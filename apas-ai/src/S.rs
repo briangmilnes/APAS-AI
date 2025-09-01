@@ -2,8 +2,22 @@
 
 //! This file builds the sequence datatype, named S, from Chapter 17 but we are skipping the
 //! fundamental version of it as a mapping and going straight to fixed size arrays.
+//!
+//! Abstract:
+//! - Defines `S<T>` as a runtime-sized, fixed-length sequence backed by `Box<[T]>`.
+//! - Exposes `Sequence<T>` with core ops: `new`, `length`, `nth`, `empty`, `set`, `singleton`,
+//!   `isEmpty`, `isSingleton`.
+//! - Helper methods on `S<T>`: `length` (convenience), `update` (chainable), `from_vec`.
+//! - No `unsafe` and no `Vec` in algorithmic paths; `seq!` may use `Vec` internally to build `S`.
+//! - Costs: all ops Θ(1) except `new` which is Θ(length) (clone init); per-fn docs specify details.
+//!
+//! Contents:
+//! - Types: `N` (usize), `B` (Boolean), `O` (Ordering re-export).
+//! - Struct `S<T>`: boxed-slice storage.
+//! - Trait `Sequence<T>`: core API used by APAS18/19.
+//! - Impl blocks: utilities on `S<T>`; `Sequence<T> for S<T>` using `seq!` for constructors.
 
-#![allow(non_snake_case)]
+// lint configured at crate level in Cargo.toml
 
 /// Type alias for natural numbers to match APAS, N.
 pub type N = usize;

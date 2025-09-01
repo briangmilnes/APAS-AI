@@ -1,4 +1,17 @@
-//! Chapter 19 algorithms as trait methods over `S<T>` (no free functions).
+//! APAS19: Chapter 19 algorithms as trait methods over `S<T>` (no free functions).
+//!
+//! Abstract:
+//! - Provides trait `APAS19` implemented for `S<T>` with Chapter 19 algorithms.
+//! - Uses only allowed primitives: `length`, `nth`, `subseq`, `tabulate`, `flatten`, `inject`, `ninject`.
+//! - Work/Span are documented per APAS; deviations are marked with "BUG: not right performance".
+//!   The main deviation is `subseq`: expected Θ(1) with views, but ours copies due to `Box<[T]>`.
+//!
+//! Contents:
+//! - Trait `APAS19`: `subseq`, `tabulate`, `map`, `select`, `append`, `append2`, `deflate`, `filter`,
+//!   `iterate`, `reduce`, `scan`, `flatten`, `inject`, `atomicWrite`, `inject_parallel2`,
+//!   `AtomicWriteLowestChangeNumberWins`, `ninject_parallel2`, `AtomicWriteHighestChangeNumberWins`.
+//! - Impl `APAS19 for S<T>`: allocation-safe, no `Vec` or `unsafe`, consistent naming (`ChangeNumber`).
+//! - Complexity notation uses Θ and Σ with explicit indices (e.g., Σ i=0..n-1).
 
 use crate::S::{S, B, N, O, Sequence};
 use crate::APAS18::APAS18;

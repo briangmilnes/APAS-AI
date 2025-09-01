@@ -196,3 +196,10 @@ fn test_nth_upper_bound_panics() {
     let a = apas_ai::seq![1, 2, 3];
     a.nth(3);
 }
+
+#[test]
+#[should_panic]
+fn test_set_out_of_bounds_panics_on_unwrap() {
+    let mut s = <S<i32> as Sequence<i32>>::new(3, 0);
+    let _ = s.set(3, 1).unwrap();
+}

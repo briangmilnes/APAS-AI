@@ -5,6 +5,9 @@ edition = "2024"
 
 [dependencies]
 
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
 [lints.rust]
 non_snake_case = "allow"
 non_upper_case_globals = "allow"
@@ -13,3 +16,7 @@ dead_code = "allow"
 
 [workspace]
 members = [ "." ]
+
+[[bench]]
+name = "SBench"
+harness = false
