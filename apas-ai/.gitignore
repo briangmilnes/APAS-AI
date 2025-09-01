@@ -1,0 +1,15 @@
+# Emacs/VCS temp files
+*~
+#*#
+.#*
+
+# Rust target
+/target/
+
+# IDE
+/.idea/
+/.vscode/
+
+# Others
+.DS_Store
+Thumbs.db

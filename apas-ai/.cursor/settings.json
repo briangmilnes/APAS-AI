@@ -1,0 +1,13 @@
+{
+  "files.exclude": {
+    "**/*~": true,
+    "**/#*#": true,
+    "**/.#*": true
+  },
+  "search.exclude": {
+    "**/*~": true,
+    "**/#*#": true,
+    "**/.#*": true
+  }
+}
+
