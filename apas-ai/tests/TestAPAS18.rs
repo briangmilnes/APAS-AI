@@ -22,11 +22,11 @@ fn test_map_increment() {
 #[test]
 fn test_subseq() {
     let a = apas_ai::seq![10, 20, 30, 40, 50];
-    let b = <S<i32> as APAS18>::subseq(&a, 1, 4);
+    let b = a.subseq(1, 3);
     assert_eq!(b, apas_ai::seq![20, 30, 40]);
-    let c = <S<i32> as APAS18>::subseq(&a, 2, 2);
+    let c = a.subseq(2, 0);
     assert_eq!(c.length(), 0);
-    let d = <S<i32> as APAS18>::subseq(&a, 0, 1);
+    let d = a.subseq(0, 1);
     assert_eq!(d, apas_ai::seq![10]);
 }
 

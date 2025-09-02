@@ -12,10 +12,6 @@ pub trait APAS18 {
     /// Work: Θ(|a| + Σ_{x∈a} W(f(x))), Span: Θ(1 + max_{x∈a} S(f(x))).
     fn map<T, U: Clone>(a: &S<T>, f: impl Fn(&T) -> U) -> S<U>;
 
-    /// Algorithm 19.13 (Function subseq). Return the subsequence in half-open range `[start, end)`. <br/>
-    /// Work: Θ(end-start), Span: Θ(1) in this owning representation.
-    fn subseq<T: Clone + Eq>(a: &S<T>, start: N, end: N) -> S<T>;
-
     /// Definition 18.1 (append). Concatenate `a` and `b` preserving order. <br/>
     /// Work: Θ(|a|+|b|), Span: Θ(1).
     fn append<T: Clone + Eq>(a: &S<T>, b: &S<T>) -> S<T>;
@@ -72,61 +68,47 @@ impl<T2> APAS18 for S<T2> {
 
     /// Work: Θ(|a| + Σ_{x∈a} W(f(x))), Span: Θ(1 + max_{x∈a} S(f(x))).
     fn map<T, U: Clone>(a: &S<T>, f: impl Fn(&T) -> U) -> S<U> {
-        let n = a.length();
-        if n == 0 { return <S<U> as Sequence<U>>::empty(); }
-        let first = f(a.nth(0));
-        let mut out = <S<U> as Sequence<U>>::new(n, first.clone());
-        let _ = out.set(0, first);
-        for i in 1..n { let _ = out.set(i, f(a.nth(i))); }
-        out
-    }
-
-    /// Work: Θ(end−start), Span: Θ(1).
-    fn subseq<T: Clone + Eq>(a: &S<T>, start: N, end: N) -> S<T> {
-        let a_len = a.length();
-        let from = start.min(a_len);
-        let to = end.min(a_len);
-        if to <= from { return <S<T> as Sequence<T>>::empty(); }
-        let k = to - from;
-        let first = a.nth(from).clone();
-        let mut out = <S<T> as Sequence<T>>::new(k, first.clone());
-        let _ = out.set(0, first);
-        for i in 1..k { let _ = out.set(i, a.nth(from + i).clone()); }
-        out
+        let input_length = a.length();
+        if input_length == 0 { return <S<U> as Sequence<U>>::empty(); }
+        let first_mapped_elt = f(a.nth(0));
+        let mut result_seq = <S<U> as Sequence<U>>::new(input_length, first_mapped_elt.clone());
+        let _ = result_seq.set(0, first_mapped_elt);
+        for index in 1..input_length { let _ = result_seq.set(index, f(a.nth(index))); }
+        result_seq
     }
 
     /// Work: Θ(|a|+|b|), Span: Θ(1).
     fn append<T: Clone + Eq>(a: &S<T>, b: &S<T>) -> S<T> {
-        let a_len = a.length();
-        let b_len = b.length();
-        let n = a_len + b_len;
-        if n == 0 { return <S<T> as Sequence<T>>::empty(); }
-        let seed = if a_len > 0 { a.nth(0).clone() } else { b.nth(0).clone() };
-        let mut out = <S<T> as Sequence<T>>::new(n, seed.clone());
-        for i in 0..a_len { let _ = out.set(i, a.nth(i).clone()); }
-        for j in 0..b_len { let _ = out.set(a_len + j, b.nth(j).clone()); }
-        out
+        let left_length = a.length();
+        let right_length = b.length();
+        let combined_length = left_length + right_length;
+        if combined_length == 0 { return <S<T> as Sequence<T>>::empty(); }
+        let initial_elt = if left_length > 0 { a.nth(0).clone() } else { b.nth(0).clone() };
+        let mut result_seq = <S<T> as Sequence<T>>::new(combined_length, initial_elt.clone());
+        for left_index in 0..left_length { let _ = result_seq.set(left_index, a.nth(left_index).clone()); }
+        for right_index in 0..right_length { let _ = result_seq.set(left_length + right_index, b.nth(right_index).clone()); }
+        result_seq
     }
 
     /// Work: Θ(|a| + Σ W(pred(x))), Span: Θ(lg|a| + max S(pred(x))).
     fn filter<T: Clone + Eq>(a: &S<T>, pred: impl Fn(&T) -> B) -> S<T> {
-        let n = a.length();
-        if n == 0 { return <S<T> as Sequence<T>>::empty(); }
-        // Compute mask to evaluate pred once per element
-        let mask: S<B> = <S<B> as APAS18>::map(a, |x| pred(x));
+        let input_length = a.length();
+        if input_length == 0 { return <S<T> as Sequence<T>>::empty(); }
+        // Compute mask to evaluate pred once per elt
+        let keep_mask: S<B> = <S<B> as APAS18>::map(a, |x| pred(x));
         // Count kept
-        let mut m: N = 0;
-        for i in 0..n { if *mask.nth(i) == B::True { m += 1; } }
-        if m == 0 { return <S<T> as Sequence<T>>::empty(); }
-        // Seed allocation with first kept element
-        let mut j: N = 0;
-        while j < n && *mask.nth(j) != B::True { j += 1; }
-        let seed = a.nth(j).clone();
-        let mut out = <S<T> as Sequence<T>>::new(m, seed.clone());
+        let mut kept_count: N = 0;
+        for index in 0..input_length { if *keep_mask.nth(index) == B::True { kept_count += 1; } }
+        if kept_count == 0 { return <S<T> as Sequence<T>>::empty(); }
+        // Seed allocation with first kept elt
+        let mut first_kept_index: N = 0;
+        while first_kept_index < input_length && *keep_mask.nth(first_kept_index) != B::True { first_kept_index += 1; }
+        let initial_elt = a.nth(first_kept_index).clone();
+        let mut result_seq = <S<T> as Sequence<T>>::new(kept_count, initial_elt.clone());
         // Fill output
-        let mut k: N = 0;
-        for i in 0..n { if *mask.nth(i) == B::True { let _ = out.set(k, a.nth(i).clone()); k += 1; } }
-        out
+        let mut write_index: N = 0;
+        for index in 0..input_length { if *keep_mask.nth(index) == B::True { let _ = result_seq.set(write_index, a.nth(index).clone()); write_index += 1; } }
+        result_seq
     }
 
     /// Work: Θ(1), Span: Θ(1).
@@ -134,109 +116,109 @@ impl<T2> APAS18 for S<T2> {
 
     /// Work: Θ(|a|+|updates|), Span: Θ(1).
     fn inject<T: Clone + Eq>(a: &S<T>, updates: &S<(N, T)>) -> S<T> {
-        let mut new_data = a.data.clone();
-        let mut seen = std::collections::HashSet::new();
-        for i in 0..updates.length() {
-            let (idx, val) = updates.nth(i);
-            if *idx < new_data.len() && !seen.contains(idx) {
-                new_data[*idx] = val.clone();
-                seen.insert(*idx);
+        let mut new_elts = a.data.clone();
+        let mut seen_indices = std::collections::HashSet::new();
+        for update_iter in 0..updates.length() {
+            let (update_index, update_value) = updates.nth(update_iter);
+            if *update_index < new_elts.len() && !seen_indices.contains(update_index) {
+                new_elts[*update_index] = update_value.clone();
+                seen_indices.insert(*update_index);
             }
         }
-        S { data: new_data }
+        S { data: new_elts }
     }
 
     /// Work: Θ(|a|+|updates|), Span: Θ(1).
     fn ninject<T: Clone + Eq>(a: &S<T>, updates: &S<(N, T)>) -> S<T> {
-        let mut new_data = a.data.clone();
-        for i in 0..updates.length() {
-            let (idx, val) = updates.nth(i);
-            if *idx < new_data.len() { new_data[*idx] = val.clone(); }
+        let mut new_elts = a.data.clone();
+        for update_iter in 0..updates.length() {
+            let (update_index, update_value) = updates.nth(update_iter);
+            if *update_index < new_elts.len() { new_elts[*update_index] = update_value.clone(); }
         }
-        S { data: new_data }
+        S { data: new_elts }
     }
 
     /// Work: Θ(|a| + Σ W(f)), Span: Θ(|a| + max S(f)).
     fn iterate<T: Clone + Eq, A: Clone>(a: &S<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
-        let mut acc = x;
-        for i in 0..a.length() { acc = f(&acc, a.nth(i)); }
-        acc
+        let mut accumulator = x;
+        for index in 0..a.length() { accumulator = f(&accumulator, a.nth(index)); }
+        accumulator
     }
 
     /// Work: Θ(|a|), Span: Θ(|a|).
     fn iteratePrefixes<T: Clone + Eq, A: Clone>(a: &S<T>, f: impl Fn(&A, &T) -> A, x: A) -> (S<A>, A) {
-        let n = a.length();
-        let mut current = x;
-        if n == 0 { return (<S<A> as Sequence<A>>::empty(), current); }
-        let mut prefixes = <S<A> as Sequence<A>>::new(n, current.clone());
-        for i in 0..n {
-            let _ = prefixes.set(i, current.clone());
-            current = f(&current, a.nth(i));
+        let input_length = a.length();
+        let mut prefix_value = x;
+        if input_length == 0 { return (<S<A> as Sequence<A>>::empty(), prefix_value); }
+        let mut prefix_values = <S<A> as Sequence<A>>::new(input_length, prefix_value.clone());
+        for index in 0..input_length {
+            let _ = prefix_values.set(index, prefix_value.clone());
+            prefix_value = f(&prefix_value, a.nth(index));
         }
-        (prefixes, current)
+        (prefix_values, prefix_value)
     }
 
     /// BUG: VEC — APAS: Work Θ(Σ (y,z)∈T(−) W(f(y, z))), Span Θ(lg|a| · max (y,z)∈T(−) S(f(y, z))).
     fn reduce<T: Clone + Eq>(a: &S<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
-        let len = a.length();
-        if len == 0 { return id; }
-        if len == 1 { return a.nth(0).clone(); }
-        let mid = len / 2;
-        let left = Self::subseq(a, 0, mid);
-        let right = Self::subseq(a, mid, len);
-        let l = Self::reduce(&left, f, id.clone());
-        let r = Self::reduce(&right, f, id);
-        f(&l, &r)
+        let input_length = a.length();
+        if input_length == 0 { return id; }
+        if input_length == 1 { return a.nth(0).clone(); }
+        let mid_index = input_length / 2;
+        let left_subseq = a.subseq(0, mid_index);
+        let right_subseq = a.subseq(mid_index, input_length - mid_index);
+        let left_result = Self::reduce(&left_subseq, f, id.clone());
+        let right_result = Self::reduce(&right_subseq, f, id);
+        f(&left_result, &right_result)
     }
 
     /// Work: Θ(|a|·lg|a|), Span: Θ(lg|a|).
     fn scan<T: Clone + Eq>(a: &S<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (S<T>, T) {
-        let n = a.length();
-        let mut prefixes = if n == 0 { <S<T> as Sequence<T>>::empty() } else { <S<T> as Sequence<T>>::new(n, id.clone()) };
-        for i in 0..n {
-            let p = Self::subseq(a, 0, i);
-            let r = Self::reduce(&p, f, id.clone());
-            let _ = prefixes.set(i, r);
+        let input_length = a.length();
+        let mut prefix_values = if input_length == 0 { <S<T> as Sequence<T>>::empty() } else { <S<T> as Sequence<T>>::new(input_length, id.clone()) };
+        for index in 0..input_length {
+            let prefix_subseq = a.subseq(0, index);
+            let prefix_result = Self::reduce(&prefix_subseq, f, id.clone());
+            let _ = prefix_values.set(index, prefix_result);
         }
-        let total = Self::reduce(a, f, id);
-        (prefixes, total)
+        let total_result = Self::reduce(a, f, id);
+        (prefix_values, total_result)
     }
 
     /// Work: Θ(∑_{x∈ss} |x|), Span: Θ(1).
     fn flatten<T: Clone + Eq>(ss: &S<S<T>>) -> S<T> {
-        let outer = ss.length();
-        let mut total: N = 0;
-        for i in 0..outer { total += ss.nth(i).length(); }
-        if total == 0 { return <S<T> as Sequence<T>>::empty(); }
-        // find first element to seed allocation
-        let mut seed_opt: Option<T> = None;
-        'find: for i in 0..outer {
-            let s = ss.nth(i);
-            if s.length() > 0 { seed_opt = Some(s.nth(0).clone()); break 'find; }
+        let outer_length = ss.length();
+        let mut total_length: N = 0;
+        for outer_index in 0..outer_length { total_length += ss.nth(outer_index).length(); }
+        if total_length == 0 { return <S<T> as Sequence<T>>::empty(); }
+        // find first elt to seed allocation
+        let mut first_elt_opt: Option<T> = None;
+        'find: for outer_index in 0..outer_length {
+            let inner_seq = ss.nth(outer_index);
+            if inner_seq.length() > 0 { first_elt_opt = Some(inner_seq.nth(0).clone()); break 'find; }
         }
-        let seed = seed_opt.expect("total > 0 implies some inner element exists");
-        let mut out = <S<T> as Sequence<T>>::new(total, seed.clone());
-        let mut idx: N = 0;
-        for i in 0..outer {
-            let s = ss.nth(i);
-            for j in 0..s.length() { let _ = out.set(idx, s.nth(j).clone()); idx += 1; }
+        let initial_elt = first_elt_opt.expect("total_length > 0 implies some inner elt exists");
+        let mut result_seq = <S<T> as Sequence<T>>::new(total_length, initial_elt.clone());
+        let mut write_index: N = 0;
+        for outer_index in 0..outer_length {
+            let inner_seq = ss.nth(outer_index);
+            for inner_index in 0..inner_seq.length() { let _ = result_seq.set(write_index, inner_seq.nth(inner_index).clone()); write_index += 1; }
         }
-        out
+        result_seq
     }
 
     /// BUG: VEC — APAS: Work Θ(|a| · W(f) · lg|a|), Span Θ(S(f) · lg^2|a|).
     fn collect<A: Clone + Eq, Bv: Clone + Eq>(a: &S<(A, Bv)>, cmp: impl Fn(&A, &A) -> O) -> S<(A, S<Bv>)> {
-        let mut groups: Vec<(A, Vec<Bv>)> = Vec::new();
-        for i in 0..a.length() {
-            let (key, value) = a.nth(i);
+        let mut grouped_values: Vec<(A, Vec<Bv>)> = Vec::new();
+        for index in 0..a.length() {
+            let (key, value) = a.nth(index);
             let mut found = false;
-            for (gk, gv) in &mut groups {
-                if cmp(key, gk) == O::Equal { gv.push(value.clone()); found = true; break; }
+            for (group_key, group_values) in &mut grouped_values {
+                if cmp(key, group_key) == O::Equal { group_values.push(value.clone()); found = true; break; }
             }
-            if !found { groups.push((key.clone(), vec![value.clone()])); }
+            if !found { grouped_values.push((key.clone(), vec![value.clone()])); }
         }
-        let result: Vec<(A, S<Bv>)> = groups.into_iter().map(|(k, v)| (k, S { data: v.into_boxed_slice() })).collect();
-        S { data: result.into_boxed_slice() }
+        let grouped_seq: Vec<(A, S<Bv>)> = grouped_values.into_iter().map(|(key, values)| (key, S { data: values.into_boxed_slice() })).collect();
+        S { data: grouped_seq.into_boxed_slice() }
     }
 }
 

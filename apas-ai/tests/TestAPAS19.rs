@@ -162,7 +162,7 @@ fn test_select_boundary() {
 #[test]
 fn test_subseq_basic() {
     let a = <S<i32> as APAS19>::tabulate(|i| (i + 1) as i32 * 10, 5);
-    let s = <S<i32> as APAS19>::subseq(&a, 1, 4);
+    let s = <S<i32> as APAS19>::subseq(&a, 1, 3);
     assert_eq!(s, apas_ai::seq![20, 30, 40]);
 }
 

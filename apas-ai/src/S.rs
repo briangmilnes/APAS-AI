@@ -7,7 +7,7 @@
 //! - Defines `S<T>` as a runtime-sized, fixed-length sequence backed by `Box<[T]>`.
 //! - Exposes `Sequence<T>` with core ops: `new`, `length`, `nth`, `empty`, `set`, `singleton`,
 //!   `isEmpty`, `isSingleton`.
-//! - Helper methods on `S<T>`: `length` (convenience), `update` (chainable), `from_vec`.
+//! - Helper methods on `S<T>`: `update` (chainable), `from_vec`.
 //! - No `unsafe` and no `Vec` in algorithmic paths; `seq!` may use `Vec` internally to build `S`.
 //! - Costs: all ops Θ(1) except `new` which is Θ(length) (clone init); per-fn docs specify details.
 //!
@@ -15,9 +15,7 @@
 //! - Types: `N` (usize), `B` (Boolean), `O` (Ordering re-export).
 //! - Struct `S<T>`: boxed-slice storage.
 //! - Trait `Sequence<T>`: core API used by APAS18/19.
-//! - Impl blocks: utilities on `S<T>`; `Sequence<T> for S<T>` using `seq!` for constructors.
-
-// lint configured at crate level in Cargo.toml
+//! - Impl blocks: utilities on `S<T>`; `Sequence<T> for S<T>` using `seq!` for constructors.e p
 
 /// Type alias for natural numbers to match APAS, N.
 pub type N = usize;
@@ -46,7 +44,7 @@ pub trait Sequence<T> {
 
     /// Algorithm 19.12 (Function length). Return the number of elements in the sequence. <br/>
     /// Work: Θ(1), Span: Θ(1).
-    fn length(&self) -> N;
+    fn length(&self) -> N ;
 
     /// Algorithm 19.11 (Function nth). Return a reference to the element at `index`. <br/>
     /// Work: Θ(1), Span: Θ(1).
@@ -72,10 +70,34 @@ pub trait Sequence<T> {
     /// Definition 18.5 (isSingleton). B::True iff the sequence has length one. <br/>
     /// Work: Θ(1), Span: Θ(1).
     fn isSingleton(&self) -> B;
+
+    /// Definition 18.12 / Algorithm 19.13 (subseq). Return the subsequence starting at `start` of
+    /// length `length`. If out of bounds, returns only the in-bounds part. <br/>
+    /// Work: Θ(length) in this owning representation (allocation and cloning).
+    fn subseq(&self, start: N, length: N) -> S<T>
+    where
+        T: Clone + Eq;
 }
 
 impl<T> S<T> {
-    pub fn length(&self) -> N { self.data.len() }
+    /// Definition 18.12 (subseq). Extract a contiguous subsequence starting at `start` with length `length`. <br/>
+    /// If out of bounds, returns only the in-bounds part. <br/>
+    /// Work: Θ(1) to compute bounds; allocation and cloning Θ(length) in this owning representation.
+    pub fn subseq(&self, start: N, length: N) -> S<T>
+    where
+        T: Clone + Eq,
+    {
+        let sequence_length = self.data.len();
+        let start_index = start.min(sequence_length);
+        let end_exclusive = start.saturating_add(length).min(sequence_length);
+        if end_exclusive <= start_index { return <S<T> as crate::S::Sequence<T>>::empty(); }
+        let result_length = end_exclusive - start_index;
+        let first_elt = self.nth(start_index).clone();
+        let mut out = <S<T> as crate::S::Sequence<T>>::new(result_length, first_elt.clone());
+        let _ = out.set(0, first_elt);
+        for result_index in 1..result_length { let _ = out.set(result_index, self.nth(start_index + result_index).clone()); }
+        out
+    }
 
     /// Update `self[index]` to `item` in place if in bounds, and return `self` for chaining. <br/>
     /// Work: Θ(1), Span: Θ(1).
@@ -87,7 +109,7 @@ impl<T> S<T> {
     /// Create sequence from a Vec (used by `seq!` and tests). <br/>
     /// Work: Θ(n) worst case (shrink-to-fit moves), Θ(1) best case (rebrand); Span: Θ(1). <br/>
     /// Reason: `Vec<T>` owns a heap buffer; `into_boxed_slice()` reuses it when capacity==len, else shrinks and moves elements.
-    pub fn from_vec(data: Vec<T>) -> S<T> { S { data: data.into_boxed_slice() } }
+    pub fn from_vec(elts: Vec<T>) -> S<T> { S { data: elts.into_boxed_slice() } }
 }
 
 impl<T: Eq> PartialEq for S<T> {
@@ -104,8 +126,8 @@ impl<T: Eq> Eq for S<T> {}
 
 impl<T: std::fmt::Debug> std::fmt::Debug for S<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let it = (0..self.length()).map(|i| self.nth(i));
-        f.debug_list().entries(it).finish()
+        let elts = (0..self.length()).map(|index| self.nth(index));
+        f.debug_list().entries(elts).finish()
     }
 }
 
@@ -132,4 +154,9 @@ impl<T> Sequence<T> for S<T> {
     fn isEmpty(&self) -> B { if self.data.len() == 0 { B::True } else { B::False } }
 
     fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
+
+    fn subseq(&self, start: N, length: N) -> S<T>
+    where
+        T: Clone + Eq,
+    { S::subseq(self, start, length) }
 }
