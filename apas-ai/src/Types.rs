@@ -1,0 +1,14 @@
+//! Common types used across the crate.
+
+/// Type alias for natural numbers to match APAS, N.
+pub type N = usize;
+
+/// Data Type 18.1 (Boolean) type used by APAS.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub enum B { True, False }
+
+/// Data Type 18.1 (Ordering) relationships used by APAS, using Rust's as it matches.
+/// Enumerated values in `std::cmp::Ordering` are named: Less, Equal, Greater.
+pub use std::cmp::Ordering as O;
+
+

@@ -1,0 +1,39 @@
+use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
+use apas_ai::Types::N;
+use apas_ai::MathSeq::{MathS, MathSeq};
+use std::env;
+use std::path::PathBuf;
+
+fn bench_mathseq_basics(c: &mut Criterion) {
+    let mut group = c.benchmark_group("MathS_ops");
+    group.sample_size(100);
+    let n: N = 100_000;
+
+    group.bench_with_input(BenchmarkId::new("new_then_set", n), &n, |b, &len| {
+        b.iter(|| {
+            let mut s = <MathS<N> as MathSeq<N>>::new(len, 0);
+            for i in 0..len { let _ = s.set(i, i); }
+            black_box(s)
+        })
+    });
+
+    group.bench_with_input(BenchmarkId::new("push_then_pop", n), &n, |b, &len| {
+        b.iter(|| {
+            let mut s: MathS<N> = <MathS<N> as MathSeq<N>>::empty();
+            for i in 0..len { let _ = s.add_last(i); }
+            for _ in 0..len { let _ = s.delete_last(); }
+            black_box(s.length())
+        })
+    });
+
+    group.finish();
+
+    let target_dir: PathBuf = env::var_os("CARGO_TARGET_DIR").map(PathBuf::from).unwrap_or_else(|| PathBuf::from("target"));
+    let report = target_dir.join("criterion").join("report").join("index.html");
+    println!("HTML report: file://{}", report.display());
+}
+
+criterion_group!(benches, bench_mathseq_basics);
+criterion_main!(benches);
+
+

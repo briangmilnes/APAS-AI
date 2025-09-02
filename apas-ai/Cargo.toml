@@ -8,6 +8,8 @@ edition = "2024"
 [dev-dependencies]
 criterion = { version = "0.5", features = ["html_reports"] }
 
+
+
 [lints.rust]
 non_snake_case = "allow"
 non_upper_case_globals = "allow"
@@ -18,5 +20,9 @@ dead_code = "allow"
 members = [ "." ]
 
 [[bench]]
-name = "SBench"
+name = "BenchArraySeq"
+harness = false
+
+[[bench]]
+name = "BenchMathSeq"
 harness = false
