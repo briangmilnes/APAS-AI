@@ -3,10 +3,12 @@ use apas_ai::Types::N;
 use apas_ai::MathSeq::{MathS, MathSeq};
 use std::env;
 use std::path::PathBuf;
+use std::time::Duration;
 
 fn bench_mathseq_basics(c: &mut Criterion) {
     let mut group = c.benchmark_group("MathS_ops");
-    group.sample_size(100);
+    group.sample_size(10);
+    group.warm_up_time(Duration::from_secs(2));
     let n: N = 100_000;
 
     group.bench_with_input(BenchmarkId::new("new_then_set", n), &n, |b, &len| {

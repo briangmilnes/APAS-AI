@@ -204,3 +204,20 @@ fn test_set_out_of_bounds_panics_on_unwrap() {
     let mut s = <ArrayS<N> as ArraySeq<N>>::new(3, 0);
     let _ = s.set(3, 1).unwrap();
 }
+
+#[test]
+fn test_set_in_bounds_ok_and_writes() {
+    let mut s = <ArrayS<N> as ArraySeq<N>>::new(3, 0);
+    let res = s.set(1, 5);
+    assert!(res.is_ok());
+    assert_eq!(*s.nth(1), 5);
+}
+
+#[test]
+fn test_subseq_copy_trait_form_basic() {
+    let a = apas_ai::arrayseq![10, 20, 30, 40, 50];
+    let b: ArrayS<N> = <ArrayS<N> as ArraySeq<N>>::subseq_copy(&a, 1, 3);
+    assert_eq!(b, apas_ai::arrayseq![20, 30, 40]);
+    let e: ArrayS<N> = <ArrayS<N> as ArraySeq<N>>::subseq_copy(&a, 10, 2);
+    assert_eq!(e.length(), 0);
+}

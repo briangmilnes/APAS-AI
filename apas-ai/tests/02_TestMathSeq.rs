@@ -86,7 +86,7 @@ fn test_domain() {
 
 #[test]
 fn test_range_deduplicates_preserving_order() {
-    let s: MathS<&str> = mathseq!["a", "b", "a", "c", "b", "d", "d"]; 
+    let s: MathS<&str> = mathseq!["a", "b", "a", "c", "b", "d", "d"];
     let r = s.range();
     assert_eq!(r, vec!["a", "b", "c", "d"]);
 }

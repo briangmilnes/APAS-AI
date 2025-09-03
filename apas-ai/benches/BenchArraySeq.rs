@@ -1,8 +1,11 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::N;
 use apas_ai::ArraySeq::{ArrayS, ArraySeq};
+use apas_ai::ArraySeqChap18::ArraySeqChap18;
+use apas_ai::ArraySeqChap19::ArraySeqChap19;
 use std::env;
 use std::path::PathBuf;
+use std::time::Duration;
 
 // Simple Linear Congruential Generator: x_{n+1} = (a * x_n + c) mod 2^32
 struct LinearCongruentialGenerator32 { state: u32 }
@@ -21,16 +24,16 @@ impl LinearCongruentialGenerator32 {
 
 fn bench_build_random_s(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArrayS_random_updates");
-    group.sample_size(100);
+    group.sample_size(10);
+    group.warm_up_time(Duration::from_secs(2));
     let n: N = 100_000;
 
     group.bench_with_input(BenchmarkId::new("zeros_then_update", n), &n, |b, &len| {
         b.iter(|| {
             let mut rng = LinearCongruentialGenerator32::new(0xDEADBEEF);
-            let mut s = <ArrayS<N> as ArraySeq<N>>::new(len, 0);
+            let mut s = <ArrayS<N> as ArraySeqChap19>::tabulate(|_| 0, len);
             for i in 0..len {
-                // Update in place using only S APIs
-                let _ = s.update((i, rng.next_N()));
+                let _ = <ArrayS<N> as ArraySeqChap18>::update(&mut s, (i, rng.next_N()));
             }
             black_box(s)
         })

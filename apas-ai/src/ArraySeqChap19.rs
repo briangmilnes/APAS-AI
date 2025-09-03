@@ -185,12 +185,17 @@ impl<T2> ArraySeqChap19 for ArrayS<T2> {
         if input_length == 0 { (<ArrayS<T> as ArraySeqChap19>::tabulate(|_| id.clone(), 0), id) }
         else if input_length == 1 { (<ArrayS<T> as ArraySeqChap19>::tabulate(|_| id.clone(), 1), a.nth(0).clone()) }
         else {
-            let half_length = input_length / 2;
+            let half_length = (input_length + 1) / 2;
             let pairwise_reductions = <ArrayS<T> as ArraySeqChap19>::tabulate(
                 |index| {
                     let left_elt = a.nth(2 * index);
-                    let right_elt = a.nth(2 * index + 1);
-                    f(left_elt, right_elt)
+                    let right_index = 2 * index + 1;
+                    if right_index < input_length {
+                        let right_elt = a.nth(right_index);
+                        f(left_elt, right_elt)
+                    } else {
+                        left_elt.clone()
+                    }
                 },
                 half_length,
             );

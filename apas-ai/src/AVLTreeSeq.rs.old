@@ -1,0 +1,157 @@
+//! AVL tree–backed sequence datatype, named AVLTreeS, aligned with `ArraySeq` APIs where possible.
+//!
+//! Abstract:
+//! - Defines `AVLTreeS<T>` as an ordered container backed by `tree_collections::avlTree::AVLTree<T>`.
+//! - Exposes `AVLTreeSeq<T>` with core sequence ops: `new`, `length`, `nth`, `empty`, `set`, `singleton`,
+//!   `isEmpty`, `isSingleton`, `subseq_copy` to match the shape of `ArraySeq`/linked-list traits.
+//! - Additionally provides set-style helpers on `AVLTreeS<T>`: `insert_value`, `contains_value`,
+//!   `delete_value`, `is_tree_empty`, and `values_in_order`.
+//! - Note: Index-based operations interpret the sequence as the in-order traversal of the AVL tree.
+// BUG: duplicates not working so it's not a real sequence.
+
+pub use crate::Types::{N, B, O};
+
+use tree_collections::avlTree::AVLTree;
+use tree_collections::commonTrait::CommonTreeTrait;
+use std::fmt::{Debug, Display};
+
+pub struct AVLTreeS<T: Ord + Copy + Debug + Display> { pub tree: AVLTree<T> }
+
+pub trait AVLTreeSeq<T: Ord + Copy + Debug + Display> {
+    /// Create a new sequence of length `length` with each element initialized to `init_value`. <br/>
+    /// Work: Θ(length * lg(length)) due to inserts; Span: Θ(1).
+    fn new(length: N, init_value: T) -> AVLTreeS<T>
+    where
+        T: Clone;
+
+    /// Return the number of elements in the sequence (in-order view). <br/>
+    /// Work: Θ(1), Span: Θ(1).
+    // BUG: current implementation materializes in-order (Θ(n)).
+    fn length(&self) -> N;
+
+    /// Return the in-order `index`-th element by value. Panics if out of bounds. <br/>
+    /// Work: Θ(lg(|a|)), Span: Θ(lg(|a|)).
+    // BUG: current implementation materializes in-order (Θ(n)).
+    fn nth(&self, index: N) -> T;
+
+    /// Construct the empty sequence. <br/>
+    /// Work: Θ(1), Span: Θ(1).
+    fn empty() -> AVLTreeS<T>;
+
+    /// Set the in-order `index`-th element to `item`. <br/>
+    /// Implemented as delete-then-insert; preserves ordering by tree invariant. <br/>
+    /// Work: Θ(lg(n)) plus rebuild; Span: Θ(1).
+    fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeS<T>, &'static str>;
+
+    /// Construct a singleton sequence containing `item`. <br/>
+    /// Work: Θ(1), Span: Θ(1).
+    fn singleton(item: T) -> AVLTreeS<T>;
+
+    /// B::True iff the sequence has length zero. <br/>
+    /// Work: Θ(1), Span: Θ(1).
+    // BUG: current implementation materializes in-order (Θ(n)).
+    fn isEmpty(&self) -> B;
+
+    /// B::True iff the sequence has length one. <br/>
+    /// Work: Θ(1), Span: Θ(1).
+    // BUG: current implementation materializes in-order (Θ(n)).
+    fn isSingleton(&self) -> B;
+
+    /// Return the in-order subsequence starting at `start` of length `length`. <br/>
+    /// Work: Θ(1 + lg(|a|)), Span: Θ(1 + lg(|a|)).
+    // BUG: current implementation reinserts (Θ(length * lg(length))).
+    fn subseq_copy(&self, start: N, length: N) -> AVLTreeS<T>
+    where
+        T: Clone + Eq;
+}
+
+impl<T: Ord + Copy + Debug + Display> AVLTreeSeq<T> for AVLTreeS<T> {
+    fn new(length: N, init_value: T) -> AVLTreeS<T>
+    where
+        T: Clone,
+    {
+        let mut t = AVLTreeS { tree: AVLTree::new() };
+        for _ in 0..length { t.tree.insert(init_value.clone()); }
+        t
+    }
+
+    fn length(&self) -> N {
+        let v = self.values_in_order();
+        v.len() as N
+    }
+
+    fn nth(&self, index: N) -> T {
+        let v = self.values_in_order();
+        v[index]
+    }
+
+    fn empty() -> AVLTreeS<T> { AVLTreeS { tree: AVLTree::new() } }
+
+    fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeS<T>, &'static str> {
+        let v = self.values_in_order();
+        if (index as usize) < v.len() {
+            let old_value = v[index as usize];
+            self.tree.delete(old_value);
+            self.tree.insert(item);
+            Ok(self)
+        } else {
+            Err("Index out of bounds")
+        }
+    }
+
+    fn singleton(item: T) -> AVLTreeS<T> {
+        let mut t = AVLTreeS { tree: AVLTree::new() };
+        t.tree.insert(item);
+        t
+    }
+
+    fn isEmpty(&self) -> B { let v = self.values_in_order(); if v.len() == 0 { B::True } else { B::False } }
+
+    fn isSingleton(&self) -> B { let v = self.values_in_order(); if v.len() == 1 { B::True } else { B::False } }
+
+    fn subseq_copy(&self, start: N, length: N) -> AVLTreeS<T>
+    where
+        T: Clone + Eq,
+    {
+        let inorder = self.values_in_order();
+        let n = inorder.len();
+        let s = (start as usize).min(n);
+        let e = start.saturating_add(length) as usize;
+        let e = e.min(n);
+        if e <= s { return <AVLTreeS<T> as AVLTreeSeq<T>>::empty(); }
+        let mut t = AVLTreeS { tree: AVLTree::new() };
+        for x in &inorder[s..e] { t.tree.insert(*x); }
+        t
+    }
+}
+
+impl<T: Ord + Copy + Debug + Display> AVLTreeS<T> {
+    /// Insert a value (set-style helper). <br/> Work: Θ(lg(n)).
+    pub fn insert_value(&mut self, value: T) { self.tree.insert(value); }
+
+    /// Return B::True iff `value` is contained. <br/> Work: Θ(n) to materialize in-order, then Θ(lg(n)) binary search.
+    pub fn contains_value(&self, value: &T) -> B {
+        let v = self.values_in_order();
+        if v.binary_search(value).is_ok() { B::True } else { B::False }
+    }
+
+    /// Delete `value` if present; return whether the set shrank. <br/> Work: Θ(lg(n)).
+    pub fn delete_value(&mut self, value: &T) -> bool {
+        let before = self.values_in_order().len() as N;
+        self.tree.delete(*value);
+        let after = self.values_in_order().len() as N;
+        after < before
+    }
+
+    /// True iff the tree is empty (helper). <br/> Work: Θ(1) amortized.
+    pub fn is_tree_empty(&self) -> B { if self.values_in_order().len() == 0 { B::True } else { B::False } }
+
+    /// Return an owned Vec of values in-order (helper). <br/> Work: Θ(n).
+    pub fn values_in_order(&self) -> Vec<T> {
+        let mut v: Vec<T> = Vec::new();
+        if let Some(root) = self.tree.get_root() { self.tree.in_order_traverse(root, &mut v); }
+        v
+    }
+}
+
+

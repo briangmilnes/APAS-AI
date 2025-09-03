@@ -1,0 +1,187 @@
+//! Implicit-order AVL tree (AVLTree2S) providing O(lg(n)) nth/insert/set by maintaining subtree sizes.
+//!
+//! Abstract:
+//! - Defines `AVLTree2S<T>` storing a balanced binary tree without key-order; in-order defines sequence order.
+//! - Maintains at each node: `height` and `size` (number of descendants including self).
+//! - Exposes `AVLTree2Seq<T>` with: `empty`, `length`, `nth`, `insert_at`, `set` and helpers.
+//! - Duplicates are supported naturally (values are not used for ordering).
+//!
+//! Complexity (APAS style):
+//! - nth(i): Work Θ(lg(n)), Span Θ(lg(n))
+//! - insert_at(i, x): Work Θ(lg(n)), Span Θ(lg(n))
+//! - set(i, x): Work Θ(lg(n)), Span Θ(lg(n))
+
+pub use crate::Types::{N, B};
+
+use std::fmt::{Debug, Display};
+
+type Link<T> = Option<Box<Node<T>>>;
+
+struct Node<T: Copy + Debug + Display> {
+    value: T,
+    height: i32,
+    size: N,
+    left: Link<T>,
+    right: Link<T>,
+}
+
+impl<T: Copy + Debug + Display> Node<T> {
+    fn new(value: T) -> Self {
+        Node { value, height: 1, size: 1, left: None, right: None }
+    }
+}
+
+pub struct AVLTree2S<T: Copy + Debug + Display> {
+    root: Link<T>,
+}
+
+pub trait AVLTree2Seq<T: Copy + Debug + Display> {
+    /// Construct an empty sequence.  Work: Θ(1), Span: Θ(1).
+    fn empty() -> AVLTree2S<T>;
+
+    /// Number of elements.  Work: Θ(1), Span: Θ(1).
+    fn length(&self) -> N;
+
+    /// Return the element at in-order position `index` (0-based). Panics if out of bounds.
+    /// Work: Θ(lg(n)), Span: Θ(lg(n)).
+    fn nth(&self, index: N) -> T;
+
+    /// Insert `value` at position `index` (0..=length).  Work: Θ(lg(n)), Span: Θ(lg(n)).
+    fn insert_at(&mut self, index: N, value: T);
+
+    /// Set the element at `index` to `value`.  Work: Θ(lg(n)), Span: Θ(lg(n)).
+    /// Returns Err if out of bounds.
+    fn set(&mut self, index: N, value: T) -> Result<(), &'static str>;
+
+    /// Helpers mirroring other sequences.
+    fn isEmpty(&self) -> B { if self.length() == 0 { B::True } else { B::False } }
+    fn isSingleton(&self) -> B { if self.length() == 1 { B::True } else { B::False } }
+    fn singleton(value: T) -> AVLTree2S<T> { let mut t = AVLTree2S::empty(); t.insert_at(0, value); t }
+}
+
+impl<T: Copy + Debug + Display> AVLTree2S<T> {
+    pub fn new() -> Self { AVLTree2S { root: None } }
+}
+
+impl<T: Copy + Debug + Display> AVLTree2Seq<T> for AVLTree2S<T> {
+    fn empty() -> AVLTree2S<T> { AVLTree2S::new() }
+
+    fn length(&self) -> N { size_link(&self.root) }
+
+    fn nth(&self, index: N) -> T { nth_link(&self.root, index) }
+
+    fn insert_at(&mut self, index: N, value: T) { self.root = insert_at_link(self.root.take(), index, value); }
+
+    fn set(&mut self, index: N, value: T) -> Result<(), &'static str> {
+        set_link(&mut self.root, index, value)
+    }
+}
+
+// ---- Internal helpers ----
+
+fn height_link<T: Copy + Debug + Display>(n: &Link<T>) -> i32 { n.as_ref().map_or(0, |b| b.height) }
+fn size_link<T: Copy + Debug + Display>(n: &Link<T>) -> N { n.as_ref().map_or(0, |b| b.size) }
+
+fn update_meta<T: Copy + Debug + Display>(n: &mut Box<Node<T>>) {
+    let hl = height_link(&n.left);
+    let hr = height_link(&n.right);
+    n.height = 1 + hl.max(hr);
+    n.size = 1 + size_link(&n.left) + size_link(&n.right);
+}
+
+fn balance_factor<T: Copy + Debug + Display>(n: &Box<Node<T>>) -> i32 {
+    height_link(&n.left) - height_link(&n.right)
+}
+
+fn rotate_right<T: Copy + Debug + Display>(mut y: Box<Node<T>>) -> Box<Node<T>> {
+    let mut x = y.left.take().expect("rotate_right requires left child");
+    let t2 = x.right.take();
+
+    y.left = t2;
+    update_meta(&mut y);
+
+    x.right = Some(y);
+    update_meta(x.right.as_mut().unwrap());
+    update_meta(&mut x);
+    x
+}
+
+fn rotate_left<T: Copy + Debug + Display>(mut x: Box<Node<T>>) -> Box<Node<T>> {
+    let mut y = x.right.take().expect("rotate_left requires right child");
+    let t2 = y.left.take();
+
+    x.right = t2;
+    update_meta(&mut x);
+
+    y.left = Some(x);
+    update_meta(y.left.as_mut().unwrap());
+    update_meta(&mut y);
+    y
+}
+
+fn rebalance<T: Copy + Debug + Display>(mut n: Box<Node<T>>) -> Box<Node<T>> {
+    update_meta(&mut n);
+    let bf = balance_factor(&n);
+    if bf > 1 {
+        if height_link(&n.left.as_ref().unwrap().right) > height_link(&n.left.as_ref().unwrap().left) {
+            let left = n.left.take().unwrap();
+            let new_left = rotate_left(left);
+            n.left = Some(new_left);
+        }
+        return rotate_right(n);
+    }
+    if bf < -1 {
+        if height_link(&n.right.as_ref().unwrap().left) > height_link(&n.right.as_ref().unwrap().right) {
+            let right = n.right.take().unwrap();
+            let new_right = rotate_right(right);
+            n.right = Some(new_right);
+        }
+        return rotate_left(n);
+    }
+    n
+}
+
+fn insert_at_link<T: Copy + Debug + Display>(node: Link<T>, index: N, value: T) -> Link<T> {
+    match node {
+        None => {
+            debug_assert!(index == 0, "insert_at_link reached None with index > 0");
+            Some(Box::new(Node::new(value)))
+        }
+        Some(mut n) => {
+            let left_size = size_link(&n.left);
+            if index <= left_size {
+                n.left = insert_at_link(n.left.take(), index, value);
+            } else {
+                n.right = insert_at_link(n.right.take(), index - left_size - 1, value);
+            }
+            Some(rebalance(n))
+        }
+    }
+}
+
+fn nth_link<T: Copy + Debug + Display>(node: &Link<T>, index: N) -> T {
+    let n = node.as_ref().expect("index out of bounds");
+    let left_size = size_link(&n.left);
+    if index < left_size { return nth_link(&n.left, index); }
+    if index == left_size { return n.value; }
+    nth_link(&n.right, index - left_size - 1)
+}
+
+fn set_link<T: Copy + Debug + Display>(node: &mut Link<T>, index: N, value: T) -> Result<(), &'static str> {
+    match node {
+        None => Err("Index out of bounds"),
+        Some(n) => {
+            let left_size = size_link(&n.left);
+            if index < left_size {
+                set_link(&mut n.left, index, value)
+            } else if index == left_size {
+                n.value = value;
+                Ok(())
+            } else {
+                set_link(&mut n.right, index - left_size - 1, value)
+            }
+        }
+    }
+}
+
+

@@ -1,0 +1,86 @@
+//! Tests for AVLTree2Seq: implicit-order AVL with O(lg n) nth/insert/set.
+
+use apas_ai::Types::{N, B};
+use apas_ai::AVLTree2Seq::{AVLTree2Seq, AVLTree2S};
+
+#[test]
+fn test_empty_and_length() {
+    let t: AVLTree2S<N> = <AVLTree2S<N> as AVLTree2Seq<N>>::empty();
+    assert_eq!(t.length(), 0);
+    assert_eq!(t.isEmpty(), B::True);
+    assert_eq!(t.isSingleton(), B::False);
+}
+
+#[test]
+fn test_singleton() {
+    let t: AVLTree2S<N> = <AVLTree2S<N> as AVLTree2Seq<N>>::singleton(7);
+    assert_eq!(t.length(), 1);
+    assert_eq!(t.nth(0), 7);
+    assert_eq!(t.isSingleton(), B::True);
+}
+
+#[test]
+fn test_insert_at_front_middle_back() {
+    let mut t: AVLTree2S<N> = <AVLTree2S<N> as AVLTree2Seq<N>>::empty();
+    // [] -> insert at 0
+    t.insert_at(0, 2);
+    assert_eq!(t.length(), 1);
+    assert_eq!(t.nth(0), 2);
+
+    // [2] -> insert front
+    t.insert_at(0, 1);
+    assert_eq!(t.length(), 2);
+    assert_eq!(t.nth(0), 1);
+    assert_eq!(t.nth(1), 2);
+
+    // [1,2] -> insert back
+    t.insert_at(2, 4);
+    assert_eq!(t.length(), 3);
+    assert_eq!(t.nth(2), 4);
+
+    // [1,2,4] -> insert middle at idx=2
+    t.insert_at(2, 3);
+    assert_eq!(t.length(), 4);
+    assert_eq!(t.nth(0), 1);
+    assert_eq!(t.nth(1), 2);
+    assert_eq!(t.nth(2), 3);
+    assert_eq!(t.nth(3), 4);
+}
+
+#[test]
+fn test_insert_many_and_nth() {
+    let mut t: AVLTree2S<N> = <AVLTree2S<N> as AVLTree2Seq<N>>::empty();
+    let n: N = 1000;
+    for i in 0..n { t.insert_at(i, i); } // append increasing
+    assert_eq!(t.length(), n);
+    // spot check
+    assert_eq!(t.nth(0), 0);
+    assert_eq!(t.nth(1), 1);
+    assert_eq!(t.nth(10), 10);
+    assert_eq!(t.nth(n - 1), n - 1);
+}
+
+#[test]
+fn test_set_in_bounds() {
+    let mut t: AVLTree2S<N> = <AVLTree2S<N> as AVLTree2Seq<N>>::empty();
+    for i in 0..5 { t.insert_at(i, i); } // [0,1,2,3,4]
+    assert!(t.set(2, 20).is_ok()); // [0,1,20,3,4]
+    assert_eq!(t.nth(2), 20);
+    assert_eq!(t.length(), 5);
+}
+
+#[test]
+fn test_set_out_of_bounds() {
+    let mut t: AVLTree2S<N> = <AVLTree2S<N> as AVLTree2Seq<N>>::empty();
+    t.insert_at(0, 1);
+    assert!(t.set(1, 9).is_err());
+}
+
+#[test]
+#[should_panic]
+fn test_nth_out_of_bounds_panics() {
+    let t: AVLTree2S<N> = <AVLTree2S<N> as AVLTree2Seq<N>>::empty();
+    let _ = t.nth(0);
+}
+
+

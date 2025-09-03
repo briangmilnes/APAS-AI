@@ -1,4 +1,9 @@
 //! Chapter 18 algorithms as trait methods over `ArrayS<T>` (no free functions).
+//!
+//! Abstract:
+//! - Defines trait `ArraySeqChap18` with Chapter 18 operations over `ArrayS<T>`.
+//! - Provides sequential implementations using only allowed primitives from `ArraySeq`.
+//! - Focus on clarity and correctness; some routines are Θ(n^2) where noted.
 
 use crate::Types::{B, N, O};
 use crate::ArraySeq::{ArrayS, ArraySeq};

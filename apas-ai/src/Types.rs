@@ -1,4 +1,8 @@
 //! Common types used across the crate.
+//!
+//! Abstract:
+//! - Defines shared aliases and enums used throughout the APAS library.
+//! - `N` (usize) for naturals, `B` (Boolean), and re-exported `O` (Ordering).
 
 /// Type alias for natural numbers to match APAS, N.
 pub type N = usize;

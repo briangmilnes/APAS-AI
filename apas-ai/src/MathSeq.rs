@@ -34,28 +34,28 @@ pub trait MathSeq<T> {
     /// Span: Θ(1)
     fn singleton(item: T) -> MathS<T>;
 
-    /// Return the number of elements. 
+    /// Return the number of elements.
     /// Work Θ(1), Span Θ(1).
     fn length(&self) -> N;
 
-    /// Reference to element at `index` (panics if out of bounds). 
+    /// Reference to element at `index` (panics if out of bounds).
     /// Work Θ(1), Span Θ(1).
     fn nth(&self, index: N) -> &T;
 
-    /// Set element at `index` (Err if out of bounds). 
+    /// Set element at `index` (Err if out of bounds).
     /// Work Θ(1), Span Θ(1).
     fn set(&mut self, index: N, value: T) -> Result<&mut MathS<T>, &'static str>;
 
-    /// Append at end (grow by 1). 
+    /// Append at end (grow by 1).
     /// Work amortized Θ(1), worst case Θ(2·length(&self)); Span amortized Θ(1), worst case Θ(2·length(&self)).
     /// Vec typically doubles capacity on growth; one growth copies existing elements once, then frees the old buffer.
     fn add_last(&mut self, value: T) -> &mut MathS<T>;
 
-    /// Remove last if any (shrink by 1). 
+    /// Remove last if any (shrink by 1).
     /// Work Θ(1), Span Θ(1).
     fn delete_last(&mut self) -> Option<T>;
 
-    /// View of [start, start+length); if beyond end, it stops at the end. 
+    /// View of [start, start+length); if beyond end, it stops at the end.
     /// Work Θ(1), Span Θ(1).
     fn subseq(&self, start: N, length: N) -> &[T];
 
@@ -76,17 +76,17 @@ pub trait MathSeq<T> {
     /// Span: Θ(1)
     fn isSingleton(&self) -> B;
 
-    /// Domain indices 0..len-1. 
+    /// Domain indices 0..len-1.
     /// Work Θ(length(&self)), Span Θ(1).
     fn domain(&self) -> Vec<N>;
 
-    /// Range with duplicates removed (maintains the ordering of the elements). 
+    /// Range where duplicates will not be added (preserves the ordering of the elements).
     /// Work Θ(length(&self)), Span Θ(1).
     fn range(&self) -> Vec<T>
     where
         T: Clone + Eq + Hash;
 
-    /// Multiset (count, value) ordered by the first occurrence of value in the range. 
+    /// Multiset (count, value) ordered by the first occurrence of value in the range.
     /// Work Θ(length(&self)), Span Θ(1).
     fn multiset_range(&self) -> Vec<(N, T)>
     where
@@ -119,7 +119,7 @@ impl<T> MathSeq<T> for MathS<T> {
 
     /// Work/Span: amortized Θ(1), Θ(1); worst‑case Θ(2·length(&self)), Θ(2·length(&self)).
     /// Vec typically doubles capacity when it out grows Vec's allocated storage. Rust will set
-    /// this automatically or you can set a total size. 
+    /// this automatically or you can set a total size.
     fn add_last(&mut self, value: T) -> &mut MathS<T> { self.data.push(value); self }
 
     /// Work/Span: Θ(1), Θ(1).

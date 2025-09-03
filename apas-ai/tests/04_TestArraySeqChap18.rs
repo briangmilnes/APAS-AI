@@ -127,4 +127,37 @@ fn test_iterate_and_prefixes_and_reduce_and_scan() {
     assert_eq!(final_result, 15);
 }
 
+#[test]
+fn test_iterate_sum_basic() {
+    let numbers = apas_ai::arrayseq![1, 2, 3, 4, 5];
+    let sum_fn = |a: &N, x: &N| a + x;
+    let r = <ArrayS<N> as ArraySeqChap18>::iterate(&numbers, sum_fn, 0);
+    assert_eq!(r, 15);
+}
+
+#[test]
+fn test_iterate_prefixes_sum() {
+    let numbers = apas_ai::arrayseq![1, 2, 3];
+    let sum_fn = |a: &N, x: &N| a + x;
+    let (prefixes, total) = <ArrayS<N> as ArraySeqChap18>::iteratePrefixes(&numbers, sum_fn, 0);
+    assert_eq!(prefixes.length(), 3);
+    assert_eq!(*prefixes.nth(0), 0);
+    assert_eq!(*prefixes.nth(1), 1);
+    assert_eq!(*prefixes.nth(2), 3);
+    assert_eq!(total, 6);
+}
+
+#[test]
+fn test_collect_groups_by_key() {
+    let pairs = apas_ai::arrayseq![("a", 1_usize), ("b", 2_usize), ("a", 3_usize)];
+    let grouped = <ArrayS<(&str, N)> as ArraySeqChap18>::collect(&pairs, |k1, k2| k1.cmp(k2));
+    assert_eq!(grouped.length(), 2);
+    let (k0, v0) = grouped.nth(0);
+    assert_eq!(*k0, "a");
+    assert_eq!(*v0, apas_ai::arrayseq![1, 3]);
+    let (k1, v1) = grouped.nth(1);
+    assert_eq!(*k1, "b");
+    assert_eq!(*v1, apas_ai::arrayseq![2]);
+}
+
 

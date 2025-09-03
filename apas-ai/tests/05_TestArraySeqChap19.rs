@@ -174,6 +174,79 @@ fn test_subseq_basic() {
 }
 
 #[test]
+fn test_reduce_sum_basic_ch19() {
+    let a = <ArrayS<N> as ArraySeqChap19>::tabulate(|i| i + 1, 5);
+    let sum_fn = |x: &N, y: &N| x + y;
+    let r = <ArrayS<N> as ArraySeqChap19>::reduce(&a, &sum_fn, 0);
+    assert_eq!(r, 15);
+    let e: ArrayS<N> = <ArrayS<N> as ArraySeqChap19>::tabulate(|_| 0, 0);
+    let re = <ArrayS<N> as ArraySeqChap19>::reduce(&e, &sum_fn, 42);
+    assert_eq!(re, 42);
+    let s = <ArrayS<N> as ArraySeqChap19>::tabulate(|_| 7, 1);
+    let rs = <ArrayS<N> as ArraySeqChap19>::reduce(&s, &sum_fn, 0);
+    assert_eq!(rs, 7);
+}
+
+#[test]
+fn test_scan_sum_basic_ch19() {
+    let a = <ArrayS<N> as ArraySeqChap19>::tabulate(|i| i + 1, 5);
+    let sum_fn = |x: &N, y: &N| x + y;
+    let (prefixes, total) = <ArrayS<N> as ArraySeqChap19>::scan(&a, &sum_fn, 0);
+    assert_eq!(prefixes.length(), 5);
+    assert_eq!(*prefixes.nth(0), 0);
+    assert_eq!(*prefixes.nth(4), 10);
+    assert_eq!(total, 15);
+}
+
+#[test]
+fn test_flatten_ch19() {
+    let s1 = <ArrayS<N> as ArraySeqChap19>::tabulate(|i| i + 1, 2);
+    let s2 = <ArrayS<N> as ArraySeqChap19>::tabulate(|i| i + 3, 2);
+    let nested: ArrayS<ArrayS<N>> = apas_ai::arrayseq![s1, s2];
+    let flat = <ArrayS<N> as ArraySeqChap19>::flatten(&nested);
+    assert_eq!(flat, apas_ai::arrayseq![1, 2, 3, 4]);
+}
+
+#[test]
+fn test_atomic_write_lowest_wins_serial() {
+    let len: N = 3;
+    let base = <ArrayS<N> as ArraySeqChap19>::tabulate(|i| i + 1, len);
+    let mut values_with_changenum: ArrayS<(N, N)> = <ArrayS<(N, N)> as ArraySeqChap19>::tabulate(
+        |i| (base.nth(i).clone(), len),
+        len,
+    );
+    let changes: ArrayS<(N, N)> = apas_ai::arrayseq![(1, 33), (1, 44)];
+    <ArrayS<N> as ArraySeqChap19>::atomicWrite(&mut values_with_changenum, &changes, 1);
+    <ArrayS<N> as ArraySeqChap19>::atomicWrite(&mut values_with_changenum, &changes, 0);
+    let (v, c) = values_with_changenum.nth(1);
+    assert_eq!((*v, *c), (33, 0));
+}
+
+#[test]
+fn test_atomic_write_highest_wins_mutex() {
+    let len: N = 3;
+    let base = <ArrayS<N> as ArraySeqChap19>::tabulate(|i| i + 1, len);
+    let values_with_changenum: ArrayS<Mutex<(N, N)>> = <ArrayS<Mutex<(N, N)>> as ArraySeqChap19>::tabulate(
+        |i| Mutex::new((base.nth(i).clone(), 0)),
+        len,
+    );
+    let changes: ArrayS<(N, N)> = apas_ai::arrayseq![(1, 33), (1, 44)];
+    <ArrayS<Mutex<(N, N)>> as ArraySeqChap19>::AtomicWriteHighestChangeNumberWins(
+        &values_with_changenum,
+        &changes,
+        0,
+    );
+    <ArrayS<Mutex<(N, N)>> as ArraySeqChap19>::AtomicWriteHighestChangeNumberWins(
+        &values_with_changenum,
+        &changes,
+        1,
+    );
+    let guard = values_with_changenum.nth(1).lock().unwrap();
+    assert_eq!(guard.0, 44);
+    assert_eq!(guard.1, 1);
+}
+
+#[test]
 fn test_iterate_empty_returns_acc() {
     let e: ArrayS<N> = <ArrayS<N> as ArraySeqChap19>::tabulate(|_| 0, 0);
     let sum = <ArrayS<N> as ArraySeqChap19>::iterate(&e, |acc: &N, x: &N| acc + x, 42);
