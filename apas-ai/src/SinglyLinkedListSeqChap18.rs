@@ -19,7 +19,8 @@ pub trait SinglyLinkedListSeqChap18 {
     /// APAS 20.7 (filter f a): Work Θ(1 + Σ x∈a W(p(x))), Span Θ(1 + Σ x∈a S(p(x))).
     fn filter<T: Clone + Eq>(a: &SinglyLinkedListS<T>, pred: impl Fn(&T) -> B) -> SinglyLinkedListS<T>;
     /// APAS 20.7 (update a (i,x)): Work Θ(1 + |a|), Span Θ(1 + |a|). <br/>
-    /// BUG: our update traverses to index only → Θ(i).
+    /// ChatGPT-5-hard: Work Θ(i), Span Θ(i).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn update<T: Clone + Eq>(a: &mut SinglyLinkedListS<T>, item_at: (N, T)) -> &mut SinglyLinkedListS<T>;
     /// APAS 20.7 (inject/ninject a b): Work Θ(1 + |a| + |b|), Span Θ(1 + |a| + |b|).
     fn inject<T: Clone + Eq>(a: &SinglyLinkedListS<T>, updates: &SinglyLinkedListS<(N, T)>) -> SinglyLinkedListS<T>;
@@ -32,6 +33,8 @@ pub trait SinglyLinkedListSeqChap18 {
     /// APAS 20.7 (flatten a): Work Θ(1 + |a| + Σ x |x|), Span Θ(1 + |a| + Σ x |x|).
     fn flatten<T: Clone + Eq>(ss: &SinglyLinkedListS<SinglyLinkedListS<T>>) -> SinglyLinkedListS<T>;
     /// APAS 20.7 (collect f a): Work Θ(1 + W(f)·|a| lg|a|), Span Θ(1 + S(f)·|a| lg|a|).
+    /// ChatGPT-5-hard: Work Θ(|a|^2), Span Θ(|a|^2).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn collect<A: Clone + Eq, Bv: Clone + Eq>(a: &SinglyLinkedListS<(A, Bv)>, cmp: impl Fn(&A, &A) -> O) -> SinglyLinkedListS<(A, SinglyLinkedListS<Bv>)>;
 }
 

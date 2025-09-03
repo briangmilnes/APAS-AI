@@ -1,0 +1,59 @@
+//! Archived old AVLTreeSeq implementation kept for reference.
+
+pub use crate::Types::{N, B, O};
+use tree_collections::avlTree::AVLTree;
+use tree_collections::commonTrait::CommonTreeTrait;
+use std::fmt::{Debug, Display};
+
+pub struct AVLTreeS<T: Ord + Copy + Debug + Display> { pub tree: AVLTree<T> }
+
+pub trait AVLTreeSeq<T: Ord + Copy + Debug + Display> {
+    fn new(length: N, init_value: T) -> AVLTreeS<T> where T: Clone;
+    fn length(&self) -> N;
+    fn nth(&self, index: N) -> T;
+    fn empty() -> AVLTreeS<T>;
+    fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeS<T>, &'static str>;
+    fn singleton(item: T) -> AVLTreeS<T>;
+    fn isEmpty(&self) -> B;
+    fn isSingleton(&self) -> B;
+    fn subseq_copy(&self, start: N, length: N) -> AVLTreeS<T> where T: Clone + Eq;
+}
+
+impl<T: Ord + Copy + Debug + Display> AVLTreeSeq<T> for AVLTreeS<T> {
+    fn new(length: N, init_value: T) -> AVLTreeS<T> where T: Clone {
+        let mut t = AVLTreeS { tree: AVLTree::new() };
+        for _ in 0..length { t.tree.insert(init_value.clone()); }
+        t
+    }
+    fn length(&self) -> N { self.values_in_order().len() as N }
+    fn nth(&self, index: N) -> T { self.values_in_order()[index] }
+    fn empty() -> AVLTreeS<T> { AVLTreeS { tree: AVLTree::new() } }
+    fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeS<T>, &'static str> {
+        let v = self.values_in_order();
+        if (index as usize) < v.len() { let old = v[index as usize]; self.tree.delete(old); self.tree.insert(item); Ok(self) } else { Err("Index out of bounds") }
+    }
+    fn singleton(item: T) -> AVLTreeS<T> { let mut t = AVLTreeS { tree: AVLTree::new() }; t.tree.insert(item); t }
+    fn isEmpty(&self) -> B { if self.values_in_order().is_empty() { B::True } else { B::False } }
+    fn isSingleton(&self) -> B { if self.values_in_order().len() == 1 { B::True } else { B::False } }
+    fn subseq_copy(&self, start: N, length: N) -> AVLTreeS<T> where T: Clone + Eq {
+        let inorder = self.values_in_order();
+        let n = inorder.len();
+        let s = (start as usize).min(n);
+        let e = start.saturating_add(length) as usize;
+        let e = e.min(n);
+        if e <= s { return <AVLTreeS<T> as AVLTreeSeq<T>>::empty(); }
+        let mut t = AVLTreeS { tree: AVLTree::new() };
+        for x in &inorder[s..e] { t.tree.insert(*x); }
+        t
+    }
+}
+
+impl<T: Ord + Copy + Debug + Display> AVLTreeS<T> {
+    pub fn insert_value(&mut self, value: T) { self.tree.insert(value); }
+    pub fn contains_value(&self, value: &T) -> B { if self.values_in_order().binary_search(value).is_ok() { B::True } else { B::False } }
+    pub fn delete_value(&mut self, value: &T) -> bool { let before = self.values_in_order().len() as N; self.tree.delete(*value); let after = self.values_in_order().len() as N; after < before }
+    pub fn is_tree_empty(&self) -> B { if self.values_in_order().is_empty() { B::True } else { B::False } }
+    pub fn values_in_order(&self) -> Vec<T> { let mut v: Vec<T> = Vec::new(); if let Some(root) = self.tree.get_root() { self.tree.in_order_traverse(root, &mut v); } v }
+}
+
+

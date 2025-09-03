@@ -12,28 +12,28 @@ use std::sync::Mutex;
 
 /// Algorithms from APAS Chapter 19 as associated functions for DoublyLinkedListS.
 pub trait DoublyLinkedListSeqChap19 {
-    /// APAS 20.7 (tabulate f n): Work Θ(1 + Σ i W(f(i))), Span Θ(1 + Σ i S(f(i))).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ i W(f(i))), Span Θ(1 + Σ i S(f(i))).
     fn tabulate<T>(f: impl Fn(N) -> T, n: N) -> DoublyLinkedListS<T>;
-    /// APAS 20.7 (map f a): Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + Σ x∈a S(f(x))).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + Σ x∈a S(f(x))).
     fn map<T, U>(a: &DoublyLinkedListS<T>, f: impl Fn(&T) -> U) -> DoublyLinkedListS<U>;
-    /// APAS 20.7 (select): arrays Θ(1); lists require traversal Θ(1+i).
+    /// ChatGPT-5-hard: Work Θ(1 + i), Span Θ(1 + i) (list traversal).
     fn select<'a, T>(a: &'a DoublyLinkedListS<T>, b: &'a DoublyLinkedListS<T>, i: N) -> Option<&'a T>;
-    /// APAS 20.7 (append a b): Work Θ(1 + |a|), Span Θ(1 + |a|).
+    /// ChatGPT-5-hard: Work Θ(1 + |a|), Span Θ(1 + |a|).
     fn append<T: Clone + Eq>(a: &DoublyLinkedListS<T>, b: &DoublyLinkedListS<T>) -> DoublyLinkedListS<T>;
     /// Variant with weaker bound on T.
     fn append2<T: Clone>(a: &DoublyLinkedListS<T>, b: &DoublyLinkedListS<T>) -> DoublyLinkedListS<T>;
-    /// APAS 20.7 (deflate): Work/Span Θ(1).
+    /// ChatGPT-5-hard: Work/Span Θ(1).
     fn deflate<T: Clone>(f: impl Fn(&T) -> B, x: &T) -> DoublyLinkedListS<T>;
-    /// APAS 20.7 (filter f a): Work Θ(1 + Σ x W(f(x))), Span Θ(1 + Σ x S(f(x))).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ x W(f(x))), Span Θ(1 + Σ x S(f(x))).
     fn filter<T: Clone + Eq>(a: &DoublyLinkedListS<T>, f: impl Fn(&T) -> B) -> DoublyLinkedListS<T>;
-    /// APAS 20.7 (iterate): Work/Span sums over trace T(−).
+    /// ChatGPT-5-hard: Work/Span sums over trace T(−).
     fn iterate<T: Clone + Eq, A: Clone>(a: &DoublyLinkedListS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
-    /// APAS 20.7 (reduce/scan): linear work/span under list traversal assumptions.
+    /// ChatGPT-5-hard: linear work/span under list traversal assumptions.
     fn reduce<T: Clone + Eq, F>(a: &DoublyLinkedListS<T>, f: &F, id: T) -> T where F: Fn(&T, &T) -> T;
     fn scan<T: Clone + Eq, F>(a: &DoublyLinkedListS<T>, f: &F, id: T) -> (DoublyLinkedListS<T>, T) where F: Fn(&T, &T) -> T;
-    /// APAS 20.7 (flatten): Work Θ(1 + |a| + Σ x |x|), Span Θ(1 + |a| + Σ x |x|).
+    /// ChatGPT-5-hard: Work Θ(1 + |a| + Σ x |x|), Span Θ(1 + |a| + Σ x |x|).
     fn flatten<T: Clone + Eq>(s: &DoublyLinkedListS<DoublyLinkedListS<T>>) -> DoublyLinkedListS<T>;
-    /// APAS 20.7 (inject/ninject): Work Θ(1 + |a| + |b|), Span Θ(1 + |a| + |b|).
+    /// ChatGPT-5-hard: Work Θ(1 + |a| + |b|), Span Θ(1 + |a| + |b|).
     fn inject<T: Clone + Eq>(values: &DoublyLinkedListS<T>, changes: &DoublyLinkedListS<(N, T)>) -> DoublyLinkedListS<T>;
     fn atomicWrite<T: Clone + Eq>(values_with_change_number: &mut DoublyLinkedListS<(T, N)>, changes: &DoublyLinkedListS<(N, T)>, change_index: N);
     fn inject_parallel2<T: Clone + Eq + Send + Sync>(values: &DoublyLinkedListS<T>, changes: &DoublyLinkedListS<(N, T)>) -> DoublyLinkedListS<T>;

@@ -21,69 +21,73 @@ use std::sync::Mutex;
 pub trait ArraySeqChap19 {
     // Base utilities used by chapter 19
     /// Tabulate: build sequence of length `n` with i-th element `f(i)`. <br/>
-    /// Work: Θ(n + Σ i=0..n-1 W(f(i))), Span: Θ(1 + max i=0..n-1 S(f(i))).
+    /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i))).
     fn tabulate<T>(f: impl Fn(N) -> T, n: N) -> ArrayS<T>;
 
     // 19.1–19.7
     /// Map: apply `f` to each element. <br/>
-    /// Work: Θ(|a| + Σ x∈a W(f(x))), Span: Θ(1 + max x∈a S(f(x))).
+    /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x))).
     fn map<T, U>(a: &ArrayS<T>, f: impl Fn(&T) -> U) -> ArrayS<U>;
     /// Select: return reference to i-th element of `a ++ b` if exists. <br/>
-    /// Work Θ(1), Span Θ(1).
+    /// APAS: Work Θ(1), Span Θ(1).
     fn select<'a, T>(a: &'a ArrayS<T>, b: &'a ArrayS<T>, i: N) -> Option<&'a T>;
     /// Append: concatenate `a` and `b`. <br/>
-    /// Work Θ(|a|+|b|), Span Θ(1).
+    /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1).
     fn append<T: Clone + Eq>(a: &ArrayS<T>, b: &ArrayS<T>) -> ArrayS<T>;
     /// Append2: same as append, different bound on `T`. <br/>
-    /// Work Θ(|a|+|b|), Span Θ(1).
+    /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1).
     fn append2<T: Clone>(a: &ArrayS<T>, b: &ArrayS<T>) -> ArrayS<T>;
     /// Deflate: keep `x` if predicate true, else empty. <br/>
-    /// Work Θ(1), Span Θ(1).
+    /// APAS: Work Θ(1), Span Θ(1).
     fn deflate<T: Clone>(f: impl Fn(&T) -> B, x: &T) -> ArrayS<T>;
     /// Filter: keep elements where `f(x)` is True. <br/>
-    /// Work: Θ(|a| + Σ i=0..|a|-1 W(f(a[i]))), Span: Θ(1 + max i=0..|a|-1 S(f(a[i]))).
+    /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(1 + max i=0..|a|-1 S(f(a[i]))).
     fn filter<T: Clone + Eq>(a: &ArrayS<T>, f: impl Fn(&T) -> B) -> ArrayS<T>;
  
     // 19.8–19.10 and others
     /// Iterate (left fold): sequential accumulation with `f`. <br/>
-    /// Expected: Work Θ(|a| + Σ i=0..|a|-1 W(f)), Span Θ(|a| + max S(f)). <br/>
-    /// BUG: not right performance — recursion uses subseq that copies, yielding Θ(|a|^2) work.
+    /// APAS: Work Θ(1 + Σ (y,z)∈T(−) W(f(y, z))), Span Θ(1 + Σ (y,z)∈T(−) S(f(y, z))).
+    /// ChatGPT-5-hard: Work Θ(|a|^2) due to copying subseqs, Span Θ(|a| + max S(f)).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn iterate<T: Clone + Eq, A: Clone>(a: &ArrayS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
     /// Reduce (associative `f`, identity `id`): divide-and-conquer. <br/>
-    /// Expected: Work Θ(|a|), Span Θ(lg|a|). <br/>
-    /// BUG: not right performance — building subproblems via copying subseq causes Θ(|a| lg|a|) work.
+    /// APAS: Work Θ(|a|), Span Θ(lg|a|).
+    /// ChatGPT-5-hard: Work Θ(|a| lg|a|) due to copying views, Span Θ(lg|a|).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn reduce<T: Clone + Eq, F>(a: &ArrayS<T>, f: &F, id: T) -> T where F: Fn(&T, &T) -> T;
     /// Scan: parallel prefix. <br/>
-    /// Work Θ(|a|), Span Θ(lg|a|) under standard assumptions (nth/length O(1)).
+    /// APAS: Work Θ(|a|), Span Θ(lg|a|).
     fn scan<T: Clone + Eq, F>(a: &ArrayS<T>, f: &F, id: T) -> (ArrayS<T>, T) where F: Fn(&T, &T) -> T;
     /// Flatten: concatenate all inner sequences. <br/>
-    /// Work: Θ(Σ x∈s |x|), Span: Θ(1).
+    /// APAS: Work Θ(1 + |a| + Σ x∈a |x|), Span Θ(1 + lg|a|).
     fn flatten<T: Clone + Eq>(s: &ArrayS<ArrayS<T>>) -> ArrayS<T>;
 
     // 19.16/19.17 parallel injection helpers
     /// Inject (first-wins): apply updates into values. <br/>
-    /// Work Θ(|values|+|changes|). Span Θ(|changes|) in this sequential impl; see parallel variant below.
+    /// APAS: Work Θ(1 + |a| + |b|), Span Θ(lg(degree(b))).
+    /// ChatGPT-5-hard: Work Θ(1 + |a| + |b|), Span Θ(1).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn inject<T: Clone + Eq>(values: &ArrayS<T>, changes: &ArrayS<(N, T)>) -> ArrayS<T>;
     /// Atomic write primitive for parallel injection. <br/>
-    /// Work Θ(1), Span Θ(1).
+    /// APAS: Work Θ(1), Span Θ(1).
     fn atomicWrite<T: Clone + Eq>(
         values_with_change_number: &mut ArrayS<(T, N)>,
         changes: &ArrayS<(N, T)>,
         change_index: N,
     );
     /// Parallel inject (lowest change number wins): <br/>
-    /// Work Θ(|values|+|changes|), Span Θ(1) in PRAM model (ignoring thread scheduling overhead).
+    /// APAS: Work Θ(|values|+|changes|), Span Θ(1) in PRAM model.
     fn inject_parallel2<T: Clone + Eq + Send + Sync>(values: &ArrayS<T>, changes: &ArrayS<(N, T)>) -> ArrayS<T>;
-    /// Atomic write (lowest wins): constant work/span per update under idealized model.
+    /// Atomic write (lowest wins): APAS Θ(1) work/span per update under idealized model.
     fn AtomicWriteLowestChangeNumberWins<T: Clone + Eq + Send>(
         values_with_change_number: &ArrayS<Mutex<(T, N)>>,
         changes: &ArrayS<(N, T)>,
         change_index: N,
     );
     /// Parallel ninject (highest change number wins): <br/>
-    /// Work Θ(|values|+|changes|), Span Θ(1) in PRAM model.
+    /// APAS: Work Θ(|values|+|changes|), Span Θ(1) in PRAM model.
     fn ninject_parallel2<T: Clone + Eq + Send + Sync>(values: &ArrayS<T>, changes: &ArrayS<(N, T)>) -> ArrayS<T>;
-    /// Atomic write (highest wins): constant work/span per update under idealized model.
+    /// Atomic write (highest wins): APAS Θ(1) work/span per update under idealized model.
     fn AtomicWriteHighestChangeNumberWins<T: Clone + Eq + Send>(
         values_with_change_number: &ArrayS<Mutex<(T, N)>>,
         changes: &ArrayS<(N, T)>,
@@ -92,6 +96,7 @@ pub trait ArraySeqChap19 {
 }
 
 impl<T2> ArraySeqChap19 for ArrayS<T2> {
+    /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i))).
     fn tabulate<T>(f: impl Fn(N) -> T, n: N) -> ArrayS<T> {
         ArrayS {
             data: (0..n)
@@ -101,9 +106,11 @@ impl<T2> ArraySeqChap19 for ArrayS<T2> {
         }
     }
 
+    /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x))).
     fn map<T, U>(a: &ArrayS<T>, f: impl Fn(&T) -> U) -> ArrayS<U> {
         <ArrayS<U> as ArraySeqChap19>::tabulate(|index| f(a.nth(index)), a.length())
     }
+    /// APAS: Work Θ(1), Span Θ(1).
     fn select<'a, T>(a: &'a ArrayS<T>, b: &'a ArrayS<T>, index: N) -> Option<&'a T> {
         if index < a.length() {
             Some(a.nth(index))
@@ -112,22 +119,26 @@ impl<T2> ArraySeqChap19 for ArrayS<T2> {
             if offset < b.length() { Some(b.nth(offset)) } else { None }
         }
     }
+    /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1).
     fn append<T: Clone + Eq>(a: &ArrayS<T>, b: &ArrayS<T>) -> ArrayS<T> {
         <ArrayS<T> as ArraySeqChap19>::tabulate(
             |index| Self::select(a, b, index).unwrap().clone(),
             a.length() + b.length(),
         )
     }
+    /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1).
     fn append2<T: Clone>(a: &ArrayS<T>, b: &ArrayS<T>) -> ArrayS<T> {
         <ArrayS<T> as ArraySeqChap19>::tabulate(
             |index| Self::select(a, b, index).unwrap().clone(),
             a.length() + b.length(),
         )
     }
+    /// APAS: Work Θ(1), Span Θ(1).
     fn deflate<T: Clone>(f: impl Fn(&T) -> B, x: &T) -> ArrayS<T> {
         let keep = f(x) == B::True;
         <ArrayS<T> as ArraySeqChap18>::tabulate(|_| x.clone(), if keep { 1 } else { 0 })
     }
+    /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(1 + max i=0..|a|-1 S(f(a[i]))).
     fn filter<T: Clone + Eq>(a: &ArrayS<T>, f: impl Fn(&T) -> B) -> ArrayS<T> {
         let mapped: ArrayS<ArrayS<T>> = <ArrayS<ArrayS<T>> as ArraySeqChap19>::tabulate(
             |index| Self::deflate(|elt| f(elt), a.nth(index)),
@@ -136,6 +147,9 @@ impl<T2> ArraySeqChap19 for ArrayS<T2> {
         <ArrayS<T> as ArraySeqChap18>::flatten(&mapped)
     }
 
+    /// APAS: Work Θ(1 + Σ (y,z)∈T(−) W(f(y, z))), Span Θ(1 + Σ (y,z)∈T(−) S(f(y, z))).
+    /// ChatGPT-5-hard: Work Θ(|a|^2), Span Θ(|a| + max S(f)).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn iterate<T: Clone + Eq, A: Clone>(a: &ArrayS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
         let input_length = a.length();
         if input_length == 0 {
@@ -154,6 +168,9 @@ impl<T2> ArraySeqChap19 for ArrayS<T2> {
             )
         }
     }
+    /// APAS: Work Θ(|a|), Span Θ(lg|a|).
+    /// ChatGPT-5-hard: Work Θ(|a| lg|a|), Span Θ(lg|a|).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn reduce<T: Clone + Eq, F>(a: &ArrayS<T>, f: &F, id: T) -> T where F: Fn(&T, &T) -> T {
         let input_length = a.length();
         if input_length == 0 {
@@ -180,6 +197,7 @@ impl<T2> ArraySeqChap19 for ArrayS<T2> {
             f(&left_result, &right_result)
         }
     }
+    /// APAS: Work Θ(|a|), Span Θ(lg|a|).
     fn scan<T: Clone + Eq, F>(a: &ArrayS<T>, f: &F, id: T) -> (ArrayS<T>, T) where F: Fn(&T, &T) -> T {
         let input_length = a.length();
         if input_length == 0 { (<ArrayS<T> as ArraySeqChap19>::tabulate(|_| id.clone(), 0), id) }
@@ -221,7 +239,9 @@ impl<T2> ArraySeqChap19 for ArrayS<T2> {
     }
     fn flatten<T: Clone + Eq>(s: &ArrayS<ArrayS<T>>) -> ArrayS<T> { <ArrayS<T> as ArraySeqChap18>::flatten(s) }
 
-    // BUG: perf mismatch with APAS text; book uses degree, which is odd here.
+    /// APAS: Work Θ(1 + |a| + |b|), Span Θ(lg(degree(b))).
+    /// ChatGPT-5-hard: Work Θ(1 + |a| + |b|), Span Θ(1).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn inject<T: Clone + Eq>(values: &ArrayS<T>, changes: &ArrayS<(N, T)>) -> ArrayS<T> {
         let sequence_length = values.length();
         let mut values_with_change_number: ArrayS<(T, N)> = <ArrayS<(T, N)> as ArraySeqChap19>::tabulate(
@@ -249,7 +269,7 @@ impl<T2> ArraySeqChap19 for ArrayS<T2> {
             }
         }
     }
-    // BUG: perf mismatch with APAS text; book uses degree, which is odd here.
+    /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1) PRAM.
     fn inject_parallel2<T: Clone + Eq + Send + Sync>(values: &ArrayS<T>, changes: &ArrayS<(N, T)>) -> ArrayS<T> {
         let sequence_length = values.length();
         let values_with_change_number: ArrayS<Mutex<(T, N)>> = <ArrayS<Mutex<(T, N)>> as ArraySeqChap19>::tabulate(
@@ -287,7 +307,7 @@ impl<T2> ArraySeqChap19 for ArrayS<T2> {
             *current_change_number = change_index;
         }
     }
-    // BUG: perf mismatch with APAS text; book uses degree, which is odd here.
+    /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1) PRAM.
     fn ninject_parallel2<T: Clone + Eq + Send + Sync>(values: &ArrayS<T>, changes: &ArrayS<(N, T)>) -> ArrayS<T> {
         let sequence_length = values.length();
         let values_with_change_number: ArrayS<Mutex<(T, N)>> = <ArrayS<Mutex<(T, N)>> as ArraySeqChap19>::tabulate(

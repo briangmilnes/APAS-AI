@@ -11,58 +11,55 @@ use crate::ArraySeq::{ArrayS, ArraySeq};
 /// Algorithms from APAS Chapter 18 built from Array Sequences.
 pub trait ArraySeqChap18 {
     /// Definition 18.1 (tabulate). Build a sequence of length `n` where the i-th element is `f(i)`. <br/>
-    /// Work: Θ(n + Σ_{i=0}^{n-1} W(f(i))), Span: Θ(1 + max_{0≤i<n} S(f(i))).
+    /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i))).
     fn tabulate<T>(f: impl Fn(N) -> T, n: N) -> ArrayS<T>;
 
     /// Definition 18.1 (map). Apply `f` to each element, returning a new sequence of results. <br/>
-    /// Work: Θ(|a| + Σ_{x∈a} W(f(x))), Span: Θ(1 + max_{x∈a} S(f(x))).
+    /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x))).
     fn map<T, U: Clone>(a: &ArrayS<T>, f: impl Fn(&T) -> U) -> ArrayS<U>;
 
     /// Definition 18.1 (append). Concatenate `a` and `b` preserving order. <br/>
-    /// Work: Θ(|a|+|b|), Span: Θ(1).
+    /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1).
     fn append<T: Clone + Eq>(a: &ArrayS<T>, b: &ArrayS<T>) -> ArrayS<T>;
 
     /// Definition 18.1 (filter). Keep elements `x` for which `pred(x)` returns `True`. <br/>
-    /// Work: Θ(|a| + Σ i=0..|a|-1 W(pred(a[i]))), Span: Θ(lg|a| + max i=0..|a|-1 S(pred(a[i]))).
-    /// Work Θ(|a| + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(lg|a| + max i=0..|a|-1 S(f(a[i]))).
+    /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(pred(a[i]))), Span Θ(lg|a| + max i=0..|a|-1 S(pred(a[i]))).
     fn filter<T: Clone + Eq>(a: &ArrayS<T>, pred: impl Fn(&T) -> B) -> ArrayS<T>;
 
     /// Update `self[index]` to `item` in place if in bounds, and return `self` for chaining. <br/>
-    /// Work: Θ(1 + |a|), Span: Θ(1).
+    /// APAS: Work Θ(1 + |a|), Span Θ(1).
     fn update<T: Clone + Eq>(a: &mut ArrayS<T>, item_at: (N, T)) -> &mut ArrayS<T>;
 
     /// Definition 18.1 (inject). Apply all updates, keeping the first update to any index. <br/>
-    /// Work: Θ(|a|+|updates|), Span: Θ(1).
+    /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(lg(degree(updates))).
     fn inject<T: Clone + Eq>(a: &ArrayS<T>, updates: &ArrayS<(N, T)>) -> ArrayS<T>;
 
     /// Definition 18.1 (ninject). Apply all updates, last write per index wins. <br/>
-    /// Work: Θ(|a|+|updates|), Span: Θ(1).
+    /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(1).
     fn ninject<T: Clone + Eq>(a: &ArrayS<T>, updates: &ArrayS<(N, T)>) -> ArrayS<T>;
 
     /// Left-to-right fold using `f`, starting from seed `x`. <br/>
-    /// Work: Θ(|a| + Σ i=0..|a|-1 W(f)), Span: Θ(|a| + max S(f)).
+    /// APAS: Work Θ(1 + Σ (y,z)∈T(−) W(f(y, z))), Span Θ(1 + Σ (y,z)∈T(−) S(f(y, z))).
     fn iterate<T: Clone + Eq, A: Clone>(a: &ArrayS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
 
     /// Produce the sequence of prefix accumulations and the final value using `f`. <br/>
-    /// Work: Θ(|a|), Span: Θ(|a|).
+    /// APAS: Work Θ(|a|), Span Θ(|a|).
     fn iteratePrefixes<T: Clone + Eq, A: Clone>(a: &ArrayS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArrayS<A>, A);
 
     /// Divide-and-conquer reduction using associative `f` with identity `id`. <br/>
-    /// Work: Θ(|a|), Span: Θ(lg|a|). <br/>
-    /// Work Θ(Σ W(f(y, z))), Span Θ(lg|a| · max S(f(y, z))).
+    /// APAS: Work Θ(1 + Σ (y,z)∈T(−) W(f(y, z))), Span Θ(lg|a| · max (y,z)∈T(−) S(f(y, z))).
     fn reduce<T: Clone + Eq>(a: &ArrayS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
 
     /// Sequential scan producing all prefixes under `f` together with the total. <br/>
-    /// Work: Θ(|a|·lg|a|), Span: Θ(lg|a|).
+    /// APAS: Work Θ(|a|), Span Θ(lg|a|).
     fn scan<T: Clone + Eq>(a: &ArrayS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayS<T>, T);
 
     /// Flatten one level of nested sequences by concatenating all inner sequences. <br/>
-    /// Work: Θ(∑_{x∈ss} |x|), Span: Θ(1).
+    /// APAS: Work Θ(1 + |a| + Σ x∈a |x|), Span Θ(1 + lg|a|).
     fn flatten<T: Clone + Eq>(ss: &ArrayS<ArrayS<T>>) -> ArrayS<T>;
 
     /// Group pairs by key according to `cmp`, collecting values into sequences per key. <br/>
-    /// Work: Θ(|a|^2), Span: Θ(|a|^2). <br/>
-    /// Work Θ(|a| · W(f) · lg|a|), Span Θ(S(f) · lg^2|a|).
+    /// APAS: Work Θ(1 + W(f) · |a| lg|a|), Span Θ(1 + S(f) · lg^2|a|).
     fn collect<A: Clone + Eq, Bv: Clone + Eq>(
         a: &ArrayS<(A, Bv)>,
         cmp: impl Fn(&A, &A) -> O,
@@ -70,12 +67,16 @@ pub trait ArraySeqChap18 {
 }
 
 impl<T2> ArraySeqChap18 for ArrayS<T2> {
-    /// Work: Θ(n + Σ_{i=0}^{n-1} W(f(i))), Span: Θ(1 + max_{0≤i<n} S(f(i))).
+    /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i))).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + Σ i=0..n-1 S(f(i))).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn tabulate<T>(f: impl Fn(N) -> T, n: N) -> ArrayS<T> {
         ArrayS { data: (0..n).map(|i| f(i)).collect::<Vec<T>>().into_boxed_slice() }
     }
 
-    /// Work: Θ(|a| + Σ_{x∈a} W(f(x))), Span: Θ(1 + max_{x∈a} S(f(x))).
+    /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x))).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + Σ x∈a S(f(x))).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn map<T, U: Clone>(a: &ArrayS<T>, f: impl Fn(&T) -> U) -> ArrayS<U> {
         let input_length = a.length();
         if input_length == 0 { return <ArrayS<U> as ArraySeq<U>>::empty(); }
@@ -86,7 +87,9 @@ impl<T2> ArraySeqChap18 for ArrayS<T2> {
         result_seq
     }
 
-    /// Work: Θ(|a|+|b|), Span: Θ(1).
+    /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1).
+    /// ChatGPT-5-hard: Work Θ(1 + |a| + |b|), Span Θ(1 + |a| + |b|).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn append<T: Clone + Eq>(a: &ArrayS<T>, b: &ArrayS<T>) -> ArrayS<T> {
         let left_length = a.length();
         let right_length = b.length();
@@ -104,7 +107,9 @@ impl<T2> ArraySeqChap18 for ArrayS<T2> {
         result_seq
     }
 
-    /// Work: Θ(|a| + Σ W(pred(x))), Span: Θ(lg|a| + max S(pred(x))).
+    /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(pred(a[i]))), Span Θ(lg|a| + max i=0..|a|-1 S(pred(a[i]))).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ i=0..|a|-1 W(pred(a[i]))), Span Θ(1 + Σ i=0..|a|-1 S(pred(a[i]))).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn filter<T: Clone + Eq>(a: &ArrayS<T>, pred: impl Fn(&T) -> B) -> ArrayS<T> {
         let input_length = a.length();
         if input_length == 0 { return <ArrayS<T> as ArraySeq<T>>::empty(); }
@@ -130,10 +135,14 @@ impl<T2> ArraySeqChap18 for ArrayS<T2> {
         result_seq
     }
 
-    /// Work: Θ(1), Span: Θ(1).
+    /// APAS: Work Θ(1 + |a|), Span Θ(1).
+    /// ChatGPT-5-hard: Work Θ(1), Span Θ(1).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn update<T: Clone + Eq>(a: &mut ArrayS<T>, (index, item): (N, T)) -> &mut ArrayS<T> { a.update((index, item)) }
 
-    /// Work: Θ(|a|+|updates|), Span: Θ(1).
+    /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(lg(degree(updates))).
+    /// ChatGPT-5-hard: Work Θ(1 + |a| + |updates|), Span Θ(1).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn inject<T: Clone + Eq>(a: &ArrayS<T>, updates: &ArrayS<(N, T)>) -> ArrayS<T> {
         let mut new_elts = a.data.clone();
         let mut seen_indices = std::collections::HashSet::new();
@@ -147,7 +156,7 @@ impl<T2> ArraySeqChap18 for ArrayS<T2> {
         ArrayS { data: new_elts }
     }
 
-    /// Work: Θ(|a|+|updates|), Span: Θ(1).
+    /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(1).
     fn ninject<T: Clone + Eq>(a: &ArrayS<T>, updates: &ArrayS<(N, T)>) -> ArrayS<T> {
         let mut new_elts = a.data.clone();
         for update_iter in 0..updates.length() {
@@ -157,14 +166,14 @@ impl<T2> ArraySeqChap18 for ArrayS<T2> {
         ArrayS { data: new_elts }
     }
 
-    /// Work: Θ(|a| + Σ W(f)), Span: Θ(|a| + max S(f)).
+    /// APAS: Work Θ(1 + Σ (y,z)∈T(−) W(f(y, z))), Span Θ(1 + Σ (y,z)∈T(−) S(f(y, z))).
     fn iterate<T: Clone + Eq, A: Clone>(a: &ArrayS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
         let mut accumulator = x;
         for index in 0..a.length() { accumulator = f(&accumulator, a.nth(index)); }
         accumulator
     }
 
-    /// Work: Θ(|a|), Span: Θ(|a|).
+    /// APAS: Work Θ(|a|), Span Θ(|a|).
     fn iteratePrefixes<T: Clone + Eq, A: Clone>(a: &ArrayS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArrayS<A>, A) {
         let input_length = a.length();
         let mut prefix_value = x;
@@ -177,7 +186,9 @@ impl<T2> ArraySeqChap18 for ArrayS<T2> {
         (prefix_values, prefix_value)
     }
 
-    /// BUG: VEC — Work Θ(Σ (y,z)∈T(−) W(f(y, z))), Span Θ(lg|a| · max (y,z)∈T(−) S(f(y, z))).
+    /// APAS: Work Θ(1 + Σ (y,z)∈T(−) W(f(y, z))), Span Θ(lg|a| · max (y,z)∈T(−) S(f(y, z))).
+    /// ChatGPT-5-hard: Work Θ(Σ (y,z)∈T(−) W(f(y, z))), Span Θ(lg|a| · max (y,z)∈T(−) S(f(y, z))).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn reduce<T: Clone + Eq>(a: &ArrayS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
         fn reduce_slice<T: Clone + Eq>(s: &[T], f: &impl Fn(&T, &T) -> T, id: T) -> T {
             let n = s.len();
@@ -191,7 +202,9 @@ impl<T2> ArraySeqChap18 for ArrayS<T2> {
         reduce_slice(&a.data[..], f, id)
     }
 
-    /// Work: Θ(|a|·lg|a|), Span: Θ(lg|a|).
+    /// APAS: Work Θ(|a|), Span Θ(lg|a|).
+    /// ChatGPT-5-hard: Work Θ(|a| lg|a|), Span Θ(lg|a|).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn scan<T: Clone + Eq>(a: &ArrayS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayS<T>, T) {
         fn reduce_slice<T: Clone + Eq>(s: &[T], f: &impl Fn(&T, &T) -> T, id: T) -> T {
             let n = s.len();
@@ -216,7 +229,9 @@ impl<T2> ArraySeqChap18 for ArrayS<T2> {
         (prefix_values, total_result)
     }
 
-    /// Work: Θ(∑_{x∈ss} |x|), Span: Θ(1).
+    /// APAS: Work Θ(1 + |a| + Σ x∈a |x|), Span Θ(1 + lg|a|).
+    /// ChatGPT-5-hard: Work Θ(1 + |a| + Σ x∈a |x|), Span Θ(1 + |a| + Σ x∈a |x|).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn flatten<T: Clone + Eq>(ss: &ArrayS<ArrayS<T>>) -> ArrayS<T> {
         let outer_length = ss.length();
         let mut total_length: N = 0;
@@ -241,7 +256,9 @@ impl<T2> ArraySeqChap18 for ArrayS<T2> {
         result_seq
     }
 
-    /// BUG: VEC — Work Θ(|a| · W(f) · lg|a|), Span Θ(S(f) · lg^2|a|).
+    /// APAS: Work Θ(1 + W(f) · |a| lg|a|), Span Θ(1 + S(f) · lg^2|a|).
+    /// ChatGPT-5-hard: Work Θ(|a| · W(f) · lg|a|), Span Θ(S(f) · lg^2|a|).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn collect<A: Clone + Eq, Bv: Clone + Eq>(
         a: &ArrayS<(A, Bv)>,
         cmp: impl Fn(&A, &A) -> O,

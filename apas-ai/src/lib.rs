@@ -15,6 +15,8 @@ pub mod DoublyLinkedListSeqChap19;
 pub mod SinglyLinkedListSeq;
 pub mod SinglyLinkedListSeqChap18;
 pub mod SinglyLinkedListSeqChap19;
+pub mod SinglyLinkedList;
+pub mod SharedSinglyLinkedList;
 pub mod AVLTreeSeq;
 pub mod AVLTreeSeqChap18;
 pub mod AVLTreeSeqChap19;
@@ -25,6 +27,9 @@ pub use crate::MathSeq::MathS;
 pub use crate::ArraySeq::ArrayS;
 pub use crate::DoublyLinkedListSeq::DoublyLinkedListS;
 pub use crate::SinglyLinkedListSeq::SinglyLinkedListS;
+pub use crate::SinglyLinkedList::SinglyLinkedList as SLList;
+pub use crate::SharedSinglyLinkedList::SharedSinglyLinkedList as SharedSLList;
+pub use crate::SharedSinglyLinkedList::SharedSList;
 //
 // Provide stable re-export naming for tree-backed sequence
 pub use crate::AVLTreeSeq::AVLTreeS; // canonical name

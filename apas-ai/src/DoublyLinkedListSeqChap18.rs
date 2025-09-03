@@ -11,55 +11,55 @@ use crate::DoublyLinkedListSeq::{DoublyLinkedListS, DoublyLinkedListSeq};
 /// Algorithms from APAS Chapter 18 built from Linked-List Sequences.
 pub trait DoublyLinkedListSeqChap18 {
     /// Definition 18.1 (tabulate). Build a sequence of length `n` where the i-th element is `f(i)`. <br/>
-    /// Derived (DLL): Work Θ(1 + Σ i W(f(i))), Span Θ(1 + Σ i S(f(i))).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ i W(f(i))), Span Θ(1 + Σ i S(f(i))).
     fn tabulate<T>(f: impl Fn(N) -> T, n: N) -> DoublyLinkedListS<T>;
 
     /// Definition 18.1 (map). Apply `f` to each element, returning a new sequence of results. <br/>
-    /// Derived (DLL): Work Θ(1 + Σ x W(f(x))), Span Θ(1 + Σ x S(f(x))).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ x W(f(x))), Span Θ(1 + Σ x S(f(x))).
     fn map<T, U: Clone>(a: &DoublyLinkedListS<T>, f: impl Fn(&T) -> U) -> DoublyLinkedListS<U>;
 
     /// Definition 18.1 (append). Concatenate `a` and `b` preserving order. <br/>
-    /// Derived (DLL): Work Θ(1 + |a|), Span Θ(1 + |a|).
+    /// ChatGPT-5-hard: Work Θ(1 + |a|), Span Θ(1 + |a|).
     fn append<T: Clone + Eq>(a: &DoublyLinkedListS<T>, b: &DoublyLinkedListS<T>) -> DoublyLinkedListS<T>;
 
     /// Definition 18.1 (filter). Keep elements `x` for which `pred(x)` returns `True`. <br/>
-    /// Derived (DLL): Work Θ(1 + Σ x W(pred(x))), Span Θ(1 + Σ x S(pred(x))).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ x W(pred(x))), Span Θ(1 + Σ x S(pred(x))).
     fn filter<T: Clone + Eq>(a: &DoublyLinkedListS<T>, pred: impl Fn(&T) -> B) -> DoublyLinkedListS<T>;
 
     /// Update `self[index]` to `item` in place if in bounds, and return `self` for chaining. <br/>
-    /// Derived (DLL): Work/Span Θ(i).
+    /// ChatGPT-5-hard: Work/Span Θ(i).
     fn update<T: Clone + Eq>(a: &mut DoublyLinkedListS<T>, item_at: (N, T)) -> &mut DoublyLinkedListS<T>;
 
     /// Definition 18.1 (inject). Apply all updates, keeping the first update to any index. <br/>
-    /// Derived (DLL): Work Θ(1 + |a| + |updates|), Span Θ(1 + |a| + |updates|).
+    /// ChatGPT-5-hard: Work Θ(1 + |a| + |updates|), Span Θ(1 + |a| + |updates|).
     fn inject<T: Clone + Eq>(a: &DoublyLinkedListS<T>, updates: &DoublyLinkedListS<(N, T)>) -> DoublyLinkedListS<T>;
 
     /// Definition 18.1 (ninject). Apply all updates, last write per index wins. <br/>
-    /// Derived (DLL): Work Θ(1 + |a| + |updates|), Span Θ(1 + |a| + |updates|).
+    /// ChatGPT-5-hard: Work Θ(1 + |a| + |updates|), Span Θ(1 + |a| + |updates|).
     fn ninject<T: Clone + Eq>(a: &DoublyLinkedListS<T>, updates: &DoublyLinkedListS<(N, T)>) -> DoublyLinkedListS<T>;
 
     /// Left-to-right fold using `f`, starting from seed `x`. <br/>
-    /// Derived (DLL): Work Θ(1 + Σ f-works), Span Θ(1 + Σ f-spans).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ f-works), Span Θ(1 + Σ f-spans).
     fn iterate<T: Clone + Eq, A: Clone>(a: &DoublyLinkedListS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
 
     /// Produce the sequence of prefix accumulations and the final value using `f`. <br/>
-    /// Derived (DLL): Work Θ(|a|), Span Θ(|a|).
+    /// ChatGPT-5-hard: Work Θ(|a|), Span Θ(|a|).
     fn iteratePrefixes<T: Clone + Eq, A: Clone>(a: &DoublyLinkedListS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (DoublyLinkedListS<A>, A);
 
     /// Divide-and-conquer reduction using associative `f` with identity `id`. <br/>
-    /// Derived (DLL): Work Θ(|a|), Span Θ(|a|).
+    /// ChatGPT-5-hard: Work Θ(|a|), Span Θ(|a|).
     fn reduce<T: Clone + Eq>(a: &DoublyLinkedListS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
 
     /// Sequential scan producing all prefixes under `f` together with the total. <br/>
-    /// Derived (DLL): Work Θ(|a|), Span Θ(|a|) under constant-time `f`.
+    /// ChatGPT-5-hard: Work Θ(|a|), Span Θ(|a|) under constant-time `f`.
     fn scan<T: Clone + Eq>(a: &DoublyLinkedListS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (DoublyLinkedListS<T>, T);
 
     /// Flatten one level of nested sequences by concatenating all inner sequences. <br/>
-    /// Derived (DLL): Work Θ(1 + |a| + Σ x |x|), Span Θ(1 + |a| + Σ x |x|).
+    /// ChatGPT-5-hard: Work Θ(1 + |a| + Σ x |x|), Span Θ(1 + |a| + Σ x |x|).
     fn flatten<T: Clone + Eq>(ss: &DoublyLinkedListS<DoublyLinkedListS<T>>) -> DoublyLinkedListS<T>;
 
     /// Group pairs by key according to `cmp`, collecting values into sequences per key. <br/>
-    /// Derived (DLL): Work Θ(1 + W(cmp)·|a| lg|a|), Span Θ(1 + S(cmp)·|a| lg|a|).
+    /// ChatGPT-5-hard: Work Θ(1 + W(cmp)·|a| lg|a|), Span Θ(1 + S(cmp)·|a| lg|a|).
     fn collect<A: Clone + Eq, Bv: Clone + Eq>(a: &DoublyLinkedListS<(A, Bv)>, cmp: impl Fn(&A, &A) -> O) -> DoublyLinkedListS<(A, DoublyLinkedListS<Bv>)>;
 }
 

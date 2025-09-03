@@ -153,3 +153,19 @@ fn test_eq_vs_partial_eq_difference_avl3() {
                <AVLTree3<PartialComparable> as AVLTreeSeq<PartialComparable>>::nth(&n2, 0));
 }
 
+#[test]
+fn test_iterator() {
+    // Non 0..n order
+    let s = apas_ai::avltreeseq![3usize, 1, 4, 2];
+    let collected: Vec<usize> = s.iter().copied().collect();
+    assert_eq!(collected, vec![3, 1, 4, 2]);
+
+    // Empty
+    let e: apas_ai::AVLTreeSeq::AVLTreeS<usize> = apas_ai::avltreeseq![];
+    assert!(e.iter().copied().collect::<Vec<_>>().is_empty());
+
+    // Singleton
+    let one = apas_ai::avltreeseq![7usize];
+    assert_eq!(one.iter().copied().collect::<Vec<_>>(), vec![7]);
+}
+

@@ -19,8 +19,8 @@ fn test_insert_contains_delete() {
 fn test_iter_and_range() {
     let mut t: AVLTreeS<N> = <AVLTreeS<N> as AVLTreeSeq<N>>::empty();
     for i in 0..5 { t.insert_value(i); }
-    let vals = t.values_in_order();
-    assert_eq!(vals, vec![0, 1, 2, 3, 4]);
+    let arr = t.to_arrayseq();
+    assert_eq!(arr, apas_ai::arrayseq![0, 1, 2, 3, 4]);
 }
 
 

@@ -43,32 +43,37 @@ pub struct AVLTreeS<T: Copy + Debug> {
 }
 
 pub trait AVLTreeSeq<T: Copy + Debug> {
-    /// Construct an empty tree.  Work: Θ(1), Span: Θ(1).
+    /// Construct an empty tree.
+    /// APAS: Work Θ(1), Span Θ(1).
     fn empty() -> AVLTreeS<T>;
 
-    /// Construct an empty tree (alias).  Work: Θ(1), Span: Θ(1).
+    /// Construct an empty tree (alias).
+    /// APAS: Work Θ(1), Span Θ(1).
     fn new() -> AVLTreeS<T>;
 
-    /// Return number of elements.  Work: Θ(1), Span: Θ(1).
+    /// Return number of elements.
+    /// APAS: Work Θ(1), Span Θ(1).
     fn length(&self) -> N;
 
     /// Return a reference to the in-order `index`-th element. Panics if out of bounds.
-    /// Work: Θ(lg(n)), Span: Θ(lg(n)).
+    /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
     fn nth(&self, index: N) -> &T;
 
-    /// Set the in-order `index`-th element to `item`. <br/>
-    /// Work: Θ(lg(n)), Span: Θ(lg(n)).
+    /// Set the in-order `index`-th element to `item`.
+    /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
     fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeS<T>, &'static str>;
 
-    /// Construct a singleton sequence.  Work: Θ(1), Span: Θ(1).
+    /// Construct a singleton sequence.
+    /// APAS: Work Θ(1), Span Θ(1).
     fn singleton(item: T) -> AVLTreeS<T>;
 
-    /// Predicates.  Work: Θ(1), Span: Θ(1).
+    /// Predicates.
+    /// APAS: Work Θ(1), Span Θ(1).
     fn isEmpty(&self) -> B;
     fn isSingleton(&self) -> B;
 
-    /// Return subsequence [start, start+length) as a new tree. <br/>
-    /// Work: Θ(length * lg(n)), Span: Θ(lg(n)).
+    /// Return subsequence [start, start+length) as a new tree.
+    /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
     fn subseq_copy(&self, start: N, length: N) -> AVLTreeS<T>
     where
         T: Clone + Eq;
@@ -100,9 +105,17 @@ impl<T: Copy + Debug> AVLTreeS<T> {
     where
         T: Clone,
     {
-        let mut out: Vec<T> = Vec::with_capacity(self.length());
-        push_inorder(&self.root, &mut out);
-        ArrayS::from_vec(out)
+        let len = self.length();
+        if len == 0 { return <ArrayS<T> as ArraySeq<T>>::empty(); }
+        let mut it = self.iter();
+        let first = it.next().expect("length > 0 but iter was empty").clone();
+        let mut out = <ArrayS<T> as ArraySeq<T>>::new(len, first);
+        let mut index: N = 1;
+        for v in it {
+            let _ = out.set(index, v.clone());
+            index += 1;
+        }
+        out
     }
 
     pub fn iter<'a>(&'a self) -> AVLTreeSeqIter<'a, T> { AVLTreeSeqIter::new(&self.root) }
@@ -114,7 +127,6 @@ impl<T: Copy + Debug> AVLTreeS<T> {
     }
 
     // Convenience APIs kept for older tests (set-like operations over sequence storage)
-    // BUG: Work/Span differ from APAS tree set/map semantics; these are sequence-based.
     pub fn contains_value(&self, target: &T) -> B
     where
         T: PartialEq,
@@ -129,10 +141,17 @@ impl<T: Copy + Debug> AVLTreeS<T> {
     where
         T: Clone + PartialEq,
     {
-        let mut v = self.values_in_order();
-        if let Some(pos) = v.iter().position(|x| x == target) {
-            v.remove(pos);
-            *self = AVLTreeS::from_vec(v);
+        let len = self.length();
+        let mut found_index: Option<N> = None;
+        for i in 0..len {
+            if self.nth(i) == target { found_index = Some(i); break; }
+        }
+        if let Some(idx) = found_index {
+            // Rebuild without the element at idx, using ArraySeq preallocation
+            let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
+            for i in 0..idx { out_vec.push(self.nth(i).clone()); }
+            for i in (idx + 1)..len { out_vec.push(self.nth(i).clone()); }
+            *self = AVLTreeS::from_vec(out_vec);
             true
         } else {
             false
@@ -152,29 +171,38 @@ impl<T: Copy + Debug> AVLTreeS<T> {
 }
 
 impl<T: Copy + Debug> AVLTreeSeq<T> for AVLTreeS<T> {
+    /// APAS: Work Θ(1), Span Θ(1).
     fn empty() -> AVLTreeS<T> { AVLTreeS::new_root() }
 
+    /// APAS: Work Θ(1), Span Θ(1).
     fn new() -> AVLTreeS<T> { AVLTreeS::new_root() }
 
 
+    /// APAS: Work Θ(1), Span Θ(1).
     fn length(&self) -> N { size_link(&self.root) }
 
+    /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
     fn nth(&self, index: N) -> &T { nth_link(&self.root, index) }
 
+    /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
     fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeS<T>, &'static str> {
         set_link(&mut self.root, index, item)?;
         Ok(self)
     }
 
+    /// APAS: Work Θ(1), Span Θ(1).
     fn singleton(item: T) -> AVLTreeS<T> {
         let mut t = AVLTreeS::new_root();
         t.root = insert_at_link(t.root.take(), 0, item, &mut t.next_key);
         t
     }
 
+    /// APAS: Work Θ(1), Span Θ(1).
     fn isEmpty(&self) -> B { if self.length() == 0 { B::True } else { B::False } }
+    /// APAS: Work Θ(1), Span Θ(1).
     fn isSingleton(&self) -> B { if self.length() == 1 { B::True } else { B::False } }
 
+    /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
     fn subseq_copy(&self, start: N, length: N) -> AVLTreeS<T>
     where
         T: Clone + Eq,
@@ -203,6 +231,19 @@ impl<T: Debug + Copy> std::fmt::Debug for AVLTreeS<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let elts = (0..self.length()).map(|i| self.nth(i));
         f.debug_list().entries(elts).finish()
+    }
+}
+
+impl<T: std::fmt::Display + Copy + Debug> std::fmt::Display for AVLTreeS<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "[")?;
+        let mut first = true;
+        for v in self.iter() {
+            if !first { write!(f, ", ")?; }
+            first = false;
+            write!(f, "{}", v)?;
+        }
+        write!(f, "]")
     }
 }
 

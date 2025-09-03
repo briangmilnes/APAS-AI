@@ -12,27 +12,41 @@ use std::sync::Mutex;
 
 pub trait SinglyLinkedListSeqChap19 {
     /// APAS 20.7 (tabulate f n): Work Θ(1 + Σ i W(f(i))), Span Θ(1 + Σ i S(f(i))).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ i W(f(i))), Span Θ(1 + Σ i S(f(i))).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn tabulate<T>(f: impl Fn(N) -> T, n: N) -> SinglyLinkedListS<T>;
     /// APAS 20.7 (map f a): Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + Σ x∈a S(f(x))).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + Σ x∈a S(f(x))).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn map<T, U>(a: &SinglyLinkedListS<T>, f: impl Fn(&T) -> U) -> SinglyLinkedListS<U>;
     /// APAS 20.7 (select): for arrays Θ(1); for lists, Θ(1+i) by traversal.
+    /// ChatGPT-5-hard: Work Θ(1 + i), Span Θ(1 + i).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn select<'a, T>(a: &'a SinglyLinkedListS<T>, b: &'a SinglyLinkedListS<T>, i: N) -> Option<&'a T>;
     /// APAS 20.7 (append a b): Work Θ(1 + |a|), Span Θ(1 + |a|).
+    /// ChatGPT-5-hard: Work Θ(1 + |a|), Span Θ(1 + |a|).
+    /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn append<T: Clone + Eq>(a: &SinglyLinkedListS<T>, b: &SinglyLinkedListS<T>) -> SinglyLinkedListS<T>;
     /// Variant with weaker bound on T.
     fn append2<T: Clone>(a: &SinglyLinkedListS<T>, b: &SinglyLinkedListS<T>) -> SinglyLinkedListS<T>;
     /// APAS 20.7 (deflate): Work/Span Θ(1).
+    /// ChatGPT-5-hard: Work/Span Θ(1).
     fn deflate<T: Clone>(f: impl Fn(&T) -> B, x: &T) -> SinglyLinkedListS<T>;
     /// APAS 20.7 (filter f a): Work Θ(1 + Σ x W(f(x))), Span Θ(1 + Σ x S(f(x))).
+    /// ChatGPT-5-hard: Work Θ(1 + Σ x W(f(x))), Span Θ(1 + Σ x S(f(x))).
     fn filter<T: Clone + Eq>(a: &SinglyLinkedListS<T>, f: impl Fn(&T) -> B) -> SinglyLinkedListS<T>;
     /// APAS 20.7 (iterate): Work/Span sums over trace T(−).
+    /// ChatGPT-5-hard: Work/Span sums over trace T(−).
     fn iterate<T: Clone + Eq, A: Clone>(a: &SinglyLinkedListS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
     /// APAS 20.7 (reduce/scan): linear work/span under list traversal assumptions.
+    /// ChatGPT-5-hard: linear work/span.
     fn reduce<T: Clone + Eq, F>(a: &SinglyLinkedListS<T>, f: &F, id: T) -> T where F: Fn(&T, &T) -> T;
     fn scan<T: Clone + Eq, F>(a: &SinglyLinkedListS<T>, f: &F, id: T) -> (SinglyLinkedListS<T>, T) where F: Fn(&T, &T) -> T;
     /// APAS 20.7 (flatten): Work Θ(1 + |a| + Σ x |x|), Span Θ(1 + |a| + Σ x |x|).
+    /// ChatGPT-5-hard: Work Θ(1 + |a| + Σ x |x|), Span Θ(1 + |a| + Σ x |x|).
     fn flatten<T: Clone + Eq>(s: &SinglyLinkedListS<SinglyLinkedListS<T>>) -> SinglyLinkedListS<T>;
     /// APAS 20.7 (inject/ninject): Work Θ(1 + |a| + |b|), Span Θ(1 + |a| + |b|).
+    /// ChatGPT-5-hard: Work Θ(1 + |a| + |b|), Span Θ(1 + |a| + |b|).
     fn inject<T: Clone + Eq>(values: &SinglyLinkedListS<T>, changes: &SinglyLinkedListS<(N, T)>) -> SinglyLinkedListS<T>;
     fn atomicWrite<T: Clone + Eq>(values_with_change_number: &mut SinglyLinkedListS<(T, N)>, changes: &SinglyLinkedListS<(N, T)>, change_index: N);
     fn inject_parallel2<T: Clone + Eq + Send + Sync>(values: &SinglyLinkedListS<T>, changes: &SinglyLinkedListS<(N, T)>) -> SinglyLinkedListS<T>;

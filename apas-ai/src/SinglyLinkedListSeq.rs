@@ -19,8 +19,7 @@ pub struct SinglyLinkedListS<T> {
 /// Generic sequence trait for linked-list-backed sequences.
 pub trait SinglyLinkedListSeq<T> {
     /// Construct a new list of length `length` with each element `init_value`. <br/>
-    /// Not in APAS 20.7. Implementation traverses once to append. <br/>
-    /// Work: Θ(length), Span: Θ(length).
+    /// ChatGPT-5-hard: Work Θ(length), Span Θ(length).
     fn new(length: N, init_value: T) -> SinglyLinkedListS<T>
     where
         T: Clone;
@@ -31,7 +30,8 @@ pub trait SinglyLinkedListSeq<T> {
     /// APAS 20.7 (empty): Work Θ(1), Span Θ(1).
     fn empty() -> SinglyLinkedListS<T>;
     /// APAS 20.7 (update a (i,x)): Work Θ(1+|a|), Span Θ(1+|a|). <br/>
-    /// BUG: our mutable update traverses to index → Work/Span Θ(i).
+    /// ChatGPT-5-hard: Work Θ(i), Span Θ(i).
+    /// BUG: APAS and ChatGPT-5 algorithmic analysis differs.
     fn set(&mut self, index: N, item: T) -> Result<&mut SinglyLinkedListS<T>, &'static str>;
     /// APAS 20.7 (singleton x): Work Θ(1), Span Θ(1).
     fn singleton(item: T) -> SinglyLinkedListS<T>;
@@ -40,7 +40,8 @@ pub trait SinglyLinkedListSeq<T> {
     /// APAS 20.7 (isSingleton x): Work Θ(1), Span Θ(1).
     fn isSingleton(&self) -> B;
     /// APAS 20.7 (subseq a (i,j)): Work Θ(1+i), Span Θ(1+i). <br/>
-    /// BUG: our owning subseq clones `length` elements → adds Θ(length).
+    /// ChatGPT-5-hard: Work Θ(1 + i + length), Span Θ(1 + i).
+    /// BUG: APAS and ChatGPT-5 algorithmic analysis differs.
     fn subseq_copy(&self, start: N, length: N) -> SinglyLinkedListS<T>
     where
         T: Clone + Eq;
@@ -77,6 +78,7 @@ impl<T: std::fmt::Debug> std::fmt::Debug for SinglyLinkedListS<T> {
 }
 
 impl<T> SinglyLinkedListSeq<T> for SinglyLinkedListS<T> {
+    /// ChatGPT-5-hard: Work Θ(length), Span Θ(length).
     fn new(length: N, init_value: T) -> SinglyLinkedListS<T>
     where
         T: Clone,
@@ -85,15 +87,25 @@ impl<T> SinglyLinkedListSeq<T> for SinglyLinkedListS<T> {
         for _ in 0..length { ll.push_back(init_value.clone()); }
         SinglyLinkedListS { data: ll }
     }
+    /// APAS 20.7 (length a): Work Θ(1), Span Θ(1).
     fn length(&self) -> N { self.data.len() }
+    /// APAS 20.7 (nth a i): Work Θ(i), Span Θ(i).
     fn nth(&self, index: N) -> &T { self.data.iter().nth(index).expect("index out of bounds") }
+    /// APAS 20.7 (empty): Work Θ(1), Span Θ(1).
     fn empty() -> SinglyLinkedListS<T> { SinglyLinkedListS { data: LinkedList::new() } }
+    /// ChatGPT-5-hard: Work Θ(i), Span Θ(i).
+    /// BUG: APAS and ChatGPT-5 algorithmic analysis differs.
     fn set(&mut self, index: N, item: T) -> Result<&mut SinglyLinkedListS<T>, &'static str> {
         match self.data.iter_mut().nth(index) { Some(slot) => { *slot = item; Ok(self) }, None => Err("Index out of bounds") }
     }
+    /// APAS 20.7 (singleton x): Work Θ(1), Span Θ(1).
     fn singleton(item: T) -> SinglyLinkedListS<T> { let mut ll = LinkedList::new(); ll.push_back(item); SinglyLinkedListS { data: ll } }
+    /// APAS 20.7 (isEmpty x): Work Θ(1), Span Θ(1).
     fn isEmpty(&self) -> B { if self.data.len() == 0 { B::True } else { B::False } }
+    /// APAS 20.7 (isSingleton x): Work Θ(1), Span Θ(1).
     fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
+    /// ChatGPT-5-hard: Work Θ(1 + start + length), Span Θ(1 + start).
+    /// BUG: APAS and ChatGPT-5 algorithmic analysis differs.
     fn subseq_copy(&self, start: N, length: N) -> SinglyLinkedListS<T>
     where
         T: Clone + Eq,

@@ -19,41 +19,41 @@ pub struct DoublyLinkedListS<T> {
 /// Generic sequence trait for linked-list-backed sequences.
 pub trait DoublyLinkedListSeq<T> {
     /// Create a new sequence of length `length` with each element initialized to `init_value`. <br/>
-    /// Derived (DLL): Work Θ(length), Span Θ(length) to push nodes.
+    /// chatgpt-5-hard: Work Θ(length), Span Θ(length).
     fn new(length: N, init_value: T) -> DoublyLinkedListS<T>
     where
         T: Clone;
 
     /// Return the number of elements in the sequence. <br/>
-    /// Derived (DLL): Work Θ(1), Span Θ(1).
+    /// chatgpt-5-hard: Work Θ(1), Span Θ(1).
     fn length(&self) -> N;
 
     /// Return a reference to the element at `index`. Panics if out of bounds. <br/>
-    /// APAS 20.7 (SLL nth a i): Work Θ(i), Span Θ(i). DLL same asymptotics.
+    /// chatgpt-5-hard: Work Θ(index), Span Θ(index).
     fn nth(&self, index: N) -> &T;
 
     /// Construct the empty sequence. <br/>
-    /// Derived (DLL): Work Θ(1), Span Θ(1).
+    /// chatgpt-5-hard: Work Θ(1), Span Θ(1).
     fn empty() -> DoublyLinkedListS<T>;
 
     /// Set the element at `index` to `item` in place. <br/>
-    /// Derived (DLL): Work Θ(i), Span Θ(i) to reach node.
+    /// chatgpt-5-hard: Work Θ(index), Span Θ(index).
     fn set(&mut self, index: N, item: T) -> Result<&mut DoublyLinkedListS<T>, &'static str>;
 
     /// Construct a singleton sequence containing `item`. <br/>
-    /// Derived (DLL): Work Θ(1), Span Θ(1).
+    /// chatgpt-5-hard: Work Θ(1), Span Θ(1).
     fn singleton(item: T) -> DoublyLinkedListS<T>;
 
     /// B::True iff the sequence has length zero. <br/>
-    /// Derived (DLL): Work Θ(1), Span Θ(1).
+    /// chatgpt-5-hard: Work Θ(1), Span Θ(1).
     fn isEmpty(&self) -> B;
 
     /// B::True iff the sequence has length one. <br/>
-    /// Derived (DLL): Work Θ(1), Span Θ(1).
+    /// chatgpt-5-hard: Work Θ(1), Span Θ(1).
     fn isSingleton(&self) -> B;
 
     /// Return the subsequence starting at `start` of length `length` (cloning elements). <br/>
-    /// Derived (DLL): Work Θ(1 + i + length), Span Θ(1 + i).
+    /// chatgpt-5-hard: Work Θ(1 + index + length), Span Θ(1 + index).
     fn subseq_copy(&self, start: N, length: N) -> DoublyLinkedListS<T>
     where
         T: Clone + Eq;
@@ -92,6 +92,7 @@ impl<T: std::fmt::Debug> std::fmt::Debug for DoublyLinkedListS<T> {
 }
 
 impl<T> DoublyLinkedListSeq<T> for DoublyLinkedListS<T> {
+    /// ChatGPT-5-hard: Work Θ(length), Span Θ(length).
     fn new(length: N, init_value: T) -> DoublyLinkedListS<T>
     where
         T: Clone,
@@ -101,12 +102,16 @@ impl<T> DoublyLinkedListSeq<T> for DoublyLinkedListS<T> {
         DoublyLinkedListS { data: ll }
     }
 
+    /// ChatGPT-5-hard: Work Θ(1), Span Θ(1).
     fn length(&self) -> N { self.data.len() }
 
+    /// ChatGPT-5-hard: Work Θ(index), Span Θ(index).
     fn nth(&self, index: N) -> &T { self.data.iter().nth(index).expect("index out of bounds") }
 
+    /// ChatGPT-5-hard: Work Θ(1), Span Θ(1).
     fn empty() -> DoublyLinkedListS<T> { DoublyLinkedListS { data: LinkedList::new() } }
 
+    /// ChatGPT-5-hard: Work Θ(index), Span Θ(index).
     fn set(&mut self, index: N, item: T) -> Result<&mut DoublyLinkedListS<T>, &'static str> {
         match self.data.iter_mut().nth(index) {
             Some(slot) => { *slot = item; Ok(self) }
@@ -114,12 +119,16 @@ impl<T> DoublyLinkedListSeq<T> for DoublyLinkedListS<T> {
         }
     }
 
+    /// ChatGPT-5-hard: Work Θ(1), Span Θ(1).
     fn singleton(item: T) -> DoublyLinkedListS<T> { let mut ll = LinkedList::new(); ll.push_back(item); DoublyLinkedListS { data: ll } }
 
+    /// ChatGPT-5-hard: Work Θ(1), Span Θ(1).
     fn isEmpty(&self) -> B { if self.data.len() == 0 { B::True } else { B::False } }
 
+    /// ChatGPT-5-hard: Work Θ(1), Span Θ(1).
     fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
 
+    /// ChatGPT-5-hard: Work Θ(1 + start + length), Span Θ(1 + start).
     fn subseq_copy(&self, start: N, length: N) -> DoublyLinkedListS<T>
     where
         T: Clone + Eq,
