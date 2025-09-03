@@ -71,7 +71,8 @@ impl<T2> ArraySeqChap18 for ArrayS<T2> {
     /// ChatGPT-5-hard: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + Σ i=0..n-1 S(f(i))).
     /// BUG: APAS and ChatGPT-5-hard algorithmic analyses differ.
     fn tabulate<T>(f: impl Fn(N) -> T, n: N) -> ArrayS<T> {
-        ArrayS { data: (0..n).map(|i| f(i)).collect::<Vec<T>>().into_boxed_slice() }
+        let data: Vec<T> = (0..n).map(|i| f(i)).collect();
+        ArrayS { data: data.into_boxed_slice() }
     }
 
     /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x))).

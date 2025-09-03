@@ -162,10 +162,12 @@ fn test_iterator() {
 
     // Empty
     let e: apas_ai::AVLTreeSeq::AVLTreeS<usize> = apas_ai::avltreeseq![];
-    assert!(e.iter().copied().collect::<Vec<_>>().is_empty());
+    let collected: Vec<_> = e.iter().copied().collect();
+    assert!(collected.is_empty());
 
     // Singleton
     let one = apas_ai::avltreeseq![7usize];
-    assert_eq!(one.iter().copied().collect::<Vec<_>>(), vec![7]);
+    let collected_one: Vec<_> = one.iter().copied().collect();
+    assert_eq!(collected_one, vec![7]);
 }
 

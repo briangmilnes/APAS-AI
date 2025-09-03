@@ -28,14 +28,14 @@ harness = false
 name = "BenchMathSeq"
 harness = false
 
-[[bench]]
-name = "BenchDoublyLinkedListSeq"
-harness = false
+## DoublyLinkedList benchmarks moved to src/attic
 
 [[bench]]
 name = "BenchAVLTreeSeq"
 harness = false
 
 [[bench]]
-name = "BenchSinglyLinkedListSeq"
+name = "BenchSharedSinglyLinkedList"
 harness = false
+
+## SinglyLinkedList benchmarks moved to src/attic

@@ -9,14 +9,11 @@ pub mod MathSeq;
 pub mod ArraySeq;
 pub mod ArraySeqChap18;
 pub mod ArraySeqChap19;
-pub mod DoublyLinkedListSeq;
-pub mod DoublyLinkedListSeqChap18;
-pub mod DoublyLinkedListSeqChap19;
-pub mod SinglyLinkedListSeq;
-pub mod SinglyLinkedListSeqChap18;
-pub mod SinglyLinkedListSeqChap19;
+// attic: DoublyLinkedListSeq*, SinglyLinkedListSeq* moved to src/attic
 pub mod SinglyLinkedList;
 pub mod SharedSinglyLinkedList;
+pub mod SharedSinglyLinkedListChap18;
+pub mod SharedSinglyLinkedListChap19;
 pub mod AVLTreeSeq;
 pub mod AVLTreeSeqChap18;
 pub mod AVLTreeSeqChap19;
@@ -25,11 +22,12 @@ pub mod AVLTreeSeqChap19;
 pub use crate::Types::{N, B, O};
 pub use crate::MathSeq::MathS;
 pub use crate::ArraySeq::ArrayS;
-pub use crate::DoublyLinkedListSeq::DoublyLinkedListS;
-pub use crate::SinglyLinkedListSeq::SinglyLinkedListS;
+// attic re-exports removed
 pub use crate::SinglyLinkedList::SinglyLinkedList as SLList;
 pub use crate::SharedSinglyLinkedList::SharedSinglyLinkedList as SharedSLList;
 pub use crate::SharedSinglyLinkedList::SharedSList;
+pub use crate::SharedSinglyLinkedListChap18::SharedSListChap18;
+pub use crate::SharedSinglyLinkedListChap19::SharedSListChap19;
 //
 // Provide stable re-export naming for tree-backed sequence
 pub use crate::AVLTreeSeq::AVLTreeS; // canonical name
@@ -60,25 +58,6 @@ macro_rules! arrayseq {
     () => { $crate::ArraySeq::ArrayS::from_vec(Vec::new()) };
     ($x:expr; $n:expr) => { $crate::ArraySeq::ArrayS::from_vec(vec![$x; $n]) };
     ($($x:expr),* $(,)?) => { $crate::ArraySeq::ArrayS::from_vec(vec![$($x),*]) };
-}
-
-#[macro_export]
-macro_rules! dllseq {
-    () => {{
-        let ll: std::collections::LinkedList<()> = std::collections::LinkedList::new();
-        let _ = ll; // type anchor
-        $crate::DoublyLinkedListSeq::DoublyLinkedListS { data: std::collections::LinkedList::new() }
-    }};
-    ($x:expr; $n:expr) => {{
-        let mut ll = std::collections::LinkedList::new();
-        for _ in 0..$n { ll.push_back($x.clone()); }
-        $crate::DoublyLinkedListSeq::DoublyLinkedListS { data: ll }
-    }};
-    ($($x:expr),* $(,)?) => {{
-        let mut ll = std::collections::LinkedList::new();
-        $( ll.push_back($x); )*
-        $crate::DoublyLinkedListSeq::DoublyLinkedListS { data: ll }
-    }};
 }
 
 
