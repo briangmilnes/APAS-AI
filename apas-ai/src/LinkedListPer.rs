@@ -1,0 +1,200 @@
+//! Persistent (immutable by rebuilding) singly linked list.
+
+use crate::Types::{B, N};
+
+pub struct NodeP<T> {
+    pub value: T,
+    pub next: Option<Box<NodeP<T>>>,
+}
+
+pub struct LinkedListPerS<T> {
+    head: Option<Box<NodeP<T>>>,
+    len: N,
+}
+
+pub trait LinkedListPerTrait<T> {
+    fn empty() -> LinkedListPerS<T>;
+    fn new(length: N, init_value: T) -> LinkedListPerS<T>
+    where
+        T: Clone;
+    fn length(&self) -> N;
+    fn nth(&self, index: N) -> &T;
+    fn isEmpty(&self) -> B;
+    fn isSingleton(&self) -> B;
+    fn singleton(item: T) -> LinkedListPerS<T>;
+    /// APAS (ephemeral set Θ(1 + i)); rebuilding here: Work Θ(length), Span Θ(1)
+    /// gpt-5-hard: Work Θ(length), Span Θ(1)
+    /// BUG: APAS and gpt-5-hard algorithmic analyses differ.
+    fn set(&self, index: N, item: T) -> Result<LinkedListPerS<T>, &'static str>
+    where
+        T: Clone;
+    fn subseq_copy(&self, start: N, length: N) -> LinkedListPerS<T>
+    where
+        T: Clone;
+}
+
+impl<T> LinkedListPerS<T> {
+    fn push_front_node(&mut self, node: Box<NodeP<T>>) {
+        let mut n = node;
+        n.next = self.head.take();
+        self.head = Some(n);
+        self.len += 1;
+    }
+
+    pub fn from_vec(v: Vec<T>) -> LinkedListPerS<T> {
+        let mut list = LinkedListPerS::empty();
+        for value in v.into_iter().rev() {
+            list.push_front_node(Box::new(NodeP { value, next: None }));
+        }
+        list
+    }
+}
+
+impl<T> LinkedListPerTrait<T> for LinkedListPerS<T> {
+    fn empty() -> LinkedListPerS<T> {
+        LinkedListPerS { head: None, len: 0 }
+    }
+    fn new(length: N, init_value: T) -> LinkedListPerS<T>
+    where
+        T: Clone,
+    {
+        let mut list = LinkedListPerS::empty();
+        for _ in 0..length {
+            list.push_front_node(Box::new(NodeP {
+                value: init_value.clone(),
+                next: None,
+            }));
+        }
+        // reverse to maintain intuitive order
+        let mut rev: Option<Box<NodeP<T>>> = None;
+        while let Some(mut n) = list.head.take() {
+            let next = n.next.take();
+            n.next = rev.take();
+            rev = Some(n);
+            list.head = next;
+        }
+        list.head = rev;
+        list
+    }
+    fn length(&self) -> N {
+        self.len
+    }
+    fn nth(&self, index: N) -> &T {
+        let mut i = 0;
+        let mut cur = self.head.as_ref();
+        while let Some(n) = cur {
+            if i == index {
+                return &n.value;
+            }
+            i += 1;
+            cur = n.next.as_ref();
+        }
+        panic!("index out of bounds")
+    }
+    fn isEmpty(&self) -> B {
+        if self.len == 0 {
+            B::True
+        } else {
+            B::False
+        }
+    }
+    fn isSingleton(&self) -> B {
+        if self.len == 1 {
+            B::True
+        } else {
+            B::False
+        }
+    }
+    fn singleton(item: T) -> LinkedListPerS<T> {
+        LinkedListPerS {
+            head: Some(Box::new(NodeP {
+                value: item,
+                next: None,
+            })),
+            len: 1,
+        }
+    }
+    fn set(&self, index: N, item: T) -> Result<LinkedListPerS<T>, &'static str>
+    where
+        T: Clone,
+    {
+        if index >= self.len {
+            return Err("Index out of bounds");
+        }
+        // rebuild list with the changed value
+        let mut out = LinkedListPerS::empty();
+        let mut i = 0;
+        let mut cur = self.head.as_ref();
+        while let Some(node) = cur {
+            let v = if i == index {
+                item.clone()
+            } else {
+                node.value.clone()
+            };
+            out.push_front_node(Box::new(NodeP {
+                value: v,
+                next: None,
+            }));
+            i += 1;
+            cur = node.next.as_ref();
+        }
+        // reverse to preserve order
+        let mut rev: Option<Box<NodeP<T>>> = None;
+        while let Some(mut n) = out.head.take() {
+            let next = n.next.take();
+            n.next = rev.take();
+            rev = Some(n);
+            out.head = next;
+        }
+        out.head = rev;
+        Ok(out)
+    }
+    fn subseq_copy(&self, start: N, length: N) -> LinkedListPerS<T>
+    where
+        T: Clone,
+    {
+        let n = self.len;
+        let s = start.min(n);
+        let e = start.saturating_add(length).min(n);
+        if e <= s {
+            return LinkedListPerS::empty();
+        }
+        let mut out = LinkedListPerS::empty();
+        let mut i = 0;
+        let mut cur = self.head.as_ref();
+        while let Some(node) = cur {
+            if i >= s && i < e {
+                out.push_front_node(Box::new(NodeP {
+                    value: node.value.clone(),
+                    next: None,
+                }));
+            }
+            if i >= e {
+                break;
+            }
+            i += 1;
+            cur = node.next.as_ref();
+        }
+        let mut rev: Option<Box<NodeP<T>>> = None;
+        while let Some(mut n) = out.head.take() {
+            let next = n.next.take();
+            n.next = rev.take();
+            rev = Some(n);
+            out.head = next;
+        }
+        out.head = rev;
+        out
+    }
+}
+
+impl<T: std::fmt::Debug> std::fmt::Debug for LinkedListPerS<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let mut v = Vec::with_capacity(self.len);
+        let mut cur = self.head.as_ref();
+        while let Some(n) = cur {
+            v.push(&n.value);
+            cur = n.next.as_ref();
+        }
+        f.debug_list().entries(v).finish()
+    }
+}

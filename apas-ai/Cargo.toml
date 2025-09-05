@@ -35,7 +35,19 @@ name = "BenchAVLTreeSeq"
 harness = false
 
 [[bench]]
-name = "BenchSharedSinglyLinkedList"
+name = "BenchArraySeqEphemeral"
+harness = false
+## SharedSinglyLinkedList removed
+
+[[bench]]
+name = "BenchArraySeqPersistent"
+harness = false
+
+[[bench]]
+name = "BenchAVLTreeSeqPersistent"
 harness = false
 
 ## SinglyLinkedList benchmarks moved to src/attic
+[[bench]]
+name = "BenchSinglyLinkedListPersistent"
+harness = false

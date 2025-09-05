@@ -6,33 +6,35 @@
 //! using rust vector which is dense.
 
 // Re-export N for convenience in this module's namespace
-pub use crate::Types::N;
 use crate::Types::B;
-use std::collections::{HashMap, HashSet};
+pub use crate::Types::N;
 use std::collections::hash_map::Entry;
+use std::collections::{HashMap, HashSet};
 use std::hash::Hash;
 
 /// Mathematical sequence with dense domain, backed by `Vec<T>`.
-pub struct MathS<T> { pub data: Vec<T> }
+pub struct MathSeqS<T> {
+    pub data: Vec<T>,
+}
 
-/// Core API for `MathS<T>`.
-pub trait MathSeq<T> {
+/// Core API for `MathSeqS<T>`.
+pub trait MathSeqTrait<T> {
     /// Construct a new sequence of length `length` initialized with `init_value`.
     /// Work: Θ(length)
     /// Span: Θ(1)
-    fn new(length: N, init_value: T) -> MathS<T>
+    fn new(length: N, init_value: T) -> MathSeqS<T>
     where
         T: Clone;
 
     /// Construct the empty sequence.
     /// Work: Θ(1)
     /// Span: Θ(1)
-    fn empty() -> MathS<T>;
+    fn empty() -> MathSeqS<T>;
 
     /// Construct a singleton sequence containing `item`.
     /// Work: Θ(1)
     /// Span: Θ(1)
-    fn singleton(item: T) -> MathS<T>;
+    fn singleton(item: T) -> MathSeqS<T>;
 
     /// Return the number of elements.
     /// Work Θ(1), Span Θ(1).
@@ -44,12 +46,12 @@ pub trait MathSeq<T> {
 
     /// Set element at `index` (Err if out of bounds).
     /// Work Θ(1), Span Θ(1).
-    fn set(&mut self, index: N, value: T) -> Result<&mut MathS<T>, &'static str>;
+    fn set(&mut self, index: N, value: T) -> Result<&mut MathSeqS<T>, &'static str>;
 
     /// Append at end (grow by 1).
     /// Work amortized Θ(1), worst case Θ(2·length(&self)); Span amortized Θ(1), worst case Θ(2·length(&self)).
     /// Vec typically doubles capacity on growth; one growth copies existing elements once, then frees the old buffer.
-    fn add_last(&mut self, value: T) -> &mut MathS<T>;
+    fn add_last(&mut self, value: T) -> &mut MathSeqS<T>;
 
     /// Remove last if any (shrink by 1).
     /// Work Θ(1), Span Θ(1).
@@ -62,7 +64,7 @@ pub trait MathSeq<T> {
     /// Owning subsequence starting at `start` with the given `length` (clones elements).
     /// Work: Θ(length)
     /// Span: Θ(1)
-    fn subseq_copy(&self, start: N, length: N) -> MathS<T>
+    fn subseq_copy(&self, start: N, length: N) -> MathSeqS<T>
     where
         T: Clone;
 
@@ -93,37 +95,59 @@ pub trait MathSeq<T> {
         T: Clone + Eq + Hash;
 }
 
-impl<T> MathSeq<T> for MathS<T> {
+impl<T> MathSeqTrait<T> for MathSeqS<T> {
     /// Work: Θ(length), Span: Θ(1).
-    fn new(length: N, init_value: T) -> MathS<T>
+    fn new(length: N, init_value: T) -> MathSeqS<T>
     where
         T: Clone,
-    { MathS { data: vec![init_value; length] } }
+    {
+        MathSeqS {
+            data: vec![init_value; length],
+        }
+    }
 
     /// Work: Θ(1), Span: Θ(1).
-    fn empty() -> MathS<T> { MathS { data: Vec::new() } }
+    fn empty() -> MathSeqS<T> {
+        MathSeqS { data: Vec::new() }
+    }
 
     /// Work: Θ(1), Span: Θ(1).
-    fn singleton(item: T) -> MathS<T> { MathS { data: vec![item] } }
+    fn singleton(item: T) -> MathSeqS<T> {
+        MathSeqS { data: vec![item] }
+    }
 
     /// Work: Θ(1), Span: Θ(1).
-    fn length(&self) -> N { self.data.len() }
+    fn length(&self) -> N {
+        self.data.len()
+    }
 
     /// Work/Span: Θ(1), Θ(1).
-    fn nth(&self, index: N) -> &T { &self.data[index] }
+    fn nth(&self, index: N) -> &T {
+        &self.data[index]
+    }
 
     /// Work/Span: Θ(1), Θ(1).
-    fn set(&mut self, index: N, value: T) -> Result<&mut MathS<T>, &'static str> {
-        if index < self.data.len() { self.data[index] = value; Ok(self) } else { Err("Index out of bounds") }
+    fn set(&mut self, index: N, value: T) -> Result<&mut MathSeqS<T>, &'static str> {
+        if index < self.data.len() {
+            self.data[index] = value;
+            Ok(self)
+        } else {
+            Err("Index out of bounds")
+        }
     }
 
     /// Work/Span: amortized Θ(1), Θ(1); worst‑case Θ(2·length(&self)), Θ(2·length(&self)).
     /// Vec typically doubles capacity when it out grows Vec's allocated storage. Rust will set
     /// this automatically or you can set a total size.
-    fn add_last(&mut self, value: T) -> &mut MathS<T> { self.data.push(value); self }
+    fn add_last(&mut self, value: T) -> &mut MathSeqS<T> {
+        self.data.push(value);
+        self
+    }
 
     /// Work/Span: Θ(1), Θ(1).
-    fn delete_last(&mut self) -> Option<T> { self.data.pop() }
+    fn delete_last(&mut self) -> Option<T> {
+        self.data.pop()
+    }
 
     /// Work/Span: Θ(1), Θ(1).
     fn subseq(&self, start: N, length: N) -> &[T] {
@@ -134,25 +158,43 @@ impl<T> MathSeq<T> for MathS<T> {
     }
 
     /// Work: Θ(length), Span: Θ(1).
-    fn subseq_copy(&self, start: N, length: N) -> MathS<T>
+    fn subseq_copy(&self, start: N, length: N) -> MathSeqS<T>
     where
         T: Clone,
     {
         let n = self.data.len();
         let s = start.min(n);
         let e = start.saturating_add(length).min(n);
-        if e <= s { return MathS { data: Vec::new() }; }
-        MathS { data: self.data[s..e].to_vec() }
+        if e <= s {
+            return MathSeqS { data: Vec::new() };
+        }
+        MathSeqS {
+            data: self.data[s..e].to_vec(),
+        }
     }
 
     /// Work: Θ(1), Span: Θ(1).
-    fn isEmpty(&self) -> B { if self.data.is_empty() { B::True } else { B::False } }
+    fn isEmpty(&self) -> B {
+        if self.data.is_empty() {
+            B::True
+        } else {
+            B::False
+        }
+    }
 
     /// Work: Θ(1), Span: Θ(1).
-    fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
+    fn isSingleton(&self) -> B {
+        if self.data.len() == 1 {
+            B::True
+        } else {
+            B::False
+        }
+    }
 
     /// Work/Span: Θ(length(&self)), Θ(1).
-    fn domain(&self) -> Vec<N> { (0..self.data.len()).collect() }
+    fn domain(&self) -> Vec<N> {
+        (0..self.data.len()).collect()
+    }
 
     /// Work/Span: Θ(length(&self)), Θ(1).
     fn range(&self) -> Vec<T>
@@ -162,7 +204,9 @@ impl<T> MathSeq<T> for MathS<T> {
         let mut seen: HashSet<&T> = HashSet::with_capacity(self.data.len());
         let mut out: Vec<T> = Vec::with_capacity(self.data.len());
         for x in &self.data {
-            if seen.insert(x) { out.push(x.clone()); }
+            if seen.insert(x) {
+                out.push(x.clone());
+            }
         }
         out
     }
@@ -176,12 +220,15 @@ impl<T> MathSeq<T> for MathS<T> {
         let mut order: Vec<&T> = Vec::new();
         for x in &self.data {
             match counts.entry(x) {
-                Entry::Vacant(e) => { e.insert(1); order.push(x); }
-                Entry::Occupied(mut e) => { *e.get_mut() += 1; }
+                Entry::Vacant(e) => {
+                    e.insert(1);
+                    order.push(x);
+                }
+                Entry::Occupied(mut e) => {
+                    *e.get_mut() += 1;
+                }
             }
         }
         order.into_iter().map(|x| (counts[x], x.clone())).collect()
     }
 }
-
-
