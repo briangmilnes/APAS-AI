@@ -35,6 +35,18 @@ impl<T> LinkedListEphS<T> {
         self.head = Some(n);
         self.len += 1;
     }
+
+    pub fn from_vec(v: Vec<T>) -> LinkedListEphS<T> {
+        let mut list = LinkedListEphS::empty();
+        for value in v.into_iter().rev() {
+            list.push_front_node(Box::new(NodeE { value, next: None }));
+        }
+        list
+    }
+
+    pub fn iter<'a>(&'a self) -> LinkedListEphIter<'a, T> {
+        LinkedListEphIter { cursor: self.head.as_deref() }
+    }
 }
 
 impl<T> LinkedListEphTrait<T> for LinkedListEphS<T> {
@@ -163,4 +175,71 @@ impl<T: std::fmt::Debug> std::fmt::Debug for LinkedListEphS<T> {
         }
         f.debug_list().entries(v).finish()
     }
+}
+
+pub struct LinkedListEphIter<'a, T> {
+    cursor: Option<&'a NodeE<T>>,
+}
+
+impl<'a, T> Iterator for LinkedListEphIter<'a, T> {
+    type Item = &'a T;
+    fn next(&mut self) -> Option<Self::Item> {
+        if let Some(n) = self.cursor {
+            self.cursor = n.next.as_deref();
+            Some(&n.value)
+        } else { None }
+    }
+}
+
+impl<T: PartialEq> PartialEq for LinkedListEphS<T> {
+    fn eq(&self, other: &Self) -> bool {
+        if self.len != other.len {
+            return false;
+        }
+        let mut a = self.head.as_ref();
+        let mut b = other.head.as_ref();
+        while let (Some(na), Some(nb)) = (a, b) {
+            if na.value != nb.value {
+                return false;
+            }
+            a = na.next.as_ref();
+            b = nb.next.as_ref();
+        }
+        true
+    }
+}
+
+impl<T: Eq> Eq for LinkedListEphS<T> {}
+
+impl<T: std::fmt::Display> std::fmt::Display for LinkedListEphS<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "[")?;
+        let mut first = true;
+        let mut cur = self.head.as_ref();
+        while let Some(n) = cur {
+            if !first { write!(f, ", ")?; } else { first = false; }
+            write!(f, "{}", n.value)?;
+            cur = n.next.as_ref();
+        }
+        write!(f, "]")
+    }
+}
+
+#[macro_export]
+macro_rules! LinkedListEph {
+    ($x:expr; $n:expr) => {{
+        < $crate::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEphTrait<_> >::new($n, $x)
+    }};
+    ($($x:expr),* $(,)?) => {{
+        let __vals = vec![$($x),*];
+        let __len = __vals.len();
+        if __len == 0 {
+            < $crate::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEphTrait<_> >::empty()
+        } else {
+            let mut __l = < $crate::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEphTrait<_> >::new(__len, __vals[0].clone());
+            let mut __i: $crate::Types::N = 0;
+            for __v in __vals { let _ = < $crate::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEphTrait<_> >::set(&mut __l, __i, __v); __i += 1; }
+            __l
+        }
+    }};
 }

@@ -47,7 +47,8 @@ impl<T2> ArraySeqEphChap18Trait for ArraySeqEphS<T2> {
     fn map<T, U: Clone>(a: &ArraySeqEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqEphS<U> {
         let n = a.length();
         if n == 0 {
-            return <ArraySeqEphS<U> as ArraySeqEphTrait<U>>::empty();
+           return <ArraySeqEphS<U> as ArraySeqEphTrait<U>>::empty();
+
         }
         let first = f(a.nth(0)).clone();
         let mut out = <ArraySeqEphS<U> as ArraySeqEphTrait<U>>::new(n, first.clone());

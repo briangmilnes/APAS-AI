@@ -71,6 +71,8 @@ impl<T> ArraySeqEphS<T> {
         }
         self
     }
+
+    pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
 }
 
 impl<T: Eq> PartialEq for ArraySeqEphS<T> {
@@ -142,4 +144,11 @@ impl<T> ArraySeqEphTrait<T> for ArraySeqEphS<T> {
     {
         self.subseq_copy(start, length)
     }
+}
+
+#[macro_export]
+macro_rules! ArraySeqEph {
+    () => { $crate::ArraySeqEph::ArraySeqEphS::from_vec(Vec::new()) };
+    ($x:expr; $n:expr) => { $crate::ArraySeqEph::ArraySeqEphS::from_vec(vec![$x; $n]) };
+    ($($x:expr),* $(,)?) => { $crate::ArraySeqEph::ArraySeqEphS::from_vec(vec![$($x),*]) };
 }

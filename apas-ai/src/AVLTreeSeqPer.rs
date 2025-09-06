@@ -3,6 +3,7 @@
 pub use crate::Types::{B, N, O};
 use std::fmt::Debug;
 use std::rc::Rc;
+use crate::ArraySeqPer::{ArrayPerS, ArraySeqPerTrait};
 
 type Link<T> = Option<Rc<Node<T>>>;
 
@@ -255,4 +256,59 @@ impl<T: Debug + Copy> std::fmt::Debug for AVLTreeSeqPerS<T> {
         let v = <Self as AVLTreeSeqPerTrait<T>>::values_in_order(self);
         f.debug_list().entries(v.iter()).finish()
     }
+}
+
+impl<T: Copy + Debug> AVLTreeSeqPerS<T> {
+    pub fn to_arrayseq(&self) -> ArrayPerS<T>
+    where
+        T: Clone,
+    {
+        let v = <Self as AVLTreeSeqPerTrait<T>>::values_in_order(self);
+        ArrayPerS::from_vec(v)
+    }
+
+    pub fn iter<'a>(&'a self) -> AVLTreeSeqPerIter<'a, T> {
+        AVLTreeSeqPerIter { stack: Vec::new(), current: self.root.as_deref() }
+    }
+}
+
+pub struct AVLTreeSeqPerIter<'a, T: Copy + Debug> {
+    stack: Vec<&'a Node<T>>,
+    current: Option<&'a Node<T>>,
+}
+
+impl<'a, T: Copy + Debug> AVLTreeSeqPerIter<'a, T> {
+    fn push_left(&mut self, mut cur: Option<&'a Node<T>>) {
+        while let Some(n) = cur {
+            self.stack.push(n);
+            cur = n.left.as_deref();
+        }
+    }
+}
+
+impl<'a, T: Copy + Debug> Iterator for AVLTreeSeqPerIter<'a, T> {
+    type Item = &'a T;
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.current.is_some() {
+            let cur = self.current.take();
+            self.push_left(cur);
+        }
+        let node = self.stack.pop()?;
+        let value_ref: &T = &node.value;
+        self.push_left(node.right.as_deref());
+        Some(value_ref)
+    }
+}
+
+#[macro_export]
+macro_rules! AVLTreeSeqPer {
+    () => { < $crate::AVLTreeSeqPer::AVLTreeSeqPerS<_> as $crate::AVLTreeSeqPer::AVLTreeSeqPerTrait<_> >::empty() };
+    ($x:expr; $n:expr) => {{
+        let __vals = vec![$x; $n];
+        < $crate::AVLTreeSeqPer::AVLTreeSeqPerS<_> as $crate::AVLTreeSeqPer::AVLTreeSeqPerTrait<_> >::from_vec(__vals)
+    }};
+    ($($x:expr),* $(,)?) => {{
+        let __vals = vec![$($x),*];
+        < $crate::AVLTreeSeqPer::AVLTreeSeqPerS<_> as $crate::AVLTreeSeqPer::AVLTreeSeqPerTrait<_> >::from_vec(__vals)
+    }};
 }

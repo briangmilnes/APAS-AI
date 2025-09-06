@@ -1,0 +1,71 @@
+- Definitions:
+  - crate: compilation unit; roots at src/lib.rs or src/main.rs; absolute paths begin crate::
+  - module: namespace; declared with mod name; or inline mod name { ... }; controls visibility and paths
+  - item: any top-level definition (mod, use, struct, enum, union, trait, impl, fn, const, static, type, macro)
+  - function: free function at module scope; callable by path; signature defines type
+  - method: function in an impl with a receiver; call as v.m(x)
+  - associated function: function in an impl without a receiver; call as Type::f(args)
+  - associated type: type member of a trait; specified in impls; may have a default
+  - associated const: const member of a trait or impl; compile-time value bound to the item
+  - path: hierarchical name using ::; absolute crate::; relative self:: and super::
+  - visibility: pub, pub(crate), pub(super), pub(in path); governs reachability
+  - use / pub use: import or re-export names into scope; no new definitions
+  - macro (macro_rules!): declarative macro; export with #[macro_export]; invoked as Name!(...)
+  - type alias: type Name = Existing; new name, same type
+  - newtype: struct Name(Existing); distinct type with same representation
+  - attributes: inner #![..] at crate/module roots, outer #[..] on items
+
+- Trait:
+  - can put in:
+    - method signatures: fn m(&self, x: T) -> U
+    - default method bodies: fn m(&self) -> U { ... }
+    - associated types: type Item;
+    - associated types with default: type Item = U;
+    - associated constants: const N: usize;
+  - can't put in:
+    - fields or data members
+    - struct/enum/union definitions
+    - modules: mod m;
+    - imports: use path::Item;
+    - free consts/statics: const X: T = ...; static X: T = ...;
+    - free type aliases: type Alias = T;
+    - impl blocks
+
+- Impl:
+  - impl Trait for Type:
+    - can put in:
+      - method implementations: fn m(&self) -> U { ... }
+      - associated type bindings: type Item = RealType;
+      - associated const values: const N: usize = 8;
+    - can't put in:
+      - new items not declared in the trait (no extra methods here)
+      - struct/enum/union definitions
+      - modules/imports/macros: mod/use/macro_rules!
+      - free type aliases: type Alias = T;
+  - impl Type (inherent):
+    - can put in:
+      - associated functions: fn new(args) -> Self
+      - methods: fn m(&self) -> U
+      - associated consts: const NAME: Type = VALUE;
+    - can't put in:
+      - associated types (only allowed in trait impls)
+      - struct/enum/union definitions
+      - modules/imports/macros: mod/use/macro_rules!
+      - free type aliases: type Alias = T;
+
+- File top level (module file):
+  - can put in:
+    - module declarations: mod m; or inline: mod m { ... }
+    - imports and re-exports: use path::Item; pub use path::Item;
+    - type definitions: struct S { .. } enum E { .. } union U { .. }
+    - trait definitions: trait T { .. }
+    - impl blocks: impl T for S { .. } impl S { .. }
+    - type aliases: type N = usize;
+    - constants/statics: const N: usize = 0; static S: i32 = 1;
+    - free functions: pub fn f() {}
+    - macro definitions: macro_rules! Name { ( $($t:tt)* ) => { /* ... */ } }
+    - attributes: crate-level #![deny(warnings)] and item-level #[cfg(test)]
+    - extern crate name; (rarely needed in 2018+)
+  - can't put in:
+    - statements or expressions outside items: let x = 1; x + 1;
+    - control flow outside functions: return; break; continue;

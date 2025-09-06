@@ -17,3 +17,12 @@ pub enum B {
 /// Data Type 18.1 (Ordering) relationships used by APAS, using Rust's as it matches.
 /// Enumerated values in `std::cmp::Ordering` are named: Less, Equal, Greater.
 pub use std::cmp::Ordering as O;
+
+impl std::fmt::Display for B {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            B::True => write!(f, "True"),
+            B::False => write!(f, "False"),
+        }
+    }
+}

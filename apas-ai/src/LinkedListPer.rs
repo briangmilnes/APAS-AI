@@ -48,6 +48,10 @@ impl<T> LinkedListPerS<T> {
         }
         list
     }
+
+    pub fn iter<'a>(&'a self) -> LinkedListPerIter<'a, T> {
+        LinkedListPerIter { cursor: self.head.as_deref() }
+    }
 }
 
 impl<T> LinkedListPerTrait<T> for LinkedListPerS<T> {
@@ -197,4 +201,61 @@ impl<T: std::fmt::Debug> std::fmt::Debug for LinkedListPerS<T> {
         }
         f.debug_list().entries(v).finish()
     }
+}
+
+pub struct LinkedListPerIter<'a, T> {
+    cursor: Option<&'a NodeP<T>>,
+}
+
+impl<'a, T> Iterator for LinkedListPerIter<'a, T> {
+    type Item = &'a T;
+    fn next(&mut self) -> Option<Self::Item> {
+        if let Some(n) = self.cursor {
+            self.cursor = n.next.as_deref();
+            Some(&n.value)
+        } else { None }
+    }
+}
+
+impl<T: PartialEq> PartialEq for LinkedListPerS<T> {
+    fn eq(&self, other: &Self) -> bool {
+        if self.len != other.len {
+            return false;
+        }
+        let mut a = self.head.as_ref();
+        let mut b = other.head.as_ref();
+        while let (Some(na), Some(nb)) = (a, b) {
+            if na.value != nb.value {
+                return false;
+            }
+            a = na.next.as_ref();
+            b = nb.next.as_ref();
+        }
+        true
+    }
+}
+
+impl<T: Eq> Eq for LinkedListPerS<T> {}
+
+impl<T: std::fmt::Display> std::fmt::Display for LinkedListPerS<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "[")?;
+        let mut first = true;
+        let mut cur = self.head.as_ref();
+        while let Some(n) = cur {
+            if !first { write!(f, ", ")?; } else { first = false; }
+            write!(f, "{}", n.value)?;
+            cur = n.next.as_ref();
+        }
+        write!(f, "]")
+    }
+}
+
+#[macro_export]
+macro_rules! LinkedListPer {
+    () => { $crate::LinkedListPer::LinkedListPerS::from_vec(Vec::new()) };
+    ($x:expr; $n:expr) => {{
+        < $crate::LinkedListPer::LinkedListPerS<_> as $crate::LinkedListPer::LinkedListPerTrait<_> >::new($n, $x)
+    }};
+    ($($x:expr),* $(,)?) => { $crate::LinkedListPer::LinkedListPerS::from_vec(vec![$($x),*]) };
 }

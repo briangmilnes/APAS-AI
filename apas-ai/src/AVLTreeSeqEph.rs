@@ -58,7 +58,7 @@ pub trait AVLTreeSeqEphTrait<T: Copy + Debug> {
         T: Clone + Eq;
 }
 
-impl<T: Copy + Debug> AVLTreeSeqEphSTrait<T> {
+impl<T: Copy + Debug> AVLTreeSeqEphS<T> {
     pub fn new_root() -> Self {
         AVLTreeSeqEphS {
             root: None,
@@ -84,17 +84,21 @@ impl<T: Copy + Debug> AVLTreeSeqEphSTrait<T> {
         debug_assert!(t.length() == length);
         t
     }
-    pub fn to_arrayseq(&self) -> AVLTreeSeqEphS<T>
+    pub fn to_arrayseq(&self) -> ArraySeqEphS<T>
     where
         T: Clone,
     {
         let len = self.length();
         if len == 0 {
-            return <AVLTreeSeqEphS<T> as AVLTreeSeqEphSeqTrait<T>>::empty();
+            return <ArraySeqEphS<T> as ArraySeqEphTrait<T>>::empty();
         }
         let mut it = self.iter();
-        let first = it.next().expect("length > 0 but iter was empty").clone();
-        let mut out = <AVLTreeSeqEphS<T> as AVLTreeSeqEphSeq<T>>::new(len, first);
+        let first = it
+            .next()
+            .expect("length > 0 but iter was empty")
+            .clone();
+        let mut out = <ArraySeqEphS<T> as ArraySeqEphTrait<T>>::new(len, first.clone());
+        let _ = out.set(0, first);
         let mut index: N = 1;
         for v in it {
             let _ = out.set(index, v.clone());
@@ -144,7 +148,7 @@ impl<T: Copy + Debug> AVLTreeSeqEphSTrait<T> {
             for i in (idx + 1)..len {
                 out_vec.push(self.nth(i).clone());
             }
-            *self = AVLTreeSeqEphSTrait::from_vec(out_vec);
+            *self = AVLTreeSeqEphS::from_vec(out_vec);
             true
         } else {
             false
@@ -154,11 +158,11 @@ impl<T: Copy + Debug> AVLTreeSeqEphSTrait<T> {
 
 impl<T: Copy + Debug> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
     fn empty() -> AVLTreeSeqEphS<T> {
-        AVLTreeSeqEphSTrait::new_root()
+        AVLTreeSeqEphS::new_root()
     }
 
     fn new() -> AVLTreeSeqEphS<T> {
-        AVLTreeSeqEphSTrait::new_root()
+        AVLTreeSeqEphS::new_root()
     }
 
     fn length(&self) -> N {
@@ -175,7 +179,7 @@ impl<T: Copy + Debug> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
     }
 
     fn singleton(item: T) -> AVLTreeSeqEphS<T> {
-        let mut t = AVLTreeSeqEphSTrait::new_root();
+        let mut t = AVLTreeSeqEphS::new_root();
         t.root = insert_at_link(t.root.take(), 0, item, &mut t.next_key);
         t
     }
@@ -210,7 +214,7 @@ impl<T: Copy + Debug> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
         for i in s..e {
             vals.push(self.nth(i).clone());
         }
-        AVLTreeSeqEphSTrait::from_vec(vals)
+        AVLTreeSeqEphS::from_vec(vals)
     }
 }
 
@@ -363,3 +367,38 @@ fn set_link<T: Copy + Debug>(node: &mut Link<T>, index: N, value: T) -> Result<(
         }
     }
 }
+
+ 
+
+
+#[macro_export]
+macro_rules! AVLTreeSeqEph {
+    () => { $crate::AVLTreeSeqEph::AVLTreeEphS::new() };
+    ($x:expr; $n:expr) => {{
+        let mut t = $crate::AVLTreeSeqEph::AVLTreeEphS::new();
+        for _ in 0..$n { t.push_back($x); }
+        t
+    }};
+    ($($x:expr),* $(,)?) => {{
+        let mut t = $crate::AVLTreeSeqEph::AVLTreeEphS::new();
+        $( { t.push_back($x); } )*
+        t
+    }};
+}
+
+
+impl<T: Eq + Copy + Debug> PartialEq for AVLTreeSeqEphS<T> {
+    fn eq(&self, other: &Self) -> bool {
+        if self.length() != other.length() {
+            return false;
+        }
+        for i in 0..self.length() {
+            if self.nth(i) != other.nth(i) {
+                return false;
+            }
+        }
+        true
+    }
+}
+
+impl<T: Eq + Copy + Debug> Eq for AVLTreeSeqEphS<T> {}

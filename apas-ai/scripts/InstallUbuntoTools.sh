@@ -8,8 +8,8 @@ fi
 
 sudo apt-get update -y
 sudo apt-get install -y build-essential pkg-config libssl-dev curl git unzip jq ripgrep
-sudo apt-get install universal-ctags
+sudo apt-get install -y universal-ctags || sudo apt-get install -y exuberant-ctags || sudo apt-get install -y ctags
 cargo install rusty-tags
 
-echo "Installed base Unix tools: build-essential, pkg-config, libssl-dev, curl, git, unzip, jq, ripgrep"
+echo "Installed base Unix tools: build-essential, pkg-config, libssl-dev, curl, git, unzip, jq, ripgrep, (universal-)ctags, rusty-tags"
 

@@ -1,7 +1,7 @@
 //! Per (immutable, structurally shared semantics) Array sequence variants.
 //!
 //! Abstract:
-//! - Defines `ArraySPer<T>` backed by `Box<[T]>` with immutable APIs.
+//! - Defines `ArrayPerS<T>` backed by `Box<[T]>` with immutable APIs.
 //! - Provides trait `ArraySeqPer<T>` mirroring `ArraySeq` but all updates return new values.
 //! - Uses only safe Rust. Builders may allocate via `Vec` and convert to boxed slices.
 
@@ -47,6 +47,8 @@ impl<T> ArrayPerS<T> {
     /// Convenience: build from a Vec without extra copies when capacity==len.
     /// APAS: Work Θ(n) worst case, Span Θ(1)
     pub fn from_vec(v: Vec<T>) -> ArrayPerS<T> { ArrayPerS { data: v.into_boxed_slice() } }
+
+    pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
 }
 
 impl<T: Eq> PartialEq for ArrayPerS<T> {
@@ -90,6 +92,13 @@ impl<T> ArraySeqPerTrait<T> for ArrayPerS<T> {
         ArrayPerS::from_vec(slice.to_vec())
     }
 
+}
+
+#[macro_export]
+macro_rules! ArraySeqPer {
+    () => { $crate::ArraySeqPer::ArrayPerS::from_vec(Vec::new()) };
+    ($x:expr; $n:expr) => { $crate::ArraySeqPer::ArrayPerS::from_vec(vec![$x; $n]) };
+    ($($x:expr),* $(,)?) => { $crate::ArraySeqPer::ArrayPerS::from_vec(vec![$($x),*]) };
 }
 
 

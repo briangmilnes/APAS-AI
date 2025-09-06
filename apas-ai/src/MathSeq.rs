@@ -17,6 +17,42 @@ pub struct MathSeqS<T> {
     pub data: Vec<T>,
 }
 
+impl<T: PartialEq> PartialEq for MathSeqS<T> {
+    fn eq(&self, other: &Self) -> bool {
+        self.data == other.data
+    }
+}
+
+impl<T: Eq> Eq for MathSeqS<T> {}
+
+impl<T: std::fmt::Debug> std::fmt::Debug for MathSeqS<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let mut v: Vec<&T> = Vec::with_capacity(self.data.len());
+        for x in &self.data {
+            v.push(x);
+        }
+        f.debug_list().entries(v).finish()
+    }
+}
+
+impl<T: std::fmt::Display> std::fmt::Display for MathSeqS<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "[")?;
+        let mut first = true;
+        for x in &self.data {
+            if !first { write!(f, ", ")?; } else { first = false; }
+            write!(f, "{}", x)?;
+        }
+        write!(f, "]")
+    }
+}
+
+impl<T> MathSeqS<T> {
+    pub fn iter(&self) -> std::slice::Iter<'_, T> {
+        self.data.iter()
+    }
+}
+
 /// Core API for `MathSeqS<T>`.
 pub trait MathSeqTrait<T> {
     /// Construct a new sequence of length `length` initialized with `init_value`.
@@ -231,4 +267,11 @@ impl<T> MathSeqTrait<T> for MathSeqS<T> {
         }
         order.into_iter().map(|x| (counts[x], x.clone())).collect()
     }
+}
+
+#[macro_export]
+macro_rules! MathSeq {
+    () => { $crate::MathSeq::MathSeqS { data: Vec::new() } };
+    ($x:expr; $n:expr) => { $crate::MathSeq::MathSeqS { data: vec![$x; $n] } };
+    ($($x:expr),* $(,)?) => { $crate::MathSeq::MathSeqS { data: vec![$($x),*] } };
 }
