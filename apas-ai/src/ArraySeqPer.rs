@@ -100,5 +100,3 @@ macro_rules! ArraySeqPer {
     ($x:expr; $n:expr) => { $crate::ArraySeqPer::ArrayPerS::from_vec(vec![$x; $n]) };
     ($($x:expr),* $(,)?) => { $crate::ArraySeqPer::ArrayPerS::from_vec(vec![$($x),*]) };
 }
-
-

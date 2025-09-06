@@ -1,5 +1,6 @@
 use apas_ai::Types::{N, B};
 use apas_ai::LinkedListPer::{LinkedListPerS, LinkedListPerTrait};
+use apas_ai::LinkedListPer;
 
 #[test]
 fn test_empty_singleton_and_predicates() {
@@ -33,9 +34,16 @@ fn test_subseq_copy() {
 
 #[test]
 fn test_from_vec_and_debug_format() {
-    let l = LinkedListPerS::from_vec(vec![1, 2, 3]);
+    let l = LinkedListPer![1, 2, 3];
     assert_eq!(<LinkedListPerS<N> as LinkedListPerTrait<N>>::length(&l), 3);
     assert_eq!(format!("{:?}", l), "[1, 2, 3]");
+}
+
+#[test]
+fn test_iter_inorder_collect() {
+    let l = LinkedListPer![10, 20, 30];
+    let vals: Vec<N> = l.iter().copied().collect();
+    assert_eq!(vals, vec![10, 20, 30]);
 }
 
 #[test]
@@ -47,7 +55,7 @@ fn test_nth_out_of_bounds_panics() {
 
 #[test]
 fn test_display_impl() {
-    let l = LinkedListPerS::from_vec(vec![1, 2, 3]);
+    let l = LinkedListPer![1, 2, 3];
     assert_eq!(format!("{}", l), "[1, 2, 3]");
 }
 

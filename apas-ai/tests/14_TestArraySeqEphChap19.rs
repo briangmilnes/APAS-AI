@@ -2,7 +2,7 @@
 
 use apas_ai::Types::{N, B, O};
 use apas_ai::{ArraySeqEphS, ArraySeqEphTrait, ArraySeqEphChap18Trait, ArraySeqEphChap19Trait};
-
+use apas_ai::ArraySeqEph;
 
 #[test]
 fn test_empty() {
@@ -13,14 +13,14 @@ fn test_empty() {
 #[test]
 fn test_singleton() {
     let s: ArraySeqEphS<N> = <ArraySeqEphS<N> as ArraySeqEphTrait<N>>::singleton(42);
-    assert_eq!(s, ArraySeqEphS::from_vec(vec![42]));
+    assert_eq!(s, ArraySeqEph![42]);
 }
 
 #[test]
 fn test_map() {
     let a = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| i + 1, 5);
     let b = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::map(&a, |x| x * 2);
-    assert_eq!(b, ArraySeqEphS::from_vec(vec![2, 4, 6, 8, 10]));
+    assert_eq!(b, ArraySeqEph![2, 4, 6, 8, 10]);
 }
 
 #[test]
@@ -28,7 +28,7 @@ fn test_append() {
     let a = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| i + 1, 3);
     let b = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| i + 4, 2);
     let c = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::append(&a, &b);
-    assert_eq!(c, ArraySeqEphS::from_vec(vec![1, 2, 3, 4, 5]));
+    assert_eq!(c, ArraySeqEph![1, 2, 3, 4, 5]);
 }
 
 #[test]
@@ -36,13 +36,13 @@ fn test_append2() {
     let a = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| i + 1, 3);
     let b = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| i + 4, 2);
     let c = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::append2(&a, &b);
-    assert_eq!(c, ArraySeqEphS::from_vec(vec![1, 2, 3, 4, 5]));
+    assert_eq!(c, ArraySeqEph![1, 2, 3, 4, 5]);
 }
 
 #[test]
 fn test_deflate_true() {
     let y = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::deflate(|&x: &N| if x % 2 == 0 { B::True } else { B::False }, &6);
-    assert_eq!(y, ArraySeqEphS::from_vec(vec![6]));
+    assert_eq!(y, ArraySeqEph![6]);
 }
 
 #[test]
@@ -55,28 +55,28 @@ fn test_deflate_false() {
 fn test_filter_even_numbers() {
     let a = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| i + 1, 10);
     let evens = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::filter(&a, |x| if *x % 2 == 0 { B::True } else { B::False });
-    assert_eq!(evens, ArraySeqEphS::from_vec(vec![2, 4, 6, 8, 10]));
+    assert_eq!(evens, ArraySeqEph![2, 4, 6, 8, 10]);
 }
 
 #[test]
 fn test_filter_none() {
     let a = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| i, 5);
     let odds_only = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::filter(&a, |x| if *x % 2 == 1 { B::True } else { B::False });
-    assert_eq!(odds_only, ArraySeqEphS::from_vec(vec![1, 3]));
+    assert_eq!(odds_only, ArraySeqEph![1, 3]);
 }
 
 #[test]
 fn test_update_in_bounds() {
     let mut a = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| i + 1, 5);
     let _ = <ArraySeqEphS<N> as ArraySeqEphChap18Trait>::update(&mut a, (2, 99));
-    assert_eq!(a, ArraySeqEphS::from_vec(vec![1, 2, 99, 4, 5]));
+    assert_eq!(a, ArraySeqEph![1, 2, 99, 4, 5]);
 }
 
 #[test]
 fn test_update_out_of_bounds() {
     let mut a = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| i + 1, 3);
     let _ = <ArraySeqEphS<N> as ArraySeqEphChap18Trait>::update(&mut a, (10, 7));
-    assert_eq!(a, ArraySeqEphS::from_vec(vec![1, 2, 3]));
+    assert_eq!(a, ArraySeqEph![1, 2, 3]);
 }
 
 #[test]
@@ -132,9 +132,9 @@ fn test_append_with_empty() {
     let e: ArraySeqEphS<N> = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|_| 0, 0);
     let a = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| i + 1, 3);
     let left = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::append(&e, &a);
-    assert_eq!(left, ArraySeqEphS::from_vec(vec![1, 2, 3]));
+    assert_eq!(left, ArraySeqEph![1, 2, 3]);
     let right = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::append(&a, &e);
-    assert_eq!(right, ArraySeqEphS::from_vec(vec![1, 2, 3]));
+    assert_eq!(right, ArraySeqEph![1, 2, 3]);
 }
 
 #[test]
@@ -168,7 +168,7 @@ fn test_select_boundary() {
 fn test_subseq_basic() {
     let a = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| (i + 1) * 10, 5);
     let s = <ArraySeqEphS<N> as ArraySeqEphTrait<N>>::subseq_copy(&a, 1, 3);
-    assert_eq!(s, ArraySeqEphS::from_vec(vec![20, 30, 40]));
+    assert_eq!(s, ArraySeqEph![20, 30, 40]);
 }
 
 #[test]
@@ -200,9 +200,9 @@ fn test_scan_sum_basic_ch19() {
 fn test_flatten_ch19() {
     let s1 = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| i + 1, 2);
     let s2 = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|i| i + 3, 2);
-    let nested: ArraySeqEphS<ArraySeqEphS<N>> = ArraySeqEphS::from_vec(vec![s1, s2]);
+    let nested: ArraySeqEphS<ArraySeqEphS<N>> = ArraySeqEph![s1, s2];
     let flat = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::flatten(&nested);
-    assert_eq!(flat, ArraySeqEphS::from_vec(vec![1, 2, 3, 4]));
+    assert_eq!(flat, ArraySeqEph![1, 2, 3, 4]);
 }
 
  

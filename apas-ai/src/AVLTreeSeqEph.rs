@@ -368,19 +368,16 @@ fn set_link<T: Copy + Debug>(node: &mut Link<T>, index: N, value: T) -> Result<(
     }
 }
 
- 
-
-
 #[macro_export]
 macro_rules! AVLTreeSeqEph {
-    () => { $crate::AVLTreeSeqEph::AVLTreeEphS::new() };
+    () => { $crate::AVLTreeSeqEph::AVLTreeSeqEphS::from_vec(Vec::new()) };
     ($x:expr; $n:expr) => {{
-        let mut t = $crate::AVLTreeSeqEph::AVLTreeEphS::new();
+        let mut t = $crate::AVLTreeSeqEph::AVLTreeSeqEphS::from_vec(Vec::new());
         for _ in 0..$n { t.push_back($x); }
         t
     }};
     ($($x:expr),* $(,)?) => {{
-        let mut t = $crate::AVLTreeSeqEph::AVLTreeEphS::new();
+        let mut t = $crate::AVLTreeSeqEph::AVLTreeSeqEphS::from_vec(Vec::new());
         $( { t.push_back($x); } )*
         t
     }};

@@ -138,3 +138,12 @@ fn test_domain_empty_is_empty() {
     assert_eq!(d.len(), 0);
 }
 
+#[test]
+fn test_iter_collect_and_sum() {
+    let s: MathSeqS<N> = MathSeq![1, 2, 3, 4];
+    let vals: Vec<N> = s.iter().copied().collect();
+    assert_eq!(vals, vec![1, 2, 3, 4]);
+    let sum: N = s.iter().copied().sum();
+    assert_eq!(sum, 10);
+}
+
