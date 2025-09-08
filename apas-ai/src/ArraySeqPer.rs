@@ -14,25 +14,25 @@ pub struct ArrayPerS<T> { pub data: Box<[T]> }
 /// Sequence trait for `ArrayPerS<T>` with immutable operations.
 pub trait ArraySeqPerTrait<T> {
     /// APAS: Work Θ(length), Span Θ(1)
-    fn new(length: N, init_value: T) -> ArrayPerS<T> where T: Clone;
+    fn new(length: N, init_value: T) -> Self where T: Clone;
     /// APAS: Work Θ(1), Span Θ(1)
     fn length(&self) -> N;
     /// APAS: Work Θ(1), Span Θ(1)
     fn nth(&self, index: N) -> &T;
     /// APAS: Work Θ(1), Span Θ(1)
-    fn empty() -> ArrayPerS<T>;
+    fn empty() -> Self;
     /// APAS: Work Θ(1) in ephemeral arrays; persistent update requires copy. Work Θ(|a|), Span Θ(1)
     /// gpt-5-hard: Work Θ(|a|), Span Θ(1)
     /// BUG: APAS and gpt-5-hard algorithmic analyses differ.
-    fn set(&self, index: N, item: T) -> Result<ArrayPerS<T>, &'static str> where T: Clone;
+    fn set(&self, index: N, item: T) -> Result<Self, &'static str> where T: Clone, Self: Sized;
     /// APAS: Work Θ(1), Span Θ(1)
-    fn singleton(item: T) -> ArrayPerS<T>;
+    fn singleton(item: T) -> Self;
     /// APAS: Work Θ(1), Span Θ(1)
     fn isEmpty(&self) -> B;
     /// APAS: Work Θ(1), Span Θ(1)
     fn isSingleton(&self) -> B;
     /// APAS: Work Θ(length), Span Θ(1)
-    fn subseq_copy(&self, start: N, length: N) -> ArrayPerS<T> where T: Clone + Eq;
+    fn subseq_copy(&self, start: N, length: N) -> Self where T: Clone + Eq, Self: Sized;
 }
 
 impl<T> ArrayPerS<T> {
@@ -46,7 +46,7 @@ impl<T> ArrayPerS<T> {
 
     /// Convenience: build from a Vec without extra copies when capacity==len.
     /// APAS: Work Θ(n) worst case, Span Θ(1)
-    pub fn from_vec(v: Vec<T>) -> ArrayPerS<T> { ArrayPerS { data: v.into_boxed_slice() } }
+    pub fn from_vec(v: Vec<T>) -> Self { ArrayPerS { data: v.into_boxed_slice() } }
 
     pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
 }
@@ -68,28 +68,28 @@ impl<T: std::fmt::Debug> std::fmt::Debug for ArrayPerS<T> {
 }
 
 impl<T> ArraySeqPerTrait<T> for ArrayPerS<T> {
-    fn new(length: N, init_value: T) -> ArrayPerS<T> where T: Clone {
-        ArrayPerS::from_vec(vec![init_value; length])
+    fn new(length: N, init_value: T) -> Self where T: Clone {
+        Self::from_vec(vec![init_value; length])
     }
     fn length(&self) -> N { self.data.len() }
     fn nth(&self, index: N) -> &T { &self.data[index] }
-    fn empty() -> ArrayPerS<T> { ArrayPerS::from_vec(Vec::new()) }
-    fn set(&self, index: N, item: T) -> Result<ArrayPerS<T>, &'static str> where T: Clone {
+    fn empty() -> Self { Self::from_vec(Vec::new()) }
+    fn set(&self, index: N, item: T) -> Result<Self, &'static str> where T: Clone {
         if index >= self.data.len() { return Err("Index out of bounds"); }
         let mut v: Vec<T> = self.data.to_vec();
         v[index] = item;
-        Ok(ArrayPerS::from_vec(v))
+        Ok(Self::from_vec(v))
     }
-    fn singleton(item: T) -> ArrayPerS<T> { ArrayPerS::from_vec(vec![item]) }
+    fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
     fn isEmpty(&self) -> B { if self.data.len() == 0 { B::True } else { B::False } }
     fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
-    fn subseq_copy(&self, start: N, length: N) -> ArrayPerS<T> where T: Clone + Eq {
+    fn subseq_copy(&self, start: N, length: N) -> Self where T: Clone + Eq {
         let n = self.data.len();
         let s = start.min(n);
         let e = start.saturating_add(length).min(n);
-        if e <= s { return <ArrayPerS<T> as ArraySeqPerTrait<T>>::empty(); }
+        if e <= s { return <Self as ArraySeqPerTrait<T>>::empty(); }
         let slice = &self.data[s..e];
-        ArrayPerS::from_vec(slice.to_vec())
+        Self::from_vec(slice.to_vec())
     }
 
 }

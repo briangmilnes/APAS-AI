@@ -27,17 +27,17 @@ fn test_add_last_and_delete_last() {
 
 #[test]
 fn test_new_empty_singleton_and_predicates() {
-    let e: MathSeqS<N> = <MathSeqS<N> as MathSeqTrait<N>>::empty();
+    let e: MathSeqS<N> = MathSeq![];
     assert_eq!(e.length(), 0);
-    assert_eq!(<MathSeqS<N> as MathSeqTrait<N>>::isEmpty(&e), B::True);
-    assert_eq!(<MathSeqS<N> as MathSeqTrait<N>>::isSingleton(&e), B::False);
+    assert_eq!(e.isEmpty(), B::True);
+    assert_eq!(e.isSingleton(), B::False);
 
-    let s = <MathSeqS<N> as MathSeqTrait<N>>::singleton(7);
+    let s: MathSeqS<N> = MathSeq![7];
     assert_eq!(s.length(), 1);
-    assert_eq!(<MathSeqS<N> as MathSeqTrait<N>>::isEmpty(&s), B::False);
-    assert_eq!(<MathSeqS<N> as MathSeqTrait<N>>::isSingleton(&s), B::True);
+    assert_eq!(s.isEmpty(), B::False);
+    assert_eq!(s.isSingleton(), B::True);
 
-    let mut a = <MathSeqS<N> as MathSeqTrait<N>>::new(3, 0);
+    let mut a: MathSeqS<N> = MathSeq![0; 3];
     assert_eq!(a.length(), 3);
     assert_eq!(*a.nth(1), 0);
     let _ = a.set(1, 42);
@@ -71,10 +71,10 @@ fn test_subseq_view_bounds() {
 #[test]
 fn test_subseq_copy_bounds() {
     let s: MathSeqS<N> = MathSeq![1, 2, 3, 4, 5];
-    let c1 = <MathSeqS<N> as MathSeqTrait<N>>::subseq_copy(&s, 1, 3);
+    let c1 = s.subseq_copy(1, 3);
     assert_eq!(c1.length(), 3);
     assert_eq!(*c1.nth(0), 2);
-    let c2 = <MathSeqS<N> as MathSeqTrait<N>>::subseq_copy(&s, 10, 3);
+    let c2 = s.subseq_copy(10, 3);
     assert_eq!(c2.length(), 0);
 }
 

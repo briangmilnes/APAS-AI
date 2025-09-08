@@ -1,0 +1,309 @@
+ Bob, Frank, Umut and Guy,
+
+  Think of this as 'A Type Devil's Dictionary of Rust in Cursor with gpt-5-hard'
+ with some ideas for an undergraduate project to improve rust.
+
+  It is very frustrating to try and learn a new programming language because all
+ of the introductory documentation is made for the undergraduate level and because
+ all of the popular designers seem to have never taken type theory and so invent
+ new terms.
+
+  The weirdest one in Rust so far is calling a piece of syntax: TurboFish,
+ another is receiver. 
+
+  So as I have been learning, I have had gpt-5-hard writing me simple explanations
+ that you might find useful. Heck, it will even table ML modules vs Rust trait/impl
+ vs F*. 
+
+  It would, in my humble opinion, be a great undergraduate summer project to find and fix
+ 'upward compatible' bad things in rust. Rust is popular, you folks are teaching it, and
+ it's winning the popularity contest of programming languages. Plus it has a lot of open
+ jobs and gpt-5-hard writes pretty good rust. The RustConf is in early September each
+ year, so you'd have a good chance of having some form of paper presentable at the end of
+ the summer.  You could name it 'Rustoleum: scraping off some of the rust in Rust."
+ 
+GPT + Cursor 
+
+  Cursor build from VS code so you're not stuck in some broweser cutting and pasting. It
+ will even do things like "PAUSE" in an agent session and I can say ETA? I can do that
+ faster in emacs. Save the files. Fix stuff in emacs and then go back in and have it
+ reread the files.
+
+  I have to say I love gpt-5 but it is a bit slow particularly when you are modifying
+ files, writing a new test file is a bit faster.  Giving it a 'go through 20 test files
+ and apply these cleanups' can take 5-12 hours. But it does write good test and benchmark
+ files for you.
+
+  It does not hallucinate much, but it does some. It misunderstands your code base a
+ bit. However, it is in the habit of forgetting to check things and not clearly following
+ all your rules. Hugely better than my F*+Claude attempts but it is annoying when it
+ forgets to use some of your rules or forgets something in a to-do list.
+
+  gpt-5-* has a habit of randomly aliasing types though. Although in Cursor it reads your
+ prompts and generates (often overly general) rules from them.  And you can put in your
+ own general rules and project specific rules.  So slowly but surely you can get it to
+ stop doing silly stuff.  It still is a bit jejune in its commenting, but I've got it
+ thinking better about that also.
+
+  One of the nicest things about gpt in Cursor is you and ask it how to adjust Cursor's
+ settings for what you want. No more hand digging through documentation. Although it's
+ answers are not always 100% correct.
+
+  And if gpt starts running ahead of what you really want, you can tame that. I
+ particularly put in the famous line from Lawrence of Arabia: Lawrence: Shouldn't an
+ officer always use his initiative at all times? Gen. Allenby: Not really, it's awfully
+ dangerous. And gpt + Cursor realized that I wanted to go more step by step.
+
+  It is smart enough to do basic algorithmic analysis and it has proposed solutions (that
+ I have been to frightened to read) for the APAS problems.  I have yet to compare all it's
+ algorithmic analyses to APAS's but I can cut and paste your analysis text in and it will
+ read the math and comment the file lines appropriately. Pretty good.
+
+  This LLM is smart enough, does enough planning but hides it from you too much. But when
+ LLMs gets 10 times faster and 10 times cheaper (google just claimes 30% power drop for
+ example), it's going to beyond the quite amazing that is now into mind boggling to code
+ with.
+
+  My guess is that it will even crank out type theory in the
+ style of Bob's text if you ask it. 
+
+  As Scott Fahlman quipped while writing Common Lisp, "upward
+ compatibility is the root of all evil.'
+
+  But I am documenting features with:
+    A) Bad, unfixable
+    B) Bad, fixable but not upward compatabile.
+    C) Fixable, upward compatible.
+
+  Lot's of these fixables are in extending syntax, compilation and some
+ are even in the type inference. So it's a nice mix things for students
+ to work on.
+
+- Definitions:
+  - crate: compilation unit; roots at src/lib.rs or src/main.rs; absolute paths begin crate::
+  - module: namespace; declared with mod name; or inline mod name { ... }; controls visibility and paths
+  - item: any top-level definition (mod, use, struct, enum, union, trait, impl, fn, const, static, type, macro)
+  - function: free function at module scope; callable by path; signature defines type
+  - method: function in an impl with a receiver; call as v.m(x)
+  - associated function: function in an impl without a receiver; call as Type::f(args)
+  - associated type: type member of a trait; specified in impls; may have a default
+  - associated const: const member of a trait or impl; compile-time value bound to the item
+  - generic associated type (GAT): an associated type that itself takes generics; models a
+    "type family". Example: trait Family { type Seq<T>; } impl<T> Family for X { type Seq<U> = XSeq<U>; }
+    Use to express "same container with a different inner T" (e.g., return Self::Seq<U>); plain Self
+    cannot capture inner-type changes. Stabilized in Rust 1.65.
+  - path: hierarchical name using ::; absolute crate::; relative self:: and super::
+  - visibility: pub, pub(crate), pub(super), pub(in path); governs reachability
+  - use / pub use: import or re-export names into scope; no new definitions
+  - macro (macro_rules!): declarative macro; export with #[macro_export]; invoked as Name!(...)
+  - type alias: type Name = Existing; new name, same type
+  - newtype: struct Name(Existing); distinct type with same representation
+  - attributes: inner #![..] at crate/module roots, outer #[..] on items
+
+- Module Namespace
+  - A file does NOT declare it's module namespace.
+  - This all gets bound together in lib.rs
+  - Fixable, upward compatible. 
+  - But in general it's rather strange namespace is unfixable.
+  - I strongly prefer each major concept to be in a separate namespace myself.
+
+- Trait:
+  - can put in:
+    - method signatures: fn m(&self, x: T) -> Self
+    - default method bodies: fn m(&self) -> U { ... }
+    - associated types: type Item;
+    - associated types with default: type Item = U;
+    - associated constants: const N: usize;
+    - If you do the type theorist's obvious way of writing
+      out fn m(&self, x: T) -> MyType<T> then type inference
+      fails to identify MyType<T> with Self. - Bad, fixable, upward compatible.
+  - can't put in:
+    - fields or data members - Fixable, read only would be upwardly compatible.
+    - struct/enum/union definitions - Fixable, upward compatible.
+    - modules: mod m;
+    - imports: use path::Item;
+    - free consts/statics: const X: T = ...; static X: T = ...; - Fixable, upward compatible.
+    - free type aliases: type Alias = T; - Fixable, upward compatible.
+    - impl blocks
+
+- Impl:
+  - impl Trait for Type:
+    - can put in:
+      - method implementations: fn m(&self) -> U { ... }
+      - associated type bindings: type Item = RealType;
+      - associated const values: const N: usize = 8;
+    - can't put in:
+      - new items not declared in the trait (no extra methods here)
+      - struct/enum/union definitions - Bad, perhaps upwardly compatibly fixable.
+      - modules/imports/macros: mod/use/macro_rules!
+      - free type aliases: type Alias = T; 
+  - impl Type (inherent):
+    - can put in:
+      - associated functions: fn new(args) -> Self
+      - methods: fn m(&self) -> U
+      - associated consts: const NAME: Type = VALUE;
+    - can't put in:
+      - associated types (only allowed in trait impls)
+      - struct/enum/union definitions - 
+         instantiating an abstract type from a trait in an implementation is probably
+         fixable and upwardly compatible.
+      - modules/imports/macros: mod/use/macro_rules!
+      - free type aliases: type Alias = T;
+
+- File top level (module file):
+  - can put in:
+    - module declarations: mod m; or inline: mod m { ... }
+    - imports and re-exports: use path::Item; pub use path::Item;
+    - type definitions: struct S { .. } enum E { .. } union U { .. }
+    - trait definitions: trait T { .. }
+    - impl blocks: impl T for S { .. } impl S { .. }
+    - type aliases: type N = usize;
+    - constants/statics: const N: usize = 0; static S: i32 = 1;
+    - free functions: pub fn f() {}
+    - macro definitions: macro_rules! Name { ( $($t:tt)* ) => { /* ... */ } }
+    - attributes: crate-level #![deny(warnings)] and item-level #[cfg(test)]
+    - extern crate name; (rarely needed in 2018+)
+  - can't put in:
+    - statements or expressions outside items: let x = 1; x + 1;
+    - control flow outside functions: return; break; continue;
+
+- UFCS (Uniform Function Call Syntax):
+  - Purpose: fully qualify the trait implementation: <Type as Trait>::item.
+  - Why: disambiguate overlapping names; call trait-associated items without a
+    receiver (cannot infer Self).
+  - Forms: <Type as Trait>::method(&value, args); <Type as Trait>::assoc_fn(args);
+    <Type as Trait>::CONST / ::AssocType.
+  - Must use when: name collisions; associated fn returns Self with no expected
+    type; inference/imports can’t disambiguate.
+  - Avoiding UFCS: method-call syntax when trait is in scope (value.method(args));
+    provide an expected type (Trait::<..>::assoc_fn(..)); add inherent wrappers
+    (Type::new(..)).
+  - UFCS is a bit of pain in the arse. 
+    You do have to let e : MyType<T> = MyTypeTrait::new() for example,
+    but you have to do that in F* in many places also.
+    This could be upwardly compatibily fixed with something like:
+    let e : = MyTypeTrait<T here>::new<or T here>() for example.
+     - Fixable, upward compatible.
+  - If you don't get your module imports just right then Rust wants
+   the really annoying type specialization syntax:
+    let e = <T1 as T2>::TraitFn().
+   - I am not sure about how to fix this or if it is really upwardly
+    compatible. But rust's lint could certainly warn you that
+    "using uses like THIS would obviate your need for the TurboFish (LOL)
+     syntax".
+
+- Core Rust Types:
+  - Ownership/smart pointers: Box<T>; Rc<T>; Arc<T>; Weak<T>; Pin<P>.
+  - Interior mutability: Cell<T>; RefCell<T>; UnsafeCell<T>.
+  - References/raw pointers: &T, &mut T; *const T, *mut T; NonNull<T>.
+  - Option/Result/markers: Option<T>; Result<T, E>; Infallible/never (!);
+    PhantomData<T>; PhantomPinned.
+  - Uninitialized/ownership control: MaybeUninit<T>; ManuallyDrop<T>.
+  - Borrowed/owned switch: Cow<'a, T>.
+  - Collections/strings: Vec<T>, VecDeque<T>, LinkedList<T>, BinaryHeap<T>;
+    String, &str; HashMap, BTreeMap, HashSet, BTreeSet; OsString/OsStr;
+    PathBuf/Path.
+  - Slices/arrays/ranges: [T; N]; &[T], &mut [T]; Range, RangeInclusive, RangeFrom,
+    RangeTo, RangeFull.
+  - Concurrency: Mutex<T>, RwLock<T>, Condvar, Barrier; Once, OnceLock<T>;
+    std::sync::mpsc::{Sender, Receiver, SyncSender}.
+  - Atomics: AtomicBool, AtomicIsize/Usize, AtomicI8/16/32/64/128,
+    AtomicU8/16/32/64/128, AtomicPtr<T>.
+  - Threads/time: JoinHandle<T>, Thread, LocalKey<T>; Duration, Instant,
+    SystemTime.
+  - FFI helpers: CString, CStr.
+  - Trait objects (type form): Box<dyn Trait>, &dyn Trait, &mut dyn Trait.
+
+- Looping Syntax:
+  - loop: loop { work(); if done { break; } }; with value: let r = loop {
+    break 42; };
+  - while: while cond() { step(); }; while let Some(x) = it.next() { use_x(x);
+    };
+  - for ranges: for i in 0..n { use_i(i); }; for i in 0..=n { use_i(i); };
+    for i in (0..n).rev() { use_i(i); };
+  - for iterators: for x in iter { f(x); }; for (i, x) in iter.enumerate() {
+    g(i, x); };
+  - borrowing: for x in &v { read(x); }; for x in &mut v { *x += 1; };
+  - labels: 'outer: for i in 0..n { for j in 0..m { break 'outer; } };
+  - continue/break: for i in 0..n { if skip(i) { continue; } do_i(i); };
+    'scan: loop { if skip() { continue 'scan; } break; };
+  - break with value (loop only): 'L: loop { break 'L 7; };
+  - iterator style: iter.for_each(|x| h(x));
+
+- Importing a Macro:
+  - Macros are invoked with '!' but imported without it. You cannot list a macro
+    with '!' inside a brace import.
+  - Macros have almost ZERO type checking. Even paths within them are not
+    checked for correctness. - Fixable
+  - In tests (e.g., 05_Test… using LinkedListPer!):
+    - Invalid: use apas_ai::LinkedListPer::{LinkedListPerS, LinkedListPerTrait, LinkedListPer!}; 
+      and even use apas_ai::LinkedListPer::{LinkedListPerS, LinkedListPerTrait, LinkedListPer};
+      is invalid. 
+    - So they are also in some weird namespace of their own. 
+    - Bring macro name by module path: use apas_ai::LinkedListPer;
+    - Invoke: LinkedListPer!(1, 2, 3);
+
+    - Alternative path call (if exported): apas_ai::LinkedListPer!(1, 2, 3);
+    - If not #[macro_export], re-export in lib.rs: pub use crate::LinkedListPer::
+      LinkedListPer;
+    - So as macros have this strange use namespace issue, everyone ends up
+     putting them in lib.rs when you build the package. This could be fixed
+     in a variety of ways, such as 
+
+- Cargo
+  - Rust has this implicit concept of a crate, which is good enough.
+  - cargo build does the compilation.
+  - But it DOES NOT provide the compilation errors all in order by 
+    file NOR does it even order them by appearance in the file.
+  - This would probably be very hard to fix but would be upward
+    compatible.
+  - It does not let you say "just compile these X files" or
+    "this file and all of its dependencies" so you can work
+    in an orderly fashion. Fixable with a switch, and upwardly
+    compatible.
+
+
+- Threads (spawn, join, and scope):
+  - Short answer: yes. std::thread::spawn(f) returns a JoinHandle<T>; call
+    join() later to wait. Example: let h = std::thread::spawn(|| 42); let v =
+    h.join().unwrap();
+  - Data structures:
+    - JoinHandle<T>: owned handle to a running thread; join() waits and yields
+      T (or a panic payload).
+    - Arc<T>: thread-safe shared ownership; use move + Arc::clone(&x) to share
+      into threads.
+    - Mutex<T>/RwLock<T>: interior mutability for shared state; wrap in
+      Arc<Mutex<_>> or Arc<RwLock<_>>.
+    - Channels (std::sync::mpsc): Sender<T>/Receiver<T> for message passing;
+      tx.send(v); rx.recv().
+    - Atomics: AtomicBool/AtomicUsize/etc. for lock-free flags/counters.
+  - Spawn now, wait later (APAS-style): push all JoinHandle<_> into a Vec and
+    then for h in handles { h.join().unwrap(); }.
+  - Scoped threads: std::thread::scope(|s| { s.spawn(|| work()); s.spawn(||
+    work2()); }); The scope returns only after all spawned threads finish,
+    making the block an implicit wait-for-all.
+  - Thread exit semantics: a thread ends when its closure returns or panics.
+    Dropping a JoinHandle does not wait (detaches); you must join, use scoped
+    threads, or an RAII guard that joins on Drop.
+  - Why “extent ends ⇒ wait-for-all”: with thread::scope the lifetime of the
+    scope enforces that borrowed data cannot outlive the block, and the API
+    joins all children before returning; thus leaving the extent guarantees all
+    threads have finished (a wait-for-all barrier).
+
+- GATs in practice (simple)
+  - Problem: need “same container with a different inner T” (e.g., Seq<T> → Seq<(A, Seq<B>)>),
+    but plain `Self` can’t express changing the inner type.
+  - Idea: define a family with a generic associated type naming your container for any inner T.
+  - Minimal pattern:
+    trait Family { type Seq<T>; }
+    trait SeqOps: Family {
+        fn map<A, B>(a: &Self::Seq<A>, f: impl Fn(&A) -> B) -> Self::Seq<B>;
+        fn collect<A: Clone + Eq, B>(a: &Self::Seq<(A, B)>) -> Self::Seq<(A, Self::Seq<B>)>;
+    }
+    // Bind the family for a concrete container
+    impl<T0> Family for LinkedListEphS<T0> { type Seq<T> = LinkedListEphS<T>; }
+    // impl SeqOps for LinkedListEphS<_> { /* use LinkedListEphS internally */ }
+  - Call sites (when type inference needs help):
+    let out = <LinkedListEphS<_> as SeqOps>::collect(&pairs);
+  - Takeaway: use a GAT “type family” to express container-closed operations without hardcoding
+    concrete types; keep concrete returns if you don’t want GATs.

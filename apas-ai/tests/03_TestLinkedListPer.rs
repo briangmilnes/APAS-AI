@@ -4,38 +4,38 @@ use apas_ai::LinkedListPer;
 
 #[test]
 fn test_empty_singleton_and_predicates() {
-    let l: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerTrait<N>>::empty();
-    assert_eq!(<LinkedListPerS<N> as LinkedListPerTrait<N>>::length(&l), 0);
-    assert_eq!(<LinkedListPerS<N> as LinkedListPerTrait<N>>::isEmpty(&l), B::True);
-    let one = <LinkedListPerS<N> as LinkedListPerTrait<N>>::singleton(7);
-    assert_eq!(<LinkedListPerS<N> as LinkedListPerTrait<N>>::isSingleton(&one), B::True);
+    let l: LinkedListPerS<N> = LinkedListPer![];
+    assert_eq!(l.length(), 0);
+    assert_eq!(l.isEmpty(), B::True);
+    let one = LinkedListPer![7];
+    assert_eq!(one.isSingleton(), B::True);
 }
 
 #[test]
 fn test_new_and_nth_set() {
-    let l = <LinkedListPerS<N> as LinkedListPerTrait<N>>::new(3, 1);
-    assert_eq!(*<LinkedListPerS<N> as LinkedListPerTrait<N>>::nth(&l, 0), 1);
-    assert_eq!(*<LinkedListPerS<N> as LinkedListPerTrait<N>>::nth(&l, 2), 1);
-    let l2 = <LinkedListPerS<N> as LinkedListPerTrait<N>>::set(&l, 1, 9).unwrap();
+    let l = LinkedListPer![1; 3];
+    assert_eq!(*l.nth(0), 1);
+    assert_eq!(*l.nth(2), 1);
+    let l2 = l.set(1, 9).unwrap();
     // original remains unchanged (persistent semantics)
-    assert_eq!(*<LinkedListPerS<N> as LinkedListPerTrait<N>>::nth(&l, 1), 1);
+    assert_eq!(*l.nth(1), 1);
     // updated copy has the change
-    assert_eq!(*<LinkedListPerS<N> as LinkedListPerTrait<N>>::nth(&l2, 1), 9);
+    assert_eq!(*l2.nth(1), 9);
 }
 
 #[test]
 fn test_subseq_copy() {
-    let l = <LinkedListPerS<N> as LinkedListPerTrait<N>>::new(5, 2);
-    let sub = <LinkedListPerS<N> as LinkedListPerTrait<N>>::subseq_copy(&l, 1, 3);
-    assert_eq!(<LinkedListPerS<N> as LinkedListPerTrait<N>>::length(&sub), 3);
-    assert_eq!(*<LinkedListPerS<N> as LinkedListPerTrait<N>>::nth(&sub, 0), 2);
-    assert_eq!(*<LinkedListPerS<N> as LinkedListPerTrait<N>>::nth(&sub, 2), 2);
+    let l = LinkedListPer![2; 5];
+    let sub = l.subseq_copy(1, 3);
+    assert_eq!(sub.length(), 3);
+    assert_eq!(*sub.nth(0), 2);
+    assert_eq!(*sub.nth(2), 2);
 }
 
 #[test]
 fn test_from_vec_and_debug_format() {
     let l = LinkedListPer![1, 2, 3];
-    assert_eq!(<LinkedListPerS<N> as LinkedListPerTrait<N>>::length(&l), 3);
+    assert_eq!(l.length(), 3);
     assert_eq!(format!("{:?}", l), "[1, 2, 3]");
 }
 
@@ -49,8 +49,8 @@ fn test_iter_inorder_collect() {
 #[test]
 #[should_panic]
 fn test_nth_out_of_bounds_panics() {
-    let l = <LinkedListPerS<N> as LinkedListPerTrait<N>>::new(2, 0);
-    let _ = <LinkedListPerS<N> as LinkedListPerTrait<N>>::nth(&l, 2);
+    let l = LinkedListPer![0; 2];
+    let _ = l.nth(2);
 }
 
 #[test]

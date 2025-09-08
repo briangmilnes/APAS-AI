@@ -6,16 +6,16 @@ use apas_ai::LinkedListPerChap18::LinkedListPerChap18Trait;
 #[test]
 fn test_tabulate() {
     let a: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap18Trait>::tabulate(|i| i * 2, 5);
-    assert_eq!(<LinkedListPerS<N> as LinkedListPerTrait<N>>::length(&a), 5);
-    assert_eq!(<LinkedListPerS<N> as LinkedListPerTrait<N>>::nth(&a, 3), &6);
+    assert_eq!(a.length(), 5);
+    assert_eq!(a.nth(3), &6);
 }
 
 #[test]
 fn test_map() {
     let a: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap18Trait>::tabulate(|i| i * 2, 5);
     let b: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap18Trait>::map(&a, |x| x + 1);
-    assert_eq!(<LinkedListPerS<N> as LinkedListPerTrait<N>>::nth(&b, 0), &1);
-    assert_eq!(<LinkedListPerS<N> as LinkedListPerTrait<N>>::nth(&b, 4), &9);
+    assert_eq!(b.nth(0), &1);
+    assert_eq!(b.nth(4), &9);
 }
 
 #[test]

@@ -1,0 +1,115 @@
+APAS coding guide: clean modules, macros, and tests with minimal typing
+
+Purpose: Keep modules and tests minimal, readable, and type-inference friendly. Avoid redundant annotations and UFCS unless strictly needed.
+
+Project configuration
+- Use Rust 1.88, edition 2024.
+- In Cargo.toml set:
+  - edition = "2024", rust-version = "1.88".
+  - [lints.rust]:
+    - non_snake_case = "allow"
+    - non_upper_case_globals = "allow"
+    - unused_imports = "allow"
+    - dead_code = "allow"
+- Pin toolchain in rust-toolchain.toml and include rust-analyzer.
+- Ignore editor cruft in .gitignore and .cursorignore (Emacs backups, etc.).
+
+Module layout and exports
+- Put code in src/ModuleX.rs as a public nested module: pub mod ModuleX { ... }.
+- Re-export the public API from src/lib.rs:
+  - pub mod ModuleX;
+  - pub use ModuleX::ModuleX::{TypeX, TraitX};
+- Avoid use crate::* in library code. Prefer explicit imports: use crate::{TypeX, TraitX}.
+
+Import style (modules, tests, benches)
+- Inside the crate: prefer module-qualified globs for a module’s API:
+  - use crate::Mod1::Mod1::*;
+  - use crate::CallMod1::CallMod1::*;
+- Outside the crate (integration tests, benches):
+  - use rustexp::Mod1::Mod1::*;
+  - use rustexp::CallMod1::CallMod1::*;
+- Macros live at the crate root. Always import macros separately when used:
+  - use rustexp::Mod1Seq;   // Mod1Seq![...]
+  - use rustexp::CallMod1Seq; // CallMod1Seq![...]
+
+Traits, types, and methods
+- Prefer implementing a trait directly for the main sequence type, not for wrapper types.
+- Example shape (adjust names as needed):
+  - Trait: Mod1Trait<T> with bounds T: Default + Clone + Debug + Display + Sized
+  - Type: Mod1Seq<T> { data: Vec<T> } derives Clone, PartialEq, Eq, Debug; implements Display
+    (prints like [a, b, c]); provides iter() and IntoIterator for owned and borrowed forms.
+  - Impl:
+    - new() -> Self
+    - set(&mut self, index, value): if in-bounds assign; else resize to index with T::default() then push value (no overwrite-then-assign).
+    - from_vec(Vec<T>) -> Self
+- Inherent methods are allowed (impl Type { ... }) for convenience constructors like new2() if you want a name that doesn’t require UFCS at call sites.
+
+Macros (stable, namespaced, inference-friendly)
+- Use macro_rules! only. Export at crate root with #[macro_export].
+- Define macros inside their module but emit crate-root paths via $crate::... so no imports are needed in dependent modules:
+  - Mod1Seq! builds Mod1Seq { data: vec![...] } and statically requires elements implement Display.
+- Include a private type-check probe near the macro to validate inference where declared:
+  - let _: Mod1Seq<i32> = Mod1Seq![1];
+  - let _: Mod1Seq<&str> = Mod1Seq["a", "b"].
+- When invoking macros in other modules/tests/benches, import them explicitly:
+  - use rustexp::Mod1Seq; use rustexp::CallMod1Seq;
+
+Type inference rules to enforce
+- Good:
+  - Binding with new requires a type: let mut s: Mod1Seq<i32> = Mod1Seq::new();
+  - Non-empty macro forms infer: let s = Mod1Seq![1, 2, 3]; (ints default to i32).
+  - Suffix one literal to steer ints: let s = Mod1Seq![1_i64, 2, 3];
+  - Empty macro requires a type: let s: Mod1Seq<i32> = Mod1Seq![];
+  - Prefer method syntax for instance methods: s.set(2, 5); let d = s.map(|x| x + 1);
+- Avoid:
+  - UFCS in call sites. Keep UFCS centralized in single trait impls only if needed.
+  - Redundant left-hand type when the expression constrains it (non-empty macros).
+  - Wrapper types that just forward to the inner sequence type.
+
+Cross-module helpers (optional)
+- “Call” modules can add trait methods that delegate without increasing call-site types:
+  - CallMod1Trait<T> implemented for Mod1Seq<T> providing new2(), set2(), from_vec(), map().
+  - A CallMod1Seq! macro may forward to Mod1Seq! via $crate::Mod1Seq!(...). No imports needed inside macros addressed via $crate::...
+
+Tests
+- Integration tests live under tests/. Wrap each file in a public module named after the file:
+  - pub mod TestMod1 { ... }, pub mod TestCallMod1 { ... }
+- Don’t add #![allow(non_snake_case)] in tests; rely on [lints.rust] in Cargo.toml.
+- Prefer use rustexp::*; in tests for brevity, or explicit imports if you want tighter scope.
+- Test patterns:
+  - let mut s: Mod1Seq<i32> = Mod1Seq::new();
+  - let s = Mod1Seq![1, 2, 3];
+  - let s: Mod1Seq<i32> = Mod1Seq![]; // only empty requires annotation
+  - let c = CallMod1Seq![1, 2, 3];
+  - c.set2(2, 5);
+  - let d = c.map(|x| x + 1);
+  - Assert on data values, not formats, unless testing Display/Debug.
+  - Prefer i32 in tests where it simplifies typing and inference.
+
+Duplications and naming
+- No duplicate impls for different wrapper types. Keep one canonical type (Mod1Seq<T>) and implement traits for it.
+- Use CamelCase identifiers as needed; snake_case lints are allowed via Cargo.
+- Keep example lines ≤ 80 chars in docs.
+
+Benchmarks (when added)
+- Warm-up ≤ 1s; total ≤ 10s.
+- Cargo.toml entries:
+  - [dev-dependencies] criterion = "0.5"
+  - [[bench]] name = "Mod1_bench", harness = false
+  - [[bench]] name = "CallMod1_bench", harness = false
+- Import style in benches:
+  - use rustexp::Mod1::Mod1::*; use rustexp::CallMod1::CallMod1::*;
+  - use rustexp::Mod1Seq; // if invoking macro forms
+- Criterion config (short runs):
+  - group.sample_size(30)
+  - group.warm_up_time(1 s)
+  - group.measurement_time(6 s)
+- Run: cargo bench
+- Reports: target/criterion/<group>/report/index.html
+  - URL form: file:///path/to/workspace/target/criterion/<group>/report/index.html
+
+Summary policy
+- Favor type inference via non-empty macros and method syntax.
+- Centralize any needed UFCS inside trait impls, not at call sites.
+- Keep API surface minimal: one sequence type, one trait, stable macros.
+

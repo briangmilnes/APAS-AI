@@ -135,27 +135,27 @@ pub struct AVLTreeSeqPerS<T: Copy + Debug> {
 
 pub trait AVLTreeSeqPerTrait<T: Copy + Debug> {
     /// APAS: Work Θ(1), Span Θ(1)
-    fn empty() -> AVLTreeSeqPerS<T>;
+    fn empty() -> Self;
     /// APAS: Work Θ(1), Span Θ(1)
-    fn new() -> AVLTreeSeqPerS<T>;
+    fn new() -> Self;
     /// APAS: Work Θ(1), Span Θ(1)
     fn length(&self) -> N;
     /// APAS: Work Θ(lg(n)), Span Θ(lg(n))
     fn nth(&self, index: N) -> &T;
     /// APAS (ephemeral set Θ(lg n)); Per path-copy Θ(lg n) allocations. Work Θ(lg n), Span Θ(lg n)
-    fn set(&self, index: N, item: T) -> Result<AVLTreeSeqPerS<T>, &'static str>;
+    fn set(&self, index: N, item: T) -> Result<Self, &'static str> where Self: Sized;
     /// APAS: Work Θ(1), Span Θ(1)
-    fn singleton(item: T) -> AVLTreeSeqPerS<T>;
+    fn singleton(item: T) -> Self;
     /// APAS: Work Θ(1), Span Θ(1)
     fn isEmpty(&self) -> B;
     /// APAS: Work Θ(1), Span Θ(1)
     fn isSingleton(&self) -> B;
     /// APAS: Work Θ(1 + lg|a|), Span Θ(1 + lg|a|)
-    fn subseq_copy(&self, start: N, length: N) -> AVLTreeSeqPerS<T>
+    fn subseq_copy(&self, start: N, length: N) -> Self
     where
         T: Clone + Eq;
     /// Build balanced tree from values in in-order order.
-    fn from_vec(values: Vec<T>) -> AVLTreeSeqPerS<T>
+    fn from_vec(values: Vec<T>) -> Self
     where
         T: Clone;
     /// Collect in-order values to Vec.
@@ -165,10 +165,10 @@ pub trait AVLTreeSeqPerTrait<T: Copy + Debug> {
 }
 
 impl<T: Copy + Debug> AVLTreeSeqPerTrait<T> for AVLTreeSeqPerS<T> {
-    fn empty() -> AVLTreeSeqPerS<T> {
+    fn empty() -> Self {
         AVLTreeSeqPerS { root: None }
     }
-    fn new() -> AVLTreeSeqPerS<T> {
+    fn new() -> Self {
         <Self as AVLTreeSeqPerTrait<T>>::empty()
     }
     fn length(&self) -> N {
@@ -177,12 +177,12 @@ impl<T: Copy + Debug> AVLTreeSeqPerTrait<T> for AVLTreeSeqPerS<T> {
     fn nth(&self, index: N) -> &T {
         nth_ref(&self.root, index)
     }
-    fn set(&self, index: N, item: T) -> Result<AVLTreeSeqPerS<T>, &'static str> {
+    fn set(&self, index: N, item: T) -> Result<Self, &'static str> {
         Ok(AVLTreeSeqPerS {
             root: set_rec(&self.root, index, item)?,
         })
     }
-    fn singleton(item: T) -> AVLTreeSeqPerS<T> {
+    fn singleton(item: T) -> Self {
         AVLTreeSeqPerS {
             root: Some(mk(item, None, None)),
         }
@@ -201,7 +201,7 @@ impl<T: Copy + Debug> AVLTreeSeqPerTrait<T> for AVLTreeSeqPerS<T> {
             B::False
         }
     }
-    fn subseq_copy(&self, start: N, length: N) -> AVLTreeSeqPerS<T>
+    fn subseq_copy(&self, start: N, length: N) -> Self
     where
         T: Clone + Eq,
     {
@@ -218,7 +218,7 @@ impl<T: Copy + Debug> AVLTreeSeqPerTrait<T> for AVLTreeSeqPerS<T> {
         }
         <Self as AVLTreeSeqPerTrait<T>>::from_vec(vals)
     }
-    fn from_vec(values: Vec<T>) -> AVLTreeSeqPerS<T>
+    fn from_vec(values: Vec<T>) -> Self
     where
         T: Clone,
     {

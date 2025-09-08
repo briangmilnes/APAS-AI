@@ -1,8 +1,8 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::N;
-use apas_ai::ArraySeq::{ArrayS, ArraySeq};
-use apas_ai::ArraySeqChap18::ArraySeqChap18;
-use apas_ai::ArraySeqChap19::ArraySeqChap19;
+use apas_ai::{ArraySeqEphS, ArraySeqEphTrait};
+use apas_ai::ArraySeqEphChap18Trait;
+use apas_ai::ArraySeqEphChap19Trait;
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;
@@ -23,17 +23,17 @@ impl LinearCongruentialGenerator32 {
 }
 
 fn bench_build_random_s(c: &mut Criterion) {
-    let mut group = c.benchmark_group("ArrayS_random_updates");
-    group.sample_size(10);
-    group.warm_up_time(Duration::from_secs(2));
+    let mut group = c.benchmark_group("ArraySeqEph_random_updates");
+    group.warm_up_time(Duration::from_secs(1));
+    group.measurement_time(Duration::from_secs(5));
     let n: N = 100_000;
 
     group.bench_with_input(BenchmarkId::new("zeros_then_update", n), &n, |b, &len| {
         b.iter(|| {
             let mut rng = LinearCongruentialGenerator32::new(0xDEADBEEF);
-            let mut s = <ArrayS<N> as ArraySeqChap19>::tabulate(|_| 0, len);
+            let mut s = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|_| 0, len);
             for i in 0..len {
-                let _ = <ArrayS<N> as ArraySeqChap18>::update(&mut s, (i, rng.next_N()));
+                let _ = <ArraySeqEphS<N> as ArraySeqEphChap18Trait>::update(&mut s, (i, rng.next_N()));
             }
             black_box(s)
         })

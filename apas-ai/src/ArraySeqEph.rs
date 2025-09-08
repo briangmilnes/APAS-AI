@@ -11,7 +11,7 @@ pub struct ArraySeqEphS<T> {
 /// Sequence trait for `ArraySeqEphS<T>`.
 pub trait ArraySeqEphTrait<T> {
     /// Work Θ(length), Span Θ(1).
-    fn new(length: N, init_value: T) -> ArraySeqEphS<T>
+    fn new(length: N, init_value: T) -> Self
     where
         T: Clone;
     /// Work Θ(1), Span Θ(1).
@@ -19,17 +19,17 @@ pub trait ArraySeqEphTrait<T> {
     /// Work Θ(1), Span Θ(1).
     fn nth(&self, index: N) -> &T;
     /// Work Θ(1), Span Θ(1).
-    fn empty() -> ArraySeqEphS<T>;
+    fn empty() -> Self;
     /// Work Θ(1), Span Θ(1).
-    fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqEphS<T>, &'static str>;
+    fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
     /// Work Θ(1), Span Θ(1).
-    fn singleton(item: T) -> ArraySeqEphS<T>;
+    fn singleton(item: T) -> Self;
     /// Work Θ(1), Span Θ(1).
     fn isEmpty(&self) -> B;
     /// Work Θ(1), Span Θ(1).
     fn isSingleton(&self) -> B;
     /// Work Θ(length) to allocate/clone.
-    fn subseq_copy(&self, start: N, length: N) -> ArraySeqEphS<T>
+    fn subseq_copy(&self, start: N, length: N) -> Self
     where
         T: Clone + Eq;
 }
@@ -41,7 +41,7 @@ impl<T> ArraySeqEphS<T> {
         let e = start.saturating_add(length).min(n);
         &self.data[s..e]
     }
-    pub fn subseq_copy(&self, start: N, length: N) -> ArraySeqEphS<T>
+    pub fn subseq_copy(&self, start: N, length: N) -> Self
     where
         T: Clone + Eq,
     {
@@ -60,7 +60,7 @@ impl<T> ArraySeqEphS<T> {
         }
         out
     }
-    pub fn from_vec(v: Vec<T>) -> ArraySeqEphS<T> {
+    pub fn from_vec(v: Vec<T>) -> Self {
         ArraySeqEphS {
             data: v.into_boxed_slice(),
         }
@@ -98,7 +98,7 @@ impl<T: std::fmt::Debug> std::fmt::Debug for ArraySeqEphS<T> {
 }
 
 impl<T> ArraySeqEphTrait<T> for ArraySeqEphS<T> {
-    fn new(length: N, init_value: T) -> ArraySeqEphS<T>
+    fn new(length: N, init_value: T) -> Self
     where
         T: Clone,
     {
@@ -110,10 +110,10 @@ impl<T> ArraySeqEphTrait<T> for ArraySeqEphS<T> {
     fn nth(&self, index: N) -> &T {
         &self.data[index]
     }
-    fn empty() -> ArraySeqEphS<T> {
+    fn empty() -> Self {
         ArraySeqEphS::from_vec(Vec::new())
     }
-    fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqEphS<T>, &'static str> {
+    fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
         if index < self.data.len() {
             self.data[index] = item;
             Ok(self)
@@ -121,7 +121,7 @@ impl<T> ArraySeqEphTrait<T> for ArraySeqEphS<T> {
             Err("Index out of bounds")
         }
     }
-    fn singleton(item: T) -> ArraySeqEphS<T> {
+    fn singleton(item: T) -> Self {
         ArraySeqEphS::from_vec(vec![item])
     }
     fn isEmpty(&self) -> B {
@@ -138,7 +138,7 @@ impl<T> ArraySeqEphTrait<T> for ArraySeqEphS<T> {
             B::False
         }
     }
-    fn subseq_copy(&self, start: N, length: N) -> ArraySeqEphS<T>
+    fn subseq_copy(&self, start: N, length: N) -> Self
     where
         T: Clone + Eq,
     {

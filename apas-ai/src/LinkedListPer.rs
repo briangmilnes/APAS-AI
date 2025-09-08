@@ -13,22 +13,23 @@ pub struct LinkedListPerS<T> {
 }
 
 pub trait LinkedListPerTrait<T> {
-    fn empty() -> LinkedListPerS<T>;
-    fn new(length: N, init_value: T) -> LinkedListPerS<T>
+    fn empty() -> Self;
+    fn new(length: N, init_value: T) -> Self
     where
         T: Clone;
     fn length(&self) -> N;
     fn nth(&self, index: N) -> &T;
     fn isEmpty(&self) -> B;
     fn isSingleton(&self) -> B;
-    fn singleton(item: T) -> LinkedListPerS<T>;
+    fn singleton(item: T) -> Self;
     /// APAS (ephemeral set Θ(1 + i)); rebuilding here: Work Θ(length), Span Θ(1)
     /// gpt-5-hard: Work Θ(length), Span Θ(1)
     /// BUG: APAS and gpt-5-hard algorithmic analyses differ.
-    fn set(&self, index: N, item: T) -> Result<LinkedListPerS<T>, &'static str>
+    fn set(&self, index: N, item: T) -> Result<Self, &'static str>
     where
-        T: Clone;
-    fn subseq_copy(&self, start: N, length: N) -> LinkedListPerS<T>
+        T: Clone,
+        Self: Sized;
+    fn subseq_copy(&self, start: N, length: N) -> Self
     where
         T: Clone;
 }
@@ -41,7 +42,7 @@ impl<T> LinkedListPerS<T> {
         self.len += 1;
     }
 
-    pub fn from_vec(v: Vec<T>) -> LinkedListPerS<T> {
+    pub fn from_vec(v: Vec<T>) -> Self {
         let mut list = LinkedListPerS::empty();
         for value in v.into_iter().rev() {
             list.push_front_node(Box::new(NodeP { value, next: None }));
@@ -55,10 +56,10 @@ impl<T> LinkedListPerS<T> {
 }
 
 impl<T> LinkedListPerTrait<T> for LinkedListPerS<T> {
-    fn empty() -> LinkedListPerS<T> {
+    fn empty() -> Self {
         LinkedListPerS { head: None, len: 0 }
     }
-    fn new(length: N, init_value: T) -> LinkedListPerS<T>
+    fn new(length: N, init_value: T) -> Self
     where
         T: Clone,
     {
@@ -109,7 +110,7 @@ impl<T> LinkedListPerTrait<T> for LinkedListPerS<T> {
             B::False
         }
     }
-    fn singleton(item: T) -> LinkedListPerS<T> {
+    fn singleton(item: T) -> Self {
         LinkedListPerS {
             head: Some(Box::new(NodeP {
                 value: item,
@@ -118,7 +119,7 @@ impl<T> LinkedListPerTrait<T> for LinkedListPerS<T> {
             len: 1,
         }
     }
-    fn set(&self, index: N, item: T) -> Result<LinkedListPerS<T>, &'static str>
+    fn set(&self, index: N, item: T) -> Result<Self, &'static str>
     where
         T: Clone,
     {
@@ -153,7 +154,7 @@ impl<T> LinkedListPerTrait<T> for LinkedListPerS<T> {
         out.head = rev;
         Ok(out)
     }
-    fn subseq_copy(&self, start: N, length: N) -> LinkedListPerS<T>
+    fn subseq_copy(&self, start: N, length: N) -> Self
     where
         T: Clone,
     {

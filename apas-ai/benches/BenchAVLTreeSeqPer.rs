@@ -1,22 +1,21 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::N;
-use apas_ai::AVLTreeSeq::{AVLTreeS, AVLTreeSeq};
-use apas_ai::AVLTreeSeqChap18::AVLTreeSeqChap18;
-use apas_ai::AVLTreeSeqChap19::AVLTreeSeqChap19;
+use apas_ai::AVLTreeSeqPer::{AVLTreeSeqPerS, AVLTreeSeqPerTrait};
+use apas_ai::AVLTreeSeqPerChap19Trait;
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;
 
 fn bench_build_and_contains(c: &mut Criterion) {
-    let mut group = c.benchmark_group("AVLTreeS_ops");
-    group.sample_size(10);
-    group.warm_up_time(Duration::from_secs(2));
+    let mut group = c.benchmark_group("BenchAVLTreeSeqPer");
+    group.warm_up_time(Duration::from_secs(1));
+    group.measurement_time(Duration::from_secs(5));
     let n: N = 1_000;
 
     group.bench_with_input(BenchmarkId::new("tabulate_then_contains", n), &n, |b, &len| {
         b.iter(|| {
-            let t: AVLTreeS<N> = <AVLTreeS<N> as AVLTreeSeqChap19>::tabulate(|i| i, len);
-            let hit = <AVLTreeS<N> as AVLTreeSeq<N>>::isSingleton(&t) == apas_ai::Types::B::True; // cheap read
+            let t: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap19Trait>::tabulate(|i| i, len);
+            let hit = <AVLTreeSeqPerS<N> as AVLTreeSeqPerTrait<N>>::isSingleton(&t) == apas_ai::Types::B::True; // cheap read
             black_box((t.length(), hit))
         })
     });

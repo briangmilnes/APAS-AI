@@ -58,19 +58,19 @@ pub trait MathSeqTrait<T> {
     /// Construct a new sequence of length `length` initialized with `init_value`.
     /// Work: Θ(length)
     /// Span: Θ(1)
-    fn new(length: N, init_value: T) -> MathSeqS<T>
+    fn new(length: N, init_value: T) -> Self
     where
         T: Clone;
 
     /// Construct the empty sequence.
     /// Work: Θ(1)
     /// Span: Θ(1)
-    fn empty() -> MathSeqS<T>;
+    fn empty() -> Self;
 
     /// Construct a singleton sequence containing `item`.
     /// Work: Θ(1)
     /// Span: Θ(1)
-    fn singleton(item: T) -> MathSeqS<T>;
+    fn singleton(item: T) -> Self;
 
     /// Return the number of elements.
     /// Work Θ(1), Span Θ(1).
@@ -82,12 +82,12 @@ pub trait MathSeqTrait<T> {
 
     /// Set element at `index` (Err if out of bounds).
     /// Work Θ(1), Span Θ(1).
-    fn set(&mut self, index: N, value: T) -> Result<&mut MathSeqS<T>, &'static str>;
+    fn set(&mut self, index: N, value: T) -> Result<&mut Self, &'static str>;
 
     /// Append at end (grow by 1).
     /// Work amortized Θ(1), worst case Θ(2·length(&self)); Span amortized Θ(1), worst case Θ(2·length(&self)).
     /// Vec typically doubles capacity on growth; one growth copies existing elements once, then frees the old buffer.
-    fn add_last(&mut self, value: T) -> &mut MathSeqS<T>;
+    fn add_last(&mut self, value: T) -> &mut Self;
 
     /// Remove last if any (shrink by 1).
     /// Work Θ(1), Span Θ(1).
@@ -100,7 +100,7 @@ pub trait MathSeqTrait<T> {
     /// Owning subsequence starting at `start` with the given `length` (clones elements).
     /// Work: Θ(length)
     /// Span: Θ(1)
-    fn subseq_copy(&self, start: N, length: N) -> MathSeqS<T>
+    fn subseq_copy(&self, start: N, length: N) -> Self
     where
         T: Clone;
 
@@ -133,7 +133,7 @@ pub trait MathSeqTrait<T> {
 
 impl<T> MathSeqTrait<T> for MathSeqS<T> {
     /// Work: Θ(length), Span: Θ(1).
-    fn new(length: N, init_value: T) -> MathSeqS<T>
+    fn new(length: N, init_value: T) -> Self
     where
         T: Clone,
     {
@@ -143,12 +143,12 @@ impl<T> MathSeqTrait<T> for MathSeqS<T> {
     }
 
     /// Work: Θ(1), Span: Θ(1).
-    fn empty() -> MathSeqS<T> {
+    fn empty() -> Self {
         MathSeqS { data: Vec::new() }
     }
 
     /// Work: Θ(1), Span: Θ(1).
-    fn singleton(item: T) -> MathSeqS<T> {
+    fn singleton(item: T) -> Self {
         MathSeqS { data: vec![item] }
     }
 
@@ -163,7 +163,7 @@ impl<T> MathSeqTrait<T> for MathSeqS<T> {
     }
 
     /// Work/Span: Θ(1), Θ(1).
-    fn set(&mut self, index: N, value: T) -> Result<&mut MathSeqS<T>, &'static str> {
+    fn set(&mut self, index: N, value: T) -> Result<&mut Self, &'static str> {
         if index < self.data.len() {
             self.data[index] = value;
             Ok(self)
@@ -175,7 +175,7 @@ impl<T> MathSeqTrait<T> for MathSeqS<T> {
     /// Work/Span: amortized Θ(1), Θ(1); worst‑case Θ(2·length(&self)), Θ(2·length(&self)).
     /// Vec typically doubles capacity when it out grows Vec's allocated storage. Rust will set
     /// this automatically or you can set a total size.
-    fn add_last(&mut self, value: T) -> &mut MathSeqS<T> {
+    fn add_last(&mut self, value: T) -> &mut Self {
         self.data.push(value);
         self
     }
@@ -194,7 +194,7 @@ impl<T> MathSeqTrait<T> for MathSeqS<T> {
     }
 
     /// Work: Θ(length), Span: Θ(1).
-    fn subseq_copy(&self, start: N, length: N) -> MathSeqS<T>
+    fn subseq_copy(&self, start: N, length: N) -> Self
     where
         T: Clone,
     {

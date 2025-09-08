@@ -37,23 +37,23 @@ pub struct AVLTreeSeqEphS<T: Copy + Debug> {
 
 pub trait AVLTreeSeqEphTrait<T: Copy + Debug> {
     /// APAS: Work Θ(1), Span Θ(1).
-    fn empty() -> AVLTreeSeqEphS<T>;
+    fn empty() -> Self;
     /// APAS: Work Θ(1), Span Θ(1).
-    fn new() -> AVLTreeSeqEphS<T>;
+    fn new() -> Self;
     /// APAS: Work Θ(1), Span Θ(1).
     fn length(&self) -> N;
     /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
     fn nth(&self, index: N) -> &T;
     /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
-    fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeSeqEphS<T>, &'static str>;
+    fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
     /// APAS: Work Θ(1), Span Θ(1).
-    fn singleton(item: T) -> AVLTreeSeqEphS<T>;
+    fn singleton(item: T) -> Self;
     /// APAS: Work Θ(1), Span Θ(1).
     fn isEmpty(&self) -> B;
     /// APAS: Work Θ(1), Span Θ(1).
     fn isSingleton(&self) -> B;
     /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
-    fn subseq_copy(&self, start: N, length: N) -> AVLTreeSeqEphS<T>
+    fn subseq_copy(&self, start: N, length: N) -> Self
     where
         T: Clone + Eq;
 }
@@ -157,11 +157,11 @@ impl<T: Copy + Debug> AVLTreeSeqEphS<T> {
 }
 
 impl<T: Copy + Debug> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
-    fn empty() -> AVLTreeSeqEphS<T> {
+    fn empty() -> Self {
         AVLTreeSeqEphS::new_root()
     }
 
-    fn new() -> AVLTreeSeqEphS<T> {
+    fn new() -> Self {
         AVLTreeSeqEphS::new_root()
     }
 
@@ -173,12 +173,12 @@ impl<T: Copy + Debug> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
         nth_link(&self.root, index)
     }
 
-    fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeSeqEphS<T>, &'static str> {
+    fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
         set_link(&mut self.root, index, item)?;
         Ok(self)
     }
 
-    fn singleton(item: T) -> AVLTreeSeqEphS<T> {
+    fn singleton(item: T) -> Self {
         let mut t = AVLTreeSeqEphS::new_root();
         t.root = insert_at_link(t.root.take(), 0, item, &mut t.next_key);
         t
@@ -200,7 +200,7 @@ impl<T: Copy + Debug> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
         }
     }
 
-    fn subseq_copy(&self, start: N, length: N) -> AVLTreeSeqEphS<T>
+    fn subseq_copy(&self, start: N, length: N) -> Self
     where
         T: Clone + Eq,
     {

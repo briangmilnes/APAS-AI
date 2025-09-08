@@ -5,9 +5,9 @@ use apas_ai::{AVLTreeSeqPerS, AVLTreeSeqPerTrait, AVLTreeSeqPerChap18Trait};
 fn test_persistent_set_does_not_mutate() {
     let _t: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerTrait<N>>::singleton(7);
     let a: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap18Trait>::tabulate(|i| i, 4);
-    let b = <AVLTreeSeqPerS<N> as AVLTreeSeqPerTrait<N>>::set(&a, 1, 99).unwrap();
-    assert_eq!(*<AVLTreeSeqPerS<N> as AVLTreeSeqPerTrait<N>>::nth(&a, 1), 1);
-    assert_eq!(*<AVLTreeSeqPerS<N> as AVLTreeSeqPerTrait<N>>::nth(&b, 1), 99);
+    let b = a.set(1, 99).unwrap();
+    assert_eq!(*a.nth(1), 1);
+    assert_eq!(*b.nth(1), 99);
 }
 
 #[test]

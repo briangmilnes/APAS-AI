@@ -6,37 +6,37 @@ use apas_ai::LinkedListEph;
 #[test]
 fn test_empty_singleton_and_predicates() {
     let l: LinkedListEphS<N> = <LinkedListEphS<N> as LinkedListEphTrait<N>>::empty();
-    assert_eq!(<LinkedListEphS<N> as LinkedListEphTrait<N>>::length(&l), 0);
-    assert_eq!(<LinkedListEphS<N> as LinkedListEphTrait<N>>::isEmpty(&l), B::True);
-    let one = <LinkedListEphS<N> as LinkedListEphTrait<N>>::singleton(7);
-    assert_eq!(<LinkedListEphS<N> as LinkedListEphTrait<N>>::isSingleton(&one), B::True);
+    assert_eq!(l.length(), 0);
+    assert_eq!(l.isEmpty(), B::True);
+    let one = LinkedListEph![7];
+    assert_eq!(one.isSingleton(), B::True);
 }
 
 #[test]
 fn test_new_and_nth_set() {
-    let mut l = <LinkedListEphS<N> as LinkedListEphTrait<N>>::new(3, 1);
-    assert_eq!(*<LinkedListEphS<N> as LinkedListEphTrait<N>>::nth(&l, 0), 1);
-    assert_eq!(*<LinkedListEphS<N> as LinkedListEphTrait<N>>::nth(&l, 2), 1);
-    let _ = <LinkedListEphS<N> as LinkedListEphTrait<N>>::set(&mut l, 1, 9).unwrap();
-    assert_eq!(*<LinkedListEphS<N> as LinkedListEphTrait<N>>::nth(&l, 1), 9);
+    let mut l = LinkedListEph![1; 3];
+    assert_eq!(*l.nth(0), 1);
+    assert_eq!(*l.nth(2), 1);
+    let _ = l.set(1, 9).unwrap();
+    assert_eq!(*l.nth(1), 9);
 }
 
 #[test]
 fn test_subseq_copy() {
-    let l = <LinkedListEphS<N> as LinkedListEphTrait<N>>::new(5, 2);
-    let sub = <LinkedListEphS<N> as LinkedListEphTrait<N>>::subseq_copy(&l, 1, 3);
-    assert_eq!(<LinkedListEphS<N> as LinkedListEphTrait<N>>::length(&sub), 3);
-    assert_eq!(*<LinkedListEphS<N> as LinkedListEphTrait<N>>::nth(&sub, 0), 2);
-    assert_eq!(*<LinkedListEphS<N> as LinkedListEphTrait<N>>::nth(&sub, 2), 2);
+    let l = LinkedListEph![2; 5];
+    let sub = l.subseq_copy(1, 3);
+    assert_eq!(sub.length(), 3);
+    assert_eq!(*sub.nth(0), 2);
+    assert_eq!(*sub.nth(2), 2);
 }
 
 #[test]
 fn test_linkedlisteph_basic() {
-    let mut s = <LinkedListEphS<N> as LinkedListEphTrait<N>>::new(3, 1);
-    assert_eq!(<LinkedListEphS<N> as LinkedListEphTrait<N>>::length(&s), 3);
-    assert_eq!(*<LinkedListEphS<N> as LinkedListEphTrait<N>>::nth(&s, 0), 1);
-    let _ = <LinkedListEphS<N> as LinkedListEphTrait<N>>::set(&mut s, 1, 9).unwrap();
-    assert_eq!(*<LinkedListEphS<N> as LinkedListEphTrait<N>>::nth(&s, 1), 9);
+    let mut s = LinkedListEph![1; 3];
+    assert_eq!(s.length(), 3);
+    assert_eq!(*s.nth(0), 1);
+    let _ = s.set(1, 9).unwrap();
+    assert_eq!(*s.nth(1), 9);
 }
 
 #[test]

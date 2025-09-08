@@ -22,6 +22,10 @@ pub use crate::LinkedListPerChap19::LinkedListPerChap19Trait;
 
 pub mod LinkedListEph;
 pub use crate::LinkedListEph::{LinkedListEphS, LinkedListEphTrait};
+pub mod LinkedListEphChap18;
+pub use crate::LinkedListEphChap18::LinkedListEphChap18Trait;
+pub mod LinkedListEphChap19;
+pub use crate::LinkedListEphChap19::LinkedListEphChap19Trait;
 
 pub mod ArraySeqPer;
 pub use crate::ArraySeqPer::{ArrayPerS, ArraySeqPerTrait};
@@ -52,3 +56,4 @@ pub use crate::AVLTreeSeqPerChap19::AVLTreeSeqPerChap19Trait;
 // Ephemeral AVLTree (base only; Chap18/19 not yet enabled)
 pub mod AVLTreeSeqEph;
 pub use crate::AVLTreeSeqEph::{AVLTreeSeqEphS, AVLTreeSeqEphTrait};
+// Note: AVLTreeSeqEph Chap18/19 modules are not yet stable for export

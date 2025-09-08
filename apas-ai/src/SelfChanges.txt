@@ -1,0 +1,101 @@
+Self return normalization (-> Self / &mut Self) across core containers
+
+Edit only same-container/same-element operations. Keep element-changing ops
+(e.g., map<T,U>, tabulate<T>) as-is. Add `Self: Sized` bounds only if the
+compiler demands them for associated fns returning Self.
+
+
+1) /home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqPer.rs (ArraySeqPerTrait)
+- Trait signatures (BEFORE -> AFTER)
+  fn new(length: N, init_value: T) -> ArrayPerS<T> where T: Clone;
+    -> fn new(length: N, init_value: T) -> Self where T: Clone;
+  fn empty() -> ArrayPerS<T>;
+    -> fn empty() -> Self;
+  fn set(&self, index: N, item: T) -> Result<ArrayPerS<T>, &'static str> where T: Clone;
+    -> fn set(&self, index: N, item: T) -> Result<Self, &'static str> where T: Clone;
+  fn singleton(item: T) -> ArrayPerS<T>;
+    -> fn singleton(item: T) -> Self;
+  fn subseq_copy(&self, start: N, length: N) -> ArrayPerS<T> where T: Clone + Eq;
+    -> fn subseq_copy(&self, start: N, length: N) -> Self where T: Clone + Eq;
+
+- Impl adjustments
+  fn new(...) -> ArrayPerS<T> { ArrayPerS::from_vec(...) }
+    -> fn new(...) -> Self { Self::from_vec(...) }
+  fn empty() -> ArrayPerS<T> { ArrayPerS::from_vec(Vec::new()) }
+    -> fn empty() -> Self { Self::from_vec(Vec::new()) }
+  fn set(...) -> Result<ArrayPerS<T>, _> { ... Ok(ArrayPerS::from_vec(v)) }
+    -> fn set(...) -> Result<Self, _> { ... Ok(Self::from_vec(v)) }
+  fn singleton(item: T) -> ArrayPerS<T> { ArrayPerS::from_vec(vec![item]) }
+    -> fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
+  fn subseq_copy(...) -> ArrayPerS<T> { ... if e<=s { return <ArrayPerS<T> as ArraySeqPerTrait<T>>::empty(); } ... ArrayPerS::from_vec(slice.to_vec()) }
+    -> fn subseq_copy(...) -> Self { ... if e<=s { return <Self as ArraySeqPerTrait<T>>::empty(); } ... Self::from_vec(slice.to_vec()) }
+
+
+2) /home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListPer.rs (LinkedListPerTrait)
+- Trait signatures
+  fn set(&self, index: N, item: T) -> Result<LinkedListPerS<T>, &'static str> where T: Clone;
+    -> fn set(&self, index: N, item: T) -> Result<Self, &'static str> where T: Clone;
+
+- Impl signature change accordingly (body Ok(out) remains valid)
+  fn set(&self, ...) -> Result<LinkedListPerS<T>, _>
+    -> fn set(&self, ...) -> Result<Self, _>
+
+
+3) /home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqEph.rs (ArraySeqEphTrait)
+- Trait signatures
+  fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqEphS<T>, &'static str>;
+    -> fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
+
+- Impl signature
+  fn set(&mut self, ...) -> Result<&mut ArraySeqEphS<T>, _>
+    -> fn set(&mut self, ...) -> Result<&mut Self, _>
+
+
+4) /home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListEph.rs (LinkedListEphTrait)
+- Trait signatures
+  fn update(&mut self, item_at: (N, T)) -> &mut LinkedListEphS<T>;
+    -> fn update(&mut self, item_at: (N, T)) -> &mut Self;
+  fn set(&mut self, index: N, item: T) -> Result<&mut LinkedListEphS<T>, &'static str>;
+    -> fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
+
+- Impl signatures
+  fn update(&mut self, ...) -> &mut LinkedListEphS<T>
+    -> fn update(&mut self, ...) -> &mut Self
+  fn set(&mut self, ...) -> Result<&mut LinkedListEphS<T>, _>
+    -> fn set(&mut self, ...) -> Result<&mut Self, _>
+
+
+5) /home/milnes/APASVERUS/APAS-AI/apas-ai/src/AVLTreeSeqPer.rs (AVLTreeSeqPerTrait)
+- Trait signature
+  fn set(&self, index: N, item: T) -> Result<AVLTreeSeqPerS<T>, &'static str>;
+    -> fn set(&self, index: N, item: T) -> Result<Self, &'static str>;
+
+- Impl signature
+  fn set(&self, ...) -> Result<AVLTreeSeqPerS<T>, _>
+    -> fn set(&self, ...) -> Result<Self, _>
+
+
+6) /home/milnes/APASVERUS/APAS-AI/apas-ai/src/AVLTreeSeqEph.rs (AVLTreeSeqEphTrait)
+- Trait signatures
+  fn empty() -> AVLTreeSeqEphS<T>;
+    -> fn empty() -> Self;
+  fn new() -> AVLTreeSeqEphS<T>;
+    -> fn new() -> Self;
+  fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeSeqEphS<T>, &'static str>;
+    -> fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
+  fn singleton(item: T) -> AVLTreeSeqEphS<T>;
+    -> fn singleton(item: T) -> Self;
+  fn subseq_copy(&self, start: N, length: N) -> AVLTreeSeqEphS<T> where T: Clone + Eq;
+    -> fn subseq_copy(&self, start: N, length: N) -> Self where T: Clone + Eq;
+
+- Impl signatures updated the same way
+  empty/new/singleton/subseq_copy: return Self; set returns &mut Self
+
+
+Notes and tips
+- Associated fns returning Self may require `where Self: Sized` if object safety
+  is relevant. These traits are used concretely, so usually no extra bound is
+  needed.
+- Prefer `Self::from_vec` and `<Self as Trait>::method` after the change to
+  reduce type noise.
+- After edits, run: cargo build; then cargo test --all --no-fail-fast.

@@ -1,19 +1,20 @@
 use apas_ai::Types::{N, B};
 use apas_ai::LinkedListEph::{LinkedListEphS, LinkedListEphTrait};
 use apas_ai::LinkedListEph;
+use apas_ai::LinkedListEphChap19Trait;
 
 #[test]
 fn test_eph_set_and_nth() {
-    let mut a: LinkedListEphS<N> = <LinkedListEphS<N> as LinkedListEphTrait<N>>::new(3, 1);
-    let _ = <LinkedListEphS<N> as LinkedListEphTrait<N>>::set(&mut a, 1, 9);
-    assert_eq!(*<LinkedListEphS<N> as LinkedListEphTrait<N>>::nth(&a, 1), 9);
+    let mut a: LinkedListEphS<N> = LinkedListEph![1; 3];
+    let _ = a.set(1, 9);
+    assert_eq!(*a.nth(1), 9);
 }
 
 #[test]
 fn test_eph_subseq_copy_and_display_debug() {
-    let a: LinkedListEphS<N> = <LinkedListEphS<N> as LinkedListEphTrait<N>>::new(3, 1);
-    let sub = <LinkedListEphS<N> as LinkedListEphTrait<N>>::subseq_copy(&a, 1, 2);
-    assert_eq!(<LinkedListEphS<N> as LinkedListEphTrait<N>>::length(&sub), 2);
+    let a: LinkedListEphS<N> = LinkedListEph![1; 3];
+    let sub = a.subseq_copy(1, 2);
+    assert_eq!(sub.length(), 2);
     let v = LinkedListEph![1, 2, 3];
     assert_eq!(format!("{:?}", v), "[1, 2, 3]");
     assert_eq!(format!("{}", v), "[1, 2, 3]");
@@ -24,5 +25,35 @@ fn test_iter_inorder_collect_eph_ch19() {
     let a: LinkedListEphS<N> = LinkedListEph![2, 4, 6];
     let vals: Vec<N> = a.iter().copied().collect();
     assert_eq!(vals, vec![2, 4, 6]);
+}
+
+#[test]
+fn test_tabulate_map_select_append_ch19() {
+    let a: LinkedListEphS<N> = <LinkedListEphS<N> as LinkedListEphChap19Trait>::tabulate(|i| i, 4);
+    let b: LinkedListEphS<N> = <LinkedListEphS<N> as LinkedListEphChap19Trait>::map(&a, |x| x + 10);
+    assert_eq!(b.iter().copied().collect::<Vec<N>>(), vec![10, 11, 12, 13]);
+    let c = <LinkedListEphS<N> as LinkedListEphChap19Trait>::append(&a, &b);
+    assert_eq!(c.iter().copied().collect::<Vec<N>>(), vec![0, 1, 2, 3, 10, 11, 12, 13]);
+    assert_eq!(<LinkedListEphS<N> as LinkedListEphChap19Trait>::select(&a, &b, 6), Some(12));
+}
+
+#[test]
+fn test_deflate_filter_iterate_reduce_scan_flatten_inject_ch19() {
+    let one = <LinkedListEphS<N> as LinkedListEphChap19Trait>::deflate(|x| if *x == 1 { B::True } else { B::False }, &1);
+    assert_eq!(one.iter().copied().collect::<Vec<N>>(), vec![1]);
+    let a: LinkedListEphS<N> = LinkedListEph![1, 2, 3, 4];
+    let even = <LinkedListEphS<N> as LinkedListEphChap19Trait>::filter(&a, |x| if *x % 2 == 0 { B::True } else { B::False });
+    assert_eq!(even.iter().copied().collect::<Vec<N>>(), vec![2, 4]);
+    let sum = <LinkedListEphS<N> as LinkedListEphChap19Trait>::reduce(&a, &|x, y| x + y, 0);
+    assert_eq!(sum, 10);
+    let (prefixes, total) = <LinkedListEphS<N> as LinkedListEphChap19Trait>::scan(&a, &|x, y| x + y, 0);
+    assert_eq!(total, 10);
+    assert_eq!(prefixes.iter().copied().collect::<Vec<N>>(), vec![0, 1, 3, 6]);
+    let outer: LinkedListEphS<LinkedListEphS<N>> = LinkedListEph![LinkedListEph![1], LinkedListEph![2, 3]];
+    let flat = <LinkedListEphS<N> as LinkedListEphChap19Trait>::flatten(&outer);
+    assert_eq!(flat.iter().copied().collect::<Vec<N>>(), vec![1, 2, 3]);
+    let ups: LinkedListEphS<(N, N)> = LinkedListEph![(1, 9), (2, 8)];
+    let inj = <LinkedListEphS<N> as LinkedListEphChap19Trait>::inject(&a, &ups);
+    assert_eq!(inj.iter().copied().collect::<Vec<N>>(), vec![1, 9, 8, 4]);
 }
 

@@ -1,19 +1,19 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::N;
-use apas_ai::MathSeq::{MathS, MathSeq};
+use apas_ai::MathSeq::{MathSeqS, MathSeqTrait};
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;
 
 fn bench_mathseq_basics(c: &mut Criterion) {
-    let mut group = c.benchmark_group("MathS_ops");
-    group.sample_size(10);
-    group.warm_up_time(Duration::from_secs(2));
+    let mut group = c.benchmark_group("MathSeq_ops");
+    group.warm_up_time(Duration::from_secs(1));
+    group.measurement_time(Duration::from_secs(5));
     let n: N = 100_000;
 
     group.bench_with_input(BenchmarkId::new("new_then_set", n), &n, |b, &len| {
         b.iter(|| {
-            let mut s = <MathS<N> as MathSeq<N>>::new(len, 0);
+            let mut s = <MathSeqS<N> as MathSeqTrait<N>>::new(len, 0);
             for i in 0..len { let _ = s.set(i, i); }
             black_box(s)
         })
@@ -21,7 +21,7 @@ fn bench_mathseq_basics(c: &mut Criterion) {
 
     group.bench_with_input(BenchmarkId::new("push_then_pop", n), &n, |b, &len| {
         b.iter(|| {
-            let mut s: MathS<N> = <MathS<N> as MathSeq<N>>::empty();
+            let mut s: MathSeqS<N> = <MathSeqS<N> as MathSeqTrait<N>>::empty();
             for i in 0..len { let _ = s.add_last(i); }
             for _ in 0..len { let _ = s.delete_last(); }
             black_box(s.length())
