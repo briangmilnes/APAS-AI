@@ -11,3 +11,10 @@ grep ' as ' tests/*.rs | wc -l
 
 echo "benches counts"
 grep ' as ' benches/*.rs | wc -l 
+
+echo "total <Type as Traits>"
+grep ' as ' src/*.rs tests/*.rs benches/*.rs | wc -l 
+
+echo "LOC" 
+wc -l src/*.rs tests/*.rs benches/*.rs
+

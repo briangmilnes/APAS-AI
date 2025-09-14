@@ -1,9 +1,10 @@
 //! Problem 21.4 (Cartesian Product) tests.
 
-use apas_ai::Types::N;
-use apas_ai::{ArrayPerS, ArraySeqPerTrait};
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqPer::ArraySeqPer::*;
 use apas_ai::ArraySeqPerChap18::ArraySeqPerChap18Trait;
 use apas_ai::ArraySeqPerChap19::ArraySeqPerChap19Trait;
+use apas_ai::ArraySeqPer;
 
 /// Cartesian product by explicit loops (x-major then y).
 /// gpt-5-hard: Work: Θ(|a|·|b|), Span: Θ(|a|·|b|)
@@ -30,26 +31,26 @@ fn cartesian_tab_flat(a: &ArrayPerS<N>, b: &ArrayPerS<&'static str>) -> ArrayPer
 
 #[test]
 fn test_cartesian_loops_basic() {
-    let a = ArrayPerS::from_vec(vec![1, 2]);
-    let b = ArrayPerS::from_vec(vec!["3.0", "4.0", "5.0"]);
+    let a = ArraySeqPer![1, 2];
+    let b = ArraySeqPer!["3.0", "4.0", "5.0"];
     let s = cartesian_loops(&a, &b);
-    let expect = ArrayPerS::from_vec(vec![(1, "3.0"), (1, "4.0"), (1, "5.0"), (2, "3.0"), (2, "4.0"), (2, "5.0")]);
+    let expect = ArraySeqPer![(1, "3.0"), (1, "4.0"), (1, "5.0"), (2, "3.0"), (2, "4.0"), (2, "5.0")];
     assert_eq!(s, expect);
 }
 
 #[test]
 fn test_cartesian_tab_flat_basic() {
-    let a = ArrayPerS::from_vec(vec![1, 2]);
-    let b = ArrayPerS::from_vec(vec!["3.0", "4.0", "5.0"]);
+    let a = ArraySeqPer![1, 2];
+    let b = ArraySeqPer!["3.0", "4.0", "5.0"];
     let s = cartesian_tab_flat(&a, &b);
-    let expect = ArrayPerS::from_vec(vec![(1, "3.0"), (1, "4.0"), (1, "5.0"), (2, "3.0"), (2, "4.0"), (2, "5.0")]);
+    let expect = ArraySeqPer![(1, "3.0"), (1, "4.0"), (1, "5.0"), (2, "3.0"), (2, "4.0"), (2, "5.0")];
     assert_eq!(s, expect);
 }
 
 #[test]
 fn test_cartesian_iterator_order() {
-    let a = ArrayPerS::from_vec(vec![1, 2]);
-    let b = ArrayPerS::from_vec(vec!["3", "4"]);
+    let a = ArraySeqPer![1, 2];
+    let b = ArraySeqPer!["3", "4"];
     let s = cartesian_tab_flat(&a, &b);
     let v: Vec<(N, &str)> = s.iter().copied().collect();
     assert_eq!(v, vec![(1, "3"), (1, "4"), (2, "3"), (2, "4")]);
@@ -57,8 +58,8 @@ fn test_cartesian_iterator_order() {
 
 #[test]
 fn test_cartesian_debug_shape() {
-    let a = ArrayPerS::from_vec(vec![1]);
-    let b = ArrayPerS::from_vec(vec!["x"]);
+    let a = ArraySeqPer![1];
+    let b = ArraySeqPer!["x"];
     let s = cartesian_loops(&a, &b);
     let dbg_str = format!("{:?}", s);
     assert!(!dbg_str.is_empty());

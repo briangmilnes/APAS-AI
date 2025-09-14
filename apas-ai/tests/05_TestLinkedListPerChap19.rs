@@ -1,6 +1,7 @@
-use apas_ai::Types::{N, B};
-use apas_ai::LinkedListPer::{LinkedListPerS, LinkedListPerTrait};
-use apas_ai::LinkedListPer;
+pub mod TestLinkedListPerChap19 {
+use apas_ai::Types::Types::*;
+use apas_ai::LinkedListPer::LinkedListPer::*;
+use apas_ai::LinkedListPer; // macro import
 use apas_ai::LinkedListPerChap18::LinkedListPerChap18Trait;
 use apas_ai::LinkedListPerChap19::LinkedListPerChap19Trait;
 
@@ -75,5 +76,6 @@ fn test_inject() {
     let changes = LinkedListPer![(1, 99)];
     let injected = <LinkedListPerS<N> as LinkedListPerChap19Trait>::inject(&values, &changes);
     assert_eq!(injected, LinkedListPer![10, 99, 30]);
+}
 }
 

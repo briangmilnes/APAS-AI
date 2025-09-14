@@ -1,14 +1,15 @@
 //! Algorithm 21.1 (2D Points) using ArraySeqPer: points2D via tabulate + flatten.
 
-use apas_ai::Types::N;
-use apas_ai::{ArrayPerS, ArraySeqPerTrait};
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqPer::ArraySeqPer::*;
 use apas_ai::ArraySeqPerChap18::ArraySeqPerChap18Trait;
 use apas_ai::ArraySeqPerChap19::ArraySeqPerChap19Trait;
+use apas_ai::ArraySeqPer;
 
 /// Functional form: points2D n = flatten (tabulate (\x. tabulate (\y. (x, y+1)) (n-1)) n)
 /// gpt-5-hard: Work: Θ(n^2), Span: Θ(lg n)
 fn points2d_tab_flat(n: N) -> ArrayPerS<(N, N)> {
-    if n == 0 { return ArrayPerS::from_vec(Vec::new()); }
+    if n == 0 { return ArraySeqPer![]; }
     let inner: ArrayPerS<ArrayPerS<(N, N)>> =
         <ArrayPerS<ArrayPerS<(N, N)>> as ArraySeqPerChap19Trait>::tabulate(
             |x| <ArrayPerS<(N, N)> as ArraySeqPerChap18Trait>::tabulate(|y| (x, y + 1), n - 1),
@@ -20,7 +21,7 @@ fn points2d_tab_flat(n: N) -> ArrayPerS<(N, N)> {
 #[test]
 fn test_points2d_n3_example() {
     let s = points2d_tab_flat(3);
-    let expect = ArrayPerS::from_vec(vec![(0, 1), (0, 2), (1, 1), (1, 2), (2, 1), (2, 2)]);
+    let expect = ArraySeqPer![(0, 1), (0, 2), (1, 1), (1, 2), (2, 1), (2, 2)];
     assert_eq!(s, expect);
 }
 

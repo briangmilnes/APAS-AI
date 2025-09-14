@@ -1,6 +1,6 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
-use apas_ai::Types::N;
-use apas_ai::AVLTreeSeqEph::{AVLTreeSeqEphS, AVLTreeSeqEphTrait};
+use apas_ai::Types::Types::*;
+use apas_ai::AVLTreeSeqEph::AVLTreeSeqEph::*;
 use std::time::Duration;
 
 fn bench_avl_eph_ch18(c: &mut Criterion) {

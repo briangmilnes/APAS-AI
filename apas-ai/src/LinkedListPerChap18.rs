@@ -1,7 +1,8 @@
 //! Chapter 18 algorithms for LinkedListPer.
 
-use crate::LinkedListPer::{LinkedListPerS, LinkedListPerTrait};
-use crate::Types::{B, N, O};
+pub mod LinkedListPerChap18 {
+use crate::LinkedListPer::LinkedListPer::*;
+use crate::Types::Types::*;
 
 pub trait LinkedListPerChap18Trait {
     /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i S(f(i)))
@@ -263,3 +264,7 @@ impl<T2> LinkedListPerChap18Trait for LinkedListPerS<T2> {
         LinkedListPerS::from_vec(pairs)
     }
 }
+
+}
+
+pub use LinkedListPerChap18::LinkedListPerChap18Trait;

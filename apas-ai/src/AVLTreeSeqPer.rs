@@ -1,9 +1,10 @@
 //! Per (immutable, structurally shared) AVL tree sequence using Rc path-copying.
 
-pub use crate::Types::{B, N, O};
+pub mod AVLTreeSeqPer {
+use crate::Types::Types::*;
 use std::fmt::Debug;
 use std::rc::Rc;
-use crate::ArraySeqPer::{ArrayPerS, ArraySeqPerTrait};
+use crate::ArraySeqPer::ArraySeqPer::*;
 
 type Link<T> = Option<Rc<Node<T>>>;
 
@@ -169,7 +170,7 @@ impl<T: Copy + Debug> AVLTreeSeqPerTrait<T> for AVLTreeSeqPerS<T> {
         AVLTreeSeqPerS { root: None }
     }
     fn new() -> Self {
-        <Self as AVLTreeSeqPerTrait<T>>::empty()
+        Self::empty()
     }
     fn length(&self) -> N {
         size(&self.root)
@@ -209,14 +210,14 @@ impl<T: Copy + Debug> AVLTreeSeqPerTrait<T> for AVLTreeSeqPerS<T> {
         let s = start.min(n);
         let e = start.saturating_add(length).min(n);
         if e <= s {
-            return <Self as AVLTreeSeqPerTrait<T>>::empty();
+            return Self::empty();
         }
         let mut vals: Vec<T> = Vec::with_capacity(e - s);
-        let all = <Self as AVLTreeSeqPerTrait<T>>::values_in_order(self);
+        let all = self.values_in_order();
         for i in s..e {
             vals.push(all[i as usize]);
         }
-        <Self as AVLTreeSeqPerTrait<T>>::from_vec(vals)
+        Self::from_vec(vals)
     }
     fn from_vec(values: Vec<T>) -> Self
     where
@@ -253,7 +254,7 @@ impl<T: Eq + Copy + Debug> Eq for AVLTreeSeqPerS<T> {}
 
 impl<T: Debug + Copy> std::fmt::Debug for AVLTreeSeqPerS<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let v = <Self as AVLTreeSeqPerTrait<T>>::values_in_order(self);
+        let v = self.values_in_order();
         f.debug_list().entries(v.iter()).finish()
     }
 }
@@ -263,7 +264,7 @@ impl<T: Copy + Debug> AVLTreeSeqPerS<T> {
     where
         T: Clone,
     {
-        let v = <Self as AVLTreeSeqPerTrait<T>>::values_in_order(self);
+        let v = self.values_in_order();
         ArrayPerS::from_vec(v)
     }
 
@@ -300,15 +301,18 @@ impl<'a, T: Copy + Debug> Iterator for AVLTreeSeqPerIter<'a, T> {
     }
 }
 
+}
+
+
 #[macro_export]
 macro_rules! AVLTreeSeqPer {
-    () => { < $crate::AVLTreeSeqPer::AVLTreeSeqPerS<_> as $crate::AVLTreeSeqPer::AVLTreeSeqPerTrait<_> >::empty() };
+    () => { < $crate::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerS<_> as $crate::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerTrait<_> >::empty() };
     ($x:expr; $n:expr) => {{
         let __vals = vec![$x; $n];
-        < $crate::AVLTreeSeqPer::AVLTreeSeqPerS<_> as $crate::AVLTreeSeqPer::AVLTreeSeqPerTrait<_> >::from_vec(__vals)
+        < $crate::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerS<_> as $crate::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerTrait<_> >::from_vec(__vals)
     }};
     ($($x:expr),* $(,)?) => {{
         let __vals = vec![$($x),*];
-        < $crate::AVLTreeSeqPer::AVLTreeSeqPerS<_> as $crate::AVLTreeSeqPer::AVLTreeSeqPerTrait<_> >::from_vec(__vals)
+        < $crate::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerS<_> as $crate::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerTrait<_> >::from_vec(__vals)
     }};
 }

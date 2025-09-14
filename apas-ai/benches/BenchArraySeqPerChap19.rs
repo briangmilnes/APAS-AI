@@ -1,8 +1,8 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
-use apas_ai::Types::N;
-use apas_ai::ArraySeqPer::ArrayPerS;
-use apas_ai::ArraySeqPerChap19Trait;
-use apas_ai::ArraySeqPerTrait;
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqPer::ArraySeqPer::*;
+use apas_ai::ArraySeqPerChap19::ArraySeqPerChap19Trait;
+use apas_ai::ArraySeqPer::ArraySeqPer::*;
 use std::time::Duration;
 
 fn bench_tabulate_map_per_ch19(c: &mut Criterion) {

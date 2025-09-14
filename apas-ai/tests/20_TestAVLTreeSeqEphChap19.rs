@@ -1,12 +1,12 @@
 //! Tests for AVLTreeSeq Eph Chap19-style operations using available Eph APIs.
 
-use apas_ai::Types::{B, N};
-use apas_ai::{ArraySeqEphS, ArraySeqEphTrait};
-use apas_ai::AVLTreeSeqEph::{AVLTreeSeqEphS,AVLTreeSeqEphTrait};
-use apas_ai::AVLTreeSeqEph;
-use apas_ai::ArraySeqEph;
-
-
+pub mod TestAVLTreeSeqEphChap19 {
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqEph::ArraySeqEph::*;
+use apas_ai::AVLTreeSeqEph::AVLTreeSeqEph::*;
+use apas_ai::AVLTreeSeqEph; // macro import
+use apas_ai::ArraySeqEph; // macro import
+ 
 #[test]
 fn test_tabulate_and_map() {
     let t: AVLTreeSeqEphS<N> = AVLTreeSeqEph![0, 1, 2, 3, 4];
@@ -45,3 +45,4 @@ fn test_deflate_and_filter() {
 }
 
 
+}

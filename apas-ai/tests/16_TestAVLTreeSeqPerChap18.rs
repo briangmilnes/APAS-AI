@@ -1,10 +1,12 @@
 //! Tests for AVLTreeSeq Chapter 18 algorithms.
 
-use apas_ai::Types::{B, N};
-use apas_ai::AVLTreeSeqPer::{AVLTreeSeqPerS, AVLTreeSeqPerTrait};
-use apas_ai::AVLTreeSeqPerChap18Trait as AVLTreeSeqPerChap18;
-use apas_ai::ArraySeqPer::{ArrayPerS, ArraySeqPerTrait};
-use apas_ai::ArraySeqPer;
+pub mod TestAVLTreeSeqPerChap18 {
+use apas_ai::Types::Types::*;
+use apas_ai::AVLTreeSeqPer::AVLTreeSeqPer::*;
+use apas_ai::AVLTreeSeqPerChap18::AVLTreeSeqPerChap18Trait as AVLTreeSeqPerChap18;
+use apas_ai::ArraySeqPer::ArraySeqPer::*;
+use apas_ai::ArraySeqPer; // macro import
+use apas_ai::ArrayPerS;
 
 #[test]
 fn test_tabulate_inorder() {
@@ -32,6 +34,8 @@ fn test_filter_even() {
     let base: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap18>::tabulate(|i| i, 6);
     let evens: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap18>::filter(&base, |x| if x % 2 == 0 { B::True } else { B::False });
     assert_eq!(evens.to_arrayseq(), ArraySeqPer![0, 2, 4]);
+}
+
 }
 
 

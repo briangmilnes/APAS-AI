@@ -1,6 +1,7 @@
-use apas_ai::Types::{N, B};
-use apas_ai::AVLTreeSeqEph::{AVLTreeSeqEphS};
-use apas_ai::AVLTreeSeqEphTrait as AVLTreeSeqEph;
+pub mod TestAVLTreeSeqEph {
+use apas_ai::Types::Types::*;
+use apas_ai::AVLTreeSeqEph::AVLTreeSeqEph::AVLTreeSeqEphS;
+use apas_ai::AVLTreeSeqEph::AVLTreeSeqEph::AVLTreeSeqEphTrait as AVLTreeSeqEph;
 
 #[test]
 fn test_avl_ephemeral_basic() {
@@ -13,4 +14,5 @@ fn test_avl_ephemeral_basic() {
     assert_eq!(*t.nth(1), 9);
 }
 
+}
 

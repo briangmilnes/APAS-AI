@@ -1,7 +1,8 @@
 //! Ephemeral (mutable) implicit-order AVL tree sequence.
 
-use crate::ArraySeqEph::{ArraySeqEphS, ArraySeqEphTrait};
-pub use crate::Types::{B, N, O};
+pub mod AVLTreeSeqEph {
+use crate::ArraySeqEph::ArraySeqEph::*;
+use crate::Types::Types::*;
 use std::fmt::Debug;
 
 type Link<T> = Option<Box<AVLTreeNode<T>>>;
@@ -368,34 +369,35 @@ fn set_link<T: Copy + Debug>(node: &mut Link<T>, index: N, value: T) -> Result<(
     }
 }
 
-#[macro_export]
-macro_rules! AVLTreeSeqEph {
-    () => { $crate::AVLTreeSeqEph::AVLTreeSeqEphS::from_vec(Vec::new()) };
-    ($x:expr; $n:expr) => {{
-        let mut t = $crate::AVLTreeSeqEph::AVLTreeSeqEphS::from_vec(Vec::new());
-        for _ in 0..$n { t.push_back($x); }
-        t
-    }};
-    ($($x:expr),* $(,)?) => {{
-        let mut t = $crate::AVLTreeSeqEph::AVLTreeSeqEphS::from_vec(Vec::new());
-        $( { t.push_back($x); } )*
-        t
-    }};
-}
+    #[macro_export]
+    macro_rules! AVLTreeSeqEph {
+        () => { $crate::AVLTreeSeqEph::AVLTreeSeqEph::AVLTreeSeqEphS::from_vec(Vec::new()) };
+        ($x:expr; $n:expr) => {{
+            let mut t = $crate::AVLTreeSeqEph::AVLTreeSeqEph::AVLTreeSeqEphS::from_vec(Vec::new());
+            for _ in 0..$n { t.push_back($x); }
+            t
+        }};
+        ($($x:expr),* $(,)?) => {{
+            let mut t = $crate::AVLTreeSeqEph::AVLTreeSeqEph::AVLTreeSeqEphS::from_vec(Vec::new());
+            $( { t.push_back($x); } )*
+            t
+        }};
+    }
 
-
-impl<T: Eq + Copy + Debug> PartialEq for AVLTreeSeqEphS<T> {
-    fn eq(&self, other: &Self) -> bool {
-        if self.length() != other.length() {
-            return false;
-        }
-        for i in 0..self.length() {
-            if self.nth(i) != other.nth(i) {
+    impl<T: Eq + Copy + Debug> PartialEq for AVLTreeSeqEphS<T> {
+        fn eq(&self, other: &Self) -> bool {
+            if self.length() != other.length() {
                 return false;
             }
+            for i in 0..self.length() {
+                if self.nth(i) != other.nth(i) {
+                    return false;
+                }
+            }
+            true
         }
-        true
     }
-}
 
-impl<T: Eq + Copy + Debug> Eq for AVLTreeSeqEphS<T> {}
+    impl<T: Eq + Copy + Debug> Eq for AVLTreeSeqEphS<T> {}
+
+}

@@ -1,6 +1,7 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
-use apas_ai::Types::N;
-use apas_ai::{LinkedListEphS, LinkedListEphTrait, LinkedListEphChap18Trait};
+use apas_ai::Types::Types::*;
+use apas_ai::LinkedListEph::LinkedListEph::*;
+use apas_ai::LinkedListEphChap18::LinkedListEphChap18Trait;
 use std::time::Duration;
 
 fn bench_ll_eph_ch18(c: &mut Criterion) {

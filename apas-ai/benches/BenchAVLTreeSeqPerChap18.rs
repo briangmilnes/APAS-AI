@@ -1,7 +1,7 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
-use apas_ai::Types::N;
-use apas_ai::AVLTreeSeqPer::AVLTreeSeqPerS;
-use apas_ai::AVLTreeSeqPerChap18Trait;
+use apas_ai::Types::Types::*;
+use apas_ai::AVLTreeSeqPer::AVLTreeSeqPer::*;
+use apas_ai::AVLTreeSeqPerChap18::AVLTreeSeqPerChap18Trait;
 use std::time::Duration;
 
 fn bench_avl_per_ch18(c: &mut Criterion) {
@@ -14,7 +14,7 @@ fn bench_avl_per_ch18(c: &mut Criterion) {
         b.iter(|| {
             let t: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap18Trait>::tabulate(|i| i, len);
             let m: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap18Trait>::map(&t, |x| x + 1);
-            black_box((apas_ai::AVLTreeSeqPer::AVLTreeSeqPerTrait::length(&t), apas_ai::AVLTreeSeqPer::AVLTreeSeqPerTrait::length(&m)))
+            black_box((t.length(), m.length()))
         })
     });
     group.finish();

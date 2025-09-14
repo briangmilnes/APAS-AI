@@ -1,7 +1,8 @@
-use apas_ai::Types::{N, B};
-use apas_ai::LinkedListEph::{LinkedListEphS, LinkedListEphTrait};
-use apas_ai::LinkedListEph;
-use apas_ai::LinkedListEphChap19Trait;
+pub mod TestLinkedListEphChap19 {
+use apas_ai::Types::Types::*;
+use apas_ai::LinkedListEph::LinkedListEph::*;
+use apas_ai::LinkedListEph; // macro import
+use apas_ai::LinkedListEphChap19::LinkedListEphChap19Trait;
 
 #[test]
 fn test_eph_set_and_nth() {
@@ -55,5 +56,7 @@ fn test_deflate_filter_iterate_reduce_scan_flatten_inject_ch19() {
     let ups: LinkedListEphS<(N, N)> = LinkedListEph![(1, 9), (2, 8)];
     let inj = <LinkedListEphS<N> as LinkedListEphChap19Trait>::inject(&a, &ups);
     assert_eq!(inj.iter().copied().collect::<Vec<N>>(), vec![1, 9, 8, 4]);
+}
+
 }
 

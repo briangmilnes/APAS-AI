@@ -1,0 +1,8 @@
+
+This prompt describes a plan we are going to call doitall.
+
+Remember to clear the terminal before you are starting these.
+
+cargo build       -- show full output, stop if there are problems, state clearly "The build had no problems."
+cargo nextest run -- show full output, stop if there are problems. state clearly "The tests had no problems."
+cargo bench       -- show the full output, stop if there are problems, state clearly "The benches had no problems." and give me the full file:/// style URL the top level benchmark page.

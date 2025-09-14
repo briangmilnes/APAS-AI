@@ -1,8 +1,8 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
-use apas_ai::Types::N;
-use apas_ai::{ArraySeqEphS, ArraySeqEphTrait};
-use apas_ai::ArraySeqEphChap18Trait;
-use apas_ai::ArraySeqEphChap19Trait;
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqEph::ArraySeqEph::*;
+use apas_ai::ArraySeqEphChap18::ArraySeqEphChap18Trait;
+use apas_ai::ArraySeqEphChap19::ArraySeqEphChap19Trait;
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;

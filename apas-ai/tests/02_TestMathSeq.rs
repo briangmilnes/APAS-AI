@@ -1,7 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-use apas_ai::Types::{N, B};
-use apas_ai::MathSeq::{MathSeqS, MathSeqTrait};
+pub mod TestMathSeq {
+use apas_ai::Types::Types::*;
+use apas_ai::MathSeq::MathSeq::*;
 use apas_ai::MathSeq;
 
 #[test]
@@ -145,5 +146,6 @@ fn test_iter_collect_and_sum() {
     assert_eq!(vals, vec![1, 2, 3, 4]);
     let sum: N = s.iter().copied().sum();
     assert_eq!(sum, 10);
+}
 }
 

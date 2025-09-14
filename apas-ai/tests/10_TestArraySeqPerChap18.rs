@@ -1,6 +1,8 @@
-use apas_ai::Types::{N, B, O};
-use apas_ai::{ArrayPerS, ArraySeqPerTrait, ArraySeqPerChap18Trait};
-use apas_ai::ArraySeqPer;
+pub mod TestArraySeqPerChap18 {
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqPer::ArraySeqPer::*;
+use apas_ai::ArraySeqPerChap18::ArraySeqPerChap18Trait;
+use apas_ai::ArraySeqPer; // macro import
 
 #[test]
 fn test_tabulate_fibonacci() {
@@ -156,6 +158,8 @@ fn test_collect_groups_by_key() {
     let (k1, v1) = grouped.nth(1);
     assert_eq!(*k1, "b");
     assert_eq!(*v1, ArraySeqPer![2]);
+}
+
 }
 
 

@@ -1,8 +1,9 @@
 //! Chapter 19 algorithms for LinkedListEph (ephemeral).
 
-use crate::LinkedListEph::{LinkedListEphS, LinkedListEphTrait};
+pub mod LinkedListEphChap19 {
+use crate::LinkedListEph::LinkedListEph::*;
 use crate::LinkedListEphChap18::LinkedListEphChap18Trait;
-use crate::Types::{B, N};
+use crate::Types::Types::*;
 
 pub trait LinkedListEphChap19Trait {
     fn tabulate<T>(f: impl Fn(N) -> T, n: N) -> LinkedListEphS<T>;
@@ -39,5 +40,9 @@ impl<T2> LinkedListEphChap19Trait for LinkedListEphS<T2> {
     fn flatten<T: Clone>(s: &LinkedListEphS<LinkedListEphS<T>>) -> LinkedListEphS<T> { <LinkedListEphS<T2> as LinkedListEphChap18Trait>::flatten(s) }
     fn inject<T: Clone + Eq>(values: &LinkedListEphS<T>, changes: &LinkedListEphS<(N, T)>) -> LinkedListEphS<T> { <LinkedListEphS<T2> as LinkedListEphChap18Trait>::inject(values, changes) }
 }
+
+}
+
+pub use LinkedListEphChap19::LinkedListEphChap19Trait;
 
 

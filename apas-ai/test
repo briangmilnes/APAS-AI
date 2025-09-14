@@ -1,0 +1,29 @@
+pub mod TestMappingEphChap5_5 {
+use apas_ai::Types::Types::*;
+use apas_ai::SetEphChap5_1::SetEphChap5_1::*;
+use apas_ai::RelationEphChap5_2::RelationEphChap5_2::*;
+use apas_ai::MappingEphChap5_5::MappingEphChap5_5::*;
+use apas_ai::SetLit;
+
+#[test]
+fn test_mapping_overwrites_duplicates_and_domain_range() {
+    // Example 5.4: X is not a mapping; 0 repeats.
+    let x_rel = Relation::FromSet(SetLit![(0,'a'), (0,'b'), (1,'b'), (3,'a')]);
+    let x_map = Mapping::FromRelation(&x_rel);
+    // Only one of (0, 'a') or (0, 'b') remains; domain size must equal mapping size
+    assert_eq!(x_map.size(), x_map.domain().size());
+    assert_eq!(x_map.domain(), SetLit![0,1,3]);
+    // Range is subset of {'a','b'}
+    let rg = x_map.range();
+    assert!(rg == SetLit!['a'] || rg == SetLit!['b'] || rg == SetLit!['a','b']);
+
+    // Example 5.4: Y is a mapping
+    let y_rel = Relation::FromSet(SetLit![(0,'a'), (1,'b'), (3,'a')]);
+    let y_map = Mapping::FromRelation(&y_rel);
+    assert_eq!(y_map.size(), 3);
+    assert_eq!(y_map.domain(), SetLit![0,1,3]);
+    assert_eq!(y_map.range(), SetLit!['a','b']);
+}
+}
+
+

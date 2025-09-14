@@ -1,0 +1,18 @@
+
+If I write
+
+#[derive(Clone)]
+pub struct Set<T> {
+    data: HashSet<T>,
+}
+
+then
+
+pub trait SetEphChap5_1Trait<T: Clone> { ... }
+
+impl<T> Set<T> { ...}
+
+is this not requiring that T have a clone trait?
+
+Do I have to implement anything about clone in the
+trait or the impl?

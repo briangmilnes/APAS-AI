@@ -5,24 +5,25 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 cargo bench \
-  --bench BenchAVLTreeSeqEphChap19 \
-  --bench BenchAVLTreeSeqEphChap18 \
-  --bench BenchAVLTreeSeqEph \
-  --bench BenchAVLTreeSeqPerChap19 \
-  --bench BenchAVLTreeSeqPer \
-  --bench BenchArraySeqEphChap19 \
-  --bench BenchArraySeqEphChap18 \
-  --bench BenchArraySeqEph \
-  --bench BenchArraySeqPerChap19 \
-  --bench BenchArraySeqPerChap18 \
-  --bench BenchArraySeqPer \
-  --bench BenchLinkedListPerChap19 \
+  --bench BenchMathSeq \
   --bench BenchLinkedListPerChap18 \
-  --bench BenchLinkedListPer \
-  --bench BenchLinkedListEphChap19 \
-  --bench BenchLinkedListEphChap18 \
+  --bench BenchLinkedListPerChap19 \
   --bench BenchLinkedListEph \
-  --bench BenchMathSeq
+  --bench BenchLinkedListEphChap18 \
+  --bench BenchLinkedListEphChap19 \
+  --bench BenchArraySeqPer \
+  --bench BenchArraySeqPerChap18 \
+  --bench BenchArraySeqPerChap19 \
+  --bench BenchArraySeqEph \
+  --bench BenchArraySeqEphChap18 \
+  --bench BenchArraySeqEphChap19 
+  --bench BenchAVLTreeSeqPer \
+  --bench BenchAVLTreeSeqPerChap19 \
+  --bench BenchAVLTreeSeqPerChap18 \
+  --bench BenchAVLTreeSeqEph \
+  --bench BenchAVLTreeSeqEphChap18 \
+  --bench BenchAVLTreeSeqEphChap19 \
+
 
 REPORT_DIR="target/criterion"
 INDEX_PATH="$REPORT_DIR/report/index.html"

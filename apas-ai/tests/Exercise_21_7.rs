@@ -1,10 +1,10 @@
 //! Exercise 21.7 (Comprehension with Conditionals): even elements of a paired with vowels of b.
 
-use apas_ai::Types::N;
-use apas_ai::{ArrayPerS, ArraySeqPerTrait};
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqPer::ArraySeqPer::*;
 use apas_ai::ArraySeqPerChap18::ArraySeqPerChap18Trait;
 use apas_ai::ArraySeqPerChap19::ArraySeqPerChap19Trait;
-use apas_ai::Types::B;
+use apas_ai::ArraySeqPer;
 
 fn is_even(x: &N) -> B { if *x % 2 == 0 { B::True } else { B::False } }
 fn is_vowel(c: &char) -> B {
@@ -28,17 +28,17 @@ fn pair_even_with_vowels(a: &ArrayPerS<N>, b: &ArrayPerS<char>) -> ArrayPerS<(N,
 
 #[test]
 fn test_pair_even_with_vowels_basic() {
-    let a = ArrayPerS::from_vec(vec![1, 2, 3, 4]);
-    let b = ArrayPerS::from_vec(vec!['a', 'b', 'e']);
+    let a = ArraySeqPer![1, 2, 3, 4];
+    let b = ArraySeqPer!['a', 'b', 'e'];
     let s = pair_even_with_vowels(&a, &b);
-    let expect = ArrayPerS::from_vec(vec![(2, 'a'), (2, 'e'), (4, 'a'), (4, 'e')]);
+    let expect = ArraySeqPer![(2, 'a'), (2, 'e'), (4, 'a'), (4, 'e')];
     assert_eq!(s, expect);
 }
 
 #[test]
 fn test_pair_even_with_vowels_debug_shape() {
-    let a = ArrayPerS::from_vec(vec![2]);
-    let b = ArrayPerS::from_vec(vec!['a', 'x']);
+    let a = ArraySeqPer![2];
+    let b = ArraySeqPer!['a', 'x'];
     let s = pair_even_with_vowels(&a, &b);
     let dbg_str = format!("{:?}", s);
     assert!(!dbg_str.is_empty());

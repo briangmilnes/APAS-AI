@@ -1,0 +1,128 @@
+Running tests now to surface any macro-scope errors, then I’ll explain the fix and show the one-line use import to bring macros into scope.
+
+[1 tool called]
+
+- Ran: cargo nextest run 2>&1 | cat. Failures show errors like “could not find ArrayPerS in ArraySeqPer” coming from the ArraySeqPer! macro. That’s not a missing macro-in-scope error; it’s the macro expanding to a path that no longer exists after the nested module refactor.
+
+Why this happens
+- The macros were written against pre-refactor paths (e.g., $crate::ArraySeqPer::ArrayPerS). After nesting into pub mod ArraySeqPer { ... } the actual path for the type is apas_ai::ArraySeqPer::ArraySeqPer::ArrayPerS, so the old path inside the macro no longer resolves.
+
+One-line fixes you can apply at the top of the affected test modules
+- To bring the macro names into scope (Rust 2018+): add
+  - use apas_ai::ArraySeqPer;
+- To make the macro’s expanded type name resolve without changing the macro yet: add
+  - use apas_ai::ArraySeqPer::ArraySeqPer::ArrayPerS;
+- If the trait is needed similarly:
+  - use apas_ai::ArraySeqPer::ArraySeqPer::ArraySeqPerTrait;
+
+These use lines let ArraySeqPer![...] compile immediately in tests while we update the macro definitions to the new nested paths.
+
+
+Start with import normalization.
+- Inside src/: replace any `use apas_ai::…` with `use crate::…`; keep macros using `$crate::…` internally.
+- In tests/benches: replace any `use crate::…` with `use apas_ai::…`; prefer `use apas_ai::Module::*;` over individual symbols.
+
+-----
+
+Thinking…
+
+- src changes: run cargo check after each file or small batch
+  - Command: cargo check --all-targets -q
+
+- test changes: run targeted nextest after each test file edit
+  - Examples:
+    - For TestMod1.rs: cargo nextest run -E 'test(TestMod1::.*)' --no-fail-fast -q
+    - For TestExtendMod1.rs: cargo nextest run -E 'test(TestExtendMod1::.*)' --no-fail-fast -q
+  - If naming is inconsistent, just run: cargo nextest run --no-fail-fast -q
+
+- module/bigger milestone: do a full compile once per module batch
+  - Command: cargo build -q
+
+- end of sweep: run full test suite and benches
+  - Tests: cargo nextest run --all-targets --no-fail-fast
+  - Benches: cargo bench
+
+
+1) Make a plean to apply the rule 'import paths by scope' across all the files.
+2) First todo start with a per file ETA and a sum ETA for the whole project.
+3) Make a todo list  of 'import paths by scope' for each src file.
+4) After each src file change run cargo check -q --all-targets 
+5) Make a todo list of 'import paths by scope' for each test file.
+6) After each todo for a test file F's modification add cargo nextest run -q -E 'test(F::.*)' --no-fail-fast 
+7) When all test files have been changed run cargo nextest run --all-targets --no-fail-fast
+7) Make a todo list of 'import paths by scope' for each benchmark file.
+8) After all benchmark files are changed, run cargo bench
+9) Report actual total time.
+
+1) Make a plan to apply the rule Constructor normalization across all the files.
+2) First todo start with a per file ETA and a sum ETA for the whole project.
+3) Make a todo list  of 'import paths by scope' for each src file.
+4) After each src file change run cargo check -1 --all-targets - be explicit in the TO-DOs here. 
+5) Make a todo list of 'import paths by scope' for each test file.
+6) After each todo for a test file F's modification add cargo nextest run of the right arguments for just that file of tests. Be explicit in the todo.
+7) When all test files have been changed run cargo nextest run --all-targets --no-fail-fast - be explicit in the TO-DO here.
+7) Make a todo list of 'import paths by scope' for each benchmark file. 
+8) After all benchmark files are changed, run cargo bench
+9) Report actual total time.
+
+
+“Contain UFCS (call-site elimination)”
+- Replace `<Type as Trait>::item(...)` at call sites with method-call syntax.
+- Ensure traits are imported; add inherent constructors or small extension traits if needed.
+- Keep UFCS only inside impls/traits for disambiguation.
+
+Here are four more whole codebase transformations.  Proceed with each one set of to-dos after
+you have finished the Constructor Normalization.
+1-9 steps at a time into the to-dos. Proceed with relentless to-dos.
+
+1) Make a plan to apply the rule Contain UFCS (call-site elimination) across all the files.
+2) First todo start with a per file ETA and a sum ETA for the whole project.
+3) Make a todo list   for each src file.
+4) After each src file change run cargo check -1 --all-targets - be explicit in the TO-DOs here. 
+5) Make a todo list of  for each test file.
+6) After each todo for a test file F's modification add cargo nextest run of the right arguments for just that file of tests. Be explicit in the todo.
+7) When all test files have been changed run cargo nextest run --all-targets --no-fail-fast - be explicit in the TO-DO here.
+7) Make a todo list of 'import paths by scope' for each benchmark file. 
+8) After all benchmark files are changed, run cargo bench
+9) Report actual total time.
+
+after this make the following plan and to-dos, proceed with relentless to-dos.
+
+1) Make a plan to apply the rule Type Inference Cleanup across all the files.
+2) First todo start with a per file ETA and a sum ETA for the whole project.
+3) Make a todo list   for each src file.
+4) After each src file change run cargo check -1 --all-targets - be explicit in the TO-DOs here. 
+5) Make a todo list of  for each test file.
+6) After each todo for a test file F's modification add cargo nextest run of the right arguments for just that file of tests. Be explicit in the todo.
+7) When all test files have been changed run cargo nextest run --all-targets --no-fail-fast - be explicit in the TO-DO here.
+7) Make a todo list of 'import paths by scope' for each benchmark file. 
+8) After all benchmark files are changed, run cargo bench
+9) Report actual total time.
+
+after this make the following plan and to-dos, proceed with relentless to-dos.
+
+1) Make a plan to apply the rule Macro Normalization across all the files.
+2) First todo start with a per file ETA and a sum ETA for the whole project.
+3) Make a todo list   for each src file.
+4) After each src file change run cargo check -1 --all-targets - be explicit in the TO-DOs here. 
+5) Make a todo list of  for each test file.
+6) After each todo for a test file F's modification add cargo nextest run of the right arguments for just that file of tests. Be explicit in the todo.
+7) When all test files have been changed run cargo nextest run --all-targets --no-fail-fast - be explicit in the TO-DO here.
+7) Make a todo list of 'import paths by scope' for each benchmark file. 
+8) After all benchmark files are changed, run cargo bench
+9) Report actual total time.
+
+after this make the following plan and to-dos, proceed with relentless to-dos.
+
+1) Make a plan to apply the rule Iterator and Formatting Normalization across all the files.
+2) First todo start with a per file ETA and a sum ETA for the whole project.
+3) Make a todo list   for each src file.
+4) After each src file change run cargo check -1 --all-targets - be explicit in the TO-DOs here. 
+5) Make a todo list of  for each test file.
+6) After each todo for a test file F's modification add cargo nextest run of the right arguments for just that file of tests. Be explicit in the todo.
+7) When all test files have been changed run cargo nextest run --all-targets --no-fail-fast - be explicit in the TO-DO here.
+7) Make a todo list of 'import paths by scope' for each benchmark file. 
+8) After all benchmark files are changed, run cargo bench
+9) Report actual total time.
+
+

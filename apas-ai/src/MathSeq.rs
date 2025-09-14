@@ -5,9 +5,8 @@
 //! Abstract: Definition 17.1 (Sequence) — runtime-sized, dense-domain sequence (0..n-1),
 //! using rust vector which is dense.
 
-// Re-export N for convenience in this module's namespace
-use crate::Types::B;
-pub use crate::Types::N;
+pub mod MathSeq {
+use crate::Types::Types::*;
 use std::collections::hash_map::Entry;
 use std::collections::{HashMap, HashSet};
 use std::hash::Hash;
@@ -271,7 +270,10 @@ impl<T> MathSeqTrait<T> for MathSeqS<T> {
 
 #[macro_export]
 macro_rules! MathSeq {
-    () => { $crate::MathSeq::MathSeqS { data: Vec::new() } };
-    ($x:expr; $n:expr) => { $crate::MathSeq::MathSeqS { data: vec![$x; $n] } };
-    ($($x:expr),* $(,)?) => { $crate::MathSeq::MathSeqS { data: vec![$($x),*] } };
+    () => { $crate::MathSeq::MathSeq::MathSeqS { data: Vec::new() } };
+    ($x:expr; $n:expr) => { $crate::MathSeq::MathSeq::MathSeqS { data: vec![$x; $n] } };
+    ($($x:expr),* $(,)?) => { $crate::MathSeq::MathSeq::MathSeqS { data: vec![$($x),*] } };
+}
+
+    
 }

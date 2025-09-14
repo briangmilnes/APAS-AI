@@ -1,9 +1,10 @@
 //! Exercises 21.5 and 21.6: All contiguous subsequences and cost analysis.
 
-use apas_ai::Types::N;
-use apas_ai::{ArrayPerS, ArraySeqPerTrait};
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqPer::ArraySeqPer::*;
 use apas_ai::ArraySeqPerChap18::ArraySeqPerChap18Trait;
 use apas_ai::ArraySeqPerChap19::ArraySeqPerChap19Trait;
+use apas_ai::ArraySeqPer;
 
 /// Generate all contiguous subsequences using nested tabulate + flatten.
 /// gpt-5-hard: Work: Θ(n^2), Span: Θ(lg n)
@@ -26,14 +27,14 @@ fn all_contiguous_subseqs<T: Clone + Eq>(a: &ArrayPerS<T>) -> ArrayPerS<ArrayPer
 
 #[test]
 fn test_all_contiguous_subseqs_n0() {
-    let a: ArrayPerS<N> = ArrayPerS::from_vec(vec![]);
+    let a: ArrayPerS<N> = ArraySeqPer![];
     let res = all_contiguous_subseqs(&a);
     assert_eq!(res.length(), 0);
 }
 
 #[test]
 fn test_all_contiguous_subseqs_n3_values() {
-    let a = ArrayPerS::from_vec(vec![1, 2, 3]);
+    let a = ArraySeqPer![1, 2, 3];
     let res = all_contiguous_subseqs(&a);
     let v: Vec<Vec<N>> = res.iter().map(|s| s.iter().copied().collect()).collect();
     let expect = vec![
@@ -46,7 +47,7 @@ fn test_all_contiguous_subseqs_n3_values() {
 
 #[test]
 fn test_all_contiguous_subseqs_debug_shape() {
-    let a = ArrayPerS::from_vec(vec![1, 2]);
+    let a = ArraySeqPer![1, 2];
     let res = all_contiguous_subseqs(&a);
     let dbg_str = format!("{:?}", res);
     assert!(!dbg_str.is_empty());

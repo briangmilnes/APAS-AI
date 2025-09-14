@@ -1,7 +1,8 @@
 //! Chapter 18 algorithms for AVLTreePerS.
 
-use crate::AVLTreeSeqPer::{AVLTreeSeqPerS, AVLTreeSeqPerTrait};
-use crate::Types::{B, N, O};
+pub mod AVLTreeSeqPerChap18 {
+use crate::AVLTreeSeqPer::AVLTreeSeqPer::*;
+use crate::Types::Types::*;
 use std::fmt::{Debug, Display};
 
 pub trait AVLTreeSeqPerChap18Trait {
@@ -73,3 +74,7 @@ impl<T2: Ord + Copy + Debug + Display> AVLTreeSeqPerChap18Trait for AVLTreeSeqPe
         <AVLTreeSeqPerS<T> as AVLTreeSeqPerTrait<T>>::from_vec(out)
     }
 }
+
+}
+
+pub use AVLTreeSeqPerChap18::AVLTreeSeqPerChap18Trait;

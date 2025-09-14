@@ -1,7 +1,8 @@
 //! Chapter 18 algorithms for ArraySeqPer.
 
-use crate::ArraySeqPer::{ArrayPerS, ArraySeqPerTrait};
-use crate::Types::{B, N, O};
+pub mod ArraySeqPerChap18 {
+use crate::ArraySeqPer::ArraySeqPer::*;
+use crate::Types::Types::*;
 
 pub trait ArraySeqPerChap18Trait {
     /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
@@ -215,3 +216,7 @@ impl<T2> ArraySeqPerChap18Trait for ArrayPerS<T2> {
         ArrayPerS::from_vec(pairs)
     }
 }
+
+}
+
+pub use ArraySeqPerChap18::ArraySeqPerChap18Trait;

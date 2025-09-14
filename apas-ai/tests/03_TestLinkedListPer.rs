@@ -1,6 +1,7 @@
-use apas_ai::Types::{N, B};
-use apas_ai::LinkedListPer::{LinkedListPerS, LinkedListPerTrait};
-use apas_ai::LinkedListPer;
+pub mod TestLinkedListPer {
+use apas_ai::Types::Types::*;
+use apas_ai::LinkedListPer::LinkedListPer::*;
+use apas_ai::LinkedListPer; // macro import
 
 #[test]
 fn test_empty_singleton_and_predicates() {
@@ -57,5 +58,6 @@ fn test_nth_out_of_bounds_panics() {
 fn test_display_impl() {
     let l = LinkedListPer![1, 2, 3];
     assert_eq!(format!("{}", l), "[1, 2, 3]");
+}
 }
 

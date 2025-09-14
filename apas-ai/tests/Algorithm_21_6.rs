@@ -1,15 +1,16 @@
 //! Algorithm 21.6 (Prime Sieve) using ArraySeqPer and ninject.
 
-use apas_ai::Types::{N, B};
+use apas_ai::Types::Types::*;
 use apas_ai::{ArrayPerS, ArraySeqPerTrait};
 use apas_ai::ArraySeqPerChap18::ArraySeqPerChap18Trait;
 use apas_ai::ArraySeqPerChap19::ArraySeqPerChap19Trait;
+use apas_ai::ArraySeqPer;
 
 /// Construct primes using a sieve: generate composites cs, create sieve pairs (x,false), ninject, then filter indices.
 /// gpt-5-hard: Work: Θ(n lg n), Span: Θ(lg n)
 /// APAS: Work: Θ(n lg n), Span: Θ(lg n)
 fn prime_sieve(n: N) -> ArrayPerS<N> {
-    if n <= 2 { return ArrayPerS::from_vec(Vec::new()); }
+    if n <= 2 { return ArraySeqPer![]; }
     // cs = 〈 i * j : 2 ≤ i ≤ floor(sqrt(n)) , 2 ≤ j ≤ n/i 〉
     let root: N = (n as f64).sqrt().floor() as N;
     let nested: ArrayPerS<ArrayPerS<N>> =

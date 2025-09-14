@@ -1,8 +1,9 @@
 //! Chapter 19 algorithms for ArraySeqPer.
 
-use crate::ArraySeqPer::{ArrayPerS, ArraySeqPerTrait};
+pub mod ArraySeqPerChap19 {
+use crate::ArraySeqPer::ArraySeqPer::*;
 use crate::ArraySeqPerChap18::ArraySeqPerChap18Trait;
-use crate::Types::{B, N, O};
+use crate::Types::Types::*;
 use std::sync::Mutex;
 
 pub trait ArraySeqPerChap19Trait {
@@ -314,3 +315,7 @@ impl<T2> ArraySeqPerChap19Trait for ArrayPerS<T2> {
         }
     }
 }
+
+}
+
+pub use ArraySeqPerChap19::ArraySeqPerChap19Trait;

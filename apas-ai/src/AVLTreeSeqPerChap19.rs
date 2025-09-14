@@ -1,8 +1,9 @@
 //! Chapter 19 algorithms for AVLTreeSeqPerS.
 
-use crate::AVLTreeSeqPer::{AVLTreeSeqPerS, AVLTreeSeqPerTrait};
+pub mod AVLTreeSeqPerChap19 {
+use crate::AVLTreeSeqPer::AVLTreeSeqPer::*;
 use crate::AVLTreeSeqPerChap18::AVLTreeSeqPerChap18Trait;
-use crate::Types::{B, N, O};
+use crate::Types::Types::*;
 use std::fmt::{Debug, Display};
 
 pub trait AVLTreeSeqPerChap19Trait {
@@ -78,3 +79,7 @@ impl<T2: Ord + Copy + Debug + Display> AVLTreeSeqPerChap19Trait for AVLTreeSeqPe
         <AVLTreeSeqPerS<T> as AVLTreeSeqPerChap18Trait>::filter(a, f)
     }
 }
+
+}
+
+pub use AVLTreeSeqPerChap19::AVLTreeSeqPerChap19Trait;

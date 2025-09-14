@@ -1,6 +1,9 @@
-use apas_ai::Types::{N, B};
-use apas_ai::{ArrayPerS, ArraySeqPerTrait, ArraySeqPerChap18Trait, ArraySeqPerChap19Trait};
-use apas_ai::ArraySeqPer;
+pub mod TestArraySeqPerChap19 {
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqPer::ArraySeqPer::*;
+use apas_ai::ArraySeqPerChap18::ArraySeqPerChap18Trait;
+use apas_ai::ArraySeqPerChap19::ArraySeqPerChap19Trait;
+use apas_ai::ArraySeqPer; // macro import
 use std::sync::Mutex;
 
 #[test]
@@ -56,6 +59,8 @@ fn test_inject_and_parallel() {
     <ArrayPerS<Mutex<(N, N)>> as ArraySeqPerChap19Trait>::AtomicWriteLowestChangeNumberWins(&with_num, &changes, 0);
     let guard = with_num.nth(2).lock().unwrap();
     assert_eq!(guard.0, 99);
+}
+
 }
 
 

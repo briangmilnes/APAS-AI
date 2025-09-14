@@ -1,0 +1,37 @@
+Apply the clean up plan and then doit after each file, to the following Files in order, including their Test and Benchmark files.
+Give me an ETA for each file clean up and doit and it's actual time before you start on each file.
+
+Non-stop mode: execute the full todo list in order. Do not pause for review or approval. Only stop on a blocking compile/test failure.  After each file: run doitall, mark the todo, and give a one-line status.
+
+
+The order of TO-DOs is:
+Clean up ArraySeqPerChap19.rs and its test and benchmark files. Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up ArraySeqEph.rs and its test and benchmark files. Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up ArraySeqEphChap18.rs and its test and benchmark files. Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up ArraySeqEphChap19.rs and its test and benchmark files. Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up AVLTreeSeqPer.rs and its test and benchmark files. Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up AVLTreeSeqPerChap18.rs and its test and benchmark files. Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up AVLTreeSeqPerChap19.rs and its test and benchmark files. Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up AVLTreeSeqEph.rs and its test and benchmark files. Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up AVLTreeSeqEphChap18.rs and its test and benchmark files. Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up AVLTreeSeqEphChap19.rs and its test and benchmark files. Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Show all file changes with git diff as you make them.
+
+Clean up Algorithm_21_1.rs. Show all file changes with git diff as you make them. Then doit when you have the changes in. 
+
+Clean up Algorithm_21_6.rs  Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up Exercise_21_2.txt  Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up Exercise_21_5_and_21_6.rs  Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up Exercise_21_7.rs  Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up Exercise_21_8_and_Algorithm_21_5.rs  Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up Exercsise_21_9.rs  Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up Problem21_1.rs  Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up Problem_21_3.rs  Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+Clean up Problem_21_4.rs  Show all file changes with git diff as you make them. Then doit when you have the changes in.  
+
+
+Show me the full to-do list before you start.
+And give me an ETA for the whole thing.
+Be sure to mark each todo as it is done so I can track your progress.
+
+Execute all to-dos in Non-stop mode: execute the full todo list in order. Do not pause for review or approval. Only stop on a blocking compile/test failure.  After each file: run doitall, mark the todo, and give a one-line status. START

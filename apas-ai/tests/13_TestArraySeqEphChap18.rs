@@ -1,8 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-use apas_ai::Types::{N, B, O};
-use apas_ai::{ArraySeqEphS, ArraySeqEphTrait, ArraySeqEphChap18Trait};
-use apas_ai::ArraySeqEph;
+pub mod TestArraySeqEphChap18 {
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqEph::ArraySeqEph::*;
+use apas_ai::ArraySeqEphChap18::ArraySeqEphChap18Trait;
+use apas_ai::ArraySeqEph; // macro import
 
 #[test]
 fn test_tabulate_fibonacci() {
@@ -170,6 +172,8 @@ fn test_collect_groups_by_key() {
     let (k1, v1) = grouped.nth(1);
     assert_eq!(*k1, "b");
     assert_eq!(*v1, ArraySeqEph![2]);
+}
+
 }
 
 

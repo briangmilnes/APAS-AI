@@ -1,7 +1,9 @@
 /// Ephemeral singly linked list tests (LinkedListEph).
-use apas_ai::Types::{B, N};
-use apas_ai::LinkedListEph::{LinkedListEphS, LinkedListEphTrait};
-use apas_ai::LinkedListEph;
+pub mod TestLinkedListEph {
+
+use apas_ai::Types::Types::*;
+use apas_ai::LinkedListEph::LinkedListEph::*;
+use apas_ai::LinkedListEph; // macro import
 
 #[test]
 fn test_empty_singleton_and_predicates() {
@@ -56,5 +58,6 @@ fn test_iter_inorder_collect_eph() {
     let l = LinkedListEph![5, 6, 7];
     let vals: Vec<N> = l.iter().copied().collect();
     assert_eq!(vals, vec![5, 6, 7]);
+}
 }
 

@@ -1,10 +1,9 @@
 //! Exercise 21.8 (isPrime) and Algorithm 21.5 (primesBF) tests and analysis.
 
-use apas_ai::Types::N;
-use apas_ai::{ArrayPerS, ArraySeqPerTrait};
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqPer::ArraySeqPer::*;
 use apas_ai::ArraySeqPerChap18::ArraySeqPerChap18Trait;
 use apas_ai::ArraySeqPerChap19::ArraySeqPerChap19Trait;
-use apas_ai::Types::B;
 
 fn is_divisible(n: N, i: N) -> B { if n % i == 0 { B::True } else { B::False } }
 

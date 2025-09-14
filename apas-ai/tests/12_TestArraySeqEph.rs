@@ -1,6 +1,8 @@
-use apas_ai::Types::{N, B};
-use apas_ai::ArraySeqEph::{ArraySeqEphS, ArraySeqEphTrait};
-use apas_ai::ArraySeqEph;
+pub mod TestArraySeqEph {
+
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqEph::ArraySeqEph::*;
+use apas_ai::ArraySeqEph; // macro import
 use apas_ai::ArraySeqEphChap18::ArraySeqEphChap18Trait;
 use apas_ai::ArraySeqEphChap19::ArraySeqEphChap19Trait;
 
@@ -28,5 +30,7 @@ fn test_iterators_collect() {
     let s = ArraySeqEph![1, 2, 3];
     let collected: Vec<N> = s.iter().copied().collect();
     assert_eq!(collected, vec![1, 2, 3]);
+}
+
 }
 

@@ -1,10 +1,11 @@
 //! Tests for AVLTreeSeq Eph (Chap18-style operations built using base APIs).
 
-use apas_ai::Types::{B, N};
-use apas_ai::{ArraySeqEphS, ArraySeqEphTrait};
-use apas_ai::AVLTreeSeqEph::{AVLTreeSeqEphS};
-use apas_ai::AVLTreeSeqEph;
-use apas_ai::ArraySeqEph;
+pub mod TestAVLTreeSeqEphChap18 {
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqEph::ArraySeqEph::*;
+use apas_ai::AVLTreeSeqEph::AVLTreeSeqEph::AVLTreeSeqEphS;
+use apas_ai::ArraySeqEph; // macro import
+use apas_ai::AVLTreeSeqEph; // macro import
 
 #[test]
 fn test_tabulate_inorder() {
@@ -37,5 +38,4 @@ fn test_filter_even() {
     let evens: AVLTreeSeqEphS<N> = AVLTreeSeqEphS::from_vec(kept);
     assert_eq!(evens.to_arrayseq(), ArraySeqEph![0, 2, 4]);
 }
-
-
+}

@@ -1,8 +1,9 @@
-//! Chapter 19 algorithms for `ArrayEphS<T>`.
+//! Chapter 19 algorithms for `ArraySeqEph<T>`.
 
-use crate::ArraySeqEph::{ArraySeqEphS, ArraySeqEphTrait};
+pub mod ArraySeqEphChap19 {
+use crate::ArraySeqEph::ArraySeqEph::*;
 use crate::ArraySeqEphChap18::ArraySeqEphChap18Trait;
-use crate::Types::{B, N};
+use crate::Types::Types::*;
 
 pub trait ArraySeqEphChap19Trait {
     fn tabulate<T>(f: impl Fn(N) -> T, n: N) -> ArraySeqEphS<T>;
@@ -76,3 +77,7 @@ impl<T2> ArraySeqEphChap19Trait for ArraySeqEphS<T2> {
         <ArraySeqEphS<T2> as ArraySeqEphChap18Trait>::flatten(s)
     }
 }
+
+}
+
+pub use ArraySeqEphChap19::ArraySeqEphChap19Trait;

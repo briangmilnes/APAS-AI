@@ -1,6 +1,7 @@
 //! Persistent (immutable by rebuilding) singly linked list.
 
-use crate::Types::{B, N};
+pub mod LinkedListPer {
+use crate::Types::Types::*;
 
 pub struct NodeP<T> {
     pub value: T,
@@ -252,11 +253,14 @@ impl<T: std::fmt::Display> std::fmt::Display for LinkedListPerS<T> {
     }
 }
 
+}
+
+
 #[macro_export]
 macro_rules! LinkedListPer {
-    () => { $crate::LinkedListPer::LinkedListPerS::from_vec(Vec::new()) };
+    () => { $crate::LinkedListPer::LinkedListPer::LinkedListPerS::from_vec(Vec::new()) };
     ($x:expr; $n:expr) => {{
-        < $crate::LinkedListPer::LinkedListPerS<_> as $crate::LinkedListPer::LinkedListPerTrait<_> >::new($n, $x)
+        < $crate::LinkedListPer::LinkedListPer::LinkedListPerS<_> as $crate::LinkedListPer::LinkedListPer::LinkedListPerTrait<_> >::new($n, $x)
     }};
-    ($($x:expr),* $(,)?) => { $crate::LinkedListPer::LinkedListPerS::from_vec(vec![$($x),*]) };
+    ($($x:expr),* $(,)?) => { $crate::LinkedListPer::LinkedListPer::LinkedListPerS::from_vec(vec![$($x),*]) };
 }

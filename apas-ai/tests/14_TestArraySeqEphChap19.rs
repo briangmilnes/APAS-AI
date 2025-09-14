@@ -1,8 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-use apas_ai::Types::{N, B, O};
-use apas_ai::{ArraySeqEphS, ArraySeqEphTrait, ArraySeqEphChap18Trait, ArraySeqEphChap19Trait};
-use apas_ai::ArraySeqEph;
+pub mod TestArraySeqEphChap19 {
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqEph::ArraySeqEph::*;
+use apas_ai::ArraySeqEphChap18::ArraySeqEphChap18Trait;
+use apas_ai::ArraySeqEphChap19::ArraySeqEphChap19Trait;
+use apas_ai::ArraySeqEph; // macro import
 
 #[test]
 fn test_empty() {
@@ -205,4 +208,4 @@ fn test_flatten_ch19() {
     assert_eq!(flat, ArraySeqEph![1, 2, 3, 4]);
 }
 
- 
+}

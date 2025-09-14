@@ -1,7 +1,8 @@
-use apas_ai::Types::{N, B, O};
-use apas_ai::LinkedListEph::{LinkedListEphS, LinkedListEphTrait};
-use apas_ai::LinkedListEph;
-use apas_ai::LinkedListEphChap18Trait;
+pub mod TestLinkedListEphChap18 {
+use apas_ai::Types::Types::*;
+use apas_ai::LinkedListEph::LinkedListEph::*;
+use apas_ai::LinkedListEph; // macro import
+use apas_ai::LinkedListEphChap18::LinkedListEphChap18::*;
 
 // Eph Chap18 algorithms are not implemented; we reference expected outcomes via simple constructions.
 
@@ -102,5 +103,7 @@ fn test_flatten_and_collect_ch18() {
     let grouped = <LinkedListEphS<(N, N)> as LinkedListEphChap18Trait>::collect(&pairs, |a, b| if a == b { O::Equal } else if a < b { O::Less } else { O::Greater });
     // Expect keys 1 and 2 with their grouped lists
     assert_eq!(<LinkedListEphS<(N, LinkedListEphS<N>)> as LinkedListEphTrait<(N, LinkedListEphS<N>)>>::length(&grouped), 2);
+}
+
 }
 

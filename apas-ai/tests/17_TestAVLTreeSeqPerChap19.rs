@@ -1,7 +1,8 @@
-use apas_ai::Types::{B, N};
-use apas_ai::{AVLTreeSeqPerS, AVLTreeSeqPerTrait};
-use apas_ai::AVLTreeSeqPerChap19Trait;
-use apas_ai::AVLTreeSeqPer;
+pub mod TestAVLTreeSeqPerChap19 {
+use apas_ai::Types::Types::*;
+use apas_ai::AVLTreeSeqPer::AVLTreeSeqPer::*;
+use apas_ai::AVLTreeSeqPerChap19::AVLTreeSeqPerChap19Trait;
+use apas_ai::AVLTreeSeqPer; // macro import
 
 #[test]
 fn test_tabulate_and_map_ch19() {
@@ -45,4 +46,4 @@ fn test_iter_inorder_after_pipeline_ch19() {
     assert_eq!(vals, vec![4, 6, 8, 10, 12]);
 }
 
-
+}

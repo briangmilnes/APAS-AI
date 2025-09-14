@@ -1,6 +1,7 @@
 //! Eph (mutable) singly linked list, duplicated from `LinkedList` with renamed types.
 
-use crate::Types::{B, N};
+pub mod LinkedListEph {
+use crate::Types::Types::*;
 
 #[derive(Clone)]
 pub struct NodeE<T> {
@@ -244,18 +245,20 @@ impl<T: std::fmt::Display> std::fmt::Display for LinkedListEphS<T> {
 #[macro_export]
 macro_rules! LinkedListEph {
     ($x:expr; $n:expr) => {{
-        < $crate::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEphTrait<_> >::new($n, $x)
+        < $crate::LinkedListEph::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEph::LinkedListEphTrait<_> >::new($n, $x)
     }};
     ($($x:expr),* $(,)?) => {{
         let __vals = vec![$($x),*];
         let __len = __vals.len();
         if __len == 0 {
-            < $crate::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEphTrait<_> >::empty()
+            < $crate::LinkedListEph::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEph::LinkedListEphTrait<_> >::empty()
         } else {
-            let mut __l = < $crate::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEphTrait<_> >::new(__len, __vals[0].clone());
-            let mut __i: $crate::Types::N = 0;
-            for __v in __vals { let _ = < $crate::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEphTrait<_> >::set(&mut __l, __i, __v); __i += 1; }
+            let mut __l = < $crate::LinkedListEph::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEph::LinkedListEphTrait<_> >::new(__len, __vals[0].clone());
+            let mut __i: $crate::Types::Types::N = 0;
+            for __v in __vals { let _ = < $crate::LinkedListEph::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEph::LinkedListEphTrait<_> >::set(&mut __l, __i, __v); __i += 1; }
             __l
         }
     }};
+}
+
 }

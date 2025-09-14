@@ -1,8 +1,8 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
-use apas_ai::Types::N;
-use apas_ai::{LinkedListPerS};
-use apas_ai::LinkedListPerChap19Trait;
-use apas_ai::LinkedListPerTrait;
+use apas_ai::Types::Types::*;
+use apas_ai::LinkedListPer::LinkedListPer::LinkedListPerS;
+use apas_ai::LinkedListPerChap19::LinkedListPerChap19Trait;
+use apas_ai::LinkedListPer::LinkedListPer::LinkedListPerTrait;
 use std::time::Duration;
 
 fn bench_ll_per_ch19(c: &mut Criterion) {

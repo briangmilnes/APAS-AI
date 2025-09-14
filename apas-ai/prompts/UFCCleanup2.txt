@@ -1,0 +1,258 @@
+UFCS Cleanup TODOs (exported)
+
+ID: test-01_TestTypes.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/01_TestTypes.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 01_TestTypes --no-fail-fast 2>&1 | cat
+
+ID: test-02_TestMathSeq.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/02_TestMathSeq.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 02_TestMathSeq --no-fail-fast 2>&1 | cat
+
+ID: test-03_TestLinkedListPer.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/03_TestLinkedListPer.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 03_TestLinkedListPer --no-fail-fast 2>&1 | cat
+
+ID: test-04_TestLinkedListPerChap18.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/04_TestLinkedListPerChap18.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 04_TestLinkedListPerChap18 --no-fail-fast 2>&1 | cat
+
+ID: test-05_TestLinkedListPerChap19.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/05_TestLinkedListPerChap19.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 05_TestLinkedListPerChap19 --no-fail-fast 2>&1 | cat
+
+ID: test-06_TestLinkedListEph.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/06_TestLinkedListEph.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 06_TestLinkedListEph --no-fail-fast 2>&1 | cat
+
+ID: test-07_TestLinkedListEphChap18.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/07_TestLinkedListEphChap18.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 07_TestLinkedListEphChap18 --no-fail-fast 2>&1 | cat
+
+ID: test-08_TestLinkedListEphChap19.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/08_TestLinkedListEphChap19.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 08_TestLinkedListEphChap19 --no-fail-fast 2>&1 | cat
+
+ID: test-09_TestArraySeqPer.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/09_TestArraySeqPer.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 09_TestArraySeqPer --no-fail-fast 2>&1 | cat
+
+ID: test-10_TestArraySeqPerChap18.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/10_TestArraySeqPerChap18.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 10_TestArraySeqPerChap18 --no-fail-fast 2>&1 | cat
+
+ID: test-11_TestArraySeqPerChap19.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/11_TestArraySeqPerChap19.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 11_TestArraySeqPerChap19 --no-fail-fast 2>&1 | cat
+
+ID: test-12_TestArraySeqEph.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/12_TestArraySeqEph.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 12_TestArraySeqEph --no-fail-fast 2>&1 | cat
+
+ID: test-13_TestArraySeqEphChap18.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/13_TestArraySeqEphChap18.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 13_TestArraySeqEphChap18 --no-fail-fast 2>&1 | cat
+
+ID: test-14_TestArraySeqEphChap19.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/14_TestArraySeqEphChap19.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 14_TestArraySeqEphChap19 --no-fail-fast 2>&1 | cat
+
+ID: test-15_TestAVLTreeSeqPer.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/15_TestAVLTreeSeqPer.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 15_TestAVLTreeSeqPer --no-fail-fast 2>&1 | cat
+
+ID: test-16_TestAVLTreeSeqPerChap18.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/16_TestAVLTreeSeqPerChap18.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 16_TestAVLTreeSeqPerChap18 --no-fail-fast 2>&1 | cat
+
+ID: test-17_TestAVLTreeSeqPerChap19.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/17_TestAVLTreeSeqPerChap19.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 17_TestAVLTreeSeqPerChap19 --no-fail-fast 2>&1 | cat
+
+ID: test-18_TestAVLTreeSeqEph.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/18_TestAVLTreeSeqEph.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 18_TestAVLTreeSeqEph --no-fail-fast 2>&1 | cat
+
+ID: test-19_TestAVLTreeSeqEphChap18.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/19_TestAVLTreeSeqEphChap18.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 19_TestAVLTreeSeqEphChap18 --no-fail-fast 2>&1 | cat
+
+ID: test-20_TestAVLTreeSeqEphChap19.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/20_TestAVLTreeSeqEphChap19.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test 20_TestAVLTreeSeqEphChap19 --no-fail-fast 2>&1 | cat
+
+ID: test-Algorithm_21_1.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/Algorithm_21_1.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test Algorithm_21_1 --no-fail-fast 2>&1 | cat
+
+ID: test-Algorithm_21_2.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/Algorithm_21_2.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test Algorithm_21_2 --no-fail-fast 2>&1 | cat
+
+ID: test-Algorithm_21_6.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/Algorithm_21_6.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test Algorithm_21_6 --no-fail-fast 2>&1 | cat
+
+ID: test-Exercise_21_5_and_21_6.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/Exercise_21_5_and_21_6.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test Exercise_21_5_and_21_6 --no-fail-fast 2>&1 | cat
+
+ID: test-Exercise_21_7.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/Exercise_21_7.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test Exercise_21_7 --no-fail-fast 2>&1 | cat
+
+ID: test-Exercise_21_8_and_Algorithm_21_5.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/Exercise_21_8_and_Algorithm_21_5.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test Exercise_21_8_and_Algorithm_21_5 --no-fail-fast 2>&1 | cat
+
+ID: test-Exercsise_21_9.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/Exercsise_21_9.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test Exercsise_21_9 --no-fail-fast 2>&1 | cat
+
+ID: test-Problem21_1.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/Problem21_1.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test Problem21_1 --no-fail-fast 2>&1 | cat
+
+ID: test-Problem_21_3.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/Problem_21_3.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test Problem_21_3 --no-fail-fast 2>&1 | cat
+
+ID: test-Problem_21_4.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — tests/Problem_21_4.rs: Verify/eliminate UFCS; if edited then run: cargo nextest run --test Problem_21_4 --no-fail-fast 2>&1 | cat
+
+ID: tests-final-nextest-all
+Status: cancelled
+Content:
+2025-09-10 09:19:38 — Final test sweep: Run cargo nextest run --tests --all-targets --no-fail-fast 2>&1 | cat after all test edits complete
+
+ID: bench-BenchAVLTreeSeqEph.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchAVLTreeSeqEph.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchAVLTreeSeqEphChap18.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchAVLTreeSeqEphChap18.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchAVLTreeSeqEphChap19.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchAVLTreeSeqEphChap19.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchAVLTreeSeqPer.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchAVLTreeSeqPer.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchAVLTreeSeqPerChap18.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchAVLTreeSeqPerChap18.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchAVLTreeSeqPerChap19.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchAVLTreeSeqPerChap19.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchArraySeqEph.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchArraySeqEph.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchArraySeqEphChap18.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchArraySeqEphChap18.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchArraySeqEphChap19.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchArraySeqEphChap19.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+
+ID: bench-BenchLinkedListEphChap18.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchLinkedListEphChap18.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchLinkedListEphChap19.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchLinkedListEphChap19.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchLinkedListPer.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchLinkedListPer.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchLinkedListPerChap18.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchLinkedListPerChap18.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchLinkedListPerChap19.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchLinkedListPerChap19.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: bench-BenchMathSeq.rs
+Status: pending
+Content:
+2025-09-10 09:19:38 — benches/BenchMathSeq.rs: Normalize 'import paths by scope'; verify/edit as needed
+
+ID: benches-run-bench
+Status: pending
+Content:
+2025-09-10 09:19:38 — After all benchmark edits, run: cargo bench | cat
+
+ID: final-report-total-time
+Status: pending
+Content:
+2025-09-10 09:19:38 — Final: Report actual total time from start to finish
+
+ID: step6-per-test-nextest
+Status: pending
+Content:
+2025-09-10 09:24:59 — Step 6: After any test file F change, run: cargo nextest run --test <F_STEM> --no-fail-fast 2>&1 | cat
+
+ID: step7-tests-final-sweep
+Status: pending
+Content:
+Start 2025-09-10T01:32:11Z
+2025-09-10 09:24:59 — Step 7: Final test sweep: cargo nextest run --tests --all-targets --no-fail-fast 2>&1 | cat (only if any tests changed) — started 2025-09-10 09:32:11 — cancelled 2025-09-10 09:36:03
+
+ID: step9-report-total-time
+Status: pending
+Content:
+2025-09-10 09:24:59 — Step 9: Report actual total time from start to finish

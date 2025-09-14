@@ -1,8 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-use apas_ai::Types::{N, B, O};
-use apas_ai::{ArrayPerS, ArraySeqPerTrait};
-use apas_ai::ArraySeqPer;
+pub mod TestArraySeqPer {
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqPer::ArraySeqPer::*;
+use apas_ai::ArraySeqPer; // macro import
 
 #[test]
 fn test_new_and_set() {
@@ -241,6 +242,8 @@ fn test_iterator_collects_in_order() {
     let s = ArraySeqPer![1, 2, 3, 4];
     let collected: Vec<N> = s.iter().copied().collect();
     assert_eq!(collected, vec![1, 2, 3, 4]);
+}
+
 }
 
 

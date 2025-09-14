@@ -1,0 +1,2 @@
+Non-stop mode: execute the full todo list in order. Do not pause for review or approval. Only stop on a blocking compile/test failure that you can not fix.
+No git. After each file: run doitall, mark the todo, and give a one-line status.

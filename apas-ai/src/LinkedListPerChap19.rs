@@ -1,8 +1,9 @@
 //! Chapter 19 algorithms for LinkedListPer.
 
-use crate::LinkedListPer::{LinkedListPerS, LinkedListPerTrait};
+pub mod LinkedListPerChap19 {
+use crate::LinkedListPer::LinkedListPer::*;
 use crate::LinkedListPerChap18::LinkedListPerChap18Trait;
-use crate::Types::{B, N};
+use crate::Types::Types::*;
 
 pub trait LinkedListPerChap19Trait {
     fn tabulate<T>(f: impl Fn(N) -> T, n: N) -> LinkedListPerS<T>;
@@ -101,3 +102,7 @@ impl<T2> LinkedListPerChap19Trait for LinkedListPerS<T2> {
         <LinkedListPerS<T2> as LinkedListPerChap18Trait>::inject(values, changes)
     }
 }
+
+}
+
+pub use LinkedListPerChap19::LinkedListPerChap19Trait;

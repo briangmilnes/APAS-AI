@@ -1,12 +1,13 @@
 //! Problem 21.1 (Points in 2D) tests and construction using ArraySeqPer.
 
-use apas_ai::Types::N;
-use apas_ai::{ArrayPerS, ArraySeqPerTrait};
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqPer::ArraySeqPer::*;
+use apas_ai::ArraySeqPer;
 
 /// Construct the sequence of 2D points (x, y) with 0 ≤ x < n and 1 ≤ y < n,
 /// ordered by x major, then y.
 fn points2d(n: N) -> ArrayPerS<(N, N)> {
-    if n == 0 { return ArrayPerS::from_vec(Vec::new()); }
+    if n == 0 { return ArraySeqPer![]; }
     let len = n * (n - 1);
     let mut v: Vec<(N, N)> = Vec::with_capacity(len);
     for x in 0..n {
@@ -20,7 +21,7 @@ fn points2d(n: N) -> ArrayPerS<(N, N)> {
 #[test]
 fn test_points2d_n3_example() {
     let s = points2d(3);
-    let expect = ArrayPerS::from_vec(vec![(0, 1), (0, 2), (1, 1), (1, 2), (2, 1), (2, 2)]);
+    let expect = ArraySeqPer![(0, 1), (0, 2), (1, 1), (1, 2), (2, 1), (2, 2)];
     assert_eq!(s.length(), expect.length());
     assert_eq!(s, expect);
 }

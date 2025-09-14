@@ -1,7 +1,8 @@
 //! Chapter 18 algorithms for LinkedListEph (ephemeral).
 
-use crate::LinkedListEph::{LinkedListEphS, LinkedListEphTrait};
-use crate::Types::{B, N, O};
+pub mod LinkedListEphChap18 {
+use crate::LinkedListEph::LinkedListEph::*;
+use crate::Types::Types::*;
 use std::collections::HashSet;
 
 pub trait LinkedListEphChap18Trait {
@@ -126,5 +127,9 @@ impl<T2> LinkedListEphChap18Trait for LinkedListEphS<T2> {
         LinkedListEphS::from_vec(pairs)
     }
 }
+
+}
+
+pub use LinkedListEphChap18::LinkedListEphChap18Trait;
 
 

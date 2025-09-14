@@ -1,6 +1,6 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
-use apas_ai::Types::N;
-use apas_ai::{LinkedListPerS, LinkedListPerTrait};
+use apas_ai::Types::Types::*;
+use apas_ai::LinkedListPer::LinkedListPer::*;
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;

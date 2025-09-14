@@ -1,5 +1,7 @@
-use apas_ai::Types::N;
-use apas_ai::{AVLTreeSeqPerS, AVLTreeSeqPerTrait, AVLTreeSeqPerChap18Trait};
+pub mod TestAVLTreeSeqPer {
+use apas_ai::Types::Types::*;
+use apas_ai::AVLTreeSeqPer::AVLTreeSeqPer::*;
+use apas_ai::AVLTreeSeqPerChap18::AVLTreeSeqPerChap18Trait;
 
 #[test]
 fn test_persistent_set_does_not_mutate() {
@@ -17,3 +19,4 @@ fn test_iterator_inorder_values() {
     assert_eq!(vals, vec![1, 2, 3, 4, 5]);
 }
 
+}
