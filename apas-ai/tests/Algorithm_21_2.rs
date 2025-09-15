@@ -12,21 +12,21 @@ use apas_ai::ArraySeqPer;
 fn points3d_tab_flat(n: N) -> ArrayPerS<(N, N, N)> {
     if n == 0 { return ArraySeqPer![]; }
     let outer: ArrayPerS<ArrayPerS<(N, N, N)>> =
-        <ArrayPerS<ArrayPerS<(N, N, N)>> as ArraySeqPerChap19Trait>::tabulate(
+        <ArrayPerS<ArrayPerS<(N, N, N)>> as ArraySeqPerChap19Trait<T>>::tabulate(
             |x| {
                 let mid: ArrayPerS<ArrayPerS<(N, N, N)>> =
-                    <ArrayPerS<ArrayPerS<(N, N, N)>> as ArraySeqPerChap19Trait>::tabulate(
-                        |y| <ArrayPerS<(N, N, N)> as ArraySeqPerChap18Trait>::tabulate(
+                    <ArrayPerS<ArrayPerS<(N, N, N)>> as ArraySeqPerChap19Trait<T>>::tabulate(
+                        |y| <ArrayPerS<(N, N, N)> as ArraySeqPerChap18Trait<T>>::tabulate(
                             |z_idx| (x, y + 1, z_idx + 2),
                             n + 1 - 2 + 1, // z: 2..=n+1 has length n
                         ),
                         n, // y: 1..=n has length n
                     );
-                <ArrayPerS<(N, N, N)> as ArraySeqPerChap18Trait>::flatten(&mid)
+                <ArrayPerS<(N, N, N)> as ArraySeqPerChap18Trait<T>>::flatten(&mid)
             },
             n, // x: 0..=n−1 has length n
         );
-    <ArrayPerS<(N, N, N)> as ArraySeqPerChap18Trait>::flatten(&outer)
+    <ArrayPerS<(N, N, N)> as ArraySeqPerChap18Trait<T>>::flatten(&outer)
 }
 
 #[test]

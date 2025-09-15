@@ -12,8 +12,8 @@ fn bench_tabulate_map(c: &mut Criterion) {
     let n: N = 10_000;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let s: ArraySeqEphS<N> = <ArraySeqEphS<N> as ArraySeqEphChap18Trait>::tabulate(|i| i, len);
-            let m: ArraySeqEphS<N> = <ArraySeqEphS<N> as ArraySeqEphChap18Trait>::map(&s, |x| x + 1);
+            let s: ArraySeqEphS<N> = <ArraySeqEphS<N> as ArraySeqEphChap18Trait<T>>::tabulate(|i| i, len);
+            let m: ArraySeqEphS<N> = <ArraySeqEphS<N> as ArraySeqEphChap18Trait<T>>::map(&s, |x| x + 1);
             black_box((s.length(), m.length()))
         })
     });

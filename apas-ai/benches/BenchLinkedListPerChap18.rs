@@ -12,8 +12,8 @@ fn bench_ll_per_ch18(c: &mut Criterion) {
     let n: N = 5_000;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let s: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap18Trait>::tabulate(|i| i, len);
-            let m: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap18Trait>::map(&s, |x| x + 1);
+            let s: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap18Trait<T>>::tabulate(|i| i, len);
+            let m: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap18Trait<T>>::map(&s, |x| x + 1);
             black_box((s.length(), m.length()))
         })
     });

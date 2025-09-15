@@ -17,13 +17,13 @@ fn is_vowel(c: &char) -> B {
 /// flatten 〈 〈 (x, y) : y ∈ b | isVowel y 〉 : x ∈ a | isEven x 〉
 /// gpt-5-hard: Work: Θ(|a|·|b|), Span: Θ(lg |a|)
 fn pair_even_with_vowels(a: &ArrayPerS<N>, b: &ArrayPerS<char>) -> ArrayPerS<(N, char)> {
-    let filtered_a: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap18Trait>::filter(a, |x| is_even(x));
+    let filtered_a: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::filter(a, |x| is_even(x));
     let nested: ArrayPerS<ArrayPerS<(N, char)>> =
-        <ArrayPerS<ArrayPerS<(N, char)>> as ArraySeqPerChap19Trait>::map(&filtered_a, |x| {
-            let vb: ArrayPerS<char> = <ArrayPerS<char> as ArraySeqPerChap18Trait>::filter(b, |y| is_vowel(y));
-            <ArrayPerS<(N, char)> as ArraySeqPerChap19Trait>::map(&vb, |y| (*x, *y))
+        <ArrayPerS<ArrayPerS<(N, char)>> as ArraySeqPerChap19Trait<T>>::map(&filtered_a, |x| {
+            let vb: ArrayPerS<char> = <ArrayPerS<char> as ArraySeqPerChap18Trait<T>>::filter(b, |y| is_vowel(y));
+            <ArrayPerS<(N, char)> as ArraySeqPerChap19Trait<T>>::map(&vb, |y| (*x, *y))
         });
-    <ArrayPerS<(N, char)> as ArraySeqPerChap18Trait>::flatten(&nested)
+    <ArrayPerS<(N, char)> as ArraySeqPerChap18Trait<T>>::flatten(&nested)
 }
 
 #[test]

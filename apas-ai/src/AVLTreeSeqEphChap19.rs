@@ -22,19 +22,19 @@ pub trait AVLTreeSeqEphChap19Trait {
     fn filter<T: Ord + Copy + Debug + Display>(a: &AVLTreeSeqEphS<T>, f: impl Fn(&T) -> B) -> AVLTreeSeqEphS<T>;
 }
 
-impl<T2: Ord + Copy + Debug + Display> AVLTreeSeqEphChap19Trait for AVLTreeSeqEphS<T2> {
+impl<T: Ord + Copy + Debug + Display> AVLTreeSeqEphChap19Trait for AVLTreeSeqEphS<T> {
     fn tabulate<T>(f: impl Fn(N) -> T, n: N) -> AVLTreeSeqEphS<T>
     where
         T: Ord + Copy + Debug + Display,
     {
-        <AVLTreeSeqEphS<T> as AVLTreeSeqEphChap18Trait>::tabulate(f, n)
+        <AVLTreeSeqEphS<T> as AVLTreeSeqEphChap18Trait<T>>::tabulate(f, n)
     }
     fn map<T, U>(a: &AVLTreeSeqEphS<T>, f: impl Fn(&T) -> U) -> AVLTreeSeqEphS<U>
     where
         T: Ord + Copy + Debug + Display,
         U: Ord + Copy + Debug + Display,
     {
-        <AVLTreeSeqEphS<T> as AVLTreeSeqEphChap18Trait>::map(a, f)
+        <AVLTreeSeqEphS<T> as AVLTreeSeqEphChap18Trait<T>>::map(a, f)
     }
     fn select<T>(a: &AVLTreeSeqEphS<T>, b: &AVLTreeSeqEphS<T>, i: N) -> Option<T>
     where
@@ -54,7 +54,7 @@ impl<T2: Ord + Copy + Debug + Display> AVLTreeSeqEphChap19Trait for AVLTreeSeqEp
         }
     }
     fn append<T: Ord + Copy + Debug + Display>(a: &AVLTreeSeqEphS<T>, b: &AVLTreeSeqEphS<T>) -> AVLTreeSeqEphS<T> {
-        <AVLTreeSeqEphS<T> as AVLTreeSeqEphChap18Trait>::append(a, b)
+        <AVLTreeSeqEphS<T> as AVLTreeSeqEphChap18Trait<T>>::append(a, b)
     }
     fn deflate<T: Ord + Copy + Debug + Display>(f: impl Fn(&T) -> B, x: &T) -> AVLTreeSeqEphS<T> {
         if f(x) == B::True {
@@ -64,7 +64,7 @@ impl<T2: Ord + Copy + Debug + Display> AVLTreeSeqEphChap19Trait for AVLTreeSeqEp
         }
     }
     fn filter<T: Ord + Copy + Debug + Display>(a: &AVLTreeSeqEphS<T>, f: impl Fn(&T) -> B) -> AVLTreeSeqEphS<T> {
-        <AVLTreeSeqEphS<T> as AVLTreeSeqEphChap18Trait>::filter(a, f)
+        <AVLTreeSeqEphS<T> as AVLTreeSeqEphChap18Trait<T>>::filter(a, f)
     }
 }
 

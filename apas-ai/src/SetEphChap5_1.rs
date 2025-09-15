@@ -17,16 +17,16 @@ pub trait SetEphChap5_1Trait<T: Eq + Hash + Clone + Display + Debug + Sized> {
     fn mem(&self, x: &T) -> B;
     fn union(&self, other: &Set<T>) -> Set<T>
     where
-         T: Clone;
+         T: StT;
     fn intersection(&self, other: &Set<T>) -> Set<T>
     where  
-         T: Clone;
+         T: StT;
     fn partition(&self, parts: &Set<Set<T>>) -> B;
 
     fn CartesianProduct<U>(&self, other: &Set<U>) -> Set<(T, U)>
     where
-        T: Clone,
-        U: Clone + Eq + Hash;
+        T: StT,
+        U: StT + Hash;
 
     fn insert(&mut self, x: T) -> &mut Self;
 
@@ -101,7 +101,7 @@ impl<T: Eq + Hash> Set<T> {
 
     pub fn union(&self, other: &Set<T>) -> Set<T>
     where
-        T: Clone,
+        T: StT,
     {
         let mut out = self.clone();
         for x in other.data.iter() { let _ = out.data.insert(x.clone()); }
@@ -110,7 +110,7 @@ impl<T: Eq + Hash> Set<T> {
 
     pub fn intersection(&self, other: &Set<T>) -> Set<T>
     where
-        T: Clone,
+        T: StT,
     {
         let mut out = HashSet::with_capacity(self.data.len().min(other.data.len()));
         for x in self.data.intersection(&other.data) { let _ = out.insert(x.clone()); }
@@ -133,8 +133,8 @@ impl<T: Eq + Hash> Set<T> {
 
     pub fn CartesianProduct<U>(&self, other: &Set<U>) -> Set<(T, U)>
     where
-        T: Clone,
-        U: Clone + Eq + Hash,
+        T: StT,
+        U: StT + Hash,
     {
         let mut out: HashSet<(T, U)> = HashSet::new();
         for a in self.data.iter() {
@@ -181,7 +181,7 @@ impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetEphChap5_1Trait<T> for S
 
     fn union(&self, other: &Set<T>) -> Set<T>
     where
-        T: Clone,
+        T: StT,
     {
         let mut out = self.clone();
         for x in other.data.iter() { let _ = out.data.insert(x.clone()); }
@@ -190,7 +190,7 @@ impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetEphChap5_1Trait<T> for S
 
     fn intersection(&self, other: &Set<T>) -> Set<T>
     where
-        T: Clone,
+        T: StT,
     {
         let mut out = HashSet::with_capacity(self.data.len().min(other.data.len()));
         for x in self.data.intersection(&other.data) { let _ = out.insert(x.clone()); }
@@ -213,8 +213,8 @@ impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetEphChap5_1Trait<T> for S
 
     fn CartesianProduct<U>(&self, other: &Set<U>) -> Set<(T, U)>
     where
-        T: Clone,
-        U: Clone + Eq + Hash,
+        T: StT,
+        U: StT + Hash,
     {
         let mut out: HashSet<(T, U)> = HashSet::new();
         for a in self.data.iter() {

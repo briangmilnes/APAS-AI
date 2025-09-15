@@ -12,8 +12,8 @@ fn bench_avl_per_ch18(c: &mut Criterion) {
     let n: N = 1_000;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let t: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap18Trait>::tabulate(|i| i, len);
-            let m: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap18Trait>::map(&t, |x| x + 1);
+            let t: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap18Trait<T>>::tabulate(|i| i, len);
+            let m: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap18Trait<T>>::map(&t, |x| x + 1);
             black_box((t.length(), m.length()))
         })
     });

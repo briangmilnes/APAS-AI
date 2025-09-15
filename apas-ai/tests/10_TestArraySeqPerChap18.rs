@@ -1,13 +1,14 @@
 pub mod TestArraySeqPerChap18 {
 use apas_ai::Types::Types::*;
 use apas_ai::ArraySeqPer::ArraySeqPer::*;
+use apas_ai::Types::Types::Pair;
 use apas_ai::ArraySeqPerChap18::ArraySeqPerChap18Trait;
 use apas_ai::ArraySeqPer; // macro import
 
 #[test]
 fn test_tabulate_fibonacci() {
     fn fib(n: N) -> N { match n { 0 => 0, 1 => 1, _ => fib(n - 1) + fib(n - 2) } }
-    let a = <ArrayPerS<N> as ArraySeqPerChap18Trait>::tabulate(fib, 10);
+    let a = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::tabulate(fib, 10);
     let fib10_head = ArraySeqPer![
         *a.nth(0), *a.nth(1), *a.nth(2), *a.nth(3), *a.nth(4),
         *a.nth(5), *a.nth(6), *a.nth(7), *a.nth(8), *a.nth(9)
@@ -19,7 +20,7 @@ fn test_tabulate_fibonacci() {
 #[test]
 fn test_map_increment() {
     let a = ArraySeqPer![1, 2, 3, 4, 5];
-    let b = <ArrayPerS<N> as ArraySeqPerChap18Trait>::map(&a, |x| x + 1);
+    let b = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::map(&a, |x| x + 1);
     assert_eq!(b, ArraySeqPer![2, 3, 4, 5, 6]);
 }
 
@@ -38,7 +39,7 @@ fn test_subseq() {
 fn test_append() {
     let a = ArraySeqPer![1, 2, 3];
     let b = ArraySeqPer![4, 5, 6];
-    let c = <ArrayPerS<N> as ArraySeqPerChap18Trait>::append(&a, &b);
+    let c = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::append(&a, &b);
     assert_eq!(c, ArraySeqPer![1, 2, 3, 4, 5, 6]);
 }
 
@@ -46,22 +47,22 @@ fn test_append() {
 fn test_sequence_literals_and_append() {
     let a = ArraySeqPer![1, 2, 3];
     let b = ArraySeqPer![4, 5];
-    let c = <ArrayPerS<N> as ArraySeqPerChap18Trait>::append(&a, &b);
+    let c = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::append(&a, &b);
     assert_eq!(c, ArraySeqPer![1, 2, 3, 4, 5]);
     let empty: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerTrait<N>>::empty();
-    let d = <ArrayPerS<N> as ArraySeqPerChap18Trait>::append(&ArraySeqPer![1,2,3], &empty);
+    let d = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::append(&ArraySeqPer![1,2,3], &empty);
     assert_eq!(d.length(), 3);
-    let e = <ArrayPerS<N> as ArraySeqPerChap18Trait>::append(&empty, &ArraySeqPer![1,2,3]);
+    let e = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::append(&empty, &ArraySeqPer![1,2,3]);
     assert_eq!(e.length(), 3);
 }
 
 #[test]
 fn test_filter_even() {
     let numbers = ArraySeqPer![1,2,3,4,5,6,7,8,9,10];
-    let evens = <ArrayPerS<N> as ArraySeqPerChap18Trait>::filter(&numbers, |&x| if x % 2 == 0 { B::True } else { B::False });
+    let evens = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::filter(&numbers, |&x| if x % 2 == 0 { B::True } else { B::False });
     assert_eq!(evens, ArraySeqPer![2, 4, 6, 8, 10]);
     let odds_only = ArraySeqPer![1,3,5,7];
-    let no_evens = <ArrayPerS<N> as ArraySeqPerChap18Trait>::filter(&odds_only, |&x| if x % 2 == 0 { B::True } else { B::False });
+    let no_evens = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::filter(&odds_only, |&x| if x % 2 == 0 { B::True } else { B::False });
     assert_eq!(no_evens.length(), 0);
 }
 
@@ -71,21 +72,21 @@ fn test_flatten() {
     let b = ArraySeqPer![3, 4, 5];
     let c = ArraySeqPer![6];
     let sequences = ArraySeqPer![a, b, c];
-    let flattened = <ArrayPerS<N> as ArraySeqPerChap18Trait>::flatten(&sequences);
+    let flattened = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::flatten(&sequences);
     assert_eq!(flattened, ArraySeqPer![1, 2, 3, 4, 5, 6]);
     let empty: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerTrait<N>>::empty();
     let mixed = ArraySeqPer![ArraySeqPer![1, 2], empty,ArraySeqPer![3]];
-    let mixed_flat = <ArrayPerS<N> as ArraySeqPerChap18Trait>::flatten(&mixed);
+    let mixed_flat = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::flatten(&mixed);
     assert_eq!(mixed_flat, ArraySeqPer![1, 2, 3]);
 }
 
 #[test]
 fn test_update_sequence() {
     let a = ArraySeqPer!["hello", "world", "test"];
-    let b = <ArrayPerS<&str> as ArraySeqPerChap18Trait>::update(&a, (1, "rust"));
+    let b = <ArrayPerS<&str> as ArraySeqPerChap18Trait<T>>::update(&a, (1, "rust"));
     assert_eq!(b, ArraySeqPer!["hello", "rust", "test"]);
     let c = ArraySeqPer!["hello", "world", "test"];
-    let d = <ArrayPerS<&str> as ArraySeqPerChap18Trait>::update(&c, (5, "out_of_bounds"));
+    let d = <ArrayPerS<&str> as ArraySeqPerChap18Trait<T>>::update(&c, (5, "out_of_bounds"));
     assert_eq!(d, ArraySeqPer!["hello", "world", "test"]);
 }
 
@@ -93,18 +94,18 @@ fn test_update_sequence() {
 fn test_inject_and_ninject() {
     let a = ArraySeqPer!["the", "cat", "in", "the", "hat"];
     let updates = ArraySeqPer![(0, "a"), (2, "on"), (4, "mat")];
-    let injected = <ArrayPerS<&str> as ArraySeqPerChap18Trait>::inject(&a, &updates);
+    let injected = <ArrayPerS<&str> as ArraySeqPerChap18Trait<T>>::inject(&a, &updates);
     assert_eq!(injected.length(), 5);
     assert_eq!(injected, ArraySeqPer!["a", "cat", "on", "the", "mat"]);
 
     let conflicting_updates = ArraySeqPer![(0, "first"), (0, "second"), (1, "updated")];
-    let result_first = <ArrayPerS<&str> as ArraySeqPerChap18Trait>::inject(&a, &conflicting_updates);
+    let result_first = <ArrayPerS<&str> as ArraySeqPerChap18Trait<T>>::inject(&a, &conflicting_updates);
     assert_eq!(result_first, ArraySeqPer!["first", "updated", "in", "the", "hat"]);
 
-    let ninjected = <ArrayPerS<&str> as ArraySeqPerChap18Trait>::ninject(&a, &ArraySeqPer![(1, "dog"), (3, "big"), (6, "hog")]);
+    let ninjected = <ArrayPerS<&str> as ArraySeqPerChap18Trait<T>>::ninject(&a, &ArraySeqPer![(1, "dog"), (3, "big"), (6, "hog")]);
     assert_eq!(ninjected, ArraySeqPer!["the", "dog", "in", "big", "hat"]);
     assert_eq!(ninjected.length(), 5);
-    let result_last = <ArrayPerS<&str> as ArraySeqPerChap18Trait>::ninject(&a, &ArraySeqPer![(0, "first"), (0, "second"), (1, "updated")]);
+    let result_last = <ArrayPerS<&str> as ArraySeqPerChap18Trait<T>>::ninject(&a, &ArraySeqPer![(0, "first"), (0, "second"), (1, "updated")]);
     assert_eq!(result_last, ArraySeqPer!["second", "updated", "in", "the", "hat"]);
 }
 
@@ -112,15 +113,15 @@ fn test_inject_and_ninject() {
 fn test_iterate_and_prefixes_and_reduce_and_scan() {
     let numbers = ArraySeqPer![1, 2, 3, 4, 5];
     let sum_fn = |a: &N, b: &N| a + b;
-    let result = <ArrayPerS<N> as ArraySeqPerChap18Trait>::reduce(&numbers, &sum_fn, 0);
+    let result = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::reduce(&numbers, &sum_fn, 0);
     assert_eq!(result, 15);
     let empty: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerTrait<N>>::empty();
-    let empty_result = <ArrayPerS<N> as ArraySeqPerChap18Trait>::reduce(&empty, &sum_fn, 42);
+    let empty_result = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::reduce(&empty, &sum_fn, 42);
     assert_eq!(empty_result, 42);
     let single = ArraySeqPer![100];
-    let single_result = <ArrayPerS<N> as ArraySeqPerChap18Trait>::reduce(&single, &sum_fn, 0);
+    let single_result = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::reduce(&single, &sum_fn, 0);
     assert_eq!(single_result, 100);
-    let (prefixes, final_result) = <ArrayPerS<N> as ArraySeqPerChap18Trait>::scan(&numbers, &sum_fn, 0);
+    let (prefixes, final_result) = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::scan(&numbers, &sum_fn, 0);
     assert_eq!(prefixes.length(), 5);
     assert_eq!(*prefixes.nth(0), 0);
     assert_eq!(*prefixes.nth(4), 10);
@@ -131,7 +132,7 @@ fn test_iterate_and_prefixes_and_reduce_and_scan() {
 fn test_iterate_sum_basic() {
     let numbers = ArraySeqPer![1, 2, 3, 4, 5];
     let sum_fn = |a: &N, x: &N| a + x;
-    let r = <ArrayPerS<N> as ArraySeqPerChap18Trait>::iterate(&numbers, sum_fn, 0);
+    let r = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::iterate(&numbers, sum_fn, 0);
     assert_eq!(r, 15);
 }
 
@@ -139,7 +140,7 @@ fn test_iterate_sum_basic() {
 fn test_iterate_prefixes_sum() {
     let numbers = ArraySeqPer![1, 2, 3];
     let sum_fn = |a: &N, x: &N| a + x;
-    let (prefixes, total) = <ArrayPerS<N> as ArraySeqPerChap18Trait>::iteratePrefixes(&numbers, sum_fn, 0);
+    let (prefixes, total) = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::iteratePrefixes(&numbers, sum_fn, 0);
     assert_eq!(prefixes.length(), 3);
     assert_eq!(*prefixes.nth(0), 0);
     assert_eq!(*prefixes.nth(1), 1);
@@ -149,13 +150,13 @@ fn test_iterate_prefixes_sum() {
 
 #[test]
 fn test_collect_groups_by_key() {
-    let pairs = ArraySeqPer![("a", 1_usize), ("b", 2_usize), ("a", 3_usize)];
-    let grouped = <ArrayPerS<(&str, N)> as ArraySeqPerChap18Trait>::collect(&pairs, |k1, k2| k1.cmp(k2));
+    let pairs = ArraySeqPer![Pair("a", 1_usize), Pair("b", 2_usize), Pair("a", 3_usize)];
+    let grouped = <ArrayPerS<Pair<&str, N>> as ArraySeqPerChap18Trait<T>>::collect(&pairs, |k1, k2| k1.cmp(k2));
     assert_eq!(grouped.length(), 2);
-    let (k0, v0) = grouped.nth(0);
+    let Pair(k0, v0) = grouped.nth(0);
     assert_eq!(*k0, "a");
     assert_eq!(*v0, ArraySeqPer![1, 3]);
-    let (k1, v1) = grouped.nth(1);
+    let Pair(k1, v1) = grouped.nth(1);
     assert_eq!(*k1, "b");
     assert_eq!(*v1, ArraySeqPer![2]);
 }

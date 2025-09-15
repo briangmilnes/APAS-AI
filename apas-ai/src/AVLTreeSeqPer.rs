@@ -262,7 +262,7 @@ impl<T: Debug + Copy> std::fmt::Debug for AVLTreeSeqPerS<T> {
 impl<T: Copy + Debug> AVLTreeSeqPerS<T> {
     pub fn to_arrayseq(&self) -> ArrayPerS<T>
     where
-        T: Clone,
+        T: Clone + MtT,
     {
         let v = self.values_in_order();
         ArrayPerS::from_vec(v)

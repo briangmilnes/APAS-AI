@@ -4,35 +4,31 @@ pub mod LinkedListEph {
 use crate::Types::Types::*;
 
 #[derive(Clone)]
-pub struct NodeE<T> {
+pub struct NodeE<T: StT> {
     pub value: T,
     pub next: Option<Box<NodeE<T>>>,
 }
 
 #[derive(Clone)]
-pub struct LinkedListEphS<T> {
+pub struct LinkedListEphS<T: StT> {
     head: Option<Box<NodeE<T>>>,
     len: N,
 }
 
-pub trait LinkedListEphTrait<T> {
+pub trait LinkedListEphTrait<T: StT> {
     fn empty() -> LinkedListEphS<T>;
-    fn new(length: N, init_value: T) -> Self
-    where
-        T: Clone;
+    fn new(length: N, init_value: T) -> Self;
     fn length(&self) -> N;
     fn nth(&self, index: N) -> &T;
     fn isEmpty(&self) -> B;
     fn isSingleton(&self) -> B;
     fn singleton(item: T) -> Self;
-    fn update(&mut self, item_at: (N, T)) -> &mut Self;
+    fn update(&mut self, item_at: Pair<N, T>) -> &mut Self;
     fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
-    fn subseq_copy(&self, start: N, length: N) -> Self
-    where
-        T: Clone;
+    fn subseq_copy(&self, start: N, length: N) -> Self;
 }
 
-impl<T> LinkedListEphS<T> {
+impl<T: StT> LinkedListEphS<T> {
     fn push_front_node(&mut self, node: Box<NodeE<T>>) {
         let mut n = node;
         n.next = self.head.take();
@@ -53,14 +49,11 @@ impl<T> LinkedListEphS<T> {
     }
 }
 
-impl<T> LinkedListEphTrait<T> for LinkedListEphS<T> {
+impl<T: StT> LinkedListEphTrait<T> for LinkedListEphS<T> {
     fn empty() -> Self {
         LinkedListEphS { head: None, len: 0 }
     }
-    fn new(length: N, init_value: T) -> Self
-    where
-        T: Clone,
-    {
+    fn new(length: N, init_value: T) -> Self {
         let mut list = LinkedListEphS::empty();
         for _ in 0..length {
             list.push_front_node(Box::new(NodeE {
@@ -117,7 +110,7 @@ impl<T> LinkedListEphTrait<T> for LinkedListEphS<T> {
             len: 1,
         }
     }
-    fn update(&mut self, (index, item): (N, T)) -> &mut Self {
+    fn update(&mut self, Pair(index, item): Pair<N, T>) -> &mut Self {
         let mut i = 0;
         let mut cur = self.head.as_mut();
         while let Some(n) = cur {
@@ -143,10 +136,7 @@ impl<T> LinkedListEphTrait<T> for LinkedListEphS<T> {
         }
         Err("Index out of bounds")
     }
-    fn subseq_copy(&self, start: N, length: N) -> Self
-    where
-        T: Clone,
-    {
+    fn subseq_copy(&self, start: N, length: N) -> Self {
         let n = self.len;
         let s = start.min(n);
         let e = start.saturating_add(length).min(n);
@@ -182,7 +172,7 @@ impl<T> LinkedListEphTrait<T> for LinkedListEphS<T> {
     }
 }
 
-impl<T: std::fmt::Debug> std::fmt::Debug for LinkedListEphS<T> {
+impl<T: StT> std::fmt::Debug for LinkedListEphS<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut v = Vec::with_capacity(self.len);
         let mut cur = self.head.as_ref();
@@ -194,11 +184,11 @@ impl<T: std::fmt::Debug> std::fmt::Debug for LinkedListEphS<T> {
     }
 }
 
-pub struct LinkedListEphIter<'a, T> {
+pub struct LinkedListEphIter<'a, T: StT> {
     cursor: Option<&'a NodeE<T>>,
 }
 
-impl<'a, T> Iterator for LinkedListEphIter<'a, T> {
+impl<'a, T: StT> Iterator for LinkedListEphIter<'a, T> {
     type Item = &'a T;
     fn next(&mut self) -> Option<Self::Item> {
         if let Some(n) = self.cursor {
@@ -208,7 +198,7 @@ impl<'a, T> Iterator for LinkedListEphIter<'a, T> {
     }
 }
 
-impl<T: PartialEq> PartialEq for LinkedListEphS<T> {
+impl<T: StT> PartialEq for LinkedListEphS<T> {
     fn eq(&self, other: &Self) -> bool {
         if self.len != other.len {
             return false;
@@ -226,9 +216,9 @@ impl<T: PartialEq> PartialEq for LinkedListEphS<T> {
     }
 }
 
-impl<T: Eq> Eq for LinkedListEphS<T> {}
+impl<T: StT> Eq for LinkedListEphS<T> {}
 
-impl<T: std::fmt::Display> std::fmt::Display for LinkedListEphS<T> {
+impl<T: StT> std::fmt::Display for LinkedListEphS<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "[")?;
         let mut first = true;

@@ -1,20 +1,23 @@
 //! Ephemeral (mutable) Array sequence variants. Mirrors `ArraySeq` under distinct names.
 
 pub mod ArraySeqEph {
+    
+    use std::fmt;
+    use std::fmt::{Debug, Formatter, Display};
+    use std::slice::Iter;
+
     use crate::Types::Types::*;
 
     /// Fixed-length sequence backed by `Box<[T]>` (ephemeral variant).
     #[derive(Clone)]
-    pub struct ArraySeqEphS<T> {
+    pub struct ArraySeqEphS<T: StT> {
         pub data: Box<[T]>,
     }
 
     /// Sequence trait for `ArraySeqEphS<T>`.
-    pub trait ArraySeqEphTrait<T> {
+    pub trait ArraySeqEphTrait<T: StT> {
         /// Work Θ(length), Span Θ(1).
-        fn new(length: N, init_value: T) -> Self
-        where
-            T: Clone;
+        fn new(length: N, init_value: T) -> Self;
         /// Work Θ(1), Span Θ(1).
         fn length(&self) -> N;
         /// Work Θ(1), Span Θ(1).
@@ -32,10 +35,10 @@ pub mod ArraySeqEph {
         /// Work Θ(length) to allocate/clone.
         fn subseq_copy(&self, start: N, length: N) -> Self
         where
-            T: Clone + Eq;
+            T: StT;
     }
 
-    impl<T> ArraySeqEphS<T> {
+    impl<T: StT> ArraySeqEphS<T> {
         pub fn subseq(&self, start: N, length: N) -> &[T] {
             let n = self.data.len();
             let s = start.min(n);
@@ -44,7 +47,7 @@ pub mod ArraySeqEph {
         }
         pub fn subseq_copy(&self, start: N, length: N) -> Self
         where
-            T: Clone + Eq,
+            T: StT,
         {
             let n = self.data.len();
             let s = start.min(n);
@@ -73,10 +76,10 @@ pub mod ArraySeqEph {
             self
         }
 
-        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
     }
 
-    impl<T: Eq> PartialEq for ArraySeqEphS<T> {
+    impl<T: StT> PartialEq for ArraySeqEphS<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.length() != other.length() {
                 return false;
@@ -89,19 +92,31 @@ pub mod ArraySeqEph {
             true
         }
     }
-    impl<T: Eq> Eq for ArraySeqEphS<T> {}
 
-    impl<T: std::fmt::Debug> std::fmt::Debug for ArraySeqEphS<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: StT> Eq for ArraySeqEphS<T> {}
+
+    impl<T: StT> Debug for ArraySeqEphS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
             let elts = (0..self.length()).map(|i| self.nth(i));
             f.debug_list().entries(elts).finish()
         }
     }
 
-    impl<T> ArraySeqEphTrait<T> for ArraySeqEphS<T> {
+    impl<T: StT> Display for ArraySeqEphS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+            write!(f, "[")?;
+            for i in 0..self.length() {
+                if i > 0 { write!(f, ", ")?; }
+                write!(f, "{}", self.nth(i))?;
+            }
+            write!(f, "]")
+        }
+    }
+
+    impl<T: StT> ArraySeqEphTrait<T> for ArraySeqEphS<T> {
         fn new(length: N, init_value: T) -> Self
         where
-            T: Clone,
+            T: StT,
         {
             ArraySeqEphS::from_vec(vec![init_value; length])
         }
@@ -141,7 +156,7 @@ pub mod ArraySeqEph {
         }
         fn subseq_copy(&self, start: N, length: N) -> Self
         where
-            T: Clone + Eq,
+            T: StT,
         {
             self.subseq_copy(start, length)
         }

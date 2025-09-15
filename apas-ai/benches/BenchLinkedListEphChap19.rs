@@ -12,8 +12,8 @@ fn bench_ll_eph_ch19(c: &mut Criterion) {
     let n: N = 5_000;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let s: LinkedListEphS<N> = <LinkedListEphS<N> as LinkedListEphChap19Trait>::tabulate(|i| i, len);
-            let m: LinkedListEphS<N> = <LinkedListEphS<N> as LinkedListEphChap19Trait>::map(&s, |x| x + 1);
+            let s: LinkedListEphS<N> = <LinkedListEphS<N> as LinkedListEphChap19Trait<T>>::tabulate(|i| i, len);
+            let m: LinkedListEphS<N> = <LinkedListEphS<N> as LinkedListEphChap19Trait<T>>::map(&s, |x| x + 1);
             black_box((<LinkedListEphS<N> as LinkedListEphTrait<N>>::length(&s), <LinkedListEphS<N> as LinkedListEphTrait<N>>::length(&m)))
         })
     });

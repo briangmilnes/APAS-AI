@@ -14,7 +14,7 @@ fn bench_build_and_contains(c: &mut Criterion) {
 
     group.bench_with_input(BenchmarkId::new("tabulate_then_contains", n), &n, |b, &len| {
         b.iter(|| {
-            let t: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap19Trait>::tabulate(|i| i, len);
+            let t: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap19Trait<T>>::tabulate(|i| i, len);
             let hit = <AVLTreeSeqPerS<N> as AVLTreeSeqPerTrait<N>>::isSingleton(&t) == B::True; // cheap read
             black_box((t.length(), hit))
         })

@@ -22,11 +22,11 @@ fn cartesian_loops(a: &ArrayPerS<N>, b: &ArrayPerS<&'static str>) -> ArrayPerS<(
 /// gpt-5-hard: Work: Θ(|a|·|b|), Span: Θ(lg |a|)
 fn cartesian_tab_flat(a: &ArrayPerS<N>, b: &ArrayPerS<&'static str>) -> ArrayPerS<(N, &'static str)> {
     let nested: ArrayPerS<ArrayPerS<(N, &'static str)>> =
-        <ArrayPerS<ArrayPerS<(N, &'static str)>> as ArraySeqPerChap19Trait>::map(
+        <ArrayPerS<ArrayPerS<(N, &'static str)>> as ArraySeqPerChap19Trait<T>>::map(
             a,
-            |x| <ArrayPerS<(N, &'static str)> as ArraySeqPerChap19Trait>::map(b, |y| (*x, *y)),
+            |x| <ArrayPerS<(N, &'static str)> as ArraySeqPerChap19Trait<T>>::map(b, |y| (*x, *y)),
         );
-    <ArrayPerS<(N, &'static str)> as ArraySeqPerChap18Trait>::flatten(&nested)
+    <ArrayPerS<(N, &'static str)> as ArraySeqPerChap18Trait<T>>::flatten(&nested)
 }
 
 #[test]

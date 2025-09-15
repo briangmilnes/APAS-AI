@@ -13,8 +13,8 @@ fn is_divisible(n: N, i: N) -> B { if n % i == 0 { B::True } else { B::False } }
 fn is_prime(n: N) -> B {
     if n < 2 { return B::False; }
     let k: N = (n as f64).sqrt().floor() as N;
-    let all: ArrayPerS<B> = <ArrayPerS<B> as ArraySeqPerChap19Trait>::tabulate(|i| is_divisible(n, i + 1), k);
-    let zeros: ArrayPerS<B> = <ArrayPerS<B> as ArraySeqPerChap18Trait>::filter(&all, |x| *x);
+    let all: ArrayPerS<B> = <ArrayPerS<B> as ArraySeqPerChap19Trait<T>>::tabulate(|i| is_divisible(n, i + 1), k);
+    let zeros: ArrayPerS<B> = <ArrayPerS<B> as ArraySeqPerChap18Trait<T>>::filter(&all, |x| *x);
     if zeros.length() == 1 { B::True } else { B::False }
 }
 
@@ -24,8 +24,8 @@ fn is_prime(n: N) -> B {
 /// gpt-5-hard: Work: Θ(n^{3/2}), Span: Θ(lg n)
 fn primes_bf(n: N) -> ArrayPerS<N> {
     if n <= 2 { return ArrayPerS::from_vec(Vec::new()); }
-    let all: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap19Trait>::tabulate(|i| i + 2, n - 2);
-    let filtered: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap18Trait>::filter(&all, |x| is_prime(*x));
+    let all: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap19Trait<T>>::tabulate(|i| i + 2, n - 2);
+    let filtered: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::filter(&all, |x| is_prime(*x));
     filtered
 }
 

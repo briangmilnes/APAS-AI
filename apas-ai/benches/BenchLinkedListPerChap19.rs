@@ -13,9 +13,9 @@ fn bench_ll_per_ch19(c: &mut Criterion) {
     let n: N = 5_000;
     group.bench_with_input(BenchmarkId::new("append_then_iterate", n), &n, |b, &len| {
         b.iter(|| {
-            let a: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap19Trait>::tabulate(|i| i, len);
-            let b2: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap19Trait>::tabulate(|i| i + len, len);
-            let c = <LinkedListPerS<N> as LinkedListPerChap19Trait>::append(&a, &b2);
+            let a: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap19Trait<T>>::tabulate(|i| i, len);
+            let b2: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap19Trait<T>>::tabulate(|i| i + len, len);
+            let c = <LinkedListPerS<N> as LinkedListPerChap19Trait<T>>::append(&a, &b2);
             black_box(<LinkedListPerS<N> as LinkedListPerTrait<N>>::length(&c))
         })
     });

@@ -6,35 +6,33 @@
 //! using rust vector which is dense.
 
 pub mod MathSeq {
-use crate::Types::Types::*;
 use std::collections::hash_map::Entry;
 use std::collections::{HashMap, HashSet};
+use std::fmt::{Debug, Display, Formatter};
 use std::hash::Hash;
 
+use crate::Types::Types::*;
+
 /// Mathematical sequence with dense domain, backed by `Vec<T>`.
-pub struct MathSeqS<T> {
-    pub data: Vec<T>,
+pub struct MathSeqS<T: StT> {
+    data: Vec<T>,
 }
 
-impl<T: PartialEq> PartialEq for MathSeqS<T> {
+impl<T: StT> PartialEq for MathSeqS<T> {
     fn eq(&self, other: &Self) -> bool {
         self.data == other.data
     }
 }
 
-impl<T: Eq> Eq for MathSeqS<T> {}
+impl<T: StT> Eq for MathSeqS<T> {}
 
-impl<T: std::fmt::Debug> std::fmt::Debug for MathSeqS<T> {
+impl<T: StT> std::fmt::Debug for MathSeqS<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut v: Vec<&T> = Vec::with_capacity(self.data.len());
-        for x in &self.data {
-            v.push(x);
-        }
-        f.debug_list().entries(v).finish()
+        f.debug_list().entries(self.data.iter()).finish()
     }
 }
 
-impl<T: std::fmt::Display> std::fmt::Display for MathSeqS<T> {
+impl<T: StT> std::fmt::Display for MathSeqS<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "[")?;
         let mut first = true;
@@ -46,20 +44,40 @@ impl<T: std::fmt::Display> std::fmt::Display for MathSeqS<T> {
     }
 }
 
-impl<T> MathSeqS<T> {
-    pub fn iter(&self) -> std::slice::Iter<'_, T> {
-        self.data.iter()
-    }
+impl<T: StT> MathSeqS<T> {
+    pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
+    pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, T> { self.data.iter_mut() }
+
+    pub fn empty() -> Self { Self { data: Vec::new() } }
+    pub fn singleton(item: T) -> Self { Self { data: vec![item] } }
+    pub fn from_vec(data: Vec<T>) -> Self { Self { data } }
+    pub fn with_len(length: N, init_value: T) -> Self { Self { data: vec![init_value; length] } }
+}
+
+impl<'a, T: StT> IntoIterator for &'a MathSeqS<T> {
+    type Item = &'a T;
+    type IntoIter = std::slice::Iter<'a, T>;
+    fn into_iter(self) -> Self::IntoIter { self.data.iter() }
+}
+
+impl<'a, T: StT> IntoIterator for &'a mut MathSeqS<T> {
+    type Item = &'a mut T;
+    type IntoIter = std::slice::IterMut<'a, T>;
+    fn into_iter(self) -> Self::IntoIter { self.data.iter_mut() }
+}
+
+impl<T: StT> IntoIterator for MathSeqS<T> {
+    type Item = T;
+    type IntoIter = std::vec::IntoIter<T>;
+    fn into_iter(self) -> Self::IntoIter { self.data.into_iter() }
 }
 
 /// Core API for `MathSeqS<T>`.
-pub trait MathSeqTrait<T> {
+pub trait MathSeqTrait<T: StT> {
     /// Construct a new sequence of length `length` initialized with `init_value`.
     /// Work: Θ(length)
     /// Span: Θ(1)
-    fn new(length: N, init_value: T) -> Self
-    where
-        T: Clone;
+    fn new(length: N, init_value: T) -> Self;
 
     /// Construct the empty sequence.
     /// Work: Θ(1)
@@ -99,9 +117,7 @@ pub trait MathSeqTrait<T> {
     /// Owning subsequence starting at `start` with the given `length` (clones elements).
     /// Work: Θ(length)
     /// Span: Θ(1)
-    fn subseq_copy(&self, start: N, length: N) -> Self
-    where
-        T: Clone;
+    fn subseq_copy(&self, start: N, length: N) -> Self;
 
     /// True iff the sequence has length zero.
     /// Work: Θ(1)
@@ -121,35 +137,24 @@ pub trait MathSeqTrait<T> {
     /// Work Θ(length(&self)), Span Θ(1).
     fn range(&self) -> Vec<T>
     where
-        T: Clone + Eq + Hash;
+        T: Hash;
 
     /// Multiset (count, value) ordered by the first occurrence of value in the range.
     /// Work Θ(length(&self)), Span Θ(1).
     fn multiset_range(&self) -> Vec<(N, T)>
     where
-        T: Clone + Eq + Hash;
+        T: Hash;
 }
 
-impl<T> MathSeqTrait<T> for MathSeqS<T> {
+impl<T: StT> MathSeqTrait<T> for MathSeqS<T> {
     /// Work: Θ(length), Span: Θ(1).
-    fn new(length: N, init_value: T) -> Self
-    where
-        T: Clone,
-    {
-        MathSeqS {
-            data: vec![init_value; length],
-        }
-    }
+    fn new(length: N, init_value: T) -> Self { MathSeqS { data: vec![init_value; length] } }
 
     /// Work: Θ(1), Span: Θ(1).
-    fn empty() -> Self {
-        MathSeqS { data: Vec::new() }
-    }
+    fn empty() -> Self { MathSeqS { data: Vec::new() } }
 
     /// Work: Θ(1), Span: Θ(1).
-    fn singleton(item: T) -> Self {
-        MathSeqS { data: vec![item] }
-    }
+    fn singleton(item: T) -> Self { MathSeqS { data: vec![item] } }
 
     /// Work: Θ(1), Span: Θ(1).
     fn length(&self) -> N {
@@ -193,10 +198,7 @@ impl<T> MathSeqTrait<T> for MathSeqS<T> {
     }
 
     /// Work: Θ(length), Span: Θ(1).
-    fn subseq_copy(&self, start: N, length: N) -> Self
-    where
-        T: Clone,
-    {
+    fn subseq_copy(&self, start: N, length: N) -> Self {
         let n = self.data.len();
         let s = start.min(n);
         let e = start.saturating_add(length).min(n);
@@ -234,14 +236,12 @@ impl<T> MathSeqTrait<T> for MathSeqS<T> {
     /// Work/Span: Θ(length(&self)), Θ(1).
     fn range(&self) -> Vec<T>
     where
-        T: Clone + Eq + Hash,
+        T: Hash,
     {
-        let mut seen: HashSet<&T> = HashSet::with_capacity(self.data.len());
+        let mut seen: HashSet<T> = HashSet::with_capacity(self.data.len());
         let mut out: Vec<T> = Vec::with_capacity(self.data.len());
-        for x in &self.data {
-            if seen.insert(x) {
-                out.push(x.clone());
-            }
+        for x in self.data.iter() {
+            if seen.insert(x.clone()) { out.push(x.clone()); }
         }
         out
     }
@@ -249,31 +249,30 @@ impl<T> MathSeqTrait<T> for MathSeqS<T> {
     /// Work/Span: Θ(length(&self)), Θ(1).
     fn multiset_range(&self) -> Vec<(N, T)>
     where
-        T: Clone + Eq + Hash,
+        T: Hash,
     {
-        let mut counts: HashMap<&T, N> = HashMap::with_capacity(self.data.len());
-        let mut order: Vec<&T> = Vec::new();
-        for x in &self.data {
-            match counts.entry(x) {
-                Entry::Vacant(e) => {
-                    e.insert(1);
-                    order.push(x);
-                }
-                Entry::Occupied(mut e) => {
-                    *e.get_mut() += 1;
-                }
+        let mut counts: HashMap<T, N> = HashMap::with_capacity(self.data.len());
+        let mut order: Vec<T> = Vec::new();
+        for x in self.data.iter() {
+            match counts.entry(x.clone()) {
+                Entry::Vacant(e) => { e.insert(1); order.push(x.clone()); }
+                Entry::Occupied(mut e) => { *e.get_mut() += 1; }
             }
         }
-        order.into_iter().map(|x| (counts[x], x.clone())).collect()
+        order.into_iter().map(|x| (*counts.get(&x).unwrap(), x)).collect()
     }
 }
 
 #[macro_export]
 macro_rules! MathSeq {
-    () => { $crate::MathSeq::MathSeq::MathSeqS { data: Vec::new() } };
-    ($x:expr; $n:expr) => { $crate::MathSeq::MathSeq::MathSeqS { data: vec![$x; $n] } };
-    ($($x:expr),* $(,)?) => { $crate::MathSeq::MathSeq::MathSeqS { data: vec![$($x),*] } };
+    () => { $crate::MathSeq::MathSeq::MathSeqS::empty() };
+    ($x:expr; $n:expr) => { $crate::MathSeq::MathSeq::MathSeqS::with_len($n, $x) };
+    ($($x:expr),* $(,)?) => { $crate::MathSeq::MathSeq::MathSeqS::from_vec(vec![$($x),*]) };
 }
 
-    
+#[allow(dead_code)]
+fn _MathSeq_macro_type_checks() {
+    let _ = MathSeq![1];
+    let _: crate::MathSeq::MathSeq::MathSeqS<i32> = MathSeq![];
+}
 }

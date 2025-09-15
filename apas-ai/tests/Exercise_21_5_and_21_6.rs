@@ -12,8 +12,8 @@ use apas_ai::ArraySeqPer;
 fn all_contiguous_subseqs<T: Clone + Eq>(a: &ArrayPerS<T>) -> ArrayPerS<ArrayPerS<T>> {
     let n = a.length();
     let nested: ArrayPerS<ArrayPerS<ArrayPerS<T>>> =
-        <ArrayPerS<ArrayPerS<ArrayPerS<T>>> as ArraySeqPerChap19Trait>::tabulate(
-            |i| <ArrayPerS<ArrayPerS<T>> as ArraySeqPerChap19Trait>::tabulate(
+        <ArrayPerS<ArrayPerS<ArrayPerS<T>>> as ArraySeqPerChap19Trait<T>>::tabulate(
+            |i| <ArrayPerS<ArrayPerS<T>> as ArraySeqPerChap19Trait<T>>::tabulate(
                 |j| ArrayPerS::from_vec(a.subseq(i, j + 1).to_vec()),
                 n - i,
             ),
@@ -21,7 +21,7 @@ fn all_contiguous_subseqs<T: Clone + Eq>(a: &ArrayPerS<T>) -> ArrayPerS<ArrayPer
         );
     // flatten twice
     let mid: ArrayPerS<ArrayPerS<T>> =
-        <ArrayPerS<ArrayPerS<T>> as ArraySeqPerChap18Trait>::flatten(&nested);
+        <ArrayPerS<ArrayPerS<T>> as ArraySeqPerChap18Trait<T>>::flatten(&nested);
     mid
 }
 

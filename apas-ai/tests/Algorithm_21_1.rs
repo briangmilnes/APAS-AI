@@ -11,11 +11,11 @@ use apas_ai::ArraySeqPer;
 fn points2d_tab_flat(n: N) -> ArrayPerS<(N, N)> {
     if n == 0 { return ArraySeqPer![]; }
     let inner: ArrayPerS<ArrayPerS<(N, N)>> =
-        <ArrayPerS<ArrayPerS<(N, N)>> as ArraySeqPerChap19Trait>::tabulate(
-            |x| <ArrayPerS<(N, N)> as ArraySeqPerChap18Trait>::tabulate(|y| (x, y + 1), n - 1),
+        <ArrayPerS<ArrayPerS<(N, N)>> as ArraySeqPerChap19Trait<T>>::tabulate(
+            |x| <ArrayPerS<(N, N)> as ArraySeqPerChap18Trait<T>>::tabulate(|y| (x, y + 1), n - 1),
             n,
         );
-    <ArrayPerS<(N, N)> as ArraySeqPerChap18Trait>::flatten(&inner)
+    <ArrayPerS<(N, N)> as ArraySeqPerChap18Trait<T>>::flatten(&inner)
 }
 
 #[test]

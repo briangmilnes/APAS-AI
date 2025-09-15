@@ -1,6 +1,11 @@
 //! Chapter 5.2 ephemeral Relation built on `Set<(A,B)>`.
 
 pub mod RelationEphChap5_2 {
+
+use std::fmt::{Display, Debug, Formatter, Result};
+use std::hash::Hash;
+use std::collections::hash_set::Iter;
+
 use crate::Types::Types::*;
 use crate::SetEphChap5_1::SetEphChap5_1::*;
 use crate::SetLit;
@@ -10,7 +15,8 @@ pub struct Relation<A, B> {
     pairs: Set<(A, B)>,
 }
 
-pub trait RelationEphChap5_2Trait<X: Eq + std::hash::Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized, Y: Eq + std::hash::Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized> {
+pub trait RelationEphChap5_2Trait<X: Eq + Hash + Display + Debug + Clone + Sized, 
+                                  Y: Eq + Hash + Display + Debug + Clone + Sized> {
     fn empty() -> Relation<X, Y>;
 
     fn FromSet(pairs: Set<(X, Y)>) -> Relation<X, Y>;
@@ -30,33 +36,33 @@ pub trait RelationEphChap5_2Trait<X: Eq + std::hash::Hash + std::fmt::Display + 
         X: Clone,
         Y: Clone;
 
-    fn iter(&self) -> std::collections::hash_set::Iter<'_, (X, Y)>;
+    fn iter(&self) -> Iter<'_, (X, Y)>;
 }
 
 impl<A, B> Relation<A, B> {
     pub fn FromVec(v: Vec<(A, B)>) -> Relation<A, B>
     where
-        A: Eq + std::hash::Hash + std::fmt::Display + std::fmt::Debug,
-        B: Eq + std::hash::Hash + std::fmt::Display + std::fmt::Debug,
+        A: Eq + Hash + Display + Debug,
+        B: Eq + Hash + Display + Debug,
     {
         Relation { pairs: Set::FromVec(v) }
     }
 }
 
-impl<A: Eq + std::hash::Hash + std::fmt::Display + std::fmt::Debug, B: Eq + std::hash::Hash + std::fmt::Display + std::fmt::Debug> PartialEq for Relation<A, B> {
+impl<A: Eq + Hash + Display + Debug, B: Eq + Hash + Display + Debug> PartialEq for Relation<A, B> {
     fn eq(&self, other: &Self) -> bool { self.pairs == other.pairs }
 }
 
-impl<A: Eq + std::hash::Hash + std::fmt::Display + std::fmt::Debug, B: Eq + std::hash::Hash + std::fmt::Display + std::fmt::Debug> Eq for Relation<A, B> {}
+impl<A: Eq + Hash + Display + Debug, B: Eq + Hash + Display + Debug> Eq for Relation<A, B> {}
 
-impl<A: std::fmt::Debug + Eq + std::hash::Hash, B: std::fmt::Debug + Eq + std::hash::Hash> std::fmt::Debug for Relation<A, B> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl<A: Debug + Eq + Hash, B: Debug + Eq + Hash> Debug for Relation<A, B> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         self.pairs.fmt(f)
     }
 }
 
-impl<A: std::fmt::Display + Eq + std::hash::Hash, B: std::fmt::Display + Eq + std::hash::Hash> std::fmt::Display for Relation<A, B> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl<A: Display + Eq + Hash, B: Display + Eq + Hash> Display for Relation<A, B> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         write!(f, "{{")?;
         let mut first = true;
         for (a, b) in self.pairs.iter() {
@@ -67,7 +73,8 @@ impl<A: std::fmt::Display + Eq + std::hash::Hash, B: std::fmt::Display + Eq + st
     }
 }
 
-impl<X: Eq + std::hash::Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized, Y: Eq + std::hash::Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized> RelationEphChap5_2Trait<X, Y> for Relation<X, Y> {
+impl<X: Eq + Hash + Display + Debug + Clone + Sized, 
+     Y: Eq + Hash + Display +  Debug + Clone + Sized> RelationEphChap5_2Trait<X, Y> for Relation<X, Y> {
     fn empty() -> Relation<X, Y> {
         Relation { pairs: SetLit![] }
     }
@@ -102,7 +109,7 @@ impl<X: Eq + std::hash::Hash + std::fmt::Display + std::fmt::Debug + Clone + Siz
         if self.pairs.mem(&(a.clone(), b.clone())) == B::True { B::True } else { B::False }
     }
 
-    fn iter(&self) -> std::collections::hash_set::Iter<'_, (X, Y)> { self.pairs.iter() }
+    fn iter(&self) -> Iter<'_, (X, Y)> { self.pairs.iter() }
 }
 
 }

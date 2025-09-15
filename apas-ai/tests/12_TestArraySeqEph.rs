@@ -17,11 +17,11 @@ fn test_ephemeral_arrayseq_basic() {
 
 #[test]
 fn test_ephemeral_ch18_map_append_filter() {
-    let a = <ArraySeqEphS<N> as ArraySeqEphChap18Trait>::tabulate(|i| i, 5);
-    let m = <ArraySeqEphS<N> as ArraySeqEphChap18Trait>::map(&a, |x| x + 1);
-    let c = <ArraySeqEphS<N> as ArraySeqEphChap18Trait>::append(&a, &m);
+    let a = <ArraySeqEphS<N> as ArraySeqEphChap18Trait<T>>::tabulate(|i| i, 5);
+    let m = <ArraySeqEphS<N> as ArraySeqEphChap18Trait<T>>::map(&a, |x| x + 1);
+    let c = <ArraySeqEphS<N> as ArraySeqEphChap18Trait<T>>::append(&a, &m);
     assert_eq!(c.length(), 10);
-    let evens = <ArraySeqEphS<N> as ArraySeqEphChap18Trait>::filter(&c, |x| if *x % 2 == 0 { B::True } else { B::False });
+    let evens = <ArraySeqEphS<N> as ArraySeqEphChap18Trait<T>>::filter(&c, |x| if *x % 2 == 0 { B::True } else { B::False });
     assert!(evens.length() > 0);
 }
 

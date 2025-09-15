@@ -87,7 +87,7 @@ impl<T: Copy + Debug> AVLTreeSeqEphS<T> {
     }
     pub fn to_arrayseq(&self) -> ArraySeqEphS<T>
     where
-        T: Clone,
+        T: Clone + StT,
     {
         let len = self.length();
         if len == 0 {

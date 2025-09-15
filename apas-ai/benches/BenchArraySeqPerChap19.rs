@@ -13,8 +13,8 @@ fn bench_tabulate_map_per_ch19(c: &mut Criterion) {
     let n: N = 10_000;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let s: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap19Trait>::tabulate(|i| i, len);
-            let m: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap19Trait>::map(&s, |x| x + 1);
+            let s: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap19Trait<T>>::tabulate(|i| i, len);
+            let m: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap19Trait<T>>::map(&s, |x| x + 1);
             black_box((s.length(), m.length()))
         })
     });

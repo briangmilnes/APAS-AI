@@ -31,9 +31,9 @@ fn bench_build_random_s(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("zeros_then_update", n), &n, |b, &len| {
         b.iter(|| {
             let mut rng = LinearCongruentialGenerator32::new(0xDEADBEEF);
-            let mut s = <ArraySeqEphS<N> as ArraySeqEphChap19Trait>::tabulate(|_| 0, len);
+            let mut s = <ArraySeqEphS<N> as ArraySeqEphChap19Trait<T>>::tabulate(|_| 0, len);
             for i in 0..len {
-                let _ = <ArraySeqEphS<N> as ArraySeqEphChap18Trait>::update(&mut s, (i, rng.next_N()));
+                let _ = <ArraySeqEphS<N> as ArraySeqEphChap18Trait<T>>::update(&mut s, (i, rng.next_N()));
             }
             black_box(s)
         })
