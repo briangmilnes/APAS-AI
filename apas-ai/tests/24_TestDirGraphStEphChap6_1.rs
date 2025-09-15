@@ -1,7 +1,7 @@
 pub mod TestDirGraphEphChap6_1 {
 use apas_ai::Types::Types::*;
-use apas_ai::SetEphChap5_1::SetEphChap5_1::*;
-use apas_ai::DirGraphEphChap6_1::DirGraphEphChap6_1::*;
+use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
+use apas_ai::DirGraphStEphChap6_1::DirGraphStEphChap6_1::*;
 use apas_ai::SetLit;
 
 #[test]

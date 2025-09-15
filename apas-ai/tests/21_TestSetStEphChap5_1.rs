@@ -1,7 +1,7 @@
 pub mod TestSetEphChap5_1 {
 
 use apas_ai::Types::Types::*;
-use apas_ai::SetEphChap5_1::SetEphChap5_1::*;
+use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
 use apas_ai::SetLit; // macro import
 
 #[allow(dead_code)]

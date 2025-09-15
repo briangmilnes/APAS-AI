@@ -1,7 +1,7 @@
 pub mod TestLinkedListPer {
 use apas_ai::Types::Types::*;
-use apas_ai::LinkedListPer::LinkedListPer::*;
-use apas_ai::LinkedListPer; // macro import
+use apas_ai::LinkedListStPer::LinkedListStPer::*;
+use apas_ai::LinkedListStPer; // macro import
 
 #[test]
 fn test_empty_singleton_and_predicates() {

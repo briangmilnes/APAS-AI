@@ -308,6 +308,7 @@ fn _MyMacro_type_checks() {
   - `Tool: glob_file_search — target: /abs/dir; glob: "**/*.rs"`
   - `Tool: run_terminal_cmd — command: "…"`
 - Redact secrets; truncate commands >160 chars. Stop announcements on STOP.
+ - Sweeps (hard rule, SEV2 on miss): During sweeps, echo EVERY tool call and batch related calls per step. Missing tool‑echo lines or silent tool usage during a sweep is a SEV2 violation; resume immediately and continue relentlessly.
 
 #### Tool Calls — Batching, Retries, Background
 - Parallel: print a single `ToolCalls:` block, one line per tool in the batch.
@@ -367,6 +368,10 @@ fn _MyMacro_type_checks() {
 ### TODO Flow and Execution Discipline
 
 #### Relentless TODO Flow (No‑Pause Autopilot; 3‑Attempt; Completion Guard)
+- SEV levels:
+  - SEV1: Critical breakage (data loss/destructive edits).
+  - SEV2: Workflow breach (stopping/asking during sweeps; missed TODO completion; failure to continue relentlessly).
+  - SEV3: Minor style/process deviations.
 - Scope: applies to sweeps and non‑sweeps.
 - Execution: synchronous; clear terminal in a separate call; non‑interactive flags; always `| cat`; one command per terminal invocation.
 - Timing: assistant‑text Start/End/Total from the system clock.
@@ -374,6 +379,7 @@ fn _MyMacro_type_checks() {
 - No‑pause Autopilot (hard rule): do not ask for confirmation or pause for review. Continue automatically unless and until one of the two hard stops occurs:
   1) After 3 failed attempts, or
   2) A fix would be destructive/ambiguous.
+  - Violation during sweeps is SEV2: Treat any stop/question/confirmation prompt during a sweep as a SEV2 bug. Immediately resume, log the violation in the status, and proceed relentlessly.
   In either stop, mark the TODO failed, print exact diagnostics, create a “Resume …” TODO, and immediately continue to the next independent TODO.
 - Completion guard: after a successful step, immediately complete the active TODO; if another exists, set it `in_progress` and print its Start; otherwise print “All TODOs completed”. No dangling TODOs (except explicit “[long‑run]”).
 - Long‑run tasks: only when tagged “[long‑run]”; exclude from totals until stopped; don’t mark complete until stop finishes.

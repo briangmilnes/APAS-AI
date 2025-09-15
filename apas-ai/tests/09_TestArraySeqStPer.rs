@@ -2,8 +2,8 @@
 
 pub mod TestArraySeqPer {
 use apas_ai::Types::Types::*;
-use apas_ai::ArraySeqPer::ArraySeqPer::*;
-use apas_ai::ArraySeqPer; // macro import
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::ArraySeqStPer; // macro import
 
 #[test]
 fn test_new_and_set() {
