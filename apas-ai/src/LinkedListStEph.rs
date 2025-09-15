@@ -1,6 +1,6 @@
-//! Eph (mutable) singly linked list, duplicated from `LinkedList` with renamed types.
+//! StEph (mutable) singly linked list, duplicated from `LinkedList` with renamed types.
 
-pub mod LinkedListEph {
+pub mod LinkedListStEph {
 use crate::Types::Types::*;
 
 #[derive(Clone)]
@@ -10,13 +10,13 @@ pub struct NodeE<T: StT> {
 }
 
 #[derive(Clone)]
-pub struct LinkedListEphS<T: StT> {
+pub struct LinkedListStEphS<T: StT> {
     head: Option<Box<NodeE<T>>>,
     len: N,
 }
 
-pub trait LinkedListEphTrait<T: StT> {
-    fn empty() -> LinkedListEphS<T>;
+pub trait LinkedListStEphTrait<T: StT> {
+    fn empty() -> LinkedListStEphS<T>;
     fn new(length: N, init_value: T) -> Self;
     fn length(&self) -> N;
     fn nth(&self, index: N) -> &T;
@@ -28,7 +28,7 @@ pub trait LinkedListEphTrait<T: StT> {
     fn subseq_copy(&self, start: N, length: N) -> Self;
 }
 
-impl<T: StT> LinkedListEphS<T> {
+impl<T: StT> LinkedListStEphS<T> {
     fn push_front_node(&mut self, node: Box<NodeE<T>>) {
         let mut n = node;
         n.next = self.head.take();
@@ -37,24 +37,24 @@ impl<T: StT> LinkedListEphS<T> {
     }
 
     pub fn from_vec(v: Vec<T>) -> Self {
-        let mut list = LinkedListEphS::empty();
+        let mut list = LinkedListStEphS::empty();
         for value in v.into_iter().rev() {
             list.push_front_node(Box::new(NodeE { value, next: None }));
         }
         list
     }
 
-    pub fn iter<'a>(&'a self) -> LinkedListEphIter<'a, T> {
-        LinkedListEphIter { cursor: self.head.as_deref() }
+    pub fn iter<'a>(&'a self) -> LinkedListStEphIter<'a, T> {
+        LinkedListStEphIter { cursor: self.head.as_deref() }
     }
 }
 
-impl<T: StT> LinkedListEphTrait<T> for LinkedListEphS<T> {
+impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
     fn empty() -> Self {
-        LinkedListEphS { head: None, len: 0 }
+        LinkedListStEphS { head: None, len: 0 }
     }
     fn new(length: N, init_value: T) -> Self {
-        let mut list = LinkedListEphS::empty();
+        let mut list = LinkedListStEphS::empty();
         for _ in 0..length {
             list.push_front_node(Box::new(NodeE {
                 value: init_value.clone(),
@@ -102,7 +102,7 @@ impl<T: StT> LinkedListEphTrait<T> for LinkedListEphS<T> {
         }
     }
     fn singleton(item: T) -> Self {
-        LinkedListEphS {
+        LinkedListStEphS {
             head: Some(Box::new(NodeE {
                 value: item,
                 next: None,
@@ -141,9 +141,9 @@ impl<T: StT> LinkedListEphTrait<T> for LinkedListEphS<T> {
         let s = start.min(n);
         let e = start.saturating_add(length).min(n);
         if e <= s {
-            return LinkedListEphS::empty();
+            return LinkedListStEphS::empty();
         }
-        let mut out = LinkedListEphS::empty();
+        let mut out = LinkedListStEphS::empty();
         let mut i = 0;
         let mut cur = self.head.as_ref();
         while let Some(node) = cur {
@@ -172,7 +172,7 @@ impl<T: StT> LinkedListEphTrait<T> for LinkedListEphS<T> {
     }
 }
 
-impl<T: StT> std::fmt::Debug for LinkedListEphS<T> {
+impl<T: StT> std::fmt::Debug for LinkedListStEphS<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut v = Vec::with_capacity(self.len);
         let mut cur = self.head.as_ref();
@@ -184,11 +184,11 @@ impl<T: StT> std::fmt::Debug for LinkedListEphS<T> {
     }
 }
 
-pub struct LinkedListEphIter<'a, T: StT> {
+pub struct LinkedListStEphIter<'a, T: StT> {
     cursor: Option<&'a NodeE<T>>,
 }
 
-impl<'a, T: StT> Iterator for LinkedListEphIter<'a, T> {
+impl<'a, T: StT> Iterator for LinkedListStEphIter<'a, T> {
     type Item = &'a T;
     fn next(&mut self) -> Option<Self::Item> {
         if let Some(n) = self.cursor {
@@ -198,7 +198,7 @@ impl<'a, T: StT> Iterator for LinkedListEphIter<'a, T> {
     }
 }
 
-impl<T: StT> PartialEq for LinkedListEphS<T> {
+impl<T: StT> PartialEq for LinkedListStEphS<T> {
     fn eq(&self, other: &Self) -> bool {
         if self.len != other.len {
             return false;
@@ -216,9 +216,9 @@ impl<T: StT> PartialEq for LinkedListEphS<T> {
     }
 }
 
-impl<T: StT> Eq for LinkedListEphS<T> {}
+impl<T: StT> Eq for LinkedListStEphS<T> {}
 
-impl<T: StT> std::fmt::Display for LinkedListEphS<T> {
+impl<T: StT> std::fmt::Display for LinkedListStEphS<T> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "[")?;
         let mut first = true;
@@ -233,19 +233,19 @@ impl<T: StT> std::fmt::Display for LinkedListEphS<T> {
 }
 
 #[macro_export]
-macro_rules! LinkedListEph {
+macro_rules! LinkedListStEph {
     ($x:expr; $n:expr) => {{
-        < $crate::LinkedListEph::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEph::LinkedListEphTrait<_> >::new($n, $x)
+        < $crate::LinkedListStEph::LinkedListStEph::LinkedListStEphS<_> as $crate::LinkedListStEph::LinkedListStEph::LinkedListStEphTrait<_> >::new($n, $x)
     }};
     ($($x:expr),* $(,)?) => {{
         let __vals = vec![$($x),*];
         let __len = __vals.len();
         if __len == 0 {
-            < $crate::LinkedListEph::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEph::LinkedListEphTrait<_> >::empty()
+            < $crate::LinkedListStEph::LinkedListStEph::LinkedListStEphS<_> as $crate::LinkedListStEph::LinkedListStEph::LinkedListStEphTrait<_> >::empty()
         } else {
-            let mut __l = < $crate::LinkedListEph::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEph::LinkedListEphTrait<_> >::new(__len, __vals[0].clone());
+            let mut __l = < $crate::LinkedListStEph::LinkedListStEph::LinkedListStEphS<_> as $crate::LinkedListStEph::LinkedListStEph::LinkedListStEphTrait<_> >::new(__len, __vals[0].clone());
             let mut __i: $crate::Types::Types::N = 0;
-            for __v in __vals { let _ = < $crate::LinkedListEph::LinkedListEph::LinkedListEphS<_> as $crate::LinkedListEph::LinkedListEph::LinkedListEphTrait<_> >::set(&mut __l, __i, __v); __i += 1; }
+            for __v in __vals { let _ = < $crate::LinkedListStEph::LinkedListStEph::LinkedListStEphS<_> as $crate::LinkedListStEph::LinkedListStEph::LinkedListStEphTrait<_> >::set(&mut __l, __i, __v); __i += 1; }
             __l
         }
     }};

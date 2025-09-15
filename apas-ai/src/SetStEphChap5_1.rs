@@ -1,6 +1,6 @@
 //! Chapter 5.1 ephemeral Set built on `std::collections::HashSet`.
 
-pub mod SetEphChap5_1 {
+pub mod SetStEphChap5_1 {
 
 use crate::Types::Types::*;
 use std::collections::HashSet;
@@ -10,7 +10,7 @@ use std::fmt::{Debug, Display};
 #[derive(Clone)]
 pub struct Set<T> { data: HashSet<T> }
 
-pub trait SetEphChap5_1Trait<T: Eq + Hash + Clone + Display + Debug + Sized> {
+pub trait SetStEphChap5_1Trait<T: Eq + Hash + Clone + Display + Debug + Sized> {
     fn empty() -> Set<T>;
     fn singleton(x: T) -> Set<T>;
     fn size(&self) -> N;
@@ -162,7 +162,7 @@ impl<T: Eq + Hash> Set<T> {
     }
 }
 
-impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetEphChap5_1Trait<T> for Set<T> {
+impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetStEphChap5_1Trait<T> for Set<T> {
     fn empty() -> Set<T> {
         Set { data: HashSet::new() }
     }
@@ -245,15 +245,15 @@ impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetEphChap5_1Trait<T> for S
 
 }
 
-pub use SetEphChap5_1::SetEphChap5_1Trait;
+pub use SetStEphChap5_1::SetStEphChap5_1Trait;
 
 #[macro_export]
 macro_rules! SetLit {
     () => {{
-        < $crate::SetEphChap5_1::SetEphChap5_1::Set<_> >::empty()
+        < $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty()
     }};
     ($($x:expr),* $(,)?) => {{
-        let mut __s = < $crate::SetEphChap5_1::SetEphChap5_1::Set<_> >::empty();
+        let mut __s = < $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
         $( let _ = __s.insert($x); )*
         __s
     }};
@@ -262,7 +262,7 @@ macro_rules! SetLit {
 
 #[allow(dead_code)]
 pub fn __set_macro_typecheck_exercise() {
-    use crate::SetEphChap5_1::SetEphChap5_1::*;
+    use crate::SetStEphChap5_1::SetStEphChap5_1::*;
     let _s0: Set<&'static str> = SetLit![];
     let _s1 = SetLit!["only"];
     let _s2 = SetLit!["a", "b", "c"];

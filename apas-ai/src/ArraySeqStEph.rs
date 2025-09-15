@@ -1,6 +1,6 @@
-//! Ephemeral (mutable) Array sequence variants. Mirrors `ArraySeq` under distinct names.
+//! StEphemeral (mutable) Array sequence variants. Mirrors `ArraySeq` under distinct names.
 
-pub mod ArraySeqEph {
+pub mod ArraySeqStEph {
     
     use std::fmt;
     use std::fmt::{Debug, Formatter, Display};
@@ -10,12 +10,12 @@ pub mod ArraySeqEph {
 
     /// Fixed-length sequence backed by `Box<[T]>` (ephemeral variant).
     #[derive(Clone)]
-    pub struct ArraySeqEphS<T: StT> {
+    pub struct ArraySeqStEphS<T: StT> {
         pub data: Box<[T]>,
     }
 
-    /// Sequence trait for `ArraySeqEphS<T>`.
-    pub trait ArraySeqEphTrait<T: StT> {
+    /// Sequence trait for `ArraySeqStEphS<T>`.
+    pub trait ArraySeqStEphTrait<T: StT> {
         /// Work Θ(length), Span Θ(1).
         fn new(length: N, init_value: T) -> Self;
         /// Work Θ(1), Span Θ(1).
@@ -38,7 +38,7 @@ pub mod ArraySeqEph {
             T: StT;
     }
 
-    impl<T: StT> ArraySeqEphS<T> {
+    impl<T: StT> ArraySeqStEphS<T> {
         pub fn subseq(&self, start: N, length: N) -> &[T] {
             let n = self.data.len();
             let s = start.min(n);
@@ -53,11 +53,11 @@ pub mod ArraySeqEph {
             let s = start.min(n);
             let e = start.saturating_add(length).min(n);
             if e <= s {
-                return <ArraySeqEphS<T> as ArraySeqEphTrait<T>>::empty();
+                return <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty();
             }
             let len = e - s;
             let first = self.nth(s).clone();
-            let mut out = <ArraySeqEphS<T> as ArraySeqEphTrait<T>>::new(len, first.clone());
+            let mut out = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::new(len, first.clone());
             let _ = out.set(0, first);
             for i in 1..len {
                 let _ = out.set(i, self.nth(s + i).clone());
@@ -65,11 +65,11 @@ pub mod ArraySeqEph {
             out
         }
         pub fn from_vec(v: Vec<T>) -> Self {
-            ArraySeqEphS {
+            ArraySeqStEphS {
                 data: v.into_boxed_slice(),
             }
         }
-        pub fn update(&mut self, (index, item): (N, T)) -> &mut ArraySeqEphS<T> {
+        pub fn update(&mut self, (index, item): (N, T)) -> &mut ArraySeqStEphS<T> {
             if index < self.data.len() {
                 self.data[index] = item;
             }
@@ -79,7 +79,7 @@ pub mod ArraySeqEph {
         pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
     }
 
-    impl<T: StT> PartialEq for ArraySeqEphS<T> {
+    impl<T: StT> PartialEq for ArraySeqStEphS<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.length() != other.length() {
                 return false;
@@ -93,16 +93,16 @@ pub mod ArraySeqEph {
         }
     }
 
-    impl<T: StT> Eq for ArraySeqEphS<T> {}
+    impl<T: StT> Eq for ArraySeqStEphS<T> {}
 
-    impl<T: StT> Debug for ArraySeqEphS<T> {
+    impl<T: StT> Debug for ArraySeqStEphS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
             let elts = (0..self.length()).map(|i| self.nth(i));
             f.debug_list().entries(elts).finish()
         }
     }
 
-    impl<T: StT> Display for ArraySeqEphS<T> {
+    impl<T: StT> Display for ArraySeqStEphS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
             write!(f, "[")?;
             for i in 0..self.length() {
@@ -113,12 +113,12 @@ pub mod ArraySeqEph {
         }
     }
 
-    impl<T: StT> ArraySeqEphTrait<T> for ArraySeqEphS<T> {
+    impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {
         fn new(length: N, init_value: T) -> Self
         where
             T: StT,
         {
-            ArraySeqEphS::from_vec(vec![init_value; length])
+            ArraySeqStEphS::from_vec(vec![init_value; length])
         }
         fn length(&self) -> N {
             self.data.len()
@@ -127,7 +127,7 @@ pub mod ArraySeqEph {
             &self.data[index]
         }
         fn empty() -> Self {
-            ArraySeqEphS::from_vec(Vec::new())
+            ArraySeqStEphS::from_vec(Vec::new())
         }
         fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
             if index < self.data.len() {
@@ -138,7 +138,7 @@ pub mod ArraySeqEph {
             }
         }
         fn singleton(item: T) -> Self {
-            ArraySeqEphS::from_vec(vec![item])
+            ArraySeqStEphS::from_vec(vec![item])
         }
         fn isEmpty(&self) -> B {
             if self.data.len() == 0 {
@@ -165,8 +165,8 @@ pub mod ArraySeqEph {
 
 
 #[macro_export]
-macro_rules! ArraySeqEph {
-    () => { $crate::ArraySeqEph::ArraySeqEph::ArraySeqEphS::from_vec(Vec::new()) };
-    ($x:expr; $n:expr) => { $crate::ArraySeqEph::ArraySeqEph::ArraySeqEphS::from_vec(vec![$x; $n]) };
-    ($($x:expr),* $(,)?) => { $crate::ArraySeqEph::ArraySeqEph::ArraySeqEphS::from_vec(vec![$($x),*]) };
+macro_rules! ArraySeqStEph {
+    () => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(Vec::new()) };
+    ($x:expr; $n:expr) => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$x; $n]) };
+    ($($x:expr),* $(,)?) => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$($x),*]) };
 }

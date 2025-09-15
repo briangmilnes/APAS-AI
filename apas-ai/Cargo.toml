@@ -19,7 +19,7 @@ dead_code = "allow"
 members = [ "." ]
 
 [[bench]]
-name = "BenchArraySeqEph"
+name = "BenchArraySeqStEph"
 harness = false
 
 ## DoublyLinkedList benchmarks moved to src/attic
@@ -29,70 +29,70 @@ name = "BenchMathSeq"
 harness = false
 
 [[bench]]
-name = "BenchAVLTreeSeqPer"
+name = "BenchAVLTreeSeqStPer"
 harness = false
 ## SharedSinglyLinkedList removed
 
 [[bench]]
-name = "BenchArraySeqEphChap18"
+name = "BenchArraySeqStEphChap18"
 harness = false
 
 [[bench]]
-name = "BenchArraySeqPer"
+name = "BenchArraySeqStPer"
 harness = false
 
 [[bench]]
-name = "BenchArraySeqPerChap19"
+name = "BenchArraySeqStPerChap19"
 harness = false
 
 ## SinglyLinkedList benchmarks moved to src/attic
 [[bench]]
-name = "BenchAVLTreeSeqPerChap19"
+name = "BenchAVLTreeSeqStPerChap19"
 harness = false
 
 [[bench]]
-name = "BenchAVLTreeSeqPerChap18"
+name = "BenchAVLTreeSeqStPerChap18"
 harness = false
 
 [[bench]]
-name = "BenchLinkedListPer"
+name = "BenchLinkedListStPer"
 harness = false
 
 [[bench]]
-name = "BenchLinkedListPerChap18"
+name = "BenchLinkedListStPerChap18"
 harness = false
 
 [[bench]]
-name = "BenchLinkedListPerChap19"
+name = "BenchLinkedListStPerChap19"
 harness = false
 
 [[bench]]
-name = "BenchLinkedListEph"
+name = "BenchLinkedListStEph"
 harness = false
 
 [[bench]]
-name = "BenchLinkedListEphChap18"
+name = "BenchLinkedListStEphChap18"
 harness = false
 
 [[bench]]
-name = "BenchLinkedListEphChap19"
+name = "BenchLinkedListStEphChap19"
 harness = false
 [[bench]]
-name = "BenchArraySeqPerChap18"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqEphChap19"
+name = "BenchArraySeqStPerChap18"
 harness = false
 
 [[bench]]
-name = "BenchAVLTreeSeqEph"
+name = "BenchArraySeqStEphChap19"
 harness = false
 
 [[bench]]
-name = "BenchAVLTreeSeqEphChap18"
+name = "BenchAVLTreeSeqStEph"
 harness = false
 
 [[bench]]
-name = "BenchAVLTreeSeqEphChap19"
+name = "BenchAVLTreeSeqStEphChap18"
+harness = false
+
+[[bench]]
+name = "BenchAVLTreeSeqStEphChap19"
 harness = false

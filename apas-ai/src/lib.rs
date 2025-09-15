@@ -10,57 +10,57 @@ pub use crate::Types::Types::*;
 pub mod MathSeq;
 pub use crate::MathSeq::MathSeq::{MathSeqS, MathSeqTrait};
 
-pub mod SetEphChap5_1;
-pub use crate::SetEphChap5_1::SetEphChap5_1::*;
+pub mod SetStEphChap5_1;
+pub use crate::SetStEphChap5_1::SetStEphChap5_1::*;
 
-pub mod RelationEphChap5_2;
-pub use crate::RelationEphChap5_2::RelationEphChap5_2::*;
+pub mod RelationStEphChap5_2;
+pub use crate::RelationStEphChap5_2::RelationStEphChap5_2::*;
 
-pub mod MappingEphChap5_5;
-pub use crate::MappingEphChap5_5::MappingEphChap5_5::*;
+pub mod MappingStEphChap5_5;
+pub use crate::MappingStEphChap5_5::MappingStEphChap5_5::*;
 
-pub mod DirGraphEphChap6_1;
-pub use crate::DirGraphEphChap6_1::DirGraphEphChap6_1::*;
-pub mod UnDirGraphEphChap6_1;
-pub use crate::UnDirGraphEphChap6_1::UnDirGraphEphChap6_1::*;
+pub mod DirGraphStEphChap6_1;
+pub use crate::DirGraphStEphChap6_1::DirGraphStEphChap6_1::*;
+pub mod UnDirGraphStEphChap6_1;
+pub use crate::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1::*;
 
-pub mod LinkedListPer;
-pub use crate::LinkedListPer::LinkedListPer::*;
-pub mod LinkedListPerChap18;
-pub use crate::LinkedListPerChap18::*;
-pub mod LinkedListPerChap19;
-pub use crate::LinkedListPerChap19::*;
+pub mod LinkedListStPer;
+pub use crate::LinkedListStPer::LinkedListStPer::*;
+pub mod LinkedListStPerChap18;
+pub use crate::LinkedListStPerChap18::*;
+pub mod LinkedListStPerChap19;
+pub use crate::LinkedListStPerChap19::*;
 
-pub mod LinkedListEph;
-pub use crate::LinkedListEph::LinkedListEph::*;
-pub mod LinkedListEphChap18;
-pub use crate::LinkedListEphChap18::*;
-pub mod LinkedListEphChap19;
-pub use crate::LinkedListEphChap19::*;
+pub mod LinkedListStEph;
+pub use crate::LinkedListStEph::LinkedListStEph::*;
+pub mod LinkedListStEphChap18;
+pub use crate::LinkedListStEphChap18::*;
+pub mod LinkedListStEphChap19;
+pub use crate::LinkedListStEphChap19::*;
 
-pub mod ArraySeqPer;
-pub use crate::ArraySeqPer::ArraySeqPer::*;
+pub mod ArraySeqStPer;
+pub use crate::ArraySeqStPer::ArraySeqStPer::*;
 
-pub mod ArraySeqPerChap18;
-pub use crate::ArraySeqPerChap18::*;
+pub mod ArraySeqStPerChap18;
+pub use crate::ArraySeqStPerChap18::*;
 
-pub mod ArraySeqPerChap19;
-pub use crate::ArraySeqPerChap19::*;
+pub mod ArraySeqStPerChap19;
+pub use crate::ArraySeqStPerChap19::*;
 
-pub mod ArraySeqEph;
-pub use crate::ArraySeqEph::ArraySeqEph::*;
+pub mod ArraySeqStEph;
+pub use crate::ArraySeqStEph::ArraySeqStEph::*;
 
-pub mod ArraySeqEphChap18;
-pub use crate::ArraySeqEphChap18::ArraySeqEphChap18::*;
-pub mod ArraySeqEphChap19;
-pub use crate::ArraySeqEphChap19::ArraySeqEphChap19::*;
+pub mod ArraySeqStEphChap18;
+pub use crate::ArraySeqStEphChap18::ArraySeqStEphChap18::*;
+pub mod ArraySeqStEphChap19;
+pub use crate::ArraySeqStEphChap19::ArraySeqStEphChap19::*;
 
-pub mod AVLTreeSeqPer;
-pub use crate::AVLTreeSeqPer::AVLTreeSeqPer::*;
-pub mod AVLTreeSeqPerChap18;
-pub use crate::AVLTreeSeqPerChap18::AVLTreeSeqPerChap18::*;
-pub mod AVLTreeSeqPerChap19;
-pub use crate::AVLTreeSeqPerChap19::AVLTreeSeqPerChap19::*;
+pub mod AVLTreeSeqStPer;
+pub use crate::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+pub mod AVLTreeSeqStPerChap18;
+pub use crate::AVLTreeSeqStPerChap18::AVLTreeSeqStPerChap18::*;
+pub mod AVLTreeSeqStPerChap19;
+pub use crate::AVLTreeSeqStPerChap19::AVLTreeSeqStPerChap19::*;
 
-pub mod AVLTreeSeqEph;
-pub use crate::AVLTreeSeqEph::AVLTreeSeqEph::*;
+pub mod AVLTreeSeqStEph;
+pub use crate::AVLTreeSeqStEph::AVLTreeSeqStEph::*;

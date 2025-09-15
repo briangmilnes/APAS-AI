@@ -1,20 +1,20 @@
 //! Chapter 6.1 Directed Graph (ephemeral) using Set for vertices and arcs.
 
-pub mod DirGraphEphChap6_1 {
+pub mod DirGraphStEphChap6_1 {
 use crate::Types::Types::*;
-use crate::SetEphChap5_1::SetEphChap5_1::*;
+use crate::SetStEphChap5_1::SetStEphChap5_1::*;
 use crate::SetLit;
 use std::hash::Hash;
 
 #[derive(Clone)]
-pub struct DirGraphEph<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {
+pub struct DirGraphStEph<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {
     V: Set<V>,
     A: Set<(V, V)>,
 }
 
-pub trait DirGraphEphChap6_1Trait<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {
-    fn empty() -> DirGraphEph<V>;
-    fn FromSets(V: Set<V>, A: Set<(V, V)>) -> DirGraphEph<V>;
+pub trait DirGraphStEphChap6_1Trait<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {
+    fn empty() -> DirGraphStEph<V>;
+    fn FromSets(V: Set<V>, A: Set<(V, V)>) -> DirGraphStEph<V>;
     fn vertices(&self) -> &Set<V>;
     fn arcs(&self) -> &Set<(V, V)>;
     fn sizeV(&self) -> N;
@@ -33,9 +33,9 @@ pub trait DirGraphEphChap6_1Trait<V: Eq + Hash + Clone + std::fmt::Display + std
     fn OutDegree(&self, v: &V) -> N;
 }
 
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> DirGraphEphChap6_1Trait<V> for DirGraphEph<V> {
-    fn empty() -> DirGraphEph<V> { DirGraphEph { V: SetLit![], A: SetLit![] } }
-    fn FromSets(V: Set<V>, A: Set<(V, V)>) -> DirGraphEph<V> { DirGraphEph { V, A } }
+impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> DirGraphStEphChap6_1Trait<V> for DirGraphStEph<V> {
+    fn empty() -> DirGraphStEph<V> { DirGraphStEph { V: SetLit![], A: SetLit![] } }
+    fn FromSets(V: Set<V>, A: Set<(V, V)>) -> DirGraphStEph<V> { DirGraphStEph { V, A } }
     fn vertices(&self) -> &Set<V> { &self.V }
     fn arcs(&self) -> &Set<(V, V)> { &self.A }
     fn sizeV(&self) -> N { self.V.size() }
@@ -94,36 +94,36 @@ impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> DirGraphEphChap
     fn OutDegree(&self, v: &V) -> N { self.NPlus(v).size() }
 }
 
-impl<V: Eq + Hash + Clone + std::fmt::Debug + std::fmt::Display> std::fmt::Debug for DirGraphEph<V> {
+impl<V: Eq + Hash + Clone + std::fmt::Debug + std::fmt::Display> std::fmt::Debug for DirGraphStEph<V> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("DirGraphEph").field("V", &self.V).field("A", &self.A).finish()
+        f.debug_struct("DirGraphStEph").field("V", &self.V).field("A", &self.A).finish()
     }
 }
 
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> std::fmt::Display for DirGraphEph<V> {
+impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> std::fmt::Display for DirGraphStEph<V> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "V={} A={:?}", self.V, self.A)
     }
 }
 
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> PartialEq for DirGraphEph<V> { fn eq(&self, other: &Self) -> bool { self.V == other.V && self.A == other.A } }
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> Eq for DirGraphEph<V> {}
+impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> PartialEq for DirGraphStEph<V> { fn eq(&self, other: &Self) -> bool { self.V == other.V && self.A == other.A } }
+impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> Eq for DirGraphStEph<V> {}
 
 }
 
-pub use DirGraphEphChap6_1::DirGraphEphChap6_1Trait;
+pub use DirGraphStEphChap6_1::DirGraphStEphChap6_1Trait;
 
 #[macro_export]
 macro_rules! DirGraphLit {
     ( V: [ $( $v:expr ),* $(,)? ], A: [ $( ( $u:expr , $w:expr ) ),* $(,)? ] ) => {{
-        let __V: $crate::SetEphChap5_1::SetEphChap5_1::Set<_> = $crate::SetLit![ $( $v ),* ];
-        let __A: $crate::SetEphChap5_1::SetEphChap5_1::Set<_> = $crate::SetLit![ $( ($u, $w) ),* ];
-        < $crate::DirGraphEphChap6_1::DirGraphEphChap6_1::DirGraphEph<_> as $crate::DirGraphEphChap6_1::DirGraphEphChap6_1::DirGraphEphChap6_1Trait<_> >::FromSets(__V, __A)
+        let __V: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![ $( $v ),* ];
+        let __A: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![ $( ($u, $w) ),* ];
+        < $crate::DirGraphStEphChap6_1::DirGraphStEphChap6_1::DirGraphStEph<_> as $crate::DirGraphStEphChap6_1::DirGraphStEphChap6_1::DirGraphStEphChap6_1Trait<_> >::FromSets(__V, __A)
     }}}
 
 #[allow(dead_code)]
 pub fn __dirgraph_macro_typecheck_exercise() {
-    use crate::DirGraphEphChap6_1::DirGraphEphChap6_1::DirGraphEph as DG;
+    use crate::DirGraphStEphChap6_1::DirGraphStEphChap6_1::DirGraphStEph as DG;
     let _g0: DG<usize> = DirGraphLit!( V: [], A: [] );
     let _g1 = DirGraphLit!( V: [0,1,2], A: [(0,1),(1,2)] );
 }

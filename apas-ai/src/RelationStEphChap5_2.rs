@@ -1,13 +1,13 @@
 //! Chapter 5.2 ephemeral Relation built on `Set<(A,B)>`.
 
-pub mod RelationEphChap5_2 {
+pub mod RelationStEphChap5_2 {
 
 use std::fmt::{Display, Debug, Formatter, Result};
 use std::hash::Hash;
 use std::collections::hash_set::Iter;
 
 use crate::Types::Types::*;
-use crate::SetEphChap5_1::SetEphChap5_1::*;
+use crate::SetStEphChap5_1::SetStEphChap5_1::*;
 use crate::SetLit;
 
 #[derive(Clone)]
@@ -15,7 +15,7 @@ pub struct Relation<A, B> {
     pairs: Set<(A, B)>,
 }
 
-pub trait RelationEphChap5_2Trait<X: Eq + Hash + Display + Debug + Clone + Sized, 
+pub trait RelationStEphChap5_2Trait<X: Eq + Hash + Display + Debug + Clone + Sized, 
                                   Y: Eq + Hash + Display + Debug + Clone + Sized> {
     fn empty() -> Relation<X, Y>;
 
@@ -74,7 +74,7 @@ impl<A: Display + Eq + Hash, B: Display + Eq + Hash> Display for Relation<A, B> 
 }
 
 impl<X: Eq + Hash + Display + Debug + Clone + Sized, 
-     Y: Eq + Hash + Display +  Debug + Clone + Sized> RelationEphChap5_2Trait<X, Y> for Relation<X, Y> {
+     Y: Eq + Hash + Display +  Debug + Clone + Sized> RelationStEphChap5_2Trait<X, Y> for Relation<X, Y> {
     fn empty() -> Relation<X, Y> {
         Relation { pairs: SetLit![] }
     }
@@ -114,22 +114,22 @@ impl<X: Eq + Hash + Display + Debug + Clone + Sized,
 
 }
 
-pub use RelationEphChap5_2::RelationEphChap5_2Trait;
+pub use RelationStEphChap5_2::RelationStEphChap5_2Trait;
 
 #[macro_export]
 macro_rules! RelationLit {
     () => {{
-        < $crate::RelationEphChap5_2::RelationEphChap5_2::Relation<_, _> as $crate::RelationEphChap5_2::RelationEphChap5_2::RelationEphChap5_2Trait<_, _> >::FromSet($crate::SetLit![])
+        < $crate::RelationStEphChap5_2::RelationStEphChap5_2::Relation<_, _> as $crate::RelationStEphChap5_2::RelationStEphChap5_2::RelationStEphChap5_2Trait<_, _> >::FromSet($crate::SetLit![])
     }};
     ( $( ($a:expr, $b:expr) ),* $(,)? ) => {{
         let __pairs = $crate::SetLit![ $( ($a, $b) ),* ];
-        < $crate::RelationEphChap5_2::RelationEphChap5_2::Relation<_, _> as $crate::RelationEphChap5_2::RelationEphChap5_2::RelationEphChap5_2Trait<_, _> >::FromSet(__pairs)
+        < $crate::RelationStEphChap5_2::RelationStEphChap5_2::Relation<_, _> as $crate::RelationStEphChap5_2::RelationStEphChap5_2::RelationStEphChap5_2Trait<_, _> >::FromSet(__pairs)
     }};
 }
 
 #[allow(dead_code)]
 pub fn __relation_macro_typecheck_exercise() {
-    use crate::RelationEphChap5_2::RelationEphChap5_2::Relation as Rel;
+    use crate::RelationStEphChap5_2::RelationStEphChap5_2::Relation as Rel;
     let _r0: Rel<usize, char> = RelationLit![];
     let _r1 = RelationLit![(0,'a')];
     let _r2 = RelationLit![(0,'a'), (1,'b')];

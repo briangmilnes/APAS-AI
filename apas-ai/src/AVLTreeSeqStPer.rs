@@ -1,7 +1,7 @@
-//! Per (immutable, structurally shared) AVL tree sequence using Rc path-copying.
+//! StPer (immutable, structurally shared) AVL tree sequence using Rc path-copying.
 
-pub mod AVLTreeSeqPer {
-    use crate::ArraySeqPer::ArraySeqPer::*;
+pub mod AVLTreeSeqStPer {
+    use crate::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
     use std::fmt::Debug;
     use std::rc::Rc;
@@ -130,11 +130,11 @@ pub mod AVLTreeSeqPer {
         rec(a)
     }
 
-    pub struct AVLTreeSeqPerS<T: StT> {
+    pub struct AVLTreeSeqStPerS<T: StT> {
         root: Link<T>,
     }
 
-    pub trait AVLTreeSeqPerTrait<T: StT> {
+    pub trait AVLTreeSeqStPerTrait<T: StT> {
         /// APAS: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
@@ -143,7 +143,7 @@ pub mod AVLTreeSeqPer {
         fn length(&self) -> N;
         /// APAS: Work Θ(lg(n)), Span Θ(lg(n))
         fn nth(&self, index: N) -> &T;
-        /// APAS (ephemeral set Θ(lg n)); Per path-copy Θ(lg n) allocations. Work Θ(lg n), Span Θ(lg n)
+        /// APAS (ephemeral set Θ(lg n)); StPer path-copy Θ(lg n) allocations. Work Θ(lg n), Span Θ(lg n)
         fn set(&self, index: N, item: T) -> Result<Self, &'static str>
         where
             Self: Sized;
@@ -161,9 +161,9 @@ pub mod AVLTreeSeqPer {
         fn values_in_order(&self) -> Vec<T>;
     }
 
-    impl<T: StT> AVLTreeSeqPerTrait<T> for AVLTreeSeqPerS<T> {
+    impl<T: StT> AVLTreeSeqStPerTrait<T> for AVLTreeSeqStPerS<T> {
         fn empty() -> Self {
-            AVLTreeSeqPerS { root: None }
+            AVLTreeSeqStPerS { root: None }
         }
         fn new() -> Self {
             Self::empty()
@@ -175,12 +175,12 @@ pub mod AVLTreeSeqPer {
             nth_ref(&self.root, index)
         }
         fn set(&self, index: N, item: T) -> Result<Self, &'static str> {
-            Ok(AVLTreeSeqPerS {
+            Ok(AVLTreeSeqStPerS {
                 root: set_rec(&self.root, index, item)?,
             })
         }
         fn singleton(item: T) -> Self {
-            AVLTreeSeqPerS {
+            AVLTreeSeqStPerS {
                 root: Some(mk(item, None, None)),
             }
         }
@@ -213,7 +213,7 @@ pub mod AVLTreeSeqPer {
             Self::from_vec(vals)
         }
         fn from_vec(values: Vec<T>) -> Self {
-            AVLTreeSeqPerS {
+            AVLTreeSeqStPerS {
                 root: build_balanced_from_slice(&values[..]),
             }
         }
@@ -224,7 +224,7 @@ pub mod AVLTreeSeqPer {
         }
     }
 
-    impl<T: StT> PartialEq for AVLTreeSeqPerS<T> {
+    impl<T: StT> PartialEq for AVLTreeSeqStPerS<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.length() != other.length() {
                 return false;
@@ -237,35 +237,35 @@ pub mod AVLTreeSeqPer {
             true
         }
     }
-    impl<T: StT> Eq for AVLTreeSeqPerS<T> {}
+    impl<T: StT> Eq for AVLTreeSeqStPerS<T> {}
 
-    impl<T: StT> std::fmt::Debug for AVLTreeSeqPerS<T> {
+    impl<T: StT> std::fmt::Debug for AVLTreeSeqStPerS<T> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             let v = self.values_in_order();
             f.debug_list().entries(v.iter()).finish()
         }
     }
 
-    impl<T: StT> AVLTreeSeqPerS<T> {
-        pub fn to_arrayseq(&self) -> ArrayPerS<T> {
+    impl<T: StT> AVLTreeSeqStPerS<T> {
+        pub fn to_arrayseq(&self) -> ArrayStPerS<T> {
             let v = self.values_in_order();
-            ArrayPerS::from_vec(v)
+            ArrayStPerS::from_vec(v)
         }
 
-        pub fn iter<'a>(&'a self) -> AVLTreeSeqPerIter<'a, T> {
-            AVLTreeSeqPerIter {
+        pub fn iter<'a>(&'a self) -> AVLTreeSeqStPerIter<'a, T> {
+            AVLTreeSeqStPerIter {
                 stack: Vec::new(),
                 current: self.root.as_deref(),
             }
         }
     }
 
-    pub struct AVLTreeSeqPerIter<'a, T: StT> {
+    pub struct AVLTreeSeqStPerIter<'a, T: StT> {
         stack: Vec<&'a Node<T>>,
         current: Option<&'a Node<T>>,
     }
 
-    impl<'a, T: StT> AVLTreeSeqPerIter<'a, T> {
+    impl<'a, T: StT> AVLTreeSeqStPerIter<'a, T> {
         fn push_left(&mut self, mut cur: Option<&'a Node<T>>) {
             while let Some(n) = cur {
                 self.stack.push(n);
@@ -274,7 +274,7 @@ pub mod AVLTreeSeqPer {
         }
     }
 
-    impl<'a, T: StT> Iterator for AVLTreeSeqPerIter<'a, T> {
+    impl<'a, T: StT> Iterator for AVLTreeSeqStPerIter<'a, T> {
         type Item = &'a T;
         fn next(&mut self) -> Option<Self::Item> {
             if self.current.is_some() {
@@ -290,14 +290,14 @@ pub mod AVLTreeSeqPer {
 }
 
 #[macro_export]
-macro_rules! AVLTreeSeqPer {
-    () => { < $crate::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerS<_> as $crate::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerTrait<_> >::empty() };
+macro_rules! AVLTreeSeqStPer {
+    () => { < $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS<_> as $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait<_> >::empty() };
     ($x:expr; $n:expr) => {{
         let __vals = vec![$x; $n];
-        < $crate::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerS<_> as $crate::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerTrait<_> >::from_vec(__vals)
+        < $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS<_> as $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait<_> >::from_vec(__vals)
     }};
     ($($x:expr),* $(,)?) => {{
         let __vals = vec![$($x),*];
-        < $crate::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerS<_> as $crate::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerTrait<_> >::from_vec(__vals)
+        < $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS<_> as $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait<_> >::from_vec(__vals)
     }};
 }

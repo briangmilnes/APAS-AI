@@ -1,67 +1,67 @@
-//! Chapter 18 algorithms for ArraySeqPer.
+//! Chapter 18 algorithms for ArraySeqStPer.
 
-pub mod ArraySeqPerChap18 {
-use crate::ArraySeqPer::ArraySeqPer::*;
+pub mod ArraySeqStPerChap18 {
+use crate::ArraySeqStPer::ArraySeqStPer::*;
 use crate::Types::Types::*;
 
-pub trait ArraySeqPerChap18Trait<T: MtT> {
+pub trait ArraySeqStPerChap18Trait<T: MtT> {
     /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
-    fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayPerS<T>;
+    fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x)))
-    fn map<U: MtT + Clone>(a: &ArrayPerS<T>, f: impl Fn(&T) -> U) -> ArrayPerS<U>;
+    fn map<U: MtT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U>;
 
     /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
-    fn append(a: &ArrayPerS<T>, b: &ArrayPerS<T>) -> ArrayPerS<T>;
+    fn append(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(pred(a[i]))), Span Θ(lg|a| + max i S(pred(a[i])))
-    fn filter(a: &ArrayPerS<T>, pred: impl Fn(&T) -> B) -> ArrayPerS<T>;
+    fn filter(a: &ArrayStPerS<T>, pred: impl Fn(&T) -> B) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + |a|), Span Θ(1)
     /// gpt-5-hard: Work Θ(|a|), Span Θ(1)
     /// BUG: APAS and gpt-5-hard algorithmic analyses differ.
-    fn update(a: &ArrayPerS<T>, item_at: (N, T)) -> ArrayPerS<T>;
+    fn update(a: &ArrayStPerS<T>, item_at: (N, T)) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(lg(degree(updates)))
-    fn inject(a: &ArrayPerS<T>, updates: &ArrayPerS<(N, T)>) -> ArrayPerS<T>;
+    fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<(N, T)>) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(1)
-    fn ninject(a: &ArrayPerS<T>, updates: &ArrayPerS<(N, T)>) -> ArrayPerS<T>;
+    fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<(N, T)>) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + Σ (y,z) W(f(y,z))), Span Θ(1 + Σ S(f(y,z)))
-    fn iterate<A: MtT>(a: &ArrayPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
+    fn iterate<A: MtT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
 
     /// APAS: Work Θ(|a|), Span Θ(|a|)
     fn iteratePrefixes<A: MtT + Clone>(
-        a: &ArrayPerS<T>,
+        a: &ArrayStPerS<T>,
         f: impl Fn(&A, &T) -> A,
         x: A,
-    ) -> (ArrayPerS<A>, A);
+    ) -> (ArrayStPerS<A>, A);
 
     /// APAS: Work Θ(1 + Σ (y,z) W(f(y,z))), Span Θ(lg|a| · max S(f(y,z)))
-    fn reduce(a: &ArrayPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
+    fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
 
     /// APAS: Work Θ(|a|), Span Θ(lg|a|)
-    fn scan(a: &ArrayPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayPerS<T>, T);
+    fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T);
 
     /// APAS: Work Θ(1 + |a| + Σ x∈a |x|), Span Θ(1 + lg|a|)
-    fn flatten(ss: &ArrayPerS<ArrayPerS<T>>) -> ArrayPerS<T>;
+    fn flatten(ss: &ArrayStPerS<ArrayStPerS<T>>) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + W(f) · |a| lg|a|), Span Θ(1 + S(f) · lg^2|a|)
     fn collect(
-        a: &ArrayPerS<Pair<T, T>>,
+        a: &ArrayStPerS<Pair<T, T>>,
         cmp: impl Fn(&T, &T) -> O,
-    ) -> ArrayPerS<Pair<T, ArrayPerS<T>>>;
+    ) -> ArrayStPerS<Pair<T, ArrayStPerS<T>>>;
 }
 
-impl<T: MtT> ArraySeqPerChap18Trait<T> for ArrayPerS<T> {
-    fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayPerS<T> {
+impl<T: MtT> ArraySeqStPerChap18Trait<T> for ArrayStPerS<T> {
+    fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayStPerS<T> {
         let data: Vec<T> = (0..n).map(|i| f(i)).collect();
-        ArrayPerS::from_vec(data)
+        ArrayStPerS::from_vec(data)
     }
-    fn map<U: MtT + Clone>(a: &ArrayPerS<T>, f: impl Fn(&T) -> U) -> ArrayPerS<U> {
+    fn map<U: MtT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U> {
         if a.length() == 0 {
-            return <ArrayPerS<U> as ArraySeqPerTrait<U>>::empty();
+            return <ArrayStPerS<U> as ArraySeqStPerTrait<U>>::empty();
         }
         let first = f(a.nth(0));
         // Fill by cloning into a Vec then boxing
@@ -69,12 +69,12 @@ impl<T: MtT> ArraySeqPerChap18Trait<T> for ArrayPerS<T> {
         for i in 0..a.length() {
             v[i] = f(a.nth(i));
         }
-        ArrayPerS::from_vec(v)
+        ArrayStPerS::from_vec(v)
     }
-    fn append(a: &ArrayPerS<T>, b: &ArrayPerS<T>) -> ArrayPerS<T> {
+    fn append(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T> {
         let n = a.length() + b.length();
         if n == 0 {
-            return <ArrayPerS<T> as ArraySeqPerTrait<T>>::empty();
+            return <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::empty();
         }
         let mut v: Vec<T> = Vec::with_capacity(n);
         for i in 0..a.length() {
@@ -83,24 +83,24 @@ impl<T: MtT> ArraySeqPerChap18Trait<T> for ArrayPerS<T> {
         for j in 0..b.length() {
             v.push(b.nth(j).clone());
         }
-        ArrayPerS::from_vec(v)
+        ArrayStPerS::from_vec(v)
     }
-    fn filter(a: &ArrayPerS<T>, pred: impl Fn(&T) -> B) -> ArrayPerS<T> {
+    fn filter(a: &ArrayStPerS<T>, pred: impl Fn(&T) -> B) -> ArrayStPerS<T> {
         let mut v: Vec<T> = Vec::new();
         for i in 0..a.length() {
             if pred(a.nth(i)) == B::True {
                 v.push(a.nth(i).clone());
             }
         }
-        ArrayPerS::from_vec(v)
+        ArrayStPerS::from_vec(v)
     }
-    fn update(a: &ArrayPerS<T>, (index, item): (N, T)) -> ArrayPerS<T> {
+    fn update(a: &ArrayStPerS<T>, (index, item): (N, T)) -> ArrayStPerS<T> {
         match a.set(index, item) {
             Ok(updated) => updated,
             Err(_) => a.clone(),
         }
     }
-    fn inject(a: &ArrayPerS<T>, updates: &ArrayPerS<(N, T)>) -> ArrayPerS<T> {
+    fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<(N, T)>) -> ArrayStPerS<T> {
         let mut v: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
         let mut seen = std::collections::HashSet::new();
         for k in 0..updates.length() {
@@ -110,9 +110,9 @@ impl<T: MtT> ArraySeqPerChap18Trait<T> for ArrayPerS<T> {
                 seen.insert(idx);
             }
         }
-        ArrayPerS::from_vec(v)
+        ArrayStPerS::from_vec(v)
     }
-    fn ninject(a: &ArrayPerS<T>, updates: &ArrayPerS<(N, T)>) -> ArrayPerS<T> {
+    fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<(N, T)>) -> ArrayStPerS<T> {
         let mut v: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
         for k in 0..updates.length() {
             let (idx, val) = updates.nth(k).clone();
@@ -120,9 +120,9 @@ impl<T: MtT> ArraySeqPerChap18Trait<T> for ArrayPerS<T> {
                 v[idx] = val;
             }
         }
-        ArrayPerS::from_vec(v)
+        ArrayStPerS::from_vec(v)
     }
-    fn iterate<A: MtT>(a: &ArrayPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
+    fn iterate<A: MtT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
         let mut acc = x;
         for i in 0..a.length() {
             acc = f(&acc, a.nth(i));
@@ -130,19 +130,19 @@ impl<T: MtT> ArraySeqPerChap18Trait<T> for ArrayPerS<T> {
         acc
     }
     fn iteratePrefixes<A: MtT + Clone>(
-        a: &ArrayPerS<T>,
+        a: &ArrayStPerS<T>,
         f: impl Fn(&A, &T) -> A,
         x: A,
-    ) -> (ArrayPerS<A>, A) {
+    ) -> (ArrayStPerS<A>, A) {
         let mut acc = x.clone();
         let mut v: Vec<A> = Vec::with_capacity(a.length());
         for i in 0..a.length() {
             v.push(acc.clone());
             acc = f(&acc, a.nth(i));
         }
-        (ArrayPerS::from_vec(v), acc)
+        (ArrayStPerS::from_vec(v), acc)
     }
-    fn reduce(a: &ArrayPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
+    fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
         fn rec<T: StT>(s: &[T], f: &impl Fn(&T, &T) -> T, id: T) -> T {
             let n = s.len();
             if n == 0 {
@@ -158,7 +158,7 @@ impl<T: MtT> ArraySeqPerChap18Trait<T> for ArrayPerS<T> {
         }
         rec(a.subseq(0, a.length()), f, id)
     }
-    fn scan(a: &ArrayPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayPerS<T>, T) {
+    fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T) {
         fn rec<T: StT>(s: &[T], f: &impl Fn(&T, &T) -> T, id: T) -> T {
             let n = s.len();
             if n == 0 {
@@ -176,9 +176,9 @@ impl<T: MtT> ArraySeqPerChap18Trait<T> for ArrayPerS<T> {
         let mut prefixes: Vec<T> = Vec::with_capacity(n);
         for i in 0..n { prefixes.push(rec(a.subseq(0, i), f, id.clone())); }
         let total = rec(a.subseq(0, n), f, id);
-        (ArrayPerS::from_vec(prefixes), total)
+        (ArrayStPerS::from_vec(prefixes), total)
     }
-    fn flatten(ss: &ArrayPerS<ArrayPerS<T>>) -> ArrayPerS<T> {
+    fn flatten(ss: &ArrayStPerS<ArrayStPerS<T>>) -> ArrayStPerS<T> {
         let mut v: Vec<T> = Vec::new();
         for i in 0..ss.length() {
             let inner = ss.nth(i);
@@ -186,12 +186,12 @@ impl<T: MtT> ArraySeqPerChap18Trait<T> for ArrayPerS<T> {
                 v.push(inner.nth(j).clone());
             }
         }
-        ArrayPerS::from_vec(v)
+        ArrayStPerS::from_vec(v)
     }
     fn collect(
-        a: &ArrayPerS<Pair<T, T>>,
+        a: &ArrayStPerS<Pair<T, T>>,
         cmp: impl Fn(&T, &T) -> O,
-    ) -> ArrayPerS<Pair<T, ArrayPerS<T>>> {
+    ) -> ArrayStPerS<Pair<T, ArrayStPerS<T>>> {
         let mut groups: Vec<Pair<T, Vec<T>>> = Vec::new();
         for i in 0..a.length() {
             let Pair(k, v) = a.nth(i).clone();
@@ -207,14 +207,14 @@ impl<T: MtT> ArraySeqPerChap18Trait<T> for ArrayPerS<T> {
                 groups.push(Pair(k.clone(), vec![v.clone()]));
             }
         }
-        let pairs: Vec<Pair<T, ArrayPerS<T>>> = groups
+        let pairs: Vec<Pair<T, ArrayStPerS<T>>> = groups
             .into_iter()
-            .map(|Pair(k, vs)| Pair(k, ArrayPerS::from_vec(vs)))
+            .map(|Pair(k, vs)| Pair(k, ArrayStPerS::from_vec(vs)))
             .collect();
-        ArrayPerS::from_vec(pairs)
+        ArrayStPerS::from_vec(pairs)
     }
 }
 
 }
 
-pub use ArraySeqPerChap18::ArraySeqPerChap18Trait;
+pub use ArraySeqStPerChap18::ArraySeqStPerChap18Trait;

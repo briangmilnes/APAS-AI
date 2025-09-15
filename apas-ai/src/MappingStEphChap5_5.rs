@@ -1,9 +1,9 @@
 //! Chapter 5.5 ephemeral Mapping (Function) built on `Relation<A,B>`.
 
-pub mod MappingEphChap5_5 {
+pub mod MappingStEphChap5_5 {
 use crate::Types::Types::*;
-use crate::RelationEphChap5_2::RelationEphChap5_2::*;
-use crate::SetEphChap5_1::SetEphChap5_1::*;
+use crate::RelationStEphChap5_2::RelationStEphChap5_2::*;
+use crate::SetStEphChap5_1::SetStEphChap5_1::*;
 use crate::SetLit;
 use std::collections::HashMap;
 use std::hash::Hash;
@@ -13,7 +13,7 @@ pub struct Mapping<A, B> {
     rel: Relation<A, B>,
 }
 
-pub trait MappingEphChap5_5Trait<X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized, Y: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized> {
+pub trait MappingStEphChap5_5Trait<X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized, Y: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized> {
     fn empty() -> Mapping<X, Y>;
 
     fn FromVec(v: Vec<(X, Y)>) -> Mapping<X, Y>;
@@ -57,19 +57,19 @@ impl<A: std::fmt::Display + Eq + Hash, B: std::fmt::Display + Eq + Hash> std::fm
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { self.rel.fmt(f) }
 }
 
-impl<X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized, Y: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized> MappingEphChap5_5Trait<X, Y> for Mapping<X, Y> {
+impl<X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized, Y: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized> MappingStEphChap5_5Trait<X, Y> for Mapping<X, Y> {
     fn empty() -> Mapping<X, Y> {
-        Mapping { rel: <Relation<X, Y> as RelationEphChap5_2Trait<X, Y>>::empty() }
+        Mapping { rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::empty() }
     }
 
     fn FromVec(v: Vec<(X, Y)>) -> Mapping<X, Y> {
         let pairs = Self::unique_pairs_from_iter(v);
-        Mapping { rel: <Relation<X, Y> as RelationEphChap5_2Trait<X, Y>>::FromSet(pairs) }
+        Mapping { rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::FromSet(pairs) }
     }
 
     fn FromRelation(r: &Relation<X, Y>) -> Mapping<X, Y> {
         let pairs = Self::unique_pairs_from_iter(r.iter().cloned());
-        Mapping { rel: <Relation<X, Y> as RelationEphChap5_2Trait<X, Y>>::FromSet(pairs) }
+        Mapping { rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::FromSet(pairs) }
     }
 
     fn size(&self) -> N { self.rel.size() }
@@ -85,22 +85,22 @@ impl<X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized, Y: Eq +
 
 }
 
-pub use MappingEphChap5_5::MappingEphChap5_5Trait;
+pub use MappingStEphChap5_5::MappingStEphChap5_5Trait;
 
 #[macro_export]
 macro_rules! MappingLit {
     () => {{
-        < $crate::MappingEphChap5_5::MappingEphChap5_5::Mapping<_, _> as $crate::MappingEphChap5_5::MappingEphChap5_5::MappingEphChap5_5Trait<_, _> >::FromRelation(& $crate::RelationLit![])
+        < $crate::MappingStEphChap5_5::MappingStEphChap5_5::Mapping<_, _> as $crate::MappingStEphChap5_5::MappingStEphChap5_5::MappingStEphChap5_5Trait<_, _> >::FromRelation(& $crate::RelationLit![])
     }};
     ( $( ($a:expr, $b:expr) ),* $(,)? ) => {{
         let __r = $crate::RelationLit![ $( ($a, $b) ),* ];
-        < $crate::MappingEphChap5_5::MappingEphChap5_5::Mapping<_, _> as $crate::MappingEphChap5_5::MappingEphChap5_5::MappingEphChap5_5Trait<_, _> >::FromRelation(&__r)
+        < $crate::MappingStEphChap5_5::MappingStEphChap5_5::Mapping<_, _> as $crate::MappingStEphChap5_5::MappingStEphChap5_5::MappingStEphChap5_5Trait<_, _> >::FromRelation(&__r)
     }};
 }
 
 #[allow(dead_code)]
 pub fn __mapping_macro_typecheck_exercise() {
-    use crate::MappingEphChap5_5::MappingEphChap5_5::Mapping as Map;
+    use crate::MappingStEphChap5_5::MappingStEphChap5_5::Mapping as Map;
     let _m0: Map<usize, char> = MappingLit![];
     let _m1 = MappingLit![(0,'a')];
     let _m2 = MappingLit![(0,'a'), (1,'b')];

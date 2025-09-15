@@ -1,70 +1,70 @@
-//! Chapter 18 algorithms for `ArraySeqEph<T>`.
+//! Chapter 18 algorithms for `ArraySeqStEph<T>`.
 
-pub mod ArraySeqEphChap18 {
-    use crate::ArraySeqEph::ArraySeqEph::*;
+pub mod ArraySeqStEphChap18 {
+    use crate::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
 
-    pub trait ArraySeqEphChap18Trait<T: StT> {
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqEphS<T>;
-        fn map<U: StT>(a: &ArraySeqEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqEphS<U>;
-        fn append(a: &ArraySeqEphS<T>, b: &ArraySeqEphS<T>) -> ArraySeqEphS<T>;
-        fn filter(a: &ArraySeqEphS<T>, pred: impl Fn(&T) -> B) -> ArraySeqEphS<T>;
-        fn update(a: &mut ArraySeqEphS<T>, item_at: (N, T)) -> &mut ArraySeqEphS<T>;
-        fn inject(a: &ArraySeqEphS<T>, updates: &ArraySeqEphS<Pair<N, T>>) -> ArraySeqEphS<T>;
-        fn ninject(a: &ArraySeqEphS<T>, updates: &ArraySeqEphS<Pair<N, T>>) -> ArraySeqEphS<T>;
-        fn iterate<A: StT>(a: &ArraySeqEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
+    pub trait ArraySeqStEphChap18Trait<T: StT> {
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqStEphS<T>;
+        fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U>;
+        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;
+        fn filter(a: &ArraySeqStEphS<T>, pred: impl Fn(&T) -> B) -> ArraySeqStEphS<T>;
+        fn update(a: &mut ArraySeqStEphS<T>, item_at: (N, T)) -> &mut ArraySeqStEphS<T>;
+        fn inject(a: &ArraySeqStEphS<T>, updates: &ArraySeqStEphS<Pair<N, T>>) -> ArraySeqStEphS<T>;
+        fn ninject(a: &ArraySeqStEphS<T>, updates: &ArraySeqStEphS<Pair<N, T>>) -> ArraySeqStEphS<T>;
+        fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
         fn iteratePrefixes<A: StT>(
-            a: &ArraySeqEphS<T>,
+            a: &ArraySeqStEphS<T>,
             f: impl Fn(&A, &T) -> A,
             x: A,
-        ) -> (ArraySeqEphS<A>, A);
-        fn reduce(a: &ArraySeqEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
+        ) -> (ArraySeqStEphS<A>, A);
+        fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
         fn scan(
-            a: &ArraySeqEphS<T>,
+            a: &ArraySeqStEphS<T>,
             f: &impl Fn(&T, &T) -> T,
             id: T,
-        ) -> (ArraySeqEphS<T>, T);
-        fn flatten(ss: &ArraySeqEphS<ArraySeqEphS<T>>) -> ArraySeqEphS<T>;
+        ) -> (ArraySeqStEphS<T>, T);
+        fn flatten(ss: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;
         fn collect<A: StT, Bv: StT>(
-            a: &ArraySeqEphS<Pair<A, Bv>>,
+            a: &ArraySeqStEphS<Pair<A, Bv>>,
             cmp: impl Fn(&A, &A) -> O,
-        ) -> ArraySeqEphS<Pair<A, ArraySeqEphS<Bv>>>;
+        ) -> ArraySeqStEphS<Pair<A, ArraySeqStEphS<Bv>>>;
     }
 
-    impl<T: StT> ArraySeqEphChap18Trait<T> for ArraySeqEphS<T> {
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqEphS<T> {
+    impl<T: StT> ArraySeqStEphChap18Trait<T> for ArraySeqStEphS<T> {
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqStEphS<T> {
             let mut v: Vec<T> = Vec::with_capacity(n);
             for i in 0..n {
                 v.push(f(i));
             }
-            ArraySeqEphS::from_vec(v)
+            ArraySeqStEphS::from_vec(v)
         }
-        fn map<U: StT>(a: &ArraySeqEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqEphS<U> {
+        fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U> {
             let n = a.length();
             if n == 0 {
-                return <ArraySeqEphS<U> as ArraySeqEphTrait<U>>::empty();
+                return <ArraySeqStEphS<U> as ArraySeqStEphTrait<U>>::empty();
             }
             let first = f(a.nth(0)).clone();
-            let mut out = <ArraySeqEphS<U> as ArraySeqEphTrait<U>>::new(n, first.clone());
+            let mut out = <ArraySeqStEphS<U> as ArraySeqStEphTrait<U>>::new(n, first.clone());
             let _ = out.set(0, first);
             for i in 1..n {
                 let _ = out.set(i, f(a.nth(i)));
             }
             out
         }
-        fn append(a: &ArraySeqEphS<T>, b: &ArraySeqEphS<T>) -> ArraySeqEphS<T> {
+        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {
             let na = a.length();
             let nb = b.length();
             let n = na + nb;
             if n == 0 {
-                return <ArraySeqEphS<T> as ArraySeqEphTrait<T>>::empty();
+                return <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty();
             }
             let init = if na > 0 {
                 a.nth(0).clone()
             } else {
                 b.nth(0).clone()
             };
-            let mut out = <ArraySeqEphS<T> as ArraySeqEphTrait<T>>::new(n, init.clone());
+            let mut out = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::new(n, init.clone());
             for i in 0..na {
                 let _ = out.set(i, a.nth(i).clone());
             }
@@ -73,7 +73,7 @@ pub mod ArraySeqEphChap18 {
             }
             out
         }
-        fn filter(a: &ArraySeqEphS<T>, pred: impl Fn(&T) -> B) -> ArraySeqEphS<T> {
+        fn filter(a: &ArraySeqStEphS<T>, pred: impl Fn(&T) -> B) -> ArraySeqStEphS<T> {
             let n = a.length();
             let mut kept: Vec<T> = Vec::new();
             kept.reserve(n);
@@ -83,15 +83,15 @@ pub mod ArraySeqEphChap18 {
                     kept.push(x.clone());
                 }
             }
-            ArraySeqEphS::from_vec(kept)
+            ArraySeqStEphS::from_vec(kept)
         }
-        fn update(a: &mut ArraySeqEphS<T>, (index, item): (N, T)) -> &mut ArraySeqEphS<T> {
+        fn update(a: &mut ArraySeqStEphS<T>, (index, item): (N, T)) -> &mut ArraySeqStEphS<T> {
             a.update((index, item))
         }
         fn inject(
-            a: &ArraySeqEphS<T>,
-            updates: &ArraySeqEphS<Pair<N, T>>,
-        ) -> ArraySeqEphS<T> {
+            a: &ArraySeqStEphS<T>,
+            updates: &ArraySeqStEphS<Pair<N, T>>,
+        ) -> ArraySeqStEphS<T> {
             let mut out = a.clone();
             for i in 0..updates.length() {
                 let Pair(idx, val) = updates.nth(i).clone();
@@ -100,12 +100,12 @@ pub mod ArraySeqEphChap18 {
             out
         }
         fn ninject(
-            a: &ArraySeqEphS<T>,
-            updates: &ArraySeqEphS<Pair<N, T>>,
-        ) -> ArraySeqEphS<T> {
+            a: &ArraySeqStEphS<T>,
+            updates: &ArraySeqStEphS<Pair<N, T>>,
+        ) -> ArraySeqStEphS<T> {
             Self::inject(a, updates)
         }
-        fn iterate<A: StT>(a: &ArraySeqEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
+        fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
             let mut acc = x;
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
@@ -113,23 +113,23 @@ pub mod ArraySeqEphChap18 {
             acc
         }
         fn iteratePrefixes<A: StT>(
-            a: &ArraySeqEphS<T>,
+            a: &ArraySeqStEphS<T>,
             f: impl Fn(&A, &T) -> A,
             x: A,
-        ) -> (ArraySeqEphS<A>, A) {
+        ) -> (ArraySeqStEphS<A>, A) {
             let n = a.length();
             let mut acc = x;
             if n == 0 {
-                return (<ArraySeqEphS<A> as ArraySeqEphTrait<A>>::empty(), acc);
+                return (<ArraySeqStEphS<A> as ArraySeqStEphTrait<A>>::empty(), acc);
             }
-            let mut out = <ArraySeqEphS<A> as ArraySeqEphTrait<A>>::new(n, acc.clone());
+            let mut out = <ArraySeqStEphS<A> as ArraySeqStEphTrait<A>>::new(n, acc.clone());
             for i in 0..n {
                 let _ = out.set(i, acc.clone());
                 acc = f(&acc, a.nth(i));
             }
             (out, acc)
         }
-        fn reduce(a: &ArraySeqEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
+        fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
             let mut acc = id;
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
@@ -137,16 +137,16 @@ pub mod ArraySeqEphChap18 {
             acc
         }
         fn scan(
-            a: &ArraySeqEphS<T>,
+            a: &ArraySeqStEphS<T>,
             f: &impl Fn(&T, &T) -> T,
             id: T,
-        ) -> (ArraySeqEphS<T>, T) {
+        ) -> (ArraySeqStEphS<T>, T) {
             let n = a.length();
             let mut acc = id;
             let mut out = if n == 0 {
-                <ArraySeqEphS<T> as ArraySeqEphTrait<T>>::empty()
+                <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty()
             } else {
-                <ArraySeqEphS<T> as ArraySeqEphTrait<T>>::new(n, acc.clone())
+                <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::new(n, acc.clone())
             };
             for i in 0..n {
                 let _ = out.set(i, acc.clone());
@@ -154,13 +154,13 @@ pub mod ArraySeqEphChap18 {
             }
             (out, acc)
         }
-        fn flatten(ss: &ArraySeqEphS<ArraySeqEphS<T>>) -> ArraySeqEphS<T> {
+        fn flatten(ss: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T> {
             let mut total: N = 0;
             for i in 0..ss.length() {
                 total += ss.nth(i).length();
             }
             if total == 0 {
-                return <ArraySeqEphS<T> as ArraySeqEphTrait<T>>::empty();
+                return <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty();
             }
             let mut init: Option<T> = None;
             for i in 0..ss.length() {
@@ -171,7 +171,7 @@ pub mod ArraySeqEphChap18 {
                 }
             }
             let initv = init.expect("total > 0 implies some inner non-empty");
-            let mut out = <ArraySeqEphS<T> as ArraySeqEphTrait<T>>::new(total, initv.clone());
+            let mut out = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::new(total, initv.clone());
             let mut w: N = 0;
             for i in 0..ss.length() {
                 let inner = ss.nth(i);
@@ -183,9 +183,9 @@ pub mod ArraySeqEphChap18 {
             out
         }
         fn collect<A: StT, Bv: StT>(
-            a: &ArraySeqEphS<Pair<A, Bv>>,
+            a: &ArraySeqStEphS<Pair<A, Bv>>,
             cmp: impl Fn(&A, &A) -> O,
-        ) -> ArraySeqEphS<Pair<A, ArraySeqEphS<Bv>>> {
+        ) -> ArraySeqStEphS<Pair<A, ArraySeqStEphS<Bv>>> {
             let mut groups: Vec<Pair<A, Vec<Bv>>> = Vec::new();
             for i in 0..a.length() {
                 let Pair(k, v) = a.nth(i).clone();
@@ -201,13 +201,13 @@ pub mod ArraySeqEphChap18 {
                     groups.push(Pair(k.clone(), vec![v.clone()]));
                 }
             }
-            let out: Vec<Pair<A, ArraySeqEphS<Bv>>> = groups
+            let out: Vec<Pair<A, ArraySeqStEphS<Bv>>> = groups
                 .into_iter()
-                .map(|Pair(k, gv)| Pair(k, ArraySeqEphS::from_vec(gv)))
+                .map(|Pair(k, gv)| Pair(k, ArraySeqStEphS::from_vec(gv)))
                 .collect();
-            ArraySeqEphS::from_vec(out)
+            ArraySeqStEphS::from_vec(out)
         }
     }
 }
 
-pub use ArraySeqEphChap18::ArraySeqEphChap18Trait;
+pub use ArraySeqStEphChap18::ArraySeqStEphChap18Trait;

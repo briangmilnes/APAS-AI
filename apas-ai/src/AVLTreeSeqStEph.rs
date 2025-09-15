@@ -1,7 +1,7 @@
-//! Ephemeral (mutable) implicit-order AVL tree sequence.
+//! StEphemeral (mutable) implicit-order AVL tree sequence.
 
-pub mod AVLTreeSeqEph {
-use crate::ArraySeqEph::ArraySeqEph::*;
+pub mod AVLTreeSeqStEph {
+use crate::ArraySeqStEph::ArraySeqStEph::*;
 use crate::Types::Types::*;
 use std::fmt::Debug;
 
@@ -31,12 +31,12 @@ impl<T: StT> AVLTreeNode<T> {
     }
 }
 
-pub struct AVLTreeSeqEphS<T: StT> {
+pub struct AVLTreeSeqStEphS<T: StT> {
     pub root: Link<T>,
     pub next_key: N,
 }
 
-pub trait AVLTreeSeqEphTrait<T: StT> {
+pub trait AVLTreeSeqStEphTrait<T: StT> {
     /// APAS: Work Θ(1), Span Θ(1).
     fn empty() -> Self;
     /// APAS: Work Θ(1), Span Θ(1).
@@ -57,9 +57,9 @@ pub trait AVLTreeSeqEphTrait<T: StT> {
     fn subseq_copy(&self, start: N, length: N) -> Self;
 }
 
-impl<T: StT> AVLTreeSeqEphS<T> {
+impl<T: StT> AVLTreeSeqStEphS<T> {
     pub fn new_root() -> Self {
-        AVLTreeSeqEphS {
+        AVLTreeSeqStEphS {
             root: None,
             next_key: 0,
         }
@@ -67,32 +67,32 @@ impl<T: StT> AVLTreeSeqEphS<T> {
     pub fn new() -> Self {
         Self::new_root()
     }
-    pub fn update(&mut self, (index, item): (N, T)) -> &mut AVLTreeSeqEphS<T> {
-        let _ = <AVLTreeSeqEphS<T> as AVLTreeSeqEphTrait<T>>::set(self, index, item);
+    pub fn update(&mut self, (index, item): (N, T)) -> &mut AVLTreeSeqStEphS<T> {
+        let _ = <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::set(self, index, item);
         self
     }
-    pub fn from_vec(values: Vec<T>) -> AVLTreeSeqEphS<T>
+    pub fn from_vec(values: Vec<T>) -> AVLTreeSeqStEphS<T>
     {
         let length = values.len();
-        let mut t = AVLTreeSeqEphS::new_root();
+        let mut t = AVLTreeSeqStEphS::new_root();
         for (i, v) in values.into_iter().enumerate() {
             t.root = insert_at_link(t.root.take(), i, v, &mut t.next_key);
         }
         debug_assert!(t.length() == length);
         t
     }
-    pub fn to_arrayseq(&self) -> ArraySeqEphS<T>
+    pub fn to_arrayseq(&self) -> ArraySeqStEphS<T>
     {
         let len = self.length();
         if len == 0 {
-            return <ArraySeqEphS<T> as ArraySeqEphTrait<T>>::empty();
+            return <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty();
         }
         let mut it = self.iter();
         let first = it
             .next()
             .expect("length > 0 but iter was empty")
             .clone();
-        let mut out = <ArraySeqEphS<T> as ArraySeqEphTrait<T>>::new(len, first.clone());
+        let mut out = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::new(len, first.clone());
         let _ = out.set(0, first);
         let mut index: N = 1;
         for v in it {
@@ -101,8 +101,8 @@ impl<T: StT> AVLTreeSeqEphS<T> {
         }
         out
     }
-    pub fn iter<'a>(&'a self) -> AVLTreeSeqIterEph<'a, T> {
-        AVLTreeSeqIterEph::new(&self.root)
+    pub fn iter<'a>(&'a self) -> AVLTreeSeqIterStEph<'a, T> {
+        AVLTreeSeqIterStEph::new(&self.root)
     }
     pub fn push_back(&mut self, value: T) {
         let len = self.length();
@@ -139,7 +139,7 @@ impl<T: StT> AVLTreeSeqEphS<T> {
             for i in (idx + 1)..len {
                 out_vec.push(self.nth(i).clone());
             }
-            *self = AVLTreeSeqEphS::from_vec(out_vec);
+            *self = AVLTreeSeqStEphS::from_vec(out_vec);
             true
         } else {
             false
@@ -147,13 +147,13 @@ impl<T: StT> AVLTreeSeqEphS<T> {
     }
 }
 
-impl<T: StT> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
+impl<T: StT> AVLTreeSeqStEphTrait<T> for AVLTreeSeqStEphS<T> {
     fn empty() -> Self {
-        AVLTreeSeqEphS::new_root()
+        AVLTreeSeqStEphS::new_root()
     }
 
     fn new() -> Self {
-        AVLTreeSeqEphS::new_root()
+        AVLTreeSeqStEphS::new_root()
     }
 
     fn length(&self) -> N {
@@ -170,7 +170,7 @@ impl<T: StT> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
     }
 
     fn singleton(item: T) -> Self {
-        let mut t = AVLTreeSeqEphS::new_root();
+        let mut t = AVLTreeSeqStEphS::new_root();
         t.root = insert_at_link(t.root.take(), 0, item, &mut t.next_key);
         t
     }
@@ -197,24 +197,24 @@ impl<T: StT> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
         let s = start.min(n);
         let e = start.saturating_add(length).min(n);
         if e <= s {
-            return <AVLTreeSeqEphS<T> as AVLTreeSeqEphTrait<T>>::empty();
+            return <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::empty();
         }
         let mut vals: Vec<T> = Vec::with_capacity(e - s);
         for i in s..e {
             vals.push(self.nth(i).clone());
         }
-        AVLTreeSeqEphS::from_vec(vals)
+        AVLTreeSeqStEphS::from_vec(vals)
     }
 }
 
-pub struct AVLTreeSeqIterEph<'a, T: StT> {
+pub struct AVLTreeSeqIterStEph<'a, T: StT> {
     stack: Vec<&'a AVLTreeNode<T>>,
     current: Option<&'a AVLTreeNode<T>>,
 }
 
-impl<'a, T: StT> AVLTreeSeqIterEph<'a, T> {
+impl<'a, T: StT> AVLTreeSeqIterStEph<'a, T> {
     fn new(root: &'a Link<T>) -> Self {
-        let mut it = AVLTreeSeqIterEph {
+        let mut it = AVLTreeSeqIterStEph {
             stack: Vec::new(),
             current: None,
         };
@@ -230,7 +230,7 @@ impl<'a, T: StT> AVLTreeSeqIterEph<'a, T> {
     }
 }
 
-impl<'a, T: StT> Iterator for AVLTreeSeqIterEph<'a, T> {
+impl<'a, T: StT> Iterator for AVLTreeSeqIterStEph<'a, T> {
     type Item = &'a T;
     fn next(&mut self) -> Option<Self::Item> {
         let node = self.stack.pop()?;
@@ -358,21 +358,21 @@ fn set_link<T: StT>(node: &mut Link<T>, index: N, value: T) -> Result<(), &'stat
 }
 
     #[macro_export]
-    macro_rules! AVLTreeSeqEph {
-        () => { $crate::AVLTreeSeqEph::AVLTreeSeqEph::AVLTreeSeqEphS::from_vec(Vec::new()) };
+    macro_rules! AVLTreeSeqStEph {
+        () => { $crate::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS::from_vec(Vec::new()) };
         ($x:expr; $n:expr) => {{
-            let mut t = $crate::AVLTreeSeqEph::AVLTreeSeqEph::AVLTreeSeqEphS::from_vec(Vec::new());
+            let mut t = $crate::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS::from_vec(Vec::new());
             for _ in 0..$n { t.push_back($x); }
             t
         }};
         ($($x:expr),* $(,)?) => {{
-            let mut t = $crate::AVLTreeSeqEph::AVLTreeSeqEph::AVLTreeSeqEphS::from_vec(Vec::new());
+            let mut t = $crate::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS::from_vec(Vec::new());
             $( { t.push_back($x); } )*
             t
         }};
     }
 
-    impl<T: StT> PartialEq for AVLTreeSeqEphS<T> {
+    impl<T: StT> PartialEq for AVLTreeSeqStEphS<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.length() != other.length() {
                 return false;
@@ -386,5 +386,5 @@ fn set_link<T: StT>(node: &mut Link<T>, index: N, value: T) -> Result<(), &'stat
         }
     }
 
-    impl<T: StT> Eq for AVLTreeSeqEphS<T> {}
+    impl<T: StT> Eq for AVLTreeSeqStEphS<T> {}
 }

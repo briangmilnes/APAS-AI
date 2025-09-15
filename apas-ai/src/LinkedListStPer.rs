@@ -1,6 +1,6 @@
-//! Persistent (immutable by rebuilding) singly linked list.
+//! StPersistent (immutable by rebuilding) singly linked list.
 
-pub mod LinkedListPer {
+pub mod LinkedListStPer {
     use crate::Types::Types::*;
 
     #[derive(Clone)]
@@ -10,12 +10,12 @@ pub mod LinkedListPer {
     }
 
     #[derive(Clone)]
-    pub struct LinkedListPerS<T: StT> {
+    pub struct LinkedListStPerS<T: StT> {
         head: Option<Box<NodeP<T>>>,
         len: N,
     }
 
-    pub trait LinkedListPerTrait<T: StT> {
+    pub trait LinkedListStPerTrait<T: StT> {
         fn empty() -> Self;
         fn new(length: N, init_value: T) -> Self;
         fn length(&self) -> N;
@@ -32,7 +32,7 @@ pub mod LinkedListPer {
         fn subseq_copy(&self, start: N, length: N) -> Self;
     }
 
-    impl<T: StT> LinkedListPerS<T> {
+    impl<T: StT> LinkedListStPerS<T> {
         fn push_front_node(&mut self, node: Box<NodeP<T>>) {
             let mut n = node;
             n.next = self.head.take();
@@ -41,26 +41,26 @@ pub mod LinkedListPer {
         }
 
         pub fn from_vec(v: Vec<T>) -> Self {
-            let mut list = LinkedListPerS::empty();
+            let mut list = LinkedListStPerS::empty();
             for value in v.into_iter().rev() {
                 list.push_front_node(Box::new(NodeP { value, next: None }));
             }
             list
         }
 
-        pub fn iter<'a>(&'a self) -> LinkedListPerIter<'a, T> {
-            LinkedListPerIter {
+        pub fn iter<'a>(&'a self) -> LinkedListStPerIter<'a, T> {
+            LinkedListStPerIter {
                 cursor: self.head.as_deref(),
             }
         }
     }
 
-    impl<T: StT> LinkedListPerTrait<T> for LinkedListPerS<T> {
+    impl<T: StT> LinkedListStPerTrait<T> for LinkedListStPerS<T> {
         fn empty() -> Self {
-            LinkedListPerS { head: None, len: 0 }
+            LinkedListStPerS { head: None, len: 0 }
         }
         fn new(length: N, init_value: T) -> Self {
-            let mut list = LinkedListPerS::empty();
+            let mut list = LinkedListStPerS::empty();
             for _ in 0..length {
                 list.push_front_node(Box::new(NodeP {
                     value: init_value.clone(),
@@ -108,7 +108,7 @@ pub mod LinkedListPer {
             }
         }
         fn singleton(item: T) -> Self {
-            LinkedListPerS {
+            LinkedListStPerS {
                 head: Some(Box::new(NodeP {
                     value: item,
                     next: None,
@@ -121,7 +121,7 @@ pub mod LinkedListPer {
                 return Err("Index out of bounds");
             }
             // rebuild list with the changed value
-            let mut out = LinkedListPerS::empty();
+            let mut out = LinkedListStPerS::empty();
             let mut i = 0;
             let mut cur = self.head.as_ref();
             while let Some(node) = cur {
@@ -153,9 +153,9 @@ pub mod LinkedListPer {
             let s = start.min(n);
             let e = start.saturating_add(length).min(n);
             if e <= s {
-                return LinkedListPerS::empty();
+                return LinkedListStPerS::empty();
             }
-            let mut out = LinkedListPerS::empty();
+            let mut out = LinkedListStPerS::empty();
             let mut i = 0;
             let mut cur = self.head.as_ref();
             while let Some(node) = cur {
@@ -183,7 +183,7 @@ pub mod LinkedListPer {
         }
     }
 
-    impl<T: StT> std::fmt::Debug for LinkedListPerS<T> {
+    impl<T: StT> std::fmt::Debug for LinkedListStPerS<T> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             let mut v = Vec::with_capacity(self.len);
             let mut cur = self.head.as_ref();
@@ -195,11 +195,11 @@ pub mod LinkedListPer {
         }
     }
 
-    pub struct LinkedListPerIter<'a, T: StT> {
+    pub struct LinkedListStPerIter<'a, T: StT> {
         cursor: Option<&'a NodeP<T>>,
     }
 
-    impl<'a, T: StT> Iterator for LinkedListPerIter<'a, T> {
+    impl<'a, T: StT> Iterator for LinkedListStPerIter<'a, T> {
         type Item = &'a T;
         fn next(&mut self) -> Option<Self::Item> {
             if let Some(n) = self.cursor {
@@ -211,7 +211,7 @@ pub mod LinkedListPer {
         }
     }
 
-    impl<T: StT> PartialEq for LinkedListPerS<T> {
+    impl<T: StT> PartialEq for LinkedListStPerS<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.len != other.len {
                 return false;
@@ -229,9 +229,9 @@ pub mod LinkedListPer {
         }
     }
 
-    impl<T: StT> Eq for LinkedListPerS<T> {}
+    impl<T: StT> Eq for LinkedListStPerS<T> {}
 
-    impl<T: StT> std::fmt::Display for LinkedListPerS<T> {
+    impl<T: StT> std::fmt::Display for LinkedListStPerS<T> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             write!(f, "[")?;
             let mut first = true;
@@ -251,10 +251,10 @@ pub mod LinkedListPer {
 }
 
 #[macro_export]
-macro_rules! LinkedListPer {
-    () => { $crate::LinkedListPer::LinkedListPer::LinkedListPerS::from_vec(Vec::new()) };
+macro_rules! LinkedListStPer {
+    () => { $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS::from_vec(Vec::new()) };
     ($x:expr; $n:expr) => {{
-        < $crate::LinkedListPer::LinkedListPer::LinkedListPerS<_> as $crate::LinkedListPer::LinkedListPer::LinkedListPerTrait<_> >::new($n, $x)
+        < $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS<_> as $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerTrait<_> >::new($n, $x)
     }};
-    ($($x:expr),* $(,)?) => { $crate::LinkedListPer::LinkedListPer::LinkedListPerS::from_vec(vec![$($x),*]) };
+    ($($x:expr),* $(,)?) => { $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS::from_vec(vec![$($x),*]) };
 }
