@@ -8,7 +8,7 @@ pub mod AVLTreeSeqStPerChap19 {
 
     pub trait AVLTreeSeqStPerChap19Trait<T: StT> {
         fn tabulate(f: impl Fn(N) -> T, n: N) -> AVLTreeSeqStPerS<T>;
-        fn map<U>(a: &AVLTreeSeqStPerS<T>, f: impl Fn(&T) -> U) -> AVLTreeSeqStPerS<U>;
+        fn map<U: StT>(a: &AVLTreeSeqStPerS<T>, f: impl Fn(&T) -> U) -> AVLTreeSeqStPerS<U>;
         fn select(a: &AVLTreeSeqStPerS<T>, b: &AVLTreeSeqStPerS<T>, i: N) -> Option<T>;
         fn append(a: &AVLTreeSeqStPerS<T>, b: &AVLTreeSeqStPerS<T>) -> AVLTreeSeqStPerS<T>;
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> AVLTreeSeqStPerS<T>;
@@ -25,12 +25,12 @@ pub mod AVLTreeSeqStPerChap19 {
         fn select(a: &AVLTreeSeqStPerS<T>, b: &AVLTreeSeqStPerS<T>, i: N) -> Option<T> {
             let a_len = <AVLTreeSeqStPerS<T> as AVLTreeSeqStPerTrait<T>>::length(a);
             if i < a_len {
-                Some(*<AVLTreeSeqStPerS<T> as AVLTreeSeqStPerTrait<T>>::nth(a, i))
+                Some(<AVLTreeSeqStPerS<T> as AVLTreeSeqStPerTrait<T>>::nth(a, i).clone())
             } else {
                 let off = i - a_len;
                 let b_len = <AVLTreeSeqStPerS<T> as AVLTreeSeqStPerTrait<T>>::length(b);
                 if off < b_len {
-                    Some(*<AVLTreeSeqStPerS<T> as AVLTreeSeqStPerTrait<T>>::nth(b, off))
+                    Some(<AVLTreeSeqStPerS<T> as AVLTreeSeqStPerTrait<T>>::nth(b, off).clone())
                 } else {
                     None
                 }
@@ -41,7 +41,7 @@ pub mod AVLTreeSeqStPerChap19 {
         }
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> AVLTreeSeqStPerS<T> {
             if f(x) == B::True {
-                <AVLTreeSeqStPerS<T> as AVLTreeSeqStPerTrait<T>>::singleton(*x)
+                <AVLTreeSeqStPerS<T> as AVLTreeSeqStPerTrait<T>>::singleton(x.clone())
             } else {
                 <AVLTreeSeqStPerS<T> as AVLTreeSeqStPerTrait<T>>::empty()
             }
@@ -51,5 +51,3 @@ pub mod AVLTreeSeqStPerChap19 {
         }
     }
 }
-
-pub use AVLTreeSeqStPerChap19::AVLTreeSeqStPerChap19Trait;

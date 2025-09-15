@@ -4,12 +4,12 @@ pub mod ArraySeqStPerChap18 {
 use crate::ArraySeqStPer::ArraySeqStPer::*;
 use crate::Types::Types::*;
 
-pub trait ArraySeqStPerChap18Trait<T: MtT> {
+pub trait ArraySeqStPerChap18Trait<T: StT> {
     /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
     fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x)))
-    fn map<U: MtT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U>;
+    fn map<U: StT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U>;
 
     /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
     fn append(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T>;
@@ -20,19 +20,19 @@ pub trait ArraySeqStPerChap18Trait<T: MtT> {
     /// APAS: Work Θ(1 + |a|), Span Θ(1)
     /// gpt-5-hard: Work Θ(|a|), Span Θ(1)
     /// BUG: APAS and gpt-5-hard algorithmic analyses differ.
-    fn update(a: &ArrayStPerS<T>, item_at: (N, T)) -> ArrayStPerS<T>;
+    fn update(a: &ArrayStPerS<T>, item_at: Pair<N, T>) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(lg(degree(updates)))
-    fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<(N, T)>) -> ArrayStPerS<T>;
+    fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(1)
-    fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<(N, T)>) -> ArrayStPerS<T>;
+    fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + Σ (y,z) W(f(y,z))), Span Θ(1 + Σ S(f(y,z)))
-    fn iterate<A: MtT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
+    fn iterate<A: StT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
 
     /// APAS: Work Θ(|a|), Span Θ(|a|)
-    fn iteratePrefixes<A: MtT + Clone>(
+    fn iteratePrefixes<A: StT + Clone>(
         a: &ArrayStPerS<T>,
         f: impl Fn(&A, &T) -> A,
         x: A,
@@ -54,12 +54,12 @@ pub trait ArraySeqStPerChap18Trait<T: MtT> {
     ) -> ArrayStPerS<Pair<T, ArrayStPerS<T>>>;
 }
 
-impl<T: MtT> ArraySeqStPerChap18Trait<T> for ArrayStPerS<T> {
+impl<T: StT> ArraySeqStPerChap18Trait<T> for ArrayStPerS<T> {
     fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayStPerS<T> {
         let data: Vec<T> = (0..n).map(|i| f(i)).collect();
         ArrayStPerS::from_vec(data)
     }
-    fn map<U: MtT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U> {
+    fn map<U: StT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U> {
         if a.length() == 0 {
             return <ArrayStPerS<U> as ArraySeqStPerTrait<U>>::empty();
         }
@@ -94,17 +94,17 @@ impl<T: MtT> ArraySeqStPerChap18Trait<T> for ArrayStPerS<T> {
         }
         ArrayStPerS::from_vec(v)
     }
-    fn update(a: &ArrayStPerS<T>, (index, item): (N, T)) -> ArrayStPerS<T> {
+    fn update(a: &ArrayStPerS<T>, Pair(index, item): Pair<N, T>) -> ArrayStPerS<T> {
         match a.set(index, item) {
             Ok(updated) => updated,
             Err(_) => a.clone(),
         }
     }
-    fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<(N, T)>) -> ArrayStPerS<T> {
+    fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {
         let mut v: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
         let mut seen = std::collections::HashSet::new();
         for k in 0..updates.length() {
-            let (idx, val) = updates.nth(k).clone();
+            let Pair(idx, val) = updates.nth(k).clone();
             if (idx as usize) < v.len() && !seen.contains(&idx) {
                 v[idx] = val;
                 seen.insert(idx);
@@ -112,24 +112,24 @@ impl<T: MtT> ArraySeqStPerChap18Trait<T> for ArrayStPerS<T> {
         }
         ArrayStPerS::from_vec(v)
     }
-    fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<(N, T)>) -> ArrayStPerS<T> {
+    fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {
         let mut v: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
         for k in 0..updates.length() {
-            let (idx, val) = updates.nth(k).clone();
+            let Pair(idx, val) = updates.nth(k).clone();
             if (idx as usize) < v.len() {
                 v[idx] = val;
             }
         }
         ArrayStPerS::from_vec(v)
     }
-    fn iterate<A: MtT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
+    fn iterate<A: StT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
         let mut acc = x;
         for i in 0..a.length() {
             acc = f(&acc, a.nth(i));
         }
         acc
     }
-    fn iteratePrefixes<A: MtT + Clone>(
+    fn iteratePrefixes<A: StT + Clone>(
         a: &ArrayStPerS<T>,
         f: impl Fn(&A, &T) -> A,
         x: A,
@@ -216,5 +216,3 @@ impl<T: MtT> ArraySeqStPerChap18Trait<T> for ArrayStPerS<T> {
 }
 
 }
-
-pub use ArraySeqStPerChap18::ArraySeqStPerChap18Trait;

@@ -17,12 +17,14 @@ fn test_cartesian_product_example_5_1() {
     let b: Set<char> = SetLit!['a', 'b'];
     let prod = a.CartesianProduct(&b);
 
-    let expect: Set<(N, char)> = SetLit![
-        (0, 'a'), (0, 'b'),
-        (1, 'a'), (1, 'b'),
-        (2, 'a'), (2, 'b'),
-        (3, 'a'), (3, 'b'),
-    ];
+    let expect: Set<Pair<N, char>> = {
+        let mut s: Set<Pair<N, char>> = Set::empty();
+        let _ = s.insert(Pair(0, 'a')); let _ = s.insert(Pair(0, 'b'));
+        let _ = s.insert(Pair(1, 'a')); let _ = s.insert(Pair(1, 'b'));
+        let _ = s.insert(Pair(2, 'a')); let _ = s.insert(Pair(2, 'b'));
+        let _ = s.insert(Pair(3, 'a')); let _ = s.insert(Pair(3, 'b'));
+        s
+    };
     assert_eq!(prod, expect);
     assert_eq!(prod.size(), 8);
 }

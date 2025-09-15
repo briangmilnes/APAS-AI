@@ -16,7 +16,7 @@ pub struct Mapping<A, B> {
 pub trait MappingStEphChap5_5Trait<X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized, Y: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized> {
     fn empty() -> Mapping<X, Y>;
 
-    fn FromVec(v: Vec<(X, Y)>) -> Mapping<X, Y>;
+    fn FromVec(v: Vec<Pair<X, Y>>) -> Mapping<X, Y>;
 
     fn FromRelation(r: &Relation<X, Y>) -> Mapping<X, Y>;
 
@@ -28,19 +28,19 @@ pub trait MappingStEphChap5_5Trait<X: Eq + Hash + std::fmt::Display + std::fmt::
 
     fn mem(&self, a: &X, b: &Y) -> B;
 
-    fn iter(&self) -> std::collections::hash_set::Iter<'_, (X, Y)>;
+    fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>>;
 }
 
 impl<A, B> Mapping<A, B> {
-    fn unique_pairs_from_iter<I>(iter: I) -> Set<(A, B)>
+    fn unique_pairs_from_iter<I>(iter: I) -> Set<Pair<A, B>>
     where
-        I: IntoIterator<Item = (A, B)>,
+        I: IntoIterator<Item = Pair<A, B>>,
         A: Eq + Hash,
         B: Eq + Hash,
     {
         let mut m: HashMap<A, B> = HashMap::new();
-        for (a, b) in iter { m.insert(a, b); }
-        let pairs: Vec<(A, B)> = m.into_iter().collect();
+        for Pair(a, b) in iter { m.insert(a, b); }
+        let pairs: Vec<Pair<A, B>> = m.into_iter().map(|(a,b)| Pair(a,b)).collect();
         Set::FromVec(pairs)
     }
 }
@@ -62,7 +62,7 @@ impl<X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized, Y: Eq +
         Mapping { rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::empty() }
     }
 
-    fn FromVec(v: Vec<(X, Y)>) -> Mapping<X, Y> {
+    fn FromVec(v: Vec<Pair<X, Y>>) -> Mapping<X, Y> {
         let pairs = Self::unique_pairs_from_iter(v);
         Mapping { rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::FromSet(pairs) }
     }
@@ -80,29 +80,24 @@ impl<X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized, Y: Eq +
 
     fn mem(&self, a: &X, b: &Y) -> B { self.rel.mem(a, b) }
 
-    fn iter(&self) -> std::collections::hash_set::Iter<'_, (X, Y)> { self.rel.iter() }
+    fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>> { self.rel.iter() }
 }
 
+    #[macro_export]
+    macro_rules! MappingLit {
+        () => {{
+            < $crate::MappingStEphChap5_5::MappingStEphChap5_5::Mapping<_, _> as $crate::MappingStEphChap5_5::MappingStEphChap5_5::MappingStEphChap5_5Trait<_, _> >::FromRelation(& $crate::RelationLit![])
+        }};
+        ( $( ($a:expr, $b:expr) ),* $(,)? ) => {{
+            let __r = $crate::RelationLit![ $( ($a, $b) ),* ];
+            < $crate::MappingStEphChap5_5::MappingStEphChap5_5::Mapping<_, _> as $crate::MappingStEphChap5_5::MappingStEphChap5_5::MappingStEphChap5_5Trait<_, _> >::FromRelation(&__r)
+        }};
+    }
+
+    #[allow(dead_code)]
+    pub fn __mapping_macro_typecheck_exercise() {
+        let _m0: Mapping<usize, char> = MappingLit![];
+        let _m1 = MappingLit![(0,'a')];
+        let _m2 = MappingLit![(0,'a'), (1,'b')];
+    }
 }
-
-pub use MappingStEphChap5_5::MappingStEphChap5_5Trait;
-
-#[macro_export]
-macro_rules! MappingLit {
-    () => {{
-        < $crate::MappingStEphChap5_5::MappingStEphChap5_5::Mapping<_, _> as $crate::MappingStEphChap5_5::MappingStEphChap5_5::MappingStEphChap5_5Trait<_, _> >::FromRelation(& $crate::RelationLit![])
-    }};
-    ( $( ($a:expr, $b:expr) ),* $(,)? ) => {{
-        let __r = $crate::RelationLit![ $( ($a, $b) ),* ];
-        < $crate::MappingStEphChap5_5::MappingStEphChap5_5::Mapping<_, _> as $crate::MappingStEphChap5_5::MappingStEphChap5_5::MappingStEphChap5_5Trait<_, _> >::FromRelation(&__r)
-    }};
-}
-
-#[allow(dead_code)]
-pub fn __mapping_macro_typecheck_exercise() {
-    use crate::MappingStEphChap5_5::MappingStEphChap5_5::Mapping as Map;
-    let _m0: Map<usize, char> = MappingLit![];
-    let _m1 = MappingLit![(0,'a')];
-    let _m2 = MappingLit![(0,'a'), (1,'b')];
-}
-

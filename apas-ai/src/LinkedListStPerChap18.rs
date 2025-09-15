@@ -267,4 +267,3 @@ pub mod LinkedListStPerChap18 {
     }
 }
 
-pub use LinkedListStPerChap18::LinkedListStPerChap18Trait;

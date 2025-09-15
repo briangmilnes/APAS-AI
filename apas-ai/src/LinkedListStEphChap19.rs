@@ -2,7 +2,7 @@
 
 pub mod LinkedListStEphChap19 {
     use crate::LinkedListStEph::LinkedListStEph::*;
-    use crate::LinkedListStEphChap18::LinkedListStEphChap18Trait;
+    use crate::LinkedListStEphChap18::*;
     use crate::Types::Types::*;
 
     pub trait LinkedListStEphChap19Trait<T: StT> {

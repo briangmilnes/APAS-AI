@@ -39,8 +39,8 @@ pub mod AVLTreeSeqStPer {
     fn rotate_right<T: StT>(y: Rc<Node<T>>) -> Rc<Node<T>> {
         let x = y.left.as_ref().expect("rotate_right requires left").clone();
         let t2 = x.right.clone();
-        let new_y = mk(y.value, t2.clone(), y.right.clone());
-        mk(x.value, x.left.clone(), Some(new_y))
+        let new_y = mk(y.value.clone(), t2.clone(), y.right.clone());
+        mk(x.value.clone(), x.left.clone(), Some(new_y))
     }
 
     fn rotate_left<T: StT>(x: Rc<Node<T>>) -> Rc<Node<T>> {
@@ -50,8 +50,8 @@ pub mod AVLTreeSeqStPer {
             .expect("rotate_left requires right")
             .clone();
         let t2 = y.left.clone();
-        let new_x = mk(x.value, x.left.clone(), t2.clone());
-        mk(y.value, Some(new_x), y.right.clone())
+        let new_x = mk(x.value.clone(), x.left.clone(), t2.clone());
+        mk(y.value.clone(), Some(new_x), y.right.clone())
     }
 
     fn rebalance<T: StT>(n: Rc<Node<T>>) -> Rc<Node<T>> {
@@ -61,7 +61,7 @@ pub mod AVLTreeSeqStPer {
             let left = n.left.as_ref().unwrap().clone();
             if height(&left.right) > height(&left.left) {
                 let rotated = rotate_left(left);
-                return rotate_right(mk(n.value, Some(rotated), n.right.clone()));
+                return rotate_right(mk(n.value.clone(), Some(rotated), n.right.clone()));
             }
             return rotate_right(n);
         }
@@ -69,7 +69,7 @@ pub mod AVLTreeSeqStPer {
             let right = n.right.as_ref().unwrap().clone();
             if height(&right.left) > height(&right.right) {
                 let rotated = rotate_right(right);
-                return rotate_left(mk(n.value, n.left.clone(), Some(rotated)));
+                return rotate_left(mk(n.value.clone(), n.left.clone(), Some(rotated)));
             }
             return rotate_left(n);
         }
@@ -98,12 +98,12 @@ pub mod AVLTreeSeqStPer {
                 let ls = size(&n.left);
                 if index < ls {
                     let new_left = set_rec(&n.left, index, value)?;
-                    Ok(Some(rebalance(mk(n.value, new_left, n.right.clone()))))
+                    Ok(Some(rebalance(mk(n.value.clone(), new_left, n.right.clone()))))
                 } else if index == ls {
                     Ok(Some(mk(value, n.left.clone(), n.right.clone())))
                 } else {
                     let new_right = set_rec(&n.right, index - ls - 1, value)?;
-                    Ok(Some(rebalance(mk(n.value, n.left.clone(), new_right))))
+                    Ok(Some(rebalance(mk(n.value.clone(), n.left.clone(), new_right))))
                 }
             }
         }
@@ -112,7 +112,7 @@ pub mod AVLTreeSeqStPer {
     fn inorder_collect<T: StT>(cur: &Link<T>, out: &mut Vec<T>) {
         if let Some(n) = cur {
             inorder_collect(&n.left, out);
-            out.push(n.value);
+            out.push(n.value.clone());
             inorder_collect(&n.right, out);
         }
     }
@@ -125,7 +125,7 @@ pub mod AVLTreeSeqStPer {
             let mid = a.len() / 2;
             let left = rec(&a[..mid]);
             let right = rec(&a[mid + 1..]);
-            Some(mk(a[mid], left, right))
+            Some(mk(a[mid].clone(), left, right))
         }
         rec(a)
     }
@@ -208,7 +208,7 @@ pub mod AVLTreeSeqStPer {
             let mut vals: Vec<T> = Vec::with_capacity(e - s);
             let all = self.values_in_order();
             for i in s..e {
-                vals.push(all[i as usize]);
+                vals.push(all[i as usize].clone());
             }
             Self::from_vec(vals)
         }

@@ -35,8 +35,8 @@ pub mod Types {
 
     // MtT: multi-threaded friendly elements; minimal so it can include Mutex<..>
     // Keep only thread-safety and size requirements.
-    pub trait MtT: Clone + Eq + Sized + Send + Sync {}
-    impl<T> MtT for T where T: Clone + Eq + Sized + Send + Sync {}
+    pub trait MtT: Sized + Send + Sync {}
+    impl<T> MtT for T where T: Sized + Send + Sync {}
 
     /// Edge wrapper to enable Display/Debug for pairs (V,V) under baseline bounds.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
@@ -81,6 +81,4 @@ pub mod Types {
             (p.0, p.1)
         }
     }
-
-    // Note: No explicit MtT impl for Pair; blanket MtT impl covers all Sized+Send+Sync types.
 }

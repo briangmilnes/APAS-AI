@@ -45,8 +45,31 @@ Result guidance
 
 #### Module import style for this project
 - In user modules, avoid importing individual symbols. Don’t use `use Foo::{Bar,Baz}`.
-- Prefer `use Foo::*` wherever possible (applies to your own modules; std items should be imported by name, without aliasing).
+- Prefer wildcard imports `use Foo::*` for your own modules (includes traits); let the module control what’s public.
+- Minimize repeated `use crate::...` lines: group them once with braces, e.g. `use crate::{Types::Types::*, LinkedListStPer::LinkedListStPer::*, LinkedListStPerChap18::LinkedListStPerChap18::*};`.
+- Fall back to explicit symbol imports only to resolve name collisions.
 - `PartialEq` and `Eq` definitions should be inside the file’s single module.
+
+#### No trailing per-file re-exports (use lib.rs instead)
+- Do not place lines like `pub use FooMod::FooModTrait;` at the end of source files.
+- If a re-export is desired for public API ergonomics, add it in `src/lib.rs` only.
+- Inside modules, import items via their module paths (e.g., `use crate::FooMod::FooMod::*;`) rather than relying on per-file re-exports.
+- Macros remain defined inside their modules with `#[macro_export]`; do not add extra re-exports for them.
+
+#### Wildcard-first imports; group to minimize `use crate`
+- Default: wildcard-import module contents (including traits): `use crate::SomeMod::SomeMod::*;`.
+- Prefer a single grouped import per file: `use crate::{A::A::*, B::B::*};`.
+- Only name symbols explicitly when disambiguating or when a wildcard would pull conflicting items into scope.
+
+#### Use Lit! macros for literal data construction
+- Always construct fixed, small literal values using the provided `...Lit!` macros (e.g., `SetLit!`, `RelationLit!`, `MappingLit!`).
+- For pair-like elements, use `Pair` inside the literal: `SetLit![Pair(a, b), Pair(c, d)]`.
+- Do not hand-build literals with temporary vars, loops, or manual inserts in tests or examples. Prefer the literal macro for clarity and brevity.
+- If a macro cannot express the literal you need, prefer adding/updating that macro rather than open-coding a one-off constructor.
+
+#### Helper function extraction threshold
+- Do not introduce a helper function unless it will be used in at least 3 distinct call sites (or across 2+ modules), or it eliminates clearly error-prone duplication.
+- Otherwise, keep the code inline or use an existing macro/constructor. Exceptions: readability for >10 lines of complex logic.
 
 #### Module/file layout
 - Each file should have a single module.
@@ -183,6 +206,13 @@ fn _MyMacro_type_checks() {
 - If the type lacks an inherent constructor, add one in its module, then update call sites to use it.
 - Keep any direct `T { data: … }` or `vec![…]` usage confined to the type’s own module/impls only (preserve invariants; avoid representation leaks).
 - UFCS constructors (`<T as Trait>::new/…`) are prohibited at call sites; prefer inherent or macro forms.
+
+#### Assistant Vec prohibition (sweeps vs non‑sweeps)
+- The user may write `Vec` code; the assistant may not introduce new `Vec` usage at call sites.
+- Sweeps: do not propose or add `Vec`/`vec![]`/`to_vec()`/`into_vec()` or equivalent conversions anywhere. Use only existing APIs (`tabulate`, `nth`, `length`, `set`, `iter`, macros).
+- Non‑sweeps: ask explicit permission before adding any `Vec` usage; default answer assumed “no”. If denied or unclear, avoid it.
+- Exceptions limited to internals: inside a type’s own module/impl, using `Vec` to implement `from_vec`, `set`, or builders is allowed if already the established representation. Do not expand its footprint.
+- Pre‑existing `Vec` at a call site: do not propagate or broaden it; keep changes local and prefer replacing with constructors/macros when practical.
 
 #### Struct Field Encapsulation
 - Default: struct fields are non‑public; hide representation by default.

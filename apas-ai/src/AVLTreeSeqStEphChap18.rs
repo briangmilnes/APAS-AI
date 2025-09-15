@@ -39,11 +39,11 @@ pub mod AVLTreeSeqStEphChap18 {
         fn append(a: &AVLTreeSeqStEphS<T>, b: &AVLTreeSeqStEphS<T>) -> AVLTreeSeqStEphS<T> {
             let mut out: AVLTreeSeqStEphS<T> = <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::empty();
             for x in a.iter() {
-                out.push_back(*x);
+                out.push_back(x.clone());
             }
             for x in b.iter() {
                 if out.contains_value(x) == B::False {
-                    out.push_back(*x);
+                    out.push_back(x.clone());
                 }
             }
             out
@@ -52,7 +52,7 @@ pub mod AVLTreeSeqStEphChap18 {
             let mut out: AVLTreeSeqStEphS<T> = <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::empty();
             for x in a.iter() {
                 if pred(x) == B::True {
-                    out.push_back(*x);
+                    out.push_back(x.clone());
                 }
             }
             out

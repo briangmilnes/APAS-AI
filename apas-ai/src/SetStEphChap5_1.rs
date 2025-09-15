@@ -23,7 +23,7 @@ pub trait SetStEphChap5_1Trait<T: Eq + Hash + Clone + Display + Debug + Sized> {
          T: StT;
     fn partition(&self, parts: &Set<Set<T>>) -> B;
 
-    fn CartesianProduct<U>(&self, other: &Set<U>) -> Set<(T, U)>
+    fn CartesianProduct<U>(&self, other: &Set<U>) -> Set<Pair<T, U>>
     where
         T: StT,
         U: StT + Hash;
@@ -131,15 +131,15 @@ impl<T: Eq + Hash> Set<T> {
         B::True
     }
 
-    pub fn CartesianProduct<U>(&self, other: &Set<U>) -> Set<(T, U)>
+    pub fn CartesianProduct<U>(&self, other: &Set<U>) -> Set<Pair<T, U>>
     where
         T: StT,
         U: StT + Hash,
     {
-        let mut out: HashSet<(T, U)> = HashSet::new();
+        let mut out: HashSet<Pair<T, U>> = HashSet::new();
         for a in self.data.iter() {
             for b in other.data.iter() {
-                let _ = out.insert((a.clone(), b.clone()));
+                let _ = out.insert(Pair(a.clone(), b.clone()));
             }
         }
         Set { data: out }
@@ -211,15 +211,15 @@ impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetStEphChap5_1Trait<T> for
         B::True
     }
 
-    fn CartesianProduct<U>(&self, other: &Set<U>) -> Set<(T, U)>
+    fn CartesianProduct<U>(&self, other: &Set<U>) -> Set<Pair<T, U>>
     where
         T: StT,
         U: StT + Hash,
     {
-        let mut out: HashSet<(T, U)> = HashSet::new();
+        let mut out: HashSet<Pair<T, U>> = HashSet::new();
         for a in self.data.iter() {
             for b in other.data.iter() {
-                let _ = out.insert((a.clone(), b.clone()));
+                let _ = out.insert(Pair(a.clone(), b.clone()));
             }
         }
         Set { data: out }
@@ -243,28 +243,26 @@ impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetStEphChap5_1Trait<T> for
 
 }
 
+    #[macro_export]
+    macro_rules! SetLit {
+        () => {{
+            < $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty()
+        }};
+        ($($x:expr),* $(,)?) => {{
+            let mut __s = < $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
+            $( let _ = __s.insert($x); )*
+            __s
+        }};
+    }
+
+    #[allow(dead_code)]
+    pub fn __set_macro_typecheck_exercise() {
+        let _s0: Set<&'static str> = SetLit![];
+        let _s1 = SetLit!("only");
+        let _s2 = SetLit!("a", "b", "c");
+    }
+
 }
 
 pub use SetStEphChap5_1::SetStEphChap5_1Trait;
-
-#[macro_export]
-macro_rules! SetLit {
-    () => {{
-        < $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty()
-    }};
-    ($($x:expr),* $(,)?) => {{
-        let mut __s = < $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
-        $( let _ = __s.insert($x); )*
-        __s
-    }};
-}
-
-
-#[allow(dead_code)]
-pub fn __set_macro_typecheck_exercise() {
-    use crate::SetStEphChap5_1::SetStEphChap5_1::*;
-    let _s0: Set<&'static str> = SetLit![];
-    let _s1 = SetLit!["only"];
-    let _s2 = SetLit!["a", "b", "c"];
-}
 

@@ -27,12 +27,12 @@ pub mod AVLTreeSeqStEphChap19 {
         fn select(a: &AVLTreeSeqStEphS<T>, b: &AVLTreeSeqStEphS<T>, i: N) -> Option<T> {
             let a_len = <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::length(a);
             if i < a_len {
-                Some(*<AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::nth(a, i))
+                Some(<AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::nth(a, i).clone())
             } else {
                 let off = i - a_len;
                 let b_len = <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::length(b);
                 if off < b_len {
-                    Some(*<AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::nth(b, off))
+                    Some(<AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::nth(b, off).clone())
                 } else {
                     None
                 }
@@ -43,7 +43,7 @@ pub mod AVLTreeSeqStEphChap19 {
         }
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> AVLTreeSeqStEphS<T> {
             if f(x) == B::True {
-                <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::singleton(*x)
+                <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::singleton(x.clone())
             } else {
                 <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::empty()
             }

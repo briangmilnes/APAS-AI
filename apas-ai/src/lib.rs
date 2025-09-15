@@ -27,25 +27,33 @@ pub use crate::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1::*;
 pub mod LinkedListStPer;
 pub use crate::LinkedListStPer::LinkedListStPer::*;
 pub mod LinkedListStPerChap18;
-pub use crate::LinkedListStPerChap18::*;
+pub use crate::LinkedListStPerChap18::LinkedListStPerChap18::*;
 pub mod LinkedListStPerChap19;
-pub use crate::LinkedListStPerChap19::*;
+pub use crate::LinkedListStPerChap19::LinkedListStPerChap19::*;
 
 pub mod LinkedListStEph;
 pub use crate::LinkedListStEph::LinkedListStEph::*;
 pub mod LinkedListStEphChap18;
-pub use crate::LinkedListStEphChap18::*;
+pub use crate::LinkedListStEphChap18::LinkedListStEphChap18::*;
 pub mod LinkedListStEphChap19;
-pub use crate::LinkedListStEphChap19::*;
+pub use crate::LinkedListStEphChap19::LinkedListStEphChap19::*;
 
 pub mod ArraySeqStPer;
 pub use crate::ArraySeqStPer::ArraySeqStPer::*;
 
 pub mod ArraySeqStPerChap18;
-pub use crate::ArraySeqStPerChap18::*;
+pub use crate::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 
 pub mod ArraySeqStPerChap19;
-pub use crate::ArraySeqStPerChap19::*;
+pub use crate::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+
+// Multithreaded persistent arrays
+pub mod ArraySeqMtPer;
+pub use crate::ArraySeqMtPer::ArraySeqMtPer::*;
+pub mod ArraySeqMtPerChap18;
+pub use crate::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
+pub mod ArraySeqMtPerChap19;
+pub use crate::ArraySeqMtPerChap19::ArraySeqMtPerChap19::*;
 
 pub mod ArraySeqStEph;
 pub use crate::ArraySeqStEph::ArraySeqStEph::*;
@@ -64,3 +72,7 @@ pub use crate::AVLTreeSeqStPerChap19::AVLTreeSeqStPerChap19::*;
 
 pub mod AVLTreeSeqStEph;
 pub use crate::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
+pub mod AVLTreeSeqStEphChap18;
+pub use crate::AVLTreeSeqStEphChap18::AVLTreeSeqStEphChap18::*;
+pub mod AVLTreeSeqStEphChap19;
+pub use crate::AVLTreeSeqStEphChap19::AVLTreeSeqStEphChap19::*;
