@@ -16,7 +16,7 @@ pub mod AVLTreeSeqPerChap18 {
         fn filter(a: &AVLTreeSeqPerS<T>, pred: impl Fn(&T) -> B) -> AVLTreeSeqPerS<T>;
     }
 
-    impl<T: StT> AVLTreeSeqPerChap18Trait for AVLTreeSeqPerS<T> {
+    impl<T: StT> AVLTreeSeqPerChap18Trait<T> for AVLTreeSeqPerS<T> {
         fn tabulate(f: impl Fn(N) -> T, n: N) -> AVLTreeSeqPerS<T> {
             let mut v: Vec<T> = Vec::with_capacity(n);
             for i in 0..n {

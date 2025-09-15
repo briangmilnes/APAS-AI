@@ -39,7 +39,7 @@ pub mod Types {
     impl<T> MtT for T where T: Clone + Eq + Sized + Send + Sync {}
 
     /// Edge wrapper to enable Display/Debug for pairs (V,V) under baseline bounds.
-    #[derive(Clone, PartialEq, Eq, Hash, Debug)]
+    #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
     pub struct Edge<V: StT>(pub V, pub V);
 
     impl<V: StT> std::fmt::Display for Edge<V> {
@@ -61,7 +61,7 @@ pub mod Types {
     }
 
     /// Pair type with proper Display/Debug available when elements support them.
-    #[derive(Clone, Debug, PartialEq, Eq, Hash)]
+    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
     pub struct Pair<A, B>(pub A, pub B);
 
     impl<A: std::fmt::Display, B: std::fmt::Display> std::fmt::Display for Pair<A, B> {

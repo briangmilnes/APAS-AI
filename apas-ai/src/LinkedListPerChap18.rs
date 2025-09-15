@@ -23,7 +23,8 @@ pub mod LinkedListPerChap18 {
         fn update(a: &LinkedListPerS<T>, item_at: Pair<N, T>) -> LinkedListPerS<T>;
 
         /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(lg(degree(updates)))
-        fn inject(a: &LinkedListPerS<T>, updates: &LinkedListPerS<T>) -> LinkedListPerS<T>;
+        fn inject(a: &LinkedListPerS<T>, updates: &LinkedListPerS<Pair<N, T>>,)
+         -> LinkedListPerS<T>;
 
         /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(1)
         fn ninject(
@@ -105,10 +106,8 @@ pub mod LinkedListPerChap18 {
             }
             LinkedListPerS::from_vec(v)
         }
-        fn inject(
-            a: &LinkedListPerS<T>,
-            updates: &LinkedListPerS<Pair<N, T>>,
-        ) -> LinkedListPerS<T> {
+        fn inject(a: &LinkedListPerS<T>, updates: &LinkedListPerS<Pair<N, T>>,) 
+         -> LinkedListPerS<T> {
             // first-update wins
             let n = <LinkedListPerS<T> as LinkedListPerTrait<T>>::length(a);
             let mut v: Vec<T> = Vec::with_capacity(n);

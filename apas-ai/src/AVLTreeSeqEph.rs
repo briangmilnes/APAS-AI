@@ -7,7 +7,7 @@ use std::fmt::Debug;
 
 type Link<T> = Option<Box<AVLTreeNode<T>>>;
 
-pub struct AVLTreeNode<T: Copy + Debug> {
+pub struct AVLTreeNode<T: StT> {
     pub value: T,
     pub height: N,
     pub left_size: N,
@@ -17,7 +17,7 @@ pub struct AVLTreeNode<T: Copy + Debug> {
     pub index: N,
 }
 
-impl<T: Copy + Debug> AVLTreeNode<T> {
+impl<T: StT> AVLTreeNode<T> {
     fn new(value: T, index: N) -> Self {
         AVLTreeNode {
             value,
@@ -31,12 +31,12 @@ impl<T: Copy + Debug> AVLTreeNode<T> {
     }
 }
 
-pub struct AVLTreeSeqEphS<T: Copy + Debug> {
+pub struct AVLTreeSeqEphS<T: StT> {
     pub root: Link<T>,
     pub next_key: N,
 }
 
-pub trait AVLTreeSeqEphTrait<T: Copy + Debug> {
+pub trait AVLTreeSeqEphTrait<T: StT> {
     /// APAS: Work Θ(1), Span Θ(1).
     fn empty() -> Self;
     /// APAS: Work Θ(1), Span Θ(1).
@@ -54,12 +54,10 @@ pub trait AVLTreeSeqEphTrait<T: Copy + Debug> {
     /// APAS: Work Θ(1), Span Θ(1).
     fn isSingleton(&self) -> B;
     /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
-    fn subseq_copy(&self, start: N, length: N) -> Self
-    where
-        T: Clone + Eq;
+    fn subseq_copy(&self, start: N, length: N) -> Self;
 }
 
-impl<T: Copy + Debug> AVLTreeSeqEphS<T> {
+impl<T: StT> AVLTreeSeqEphS<T> {
     pub fn new_root() -> Self {
         AVLTreeSeqEphS {
             root: None,
@@ -74,8 +72,6 @@ impl<T: Copy + Debug> AVLTreeSeqEphS<T> {
         self
     }
     pub fn from_vec(values: Vec<T>) -> AVLTreeSeqEphS<T>
-    where
-        T: Clone,
     {
         let length = values.len();
         let mut t = AVLTreeSeqEphS::new_root();
@@ -86,8 +82,6 @@ impl<T: Copy + Debug> AVLTreeSeqEphS<T> {
         t
     }
     pub fn to_arrayseq(&self) -> ArraySeqEphS<T>
-    where
-        T: Clone + StT,
     {
         let len = self.length();
         if len == 0 {
@@ -116,8 +110,6 @@ impl<T: Copy + Debug> AVLTreeSeqEphS<T> {
         self.root = node;
     }
     pub fn contains_value(&self, target: &T) -> B
-    where
-        T: PartialEq,
     {
         for v in self.iter() {
             if v == target {
@@ -130,8 +122,6 @@ impl<T: Copy + Debug> AVLTreeSeqEphS<T> {
         self.push_back(value);
     }
     pub fn delete_value(&mut self, target: &T) -> bool
-    where
-        T: Clone + PartialEq,
     {
         let len = self.length();
         let mut found_index: Option<N> = None;
@@ -157,7 +147,7 @@ impl<T: Copy + Debug> AVLTreeSeqEphS<T> {
     }
 }
 
-impl<T: Copy + Debug> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
+impl<T: StT> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
     fn empty() -> Self {
         AVLTreeSeqEphS::new_root()
     }
@@ -202,8 +192,6 @@ impl<T: Copy + Debug> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
     }
 
     fn subseq_copy(&self, start: N, length: N) -> Self
-    where
-        T: Clone + Eq,
     {
         let n = self.length();
         let s = start.min(n);
@@ -219,12 +207,12 @@ impl<T: Copy + Debug> AVLTreeSeqEphTrait<T> for AVLTreeSeqEphS<T> {
     }
 }
 
-pub struct AVLTreeSeqIterEph<'a, T: Copy + Debug> {
+pub struct AVLTreeSeqIterEph<'a, T: StT> {
     stack: Vec<&'a AVLTreeNode<T>>,
     current: Option<&'a AVLTreeNode<T>>,
 }
 
-impl<'a, T: Copy + Debug> AVLTreeSeqIterEph<'a, T> {
+impl<'a, T: StT> AVLTreeSeqIterEph<'a, T> {
     fn new(root: &'a Link<T>) -> Self {
         let mut it = AVLTreeSeqIterEph {
             stack: Vec::new(),
@@ -242,7 +230,7 @@ impl<'a, T: Copy + Debug> AVLTreeSeqIterEph<'a, T> {
     }
 }
 
-impl<'a, T: Copy + Debug> Iterator for AVLTreeSeqIterEph<'a, T> {
+impl<'a, T: StT> Iterator for AVLTreeSeqIterEph<'a, T> {
     type Item = &'a T;
     fn next(&mut self) -> Option<Self::Item> {
         let node = self.stack.pop()?;
@@ -252,11 +240,11 @@ impl<'a, T: Copy + Debug> Iterator for AVLTreeSeqIterEph<'a, T> {
     }
 }
 
-fn h<T: Copy + Debug>(n: &Link<T>) -> N {
+fn h<T: StT>(n: &Link<T>) -> N {
     n.as_ref().map_or(0, |b| b.height)
 }
 
-fn size_link<T: Copy + Debug>(n: &Link<T>) -> N {
+fn size_link<T: StT>(n: &Link<T>) -> N {
     if let Some(b) = n {
         1 + b.left_size + b.right_size
     } else {
@@ -264,7 +252,7 @@ fn size_link<T: Copy + Debug>(n: &Link<T>) -> N {
     }
 }
 
-fn update_meta<T: Copy + Debug>(n: &mut Box<AVLTreeNode<T>>) {
+fn update_meta<T: StT>(n: &mut Box<AVLTreeNode<T>>) {
     n.left_size = size_link(&n.left);
     n.right_size = size_link(&n.right);
     let hl = h(&n.left);
@@ -272,7 +260,7 @@ fn update_meta<T: Copy + Debug>(n: &mut Box<AVLTreeNode<T>>) {
     n.height = 1 + hl.max(hr);
 }
 
-fn rotate_right<T: Copy + Debug>(mut y: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
+fn rotate_right<T: StT>(mut y: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
     let mut x = y.left.take().expect("rotate_right requires left child");
     let t2 = x.right.take();
     y.left = t2;
@@ -283,7 +271,7 @@ fn rotate_right<T: Copy + Debug>(mut y: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<
     x
 }
 
-fn rotate_left<T: Copy + Debug>(mut x: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
+fn rotate_left<T: StT>(mut x: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
     let mut y = x.right.take().expect("rotate_left requires right child");
     let t2 = y.left.take();
     x.right = t2;
@@ -294,7 +282,7 @@ fn rotate_left<T: Copy + Debug>(mut x: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T
     y
 }
 
-fn rebalance<T: Copy + Debug>(mut n: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
+fn rebalance<T: StT>(mut n: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
     update_meta(&mut n);
     let hl = h(&n.left);
     let hr = h(&n.right);
@@ -315,7 +303,7 @@ fn rebalance<T: Copy + Debug>(mut n: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>>
     n
 }
 
-pub(crate) fn insert_at_link<T: Copy + Debug>(
+pub(crate) fn insert_at_link<T: StT>(
     node: Link<T>,
     index: N,
     value: T,
@@ -340,7 +328,7 @@ pub(crate) fn insert_at_link<T: Copy + Debug>(
     }
 }
 
-fn nth_link<'a, T: Copy + Debug>(node: &'a Link<T>, index: N) -> &'a T {
+fn nth_link<'a, T: StT>(node: &'a Link<T>, index: N) -> &'a T {
     let n = node.as_ref().expect("index out of bounds");
     let left_size = n.left_size;
     if index < left_size {
@@ -352,7 +340,7 @@ fn nth_link<'a, T: Copy + Debug>(node: &'a Link<T>, index: N) -> &'a T {
     nth_link(&n.right, index - left_size - 1)
 }
 
-fn set_link<T: Copy + Debug>(node: &mut Link<T>, index: N, value: T) -> Result<(), &'static str> {
+fn set_link<T: StT>(node: &mut Link<T>, index: N, value: T) -> Result<(), &'static str> {
     match node {
         None => Err("Index out of bounds"),
         Some(n) => {
@@ -384,7 +372,7 @@ fn set_link<T: Copy + Debug>(node: &mut Link<T>, index: N, value: T) -> Result<(
         }};
     }
 
-    impl<T: Eq + Copy + Debug> PartialEq for AVLTreeSeqEphS<T> {
+    impl<T: StT> PartialEq for AVLTreeSeqEphS<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.length() != other.length() {
                 return false;
@@ -398,6 +386,5 @@ fn set_link<T: Copy + Debug>(node: &mut Link<T>, index: N, value: T) -> Result<(
         }
     }
 
-    impl<T: Eq + Copy + Debug> Eq for AVLTreeSeqEphS<T> {}
-
+    impl<T: StT> Eq for AVLTreeSeqEphS<T> {}
 }
