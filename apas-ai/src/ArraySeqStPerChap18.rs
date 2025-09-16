@@ -6,26 +6,31 @@ use crate::Types::Types::*;
 
 pub trait ArraySeqStPerChap18Trait<T: StT> {
     /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
+    /// claude-4-sonet: Work Θ(n + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
     fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x)))
+    /// claude-4-sonet: Work Θ(|a| + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x)))
     fn map<U: StT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U>;
 
     /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
     fn append(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(pred(a[i]))), Span Θ(lg|a| + max i S(pred(a[i])))
+    /// claude-4-sonet: Work Θ(|a| + Σ i=0..|a|-1 W(pred(a[i]))), Span Θ(lg|a| + max i S(pred(a[i])))
     fn filter(a: &ArrayStPerS<T>, pred: impl Fn(&T) -> B) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + |a|), Span Θ(1)
-    /// gpt-5-hard: Work Θ(|a|), Span Θ(1)
-    /// BUG: APAS and gpt-5-hard algorithmic analyses differ.
+    /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
     fn update(a: &ArrayStPerS<T>, item_at: Pair<N, T>) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(lg(degree(updates)))
+    /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(lg(degree(updates)))
     fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(1)
     fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T>;
 
     /// APAS: Work Θ(1 + Σ (y,z) W(f(y,z))), Span Θ(1 + Σ S(f(y,z)))

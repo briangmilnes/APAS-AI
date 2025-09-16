@@ -37,23 +37,32 @@ pub struct AVLTreeSeqStEphS<T: StT> {
 }
 
 pub trait AVLTreeSeqStEphTrait<T: StT> {
-    /// APAS: Work Θ(1), Span Θ(1).
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn empty() -> Self;
-    /// APAS: Work Θ(1), Span Θ(1).
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn new() -> Self;
-    /// APAS: Work Θ(1), Span Θ(1).
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn length(&self) -> N;
-    /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
+    /// APAS: Work Θ(lg(n)), Span Θ(lg(n))
+    /// claude-4-sonet: Work Θ(lg(n)), Span Θ(lg(n))
     fn nth(&self, index: N) -> &T;
-    /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
+    /// APAS: Work Θ(lg(n)), Span Θ(lg(n))
+    /// claude-4-sonet: Work Θ(lg(n)), Span Θ(lg(n))
     fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
-    /// APAS: Work Θ(1), Span Θ(1).
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn singleton(item: T) -> Self;
-    /// APAS: Work Θ(1), Span Θ(1).
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn isEmpty(&self) -> B;
-    /// APAS: Work Θ(1), Span Θ(1).
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn isSingleton(&self) -> B;
-    /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
+    /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|))
+    /// claude-4-sonet: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|))
     fn subseq_copy(&self, start: N, length: N) -> Self;
 }
 
@@ -240,122 +249,123 @@ impl<'a, T: StT> Iterator for AVLTreeSeqIterStEph<'a, T> {
     }
 }
 
-fn h<T: StT>(n: &Link<T>) -> N {
-    n.as_ref().map_or(0, |b| b.height)
-}
-
-fn size_link<T: StT>(n: &Link<T>) -> N {
-    if let Some(b) = n {
-        1 + b.left_size + b.right_size
-    } else {
-        0
+    // Private helper functions for AVL tree operations
+    fn h<T: StT>(n: &Link<T>) -> N {
+        n.as_ref().map_or(0, |b| b.height)
     }
-}
 
-fn update_meta<T: StT>(n: &mut Box<AVLTreeNode<T>>) {
-    n.left_size = size_link(&n.left);
-    n.right_size = size_link(&n.right);
-    let hl = h(&n.left);
-    let hr = h(&n.right);
-    n.height = 1 + hl.max(hr);
-}
-
-fn rotate_right<T: StT>(mut y: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
-    let mut x = y.left.take().expect("rotate_right requires left child");
-    let t2 = x.right.take();
-    y.left = t2;
-    update_meta(&mut y);
-    x.right = Some(y);
-    update_meta(x.right.as_mut().unwrap());
-    update_meta(&mut x);
-    x
-}
-
-fn rotate_left<T: StT>(mut x: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
-    let mut y = x.right.take().expect("rotate_left requires right child");
-    let t2 = y.left.take();
-    x.right = t2;
-    update_meta(&mut x);
-    y.left = Some(x);
-    update_meta(y.left.as_mut().unwrap());
-    update_meta(&mut y);
-    y
-}
-
-fn rebalance<T: StT>(mut n: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
-    update_meta(&mut n);
-    let hl = h(&n.left);
-    let hr = h(&n.right);
-    if hl > hr.saturating_add(1) {
-        if h(&n.left.as_ref().unwrap().right) > h(&n.left.as_ref().unwrap().left) {
-            let left = n.left.take().unwrap();
-            n.left = Some(rotate_left(left));
+    fn size_link<T: StT>(n: &Link<T>) -> N {
+        if let Some(b) = n {
+            1 + b.left_size + b.right_size
+        } else {
+            0
         }
-        return rotate_right(n);
     }
-    if hr > hl.saturating_add(1) {
-        if h(&n.right.as_ref().unwrap().left) > h(&n.right.as_ref().unwrap().right) {
-            let right = n.right.take().unwrap();
-            n.right = Some(rotate_right(right));
-        }
-        return rotate_left(n);
-    }
-    n
-}
 
-pub(crate) fn insert_at_link<T: StT>(
-    node: Link<T>,
-    index: N,
-    value: T,
-    next_key: &mut N,
-) -> Link<T> {
-    match node {
-        None => {
-            debug_assert!(index == 0, "insert_at_link reached None with index > 0");
-            let key = *next_key;
-            *next_key += 1;
-            Some(Box::new(AVLTreeNode::new(value, key)))
-        }
-        Some(mut n) => {
-            let left_size = n.left_size;
-            if index <= left_size {
-                n.left = insert_at_link(n.left.take(), index, value, next_key);
-            } else {
-                n.right = insert_at_link(n.right.take(), index - left_size - 1, value, next_key);
+    fn update_meta<T: StT>(n: &mut Box<AVLTreeNode<T>>) {
+        n.left_size = size_link(&n.left);
+        n.right_size = size_link(&n.right);
+        let hl = h(&n.left);
+        let hr = h(&n.right);
+        n.height = 1 + hl.max(hr);
+    }
+
+    fn rotate_right<T: StT>(mut y: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
+        let mut x = y.left.take().expect("rotate_right requires left child");
+        let t2 = x.right.take();
+        y.left = t2;
+        update_meta(&mut y);
+        x.right = Some(y);
+        update_meta(x.right.as_mut().unwrap());
+        update_meta(&mut x);
+        x
+    }
+
+    fn rotate_left<T: StT>(mut x: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
+        let mut y = x.right.take().expect("rotate_left requires right child");
+        let t2 = y.left.take();
+        x.right = t2;
+        update_meta(&mut x);
+        y.left = Some(x);
+        update_meta(y.left.as_mut().unwrap());
+        update_meta(&mut y);
+        y
+    }
+
+    fn rebalance<T: StT>(mut n: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
+        update_meta(&mut n);
+        let hl = h(&n.left);
+        let hr = h(&n.right);
+        if hl > hr.saturating_add(1) {
+            if h(&n.left.as_ref().unwrap().right) > h(&n.left.as_ref().unwrap().left) {
+                let left = n.left.take().unwrap();
+                n.left = Some(rotate_left(left));
             }
-            Some(rebalance(n))
+            return rotate_right(n);
         }
+        if hr > hl.saturating_add(1) {
+            if h(&n.right.as_ref().unwrap().left) > h(&n.right.as_ref().unwrap().right) {
+                let right = n.right.take().unwrap();
+                n.right = Some(rotate_right(right));
+            }
+            return rotate_left(n);
+        }
+        n
     }
-}
 
-fn nth_link<'a, T: StT>(node: &'a Link<T>, index: N) -> &'a T {
-    let n = node.as_ref().expect("index out of bounds");
-    let left_size = n.left_size;
-    if index < left_size {
-        return nth_link(&n.left, index);
+    fn nth_link<'a, T: StT>(node: &'a Link<T>, index: N) -> &'a T {
+        let n = node.as_ref().expect("index out of bounds");
+        let left_size = n.left_size;
+        if index < left_size {
+            return nth_link(&n.left, index);
+        }
+        if index == left_size {
+            return &n.value;
+        }
+        nth_link(&n.right, index - left_size - 1)
     }
-    if index == left_size {
-        return &n.value;
-    }
-    nth_link(&n.right, index - left_size - 1)
-}
 
-fn set_link<T: StT>(node: &mut Link<T>, index: N, value: T) -> Result<(), &'static str> {
-    match node {
-        None => Err("Index out of bounds"),
-        Some(n) => {
-            let left_size = n.left_size;
-            if index < left_size {
-                set_link(&mut n.left, index, value)
-            } else if index == left_size {
-                n.value = value;
-                Ok(())
-            } else {
-                set_link(&mut n.right, index - left_size - 1, value)
+    fn set_link<T: StT>(node: &mut Link<T>, index: N, value: T) -> Result<(), &'static str> {
+        match node {
+            None => Err("Index out of bounds"),
+            Some(n) => {
+                let left_size = n.left_size;
+                if index < left_size {
+                    set_link(&mut n.left, index, value)
+                } else if index == left_size {
+                    n.value = value;
+                    Ok(())
+                } else {
+                    set_link(&mut n.right, index - left_size - 1, value)
+                }
             }
         }
     }
-}
+
+    pub(crate) fn insert_at_link<T: StT>(
+        node: Link<T>,
+        index: N,
+        value: T,
+        next_key: &mut N,
+    ) -> Link<T> {
+        match node {
+            None => {
+                debug_assert!(index == 0, "insert_at_link reached None with index > 0");
+                let key = *next_key;
+                *next_key += 1;
+                Some(Box::new(AVLTreeNode::new(value, key)))
+            }
+            Some(mut n) => {
+                let left_size = n.left_size;
+                if index <= left_size {
+                    n.left = insert_at_link(n.left.take(), index, value, next_key);
+                } else {
+                    n.right = insert_at_link(n.right.take(), index - left_size - 1, value, next_key);
+                }
+                Some(rebalance(n))
+            }
+        }
+    }
 
     #[macro_export]
     macro_rules! AVLTreeSeqStEph {

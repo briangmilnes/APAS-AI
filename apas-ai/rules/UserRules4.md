@@ -433,6 +433,14 @@ fn _MyMacro_type_checks() {
 #### Update todo status eagerly
 - If a TODO is done, check it off immediately and set the next TODO to `in_progress`.
 
+#### Never Stop Until All TODOs Complete (Absolute Completion Rule)
+- **NEVER declare victory or completion until ALL TODO items are marked as "completed"**
+- Always check the TODO list status before claiming a task is finished
+- If any TODOs remain pending or in_progress, continue working relentlessly until every single item shows status "completed"
+- Do not ask for permission to continue - just keep executing until 100% completion is achieved
+- **NO EXCEPTIONS** for declaring success until the todo list shows 100% completion status
+- This rule enhances all existing TODO Flow rules with an absolute completion requirement
+
 #### Pause Question
 - When asked if you are paused, answer explicitly: “Yes I am paused” or “No I am not”; explain why or what you’re doing; continue with the work.
 

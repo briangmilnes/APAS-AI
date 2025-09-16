@@ -6,10 +6,10 @@ use apas_ai::LinkedListStPerChap19::LinkedListStPerChap19::*;
 
 #[test]
 fn test_select() {
-    let a = LinkedListPer![1, 2, 3];
-    let b = LinkedListPer![4, 5];
+    let a = LinkedListStPer![1, 2, 3];
+    let b = LinkedListStPer![4, 5];
 
-    let sel0 = select(&a, &b, 0);
+    let sel0 = <LinkedListStPerS<N> as LinkedListStPerChap19Trait<N>>::select(&a, &b, 0);
     let sel3 = <LinkedListStPerS<N> as LinkedListStPerChap19Trait<N>>::select(&a, &b, 3);
     let sel5 = <LinkedListStPerS<N> as LinkedListStPerChap19Trait<N>>::select(&a, &b, 5);
     assert_eq!(sel0, Some(1));
@@ -19,8 +19,8 @@ fn test_select() {
 
 #[test]
 fn test_append_variants() {
-    let a = LinkedListPer![1, 2, 3];
-    let b = LinkedListPer![4, 5];
+    let a = LinkedListStPer![1, 2, 3];
+    let b = LinkedListStPer![4, 5];
     let c = <LinkedListStPerS<N> as LinkedListStPerChap19Trait<N>>::append(&a, &b);
     let c2 = <LinkedListStPerS<N> as LinkedListStPerChap19Trait<N>>::append2(&a, &b);
     assert_eq!(c, LinkedListStPer![1, 2, 3, 4, 5]);
@@ -37,14 +37,14 @@ fn test_deflate() {
 
 #[test]
 fn test_map() {
-    let a = LinkedListPer![1, 2, 3];
+    let a = LinkedListStPer![1, 2, 3];
     let b = <LinkedListStPerS<N> as LinkedListStPerChap19Trait<N>>::map(&a, |x| x + 1);
     assert_eq!(b, LinkedListStPer![2, 3, 4]);
 }
 
 #[test]
 fn test_iterate_and_reduce() {
-    let a = LinkedListPer![1, 2, 3];
+    let a = LinkedListStPer![1, 2, 3];
     let sum = <LinkedListStPerS<N> as LinkedListStPerChap19Trait<N>>::iterate(&a, |acc, x| acc + x, 0);
     assert_eq!(sum, 6);
     let red = <LinkedListStPerS<N> as LinkedListStPerChap19Trait<N>>::reduce(&a, &|x, y| x + y, 0);
@@ -53,7 +53,7 @@ fn test_iterate_and_reduce() {
 
 #[test]
 fn test_scan() {
-    let a = LinkedListPer![1, 2, 3];
+    let a = LinkedListStPer![1, 2, 3];
     let (prefixes, total) = <LinkedListStPerS<N> as LinkedListStPerChap19Trait<N>>::scan(&a, &|x, y| x + y, 0);
     assert_eq!(prefixes, LinkedListStPer![0, 1, 3]);
     assert_eq!(total, 6);

@@ -14,30 +14,39 @@ pub struct Mapping<A, B> {
 }
 
 pub trait MappingStEphChap5_5Trait<X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized, Y: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized> {
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn empty() -> Mapping<X, Y>;
 
+    /// APAS: Work Θ(|v|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
     fn FromVec(v: Vec<Pair<X, Y>>) -> Mapping<X, Y>;
 
+    /// APAS: Work Θ(|r|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|r|), Span Θ(1)
     fn FromRelation(r: &Relation<X, Y>) -> Mapping<X, Y>;
 
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn size(&self) -> N;
 
+    /// APAS: Work Θ(|m|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|m|), Span Θ(1)
     fn domain(&self) -> Set<X>;
 
+    /// APAS: Work Θ(|m|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|m|), Span Θ(1)
     fn range(&self) -> Set<Y>;
 
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn mem(&self, a: &X, b: &Y) -> B;
 
     fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>>;
 }
 
-impl<A, B> Mapping<A, B> {
-    fn unique_pairs_from_iter<I>(iter: I) -> Set<Pair<A, B>>
-    where
-        I: IntoIterator<Item = Pair<A, B>>,
-        A: Eq + Hash,
-        B: Eq + Hash,
-    {
+impl<A: Eq + Hash, B: Eq + Hash> Mapping<A, B> {
+    fn unique_pairs_from_iter<I: IntoIterator<Item = Pair<A, B>>>(iter: I) -> Set<Pair<A, B>> {
         let mut m: HashMap<A, B> = HashMap::new();
         for Pair(a, b) in iter { m.insert(a, b); }
         let pairs: Vec<Pair<A, B>> = m.into_iter().map(|(a,b)| Pair(a,b)).collect();

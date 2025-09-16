@@ -13,17 +13,38 @@ pub struct UnDirGraphStEph<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::
 }
 
 pub trait UnDirGraphStEphChap6_1Trait<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn empty() -> UnDirGraphStEph<V>;
+    /// APAS: Work Θ(|V| + |E|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(1)
     fn FromSets(V: Set<V>, E: Set<Pair<V, V>>) -> UnDirGraphStEph<V>;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn vertices(&self) -> &Set<V>;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn edges(&self) -> &Set<Pair<V, V>>;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn sizeV(&self) -> N;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn sizeE(&self) -> N;
-    // Neighborhood and adjacency APIs (undirected)
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn Neighbor(&self, u: &V, v: &V) -> B;
+    /// APAS: Work Θ(|E|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|E|), Span Θ(1)
     fn NG(&self, v: &V) -> Set<V>;
+    /// APAS: Work Θ(|u_set| × |E|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|u_set| × |E|), Span Θ(1)
     fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V>;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn Incident(&self, e: &Pair<V, V>, v: &V) -> B;
+    /// APAS: Work Θ(|E|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|E|), Span Θ(1)
     fn Degree(&self, v: &V) -> N;
 }
 

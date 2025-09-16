@@ -16,19 +16,34 @@ pub mod LinkedListStPer {
     }
 
     pub trait LinkedListStPerTrait<T: StT> {
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
+        /// APAS: Work Θ(length), Span Θ(1)
+        /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn new(length: N, init_value: T) -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn length(&self) -> N;
+        /// APAS: Work Θ(index), Span Θ(index)
+        /// claude-4-sonet: Work Θ(index), Span Θ(index)
         fn nth(&self, index: N) -> &T;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(&self) -> B;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(&self) -> B;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(item: T) -> Self;
         /// APAS (ephemeral set Θ(1 + i)); rebuilding here: Work Θ(length), Span Θ(1)
-        /// gpt-5-hard: Work Θ(length), Span Θ(1)
-        /// BUG: APAS and gpt-5-hard algorithmic analyses differ.
+        /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn set(&self, index: N, item: T) -> Result<Self, &'static str>
         where
             Self: Sized;
+        /// APAS: Work Θ(start + length), Span Θ(start + length)
+        /// claude-4-sonet: Work Θ(start + length), Span Θ(start + length)
         fn subseq_copy(&self, start: N, length: N) -> Self;
     }
 

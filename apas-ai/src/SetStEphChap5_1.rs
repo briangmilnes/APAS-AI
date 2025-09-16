@@ -11,29 +11,42 @@ use std::fmt::{Debug, Display};
 pub struct Set<T> { data: HashSet<T> }
 
 pub trait SetStEphChap5_1Trait<T: Eq + Hash + Clone + Display + Debug + Sized> {
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn empty() -> Set<T>;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn singleton(x: T) -> Set<T>;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn size(&self) -> N;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn mem(&self, x: &T) -> B;
-    fn union(&self, other: &Set<T>) -> Set<T>
-    where
-         T: StT;
-    fn intersection(&self, other: &Set<T>) -> Set<T>
-    where  
-         T: StT;
+    /// APAS: Work Θ(|a| + |b|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
+    fn union(&self, other: &Set<T>) -> Set<T>;
+    /// APAS: Work Θ(|a| + |b|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
+    fn intersection(&self, other: &Set<T>) -> Set<T>;
+    /// APAS: Work Θ(|parts| × |a|²), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|parts| × |a|²), Span Θ(1)
     fn partition(&self, parts: &Set<Set<T>>) -> B;
 
-    fn CartesianProduct<U>(&self, other: &Set<U>) -> Set<Pair<T, U>>
-    where
-        T: StT,
-        U: StT + Hash;
+    /// APAS: Work Θ(|a| × |b|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|a| × |b|), Span Θ(1)
+    fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>>;
 
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn insert(&mut self, x: T) -> &mut Self;
 
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn iter(&self) -> std::collections::hash_set::Iter<'_, T>;
-    fn FromVec(v: Vec<T>) -> Set<T>
-    where
-        T: Eq + Hash;
+    /// APAS: Work Θ(|v|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
+    fn FromVec(v: Vec<T>) -> Set<T>;
 }
 
 impl<T: Eq + Hash> PartialEq for Set<T> {
@@ -99,19 +112,13 @@ impl<T: Eq + Hash> Set<T> {
         if self.data.contains(x) { B::True } else { B::False }
     }
 
-    pub fn union(&self, other: &Set<T>) -> Set<T>
-    where
-        T: StT,
-    {
+    pub fn union(&self, other: &Set<T>) -> Set<T> where T: Clone {
         let mut out = self.clone();
         for x in other.data.iter() { let _ = out.data.insert(x.clone()); }
         out
     }
 
-    pub fn intersection(&self, other: &Set<T>) -> Set<T>
-    where
-        T: StT,
-    {
+    pub fn intersection(&self, other: &Set<T>) -> Set<T> where T: Clone {
         let mut out = HashSet::with_capacity(self.data.len().min(other.data.len()));
         for x in self.data.intersection(&other.data) { let _ = out.insert(x.clone()); }
         Set { data: out }
@@ -131,11 +138,7 @@ impl<T: Eq + Hash> Set<T> {
         B::True
     }
 
-    pub fn CartesianProduct<U>(&self, other: &Set<U>) -> Set<Pair<T, U>>
-    where
-        T: StT,
-        U: StT + Hash,
-    {
+    pub fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>> where T: Clone, U: Clone {
         let mut out: HashSet<Pair<T, U>> = HashSet::new();
         for a in self.data.iter() {
             for b in other.data.iter() {
@@ -152,10 +155,7 @@ impl<T: Eq + Hash> Set<T> {
 
     pub fn iter(&self) -> std::collections::hash_set::Iter<'_, T> { self.data.iter() }
 
-    pub fn FromVec(v: Vec<T>) -> Set<T>
-    where
-        T: Eq + Hash,
-    {
+    pub fn FromVec(v: Vec<T>) -> Set<T> {
         let mut s = HashSet::with_capacity(v.len());
         for x in v { let _ = s.insert(x); }
         Set { data: s }
@@ -179,19 +179,13 @@ impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetStEphChap5_1Trait<T> for
         if self.data.contains(x) { B::True } else { B::False }
     }
 
-    fn union(&self, other: &Set<T>) -> Set<T>
-    where
-        T: StT,
-    {
+    fn union(&self, other: &Set<T>) -> Set<T> where T: Clone {
         let mut out = self.clone();
         for x in other.data.iter() { let _ = out.data.insert(x.clone()); }
         out
     }
 
-    fn intersection(&self, other: &Set<T>) -> Set<T>
-    where
-        T: StT,
-    {
+    fn intersection(&self, other: &Set<T>) -> Set<T> where T: Clone {
         let mut out = HashSet::with_capacity(self.data.len().min(other.data.len()));
         for x in self.data.intersection(&other.data) { let _ = out.insert(x.clone()); }
         Set { data: out }
@@ -211,11 +205,7 @@ impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetStEphChap5_1Trait<T> for
         B::True
     }
 
-    fn CartesianProduct<U>(&self, other: &Set<U>) -> Set<Pair<T, U>>
-    where
-        T: StT,
-        U: StT + Hash,
-    {
+    fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>> where T: Clone, U: Clone {
         let mut out: HashSet<Pair<T, U>> = HashSet::new();
         for a in self.data.iter() {
             for b in other.data.iter() {
@@ -232,10 +222,7 @@ impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetStEphChap5_1Trait<T> for
 
     fn iter(&self) -> std::collections::hash_set::Iter<'_, T> { self.data.iter() }
 
-    fn FromVec(v: Vec<T>) -> Set<T>
-    where
-        T: Eq + Hash,
-    {
+    fn FromVec(v: Vec<T>) -> Set<T> {
         let mut s = HashSet::with_capacity(v.len());
         for x in v { let _ = s.insert(x); }
         Set { data: s }

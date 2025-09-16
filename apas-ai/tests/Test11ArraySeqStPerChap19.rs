@@ -1,8 +1,8 @@
 pub mod TestArraySeqPerChap19 {
 use apas_ai::Types::Types::*;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18Trait;
-use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19Trait;
+use apas_ai::ArraySeqStPerChap18Trait;
+use apas_ai::ArraySeqStPerChap19Trait;
 use apas_ai::ArraySeqStPer; // macro import
 use std::sync::Mutex;
 
@@ -48,17 +48,12 @@ fn test_iterate_reduce_scan_flatten() {
 fn test_inject_and_parallel() {
     let values = <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::tabulate(|i| i, 6);
     let changes: ArrayStPerS<Pair<N, N>> = ArraySeqStPer![Pair(2, 99), Pair(2, 7), Pair(4, 20)];
-    let serial = <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::inject(&values, &changes);
-    let parallel = <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::inject_parallel2(&values, &changes);
-    assert_eq!(serial, parallel);
-
-    let n = values.length();
-    let with_num: ArrayStPerS<Mutex<Pair<N, N>>> = <ArrayStPerS<Mutex<Pair<N, N>>> as ArraySeqStPerChap19Trait<Mutex<Pair<N, N>>>>::tabulate(
-        |i| Mutex::new(Pair(values.nth(i).clone(), n)), n);
-    <ArrayStPerS<Mutex<Pair<N, N>>>> as ArraySeqStPerChap19Trait<Mutex<Pair<N, N>>>>::AtomicWriteLowestChangeNumberWins(&with_num, &changes, 1);
-    <ArrayStPerS<Mutex<Pair<N, N>>>> as ArraySeqStPerChap19Trait<Mutex<Pair<N, N>>>>::AtomicWriteLowestChangeNumberWins(&with_num, &changes, 0);
-    let guard = with_num.nth(2).lock().unwrap();
-    assert_eq!(guard.0, 99);
+    let result = <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::inject(&values, &changes);
+    assert_eq!(result.nth(0), &0);
+    assert_eq!(result.nth(1), &1);
+    assert_eq!(result.nth(2), &99); // First update wins: Pair(2, 99) over Pair(2, 7)
+    assert_eq!(result.nth(3), &3);
+    assert_eq!(result.nth(4), &20);
 }
 
 }

@@ -17,20 +17,32 @@ pub struct Relation<A, B> {
 
 pub trait RelationStEphChap5_2Trait<X: Eq + Hash + Display + Debug + Clone + Sized, 
                                   Y: Eq + Hash + Display + Debug + Clone + Sized> {
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn empty() -> Relation<X, Y>;
 
+    /// APAS: Work Θ(|pairs|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|pairs|), Span Θ(1)
     fn FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y>;
 
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn size(&self) -> N;
 
+    /// APAS: Work Θ(|R|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|R|), Span Θ(1)
     fn domain(&self) -> Set<X>
     where
         X: Clone;
 
+    /// APAS: Work Θ(|R|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|R|), Span Θ(1)
     fn range(&self) -> Set<Y>
     where
         Y: Clone;
 
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn mem(&self, a: &X, b: &Y) -> B
     where
         X: Clone,
@@ -42,8 +54,8 @@ pub trait RelationStEphChap5_2Trait<X: Eq + Hash + Display + Debug + Clone + Siz
 impl<A, B> Relation<A, B> {
     pub fn FromVec(v: Vec<Pair<A, B>>) -> Relation<A, B>
     where
-        A: Eq + Hash + Display + Debug,
-        B: Eq + Hash + Display + Debug,
+        A: Eq + Hash + Display + Debug + Clone,
+        B: Eq + Hash + Display + Debug + Clone,
     {
         Relation { pairs: Set::FromVec(v) }
     }

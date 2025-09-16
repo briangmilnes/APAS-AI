@@ -5,12 +5,26 @@ pub mod ArraySeqStEphChap18 {
     use crate::Types::Types::*;
 
     pub trait ArraySeqStEphChap18Trait<T: StT> {
+        /// APAS: Work Θ(n), Span Θ(1)
+        /// claude-4-sonet: Work Θ(n), Span Θ(1)
         fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqStEphS<T>;
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
         fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U>;
+        /// APAS: Work Θ(|a| + |b|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
         fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
         fn filter(a: &ArraySeqStEphS<T>, pred: impl Fn(&T) -> B) -> ArraySeqStEphS<T>;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn update(a: &mut ArraySeqStEphS<T>, item_at: (N, T)) -> &mut ArraySeqStEphS<T>;
+        /// APAS: Work Θ(|a| + |updates|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(1)
         fn inject(a: &ArraySeqStEphS<T>, updates: &ArraySeqStEphS<Pair<N, T>>) -> ArraySeqStEphS<T>;
+        /// APAS: Work Θ(|a| + |updates|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(1)
         fn ninject(a: &ArraySeqStEphS<T>, updates: &ArraySeqStEphS<Pair<N, T>>) -> ArraySeqStEphS<T>;
         fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
         fn iteratePrefixes<A: StT>(

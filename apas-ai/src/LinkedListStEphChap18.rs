@@ -6,12 +6,26 @@ use crate::Types::Types::*;
 use std::collections::HashSet;
 
 pub trait LinkedListStEphChap18Trait<T: StT> {
+    /// APAS: Work Θ(n), Span Θ(1)
+    /// claude-4-sonet: Work Θ(n), Span Θ(1)
     fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStEphS<T>;
+    /// APAS: Work Θ(|a|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
     fn map<U: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&T) -> U) -> LinkedListStEphS<U>;
+    /// APAS: Work Θ(|a| + |b|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
     fn append(a: &LinkedListStEphS<T>, b: &LinkedListStEphS<T>) -> LinkedListStEphS<T>;
+    /// APAS: Work Θ(|a|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
     fn filter(a: &LinkedListStEphS<T>, pred: impl Fn(&T) -> B) -> LinkedListStEphS<T>;
+    /// APAS: Work Θ(index), Span Θ(index)
+    /// claude-4-sonet: Work Θ(index), Span Θ(index)
     fn update(a: &mut LinkedListStEphS<T>, item_at: Pair<N, T>) -> &mut LinkedListStEphS<T>;
+    /// APAS: Work Θ(|a| + |updates|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(1)
     fn inject(a: &LinkedListStEphS<T>, updates: &LinkedListStEphS<Pair<N, T>>) -> LinkedListStEphS<T>;
+    /// APAS: Work Θ(|a| + |updates|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(1)
     fn ninject(a: &LinkedListStEphS<T>, updates: &LinkedListStEphS<Pair<N, T>>) -> LinkedListStEphS<T>;
     fn iterate< A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
     fn iteratePrefixes< A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LinkedListStEphS<A>, A);

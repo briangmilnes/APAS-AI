@@ -6,20 +6,23 @@ pub mod LinkedListStPerChap18 {
 
     pub trait LinkedListStPerChap18Trait<T: StT> {
         /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i S(f(i)))
+        /// claude-4-sonet: Work Θ(n + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i S(f(i)))
         fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStPerS<T>;
 
         /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x)))
+        /// claude-4-sonet: Work Θ(|a| + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x)))
         fn map<U: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&T) -> U) -> LinkedListStPerS<U>;
 
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
         fn append(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>) -> LinkedListStPerS<T>;
 
         /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(pred(a[i]))), Span Θ(lg|a| + max i S(pred(a[i])))
+        /// claude-4-sonet: Work Θ(|a| + Σ i=0..|a|-1 W(pred(a[i]))), Span Θ(lg|a| + max i S(pred(a[i])))
         fn filter(a: &LinkedListStPerS<T>, pred: impl Fn(&T) -> B) -> LinkedListStPerS<T>;
 
         /// APAS: Work Θ(1 + |a|), Span Θ(1)
-        /// gpt-5-hard: Work Θ(|a|), Span Θ(1)
-        /// BUG: APAS and gpt-5-hard algorithmic analyses differ.
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
         fn update(a: &LinkedListStPerS<T>, item_at: Pair<N, T>) -> LinkedListStPerS<T>;
 
         /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(lg(degree(updates)))

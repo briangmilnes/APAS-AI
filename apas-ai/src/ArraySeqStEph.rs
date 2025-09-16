@@ -16,33 +16,46 @@ pub mod ArraySeqStEph {
 
     /// Sequence trait for `ArraySeqStEphS<T>`.
     pub trait ArraySeqStEphTrait<T: StT> {
-        /// Work Θ(length), Span Θ(1).
+        /// APAS: Work Θ(length), Span Θ(1)
+        /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn new(length: N, init_value: T) -> Self;
-        /// Work Θ(1), Span Θ(1).
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn length(&self) -> N;
-        /// Work Θ(1), Span Θ(1).
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn nth(&self, index: N) -> &T;
-        /// Work Θ(1), Span Θ(1).
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
-        /// Work Θ(1), Span Θ(1).
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
-        /// Work Θ(1), Span Θ(1).
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(item: T) -> Self;
-        /// Work Θ(1), Span Θ(1).
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(&self) -> B;
-        /// Work Θ(1), Span Θ(1).
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(&self) -> B;
-        /// Work Θ(length) to allocate/clone.
+        /// APAS: Work Θ(length), Span Θ(1)
+        /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn subseq_copy(&self, start: N, length: N) -> Self;
     }
 
     impl<T: StT> ArraySeqStEphS<T> {
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         pub fn subseq(&self, start: N, length: N) -> &[T] {
             let n = self.data.len();
             let s = start.min(n);
             let e = start.saturating_add(length).min(n);
             &self.data[s..e]
         }
+        /// APAS: Work Θ(length), Span Θ(1)
+        /// claude-4-sonet: Work Θ(length), Span Θ(1)
         pub fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.data.len();
             let s = start.min(n);
@@ -59,11 +72,15 @@ pub mod ArraySeqStEph {
             }
             out
         }
+        /// APAS: Work Θ(|v|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
         pub fn from_vec(v: Vec<T>) -> Self {
             ArraySeqStEphS {
                 data: v.into_boxed_slice(),
             }
         }
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         pub fn update(&mut self, (index, item): (N, T)) -> &mut ArraySeqStEphS<T> {
             if index < self.data.len() {
                 self.data[index] = item;
@@ -71,6 +88,8 @@ pub mod ArraySeqStEph {
             self
         }
 
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
     }
 
@@ -109,18 +128,28 @@ pub mod ArraySeqStEph {
     }
 
     impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {
+        /// APAS: Work Θ(length), Span Θ(1)
+        /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn new(length: N, init_value: T) -> Self {
             ArraySeqStEphS::from_vec(vec![init_value; length])
         }
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn length(&self) -> N {
             self.data.len()
         }
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn nth(&self, index: N) -> &T {
             &self.data[index]
         }
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self {
             ArraySeqStEphS::from_vec(Vec::new())
         }
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
             if index < self.data.len() {
                 self.data[index] = item;
@@ -129,9 +158,13 @@ pub mod ArraySeqStEph {
                 Err("Index out of bounds")
             }
         }
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(item: T) -> Self {
             ArraySeqStEphS::from_vec(vec![item])
         }
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(&self) -> B {
             if self.data.len() == 0 {
                 B::True
@@ -139,6 +172,8 @@ pub mod ArraySeqStEph {
                 B::False
             }
         }
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(&self) -> B {
             if self.data.len() == 1 {
                 B::True
@@ -146,6 +181,8 @@ pub mod ArraySeqStEph {
                 B::False
             }
         }
+        /// APAS: Work Θ(length), Span Θ(1)
+        /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn subseq_copy(&self, start: N, length: N) -> Self {
             self.subseq_copy(start, length)
         }

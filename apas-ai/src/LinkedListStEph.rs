@@ -16,19 +16,41 @@ pub struct LinkedListStEphS<T: StT> {
 }
 
 pub trait LinkedListStEphTrait<T: StT> {
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn empty() -> LinkedListStEphS<T>;
+    /// APAS: Work Θ(length), Span Θ(1)
+    /// claude-4-sonet: Work Θ(length), Span Θ(1)
     fn new(length: N, init_value: T) -> Self;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn length(&self) -> N;
+    /// APAS: Work Θ(index), Span Θ(index)
+    /// claude-4-sonet: Work Θ(index), Span Θ(index)
     fn nth(&self, index: N) -> &T;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn isEmpty(&self) -> B;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn isSingleton(&self) -> B;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn singleton(item: T) -> Self;
+    /// APAS: Work Θ(index), Span Θ(index)
+    /// claude-4-sonet: Work Θ(index), Span Θ(index)
     fn update(&mut self, item_at: Pair<N, T>) -> &mut Self;
+    /// APAS: Work Θ(index), Span Θ(index)
+    /// claude-4-sonet: Work Θ(index), Span Θ(index)
     fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
+    /// APAS: Work Θ(start + length), Span Θ(start + length)
+    /// claude-4-sonet: Work Θ(start + length), Span Θ(start + length)
     fn subseq_copy(&self, start: N, length: N) -> Self;
 }
 
 impl<T: StT> LinkedListStEphS<T> {
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn push_front_node(&mut self, node: Box<NodeE<T>>) {
         let mut n = node;
         n.next = self.head.take();
@@ -36,6 +58,8 @@ impl<T: StT> LinkedListStEphS<T> {
         self.len += 1;
     }
 
+    /// APAS: Work Θ(|v|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
     pub fn from_vec(v: Vec<T>) -> Self {
         let mut list = LinkedListStEphS::empty();
         for value in v.into_iter().rev() {
@@ -44,15 +68,21 @@ impl<T: StT> LinkedListStEphS<T> {
         list
     }
 
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     pub fn iter<'a>(&'a self) -> LinkedListStEphIter<'a, T> {
         LinkedListStEphIter { cursor: self.head.as_deref() }
     }
 }
 
 impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn empty() -> Self {
         LinkedListStEphS { head: None, len: 0 }
     }
+    /// APAS: Work Θ(length), Span Θ(1)
+    /// claude-4-sonet: Work Θ(length), Span Θ(1)
     fn new(length: N, init_value: T) -> Self {
         let mut list = LinkedListStEphS::empty();
         for _ in 0..length {
@@ -72,9 +102,13 @@ impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
         list.head = rev;
         list
     }
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn length(&self) -> N {
         self.len
     }
+    /// APAS: Work Θ(index), Span Θ(index)
+    /// claude-4-sonet: Work Θ(index), Span Θ(index)
     fn nth(&self, index: N) -> &T {
         let mut i = 0;
         let mut cur = self.head.as_ref();
@@ -87,6 +121,8 @@ impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
         }
         panic!("index out of bounds")
     }
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn isEmpty(&self) -> B {
         if self.len == 0 {
             B::True
@@ -94,6 +130,8 @@ impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
             B::False
         }
     }
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn isSingleton(&self) -> B {
         if self.len == 1 {
             B::True
@@ -101,6 +139,8 @@ impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
             B::False
         }
     }
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn singleton(item: T) -> Self {
         LinkedListStEphS {
             head: Some(Box::new(NodeE {
@@ -110,6 +150,8 @@ impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
             len: 1,
         }
     }
+    /// APAS: Work Θ(index), Span Θ(index)
+    /// claude-4-sonet: Work Θ(index), Span Θ(index)
     fn update(&mut self, Pair(index, item): Pair<N, T>) -> &mut Self {
         let mut i = 0;
         let mut cur = self.head.as_mut();
@@ -123,6 +165,8 @@ impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
         }
         self
     }
+    /// APAS: Work Θ(index), Span Θ(index)
+    /// claude-4-sonet: Work Θ(index), Span Θ(index)
     fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
         let mut i = 0;
         let mut cur = self.head.as_mut();
@@ -136,6 +180,8 @@ impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
         }
         Err("Index out of bounds")
     }
+    /// APAS: Work Θ(start + length), Span Θ(start + length)
+    /// claude-4-sonet: Work Θ(start + length), Span Θ(start + length)
     fn subseq_copy(&self, start: N, length: N) -> Self {
         let n = self.len;
         let s = start.min(n);

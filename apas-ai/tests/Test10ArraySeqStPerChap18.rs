@@ -3,6 +3,7 @@ use apas_ai::Types::Types::*;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Types::Types::Pair;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
+use apas_ai::ArraySeqStPerChap18Trait;
 use apas_ai::ArraySeqStPer; // macro import
 
 #[test]
@@ -20,7 +21,7 @@ fn test_tabulate_fibonacci() {
 #[test]
 fn test_map_increment() {
     let a = ArraySeqStPer![1, 2, 3, 4, 5];
-    let b = a.map(|x| x + 1);
+    let b = <ArrayStPerS<i32> as ArraySeqStPerChap18Trait<i32>>::map(&a, |x| x + 1);
     assert_eq!(b, ArraySeqStPer![2, 3, 4, 5, 6]);
 }
 
@@ -39,7 +40,7 @@ fn test_subseq() {
 fn test_append() {
     let a = ArraySeqStPer![1, 2, 3];
     let b = ArraySeqStPer![4, 5, 6];
-    let c = a.append(&b);
+    let c = <ArrayStPerS<i32> as ArraySeqStPerChap18Trait<i32>>::append(&a, &b);
     assert_eq!(c, ArraySeqStPer![1, 2, 3, 4, 5, 6]);
 }
 
@@ -47,46 +48,47 @@ fn test_append() {
 fn test_sequence_literals_and_append() {
     let a = ArraySeqStPer![1, 2, 3];
     let b = ArraySeqStPer![4, 5];
-    let c = a.append(&b);
+    let c = <ArrayStPerS<i32> as ArraySeqStPerChap18Trait<i32>>::append(&a, &b);
     assert_eq!(c, ArraySeqStPer![1, 2, 3, 4, 5]);
     let empty: ArrayStPerS<N> = ArrayStPerS::empty();
-    let d = ArraySeqStPer![1,2,3].append(&empty);
+    let d = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::append(&ArraySeqStPer![1,2,3], &empty);
     assert_eq!(d.length(), 3);
-    let e = empty.append(&ArraySeqStPer![1,2,3]);
+    let e = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::append(&empty, &ArraySeqStPer![1,2,3]);
     assert_eq!(e.length(), 3);
 }
 
 #[test]
 fn test_filter_even() {
     let numbers = ArraySeqStPer![1,2,3,4,5,6,7,8,9,10];
-    let evens = numbers.filter(|&x| if x % 2 == 0 { B::True } else { B::False });
+    let evens = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::filter(&numbers, |&x| if x % 2 == 0 { B::True } else { B::False });
     assert_eq!(evens, ArraySeqStPer![2, 4, 6, 8, 10]);
     let odds_only = ArraySeqStPer![1,3,5,7];
-    let no_evens = odds_only.filter(|&x| if x % 2 == 0 { B::True } else { B::False });
+    let no_evens = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::filter(&odds_only, |&x| if x % 2 == 0 { B::True } else { B::False });
     assert_eq!(no_evens.length(), 0);
 }
 
+// TODO: Fix flatten type inference - ArrayStPerS<ArrayStPerS<N>> trait bound issues
 #[test]
 fn test_flatten() {
-    let a = ArraySeqStPer![1, 2];
-    let b = ArraySeqStPer![3, 4, 5];
-    let c = ArraySeqStPer![6];
-    let sequences = ArraySeqStPer![a, b, c];
-    let flattened = sequences.flatten();
+    let a: ArrayStPerS<N> = ArraySeqStPer![1, 2];
+    let b: ArrayStPerS<N> = ArraySeqStPer![3, 4, 5];
+    let c: ArrayStPerS<N> = ArraySeqStPer![6];
+    let sequences: ArrayStPerS<ArrayStPerS<N>> = ArraySeqStPer![a, b, c];
+    let flattened = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::flatten(&sequences);
     assert_eq!(flattened, ArraySeqStPer![1, 2, 3, 4, 5, 6]);
     let empty: ArrayStPerS<N> = ArrayStPerS::empty();
-    let mixed = ArraySeqStPer![ArraySeqStPer![1, 2], empty,ArraySeqStPer![3]];
-    let mixed_flat = mixed.flatten();
+    let mixed: ArrayStPerS<ArrayStPerS<N>> = ArraySeqStPer![ArraySeqStPer![1, 2], empty,ArraySeqStPer![3]];
+    let mixed_flat = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::flatten(&mixed);
     assert_eq!(mixed_flat, ArraySeqStPer![1, 2, 3]);
 }
 
 #[test]
 fn test_update_sequence() {
     let a = ArraySeqStPer!["hello", "world", "test"];
-    let b = a.update(Pair(1, "rust"));
+    let b = <ArrayStPerS<&str> as ArraySeqStPerChap18Trait<&str>>::update(&a, Pair(1, "rust"));
     assert_eq!(b, ArraySeqStPer!["hello", "rust", "test"]);
     let c = ArraySeqStPer!["hello", "world", "test"];
-    let d = c.update(Pair(5, "out_of_bounds"));
+    let d = <ArrayStPerS<&str> as ArraySeqStPerChap18Trait<&str>>::update(&c, Pair(5, "out_of_bounds"));
     assert_eq!(d, ArraySeqStPer!["hello", "world", "test"]);
 }
 
@@ -94,18 +96,18 @@ fn test_update_sequence() {
 fn test_inject_and_ninject() {
     let a = ArraySeqStPer!["the", "cat", "in", "the", "hat"];
     let updates = ArraySeqStPer![Pair(0, "a"), Pair(2, "on"), Pair(4, "mat")];
-    let injected = a.inject(&updates);
+    let injected = <ArrayStPerS<&str> as ArraySeqStPerChap18Trait<&str>>::inject(&a, &updates);
     assert_eq!(injected.length(), 5);
     assert_eq!(injected, ArraySeqStPer!["a", "cat", "on", "the", "mat"]);
 
     let conflicting_updates = ArraySeqStPer![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")];
-    let result_first = a.inject(&conflicting_updates);
+    let result_first = <ArrayStPerS<&str> as ArraySeqStPerChap18Trait<&str>>::inject(&a, &conflicting_updates);
     assert_eq!(result_first, ArraySeqStPer!["first", "updated", "in", "the", "hat"]);
 
-    let ninjected = a.ninject(&ArraySeqStPer![Pair(1, "dog"), Pair(3, "big"), Pair(6, "hog")]);
+    let ninjected = <ArrayStPerS<&str> as ArraySeqStPerChap18Trait<&str>>::ninject(&a, &ArraySeqStPer![Pair(1, "dog"), Pair(3, "big"), Pair(6, "hog")]);
     assert_eq!(ninjected, ArraySeqStPer!["the", "dog", "in", "big", "hat"]);
     assert_eq!(ninjected.length(), 5);
-    let result_last = a.ninject(&ArraySeqStPer![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")]);
+    let result_last = <ArrayStPerS<&str> as ArraySeqStPerChap18Trait<&str>>::ninject(&a, &ArraySeqStPer![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")]);
     assert_eq!(result_last, ArraySeqStPer!["second", "updated", "in", "the", "hat"]);
 }
 
@@ -113,15 +115,15 @@ fn test_inject_and_ninject() {
 fn test_iterate_and_prefixes_and_reduce_and_scan() {
     let numbers = ArraySeqStPer![1, 2, 3, 4, 5];
     let sum_fn = |a: &N, b: &N| a + b;
-    let result = numbers.reduce(&sum_fn, 0);
+    let result = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::reduce(&numbers, &sum_fn, 0);
     assert_eq!(result, 15);
     let empty: ArrayStPerS<N> = ArrayStPerS::empty();
-    let empty_result = empty.reduce(&sum_fn, 42);
+    let empty_result = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::reduce(&empty, &sum_fn, 42);
     assert_eq!(empty_result, 42);
     let single = ArraySeqStPer![100];
-    let single_result = single.reduce(&sum_fn, 0);
+    let single_result = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::reduce(&single, &sum_fn, 0);
     assert_eq!(single_result, 100);
-    let (prefixes, final_result) = numbers.scan(&sum_fn, 0);
+    let (prefixes, final_result) = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::scan(&numbers, &sum_fn, 0);
     assert_eq!(prefixes.length(), 5);
     assert_eq!(*prefixes.nth(0), 0);
     assert_eq!(*prefixes.nth(4), 10);
@@ -132,7 +134,7 @@ fn test_iterate_and_prefixes_and_reduce_and_scan() {
 fn test_iterate_sum_basic() {
     let numbers = ArraySeqStPer![1, 2, 3, 4, 5];
     let sum_fn = |a: &N, x: &N| a + x;
-    let r = numbers.iterate(sum_fn, 0);
+    let r = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::iterate(&numbers, sum_fn, 0);
     assert_eq!(r, 15);
 }
 
@@ -140,7 +142,7 @@ fn test_iterate_sum_basic() {
 fn test_iterate_prefixes_sum() {
     let numbers = ArraySeqStPer![1, 2, 3];
     let sum_fn = |a: &N, x: &N| a + x;
-    let (prefixes, total) = numbers.iteratePrefixes(sum_fn, 0);
+    let (prefixes, total) = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::iteratePrefixes(&numbers, sum_fn, 0);
     assert_eq!(prefixes.length(), 3);
     assert_eq!(*prefixes.nth(0), 0);
     assert_eq!(*prefixes.nth(1), 1);

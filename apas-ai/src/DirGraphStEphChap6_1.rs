@@ -13,23 +13,56 @@ pub struct DirGraphStEph<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::De
 }
 
 pub trait DirGraphStEphChap6_1Trait<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn empty() -> DirGraphStEph<V>;
+    /// APAS: Work Θ(|V| + |A|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|V| + |A|), Span Θ(1)
     fn FromSets(V: Set<V>, A: Set<Pair<V, V>>) -> DirGraphStEph<V>;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn vertices(&self) -> &Set<V>;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn arcs(&self) -> &Set<Pair<V, V>>;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn sizeV(&self) -> N;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn sizeA(&self) -> N;
-    // Neighborhood and adjacency APIs
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn Neighbor(&self, u: &V, v: &V) -> B;
-    fn NG(&self, v: &V) -> Set<V>;            // Out-neighbors by convention
+    /// APAS: Work Θ(|A|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
+    fn NG(&self, v: &V) -> Set<V>;
+    /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(1)
     fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V>;
-    fn NPlus(&self, v: &V) -> Set<V>;         // Out-neighbors
-    fn NMinus(&self, v: &V) -> Set<V>;        // In-neighbors
+    /// APAS: Work Θ(|A|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
+    fn NPlus(&self, v: &V) -> Set<V>;
+    /// APAS: Work Θ(|A|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
+    fn NMinus(&self, v: &V) -> Set<V>;
+    /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(1)
     fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V>;
+    /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(1)
     fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V>;
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
     fn Incident(&self, e: &Pair<V, V>, v: &V) -> B;
-    fn Degree(&self, v: &V) -> N;             // Out-degree by convention
+    /// APAS: Work Θ(|A|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
+    fn Degree(&self, v: &V) -> N;
+    /// APAS: Work Θ(|A|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
     fn InDegree(&self, v: &V) -> N;
+    /// APAS: Work Θ(|A|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
     fn OutDegree(&self, v: &V) -> N;
 }
 

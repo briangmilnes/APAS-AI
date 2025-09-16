@@ -19,29 +19,37 @@ pub mod ArraySeqStPer {
     /// Sequence trait for `ArrayStPerS<T>` with immutable operations.
     pub trait ArraySeqStPerTrait<T: StT + Clone> {
         /// APAS: Work Θ(length), Span Θ(1)
+        /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn new(length: N, init_value: T) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn length(&self) -> N;
         /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn nth(&self, index: N) -> &T;
         /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
         /// APAS: Work Θ(1) in ephemeral arrays; persistent update requires copy. Work Θ(|a|), Span Θ(1)
-        /// gpt-5-hard: Work Θ(|a|), Span Θ(1)
-        /// BUG: APAS and gpt-5-hard algorithmic analyses differ.
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
         fn set(&self, index: N, item: T) -> Result<Self, &'static str> where Self: Sized;
         /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(item: T) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(&self) -> B;
         /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(&self) -> B;
         /// APAS: Work Θ(length), Span Θ(1)
+        /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn subseq_copy(&self, start: N, length: N) -> Self where Self: Sized;
     }
 
     impl<T: StT> ArrayStPerS<T> {
         /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         pub fn subseq(&self, start: N, length: N) -> &[T] {
             let n = self.data.len();
             let s = start.min(n);
