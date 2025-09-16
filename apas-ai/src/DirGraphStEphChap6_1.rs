@@ -128,5 +128,3 @@ impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> Eq for DirGraph
     }
 }
 
-pub use DirGraphStEphChap6_1::DirGraphStEphChap6_1Trait;
-

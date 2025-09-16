@@ -2,7 +2,7 @@
 
 pub mod ArraySeqStEphChap19 {
 use crate::ArraySeqStEph::ArraySeqStEph::*;
-use crate::ArraySeqStEphChap18::ArraySeqStEphChap18Trait;
+use crate::ArraySeqStEphChap18::ArraySeqStEphChap18::*;
 use crate::Types::Types::*;
 
 pub trait ArraySeqStEphChap19Trait<T: StT> {
@@ -14,12 +14,8 @@ pub trait ArraySeqStEphChap19Trait<T: StT> {
     fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqStEphS<T>;
     fn filter(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> B) -> ArraySeqStEphS<T>;
     fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
-    fn reduce<F>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> T
-    where
-        F: Fn(&T, &T) -> T;
-    fn scan<F>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T)
-    where
-        F: Fn(&T, &T) -> T;
+    fn reduce(a: &ArraySeqStEphS<T>, f: impl Fn(&T, &T) -> T, id: T) -> T;
+    fn scan(a: &ArraySeqStEphS<T>, f: impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, T);
     fn flatten(s: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;
 }
 
@@ -61,16 +57,10 @@ impl<T: StT> ArraySeqStEphChap19Trait<T> for ArraySeqStEphS<T> {
     fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
         <ArraySeqStEphS<T> as ArraySeqStEphChap18Trait<T>>::iterate(a, f, x)
     }
-    fn reduce<F>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> T
-    where
-        F: Fn(&T, &T) -> T,
-    {
+    fn reduce(a: &ArraySeqStEphS<T>, f: impl Fn(&T, &T) -> T, id: T) -> T {
         <ArraySeqStEphS<T> as ArraySeqStEphChap18Trait<T>>::reduce(a, f, id)
     }
-    fn scan<F>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T)
-    where
-        F: Fn(&T, &T) -> T,
-    {
+    fn scan(a: &ArraySeqStEphS<T>, f: impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, T) {
         <ArraySeqStEphS<T> as ArraySeqStEphChap18Trait<T>>::scan(a, f, id)
     }
     fn flatten(s: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T> {
@@ -79,5 +69,3 @@ impl<T: StT> ArraySeqStEphChap19Trait<T> for ArraySeqStEphS<T> {
 }
 
 }
-
-pub use ArraySeqStEphChap19::ArraySeqStEphChap19Trait;

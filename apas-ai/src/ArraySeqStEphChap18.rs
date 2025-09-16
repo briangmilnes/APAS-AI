@@ -209,5 +209,3 @@ pub mod ArraySeqStEphChap18 {
         }
     }
 }
-
-pub use ArraySeqStEphChap18::ArraySeqStEphChap18Trait;

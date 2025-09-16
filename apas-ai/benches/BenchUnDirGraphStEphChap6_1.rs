@@ -1,7 +1,7 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::Types::*;
-use apas_ai::SetEphChap5_1::SetEphChap5_1::*;
-use apas_ai::UnDirGraphEphChap6_1::UnDirGraphEphChap6_1::*;
+use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
+use apas_ai::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1::*;
 use std::time::Duration;
 
 fn bench_undirgraph_build(c: &mut Criterion) {
@@ -15,9 +15,9 @@ fn bench_undirgraph_build(c: &mut Criterion) {
         b.iter(|| {
             let mut v: Set<N> = Set::empty();
             for i in 0..len { let _ = Set::insert(&mut v, i); }
-            let mut e: Set<(N,N)> = Set::empty();
-            for i in 0..len { let _ = Set::insert(&mut e, (i.min((i+1)%len), i.max((i+1)%len))); }
-            let g = UnDirGraphEph::FromSets(v, e);
+            let mut e: Set<Pair<N,N>> = Set::empty();
+            for i in 0..len { let _ = Set::insert(&mut e, Pair(i.min((i+1)%len), i.max((i+1)%len))); }
+            let g = <UnDirGraphStEph<N> as UnDirGraphStEphChap6_1Trait<N>>::FromSets(v, e);
             black_box(g)
         })
     });

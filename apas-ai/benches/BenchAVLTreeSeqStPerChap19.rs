@@ -1,8 +1,8 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::Types::*;
-use apas_ai::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerS;
-use apas_ai::AVLTreeSeqPerChap19::AVLTreeSeqPerChap19Trait;
-use apas_ai::AVLTreeSeqPer::AVLTreeSeqPer::AVLTreeSeqPerTrait;
+use apas_ai::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS;
+use apas_ai::AVLTreeSeqStPerChap19Trait;
+use apas_ai::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;
@@ -15,8 +15,8 @@ fn bench_build_and_read_persistent(c: &mut Criterion) {
 
     group.bench_with_input(BenchmarkId::new("tabulate_then_nth", n), &n, |b, &len| {
         b.iter(|| {
-            let t: AVLTreeSeqPerS<N> = <AVLTreeSeqPerS<N> as AVLTreeSeqPerChap19Trait<T>>::tabulate(|i| i, len);
-            let v = *<AVLTreeSeqPerS<N> as AVLTreeSeqPerTrait<N>>::nth(&t, len - 1);
+            let t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap19Trait<N>>::tabulate(|i| i, len);
+            let v = *<AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::nth(&t, len - 1);
             black_box((t.length(), v))
         })
     });

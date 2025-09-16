@@ -1,7 +1,7 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::Types::*;
-use apas_ai::LinkedListPer::LinkedListPer::*;
-use apas_ai::LinkedListPerChap18::LinkedListPerChap18Trait;
+use apas_ai::LinkedListStPer::LinkedListStPer::*;
+use apas_ai::LinkedListStPerChap18Trait;
 use std::time::Duration;
 
 fn bench_ll_per_ch18(c: &mut Criterion) {
@@ -12,8 +12,8 @@ fn bench_ll_per_ch18(c: &mut Criterion) {
     let n: N = 5_000;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let s: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap18Trait<T>>::tabulate(|i| i, len);
-            let m: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap18Trait<T>>::map(&s, |x| x + 1);
+            let s: LinkedListStPerS<N> = <LinkedListStPerS<N> as LinkedListStPerChap18Trait<N>>::tabulate(|i| i, len);
+            let m: LinkedListStPerS<N> = <LinkedListStPerS<N> as LinkedListStPerChap18Trait<N>>::map(&s, |x| x + 1);
             black_box((s.length(), m.length()))
         })
     });

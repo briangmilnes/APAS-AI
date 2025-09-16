@@ -98,5 +98,3 @@ impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> Eq for UnDirGra
     }
 }
 
-pub use UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1Trait;
-

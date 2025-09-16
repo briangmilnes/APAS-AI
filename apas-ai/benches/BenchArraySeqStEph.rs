@@ -1,8 +1,8 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::Types::*;
-use apas_ai::ArraySeqEph::ArraySeqEph::*;
-use apas_ai::ArraySeqEphChap18::ArraySeqEphChap18Trait;
-use apas_ai::ArraySeqEphChap19::ArraySeqEphChap19Trait;
+use apas_ai::ArraySeqStEph::ArraySeqStEph::*;
+use apas_ai::ArraySeqStEphChap18Trait;
+use apas_ai::ArraySeqStEphChap19Trait;
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;
@@ -31,9 +31,9 @@ fn bench_build_random_s(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("zeros_then_update", n), &n, |b, &len| {
         b.iter(|| {
             let mut rng = LinearCongruentialGenerator32::new(0xDEADBEEF);
-            let mut s = <ArraySeqEphS<N> as ArraySeqEphChap19Trait<T>>::tabulate(|_| 0, len);
+            let mut s = <ArraySeqStEphS<N> as ArraySeqStEphChap19Trait<N>>::tabulate(|_| 0, len);
             for i in 0..len {
-                let _ = <ArraySeqEphS<N> as ArraySeqEphChap18Trait<T>>::update(&mut s, (i, rng.next_N()));
+                let _ = <ArraySeqStEphS<N> as ArraySeqStEphChap18Trait<N>>::update(&mut s, (i, rng.next_N()));
             }
             black_box(s)
         })

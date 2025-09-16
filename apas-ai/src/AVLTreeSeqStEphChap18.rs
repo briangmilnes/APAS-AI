@@ -59,5 +59,3 @@ pub mod AVLTreeSeqStEphChap18 {
         }
     }
 }
-
-pub use AVLTreeSeqStEphChap18::AVLTreeSeqStEphChap18Trait;

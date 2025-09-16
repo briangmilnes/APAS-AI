@@ -13,13 +13,13 @@ pub mod ArraySeqStPer {
     use crate::Types::Types::*;
 
     /// Fixed-length sequence backed by `Box<[T]>` (persistent/immutable variant).
-    #[derive(Clone)]
+    #[derive(Clone, PartialEq, Eq, PartialOrd, Ord)]
     pub struct ArrayStPerS<T: StT> { data: Box<[T]> }
 
     /// Sequence trait for `ArrayStPerS<T>` with immutable operations.
-    pub trait ArraySeqStPerTrait<T: StT> {
+    pub trait ArraySeqStPerTrait<T: StT + Clone> {
         /// APAS: Work Θ(length), Span Θ(1)
-        fn new(length: N, init_value: T) -> Self where T: Clone;
+        fn new(length: N, init_value: T) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         fn length(&self) -> N;
         /// APAS: Work Θ(1), Span Θ(1)
@@ -29,7 +29,7 @@ pub mod ArraySeqStPer {
         /// APAS: Work Θ(1) in ephemeral arrays; persistent update requires copy. Work Θ(|a|), Span Θ(1)
         /// gpt-5-hard: Work Θ(|a|), Span Θ(1)
         /// BUG: APAS and gpt-5-hard algorithmic analyses differ.
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str> where T: Clone, Self: Sized;
+        fn set(&self, index: N, item: T) -> Result<Self, &'static str> where Self: Sized;
         /// APAS: Work Θ(1), Span Θ(1)
         fn singleton(item: T) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
@@ -37,7 +37,7 @@ pub mod ArraySeqStPer {
         /// APAS: Work Θ(1), Span Θ(1)
         fn isSingleton(&self) -> B;
         /// APAS: Work Θ(length), Span Θ(1)
-        fn subseq_copy(&self, start: N, length: N) -> Self where T: Clone, Self: Sized;
+        fn subseq_copy(&self, start: N, length: N) -> Self where Self: Sized;
     }
 
     impl<T: StT> ArrayStPerS<T> {
@@ -69,14 +69,6 @@ pub mod ArraySeqStPer {
         }
     }
 
-    impl<T: StT + Eq> PartialEq for ArrayStPerS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            if self.length() != other.length() { return false; }
-            for i in 0..self.length() { if self.nth(i) != other.nth(i) { return false; } }
-            true
-        }
-    }
-    impl<T: StT + Eq> Eq for ArrayStPerS<T> {}
 
     impl<T: StT + Debug> Debug for ArrayStPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -96,14 +88,14 @@ pub mod ArraySeqStPer {
         }
     }
 
-    impl<T: StT> ArraySeqStPerTrait<T> for ArrayStPerS<T> {
-        fn new(length: N, init_value: T) -> Self where T: Clone {
+    impl<T: StT + Clone> ArraySeqStPerTrait<T> for ArrayStPerS<T> {
+        fn new(length: N, init_value: T) -> Self {
             Self::from_vec(vec![init_value; length])
         }
         fn length(&self) -> N { self.data.len() }
         fn nth(&self, index: N) -> &T { &self.data[index] }
         fn empty() -> Self { Self::from_vec(Vec::new()) }
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str> where T: Clone {
+        fn set(&self, index: N, item: T) -> Result<Self, &'static str> {
             if index >= self.data.len() { return Err("Index out of bounds"); }
             let mut v: Vec<T> = self.data.to_vec();
             v[index] = item;
@@ -112,7 +104,7 @@ pub mod ArraySeqStPer {
         fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
         fn isEmpty(&self) -> B { if self.data.len() == 0 { B::True } else { B::False } }
         fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
-        fn subseq_copy(&self, start: N, length: N) -> Self where T: Clone {
+        fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.data.len();
             let s = start.min(n);
             let e = start.saturating_add(length).min(n);

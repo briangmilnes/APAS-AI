@@ -51,5 +51,3 @@ pub mod AVLTreeSeqStPerChap18 {
         }
     }
 }
-
-pub use AVLTreeSeqStPerChap18::AVLTreeSeqStPerChap18Trait;

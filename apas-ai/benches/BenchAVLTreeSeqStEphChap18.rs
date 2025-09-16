@@ -1,6 +1,6 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::Types::*;
-use apas_ai::AVLTreeSeqEph::AVLTreeSeqEph::*;
+use apas_ai::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
 use std::time::Duration;
 
 fn bench_avl_eph_ch18(c: &mut Criterion) {
@@ -11,10 +11,10 @@ fn bench_avl_eph_ch18(c: &mut Criterion) {
     let n: N = 1_000;
     group.bench_with_input(BenchmarkId::new("push_then_nth", n), &n, |b, &len| {
         b.iter(|| {
-            let mut t: AVLTreeSeqEphS<N> = <AVLTreeSeqEphS<N> as AVLTreeSeqEphTrait<N>>::empty();
+            let mut t: AVLTreeSeqStEphS<N> = <AVLTreeSeqStEphS<N> as AVLTreeSeqStEphTrait<N>>::empty();
             for i in 0..len { t.push_back(i); }
-            let v = *<AVLTreeSeqEphS<N> as AVLTreeSeqEphTrait<N>>::nth(&t, len - 1);
-            black_box((<AVLTreeSeqEphS<N> as AVLTreeSeqEphTrait<N>>::length(&t), v))
+            let v = *<AVLTreeSeqStEphS<N> as AVLTreeSeqStEphTrait<N>>::nth(&t, len - 1);
+            black_box((<AVLTreeSeqStEphS<N> as AVLTreeSeqStEphTrait<N>>::length(&t), v))
         })
     });
     group.finish();

@@ -35,8 +35,103 @@ pub mod Types {
 
     // MtT: multi-threaded friendly elements; minimal so it can include Mutex<..>
     // Keep only thread-safety and size requirements.
-    pub trait MtT: Sized + Send + Sync {}
-    impl<T> MtT for T where T: Sized + Send + Sync {}
+    pub trait MtT: Sized + Send + Sync {
+        type Inner: StT;
+        fn clone_mt(&self) -> Self;
+        fn new_mt(inner: Self::Inner) -> Self;
+    }
+    
+    impl<T: StT + Send> MtT for std::sync::Mutex<T> {
+        type Inner = T;
+        fn clone_mt(&self) -> Self {
+            let inner = self.lock().unwrap().clone();
+            std::sync::Mutex::new(inner)
+        }
+        fn new_mt(inner: Self::Inner) -> Self {
+            std::sync::Mutex::new(inner)
+        }
+    }
+    
+    impl<A: StT + Send + Sync, B: StT + Send + Sync> MtT for Pair<A, B> {
+        type Inner = Pair<A, B>;
+        fn clone_mt(&self) -> Self {
+            self.clone()
+        }
+        fn new_mt(inner: Self::Inner) -> Self {
+            inner
+        }
+    }
+
+    // Ad-hoc implementations for specific primitive types to avoid conflicts
+    impl MtT for usize {
+        type Inner = usize;
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
+    }
+
+    impl MtT for isize {
+        type Inner = isize;
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
+    }
+
+    impl MtT for i32 {
+        type Inner = i32;
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
+    }
+
+    impl MtT for u32 {
+        type Inner = u32;
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
+    }
+
+    impl MtT for i64 {
+        type Inner = i64;
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
+    }
+
+    impl MtT for u64 {
+        type Inner = u64;
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
+    }
+
+
+    impl MtT for bool {
+        type Inner = bool;
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
+    }
+
+    impl MtT for char {
+        type Inner = char;
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
+    }
+
+    // Special case: ad-hoc implementation for String
+    impl MtT for String {
+        type Inner = String;
+        fn clone_mt(&self) -> Self { self.clone() }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
+    }
+
+    // String slice implementation
+    impl<'a> MtT for &'a str {
+        type Inner = &'a str;
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
+    }
+
+    // Custom boolean enum implementation
+    impl MtT for B {
+        type Inner = B;
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
+    }
 
     /// Edge wrapper to enable Display/Debug for pairs (V,V) under baseline bounds.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
@@ -61,7 +156,7 @@ pub mod Types {
     }
 
     /// Pair type with proper Display/Debug available when elements support them.
-    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+    #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
     pub struct Pair<A, B>(pub A, pub B);
 
     impl<A: std::fmt::Display, B: std::fmt::Display> std::fmt::Display for Pair<A, B> {
@@ -80,5 +175,44 @@ pub mod Types {
         fn from(p: Pair<A, B>) -> (A, B) {
             (p.0, p.1)
         }
+    }
+
+    /// Set equivalence comparison for sequences (order-independent, useful for MT tests)
+    /// APAS: Work Θ(n²), Span Θ(1) - simple membership test both ways
+    pub fn ArraySeqSetEq<T, F1, F2>(a_len: N, a_nth: F1, b_len: N, b_nth: F2) -> bool 
+    where 
+        T: PartialEq,
+        F1: Fn(N) -> T,
+        F2: Fn(N) -> T,
+    {
+        if a_len != b_len { return false; }
+        
+        // For each element in sequence A, check if it exists in sequence B
+        for i in 0..a_len {
+            let a_elem = a_nth(i);
+            let mut found = false;
+            for j in 0..b_len {
+                if a_elem == b_nth(j) {
+                    found = true;
+                    break;
+                }
+            }
+            if !found { return false; }
+        }
+        
+        // For each element in sequence B, check if it exists in sequence A
+        for j in 0..b_len {
+            let b_elem = b_nth(j);
+            let mut found = false;
+            for i in 0..a_len {
+                if b_elem == a_nth(i) {
+                    found = true;
+                    break;
+                }
+            }
+            if !found { return false; }
+        }
+        
+        true
     }
 }

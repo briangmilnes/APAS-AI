@@ -1,7 +1,7 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::Types::*;
-use apas_ai::ArraySeqPer::ArraySeqPer::*;
-use apas_ai::ArraySeqPerChap18::ArraySeqPerChap18Trait;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use std::time::Duration;
 
 fn bench_tabulate_map_per_ch18(c: &mut Criterion) {
@@ -12,8 +12,8 @@ fn bench_tabulate_map_per_ch18(c: &mut Criterion) {
     let n: N = 10_000;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let s: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::tabulate(|i| i, len);
-            let m: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::map(&s, |x| x + 1);
+            let s: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::tabulate(|i| i, len);
+            let m: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::map(&s, |x| x + 1);
             black_box((s.length(), m.length()))
         })
     });

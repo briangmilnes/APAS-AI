@@ -33,9 +33,7 @@ pub mod ArraySeqStEph {
         /// Work Θ(1), Span Θ(1).
         fn isSingleton(&self) -> B;
         /// Work Θ(length) to allocate/clone.
-        fn subseq_copy(&self, start: N, length: N) -> Self
-        where
-            T: StT;
+        fn subseq_copy(&self, start: N, length: N) -> Self;
     }
 
     impl<T: StT> ArraySeqStEphS<T> {
@@ -45,10 +43,7 @@ pub mod ArraySeqStEph {
             let e = start.saturating_add(length).min(n);
             &self.data[s..e]
         }
-        pub fn subseq_copy(&self, start: N, length: N) -> Self
-        where
-            T: StT,
-        {
+        pub fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.data.len();
             let s = start.min(n);
             let e = start.saturating_add(length).min(n);
@@ -114,10 +109,7 @@ pub mod ArraySeqStEph {
     }
 
     impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {
-        fn new(length: N, init_value: T) -> Self
-        where
-            T: StT,
-        {
+        fn new(length: N, init_value: T) -> Self {
             ArraySeqStEphS::from_vec(vec![init_value; length])
         }
         fn length(&self) -> N {
@@ -154,10 +146,7 @@ pub mod ArraySeqStEph {
                 B::False
             }
         }
-        fn subseq_copy(&self, start: N, length: N) -> Self
-        where
-            T: StT,
-        {
+        fn subseq_copy(&self, start: N, length: N) -> Self {
             self.subseq_copy(start, length)
         }
     }

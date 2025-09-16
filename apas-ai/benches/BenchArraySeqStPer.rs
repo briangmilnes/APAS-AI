@@ -1,8 +1,8 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::Types::*;
-use apas_ai::ArraySeqPer::ArraySeqPer::ArrayPerS;
-use apas_ai::ArraySeqPerChap18::ArraySeqPerChap18Trait;
-use apas_ai::ArraySeqPerChap19::ArraySeqPerChap19Trait;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::ArrayStPerS;
+use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
+use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;
@@ -32,9 +32,9 @@ fn bench_build_random_s_persistent(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("zeros_then_persistent_update", n), &n, |b, &len| {
         b.iter(|| {
             let mut rng = LinearCongruentialGenerator32::new(0xDEADBEEF);
-            let mut s: ArrayPerS<N> = <ArrayPerS<N> as ArraySeqPerChap19Trait<T>>::tabulate(|_| 0, len);
+            let mut s: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::tabulate(|_| 0, len);
             for i in 0..len {
-                s = <ArrayPerS<N> as ArraySeqPerChap18Trait<T>>::update(&s, (i, rng.next_N()));
+                s = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::update(&s, Pair(i, rng.next_N()));
             }
             black_box(s)
         })

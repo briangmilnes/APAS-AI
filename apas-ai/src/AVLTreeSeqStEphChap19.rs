@@ -5,7 +5,7 @@ pub mod AVLTreeSeqStEphChap19 {
     use std::fmt::{Debug, Display};
 
     use crate::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
-    use crate::AVLTreeSeqStEphChap18::AVLTreeSeqStEphChap18Trait;
+    use crate::AVLTreeSeqStEphChap18::AVLTreeSeqStEphChap18::*;
     use crate::Types::Types::*;
 
     pub trait AVLTreeSeqStEphChap19Trait<T: StT> {
@@ -53,5 +53,3 @@ pub mod AVLTreeSeqStEphChap19 {
         }
     }
 }
-
-pub use AVLTreeSeqStEphChap19::AVLTreeSeqStEphChap19Trait;

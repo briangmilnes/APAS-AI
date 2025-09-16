@@ -25,15 +25,15 @@ pub mod ArraySeqStPerChap19 {
         /// BUG: APAS and gpt-5-hard algorithmic analyses differ.
         fn iterate<A: StT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
         /// APAS: Work Θ(|a|), Span Θ(lg|a|)
-        fn reduce<F>(a: &ArrayStPerS<T>, f: &F, id: T) -> T
-        where
-            F: Fn(&T, &T) -> T;
+        fn reduce(a: &ArrayStPerS<T>, f: impl Fn(&T, &T) -> T, id: T) -> T;
         /// APAS: Work Θ(|a|), Span Θ(lg|a|)
-        fn scan<F>(a: &ArrayStPerS<T>, f: &F, id: T) -> (ArrayStPerS<T>, T)
-        where
-            F: Fn(&T, &T) -> T;
+        fn scan(a: &ArrayStPerS<T>, f: impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T);
         /// APAS: Work Θ(1 + |a| + Σ |x|), Span Θ(1 + lg|a|)
         fn flatten(s: &ArrayStPerS<ArrayStPerS<T>>) -> ArrayStPerS<T>;
+        /// APAS: Work Θ(|a| + |updates|), Span Θ(lg|a|)
+        fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T>;
+        /// APAS: Work Θ(|a| + |updates|), Span Θ(lg|a|)
+        fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T>;
     }
 
     impl<T: StT> ArraySeqStPerChap19Trait<T> for ArrayStPerS<T> {
@@ -101,10 +101,7 @@ pub mod ArraySeqStPerChap19 {
                 )
             }
         }
-        fn reduce<F>(a: &ArrayStPerS<T>, f: &F, id: T) -> T
-        where
-            F: Fn(&T, &T) -> T,
-        {
+        fn reduce(a: &ArrayStPerS<T>, f: impl Fn(&T, &T) -> T, id: T) -> T {
             let n = a.length();
             if n == 0 {
                 return id;
@@ -125,10 +122,7 @@ pub mod ArraySeqStPerChap19 {
             );
             f(&l, &r)
         }
-        fn scan<F>(a: &ArrayStPerS<T>, f: &F, id: T) -> (ArrayStPerS<T>, T)
-        where
-            F: Fn(&T, &T) -> T,
-        {
+        fn scan(a: &ArrayStPerS<T>, f: impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T) {
             let n = a.length();
             if n == 0 {
                 (<ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(|_| id.clone(), 0), id)
@@ -167,6 +161,14 @@ pub mod ArraySeqStPerChap19 {
         }
         fn flatten(s: &ArrayStPerS<ArrayStPerS<T>>) -> ArrayStPerS<T> {
             <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::flatten(s)
+        }
+
+        fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {
+            <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::inject(a, updates)
+        }
+
+        fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {
+            <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::ninject(a, updates)
         }
 
     }

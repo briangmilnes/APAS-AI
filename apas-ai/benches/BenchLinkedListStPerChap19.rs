@@ -1,8 +1,8 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::Types::*;
-use apas_ai::LinkedListPer::LinkedListPer::LinkedListPerS;
-use apas_ai::LinkedListPerChap19::LinkedListPerChap19Trait;
-use apas_ai::LinkedListPer::LinkedListPer::LinkedListPerTrait;
+use apas_ai::LinkedListStPer::LinkedListStPer::LinkedListStPerS;
+use apas_ai::LinkedListStPerChap19Trait;
+use apas_ai::LinkedListStPer::LinkedListStPer::*;
 use std::time::Duration;
 
 fn bench_ll_per_ch19(c: &mut Criterion) {
@@ -13,10 +13,10 @@ fn bench_ll_per_ch19(c: &mut Criterion) {
     let n: N = 5_000;
     group.bench_with_input(BenchmarkId::new("append_then_iterate", n), &n, |b, &len| {
         b.iter(|| {
-            let a: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap19Trait<T>>::tabulate(|i| i, len);
-            let b2: LinkedListPerS<N> = <LinkedListPerS<N> as LinkedListPerChap19Trait<T>>::tabulate(|i| i + len, len);
-            let c = <LinkedListPerS<N> as LinkedListPerChap19Trait<T>>::append(&a, &b2);
-            black_box(<LinkedListPerS<N> as LinkedListPerTrait<N>>::length(&c))
+            let a: LinkedListStPerS<N> = <LinkedListStPerS<N> as LinkedListStPerChap19Trait<N>>::tabulate(|i| i, len);
+            let b2: LinkedListStPerS<N> = <LinkedListStPerS<N> as LinkedListStPerChap19Trait<N>>::tabulate(|i| i + len, len);
+            let c = <LinkedListStPerS<N> as LinkedListStPerChap19Trait<N>>::append(&a, &b2);
+            black_box(<LinkedListStPerS<N> as LinkedListStPerTrait<N>>::length(&c))
         })
     });
     group.finish();

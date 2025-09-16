@@ -14,12 +14,8 @@ pub mod LinkedListStPerChap19 {
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> LinkedListStPerS<T>;
         fn filter(a: &LinkedListStPerS<T>, f: impl Fn(&T) -> B) -> LinkedListStPerS<T>;
         fn iterate<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
-        fn reduce<F>(a: &LinkedListStPerS<T>, f: &F, id: T) -> T
-        where
-            F: Fn(&T, &T) -> T;
-        fn scan<F>(a: &LinkedListStPerS<T>, f: &F, id: T) -> (LinkedListStPerS<T>, T)
-        where
-            F: Fn(&T, &T) -> T;
+        fn reduce(a: &LinkedListStPerS<T>, f: impl Fn(&T, &T) -> T, id: T) -> T;
+        fn scan(a: &LinkedListStPerS<T>, f: impl Fn(&T, &T) -> T, id: T) -> (LinkedListStPerS<T>, T);
         fn flatten(s: &LinkedListStPerS<LinkedListStPerS<T>>) -> LinkedListStPerS<T>;
         fn inject(values: &LinkedListStPerS<T>, changes: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T>;
     }
@@ -69,17 +65,11 @@ pub mod LinkedListStPerChap19 {
             <LinkedListStPerS<T> as LinkedListStPerChap18Trait<T>>::iterate(a, f, x)
         }
 
-        fn reduce<F>(a: &LinkedListStPerS<T>, f: &F, id: T) -> T
-        where
-            F: Fn(&T, &T) -> T,
-        {
+        fn reduce(a: &LinkedListStPerS<T>, f: impl Fn(&T, &T) -> T, id: T) -> T {
             <LinkedListStPerS<T> as LinkedListStPerChap18Trait<T>>::reduce(a, f, id)
         }
 
-        fn scan<F>(a: &LinkedListStPerS<T>, f: &F, id: T) -> (LinkedListStPerS<T>, T)
-        where
-            F: Fn(&T, &T) -> T,
-        {
+        fn scan(a: &LinkedListStPerS<T>, f: impl Fn(&T, &T) -> T, id: T) -> (LinkedListStPerS<T>, T) {
             <LinkedListStPerS<T> as LinkedListStPerChap18Trait<T>>::scan(a, f, id)
         }
 

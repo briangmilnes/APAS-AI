@@ -1,11 +1,11 @@
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
 use apas_ai::Types::Types::*;
-use apas_ai::SetEphChap5_1::SetEphChap5_1::*;
-use apas_ai::DirGraphEphChap6_1::DirGraphEphChap6_1::*;
+use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
+use apas_ai::DirGraphStEphChap6_1::DirGraphStEphChap6_1::*;
 use std::time::Duration;
 
 fn bench_dirgraph_build(c: &mut Criterion) {
-    let mut group = c.benchmark_group("BenchDirGraphEphChap6_1");
+    let mut group = c.benchmark_group("BenchDirGraphStEphChap6_1");
     group.sample_size(10);
     group.warm_up_time(Duration::from_secs(1));
     group.measurement_time(Duration::from_secs(5));
@@ -15,9 +15,9 @@ fn bench_dirgraph_build(c: &mut Criterion) {
         b.iter(|| {
             let mut v: Set<N> = Set::empty();
             for i in 0..len { let _ = Set::insert(&mut v, i); }
-            let mut a: Set<(N,N)> = Set::empty();
-            for i in 0..len { let _ = Set::insert(&mut a, (i, (i+1)%len)); }
-            let g = DirGraphEph::FromSets(v, a);
+            let mut a: Set<Pair<N,N>> = Set::empty();
+            for i in 0..len { let _ = Set::insert(&mut a, Pair(i, (i+1)%len)); }
+            let g = DirGraphStEph::FromSets(v, a);
             black_box(g)
         })
     });

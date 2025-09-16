@@ -1,5 +1,19 @@
 ## APAS User Rules — Canonical (UserRules4)
 
+### Code Elegance and Minimalism
+
+#### Always choose the minimal solution
+- Extend existing types/traits rather than creating new ones
+- When sketching designs, start with the smallest possible change
+- Avoid over-engineering - most example code online is unnecessarily complex
+- Elegance comes from simplicity, not from adding features or abstractions
+
+#### Closure Mutation Patterns
+- **FnMut vs Fn**: When closures need to mutate captured variables, they require `FnMut` trait bounds
+- **Vec-based workaround**: If a function requires `Fn` but you need mutation (like `tabulate`), replace closure-based implementation with explicit `Vec` loops
+- **Pattern**: `let mut acc = init; for i in 0..n { acc = f(&acc, &data[i]); results.push(acc.clone()); }`
+- This avoids closure capture issues while maintaining functional semantics
+
 ### Imports and Module Scope
 
 #### Standard Library Imports and Result usage (module-top; no aliasing)
@@ -130,6 +144,10 @@ impl<T: Eq + Clone + Copy + Display + Debug + Sized> Foo<T> for Bar<T> {
 - StT: single-threaded elements = `Eq + Clone + Display + Debug + Sized`. Use on public data structures like `ArrayPerS<T: StT>`.
 - MtT: multi-threaded elements = `Sized + Send + Sync` only. Use in Chap. 19 when storing `Mutex<...>` inside structures.
   No custom wrapper types; use `std::sync::Mutex<T>` directly with `T: mtT`.
+- **Trait delegation rule**: `StT` and `MtT` have incompatible bounds and cannot cross-convert. Therefore:
+  - `*StPerChap19` traits must delegate to `*StPerChap18` traits (both use `StT`)
+  - `*MtPerChap19` traits must delegate to `*MtPerChap18` traits (both use `MtT`)
+  - Never delegate from Mt* to St* traits or vice versa due to incompatible trait bounds
 
 #### Trait-bound hoisting for chapter traits (Option A)
 
@@ -386,11 +404,11 @@ fn _MyMacro_type_checks() {
 
 #### Per‑TODO Execution (hard gate)
 - On setting a TODO `in_progress`: print Start via terminal:
-  - `date +"Start: %a %b %d %T %Z %Y" && date +%s`
+  - `date +"Start: %a %b %d %T %Z %Y"`
 - Execute exactly one synchronous action (or a clearly batched set): edits and/or 1 command, piped with `2>&1 | cat`. Reuse SAME Start for retries.
 - On finishing: print End via terminal:
-  - `date +"End: %a %b %d %T %Z %Y" && date +%s`
-- Compute and print Total (End_epoch − Start_epoch). Provide a brief summary. Immediately complete or fail the TODO; if another exists, set it `in_progress` and print its Start.
+  - `date +"End: %a %b %d %T %Z %Y"`
+- Provide a brief summary. Immediately complete or fail the TODO; if another exists, set it `in_progress` and print its Start.
 
 #### TODO Completion Guard (Last Item)
 - Same‑message order:

@@ -2,7 +2,7 @@
 
 pub mod AVLTreeSeqStPerChap19 {
     use crate::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::AVLTreeSeqStPerChap18::AVLTreeSeqStPerChap18Trait;
+    use crate::AVLTreeSeqStPerChap18::AVLTreeSeqStPerChap18::*;
     use crate::Types::Types::*;
     use std::fmt::{Debug, Display};
 

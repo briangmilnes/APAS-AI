@@ -130,6 +130,4 @@ impl<T: StT> LinkedListStEphChap18Trait<T> for LinkedListStEphS<T> {
 
 }
 
-pub use LinkedListStEphChap18::LinkedListStEphChap18Trait;
-
 
