@@ -6,7 +6,7 @@ pub mod ArraySeqMtPerChap19 {
     use crate::ArraySeqMtPer::ArraySeqMtPer::*;
     use crate::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
     use crate::Types::Types::*;
-    use std::fmt::{Display, Debug};
+    use std::fmt::{Debug, Display};
 
     pub trait ArraySeqMtPerChap19Trait<T: MtT> {
         // Chapter 18 wrappers
@@ -31,11 +31,7 @@ pub mod ArraySeqMtPerChap19 {
         /// APAS: Work Θ(1 + Σ (y,z) W(f(y,z))), Span Θ(1 + Σ S(f(y,z)))
         fn iterate<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
         /// APAS: Work Θ(|a|), Span Θ(|a|)
-        fn iteratePrefixes<A: MtT>(
-            a: &ArrayMtPerS<T>,
-            f: impl Fn(&A, &T) -> A,
-            x: A,
-        ) -> (ArrayMtPerS<A>, A);
+        fn iteratePrefixes<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArrayMtPerS<A>, A);
         /// APAS: Work Θ(1 + Σ (y,z) W(f(y,z))), Span Θ(lg|a| · max S(f(y,z)))
         fn reduce(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
         /// APAS: Work Θ(|a|), Span Θ(lg|a|)
@@ -43,11 +39,8 @@ pub mod ArraySeqMtPerChap19 {
         /// APAS: Work Θ(1 + |a| + Σ x∈a |x|), Span Θ(1 + lg|a|)
         fn flatten(ss: &ArrayMtPerS<ArrayMtPerS<T>>) -> ArrayMtPerS<T>;
         /// APAS: Work Θ(1 + W(f) · |a| lg|a|), Span Θ(1 + S(f) · lg^2|a|)
-        fn collect(
-            a: &ArrayMtPerS<Pair<T, T>>,
-            cmp: impl Fn(&T, &T) -> O,
-        ) -> ArrayMtPerS<Pair<T, ArrayMtPerS<T>>>;
-        
+        fn collect(a: &ArrayMtPerS<Pair<T, T>>, cmp: impl Fn(&T, &T) -> O) -> ArrayMtPerS<Pair<T, ArrayMtPerS<T>>>;
+
         // Chapter 19 specific functions
         fn inject(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T>;
         /// APAS: Work Θ(1), Span Θ(1)
@@ -101,11 +94,7 @@ pub mod ArraySeqMtPerChap19 {
             <ArrayMtPerS<T> as ArraySeqMtPerChap18Trait<T>>::iterate(a, f, x)
         }
 
-        fn iteratePrefixes<A: MtT>(
-            a: &ArrayMtPerS<T>,
-            f: impl Fn(&A, &T) -> A,
-            x: A,
-        ) -> (ArrayMtPerS<A>, A) {
+        fn iteratePrefixes<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArrayMtPerS<A>, A) {
             <ArrayMtPerS<T> as ArraySeqMtPerChap18Trait<T>>::iteratePrefixes(a, f, x)
         }
 
@@ -128,19 +117,16 @@ pub mod ArraySeqMtPerChap19 {
             ArrayMtPerS::from_vec(results)
         }
 
-        fn collect(
-            a: &ArrayMtPerS<Pair<T, T>>,
-            cmp: impl Fn(&T, &T) -> O,
-        ) -> ArrayMtPerS<Pair<T, ArrayMtPerS<T>>> {
+        fn collect(a: &ArrayMtPerS<Pair<T, T>>, cmp: impl Fn(&T, &T) -> O) -> ArrayMtPerS<Pair<T, ArrayMtPerS<T>>> {
             if a.length() == 0 {
                 return ArrayMtPerS::from_vec(vec![]);
             }
-            
+
             let mut groups: Vec<Pair<T, ArrayMtPerS<T>>> = Vec::new();
-            
+
             for i in 0..a.length() {
                 let Pair(key, value) = a.nth(i);
-                
+
                 // Find existing group or create new one
                 let mut found_group = false;
                 for group in &mut groups {
@@ -156,12 +142,12 @@ pub mod ArraySeqMtPerChap19 {
                         break;
                     }
                 }
-                
+
                 if !found_group {
                     groups.push(Pair(key.clone_mt(), ArrayMtPerS::from_vec(vec![value.clone_mt()])));
                 }
             }
-            
+
             ArrayMtPerS::from_vec(groups)
         }
 
@@ -183,11 +169,24 @@ pub mod ArraySeqMtPerChap19 {
         }
 
         fn AtomicWriteLowestChangeNumberWins(
-            _values_with_change_number: &ArrayMtPerS<Mutex<Pair<T, N>>>,
-            _changes: &ArrayMtPerS<Pair<N, T>>,
-            _change_index: N,
+            values_with_change_number: &ArrayMtPerS<Mutex<Pair<T, N>>>,
+            changes: &ArrayMtPerS<Pair<N, T>>,
+            change_index: N,
         ) {
-            // Stub implementation - complex atomic operations not needed for basic functionality
+            let nvals = values_with_change_number.length();
+            for i in 0..changes.length() {
+                let Pair(idx, val) = changes.nth(i);
+                let idxn = *idx;
+                if idxn >= nvals {
+                    continue;
+                }
+                let cell = values_with_change_number.nth(idxn);
+                let mut guard = cell.lock().unwrap();
+                if change_index < guard.1 {
+                    guard.0 = val.clone();
+                    guard.1 = change_index;
+                }
+            }
         }
 
         fn ninject_parallel2(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T> {
@@ -196,13 +195,24 @@ pub mod ArraySeqMtPerChap19 {
         }
 
         fn AtomicWriteHighestChangeNumberWins(
-            _values_with_change_number: &ArrayMtPerS<Mutex<Pair<T, N>>>,
-            _changes: &ArrayMtPerS<Pair<N, T>>,
-            _change_index: N,
+            values_with_change_number: &ArrayMtPerS<Mutex<Pair<T, N>>>,
+            changes: &ArrayMtPerS<Pair<N, T>>,
+            change_index: N,
         ) {
-            // Stub implementation - complex atomic operations not needed for basic functionality
+            let nvals = values_with_change_number.length();
+            for i in 0..changes.length() {
+                let Pair(idx, val) = changes.nth(i);
+                let idxn = *idx;
+                if idxn >= nvals {
+                    continue;
+                }
+                let cell = values_with_change_number.nth(idxn);
+                let mut guard = cell.lock().unwrap();
+                if change_index > guard.1 {
+                    guard.0 = val.clone();
+                    guard.1 = change_index;
+                }
+            }
         }
     }
 }
-
-

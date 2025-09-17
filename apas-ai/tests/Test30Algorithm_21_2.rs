@@ -1,16 +1,18 @@
 //! Algorithm 21.2 (3D Points) using ArraySeqPer: flatten of nested tabulates.
 
-use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
-use apas_ai::ArraySeqStPer;
+use apas_ai::Types::Types::*;
 
 /// Comprehension form: 〈(x,y,z): 0 ≤ x ≤ n−1, 1 ≤ y ≤ n, 2 ≤ z ≤ n+1〉
 /// Implemented as: flatten ∘ (tabulate_x (flatten ∘ (tabulate_y (tabulate_z))))
 /// gpt-5-hard: Work: Θ(n^3), Span: Θ(lg n)
 fn points3d_tab_flat(n: N) -> ArrayStPerS<Pair<N, Pair<N, N>>> {
-    if n == 0 { return ArraySeqStPer![]; }
+    if n == 0 {
+        return ArraySeqStPer![];
+    }
     let outer: ArrayStPerS<ArrayStPerS<Pair<N, Pair<N, N>>>> =
         <ArrayStPerS<ArrayStPerS<Pair<N, Pair<N, N>>>> as ArraySeqStPerChap19Trait<ArrayStPerS<Pair<N, Pair<N, N>>>>>::tabulate(
             |x| {
@@ -46,10 +48,14 @@ fn test_points3d_tab_flat_n1_single() {
 fn test_points3d_tab_flat_n2_values_and_order() {
     let s = points3d_tab_flat(2);
     let expect = ArraySeqStPer![
-        Pair(0,Pair(1,2)),Pair(0,Pair(1,3)),
-        Pair(0,Pair(2,2)),Pair(0,Pair(2,3)),
-        Pair(1,Pair(1,2)),Pair(1,Pair(1,3)),
-        Pair(1,Pair(2,2)),Pair(1,Pair(2,3)),
+        Pair(0, Pair(1, 2)),
+        Pair(0, Pair(1, 3)),
+        Pair(0, Pair(2, 2)),
+        Pair(0, Pair(2, 3)),
+        Pair(1, Pair(1, 2)),
+        Pair(1, Pair(1, 3)),
+        Pair(1, Pair(2, 2)),
+        Pair(1, Pair(2, 3)),
     ];
     assert_eq!(s.length(), 8);
     assert_eq!(s, expect);
@@ -59,7 +65,19 @@ fn test_points3d_tab_flat_n2_values_and_order() {
 fn test_points3d_tab_flat_iterator_order() {
     let s = points3d_tab_flat(2);
     let collected: Vec<Pair<N, Pair<N, N>>> = s.iter().copied().collect();
-    assert_eq!(collected, vec![Pair(0,Pair(1,2)),Pair(0,Pair(1,3)),Pair(0,Pair(2,2)),Pair(0,Pair(2,3)),Pair(1,Pair(1,2)),Pair(1,Pair(1,3)),Pair(1,Pair(2,2)),Pair(1,Pair(2,3))]);
+    assert_eq!(
+        collected,
+        vec![
+            Pair(0, Pair(1, 2)),
+            Pair(0, Pair(1, 3)),
+            Pair(0, Pair(2, 2)),
+            Pair(0, Pair(2, 3)),
+            Pair(1, Pair(1, 2)),
+            Pair(1, Pair(1, 3)),
+            Pair(1, Pair(2, 2)),
+            Pair(1, Pair(2, 3))
+        ]
+    );
 }
 
 #[test]

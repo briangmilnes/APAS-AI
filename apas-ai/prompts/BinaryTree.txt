@@ -1,0 +1,88 @@
+
+Build a BBTEph.rs from this description, test and perf.
+Remember no Vectors. Build a test file an a bench.
+
+We start with some basic definitions and terminology involving rooted and binary search
+trees. Recall first that a rooted tree is a tree with a distinguished root node.
+Definition 37.1 (Full Binary Tree). A full binary tree is an ordered rooted tree where each
+node is either a leaf , which has no children, or an internal node, which has a left child, a
+value, and a right child. This can be defined as the recursive type:
+type α tree = Leaf
+| Node of (tree × α × tree)
+where α is the type of the value stored at each internal node, and for an internal node
+Node(L, v , R), L is the left child, v is the value, and R is the right child.
+For a given node in a binary tree, we define the left subtree of the node as the subtree
+rooted at the left child, and the right subtree of the node as the subtree rooted at the right
+child.
+
+2. PRELIMINARIES 257
+Here we only consider storing values on the internal nodes and assume leaves have no
+values associated with them.
+It is useful to define different traversal orders on binary trees. A traversal starts at the
+root and inductively (recursively) traverses each subtree. The traversal order that is most
+important to us is the in-order traversal. It can be defined as follows:
+Definition 37.2. The in-order traversal of a full binary tree is given by the order of elements
+in the sequence returned by:
+inOrder T =
+case T of
+Leaf ⇒ 〈 〉
+| Node(L, k, R) ⇒ inOrder (L) ++ 〈 k 〉 ++ inOrder (R)
+i.e., it recursively puts the values from the left subtree first, then the key k at the node, and
+then the values from the right subtree. We assume leaves have no values.
+Another common order is the pre-order, which visits keys in the order given by:
+preOrder T =
+case T of
+Leaf ⇒ 〈 〉
+| Node(L, k, R) ⇒ 〈 k 〉 ++ preOrder (L) ++ preOrder (R)
+i.e., first the key, then the left subtree, and finally the right subtree.
+When the values (keys) we store at each node have a total ordering defined by a compar-
+ison <, we will use the following notation: For complete binary trees T, T1 and T2, and a
+value k, we use:
+T < k ≡ for all k′ ∈ T, k′ < k
+k < T ≡ for all k′ ∈ T, k < k′
+T1 < T2 ≡ for all k1 ∈ T1, k2 ∈ T2, k1 < k2
+
+We are now ready to define binary search trees.
+
+Build a BSTEph.rs from this description, test and perf.
+Remember no Vectors. Build a test file an a bench.
+
+
+Definition 37.3 (Binary Search Tree (BST)). Consider a set S taken from a total order de-
+fined by the comparison <. A binary search tree (BST) over S is a full binary tree T (with
+no leaf values) that satisfies the following conditions.
+1. There is a one-to-one mapping k(v) from internal tree nodes of T to elements in S,
+and
+2. inOrder (T ) is sorted by <.
+
+In the definition, the second condition is referred to as the BST property. It can be equiva-
+lently stated as: for all internal nodes (L, k, R) ∈ T, L < k < R (using our notation above).
+We often refer to the elements of S in a BST as keys, and use dom(T ) to indicate the domain
+(keys) in a BST T .
+We define the size of a BST S as the number of keys in the tree, and also write it as |S|. We
+define the depth of either a leaf or node in a BST, as the length of the path from the root
+to that leaf or node. The root always has depth 0. We define the height of a BST, denoted
+as h(T ), as the maximum depth of any leaf. An empty tree has height 0, and a tree with a
+single node has height 1
+
+3 Searching a BST
+The primary goal of a BST is to do fast searches for a particular key. Fortunately, it is
+relatively easy to search for a key in a BST, and even to find the next larger or smaller key
+in the tree. To find a particular key we can start at the root r and if k equals the key at the
+root, call it k′, then we have found our key, otherwise if k < k′, then we know that k cannot
+appear in the right subtree, so we only need to search the left subtree, and if k > k′, then
+we only have to search the right subtree. Continuing the search, we will either find the key
+or reach a leaf and conclude that the key is not in the tree. Based on this idea the following
+algorithm will return whether a key k is in a BST T .
+Algorithm 37.4 (Searching a BST).
+find T k =
+case T of
+Leaf ⇒ false
+| Node(L, k′, R) ⇒
+if (k = k′) then true
+else if (k < k′) then find L k
+else find R k
+
+
+
+

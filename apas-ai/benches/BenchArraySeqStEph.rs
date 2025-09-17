@@ -1,17 +1,21 @@
-use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
-use apas_ai::Types::Types::*;
 use apas_ai::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::ArraySeqStEphChap18Trait;
 use apas_ai::ArraySeqStEphChap19Trait;
+use apas_ai::Types::Types::*;
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;
 
 // Simple Linear Congruential Generator: x_{n+1} = (a * x_n + c) mod 2^32
-struct LinearCongruentialGenerator32 { state: u32 }
+struct LinearCongruentialGenerator32 {
+    state: u32,
+}
 
 impl LinearCongruentialGenerator32 {
-    fn new(seed: u32) -> LinearCongruentialGenerator32 { LinearCongruentialGenerator32 { state: seed } }
+    fn new(seed: u32) -> LinearCongruentialGenerator32 {
+        LinearCongruentialGenerator32 { state: seed }
+    }
     #[inline]
     fn next_N(&mut self) -> N {
         // Numerical Recipes parameters
@@ -42,12 +46,12 @@ fn bench_build_random_s(c: &mut Criterion) {
     group.finish();
 
     // Print HTML report URL (criterion html_reports is enabled in Cargo.toml)
-    let target_dir: PathBuf = env::var_os("CARGO_TARGET_DIR").map(PathBuf::from).unwrap_or_else(|| PathBuf::from("target"));
+    let target_dir: PathBuf = env::var_os("CARGO_TARGET_DIR")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from("target"));
     let report = target_dir.join("criterion").join("report").join("index.html");
     println!("HTML report: file://{}", report.display());
 }
 
 criterion_group!(benches, bench_build_random_s);
 criterion_main!(benches);
-
-

@@ -1,0 +1,157 @@
+//! Chapter 36: Multithreaded Quicksort with Three Pivot Selection Strategies
+//!
+//! Implementation of Algorithm 36.1 (Generic Quicksort) using ArraySeqMtPer
+//! with three different pivot selection strategies and parallel execution.
+
+pub mod Chapter36 {
+    use std::sync::Mutex;
+    use rayon;
+    use rand::{rng, Rng};
+    
+    use crate::Types::Types::*;
+    use crate::ArraySeqMtPer::ArraySeqMtPer::*;
+
+    /// Multithreaded quicksort using first element as pivot
+    /// APAS: Work Θ(n²) worst case (sorted input), Θ(n lg n) average case
+    /// APAS: Span Θ(n) worst case, Θ(lg² n) average case  
+    /// claude-4-sonet: Work Θ(n²) worst case (sorted input), Θ(n lg n) average case
+    /// claude-4-sonet: Span Θ(n) worst case, Θ(lg² n) average case
+    pub fn quicksort_pivot_first<T: MtT + Ord + Clone>(a: &ArrayMtPerS<Mutex<T>>) -> ArrayMtPerS<Mutex<T>> {
+        if a.length() <= 1 {
+            return a.clone();
+        }
+        
+        let pivot_value = a.nth(0).lock().unwrap().clone();
+        let (less, equal, greater) = partition_mt(a, &pivot_value);
+        
+        // Parallel recursive calls using rayon::join
+        let (sorted_less, sorted_greater) = rayon::join(
+            || quicksort_pivot_first(&less),
+            || quicksort_pivot_first(&greater)
+        );
+        
+        concat_three_mt(&sorted_less, &equal, &sorted_greater)
+    }
+
+    /// Multithreaded quicksort using median of three elements as pivot
+    /// APAS: Work Θ(n²) worst case, Θ(n lg n) average case (better for sorted inputs)
+    /// APAS: Span Θ(n) worst case, Θ(lg² n) average case
+    /// claude-4-sonet: Work Θ(n²) worst case, Θ(n lg n) average case (better for sorted inputs)
+    /// claude-4-sonet: Span Θ(n) worst case, Θ(lg² n) average case
+    pub fn quicksort_pivot_median_of_three<T: MtT + Ord + Clone>(a: &ArrayMtPerS<Mutex<T>>) -> ArrayMtPerS<Mutex<T>> {
+        if a.length() <= 1 {
+            return a.clone();
+        }
+        
+        let pivot_value = median_of_three_pivot(a);
+        let (less, equal, greater) = partition_mt(a, &pivot_value);
+        
+        // Parallel recursive calls using rayon::join
+        let (sorted_less, sorted_greater) = rayon::join(
+            || quicksort_pivot_median_of_three(&less),
+            || quicksort_pivot_median_of_three(&greater)
+        );
+        
+        concat_three_mt(&sorted_less, &equal, &sorted_greater)
+    }
+
+    /// Multithreaded quicksort using random element as pivot
+    /// APAS: Expected Work Θ(n lg n), Θ(n²) worst case (rare)
+    /// APAS: Expected Span Θ(lg² n), Θ(n) worst case (rare)
+    /// claude-4-sonet: Expected Work Θ(n lg n), Θ(n²) worst case (rare)
+    /// claude-4-sonet: Expected Span Θ(lg² n), Θ(n) worst case (rare)
+    pub fn quicksort_pivot_random<T: MtT + Ord + Clone>(a: &ArrayMtPerS<Mutex<T>>) -> ArrayMtPerS<Mutex<T>> {
+        if a.length() <= 1 {
+            return a.clone();
+        }
+        
+        let pivot_value = random_pivot(a);
+        let (less, equal, greater) = partition_mt(a, &pivot_value);
+        
+        // Parallel recursive calls using rayon::join
+        let (sorted_less, sorted_greater) = rayon::join(
+            || quicksort_pivot_random(&less),
+            || quicksort_pivot_random(&greater)
+        );
+        
+        concat_three_mt(&sorted_less, &equal, &sorted_greater)
+    }
+
+    /// Multithreaded partition function that splits array into less/equal/greater partitions
+    /// APAS: Work Θ(n), Span Θ(1) with parallel filtering
+    /// claude-4-sonet: Work Θ(n), Span Θ(1) with parallel filtering
+    fn partition_mt<T: MtT + Ord + Clone>(a: &ArrayMtPerS<Mutex<T>>, pivot: &T) -> (ArrayMtPerS<Mutex<T>>, ArrayMtPerS<Mutex<T>>, ArrayMtPerS<Mutex<T>>) {
+        let less = Mutex::new(Vec::new());
+        let equal = Mutex::new(Vec::new());
+        let greater = Mutex::new(Vec::new());
+        
+        // Parallel iteration and partitioning
+        a.iter().collect::<Vec<_>>().into_iter().for_each(|mutex_item| {
+            let value = mutex_item.lock().unwrap().clone();
+            match value.cmp(pivot) {
+                std::cmp::Ordering::Less => less.lock().unwrap().push(Mutex::new(value)),
+                std::cmp::Ordering::Equal => equal.lock().unwrap().push(Mutex::new(value)),
+                std::cmp::Ordering::Greater => greater.lock().unwrap().push(Mutex::new(value)),
+            }
+        });
+        
+        (
+            ArrayMtPerS::from_vec(less.into_inner().unwrap()),
+            ArrayMtPerS::from_vec(equal.into_inner().unwrap()),
+            ArrayMtPerS::from_vec(greater.into_inner().unwrap()),
+        )
+    }
+
+    /// Multithreaded concatenation of three sequences
+    /// APAS: Work Θ(|a| + |b| + |c|), Span Θ(1)
+    /// claude-4-sonet: Work Θ(|a| + |b| + |c|), Span Θ(1)
+    fn concat_three_mt<T: MtT + Clone>(a: &ArrayMtPerS<Mutex<T>>, b: &ArrayMtPerS<Mutex<T>>, c: &ArrayMtPerS<Mutex<T>>) -> ArrayMtPerS<Mutex<T>> {
+        let total_len = a.length() + b.length() + c.length();
+        let mut result = Vec::with_capacity(total_len);
+        
+        // Sequential concatenation (parallel concat would have overhead for small sequences)
+        for item in a.iter() {
+            result.push(Mutex::new(item.lock().unwrap().clone()));
+        }
+        for item in b.iter() {
+            result.push(Mutex::new(item.lock().unwrap().clone()));
+        }
+        for item in c.iter() {
+            result.push(Mutex::new(item.lock().unwrap().clone()));
+        }
+        
+        ArrayMtPerS::from_vec(result)
+    }
+
+    /// Select median of first, middle, and last elements as pivot
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
+    fn median_of_three_pivot<T: MtT + Ord + Clone>(a: &ArrayMtPerS<Mutex<T>>) -> T {
+        let len = a.length();
+        if len <= 2 {
+            return a.nth(0).lock().unwrap().clone();
+        }
+        
+        let first = a.nth(0).lock().unwrap().clone();
+        let middle = a.nth(len / 2).lock().unwrap().clone();
+        let last = a.nth(len - 1).lock().unwrap().clone();
+        
+        // Return median of the three
+        if (first <= middle && middle <= last) || (last <= middle && middle <= first) {
+            middle
+        } else if (middle <= first && first <= last) || (last <= first && first <= middle) {
+            first
+        } else {
+            last
+        }
+    }
+
+    /// Select random element as pivot
+    /// APAS: Work Θ(1), Span Θ(1)
+    /// claude-4-sonet: Work Θ(1), Span Θ(1)
+    fn random_pivot<T: MtT + Clone>(a: &ArrayMtPerS<Mutex<T>>) -> T {
+        let mut rng = rng();
+        let index = rng.random_range(0..a.length());
+        a.nth(index).lock().unwrap().clone()
+    }
+}

@@ -1,13 +1,15 @@
 //! Problem 21.1 (Points in 2D) tests and construction using ArraySeqPer.
 
-use apas_ai::Types::Types::*;
-use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPer;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::Types::Types::*;
 
 /// Construct the sequence of 2D points (x, y) with 0 ≤ x < n and 1 ≤ y < n,
 /// ordered by x major, then y.
 fn points2d(n: N) -> ArrayStPerS<Pair<N, N>> {
-    if n == 0 { return ArraySeqStPer![]; }
+    if n == 0 {
+        return ArraySeqStPer![];
+    }
     let len = n * (n - 1);
     let mut v: Vec<Pair<N, N>> = Vec::with_capacity(len);
     for x in 0..n {
@@ -44,7 +46,20 @@ fn test_points2d_n2_basic_values() {
 fn test_points2d_iterator_in_order() {
     let s = points2d(4);
     let collected: Vec<Pair<N, N>> = s.iter().copied().collect();
-    let expect = vec![Pair(0,1),Pair(0,2),Pair(0,3),Pair(1,1),Pair(1,2),Pair(1,3),Pair(2,1),Pair(2,2),Pair(2,3),Pair(3,1),Pair(3,2),Pair(3,3)];
+    let expect = vec![
+        Pair(0, 1),
+        Pair(0, 2),
+        Pair(0, 3),
+        Pair(1, 1),
+        Pair(1, 2),
+        Pair(1, 3),
+        Pair(2, 1),
+        Pair(2, 2),
+        Pair(2, 3),
+        Pair(3, 1),
+        Pair(3, 2),
+        Pair(3, 3),
+    ];
     assert_eq!(collected, expect);
 }
 

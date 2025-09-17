@@ -1,9 +1,9 @@
 //! StEphemeral (mutable) Array sequence variants. Mirrors `ArraySeq` under distinct names.
 
 pub mod ArraySeqStEph {
-    
+
     use std::fmt;
-    use std::fmt::{Debug, Formatter, Display};
+    use std::fmt::{Debug, Display, Formatter};
     use std::slice::Iter;
 
     use crate::Types::Types::*;
@@ -90,7 +90,9 @@ pub mod ArraySeqStEph {
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+        pub fn iter(&self) -> Iter<'_, T> {
+            self.data.iter()
+        }
     }
 
     impl<T: StT> PartialEq for ArraySeqStEphS<T> {
@@ -120,7 +122,9 @@ pub mod ArraySeqStEph {
         fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
             write!(f, "[")?;
             for i in 0..self.length() {
-                if i > 0 { write!(f, ", ")?; }
+                if i > 0 {
+                    write!(f, ", ")?;
+                }
                 write!(f, "{}", self.nth(i))?;
             }
             write!(f, "]")
@@ -166,20 +170,12 @@ pub mod ArraySeqStEph {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(&self) -> B {
-            if self.data.len() == 0 {
-                B::True
-            } else {
-                B::False
-            }
+            if self.data.len() == 0 { B::True } else { B::False }
         }
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(&self) -> B {
-            if self.data.len() == 1 {
-                B::True
-            } else {
-                B::False
-            }
+            if self.data.len() == 1 { B::True } else { B::False }
         }
         /// APAS: Work Θ(length), Span Θ(1)
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
@@ -187,12 +183,11 @@ pub mod ArraySeqStEph {
             self.subseq_copy(start, length)
         }
     }
-}
 
-
-#[macro_export]
-macro_rules! ArraySeqStEph {
-    () => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(Vec::new()) };
-    ($x:expr; $n:expr) => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$x; $n]) };
-    ($($x:expr),* $(,)?) => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$($x),*]) };
+    #[macro_export]
+    macro_rules! ArraySeqStEph {
+        () => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(Vec::new()) };
+        ($x:expr; $n:expr) => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$x; $n]) };
+        ($($x:expr),* $(,)?) => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$($x),*]) };
+    }
 }

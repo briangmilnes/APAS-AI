@@ -14,7 +14,9 @@ pub mod ArraySeqStPer {
 
     /// Fixed-length sequence backed by `Box<[T]>` (persistent/immutable variant).
     #[derive(Clone, PartialEq, Eq, PartialOrd, Ord)]
-    pub struct ArrayStPerS<T: StT> { data: Box<[T]> }
+    pub struct ArrayStPerS<T: StT> {
+        data: Box<[T]>,
+    }
 
     /// Sequence trait for `ArrayStPerS<T>` with immutable operations.
     pub trait ArraySeqStPerTrait<T: StT + Clone> {
@@ -32,7 +34,9 @@ pub mod ArraySeqStPer {
         fn empty() -> Self;
         /// APAS: Work Θ(1) in ephemeral arrays; persistent update requires copy. Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str> where Self: Sized;
+        fn set(&self, index: N, item: T) -> Result<Self, &'static str>
+        where
+            Self: Sized;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(item: T) -> Self;
@@ -44,7 +48,9 @@ pub mod ArraySeqStPer {
         fn isSingleton(&self) -> B;
         /// APAS: Work Θ(length), Span Θ(1)
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn subseq_copy(&self, start: N, length: N) -> Self where Self: Sized;
+        fn subseq_copy(&self, start: N, length: N) -> Self
+        where
+            Self: Sized;
     }
 
     impl<T: StT> ArrayStPerS<T> {
@@ -59,24 +65,53 @@ pub mod ArraySeqStPer {
 
         /// Convenience: build from a Vec without extra copies when capacity==len.
         /// APAS: Work Θ(n) worst case, Span Θ(1)
-        pub fn from_vec(v: Vec<T>) -> Self { ArrayStPerS { data: v.into_boxed_slice() } }
+        pub fn from_vec(v: Vec<T>) -> Self {
+            ArrayStPerS {
+                data: v.into_boxed_slice(),
+            }
+        }
 
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
-        pub fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }
+        pub fn iter(&self) -> Iter<'_, T> {
+            self.data.iter()
+        }
+        pub fn iter_mut(&mut self) -> IterMut<'_, T> {
+            self.data.iter_mut()
+        }
 
-        pub fn empty() -> Self { ArrayStPerS { data: Vec::new().into_boxed_slice() } }
-        pub fn singleton(item: T) -> Self { ArrayStPerS { data: vec![item].into_boxed_slice() } }
-        pub fn new(length: N, init_value: T) -> Self where T: Clone { Self::from_vec(vec![init_value; length]) }
-        pub fn length(&self) -> N { self.data.len() }
-        pub fn nth(&self, index: N) -> &T { &self.data[index] }
-        pub fn set(&self, index: N, item: T) -> Result<Self, &'static str> where T: Clone {
-            if index >= self.data.len() { return Err("Index out of bounds"); }
+        pub fn empty() -> Self {
+            ArrayStPerS {
+                data: Vec::new().into_boxed_slice(),
+            }
+        }
+        pub fn singleton(item: T) -> Self {
+            ArrayStPerS {
+                data: vec![item].into_boxed_slice(),
+            }
+        }
+        pub fn new(length: N, init_value: T) -> Self
+        where
+            T: Clone,
+        {
+            Self::from_vec(vec![init_value; length])
+        }
+        pub fn length(&self) -> N {
+            self.data.len()
+        }
+        pub fn nth(&self, index: N) -> &T {
+            &self.data[index]
+        }
+        pub fn set(&self, index: N, item: T) -> Result<Self, &'static str>
+        where
+            T: Clone,
+        {
+            if index >= self.data.len() {
+                return Err("Index out of bounds");
+            }
             let mut v: Vec<T> = self.data.to_vec();
             v[index] = item;
             Ok(Self::from_vec(v))
         }
     }
-
 
     impl<T: StT + Debug> Debug for ArrayStPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -89,7 +124,9 @@ pub mod ArraySeqStPer {
         fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
             write!(f, "[")?;
             for (i, x) in self.iter().enumerate() {
-                if i > 0 { write!(f, ", ")?; }
+                if i > 0 {
+                    write!(f, ", ")?;
+                }
                 write!(f, "{}", x)?;
             }
             write!(f, "]")
@@ -100,27 +137,42 @@ pub mod ArraySeqStPer {
         fn new(length: N, init_value: T) -> Self {
             Self::from_vec(vec![init_value; length])
         }
-        fn length(&self) -> N { self.data.len() }
-        fn nth(&self, index: N) -> &T { &self.data[index] }
-        fn empty() -> Self { Self::from_vec(Vec::new()) }
+        fn length(&self) -> N {
+            self.data.len()
+        }
+        fn nth(&self, index: N) -> &T {
+            &self.data[index]
+        }
+        fn empty() -> Self {
+            Self::from_vec(Vec::new())
+        }
         fn set(&self, index: N, item: T) -> Result<Self, &'static str> {
-            if index >= self.data.len() { return Err("Index out of bounds"); }
+            if index >= self.data.len() {
+                return Err("Index out of bounds");
+            }
             let mut v: Vec<T> = self.data.to_vec();
             v[index] = item;
             Ok(Self::from_vec(v))
         }
-        fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
-        fn isEmpty(&self) -> B { if self.data.len() == 0 { B::True } else { B::False } }
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
+        fn singleton(item: T) -> Self {
+            Self::from_vec(vec![item])
+        }
+        fn isEmpty(&self) -> B {
+            if self.data.len() == 0 { B::True } else { B::False }
+        }
+        fn isSingleton(&self) -> B {
+            if self.data.len() == 1 { B::True } else { B::False }
+        }
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.data.len();
             let s = start.min(n);
             let e = start.saturating_add(length).min(n);
-            if e <= s { return Self::empty(); }
+            if e <= s {
+                return Self::empty();
+            }
             let slice = &self.data[s..e];
             Self::from_vec(slice.to_vec())
         }
-
     }
 
     #[macro_export]

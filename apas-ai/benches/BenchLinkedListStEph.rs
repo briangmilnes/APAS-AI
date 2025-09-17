@@ -1,6 +1,6 @@
-use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
-use apas_ai::Types::Types::*;
 use apas_ai::LinkedListStEph::LinkedListStEph::*;
+use apas_ai::Types::Types::*;
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_ll_eph(c: &mut Criterion) {
@@ -12,7 +12,9 @@ fn bench_ll_eph(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("new_then_set", n), &n, |b, &len| {
         b.iter(|| {
             let mut s: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::new(len, 0);
-            for i in 0..len { let _ = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::set(&mut s, i, i); }
+            for i in 0..len {
+                let _ = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::set(&mut s, i, i);
+            }
             black_box(<LinkedListStEphS<N> as LinkedListStEphTrait<N>>::length(&s))
         })
     });
@@ -21,5 +23,3 @@ fn bench_ll_eph(c: &mut Criterion) {
 
 criterion_group!(benches, bench_ll_eph);
 criterion_main!(benches);
-
-

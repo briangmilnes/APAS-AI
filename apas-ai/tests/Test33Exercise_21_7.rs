@@ -1,15 +1,17 @@
 //! Exercise 21.7 (Comprehension with Conditionals): even elements of a paired with vowels of b.
 
-use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
-use apas_ai::ArraySeqStPer;
+use apas_ai::Types::Types::*;
 
-fn is_even(x: &N) -> B { if *x % 2 == 0 { B::True } else { B::False } }
+fn is_even(x: &N) -> B {
+    if *x % 2 == 0 { B::True } else { B::False }
+}
 fn is_vowel(c: &char) -> B {
     match *c {
-        'a'|'e'|'i'|'o'|'u'|'A'|'E'|'I'|'O'|'U' => B::True,
+        'a' | 'e' | 'i' | 'o' | 'u' | 'A' | 'E' | 'I' | 'O' | 'U' => B::True,
         _ => B::False,
     }
 }
@@ -18,8 +20,9 @@ fn is_vowel(c: &char) -> B {
 /// gpt-5-hard: Work: Θ(|a|·|b|), Span: Θ(lg |a|)
 fn pair_even_with_vowels(a: &ArrayStPerS<N>, b: &ArrayStPerS<char>) -> ArrayStPerS<Pair<N, char>> {
     let filtered_a: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::filter(a, |x| is_even(x));
-    let filtered_b: ArrayStPerS<char> = <ArrayStPerS<char> as ArraySeqStPerChap18Trait<char>>::filter(b, |y| is_vowel(y));
-    
+    let filtered_b: ArrayStPerS<char> =
+        <ArrayStPerS<char> as ArraySeqStPerChap18Trait<char>>::filter(b, |y| is_vowel(y));
+
     // Use a simple nested loop approach with Vec and then convert
     let mut result_vec: Vec<Pair<N, char>> = Vec::new();
     for i in 0..filtered_a.length() {

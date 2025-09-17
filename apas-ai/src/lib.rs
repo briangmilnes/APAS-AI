@@ -63,6 +63,14 @@ pub use crate::ArraySeqStEphChap18::ArraySeqStEphChap18::*;
 pub mod ArraySeqStEphChap19;
 pub use crate::ArraySeqStEphChap19::ArraySeqStEphChap19::*;
 
+// Multithreaded ephemeral arrays
+pub mod ArraySeqMtEph;
+pub use crate::ArraySeqMtEph::ArraySeqMtEph::*;
+pub mod ArraySeqMtEphChap18;
+pub use crate::ArraySeqMtEphChap18::ArraySeqMtEphChap18::*;
+pub mod ArraySeqMtEphChap19;
+pub use crate::ArraySeqMtEphChap19::ArraySeqMtEphChap19::*;
+
 pub mod AVLTreeSeqStPer;
 pub use crate::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 pub mod AVLTreeSeqStPerChap18;
@@ -76,3 +84,15 @@ pub mod AVLTreeSeqStEphChap18;
 pub use crate::AVLTreeSeqStEphChap18::AVLTreeSeqStEphChap18::*;
 pub mod AVLTreeSeqStEphChap19;
 pub use crate::AVLTreeSeqStEphChap19::AVLTreeSeqStEphChap19::*;
+
+// Chapter 36 quicksorts
+pub mod Chapter36St;
+pub use crate::Chapter36St::Chapter36St::*;
+pub mod Chapter36Mt;
+pub use crate::Chapter36Mt::Chapter36Mt::*;
+
+// Chapter 37 binary trees
+pub mod BBTEph;
+pub use crate::BBTEph::BBTEph::*;
+pub mod BSTEph;
+pub use crate::BSTEph::BSTEph::*;

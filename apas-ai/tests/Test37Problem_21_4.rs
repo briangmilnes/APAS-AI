@@ -1,10 +1,10 @@
 //! Problem 21.4 (Cartesian Product) tests.
 
-use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
-use apas_ai::ArraySeqStPer;
+use apas_ai::Types::Types::*;
 
 /// Cartesian product by explicit loops (x-major then y).
 /// gpt-5-hard: Work: Θ(|a|·|b|), Span: Θ(|a|·|b|)
@@ -22,9 +22,15 @@ fn cartesian_loops(a: &ArrayStPerS<N>, b: &ArrayStPerS<&'static str>) -> ArraySt
 /// gpt-5-hard: Work: Θ(|a|·|b|), Span: Θ(lg |a|)
 fn cartesian_tab_flat(a: &ArrayStPerS<N>, b: &ArrayStPerS<&'static str>) -> ArrayStPerS<Pair<N, &'static str>> {
     let nested: ArrayStPerS<ArrayStPerS<Pair<N, &'static str>>> =
-        <ArrayStPerS<ArrayStPerS<Pair<N, &'static str>>> as ArraySeqStPerChap19Trait<ArrayStPerS<Pair<N, &'static str>>>>::tabulate(
-            |i| <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap19Trait<Pair<N, &'static str>>>::tabulate(
-                |j| Pair(*a.nth(i), *b.nth(j)), b.length()),
+        <ArrayStPerS<ArrayStPerS<Pair<N, &'static str>>> as ArraySeqStPerChap19Trait<
+            ArrayStPerS<Pair<N, &'static str>>,
+        >>::tabulate(
+            |i| {
+                <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap19Trait<Pair<N, &'static str>>>::tabulate(
+                    |j| Pair(*a.nth(i), *b.nth(j)),
+                    b.length(),
+                )
+            },
             a.length(),
         );
     <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap18Trait<Pair<N, &'static str>>>::flatten(&nested)
@@ -35,7 +41,14 @@ fn test_cartesian_loops_basic() {
     let a = ArraySeqStPer![1, 2];
     let b = ArraySeqStPer!["3.0", "4.0", "5.0"];
     let s = cartesian_loops(&a, &b);
-    let expect = ArraySeqStPer![Pair(1, "3.0"), Pair(1, "4.0"), Pair(1, "5.0"), Pair(2, "3.0"), Pair(2, "4.0"), Pair(2, "5.0")];
+    let expect = ArraySeqStPer![
+        Pair(1, "3.0"),
+        Pair(1, "4.0"),
+        Pair(1, "5.0"),
+        Pair(2, "3.0"),
+        Pair(2, "4.0"),
+        Pair(2, "5.0")
+    ];
     assert_eq!(s, expect);
 }
 
@@ -44,7 +57,14 @@ fn test_cartesian_tab_flat_basic() {
     let a = ArraySeqStPer![1, 2];
     let b = ArraySeqStPer!["3.0", "4.0", "5.0"];
     let s = cartesian_tab_flat(&a, &b);
-    let expect = ArraySeqStPer![Pair(1, "3.0"), Pair(1, "4.0"), Pair(1, "5.0"), Pair(2, "3.0"), Pair(2, "4.0"), Pair(2, "5.0")];
+    let expect = ArraySeqStPer![
+        Pair(1, "3.0"),
+        Pair(1, "4.0"),
+        Pair(1, "5.0"),
+        Pair(2, "3.0"),
+        Pair(2, "4.0"),
+        Pair(2, "5.0")
+    ];
     assert_eq!(s, expect);
 }
 

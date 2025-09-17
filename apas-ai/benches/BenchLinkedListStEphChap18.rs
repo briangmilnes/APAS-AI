@@ -1,7 +1,7 @@
-use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, black_box};
-use apas_ai::Types::Types::*;
 use apas_ai::LinkedListStEph::LinkedListStEph::*;
 use apas_ai::LinkedListStEphChap18Trait;
+use apas_ai::Types::Types::*;
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_ll_eph_ch18(c: &mut Criterion) {
@@ -14,7 +14,10 @@ fn bench_ll_eph_ch18(c: &mut Criterion) {
         b.iter(|| {
             let s: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphChap18Trait<N>>::tabulate(|i| i, len);
             let m: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphChap18Trait<N>>::map(&s, |x| x + 1);
-            black_box((<LinkedListStEphS<N> as LinkedListStEphTrait<N>>::length(&s), <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::length(&m)))
+            black_box((
+                <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::length(&s),
+                <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::length(&m),
+            ))
         })
     });
     group.finish();

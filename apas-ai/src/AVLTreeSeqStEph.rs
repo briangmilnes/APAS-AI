@@ -1,253 +1,237 @@
 //! StEphemeral (mutable) implicit-order AVL tree sequence.
 
 pub mod AVLTreeSeqStEph {
-use crate::ArraySeqStEph::ArraySeqStEph::*;
-use crate::Types::Types::*;
-use std::fmt::Debug;
+    use crate::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Types::Types::*;
+    use std::fmt::Debug;
 
-type Link<T> = Option<Box<AVLTreeNode<T>>>;
+    type Link<T> = Option<Box<AVLTreeNode<T>>>;
 
-pub struct AVLTreeNode<T: StT> {
-    pub value: T,
-    pub height: N,
-    pub left_size: N,
-    pub right_size: N,
-    pub left: Link<T>,
-    pub right: Link<T>,
-    pub index: N,
-}
+    pub struct AVLTreeNode<T: StT> {
+        pub value: T,
+        pub height: N,
+        pub left_size: N,
+        pub right_size: N,
+        pub left: Link<T>,
+        pub right: Link<T>,
+        pub index: N,
+    }
 
-impl<T: StT> AVLTreeNode<T> {
-    fn new(value: T, index: N) -> Self {
-        AVLTreeNode {
-            value,
-            height: 1,
-            left_size: 0,
-            right_size: 0,
-            left: None,
-            right: None,
-            index,
-        }
-    }
-}
-
-pub struct AVLTreeSeqStEphS<T: StT> {
-    pub root: Link<T>,
-    pub next_key: N,
-}
-
-pub trait AVLTreeSeqStEphTrait<T: StT> {
-    /// APAS: Work Θ(1), Span Θ(1)
-    /// claude-4-sonet: Work Θ(1), Span Θ(1)
-    fn empty() -> Self;
-    /// APAS: Work Θ(1), Span Θ(1)
-    /// claude-4-sonet: Work Θ(1), Span Θ(1)
-    fn new() -> Self;
-    /// APAS: Work Θ(1), Span Θ(1)
-    /// claude-4-sonet: Work Θ(1), Span Θ(1)
-    fn length(&self) -> N;
-    /// APAS: Work Θ(lg(n)), Span Θ(lg(n))
-    /// claude-4-sonet: Work Θ(lg(n)), Span Θ(lg(n))
-    fn nth(&self, index: N) -> &T;
-    /// APAS: Work Θ(lg(n)), Span Θ(lg(n))
-    /// claude-4-sonet: Work Θ(lg(n)), Span Θ(lg(n))
-    fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
-    /// APAS: Work Θ(1), Span Θ(1)
-    /// claude-4-sonet: Work Θ(1), Span Θ(1)
-    fn singleton(item: T) -> Self;
-    /// APAS: Work Θ(1), Span Θ(1)
-    /// claude-4-sonet: Work Θ(1), Span Θ(1)
-    fn isEmpty(&self) -> B;
-    /// APAS: Work Θ(1), Span Θ(1)
-    /// claude-4-sonet: Work Θ(1), Span Θ(1)
-    fn isSingleton(&self) -> B;
-    /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|))
-    /// claude-4-sonet: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|))
-    fn subseq_copy(&self, start: N, length: N) -> Self;
-}
-
-impl<T: StT> AVLTreeSeqStEphS<T> {
-    pub fn new_root() -> Self {
-        AVLTreeSeqStEphS {
-            root: None,
-            next_key: 0,
-        }
-    }
-    pub fn new() -> Self {
-        Self::new_root()
-    }
-    pub fn update(&mut self, (index, item): (N, T)) -> &mut AVLTreeSeqStEphS<T> {
-        let _ = <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::set(self, index, item);
-        self
-    }
-    pub fn from_vec(values: Vec<T>) -> AVLTreeSeqStEphS<T>
-    {
-        let length = values.len();
-        let mut t = AVLTreeSeqStEphS::new_root();
-        for (i, v) in values.into_iter().enumerate() {
-            t.root = insert_at_link(t.root.take(), i, v, &mut t.next_key);
-        }
-        debug_assert!(t.length() == length);
-        t
-    }
-    pub fn to_arrayseq(&self) -> ArraySeqStEphS<T>
-    {
-        let len = self.length();
-        if len == 0 {
-            return <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty();
-        }
-        let mut it = self.iter();
-        let first = it
-            .next()
-            .expect("length > 0 but iter was empty")
-            .clone();
-        let mut out = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::new(len, first.clone());
-        let _ = out.set(0, first);
-        let mut index: N = 1;
-        for v in it {
-            let _ = out.set(index, v.clone());
-            index += 1;
-        }
-        out
-    }
-    pub fn iter<'a>(&'a self) -> AVLTreeSeqIterStEph<'a, T> {
-        AVLTreeSeqIterStEph::new(&self.root)
-    }
-    pub fn push_back(&mut self, value: T) {
-        let len = self.length();
-        let node = insert_at_link(self.root.take(), len, value, &mut self.next_key);
-        self.root = node;
-    }
-    pub fn contains_value(&self, target: &T) -> B
-    {
-        for v in self.iter() {
-            if v == target {
-                return B::True;
+    impl<T: StT> AVLTreeNode<T> {
+        fn new(value: T, index: N) -> Self {
+            AVLTreeNode {
+                value,
+                height: 1,
+                left_size: 0,
+                right_size: 0,
+                left: None,
+                right: None,
+                index,
             }
         }
-        B::False
     }
-    pub fn insert_value(&mut self, value: T) {
-        self.push_back(value);
+
+    pub struct AVLTreeSeqStEphS<T: StT> {
+        pub root: Link<T>,
+        pub next_key: N,
     }
-    pub fn delete_value(&mut self, target: &T) -> bool
-    {
-        let len = self.length();
-        let mut found_index: Option<N> = None;
-        for i in 0..len {
-            if self.nth(i) == target {
-                found_index = Some(i);
-                break;
+
+    pub trait AVLTreeSeqStEphTrait<T: StT> {
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn empty() -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn new() -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn length(&self) -> N;
+        /// APAS: Work Θ(lg(n)), Span Θ(lg(n))
+        /// claude-4-sonet: Work Θ(lg(n)), Span Θ(lg(n))
+        fn nth(&self, index: N) -> &T;
+        /// APAS: Work Θ(lg(n)), Span Θ(lg(n))
+        /// claude-4-sonet: Work Θ(lg(n)), Span Θ(lg(n))
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn singleton(item: T) -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn isEmpty(&self) -> B;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn isSingleton(&self) -> B;
+        /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|))
+        /// claude-4-sonet: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|))
+        fn subseq_copy(&self, start: N, length: N) -> Self;
+    }
+
+    impl<T: StT> AVLTreeSeqStEphS<T> {
+        pub fn new_root() -> Self {
+            AVLTreeSeqStEphS {
+                root: None,
+                next_key: 0,
             }
         }
-        if let Some(idx) = found_index {
-            let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
-            for i in 0..idx {
-                out_vec.push(self.nth(i).clone());
-            }
-            for i in (idx + 1)..len {
-                out_vec.push(self.nth(i).clone());
-            }
-            *self = AVLTreeSeqStEphS::from_vec(out_vec);
-            true
-        } else {
-            false
+        pub fn new() -> Self {
+            Self::new_root()
         }
-    }
-}
-
-impl<T: StT> AVLTreeSeqStEphTrait<T> for AVLTreeSeqStEphS<T> {
-    fn empty() -> Self {
-        AVLTreeSeqStEphS::new_root()
-    }
-
-    fn new() -> Self {
-        AVLTreeSeqStEphS::new_root()
-    }
-
-    fn length(&self) -> N {
-        size_link(&self.root)
-    }
-
-    fn nth(&self, index: N) -> &T {
-        nth_link(&self.root, index)
-    }
-
-    fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
-        set_link(&mut self.root, index, item)?;
-        Ok(self)
-    }
-
-    fn singleton(item: T) -> Self {
-        let mut t = AVLTreeSeqStEphS::new_root();
-        t.root = insert_at_link(t.root.take(), 0, item, &mut t.next_key);
-        t
-    }
-
-    fn isEmpty(&self) -> B {
-        if self.length() == 0 {
-            B::True
-        } else {
+        pub fn update(&mut self, (index, item): (N, T)) -> &mut AVLTreeSeqStEphS<T> {
+            let _ = <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::set(self, index, item);
+            self
+        }
+        pub fn from_vec(values: Vec<T>) -> AVLTreeSeqStEphS<T> {
+            let length = values.len();
+            let mut t = AVLTreeSeqStEphS::new_root();
+            for (i, v) in values.into_iter().enumerate() {
+                t.root = insert_at_link(t.root.take(), i, v, &mut t.next_key);
+            }
+            debug_assert!(t.length() == length);
+            t
+        }
+        pub fn to_arrayseq(&self) -> ArraySeqStEphS<T> {
+            let len = self.length();
+            if len == 0 {
+                return <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty();
+            }
+            let mut it = self.iter();
+            let first = it.next().expect("length > 0 but iter was empty").clone();
+            let mut out = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::new(len, first.clone());
+            let _ = out.set(0, first);
+            let mut index: N = 1;
+            for v in it {
+                let _ = out.set(index, v.clone());
+                index += 1;
+            }
+            out
+        }
+        pub fn iter<'a>(&'a self) -> AVLTreeSeqIterStEph<'a, T> {
+            AVLTreeSeqIterStEph::new(&self.root)
+        }
+        pub fn push_back(&mut self, value: T) {
+            let len = self.length();
+            let node = insert_at_link(self.root.take(), len, value, &mut self.next_key);
+            self.root = node;
+        }
+        pub fn contains_value(&self, target: &T) -> B {
+            for v in self.iter() {
+                if v == target {
+                    return B::True;
+                }
+            }
             B::False
         }
-    }
-
-    fn isSingleton(&self) -> B {
-        if self.length() == 1 {
-            B::True
-        } else {
-            B::False
+        pub fn insert_value(&mut self, value: T) {
+            self.push_back(value);
+        }
+        pub fn delete_value(&mut self, target: &T) -> bool {
+            let len = self.length();
+            let mut found_index: Option<N> = None;
+            for i in 0..len {
+                if self.nth(i) == target {
+                    found_index = Some(i);
+                    break;
+                }
+            }
+            if let Some(idx) = found_index {
+                let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
+                for i in 0..idx {
+                    out_vec.push(self.nth(i).clone());
+                }
+                for i in (idx + 1)..len {
+                    out_vec.push(self.nth(i).clone());
+                }
+                *self = AVLTreeSeqStEphS::from_vec(out_vec);
+                true
+            } else {
+                false
+            }
         }
     }
 
-    fn subseq_copy(&self, start: N, length: N) -> Self
-    {
-        let n = self.length();
-        let s = start.min(n);
-        let e = start.saturating_add(length).min(n);
-        if e <= s {
-            return <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::empty();
+    impl<T: StT> AVLTreeSeqStEphTrait<T> for AVLTreeSeqStEphS<T> {
+        fn empty() -> Self {
+            AVLTreeSeqStEphS::new_root()
         }
-        let mut vals: Vec<T> = Vec::with_capacity(e - s);
-        for i in s..e {
-            vals.push(self.nth(i).clone());
+
+        fn new() -> Self {
+            AVLTreeSeqStEphS::new_root()
         }
-        AVLTreeSeqStEphS::from_vec(vals)
-    }
-}
 
-pub struct AVLTreeSeqIterStEph<'a, T: StT> {
-    stack: Vec<&'a AVLTreeNode<T>>,
-    current: Option<&'a AVLTreeNode<T>>,
-}
+        fn length(&self) -> N {
+            size_link(&self.root)
+        }
 
-impl<'a, T: StT> AVLTreeSeqIterStEph<'a, T> {
-    fn new(root: &'a Link<T>) -> Self {
-        let mut it = AVLTreeSeqIterStEph {
-            stack: Vec::new(),
-            current: None,
-        };
-        it.push_left(root);
-        it
-    }
-    fn push_left(&mut self, link: &'a Link<T>) {
-        let mut cursor = link;
-        while let Some(ref node) = cursor.as_ref() {
-            self.stack.push(node);
-            cursor = &node.left;
+        fn nth(&self, index: N) -> &T {
+            nth_link(&self.root, index)
+        }
+
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
+            set_link(&mut self.root, index, item)?;
+            Ok(self)
+        }
+
+        fn singleton(item: T) -> Self {
+            let mut t = AVLTreeSeqStEphS::new_root();
+            t.root = insert_at_link(t.root.take(), 0, item, &mut t.next_key);
+            t
+        }
+
+        fn isEmpty(&self) -> B {
+            if self.length() == 0 { B::True } else { B::False }
+        }
+
+        fn isSingleton(&self) -> B {
+            if self.length() == 1 { B::True } else { B::False }
+        }
+
+        fn subseq_copy(&self, start: N, length: N) -> Self {
+            let n = self.length();
+            let s = start.min(n);
+            let e = start.saturating_add(length).min(n);
+            if e <= s {
+                return <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::empty();
+            }
+            let mut vals: Vec<T> = Vec::with_capacity(e - s);
+            for i in s..e {
+                vals.push(self.nth(i).clone());
+            }
+            AVLTreeSeqStEphS::from_vec(vals)
         }
     }
-}
 
-impl<'a, T: StT> Iterator for AVLTreeSeqIterStEph<'a, T> {
-    type Item = &'a T;
-    fn next(&mut self) -> Option<Self::Item> {
-        let node = self.stack.pop()?;
-        let value_ref: &T = &node.value;
-        self.push_left(&node.right);
-        Some(value_ref)
+    pub struct AVLTreeSeqIterStEph<'a, T: StT> {
+        stack: Vec<&'a AVLTreeNode<T>>,
+        current: Option<&'a AVLTreeNode<T>>,
     }
-}
+
+    impl<'a, T: StT> AVLTreeSeqIterStEph<'a, T> {
+        fn new(root: &'a Link<T>) -> Self {
+            let mut it = AVLTreeSeqIterStEph {
+                stack: Vec::new(),
+                current: None,
+            };
+            it.push_left(root);
+            it
+        }
+        fn push_left(&mut self, link: &'a Link<T>) {
+            let mut cursor = link;
+            while let Some(ref node) = cursor.as_ref() {
+                self.stack.push(node);
+                cursor = &node.left;
+            }
+        }
+    }
+
+    impl<'a, T: StT> Iterator for AVLTreeSeqIterStEph<'a, T> {
+        type Item = &'a T;
+        fn next(&mut self) -> Option<Self::Item> {
+            let node = self.stack.pop()?;
+            let value_ref: &T = &node.value;
+            self.push_left(&node.right);
+            Some(value_ref)
+        }
+    }
 
     // Private helper functions for AVL tree operations
     fn h<T: StT>(n: &Link<T>) -> N {
@@ -342,12 +326,7 @@ impl<'a, T: StT> Iterator for AVLTreeSeqIterStEph<'a, T> {
         }
     }
 
-    pub(crate) fn insert_at_link<T: StT>(
-        node: Link<T>,
-        index: N,
-        value: T,
-        next_key: &mut N,
-    ) -> Link<T> {
+    pub(crate) fn insert_at_link<T: StT>(node: Link<T>, index: N, value: T, next_key: &mut N) -> Link<T> {
         match node {
             None => {
                 debug_assert!(index == 0, "insert_at_link reached None with index > 0");
@@ -380,6 +359,12 @@ impl<'a, T: StT> Iterator for AVLTreeSeqIterStEph<'a, T> {
             $( { t.push_back($x); } )*
             t
         }};
+    }
+
+    #[allow(dead_code)]
+    fn _AVLTreeSeqStEph_type_checks() {
+        let _ = AVLTreeSeqStEph![1]; // non-empty infers (e.g., i32)
+        let _: AVLTreeSeqStEphS<i32> = AVLTreeSeqStEph![]; // empty form requires explicit type
     }
 
     impl<T: StT> PartialEq for AVLTreeSeqStEphS<T> {

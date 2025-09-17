@@ -1,13 +1,15 @@
 //! Problem 21.3 (Points in 3D) using ArraySeqPer — imperative triple loop.
 
-use apas_ai::Types::Types::*;
-use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPer;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::Types::Types::*;
 
 /// Generate points (x, y, z) with 0 ≤ x ≤ n−1, 1 ≤ y ≤ n, 2 ≤ z ≤ n+1 in x-major, then y, then z order.
 /// gpt-5-hard: Work: Θ(n^3), Span: Θ(n^3)
 fn points3d_loops(n: N) -> ArrayStPerS<Pair<N, Pair<N, N>>> {
-    if n == 0 { return ArraySeqStPer![]; }
+    if n == 0 {
+        return ArraySeqStPer![];
+    }
     let len = n * n * n;
     let mut v: Vec<Pair<N, Pair<N, N>>> = Vec::with_capacity(len);
     for x in 0..n {
@@ -37,10 +39,14 @@ fn test_points3d_loops_n1_single() {
 fn test_points3d_loops_n2_values_and_order() {
     let s = points3d_loops(2);
     let expect = ArraySeqStPer![
-        Pair(0,Pair(1,2)),Pair(0,Pair(1,3)),
-        Pair(0,Pair(2,2)),Pair(0,Pair(2,3)),
-        Pair(1,Pair(1,2)),Pair(1,Pair(1,3)),
-        Pair(1,Pair(2,2)),Pair(1,Pair(2,3)),
+        Pair(0, Pair(1, 2)),
+        Pair(0, Pair(1, 3)),
+        Pair(0, Pair(2, 2)),
+        Pair(0, Pair(2, 3)),
+        Pair(1, Pair(1, 2)),
+        Pair(1, Pair(1, 3)),
+        Pair(1, Pair(2, 2)),
+        Pair(1, Pair(2, 3)),
     ];
     assert_eq!(s.length(), 8);
     assert_eq!(s, expect);
@@ -50,7 +56,19 @@ fn test_points3d_loops_n2_values_and_order() {
 fn test_points3d_loops_iterator_order() {
     let s = points3d_loops(2);
     let collected: Vec<Pair<N, Pair<N, N>>> = s.iter().copied().collect();
-    assert_eq!(collected, vec![Pair(0,Pair(1,2)),Pair(0,Pair(1,3)),Pair(0,Pair(2,2)),Pair(0,Pair(2,3)),Pair(1,Pair(1,2)),Pair(1,Pair(1,3)),Pair(1,Pair(2,2)),Pair(1,Pair(2,3))]);
+    assert_eq!(
+        collected,
+        vec![
+            Pair(0, Pair(1, 2)),
+            Pair(0, Pair(1, 3)),
+            Pair(0, Pair(2, 2)),
+            Pair(0, Pair(2, 3)),
+            Pair(1, Pair(1, 2)),
+            Pair(1, Pair(1, 3)),
+            Pair(1, Pair(2, 2)),
+            Pair(1, Pair(2, 3))
+        ]
+    );
 }
 
 #[test]

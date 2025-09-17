@@ -26,24 +26,16 @@ pub mod LinkedListStPerChap18 {
         fn update(a: &LinkedListStPerS<T>, item_at: Pair<N, T>) -> LinkedListStPerS<T>;
 
         /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(lg(degree(updates)))
-        fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>,)
-         -> LinkedListStPerS<T>;
+        fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T>;
 
         /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(1)
-        fn ninject(
-            a: &LinkedListStPerS<T>,
-            updates: &LinkedListStPerS<Pair<N, T>>,
-        ) -> LinkedListStPerS<T>;
+        fn ninject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T>;
 
         /// APAS: Work Θ(1 + Σ (y,z) W(f(y,z))), Span Θ(1 + Σ S(f(y,z)))
         fn iterate<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
 
         /// APAS: Work Θ(|a|), Span Θ(|a|)
-        fn iteratePrefixes<A: StT>(
-            a: &LinkedListStPerS<T>,
-            f: impl Fn(&A, &T) -> A,
-            x: A,
-        ) -> (LinkedListStPerS<A>, A);
+        fn iteratePrefixes<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LinkedListStPerS<A>, A);
 
         /// APAS: Work Θ(1 + Σ (y,z) W(f(y,z))), Span Θ(lg|a| · max S(f(y,z)))
         fn reduce(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
@@ -71,8 +63,7 @@ pub mod LinkedListStPerChap18 {
         }
 
         fn map<U: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&T) -> U) -> LinkedListStPerS<U> {
-            let mut v: Vec<U> =
-                Vec::with_capacity(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a));
+            let mut v: Vec<U> = Vec::with_capacity(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a));
             for i in 0..<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a) {
                 v.push(f(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i)));
             }
@@ -101,89 +92,61 @@ pub mod LinkedListStPerChap18 {
             LinkedListStPerS::from_vec(v)
         }
         fn update(a: &LinkedListStPerS<T>, Pair(index, item): Pair<N, T>) -> LinkedListStPerS<T> {
-            let mut v: Vec<T> =
-                Vec::with_capacity(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a));
+            let mut v: Vec<T> = Vec::with_capacity(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a));
             for i in 0..<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a) {
                 let cur = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i).clone();
                 v.push(if i == index { item.clone() } else { cur });
             }
             LinkedListStPerS::from_vec(v)
         }
-        fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>,) 
-         -> LinkedListStPerS<T> {
+        fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T> {
             // first-update wins
             let n = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a);
             let mut v: Vec<T> = Vec::with_capacity(n);
             for i in 0..n {
                 let mut replaced: Option<T> = None;
-                for j in 0..<LinkedListStPerS<Pair<N, T>> as LinkedListStPerTrait<Pair<N, T>>>::length(
-                    updates,
-                ) {
-                    let Pair(idx, val) = <LinkedListStPerS<Pair<N, T>> as LinkedListStPerTrait<
-                        Pair<N, T>,
-                    >>::nth(updates, j)
-                    .clone();
+                for j in 0..<LinkedListStPerS<Pair<N, T>> as LinkedListStPerTrait<Pair<N, T>>>::length(updates) {
+                    let Pair(idx, val) =
+                        <LinkedListStPerS<Pair<N, T>> as LinkedListStPerTrait<Pair<N, T>>>::nth(updates, j).clone();
                     if idx == i {
                         replaced = Some(val);
                         break;
                     }
                 }
-                v.push(replaced.unwrap_or_else(|| {
-                    <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i).clone()
-                }));
+                v.push(replaced.unwrap_or_else(|| <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i).clone()));
             }
             LinkedListStPerS::from_vec(v)
         }
-        fn ninject(
-            a: &LinkedListStPerS<T>,
-            updates: &LinkedListStPerS<Pair<N, T>>,
-        ) -> LinkedListStPerS<T> {
+        fn ninject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T> {
             // last-update wins
             let n = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a);
             let mut v: Vec<T> = Vec::with_capacity(n);
             for i in 0..n {
                 let mut replaced: Option<T> = None;
-                for j in 0..<LinkedListStPerS<Pair<N, T>> as LinkedListStPerTrait<Pair<N, T>>>::length(
-                    updates,
-                ) {
-                    let Pair(idx, val) = <LinkedListStPerS<Pair<N, T>> as LinkedListStPerTrait<
-                        Pair<N, T>,
-                    >>::nth(updates, j)
-                    .clone();
+                for j in 0..<LinkedListStPerS<Pair<N, T>> as LinkedListStPerTrait<Pair<N, T>>>::length(updates) {
+                    let Pair(idx, val) =
+                        <LinkedListStPerS<Pair<N, T>> as LinkedListStPerTrait<Pair<N, T>>>::nth(updates, j).clone();
                     if idx == i {
                         replaced = Some(val);
                     }
                 }
-                v.push(replaced.unwrap_or_else(|| {
-                    <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i).clone()
-                }));
+                v.push(replaced.unwrap_or_else(|| <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i).clone()));
             }
             LinkedListStPerS::from_vec(v)
         }
         fn iterate<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
             let mut acc = x;
             for i in 0..<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a) {
-                acc = f(
-                    &acc,
-                    <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i),
-                );
+                acc = f(&acc, <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i));
             }
             acc
         }
-        fn iteratePrefixes<A: StT>(
-            a: &LinkedListStPerS<T>,
-            f: impl Fn(&A, &T) -> A,
-            x: A,
-        ) -> (LinkedListStPerS<A>, A) {
+        fn iteratePrefixes<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LinkedListStPerS<A>, A) {
             let mut acc = x.clone();
-            let mut v: Vec<A> =
-                Vec::with_capacity(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a));
+            let mut v: Vec<A> = Vec::with_capacity(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a));
             for i in 0..<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a) {
                 v.push(acc.clone());
-                acc = f(
-                    &acc,
-                    <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i),
-                );
+                acc = f(&acc, <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i));
             }
             (LinkedListStPerS::from_vec(v), acc)
         }
@@ -198,8 +161,7 @@ pub mod LinkedListStPerChap18 {
             let m = n / 2;
             let left = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::subseq_copy(a, 0, m);
             let right = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::subseq_copy(a, m, n - m);
-            let l =
-                <LinkedListStPerS<T> as LinkedListStPerChap18Trait<T>>::reduce(&left, f, id.clone());
+            let l = <LinkedListStPerS<T> as LinkedListStPerChap18Trait<T>>::reduce(&left, f, id.clone());
             let r = <LinkedListStPerS<T> as LinkedListStPerChap18Trait<T>>::reduce(&right, f, id);
             f(&l, &r)
         }
@@ -214,11 +176,7 @@ pub mod LinkedListStPerChap18 {
             let mut prefixes: Vec<T> = Vec::with_capacity(n);
             for i in 0..n {
                 let prefix = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::subseq_copy(a, 0, i);
-                let red = <LinkedListStPerS<T> as LinkedListStPerChap18Trait<T>>::reduce(
-                    &prefix,
-                    f,
-                    id.clone(),
-                );
+                let red = <LinkedListStPerS<T> as LinkedListStPerChap18Trait<T>>::reduce(&prefix, f, id.clone());
                 prefixes.push(red);
             }
             let total = <LinkedListStPerS<T> as LinkedListStPerChap18Trait<T>>::reduce(a, f, id);
@@ -226,13 +184,10 @@ pub mod LinkedListStPerChap18 {
         }
         fn flatten(ss: &LinkedListStPerS<LinkedListStPerS<T>>) -> LinkedListStPerS<T> {
             let mut v: Vec<T> = Vec::new();
-            for i in 0..<LinkedListStPerS<LinkedListStPerS<T>> as LinkedListStPerTrait<
-                LinkedListStPerS<T>,
-            >>::length(ss)
+            for i in 0..<LinkedListStPerS<LinkedListStPerS<T>> as LinkedListStPerTrait<LinkedListStPerS<T>>>::length(ss)
             {
-                let inner = <LinkedListStPerS<LinkedListStPerS<T>> as LinkedListStPerTrait<
-                    LinkedListStPerS<T>,
-                >>::nth(ss, i);
+                let inner =
+                    <LinkedListStPerS<LinkedListStPerS<T>> as LinkedListStPerTrait<LinkedListStPerS<T>>>::nth(ss, i);
                 for j in 0..<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(inner) {
                     v.push(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(inner, j).clone());
                 }
@@ -244,11 +199,9 @@ pub mod LinkedListStPerChap18 {
             cmp: impl Fn(&A, &A) -> O,
         ) -> LinkedListStPerS<Pair<A, LinkedListStPerS<Bv>>> {
             let mut groups: Vec<(A, Vec<Bv>)> = Vec::new();
-            for i in 0..<LinkedListStPerS<Pair<A, Bv>> as LinkedListStPerTrait<Pair<A, Bv>>>::length(a)
-            {
+            for i in 0..<LinkedListStPerS<Pair<A, Bv>> as LinkedListStPerTrait<Pair<A, Bv>>>::length(a) {
                 let Pair(k, v) =
-                    <LinkedListStPerS<Pair<A, Bv>> as LinkedListStPerTrait<Pair<A, Bv>>>::nth(a, i)
-                        .clone();
+                    <LinkedListStPerS<Pair<A, Bv>> as LinkedListStPerTrait<Pair<A, Bv>>>::nth(a, i).clone();
                 let mut found = false;
                 for (gk, gv) in &mut groups {
                     if cmp(&k, gk) == O::Equal {
@@ -269,4 +222,3 @@ pub mod LinkedListStPerChap18 {
         }
     }
 }
-

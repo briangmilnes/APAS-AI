@@ -1,9 +1,9 @@
 //! Chapter 19 algorithms for ArraySeqMtPer.
 
 pub mod ArraySeqStPerChap19 {
-    use crate::Types::Types::*;
     use crate::ArraySeqStPer::ArraySeqStPer::*;
     use crate::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
+    use crate::Types::Types::*;
 
     pub trait ArraySeqStPerChap19Trait<T: StT> {
         /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
@@ -49,11 +49,7 @@ pub mod ArraySeqStPerChap19 {
                 Some(a.nth(i))
             } else {
                 let j = i - a.length();
-                if j < b.length() {
-                    Some(b.nth(j))
-                } else {
-                    None
-                }
+                if j < b.length() { Some(b.nth(j)) } else { None }
             }
         }
 
@@ -73,17 +69,14 @@ pub mod ArraySeqStPerChap19 {
 
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArrayStPerS<T> {
             let keep = f(x) == B::True;
-            <ArrayStPerS<T> as ArraySeqStPerChap19Trait<T>>::tabulate(
-                |_| x.clone(),
-                if keep { 1 } else { 0 },
-            )
+            <ArrayStPerS<T> as ArraySeqStPerChap19Trait<T>>::tabulate(|_| x.clone(), if keep { 1 } else { 0 })
         }
         fn filter(a: &ArrayStPerS<T>, f: impl Fn(&T) -> B) -> ArrayStPerS<T> {
-            let mapped: ArrayStPerS<ArrayStPerS<T>> =
-                <ArrayStPerS<ArrayStPerS<T>> as ArraySeqStPerChap18Trait<ArrayStPerS<T>>>::tabulate(
-                    |i| Self::deflate(|elt| f(elt), a.nth(i)),
-                    a.length(),
-                );
+            let mapped: ArrayStPerS<ArrayStPerS<T>> = <ArrayStPerS<ArrayStPerS<T>> as ArraySeqStPerChap18Trait<
+                ArrayStPerS<T>,
+            >>::tabulate(
+                |i| Self::deflate(|elt| f(elt), a.nth(i)), a.length()
+            );
             <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::flatten(&mapped)
         }
 
@@ -96,9 +89,7 @@ pub mod ArraySeqStPerChap19 {
             } else {
                 let first = f(&x, a.nth(0));
                 let rest = ArrayStPerS::from_vec(a.subseq(1, n - 1).to_vec());
-                <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::iterate(
-                    &rest, f, first,
-                )
+                <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::iterate(&rest, f, first)
             }
         }
         fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
@@ -112,22 +103,22 @@ pub mod ArraySeqStPerChap19 {
             let m = n / 2;
             let left = ArrayStPerS::from_vec(a.subseq(0, m).to_vec());
             let right = ArrayStPerS::from_vec(a.subseq(m, n - m).to_vec());
-            let l = <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::reduce(
-                &left,
-                &f,
-                id.clone(),
-            );
-            let r = <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::reduce(
-                &right, &f, id,
-            );
+            let l = <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::reduce(&left, &f, id.clone());
+            let r = <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::reduce(&right, &f, id);
             f(&l, &r)
         }
         fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T) {
             let n = a.length();
             if n == 0 {
-                (<ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(|_| id.clone(), 0), id)
+                (
+                    <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(|_| id.clone(), 0),
+                    id,
+                )
             } else if n == 1 {
-                (<ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(|_| id.clone(), 1), a.nth(0).clone())
+                (
+                    <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(|_| id.clone(), 1),
+                    a.nth(0).clone(),
+                )
             } else {
                 let half = (n + 1) / 2;
                 let pairwise = <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(
@@ -170,6 +161,5 @@ pub mod ArraySeqStPerChap19 {
         fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {
             <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::ninject(a, updates)
         }
-
     }
-}    
+}

@@ -17,10 +17,7 @@ pub mod LinkedListStEphChap19 {
         fn reduce(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
         fn scan(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<T>, T);
         fn flatten(s: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T>;
-        fn inject(
-            values: &LinkedListStEphS<T>,
-            changes: &LinkedListStEphS<Pair<N, T>>,
-        ) -> LinkedListStEphS<T>;
+        fn inject(values: &LinkedListStEphS<T>, changes: &LinkedListStEphS<Pair<N, T>>) -> LinkedListStEphS<T>;
     }
 
     impl<T: StT> LinkedListStEphChap19Trait<T> for LinkedListStEphS<T> {
@@ -63,17 +60,16 @@ pub mod LinkedListStEphChap19 {
         fn iterate<A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
             <LinkedListStEphS<T> as LinkedListStEphChap18Trait<T>>::iterate(a, f, x)
         }
-    fn reduce(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
-        <LinkedListStEphS<T> as LinkedListStEphChap18Trait<T>>::reduce(a, f, id)
-    }
-    fn scan(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<T>, T) {
-        <LinkedListStEphS<T> as LinkedListStEphChap18Trait<T>>::scan(a, f, id)
-    }
+        fn reduce(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
+            <LinkedListStEphS<T> as LinkedListStEphChap18Trait<T>>::reduce(a, f, id)
+        }
+        fn scan(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<T>, T) {
+            <LinkedListStEphS<T> as LinkedListStEphChap18Trait<T>>::scan(a, f, id)
+        }
         fn flatten(s: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T> {
             <LinkedListStEphS<T> as LinkedListStEphChap18Trait<T>>::flatten(s)
         }
-        fn inject(values: &LinkedListStEphS<T>,changes: &LinkedListStEphS<Pair<N, T>>,) 
-         -> LinkedListStEphS<T> {
+        fn inject(values: &LinkedListStEphS<T>, changes: &LinkedListStEphS<Pair<N, T>>) -> LinkedListStEphS<T> {
             <LinkedListStEphS<T> as LinkedListStEphChap18Trait<T>>::inject(values, changes)
         }
     }

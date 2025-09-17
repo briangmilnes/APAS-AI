@@ -109,18 +109,10 @@ pub mod LinkedListStPer {
             panic!("index out of bounds")
         }
         fn isEmpty(&self) -> B {
-            if self.len == 0 {
-                B::True
-            } else {
-                B::False
-            }
+            if self.len == 0 { B::True } else { B::False }
         }
         fn isSingleton(&self) -> B {
-            if self.len == 1 {
-                B::True
-            } else {
-                B::False
-            }
+            if self.len == 1 { B::True } else { B::False }
         }
         fn singleton(item: T) -> Self {
             LinkedListStPerS {
@@ -140,15 +132,8 @@ pub mod LinkedListStPer {
             let mut i = 0;
             let mut cur = self.head.as_ref();
             while let Some(node) = cur {
-                let v = if i == index {
-                    item.clone()
-                } else {
-                    node.value.clone()
-                };
-                out.push_front_node(Box::new(NodeP {
-                    value: v,
-                    next: None,
-                }));
+                let v = if i == index { item.clone() } else { node.value.clone() };
+                out.push_front_node(Box::new(NodeP { value: v, next: None }));
                 i += 1;
                 cur = node.next.as_ref();
             }
@@ -263,13 +248,20 @@ pub mod LinkedListStPer {
             write!(f, "]")
         }
     }
-}
 
-#[macro_export]
-macro_rules! LinkedListStPer {
-    () => { $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS::from_vec(Vec::new()) };
-    ($x:expr; $n:expr) => {{
-        < $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS<_> as $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerTrait<_> >::new($n, $x)
-    }};
-    ($($x:expr),* $(,)?) => { $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS::from_vec(vec![$($x),*]) };
+    #[macro_export]
+    macro_rules! LinkedListStPer {
+        () => { $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS::from_vec(Vec::new()) };
+        ($x:expr; $n:expr) => {{
+            < $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS<_> as $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerTrait<_> >::new($n, $x)
+        }};
+        ($($x:expr),* $(,)?) => { $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS::from_vec(vec![$($x),*]) };
+    }
+
+    #[allow(dead_code)]
+    fn _LinkedListStPer_type_checks() {
+        use crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS;
+        let _ = LinkedListStPer![1]; // non-empty infers (e.g., i32)
+        let _: LinkedListStPerS<i32> = LinkedListStPer![]; // empty form requires explicit type
+    }
 }

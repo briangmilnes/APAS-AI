@@ -1,10 +1,10 @@
 //! Exercises 21.5 and 21.6: All contiguous subsequences and cost analysis.
 
-use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
-use apas_ai::ArraySeqStPer;
+use apas_ai::Types::Types::*;
 
 /// Generate all contiguous subsequences using nested tabulate + flatten.
 /// gpt-5-hard: Work: Θ(n^2), Span: Θ(lg n)
@@ -13,10 +13,12 @@ fn all_contiguous_subseqs<T: StT>(a: &ArrayStPerS<T>) -> ArrayStPerS<ArrayStPerS
     let n = a.length();
     let nested: ArrayStPerS<ArrayStPerS<ArrayStPerS<T>>> =
         <ArrayStPerS<ArrayStPerS<ArrayStPerS<T>>> as ArraySeqStPerChap19Trait<ArrayStPerS<ArrayStPerS<T>>>>::tabulate(
-            |i| <ArrayStPerS<ArrayStPerS<T>> as ArraySeqStPerChap19Trait<ArrayStPerS<T>>>::tabulate(
-                |j| ArrayStPerS::from_vec(a.subseq(i, j + 1).to_vec()),
-                n - i,
-            ),
+            |i| {
+                <ArrayStPerS<ArrayStPerS<T>> as ArraySeqStPerChap19Trait<ArrayStPerS<T>>>::tabulate(
+                    |j| ArrayStPerS::from_vec(a.subseq(i, j + 1).to_vec()),
+                    n - i,
+                )
+            },
             n,
         );
     // flatten twice
@@ -37,11 +39,7 @@ fn test_all_contiguous_subseqs_n3_values() {
     let a = ArraySeqStPer![1, 2, 3];
     let res = all_contiguous_subseqs(&a);
     let v: Vec<Vec<N>> = res.iter().map(|s| s.iter().copied().collect()).collect();
-    let expect = vec![
-        vec![1], vec![1,2], vec![1,2,3],
-        vec![2], vec![2,3],
-        vec![3],
-    ];
+    let expect = vec![vec![1], vec![1, 2], vec![1, 2, 3], vec![2], vec![2, 3], vec![3]];
     assert_eq!(v, expect);
 }
 

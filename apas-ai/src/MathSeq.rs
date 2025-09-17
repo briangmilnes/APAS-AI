@@ -254,21 +254,13 @@ pub mod MathSeq {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(&self) -> B {
-            if self.data.is_empty() {
-                B::True
-            } else {
-                B::False
-            }
+            if self.data.is_empty() { B::True } else { B::False }
         }
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(&self) -> B {
-            if self.data.len() == 1 {
-                B::True
-            } else {
-                B::False
-            }
+            if self.data.len() == 1 { B::True } else { B::False }
         }
 
         /// APAS: Work Θ(|a|), Span Θ(1)

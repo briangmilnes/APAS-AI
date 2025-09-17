@@ -2,11 +2,15 @@
 
 ### Code Elegance and Minimalism
 
+#### Terminology alignment
+- Prefer standard programming-languages terminology alongside Rust usage: write `rust-term (programming-languages-term)` when referencing Rust-specific jargon (e.g., `blanket impl (polymorphic extension)`).
+
 #### Always choose the minimal solution
 - Extend existing types/traits rather than creating new ones
 - When sketching designs, start with the smallest possible change
 - Avoid over-engineering - most example code online is unnecessarily complex
 - Elegance comes from simplicity, not from adding features or abstractions
+- Strongly prefer simpler, more elegant solutions over feature-heavy alternatives; resist adding optional knobs unless the problem demands them.
 
 #### Closure Mutation Patterns
 - **FnMut vs Fn**: When closures need to mutate captured variables, they require `FnMut` trait bounds
@@ -85,10 +89,22 @@ Result guidance
 - Do not introduce a helper function unless it will be used in at least 3 distinct call sites (or across 2+ modules), or it eliminates clearly error-prone duplication.
 - Otherwise, keep the code inline or use an existing macro/constructor. Exceptions: readability for >10 lines of complex logic.
 
-#### Module/file layout
-- Each file should have a single module.
-
+#### Module/file layout and Mandatory Encapsulation
+- **MANDATORY**: Each file should have a single module.
+- **ALL CODE MUST BE WITHIN `pub mod M{...}`**: Every function, struct, enum, type alias, macro, and implementation must be defined inside the module block. The only exceptions are:
+  - `src/main.rs`: May have a free `fn main()` function
+  - `src/lib.rs`: May have module declarations and re-exports at file level
+- **NO FREE DEFINITIONS**: No definitions are allowed at file scope outside the module block in any `src/*.rs` file (except the exceptions above).
+- **Violation is a build error**: Any code found outside module blocks should be moved inside immediately.
 ---
+
+### Traits and Implementations (Mandatory Pattern)
+- For every new public API in `src/` modules, define a public trait inside the module and implement it for the module’s concrete type(s). Do not expose only free functions as the API surface.
+- Hoist baseline bounds at the trait header (see Generalized lifting rule) and mirror them on the corresponding impl header.
+- Keep both the trait and its impl(s) inside the module’s single `pub mod` block (see Mandatory Encapsulation).
+- Name traits and impls consistently with the module (e.g., `Chapter36StTrait` implemented for `ArraySeqStEphS<T>`).
+- Free functions may exist for composition, but core operations must be available via trait methods.
+- Tests: write at least one test per public trait item (see Tests Format).
 
 ### Types, Bounds, and Lifting
 
@@ -131,31 +147,6 @@ impl<T: Eq + Clone + Copy + Display + Debug + Sized> Foo<T> for Bar<T> {
 ```
 
 #### Type Creation Traits (align with baseline)
-#### Type shorthands: `StT` and `MtT` (Elem split)
-- Purpose: avoid repeating `T: Eq + Clone + Copy + Display + Debug + Sized` by using a blanket `Elem` trait.
-- Definition (in `crate::Types::Types`):
-  ```rust
-  use std::fmt::{Display, Debug};
-  pub trait Elem: Eq + Clone + Display + Debug + Sized {}
-  impl<T> Elem for T where T: Eq + Clone + Display + Debug + Sized {}
-  ```
-- Default hoist site: prefer hoisting `T: Elem` on public traits and their general impls. For struct headers, you may hoist `T: Elem` now that `Copy` was dropped; if you must support `Mutex<…>` elements, use the exception below.
-- Pair preferred over raw tuples: use `crate::Types::Types::Pair<A, B>` instead of `(A, B)`.
-- StT: single-threaded elements = `Eq + Clone + Display + Debug + Sized`. Use on public data structures like `ArrayPerS<T: StT>`.
-- MtT: multi-threaded elements = `Sized + Send + Sync` only. Use in Chap. 19 when storing `Mutex<...>` inside structures.
-  No custom wrapper types; use `std::sync::Mutex<T>` directly with `T: mtT`.
-- **Trait delegation rule**: `StT` and `MtT` have incompatible bounds and cannot cross-convert. Therefore:
-  - `*StPerChap19` traits must delegate to `*StPerChap18` traits (both use `StT`)
-  - `*MtPerChap19` traits must delegate to `*MtPerChap18` traits (both use `MtT`)
-  - Never delegate from Mt* to St* traits or vice versa due to incompatible trait bounds
-
-#### Trait-bound hoisting for chapter traits (Option A)
-
-- Prefer generic trait parameters to avoid repeating method-scoped type params when the element type stays the same across methods.
-- For Chap. 18 sequence algorithms, define the trait as `pub trait ArraySeqPerChap18Trait<T: MtT> { ... }` and implement with `impl<T: MtT + Clone + Eq> ArraySeqPerChap18Trait<T> for ArrayPerS<T> { ... }`.
-- Keep additional method generics only when the method changes the element type (e.g., `map<U: StT>(...) -> ArrayPerS<U>`).
-- Chap. 19 remains free to introduce extra bounds locally, but prefer hoisting `MtT` where possible on trait-level generics.
-
 #### Function argument bounds without where-clauses (new)
 - Prefer inline generic bounds directly on the function’s generic parameters and arguments; avoid trailing `where` clauses unless:
   - The bounds are too long to read inline (≥ 2 traits on ≥ 2 params), or
@@ -225,13 +216,6 @@ fn _MyMacro_type_checks() {
 - Keep any direct `T { data: … }` or `vec![…]` usage confined to the type’s own module/impls only (preserve invariants; avoid representation leaks).
 - UFCS constructors (`<T as Trait>::new/…`) are prohibited at call sites; prefer inherent or macro forms.
 
-#### Assistant Vec prohibition (sweeps vs non‑sweeps)
-- The user may write `Vec` code; the assistant may not introduce new `Vec` usage at call sites.
-- Sweeps: do not propose or add `Vec`/`vec![]`/`to_vec()`/`into_vec()` or equivalent conversions anywhere. Use only existing APIs (`tabulate`, `nth`, `length`, `set`, `iter`, macros).
-- Non‑sweeps: ask explicit permission before adding any `Vec` usage; default answer assumed “no”. If denied or unclear, avoid it.
-- Exceptions limited to internals: inside a type’s own module/impl, using `Vec` to implement `from_vec`, `set`, or builders is allowed if already the established representation. Do not expand its footprint.
-- Pre‑existing `Vec` at a call site: do not propagate or broaden it; keep changes local and prefer replacing with constructors/macros when practical.
-
 #### Struct Field Encapsulation
 - Default: struct fields are non‑public; hide representation by default.
 - Access via API: expose state through inherent methods and trait impls (e.g., `iter`, `iter_mut`, `len`, `as_slice`), not public fields.
@@ -266,9 +250,6 @@ fn _MyMacro_type_checks() {
 - Add `ExactSizeIterator` when length is known in O(1) and stable during iteration.
 - Add `DoubleEndedIterator` when items can be traversed from both ends without extra allocation or violating semantics.
 
-#### Iterator‑based Assertions
-- Use `iter()/iter_mut()/into_iter()` to assert sequence contents instead of exposing storage.
-
 #### Tests Format
 - One test per public function/trait item in a module (include iterator and formatting coverage).
 - Equality: test `PartialEq`/`Eq` behavior explicitly where defined.
@@ -281,14 +262,6 @@ fn _MyMacro_type_checks() {
 
 #### Test via Public API Only
 - Write tests against exposed methods/traits/macros; never against private fields.
-
-#### Benches (criterion, short runs)
-- Provide representative iterator benches (e.g., `iter_sum_*`).
-- Configuration: warm‑up ≤ 1s; measurement ≈ 6s; sample size ≈ 30; total ≤ 10s.
-
----
-
-### Naming and Inference
 
 #### CamlCase not SnakeCase
 - Functions/structures of more than one English word use CamlCase.
@@ -310,165 +283,3 @@ fn _MyMacro_type_checks() {
 - Keep UFCS inside impls/traits for disambiguation; minimize UFCS in callers (tests/benches should not need UFCS).
 
 ---
-
-### Tooling, Execution Protocol, and Transparency
-
-#### Tool Usage Transparency
-- Announce every tool call before it runs (single line). Formats:
-  - `Tool: read_file — path: /abs/path/file.rs`
-  - `Tool: edit_file — file: /abs/path/file.rs`
-  - `Tool: apply_patch — file: /abs/path/file.rs`
-  - `Tool: codebase_search — query: "…"; target: ["…"]`
-  - `Tool: grep — pattern: '…'; path: /abs/path; type/glob: rs`
-  - `Tool: todo_write — merge: true; items: N`
-  - `Tool: read_lints — paths: ["…"]`
-  - `Tool: list_dir — target: /abs/dir`
-  - `Tool: glob_file_search — target: /abs/dir; glob: "**/*.rs"`
-  - `Tool: run_terminal_cmd — command: "…"`
-- Redact secrets; truncate commands >160 chars. Stop announcements on STOP.
- - Sweeps (hard rule, SEV2 on miss): During sweeps, echo EVERY tool call and batch related calls per step. Missing tool‑echo lines or silent tool usage during a sweep is a SEV2 violation; resume immediately and continue relentlessly.
-
-#### Tool Calls — Batching, Retries, Background
-- Parallel: print a single `ToolCalls:` block, one line per tool in the batch.
-- Retries: append `(attempt X/3)` to the tool line.
-- Background: append `(background)` for background jobs.
-- Clear policy: for shell commands, always use a clear‑first in a separate invocation before running the command.
-
-#### Terminal Clear & Output Visibility
-- Clear‑first, separate calls: run the terminal clear in its own invocation, then run the actual command in a new invocation. Never chain clear + command with `&&`.
-  - Clear: `printf '\033[3J\033[H\033[2J'`
-  - Then: `<your command> 2>&1 | cat`
-- One command per terminal window. Always pipe command output via `| cat`.
-- Exception: if you explicitly say “no‑clear”, skip the clear step; still keep one command per terminal invocation.
-
-#### Non‑terminal Step Timing (Edits/Searches/Planning)
-- Provide precise timing for non‑terminal work on request.
-- On request, bracket each non‑terminal step with Start/End timestamps in chat status updates.
-- Obtain timestamps via a shell date call; use system timezone unless PDT is explicitly requested.
-  - Start: `date +"Start: %a %b %d %T %Z %Y"`
-  - End:   `date +"End: %a %b %d %T %Z %Y"`
-- One Start/End pair per distinct step; repeat per step as needed.
-- Optionally include Total (H:M:S) after End if helpful.
-- Do not run extra commands solely for timing unless requested.
-
-#### Verification Trace (imports & bounds hoist)
-- For each file verification, print:
-  - `Verifying: <ABS-PATH>`
-  - `Start: HH:MM:SS (system TZ)`
-  - Checks (one line each):
-    - imports: inside `src` use `crate::`; wildcard module imports; no `extern crate`
-    - macros: exported at crate root; `$crate` paths; type‑check helper present
-    - bounds hoist: gather per‑method bounds; hoist union to trait/impl; do not lift lifetimes; mirror impls
-    - baseline: public APIs include `Clone + Sized + Display + Debug` at declaration sites
-    - naming: CamlCase for multi‑word items; files start with a capital
-  - Tool calls announced via Tool Usage Transparency.
-  - `End: HH:MM:SS (system TZ); Total: H:MM:SS`
-
-#### emacs_sync
-- Trigger: when you say you’ll “fix/edit in Emacs,” pause all write edits immediately.
-- Pause behavior: read‑only work only (reviews/plans), no file edits until “Emacs: done”.
-- Resync on done: propose refreshing repo state, then re‑open changed files.
-  - Suggested:
-    ```bash
-    git status -s | cat
-    git diff --name-only | cat
-    ```
-- Reconcile: prefer your Emacs changes; never overwrite. If conflicts arise, summarize diffs and ask how to proceed.
-- Style guarantees: keep existing indentation, whitespace, and CamelCase module naming intact.
-- Scope hygiene: avoid global refactors while you’re editing; target only files you didn’t modify unless you approve.
-- Follow-ups: after resync, run lint/diagnostics on changed files and resume the pending task.
-
-#### Do not load from rules or prompts files
-- Do not read files from the rules or prompts directory without explicit instruction; content may be out of date.
-
----
-
-### TODO Flow and Execution Discipline
-
-#### Relentless TODO Flow (No‑Pause Autopilot; 3‑Attempt; Completion Guard)
-- SEV levels:
-  - SEV1: Critical breakage (data loss/destructive edits).
-  - SEV2: Workflow breach (stopping/asking during sweeps; missed TODO completion; failure to continue relentlessly).
-  - SEV3: Minor style/process deviations.
-- Scope: applies to sweeps and non‑sweeps.
-- Execution: synchronous; clear terminal in a separate call; non‑interactive flags; always `| cat`; one command per terminal invocation.
-- Timing: assistant‑text Start/End/Total from the system clock.
-- Attempts: on any error, make up to 3 self‑directed fix attempts; clear before each; keep edits minimal/local.
-- No‑pause Autopilot (hard rule): do not ask for confirmation or pause for review. Continue automatically unless and until one of the two hard stops occurs:
-  1) After 3 failed attempts, or
-  2) A fix would be destructive/ambiguous.
-  - Violation during sweeps is SEV2: Treat any stop/question/confirmation prompt during a sweep as a SEV2 bug. Immediately resume, log the violation in the status, and proceed relentlessly.
-  In either stop, mark the TODO failed, print exact diagnostics, create a “Resume …” TODO, and immediately continue to the next independent TODO.
-- Completion guard: after a successful step, immediately complete the active TODO; if another exists, set it `in_progress` and print its Start; otherwise print “All TODOs completed”. No dangling TODOs (except explicit “[long‑run]”).
-- Long‑run tasks: only when tagged “[long‑run]”; exclude from totals until stopped; don’t mark complete until stop finishes.
-
-#### Per‑TODO Execution (hard gate)
-- On setting a TODO `in_progress`: print Start via terminal:
-  - `date +"Start: %a %b %d %T %Z %Y"`
-- Execute exactly one synchronous action (or a clearly batched set): edits and/or 1 command, piped with `2>&1 | cat`. Reuse SAME Start for retries.
-- On finishing: print End via terminal:
-  - `date +"End: %a %b %d %T %Z %Y"`
-- Provide a brief summary. Immediately complete or fail the TODO; if another exists, set it `in_progress` and print its Start.
-
-#### TODO Completion Guard (Last Item)
-- Same‑message order:
-  1) End and Total
-  2) Brief summary
-  3) Complete active TODO
-  4) If another exists, set `in_progress` and print Start; else “All TODOs completed”.
-- Only `[long‑run]` can remain active without completion.
-
-#### Immediate TODO-completion guards (hard rules)
-- Immediate completion on success (mandatory): immediately after any successful edit/command that fulfills the active TODO, call todo_write (merge=true) to mark it completed before any further tool calls or sending the message.
-- No-call invariant: you may not start another tool call while any fulfilled TODO remains in_progress.
-- No-send invariant: you may not send a message with a fulfilled TODO still in_progress (except explicit “[long‑run]”).
-- Single-active: at most one TODO may be in_progress. To start the next task, first complete the current one; only mark the next TODO in_progress when its first tool call starts.
-- Start-of-turn reconcile: before the first tool call each turn, if any prior in_progress TODO is already fulfilled, complete it via todo_write immediately.
-- Batch completions: if one operation satisfies multiple TODOs, complete all of them in a single todo_write batch right after that operation.
-- Escalation on miss (SEV2): if a fulfilled TODO is found in_progress at the start of a turn, immediately complete it and create a “Follow‑up: missed TODO completion (SEV2)” TODO, then continue.
-
-#### Clearing TO‑DOS
-- Overwrite the entire list via the todo tool with `merge=false` and `todos=[]`. State “All TODOs cleared.” and stop.
-
-#### Update todo status eagerly
-- If a TODO is done, check it off immediately and set the next TODO to `in_progress`.
-
-#### Never Stop Until All TODOs Complete (Absolute Completion Rule)
-- **NEVER declare victory or completion until ALL TODO items are marked as "completed"**
-- Always check the TODO list status before claiming a task is finished
-- If any TODOs remain pending or in_progress, continue working relentlessly until every single item shows status "completed"
-- Do not ask for permission to continue - just keep executing until 100% completion is achieved
-- **NO EXCEPTIONS** for declaring success until the todo list shows 100% completion status
-- This rule enhances all existing TODO Flow rules with an absolute completion requirement
-
-#### Pause Question
-- When asked if you are paused, answer explicitly: “Yes I am paused” or “No I am not”; explain why or what you’re doing; continue with the work.
-
----
-
-### Environment, Tools, and Misc
-
-#### Cargo Nextest
-- `cargo nextest` writes to stderr; use `2>&1 | cat` to capture output.
-
-#### No Perl; awk acceptable
-- Use `rg/grep`; `awk` only if needed; never Perl.
-
-#### CPR rule (heartbeat lines)
-- Always write brief heartbeat lines (e.g., “Thinking” or “Planning”) so progress is visible—before a tool batch, after edits/commands, and at completion.
-
-#### High‑Signal Live Tracing (mandatory)
-- Heartbeat after every batch: After every tool call batch and every code edit, write a 1–2 line status update naming the active TODO, files touched, and the next action.
-- No‑quiet window: If 60 seconds elapse or 2 consecutive tool batches occur without user‑visible output, send a status update anyway (e.g., “still building/searching…”).
-- Command echo: Before running a non‑trivial shell command, print the exact command in one line; after it finishes, note success/failure.
-- Build/test digest: After any build/test, output a 3–8 line digest including the first failing file:line with error code, total error count (approximate OK), and the concrete next fix.
-- Edit diff signal: After any file edit, report the file path and a short change label (e.g., “hoisted T: StT; tuples→Pair”).
-- Search signal: For broad searches, report match counts and top 1–3 relevant paths (or “no matches”).
-- TODO‑anchored tracing: Each status must reference the active TODO name and state, plus the immediate next step.
-- Failure sentinel: On repeat of the same error, state the suspected root cause and the specific change being applied next.
-- Blocked state: If input is required, state the exact question and mark the TODO as blocked until answered.
-
-#### Minimal Constructor Surface
-- Prefer inherent constructors/macros (`new`, `from_vec`, `Lit![]`) over struct literals in tests.
-
-

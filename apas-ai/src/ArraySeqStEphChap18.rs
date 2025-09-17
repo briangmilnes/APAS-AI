@@ -27,17 +27,9 @@ pub mod ArraySeqStEphChap18 {
         /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(1)
         fn ninject(a: &ArraySeqStEphS<T>, updates: &ArraySeqStEphS<Pair<N, T>>) -> ArraySeqStEphS<T>;
         fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
-        fn iteratePrefixes<A: StT>(
-            a: &ArraySeqStEphS<T>,
-            f: impl Fn(&A, &T) -> A,
-            x: A,
-        ) -> (ArraySeqStEphS<A>, A);
+        fn iteratePrefixes<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArraySeqStEphS<A>, A);
         fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
-        fn scan(
-            a: &ArraySeqStEphS<T>,
-            f: &impl Fn(&T, &T) -> T,
-            id: T,
-        ) -> (ArraySeqStEphS<T>, T);
+        fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, T);
         fn flatten(ss: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;
         fn collect<A: StT, Bv: StT>(
             a: &ArraySeqStEphS<Pair<A, Bv>>,
@@ -73,11 +65,7 @@ pub mod ArraySeqStEphChap18 {
             if n == 0 {
                 return <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty();
             }
-            let init = if na > 0 {
-                a.nth(0).clone()
-            } else {
-                b.nth(0).clone()
-            };
+            let init = if na > 0 { a.nth(0).clone() } else { b.nth(0).clone() };
             let mut out = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::new(n, init.clone());
             for i in 0..na {
                 let _ = out.set(i, a.nth(i).clone());
@@ -102,10 +90,7 @@ pub mod ArraySeqStEphChap18 {
         fn update(a: &mut ArraySeqStEphS<T>, (index, item): (N, T)) -> &mut ArraySeqStEphS<T> {
             a.update((index, item))
         }
-        fn inject(
-            a: &ArraySeqStEphS<T>,
-            updates: &ArraySeqStEphS<Pair<N, T>>,
-        ) -> ArraySeqStEphS<T> {
+        fn inject(a: &ArraySeqStEphS<T>, updates: &ArraySeqStEphS<Pair<N, T>>) -> ArraySeqStEphS<T> {
             let mut out = a.clone();
             for i in 0..updates.length() {
                 let Pair(idx, val) = updates.nth(i).clone();
@@ -113,10 +98,7 @@ pub mod ArraySeqStEphChap18 {
             }
             out
         }
-        fn ninject(
-            a: &ArraySeqStEphS<T>,
-            updates: &ArraySeqStEphS<Pair<N, T>>,
-        ) -> ArraySeqStEphS<T> {
+        fn ninject(a: &ArraySeqStEphS<T>, updates: &ArraySeqStEphS<Pair<N, T>>) -> ArraySeqStEphS<T> {
             Self::inject(a, updates)
         }
         fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
@@ -126,11 +108,7 @@ pub mod ArraySeqStEphChap18 {
             }
             acc
         }
-        fn iteratePrefixes<A: StT>(
-            a: &ArraySeqStEphS<T>,
-            f: impl Fn(&A, &T) -> A,
-            x: A,
-        ) -> (ArraySeqStEphS<A>, A) {
+        fn iteratePrefixes<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArraySeqStEphS<A>, A) {
             let n = a.length();
             let mut acc = x;
             if n == 0 {
@@ -150,11 +128,7 @@ pub mod ArraySeqStEphChap18 {
             }
             acc
         }
-        fn scan(
-            a: &ArraySeqStEphS<T>,
-            f: &impl Fn(&T, &T) -> T,
-            id: T,
-        ) -> (ArraySeqStEphS<T>, T) {
+        fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, T) {
             let n = a.length();
             let mut acc = id;
             let mut out = if n == 0 {

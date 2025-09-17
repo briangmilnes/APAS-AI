@@ -44,11 +44,7 @@ pub mod AVLTreeSeqStPer {
     }
 
     fn rotate_left<T: StT>(x: Rc<Node<T>>) -> Rc<Node<T>> {
-        let y = x
-            .right
-            .as_ref()
-            .expect("rotate_left requires right")
-            .clone();
+        let y = x.right.as_ref().expect("rotate_left requires right").clone();
         let t2 = y.left.clone();
         let new_x = mk(x.value.clone(), x.left.clone(), t2.clone());
         mk(y.value.clone(), Some(new_x), y.right.clone())
@@ -194,18 +190,10 @@ pub mod AVLTreeSeqStPer {
             }
         }
         fn isEmpty(&self) -> B {
-            if self.length() == 0 {
-                B::True
-            } else {
-                B::False
-            }
+            if self.length() == 0 { B::True } else { B::False }
         }
         fn isSingleton(&self) -> B {
-            if self.length() == 1 {
-                B::True
-            } else {
-                B::False
-            }
+            if self.length() == 1 { B::True } else { B::False }
         }
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.length();
@@ -296,17 +284,24 @@ pub mod AVLTreeSeqStPer {
             Some(value_ref)
         }
     }
-}
 
-#[macro_export]
-macro_rules! AVLTreeSeqStPer {
-    () => { < $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS<_> as $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait<_> >::empty() };
-    ($x:expr; $n:expr) => {{
-        let __vals = vec![$x; $n];
-        < $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS<_> as $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait<_> >::from_vec(__vals)
-    }};
-    ($($x:expr),* $(,)?) => {{
-        let __vals = vec![$($x),*];
-        < $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS<_> as $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait<_> >::from_vec(__vals)
-    }};
+    #[macro_export]
+    macro_rules! AVLTreeSeqStPer {
+        () => { < $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS<_> as $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait<_> >::empty() };
+        ($x:expr; $n:expr) => {{
+            let __vals = vec![$x; $n];
+            < $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS<_> as $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait<_> >::from_vec(__vals)
+        }};
+        ($($x:expr),* $(,)?) => {{
+            let __vals = vec![$($x),*];
+            < $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS<_> as $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait<_> >::from_vec(__vals)
+        }};
+    }
+
+    #[allow(dead_code)]
+    fn _AVLTreeSeqStPer_type_checks() {
+        use crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS;
+        let _ = AVLTreeSeqStPer![1]; // non-empty infers (e.g., i32)
+        let _: AVLTreeSeqStPerS<i32> = AVLTreeSeqStPer![]; // empty form requires explicit type
+    }
 }

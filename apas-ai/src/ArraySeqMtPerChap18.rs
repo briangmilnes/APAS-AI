@@ -29,11 +29,7 @@ pub mod ArraySeqMtPerChap18 {
         /// APAS: Work Θ(1 + Σ (y,z) W(f(y,z))), Span Θ(1 + Σ S(f(y,z)))
         fn iterate<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
         /// APAS: Work Θ(|a|), Span Θ(|a|)
-        fn iteratePrefixes<A: MtT>(
-            a: &ArrayMtPerS<T>,
-            f: impl Fn(&A, &T) -> A,
-            x: A,
-        ) -> (ArrayMtPerS<A>, A);
+        fn iteratePrefixes<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArrayMtPerS<A>, A);
         /// APAS: Work Θ(1 + Σ (y,z) W(f(y,z))), Span Θ(lg|a| · max S(f(y,z)))
         fn reduce(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
         /// APAS: Work Θ(|a|), Span Θ(lg|a|)
@@ -41,10 +37,7 @@ pub mod ArraySeqMtPerChap18 {
         /// APAS: Work Θ(1 + |a| + Σ x∈a |x|), Span Θ(1 + lg|a|)
         fn flatten(ss: &ArrayMtPerS<ArrayMtPerS<T>>) -> ArrayMtPerS<T>;
         /// APAS: Work Θ(1 + W(f) · |a| lg|a|), Span Θ(1 + S(f) · lg^2|a|)
-        fn collect(
-            a: &ArrayMtPerS<Pair<T, T>>,
-            cmp: impl Fn(&T, &T) -> O,
-        ) -> ArrayMtPerS<Pair<T, ArrayMtPerS<T>>>;
+        fn collect(a: &ArrayMtPerS<Pair<T, T>>, cmp: impl Fn(&T, &T) -> O) -> ArrayMtPerS<Pair<T, ArrayMtPerS<T>>>;
     }
 
     impl<T: MtT> ArraySeqMtPerChap18Trait<T> for ArrayMtPerS<T> {
@@ -59,8 +52,14 @@ pub mod ArraySeqMtPerChap18 {
 
         fn append(a: &ArrayMtPerS<T>, b: &ArrayMtPerS<T>) -> ArrayMtPerS<T> {
             Self::tabulate(
-                |i| if i < a.length() { a.nth(i).clone_mt() } else { b.nth(i - a.length()).clone_mt() },
-                a.length() + b.length()
+                |i| {
+                    if i < a.length() {
+                        a.nth(i).clone_mt()
+                    } else {
+                        b.nth(i - a.length()).clone_mt()
+                    }
+                },
+                a.length() + b.length(),
             )
         }
 
@@ -110,11 +109,7 @@ pub mod ArraySeqMtPerChap18 {
             acc
         }
 
-        fn iteratePrefixes<A: MtT>(
-            a: &ArrayMtPerS<T>,
-            f: impl Fn(&A, &T) -> A,
-            x: A,
-        ) -> (ArrayMtPerS<A>, A) {
+        fn iteratePrefixes<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArrayMtPerS<A>, A) {
             let mut acc = x;
             let mut results: Vec<A> = Vec::new();
             for i in 0..a.length() {
@@ -126,7 +121,9 @@ pub mod ArraySeqMtPerChap18 {
         }
 
         fn reduce(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
-            if a.length() == 0 { return id; }
+            if a.length() == 0 {
+                return id;
+            }
             let mut result = a.nth(0).clone_mt();
             for i in 1..a.length() {
                 result = f(&result, a.nth(i));
@@ -155,19 +152,16 @@ pub mod ArraySeqMtPerChap18 {
             ArrayMtPerS::from_vec(results)
         }
 
-        fn collect(
-            a: &ArrayMtPerS<Pair<T, T>>,
-            cmp: impl Fn(&T, &T) -> O,
-        ) -> ArrayMtPerS<Pair<T, ArrayMtPerS<T>>> {
+        fn collect(a: &ArrayMtPerS<Pair<T, T>>, cmp: impl Fn(&T, &T) -> O) -> ArrayMtPerS<Pair<T, ArrayMtPerS<T>>> {
             if a.length() == 0 {
                 return ArrayMtPerS::from_vec(vec![]);
             }
-            
+
             let mut groups: Vec<Pair<T, ArrayMtPerS<T>>> = Vec::new();
-            
+
             for i in 0..a.length() {
                 let Pair(key, value) = a.nth(i);
-                
+
                 // Find existing group or create new one
                 let mut found_group = false;
                 for group in &mut groups {
@@ -183,12 +177,12 @@ pub mod ArraySeqMtPerChap18 {
                         break;
                     }
                 }
-                
+
                 if !found_group {
                     groups.push(Pair(key.clone_mt(), ArrayMtPerS::from_vec(vec![value.clone_mt()])));
                 }
             }
-            
+
             ArrayMtPerS::from_vec(groups)
         }
     }
