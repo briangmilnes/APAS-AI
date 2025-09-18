@@ -21,9 +21,7 @@
 - Clear policy: for shell commands, always use a clear‑first in a separate invocation before running the command.
 
 #### Terminal Clear & Output Visibility
-- Clear‑first, separate calls: run the terminal clear in its own invocation, then run the actual command in a new invocation. Never chain clear + command with `&&`.
-  - Clear: `printf '\033[3J\033[H\033[2J'`
-  - Then: `<your command> 2>&1 | cat`
+- Clear-first, separate calls: if you need to clear the terminal, run that clear command in its own invocation, then run the actual command in a new invocation. Never chain clear + command with `&&`.
 - One command per terminal window. Always pipe command output via `| cat`.
 - Exception: if you explicitly say “no‑clear”, skip the clear step; still keep one command per terminal invocation.
 
@@ -83,6 +81,7 @@
 - No‑pause Autopilot (hard rule): do not ask for confirmation or pause for review. Continue automatically unless and until one of the two hard stops occurs:
   1) After 3 failed attempts, or
   2) A fix would be destructive/ambiguous.
+  - Drive mode: shorthand for the relentless execution posture—stay in motion without pausing for confirmation until you hit one of the two hard stops above.
   - Violation during sweeps is SEV2: Treat any stop/question/confirmation prompt during a sweep as a SEV2 bug. Immediately resume, log the violation in the status, and proceed relentlessly.
   In either stop, mark the TODO failed, print exact diagnostics, create a “Resume …” TODO, and immediately continue to the next independent TODO.
 - Completion guard: after a successful step, immediately complete the active TODO; if another exists, set it `in_progress` and print its Start; otherwise print “All TODOs completed”. No dangling TODOs (except explicit “[long‑run]”).
@@ -134,6 +133,9 @@
 
 ### Environment, Tools, and Misc
 
+#### Git Terminology Consistency
+- Refer to repository state with `git` phrases: say `git-untracked`, `git-committed`, and `git-pushed`. Avoid substitutes such as “shipped.”
+
 #### Mandatory Build Verification for Source Code Modifications
 - **FINAL STEP REQUIREMENT**: The final steps of ANY source code modification MUST include:
   1. `cargo build` - MANDATORY for all `src/` changes
@@ -164,5 +166,3 @@
 
 #### Minimal Constructor Surface
 - Prefer inherent constructors/macros (`new`, `from_vec`, `Lit![]`) over struct literals in tests.
-
-

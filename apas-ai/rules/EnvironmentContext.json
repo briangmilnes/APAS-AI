@@ -1,0 +1,7 @@
+<environment_context>
+  <cwd>/home/milnes/</cwd>
+  <approval_policy>never</approval_policy>
+  <sandbox_mode>workspace-write</sandbox_mode>
+  <network_access>restricted</network_access>
+  <shell>bash</shell>
+</environment_context>

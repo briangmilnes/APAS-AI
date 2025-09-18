@@ -112,5 +112,49 @@ name = "BenchChapter26Mt"
 harness = false
 
 [[bench]]
-name = "BenchBSTEph"
+name = "BenchBSTPlainStEph"
 harness = false
+
+[[bench]]
+name = "BenchBSTAVLStEph"
+harness = false
+
+[[bench]]
+name = "BenchBSTRBStEph"
+harness = false
+
+[[bench]]
+name = "BenchBSTBBAlphaStEph"
+harness = false
+
+[[bench]]
+name = "BenchBSTTreapStEph"
+harness = false
+
+[[bench]]
+name = "BenchBSTSplayStEph"
+harness = false
+[[bench]]
+name = "BenchBSTPlainMtEph"
+harness = false
+
+[[bench]]
+name = "BenchBSTAVLMtEph"
+harness = false
+
+[[bench]]
+name = "BenchBSTRBMtEph"
+harness = false
+
+[[bench]]
+name = "BenchBSTBBAlphaMtEph"
+harness = false
+
+[[bench]]
+name = "BenchBSTTreapMtEph"
+harness = false
+
+[[bench]]
+name = "BenchBSTSplayMtEph"
+harness = false
+

@@ -16,11 +16,11 @@ fn gen_data(n: usize) -> ArraySeqMtEphS<i32> {
 
 fn bench_quicksort_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chapter36Mt");
-    group.sample_size(30);
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.sample_size(10);
+    group.warm_up_time(Duration::from_millis(500));
+    group.measurement_time(Duration::from_secs(3));
 
-    for &n in &[2_048usize, 16_384] {
+    for &n in &[256usize, 2_048, 8_192] {
         group.bench_with_input(BenchmarkId::new("first", n), &n, |b, &len| {
             b.iter_batched(
                 || gen_data(len),

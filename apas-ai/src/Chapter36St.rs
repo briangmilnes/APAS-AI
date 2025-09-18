@@ -40,57 +40,41 @@ pub mod Chapter36St {
         }
 
         fn quick_sort_st_first(&mut self) {
-            fn swap<T: StT>(a: &mut ArraySeqStEphS<T>, i: N, j: N) {
-                if i == j {
-                    return;
-                }
-                let xi = a.nth(i).clone();
-                let xj = a.nth(j).clone();
-                let _ = a.set(i, xj);
-                let _ = a.set(j, xi);
-            }
-            fn partition<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N, p: &T) -> (N, N) {
-                let mut lt = lo;
-                let mut i = lo;
-                let mut gt = hi;
-                while i < gt {
-                    let x = a.nth(i).clone();
-                    if x < *p {
-                        swap(a, lt, i);
-                        lt += 1;
-                        i += 1;
-                    } else if x > *p {
-                        gt -= 1;
-                        swap(a, i, gt);
-                    } else {
-                        i += 1;
-                    }
-                }
-                (lt, gt)
-            }
             fn sort<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N) {
                 if hi <= lo + 1 {
                     return;
                 }
-                let p = a.nth(lo).clone();
-                let (m1, m2) = partition(a, lo, hi, &p);
-                sort(a, lo, m1);
-                sort(a, m2, hi);
+                let pivot = a.nth(lo).clone();
+                let mut lt = lo;
+                let mut i = lo;
+                let mut gt = hi;
+                while i < gt {
+                    let xi = a.nth(i).clone();
+                    if xi < pivot {
+                        if lt != i {
+                            let xlt = a.nth(lt).clone();
+                            let _ = a.set(lt, xi);
+                            let _ = a.set(i, xlt);
+                        }
+                        lt += 1;
+                        i += 1;
+                    } else if xi > pivot {
+                        gt -= 1;
+                        let xgt = a.nth(gt).clone();
+                        let _ = a.set(i, xgt);
+                        let _ = a.set(gt, xi);
+                    } else {
+                        i += 1;
+                    }
+                }
+                sort(a, lo, lt);
+                sort(a, gt, hi);
             }
             let n = self.length();
             sort(self, 0, n);
         }
 
         fn quick_sort_st_median3(&mut self) {
-            fn swap<T: StT>(a: &mut ArraySeqStEphS<T>, i: N, j: N) {
-                if i == j {
-                    return;
-                }
-                let xi = a.nth(i).clone();
-                let xj = a.nth(j).clone();
-                let _ = a.set(i, xj);
-                let _ = a.set(j, xi);
-            }
             fn median3<T: StT + Ord>(a: &ArraySeqStEphS<T>, lo: N, hi: N) -> T {
                 let mid = lo + (hi - lo) / 2;
                 let x0 = a.nth(lo).clone();
@@ -104,77 +88,72 @@ pub mod Chapter36St {
                     xl
                 }
             }
-            fn partition<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N, p: &T) -> (N, N) {
-                let mut lt = lo;
-                let mut i = lo;
-                let mut gt = hi;
-                while i < gt {
-                    let x = a.nth(i).clone();
-                    if x < *p {
-                        swap(a, lt, i);
-                        lt += 1;
-                        i += 1;
-                    } else if x > *p {
-                        gt -= 1;
-                        swap(a, i, gt);
-                    } else {
-                        i += 1;
-                    }
-                }
-                (lt, gt)
-            }
             fn sort<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N) {
                 if hi <= lo + 1 {
                     return;
                 }
-                let p = median3(a, lo, hi);
-                let (m1, m2) = partition(a, lo, hi, &p);
-                sort(a, lo, m1);
-                sort(a, m2, hi);
+                let pivot = median3(a, lo, hi);
+                let mut lt = lo;
+                let mut i = lo;
+                let mut gt = hi;
+                while i < gt {
+                    let xi = a.nth(i).clone();
+                    if xi < pivot {
+                        if lt != i {
+                            let xlt = a.nth(lt).clone();
+                            let _ = a.set(lt, xi);
+                            let _ = a.set(i, xlt);
+                        }
+                        lt += 1;
+                        i += 1;
+                    } else if xi > pivot {
+                        gt -= 1;
+                        let xgt = a.nth(gt).clone();
+                        let _ = a.set(i, xgt);
+                        let _ = a.set(gt, xi);
+                    } else {
+                        i += 1;
+                    }
+                }
+                sort(a, lo, lt);
+                sort(a, gt, hi);
             }
             let n = self.length();
             sort(self, 0, n);
         }
 
         fn quick_sort_st_random(&mut self) {
-            fn swap<T: StT>(a: &mut ArraySeqStEphS<T>, i: N, j: N) {
-                if i == j {
-                    return;
-                }
-                let xi = a.nth(i).clone();
-                let xj = a.nth(j).clone();
-                let _ = a.set(i, xj);
-                let _ = a.set(j, xi);
-            }
-            fn partition<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N, p: &T) -> (N, N) {
-                let mut lt = lo;
-                let mut i = lo;
-                let mut gt = hi;
-                while i < gt {
-                    let x = a.nth(i).clone();
-                    if x < *p {
-                        swap(a, lt, i);
-                        lt += 1;
-                        i += 1;
-                    } else if x > *p {
-                        gt -= 1;
-                        swap(a, i, gt);
-                    } else {
-                        i += 1;
-                    }
-                }
-                (lt, gt)
-            }
             fn sort<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N) {
                 if hi <= lo + 1 {
                     return;
                 }
                 let mut r = rng();
                 let idx = r.random_range(lo..hi);
-                let p = a.nth(idx).clone();
-                let (m1, m2) = partition(a, lo, hi, &p);
-                sort(a, lo, m1);
-                sort(a, m2, hi);
+                let pivot = a.nth(idx).clone();
+                let mut lt = lo;
+                let mut i = lo;
+                let mut gt = hi;
+                while i < gt {
+                    let xi = a.nth(i).clone();
+                    if xi < pivot {
+                        if lt != i {
+                            let xlt = a.nth(lt).clone();
+                            let _ = a.set(lt, xi);
+                            let _ = a.set(i, xlt);
+                        }
+                        lt += 1;
+                        i += 1;
+                    } else if xi > pivot {
+                        gt -= 1;
+                        let xgt = a.nth(gt).clone();
+                        let _ = a.set(i, xgt);
+                        let _ = a.set(gt, xi);
+                    } else {
+                        i += 1;
+                    }
+                }
+                sort(a, lo, lt);
+                sort(a, gt, hi);
             }
             let n = self.length();
             sort(self, 0, n);

@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use apas_ai::BSTEph::BSTEph::BSTree;
+use apas_ai::BSTPlainMtEph::BSTPlainMtEph::BSTree;
 use apas_ai::*;
 use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 
@@ -15,12 +15,12 @@ fn build_tree(len: usize) -> BSTree<i32> {
 }
 
 fn bench_bsteph(c: &mut Criterion) {
-    let mut group = c.benchmark_group("BSTEph");
-    group.sample_size(30);
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    let mut group = c.benchmark_group("BSTPlainMtEph");
+    group.sample_size(10);
+    group.warm_up_time(Duration::from_millis(200));
+    group.measurement_time(Duration::from_millis(800));
 
-    for &n in &[1_024usize, 8_192] {
+    for &n in &[1_024usize, 2_048] {
         group.bench_with_input(BenchmarkId::new("build", n), &n, |b, &len| {
             b.iter(|| black_box(build_tree(len)));
         });
@@ -32,7 +32,7 @@ fn bench_bsteph(c: &mut Criterion) {
                     let mut found = 0usize;
                     while found < len {
                         let key = found as i32;
-                        let _ = black_box(tree.contains(&key));
+                        let _ = black_box(tree.find(&key));
                         found += 17;
                     }
                 },

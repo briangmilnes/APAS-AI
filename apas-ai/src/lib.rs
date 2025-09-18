@@ -66,6 +66,8 @@ pub use crate::ArraySeqStEphChap19::ArraySeqStEphChap19::*;
 // Multithreaded ephemeral arrays
 pub mod ArraySeqMtEph;
 pub use crate::ArraySeqMtEph::ArraySeqMtEph::*;
+pub mod ArraySeqMtEphSlice;
+pub use crate::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
 pub mod ArraySeqMtEphChap18;
 pub use crate::ArraySeqMtEphChap18::ArraySeqMtEphChap18::*;
 pub mod ArraySeqMtEphChap19;
@@ -90,9 +92,35 @@ pub mod Chapter36St;
 pub use crate::Chapter36St::Chapter36St::*;
 pub mod Chapter36Mt;
 pub use crate::Chapter36Mt::Chapter36Mt::*;
+pub mod Chapter36MtSlice;
+pub use crate::Chapter36MtSlice::Chapter36MtSlice::*;
 
 // Chapter 37 binary trees
 pub mod BBTEph;
-pub use crate::BBTEph::BBTEph::*;
-pub mod BSTEph;
-pub use crate::BSTEph::BSTEph::*;
+pub use crate::BBTEph::BBTEph::{BBNode, BBTree};
+
+pub mod BSTPlainStEph;
+pub use crate::BSTPlainStEph::BSTPlainStEph::{BSTPlainStEphTrait, BSTree as BSTPlainStTree};
+pub mod BSTAVLStEph;
+pub use crate::BSTAVLStEph::BSTAVLStEph::{BSTAVLStEphTrait, BSTreeAVL as BSTAVLStTree};
+pub mod BSTRBStEph;
+pub use crate::BSTRBStEph::BSTRBStEph::{BSTRBStEphTrait, BSTreeRB as BSTRBStTree};
+pub mod BSTBBAlphaStEph;
+pub use crate::BSTBBAlphaStEph::BSTBBAlphaStEph::{BSTBBAlphaStEphTrait, BSTreeBBAlpha as BSTBBAlphaStTree};
+pub mod BSTTreapStEph;
+pub use crate::BSTTreapStEph::BSTTreapStEph::{BSTTreapStEphTrait, BSTreeTreap as BSTTreapStTree};
+pub mod BSTSplayStEph;
+pub use crate::BSTSplayStEph::BSTSplayStEph::{BSTSplayStEphTrait, BSTreeSplay as BSTSplayStTree};
+
+pub mod BSTPlainMtEph;
+pub use crate::BSTPlainMtEph::BSTPlainMtEph::{BSTPlainMtEphTrait, BSTree as BSTPlainMtTree};
+pub mod BSTAVLMtEph;
+pub use crate::BSTAVLMtEph::BSTAVLMtEph::{BSTAVLMtEphTrait, BSTreeAVL as BSTAVLMtTree};
+pub mod BSTRBMtEph;
+pub use crate::BSTRBMtEph::BSTRBMtEph::{BSTRBMtEphTrait, BSTreeRB as BSTRBMtTree};
+pub mod BSTBBAlphaMtEph;
+pub use crate::BSTBBAlphaMtEph::BSTBBAlphaMtEph::{BSTBBAlphaMtEphTrait, BSTreeBBAlpha as BSTBBAlphaMtTree};
+pub mod BSTTreapMtEph;
+pub use crate::BSTTreapMtEph::BSTTreapMtEph::{BSTTreapMtEphTrait, BSTreeTreap as BSTTreapMtTree};
+pub mod BSTSplayMtEph;
+pub use crate::BSTSplayMtEph::BSTSplayMtEph::{BSTSplayMtEphTrait, BSTreeSplay as BSTSplayMtTree};

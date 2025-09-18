@@ -46,6 +46,10 @@ fn quick_sort_mt_edge_cases() {
     let mut reversed = ArraySeqMtEph![5, 4, 3, 2, 1];
     reversed.quick_sort_mt_first();
     assert_eq!(to_vec(&reversed), vec![1, 2, 3, 4, 5]);
+
+    let mut pair = ArraySeqMtEph![2, 1];
+    pair.quick_sort_mt_median3();
+    assert_eq!(to_vec(&pair), vec![1, 2]);
 }
 
 #[test]
@@ -64,6 +68,9 @@ fn pivot_mt_strategies_match_expectations() {
         }
     }
     assert!(within, "random pivot should be drawn from the requested sub-range");
+
+    let median_case = ArraySeqMtEph![3, 8, 5, 6, 7];
+    assert_eq!(median_case.pivot_mt_median3(0, median_case.length()), 5);
 }
 
 #[test]
@@ -77,4 +84,17 @@ fn quick_sort_mt_large_inputs() {
     let mut random_seq = ArraySeqMtEphS::from_vec(random_data);
     random_seq.quick_sort_mt_random();
     assert!(is_sorted(&to_vec(&random_seq)));
+}
+
+#[test]
+fn quick_sort_mt_small_inputs_use_shared_pivots() {
+    let mut seq = ArraySeqMtEph![4, 1, 3];
+    assert_eq!(seq.pivot_mt_first(0, seq.length()), 4);
+    seq.quick_sort_mt_first();
+    assert_eq!(to_vec(&seq), vec![1, 3, 4]);
+
+    let mut seq_med = ArraySeqMtEph![8, 2, 7, 1, 5];
+    assert_eq!(seq_med.pivot_mt_median3(0, seq_med.length()), 7);
+    seq_med.quick_sort_mt_median3();
+    assert_eq!(to_vec(&seq_med), vec![1, 2, 5, 7, 8]);
 }

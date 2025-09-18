@@ -5,6 +5,8 @@
 - In sweeps, never add `Vec`/`vec![]`/`to_vec()`/`into_vec()` or equivalent conversions—stick to the provided sequence APIs (`tabulate`, `nth`, `length`, `set`, `iter`, literals).
 - Outside sweeps, I need explicit permission before adding any new `Vec` usage; default assumption is “no”.
 - Inside a type’s own module or impl, reuse existing `Vec` representations only when already established; do not broaden their footprint.
+- Core operations must be exposed as inherent methods on the public type (no private/free-function wrappers) so tests can exercise them directly.
+- Inherent conversion helpers (`from_vec`, `to_vec`) are allowed inside the defining module when they keep the `Vec` hidden from callers.
 - When existing call sites already use `Vec`, keep changes local and prefer constructors/macros over expanding that usage.
 
 ### Element Shorthands and Delegation

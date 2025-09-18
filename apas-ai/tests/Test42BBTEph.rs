@@ -1,5 +1,5 @@
 use apas_ai::BBTEph::BBTEph::*;
-use apas_ai::BSTEph::BSTEph::*;
+use apas_ai::BSTPlainStEph::BSTPlainStEph::*;
 use apas_ai::*;
 
 #[test]
@@ -29,6 +29,9 @@ fn bst_insert_and_search_behavior() {
     assert_eq!(bst.contains(&4), B::True);
     assert_eq!(bst.contains(&5), B::True);
     assert_eq!(bst.contains(&8), B::False);
+    assert_eq!(bst.find(&4), Some(&4));
+    assert_eq!(bst.find(&6), Some(&6));
+    assert_eq!(bst.find(&9), None);
     let inorder = bst.in_order();
     assert_eq!(inorder, ArraySeqStPer![1, 2, 3, 4, 5, 6, 7]);
     let preorder = bst.pre_order();

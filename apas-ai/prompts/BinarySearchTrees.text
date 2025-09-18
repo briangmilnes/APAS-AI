@@ -1,0 +1,91 @@
+
+ Put find into BST.
+ Write test code.
+ Write performance code.
+ 
+
+3. SEARCHING A BST
+
+Here we are assuming that we just store keys at the nodes of the trees, and that the keys
+represent an ordered set. In practice we often store a value associated with each key at
+each node, and perhaps other information. These do not change the fundamental ideas we
+discuss here, so we will ignore them at first and then come back to them.
+3 Searching a BST
+The primary goal of a BST is to do fast searches for a particular key. Fortunately, it is
+relatively easy to search for a key in a BST, and even to find the next larger or smaller key
+in the tree. To find a particular key we can start at the root r and if k equals the key at the
+root, call it k′, then we have found our key, otherwise if k < k′, then we know that k cannot
+appear in the right subtree, so we only need to search the left subtree, and if k > k′, then
+we only have to search the right subtree. Continuing the search, we will either find the key
+or reach a leaf and conclude that the key is not in the tree. Based on this idea the following
+algorithm will return whether a key k is in a BST T .
+Algorithm 37.4 (Searching a BST).
+find T k =
+case T of
+Leaf ⇒ false
+| Node(L, k′, R) ⇒
+if (k = k′) then true
+else if (k < k′) then find L k
+else find R k
+
+When that works, build a version of BST (named BSTEphX) for
+each of the five balancing techniques numbered. Write test and
+benches for each. 
+
+4 Balancing BSTs
+
+Given that the work to find a key (and also for other operations) is proportional to the
+height of a BST, our goal should therefore be to keep the height low. In the worst case the
+height could be equal to the size. This would be true if every node had one child that is a
+leaf. Such a tree is clearly very unbalanced. Our goal therefore implies we should keep the
+tree “balanced” such that all leaves of the tree are at approximately at the same depth. We
+formalize this notion as follows.
+
+Definition 37.5 (Perfectly Balanced BSTs). A binary tree is perfectly balanced if it has the
+minimum possible height. For a binary search tree with n keys, a perfectly balanced tree
+has height exactly dlg(n + 1)e.
+Ideally we would like to use only perfectly balanced trees. If we never make changes to
+the tree, we could balance it once and for all. If, however, we want to update the tree by,
+for example, inserting new keys, then maintaining such perfect balance is costly. In fact, it
+turns out to be impossible to maintain a perfectly balanced tree while allowing insertions
+
+in O(lg n) work. BST data structures therefore aim to keep approximate balance instead of
+a perfect one. There are various schemes that keep trees nearly balanced for any sized tree.
+These schemes maintain invariants at each node that ensure this near balance.
+Definition 37.6 (Nearly Balanced BSTs). We refer to a balancing scheme as maintaining near
+balance, or simply balance, if all trees with n elements that satisfy the scheme’s invariants
+have height O(lg n). In some cases this is satisfied in expectation or with high probability.
+Balanced BST Data Structures. There are many balancing schemes for BSTs. Most either
+try to maintain height balance (the children of a node are about the same height) or weight
+balance (the children of a node are about the same size). Here we list a few such balancing
+schemes:
+1. AVL trees are the earliest nearly balanced BST data structure (1962). AVL trees main-
+tain the invariant that the two children of each node differ in height by at most one,
+which implies near balance.
+
+2. Red-Black trees maintain the invariant that all leaves have a depth that is within a
+factor of 2 of each other. The depth invariant is ensured by a scheme of coloring the
+nodes red and black.
+
+3. Weight balanced (BB[α]) trees maintain the invariant that the left and right subtrees
+of a node of size n each have size at least αn for 0 < α ≤ 1 − 1√2 . The BB stands for
+bounded balance, and adjusting α gives a tradeoff between search and update costs.
+
+4. Treaps associate a random priority with every key and maintain the invariant that
+the keys are stored in heap order with respect to their priorities (the term “Treap” is
+short for “tree heap”). Treaps guarantee near balance with high-probability.
+
+5. Splay trees are an amortized data structure that does not guarantee near balance, but
+instead guarantees that for any sequence of m insert, find and delete operations each
+does O(lg n) amortized work.
+
+There are several other balancing schemes for BST data structures (e.g. scapegoat trees and
+AA trees), as well as many that allow larger degrees, including 2–3 trees, brother trees, and
+B trees.
+
+Remark. Many of the existing BST data structures were developed for sequential comput-
+ing. Some of these data structures such as Treaps, which we describe here, generalize
+naturally to parallel computing. But some others, such as data structures that rely on amor-
+tization techniques can be challenging to support in the parallel setting
+
+
