@@ -44,9 +44,7 @@ pub mod ArraySeqMtEph {
     impl<T: StT> ArraySeqMtEphS<T> {
         /// APAS: Work Θ(1), Span Θ(1)
         pub fn from_vec(v: Vec<T>) -> Self {
-            ArraySeqMtEphS {
-                data: Mutex::new(v.into_boxed_slice()),
-            }
+            ArraySeqMtEphS { data: Mutex::new(v.into_boxed_slice()) }
         }
 
         /// APAS: Work Θ(1), Span Θ(1)

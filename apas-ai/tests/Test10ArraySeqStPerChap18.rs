@@ -177,11 +177,7 @@ pub mod TestArraySeqStPerChap18 {
     #[test]
     fn test_collect_groups_by_key() {
         // Use N, N pairs since collect requires same types
-        let pairs = ArraySeqStPer![
-            Pair(1_usize, 10_usize),
-            Pair(2_usize, 20_usize),
-            Pair(1_usize, 30_usize)
-        ];
+        let pairs = ArraySeqStPer![Pair(1_usize, 10_usize), Pair(2_usize, 20_usize), Pair(1_usize, 30_usize)];
         let grouped: ArrayStPerS<Pair<N, ArrayStPerS<N>>> =
             <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::collect(&pairs, |k1, k2| k1.cmp(k2));
         assert_eq!(grouped.length(), 2);

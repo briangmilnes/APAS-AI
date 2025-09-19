@@ -35,10 +35,7 @@ pub mod TestLinkedListStEphChap19 {
         assert_eq!(b.iter().copied().collect::<Vec<N>>(), vec![10, 11, 12, 13]);
         let c = <LinkedListStEphS<N> as LinkedListStEphChap19Trait<N>>::append(&a, &b);
         assert_eq!(c.iter().copied().collect::<Vec<N>>(), vec![0, 1, 2, 3, 10, 11, 12, 13]);
-        assert_eq!(
-            <LinkedListStEphS<N> as LinkedListStEphChap19Trait<N>>::select(&a, &b, 6),
-            Some(12)
-        );
+        assert_eq!(<LinkedListStEphS<N> as LinkedListStEphChap19Trait<N>>::select(&a, &b, 6), Some(12));
     }
 
     #[test]

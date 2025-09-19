@@ -75,9 +75,7 @@ pub mod ArraySeqStEph {
         /// APAS: Work Θ(|v|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
         pub fn from_vec(v: Vec<T>) -> Self {
-            ArraySeqStEphS {
-                data: v.into_boxed_slice(),
-            }
+            ArraySeqStEphS { data: v.into_boxed_slice() }
         }
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)

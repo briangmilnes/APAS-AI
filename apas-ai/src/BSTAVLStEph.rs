@@ -18,19 +18,15 @@ pub mod BSTAVLStEph {
 
     impl<T: StT + Ord> Node<T> {
         fn new(key: T) -> Self {
-            Node {
-                key,
-                height: 1,
-                size: 1,
-                left: None,
-                right: None,
-            }
+            Node { key, height: 1, size: 1, left: None, right: None }
         }
     }
 
-    pub struct BSTreeAVL<T: StT + Ord> {
+    pub struct BSTAVLStEph<T: StT + Ord> {
         root: Link<T>,
     }
+
+    pub type BSTreeAVL<T> = BSTAVLStEph<T>;
 
     pub trait BSTAVLStEphTrait<T: StT + Ord> {
         fn new() -> Self;
@@ -46,15 +42,15 @@ pub mod BSTAVLStEph {
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StT + Ord> Default for BSTreeAVL<T> {
+    impl<T: StT + Ord> Default for BSTAVLStEph<T> {
         fn default() -> Self {
             Self::new()
         }
     }
 
-    impl<T: StT + Ord> BSTreeAVL<T> {
+    impl<T: StT + Ord> BSTAVLStEph<T> {
         pub fn new() -> Self {
-            BSTreeAVL { root: None }
+            BSTAVLStEph { root: None }
         }
 
         pub fn size(&self) -> N {
@@ -238,49 +234,49 @@ pub mod BSTAVLStEph {
         }
     }
 
-    impl<T: StT + Ord> BSTAVLStEphTrait<T> for BSTreeAVL<T> {
+    impl<T: StT + Ord> BSTAVLStEphTrait<T> for BSTAVLStEph<T> {
         fn new() -> Self {
-            BSTreeAVL::new()
+            BSTAVLStEph::new()
         }
 
         fn size(&self) -> N {
-            BSTreeAVL::size(self)
+            BSTAVLStEph::size(self)
         }
 
         fn is_empty(&self) -> B {
-            BSTreeAVL::is_empty(self)
+            BSTAVLStEph::is_empty(self)
         }
 
         fn height(&self) -> N {
-            BSTreeAVL::height(self)
+            BSTAVLStEph::height(self)
         }
 
         fn insert(&mut self, value: T) {
-            BSTreeAVL::insert(self, value)
+            BSTAVLStEph::insert(self, value)
         }
 
         fn find(&self, target: &T) -> Option<&T> {
-            BSTreeAVL::find(self, target)
+            BSTAVLStEph::find(self, target)
         }
 
         fn contains(&self, target: &T) -> B {
-            BSTreeAVL::contains(self, target)
+            BSTAVLStEph::contains(self, target)
         }
 
         fn minimum(&self) -> Option<&T> {
-            BSTreeAVL::minimum(self)
+            BSTAVLStEph::minimum(self)
         }
 
         fn maximum(&self) -> Option<&T> {
-            BSTreeAVL::maximum(self)
+            BSTAVLStEph::maximum(self)
         }
 
         fn in_order(&self) -> ArrayStPerS<T> {
-            BSTreeAVL::in_order(self)
+            BSTAVLStEph::in_order(self)
         }
 
         fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTreeAVL::pre_order(self)
+            BSTAVLStEph::pre_order(self)
         }
     }
 }

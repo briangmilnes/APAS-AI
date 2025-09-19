@@ -200,10 +200,8 @@ pub mod ArraySeqStPerChap18 {
                     groups.push(Pair(k.clone(), vec![v.clone()]));
                 }
             }
-            let pairs: Vec<Pair<T, ArrayStPerS<T>>> = groups
-                .into_iter()
-                .map(|Pair(k, vs)| Pair(k, ArrayStPerS::from_vec(vs)))
-                .collect();
+            let pairs: Vec<Pair<T, ArrayStPerS<T>>> =
+                groups.into_iter().map(|Pair(k, vs)| Pair(k, ArrayStPerS::from_vec(vs))).collect();
             ArrayStPerS::from_vec(pairs)
         }
     }

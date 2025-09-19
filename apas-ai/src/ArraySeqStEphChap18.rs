@@ -189,10 +189,8 @@ pub mod ArraySeqStEphChap18 {
                     groups.push(Pair(k.clone(), vec![v.clone()]));
                 }
             }
-            let out: Vec<Pair<A, ArraySeqStEphS<Bv>>> = groups
-                .into_iter()
-                .map(|Pair(k, gv)| Pair(k, ArraySeqStEphS::from_vec(gv)))
-                .collect();
+            let out: Vec<Pair<A, ArraySeqStEphS<Bv>>> =
+                groups.into_iter().map(|Pair(k, gv)| Pair(k, ArraySeqStEphS::from_vec(gv))).collect();
             ArraySeqStEphS::from_vec(out)
         }
     }

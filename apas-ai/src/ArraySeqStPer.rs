@@ -66,9 +66,7 @@ pub mod ArraySeqStPer {
         /// Convenience: build from a Vec without extra copies when capacity==len.
         /// APAS: Work Θ(n) worst case, Span Θ(1)
         pub fn from_vec(v: Vec<T>) -> Self {
-            ArrayStPerS {
-                data: v.into_boxed_slice(),
-            }
+            ArrayStPerS { data: v.into_boxed_slice() }
         }
 
         pub fn iter(&self) -> Iter<'_, T> {
@@ -79,14 +77,10 @@ pub mod ArraySeqStPer {
         }
 
         pub fn empty() -> Self {
-            ArrayStPerS {
-                data: Vec::new().into_boxed_slice(),
-            }
+            ArrayStPerS { data: Vec::new().into_boxed_slice() }
         }
         pub fn singleton(item: T) -> Self {
-            ArrayStPerS {
-                data: vec![item].into_boxed_slice(),
-            }
+            ArrayStPerS { data: vec![item].into_boxed_slice() }
         }
         pub fn new(length: N, init_value: T) -> Self
         where

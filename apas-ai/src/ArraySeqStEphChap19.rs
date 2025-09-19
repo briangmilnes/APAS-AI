@@ -45,11 +45,7 @@ pub mod ArraySeqStEphChap19 {
                 Some(a.nth(i).clone())
             } else {
                 let off = i - a.length();
-                if off < b.length() {
-                    Some(b.nth(off).clone())
-                } else {
-                    None
-                }
+                if off < b.length() { Some(b.nth(off).clone()) } else { None }
             }
         }
         fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {

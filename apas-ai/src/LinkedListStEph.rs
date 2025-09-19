@@ -71,9 +71,7 @@ pub mod LinkedListStEph {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         pub fn iter<'a>(&'a self) -> LinkedListStEphIter<'a, T> {
-            LinkedListStEphIter {
-                cursor: self.head.as_deref(),
-            }
+            LinkedListStEphIter { cursor: self.head.as_deref() }
         }
     }
 
@@ -88,10 +86,7 @@ pub mod LinkedListStEph {
         fn new(length: N, init_value: T) -> Self {
             let mut list = LinkedListStEphS::empty();
             for _ in 0..length {
-                list.push_front_node(Box::new(NodeE {
-                    value: init_value.clone(),
-                    next: None,
-                }));
+                list.push_front_node(Box::new(NodeE { value: init_value.clone(), next: None }));
             }
             // reverse to maintain intuitive order
             let mut rev: Option<Box<NodeE<T>>> = None;
@@ -136,13 +131,7 @@ pub mod LinkedListStEph {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(item: T) -> Self {
-            LinkedListStEphS {
-                head: Some(Box::new(NodeE {
-                    value: item,
-                    next: None,
-                })),
-                len: 1,
-            }
+            LinkedListStEphS { head: Some(Box::new(NodeE { value: item, next: None })), len: 1 }
         }
         /// APAS: Work Θ(index), Span Θ(index)
         /// claude-4-sonet: Work Θ(index), Span Θ(index)
@@ -188,10 +177,7 @@ pub mod LinkedListStEph {
             let mut cur = self.head.as_ref();
             while let Some(node) = cur {
                 if i >= s && i < e {
-                    out.push_front_node(Box::new(NodeE {
-                        value: node.value.clone(),
-                        next: None,
-                    }));
+                    out.push_front_node(Box::new(NodeE { value: node.value.clone(), next: None }));
                 }
                 if i >= e {
                     break;

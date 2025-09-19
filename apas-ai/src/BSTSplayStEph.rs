@@ -17,18 +17,15 @@ pub mod BSTSplayStEph {
 
     impl<T: StT + Ord> Node<T> {
         fn new(key: T) -> Self {
-            Node {
-                key,
-                size: 1,
-                left: None,
-                right: None,
-            }
+            Node { key, size: 1, left: None, right: None }
         }
     }
 
-    pub struct BSTreeSplay<T: StT + Ord> {
+    pub struct BSTSplayStEph<T: StT + Ord> {
         root: Link<T>,
     }
+
+    pub type BSTreeSplay<T> = BSTSplayStEph<T>;
 
     pub trait BSTSplayStEphTrait<T: StT + Ord> {
         fn new() -> Self;
@@ -44,15 +41,15 @@ pub mod BSTSplayStEph {
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StT + Ord> Default for BSTreeSplay<T> {
+    impl<T: StT + Ord> Default for BSTSplayStEph<T> {
         fn default() -> Self {
             Self::new()
         }
     }
 
-    impl<T: StT + Ord> BSTreeSplay<T> {
+    impl<T: StT + Ord> BSTSplayStEph<T> {
         pub fn new() -> Self {
-            BSTreeSplay { root: None }
+            BSTSplayStEph { root: None }
         }
 
         pub fn size(&self) -> N {
@@ -187,49 +184,49 @@ pub mod BSTSplayStEph {
         }
     }
 
-    impl<T: StT + Ord> BSTSplayStEphTrait<T> for BSTreeSplay<T> {
+    impl<T: StT + Ord> BSTSplayStEphTrait<T> for BSTSplayStEph<T> {
         fn new() -> Self {
-            BSTreeSplay::new()
+            BSTSplayStEph::new()
         }
 
         fn size(&self) -> N {
-            BSTreeSplay::size(self)
+            BSTSplayStEph::size(self)
         }
 
         fn is_empty(&self) -> B {
-            BSTreeSplay::is_empty(self)
+            BSTSplayStEph::is_empty(self)
         }
 
         fn height(&self) -> N {
-            BSTreeSplay::height(self)
+            BSTSplayStEph::height(self)
         }
 
         fn insert(&mut self, value: T) {
-            BSTreeSplay::insert(self, value)
+            BSTSplayStEph::insert(self, value)
         }
 
         fn find(&self, target: &T) -> Option<&T> {
-            BSTreeSplay::find(self, target)
+            BSTSplayStEph::find(self, target)
         }
 
         fn contains(&self, target: &T) -> B {
-            BSTreeSplay::contains(self, target)
+            BSTSplayStEph::contains(self, target)
         }
 
         fn minimum(&self) -> Option<&T> {
-            BSTreeSplay::minimum(self)
+            BSTSplayStEph::minimum(self)
         }
 
         fn maximum(&self) -> Option<&T> {
-            BSTreeSplay::maximum(self)
+            BSTSplayStEph::maximum(self)
         }
 
         fn in_order(&self) -> ArrayStPerS<T> {
-            BSTreeSplay::in_order(self)
+            BSTSplayStEph::in_order(self)
         }
 
         fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTreeSplay::pre_order(self)
+            BSTSplayStEph::pre_order(self)
         }
     }
 }

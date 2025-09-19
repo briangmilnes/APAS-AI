@@ -89,23 +89,17 @@ pub mod MappingStEphChap5_5 {
     > MappingStEphChap5_5Trait<X, Y> for Mapping<X, Y>
     {
         fn empty() -> Mapping<X, Y> {
-            Mapping {
-                rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::empty(),
-            }
+            Mapping { rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::empty() }
         }
 
         fn FromVec(v: Vec<Pair<X, Y>>) -> Mapping<X, Y> {
             let pairs = Self::unique_pairs_from_iter(v);
-            Mapping {
-                rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::FromSet(pairs),
-            }
+            Mapping { rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::FromSet(pairs) }
         }
 
         fn FromRelation(r: &Relation<X, Y>) -> Mapping<X, Y> {
             let pairs = Self::unique_pairs_from_iter(r.iter().cloned());
-            Mapping {
-                rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::FromSet(pairs),
-            }
+            Mapping { rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::FromSet(pairs) }
         }
 
         fn size(&self) -> N {

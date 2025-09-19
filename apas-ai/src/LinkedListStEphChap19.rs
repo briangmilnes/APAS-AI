@@ -34,11 +34,7 @@ pub mod LinkedListStEphChap19 {
             } else {
                 let j = i - na;
                 let nb = <LinkedListStEphS<T> as LinkedListStEphTrait<T>>::length(b);
-                if j < nb {
-                    Some(<LinkedListStEphS<T> as LinkedListStEphTrait<T>>::nth(b, j).clone())
-                } else {
-                    None
-                }
+                if j < nb { Some(<LinkedListStEphS<T> as LinkedListStEphTrait<T>>::nth(b, j).clone()) } else { None }
             }
         }
         fn append(a: &LinkedListStEphS<T>, b: &LinkedListStEphS<T>) -> LinkedListStEphS<T> {

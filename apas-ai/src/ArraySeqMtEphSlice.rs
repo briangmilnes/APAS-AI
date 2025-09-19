@@ -18,9 +18,7 @@ pub mod ArraySeqMtEphSlice {
 
     impl<T: StT> Inner<T> {
         fn new(data: Box<[T]>) -> Self {
-            Inner {
-                data: Mutex::new(data),
-            }
+            Inner { data: Mutex::new(data) }
         }
 
         fn len(&self) -> N {
@@ -53,10 +51,7 @@ pub mod ArraySeqMtEphSlice {
         /// Constructs a sequence from an owned boxed slice.
         pub fn from_box(data: Box<[T]>) -> Self {
             let len = data.len();
-            ArraySeqMtEphSliceS {
-                inner: Arc::new(Inner::new(data)),
-                range: 0..len,
-            }
+            ArraySeqMtEphSliceS { inner: Arc::new(Inner::new(data)), range: 0..len }
         }
 
         /// Constructs a sequence from a Vec without exposing it to callers.
@@ -67,10 +62,7 @@ pub mod ArraySeqMtEphSlice {
         /// Materializes the current slice into a Vec for diagnostics or copies.
         pub fn to_vec(&self) -> Vec<T> {
             let guard = self.inner.data.lock().unwrap();
-            guard[self.range.start..self.range.end]
-                .iter()
-                .cloned()
-                .collect()
+            guard[self.range.start..self.range.end].iter().cloned().collect()
         }
 
         /// Invokes the closure with a mutable slice under the single mutex.
@@ -134,19 +126,11 @@ pub mod ArraySeqMtEphSlice {
         }
 
         fn isEmpty(&self) -> B {
-            if self.len() == 0 {
-                B::True
-            } else {
-                B::False
-            }
+            if self.len() == 0 { B::True } else { B::False }
         }
 
         fn isSingleton(&self) -> B {
-            if self.len() == 1 {
-                B::True
-            } else {
-                B::False
-            }
+            if self.len() == 1 { B::True } else { B::False }
         }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
@@ -158,19 +142,13 @@ pub mod ArraySeqMtEphSlice {
 
         fn slice(&self, start: N, length: N) -> Self {
             let sub = self.clamp_subrange(start, length);
-            ArraySeqMtEphSliceS {
-                inner: Arc::clone(&self.inner),
-                range: sub,
-            }
+            ArraySeqMtEphSliceS { inner: Arc::clone(&self.inner), range: sub }
         }
     }
 
     impl<T: StT> Clone for ArraySeqMtEphSliceS<T> {
         fn clone(&self) -> Self {
-            ArraySeqMtEphSliceS {
-                inner: Arc::clone(&self.inner),
-                range: self.range.clone(),
-            }
+            ArraySeqMtEphSliceS { inner: Arc::clone(&self.inner), range: self.range.clone() }
         }
     }
 
@@ -193,9 +171,7 @@ pub mod ArraySeqMtEphSlice {
     impl<T: StT> Debug for ArraySeqMtEphSliceS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             let guard = self.inner.data.lock().unwrap();
-            f.debug_list()
-                .entries(guard[self.range.start..self.range.end].iter())
-                .finish()
+            f.debug_list().entries(guard[self.range.start..self.range.end].iter()).finish()
         }
     }
 

@@ -19,19 +19,15 @@ pub mod BSTTreapStEph {
 
     impl<T: StT + Ord> Node<T> {
         fn new(key: T, priority: u64) -> Self {
-            Node {
-                key,
-                priority,
-                size: 1,
-                left: None,
-                right: None,
-            }
+            Node { key, priority, size: 1, left: None, right: None }
         }
     }
 
-    pub struct BSTreeTreap<T: StT + Ord> {
+    pub struct BSTTreapStEph<T: StT + Ord> {
         root: Link<T>,
     }
+
+    pub type BSTreeTreap<T> = BSTTreapStEph<T>;
 
     pub trait BSTTreapStEphTrait<T: StT + Ord> {
         fn new() -> Self;
@@ -47,15 +43,15 @@ pub mod BSTTreapStEph {
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StT + Ord> Default for BSTreeTreap<T> {
+    impl<T: StT + Ord> Default for BSTTreapStEph<T> {
         fn default() -> Self {
             Self::new()
         }
     }
 
-    impl<T: StT + Ord> BSTreeTreap<T> {
+    impl<T: StT + Ord> BSTTreapStEph<T> {
         pub fn new() -> Self {
-            BSTreeTreap { root: None }
+            BSTTreapStEph { root: None }
         }
 
         pub fn size(&self) -> N {
@@ -218,49 +214,49 @@ pub mod BSTTreapStEph {
         }
     }
 
-    impl<T: StT + Ord> BSTTreapStEphTrait<T> for BSTreeTreap<T> {
+    impl<T: StT + Ord> BSTTreapStEphTrait<T> for BSTTreapStEph<T> {
         fn new() -> Self {
-            BSTreeTreap::new()
+            BSTTreapStEph::new()
         }
 
         fn size(&self) -> N {
-            BSTreeTreap::size(self)
+            BSTTreapStEph::size(self)
         }
 
         fn is_empty(&self) -> B {
-            BSTreeTreap::is_empty(self)
+            BSTTreapStEph::is_empty(self)
         }
 
         fn height(&self) -> N {
-            BSTreeTreap::height(self)
+            BSTTreapStEph::height(self)
         }
 
         fn insert(&mut self, value: T) {
-            BSTreeTreap::insert(self, value)
+            BSTTreapStEph::insert(self, value)
         }
 
         fn find(&self, target: &T) -> Option<&T> {
-            BSTreeTreap::find(self, target)
+            BSTTreapStEph::find(self, target)
         }
 
         fn contains(&self, target: &T) -> B {
-            BSTreeTreap::contains(self, target)
+            BSTTreapStEph::contains(self, target)
         }
 
         fn minimum(&self) -> Option<&T> {
-            BSTreeTreap::minimum(self)
+            BSTTreapStEph::minimum(self)
         }
 
         fn maximum(&self) -> Option<&T> {
-            BSTreeTreap::maximum(self)
+            BSTTreapStEph::maximum(self)
         }
 
         fn in_order(&self) -> ArrayStPerS<T> {
-            BSTreeTreap::in_order(self)
+            BSTTreapStEph::in_order(self)
         }
 
         fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTreeTreap::pre_order(self)
+            BSTTreapStEph::pre_order(self)
         }
     }
 }

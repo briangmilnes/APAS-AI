@@ -1,182 +1,234 @@
-//! Ephemeral binary search tree built on `BBTEph` primitives.
+//! Ephemeral binary search tree built on `BBTEph` primitives with fine-grained locking.
 
 pub mod BSTPlainMtEph {
+    use std::sync::{Arc, RwLock};
+
     use crate::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::BBTEph::BBTEph::BBTree;
     use crate::Types::Types::*;
 
-    pub struct BSTree<T: StT + Ord + Send> {
-        root: BBTree<T>,
+    type Link<T> = Arc<RwLock<Option<Node<T>>>>;
+
+    #[derive(Clone)]
+    struct Node<T: StTinMtT + Ord> {
+        key: T,
+        height: i32,
+        size: N,
+        left: Link<T>,
+        right: Link<T>,
     }
 
-    pub trait BSTPlainMtEphTrait<T: StT + Ord + Send> {
+    impl<T: StTinMtT + Ord> Node<T> {
+        fn new(key: T) -> Self {
+            Node { key, height: 1, size: 1, left: Arc::new(RwLock::new(None)), right: Arc::new(RwLock::new(None)) }
+        }
+
+        fn update(&mut self) {
+            let left = self.left.read().unwrap();
+            let right = self.right.read().unwrap();
+            self.height = 1 + height_of(&left).max(height_of(&right));
+            self.size = 1 + size_of(&left) + size_of(&right);
+        }
+    }
+
+    pub struct BSTPlainMtEph<T: StTinMtT + Ord> {
+        root: Link<T>,
+    }
+
+    pub type BSTree<T> = BSTPlainMtEph<T>;
+
+    pub trait BSTPlainMtEphTrait<T: StTinMtT + Ord>: Sized {
         fn new() -> Self;
+        fn insert(&self, value: T);
+        fn find(&self, target: &T) -> Option<T>;
+        fn contains(&self, target: &T) -> B;
         fn size(&self) -> N;
         fn is_empty(&self) -> B;
         fn height(&self) -> N;
-        fn insert(&mut self, value: T);
-        fn find(&self, target: &T) -> Option<&T>;
-        fn contains(&self, target: &T) -> B;
-        fn minimum(&self) -> Option<&T>;
-        fn maximum(&self) -> Option<&T>;
+        fn minimum(&self) -> Option<T>;
+        fn maximum(&self) -> Option<T>;
         fn in_order(&self) -> ArrayStPerS<T>;
-        fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StT + Ord + Send> BSTree<T> {
+    impl<T: StTinMtT + Ord> BSTPlainMtEph<T> {
         pub fn new() -> Self {
-            BSTree { root: BBTree::leaf() }
+            Self { root: Arc::new(RwLock::new(None)) }
         }
 
-        pub fn size(&self) -> N {
-            self.root.size()
+        pub fn insert(&self, value: T) {
+            fn descend<T: StTinMtT + Ord>(link: &Link<T>, value: T) -> bool {
+                let mut guard = link.write().unwrap();
+                match guard.as_mut() {
+                    Some(node) => {
+                        if value == node.key {
+                            return false;
+                        }
+
+                        let branch = if value < node.key { node.left.clone() } else { node.right.clone() };
+
+                        drop(guard);
+                        let inserted = descend(&branch, value);
+                        if inserted {
+                            let mut guard = link.write().unwrap();
+                            if let Some(node) = guard.as_mut() {
+                                node.update();
+                            }
+                        }
+                        inserted
+                    }
+                    None => {
+                        *guard = Some(Node::new(value));
+                        true
+                    }
+                }
+            }
+
+            descend(&self.root, value);
         }
 
-        pub fn is_empty(&self) -> B {
-            self.root.is_leaf()
-        }
-
-        pub fn height(&self) -> N {
-            self.root.height()
-        }
-
-        pub fn insert(&mut self, value: T) {
-            insert_node(&mut self.root, value);
-        }
-
-        pub fn find(&self, target: &T) -> Option<&T> {
-            find_node(&self.root, target)
+        pub fn find(&self, target: &T) -> Option<T> {
+            fn find_rec<T: StTinMtT + Ord>(link: &Link<T>, target: &T) -> Option<T> {
+                let guard = link.read().unwrap();
+                match guard.as_ref() {
+                    Some(node) if target == &node.key => Some(node.key.clone()),
+                    Some(node) => {
+                        let branch = if target < &node.key { node.left.clone() } else { node.right.clone() };
+                        drop(guard);
+                        find_rec(&branch, target)
+                    }
+                    None => None,
+                }
+            }
+            find_rec(&self.root, target)
         }
 
         pub fn contains(&self, target: &T) -> B {
-            contains_node(&self.root, target)
+            if self.find(target).is_some() { B::True } else { B::False }
+        }
+        pub fn size(&self) -> N {
+            let guard = self.root.read().unwrap();
+            guard.as_ref().map_or(0, |node| node.size)
         }
 
-        pub fn minimum(&self) -> Option<&T> {
-            min_node(&self.root)
+        pub fn is_empty(&self) -> B {
+            if self.size() == 0 { B::True } else { B::False }
         }
 
-        pub fn maximum(&self) -> Option<&T> {
-            max_node(&self.root)
+        pub fn height(&self) -> N {
+            let guard = self.root.read().unwrap();
+            guard.as_ref().map_or(0, |node| node.height as N)
+        }
+
+        pub fn minimum(&self) -> Option<T> {
+            fn leftmost<T: StTinMtT + Ord>(link: &Link<T>) -> Option<T> {
+                let guard = link.read().unwrap();
+                if let Some(node) = guard.as_ref() {
+                    let child = node.left.clone();
+                    let key = node.key.clone();
+                    drop(guard);
+                    let left_guard = child.read().unwrap();
+                    if left_guard.is_none() {
+                        Some(key)
+                    } else {
+                        drop(left_guard);
+                        leftmost(&child)
+                    }
+                } else {
+                    None
+                }
+            }
+
+            leftmost(&self.root)
+        }
+
+        pub fn maximum(&self) -> Option<T> {
+            fn rightmost<T: StTinMtT + Ord>(link: &Link<T>) -> Option<T> {
+                let guard = link.read().unwrap();
+                if let Some(node) = guard.as_ref() {
+                    let child = node.right.clone();
+                    let key = node.key.clone();
+                    drop(guard);
+                    let right_guard = child.read().unwrap();
+                    if right_guard.is_none() {
+                        Some(key)
+                    } else {
+                        drop(right_guard);
+                        rightmost(&child)
+                    }
+                } else {
+                    None
+                }
+            }
+
+            rightmost(&self.root)
         }
 
         pub fn in_order(&self) -> ArrayStPerS<T> {
-            self.root.in_order()
-        }
+            fn traverse<T: StTinMtT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
+                let guard = link.read().unwrap();
+                if let Some(node) = guard.as_ref() {
+                    let left = node.left.clone();
+                    let right = node.right.clone();
+                    let key = node.key.clone();
+                    drop(guard);
+                    traverse(&left, out);
+                    out.push(key);
+                    traverse(&right, out);
+                }
+            }
 
-        pub fn pre_order(&self) -> ArrayStPerS<T> {
-            self.root.pre_order()
+            let mut values = Vec::new();
+            traverse(&self.root, &mut values);
+            ArrayStPerS::from_vec(values)
         }
     }
 
-    impl<T: StT + Ord + Send> BSTPlainMtEphTrait<T> for BSTree<T> {
+    fn height_of<T: StTinMtT + Ord>(link: &Option<Node<T>>) -> i32 {
+        link.as_ref().map_or(0, |n| n.height)
+    }
+
+    fn size_of<T: StTinMtT + Ord>(link: &Option<Node<T>>) -> N {
+        link.as_ref().map_or(0, |n| n.size)
+    }
+
+    impl<T: StTinMtT + Ord> BSTPlainMtEphTrait<T> for BSTPlainMtEph<T> {
         fn new() -> Self {
-            BSTree::new()
+            BSTPlainMtEph::new()
         }
 
-        fn size(&self) -> N {
-            BSTree::size(self)
+        fn insert(&self, value: T) {
+            BSTPlainMtEph::insert(self, value)
         }
 
-        fn is_empty(&self) -> B {
-            BSTree::is_empty(self)
-        }
-
-        fn height(&self) -> N {
-            BSTree::height(self)
-        }
-
-        fn insert(&mut self, value: T) {
-            BSTree::insert(self, value)
-        }
-
-        fn find(&self, target: &T) -> Option<&T> {
-            BSTree::find(self, target)
+        fn find(&self, target: &T) -> Option<T> {
+            BSTPlainMtEph::find(self, target)
         }
 
         fn contains(&self, target: &T) -> B {
-            BSTree::contains(self, target)
+            BSTPlainMtEph::contains(self, target)
         }
 
-        fn minimum(&self) -> Option<&T> {
-            BSTree::minimum(self)
+        fn size(&self) -> N {
+            BSTPlainMtEph::size(self)
         }
 
-        fn maximum(&self) -> Option<&T> {
-            BSTree::maximum(self)
+        fn is_empty(&self) -> B {
+            BSTPlainMtEph::is_empty(self)
+        }
+
+        fn height(&self) -> N {
+            BSTPlainMtEph::height(self)
+        }
+
+        fn minimum(&self) -> Option<T> {
+            BSTPlainMtEph::minimum(self)
+        }
+
+        fn maximum(&self) -> Option<T> {
+            BSTPlainMtEph::maximum(self)
         }
 
         fn in_order(&self) -> ArrayStPerS<T> {
-            BSTree::in_order(self)
-        }
-
-        fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTree::pre_order(self)
-        }
-    }
-
-    fn insert_node<T: StT + Ord + Send>(node: &mut BBTree<T>, value: T) {
-        match node {
-            BBTree::Leaf => {
-                *node = BBTree::node(BBTree::leaf(), value, BBTree::leaf());
-            }
-            BBTree::Node(inner) => {
-                if value < inner.value {
-                    insert_node(&mut inner.left, value);
-                } else if value > inner.value {
-                    insert_node(&mut inner.right, value);
-                }
-            }
-        }
-    }
-
-    fn contains_node<'a, T: StT + Ord + Send>(node: &'a BBTree<T>, target: &T) -> B {
-        match node {
-            BBTree::Leaf => B::False,
-            BBTree::Node(inner) => {
-                if target == &inner.value {
-                    B::True
-                } else if target < &inner.value {
-                    contains_node(&inner.left, target)
-                } else {
-                    contains_node(&inner.right, target)
-                }
-            }
-        }
-    }
-
-    fn find_node<'a, T: StT + Ord + Send>(node: &'a BBTree<T>, target: &T) -> Option<&'a T> {
-        match node {
-            BBTree::Leaf => None,
-            BBTree::Node(inner) => {
-                if target == &inner.value {
-                    Some(&inner.value)
-                } else if target < &inner.value {
-                    find_node(&inner.left, target)
-                } else {
-                    find_node(&inner.right, target)
-                }
-            }
-        }
-    }
-
-    fn min_node<'a, T: StT + Ord + Send>(node: &'a BBTree<T>) -> Option<&'a T> {
-        match node {
-            BBTree::Leaf => None,
-            BBTree::Node(inner) => match &inner.left {
-                BBTree::Leaf => Some(&inner.value),
-                _ => min_node(&inner.left),
-            },
-        }
-    }
-
-    fn max_node<'a, T: StT + Ord + Send>(node: &'a BBTree<T>) -> Option<&'a T> {
-        match node {
-            BBTree::Leaf => None,
-            BBTree::Node(inner) => match &inner.right {
-                BBTree::Leaf => Some(&inner.value),
-                _ => max_node(&inner.right),
-            },
+            BSTPlainMtEph::in_order(self)
         }
     }
 }

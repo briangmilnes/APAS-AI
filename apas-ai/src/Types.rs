@@ -33,6 +33,10 @@ pub mod Types {
     pub trait StT: Eq + Clone + Display + Debug + Sized {}
     impl<T> StT for T where T: Eq + Clone + Display + Debug + Sized {}
 
+    // StTinMtT: St-friendly elements that can be shared across threads (StT + Send + Sync)
+    pub trait StTinMtT: StT + Send + Sync {}
+    impl<T> StTinMtT for T where T: StT + Send + Sync {}
+
     // MtT: multi-threaded friendly elements; minimal so it can include Mutex<..>
     // Keep only thread-safety and size requirements.
     pub trait MtT: Sized + Send + Sync {

@@ -1,0 +1,103 @@
+
+ Build BSTSet* (where * is BSTAVLMtEph.rs, BSTBBAlphaMtEph.rs, BSTRBMtEph.rs ... without the BST),
+  that is BSTSetAVLMtEph, ... for all the BST* files. 
+ Accordign to the textbook chapter below.
+ Execute relentlessly.
+ Make test and benches code when it is working.
+ I'll watch as you go along and stop if you make mistakes.
+
+5 An Interface for Sets
+
+As discussed, BSTs are useful for representing sets of keys that have a total ordering, and
+require dynamic changes. Let us consider what functions could be useful for such “dy-
+namic” sets. Certainly we will require some basic operations such as creating an empty
+set, creating a singleton set, or returning the size of the set. Also, we would like to find an
+element in a set, insert an element into a set, and delete an element from a set. You might
+have studied how to do this with BSTs with particular balancing schemes (e.g. AVL trees,
+or red-black trees) in previous courses.
+
+However, at a higher level we would like to supply bulk operations on sets, such as taking
+the union of two sets, filtering a set so that only elements that satisfy a predicate remain,
+or summing the elements of a set with respect to some associative operation. For tables
+(i.e., when we associate a value with each key), we might also want to map some function
+over the values to generate a new table, or filter based on the values. Such bulk operations
+are very useful in programming with sets and tables. They are also important for taking
+advantage of parallelism since individual inserts and deletes are inherently sequential, but
+bulk operations can often be parallelized.
+
+To implement these bulk operations it is useful to build them on top of some primitives.
+Building them on top of insertion, deletion will not be effective since they are inherently
+sequential. Instead, as we will see, it is useful to build them on top of three other opera-
+tions split, joinM, and joinPair. These are described below. As described in the next
+chapter, split and joinPair can be implemented in terms of joinM so all we will really
+need is joinM (actually a slight variant, called joinMid).
+
+Here we present an abstract data type that supplies a collection of useful functions over
+ordered sets. We will extend this list with further functions in the following chapters. An
+important aspect of this interface is that it is designed to support parallelism.
+Data Type 37.7 (BST). For a universe of totally ordered keys K, the BST ADT consists of a
+type T representing a power set of keys and the functions whose types are specified as:
+empty : T
+singleton : K → T
+size : T → N
+find : T → K → B
+delete : (T × K) → T
+insert : (T × K) → T
+union : (T × T) → T
+intersection : (T × T) → T
+difference : (T × T) → T
+split : (T × K) → (T × B × T)
+joinPair : (T × T) → T
+joinM : (T × K × T) → T
+filter : (K → bool) → T → T
+reduce : (K × K → K) → K → T → K
+and functionality is defined below.
+The ADT supports two constructors: empty and singleton. As their names imply, the func-
+tion empty creates an empty BST and the function singleton creates a BST with a single
+key.
+The function find searches for a given key and returns a boolean indicating success.
+The functions insert and delete insert and delete a given key into or from the BST.
+Example 37.3. Consider the following tree.
+• Searching for 5 in the tree above returns true.
+• Searching for 6 in the tree above returns false.
+Example 37.4 (Insertion). Consider the following tree.
+Inserting the key 6 into this tree returns the following tree.
+Example 37.5 (Deletion). Consider the following tree.
+
+Deleting the key 6 from this tree returns the following tree.
+Union, Intersection, and Difference. The function union takes two BSTs and returns a
+BST that contains the union of the keys in the two BSTs. The function intersection takes two
+BSTs and returns a BST that contains the keys that appear in both (i.e., the intersection of
+the sets). The function difference takes two BSTs T1 and T2 and returns a BST that contains
+the keys in T1 that are not in T2.
+Note that union can be thought of as a “parallel” insert since it can add multiple keys at
+once. Similarly difference can be thought of as a “parallel” delete, since it will remove
+multiple keys at once.
+Split. The function split takes a tree T and a key k and splits T into two trees: one consist-
+ing of all the keys of T less than k, and another consisting of all the keys of T greater than k.
+It also returns a Boolean value indicating whether k appears in T . The exact structure of
+the trees returned by split can differ from one implementation to another: the specification
+only requires that the resulting trees to be valid BSTs and that they contain the keys less
+than k and greater than k, leaving their structure otherwise unspecified.
+Example 37.6. Consider the following input tree.
+
+• Splitting the input tree at 6 yields two following trees, consisting of the keys less
+that 6 and those greater that 6, and returns false to indicate that 6 is not in the input
+tree.
+• Splitting the input tree at 5 yields the following two trees, consisting of the keys less
+than 5 and those greater than 5, and also returns true to indicate that 5 is found in
+the input tree.
+
+JoinPair. The function joinPair takes two trees T1 and T2 such that all the keys in T1 are
+less than the keys in T2. The function returns a tree that contains all the keys in T1 and T2.
+The exact structure of the tree returned by joinPair can differ from one implementation
+to another: the specification only requires that the resulting tree is a valid BST and that it
+contains all the keys in the trees being joined.
+Example 37.7. Joining the two trees below using the function joinPair
+yields the following three.
+
+JoinM. The function joinM takes a tree T1, a key k, and another tree T2 such that T1 <
+k < T2. A returns a tree containing all of the three. It is similar to joinPair except it includes
+the middle value (hence the M instead of Pair ). As with joinPair the exact structure of the
+tree returned can differ from one implementation to another.
+

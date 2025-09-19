@@ -168,10 +168,7 @@ pub mod LinkedListStPerChap18 {
         fn scan(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStPerS<T>, T) {
             let n = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a);
             if n == 0 {
-                return (
-                    <LinkedListStPerS<T> as LinkedListStPerChap18Trait<T>>::tabulate(|_| id.clone(), 0),
-                    id,
-                );
+                return (<LinkedListStPerS<T> as LinkedListStPerChap18Trait<T>>::tabulate(|_| id.clone(), 0), id);
             }
             let mut prefixes: Vec<T> = Vec::with_capacity(n);
             for i in 0..n {
@@ -214,10 +211,8 @@ pub mod LinkedListStPerChap18 {
                     groups.push((k, vec![v]));
                 }
             }
-            let pairs: Vec<Pair<A, LinkedListStPerS<Bv>>> = groups
-                .into_iter()
-                .map(|(k, vs)| Pair(k, LinkedListStPerS::from_vec(vs)))
-                .collect();
+            let pairs: Vec<Pair<A, LinkedListStPerS<Bv>>> =
+                groups.into_iter().map(|(k, vs)| Pair(k, LinkedListStPerS::from_vec(vs))).collect();
             LinkedListStPerS::from_vec(pairs)
         }
     }

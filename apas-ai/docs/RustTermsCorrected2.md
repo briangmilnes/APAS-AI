@@ -215,6 +215,8 @@ Attribute                      | Purpose
 
 ## Limitations
 
+Rust’s type aliases (`type Alias = ExistingType;`) are purely compile-time nicknames: they inherit exactly the methods and trait implementations of the underlying type, but you cannot add new inherent methods or blanket trait impls to the alias itself. As a result, using a type abbreviation to replace a wrapper struct prevents you from extending the API—any new behavior must still be implemented on the original type. Whenever you need a distinct method/trait surface (for example, to expose multithreaded semantics or tailor bounds per module), you must keep a real `struct` newtype rather than a type alias.
+
 Modules may contain:
 - type definitions (struct, enum, type alias)
 - trait definitions

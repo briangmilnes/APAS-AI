@@ -1,6 +1,8 @@
-//! Ephemeral AVL-balanced binary search tree with `find` support and public traversal helpers.
+//! Ephemeral AVL-balanced binary search tree with interior locking for multi-threaded access.
 
 pub mod BSTAVLMtEph {
+    use std::sync::{Arc, RwLock};
+
     use crate::ArraySeqStPer::ArraySeqStPer::*;
     use crate::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
     use crate::Types::Types::*;
@@ -8,7 +10,7 @@ pub mod BSTAVLMtEph {
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone)]
-    struct Node<T: StT + Ord + Send> {
+    struct Node<T: StTinMtT + Ord> {
         key: T,
         height: i32,
         size: N,
@@ -16,49 +18,47 @@ pub mod BSTAVLMtEph {
         right: Link<T>,
     }
 
-    impl<T: StT + Ord + Send> Node<T> {
+    impl<T: StTinMtT + Ord> Node<T> {
         fn new(key: T) -> Self {
-            Node {
-                key,
-                height: 1,
-                size: 1,
-                left: None,
-                right: None,
-            }
+            Node { key, height: 1, size: 1, left: None, right: None }
         }
     }
 
-    pub struct BSTreeAVL<T: StT + Ord + Send> {
-        root: Link<T>,
+    #[derive(Clone)]
+    pub struct BSTAVLMtEph<T: StTinMtT + Ord> {
+        root: Arc<RwLock<Link<T>>>,
     }
 
-    pub trait BSTAVLMtEphTrait<T: StT + Ord + Send> {
+    pub type BSTreeAVL<T> = BSTAVLMtEph<T>;
+
+    pub trait BSTAVLMtEphTrait<T: StTinMtT + Ord>: Sized {
         fn new() -> Self;
+        fn insert(&self, value: T);
+        fn find(&self, target: &T) -> Option<T>;
+        fn contains(&self, target: &T) -> B;
         fn size(&self) -> N;
         fn is_empty(&self) -> B;
         fn height(&self) -> N;
-        fn insert(&mut self, value: T);
-        fn find(&self, target: &T) -> Option<&T>;
-        fn contains(&self, target: &T) -> B;
-        fn minimum(&self) -> Option<&T>;
-        fn maximum(&self) -> Option<&T>;
+        fn minimum(&self) -> Option<T>;
+        fn maximum(&self) -> Option<T>;
         fn in_order(&self) -> ArrayStPerS<T>;
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StT + Ord + Send> Default for BSTreeAVL<T> {
+    impl<T: StTinMtT + Ord> Default for BSTAVLMtEph<T> {
         fn default() -> Self {
             Self::new()
         }
     }
 
-    impl<T: StT + Ord + Send> BSTreeAVL<T> {
+    impl<T: StTinMtT + Ord> BSTAVLMtEph<T> {
         pub fn new() -> Self {
-            BSTreeAVL { root: None }
+            BSTAVLMtEph { root: Arc::new(RwLock::new(None)) }
         }
 
         pub fn size(&self) -> N {
-            Self::size_link(&self.root)
+            let guard = self.root.read().unwrap();
+            Self::size_link(&*guard)
         }
 
         pub fn is_empty(&self) -> B {
@@ -66,38 +66,45 @@ pub mod BSTAVLMtEph {
         }
 
         pub fn height(&self) -> N {
-            Self::height_link(&self.root) as N
+            let guard = self.root.read().unwrap();
+            Self::height_link(&*guard) as N
         }
 
-        pub fn insert(&mut self, value: T) {
-            Self::insert_link(&mut self.root, value);
+        pub fn insert(&self, value: T) {
+            let mut guard = self.root.write().unwrap();
+            Self::insert_link(&mut *guard, value);
         }
 
-        pub fn find(&self, target: &T) -> Option<&T> {
-            Self::find_link(&self.root, target)
+        pub fn find(&self, target: &T) -> Option<T> {
+            let guard = self.root.read().unwrap();
+            Self::find_link(&*guard, target).cloned()
         }
 
         pub fn contains(&self, target: &T) -> B {
             if self.find(target).is_some() { B::True } else { B::False }
         }
 
-        pub fn minimum(&self) -> Option<&T> {
-            Self::min_link(&self.root)
+        pub fn minimum(&self) -> Option<T> {
+            let guard = self.root.read().unwrap();
+            Self::min_link(&*guard).cloned()
         }
 
-        pub fn maximum(&self) -> Option<&T> {
-            Self::max_link(&self.root)
+        pub fn maximum(&self) -> Option<T> {
+            let guard = self.root.read().unwrap();
+            Self::max_link(&*guard).cloned()
         }
 
         pub fn in_order(&self) -> ArrayStPerS<T> {
-            let mut out = Vec::with_capacity(self.size());
-            Self::in_order_collect(&self.root, &mut out);
+            let guard = self.root.read().unwrap();
+            let mut out = Vec::with_capacity(Self::size_link(&*guard));
+            Self::in_order_collect(&*guard, &mut out);
             ArrayStPerS::from_vec(out)
         }
 
         pub fn pre_order(&self) -> ArrayStPerS<T> {
-            let mut out = Vec::with_capacity(self.size());
-            Self::pre_order_collect(&self.root, &mut out);
+            let guard = self.root.read().unwrap();
+            let mut out = Vec::with_capacity(Self::size_link(&*guard));
+            Self::pre_order_collect(&*guard, &mut out);
             ArrayStPerS::from_vec(out)
         }
 
@@ -204,7 +211,7 @@ pub mod BSTAVLMtEph {
         fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
             match link {
                 None => None,
-                Some(node) => match node.left {
+                Some(node) => match &node.left {
                     None => Some(&node.key),
                     Some(_) => Self::min_link(&node.left),
                 },
@@ -214,7 +221,7 @@ pub mod BSTAVLMtEph {
         fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
             match link {
                 None => None,
-                Some(node) => match node.right {
+                Some(node) => match &node.right {
                     None => Some(&node.key),
                     Some(_) => Self::max_link(&node.right),
                 },
@@ -238,49 +245,49 @@ pub mod BSTAVLMtEph {
         }
     }
 
-    impl<T: StT + Ord + Send> BSTAVLMtEphTrait<T> for BSTreeAVL<T> {
+    impl<T: StTinMtT + Ord> BSTAVLMtEphTrait<T> for BSTAVLMtEph<T> {
         fn new() -> Self {
-            BSTreeAVL::new()
+            BSTAVLMtEph::new()
         }
 
-        fn size(&self) -> N {
-            BSTreeAVL::size(self)
+        fn insert(&self, value: T) {
+            BSTAVLMtEph::insert(self, value)
         }
 
-        fn is_empty(&self) -> B {
-            BSTreeAVL::is_empty(self)
-        }
-
-        fn height(&self) -> N {
-            BSTreeAVL::height(self)
-        }
-
-        fn insert(&mut self, value: T) {
-            BSTreeAVL::insert(self, value)
-        }
-
-        fn find(&self, target: &T) -> Option<&T> {
-            BSTreeAVL::find(self, target)
+        fn find(&self, target: &T) -> Option<T> {
+            BSTAVLMtEph::find(self, target)
         }
 
         fn contains(&self, target: &T) -> B {
-            BSTreeAVL::contains(self, target)
+            BSTAVLMtEph::contains(self, target)
         }
 
-        fn minimum(&self) -> Option<&T> {
-            BSTreeAVL::minimum(self)
+        fn size(&self) -> N {
+            BSTAVLMtEph::size(self)
         }
 
-        fn maximum(&self) -> Option<&T> {
-            BSTreeAVL::maximum(self)
+        fn is_empty(&self) -> B {
+            BSTAVLMtEph::is_empty(self)
+        }
+
+        fn height(&self) -> N {
+            BSTAVLMtEph::height(self)
+        }
+
+        fn minimum(&self) -> Option<T> {
+            BSTAVLMtEph::minimum(self)
+        }
+
+        fn maximum(&self) -> Option<T> {
+            BSTAVLMtEph::maximum(self)
         }
 
         fn in_order(&self) -> ArrayStPerS<T> {
-            BSTreeAVL::in_order(self)
+            BSTAVLMtEph::in_order(self)
         }
 
         fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTreeAVL::pre_order(self)
+            BSTAVLMtEph::pre_order(self)
         }
     }
 }

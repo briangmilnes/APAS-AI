@@ -158,3 +158,6 @@ harness = false
 name = "BenchBSTSplayMtEph"
 harness = false
 
+[[bench]]
+name = "BenchBSTSetMtEph"
+harness = false

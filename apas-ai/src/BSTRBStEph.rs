@@ -24,19 +24,15 @@ pub mod BSTRBStEph {
 
     impl<T: StT + Ord> Node<T> {
         fn new(key: T) -> Self {
-            Node {
-                key,
-                color: Color::Red,
-                size: 1,
-                left: None,
-                right: None,
-            }
+            Node { key, color: Color::Red, size: 1, left: None, right: None }
         }
     }
 
-    pub struct BSTreeRB<T: StT + Ord> {
+    pub struct BSTRBStEph<T: StT + Ord> {
         root: Link<T>,
     }
+
+    pub type BSTreeRB<T> = BSTRBStEph<T>;
 
     pub trait BSTRBStEphTrait<T: StT + Ord> {
         fn new() -> Self;
@@ -52,15 +48,15 @@ pub mod BSTRBStEph {
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StT + Ord> Default for BSTreeRB<T> {
+    impl<T: StT + Ord> Default for BSTRBStEph<T> {
         fn default() -> Self {
             Self::new()
         }
     }
 
-    impl<T: StT + Ord> BSTreeRB<T> {
+    impl<T: StT + Ord> BSTRBStEph<T> {
         pub fn new() -> Self {
-            BSTreeRB { root: None }
+            BSTRBStEph { root: None }
         }
 
         pub fn size(&self) -> N {
@@ -187,7 +183,9 @@ pub mod BSTRBStEph {
             if Self::is_red(&link.as_ref().unwrap().right) && !Self::is_red(&link.as_ref().unwrap().left) {
                 Self::rotate_left(link);
             }
-            if Self::is_red(&link.as_ref().unwrap().left) && Self::is_red(&link.as_ref().unwrap().left.as_ref().unwrap().left) {
+            if Self::is_red(&link.as_ref().unwrap().left)
+                && Self::is_red(&link.as_ref().unwrap().left.as_ref().unwrap().left)
+            {
                 Self::rotate_right(link);
             }
             if Self::is_red(&link.as_ref().unwrap().left) && Self::is_red(&link.as_ref().unwrap().right) {
@@ -266,49 +264,49 @@ pub mod BSTRBStEph {
         }
     }
 
-    impl<T: StT + Ord> BSTRBStEphTrait<T> for BSTreeRB<T> {
+    impl<T: StT + Ord> BSTRBStEphTrait<T> for BSTRBStEph<T> {
         fn new() -> Self {
-            BSTreeRB::new()
+            BSTRBStEph::new()
         }
 
         fn size(&self) -> N {
-            BSTreeRB::size(self)
+            BSTRBStEph::size(self)
         }
 
         fn is_empty(&self) -> B {
-            BSTreeRB::is_empty(self)
+            BSTRBStEph::is_empty(self)
         }
 
         fn height(&self) -> N {
-            BSTreeRB::height(self)
+            BSTRBStEph::height(self)
         }
 
         fn insert(&mut self, value: T) {
-            BSTreeRB::insert(self, value)
+            BSTRBStEph::insert(self, value)
         }
 
         fn find(&self, target: &T) -> Option<&T> {
-            BSTreeRB::find(self, target)
+            BSTRBStEph::find(self, target)
         }
 
         fn contains(&self, target: &T) -> B {
-            BSTreeRB::contains(self, target)
+            BSTRBStEph::contains(self, target)
         }
 
         fn minimum(&self) -> Option<&T> {
-            BSTreeRB::minimum(self)
+            BSTRBStEph::minimum(self)
         }
 
         fn maximum(&self) -> Option<&T> {
-            BSTreeRB::maximum(self)
+            BSTRBStEph::maximum(self)
         }
 
         fn in_order(&self) -> ArrayStPerS<T> {
-            BSTreeRB::in_order(self)
+            BSTRBStEph::in_order(self)
         }
 
         fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTreeRB::pre_order(self)
+            BSTRBStEph::pre_order(self)
         }
     }
 }

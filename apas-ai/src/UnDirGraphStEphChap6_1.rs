@@ -50,10 +50,7 @@ pub mod UnDirGraphStEphChap6_1 {
 
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> UnDirGraphStEphChap6_1Trait<V> for UnDirGraphStEph<V> {
         fn empty() -> UnDirGraphStEph<V> {
-            UnDirGraphStEph {
-                V: SetLit![],
-                E: SetLit![],
-            }
+            UnDirGraphStEph { V: SetLit![], E: SetLit![] }
         }
         fn FromSets(V: Set<V>, E: Set<Pair<V, V>>) -> UnDirGraphStEph<V> {
             UnDirGraphStEph { V, E }
@@ -113,10 +110,7 @@ pub mod UnDirGraphStEphChap6_1 {
 
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> std::fmt::Debug for UnDirGraphStEph<V> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            f.debug_struct("UnDirGraphStEph")
-                .field("V", &self.V)
-                .field("E", &self.E)
-                .finish()
+            f.debug_struct("UnDirGraphStEph").field("V", &self.V).field("E", &self.E).finish()
         }
     }
 

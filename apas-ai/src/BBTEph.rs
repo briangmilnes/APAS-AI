@@ -19,6 +19,16 @@ pub mod BBTEph {
         pub right: BBTree<T>,
     }
 
+    pub trait BBTEphTrait<T: StT> {
+        fn leaf() -> Self;
+        fn node(left: Self, value: T, right: Self) -> Self;
+        fn is_leaf(&self) -> B;
+        fn in_order(&self) -> ArrayStPerS<T>;
+        fn pre_order(&self) -> ArrayStPerS<T>;
+        fn height(&self) -> N;
+        fn size(&self) -> N;
+    }
+
     impl<T: StT> BBTree<T> {
         pub fn leaf() -> Self {
             BBTree::Leaf
@@ -77,6 +87,36 @@ pub mod BBTEph {
                 BBTree::Leaf => 0,
                 BBTree::Node(node) => 1 + node.left.size() + node.right.size(),
             }
+        }
+    }
+
+    impl<T: StT> BBTEphTrait<T> for BBTree<T> {
+        fn leaf() -> Self {
+            BBTree::leaf()
+        }
+
+        fn node(left: Self, value: T, right: Self) -> Self {
+            BBTree::node(left, value, right)
+        }
+
+        fn is_leaf(&self) -> B {
+            BBTree::is_leaf(self)
+        }
+
+        fn in_order(&self) -> ArrayStPerS<T> {
+            BBTree::in_order(self)
+        }
+
+        fn pre_order(&self) -> ArrayStPerS<T> {
+            BBTree::pre_order(self)
+        }
+
+        fn height(&self) -> N {
+            BBTree::height(self)
+        }
+
+        fn size(&self) -> N {
+            BBTree::size(self)
         }
     }
 }

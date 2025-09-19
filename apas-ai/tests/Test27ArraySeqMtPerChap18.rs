@@ -39,12 +39,7 @@ pub mod Test27ArraySeqMtPerChap18 {
 
         // Expected fibonacci sequence: [0, 1, 1, 2, 3, 5, 8, 13]
         let expected = [0, 1, 1, 2, 3, 5, 8, 13];
-        assert!(ArraySeqSetEq(
-            fibs.length(),
-            |i| *fibs.nth(i),
-            expected.len(),
-            |i| expected[i]
-        ));
+        assert!(ArraySeqSetEq(fibs.length(), |i| *fibs.nth(i), expected.len(), |i| expected[i]));
     }
 
     #[test]
@@ -83,12 +78,7 @@ pub mod Test27ArraySeqMtPerChap18 {
 
         // Expected: [True, False, True, False, True, False]
         let expected = [B::True, B::False, B::True, B::False, B::True, B::False];
-        assert!(ArraySeqSetEq(
-            bools.length(),
-            |i| *bools.nth(i),
-            expected.len(),
-            |i| expected[i]
-        ));
+        assert!(ArraySeqSetEq(bools.length(), |i| *bools.nth(i), expected.len(), |i| expected[i]));
     }
 
     #[test]
@@ -98,12 +88,7 @@ pub mod Test27ArraySeqMtPerChap18 {
 
         // Expected: [0, 1, 4, 9, 16]
         let expected = [0, 1, 4, 9, 16];
-        assert!(ArraySeqSetEq(
-            squares.length(),
-            |i| *squares.nth(i),
-            expected.len(),
-            |i| expected[i]
-        ));
+        assert!(ArraySeqSetEq(squares.length(), |i| *squares.nth(i), expected.len(), |i| expected[i]));
     }
 
     #[test]

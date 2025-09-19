@@ -36,9 +36,8 @@ fn bench_mathseq_basics(c: &mut Criterion) {
 
     group.finish();
 
-    let target_dir: PathBuf = env::var_os("CARGO_TARGET_DIR")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| PathBuf::from("target"));
+    let target_dir: PathBuf =
+        env::var_os("CARGO_TARGET_DIR").map(PathBuf::from).unwrap_or_else(|| PathBuf::from("target"));
     let report = target_dir.join("criterion").join("report").join("index.html");
     println!("HTML report: file://{}", report.display());
 }

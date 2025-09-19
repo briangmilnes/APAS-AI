@@ -5,7 +5,7 @@ use apas_ai::*;
 use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 
 fn build_tree(len: usize) -> BSTree<i32> {
-    let mut tree = BSTree::new();
+    let tree = BSTree::new();
     let mut index = 0usize;
     while index < len {
         tree.insert(index as i32);
@@ -41,11 +41,7 @@ fn bench_bsteph(c: &mut Criterion) {
         });
 
         group.bench_with_input(BenchmarkId::new("traversal", n), &n, |b, &len| {
-            b.iter_batched(
-                || build_tree(len),
-                |tree| black_box(tree.in_order()),
-                BatchSize::SmallInput,
-            );
+            b.iter_batched(|| build_tree(len), |tree| black_box(tree.in_order()), BatchSize::SmallInput);
         });
     }
 

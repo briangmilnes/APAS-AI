@@ -29,3 +29,13 @@
 ### Parallel Spawn/Join Model
 - Implement multi-threaded chapter algorithms using `std::thread::spawn` for recursive branches and `join` to synchronize completion.
 - Avoid alternative thread-pool abstractions (e.g., rayon) so the parallel structure mirrors the textbook and remains amenable to Verus proofs.
+
+### MT Module Discipline
+- Any module whose filename contains `Mt` MUST deliver actual multi-threaded semantics: structure definitions must rely on `MtT` elements and internal synchronization (`Send + Sync`) rather than single-threaded `StT` shortcuts.
+- Treat wrapper structs in `*Mt*` files as genuine MT types: their fields should employ `MtT` or thread-safe containers (e.g., mutexes, atomic references) and expose APIs safe for concurrent use.
+- Never mirror a single-threaded implementation inside an `Mt` module; if functionality cannot be parallelised safely, move it to the `St` counterpart instead of duplicating it under the MT name.
+
+### Iteration vs. Recursion Hygiene
+- When code naturally descends a structure or mirrors the textbook recursion, opt for a compact recursive implementation (often as a nested function) instead of piling logic into a `loop { … }`.
+- Straightforward iterative loops are still fine for generators or linear scans; switch only when the recursion matches the idea more clearly.
+- If only one call site uses the recursive routine, keep it local to that function; hoist it out only when multiple entry points need it shared.

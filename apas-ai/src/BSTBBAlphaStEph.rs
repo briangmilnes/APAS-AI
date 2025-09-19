@@ -19,18 +19,15 @@ pub mod BSTBBAlphaStEph {
 
     impl<T: StT + Ord> Node<T> {
         fn new(key: T) -> Self {
-            Node {
-                key,
-                size: 1,
-                left: None,
-                right: None,
-            }
+            Node { key, size: 1, left: None, right: None }
         }
     }
 
-    pub struct BSTreeBBAlpha<T: StT + Ord> {
+    pub struct BSTBBAlphaStEph<T: StT + Ord> {
         root: Link<T>,
     }
+
+    pub type BSTreeBBAlpha<T> = BSTBBAlphaStEph<T>;
 
     pub trait BSTBBAlphaStEphTrait<T: StT + Ord> {
         fn new() -> Self;
@@ -46,15 +43,15 @@ pub mod BSTBBAlphaStEph {
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StT + Ord> Default for BSTreeBBAlpha<T> {
+    impl<T: StT + Ord> Default for BSTBBAlphaStEph<T> {
         fn default() -> Self {
             Self::new()
         }
     }
 
-    impl<T: StT + Ord> BSTreeBBAlpha<T> {
+    impl<T: StT + Ord> BSTBBAlphaStEph<T> {
         pub fn new() -> Self {
-            BSTreeBBAlpha { root: None }
+            BSTBBAlphaStEph { root: None }
         }
 
         pub fn size(&self) -> N {
@@ -230,49 +227,49 @@ pub mod BSTBBAlphaStEph {
         }
     }
 
-    impl<T: StT + Ord> BSTBBAlphaStEphTrait<T> for BSTreeBBAlpha<T> {
+    impl<T: StT + Ord> BSTBBAlphaStEphTrait<T> for BSTBBAlphaStEph<T> {
         fn new() -> Self {
-            BSTreeBBAlpha::new()
+            BSTBBAlphaStEph::new()
         }
 
         fn size(&self) -> N {
-            BSTreeBBAlpha::size(self)
+            BSTBBAlphaStEph::size(self)
         }
 
         fn is_empty(&self) -> B {
-            BSTreeBBAlpha::is_empty(self)
+            BSTBBAlphaStEph::is_empty(self)
         }
 
         fn height(&self) -> N {
-            BSTreeBBAlpha::height(self)
+            BSTBBAlphaStEph::height(self)
         }
 
         fn insert(&mut self, value: T) {
-            BSTreeBBAlpha::insert(self, value)
+            BSTBBAlphaStEph::insert(self, value)
         }
 
         fn find(&self, target: &T) -> Option<&T> {
-            BSTreeBBAlpha::find(self, target)
+            BSTBBAlphaStEph::find(self, target)
         }
 
         fn contains(&self, target: &T) -> B {
-            BSTreeBBAlpha::contains(self, target)
+            BSTBBAlphaStEph::contains(self, target)
         }
 
         fn minimum(&self) -> Option<&T> {
-            BSTreeBBAlpha::minimum(self)
+            BSTBBAlphaStEph::minimum(self)
         }
 
         fn maximum(&self) -> Option<&T> {
-            BSTreeBBAlpha::maximum(self)
+            BSTBBAlphaStEph::maximum(self)
         }
 
         fn in_order(&self) -> ArrayStPerS<T> {
-            BSTreeBBAlpha::in_order(self)
+            BSTBBAlphaStEph::in_order(self)
         }
 
         fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTreeBBAlpha::pre_order(self)
+            BSTBBAlphaStEph::pre_order(self)
         }
     }
 }

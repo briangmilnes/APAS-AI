@@ -41,14 +41,8 @@ fn test_cartesian_loops_basic() {
     let a = ArraySeqStPer![1, 2];
     let b = ArraySeqStPer!["3.0", "4.0", "5.0"];
     let s = cartesian_loops(&a, &b);
-    let expect = ArraySeqStPer![
-        Pair(1, "3.0"),
-        Pair(1, "4.0"),
-        Pair(1, "5.0"),
-        Pair(2, "3.0"),
-        Pair(2, "4.0"),
-        Pair(2, "5.0")
-    ];
+    let expect =
+        ArraySeqStPer![Pair(1, "3.0"), Pair(1, "4.0"), Pair(1, "5.0"), Pair(2, "3.0"), Pair(2, "4.0"), Pair(2, "5.0")];
     assert_eq!(s, expect);
 }
 
@@ -57,14 +51,8 @@ fn test_cartesian_tab_flat_basic() {
     let a = ArraySeqStPer![1, 2];
     let b = ArraySeqStPer!["3.0", "4.0", "5.0"];
     let s = cartesian_tab_flat(&a, &b);
-    let expect = ArraySeqStPer![
-        Pair(1, "3.0"),
-        Pair(1, "4.0"),
-        Pair(1, "5.0"),
-        Pair(2, "3.0"),
-        Pair(2, "4.0"),
-        Pair(2, "5.0")
-    ];
+    let expect =
+        ArraySeqStPer![Pair(1, "3.0"), Pair(1, "4.0"), Pair(1, "5.0"), Pair(2, "3.0"), Pair(2, "4.0"), Pair(2, "5.0")];
     assert_eq!(s, expect);
 }
 

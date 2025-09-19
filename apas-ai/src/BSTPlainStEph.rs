@@ -5,9 +5,11 @@ pub mod BSTPlainStEph {
     use crate::BBTEph::BBTEph::BBTree;
     use crate::Types::Types::*;
 
-    pub struct BSTree<T: StT + Ord> {
+    pub struct BSTPlainStEph<T: StT + Ord> {
         root: BBTree<T>,
     }
+
+    pub type BSTree<T> = BSTPlainStEph<T>;
 
     pub trait BSTPlainStEphTrait<T: StT + Ord> {
         fn new() -> Self;
@@ -23,9 +25,9 @@ pub mod BSTPlainStEph {
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StT + Ord> BSTree<T> {
+    impl<T: StT + Ord> BSTPlainStEph<T> {
         pub fn new() -> Self {
-            BSTree { root: BBTree::leaf() }
+            BSTPlainStEph { root: BBTree::leaf() }
         }
 
         pub fn size(&self) -> N {
@@ -69,49 +71,49 @@ pub mod BSTPlainStEph {
         }
     }
 
-    impl<T: StT + Ord> BSTPlainStEphTrait<T> for BSTree<T> {
+    impl<T: StT + Ord> BSTPlainStEphTrait<T> for BSTPlainStEph<T> {
         fn new() -> Self {
-            BSTree::new()
+            BSTPlainStEph::new()
         }
 
         fn size(&self) -> N {
-            BSTree::size(self)
+            BSTPlainStEph::size(self)
         }
 
         fn is_empty(&self) -> B {
-            BSTree::is_empty(self)
+            BSTPlainStEph::is_empty(self)
         }
 
         fn height(&self) -> N {
-            BSTree::height(self)
+            BSTPlainStEph::height(self)
         }
 
         fn insert(&mut self, value: T) {
-            BSTree::insert(self, value)
+            BSTPlainStEph::insert(self, value)
         }
 
         fn find(&self, target: &T) -> Option<&T> {
-            BSTree::find(self, target)
+            BSTPlainStEph::find(self, target)
         }
 
         fn contains(&self, target: &T) -> B {
-            BSTree::contains(self, target)
+            BSTPlainStEph::contains(self, target)
         }
 
         fn minimum(&self) -> Option<&T> {
-            BSTree::minimum(self)
+            BSTPlainStEph::minimum(self)
         }
 
         fn maximum(&self) -> Option<&T> {
-            BSTree::maximum(self)
+            BSTPlainStEph::maximum(self)
         }
 
         fn in_order(&self) -> ArrayStPerS<T> {
-            BSTree::in_order(self)
+            BSTPlainStEph::in_order(self)
         }
 
         fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTree::pre_order(self)
+            BSTPlainStEph::pre_order(self)
         }
     }
 

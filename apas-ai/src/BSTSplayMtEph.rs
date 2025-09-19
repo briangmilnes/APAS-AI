@@ -1,6 +1,8 @@
-//! Ephemeral Splay Tree placeholder (standard BST semantics) with public methods.
+//! Ephemeral splay-style (simple BST) structure with interior locking for multi-threaded access.
 
 pub mod BSTSplayMtEph {
+    use std::sync::{Arc, RwLock};
+
     use crate::ArraySeqStPer::ArraySeqStPer::*;
     use crate::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
     use crate::Types::Types::*;
@@ -8,55 +10,54 @@ pub mod BSTSplayMtEph {
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone)]
-    struct Node<T: StT + Ord + Send> {
+    struct Node<T: StTinMtT + Ord> {
         key: T,
         size: N,
         left: Link<T>,
         right: Link<T>,
     }
 
-    impl<T: StT + Ord + Send> Node<T> {
+    impl<T: StTinMtT + Ord> Node<T> {
         fn new(key: T) -> Self {
-            Node {
-                key,
-                size: 1,
-                left: None,
-                right: None,
-            }
+            Node { key, size: 1, left: None, right: None }
         }
     }
 
-    pub struct BSTreeSplay<T: StT + Ord + Send> {
-        root: Link<T>,
+    #[derive(Clone)]
+    pub struct BSTSplayMtEph<T: StTinMtT + Ord> {
+        root: Arc<RwLock<Link<T>>>,
     }
 
-    pub trait BSTSplayMtEphTrait<T: StT + Ord + Send> {
+    pub type BSTreeSplay<T> = BSTSplayMtEph<T>;
+
+    pub trait BSTSplayMtEphTrait<T: StTinMtT + Ord>: Sized {
         fn new() -> Self;
+        fn insert(&self, value: T);
+        fn find(&self, target: &T) -> Option<T>;
+        fn contains(&self, target: &T) -> B;
         fn size(&self) -> N;
         fn is_empty(&self) -> B;
         fn height(&self) -> N;
-        fn insert(&mut self, value: T);
-        fn find(&self, target: &T) -> Option<&T>;
-        fn contains(&self, target: &T) -> B;
-        fn minimum(&self) -> Option<&T>;
-        fn maximum(&self) -> Option<&T>;
+        fn minimum(&self) -> Option<T>;
+        fn maximum(&self) -> Option<T>;
         fn in_order(&self) -> ArrayStPerS<T>;
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StT + Ord + Send> Default for BSTreeSplay<T> {
+    impl<T: StTinMtT + Ord> Default for BSTSplayMtEph<T> {
         fn default() -> Self {
             Self::new()
         }
     }
 
-    impl<T: StT + Ord + Send> BSTreeSplay<T> {
+    impl<T: StTinMtT + Ord> BSTSplayMtEph<T> {
         pub fn new() -> Self {
-            BSTreeSplay { root: None }
+            BSTSplayMtEph { root: Arc::new(RwLock::new(None)) }
         }
 
         pub fn size(&self) -> N {
-            Self::size_link(&self.root)
+            let guard = self.root.read().unwrap();
+            Self::size_link(&*guard)
         }
 
         pub fn is_empty(&self) -> B {
@@ -64,44 +65,52 @@ pub mod BSTSplayMtEph {
         }
 
         pub fn height(&self) -> N {
-            fn height_rec<T: StT + Ord + Send>(link: &Link<T>) -> N {
+            fn height_rec<T: StTinMtT + Ord>(link: &Link<T>) -> N {
                 match link {
                     None => 0,
                     Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
                 }
             }
-            height_rec(&self.root)
+
+            let guard = self.root.read().unwrap();
+            height_rec(&*guard)
         }
 
-        pub fn insert(&mut self, value: T) {
-            Self::insert_link(&mut self.root, value);
+        pub fn insert(&self, value: T) {
+            let mut guard = self.root.write().unwrap();
+            Self::insert_link(&mut *guard, value);
         }
 
-        pub fn find(&self, target: &T) -> Option<&T> {
-            Self::find_link(&self.root, target)
+        pub fn find(&self, target: &T) -> Option<T> {
+            let guard = self.root.read().unwrap();
+            Self::find_link(&*guard, target).cloned()
         }
 
         pub fn contains(&self, target: &T) -> B {
             if self.find(target).is_some() { B::True } else { B::False }
         }
 
-        pub fn minimum(&self) -> Option<&T> {
-            Self::min_link(&self.root)
+        pub fn minimum(&self) -> Option<T> {
+            let guard = self.root.read().unwrap();
+            Self::min_link(&*guard).cloned()
         }
 
-        pub fn maximum(&self) -> Option<&T> {
-            Self::max_link(&self.root)
+        pub fn maximum(&self) -> Option<T> {
+            let guard = self.root.read().unwrap();
+            Self::max_link(&*guard).cloned()
         }
 
         pub fn in_order(&self) -> ArrayStPerS<T> {
-            let mut out = Vec::with_capacity(self.size());
-            Self::in_order_collect(&self.root, &mut out);
+            let guard = self.root.read().unwrap();
+            let mut out = Vec::with_capacity(Self::size_link(&*guard));
+            Self::in_order_collect(&*guard, &mut out);
             ArrayStPerS::from_vec(out)
         }
 
         pub fn pre_order(&self) -> ArrayStPerS<T> {
-            let mut out = Vec::with_capacity(self.size());
-            Self::pre_order_collect(&self.root, &mut out);
+            let guard = self.root.read().unwrap();
+            let mut out = Vec::with_capacity(Self::size_link(&*guard));
+            Self::pre_order_collect(&*guard, &mut out);
             ArrayStPerS::from_vec(out)
         }
 
@@ -187,49 +196,49 @@ pub mod BSTSplayMtEph {
         }
     }
 
-    impl<T: StT + Ord + Send> BSTSplayMtEphTrait<T> for BSTreeSplay<T> {
+    impl<T: StTinMtT + Ord> BSTSplayMtEphTrait<T> for BSTSplayMtEph<T> {
         fn new() -> Self {
-            BSTreeSplay::new()
+            BSTSplayMtEph::new()
         }
 
-        fn size(&self) -> N {
-            BSTreeSplay::size(self)
+        fn insert(&self, value: T) {
+            BSTSplayMtEph::insert(self, value)
         }
 
-        fn is_empty(&self) -> B {
-            BSTreeSplay::is_empty(self)
-        }
-
-        fn height(&self) -> N {
-            BSTreeSplay::height(self)
-        }
-
-        fn insert(&mut self, value: T) {
-            BSTreeSplay::insert(self, value)
-        }
-
-        fn find(&self, target: &T) -> Option<&T> {
-            BSTreeSplay::find(self, target)
+        fn find(&self, target: &T) -> Option<T> {
+            BSTSplayMtEph::find(self, target)
         }
 
         fn contains(&self, target: &T) -> B {
-            BSTreeSplay::contains(self, target)
+            BSTSplayMtEph::contains(self, target)
         }
 
-        fn minimum(&self) -> Option<&T> {
-            BSTreeSplay::minimum(self)
+        fn size(&self) -> N {
+            BSTSplayMtEph::size(self)
         }
 
-        fn maximum(&self) -> Option<&T> {
-            BSTreeSplay::maximum(self)
+        fn is_empty(&self) -> B {
+            BSTSplayMtEph::is_empty(self)
+        }
+
+        fn height(&self) -> N {
+            BSTSplayMtEph::height(self)
+        }
+
+        fn minimum(&self) -> Option<T> {
+            BSTSplayMtEph::minimum(self)
+        }
+
+        fn maximum(&self) -> Option<T> {
+            BSTSplayMtEph::maximum(self)
         }
 
         fn in_order(&self) -> ArrayStPerS<T> {
-            BSTreeSplay::in_order(self)
+            BSTSplayMtEph::in_order(self)
         }
 
         fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTreeSplay::pre_order(self)
+            BSTSplayMtEph::pre_order(self)
         }
     }
 }

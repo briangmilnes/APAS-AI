@@ -68,10 +68,7 @@ pub mod DirGraphStEphChap6_1 {
 
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> DirGraphStEphChap6_1Trait<V> for DirGraphStEph<V> {
         fn empty() -> DirGraphStEph<V> {
-            DirGraphStEph {
-                V: SetLit![],
-                A: SetLit![],
-            }
+            DirGraphStEph { V: SetLit![], A: SetLit![] }
         }
         fn FromSets(V: Set<V>, A: Set<Pair<V, V>>) -> DirGraphStEph<V> {
             DirGraphStEph { V, A }
@@ -167,10 +164,7 @@ pub mod DirGraphStEphChap6_1 {
 
     impl<V: Eq + Hash + Clone + std::fmt::Debug + std::fmt::Display> std::fmt::Debug for DirGraphStEph<V> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            f.debug_struct("DirGraphStEph")
-                .field("V", &self.V)
-                .field("A", &self.A)
-                .finish()
+            f.debug_struct("DirGraphStEph").field("V", &self.V).field("A", &self.A).finish()
         }
     }
 

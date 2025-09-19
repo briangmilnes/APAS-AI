@@ -34,11 +34,7 @@ pub mod LinkedListStPerChap19 {
             } else {
                 let j = i - na;
                 let nb = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(b);
-                if j < nb {
-                    Some(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(b, j).clone())
-                } else {
-                    None
-                }
+                if j < nb { Some(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(b, j).clone()) } else { None }
             }
         }
         fn append(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>) -> LinkedListStPerS<T> {

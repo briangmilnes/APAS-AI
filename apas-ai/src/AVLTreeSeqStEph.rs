@@ -19,15 +19,7 @@ pub mod AVLTreeSeqStEph {
 
     impl<T: StT> AVLTreeNode<T> {
         fn new(value: T, index: N) -> Self {
-            AVLTreeNode {
-                value,
-                height: 1,
-                left_size: 0,
-                right_size: 0,
-                left: None,
-                right: None,
-                index,
-            }
+            AVLTreeNode { value, height: 1, left_size: 0, right_size: 0, left: None, right: None, index }
         }
     }
 
@@ -68,10 +60,7 @@ pub mod AVLTreeSeqStEph {
 
     impl<T: StT> AVLTreeSeqStEphS<T> {
         pub fn new_root() -> Self {
-            AVLTreeSeqStEphS {
-                root: None,
-                next_key: 0,
-            }
+            AVLTreeSeqStEphS { root: None, next_key: 0 }
         }
         pub fn new() -> Self {
             Self::new_root()
@@ -207,10 +196,7 @@ pub mod AVLTreeSeqStEph {
 
     impl<'a, T: StT> AVLTreeSeqIterStEph<'a, T> {
         fn new(root: &'a Link<T>) -> Self {
-            let mut it = AVLTreeSeqIterStEph {
-                stack: Vec::new(),
-                current: None,
-            };
+            let mut it = AVLTreeSeqIterStEph { stack: Vec::new(), current: None };
             it.push_left(root);
             it
         }
@@ -239,11 +225,7 @@ pub mod AVLTreeSeqStEph {
     }
 
     fn size_link<T: StT>(n: &Link<T>) -> N {
-        if let Some(b) = n {
-            1 + b.left_size + b.right_size
-        } else {
-            0
-        }
+        if let Some(b) = n { 1 + b.left_size + b.right_size } else { 0 }
     }
 
     fn update_meta<T: StT>(n: &mut Box<AVLTreeNode<T>>) {

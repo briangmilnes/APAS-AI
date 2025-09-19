@@ -24,16 +24,16 @@
 - Clear-first, separate calls: if you need to clear the terminal, run that clear command in its own invocation, then run the actual command in a new invocation. Never chain clear + command with `&&`.
 - One command per terminal window. Always pipe command output via `| cat`.
 - Exception: if you explicitly say “no‑clear”, skip the clear step; still keep one command per terminal invocation.
+- Present every command’s captured output inside fenced code blocks so the terminal formatting box appears consistently.
+- Echo the output immediately after the command finishes; do not defer or batch command logs.
 
-#### Non‑terminal Step Timing (Edits/Searches/Planning)
-- Provide precise timing for non‑terminal work on request.
-- On request, bracket each non‑terminal step with Start/End timestamps in chat status updates.
-- Obtain timestamps via a shell date call; use system timezone unless PDT is explicitly requested.
-  - Start: `date +"Start: %a %b %d %T %Z %Y"`
-  - End:   `date +"End: %a %b %d %T %Z %Y"`
-- One Start/End pair per distinct step; repeat per step as needed.
-- Optionally include Total (H:M:S) after End if helpful.
-- Do not run extra commands solely for timing unless requested.
+#### Command Timestamping
+- At the start of each work batch, print the current time via `date +"%d %H:%M:%S %Z"` before issuing the first shell command.
+- For any `cargo` command, emit an additional timestamp immediately beforehand using the same format.
+- Show each timestamp in the transcript (code block), then execute the command as a separate invocation.
+- Print the timestamp right away in the response so the user sees it before any subsequent command output.
+- Avoid Start/End markers unless the user explicitly requests them.
+- Do not emit extra timing commands beyond these requirements.
 
 #### Verification Trace (imports & bounds hoist)
 - For each file verification, print:

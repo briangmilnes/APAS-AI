@@ -53,11 +53,7 @@ pub mod ArraySeqMtPerChap18 {
         fn append(a: &ArrayMtPerS<T>, b: &ArrayMtPerS<T>) -> ArrayMtPerS<T> {
             Self::tabulate(
                 |i| {
-                    if i < a.length() {
-                        a.nth(i).clone_mt()
-                    } else {
-                        b.nth(i - a.length()).clone_mt()
-                    }
+                    if i < a.length() { a.nth(i).clone_mt() } else { b.nth(i - a.length()).clone_mt() }
                 },
                 a.length() + b.length(),
             )

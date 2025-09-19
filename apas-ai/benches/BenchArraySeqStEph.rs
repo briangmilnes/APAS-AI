@@ -46,9 +46,8 @@ fn bench_build_random_s(c: &mut Criterion) {
     group.finish();
 
     // Print HTML report URL (criterion html_reports is enabled in Cargo.toml)
-    let target_dir: PathBuf = env::var_os("CARGO_TARGET_DIR")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| PathBuf::from("target"));
+    let target_dir: PathBuf =
+        env::var_os("CARGO_TARGET_DIR").map(PathBuf::from).unwrap_or_else(|| PathBuf::from("target"));
     let report = target_dir.join("criterion").join("report").join("index.html");
     println!("HTML report: file://{}", report.display());
 }

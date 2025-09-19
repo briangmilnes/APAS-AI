@@ -38,11 +38,7 @@ fn bench_bsteph_bbalpha(c: &mut Criterion) {
         });
 
         group.bench_with_input(BenchmarkId::new("traversal", n), &n, |b, &len| {
-            b.iter_batched(
-                || build_tree(len),
-                |tree| black_box(tree.in_order()),
-                BatchSize::SmallInput,
-            );
+            b.iter_batched(|| build_tree(len), |tree| black_box(tree.in_order()), BatchSize::SmallInput);
         });
     }
 

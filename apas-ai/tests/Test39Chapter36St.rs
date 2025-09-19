@@ -63,10 +63,7 @@ fn pivot_strategies_match_expectations() {
             break;
         }
     }
-    assert!(
-        within_range,
-        "random pivot should be drawn from the requested sub-range"
-    );
+    assert!(within_range, "random pivot should be drawn from the requested sub-range");
 
     let median_case = ArraySeqStEph![3, 8, 5, 6, 7];
     let expected_mid = median_case.pivot_st_median3(0, median_case.length());

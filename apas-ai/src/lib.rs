@@ -4,6 +4,8 @@
 //! - Declares modules, re-exports core types and concrete sequence structs.
 //! - Provides macros `mathseq!`, `arrayseq!`, and `listseq!` to build sequences concisely.
 
+// Codex write-test comment.
+
 pub mod Types;
 pub use crate::Types::Types::*;
 
@@ -100,27 +102,34 @@ pub mod BBTEph;
 pub use crate::BBTEph::BBTEph::{BBNode, BBTree};
 
 pub mod BSTPlainStEph;
-pub use crate::BSTPlainStEph::BSTPlainStEph::{BSTPlainStEphTrait, BSTree as BSTPlainStTree};
+pub use crate::BSTPlainStEph::BSTPlainStEph::{BSTPlainStEph as BSTPlainStTree, BSTPlainStEphTrait};
 pub mod BSTAVLStEph;
-pub use crate::BSTAVLStEph::BSTAVLStEph::{BSTAVLStEphTrait, BSTreeAVL as BSTAVLStTree};
+pub use crate::BSTAVLStEph::BSTAVLStEph::{BSTAVLStEph as BSTAVLStTree, BSTAVLStEphTrait};
 pub mod BSTRBStEph;
-pub use crate::BSTRBStEph::BSTRBStEph::{BSTRBStEphTrait, BSTreeRB as BSTRBStTree};
+pub use crate::BSTRBStEph::BSTRBStEph::{BSTRBStEph as BSTRBStTree, BSTRBStEphTrait};
 pub mod BSTBBAlphaStEph;
-pub use crate::BSTBBAlphaStEph::BSTBBAlphaStEph::{BSTBBAlphaStEphTrait, BSTreeBBAlpha as BSTBBAlphaStTree};
+pub use crate::BSTBBAlphaStEph::BSTBBAlphaStEph::{BSTBBAlphaStEph as BSTBBAlphaStTree, BSTBBAlphaStEphTrait};
 pub mod BSTTreapStEph;
-pub use crate::BSTTreapStEph::BSTTreapStEph::{BSTTreapStEphTrait, BSTreeTreap as BSTTreapStTree};
+pub use crate::BSTTreapStEph::BSTTreapStEph::{BSTTreapStEph as BSTTreapStTree, BSTTreapStEphTrait};
 pub mod BSTSplayStEph;
-pub use crate::BSTSplayStEph::BSTSplayStEph::{BSTSplayStEphTrait, BSTreeSplay as BSTSplayStTree};
+pub use crate::BSTSplayStEph::BSTSplayStEph::{BSTSplayStEph as BSTSplayStTree, BSTSplayStEphTrait};
 
 pub mod BSTPlainMtEph;
-pub use crate::BSTPlainMtEph::BSTPlainMtEph::{BSTPlainMtEphTrait, BSTree as BSTPlainMtTree};
+pub use crate::BSTPlainMtEph::BSTPlainMtEph::{BSTPlainMtEph as BSTPlainMtTree, BSTPlainMtEphTrait};
 pub mod BSTAVLMtEph;
-pub use crate::BSTAVLMtEph::BSTAVLMtEph::{BSTAVLMtEphTrait, BSTreeAVL as BSTAVLMtTree};
+pub use crate::BSTAVLMtEph::BSTAVLMtEph::{BSTAVLMtEph as BSTAVLMtTree, BSTAVLMtEphTrait};
 pub mod BSTRBMtEph;
-pub use crate::BSTRBMtEph::BSTRBMtEph::{BSTRBMtEphTrait, BSTreeRB as BSTRBMtTree};
+pub use crate::BSTRBMtEph::BSTRBMtEph::{BSTRBMtEph as BSTRBMtTree, BSTRBMtEphTrait};
 pub mod BSTBBAlphaMtEph;
-pub use crate::BSTBBAlphaMtEph::BSTBBAlphaMtEph::{BSTBBAlphaMtEphTrait, BSTreeBBAlpha as BSTBBAlphaMtTree};
+pub use crate::BSTBBAlphaMtEph::BSTBBAlphaMtEph::{BSTBBAlphaMtEph as BSTBBAlphaMtTree, BSTBBAlphaMtEphTrait};
 pub mod BSTTreapMtEph;
-pub use crate::BSTTreapMtEph::BSTTreapMtEph::{BSTTreapMtEphTrait, BSTreeTreap as BSTTreapMtTree};
+pub use crate::BSTTreapMtEph::BSTTreapMtEph::{BSTTreapMtEph as BSTTreapMtTree, BSTTreapMtEphTrait};
 pub mod BSTSplayMtEph;
-pub use crate::BSTSplayMtEph::BSTSplayMtEph::{BSTSplayMtEphTrait, BSTreeSplay as BSTSplayMtTree};
+pub use crate::BSTSplayMtEph::BSTSplayMtEph::{BSTSplayMtEph as BSTSplayMtTree, BSTSplayMtEphTrait};
+
+pub mod BSTSetAVLMtEph;
+pub mod BSTSetBBAlphaMtEph;
+pub mod BSTSetPlainMtEph;
+pub mod BSTSetRBMtEph;
+pub mod BSTSetSplayMtEph;
+pub mod BSTSetTreapMtEph;

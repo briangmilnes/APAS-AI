@@ -78,9 +78,7 @@ pub mod MathSeq {
         /// APAS: Work Θ(length), Span Θ(1)
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
         pub fn with_len(length: N, init_value: T) -> Self {
-            Self {
-                data: vec![init_value; length],
-            }
+            Self { data: vec![init_value; length] }
         }
     }
 
@@ -175,9 +173,7 @@ pub mod MathSeq {
         /// APAS: Work Θ(length), Span Θ(1)
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn new(length: N, init_value: T) -> Self {
-            MathSeqS {
-                data: vec![init_value; length],
-            }
+            MathSeqS { data: vec![init_value; length] }
         }
 
         /// APAS: Work Θ(1), Span Θ(1)
@@ -246,9 +242,7 @@ pub mod MathSeq {
             if e <= s {
                 return MathSeqS { data: Vec::new() };
             }
-            MathSeqS {
-                data: self.data[s..e].to_vec(),
-            }
+            MathSeqS { data: self.data[s..e].to_vec() }
         }
 
         /// APAS: Work Θ(1), Span Θ(1)
