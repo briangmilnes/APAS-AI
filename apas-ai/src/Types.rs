@@ -22,8 +22,8 @@ pub mod Types {
     impl std::fmt::Display for B {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                B::True => write!(f, "True"),
-                B::False => write!(f, "False"),
+                | B::True => write!(f, "True"),
+                | B::False => write!(f, "False"),
             }
         }
     }
@@ -51,133 +51,83 @@ pub mod Types {
             let inner = self.lock().unwrap().clone();
             std::sync::Mutex::new(inner)
         }
-        fn new_mt(inner: Self::Inner) -> Self {
-            std::sync::Mutex::new(inner)
-        }
+        fn new_mt(inner: Self::Inner) -> Self { std::sync::Mutex::new(inner) }
     }
 
     impl<A: StT + Send + Sync, B: StT + Send + Sync> MtT for Pair<A, B> {
         type Inner = Pair<A, B>;
-        fn clone_mt(&self) -> Self {
-            self.clone()
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { self.clone() }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     // Ad-hoc implementations for specific primitive types to avoid conflicts
     impl MtT for usize {
         type Inner = usize;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for isize {
         type Inner = isize;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for i32 {
         type Inner = i32;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for u32 {
         type Inner = u32;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for i64 {
         type Inner = i64;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for u64 {
         type Inner = u64;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for bool {
         type Inner = bool;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for char {
         type Inner = char;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     // Special case: ad-hoc implementation for String
     impl MtT for String {
         type Inner = String;
-        fn clone_mt(&self) -> Self {
-            self.clone()
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { self.clone() }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     // String slice implementation
     impl<'a> MtT for &'a str {
         type Inner = &'a str;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     // Custom boolean enum implementation
     impl MtT for B {
         type Inner = B;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     /// Edge wrapper to enable Display/Debug for pairs (V,V) under baseline bounds.
@@ -185,21 +135,15 @@ pub mod Types {
     pub struct Edge<V: StT>(pub V, pub V);
 
     impl<V: StT> std::fmt::Display for Edge<V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "({}, {})", self.0, self.1)
-        }
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "({}, {})", self.0, self.1) }
     }
 
     impl<V: StT> From<(V, V)> for Edge<V> {
-        fn from(t: (V, V)) -> Self {
-            Edge(t.0, t.1)
-        }
+        fn from(t: (V, V)) -> Self { Edge(t.0, t.1) }
     }
 
     impl<V: StT> From<Edge<V>> for (V, V) {
-        fn from(e: Edge<V>) -> (V, V) {
-            (e.0, e.1)
-        }
+        fn from(e: Edge<V>) -> (V, V) { (e.0, e.1) }
     }
 
     /// Pair type with proper Display/Debug available when elements support them.
@@ -207,21 +151,15 @@ pub mod Types {
     pub struct Pair<A, B>(pub A, pub B);
 
     impl<A: std::fmt::Display, B: std::fmt::Display> std::fmt::Display for Pair<A, B> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "({}, {})", self.0, self.1)
-        }
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "({}, {})", self.0, self.1) }
     }
 
     impl<A, B> From<(A, B)> for Pair<A, B> {
-        fn from(t: (A, B)) -> Self {
-            Pair(t.0, t.1)
-        }
+        fn from(t: (A, B)) -> Self { Pair(t.0, t.1) }
     }
 
     impl<A, B> From<Pair<A, B>> for (A, B) {
-        fn from(p: Pair<A, B>) -> (A, B) {
-            (p.0, p.1)
-        }
+        fn from(p: Pair<A, B>) -> (A, B) { (p.0, p.1) }
     }
 
     /// Set equivalence comparison for sequences (order-independent, useful for MT tests)

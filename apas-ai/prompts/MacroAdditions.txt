@@ -1,0 +1,8 @@
+
+ How many of our core modules in src do not have a *Lit! macro? List them.
+
+ Add a MathSeqLit! to MathSeq.rs.
+
+  Look for macros in src that are not of the name <Module>Lit! and fix
+ them and the test and bench code. Be sure to leave or place the macros
+ and their test code in the module. Execute relentlessly.

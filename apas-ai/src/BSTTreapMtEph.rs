@@ -6,7 +6,7 @@ pub mod BSTTreapMtEph {
     use crate::ArraySeqStPer::ArraySeqStPer::*;
     use crate::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
     use crate::Types::Types::*;
-    use rand::{Rng, rng};
+    use rand::{rng, Rng};
 
     type Link<T> = Option<Box<Node<T>>>;
 
@@ -21,7 +21,13 @@ pub mod BSTTreapMtEph {
 
     impl<T: StTinMtT + Ord> Node<T> {
         fn new(key: T, priority: u64) -> Self {
-            Node { key, priority, size: 1, left: None, right: None }
+            Node {
+                key,
+                priority,
+                size: 1,
+                left: None,
+                right: None,
+            }
         }
     }
 
@@ -47,14 +53,14 @@ pub mod BSTTreapMtEph {
     }
 
     impl<T: StTinMtT + Ord> Default for BSTTreapMtEph<T> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     impl<T: StTinMtT + Ord> BSTTreapMtEph<T> {
         pub fn new() -> Self {
-            BSTTreapMtEph { root: Arc::new(RwLock::new(None)) }
+            BSTTreapMtEph {
+                root: Arc::new(RwLock::new(None)),
+            }
         }
 
         pub fn size(&self) -> N {
@@ -63,14 +69,18 @@ pub mod BSTTreapMtEph {
         }
 
         pub fn is_empty(&self) -> B {
-            if self.size() == 0 { B::True } else { B::False }
+            if self.size() == 0 {
+                B::True
+            } else {
+                B::False
+            }
         }
 
         pub fn height(&self) -> N {
             fn height_rec<T: StTinMtT + Ord>(link: &Link<T>) -> N {
                 match link {
-                    None => 0,
-                    Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
+                    | None => 0,
+                    | Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
                 }
             }
 
@@ -90,7 +100,11 @@ pub mod BSTTreapMtEph {
         }
 
         pub fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() { B::True } else { B::False }
+            if self.find(target).is_some() {
+                B::True
+            } else {
+                B::False
+            }
         }
 
         pub fn minimum(&self) -> Option<T> {
@@ -117,13 +131,9 @@ pub mod BSTTreapMtEph {
             ArrayStPerS::from_vec(out)
         }
 
-        fn size_link(link: &Link<T>) -> N {
-            link.as_ref().map_or(0, |n| n.size)
-        }
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
-        fn update(node: &mut Node<T>) {
-            node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right);
-        }
+        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right); }
 
         fn rotate_left(link: &mut Link<T>) {
             if let Some(mut x) = link.take() {
@@ -162,7 +172,11 @@ pub mod BSTTreapMtEph {
                     }
                 } else if value > node.key {
                     Self::insert_link(&mut node.right, value, rng);
-                    if node.right.as_ref().map_or(false, |right| right.priority < node.priority) {
+                    if node
+                        .right
+                        .as_ref()
+                        .map_or(false, |right| right.priority < node.priority)
+                    {
                         Self::rotate_left(link);
                     }
                 }
@@ -176,8 +190,8 @@ pub mod BSTTreapMtEph {
 
         fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {
             match link {
-                None => None,
-                Some(node) => {
+                | None => None,
+                | Some(node) => {
                     if target == &node.key {
                         Some(&node.key)
                     } else if target < &node.key {
@@ -191,20 +205,20 @@ pub mod BSTTreapMtEph {
 
         fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
             match link {
-                None => None,
-                Some(node) => match node.left {
-                    None => Some(&node.key),
-                    Some(_) => Self::min_link(&node.left),
+                | None => None,
+                | Some(node) => match node.left {
+                    | None => Some(&node.key),
+                    | Some(_) => Self::min_link(&node.left),
                 },
             }
         }
 
         fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
             match link {
-                None => None,
-                Some(node) => match node.right {
-                    None => Some(&node.key),
-                    Some(_) => Self::max_link(&node.right),
+                | None => None,
+                | Some(node) => match node.right {
+                    | None => Some(&node.key),
+                    | Some(_) => Self::max_link(&node.right),
                 },
             }
         }
@@ -227,48 +241,26 @@ pub mod BSTTreapMtEph {
     }
 
     impl<T: StTinMtT + Ord> BSTTreapMtEphTrait<T> for BSTTreapMtEph<T> {
-        fn new() -> Self {
-            BSTTreapMtEph::new()
-        }
+        fn new() -> Self { BSTTreapMtEph::new() }
 
-        fn insert(&self, value: T) {
-            BSTTreapMtEph::insert(self, value)
-        }
+        fn insert(&self, value: T) { BSTTreapMtEph::insert(self, value) }
 
-        fn find(&self, target: &T) -> Option<T> {
-            BSTTreapMtEph::find(self, target)
-        }
+        fn find(&self, target: &T) -> Option<T> { BSTTreapMtEph::find(self, target) }
 
-        fn contains(&self, target: &T) -> B {
-            BSTTreapMtEph::contains(self, target)
-        }
+        fn contains(&self, target: &T) -> B { BSTTreapMtEph::contains(self, target) }
 
-        fn size(&self) -> N {
-            BSTTreapMtEph::size(self)
-        }
+        fn size(&self) -> N { BSTTreapMtEph::size(self) }
 
-        fn is_empty(&self) -> B {
-            BSTTreapMtEph::is_empty(self)
-        }
+        fn is_empty(&self) -> B { BSTTreapMtEph::is_empty(self) }
 
-        fn height(&self) -> N {
-            BSTTreapMtEph::height(self)
-        }
+        fn height(&self) -> N { BSTTreapMtEph::height(self) }
 
-        fn minimum(&self) -> Option<T> {
-            BSTTreapMtEph::minimum(self)
-        }
+        fn minimum(&self) -> Option<T> { BSTTreapMtEph::minimum(self) }
 
-        fn maximum(&self) -> Option<T> {
-            BSTTreapMtEph::maximum(self)
-        }
+        fn maximum(&self) -> Option<T> { BSTTreapMtEph::maximum(self) }
 
-        fn in_order(&self) -> ArrayStPerS<T> {
-            BSTTreapMtEph::in_order(self)
-        }
+        fn in_order(&self) -> ArrayStPerS<T> { BSTTreapMtEph::in_order(self) }
 
-        fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTTreapMtEph::pre_order(self)
-        }
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTTreapMtEph::pre_order(self) }
     }
 }

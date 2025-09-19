@@ -5,9 +5,7 @@ trait ToVec<T: StT> {
     fn to_vec(&self) -> Vec<T>;
 }
 impl<T: StT> ToVec<T> for ArraySeqStEphS<T> {
-    fn to_vec(&self) -> Vec<T> {
-        (0..self.length()).map(|i| self.nth(i).clone()).collect()
-    }
+    fn to_vec(&self) -> Vec<T> { (0..self.length()).map(|i| self.nth(i).clone()).collect() }
 }
 
 #[test]
@@ -63,7 +61,10 @@ fn pivot_strategies_match_expectations() {
             break;
         }
     }
-    assert!(within_range, "random pivot should be drawn from the requested sub-range");
+    assert!(
+        within_range,
+        "random pivot should be drawn from the requested sub-range"
+    );
 
     let median_case = ArraySeqStEph![3, 8, 5, 6, 7];
     let expected_mid = median_case.pivot_st_median3(0, median_case.length());

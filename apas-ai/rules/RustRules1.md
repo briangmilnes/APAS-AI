@@ -18,6 +18,10 @@
 - **Pattern**: `let mut acc = init; for i in 0..n { acc = f(&acc, &data[i]); results.push(acc.clone()); }`
 - This avoids closure capture issues while maintaining functional semantics
 
+#### Formatting discipline
+- Do not run `cargo fmt` or `rustfmt`; leave formatting passes to the user.
+- User formatting target: keep `rustfmt` max line width at 120 characters.
+
 ### Imports and Module Scope
 
 #### Standard Library Imports and Result usage (module-top; no aliasing)

@@ -52,9 +52,7 @@ pub mod SetStEphChap5_1 {
     }
 
     impl<T: Eq + Hash> PartialEq for Set<T> {
-        fn eq(&self, other: &Self) -> bool {
-            self.data == other.data
-        }
+        fn eq(&self, other: &Self) -> bool { self.data == other.data }
     }
 
     impl<T: Eq + Hash> Eq for Set<T> {}
@@ -106,9 +104,7 @@ pub mod SetStEphChap5_1 {
     }
 
     impl<T: Eq + Hash> Set<T> {
-        pub fn empty() -> Set<T> {
-            Set { data: HashSet::new() }
-        }
+        pub fn empty() -> Set<T> { Set { data: HashSet::new() } }
 
         pub fn singleton(x: T) -> Set<T> {
             let mut s = HashSet::with_capacity(1);
@@ -116,12 +112,14 @@ pub mod SetStEphChap5_1 {
             Set { data: s }
         }
 
-        pub fn size(&self) -> N {
-            self.data.len()
-        }
+        pub fn size(&self) -> N { self.data.len() }
 
         pub fn mem(&self, x: &T) -> B {
-            if self.data.contains(x) { B::True } else { B::False }
+            if self.data.contains(x) {
+                B::True
+            } else {
+                B::False
+            }
         }
 
         pub fn union(&self, other: &Set<T>) -> Set<T>
@@ -183,9 +181,7 @@ pub mod SetStEphChap5_1 {
             self
         }
 
-        pub fn iter(&self) -> std::collections::hash_set::Iter<'_, T> {
-            self.data.iter()
-        }
+        pub fn iter(&self) -> std::collections::hash_set::Iter<'_, T> { self.data.iter() }
 
         pub fn FromVec(v: Vec<T>) -> Set<T> {
             let mut s = HashSet::with_capacity(v.len());
@@ -197,9 +193,7 @@ pub mod SetStEphChap5_1 {
     }
 
     impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetStEphChap5_1Trait<T> for Set<T> {
-        fn empty() -> Set<T> {
-            Set { data: HashSet::new() }
-        }
+        fn empty() -> Set<T> { Set { data: HashSet::new() } }
 
         fn singleton(x: T) -> Set<T> {
             let mut s = HashSet::with_capacity(1);
@@ -207,12 +201,14 @@ pub mod SetStEphChap5_1 {
             Set { data: s }
         }
 
-        fn size(&self) -> N {
-            self.data.len()
-        }
+        fn size(&self) -> N { self.data.len() }
 
         fn mem(&self, x: &T) -> B {
-            if self.data.contains(x) { B::True } else { B::False }
+            if self.data.contains(x) {
+                B::True
+            } else {
+                B::False
+            }
         }
 
         fn union(&self, other: &Set<T>) -> Set<T>
@@ -274,9 +270,7 @@ pub mod SetStEphChap5_1 {
             self
         }
 
-        fn iter(&self) -> std::collections::hash_set::Iter<'_, T> {
-            self.data.iter()
-        }
+        fn iter(&self) -> std::collections::hash_set::Iter<'_, T> { self.data.iter() }
 
         fn FromVec(v: Vec<T>) -> Set<T> {
             let mut s = HashSet::with_capacity(v.len());

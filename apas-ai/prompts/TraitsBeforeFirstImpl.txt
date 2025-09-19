@@ -1,0 +1,8 @@
+
+  Write a new rule in rust rules saying that traits come after any datatypes in a module\
+ but before the first impl. Then Cargo build.
+
+  Sweep the source files and fix this.
+  Execute relentlessly.
+
+  

@@ -63,9 +63,7 @@ pub mod MappingStEphChap5_5 {
     impl<A: Eq + Hash + std::fmt::Display + std::fmt::Debug, B: Eq + Hash + std::fmt::Display + std::fmt::Debug>
         PartialEq for Mapping<A, B>
     {
-        fn eq(&self, other: &Self) -> bool {
-            self.rel == other.rel
-        }
+        fn eq(&self, other: &Self) -> bool { self.rel == other.rel }
     }
     impl<A: Eq + Hash + std::fmt::Display + std::fmt::Debug, B: Eq + Hash + std::fmt::Display + std::fmt::Debug> Eq
         for Mapping<A, B>
@@ -73,54 +71,46 @@ pub mod MappingStEphChap5_5 {
     }
 
     impl<A: std::fmt::Debug + Eq + Hash, B: std::fmt::Debug + Eq + Hash> std::fmt::Debug for Mapping<A, B> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            self.rel.fmt(f)
-        }
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { self.rel.fmt(f) }
     }
     impl<A: std::fmt::Display + Eq + Hash, B: std::fmt::Display + Eq + Hash> std::fmt::Display for Mapping<A, B> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            self.rel.fmt(f)
-        }
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { self.rel.fmt(f) }
     }
 
     impl<
-        X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized,
-        Y: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized,
-    > MappingStEphChap5_5Trait<X, Y> for Mapping<X, Y>
+            X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized,
+            Y: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized,
+        > MappingStEphChap5_5Trait<X, Y> for Mapping<X, Y>
     {
         fn empty() -> Mapping<X, Y> {
-            Mapping { rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::empty() }
+            Mapping {
+                rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::empty(),
+            }
         }
 
         fn FromVec(v: Vec<Pair<X, Y>>) -> Mapping<X, Y> {
             let pairs = Self::unique_pairs_from_iter(v);
-            Mapping { rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::FromSet(pairs) }
+            Mapping {
+                rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::FromSet(pairs),
+            }
         }
 
         fn FromRelation(r: &Relation<X, Y>) -> Mapping<X, Y> {
             let pairs = Self::unique_pairs_from_iter(r.iter().cloned());
-            Mapping { rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::FromSet(pairs) }
+            Mapping {
+                rel: <Relation<X, Y> as RelationStEphChap5_2Trait<X, Y>>::FromSet(pairs),
+            }
         }
 
-        fn size(&self) -> N {
-            self.rel.size()
-        }
+        fn size(&self) -> N { self.rel.size() }
 
-        fn domain(&self) -> Set<X> {
-            self.rel.domain()
-        }
+        fn domain(&self) -> Set<X> { self.rel.domain() }
 
-        fn range(&self) -> Set<Y> {
-            self.rel.range()
-        }
+        fn range(&self) -> Set<Y> { self.rel.range() }
 
-        fn mem(&self, a: &X, b: &Y) -> B {
-            self.rel.mem(a, b)
-        }
+        fn mem(&self, a: &X, b: &Y) -> B { self.rel.mem(a, b) }
 
-        fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>> {
-            self.rel.iter()
-        }
+        fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>> { self.rel.iter() }
     }
 
     #[macro_export]

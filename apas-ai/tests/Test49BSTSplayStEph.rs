@@ -1,10 +1,6 @@
 use apas_ai::BSTSplayStEph::BSTSplayStEph::*;
 use apas_ai::*;
 
-fn inorder<T: StT + Ord>(tree: &BSTreeSplay<T>) -> Vec<T> {
-    tree.in_order().iter().cloned().collect()
-}
-
 #[test]
 fn splay_basic_behaviour() {
     let mut bst = BSTreeSplay::new();
@@ -16,7 +12,12 @@ fn splay_basic_behaviour() {
     assert_eq!(bst.find(&9), None);
     assert_eq!(bst.minimum(), Some(&1));
     assert_eq!(bst.maximum(), Some(&7));
-    assert_eq!(inorder(&bst), vec![1, 2, 3, 4, 5, 6, 7]);
+    let inorder = bst.in_order();
+    let expected = [1, 2, 3, 4, 5, 6, 7];
+    assert_eq!(inorder.length(), expected.len());
+    for (exp, value) in expected.iter().zip(inorder.iter()) {
+        assert_eq!(*value, *exp);
+    }
 }
 
 #[test]

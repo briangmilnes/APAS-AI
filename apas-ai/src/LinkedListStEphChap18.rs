@@ -145,7 +145,10 @@ pub mod LinkedListStEphChap18 {
         fn scan(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<T>, T) {
             let n = <LinkedListStEphS<T> as LinkedListStEphTrait<T>>::length(a);
             if n == 0 {
-                return (<LinkedListStEphS<T> as LinkedListStEphChap18Trait<T>>::tabulate(|_| id.clone(), 0), id);
+                return (
+                    <LinkedListStEphS<T> as LinkedListStEphChap18Trait<T>>::tabulate(|_| id.clone(), 0),
+                    id,
+                );
             }
             let mut prefixes: Vec<T> = Vec::with_capacity(n);
             let mut acc = id.clone();
@@ -184,8 +187,10 @@ pub mod LinkedListStEphChap18 {
                     groups.push(Pair(k, vec![v]));
                 }
             }
-            let pairs: Vec<Pair<A, LinkedListStEphS<Bv>>> =
-                groups.into_iter().map(|Pair(k, vs)| Pair(k, LinkedListStEphS::from_vec(vs))).collect();
+            let pairs: Vec<Pair<A, LinkedListStEphS<Bv>>> = groups
+                .into_iter()
+                .map(|Pair(k, vs)| Pair(k, LinkedListStEphS::from_vec(vs)))
+                .collect();
             LinkedListStEphS::from_vec(pairs)
         }
     }

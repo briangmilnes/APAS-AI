@@ -2,7 +2,7 @@ use apas_ai::MappingStEphChap5_5::MappingStEphChap5_5::*;
 use apas_ai::RelationStEphChap5_2::RelationStEphChap5_2::*;
 use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
 use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
 fn bench_mapping_build(c: &mut Criterion) {

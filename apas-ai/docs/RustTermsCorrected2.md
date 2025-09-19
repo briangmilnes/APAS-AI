@@ -254,6 +254,7 @@ Type inference limitations:
 - Trait methods that return concrete associated types (for example, fn build() -> Widget)
   do not identify the implementor, so callers often need explicit type annotations or
   turbofish syntax (explicit type application).
+- Associated functions on traits cannot be called without specifying the concrete impl type (e.g., `<ArrayStPerS<_> as ArraySeqStPerChap18Trait<_>>::filter(...)`); Hindley–Milner would infer the target automatically.
 - Trait object upcasts (dyn Trait) erase concrete types, so methods that return Self are
   disallowed and callers must rely on associated types or where bounds.
 - Inference does not speculate across trait obligations; when multiple traits provide the

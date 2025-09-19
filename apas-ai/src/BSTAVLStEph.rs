@@ -18,7 +18,13 @@ pub mod BSTAVLStEph {
 
     impl<T: StT + Ord> Node<T> {
         fn new(key: T) -> Self {
-            Node { key, height: 1, size: 1, left: None, right: None }
+            Node {
+                key,
+                height: 1,
+                size: 1,
+                left: None,
+                right: None,
+            }
         }
     }
 
@@ -43,47 +49,39 @@ pub mod BSTAVLStEph {
     }
 
     impl<T: StT + Ord> Default for BSTAVLStEph<T> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     impl<T: StT + Ord> BSTAVLStEph<T> {
-        pub fn new() -> Self {
-            BSTAVLStEph { root: None }
-        }
+        pub fn new() -> Self { BSTAVLStEph { root: None } }
 
-        pub fn size(&self) -> N {
-            Self::size_link(&self.root)
-        }
+        pub fn size(&self) -> N { Self::size_link(&self.root) }
 
         pub fn is_empty(&self) -> B {
-            if self.size() == 0 { B::True } else { B::False }
+            if self.size() == 0 {
+                B::True
+            } else {
+                B::False
+            }
         }
 
-        pub fn height(&self) -> N {
-            Self::height_link(&self.root) as N
-        }
+        pub fn height(&self) -> N { Self::height_link(&self.root) as N }
 
-        pub fn insert(&mut self, value: T) {
-            Self::insert_link(&mut self.root, value);
-        }
+        pub fn insert(&mut self, value: T) { Self::insert_link(&mut self.root, value); }
 
-        pub fn find(&self, target: &T) -> Option<&T> {
-            Self::find_link(&self.root, target)
-        }
+        pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
 
         pub fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() { B::True } else { B::False }
+            if self.find(target).is_some() {
+                B::True
+            } else {
+                B::False
+            }
         }
 
-        pub fn minimum(&self) -> Option<&T> {
-            Self::min_link(&self.root)
-        }
+        pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
 
-        pub fn maximum(&self) -> Option<&T> {
-            Self::max_link(&self.root)
-        }
+        pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
 
         pub fn in_order(&self) -> ArrayStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
@@ -97,13 +95,9 @@ pub mod BSTAVLStEph {
             ArrayStPerS::from_vec(out)
         }
 
-        fn height_link(link: &Link<T>) -> i32 {
-            link.as_ref().map_or(0, |n| n.height)
-        }
+        fn height_link(link: &Link<T>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
 
-        fn size_link(link: &Link<T>) -> N {
-            link.as_ref().map_or(0, |n| n.size)
-        }
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
         fn update(node: &mut Node<T>) {
             node.height = 1 + Self::height_link(&node.left).max(Self::height_link(&node.right));
@@ -165,7 +159,7 @@ pub mod BSTAVLStEph {
 
         fn insert_link(link: &mut Link<T>, value: T) {
             match link {
-                Some(node) => {
+                | Some(node) => {
                     if value < node.key {
                         Self::insert_link(&mut node.left, value);
                     } else if value > node.key {
@@ -174,7 +168,7 @@ pub mod BSTAVLStEph {
                         return;
                     }
                 }
-                None => {
+                | None => {
                     *link = Some(Box::new(Node::new(value)));
                     return;
                 }
@@ -184,8 +178,8 @@ pub mod BSTAVLStEph {
 
         fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {
             match link {
-                None => None,
-                Some(node) => {
+                | None => None,
+                | Some(node) => {
                     if target == &node.key {
                         Some(&node.key)
                     } else if target < &node.key {
@@ -199,20 +193,20 @@ pub mod BSTAVLStEph {
 
         fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
             match link {
-                None => None,
-                Some(node) => match node.left {
-                    None => Some(&node.key),
-                    Some(_) => Self::min_link(&node.left),
+                | None => None,
+                | Some(node) => match node.left {
+                    | None => Some(&node.key),
+                    | Some(_) => Self::min_link(&node.left),
                 },
             }
         }
 
         fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
             match link {
-                None => None,
-                Some(node) => match node.right {
-                    None => Some(&node.key),
-                    Some(_) => Self::max_link(&node.right),
+                | None => None,
+                | Some(node) => match node.right {
+                    | None => Some(&node.key),
+                    | Some(_) => Self::max_link(&node.right),
                 },
             }
         }
@@ -235,48 +229,26 @@ pub mod BSTAVLStEph {
     }
 
     impl<T: StT + Ord> BSTAVLStEphTrait<T> for BSTAVLStEph<T> {
-        fn new() -> Self {
-            BSTAVLStEph::new()
-        }
+        fn new() -> Self { BSTAVLStEph::new() }
 
-        fn size(&self) -> N {
-            BSTAVLStEph::size(self)
-        }
+        fn size(&self) -> N { BSTAVLStEph::size(self) }
 
-        fn is_empty(&self) -> B {
-            BSTAVLStEph::is_empty(self)
-        }
+        fn is_empty(&self) -> B { BSTAVLStEph::is_empty(self) }
 
-        fn height(&self) -> N {
-            BSTAVLStEph::height(self)
-        }
+        fn height(&self) -> N { BSTAVLStEph::height(self) }
 
-        fn insert(&mut self, value: T) {
-            BSTAVLStEph::insert(self, value)
-        }
+        fn insert(&mut self, value: T) { BSTAVLStEph::insert(self, value) }
 
-        fn find(&self, target: &T) -> Option<&T> {
-            BSTAVLStEph::find(self, target)
-        }
+        fn find(&self, target: &T) -> Option<&T> { BSTAVLStEph::find(self, target) }
 
-        fn contains(&self, target: &T) -> B {
-            BSTAVLStEph::contains(self, target)
-        }
+        fn contains(&self, target: &T) -> B { BSTAVLStEph::contains(self, target) }
 
-        fn minimum(&self) -> Option<&T> {
-            BSTAVLStEph::minimum(self)
-        }
+        fn minimum(&self) -> Option<&T> { BSTAVLStEph::minimum(self) }
 
-        fn maximum(&self) -> Option<&T> {
-            BSTAVLStEph::maximum(self)
-        }
+        fn maximum(&self) -> Option<&T> { BSTAVLStEph::maximum(self) }
 
-        fn in_order(&self) -> ArrayStPerS<T> {
-            BSTAVLStEph::in_order(self)
-        }
+        fn in_order(&self) -> ArrayStPerS<T> { BSTAVLStEph::in_order(self) }
 
-        fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTAVLStEph::pre_order(self)
-        }
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTAVLStEph::pre_order(self) }
     }
 }

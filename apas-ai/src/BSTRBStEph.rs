@@ -24,7 +24,13 @@ pub mod BSTRBStEph {
 
     impl<T: StT + Ord> Node<T> {
         fn new(key: T) -> Self {
-            Node { key, color: Color::Red, size: 1, left: None, right: None }
+            Node {
+                key,
+                color: Color::Red,
+                size: 1,
+                left: None,
+                right: None,
+            }
         }
     }
 
@@ -49,29 +55,27 @@ pub mod BSTRBStEph {
     }
 
     impl<T: StT + Ord> Default for BSTRBStEph<T> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     impl<T: StT + Ord> BSTRBStEph<T> {
-        pub fn new() -> Self {
-            BSTRBStEph { root: None }
-        }
+        pub fn new() -> Self { BSTRBStEph { root: None } }
 
-        pub fn size(&self) -> N {
-            Self::size_link(&self.root)
-        }
+        pub fn size(&self) -> N { Self::size_link(&self.root) }
 
         pub fn is_empty(&self) -> B {
-            if self.size() == 0 { B::True } else { B::False }
+            if self.size() == 0 {
+                B::True
+            } else {
+                B::False
+            }
         }
 
         pub fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
                 match link {
-                    None => 0,
-                    Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
+                    | None => 0,
+                    | Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
                 }
             }
             height_rec(&self.root)
@@ -84,21 +88,19 @@ pub mod BSTRBStEph {
             }
         }
 
-        pub fn find(&self, target: &T) -> Option<&T> {
-            Self::find_link(&self.root, target)
-        }
+        pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
 
         pub fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() { B::True } else { B::False }
+            if self.find(target).is_some() {
+                B::True
+            } else {
+                B::False
+            }
         }
 
-        pub fn minimum(&self) -> Option<&T> {
-            Self::min_link(&self.root)
-        }
+        pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
 
-        pub fn maximum(&self) -> Option<&T> {
-            Self::max_link(&self.root)
-        }
+        pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
 
         pub fn in_order(&self) -> ArrayStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
@@ -112,17 +114,11 @@ pub mod BSTRBStEph {
             ArrayStPerS::from_vec(out)
         }
 
-        fn is_red(link: &Link<T>) -> bool {
-            matches!(link, Some(node) if node.color == Color::Red)
-        }
+        fn is_red(link: &Link<T>) -> bool { matches!(link, Some(node) if node.color == Color::Red) }
 
-        fn size_link(link: &Link<T>) -> N {
-            link.as_ref().map_or(0, |n| n.size)
-        }
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
-        fn update(node: &mut Node<T>) {
-            node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right);
-        }
+        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right); }
 
         fn rotate_left(link: &mut Link<T>) {
             if let Some(mut h) = link.take() {
@@ -161,19 +157,19 @@ pub mod BSTRBStEph {
         fn flip_colors(link: &mut Link<T>) {
             if let Some(node) = link.as_mut() {
                 node.color = match node.color {
-                    Color::Red => Color::Black,
-                    Color::Black => Color::Red,
+                    | Color::Red => Color::Black,
+                    | Color::Black => Color::Red,
                 };
                 if let Some(left) = node.left.as_mut() {
                     left.color = match left.color {
-                        Color::Red => Color::Black,
-                        Color::Black => Color::Red,
+                        | Color::Red => Color::Black,
+                        | Color::Black => Color::Red,
                     };
                 }
                 if let Some(right) = node.right.as_mut() {
                     right.color = match right.color {
-                        Color::Red => Color::Black,
-                        Color::Black => Color::Red,
+                        | Color::Red => Color::Black,
+                        | Color::Black => Color::Red,
                     };
                 }
             }
@@ -214,8 +210,8 @@ pub mod BSTRBStEph {
 
         fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {
             match link {
-                None => None,
-                Some(node) => {
+                | None => None,
+                | Some(node) => {
                     if target == &node.key {
                         Some(&node.key)
                     } else if target < &node.key {
@@ -229,20 +225,20 @@ pub mod BSTRBStEph {
 
         fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
             match link {
-                None => None,
-                Some(node) => match node.left {
-                    None => Some(&node.key),
-                    Some(_) => Self::min_link(&node.left),
+                | None => None,
+                | Some(node) => match node.left {
+                    | None => Some(&node.key),
+                    | Some(_) => Self::min_link(&node.left),
                 },
             }
         }
 
         fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
             match link {
-                None => None,
-                Some(node) => match node.right {
-                    None => Some(&node.key),
-                    Some(_) => Self::max_link(&node.right),
+                | None => None,
+                | Some(node) => match node.right {
+                    | None => Some(&node.key),
+                    | Some(_) => Self::max_link(&node.right),
                 },
             }
         }
@@ -265,48 +261,26 @@ pub mod BSTRBStEph {
     }
 
     impl<T: StT + Ord> BSTRBStEphTrait<T> for BSTRBStEph<T> {
-        fn new() -> Self {
-            BSTRBStEph::new()
-        }
+        fn new() -> Self { BSTRBStEph::new() }
 
-        fn size(&self) -> N {
-            BSTRBStEph::size(self)
-        }
+        fn size(&self) -> N { BSTRBStEph::size(self) }
 
-        fn is_empty(&self) -> B {
-            BSTRBStEph::is_empty(self)
-        }
+        fn is_empty(&self) -> B { BSTRBStEph::is_empty(self) }
 
-        fn height(&self) -> N {
-            BSTRBStEph::height(self)
-        }
+        fn height(&self) -> N { BSTRBStEph::height(self) }
 
-        fn insert(&mut self, value: T) {
-            BSTRBStEph::insert(self, value)
-        }
+        fn insert(&mut self, value: T) { BSTRBStEph::insert(self, value) }
 
-        fn find(&self, target: &T) -> Option<&T> {
-            BSTRBStEph::find(self, target)
-        }
+        fn find(&self, target: &T) -> Option<&T> { BSTRBStEph::find(self, target) }
 
-        fn contains(&self, target: &T) -> B {
-            BSTRBStEph::contains(self, target)
-        }
+        fn contains(&self, target: &T) -> B { BSTRBStEph::contains(self, target) }
 
-        fn minimum(&self) -> Option<&T> {
-            BSTRBStEph::minimum(self)
-        }
+        fn minimum(&self) -> Option<&T> { BSTRBStEph::minimum(self) }
 
-        fn maximum(&self) -> Option<&T> {
-            BSTRBStEph::maximum(self)
-        }
+        fn maximum(&self) -> Option<&T> { BSTRBStEph::maximum(self) }
 
-        fn in_order(&self) -> ArrayStPerS<T> {
-            BSTRBStEph::in_order(self)
-        }
+        fn in_order(&self) -> ArrayStPerS<T> { BSTRBStEph::in_order(self) }
 
-        fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTRBStEph::pre_order(self)
-        }
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTRBStEph::pre_order(self) }
     }
 }

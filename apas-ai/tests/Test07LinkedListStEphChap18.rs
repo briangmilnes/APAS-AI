@@ -4,6 +4,14 @@ pub mod TestLinkedListStEphChap18 {
     use apas_ai::LinkedListStEphChap18::LinkedListStEphChap18::*;
     use apas_ai::Types::Types::*;
 
+    fn expect_list(list: &LinkedListStEphS<N>, expected: &[N]) {
+        let mut iter = list.iter();
+        for &value in expected {
+            assert_eq!(iter.next().copied(), Some(value));
+        }
+        assert_eq!(iter.next(), None);
+    }
+
     // Eph Chap18 algorithms are not implemented; we reference expected outcomes via simple constructions.
 
     #[test]
@@ -32,16 +40,14 @@ pub mod TestLinkedListStEphChap18 {
     #[test]
     fn test_iter_inorder_collect_eph_ch18() {
         let a: LinkedListStEphS<N> = LinkedListStEph![1, 3, 5];
-        let vals: Vec<N> = a.iter().copied().collect();
-        assert_eq!(vals, vec![1, 3, 5]);
+        expect_list(&a, &[1, 3, 5]);
     }
 
     #[test]
     fn test_tabulate_and_map_ch18() {
         let a: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphChap18Trait<N>>::tabulate(|i| i, 5);
         let b: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphChap18Trait<N>>::map(&a, |x| x + 1);
-        let vals: Vec<N> = b.iter().copied().collect();
-        assert_eq!(vals, vec![1, 2, 3, 4, 5]);
+        expect_list(&b, &[1, 2, 3, 4, 5]);
     }
 
     #[test]
@@ -49,26 +55,27 @@ pub mod TestLinkedListStEphChap18 {
         let a: LinkedListStEphS<N> = LinkedListStEph![1, 2];
         let b: LinkedListStEphS<N> = LinkedListStEph![2, 3];
         let c: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphChap18Trait<N>>::append(&a, &b);
-        let vals: Vec<N> = c.iter().copied().collect();
-        assert_eq!(vals, vec![1, 2, 2, 3]);
+        expect_list(&c, &[1, 2, 2, 3]);
     }
 
     #[test]
     fn test_filter_ch18() {
         let a: LinkedListStEphS<N> = LinkedListStEph![1, 2, 3, 4];
         let b = <LinkedListStEphS<N> as LinkedListStEphChap18Trait<N>>::filter(&a, |x| {
-            if *x % 2 == 0 { B::True } else { B::False }
+            if *x % 2 == 0 {
+                B::True
+            } else {
+                B::False
+            }
         });
-        let vals: Vec<N> = b.iter().copied().collect();
-        assert_eq!(vals, vec![2, 4]);
+        expect_list(&b, &[2, 4]);
     }
 
     #[test]
     fn test_update_ch18() {
         let mut a: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::new(3, 0);
         let _ = a.update(Pair(1, 7).into());
-        let vals: Vec<N> = a.iter().copied().collect();
-        assert_eq!(vals, vec![0, 7, 0]);
+        expect_list(&a, &[0, 7, 0]);
     }
 
     #[test]
@@ -77,8 +84,8 @@ pub mod TestLinkedListStEphChap18 {
         let ups: LinkedListStEphS<Pair<N, N>> = LinkedListStEph![Pair(1, 9), Pair(1, 5), Pair(3, 6)];
         let inj = <LinkedListStEphS<N> as LinkedListStEphChap18Trait<N>>::inject(&a, &ups);
         let ninj = <LinkedListStEphS<N> as LinkedListStEphChap18Trait<N>>::ninject(&a, &ups);
-        assert_eq!(inj.iter().copied().collect::<Vec<N>>(), vec![0, 9, 0, 6]);
-        assert_eq!(ninj.iter().copied().collect::<Vec<N>>(), vec![0, 5, 0, 6]);
+        expect_list(&inj, &[0, 9, 0, 6]);
+        expect_list(&ninj, &[0, 5, 0, 6]);
     }
 
     #[test]
@@ -90,7 +97,7 @@ pub mod TestLinkedListStEphChap18 {
         assert_eq!(pref, 6);
         let (prefixes, total) = <LinkedListStEphS<N> as LinkedListStEphChap18Trait<N>>::scan(&a, &|x, y| x + y, 0);
         assert_eq!(total, 6);
-        assert_eq!(prefixes.iter().copied().collect::<Vec<N>>(), vec![0, 1, 3]);
+        expect_list(&prefixes, &[0, 1, 3]);
     }
 
     #[test]
@@ -99,7 +106,7 @@ pub mod TestLinkedListStEphChap18 {
         let y: LinkedListStEphS<N> = LinkedListStEph![3];
         let outer: LinkedListStEphS<LinkedListStEphS<N>> = LinkedListStEph![x, y];
         let flat = <LinkedListStEphS<N> as LinkedListStEphChap18Trait<N>>::flatten(&outer);
-        assert_eq!(flat.iter().copied().collect::<Vec<N>>(), vec![1, 2, 3]);
+        expect_list(&flat, &[1, 2, 3]);
 
         let pairs: LinkedListStEphS<Pair<N, N>> = LinkedListStEph![Pair(1, 10), Pair(2, 20), Pair(1, 30)];
         let grouped = <LinkedListStEphS<Pair<N, LinkedListStEphS<N>>> as LinkedListStEphChap18Trait<

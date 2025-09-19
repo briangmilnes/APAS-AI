@@ -19,7 +19,13 @@ pub mod BSTPlainMtEph {
 
     impl<T: StTinMtT + Ord> Node<T> {
         fn new(key: T) -> Self {
-            Node { key, height: 1, size: 1, left: Arc::new(RwLock::new(None)), right: Arc::new(RwLock::new(None)) }
+            Node {
+                key,
+                height: 1,
+                size: 1,
+                left: Arc::new(RwLock::new(None)),
+                right: Arc::new(RwLock::new(None)),
+            }
         }
 
         fn update(&mut self) {
@@ -51,19 +57,25 @@ pub mod BSTPlainMtEph {
 
     impl<T: StTinMtT + Ord> BSTPlainMtEph<T> {
         pub fn new() -> Self {
-            Self { root: Arc::new(RwLock::new(None)) }
+            Self {
+                root: Arc::new(RwLock::new(None)),
+            }
         }
 
         pub fn insert(&self, value: T) {
             fn descend<T: StTinMtT + Ord>(link: &Link<T>, value: T) -> bool {
                 let mut guard = link.write().unwrap();
                 match guard.as_mut() {
-                    Some(node) => {
+                    | Some(node) => {
                         if value == node.key {
                             return false;
                         }
 
-                        let branch = if value < node.key { node.left.clone() } else { node.right.clone() };
+                        let branch = if value < node.key {
+                            node.left.clone()
+                        } else {
+                            node.right.clone()
+                        };
 
                         drop(guard);
                         let inserted = descend(&branch, value);
@@ -75,7 +87,7 @@ pub mod BSTPlainMtEph {
                         }
                         inserted
                     }
-                    None => {
+                    | None => {
                         *guard = Some(Node::new(value));
                         true
                     }
@@ -89,20 +101,28 @@ pub mod BSTPlainMtEph {
             fn find_rec<T: StTinMtT + Ord>(link: &Link<T>, target: &T) -> Option<T> {
                 let guard = link.read().unwrap();
                 match guard.as_ref() {
-                    Some(node) if target == &node.key => Some(node.key.clone()),
-                    Some(node) => {
-                        let branch = if target < &node.key { node.left.clone() } else { node.right.clone() };
+                    | Some(node) if target == &node.key => Some(node.key.clone()),
+                    | Some(node) => {
+                        let branch = if target < &node.key {
+                            node.left.clone()
+                        } else {
+                            node.right.clone()
+                        };
                         drop(guard);
                         find_rec(&branch, target)
                     }
-                    None => None,
+                    | None => None,
                 }
             }
             find_rec(&self.root, target)
         }
 
         pub fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() { B::True } else { B::False }
+            if self.find(target).is_some() {
+                B::True
+            } else {
+                B::False
+            }
         }
         pub fn size(&self) -> N {
             let guard = self.root.read().unwrap();
@@ -110,7 +130,11 @@ pub mod BSTPlainMtEph {
         }
 
         pub fn is_empty(&self) -> B {
-            if self.size() == 0 { B::True } else { B::False }
+            if self.size() == 0 {
+                B::True
+            } else {
+                B::False
+            }
         }
 
         pub fn height(&self) -> N {
@@ -182,53 +206,20 @@ pub mod BSTPlainMtEph {
         }
     }
 
-    fn height_of<T: StTinMtT + Ord>(link: &Option<Node<T>>) -> i32 {
-        link.as_ref().map_or(0, |n| n.height)
-    }
+    fn height_of<T: StTinMtT + Ord>(link: &Option<Node<T>>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
 
-    fn size_of<T: StTinMtT + Ord>(link: &Option<Node<T>>) -> N {
-        link.as_ref().map_or(0, |n| n.size)
-    }
+    fn size_of<T: StTinMtT + Ord>(link: &Option<Node<T>>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
     impl<T: StTinMtT + Ord> BSTPlainMtEphTrait<T> for BSTPlainMtEph<T> {
-        fn new() -> Self {
-            BSTPlainMtEph::new()
-        }
-
-        fn insert(&self, value: T) {
-            BSTPlainMtEph::insert(self, value)
-        }
-
-        fn find(&self, target: &T) -> Option<T> {
-            BSTPlainMtEph::find(self, target)
-        }
-
-        fn contains(&self, target: &T) -> B {
-            BSTPlainMtEph::contains(self, target)
-        }
-
-        fn size(&self) -> N {
-            BSTPlainMtEph::size(self)
-        }
-
-        fn is_empty(&self) -> B {
-            BSTPlainMtEph::is_empty(self)
-        }
-
-        fn height(&self) -> N {
-            BSTPlainMtEph::height(self)
-        }
-
-        fn minimum(&self) -> Option<T> {
-            BSTPlainMtEph::minimum(self)
-        }
-
-        fn maximum(&self) -> Option<T> {
-            BSTPlainMtEph::maximum(self)
-        }
-
-        fn in_order(&self) -> ArrayStPerS<T> {
-            BSTPlainMtEph::in_order(self)
-        }
+        fn new() -> Self { BSTPlainMtEph::new() }
+        fn insert(&self, value: T) { BSTPlainMtEph::insert(self, value) }
+        fn find(&self, target: &T) -> Option<T> { BSTPlainMtEph::find(self, target) }
+        fn contains(&self, target: &T) -> B { BSTPlainMtEph::contains(self, target) }
+        fn size(&self) -> N { BSTPlainMtEph::size(self) }
+        fn is_empty(&self) -> B { BSTPlainMtEph::is_empty(self) }
+        fn height(&self) -> N { BSTPlainMtEph::height(self) }
+        fn minimum(&self) -> Option<T> { BSTPlainMtEph::minimum(self) }
+        fn maximum(&self) -> Option<T> { BSTPlainMtEph::maximum(self) }
+        fn in_order(&self) -> ArrayStPerS<T> { BSTPlainMtEph::in_order(self) }
     }
 }

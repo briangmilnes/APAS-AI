@@ -30,9 +30,7 @@ pub mod BBTEph {
     }
 
     impl<T: StT> BBTree<T> {
-        pub fn leaf() -> Self {
-            BBTree::Leaf
-        }
+        pub fn leaf() -> Self { BBTree::Leaf }
 
         pub fn node(left: BBTree<T>, value: T, right: BBTree<T>) -> Self {
             BBTree::Node(Box::new(BBNode { left, value, right }))
@@ -40,15 +38,15 @@ pub mod BBTEph {
 
         pub fn is_leaf(&self) -> B {
             match self {
-                BBTree::Leaf => B::True,
-                BBTree::Node(_) => B::False,
+                | BBTree::Leaf => B::True,
+                | BBTree::Node(_) => B::False,
             }
         }
 
         pub fn in_order(&self) -> ArrayStPerS<T> {
             match self {
-                BBTree::Leaf => <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::empty(),
-                BBTree::Node(node) => {
+                | BBTree::Leaf => <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::empty(),
+                | BBTree::Node(node) => {
                     let left = node.left.in_order();
                     let middle = <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::singleton(node.value.clone());
                     let right = node.right.in_order();
@@ -60,8 +58,8 @@ pub mod BBTEph {
 
         pub fn pre_order(&self) -> ArrayStPerS<T> {
             match self {
-                BBTree::Leaf => <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::empty(),
-                BBTree::Node(node) => {
+                | BBTree::Leaf => <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::empty(),
+                | BBTree::Node(node) => {
                     let root = <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::singleton(node.value.clone());
                     let left = node.left.pre_order();
                     let right = node.right.pre_order();
@@ -73,8 +71,8 @@ pub mod BBTEph {
 
         pub fn height(&self) -> N {
             match self {
-                BBTree::Leaf => 0,
-                BBTree::Node(node) => {
+                | BBTree::Leaf => 0,
+                | BBTree::Node(node) => {
                     let left_h = node.left.height();
                     let right_h = node.right.height();
                     1 + left_h.max(right_h)
@@ -84,39 +82,25 @@ pub mod BBTEph {
 
         pub fn size(&self) -> N {
             match self {
-                BBTree::Leaf => 0,
-                BBTree::Node(node) => 1 + node.left.size() + node.right.size(),
+                | BBTree::Leaf => 0,
+                | BBTree::Node(node) => 1 + node.left.size() + node.right.size(),
             }
         }
     }
 
     impl<T: StT> BBTEphTrait<T> for BBTree<T> {
-        fn leaf() -> Self {
-            BBTree::leaf()
-        }
+        fn leaf() -> Self { BBTree::leaf() }
 
-        fn node(left: Self, value: T, right: Self) -> Self {
-            BBTree::node(left, value, right)
-        }
+        fn node(left: Self, value: T, right: Self) -> Self { BBTree::node(left, value, right) }
 
-        fn is_leaf(&self) -> B {
-            BBTree::is_leaf(self)
-        }
+        fn is_leaf(&self) -> B { BBTree::is_leaf(self) }
 
-        fn in_order(&self) -> ArrayStPerS<T> {
-            BBTree::in_order(self)
-        }
+        fn in_order(&self) -> ArrayStPerS<T> { BBTree::in_order(self) }
 
-        fn pre_order(&self) -> ArrayStPerS<T> {
-            BBTree::pre_order(self)
-        }
+        fn pre_order(&self) -> ArrayStPerS<T> { BBTree::pre_order(self) }
 
-        fn height(&self) -> N {
-            BBTree::height(self)
-        }
+        fn height(&self) -> N { BBTree::height(self) }
 
-        fn size(&self) -> N {
-            BBTree::size(self)
-        }
+        fn size(&self) -> N { BBTree::size(self) }
     }
 }

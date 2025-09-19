@@ -1,7 +1,7 @@
 use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
 use apas_ai::Types::Types::*;
 use apas_ai::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
 fn bench_undirgraph_build(c: &mut Criterion) {

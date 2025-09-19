@@ -2,7 +2,7 @@ use apas_ai::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS;
 use apas_ai::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
 use apas_ai::ArraySeqMtPerChap19::ArraySeqMtPerChap19::*;
 use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;
@@ -13,9 +13,7 @@ struct LinearCongruentialGenerator32 {
 }
 
 impl LinearCongruentialGenerator32 {
-    fn new(seed: u32) -> LinearCongruentialGenerator32 {
-        LinearCongruentialGenerator32 { state: seed }
-    }
+    fn new(seed: u32) -> LinearCongruentialGenerator32 { LinearCongruentialGenerator32 { state: seed } }
     #[inline]
     fn next_N(&mut self) -> N {
         // Numerical Recipes parameters
@@ -47,8 +45,9 @@ fn bench_build_random_s_multithreaded_persistent(c: &mut Criterion) {
     group.finish();
 
     // Print HTML report URL
-    let target_dir: PathBuf =
-        env::var_os("CARGO_TARGET_DIR").map(PathBuf::from).unwrap_or_else(|| PathBuf::from("target"));
+    let target_dir: PathBuf = env::var_os("CARGO_TARGET_DIR")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from("target"));
     let report = target_dir.join("criterion").join("report").join("index.html");
     println!("HTML report: file://{}", report.display());
 }

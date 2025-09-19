@@ -66,21 +66,23 @@ pub mod ArraySeqStPer {
         /// Convenience: build from a Vec without extra copies when capacity==len.
         /// APAS: Work Θ(n) worst case, Span Θ(1)
         pub fn from_vec(v: Vec<T>) -> Self {
-            ArrayStPerS { data: v.into_boxed_slice() }
+            ArrayStPerS {
+                data: v.into_boxed_slice(),
+            }
         }
 
-        pub fn iter(&self) -> Iter<'_, T> {
-            self.data.iter()
-        }
-        pub fn iter_mut(&mut self) -> IterMut<'_, T> {
-            self.data.iter_mut()
-        }
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+        pub fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }
 
         pub fn empty() -> Self {
-            ArrayStPerS { data: Vec::new().into_boxed_slice() }
+            ArrayStPerS {
+                data: Vec::new().into_boxed_slice(),
+            }
         }
         pub fn singleton(item: T) -> Self {
-            ArrayStPerS { data: vec![item].into_boxed_slice() }
+            ArrayStPerS {
+                data: vec![item].into_boxed_slice(),
+            }
         }
         pub fn new(length: N, init_value: T) -> Self
         where
@@ -88,12 +90,8 @@ pub mod ArraySeqStPer {
         {
             Self::from_vec(vec![init_value; length])
         }
-        pub fn length(&self) -> N {
-            self.data.len()
-        }
-        pub fn nth(&self, index: N) -> &T {
-            &self.data[index]
-        }
+        pub fn length(&self) -> N { self.data.len() }
+        pub fn nth(&self, index: N) -> &T { &self.data[index] }
         pub fn set(&self, index: N, item: T) -> Result<Self, &'static str>
         where
             T: Clone,
@@ -128,18 +126,10 @@ pub mod ArraySeqStPer {
     }
 
     impl<T: StT + Clone> ArraySeqStPerTrait<T> for ArrayStPerS<T> {
-        fn new(length: N, init_value: T) -> Self {
-            Self::from_vec(vec![init_value; length])
-        }
-        fn length(&self) -> N {
-            self.data.len()
-        }
-        fn nth(&self, index: N) -> &T {
-            &self.data[index]
-        }
-        fn empty() -> Self {
-            Self::from_vec(Vec::new())
-        }
+        fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
+        fn length(&self) -> N { self.data.len() }
+        fn nth(&self, index: N) -> &T { &self.data[index] }
+        fn empty() -> Self { Self::from_vec(Vec::new()) }
         fn set(&self, index: N, item: T) -> Result<Self, &'static str> {
             if index >= self.data.len() {
                 return Err("Index out of bounds");
@@ -148,14 +138,20 @@ pub mod ArraySeqStPer {
             v[index] = item;
             Ok(Self::from_vec(v))
         }
-        fn singleton(item: T) -> Self {
-            Self::from_vec(vec![item])
-        }
+        fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
         fn isEmpty(&self) -> B {
-            if self.data.len() == 0 { B::True } else { B::False }
+            if self.data.len() == 0 {
+                B::True
+            } else {
+                B::False
+            }
         }
         fn isSingleton(&self) -> B {
-            if self.data.len() == 1 { B::True } else { B::False }
+            if self.data.len() == 1 {
+                B::True
+            } else {
+                B::False
+            }
         }
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.data.len();

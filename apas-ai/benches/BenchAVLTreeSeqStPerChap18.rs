@@ -1,7 +1,7 @@
 use apas_ai::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::AVLTreeSeqStPerChap18Trait;
 use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
 fn bench_avl_per_ch18(c: &mut Criterion) {

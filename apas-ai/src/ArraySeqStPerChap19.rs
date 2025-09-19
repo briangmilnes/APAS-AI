@@ -49,7 +49,11 @@ pub mod ArraySeqStPerChap19 {
                 Some(a.nth(i))
             } else {
                 let j = i - a.length();
-                if j < b.length() { Some(b.nth(j)) } else { None }
+                if j < b.length() {
+                    Some(b.nth(j))
+                } else {
+                    None
+                }
             }
         }
 
@@ -110,9 +114,15 @@ pub mod ArraySeqStPerChap19 {
         fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T) {
             let n = a.length();
             if n == 0 {
-                (<ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(|_| id.clone(), 0), id)
+                (
+                    <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(|_| id.clone(), 0),
+                    id,
+                )
             } else if n == 1 {
-                (<ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(|_| id.clone(), 1), a.nth(0).clone())
+                (
+                    <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(|_| id.clone(), 1),
+                    a.nth(0).clone(),
+                )
             } else {
                 let half = (n + 1) / 2;
                 let pairwise = <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(

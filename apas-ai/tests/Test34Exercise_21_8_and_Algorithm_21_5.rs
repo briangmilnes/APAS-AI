@@ -6,7 +6,11 @@ use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
 use apas_ai::Types::Types::*;
 
 fn is_divisible(n: N, i: N) -> B {
-    if n % i == 0 { B::True } else { B::False }
+    if n % i == 0 {
+        B::True
+    } else {
+        B::False
+    }
 }
 
 /// Algorithm 21.4 (Brute Force Primality Test)
@@ -19,7 +23,11 @@ fn is_prime(n: N) -> B {
     let k: N = (n as f64).sqrt().floor() as N;
     let all: ArrayStPerS<B> = <ArrayStPerS<B> as ArraySeqStPerChap19Trait<B>>::tabulate(|i| is_divisible(n, i + 1), k);
     let zeros: ArrayStPerS<B> = <ArrayStPerS<B> as ArraySeqStPerChap18Trait<B>>::filter(&all, |x| *x);
-    if zeros.length() == 1 { B::True } else { B::False }
+    if zeros.length() == 1 {
+        B::True
+    } else {
+        B::False
+    }
 }
 
 /// Algorithm 21.5 (Brute Force Solution to the Primes Problem)

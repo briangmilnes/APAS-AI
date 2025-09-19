@@ -19,9 +19,7 @@ pub mod MathSeq {
     }
 
     impl<T: StT> PartialEq for MathSeqS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            self.data == other.data
-        }
+        fn eq(&self, other: &Self) -> bool { self.data == other.data }
     }
 
     impl<T: StT> Eq for MathSeqS<T> {}
@@ -51,59 +49,45 @@ pub mod MathSeq {
     impl<T: StT> MathSeqS<T> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn iter(&self) -> std::slice::Iter<'_, T> {
-            self.data.iter()
-        }
+        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, T> {
-            self.data.iter_mut()
-        }
+        pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, T> { self.data.iter_mut() }
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn empty() -> Self {
-            Self { data: Vec::new() }
-        }
+        pub fn empty() -> Self { Self { data: Vec::new() } }
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn singleton(item: T) -> Self {
-            Self { data: vec![item] }
-        }
+        pub fn singleton(item: T) -> Self { Self { data: vec![item] } }
         /// APAS: Work Θ(|data|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|data|), Span Θ(1)
-        pub fn from_vec(data: Vec<T>) -> Self {
-            Self { data }
-        }
+        pub fn from_vec(data: Vec<T>) -> Self { Self { data } }
         /// APAS: Work Θ(length), Span Θ(1)
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
         pub fn with_len(length: N, init_value: T) -> Self {
-            Self { data: vec![init_value; length] }
+            Self {
+                data: vec![init_value; length],
+            }
         }
     }
 
     impl<'a, T: StT> IntoIterator for &'a MathSeqS<T> {
         type Item = &'a T;
         type IntoIter = std::slice::Iter<'a, T>;
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
 
     impl<'a, T: StT> IntoIterator for &'a mut MathSeqS<T> {
         type Item = &'a mut T;
         type IntoIter = std::slice::IterMut<'a, T>;
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.iter_mut()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.data.iter_mut() }
     }
 
     impl<T: StT> IntoIterator for MathSeqS<T> {
         type Item = T;
         type IntoIter = std::vec::IntoIter<T>;
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.data.into_iter() }
     }
 
     /// Core API for `MathSeqS<T>`.
@@ -173,32 +157,26 @@ pub mod MathSeq {
         /// APAS: Work Θ(length), Span Θ(1)
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn new(length: N, init_value: T) -> Self {
-            MathSeqS { data: vec![init_value; length] }
+            MathSeqS {
+                data: vec![init_value; length],
+            }
         }
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self {
-            MathSeqS { data: Vec::new() }
-        }
+        fn empty() -> Self { MathSeqS { data: Vec::new() } }
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> Self {
-            MathSeqS { data: vec![item] }
-        }
+        fn singleton(item: T) -> Self { MathSeqS { data: vec![item] } }
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N {
-            self.data.len()
-        }
+        fn length(&self) -> N { self.data.len() }
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn nth(&self, index: N) -> &T {
-            &self.data[index]
-        }
+        fn nth(&self, index: N) -> &T { &self.data[index] }
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
@@ -220,9 +198,7 @@ pub mod MathSeq {
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn delete_last(&mut self) -> Option<T> {
-            self.data.pop()
-        }
+        fn delete_last(&mut self) -> Option<T> { self.data.pop() }
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
@@ -242,26 +218,34 @@ pub mod MathSeq {
             if e <= s {
                 return MathSeqS { data: Vec::new() };
             }
-            MathSeqS { data: self.data[s..e].to_vec() }
+            MathSeqS {
+                data: self.data[s..e].to_vec(),
+            }
         }
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(&self) -> B {
-            if self.data.is_empty() { B::True } else { B::False }
+            if self.data.is_empty() {
+                B::True
+            } else {
+                B::False
+            }
         }
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(&self) -> B {
-            if self.data.len() == 1 { B::True } else { B::False }
+            if self.data.len() == 1 {
+                B::True
+            } else {
+                B::False
+            }
         }
 
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
-        fn domain(&self) -> Vec<N> {
-            (0..self.data.len()).collect()
-        }
+        fn domain(&self) -> Vec<N> { (0..self.data.len()).collect() }
 
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
@@ -283,11 +267,11 @@ pub mod MathSeq {
             let mut order: Vec<T> = Vec::new();
             for x in self.data.iter() {
                 match counts.entry(x.clone()) {
-                    Entry::Vacant(e) => {
+                    | Entry::Vacant(e) => {
                         e.insert(1);
                         order.push(x.clone());
                     }
-                    Entry::Occupied(mut e) => {
+                    | Entry::Occupied(mut e) => {
                         *e.get_mut() += 1;
                     }
                 }
@@ -297,15 +281,22 @@ pub mod MathSeq {
     }
 
     #[macro_export]
-    macro_rules! MathSeq {
-    () => { $crate::MathSeq::MathSeq::MathSeqS::empty() };
-    ($x:expr; $n:expr) => { $crate::MathSeq::MathSeq::MathSeqS::with_len($n, $x) };
-    ($($x:expr),* $(,)?) => { $crate::MathSeq::MathSeq::MathSeqS::from_vec(vec![$($x),*]) };
-}
+    macro_rules! MathSeqLit {
+        () => {
+            $crate::MathSeq::MathSeq::MathSeqS::empty()
+        };
+        ($x:expr; $n:expr) => {
+            $crate::MathSeq::MathSeq::MathSeqS::with_len($n, $x)
+        };
+        ($($x:expr),* $(,)?) => {
+            $crate::MathSeq::MathSeq::MathSeqS::from_vec(vec![$($x),*])
+        };
+    }
 
     #[allow(dead_code)]
-    fn _MathSeq_macro_type_checks() {
-        let _ = MathSeq![1];
-        let _: crate::MathSeq::MathSeq::MathSeqS<i32> = MathSeq![];
+    fn _MathSeqLit_type_checks() {
+        let _ = MathSeqLit![1];
+        let _ = MathSeqLit![0; 3];
+        let _: crate::MathSeq::MathSeq::MathSeqS<i32> = MathSeqLit![];
     }
 }

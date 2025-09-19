@@ -44,7 +44,9 @@ pub mod ArraySeqMtEph {
     impl<T: StT> ArraySeqMtEphS<T> {
         /// APAS: Work Θ(1), Span Θ(1)
         pub fn from_vec(v: Vec<T>) -> Self {
-            ArraySeqMtEphS { data: Mutex::new(v.into_boxed_slice()) }
+            ArraySeqMtEphS {
+                data: Mutex::new(v.into_boxed_slice()),
+            }
         }
 
         /// APAS: Work Θ(1), Span Θ(1)
@@ -91,9 +93,7 @@ pub mod ArraySeqMtEph {
     }
 
     impl<T: StT> Clone for ArraySeqMtEphS<T> {
-        fn clone(&self) -> Self {
-            ArraySeqMtEphS::from_vec(self.to_vec())
-        }
+        fn clone(&self) -> Self { ArraySeqMtEphS::from_vec(self.to_vec()) }
     }
 
     impl<T: StT> PartialEq for ArraySeqMtEphS<T> {
@@ -127,18 +127,10 @@ pub mod ArraySeqMtEph {
     }
 
     impl<T: StT> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
-        fn new(length: N, init_value: T) -> Self {
-            ArraySeqMtEphS::from_vec(vec![init_value; length])
-        }
-        fn length(&self) -> N {
-            self.length()
-        }
-        fn nth_cloned(&self, index: N) -> T {
-            self.nth_cloned(index)
-        }
-        fn empty() -> Self {
-            ArraySeqMtEphS::from_vec(Vec::new())
-        }
+        fn new(length: N, init_value: T) -> Self { ArraySeqMtEphS::from_vec(vec![init_value; length]) }
+        fn length(&self) -> N { self.length() }
+        fn nth_cloned(&self, index: N) -> T { self.nth_cloned(index) }
+        fn empty() -> Self { ArraySeqMtEphS::from_vec(Vec::new()) }
         fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
             {
                 let mut guard = self.data.lock().unwrap();
@@ -150,18 +142,22 @@ pub mod ArraySeqMtEph {
             }
             Ok(self)
         }
-        fn singleton(item: T) -> Self {
-            ArraySeqMtEphS::from_vec(vec![item])
-        }
+        fn singleton(item: T) -> Self { ArraySeqMtEphS::from_vec(vec![item]) }
         fn isEmpty(&self) -> B {
-            if self.length() == 0 { B::True } else { B::False }
+            if self.length() == 0 {
+                B::True
+            } else {
+                B::False
+            }
         }
         fn isSingleton(&self) -> B {
-            if self.length() == 1 { B::True } else { B::False }
+            if self.length() == 1 {
+                B::True
+            } else {
+                B::False
+            }
         }
-        fn subseq_copy(&self, start: N, length: N) -> Self {
-            self.subseq_copy(start, length)
-        }
+        fn subseq_copy(&self, start: N, length: N) -> Self { self.subseq_copy(start, length) }
     }
 
     #[macro_export]

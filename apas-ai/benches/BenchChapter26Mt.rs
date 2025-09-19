@@ -2,11 +2,9 @@ use std::time::Duration;
 
 use apas_ai::ArraySeqMtPer::ArraySeqMtPer::{ArrayMtPerS, ArraySeqMtPerTrait};
 use apas_ai::*;
-use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
 
-fn gen_sequence(n: usize) -> ArrayMtPerS<usize> {
-    ArrayMtPerS::new(n, 0)
-}
+fn gen_sequence(n: usize) -> ArrayMtPerS<usize> { ArrayMtPerS::new(n, 0) }
 
 fn bench_chapter26_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chapter26Mt");

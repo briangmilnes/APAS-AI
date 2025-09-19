@@ -43,7 +43,15 @@ fn prime_sieve(n: N) -> ArrayStPerS<N> {
     // primes = 〈 i : 2 ≤ i < n | isPrime[i] = true 〉
     let candidates: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::tabulate(|i| i, n);
     let filtered_idx: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::filter(&candidates, |i| {
-        if *i >= 2 && *i < n { if *is_prime.nth(*i) == B::True { B::True } else { B::False } } else { B::False }
+        if *i >= 2 && *i < n {
+            if *is_prime.nth(*i) == B::True {
+                B::True
+            } else {
+                B::False
+            }
+        } else {
+            B::False
+        }
     });
     filtered_idx
 }
@@ -51,8 +59,7 @@ fn prime_sieve(n: N) -> ArrayStPerS<N> {
 #[test]
 fn test_prime_sieve_small() {
     let p = prime_sieve(10);
-    let v: Vec<N> = p.iter().copied().collect();
-    assert_eq!(v, vec![2, 3, 5, 7]);
+    assert_eq!(p, ArraySeqStPer![2, 3, 5, 7]);
 }
 
 #[test]

@@ -1,6 +1,6 @@
 use apas_ai::LinkedListStPer::LinkedListStPer::*;
 use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;
@@ -23,8 +23,9 @@ fn bench_sll_persistent_ops(c: &mut Criterion) {
 
     group.finish();
 
-    let target_dir: PathBuf =
-        env::var_os("CARGO_TARGET_DIR").map(PathBuf::from).unwrap_or_else(|| PathBuf::from("target"));
+    let target_dir: PathBuf = env::var_os("CARGO_TARGET_DIR")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from("target"));
     let report = target_dir.join("criterion").join("report").join("index.html");
     println!("HTML report: file://{}", report.display());
 }

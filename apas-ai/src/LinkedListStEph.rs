@@ -71,22 +71,25 @@ pub mod LinkedListStEph {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         pub fn iter<'a>(&'a self) -> LinkedListStEphIter<'a, T> {
-            LinkedListStEphIter { cursor: self.head.as_deref() }
+            LinkedListStEphIter {
+                cursor: self.head.as_deref(),
+            }
         }
     }
 
     impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self {
-            LinkedListStEphS { head: None, len: 0 }
-        }
+        fn empty() -> Self { LinkedListStEphS { head: None, len: 0 } }
         /// APAS: Work Θ(length), Span Θ(1)
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn new(length: N, init_value: T) -> Self {
             let mut list = LinkedListStEphS::empty();
             for _ in 0..length {
-                list.push_front_node(Box::new(NodeE { value: init_value.clone(), next: None }));
+                list.push_front_node(Box::new(NodeE {
+                    value: init_value.clone(),
+                    next: None,
+                }));
             }
             // reverse to maintain intuitive order
             let mut rev: Option<Box<NodeE<T>>> = None;
@@ -101,9 +104,7 @@ pub mod LinkedListStEph {
         }
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N {
-            self.len
-        }
+        fn length(&self) -> N { self.len }
         /// APAS: Work Θ(index), Span Θ(index)
         /// claude-4-sonet: Work Θ(index), Span Θ(index)
         fn nth(&self, index: N) -> &T {
@@ -121,17 +122,31 @@ pub mod LinkedListStEph {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(&self) -> B {
-            if self.len == 0 { B::True } else { B::False }
+            if self.len == 0 {
+                B::True
+            } else {
+                B::False
+            }
         }
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(&self) -> B {
-            if self.len == 1 { B::True } else { B::False }
+            if self.len == 1 {
+                B::True
+            } else {
+                B::False
+            }
         }
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(item: T) -> Self {
-            LinkedListStEphS { head: Some(Box::new(NodeE { value: item, next: None })), len: 1 }
+            LinkedListStEphS {
+                head: Some(Box::new(NodeE {
+                    value: item,
+                    next: None,
+                })),
+                len: 1,
+            }
         }
         /// APAS: Work Θ(index), Span Θ(index)
         /// claude-4-sonet: Work Θ(index), Span Θ(index)
@@ -177,7 +192,10 @@ pub mod LinkedListStEph {
             let mut cur = self.head.as_ref();
             while let Some(node) = cur {
                 if i >= s && i < e {
-                    out.push_front_node(Box::new(NodeE { value: node.value.clone(), next: None }));
+                    out.push_front_node(Box::new(NodeE {
+                        value: node.value.clone(),
+                        next: None,
+                    }));
                 }
                 if i >= e {
                     break;

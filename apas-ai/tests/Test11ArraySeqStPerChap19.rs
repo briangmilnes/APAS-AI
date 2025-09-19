@@ -11,7 +11,10 @@ pub mod TestArraySeqPerChap19 {
         let a = <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::tabulate(|i| i + 1, 3);
         let b = <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::map(&a, |x| x * 2);
         assert_eq!(b, ArraySeqStPer![2, 4, 6]);
-        assert_eq!(<ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::select(&a, &b, 0), Some(&1));
+        assert_eq!(
+            <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::select(&a, &b, 0),
+            Some(&1)
+        );
         let c = <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::append(&a, &b);
         assert_eq!(c, ArraySeqStPer![1, 2, 3, 2, 4, 6]);
     }

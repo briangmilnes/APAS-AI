@@ -20,7 +20,13 @@ pub mod BSTAVLMtEph {
 
     impl<T: StTinMtT + Ord> Node<T> {
         fn new(key: T) -> Self {
-            Node { key, height: 1, size: 1, left: None, right: None }
+            Node {
+                key,
+                height: 1,
+                size: 1,
+                left: None,
+                right: None,
+            }
         }
     }
 
@@ -46,14 +52,14 @@ pub mod BSTAVLMtEph {
     }
 
     impl<T: StTinMtT + Ord> Default for BSTAVLMtEph<T> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     impl<T: StTinMtT + Ord> BSTAVLMtEph<T> {
         pub fn new() -> Self {
-            BSTAVLMtEph { root: Arc::new(RwLock::new(None)) }
+            BSTAVLMtEph {
+                root: Arc::new(RwLock::new(None)),
+            }
         }
 
         pub fn size(&self) -> N {
@@ -62,7 +68,11 @@ pub mod BSTAVLMtEph {
         }
 
         pub fn is_empty(&self) -> B {
-            if self.size() == 0 { B::True } else { B::False }
+            if self.size() == 0 {
+                B::True
+            } else {
+                B::False
+            }
         }
 
         pub fn height(&self) -> N {
@@ -81,7 +91,11 @@ pub mod BSTAVLMtEph {
         }
 
         pub fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() { B::True } else { B::False }
+            if self.find(target).is_some() {
+                B::True
+            } else {
+                B::False
+            }
         }
 
         pub fn minimum(&self) -> Option<T> {
@@ -108,13 +122,9 @@ pub mod BSTAVLMtEph {
             ArrayStPerS::from_vec(out)
         }
 
-        fn height_link(link: &Link<T>) -> i32 {
-            link.as_ref().map_or(0, |n| n.height)
-        }
+        fn height_link(link: &Link<T>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
 
-        fn size_link(link: &Link<T>) -> N {
-            link.as_ref().map_or(0, |n| n.size)
-        }
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
         fn update(node: &mut Node<T>) {
             node.height = 1 + Self::height_link(&node.left).max(Self::height_link(&node.right));
@@ -176,7 +186,7 @@ pub mod BSTAVLMtEph {
 
         fn insert_link(link: &mut Link<T>, value: T) {
             match link {
-                Some(node) => {
+                | Some(node) => {
                     if value < node.key {
                         Self::insert_link(&mut node.left, value);
                     } else if value > node.key {
@@ -185,7 +195,7 @@ pub mod BSTAVLMtEph {
                         return;
                     }
                 }
-                None => {
+                | None => {
                     *link = Some(Box::new(Node::new(value)));
                     return;
                 }
@@ -195,8 +205,8 @@ pub mod BSTAVLMtEph {
 
         fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {
             match link {
-                None => None,
-                Some(node) => {
+                | None => None,
+                | Some(node) => {
                     if target == &node.key {
                         Some(&node.key)
                     } else if target < &node.key {
@@ -210,20 +220,20 @@ pub mod BSTAVLMtEph {
 
         fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
             match link {
-                None => None,
-                Some(node) => match &node.left {
-                    None => Some(&node.key),
-                    Some(_) => Self::min_link(&node.left),
+                | None => None,
+                | Some(node) => match &node.left {
+                    | None => Some(&node.key),
+                    | Some(_) => Self::min_link(&node.left),
                 },
             }
         }
 
         fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
             match link {
-                None => None,
-                Some(node) => match &node.right {
-                    None => Some(&node.key),
-                    Some(_) => Self::max_link(&node.right),
+                | None => None,
+                | Some(node) => match &node.right {
+                    | None => Some(&node.key),
+                    | Some(_) => Self::max_link(&node.right),
                 },
             }
         }
@@ -246,48 +256,26 @@ pub mod BSTAVLMtEph {
     }
 
     impl<T: StTinMtT + Ord> BSTAVLMtEphTrait<T> for BSTAVLMtEph<T> {
-        fn new() -> Self {
-            BSTAVLMtEph::new()
-        }
+        fn new() -> Self { BSTAVLMtEph::new() }
 
-        fn insert(&self, value: T) {
-            BSTAVLMtEph::insert(self, value)
-        }
+        fn insert(&self, value: T) { BSTAVLMtEph::insert(self, value) }
 
-        fn find(&self, target: &T) -> Option<T> {
-            BSTAVLMtEph::find(self, target)
-        }
+        fn find(&self, target: &T) -> Option<T> { BSTAVLMtEph::find(self, target) }
 
-        fn contains(&self, target: &T) -> B {
-            BSTAVLMtEph::contains(self, target)
-        }
+        fn contains(&self, target: &T) -> B { BSTAVLMtEph::contains(self, target) }
 
-        fn size(&self) -> N {
-            BSTAVLMtEph::size(self)
-        }
+        fn size(&self) -> N { BSTAVLMtEph::size(self) }
 
-        fn is_empty(&self) -> B {
-            BSTAVLMtEph::is_empty(self)
-        }
+        fn is_empty(&self) -> B { BSTAVLMtEph::is_empty(self) }
 
-        fn height(&self) -> N {
-            BSTAVLMtEph::height(self)
-        }
+        fn height(&self) -> N { BSTAVLMtEph::height(self) }
 
-        fn minimum(&self) -> Option<T> {
-            BSTAVLMtEph::minimum(self)
-        }
+        fn minimum(&self) -> Option<T> { BSTAVLMtEph::minimum(self) }
 
-        fn maximum(&self) -> Option<T> {
-            BSTAVLMtEph::maximum(self)
-        }
+        fn maximum(&self) -> Option<T> { BSTAVLMtEph::maximum(self) }
 
-        fn in_order(&self) -> ArrayStPerS<T> {
-            BSTAVLMtEph::in_order(self)
-        }
+        fn in_order(&self) -> ArrayStPerS<T> { BSTAVLMtEph::in_order(self) }
 
-        fn pre_order(&self) -> ArrayStPerS<T> {
-            BSTAVLMtEph::pre_order(self)
-        }
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTAVLMtEph::pre_order(self) }
     }
 }

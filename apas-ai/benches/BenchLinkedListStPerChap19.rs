@@ -2,7 +2,7 @@ use apas_ai::LinkedListStPer::LinkedListStPer::LinkedListStPerS;
 use apas_ai::LinkedListStPer::LinkedListStPer::*;
 use apas_ai::LinkedListStPerChap19Trait;
 use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
 fn bench_ll_per_ch19(c: &mut Criterion) {

@@ -65,17 +65,13 @@ pub mod RelationStEphChap5_2 {
     }
 
     impl<A: Eq + Hash + Display + Debug, B: Eq + Hash + Display + Debug> PartialEq for Relation<A, B> {
-        fn eq(&self, other: &Self) -> bool {
-            self.pairs == other.pairs
-        }
+        fn eq(&self, other: &Self) -> bool { self.pairs == other.pairs }
     }
 
     impl<A: Eq + Hash + Display + Debug, B: Eq + Hash + Display + Debug> Eq for Relation<A, B> {}
 
     impl<A: Debug + Eq + Hash, B: Debug + Eq + Hash> Debug for Relation<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            self.pairs.fmt(f)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { self.pairs.fmt(f) }
     }
 
     impl<A: Display + Eq + Hash, B: Display + Eq + Hash> Display for Relation<A, B> {
@@ -97,17 +93,11 @@ pub mod RelationStEphChap5_2 {
     impl<X: Eq + Hash + Display + Debug + Clone + Sized, Y: Eq + Hash + Display + Debug + Clone + Sized>
         RelationStEphChap5_2Trait<X, Y> for Relation<X, Y>
     {
-        fn empty() -> Relation<X, Y> {
-            Relation { pairs: SetLit![] }
-        }
+        fn empty() -> Relation<X, Y> { Relation { pairs: SetLit![] } }
 
-        fn FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y> {
-            Relation { pairs }
-        }
+        fn FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y> { Relation { pairs } }
 
-        fn size(&self) -> N {
-            self.pairs.size()
-        }
+        fn size(&self) -> N { self.pairs.size() }
 
         fn domain(&self) -> Set<X>
         where
@@ -136,12 +126,14 @@ pub mod RelationStEphChap5_2 {
             X: Clone,
             Y: Clone,
         {
-            if self.pairs.mem(&Pair(a.clone(), b.clone())) == B::True { B::True } else { B::False }
+            if self.pairs.mem(&Pair(a.clone(), b.clone())) == B::True {
+                B::True
+            } else {
+                B::False
+            }
         }
 
-        fn iter(&self) -> Iter<'_, Pair<X, Y>> {
-            self.pairs.iter()
-        }
+        fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.pairs.iter() }
     }
 
     #[macro_export]

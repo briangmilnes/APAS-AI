@@ -23,7 +23,11 @@ pub mod TestLinkedListStPerChap18 {
     fn test_filter() {
         let a = <LinkedListStPerS<N> as LinkedListStPerChap18Trait<N>>::tabulate(|i| i + 1, 5);
         let c = <LinkedListStPerS<N> as LinkedListStPerChap18Trait<N>>::filter(&a, |x| {
-            if *x % 2 == 1 { B::True } else { B::False }
+            if *x % 2 == 1 {
+                B::True
+            } else {
+                B::False
+            }
         });
         assert_eq!(c, LinkedListStPer![1, 3, 5]);
     }

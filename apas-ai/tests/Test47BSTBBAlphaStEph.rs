@@ -1,10 +1,6 @@
 use apas_ai::BSTBBAlphaStEph::BSTBBAlphaStEph::*;
 use apas_ai::*;
 
-fn inorder<T: StT + Ord>(tree: &BSTreeBBAlpha<T>) -> Vec<T> {
-    tree.in_order().iter().cloned().collect()
-}
-
 #[test]
 fn bbalpha_insert_find_balances() {
     let mut bst = BSTreeBBAlpha::new();
@@ -18,7 +14,11 @@ fn bbalpha_insert_find_balances() {
     assert_eq!(bst.find(&128), None);
     assert_eq!(bst.minimum().copied(), Some(0));
     assert_eq!(bst.maximum().copied(), Some(63));
-    assert_eq!(inorder(&bst), (0..64).collect::<Vec<_>>());
+    let inorder = bst.in_order();
+    assert_eq!(inorder.length(), 64);
+    for (expected, value) in (0..64).zip(inorder.iter()) {
+        assert_eq!(*value, expected);
+    }
 }
 
 #[test]

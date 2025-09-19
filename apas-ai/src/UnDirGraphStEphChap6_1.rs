@@ -50,23 +50,16 @@ pub mod UnDirGraphStEphChap6_1 {
 
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> UnDirGraphStEphChap6_1Trait<V> for UnDirGraphStEph<V> {
         fn empty() -> UnDirGraphStEph<V> {
-            UnDirGraphStEph { V: SetLit![], E: SetLit![] }
+            UnDirGraphStEph {
+                V: SetLit![],
+                E: SetLit![],
+            }
         }
-        fn FromSets(V: Set<V>, E: Set<Pair<V, V>>) -> UnDirGraphStEph<V> {
-            UnDirGraphStEph { V, E }
-        }
-        fn vertices(&self) -> &Set<V> {
-            &self.V
-        }
-        fn edges(&self) -> &Set<Pair<V, V>> {
-            &self.E
-        }
-        fn sizeV(&self) -> N {
-            self.V.size()
-        }
-        fn sizeE(&self) -> N {
-            self.E.size()
-        }
+        fn FromSets(V: Set<V>, E: Set<Pair<V, V>>) -> UnDirGraphStEph<V> { UnDirGraphStEph { V, E } }
+        fn vertices(&self) -> &Set<V> { &self.V }
+        fn edges(&self) -> &Set<Pair<V, V>> { &self.E }
+        fn sizeV(&self) -> N { self.V.size() }
+        fn sizeE(&self) -> N { self.E.size() }
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Treat edges as unordered: {u,v}
@@ -100,30 +93,31 @@ pub mod UnDirGraphStEphChap6_1 {
         }
 
         fn Incident(&self, e: &Pair<V, V>, v: &V) -> B {
-            if &e.0 == v || &e.1 == v { B::True } else { B::False }
+            if &e.0 == v || &e.1 == v {
+                B::True
+            } else {
+                B::False
+            }
         }
 
-        fn Degree(&self, v: &V) -> N {
-            self.NG(v).size()
-        }
+        fn Degree(&self, v: &V) -> N { self.NG(v).size() }
     }
 
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> std::fmt::Debug for UnDirGraphStEph<V> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            f.debug_struct("UnDirGraphStEph").field("V", &self.V).field("E", &self.E).finish()
+            f.debug_struct("UnDirGraphStEph")
+                .field("V", &self.V)
+                .field("E", &self.E)
+                .finish()
         }
     }
 
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> std::fmt::Display for UnDirGraphStEph<V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "V={} E={:?}", self.V, self.E)
-        }
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "V={} E={:?}", self.V, self.E) }
     }
 
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> PartialEq for UnDirGraphStEph<V> {
-        fn eq(&self, other: &Self) -> bool {
-            self.V == other.V && self.E == other.E
-        }
+        fn eq(&self, other: &Self) -> bool { self.V == other.V && self.E == other.E }
     }
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> Eq for UnDirGraphStEph<V> {}
 

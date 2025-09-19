@@ -64,18 +64,21 @@ pub mod LinkedListStPer {
         }
 
         pub fn iter<'a>(&'a self) -> LinkedListStPerIter<'a, T> {
-            LinkedListStPerIter { cursor: self.head.as_deref() }
+            LinkedListStPerIter {
+                cursor: self.head.as_deref(),
+            }
         }
     }
 
     impl<T: StT> LinkedListStPerTrait<T> for LinkedListStPerS<T> {
-        fn empty() -> Self {
-            LinkedListStPerS { head: None, len: 0 }
-        }
+        fn empty() -> Self { LinkedListStPerS { head: None, len: 0 } }
         fn new(length: N, init_value: T) -> Self {
             let mut list = LinkedListStPerS::empty();
             for _ in 0..length {
-                list.push_front_node(Box::new(NodeP { value: init_value.clone(), next: None }));
+                list.push_front_node(Box::new(NodeP {
+                    value: init_value.clone(),
+                    next: None,
+                }));
             }
             // reverse to maintain intuitive order
             let mut rev: Option<Box<NodeP<T>>> = None;
@@ -88,9 +91,7 @@ pub mod LinkedListStPer {
             list.head = rev;
             list
         }
-        fn length(&self) -> N {
-            self.len
-        }
+        fn length(&self) -> N { self.len }
         fn nth(&self, index: N) -> &T {
             let mut i = 0;
             let mut cur = self.head.as_ref();
@@ -104,13 +105,27 @@ pub mod LinkedListStPer {
             panic!("index out of bounds")
         }
         fn isEmpty(&self) -> B {
-            if self.len == 0 { B::True } else { B::False }
+            if self.len == 0 {
+                B::True
+            } else {
+                B::False
+            }
         }
         fn isSingleton(&self) -> B {
-            if self.len == 1 { B::True } else { B::False }
+            if self.len == 1 {
+                B::True
+            } else {
+                B::False
+            }
         }
         fn singleton(item: T) -> Self {
-            LinkedListStPerS { head: Some(Box::new(NodeP { value: item, next: None })), len: 1 }
+            LinkedListStPerS {
+                head: Some(Box::new(NodeP {
+                    value: item,
+                    next: None,
+                })),
+                len: 1,
+            }
         }
         fn set(&self, index: N, item: T) -> Result<Self, &'static str> {
             if index >= self.len {
@@ -149,7 +164,10 @@ pub mod LinkedListStPer {
             let mut cur = self.head.as_ref();
             while let Some(node) = cur {
                 if i >= s && i < e {
-                    out.push_front_node(Box::new(NodeP { value: node.value.clone(), next: None }));
+                    out.push_front_node(Box::new(NodeP {
+                        value: node.value.clone(),
+                        next: None,
+                    }));
                 }
                 if i >= e {
                     break;

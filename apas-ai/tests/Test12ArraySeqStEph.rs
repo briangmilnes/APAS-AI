@@ -22,7 +22,11 @@ pub mod TestArraySeqEph {
         let c = <ArraySeqStEphS<N> as ArraySeqStEphChap18Trait<N>>::append(&a, &m);
         assert_eq!(c.length(), 10);
         let evens = <ArraySeqStEphS<N> as ArraySeqStEphChap18Trait<N>>::filter(&c, |x| {
-            if *x % 2 == 0 { B::True } else { B::False }
+            if *x % 2 == 0 {
+                B::True
+            } else {
+                B::False
+            }
         });
         assert!(evens.length() > 0);
     }

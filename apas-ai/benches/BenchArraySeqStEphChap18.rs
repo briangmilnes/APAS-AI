@@ -2,7 +2,7 @@ use apas_ai::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
 use apas_ai::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::ArraySeqStEphChap18Trait;
 use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
 fn bench_tabulate_map(c: &mut Criterion) {

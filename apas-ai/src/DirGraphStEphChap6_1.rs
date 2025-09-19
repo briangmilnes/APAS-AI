@@ -68,23 +68,16 @@ pub mod DirGraphStEphChap6_1 {
 
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> DirGraphStEphChap6_1Trait<V> for DirGraphStEph<V> {
         fn empty() -> DirGraphStEph<V> {
-            DirGraphStEph { V: SetLit![], A: SetLit![] }
+            DirGraphStEph {
+                V: SetLit![],
+                A: SetLit![],
+            }
         }
-        fn FromSets(V: Set<V>, A: Set<Pair<V, V>>) -> DirGraphStEph<V> {
-            DirGraphStEph { V, A }
-        }
-        fn vertices(&self) -> &Set<V> {
-            &self.V
-        }
-        fn arcs(&self) -> &Set<Pair<V, V>> {
-            &self.A
-        }
-        fn sizeV(&self) -> N {
-            self.V.size()
-        }
-        fn sizeA(&self) -> N {
-            self.A.size()
-        }
+        fn FromSets(V: Set<V>, A: Set<Pair<V, V>>) -> DirGraphStEph<V> { DirGraphStEph { V, A } }
+        fn vertices(&self) -> &Set<V> { &self.V }
+        fn arcs(&self) -> &Set<Pair<V, V>> { &self.A }
+        fn sizeV(&self) -> N { self.V.size() }
+        fn sizeA(&self) -> N { self.A.size() }
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Adjacent if there is an arc either way
@@ -96,9 +89,7 @@ pub mod DirGraphStEphChap6_1 {
             }
         }
 
-        fn NG(&self, v: &V) -> Set<V> {
-            self.NPlus(v)
-        }
+        fn NG(&self, v: &V) -> Set<V> { self.NPlus(v) }
 
         fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V> {
             let mut result: Set<V> = SetLit![];
@@ -148,36 +139,33 @@ pub mod DirGraphStEphChap6_1 {
         }
 
         fn Incident(&self, e: &Pair<V, V>, v: &V) -> B {
-            if &e.0 == v || &e.1 == v { B::True } else { B::False }
+            if &e.0 == v || &e.1 == v {
+                B::True
+            } else {
+                B::False
+            }
         }
 
-        fn Degree(&self, v: &V) -> N {
-            self.NPlus(v).size()
-        }
-        fn InDegree(&self, v: &V) -> N {
-            self.NMinus(v).size()
-        }
-        fn OutDegree(&self, v: &V) -> N {
-            self.NPlus(v).size()
-        }
+        fn Degree(&self, v: &V) -> N { self.NPlus(v).size() }
+        fn InDegree(&self, v: &V) -> N { self.NMinus(v).size() }
+        fn OutDegree(&self, v: &V) -> N { self.NPlus(v).size() }
     }
 
     impl<V: Eq + Hash + Clone + std::fmt::Debug + std::fmt::Display> std::fmt::Debug for DirGraphStEph<V> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            f.debug_struct("DirGraphStEph").field("V", &self.V).field("A", &self.A).finish()
+            f.debug_struct("DirGraphStEph")
+                .field("V", &self.V)
+                .field("A", &self.A)
+                .finish()
         }
     }
 
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> std::fmt::Display for DirGraphStEph<V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "V={} A={:?}", self.V, self.A)
-        }
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "V={} A={:?}", self.V, self.A) }
     }
 
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> PartialEq for DirGraphStEph<V> {
-        fn eq(&self, other: &Self) -> bool {
-            self.V == other.V && self.A == other.A
-        }
+        fn eq(&self, other: &Self) -> bool { self.V == other.V && self.A == other.A }
     }
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> Eq for DirGraphStEph<V> {}
 

@@ -3,7 +3,7 @@
 pub mod Chapter36Mt {
     use std::thread;
 
-    use rand::{Rng, rng};
+    use rand::{rng, Rng};
 
     use crate::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
@@ -33,9 +33,7 @@ pub mod Chapter36Mt {
     }
 
     impl<T: StT + Ord + Send> Chapter36MtTrait<T> for ArraySeqMtEphS<T> {
-        fn pivot_mt_first(&self, lo: N, _hi: N) -> T {
-            self.nth_cloned(lo)
-        }
+        fn pivot_mt_first(&self, lo: N, _hi: N) -> T { self.nth_cloned(lo) }
         fn pivot_mt_median3(&self, lo: N, hi: N) -> T {
             let mid = lo + (hi - lo) / 2;
             let x0 = self.nth_cloned(lo);

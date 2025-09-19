@@ -7,30 +7,36 @@ use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
 use apas_ai::Types::Types::*;
 
 fn is_even(x: &N) -> B {
-    if *x % 2 == 0 { B::True } else { B::False }
+    if *x % 2 == 0 {
+        B::True
+    } else {
+        B::False
+    }
 }
 fn is_vowel(c: &char) -> B {
     match *c {
-        'a' | 'e' | 'i' | 'o' | 'u' | 'A' | 'E' | 'I' | 'O' | 'U' => B::True,
-        _ => B::False,
+        | 'a' | 'e' | 'i' | 'o' | 'u' | 'A' | 'E' | 'I' | 'O' | 'U' => B::True,
+        | _ => B::False,
     }
 }
 
 /// flatten 〈 〈 (x, y) : y ∈ b | isVowel y 〉 : x ∈ a | isEven x 〉
 /// gpt-5-hard: Work: Θ(|a|·|b|), Span: Θ(lg |a|)
 fn pair_even_with_vowels(a: &ArrayStPerS<N>, b: &ArrayStPerS<char>) -> ArrayStPerS<Pair<N, char>> {
-    let filtered_a: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::filter(a, |x| is_even(x));
-    let filtered_b: ArrayStPerS<char> =
-        <ArrayStPerS<char> as ArraySeqStPerChap18Trait<char>>::filter(b, |y| is_vowel(y));
+    let filtered_a = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::filter(a, |x| is_even(x));
+    let filtered_b = <ArrayStPerS<char> as ArraySeqStPerChap18Trait<char>>::filter(b, |y| is_vowel(y));
 
-    // Use a simple nested loop approach with Vec and then convert
-    let mut result_vec: Vec<Pair<N, char>> = Vec::new();
-    for i in 0..filtered_a.length() {
-        for j in 0..filtered_b.length() {
-            result_vec.push(Pair(*filtered_a.nth(i), *filtered_b.nth(j)));
-        }
-    }
-    ArrayStPerS::from_vec(result_vec)
+    let nested = <ArrayStPerS<ArrayStPerS<Pair<N, char>>> as ArraySeqStPerChap18Trait<ArrayStPerS<Pair<N, char>>>>::tabulate(
+        |i| {
+            let x = filtered_a.nth(i);
+            <ArrayStPerS<Pair<N, char>> as ArraySeqStPerChap18Trait<Pair<N, char>>>::tabulate(
+                |j| Pair(*x, *filtered_b.nth(j)),
+                filtered_b.length(),
+            )
+        },
+        filtered_a.length(),
+    );
+    <ArrayStPerS<Pair<N, char>> as ArraySeqStPerChap18Trait<Pair<N, char>>>::flatten(&nested)
 }
 
 #[test]

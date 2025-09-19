@@ -126,6 +126,8 @@ pub mod BSTTreapMtEph;
 pub use crate::BSTTreapMtEph::BSTTreapMtEph::{BSTTreapMtEph as BSTTreapMtTree, BSTTreapMtEphTrait};
 pub mod BSTSplayMtEph;
 pub use crate::BSTSplayMtEph::BSTSplayMtEph::{BSTSplayMtEph as BSTSplayMtTree, BSTSplayMtEphTrait};
+pub mod BSTParaMtEph;
+pub use crate::BSTParaMtEph::BSTParaMtEph::{ParamBST as BSTParaMtTree, ParamBSTTrait as BSTParaMtTrait};
 
 pub mod BSTSetAVLMtEph;
 pub mod BSTSetBBAlphaMtEph;

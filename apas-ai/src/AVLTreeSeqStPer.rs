@@ -16,18 +16,20 @@ pub mod AVLTreeSeqStPer {
         right: Link<T>,
     }
 
-    fn height<T: StT>(n: &Link<T>) -> N {
-        n.as_ref().map_or(0, |r| r.height)
-    }
-    fn size<T: StT>(n: &Link<T>) -> N {
-        n.as_ref().map_or(0, |r| r.size)
-    }
+    fn height<T: StT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |r| r.height) }
+    fn size<T: StT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |r| r.size) }
 
     fn mk<T: StT>(value: T, left: Link<T>, right: Link<T>) -> Rc<Node<T>> {
         let hl = height(&left);
         let hr = height(&right);
         let sz = 1 + size(&left) + size(&right);
-        Rc::new(Node { value, height: 1 + hl.max(hr), size: sz, left, right })
+        Rc::new(Node {
+            value,
+            height: 1 + hl.max(hr),
+            size: sz,
+            left,
+            right,
+        })
     }
 
     fn rotate_right<T: StT>(y: Rc<Node<T>>) -> Rc<Node<T>> {
@@ -83,8 +85,8 @@ pub mod AVLTreeSeqStPer {
 
     fn set_rec<T: StT>(cur: &Link<T>, index: N, value: T) -> Result<Link<T>, &'static str> {
         match cur {
-            None => Err("Index out of bounds"),
-            Some(n) => {
+            | None => Err("Index out of bounds"),
+            | Some(n) => {
                 let ls = size(&n.left);
                 if index < ls {
                     let new_left = set_rec(&n.left, index, value)?;
@@ -161,29 +163,33 @@ pub mod AVLTreeSeqStPer {
     }
 
     impl<T: StT> AVLTreeSeqStPerTrait<T> for AVLTreeSeqStPerS<T> {
-        fn empty() -> Self {
-            AVLTreeSeqStPerS { root: None }
-        }
-        fn new() -> Self {
-            Self::empty()
-        }
-        fn length(&self) -> N {
-            size(&self.root)
-        }
-        fn nth(&self, index: N) -> &T {
-            nth_ref(&self.root, index)
-        }
+        fn empty() -> Self { AVLTreeSeqStPerS { root: None } }
+        fn new() -> Self { Self::empty() }
+        fn length(&self) -> N { size(&self.root) }
+        fn nth(&self, index: N) -> &T { nth_ref(&self.root, index) }
         fn set(&self, index: N, item: T) -> Result<Self, &'static str> {
-            Ok(AVLTreeSeqStPerS { root: set_rec(&self.root, index, item)? })
+            Ok(AVLTreeSeqStPerS {
+                root: set_rec(&self.root, index, item)?,
+            })
         }
         fn singleton(item: T) -> Self {
-            AVLTreeSeqStPerS { root: Some(mk(item, None, None)) }
+            AVLTreeSeqStPerS {
+                root: Some(mk(item, None, None)),
+            }
         }
         fn isEmpty(&self) -> B {
-            if self.length() == 0 { B::True } else { B::False }
+            if self.length() == 0 {
+                B::True
+            } else {
+                B::False
+            }
         }
         fn isSingleton(&self) -> B {
-            if self.length() == 1 { B::True } else { B::False }
+            if self.length() == 1 {
+                B::True
+            } else {
+                B::False
+            }
         }
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.length();
@@ -200,7 +206,9 @@ pub mod AVLTreeSeqStPer {
             Self::from_vec(vals)
         }
         fn from_vec(values: Vec<T>) -> Self {
-            AVLTreeSeqStPerS { root: build_balanced_from_slice(&values[..]) }
+            AVLTreeSeqStPerS {
+                root: build_balanced_from_slice(&values[..]),
+            }
         }
         fn values_in_order(&self) -> Vec<T> {
             let mut out = Vec::with_capacity(self.length());
@@ -238,7 +246,10 @@ pub mod AVLTreeSeqStPer {
         }
 
         pub fn iter<'a>(&'a self) -> AVLTreeSeqStPerIter<'a, T> {
-            AVLTreeSeqStPerIter { stack: Vec::new(), current: self.root.as_deref() }
+            AVLTreeSeqStPerIter {
+                stack: Vec::new(),
+                current: self.root.as_deref(),
+            }
         }
     }
 

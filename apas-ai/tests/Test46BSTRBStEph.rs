@@ -1,10 +1,6 @@
 use apas_ai::BSTRBStEph::BSTRBStEph::*;
 use apas_ai::*;
 
-fn inorder<T: StT + Ord>(tree: &BSTreeRB<T>) -> Vec<T> {
-    tree.in_order().iter().cloned().collect()
-}
-
 #[test]
 fn rb_insert_find_and_bounds() {
     let mut bst = BSTreeRB::new();
@@ -17,7 +13,12 @@ fn rb_insert_find_and_bounds() {
     assert_eq!(bst.find(&9), None);
     assert_eq!(bst.minimum().copied(), Some(1));
     assert_eq!(bst.maximum().copied(), Some(7));
-    assert_eq!(inorder(&bst), vec![1, 2, 3, 4, 5, 6, 7]);
+    let inorder = bst.in_order();
+    let expected = [1, 2, 3, 4, 5, 6, 7];
+    assert_eq!(inorder.length(), expected.len());
+    for (exp, value) in expected.iter().zip(inorder.iter()) {
+        assert_eq!(*value, *exp);
+    }
 }
 
 #[test]

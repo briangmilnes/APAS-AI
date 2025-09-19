@@ -33,7 +33,11 @@ pub mod TestAVLTreeSeqStPerChap18 {
     fn test_filter_even() {
         let base: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap18Trait<N>>::tabulate(|i| i, 6);
         let evens: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap18Trait<N>>::filter(&base, |x| {
-            if x % 2 == 0 { B::True } else { B::False }
+            if x % 2 == 0 {
+                B::True
+            } else {
+                B::False
+            }
         });
         assert_eq!(evens.to_arrayseq(), ArraySeqStPer![0, 2, 4]);
     }

@@ -1,10 +1,6 @@
 use apas_ai::BSTTreapStEph::BSTTreapStEph::*;
 use apas_ai::*;
 
-fn inorder<T: StT + Ord>(tree: &BSTreeTreap<T>) -> Vec<T> {
-    tree.in_order().iter().cloned().collect()
-}
-
 #[test]
 fn treap_insert_find_stays_balanced() {
     let mut bst = BSTreeTreap::new();
@@ -18,7 +14,11 @@ fn treap_insert_find_stays_balanced() {
     assert_eq!(bst.find(&256), None);
     assert_eq!(bst.minimum().copied(), Some(0));
     assert_eq!(bst.maximum().copied(), Some(127));
-    assert_eq!(inorder(&bst), (0..128).collect::<Vec<_>>());
+    let inorder = bst.in_order();
+    assert_eq!(inorder.length(), 128);
+    for (expected, value) in (0..128).zip(inorder.iter()) {
+        assert_eq!(*value, expected);
+    }
 }
 
 #[test]

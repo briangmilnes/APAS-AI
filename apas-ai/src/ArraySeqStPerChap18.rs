@@ -94,8 +94,8 @@ pub mod ArraySeqStPerChap18 {
         }
         fn update(a: &ArrayStPerS<T>, Pair(index, item): Pair<N, T>) -> ArrayStPerS<T> {
             match a.set(index, item) {
-                Ok(updated) => updated,
-                Err(_) => a.clone(),
+                | Ok(updated) => updated,
+                | Err(_) => a.clone(),
             }
         }
         fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {
@@ -200,8 +200,10 @@ pub mod ArraySeqStPerChap18 {
                     groups.push(Pair(k.clone(), vec![v.clone()]));
                 }
             }
-            let pairs: Vec<Pair<T, ArrayStPerS<T>>> =
-                groups.into_iter().map(|Pair(k, vs)| Pair(k, ArrayStPerS::from_vec(vs))).collect();
+            let pairs: Vec<Pair<T, ArrayStPerS<T>>> = groups
+                .into_iter()
+                .map(|Pair(k, vs)| Pair(k, ArrayStPerS::from_vec(vs)))
+                .collect();
             ArrayStPerS::from_vec(pairs)
         }
     }

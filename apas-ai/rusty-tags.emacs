@@ -1,5 +1,25 @@
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqMtPerChap19.rs,3519
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chapter36MtSlice.rs,1381
+pub mod Chapter36MtSlice {Chapter36MtSlice3,98
+    pub trait Chapter36MtSliceTrait<T: StT + Ord + Send> {Chapter36MtSliceTrait13,298
+        fn pivot_mt_first(&self, lo: N, hi: N) -> T;pivot_mt_first14,357
+        fn pivot_mt_median3(&self, lo: N, hi: N) -> T;pivot_mt_median315,410
+        fn pivot_mt_random(&self, lo: N, hi: N) -> T;pivot_mt_random16,465
+        fn quick_sort_mt_first(&self);quick_sort_mt_first18,520
+        fn quick_sort_mt_median3(&self);quick_sort_mt_median319,559
+        fn quick_sort_mt_random(&self);quick_sort_mt_random20,600
+    impl<T: StT + Ord + Send> Chapter36MtSliceTrait<T> for ArraySeqMtEphSliceS<T> {ArraySeqMtEphSliceS23,647
+        fn pivot_mt_first(&self, lo: N, _hi: N) -> T { self.nth_cloned(lo) }pivot_mt_first24,731
+        fn pivot_mt_median3(&self, lo: N, hi: N) -> T {pivot_mt_median326,809
+        fn pivot_mt_random(&self, lo: N, hi: N) -> T {pivot_mt_random40,1280
+        fn quick_sort_mt_first(&self) {quick_sort_mt_first46,1456
+                fn sort<T: StT + Ord + Send>(data: &mut [T]) {sort51,1611
+        fn quick_sort_mt_median3(&self) {quick_sort_mt_median388,2974
+                fn sort<T: StT + Ord + Send>(data: &mut [T]) {sort93,3131
+        fn quick_sort_mt_random(&self) {quick_sort_mt_random143,5059
+                fn sort<T: StT + Ord + Send>(data: &mut [T]) {sort148,5215
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqMtPerChap19.rs,3793
 pub mod ArraySeqMtPerChap19 {ArraySeqMtPerChap193,129
     pub trait ArraySeqMtPerChap19Trait<T: MtT> {ArraySeqMtPerChap19Trait11,363
         fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayMtPerS<T>;tabulate15,625
@@ -9,38 +29,110 @@ pub mod ArraySeqMtPerChap19 {ArraySeqMtPerChap193,129
         fn update(a: &ArrayMtPerS<T>, item_at: Pair<N, T>) -> ArrayMtPerS<T>;update27,1521
         fn ninject(a: &ArrayMtPerS<T>, updates: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T>;ninject30,1723
         fn iterate<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;iterate32,1893
-        fn iteratePrefixes<A: MtT>(iteratePrefixes34,2022
-        fn reduce(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce40,2262
-        fn scan(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayMtPerS<T>, T);scan42,2386
-        fn flatten(ss: &ArrayMtPerS<ArrayMtPerS<T>>) -> ArrayMtPerS<T>;flatten44,2549
-        fn collect(collect46,2700
-        fn inject(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T>;inject52,2901
-        fn atomicWrite(atomicWrite54,3039
-        fn inject_parallel2(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> Arrayinject_parallel260,3282
-        fn AtomicWriteLowestChangeNumberWins(AtomicWriteLowestChangeNumberWins61,3389
-        fn ninject_parallel2(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> Arraninject_parallel267,3657
-        fn AtomicWriteHighestChangeNumberWins(AtomicWriteHighestChangeNumberWins68,3765
-    impl<T: MtT + StT + Send + Sync> ArraySeqMtPerChap19Trait<T> for ArrayMtPerS<T> {ArrayMtPerS75,3978
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayMtPerS<T> {tabulate76,4064
-        fn map<W: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&T) -> W) -> ArrayMtPerS<W> {map80,4217
-        fn append(a: &ArrayMtPerS<T>, b: &ArrayMtPerS<T>) -> ArrayMtPerS<T> {append84,4383
-        fn filter(a: &ArrayMtPerS<T>, pred: impl Fn(&T) -> B) -> ArrayMtPerS<T> {filter88,4546
-        fn update(a: &ArrayMtPerS<T>, item_at: Pair<N, T>) -> ArrayMtPerS<T> {update92,4716
-        fn ninject(a: &ArrayMtPerS<T>, updates: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T> {ninject96,4886
-        fn iterate<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate100,5072
-        fn iteratePrefixes<A: MtT>(iteratePrefixes104,5246
-        fn reduce(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce112,5501
-        fn scan(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayMtPerS<T>, T) {scan116,5668
-        fn flatten(ss: &ArrayMtPerS<ArrayMtPerS<T>>) -> ArrayMtPerS<T> {flatten120,5849
-        fn collect(collect131,6251
-        fn inject(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T> inject168,7679
-        fn atomicWrite(atomicWrite172,7873
-        fn inject_parallel2(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> Arrayinject_parallel2180,8166
-        fn AtomicWriteLowestChangeNumberWins(AtomicWriteLowestChangeNumberWins185,8446
-        fn ninject_parallel2(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> Arraninject_parallel2204,9180
-        fn AtomicWriteHighestChangeNumberWins(AtomicWriteHighestChangeNumberWins209,9463
+        fn iteratePrefixes<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArrayMiteratePrefixes34,2022
+        fn reduce(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce36,2215
+        fn scan(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayMtPerS<T>, T);scan38,2339
+        fn flatten(ss: &ArrayMtPerS<ArrayMtPerS<T>>) -> ArrayMtPerS<T>;flatten40,2502
+        fn collect(a: &ArrayMtPerS<Pair<T, T>>, cmp: impl Fn(&T, &T) -> O) -> ArrayMtPerS<Pair<Tcollect42,2653
+        fn inject(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T>;inject45,2811
+        fn atomicWrite(atomicWrite47,2949
+        fn inject_parallel2(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> Arrayinject_parallel253,3192
+        fn AtomicWriteLowestChangeNumberWins(AtomicWriteLowestChangeNumberWins54,3299
+        fn ninject_parallel2(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> Arraninject_parallel260,3567
+        fn AtomicWriteHighestChangeNumberWins(AtomicWriteHighestChangeNumberWins61,3675
+    impl<T: MtT + StT + Send + Sync> ArraySeqMtPerChap19Trait<T> for ArrayMtPerS<T> {ArrayMtPerS68,3888
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayMtPerS<T> {tabulate69,3974
+        fn map<W: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&T) -> W) -> ArrayMtPerS<W> {map73,4127
+        fn append(a: &ArrayMtPerS<T>, b: &ArrayMtPerS<T>) -> ArrayMtPerS<T> {append77,4293
+        fn filter(a: &ArrayMtPerS<T>, pred: impl Fn(&T) -> B) -> ArrayMtPerS<T> {filter81,4456
+        fn update(a: &ArrayMtPerS<T>, item_at: Pair<N, T>) -> ArrayMtPerS<T> {update85,4626
+        fn ninject(a: &ArrayMtPerS<T>, updates: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T> {ninject89,4796
+        fn iterate<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate93,4982
+        fn iteratePrefixes<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArrayMiteratePrefixes97,5156
+        fn reduce(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce101,5364
+        fn scan(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayMtPerS<T>, T) {scan105,5531
+        fn flatten(ss: &ArrayMtPerS<ArrayMtPerS<T>>) -> ArrayMtPerS<T> {flatten109,5712
+        fn collect(a: &ArrayMtPerS<Pair<T, T>>, cmp: impl Fn(&T, &T) -> O) -> ArrayMtPerS<Pair<Tcollect120,6114
+        fn inject(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T> inject154,7439
+        fn atomicWrite(atomicWrite158,7633
+        fn inject_parallel2(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> Arrayinject_parallel2166,7926
+        fn AtomicWriteLowestChangeNumberWins(AtomicWriteLowestChangeNumberWins171,8206
+        fn ninject_parallel2(values: &ArrayMtPerS<T>, changes: &ArrayMtPerS<Pair<N, T>>) -> Arraninject_parallel2192,8976
+        fn AtomicWriteHighestChangeNumberWins(AtomicWriteHighestChangeNumberWins197,9259
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqStPerChap19.rs,2726
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTSetAVLMtEph.rs,5434
+pub mod BSTSetAVLMtEph {BSTSetAVLMtEph3,73
+    pub struct BSTSetAVLMtEph<T: StTinMtT + Ord> {BSTSetAVLMtEph10,280
+        tree: BSTAVLMtEph<T>,tree11,331
+    pub type BSTSetAVLMt<T> = BSTSetAVLMtEph<T>;BSTSetAVLMt14,368
+    pub trait BSTSetAVLMtEphTrait<T: StTinMtT + Ord>: Sized {BSTSetAVLMtEphTrait16,418
+        fn empty() -> Self;empty17,480
+        fn singleton(value: T) -> Self;singleton18,508
+        fn size(&self) -> N;size19,548
+        fn is_empty(&self) -> B;is_empty20,577
+        fn find(&self, value: &T) -> Option<T>;find21,610
+        fn contains(&self, value: &T) -> B;contains22,658
+        fn minimum(&self) -> Option<T>;minimum23,702
+        fn maximum(&self) -> Option<T>;maximum24,742
+        fn insert(&mut self, value: T);insert25,782
+        fn delete(&mut self, target: &T);delete26,822
+        fn union(&self, other: &Self) -> Self;union27,864
+        fn intersection(&self, other: &Self) -> Self;intersection28,911
+        fn difference(&self, other: &Self) -> Self;difference29,965
+        fn split(&self, pivot: &T) -> (Self, B, Self);split30,1017
+        fn join_pair(left: Self, right: Self) -> Self;join_pair31,1072
+        fn join_m(left: Self, pivot: T, right: Self) -> Self;join_m32,1127
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self;filter33,1189
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T;reduce34,1259
+        fn iter_in_order(&self) -> ArrayStPerS<T>;iter_in_order35,1327
+        fn as_tree(&self) -> &BSTAVLMtEph<T>;as_tree36,1378
+    impl<T: StTinMtT + Ord> BSTSetAVLMtEph<T> {BSTSetAVLMtEph39,1431
+        pub fn empty() -> Self {empty40,1479
+        pub fn singleton(value: T) -> Self {singleton46,1598
+        pub fn size(&self) -> N { self.tree.size() }size52,1755
+        pub fn is_empty(&self) -> B { self.tree.is_empty() }is_empty54,1809
+        pub fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }find56,1871
+        pub fn contains(&self, value: &T) -> B { self.tree.contains(value) }contains58,1949
+        pub fn minimum(&self) -> Option<T> { self.tree.minimum() }minimum60,2027
+        pub fn maximum(&self) -> Option<T> { self.tree.maximum() }maximum62,2095
+        pub fn insert(&mut self, value: T) { self.tree.insert(value); }insert64,2163
+        pub fn delete(&mut self, target: &T) {delete66,2236
+        pub fn union(&self, other: &Self) -> Self {union74,2525
+        pub fn intersection(&self, other: &Self) -> Self {intersection82,2824
+        pub fn difference(&self, other: &Self) -> Self {difference99,3402
+        pub fn split(&self, pivot: &T) -> (Self, B, Self) {split116,3979
+        pub fn join_pair(left: Self, right: Self) -> Self {join_pair136,4670
+        pub fn join_m(left: Self, pivot: T, right: Self) -> Self {join_m144,4983
+        pub fn filter<F>(&self, mut predicate: F) -> Selffilter153,5339
+        pub fn reduce<F>(&self, mut op: F, base: T) -> Treduce166,5748
+        pub fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }iter_in_order176,6012
+        pub fn as_tree(&self) -> &BSTAVLMtEph<T> { &self.tree }as_tree178,6092
+        fn values_vec(&self) -> Vec<T> { self.tree.in_order().iter().cloned().collect() }values_vec180,6157
+        fn rebuild_from_vec(values: Vec<T>) -> BSTAVLMtEph<T> {rebuild_from_vec182,6248
+        fn from_sorted_iter<I>(values: I) -> Selffrom_sorted_iter190,6467
+    impl<T: StTinMtT + Ord> BSTSetAVLMtEphTrait<T> for BSTSetAVLMtEph<T> {BSTSetAVLMtEph202,6750
+        fn empty() -> Self { Self::empty() }empty203,6825
+        fn singleton(value: T) -> Self { Self::singleton(value) }singleton205,6871
+        fn size(&self) -> N { self.tree.size() }size207,6938
+        fn is_empty(&self) -> B { self.tree.is_empty() }is_empty209,6988
+        fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }find211,7046
+        fn contains(&self, value: &T) -> B { self.tree.contains(value) }contains213,7120
+        fn minimum(&self) -> Option<T> { self.tree.minimum() }minimum215,7194
+        fn maximum(&self) -> Option<T> { self.tree.maximum() }maximum217,7258
+        fn insert(&mut self, value: T) { self.tree.insert(value); }insert219,7322
+        fn delete(&mut self, target: &T) { BSTSetAVLMtEph::delete(self, target) }delete221,7391
+        fn union(&self, other: &Self) -> Self { BSTSetAVLMtEph::union(self, other) }union223,7474
+        fn intersection(&self, other: &Self) -> Self { BSTSetAVLMtEph::intersection(self, other)intersection225,7560
+        fn difference(&self, other: &Self) -> Self { BSTSetAVLMtEph::difference(self, other) }difference227,7660
+        fn split(&self, pivot: &T) -> (Self, B, Self) { BSTSetAVLMtEph::split(self, pivot) }split229,7756
+        fn join_pair(left: Self, right: Self) -> Self { BSTSetAVLMtEph::join_pair(left, right) }join_pair231,7850
+        fn join_m(left: Self, pivot: T, right: Self) -> Self { BSTSetAVLMtEph::join_m(left, pivojoin_m233,7948
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self { BSTSetAVLMtEph::filter(sefilter235,8057
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T { BSTSetAVLMtEph::reduce(selfreduce237,8171
+        fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }iter_in_order239,8282
+        fn as_tree(&self) -> &BSTAVLMtEph<T> { &self.tree }as_tree241,8358
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqStPerChap19.rs,2725
 pub mod ArraySeqStPerChap19 {ArraySeqStPerChap193,46
     pub trait ArraySeqStPerChap19Trait<T: StT> {ArraySeqStPerChap19Trait8,217
         fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayStPerS<T>;tabulate10,352
@@ -63,15 +155,15 @@ pub mod ArraySeqStPerChap19 {ArraySeqStPerChap193,46
         fn append(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T> {append60,3012
         fn append2(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T> {append267,3287
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArrayStPerS<T> {deflate74,3563
-        fn filter(a: &ArrayStPerS<T>, f: impl Fn(&T) -> B) -> ArrayStPerS<T> {filter81,3838
-        fn iterate<A: StT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate90,4275
-        fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce104,4795
-        fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T) {scan125,5542
-        fn flatten(s: &ArrayStPerS<ArrayStPerS<T>>) -> ArrayStPerS<T> {flatten162,7158
-        fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {inject166,7313
-        fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {ninject170,7497
+        fn filter(a: &ArrayStPerS<T>, f: impl Fn(&T) -> B) -> ArrayStPerS<T> {filter78,3791
+        fn iterate<A: StT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate87,4214
+        fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce99,4695
+        fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T) {scan114,5348
+        fn flatten(s: &ArrayStPerS<ArrayStPerS<T>>) -> ArrayStPerS<T> {flatten157,7082
+        fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {inject161,7237
+        fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {ninject165,7421
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqStEphChap18.rs,2403
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqStEphChap18.rs,2838
 pub mod ArraySeqStEphChap18 {ArraySeqStEphChap183,51
     pub trait ArraySeqStEphChap18Trait<T: StT> {ArraySeqStEphChap18Trait7,162
         fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqStEphS<T>;tabulate10,303
@@ -82,25 +174,25 @@ pub mod ArraySeqStEphChap18 {ArraySeqStEphChap183,51
         fn inject(a: &ArraySeqStEphS<T>, updates: &ArraySeqStEphS<Pair<N, T>>) -> ArraySeqStEphSinject25,1234
         fn ninject(a: &ArraySeqStEphS<T>, updates: &ArraySeqStEphS<Pair<N, T>>) -> ArraySeqStEphninject28,1455
         fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;iterate29,1557
-        fn iteratePrefixes<A: StT>(iteratePrefixes30,1644
-        fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce35,1807
-        fn scan(scan36,1887
-        fn flatten(ss: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;flatten41,2033
-        fn collect<A: StT, Bv: StT>(collect42,2114
-    impl<T: StT> ArraySeqStEphChap18Trait<T> for ArraySeqStEphS<T> {ArraySeqStEphS48,2300
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqStEphS<T> {tabulate49,2369
-        fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U> {map56,2615
-        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {append69,3149
-        fn filter(a: &ArraySeqStEphS<T>, pred: impl Fn(&T) -> B) -> ArraySeqStEphS<T> {filter90,3903
-        fn update(a: &mut ArraySeqStEphS<T>, (index, item): (N, T)) -> &mut ArraySeqStEphS<T> {update102,4328
-        fn inject(inject105,4470
-        fn ninject(ninject116,4831
-        fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate122,5016
-        fn iteratePrefixes<A: StT>(iteratePrefixes129,5251
-        fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce146,5857
-        fn scan(scan153,6086
-        fn flatten(ss: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T> {flatten171,6686
-        fn collect<A: StT, Bv: StT>(collect199,7772
+        fn iteratePrefixes<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArriteratePrefixes30,1644
+        fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce31,1760
+        fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, Tscan32,1840
+        fn flatten(ss: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;flatten33,1939
+        fn collect<A: StT, Bv: StT>(collect34,2020
+    impl<T: StT> ArraySeqStEphChap18Trait<T> for ArraySeqStEphS<T> {ArraySeqStEphS40,2206
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqStEphS<T> {tabulate41,2275
+        fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U> {map48,2521
+        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {append61,3055
+        fn filter(a: &ArraySeqStEphS<T>, pred: impl Fn(&T) -> B) -> ArraySeqStEphS<T> {filter78,3753
+        fn update(a: &mut ArraySeqStEphS<T>, (index, item): (N, T)) -> &mut ArraySeqStEphS<T> {update90,4178
+        fn inject(a: &ArraySeqStEphS<T>, updates: &ArraySeqStEphS<Pair<N, T>>) -> ArraySeqStEphSinject93,4320
+        fn ninject(a: &ArraySeqStEphS<T>, updates: &ArraySeqStEphS<Pair<N, T>>) -> ArraySeqStEphninject101,4646
+        fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate104,4796
+        fn iteratePrefixes<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArriteratePrefixes111,5031
+        fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce124,5590
+        fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, Tscan131,5819
+        fn flatten(ss: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T> {flatten145,6372
+        fn collect<A: StT, Bv: StT>(collect173,7458
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/AVLTreeSeqStEphChap19.rs,1424
 pub mod AVLTreeSeqStEphChap19 {AVLTreeSeqStEphChap193,54
@@ -119,7 +211,7 @@ pub mod AVLTreeSeqStEphChap19 {AVLTreeSeqStEphChap193,54
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> AVLTreeSeqStEphS<T> {deflate44,2095
         fn filter(a: &AVLTreeSeqStEphS<T>, f: impl Fn(&T) -> B) -> AVLTreeSeqStEphS<T> {filter51,2406
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/AVLTreeSeqStPer.rs,4033
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/AVLTreeSeqStPer.rs,4203
 pub mod AVLTreeSeqStPer {AVLTreeSeqStPer3,85
     type Link<T> = Option<Rc<Node<T>>>;Link9,238
     struct Node<T: StT> {Node11,279
@@ -128,207 +220,342 @@ pub mod AVLTreeSeqStPer {AVLTreeSeqStPer3,85
         size: N,size14,342
         left: Link<T>,left15,359
         right: Link<T>,right16,382
-    fn height<T: StT>(n: &Link<T>) -> N {height19,413
-    fn size<T: StT>(n: &Link<T>) -> N {size22,504
-    fn mk<T: StT>(value: T, left: Link<T>, right: Link<T>) -> Rc<Node<T>> {mk26,592
-    fn rotate_right<T: StT>(y: Rc<Node<T>>) -> Rc<Node<T>> {rotate_right39,937
-    fn rotate_left<T: StT>(x: Rc<Node<T>>) -> Rc<Node<T>> {rotate_left46,1244
-    fn rebalance<T: StT>(n: Rc<Node<T>>) -> Rc<Node<T>> {rebalance57,1602
-    fn nth_ref<'a, T: StT>(mut cur: &'a Link<T>, mut index: N) -> &'a T {nth_ref79,2455
-    fn set_rec<T: StT>(cur: &Link<T>, index: N, value: T) -> Result<Link<T>, &'static str> {set_rec94,2904
-    fn inorder_collect<T: StT>(cur: &Link<T>, out: &mut Vec<T>) {inorder_collect112,3672
-    fn build_balanced_from_slice<T: StT>(a: &[T]) -> Link<T> {build_balanced_from_slice120,3912
-        fn rec<T: StT>(a: &[T]) -> Link<T> {rec121,3975
-    pub struct AVLTreeSeqStPerS<T: StT> {AVLTreeSeqStPerS133,4293
-        root: Link<T>,root134,4335
-    pub trait AVLTreeSeqStPerTrait<T: StT> {AVLTreeSeqStPerTrait137,4365
-        fn empty() -> Self;empty140,4502
-        fn new() -> Self;new143,4622
-        fn length(&self) -> N;length146,4740
-        fn nth(&self, index: N) -> &T;nth149,4879
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str>set152,5085
-        fn singleton(item: T) -> Self;singleton157,5287
-        fn isEmpty(&self) -> B;isEmpty160,5418
-        fn isSingleton(&self) -> B;isSingleton163,5542
-        fn subseq_copy(&self, start: N, length: N) -> Self;subseq_copy166,5694
-        fn from_vec(values: Vec<T>) -> Self;from_vec168,5817
-        fn values_in_order(&self) -> Vec<T>;values_in_order170,5906
-    impl<T: StT> AVLTreeSeqStPerTrait<T> for AVLTreeSeqStPerS<T> {AVLTreeSeqStPerS173,5958
-        fn empty() -> Self {empty174,6025
-        fn new() -> Self {new177,6108
-        fn length(&self) -> N {length180,6171
-        fn nth(&self, index: N) -> &T {nth183,6242
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str> {set186,6331
-        fn singleton(item: T) -> Self {singleton191,6520
-        fn isEmpty(&self) -> B {isEmpty196,6665
-        fn isSingleton(&self) -> B {isSingleton203,6828
-        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy210,6995
-        fn from_vec(values: Vec<T>) -> Self {from_vec224,7503
-        fn values_in_order(&self) -> Vec<T> {values_in_order229,7666
-    impl<T: StT> PartialEq for AVLTreeSeqStPerS<T> {AVLTreeSeqStPerS236,7857
-        fn eq(&self, other: &Self) -> bool {eq237,7910
-    impl<T: StT> Eq for AVLTreeSeqStPerS<T> {}AVLTreeSeqStPerS249,8236
-    impl<T: StT> std::fmt::Debug for AVLTreeSeqStPerS<T> {AVLTreeSeqStPerS251,8284
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt252,8343
-    impl<T: StT> AVLTreeSeqStPerS<T> {AVLTreeSeqStPerS258,8535
-        pub fn to_arrayseq(&self) -> ArrayStPerS<T> {to_arrayseq259,8574
-        pub fn iter<'a>(&'a self) -> AVLTreeSeqStPerIter<'a, T> {iter264,8720
-    pub struct AVLTreeSeqStPerIter<'a, T: StT> {AVLTreeSeqStPerIter272,8933
-        stack: Vec<&'a Node<T>>,stack273,8982
-        current: Option<&'a Node<T>>,current274,9015
-    impl<'a, T: StT> AVLTreeSeqStPerIter<'a, T> {AVLTreeSeqStPerIter277,9060
-        fn push_left(&mut self, mut cur: Option<&'a Node<T>>) {push_left278,9110
-    impl<'a, T: StT> Iterator for AVLTreeSeqStPerIter<'a, T> {AVLTreeSeqStPerIter286,9320
-        type Item = &'a T;Item287,9383
-        fn next(&mut self) -> Option<Self::Item> {next288,9410
-    macro_rules! AVLTreeSeqStPer {AVLTreeSeqStPer301,9802
-    fn _AVLTreeSeqStPer_type_checks() {_AVLTreeSeqStPer_type_checks314,10532
+    fn height<T: StT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |r| r.height) }height19,413
+    fn size<T: StT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |r| r.size) }size20,492
+    fn mk<T: StT>(value: T, left: Link<T>, right: Link<T>) -> Rc<Node<T>> {mk22,568
+    fn rotate_right<T: StT>(y: Rc<Node<T>>) -> Rc<Node<T>> {rotate_right35,913
+    fn rotate_left<T: StT>(x: Rc<Node<T>>) -> Rc<Node<T>> {rotate_left42,1220
+    fn rebalance<T: StT>(n: Rc<Node<T>>) -> Rc<Node<T>> {rebalance49,1526
+    fn nth_ref<'a, T: StT>(mut cur: &'a Link<T>, mut index: N) -> &'a T {nth_ref71,2379
+    fn set_rec<T: StT>(cur: &Link<T>, index: N, value: T) -> Result<Link<T>, &'static str> {set_rec86,2828
+    fn inorder_collect<T: StT>(cur: &Link<T>, out: &mut Vec<T>) {inorder_collect104,3600
+    fn build_balanced_from_slice<T: StT>(a: &[T]) -> Link<T> {build_balanced_from_slice112,3840
+        fn rec<T: StT>(a: &[T]) -> Link<T> {rec113,3903
+    pub struct AVLTreeSeqStPerS<T: StT> {AVLTreeSeqStPerS125,4221
+        root: Link<T>,root126,4263
+    pub trait AVLTreeSeqStPerTrait<T: StT> {AVLTreeSeqStPerTrait129,4293
+        fn empty() -> Self;empty132,4430
+        fn new() -> Self;new135,4550
+        fn length(&self) -> N;length138,4668
+        fn nth(&self, index: N) -> &T;nth141,4807
+        fn set(&self, index: N, item: T) -> Result<Self, &'static str>set144,5013
+        fn singleton(item: T) -> Self;singleton149,5215
+        fn isEmpty(&self) -> B;isEmpty152,5346
+        fn isSingleton(&self) -> B;isSingleton155,5470
+        fn subseq_copy(&self, start: N, length: N) -> Self;subseq_copy158,5622
+        fn from_vec(values: Vec<T>) -> Self;from_vec160,5745
+        fn values_in_order(&self) -> Vec<T>;values_in_order162,5834
+    impl<T: StT> AVLTreeSeqStPerTrait<T> for AVLTreeSeqStPerS<T> {AVLTreeSeqStPerS165,5886
+        fn empty() -> Self { AVLTreeSeqStPerS { root: None } }empty166,5953
+        fn new() -> Self { Self::empty() }new167,6016
+        fn length(&self) -> N { size(&self.root) }length168,6059
+        fn nth(&self, index: N) -> &T { nth_ref(&self.root, index) }nth169,6110
+        fn set(&self, index: N, item: T) -> Result<Self, &'static str> {set170,6179
+        fn singleton(item: T) -> Self {singleton175,6368
+        fn isEmpty(&self) -> B {isEmpty180,6513
+        fn isSingleton(&self) -> B {isSingleton187,6676
+        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy194,6843
+        fn from_vec(values: Vec<T>) -> Self {from_vec208,7351
+        fn values_in_order(&self) -> Vec<T> {values_in_order213,7514
+    impl<T: StT> PartialEq for AVLTreeSeqStPerS<T> {AVLTreeSeqStPerS220,7705
+        fn eq(&self, other: &Self) -> bool {eq221,7758
+    impl<T: StT> Eq for AVLTreeSeqStPerS<T> {}AVLTreeSeqStPerS233,8084
+    impl<T: StT> std::fmt::Debug for AVLTreeSeqStPerS<T> {AVLTreeSeqStPerS235,8132
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt236,8191
+    impl<T: StT> AVLTreeSeqStPerS<T> {AVLTreeSeqStPerS242,8383
+        pub fn to_arrayseq(&self) -> ArrayStPerS<T> {to_arrayseq243,8422
+        pub fn iter<'a>(&'a self) -> AVLTreeSeqStPerIter<'a, T> {iter248,8568
+    pub struct AVLTreeSeqStPerIter<'a, T: StT> {AVLTreeSeqStPerIter256,8781
+        stack: Vec<&'a Node<T>>,stack257,8830
+        current: Option<&'a Node<T>>,current258,8863
+    impl<'a, T: StT> AVLTreeSeqStPerIter<'a, T> {AVLTreeSeqStPerIter261,8908
+        fn push_left(&mut self, mut cur: Option<&'a Node<T>>) {push_left262,8958
+    impl<'a, T: StT> Iterator for AVLTreeSeqStPerIter<'a, T> {AVLTreeSeqStPerIter270,9168
+        type Item = &'a T;Item271,9231
+        fn next(&mut self) -> Option<Self::Item> {next272,9258
+    macro_rules! AVLTreeSeqStPer {AVLTreeSeqStPer285,9650
+    fn _AVLTreeSeqStPer_type_checks() {_AVLTreeSeqStPer_type_checks298,10380
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/MathSeq.rs,3929
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTSetPlainMtEph.rs,5110
+pub mod BSTSetPlainMtEph {BSTSetPlainMtEph3,75
+    pub struct BSTSetPlainMtEph<T: StTinMtT + Ord> {BSTSetPlainMtEph10,290
+        tree: BSTPlainMtEph<T>,tree11,343
+    pub type BSTSetPlainMt<T> = BSTSetPlainMtEph<T>;BSTSetPlainMt14,382
+    pub trait BSTSetPlainMtEphTrait<T: StTinMtT + Ord>: Sized {BSTSetPlainMtEphTrait16,436
+        fn empty() -> Self;empty17,500
+        fn singleton(value: T) -> Self;singleton18,528
+        fn size(&self) -> N;size19,568
+        fn is_empty(&self) -> B;is_empty20,597
+        fn find(&self, value: &T) -> Option<T>;find21,630
+        fn contains(&self, value: &T) -> B;contains22,678
+        fn minimum(&self) -> Option<T>;minimum23,722
+        fn maximum(&self) -> Option<T>;maximum24,762
+        fn insert(&mut self, value: T);insert25,802
+        fn delete(&mut self, target: &T);delete26,842
+        fn union(&self, other: &Self) -> Self;union27,884
+        fn intersection(&self, other: &Self) -> Self;intersection28,931
+        fn difference(&self, other: &Self) -> Self;difference29,985
+        fn split(&self, pivot: &T) -> (Self, B, Self);split30,1037
+        fn join_pair(left: Self, right: Self) -> Self;join_pair31,1092
+        fn join_m(left: Self, pivot: T, right: Self) -> Self;join_m32,1147
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self;filter33,1209
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T;reduce34,1279
+        fn iter_in_order(&self) -> ArrayStPerS<T>;iter_in_order35,1347
+        fn as_tree(&self) -> &BSTPlainMtEph<T>;as_tree36,1398
+    impl<T: StTinMtT + Ord> BSTSetPlainMtEph<T> {BSTSetPlainMtEph39,1453
+        pub fn empty() -> Self {empty40,1503
+        pub fn singleton(value: T) -> Self {singleton46,1624
+        pub fn size(&self) -> N { self.tree.size() }size52,1783
+        pub fn is_empty(&self) -> B { self.tree.is_empty() }is_empty54,1837
+        pub fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }find56,1899
+        pub fn contains(&self, value: &T) -> B { self.tree.contains(value) }contains58,1977
+        pub fn minimum(&self) -> Option<T> { self.tree.minimum() }minimum60,2055
+        pub fn maximum(&self) -> Option<T> { self.tree.maximum() }maximum62,2123
+        pub fn insert(&mut self, value: T) { self.tree.insert(value); }insert64,2191
+        pub fn delete(&mut self, target: &T) {delete66,2264
+        pub fn union(&self, other: &Self) -> Self {union74,2553
+        pub fn intersection(&self, other: &Self) -> Self {intersection82,2852
+        pub fn difference(&self, other: &Self) -> Self {difference99,3430
+        pub fn split(&self, pivot: &T) -> (Self, B, Self) {split116,4007
+        pub fn join_pair(left: Self, right: Self) -> Self {join_pair136,4698
+        pub fn join_m(left: Self, pivot: T, right: Self) -> Self {join_m144,5011
+        pub fn filter<F>(&self, mut predicate: F) -> Selffilter153,5367
+        pub fn reduce<F>(&self, mut op: F, base: T) -> Treduce166,5776
+        pub fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }iter_in_order176,6040
+        pub fn as_tree(&self) -> &BSTPlainMtEph<T> { &self.tree }as_tree178,6120
+        fn values_vec(&self) -> Vec<T> { self.tree.in_order().iter().cloned().collect() }values_vec180,6187
+        fn rebuild_from_vec(values: Vec<T>) -> BSTPlainMtEph<T> {rebuild_from_vec182,6278
+        fn from_sorted_iter<I>(values: I) -> Selffrom_sorted_iter190,6501
+    impl<T: StTinMtT + Ord> BSTSetPlainMtEphTrait<T> for BSTSetPlainMtEph<T> {BSTSetPlainMtEph202,6786
+        fn empty() -> Self { Self::empty() }empty203,6865
+        fn singleton(value: T) -> Self { Self::singleton(value) }singleton205,6911
+        fn size(&self) -> N { self.tree.size() }size207,6978
+        fn is_empty(&self) -> B { self.tree.is_empty() }is_empty209,7028
+        fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }find211,7086
+        fn contains(&self, value: &T) -> B { self.tree.contains(value) }contains213,7160
+        fn minimum(&self) -> Option<T> { self.tree.minimum() }minimum215,7234
+        fn maximum(&self) -> Option<T> { self.tree.maximum() }maximum217,7298
+        fn insert(&mut self, value: T) { self.tree.insert(value); }insert219,7362
+        fn delete(&mut self, target: &T) {delete221,7431
+        fn union(&self, other: &Self) -> Self {union229,7716
+        fn intersection(&self, other: &Self) -> Self {intersection237,8011
+        fn difference(&self, other: &Self) -> Self {difference254,8585
+        fn split(&self, pivot: &T) -> (Self, B, Self) {split271,9158
+        fn join_pair(left: Self, right: Self) -> Self {join_pair291,9845
+        fn join_m(left: Self, pivot: T, right: Self) -> Self {join_m299,10154
+        fn filter<F>(&self, predicate: F) -> Selffilter308,10506
+        fn reduce<F>(&self, op: F, base: T) -> Treduce315,10667
+        fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }iter_in_order322,10825
+        fn as_tree(&self) -> &BSTPlainMtEph<T> { &self.tree }as_tree324,10901
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/MathSeq.rs,4282
 pub mod MathSeq {MathSeq8,306
     pub struct MathSeqS<T: StT> {MathSeqS17,588
         data: Vec<T>,data18,622
     impl<T: StT> PartialEq for MathSeqS<T> {MathSeqS21,651
-        fn eq(&self, other: &Self) -> bool {eq22,696
-    impl<T: StT> Eq for MathSeqS<T> {}MathSeqS27,794
-    impl<T: StT> std::fmt::Debug for MathSeqS<T> {MathSeqS29,834
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt30,885
-    impl<T: StT> std::fmt::Display for MathSeqS<T> {MathSeqS35,1041
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt36,1094
-    impl<T: StT> MathSeqS<T> {MathSeqS51,1507
-        pub fn iter(&self) -> std::slice::Iter<'_, T> {iter54,1630
-        pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, T> {iter_mut59,1817
-        pub fn empty() -> Self {empty65,2020
-        pub fn singleton(item: T) -> Self {singleton70,2193
-        pub fn from_vec(data: Vec<T>) -> Self {from_vec75,2387
-        pub fn with_len(length: N, init_value: T) -> Self {with_len80,2573
-    impl<'a, T: StT> IntoIterator for &'a MathSeqS<T> {MathSeqS87,2731
-        type Item = &'a T;Item88,2787
-        type IntoIter = std::slice::Iter<'a, T>;IntoIter89,2814
-        fn into_iter(self) -> Self::IntoIter {into_iter90,2863
-    impl<'a, T: StT> IntoIterator for &'a mut MathSeqS<T> {MathSeqS95,2956
-        type Item = &'a mut T;Item96,3016
-        type IntoIter = std::slice::IterMut<'a, T>;IntoIter97,3047
-        fn into_iter(self) -> Self::IntoIter {into_iter98,3099
-    impl<T: StT> IntoIterator for MathSeqS<T> {MathSeqS103,3196
-        type Item = T;Item104,3244
-        type IntoIter = std::vec::IntoIter<T>;IntoIter105,3267
-        fn into_iter(self) -> Self::IntoIter {into_iter106,3314
-    pub trait MathSeqTrait<T: StT + Hash> {MathSeqTrait112,3448
-        fn new(length: N, init_value: T) -> Self;new115,3594
-        fn empty() -> Self;empty119,3737
-        fn singleton(item: T) -> Self;singleton123,3858
-        fn length(&self) -> N;length127,3990
-        fn nth(&self, index: N) -> &T;nth131,4114
-        fn set(&mut self, index: N, value: T) -> Result<&mut Self, &'static str>;set135,4246
-        fn add_last(&mut self, value: T) -> &mut Self;add_last139,4533
-        fn delete_last(&mut self) -> Option<T>;delete_last143,4681
-        fn subseq(&self, start: N, length: N) -> &[T];subseq147,4822
-        fn subseq_copy(&self, start: N, length: N) -> Self;subseq_copy151,4980
-        fn isEmpty(&self) -> B;isEmpty155,5133
-        fn isSingleton(&self) -> B;isSingleton159,5258
-        fn domain(&self) -> Vec<N>;domain163,5391
-        fn range(&self) -> Vec<T>;range167,5524
-        fn multiset_range(&self) -> Vec<(N, T)>;multiset_range171,5656
-    impl<T: StT + Hash> MathSeqTrait<T> for MathSeqS<T> {MathSeqS174,5712
-        fn new(length: N, init_value: T) -> Self {new177,5872
-        fn empty() -> Self {empty185,6111
-        fn singleton(item: T) -> Self {singleton191,6285
-        fn length(&self) -> N {length197,6470
-        fn nth(&self, index: N) -> &T {nth203,6633
-        fn set(&mut self, index: N, value: T) -> Result<&mut Self, &'static str> {set209,6806
-        fn add_last(&mut self, value: T) -> &mut Self {add_last220,7290
-        fn delete_last(&mut self) -> Option<T> {delete_last227,7501
-        fn subseq(&self, start: N, length: N) -> &[T] {subseq233,7681
-        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy242,8007
-        fn isEmpty(&self) -> B {isEmpty256,8476
-        fn isSingleton(&self) -> B {isSingleton266,8734
-        fn domain(&self) -> Vec<N> {domain276,9000
-        fn range(&self) -> Vec<T> {range282,9187
-        fn multiset_range(&self) -> Vec<(N, T)> {multiset_range295,9654
-    macro_rules! MathSeq {MathSeq314,10334
-    fn _MathSeq_macro_type_checks() {_MathSeq_macro_type_checks321,10624
+        fn eq(&self, other: &Self) -> bool { self.data == other.data }eq22,696
+    impl<T: StT> Eq for MathSeqS<T> {}MathSeqS25,774
+    impl<T: StT> std::fmt::Debug for MathSeqS<T> {MathSeqS27,814
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt28,865
+    impl<T: StT> std::fmt::Display for MathSeqS<T> {MathSeqS33,1021
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt34,1074
+    impl<T: StT> MathSeqS<T> {MathSeqS49,1487
+        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }iter52,1610
+        pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, T> { self.data.iter_mut() }iter_mut55,1777
+        pub fn empty() -> Self { Self { data: Vec::new() } }empty59,1960
+        pub fn singleton(item: T) -> Self { Self { data: vec![item] } }singleton62,2113
+        pub fn from_vec(data: Vec<T>) -> Self { Self { data } }from_vec65,2287
+        pub fn with_len(length: N, init_value: T) -> Self {with_len68,2453
+    impl<'a, T: StT> IntoIterator for &'a MathSeqS<T> {MathSeqS75,2611
+        type Item = &'a T;Item76,2667
+        type IntoIter = std::slice::Iter<'a, T>;IntoIter77,2694
+        fn into_iter(self) -> Self::IntoIter { self.data.iter() }into_iter78,2743
+    impl<'a, T: StT> IntoIterator for &'a mut MathSeqS<T> {MathSeqS81,2816
+        type Item = &'a mut T;Item82,2876
+        type IntoIter = std::slice::IterMut<'a, T>;IntoIter83,2907
+        fn into_iter(self) -> Self::IntoIter { self.data.iter_mut() }into_iter84,2959
+    impl<T: StT> IntoIterator for MathSeqS<T> {MathSeqS87,3036
+        type Item = T;Item88,3084
+        type IntoIter = std::vec::IntoIter<T>;IntoIter89,3107
+        fn into_iter(self) -> Self::IntoIter { self.data.into_iter() }into_iter90,3154
+    pub trait MathSeqTrait<T: StT + Hash> {MathSeqTrait94,3268
+        fn new(length: N, init_value: T) -> Self;new97,3414
+        fn empty() -> Self;empty101,3557
+        fn singleton(item: T) -> Self;singleton105,3678
+        fn length(&self) -> N;length109,3810
+        fn nth(&self, index: N) -> &T;nth113,3934
+        fn set(&mut self, index: N, value: T) -> Result<&mut Self, &'static str>;set117,4066
+        fn add_last(&mut self, value: T) -> &mut Self;add_last121,4353
+        fn delete_last(&mut self) -> Option<T>;delete_last125,4501
+        fn subseq(&self, start: N, length: N) -> &[T];subseq129,4642
+        fn subseq_copy(&self, start: N, length: N) -> Self;subseq_copy133,4800
+        fn isEmpty(&self) -> B;isEmpty137,4953
+        fn isSingleton(&self) -> B;isSingleton141,5078
+        fn domain(&self) -> Vec<N>;domain145,5211
+        fn range(&self) -> Vec<T>;range149,5344
+        fn multiset_range(&self) -> Vec<(N, T)>;multiset_range153,5476
+    impl<T: StT + Hash> MathSeqTrait<T> for MathSeqS<T> {MathSeqS156,5532
+        fn new(length: N, init_value: T) -> Self {new159,5692
+        fn empty() -> Self { MathSeqS { data: Vec::new() } }empty167,5931
+        fn singleton(item: T) -> Self { MathSeqS { data: vec![item] } }singleton171,6085
+        fn length(&self) -> N { self.data.len() }length175,6250
+        fn nth(&self, index: N) -> &T { &self.data[index] }nth179,6393
+        fn set(&mut self, index: N, value: T) -> Result<&mut Self, &'static str> {set183,6546
+        fn add_last(&mut self, value: T) -> &mut Self {add_last194,7030
+        fn delete_last(&mut self) -> Option<T> { self.data.pop() }delete_last201,7241
+        fn subseq(&self, start: N, length: N) -> &[T] {subseq205,7401
+        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy214,7727
+        fn isEmpty(&self) -> B {isEmpty228,8196
+        fn isSingleton(&self) -> B {isSingleton238,8454
+        fn domain(&self) -> Vec<N> { (0..self.data.len()).collect() }domain248,8720
+        fn range(&self) -> Vec<T> {range252,8887
+        fn multiset_range(&self) -> Vec<(N, T)> {multiset_range265,9354
+    macro_rules! MathSeqLit {MathSeqLit284,10038
+    fn _MathSeqLit_type_checks() {_MathSeqLit_type_checks297,10407
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/DirGraphStEphChap6_1.rs,3712
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTRBStEph.rs,4484
+pub mod BSTRBStEph {BSTRBStEph3,93
+    enum Color {Color9,297
+        Red,Red10,314
+        Black,Black11,327
+    type Link<T> = Option<Box<Node<T>>>;Link14,349
+    struct Node<T: StT + Ord> {Node17,412
+        key: T,key18,444
+        color: Color,color19,460
+        size: N,size20,482
+        left: Link<T>,left21,499
+        right: Link<T>,right22,522
+    impl<T: StT + Ord> Node<T> {Node25,553
+        fn new(key: T) -> Self {new26,586
+    pub struct BSTRBStEph<T: StT + Ord> {BSTRBStEph37,807
+        root: Link<T>,root38,849
+    pub type BSTreeRB<T> = BSTRBStEph<T>;BSTreeRB41,879
+    pub trait BSTRBStEphTrait<T: StT + Ord> {BSTRBStEphTrait43,922
+        fn new() -> Self;new44,968
+        fn size(&self) -> N;size45,994
+        fn is_empty(&self) -> B;is_empty46,1023
+        fn height(&self) -> N;height47,1056
+        fn insert(&mut self, value: T);insert48,1087
+        fn find(&self, target: &T) -> Option<&T>;find49,1127
+        fn contains(&self, target: &T) -> B;contains50,1177
+        fn minimum(&self) -> Option<&T>;minimum51,1222
+        fn maximum(&self) -> Option<&T>;maximum52,1263
+        fn in_order(&self) -> ArrayStPerS<T>;in_order53,1304
+        fn pre_order(&self) -> ArrayStPerS<T>;pre_order54,1350
+    impl<T: StT + Ord> Default for BSTRBStEph<T> {BSTRBStEph57,1404
+        fn default() -> Self { Self::new() }default58,1455
+    impl<T: StT + Ord> BSTRBStEph<T> {BSTRBStEph61,1507
+        pub fn new() -> Self { BSTRBStEph { root: None } }new62,1546
+        pub fn size(&self) -> N { Self::size_link(&self.root) }size64,1606
+        pub fn is_empty(&self) -> B {is_empty66,1671
+        pub fn height(&self) -> N {height74,1838
+            fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {height_rec75,1874
+        pub fn insert(&mut self, value: T) {insert84,2170
+        pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }find91,2390
+        pub fn contains(&self, target: &T) -> B {contains93,2484
+        pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }minimum101,2674
+        pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }maximum103,2750
+        pub fn in_order(&self) -> ArrayStPerS<T> {in_order105,2826
+        pub fn pre_order(&self) -> ArrayStPerS<T> {pre_order111,3044
+        fn is_red(link: &Link<T>) -> bool { matches!(link, Some(node) if node.color == Color::Reis_red117,3264
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }size_link119,3366
+        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::sizeupdate121,3449
+        fn rotate_left(link: &mut Link<T>) {rotate_left123,3568
+        fn rotate_right(link: &mut Link<T>) {rotate_right140,4164
+        fn flip_colors(link: &mut Link<T>) {flip_colors157,4762
+        fn fix_up(link: &mut Link<T>) {fix_up178,5567
+        fn insert_link(link: &mut Link<T>, value: T) {insert_link195,6254
+        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {find_link211,6796
+        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {min_link226,7313
+        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {max_link236,7634
+        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {in_order_collect246,7957
+        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {pre_order_collect254,8244
+    impl<T: StT + Ord> BSTRBStEphTrait<T> for BSTRBStEph<T> {BSTRBStEph263,8540
+        fn new() -> Self { BSTRBStEph::new() }new264,8602
+        fn size(&self) -> N { BSTRBStEph::size(self) }size266,8650
+        fn is_empty(&self) -> B { BSTRBStEph::is_empty(self) }is_empty268,8706
+        fn height(&self) -> N { BSTRBStEph::height(self) }height270,8770
+        fn insert(&mut self, value: T) { BSTRBStEph::insert(self, value) }insert272,8830
+        fn find(&self, target: &T) -> Option<&T> { BSTRBStEph::find(self, target) }find274,8906
+        fn contains(&self, target: &T) -> B { BSTRBStEph::contains(self, target) }contains276,8991
+        fn minimum(&self) -> Option<&T> { BSTRBStEph::minimum(self) }minimum278,9075
+        fn maximum(&self) -> Option<&T> { BSTRBStEph::maximum(self) }maximum280,9146
+        fn in_order(&self) -> ArrayStPerS<T> { BSTRBStEph::in_order(self) }in_order282,9217
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTRBStEph::pre_order(self) }pre_order284,9294
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/DirGraphStEphChap6_1.rs,3792
 pub mod DirGraphStEphChap6_1 {DirGraphStEphChap6_13,77
-pub struct DirGraphStEph<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {DirGraphStEph10,242
-    V: Set<V>,V11,329
-    A: Set<Pair<V, V>>,A12,344
-pub trait DirGraphStEphChap6_1Trait<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> DirGraphStEphChap6_1Trait15,371
-    fn empty() -> DirGraphStEph<V>;empty18,553
-    fn FromSets(V: Set<V>, A: Set<Pair<V, V>>) -> DirGraphStEph<V>;FromSets21,689
-    fn vertices(&self) -> &Set<V>;vertices24,841
-    fn arcs(&self) -> &Set<Pair<V, V>>;arcs27,960
-    fn sizeV(&self) -> N;sizeV30,1084
-    fn sizeA(&self) -> N;sizeA33,1194
-    fn Neighbor(&self, u: &V, v: &V) -> B;Neighbor36,1304
-    fn NG(&self, v: &V) -> Set<V>;NG39,1435
-    fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V>;NGOfVertices42,1580
-    fn NPlus(&self, v: &V) -> Set<V>;NPlus45,1722
-    fn NMinus(&self, v: &V) -> Set<V>;NMinus48,1848
-    fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V>;NPlusOfVertices51,1997
-    fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V>;NMinusOfVertices54,2164
-    fn Incident(&self, e: &Pair<V, V>, v: &V) -> B;Incident57,2306
-    fn Degree(&self, v: &V) -> N;Degree60,2446
-    fn InDegree(&self, v: &V) -> N;InDegree63,2568
-    fn OutDegree(&self, v: &V) -> N;OutDegree66,2692
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> DirGraphStEphChap6_1Trait<V> foDirGraphStEph69,2732
-    fn empty() -> DirGraphStEph<V> { DirGraphStEph { V: SetLit![], A: SetLit![] } }empty70,2849
-    fn FromSets(V: Set<V>, A: Set<Pair<V, V>>) -> DirGraphStEph<V> { DirGraphStEph { V, A } }FromSets71,2933
-    fn vertices(&self) -> &Set<V> { &self.V }vertices72,3027
-    fn arcs(&self) -> &Set<Pair<V, V>> { &self.A }arcs73,3073
-    fn sizeV(&self) -> N { self.V.size() }sizeV74,3124
-    fn sizeA(&self) -> N { self.A.size() }sizeA75,3167
-    fn Neighbor(&self, u: &V, v: &V) -> B {Neighbor77,3211
-    fn NG(&self, v: &V) -> Set<V> { self.NPlus(v) }NG82,3458
-    fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V> {NGOfVertices84,3511
-    fn NPlus(&self, v: &V) -> Set<V> {NPlus93,3751
-    fn NMinus(&self, v: &V) -> Set<V> {NMinus99,3949
-    fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V> {NPlusOfVertices105,4148
-    fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V> {NMinusOfVertices114,4398
-    fn Incident(&self, e: &Pair<V, V>, v: &V) -> B { if &e.0 == v || &e.1 == v { B::True } else Incident123,4652
-    fn Degree(&self, v: &V) -> N { self.NPlus(v).size() }Degree125,4764
-    fn InDegree(&self, v: &V) -> N { self.NMinus(v).size() }InDegree126,4822
-    fn OutDegree(&self, v: &V) -> N { self.NPlus(v).size() }OutDegree127,4883
-impl<V: Eq + Hash + Clone + std::fmt::Debug + std::fmt::Display> std::fmt::Debug for DirGraphStEDirGraphStEph130,4947
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt131,5051
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> std::fmt::Display for DirGraphSDirGraphStEph136,5222
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt137,5328
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> PartialEq for DirGraphStEph<V> DirGraphStEph142,5459
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> PartialEq for DirGraphStEph<V> eq142,5459
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> Eq for DirGraphStEph<V> {}DirGraphStEph143,5637
-    macro_rules! DirGraphLit {DirGraphLit146,5750
-    fn _DirGraphLit_type_checks() {_DirGraphLit_type_checks163,6909
-    pub fn __dirgraph_macro_typecheck_exercise() {__dirgraph_macro_typecheck_exercise169,7175
+    pub struct DirGraphStEph<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {DirGraphStEph10,262
+        V: Set<V>,V11,353
+        A: Set<Pair<V, V>>,A12,372
+    pub trait DirGraphStEphChap6_1Trait<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::DebDirGraphStEphChap6_1Trait15,407
+        fn empty() -> DirGraphStEph<V>;empty18,601
+        fn FromSets(V: Set<V>, A: Set<Pair<V, V>>) -> DirGraphStEph<V>;FromSets21,749
+        fn vertices(&self) -> &Set<V>;vertices24,913
+        fn arcs(&self) -> &Set<Pair<V, V>>;arcs27,1044
+        fn sizeV(&self) -> N;sizeV30,1180
+        fn sizeA(&self) -> N;sizeA33,1302
+        fn Neighbor(&self, u: &V, v: &V) -> B;Neighbor36,1424
+        fn NG(&self, v: &V) -> Set<V>;NG39,1567
+        fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V>;NGOfVertices42,1724
+        fn NPlus(&self, v: &V) -> Set<V>;NPlus45,1878
+        fn NMinus(&self, v: &V) -> Set<V>;NMinus48,2016
+        fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V>;NPlusOfVertices51,2177
+        fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V>;NMinusOfVertices54,2356
+        fn Incident(&self, e: &Pair<V, V>, v: &V) -> B;Incident57,2510
+        fn Degree(&self, v: &V) -> N;Degree60,2662
+        fn InDegree(&self, v: &V) -> N;InDegree63,2796
+        fn OutDegree(&self, v: &V) -> N;OutDegree66,2932
+    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> DirGraphStEphChap6_1Trait<VDirGraphStEph69,2980
+        fn empty() -> DirGraphStEph<V> {empty70,3101
+        fn FromSets(V: Set<V>, A: Set<Pair<V, V>>) -> DirGraphStEph<V> { DirGraphStEph { V, A } FromSets76,3254
+        fn vertices(&self) -> &Set<V> { &self.V }vertices77,3352
+        fn arcs(&self) -> &Set<Pair<V, V>> { &self.A }arcs78,3402
+        fn sizeV(&self) -> N { self.V.size() }sizeV79,3457
+        fn sizeA(&self) -> N { self.A.size() }sizeA80,3504
+        fn Neighbor(&self, u: &V, v: &V) -> B {Neighbor82,3552
+        fn NG(&self, v: &V) -> Set<V> { self.NPlus(v) }NG92,3883
+        fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V> {NGOfVertices94,3940
+        fn NPlus(&self, v: &V) -> Set<V> {NPlus103,4212
+        fn NMinus(&self, v: &V) -> Set<V> {NMinus113,4494
+        fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V> {NPlusOfVertices123,4777
+        fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V> {NMinusOfVertices132,5059
+        fn Incident(&self, e: &Pair<V, V>, v: &V) -> B {Incident141,5345
+        fn Degree(&self, v: &V) -> N { self.NPlus(v).size() }Degree149,5537
+        fn InDegree(&self, v: &V) -> N { self.NMinus(v).size() }InDegree150,5599
+        fn OutDegree(&self, v: &V) -> N { self.NPlus(v).size() }OutDegree151,5664
+    impl<V: Eq + Hash + Clone + std::fmt::Debug + std::fmt::Display> std::fmt::Debug for DirGrapDirGraphStEph154,5736
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt155,5844
+    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> std::fmt::Display for DirGrDirGraphStEph163,6082
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "V={} A={fmt164,6192
+    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> PartialEq for DirGraphStEphDirGraphStEph167,6319
+        fn eq(&self, other: &Self) -> bool { self.V == other.V && self.A == other.A }eq168,6421
+    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> Eq for DirGraphStEph<V> {}DirGraphStEph170,6513
+    macro_rules! DirGraphLit {DirGraphLit173,6630
+    fn _DirGraphLit_type_checks() {_DirGraphLit_type_checks190,7789
+    pub fn __dirgraph_macro_typecheck_exercise() {__dirgraph_macro_typecheck_exercise196,8029
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chapter36Mt.rs,2179
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chapter36Mt.rs,1405
 pub mod Chapter36Mt {Chapter36Mt3,94
-    pub trait Chapter36MtTrait<T: StT + Ord + Send + 'static> {Chapter36MtTrait14,315
-        fn pivot_mt_first(&self, lo: N, hi: N) -> T;pivot_mt_first15,379
-        fn pivot_mt_median3(&self, lo: N, hi: N) -> T;pivot_mt_median316,432
-        fn pivot_mt_random(&self, lo: N, hi: N) -> T;pivot_mt_random17,487
-        fn quick_sort_mt_first(&mut self);quick_sort_mt_first19,542
-        fn quick_sort_mt_median3(&mut self);quick_sort_mt_median320,585
-        fn quick_sort_mt_random(&mut self);quick_sort_mt_random21,630
-    fn snapshot_mutex_vec<T: StT + Send>(a: &ArraySeqMtEphS<T>) -> Arc<Vec<Mutex<T>>> {snapshot_mutex_vec24,681
-    fn commit_sorted<T: StT + Send>(a: &mut ArraySeqMtEphS<T>, data: &Arc<Vec<Mutex<T>>>) {commit_sorted30,918
-    fn mutex_value_at<T: StT + Send>(data: &Arc<Vec<Mutex<T>>>, index: N) -> T {mutex_value_at38,1173
-    fn swap_cells<T: StT + Send>(data: &Arc<Vec<Mutex<T>>>, i: N, j: N) {swap_cells42,1305
-    fn partition<T: StT + Ord + Send>(partition54,1745
-    fn pivot_arc_first<T: StT + Ord + Send>(data: &Arc<Vec<Mutex<T>>>, lo: N, _hi: N) -> T {pivot_arc_first79,2340
-    fn pivot_arc_median3<T: StT + Ord + Send>(data: &Arc<Vec<Mutex<T>>>, lo: N, hi: N) -> T {pivot_arc_median383,2473
-    fn pivot_arc_random<T: StT + Ord + Send>(data: &Arc<Vec<Mutex<T>>>, lo: N, hi: N) -> T {pivot_arc_random93,2905
-    fn quick_sort_parallel<T: StT + Ord + Send + 'static>(quick_sort_parallel99,3108
-    fn quick_sort_mt_impl<T: StT + Ord + Send + 'static>(quick_sort_mt_impl120,3899
-    impl<T: StT + Ord + Send + 'static> Chapter36MtTrait<T> for ArraySeqMtEphS<T> {ArraySeqMtEphS131,4254
-        fn pivot_mt_first(&self, lo: N, _hi: N) -> T { self.nth_cloned(lo) }pivot_mt_first132,4338
-        fn pivot_mt_median3(&self, lo: N, hi: N) -> T {pivot_mt_median3133,4415
-        fn pivot_mt_random(&self, lo: N, hi: N) -> T {pivot_mt_random142,4825
-        fn quick_sort_mt_first(&mut self) {quick_sort_mt_first148,5001
-        fn quick_sort_mt_median3(&mut self) {quick_sort_mt_median3151,5115
-        fn quick_sort_mt_random(&mut self) {quick_sort_mt_random154,5233
+    pub trait Chapter36MtTrait<T: StT + Ord + Send> {Chapter36MtTrait25,1177
+        fn pivot_mt_first(&self, lo: N, hi: N) -> T;pivot_mt_first26,1231
+        fn pivot_mt_median3(&self, lo: N, hi: N) -> T;pivot_mt_median327,1284
+        fn pivot_mt_random(&self, lo: N, hi: N) -> T;pivot_mt_random28,1339
+        fn quick_sort_mt_first(&mut self);quick_sort_mt_first30,1394
+        fn quick_sort_mt_median3(&mut self);quick_sort_mt_median331,1437
+        fn quick_sort_mt_random(&mut self);quick_sort_mt_random32,1482
+    impl<T: StT + Ord + Send> Chapter36MtTrait<T> for ArraySeqMtEphS<T> {ArraySeqMtEphS35,1533
+        fn pivot_mt_first(&self, lo: N, _hi: N) -> T { self.nth_cloned(lo) }pivot_mt_first36,1607
+        fn pivot_mt_median3(&self, lo: N, hi: N) -> T {pivot_mt_median337,1684
+        fn pivot_mt_random(&self, lo: N, hi: N) -> T {pivot_mt_random50,2154
+        fn quick_sort_mt_first(&mut self) {quick_sort_mt_first56,2330
+            fn quick_sort<T: StT + Ord + Send>(data: &mut [T]) {quick_sort61,2449
+        fn quick_sort_mt_median3(&mut self) {quick_sort_mt_median399,3795
+            fn quick_sort<T: StT + Ord + Send>(data: &mut [T]) {quick_sort104,3916
+        fn quick_sort_mt_random(&mut self) {quick_sort_mt_random154,5729
+            fn quick_sort<T: StT + Ord + Send>(data: &mut [T]) {quick_sort159,5849
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListStPer.rs,2863
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListStPer.rs,2916
 pub mod LinkedListStPer {LinkedListStPer3,64
     pub struct NodeP<T: StT> {NodeP7,144
         pub value: T,value8,175
@@ -351,29 +578,79 @@ pub mod LinkedListStPer {LinkedListStPer3,64
         pub fn from_vec(v: Vec<T>) -> Self {from_vec58,2044
         pub fn iter<'a>(&'a self) -> LinkedListStPerIter<'a, T> {iter66,2309
     impl<T: StT> LinkedListStPerTrait<T> for LinkedListStPerS<T> {LinkedListStPerS73,2486
-        fn empty() -> Self {empty74,2553
-        fn new(length: N, init_value: T) -> Self {new77,2644
-        fn length(&self) -> N {length96,3325
-        fn nth(&self, index: N) -> &T {nth99,3388
-        fn isEmpty(&self) -> B {isEmpty111,3755
-        fn isSingleton(&self) -> B {isSingleton118,3913
-        fn singleton(item: T) -> Self {singleton125,4075
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str> {set134,4324
-        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy166,5452
-    impl<T: StT> std::fmt::Debug for LinkedListStPerS<T> {LinkedListStPerS201,6593
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt202,6652
-    pub struct LinkedListStPerIter<'a, T: StT> {LinkedListStPerIter213,7018
-        cursor: Option<&'a NodeP<T>>,cursor214,7067
-    impl<'a, T: StT> Iterator for LinkedListStPerIter<'a, T> {LinkedListStPerIter217,7112
-        type Item = &'a T;Item218,7175
-        fn next(&mut self) -> Option<Self::Item> {next219,7202
-    impl<T: StT> PartialEq for LinkedListStPerS<T> {LinkedListStPerS229,7449
-        fn eq(&self, other: &Self) -> bool {eq230,7502
-    impl<T: StT> Eq for LinkedListStPerS<T> {}LinkedListStPerS247,7991
-    impl<T: StT> std::fmt::Display for LinkedListStPerS<T> {LinkedListStPerS249,8039
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt250,8100
-    macro_rules! LinkedListStPer {LinkedListStPer268,8628
-    fn _LinkedListStPer_type_checks() {_LinkedListStPer_type_checks277,9120
+        fn empty() -> Self { LinkedListStPerS { head: None, len: 0 } }empty74,2553
+        fn new(length: N, init_value: T) -> Self {new75,2624
+        fn length(&self) -> N { self.len }length94,3305
+        fn nth(&self, index: N) -> &T {nth95,3348
+        fn isEmpty(&self) -> B {isEmpty107,3715
+        fn isSingleton(&self) -> B {isSingleton114,3873
+        fn singleton(item: T) -> Self {singleton121,4035
+        fn set(&self, index: N, item: T) -> Result<Self, &'static str> {set130,4284
+        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy155,5283
+    impl<T: StT> std::fmt::Debug for LinkedListStPerS<T> {LinkedListStPerS190,6424
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt191,6483
+    pub struct LinkedListStPerIter<'a, T: StT> {LinkedListStPerIter202,6849
+        cursor: Option<&'a NodeP<T>>,cursor203,6898
+    impl<'a, T: StT> Iterator for LinkedListStPerIter<'a, T> {LinkedListStPerIter206,6943
+        type Item = &'a T;Item207,7006
+        fn next(&mut self) -> Option<Self::Item> {next208,7033
+    impl<T: StT> PartialEq for LinkedListStPerS<T> {LinkedListStPerS218,7280
+        fn eq(&self, other: &Self) -> bool {eq219,7333
+    impl<T: StT> Eq for LinkedListStPerS<T> {}LinkedListStPerS236,7822
+    impl<T: StT> std::fmt::Display for LinkedListStPerS<T> {LinkedListStPerS238,7870
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt239,7931
+    macro_rules! LinkedListStPer {LinkedListStPer257,8459
+    fn _LinkedListStPer_type_checks() {_LinkedListStPer_type_checks266,8951
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqMtEphSlice.rs,3287
+pub mod ArraySeqMtEphSlice {ArraySeqMtEphSlice8,395
+    struct Inner<T: StT> {Inner15,563
+        data: Mutex<Box<[T]>>,data16,590
+    impl<T: StT> Inner<T> {Inner19,628
+        fn new(data: Box<[T]>) -> Self { Inner { data: Mutex::new(data) } }new20,656
+        fn len(&self) -> N {len22,733
+    pub struct ArraySeqMtEphSliceS<T: StT> {ArraySeqMtEphSliceS29,921
+        inner: Arc<Inner<T>>,inner30,966
+        range: Range<N>,range31,996
+    pub trait ArraySeqMtEphSliceTrait<T: StT> {ArraySeqMtEphSliceTrait35,1092
+        fn new(length: N, init_value: T) -> Self;new36,1140
+        fn length(&self) -> N;length37,1190
+        fn nth_cloned(&self, index: N) -> T;nth_cloned38,1221
+        fn empty() -> Self;empty39,1266
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;set40,1294
+        fn singleton(item: T) -> Self;singleton41,1375
+        fn isEmpty(&self) -> B;isEmpty42,1414
+        fn isSingleton(&self) -> B;isSingleton43,1446
+        fn subseq_copy(&self, start: N, length: N) -> Self;subseq_copy44,1482
+        fn slice(&self, start: N, length: N) -> Self;slice45,1542
+    impl<T: StT> ArraySeqMtEphSliceS<T> {ArraySeqMtEphSliceS48,1603
+        pub fn from_box(data: Box<[T]>) -> Self {from_box50,1706
+        pub fn from_vec(data: Vec<T>) -> Self { Self::from_box(data.into_boxed_slice()) }from_vec59,2008
+        pub fn to_vec(&self) -> Vec<T> {to_vec62,2180
+        pub fn with_exclusive<F, R>(&self, f: F) -> Rwith_exclusive68,2444
+        fn len(&self) -> N { self.range.end - self.range.start }len78,2750
+        fn clamp_subrange(&self, start: N, length: N) -> Range<N> {clamp_subrange80,2816
+    impl<T: StT> ArraySeqMtEphSliceTrait<T> for ArraySeqMtEphSliceS<T> {ArraySeqMtEphSliceS89,3176
+        fn new(length: N, init_value: T) -> Self {new90,3249
+        fn length(&self) -> N { self.len() }length95,3414
+        fn nth_cloned(&self, index: N) -> T {nth_cloned97,3460
+        fn empty() -> Self { ArraySeqMtEphSliceS::from_vec(Vec::new()) }empty103,3653
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {set105,3727
+        fn singleton(item: T) -> Self { ArraySeqMtEphSliceS::from_vec(vec![item]) }singleton117,4123
+        fn isEmpty(&self) -> B {isEmpty119,4208
+        fn isSingleton(&self) -> B {isSingleton127,4369
+        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy135,4534
+        fn slice(&self, start: N, length: N) -> Self {slice142,4853
+    impl<T: StT> Clone for ArraySeqMtEphSliceS<T> {ArraySeqMtEphSliceS151,5107
+        fn clone(&self) -> Self {clone152,5159
+    impl<T: StT> PartialEq for ArraySeqMtEphSliceS<T> {ArraySeqMtEphSliceS160,5349
+        fn eq(&self, other: &Self) -> bool {eq161,5405
+    impl<T: StT> Eq for ArraySeqMtEphSliceS<T> {}ArraySeqMtEphSliceS174,5823
+    impl<T: StT> Debug for ArraySeqMtEphSliceS<T> {ArraySeqMtEphSliceS176,5874
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {fmt177,5926
+    impl<T: StT> Display for ArraySeqMtEphSliceS<T> {ArraySeqMtEphSliceS185,6193
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {fmt186,6247
+    fn repeat_vec<T: StT>(length: N, init: T) -> Vec<T> {repeat_vec201,6714
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqMtEphChap18.rs,1663
 pub mod ArraySeqMtEphChap18 {ArraySeqMtEphChap183,67
@@ -387,12 +664,84 @@ pub mod ArraySeqMtEphChap18 {ArraySeqMtEphChap183,67
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphninject14,747
     impl<T: StT> ArraySeqMtEphChap18Trait<T> for ArraySeqMtEphS<T> {ArraySeqMtEphS17,856
         fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqMtEphS<T> {tabulate18,925
-        fn map<U: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqMtEphS<U> {map23,1143
-        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T> {append32,1593
-        fn filter(a: &ArraySeqMtEphS<T>, pred: impl Fn(&T) -> B) -> ArraySeqMtEphS<T> {filter41,2143
-        fn update(a: &mut ArraySeqMtEphS<T>, (index, item): (N, T)) -> &mut ArraySeqMtEphS<T> {update46,2464
-        fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphSinject49,2612
-        fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphninject54,2893
+        fn map<U: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqMtEphS<U> {map25,1171
+        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T> {append38,1677
+        fn filter(a: &ArraySeqMtEphS<T>, pred: impl Fn(&T) -> B) -> ArraySeqMtEphS<T> {filter55,2335
+        fn update(a: &mut ArraySeqMtEphS<T>, (index, item): (N, T)) -> &mut ArraySeqMtEphS<T> {update67,2760
+        fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphSinject71,2920
+        fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphninject79,3245
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTSetSplayMtEph.rs,5480
+pub mod BSTSetSplayMtEph {BSTSetSplayMtEph3,75
+    pub struct BSTSetSplayMtEph<T: StTinMtT + Ord> {BSTSetSplayMtEph10,290
+        tree: BSTSplayMtEph<T>,tree11,343
+    pub type BSTSetSplayMt<T> = BSTSetSplayMtEph<T>;BSTSetSplayMt14,382
+    pub trait BSTSetSplayMtEphTrait<T: StTinMtT + Ord>: Sized {BSTSetSplayMtEphTrait16,436
+        fn empty() -> Self;empty17,500
+        fn singleton(value: T) -> Self;singleton18,528
+        fn size(&self) -> N;size19,568
+        fn is_empty(&self) -> B;is_empty20,597
+        fn find(&self, value: &T) -> Option<T>;find21,630
+        fn contains(&self, value: &T) -> B;contains22,678
+        fn minimum(&self) -> Option<T>;minimum23,722
+        fn maximum(&self) -> Option<T>;maximum24,762
+        fn insert(&mut self, value: T);insert25,802
+        fn delete(&mut self, target: &T);delete26,842
+        fn union(&self, other: &Self) -> Self;union27,884
+        fn intersection(&self, other: &Self) -> Self;intersection28,931
+        fn difference(&self, other: &Self) -> Self;difference29,985
+        fn split(&self, pivot: &T) -> (Self, B, Self);split30,1037
+        fn join_pair(left: Self, right: Self) -> Self;join_pair31,1092
+        fn join_m(left: Self, pivot: T, right: Self) -> Self;join_m32,1147
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self;filter33,1209
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T;reduce34,1279
+        fn iter_in_order(&self) -> ArrayStPerS<T>;iter_in_order35,1347
+        fn as_tree(&self) -> &BSTSplayMtEph<T>;as_tree36,1398
+    impl<T: StTinMtT + Ord> BSTSetSplayMtEph<T> {BSTSetSplayMtEph39,1453
+        pub fn empty() -> Self {empty40,1503
+        pub fn singleton(value: T) -> Self {singleton46,1624
+        pub fn size(&self) -> N { self.tree.size() }size52,1783
+        pub fn is_empty(&self) -> B { self.tree.is_empty() }is_empty54,1837
+        pub fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }find56,1899
+        pub fn contains(&self, value: &T) -> B { self.tree.contains(value) }contains58,1977
+        pub fn minimum(&self) -> Option<T> { self.tree.minimum() }minimum60,2055
+        pub fn maximum(&self) -> Option<T> { self.tree.maximum() }maximum62,2123
+        pub fn insert(&mut self, value: T) { self.tree.insert(value); }insert64,2191
+        pub fn delete(&mut self, target: &T) {delete66,2264
+        pub fn union(&self, other: &Self) -> Self {union74,2553
+        pub fn intersection(&self, other: &Self) -> Self {intersection82,2852
+        pub fn difference(&self, other: &Self) -> Self {difference99,3430
+        pub fn split(&self, pivot: &T) -> (Self, B, Self) {split116,4007
+        pub fn join_pair(left: Self, right: Self) -> Self {join_pair136,4698
+        pub fn join_m(left: Self, pivot: T, right: Self) -> Self {join_m144,5011
+        pub fn filter<F>(&self, mut predicate: F) -> Selffilter153,5367
+        pub fn reduce<F>(&self, mut op: F, base: T) -> Treduce166,5776
+        pub fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }iter_in_order176,6040
+        pub fn as_tree(&self) -> &BSTSplayMtEph<T> { &self.tree }as_tree178,6120
+        fn values_vec(&self) -> Vec<T> { self.tree.in_order().iter().cloned().collect() }values_vec180,6187
+        fn rebuild_from_vec(values: Vec<T>) -> BSTSplayMtEph<T> {rebuild_from_vec182,6278
+        fn from_sorted_iter<I>(values: I) -> Selffrom_sorted_iter190,6501
+    impl<T: StTinMtT + Ord> BSTSetSplayMtEphTrait<T> for BSTSetSplayMtEph<T> {BSTSetSplayMtEph202,6786
+        fn empty() -> Self { Self::empty() }empty203,6865
+        fn singleton(value: T) -> Self { Self::singleton(value) }singleton205,6911
+        fn size(&self) -> N { self.tree.size() }size207,6978
+        fn is_empty(&self) -> B { self.tree.is_empty() }is_empty209,7028
+        fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }find211,7086
+        fn contains(&self, value: &T) -> B { self.tree.contains(value) }contains213,7160
+        fn minimum(&self) -> Option<T> { self.tree.minimum() }minimum215,7234
+        fn maximum(&self) -> Option<T> { self.tree.maximum() }maximum217,7298
+        fn insert(&mut self, value: T) { self.tree.insert(value); }insert219,7362
+        fn delete(&mut self, target: &T) { BSTSetSplayMtEph::delete(self, target) }delete221,7431
+        fn union(&self, other: &Self) -> Self { BSTSetSplayMtEph::union(self, other) }union223,7516
+        fn intersection(&self, other: &Self) -> Self { BSTSetSplayMtEph::intersection(self, otheintersection225,7604
+        fn difference(&self, other: &Self) -> Self { BSTSetSplayMtEph::difference(self, other) }difference227,7706
+        fn split(&self, pivot: &T) -> (Self, B, Self) { BSTSetSplayMtEph::split(self, pivot) }split229,7804
+        fn join_pair(left: Self, right: Self) -> Self { BSTSetSplayMtEph::join_pair(left, right)join_pair231,7900
+        fn join_m(left: Self, pivot: T, right: Self) -> Self { BSTSetSplayMtEph::join_m(left, pijoin_m233,8000
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self { BSTSetSplayMtEph::filter(filter235,8111
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T { BSTSetSplayMtEph::reduce(sereduce237,8227
+        fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }iter_in_order239,8340
+        fn as_tree(&self) -> &BSTSplayMtEph<T> { &self.tree }as_tree241,8416
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/AVLTreeSeqStEphChap18.rs,1052
 pub mod AVLTreeSeqStEphChap18 {AVLTreeSeqStEphChap183,74
@@ -407,69 +756,69 @@ pub mod AVLTreeSeqStEphChap18 {AVLTreeSeqStEphChap183,74
         fn append(a: &AVLTreeSeqStEphS<T>, b: &AVLTreeSeqStEphS<T>) -> AVLTreeSeqStEphS<T> {append39,1867
         fn filter(a: &AVLTreeSeqStEphS<T>, pred: impl Fn(&T) -> B) -> AVLTreeSeqStEphS<T> {filter51,2345
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListStEphChap18.rs,2964
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListStEphChap18.rs,2912
 pub mod LinkedListStEphChap18 {LinkedListStEphChap183,60
-pub trait LinkedListStEphChap18Trait<T: StT> {LinkedListStEphChap18Trait8,200
-    fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStEphS<T>;tabulate11,331
-    fn map<U: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&T) -> U) -> LinkedListStEphS<U>;map14,485
-    fn append(a: &LinkedListStEphS<T>, b: &LinkedListStEphS<T>) -> LinkedListStEphS<T>;append17,674
-    fn filter(a: &LinkedListStEphS<T>, pred: impl Fn(&T) -> B) -> LinkedListStEphS<T>;filter20,850
-    fn update(a: &mut LinkedListStEphS<T>, item_at: Pair<N, T>) -> &mut LinkedListStEphS<T>;update23,1037
-    fn inject(a: &LinkedListStEphS<T>, updates: &LinkedListStEphS<Pair<N, T>>) -> LinkedListStEpinject26,1242
-    fn ninject(a: &LinkedListStEphS<T>, updates: &LinkedListStEphS<Pair<N, T>>) -> LinkedListStEninject29,1457
-    fn iterate< A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;iterate30,1561
-    fn iteratePrefixes< A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LinkiteratePrefixes31,1647
-    fn reduce(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce32,1764
-    fn scan(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<T>, Tscan33,1842
-    fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T>;flatten34,1941
-    fn collect<A: StT, Bv: StT>(a: &LinkedListStEphS<Pair<A, Bv>>, cmp: impl Fn(&A, &A) -> O) ->collect35,2024
-impl<T: StT> LinkedListStEphChap18Trait<T> for LinkedListStEphS<T> {LinkedListStEphS38,2173
-    fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStEphS<T> {tabulate39,2242
-    fn map<U: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&T) -> U) -> LinkedListStEphS<U> {map44,2444
-    fn append(a: &LinkedListStEphS<T>, b: &LinkedListStEphS<T>) -> LinkedListStEphS<T> {append49,2843
-    fn filter(a: &LinkedListStEphS<T>, pred: impl Fn(&T) -> B) -> LinkedListStEphS<T> {filter57,3397
-    fn update(a: &mut LinkedListStEphS<T>, item_at: Pair<N, T>) -> &mut LinkedListStEphS<T> { <Lupdate65,3799
-    fn inject(a: &LinkedListStEphS<T>, updates: &LinkedListStEphS<Pair<N, T>>) -> LinkedListStEpinject66,3964
-    fn ninject(a: &LinkedListStEphS<T>, updates: &LinkedListStEphS<Pair<N, T>>) -> LinkedListStEninject83,4801
-    fn iterate< A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate96,5488
-    fn iteratePrefixes<A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LinkeiteratePrefixes99,5762
-    fn reduce(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce105,6206
-    fn scan(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<T>, Tscan116,6924
-    fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T> {flatten124,7570
-    fn collect<A: StT, Bv: StT>(a: &LinkedListStEphS<Pair<A, Bv>>, cmp: impl Fn(&A, &A) -> O) ->collect134,8190
+    pub trait LinkedListStEphChap18Trait<T: StT> {LinkedListStEphChap18Trait8,212
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStEphS<T>;tabulate11,355
+        fn map<U: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&T) -> U) -> LinkedListStEphS<U>;map14,521
+        fn append(a: &LinkedListStEphS<T>, b: &LinkedListStEphS<T>) -> LinkedListStEphS<T>;append17,722
+        fn filter(a: &LinkedListStEphS<T>, pred: impl Fn(&T) -> B) -> LinkedListStEphS<T>;filter20,910
+        fn update(a: &mut LinkedListStEphS<T>, item_at: Pair<N, T>) -> &mut LinkedListStEphS<T>;update23,1109
+        fn inject(a: &LinkedListStEphS<T>, updates: &LinkedListStEphS<Pair<N, T>>) -> LinkedListinject26,1326
+        fn ninject(a: &LinkedListStEphS<T>, updates: &LinkedListStEphS<Pair<N, T>>) -> LinkedLisninject29,1553
+        fn iterate<A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;iterate30,1661
+        fn iteratePrefixes<A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LiteratePrefixes31,1750
+        fn reduce(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce32,1870
+        fn scan(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<Tscan33,1952
+        fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T>;flatten34,2055
+        fn collect<A: StT, Bv: StT>(collect35,2142
+    impl<T: StT> LinkedListStEphChap18Trait<T> for LinkedListStEphS<T> {LinkedListStEphS41,2334
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStEphS<T> {tabulate42,2407
+        fn map<U: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&T) -> U) -> LinkedListStEphS<U> {map49,2657
+        fn append(a: &LinkedListStEphS<T>, b: &LinkedListStEphS<T>) -> LinkedListStEphS<T> {append56,3104
+        fn filter(a: &LinkedListStEphS<T>, pred: impl Fn(&T) -> B) -> LinkedListStEphS<T> {filter68,3746
+        fn update(a: &mut LinkedListStEphS<T>, item_at: Pair<N, T>) -> &mut LinkedListStEphS<T> update78,4216
+        fn inject(a: &LinkedListStEphS<T>, updates: &LinkedListStEphS<Pair<N, T>>) -> LinkedListinject81,4405
+        fn ninject(a: &LinkedListStEphS<T>, updates: &LinkedListStEphS<Pair<N, T>>) -> LinkedLisninject99,5330
+        fn iterate<A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate113,6089
+        fn iteratePrefixes<A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LiteratePrefixes120,6426
+        fn reduce(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce130,6950
+        fn scan(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<Tscan145,7768
+        fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T> {flatten164,8624
+        fn collect<A: StT, Bv: StT>(collect176,9316
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/RelationStEphChap5_2.rs,2071
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/RelationStEphChap5_2.rs,2219
 pub mod RelationStEphChap5_2 {RelationStEphChap5_23,63
-pub struct Relation<A, B> {Relation14,319
-    pairs: Set<Pair<A, B>>,pairs15,347
-pub trait RelationStEphChap5_2Trait<X: Eq + Hash + Display + Debug + Clone + Sized, RelationStEphChap5_2Trait18,378
-    fn empty() -> Relation<X, Y>;empty22,631
-    fn FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y>;FromSet26,762
-    fn size(&self) -> N;size30,905
-    fn domain(&self) -> Set<X>domain34,1019
-    fn range(&self) -> Set<Y>range40,1167
-    fn mem(&self, a: &X, b: &Y) -> Bmem46,1310
-    fn iter(&self) -> Iter<'_, Pair<X, Y>>;iter51,1394
-impl<A, B> Relation<A, B> {Relation54,1441
-    pub fn FromVec(v: Vec<Pair<A, B>>) -> Relation<A, B>FromVec55,1469
-impl<A: Eq + Hash + Display + Debug, B: Eq + Hash + Display + Debug> PartialEq for Relation<A, BRelation64,1691
-    fn eq(&self, other: &Self) -> bool { self.pairs == other.pairs }eq65,1791
-impl<A: Eq + Hash + Display + Debug, B: Eq + Hash + Display + Debug> Eq for Relation<A, B> {}Relation68,1863
-impl<A: Debug + Eq + Hash, B: Debug + Eq + Hash> Debug for Relation<A, B> {Relation70,1958
-    fn fmt(&self, f: &mut Formatter<'_>) -> Result {fmt71,2034
-impl<A: Display + Eq + Hash, B: Display + Eq + Hash> Display for Relation<A, B> {Relation76,2122
-    fn fmt(&self, f: &mut Formatter<'_>) -> Result {fmt77,2204
-impl<X: Eq + Hash + Display + Debug + Clone + Sized, Relation88,2512
-    fn empty() -> Relation<X, Y> {empty90,2673
-    fn FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y> { Relation { pairs } }FromSet94,2753
-    fn size(&self) -> N { self.pairs.size() }size96,2834
-    fn domain(&self) -> Set<X>domain98,2881
-    fn range(&self) -> Set<Y>range107,3088
-    fn mem(&self, a: &X, b: &Y) -> Bmem116,3294
-    fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.pairs.iter() }iter124,3486
-    macro_rules! RelationLit {RelationLit128,3574
-    fn _RelationLit_type_checks() {_RelationLit_type_checks144,4507
-    pub fn __relation_macro_typecheck_exercise() {__relation_macro_typecheck_exercise150,4780
+    pub struct Relation<A, B> {Relation14,347
+        pairs: Set<Pair<A, B>>,pairs15,379
+    pub trait RelationStEphChap5_2Trait<RelationStEphChap5_2Trait18,418
+        fn empty() -> Relation<X, Y>;empty25,675
+        fn FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y>;FromSet29,818
+        fn size(&self) -> N;size33,973
+        fn domain(&self) -> Set<X>domain37,1099
+        fn range(&self) -> Set<Y>range43,1267
+        fn mem(&self, a: &X, b: &Y) -> Bmem49,1430
+        fn iter(&self) -> Iter<'_, Pair<X, Y>>;iter54,1530
+    impl<A, B> Relation<A, B> {Relation57,1585
+        pub fn FromVec(v: Vec<Pair<A, B>>) -> Relation<A, B>FromVec58,1617
+    impl<A: Eq + Hash + Display + Debug, B: Eq + Hash + Display + Debug> PartialEq for Relation<Relation67,1871
+        fn eq(&self, other: &Self) -> bool { self.pairs == other.pairs }eq68,1975
+    impl<A: Eq + Hash + Display + Debug, B: Eq + Hash + Display + Debug> Eq for Relation<A, B> {Relation71,2055
+    impl<A: Debug + Eq + Hash, B: Debug + Eq + Hash> Debug for Relation<A, B> {Relation73,2154
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { self.pairs.fmt(f) }fmt74,2234
+    impl<A: Display + Eq + Hash, B: Display + Eq + Hash> Display for Relation<A, B> {Relation77,2318
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {fmt78,2404
+    impl<X: Eq + Hash + Display + Debug + Clone + Sized, Y: Eq + Hash + Display + Debug + Clone Relation93,2824
+        fn empty() -> Relation<X, Y> { Relation { pairs: SetLit![] } }empty96,2994
+        fn FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y> { Relation { pairs } }FromSet98,3066
+        fn size(&self) -> N { self.pairs.size() }size100,3151
+        fn domain(&self) -> Set<X>domain102,3202
+        fn range(&self) -> Set<Y>range113,3469
+        fn mem(&self, a: &X, b: &Y) -> Bmem124,3735
+        fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.pairs.iter() }iter136,4011
+    macro_rules! RelationLit {RelationLit140,4107
+    fn _RelationLit_type_checks() {_RelationLit_type_checks156,5040
+    pub fn __relation_macro_typecheck_exercise() {__relation_macro_typecheck_exercise162,5275
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/AVLTreeSeqStPerChap19.rs,1423
 pub mod AVLTreeSeqStPerChap19 {AVLTreeSeqStPerChap193,49
@@ -488,7 +837,72 @@ pub mod AVLTreeSeqStPerChap19 {AVLTreeSeqStPerChap193,49
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> AVLTreeSeqStPerS<T> {deflate42,2088
         fn filter(a: &AVLTreeSeqStPerS<T>, f: impl Fn(&T) -> B) -> AVLTreeSeqStPerS<T> {filter49,2399
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Types.rs,4468
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTBBAlphaMtEph.rs,4364
+pub mod BSTBBAlphaMtEph {BSTBBAlphaMtEph3,108
+    type Link<T> = Option<Box<Node<T>>>;Link12,340
+    struct Node<T: StTinMtT + Ord> {Node15,403
+        key: T,key16,440
+        size: N,size17,456
+        left: Link<T>,left18,473
+        right: Link<T>,right19,496
+    impl<T: StTinMtT + Ord> Node<T> {Node22,527
+        fn new(key: T) -> Self {new23,565
+    pub struct BSTBBAlphaMtEph<T: StTinMtT + Ord> {BSTBBAlphaMtEph34,772
+        root: Arc<RwLock<Link<T>>>,root35,824
+    pub type BSTreeBBAlpha<T> = BSTBBAlphaMtEph<T>;BSTreeBBAlpha38,867
+    pub trait BSTBBAlphaMtEphTrait<T: StTinMtT + Ord>: Sized {BSTBBAlphaMtEphTrait40,920
+        fn new() -> Self;new41,983
+        fn insert(&self, value: T);insert42,1009
+        fn find(&self, target: &T) -> Option<T>;find43,1045
+        fn contains(&self, target: &T) -> B;contains44,1094
+        fn size(&self) -> N;size45,1139
+        fn is_empty(&self) -> B;is_empty46,1168
+        fn height(&self) -> N;height47,1201
+        fn minimum(&self) -> Option<T>;minimum48,1232
+        fn maximum(&self) -> Option<T>;maximum49,1272
+        fn in_order(&self) -> ArrayStPerS<T>;in_order50,1312
+        fn pre_order(&self) -> ArrayStPerS<T>;pre_order51,1358
+    impl<T: StTinMtT + Ord> Default for BSTBBAlphaMtEph<T> {BSTBBAlphaMtEph54,1412
+        fn default() -> Self { Self::new() }default55,1473
+    impl<T: StTinMtT + Ord> BSTBBAlphaMtEph<T> {BSTBBAlphaMtEph58,1525
+        pub fn new() -> Self {new59,1574
+        pub fn size(&self) -> N {size65,1711
+        pub fn is_empty(&self) -> B {is_empty70,1844
+        pub fn height(&self) -> N {height78,2011
+            fn height_rec<T: StTinMtT + Ord>(link: &Link<T>) -> N {height_rec79,2047
+        pub fn insert(&self, value: T) {insert90,2397
+        pub fn find(&self, target: &T) -> Option<T> {find99,2728
+        pub fn contains(&self, target: &T) -> B {contains104,2898
+        pub fn minimum(&self) -> Option<T> {minimum112,3088
+        pub fn maximum(&self) -> Option<T> {maximum117,3240
+        pub fn in_order(&self) -> ArrayStPerS<T> {in_order122,3392
+        pub fn pre_order(&self) -> ArrayStPerS<T> {pre_order129,3671
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }size_link136,3952
+        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::sizeupdate138,4035
+        fn insert_link(link: &mut Link<T>, value: T) -> bool {insert_link140,4154
+        fn needs_rebuild(node: &Node<T>) -> bool {needs_rebuild162,4900
+        fn rebalance_if_needed(link: &mut Link<T>, total_size: N) {rebalance_if_needed169,5182
+        fn collect_values(link: &Link<T>, out: &mut Vec<T>) {collect_values179,5592
+        fn build_balanced(values: &[T]) -> Link<T> {build_balanced187,5873
+        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {find_link199,6313
+        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {min_link214,6830
+        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {max_link224,7151
+        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {in_order_collect234,7474
+        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {pre_order_collect242,7761
+    impl<T: StTinMtT + Ord> BSTBBAlphaMtEphTrait<T> for BSTBBAlphaMtEph<T> {BSTBBAlphaMtEph251,8057
+        fn new() -> Self { BSTBBAlphaMtEph::new() }new252,8134
+        fn insert(&self, value: T) { BSTBBAlphaMtEph::insert(self, value) }insert254,8187
+        fn find(&self, target: &T) -> Option<T> { BSTBBAlphaMtEph::find(self, target) }find256,8264
+        fn contains(&self, target: &T) -> B { BSTBBAlphaMtEph::contains(self, target) }contains258,8353
+        fn size(&self) -> N { BSTBBAlphaMtEph::size(self) }size260,8442
+        fn is_empty(&self) -> B { BSTBBAlphaMtEph::is_empty(self) }is_empty262,8503
+        fn height(&self) -> N { BSTBBAlphaMtEph::height(self) }height264,8572
+        fn minimum(&self) -> Option<T> { BSTBBAlphaMtEph::minimum(self) }minimum266,8637
+        fn maximum(&self) -> Option<T> { BSTBBAlphaMtEph::maximum(self) }maximum268,8712
+        fn in_order(&self) -> ArrayStPerS<T> { BSTBBAlphaMtEph::in_order(self) }in_order270,8787
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTBBAlphaMtEph::pre_order(self) }pre_order272,8869
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Types.rs,4752
 pub mod Types {Types4,45
     pub type N = usize;N9,156
     pub enum B {B13,299
@@ -496,118 +910,120 @@ pub mod Types {Types4,45
         False,False15,330
     impl std::fmt::Display for B {B22,563
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt23,598
-    pub trait StT: Eq + Clone + Display + Debug + Sized {}StT33,939
-    impl<T> StT for T where T: Eq + Clone + Display + Debug + Sized {}T34,998
-    pub trait MtT: Sized + Send + Sync {MtT38,1206
-        type Inner: StT;Inner39,1247
-        fn clone_mt(&self) -> Self;clone_mt40,1272
-        fn new_mt(inner: Self::Inner) -> Self;new_mt41,1308
-    impl<T: StT + Send> MtT for std::sync::Mutex<T> {Mutex44,1366
-        type Inner = T;Inner45,1420
-        fn clone_mt(&self) -> Self {clone_mt46,1444
-        fn new_mt(inner: Self::Inner) -> Self {new_mt50,1586
-    impl<A: StT + Send + Sync, B: StT + Send + Sync> MtT for Pair<A, B> {Pair55,1696
-        type Inner = Pair<A, B>;Inner56,1770
-        fn clone_mt(&self) -> Self {clone_mt57,1803
-        fn new_mt(inner: Self::Inner) -> Self {new_mt60,1875
-    impl MtT for usize {usize66,2036
-        type Inner = usize;Inner67,2061
-        fn clone_mt(&self) -> Self { *self }clone_mt68,2089
-        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt69,2134
-    impl MtT for isize {isize72,2197
-        type Inner = isize;Inner73,2222
-        fn clone_mt(&self) -> Self { *self }clone_mt74,2250
-        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt75,2295
-    impl MtT for i32 {i3278,2358
-        type Inner = i32;Inner79,2381
-        fn clone_mt(&self) -> Self { *self }clone_mt80,2407
-        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt81,2452
-    impl MtT for u32 {u3284,2515
-        type Inner = u32;Inner85,2538
-        fn clone_mt(&self) -> Self { *self }clone_mt86,2564
-        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt87,2609
-    impl MtT for i64 {i6490,2672
-        type Inner = i64;Inner91,2695
-        fn clone_mt(&self) -> Self { *self }clone_mt92,2721
-        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt93,2766
-    impl MtT for u64 {u6496,2829
-        type Inner = u64;Inner97,2852
-        fn clone_mt(&self) -> Self { *self }clone_mt98,2878
-        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt99,2923
-    impl MtT for bool {bool103,2987
-        type Inner = bool;Inner104,3011
-        fn clone_mt(&self) -> Self { *self }clone_mt105,3038
-        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt106,3083
-    impl MtT for char {char109,3146
-        type Inner = char;Inner110,3170
-        fn clone_mt(&self) -> Self { *self }clone_mt111,3197
-        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt112,3242
-    impl MtT for String {String116,3359
-        type Inner = String;Inner117,3385
-        fn clone_mt(&self) -> Self { self.clone() }clone_mt118,3414
-        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt119,3466
-    impl<'a> MtT for &'a str {str123,3564
-        type Inner = &'a str;Inner124,3595
-        fn clone_mt(&self) -> Self { *self }clone_mt125,3625
-        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt126,3670
-    impl MtT for B {B130,3775
-        type Inner = B;Inner131,3796
-        fn clone_mt(&self) -> Self { *self }clone_mt132,3820
-        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt133,3865
-    pub struct Edge<V: StT>(pub V, pub V);Edge138,4067
-    impl<V: StT> std::fmt::Display for Edge<V> {Edge140,4111
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt141,4160
-    impl<V: StT> From<(V, V)> for Edge<V> {Edge146,4304
-        fn from(t: (V, V)) -> Self {from147,4348
-    impl<V: StT> From<Edge<V>> for (V, V) {V152,4429
-        fn from(e: Edge<V>) -> (V, V) {from153,4473
-    pub struct Pair<A, B>(pub A, pub B);Pair160,4707
-    impl<A: std::fmt::Display, B: std::fmt::Display> std::fmt::Display for Pair<A, B> {Pair162,4749
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt163,4837
-    impl<A, B> From<(A, B)> for Pair<A, B> {Pair168,4981
-        fn from(t: (A, B)) -> Self {from169,5026
-    impl<A, B> From<Pair<A, B>> for (A, B) {B174,5107
-        fn from(p: Pair<A, B>) -> (A, B) {from175,5152
-    pub fn ArraySeqSetEq<T: PartialEq>(a_len: N, a_nth: impl Fn(N) -> T, b_len: N, b_nth: impl FArraySeqSetEq183,5483
+    pub trait StT: Eq + Clone + Display + Debug + Sized {}StT33,943
+    impl<T> StT for T where T: Eq + Clone + Display + Debug + Sized {}T34,1002
+    pub trait StTinMtT: StT + Send + Sync {}StTinMtT37,1166
+    impl<T> StTinMtT for T where T: StT + Send + Sync {}T38,1211
+    pub trait MtT: Sized + Send + Sync {MtT42,1405
+        type Inner: StT;Inner43,1446
+        fn clone_mt(&self) -> Self;clone_mt44,1471
+        fn new_mt(inner: Self::Inner) -> Self;new_mt45,1507
+    impl<T: StT + Send> MtT for std::sync::Mutex<T> {Mutex48,1561
+        type Inner = T;Inner49,1615
+        fn clone_mt(&self) -> Self {clone_mt50,1639
+        fn new_mt(inner: Self::Inner) -> Self { std::sync::Mutex::new(inner) }new_mt54,1781
+    impl<A: StT + Send + Sync, B: StT + Send + Sync> MtT for Pair<A, B> {Pair57,1867
+        type Inner = Pair<A, B>;Inner58,1941
+        fn clone_mt(&self) -> Self { self.clone() }clone_mt59,1974
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt60,2026
+    impl MtT for usize {usize64,2167
+        type Inner = usize;Inner65,2192
+        fn clone_mt(&self) -> Self { *self }clone_mt66,2220
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt67,2265
+    impl MtT for isize {isize70,2328
+        type Inner = isize;Inner71,2353
+        fn clone_mt(&self) -> Self { *self }clone_mt72,2381
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt73,2426
+    impl MtT for i32 {i3276,2489
+        type Inner = i32;Inner77,2512
+        fn clone_mt(&self) -> Self { *self }clone_mt78,2538
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt79,2583
+    impl MtT for u32 {u3282,2646
+        type Inner = u32;Inner83,2669
+        fn clone_mt(&self) -> Self { *self }clone_mt84,2695
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt85,2740
+    impl MtT for i64 {i6488,2803
+        type Inner = i64;Inner89,2826
+        fn clone_mt(&self) -> Self { *self }clone_mt90,2852
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt91,2897
+    impl MtT for u64 {u6494,2960
+        type Inner = u64;Inner95,2983
+        fn clone_mt(&self) -> Self { *self }clone_mt96,3009
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt97,3054
+    impl MtT for bool {bool100,3117
+        type Inner = bool;Inner101,3141
+        fn clone_mt(&self) -> Self { *self }clone_mt102,3168
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt103,3213
+    impl MtT for char {char106,3276
+        type Inner = char;Inner107,3300
+        fn clone_mt(&self) -> Self { *self }clone_mt108,3327
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt109,3372
+    impl MtT for String {String113,3489
+        type Inner = String;Inner114,3515
+        fn clone_mt(&self) -> Self { self.clone() }clone_mt115,3544
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt116,3596
+    impl<'a> MtT for &'a str {str120,3694
+        type Inner = &'a str;Inner121,3725
+        fn clone_mt(&self) -> Self { *self }clone_mt122,3755
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt123,3800
+    impl MtT for B {B127,3905
+        type Inner = B;Inner128,3926
+        fn clone_mt(&self) -> Self { *self }clone_mt129,3950
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt130,3995
+    pub struct Edge<V: StT>(pub V, pub V);Edge135,4197
+    impl<V: StT> std::fmt::Display for Edge<V> {Edge137,4241
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "({}, {})fmt138,4290
+    impl<V: StT> From<(V, V)> for Edge<V> {Edge141,4414
+        fn from(t: (V, V)) -> Self { Edge(t.0, t.1) }from142,4458
+    impl<V: StT> From<Edge<V>> for (V, V) {V145,4519
+        fn from(e: Edge<V>) -> (V, V) { (e.0, e.1) }from146,4563
+    pub struct Pair<A, B>(pub A, pub B);Pair151,4777
+    impl<A: std::fmt::Display, B: std::fmt::Display> std::fmt::Display for Pair<A, B> {Pair153,4819
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "({}, {})fmt154,4907
+    impl<A, B> From<(A, B)> for Pair<A, B> {Pair157,5031
+        fn from(t: (A, B)) -> Self { Pair(t.0, t.1) }from158,5076
+    impl<A, B> From<Pair<A, B>> for (A, B) {B161,5137
+        fn from(p: Pair<A, B>) -> (A, B) { (p.0, p.1) }from162,5182
+    pub fn ArraySeqSetEq<T: PartialEq>(a_len: N, a_nth: impl Fn(N) -> T, b_len: N, b_nth: impl FArraySeqSetEq168,5493
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqStEph.rs,2392
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqStEph.rs,2588
 pub mod ArraySeqStEph {ArraySeqStEph3,93
-    pub struct ArraySeqStEphS<T: StT> {ArraySeqStEphS13,340
-        pub data: Box<[T]>,data14,380
-    pub trait ArraySeqStEphTrait<T: StT> {ArraySeqStEphTrait18,463
-        fn new(length: N, init_value: T) -> Self;new21,608
-        fn length(&self) -> N;length24,750
-        fn nth(&self, index: N) -> &T;nth27,873
-        fn empty() -> Self;empty30,1004
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;set33,1124
-        fn singleton(item: T) -> Self;singleton36,1297
-        fn isEmpty(&self) -> B;isEmpty39,1428
-        fn isSingleton(&self) -> B;isSingleton42,1552
-        fn subseq_copy(&self, start: N, length: N) -> Self;subseq_copy45,1690
-    impl<T: StT> ArraySeqStEphS<T> {ArraySeqStEphS48,1757
-        pub fn subseq(&self, start: N, length: N) -> &[T] {subseq51,1886
-        pub fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy59,2215
-        pub fn from_vec(v: Vec<T>) -> Self {from_vec77,2961
-        pub fn update(&mut self, (index, item): (N, T)) -> &mut ArraySeqStEphS<T> {update84,3195
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }iter93,3495
-    impl<T: StT> PartialEq for ArraySeqStEphS<T> {ArraySeqStEphS96,3565
-        fn eq(&self, other: &Self) -> bool {eq97,3616
-    impl<T: StT> Eq for ArraySeqStEphS<T> {}ArraySeqStEphS110,3943
-    impl<T: StT> Debug for ArraySeqStEphS<T> {ArraySeqStEphS112,3989
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt113,4036
-    impl<T: StT> Display for ArraySeqStEphS<T> {ArraySeqStEphS119,4229
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt120,4278
-    impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {ArraySeqStEphS130,4561
-        fn new(length: N, init_value: T) -> Self {new133,4726
-        fn length(&self) -> N {length138,4942
-        fn nth(&self, index: N) -> &T {nth143,5104
-        fn empty() -> Self {empty148,5276
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {set153,5456
-        fn singleton(item: T) -> Self {singleton163,5825
-        fn isEmpty(&self) -> B {isEmpty168,6016
-        fn isSingleton(&self) -> B {isSingleton177,6273
-        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy186,6544
-    macro_rules! ArraySeqStEph {ArraySeqStEph192,6686
+    pub struct ArraySeqStEphS<T: StT> {ArraySeqStEphS13,336
+        pub data: Box<[T]>,data14,376
+    pub trait ArraySeqStEphTrait<T: StT> {ArraySeqStEphTrait18,459
+        fn new(length: N, init_value: T) -> Self;new21,604
+        fn length(&self) -> N;length24,746
+        fn nth(&self, index: N) -> &T;nth27,869
+        fn empty() -> Self;empty30,1000
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;set33,1120
+        fn singleton(item: T) -> Self;singleton36,1293
+        fn isEmpty(&self) -> B;isEmpty39,1424
+        fn isSingleton(&self) -> B;isSingleton42,1548
+        fn subseq_copy(&self, start: N, length: N) -> Self;subseq_copy45,1686
+    impl<T: StT> ArraySeqStEphS<T> {ArraySeqStEphS48,1753
+        pub fn subseq(&self, start: N, length: N) -> &[T] {subseq51,1882
+        pub fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy59,2211
+        pub fn from_vec(v: Vec<T>) -> Self {from_vec77,2957
+        pub fn update(&mut self, (index, item): (N, T)) -> &mut ArraySeqStEphS<T> {update84,3191
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }iter93,3491
+    impl<T: StT> PartialEq for ArraySeqStEphS<T> {ArraySeqStEphS96,3561
+        fn eq(&self, other: &Self) -> bool {eq97,3612
+    impl<T: StT> Eq for ArraySeqStEphS<T> {}ArraySeqStEphS110,3939
+    impl<T: StT> Debug for ArraySeqStEphS<T> {ArraySeqStEphS112,3985
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt113,4032
+    impl<T: StT> Display for ArraySeqStEphS<T> {ArraySeqStEphS119,4225
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt120,4274
+    impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {ArraySeqStEphS132,4593
+        fn new(length: N, init_value: T) -> Self { ArraySeqStEphS::from_vec(vec![init_value; lennew135,4758
+        fn length(&self) -> N { self.data.len() }length138,4954
+        fn nth(&self, index: N) -> &T { &self.data[index] }nth141,5096
+        fn empty() -> Self { ArraySeqStEphS::from_vec(Vec::new()) }empty144,5248
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {set147,5408
+        fn singleton(item: T) -> Self { ArraySeqStEphS::from_vec(vec![item]) }singleton157,5777
+        fn isEmpty(&self) -> B {isEmpty160,5948
+        fn isSingleton(&self) -> B {isSingleton169,6205
+        fn subseq_copy(&self, start: N, length: N) -> Self { self.subseq_copy(start, length) }subseq_copy178,6476
+    macro_rules! ArraySeqStEph {ArraySeqStEph182,6598
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqMtEphChap19.rs,2409
 pub mod ArraySeqMtEphChap19 {ArraySeqMtEphChap193,67
@@ -627,114 +1043,364 @@ pub mod ArraySeqMtEphChap19 {ArraySeqMtEphChap193,67
         fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqMtEphS<T> {tabulate23,1286
         fn map<U: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqMtEphS<U> {map26,1444
         fn select<'a>(a: &'a ArraySeqMtEphS<T>, b: &'a ArraySeqMtEphS<T>, i: N) -> Option<T> {select29,1618
-        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T> {append35,1920
-        fn append2(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T> {append238,2094
-        fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqMtEphS<T> {deflate41,2269
-        fn filter(a: &ArraySeqMtEphS<T>, f: impl Fn(&T) -> B) -> ArraySeqMtEphS<T> {filter44,2472
-        fn iterate<A: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&A, &T) -> A, mut x: A) -> A {iterate47,2644
-        fn reduce(a: &ArraySeqMtEphS<T>, f: &impl Fn(&T, &T) -> T, mut id: T) -> T {reduce50,2816
-        fn scan(a: &ArraySeqMtEphS<T>, f: &impl Fn(&T, &T) -> T, mut id: T) -> (ArraySeqMtEphS<Tscan53,2984
-        fn flatten(s: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {flatten59,3378
+        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T> {append41,2020
+        fn append2(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T> {append244,2194
+        fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqMtEphS<T> {deflate47,2369
+        fn filter(a: &ArraySeqMtEphS<T>, f: impl Fn(&T) -> B) -> ArraySeqMtEphS<T> {filter54,2628
+        fn iterate<A: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&A, &T) -> A, mut x: A) -> A {iterate57,2800
+        fn reduce(a: &ArraySeqMtEphS<T>, f: &impl Fn(&T, &T) -> T, mut id: T) -> T {reduce63,3012
+        fn scan(a: &ArraySeqMtEphS<T>, f: &impl Fn(&T, &T) -> T, mut id: T) -> (ArraySeqMtEphS<Tscan69,3220
+        fn flatten(s: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {flatten82,3714
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqStEphChap19.rs,2316
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqStEphChap19.rs,2407
 pub mod ArraySeqStEphChap19 {ArraySeqStEphChap193,51
-pub trait ArraySeqStEphChap19Trait<T: StT> {ArraySeqStEphChap19Trait8,210
-    fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqStEphS<T>;tabulate11,339
-    fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U>;map14,491
-    fn select<'a>(a: &'a ArraySeqStEphS<T>, b: &'a ArraySeqStEphS<T>, i: N) -> Option<T>;select17,660
-    fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;append20,850
-    fn append2(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;append223,1032
-    fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqStEphS<T>;deflate26,1199
-    fn filter(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> B) -> ArraySeqStEphS<T>;filter29,1352
-    fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;iterate30,1432
-    fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce31,1515
-    fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, T);scan32,1591
-    fn flatten(s: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;flatten33,1686
-impl<T: StT> ArraySeqStEphChap19Trait<T> for ArraySeqStEphS<T> {ArraySeqStEphS36,1765
-    fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqStEphS<T> {tabulate37,1830
-    fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U> {map40,1976
-    fn select<'a>(a: &'a ArraySeqStEphS<T>, b: &'a ArraySeqStEphS<T>, i: N) -> Option<T> {select43,2138
-    fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {append55,2492
-    fn append2(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {append258,2654
-    fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqStEphS<T> {deflate61,2817
-    fn filter(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> B) -> ArraySeqStEphS<T> {filter68,3090
-    fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate71,3250
-    fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce74,3417
-    fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, T) {scan77,3577
-    fn flatten(s: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T> {flatten80,3754
+    pub trait ArraySeqStEphChap19Trait<T: StT> {ArraySeqStEphChap19Trait8,222
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqStEphS<T>;tabulate11,363
+        fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U>;map14,527
+        fn select<'a>(a: &'a ArraySeqStEphS<T>, b: &'a ArraySeqStEphS<T>, i: N) -> Option<T>;select17,708
+        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;append20,910
+        fn append2(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;append223,1104
+        fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqStEphS<T>;deflate26,1283
+        fn filter(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> B) -> ArraySeqStEphS<T>;filter29,1448
+        fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;iterate30,1532
+        fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce31,1619
+        fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, Tscan32,1699
+        fn flatten(s: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;flatten33,1798
+    impl<T: StT> ArraySeqStEphChap19Trait<T> for ArraySeqStEphS<T> {ArraySeqStEphS36,1885
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqStEphS<T> {tabulate37,1954
+        fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U> {map40,2112
+        fn select<'a>(a: &'a ArraySeqStEphS<T>, b: &'a ArraySeqStEphS<T>, i: N) -> Option<T> {select43,2286
+        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {append55,2690
+        fn append2(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {append258,2864
+        fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqStEphS<T> {deflate61,3039
+        fn filter(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> B) -> ArraySeqStEphS<T> {filter68,3340
+        fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate71,3512
+        fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce74,3691
+        fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, Tscan77,3863
+        fn flatten(s: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T> {flatten80,4052
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqStPerChap18.rs,2650
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTAVLStEph.rs,4300
+pub mod BSTAVLStEph {BSTAVLStEph3,97
+    type Link<T> = Option<Box<Node<T>>>;Link8,260
+    struct Node<T: StT + Ord> {Node11,323
+        key: T,key12,355
+        height: i32,height13,371
+        size: N,size14,392
+        left: Link<T>,left15,409
+        right: Link<T>,right16,432
+    impl<T: StT + Ord> Node<T> {Node19,463
+        fn new(key: T) -> Self {new20,496
+    pub struct BSTAVLStEph<T: StT + Ord> {BSTAVLStEph31,709
+        root: Link<T>,root32,752
+    pub type BSTreeAVL<T> = BSTAVLStEph<T>;BSTreeAVL35,782
+    pub trait BSTAVLStEphTrait<T: StT + Ord> {BSTAVLStEphTrait37,827
+        fn new() -> Self;new38,874
+        fn size(&self) -> N;size39,900
+        fn is_empty(&self) -> B;is_empty40,929
+        fn height(&self) -> N;height41,962
+        fn insert(&mut self, value: T);insert42,993
+        fn find(&self, target: &T) -> Option<&T>;find43,1033
+        fn contains(&self, target: &T) -> B;contains44,1083
+        fn minimum(&self) -> Option<&T>;minimum45,1128
+        fn maximum(&self) -> Option<&T>;maximum46,1169
+        fn in_order(&self) -> ArrayStPerS<T>;in_order47,1210
+        fn pre_order(&self) -> ArrayStPerS<T>;pre_order48,1256
+    impl<T: StT + Ord> Default for BSTAVLStEph<T> {BSTAVLStEph51,1310
+        fn default() -> Self { Self::new() }default52,1362
+    impl<T: StT + Ord> BSTAVLStEph<T> {BSTAVLStEph55,1414
+        pub fn new() -> Self { BSTAVLStEph { root: None } }new56,1454
+        pub fn size(&self) -> N { Self::size_link(&self.root) }size58,1515
+        pub fn is_empty(&self) -> B {is_empty60,1580
+        pub fn height(&self) -> N { Self::height_link(&self.root) as N }height68,1747
+        pub fn insert(&mut self, value: T) { Self::insert_link(&mut self.root, value); }insert70,1821
+        pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }find72,1911
+        pub fn contains(&self, target: &T) -> B {contains74,2005
+        pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }minimum82,2195
+        pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }maximum84,2271
+        pub fn in_order(&self) -> ArrayStPerS<T> {in_order86,2347
+        pub fn pre_order(&self) -> ArrayStPerS<T> {pre_order92,2565
+        fn height_link(link: &Link<T>) -> i32 { link.as_ref().map_or(0, |n| n.height) }height_link98,2785
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }size_link100,2874
+        fn update(node: &mut Node<T>) {update102,2957
+        fn rotate_right(link: &mut Link<T>) {rotate_right107,3193
+        fn rotate_left(link: &mut Link<T>) {rotate_left121,3649
+        fn rebalance(link: &mut Link<T>) {rebalance135,4104
+        fn insert_link(link: &mut Link<T>, value: T) {insert_link160,5150
+        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {find_link179,5785
+        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {min_link194,6302
+        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {max_link204,6623
+        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {in_order_collect214,6946
+        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {pre_order_collect222,7233
+    impl<T: StT + Ord> BSTAVLStEphTrait<T> for BSTAVLStEph<T> {BSTAVLStEph231,7529
+        fn new() -> Self { BSTAVLStEph::new() }new232,7593
+        fn size(&self) -> N { BSTAVLStEph::size(self) }size234,7642
+        fn is_empty(&self) -> B { BSTAVLStEph::is_empty(self) }is_empty236,7699
+        fn height(&self) -> N { BSTAVLStEph::height(self) }height238,7764
+        fn insert(&mut self, value: T) { BSTAVLStEph::insert(self, value) }insert240,7825
+        fn find(&self, target: &T) -> Option<&T> { BSTAVLStEph::find(self, target) }find242,7902
+        fn contains(&self, target: &T) -> B { BSTAVLStEph::contains(self, target) }contains244,7988
+        fn minimum(&self) -> Option<&T> { BSTAVLStEph::minimum(self) }minimum246,8073
+        fn maximum(&self) -> Option<&T> { BSTAVLStEph::maximum(self) }maximum248,8145
+        fn in_order(&self) -> ArrayStPerS<T> { BSTAVLStEph::in_order(self) }in_order250,8217
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTAVLStEph::pre_order(self) }pre_order252,8295
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqStPerChap18.rs,3029
 pub mod ArraySeqStPerChap18 {ArraySeqStPerChap183,46
-pub trait ArraySeqStPerChap18Trait<T: StT> {ArraySeqStPerChap18Trait7,149
-    fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayStPerS<T>;tabulate10,368
-    fn map<U: StT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U>;map14,594
-    fn append(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T>;append18,786
-    fn filter(a: &ArrayStPerS<T>, pred: impl Fn(&T) -> B) -> ArrayStPerS<T>;filter22,1058
-    fn update(a: &ArrayStPerS<T>, item_at: Pair<N, T>) -> ArrayStPerS<T>;update26,1228
-    fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T>;inject30,1455
-    fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T>;ninject34,1660
-    fn iterate<A: StT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;iterate37,1823
-    fn iteratePrefixes<A: StT + Clone>(iteratePrefixes40,1945
-    fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce47,2170
-    fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T);scan50,2287
-    fn flatten(ss: &ArrayStPerS<ArrayStPerS<T>>) -> ArrayStPerS<T>;flatten53,2443
-    fn collect(collect56,2587
-impl<T: StT> ArraySeqStPerChap18Trait<T> for ArrayStPerS<T> {ArrayStPerS62,2725
-    fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayStPerS<T> {tabulate63,2787
-    fn map<U: StT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U> {map67,2950
-    fn append(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T> {append79,3398
-    fn filter(a: &ArrayStPerS<T>, pred: impl Fn(&T) -> B) -> ArrayStPerS<T> {filter93,3866
-    fn update(a: &ArrayStPerS<T>, Pair(index, item): Pair<N, T>) -> ArrayStPerS<T> {update102,4165
-    fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {inject108,4370
-    fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {ninject120,4886
-    fn iterate<A: StT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate130,5288
-    fn iteratePrefixes<A: StT + Clone>(iteratePrefixes137,5492
-    fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce150,5890
-        fn rec<T: StT>(s: &[T], f: &impl Fn(&T, &T) -> T, id: T) -> T {rec151,5964
-    fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T) {scan166,6404
-        fn rec<T: StT>(s: &[T], f: &impl Fn(&T, &T) -> T, id: T) -> T {rec167,6494
-    fn flatten(ss: &ArrayStPerS<ArrayStPerS<T>>) -> ArrayStPerS<T> {flatten186,7150
-    fn collect(collect196,7478
+    pub trait ArraySeqStPerChap18Trait<T: StT> {ArraySeqStPerChap18Trait7,157
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayStPerS<T>;tabulate10,388
+        fn map<U: StT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U>;map14,626
+        fn append(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T>;append18,830
+        fn filter(a: &ArrayStPerS<T>, pred: impl Fn(&T) -> B) -> ArrayStPerS<T>;filter22,1114
+        fn update(a: &ArrayStPerS<T>, item_at: Pair<N, T>) -> ArrayStPerS<T>;update26,1296
+        fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T>;inject30,1535
+        fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T>;ninject34,1752
+        fn iterate<A: StT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;iterate37,1923
+        fn iteratePrefixes<A: StT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) ->iteratePrefixes40,2053
+        fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce43,2255
+        fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T);scan46,2380
+        fn flatten(ss: &ArrayStPerS<ArrayStPerS<T>>) -> ArrayStPerS<T>;flatten49,2544
+        fn collect(a: &ArrayStPerS<Pair<T, T>>, cmp: impl Fn(&T, &T) -> O) -> ArrayStPerS<Pair<Tcollect52,2696
+    impl<T: StT> ArraySeqStPerChap18Trait<T> for ArrayStPerS<T> {ArrayStPerS55,2819
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayStPerS<T> {tabulate56,2885
+        fn map<U: StT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U> {map60,3064
+        fn append(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T> {append72,3560
+        fn filter(a: &ArrayStPerS<T>, pred: impl Fn(&T) -> B) -> ArrayStPerS<T> {filter86,4084
+        fn update(a: &ArrayStPerS<T>, Pair(index, item): Pair<N, T>) -> ArrayStPerS<T> {update95,4419
+        fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {inject101,4652
+        fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {ninject113,5216
+        fn iterate<A: StT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate123,5658
+        fn iteratePrefixes<A: StT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) ->iteratePrefixes130,5890
+        fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce139,6293
+            fn rec<T: StT>(s: &[T], f: &impl Fn(&T, &T) -> T, id: T) -> T {rec140,6371
+        fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T) {scan155,6871
+            fn rec<T: StT>(s: &[T], f: &impl Fn(&T, &T) -> T, id: T) -> T {rec156,6965
+        fn flatten(ss: &ArrayStPerS<ArrayStPerS<T>>) -> ArrayStPerS<T> {flatten177,7725
+        fn collect(a: &ArrayStPerS<Pair<T, T>>, cmp: impl Fn(&T, &T) -> O) -> ArrayStPerS<Pair<Tcollect187,8093
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/MappingStEphChap5_5.rs,2533
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/MappingStEphChap5_5.rs,2485
 pub mod MappingStEphChap5_5 {MappingStEphChap5_53,72
-pub struct Mapping<A, B> {Mapping12,325
-    rel: Relation<A, B>,rel13,352
-pub trait MappingStEphChap5_5Trait<X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + MappingStEphChap5_5Trait16,380
-    fn empty() -> Mapping<X, Y>;empty19,637
-    fn FromVec(v: Vec<Pair<X, Y>>) -> Mapping<X, Y>;FromVec23,759
-    fn FromRelation(r: &Relation<X, Y>) -> Mapping<X, Y>;FromRelation27,901
-    fn size(&self) -> N;size31,1044
-    fn domain(&self) -> Set<X>;domain35,1158
-    fn range(&self) -> Set<Y>;range39,1279
-    fn mem(&self, a: &X, b: &Y) -> B;mem43,1395
-    fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>>;iter45,1434
-impl<A: Eq + Hash, B: Eq + Hash> Mapping<A, B> {Mapping48,1509
-    fn unique_pairs_from_iter<I: IntoIterator<Item = Pair<A, B>>>(iter: I) -> Set<Pair<A, B>> {unique_pairs_from_iter49,1558
-impl<A: Eq + Hash + std::fmt::Display + std::fmt::Debug, B: Eq + Hash + std::fmt::Display + std:Mapping57,1878
-    fn eq(&self, other: &Self) -> bool { self.rel == other.rel }eq58,2017
-impl<A: Eq + Hash + std::fmt::Display + std::fmt::Debug, B: Eq + Hash + std::fmt::Display + std:Mapping60,2084
-impl<A: std::fmt::Debug + Eq + Hash, B: std::fmt::Debug + Eq + Hash> std::fmt::Debug for MappingMapping62,2218
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { self.rel.fmt(f) }fmt63,2323
-impl<A: std::fmt::Display + Eq + Hash, B: std::fmt::Display + Eq + Hash> std::fmt::Display for MMapping65,2416
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { self.rel.fmt(f) }fmt66,2527
-impl<X: Eq + Hash + std::fmt::Display + std::fmt::Debug + Clone + Sized, Y: Eq + Hash + std::fmtMapping69,2621
-    fn empty() -> Mapping<X, Y> {empty70,2813
-    fn FromVec(v: Vec<Pair<X, Y>>) -> Mapping<X, Y> {FromVec74,2940
-    fn FromRelation(r: &Relation<X, Y>) -> Mapping<X, Y> {FromRelation79,3147
-    fn size(&self) -> N { self.rel.size() }size84,3375
-    fn domain(&self) -> Set<X> { self.rel.domain() }domain86,3420
-    fn range(&self) -> Set<Y> { self.rel.range() }range88,3474
-    fn mem(&self, a: &X, b: &Y) -> B { self.rel.mem(a, b) }mem90,3526
-    fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>> { self.rel.iter() }iter92,3587
-    macro_rules! MappingLit {MappingLit96,3701
-    fn _MappingLit_type_checks() {_MappingLit_type_checks107,4304
-    pub fn __mapping_macro_typecheck_exercise() {__mapping_macro_typecheck_exercise113,4574
+    pub struct Mapping<A, B> {Mapping12,353
+        rel: Relation<A, B>,rel13,384
+    pub trait MappingStEphChap5_5Trait<MappingStEphChap5_5Trait16,420
+        fn empty() -> Mapping<X, Y>;empty23,716
+        fn FromVec(v: Vec<Pair<X, Y>>) -> Mapping<X, Y>;FromVec27,850
+        fn FromRelation(r: &Relation<X, Y>) -> Mapping<X, Y>;FromRelation31,1004
+        fn size(&self) -> N;size35,1159
+        fn domain(&self) -> Set<X>;domain39,1285
+        fn range(&self) -> Set<Y>;range43,1418
+        fn mem(&self, a: &X, b: &Y) -> B;mem47,1546
+        fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>>;iter49,1589
+    impl<A: Eq + Hash, B: Eq + Hash> Mapping<A, B> {Mapping52,1672
+        fn unique_pairs_from_iter<I: IntoIterator<Item = Pair<A, B>>>(iter: I) -> Set<Pair<A, B>unique_pairs_from_iter53,1725
+    impl<A: Eq + Hash + std::fmt::Display + std::fmt::Debug, B: Eq + Hash + std::fmt::Display + Mapping63,2103
+        fn eq(&self, other: &Self) -> bool { self.rel == other.rel }eq66,2258
+    impl<A: Eq + Hash + std::fmt::Display + std::fmt::Debug, B: Eq + Hash + std::fmt::Display + Mapping68,2333
+    impl<A: std::fmt::Debug + Eq + Hash, B: std::fmt::Debug + Eq + Hash> std::fmt::Debug for MapMapping73,2488
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { self.rel.fmt(f) }fmt74,2597
+    impl<A: std::fmt::Display + Eq + Hash, B: std::fmt::Display + Eq + Hash> std::fmt::Display fMapping76,2698
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { self.rel.fmt(f) }fmt77,2813
+    impl<Mapping80,2915
+        fn empty() -> Mapping<X, Y> {empty85,3150
+        fn FromVec(v: Vec<Pair<X, Y>>) -> Mapping<X, Y> {FromVec91,3318
+        fn FromRelation(r: &Relation<X, Y>) -> Mapping<X, Y> {FromRelation98,3570
+        fn size(&self) -> N { self.rel.size() }size105,3843
+        fn domain(&self) -> Set<X> { self.rel.domain() }domain107,3892
+        fn range(&self) -> Set<Y> { self.rel.range() }range109,3950
+        fn mem(&self, a: &X, b: &Y) -> B { self.rel.mem(a, b) }mem111,4006
+        fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>> { self.rel.iter() }iter113,4071
+    macro_rules! MappingLit {MappingLit117,4193
+    fn _MappingLit_type_checks() {_MappingLit_type_checks128,4796
+    pub fn __mapping_macro_typecheck_exercise() {__mapping_macro_typecheck_exercise134,5027
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTPlainMtEph.rs,3560
+pub mod BSTPlainMtEph {BSTPlainMtEph3,90
+    type Link<T> = Arc<RwLock<Option<Node<T>>>>;Link9,230
+    struct Node<T: StTinMtT + Ord> {Node12,301
+        key: T,key13,338
+        height: i32,height14,354
+        size: N,size15,375
+        left: Link<T>,left16,392
+        right: Link<T>,right17,415
+    impl<T: StTinMtT + Ord> Node<T> {Node20,446
+        fn new(key: T) -> Self {new21,484
+        fn update(&mut self) {update31,737
+    pub struct BSTPlainMtEph<T: StTinMtT + Ord> {BSTPlainMtEph39,1020
+        root: Link<T>,root40,1070
+    pub type BSTree<T> = BSTPlainMtEph<T>;BSTree43,1100
+    pub trait BSTPlainMtEphTrait<T: StTinMtT + Ord>: Sized {BSTPlainMtEphTrait45,1144
+        fn new() -> Self;new46,1205
+        fn insert(&self, value: T);insert47,1231
+        fn find(&self, target: &T) -> Option<T>;find48,1267
+        fn contains(&self, target: &T) -> B;contains49,1316
+        fn size(&self) -> N;size50,1361
+        fn is_empty(&self) -> B;is_empty51,1390
+        fn height(&self) -> N;height52,1423
+        fn minimum(&self) -> Option<T>;minimum53,1454
+        fn maximum(&self) -> Option<T>;maximum54,1494
+        fn in_order(&self) -> ArrayStPerS<T>;in_order55,1534
+    impl<T: StTinMtT + Ord> BSTPlainMtEph<T> {BSTPlainMtEph58,1587
+        pub fn new() -> Self {new59,1634
+        pub fn insert(&self, value: T) {insert65,1760
+            fn descend<T: StTinMtT + Ord>(link: &Link<T>, value: T) -> bool {descend66,1801
+        pub fn find(&self, target: &T) -> Option<T> {find100,2993
+            fn find_rec<T: StTinMtT + Ord>(link: &Link<T>, target: &T) -> Option<T> {find_rec101,3047
+        pub fn contains(&self, target: &T) -> B {contains120,3786
+        pub fn size(&self) -> N {size127,3975
+        pub fn is_empty(&self) -> B {is_empty132,4126
+        pub fn height(&self) -> N {height140,4293
+        pub fn minimum(&self) -> Option<T> {minimum145,4453
+            fn leftmost<T: StTinMtT + Ord>(link: &Link<T>) -> Option<T> {leftmost146,4498
+        pub fn maximum(&self) -> Option<T> {maximum167,5208
+            fn rightmost<T: StTinMtT + Ord>(link: &Link<T>) -> Option<T> {rightmost168,5253
+        pub fn in_order(&self) -> ArrayStPerS<T> {in_order189,5970
+            fn traverse<T: StTinMtT + Ord>(link: &Link<T>, out: &mut Vec<T>) {traverse190,6021
+    fn height_of<T: StTinMtT + Ord>(link: &Option<Node<T>>) -> i32 { link.as_ref().map_or(0, |n|height_of209,6686
+    fn size_of<T: StTinMtT + Ord>(link: &Option<Node<T>>) -> N { link.as_ref().map_or(0, |n| n.ssize_of211,6796
+    impl<T: StTinMtT + Ord> BSTPlainMtEphTrait<T> for BSTPlainMtEph<T> {BSTPlainMtEph213,6900
+        fn new() -> Self { BSTPlainMtEph::new() }new214,6973
+        fn insert(&self, value: T) { BSTPlainMtEph::insert(self, value) }insert215,7023
+        fn find(&self, target: &T) -> Option<T> { BSTPlainMtEph::find(self, target) }find216,7097
+        fn contains(&self, target: &T) -> B { BSTPlainMtEph::contains(self, target) }contains217,7183
+        fn size(&self) -> N { BSTPlainMtEph::size(self) }size218,7269
+        fn is_empty(&self) -> B { BSTPlainMtEph::is_empty(self) }is_empty219,7327
+        fn height(&self) -> N { BSTPlainMtEph::height(self) }height220,7393
+        fn minimum(&self) -> Option<T> { BSTPlainMtEph::minimum(self) }minimum221,7455
+        fn maximum(&self) -> Option<T> { BSTPlainMtEph::maximum(self) }maximum222,7527
+        fn in_order(&self) -> ArrayStPerS<T> { BSTPlainMtEph::in_order(self) }in_order223,7599
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTBBAlphaStEph.rs,4476
+pub mod BSTBBAlphaStEph {BSTBBAlphaStEph3,80
+    type Link<T> = Option<Box<Node<T>>>;Link10,277
+    struct Node<T: StT + Ord> {Node13,340
+        key: T,key14,372
+        size: N,size15,388
+        left: Link<T>,left16,405
+        right: Link<T>,right17,428
+    impl<T: StT + Ord> Node<T> {Node20,459
+        fn new(key: T) -> Self {new21,492
+    pub struct BSTBBAlphaStEph<T: StT + Ord> {BSTBBAlphaStEph31,678
+        root: Link<T>,root32,725
+    pub type BSTreeBBAlpha<T> = BSTBBAlphaStEph<T>;BSTreeBBAlpha35,755
+    pub trait BSTBBAlphaStEphTrait<T: StT + Ord> {BSTBBAlphaStEphTrait37,808
+        fn new() -> Self;new38,859
+        fn size(&self) -> N;size39,885
+        fn is_empty(&self) -> B;is_empty40,914
+        fn height(&self) -> N;height41,947
+        fn insert(&mut self, value: T);insert42,978
+        fn find(&self, target: &T) -> Option<&T>;find43,1018
+        fn contains(&self, target: &T) -> B;contains44,1068
+        fn minimum(&self) -> Option<&T>;minimum45,1113
+        fn maximum(&self) -> Option<&T>;maximum46,1154
+        fn in_order(&self) -> ArrayStPerS<T>;in_order47,1195
+        fn pre_order(&self) -> ArrayStPerS<T>;pre_order48,1241
+    impl<T: StT + Ord> Default for BSTBBAlphaStEph<T> {BSTBBAlphaStEph51,1295
+        fn default() -> Self { Self::new() }default52,1351
+    impl<T: StT + Ord> BSTBBAlphaStEph<T> {BSTBBAlphaStEph55,1403
+        pub fn new() -> Self { BSTBBAlphaStEph { root: None } }new56,1447
+        pub fn size(&self) -> N { Self::size_link(&self.root) }size58,1512
+        pub fn is_empty(&self) -> B {is_empty60,1577
+        pub fn height(&self) -> N {height68,1744
+            fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {height_rec69,1780
+        pub fn insert(&mut self, value: T) {insert78,2076
+        pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }find86,2364
+        pub fn contains(&self, target: &T) -> B {contains88,2458
+        pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }minimum96,2648
+        pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }maximum98,2724
+        pub fn in_order(&self) -> ArrayStPerS<T> {in_order100,2800
+        pub fn pre_order(&self) -> ArrayStPerS<T> {pre_order106,3018
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }size_link112,3238
+        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::sizeupdate114,3321
+        fn insert_link(link: &mut Link<T>, value: T) -> bool {insert_link116,3440
+        fn needs_rebuild(node: &Node<T>) -> bool {needs_rebuild138,4186
+        fn rebalance_if_needed(link: &mut Link<T>, total_size: N) {rebalance_if_needed145,4468
+        fn collect_values(link: &Link<T>, out: &mut Vec<T>) {collect_values155,4878
+        fn build_balanced(values: &[T]) -> Link<T> {build_balanced163,5159
+        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {find_link175,5599
+        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {min_link190,6116
+        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {max_link200,6437
+        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {in_order_collect210,6760
+        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {pre_order_collect218,7047
+    impl<T: StT + Ord> BSTBBAlphaStEphTrait<T> for BSTBBAlphaStEph<T> {BSTBBAlphaStEph227,7343
+        fn new() -> Self { BSTBBAlphaStEph::new() }new228,7415
+        fn size(&self) -> N { BSTBBAlphaStEph::size(self) }size230,7468
+        fn is_empty(&self) -> B { BSTBBAlphaStEph::is_empty(self) }is_empty232,7529
+        fn height(&self) -> N { BSTBBAlphaStEph::height(self) }height234,7598
+        fn insert(&mut self, value: T) { BSTBBAlphaStEph::insert(self, value) }insert236,7663
+        fn find(&self, target: &T) -> Option<&T> { BSTBBAlphaStEph::find(self, target) }find238,7744
+        fn contains(&self, target: &T) -> B { BSTBBAlphaStEph::contains(self, target) }contains240,7834
+        fn minimum(&self) -> Option<&T> { BSTBBAlphaStEph::minimum(self) }minimum242,7923
+        fn maximum(&self) -> Option<&T> { BSTBBAlphaStEph::maximum(self) }maximum244,7999
+        fn in_order(&self) -> ArrayStPerS<T> { BSTBBAlphaStEph::in_order(self) }in_order246,8075
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTBBAlphaStEph::pre_order(self) }pre_order248,8157
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTTreapMtEph.rs,4177
+pub mod BSTTreapMtEph {BSTTreapMtEph3,100
+    type Link<T> = Option<Box<Node<T>>>;Link11,326
+    struct Node<T: StTinMtT + Ord> {Node14,389
+        key: T,key15,426
+        priority: u64,priority16,442
+        size: N,size17,465
+        left: Link<T>,left18,482
+        right: Link<T>,right19,505
+    impl<T: StTinMtT + Ord> Node<T> {Node22,536
+        fn new(key: T, priority: u64) -> Self {new23,574
+    pub struct BSTTreapMtEph<T: StTinMtT + Ord> {BSTTreapMtEph35,822
+        root: Arc<RwLock<Link<T>>>,root36,872
+    pub type BSTreeTreap<T> = BSTTreapMtEph<T>;BSTreeTreap39,915
+    pub trait BSTTreapMtEphTrait<T: StTinMtT + Ord>: Sized {BSTTreapMtEphTrait41,964
+        fn new() -> Self;new42,1025
+        fn insert(&self, value: T);insert43,1051
+        fn find(&self, target: &T) -> Option<T>;find44,1087
+        fn contains(&self, target: &T) -> B;contains45,1136
+        fn size(&self) -> N;size46,1181
+        fn is_empty(&self) -> B;is_empty47,1210
+        fn height(&self) -> N;height48,1243
+        fn minimum(&self) -> Option<T>;minimum49,1274
+        fn maximum(&self) -> Option<T>;maximum50,1314
+        fn in_order(&self) -> ArrayStPerS<T>;in_order51,1354
+        fn pre_order(&self) -> ArrayStPerS<T>;pre_order52,1400
+    impl<T: StTinMtT + Ord> Default for BSTTreapMtEph<T> {BSTTreapMtEph55,1454
+        fn default() -> Self { Self::new() }default56,1513
+    impl<T: StTinMtT + Ord> BSTTreapMtEph<T> {BSTTreapMtEph59,1565
+        pub fn new() -> Self {new60,1612
+        pub fn size(&self) -> N {size66,1747
+        pub fn is_empty(&self) -> B {is_empty71,1880
+        pub fn height(&self) -> N {height79,2047
+            fn height_rec<T: StTinMtT + Ord>(link: &Link<T>) -> N {height_rec80,2083
+        pub fn insert(&self, value: T) {insert91,2433
+        pub fn find(&self, target: &T) -> Option<T> {find97,2635
+        pub fn contains(&self, target: &T) -> B {contains102,2805
+        pub fn minimum(&self) -> Option<T> {minimum110,2995
+        pub fn maximum(&self) -> Option<T> {maximum115,3147
+        pub fn in_order(&self) -> ArrayStPerS<T> {in_order120,3299
+        pub fn pre_order(&self) -> ArrayStPerS<T> {pre_order127,3578
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }size_link134,3859
+        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::sizeupdate136,3942
+        fn rotate_left(link: &mut Link<T>) {rotate_left138,4061
+        fn rotate_right(link: &mut Link<T>) {rotate_right152,4516
+        fn insert_link(link: &mut Link<T>, value: T, rng: &mut impl Rng) {insert_link166,4972
+        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {find_link191,5992
+        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {min_link206,6509
+        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {max_link216,6830
+        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {in_order_collect226,7153
+        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {pre_order_collect234,7440
+    impl<T: StTinMtT + Ord> BSTTreapMtEphTrait<T> for BSTTreapMtEph<T> {BSTTreapMtEph243,7736
+        fn new() -> Self { BSTTreapMtEph::new() }new244,7809
+        fn insert(&self, value: T) { BSTTreapMtEph::insert(self, value) }insert246,7860
+        fn find(&self, target: &T) -> Option<T> { BSTTreapMtEph::find(self, target) }find248,7935
+        fn contains(&self, target: &T) -> B { BSTTreapMtEph::contains(self, target) }contains250,8022
+        fn size(&self) -> N { BSTTreapMtEph::size(self) }size252,8109
+        fn is_empty(&self) -> B { BSTTreapMtEph::is_empty(self) }is_empty254,8168
+        fn height(&self) -> N { BSTTreapMtEph::height(self) }height256,8235
+        fn minimum(&self) -> Option<T> { BSTTreapMtEph::minimum(self) }minimum258,8298
+        fn maximum(&self) -> Option<T> { BSTTreapMtEph::maximum(self) }maximum260,8371
+        fn in_order(&self) -> ArrayStPerS<T> { BSTTreapMtEph::in_order(self) }in_order262,8444
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTTreapMtEph::pre_order(self) }pre_order264,8524
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/main.rs,23
 fn main() {main7,236
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqMtPerChap18.rs,2557
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqMtPerChap18.rs,2833
 pub mod ArraySeqMtPerChap18 {ArraySeqMtPerChap183,82
     pub trait ArraySeqMtPerChap18Trait<T: MtT> {ArraySeqMtPerChap18Trait7,193
         fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayMtPerS<T>;tabulate10,424
@@ -745,154 +1411,287 @@ pub mod ArraySeqMtPerChap18 {ArraySeqMtPerChap183,82
         fn inject(a: &ArrayMtPerS<T>, updates: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T>;inject25,1558
         fn ninject(a: &ArrayMtPerS<T>, updates: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T>;ninject28,1774
         fn iterate<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;iterate30,1944
-        fn iteratePrefixes<A: MtT>(iteratePrefixes32,2073
-        fn reduce(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce38,2313
-        fn scan(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayMtPerS<T>, T);scan40,2437
-        fn flatten(ss: &ArrayMtPerS<ArrayMtPerS<T>>) -> ArrayMtPerS<T>;flatten42,2600
-        fn collect(collect44,2751
-    impl<T: MtT> ArraySeqMtPerChap18Trait<T> for ArrayMtPerS<T> {ArrayMtPerS50,2909
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayMtPerS<T> {tabulate51,2975
-        fn map<W: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&T) -> W) -> ArrayMtPerS<W> {map56,3155
-        fn append(a: &ArrayMtPerS<T>, b: &ArrayMtPerS<T>) -> ArrayMtPerS<T> {append60,3349
-        fn filter(a: &ArrayMtPerS<T>, pred: impl Fn(&T) -> B) -> ArrayMtPerS<T> {filter67,3625
-        fn update(a: &ArrayMtPerS<T>, Pair(index, item): Pair<N, T>) -> ArrayMtPerS<T> {update77,3982
-        fn inject(a: &ArrayMtPerS<T>, updates: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T> {inject81,4143
-        fn ninject(a: &ArrayMtPerS<T>, updates: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T> {ninject94,4792
-        fn iterate<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate105,5227
-        fn iteratePrefixes<A: MtT>(iteratePrefixes113,5460
-        fn reduce(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce128,5946
-        fn scan(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayMtPerS<T>, T) {scan137,6248
-        fn flatten(ss: &ArrayMtPerS<ArrayMtPerS<T>>) -> ArrayMtPerS<T> {flatten147,6632
-        fn collect(collect158,7034
+        fn iteratePrefixes<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArrayMiteratePrefixes32,2073
+        fn reduce(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce34,2266
+        fn scan(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayMtPerS<T>, T);scan36,2390
+        fn flatten(ss: &ArrayMtPerS<ArrayMtPerS<T>>) -> ArrayMtPerS<T>;flatten38,2553
+        fn collect(a: &ArrayMtPerS<Pair<T, T>>, cmp: impl Fn(&T, &T) -> O) -> ArrayMtPerS<Pair<Tcollect40,2704
+    impl<T: MtT> ArraySeqMtPerChap18Trait<T> for ArrayMtPerS<T> {ArrayMtPerS43,2827
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayMtPerS<T> {tabulate44,2893
+        fn map<W: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&T) -> W) -> ArrayMtPerS<W> {map49,3073
+        fn append(a: &ArrayMtPerS<T>, b: &ArrayMtPerS<T>) -> ArrayMtPerS<T> {append53,3267
+        fn filter(a: &ArrayMtPerS<T>, pred: impl Fn(&T) -> B) -> ArrayMtPerS<T> {filter66,3672
+        fn update(a: &ArrayMtPerS<T>, Pair(index, item): Pair<N, T>) -> ArrayMtPerS<T> {update76,4029
+        fn inject(a: &ArrayMtPerS<T>, updates: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T> {inject80,4190
+        fn ninject(a: &ArrayMtPerS<T>, updates: &ArrayMtPerS<Pair<N, T>>) -> ArrayMtPerS<T> {ninject93,4839
+        fn iterate<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate104,5274
+        fn iteratePrefixes<A: MtT>(a: &ArrayMtPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArrayMiteratePrefixes112,5507
+        fn reduce(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce123,5946
+        fn scan(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayMtPerS<T>, T) {scan134,6276
+        fn flatten(ss: &ArrayMtPerS<ArrayMtPerS<T>>) -> ArrayMtPerS<T> {flatten144,6660
+        fn collect(a: &ArrayMtPerS<Pair<T, T>>, cmp: impl Fn(&T, &T) -> O) -> ArrayMtPerS<Pair<Tcollect155,7062
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTSplayMtEph.rs,3972
+pub mod BSTSplayMtEph {BSTSplayMtEph3,99
+    type Link<T> = Option<Box<Node<T>>>;Link10,299
+    struct Node<T: StTinMtT + Ord> {Node13,362
+        key: T,key14,399
+        size: N,size15,415
+        left: Link<T>,left16,432
+        right: Link<T>,right17,455
+    impl<T: StTinMtT + Ord> Node<T> {Node20,486
+        fn new(key: T) -> Self {new21,524
+    pub struct BSTSplayMtEph<T: StTinMtT + Ord> {BSTSplayMtEph32,731
+        root: Arc<RwLock<Link<T>>>,root33,781
+    pub type BSTreeSplay<T> = BSTSplayMtEph<T>;BSTreeSplay36,824
+    pub trait BSTSplayMtEphTrait<T: StTinMtT + Ord>: Sized {BSTSplayMtEphTrait38,873
+        fn new() -> Self;new39,934
+        fn insert(&self, value: T);insert40,960
+        fn find(&self, target: &T) -> Option<T>;find41,996
+        fn contains(&self, target: &T) -> B;contains42,1045
+        fn size(&self) -> N;size43,1090
+        fn is_empty(&self) -> B;is_empty44,1119
+        fn height(&self) -> N;height45,1152
+        fn minimum(&self) -> Option<T>;minimum46,1183
+        fn maximum(&self) -> Option<T>;maximum47,1223
+        fn in_order(&self) -> ArrayStPerS<T>;in_order48,1263
+        fn pre_order(&self) -> ArrayStPerS<T>;pre_order49,1309
+    impl<T: StTinMtT + Ord> Default for BSTSplayMtEph<T> {BSTSplayMtEph52,1363
+        fn default() -> Self { Self::new() }default53,1422
+    impl<T: StTinMtT + Ord> BSTSplayMtEph<T> {BSTSplayMtEph56,1474
+        pub fn new() -> Self {new57,1521
+        pub fn size(&self) -> N {size63,1656
+        pub fn is_empty(&self) -> B {is_empty68,1789
+        pub fn height(&self) -> N {height76,1956
+            fn height_rec<T: StTinMtT + Ord>(link: &Link<T>) -> N {height_rec77,1992
+        pub fn insert(&self, value: T) {insert88,2342
+        pub fn find(&self, target: &T) -> Option<T> {find93,2501
+        pub fn contains(&self, target: &T) -> B {contains98,2671
+        pub fn minimum(&self) -> Option<T> {minimum106,2861
+        pub fn maximum(&self) -> Option<T> {maximum111,3013
+        pub fn in_order(&self) -> ArrayStPerS<T> {in_order116,3165
+        pub fn pre_order(&self) -> ArrayStPerS<T> {pre_order123,3444
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }size_link130,3725
+        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::sizeupdate132,3808
+        fn insert_link(link: &mut Link<T>, value: T) -> bool {insert_link134,3927
+        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {find_link156,4673
+        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {min_link171,5190
+        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {max_link181,5511
+        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {in_order_collect191,5834
+        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {pre_order_collect199,6121
+    impl<T: StTinMtT + Ord> BSTSplayMtEphTrait<T> for BSTSplayMtEph<T> {BSTSplayMtEph208,6417
+        fn new() -> Self { BSTSplayMtEph::new() }new209,6490
+        fn insert(&self, value: T) { BSTSplayMtEph::insert(self, value) }insert211,6541
+        fn find(&self, target: &T) -> Option<T> { BSTSplayMtEph::find(self, target) }find213,6616
+        fn contains(&self, target: &T) -> B { BSTSplayMtEph::contains(self, target) }contains215,6703
+        fn size(&self) -> N { BSTSplayMtEph::size(self) }size217,6790
+        fn is_empty(&self) -> B { BSTSplayMtEph::is_empty(self) }is_empty219,6849
+        fn height(&self) -> N { BSTSplayMtEph::height(self) }height221,6916
+        fn minimum(&self) -> Option<T> { BSTSplayMtEph::minimum(self) }minimum223,6979
+        fn maximum(&self) -> Option<T> { BSTSplayMtEph::maximum(self) }maximum225,7052
+        fn in_order(&self) -> ArrayStPerS<T> { BSTSplayMtEph::in_order(self) }in_order227,7125
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTSplayMtEph::pre_order(self) }pre_order229,7205
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chapter36.rs.claude,0
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqMtPer.rs,3798
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqMtPer.rs,3539
 pub mod ArraySeqMtPer {ArraySeqMtPer8,390
-    pub struct ArrayMtPerS<T> { data: Box<[T]> }ArrayMtPerS16,633
-    pub struct ArrayMtPerS<T> { data: Box<[T]> }data16,633
-    pub trait ArraySeqMtPerTrait<T: MtT> {ArraySeqMtPerTrait19,754
-        fn new(length: N, init_value: T) -> Self;new22,899
-        fn length(&self) -> N;length25,1041
-        fn nth(&self, index: N) -> &T;nth28,1164
-        fn empty() -> Self;empty31,1295
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str> where Self: Sized;set34,1484
-        fn singleton(item: T) -> Self;singleton37,1666
-        fn isEmpty(&self) -> B;isEmpty40,1797
-        fn isSingleton(&self) -> B;isSingleton43,1921
-        fn subseq_copy(&self, start: N, length: N) -> Self where Self: Sized;subseq_copy46,2059
-    impl<T> ArrayMtPerS<T> {ArrayMtPerS49,2144
-        pub fn subseq(&self, start: N, length: N) -> &[T] {subseq51,2214
-        pub fn from_vec(v: Vec<T>) -> Self { ArrayMtPerS { data: v.into_boxed_slice() } }from_vec60,2577
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }iter62,2668
-        pub fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }iter_mut63,2731
-        pub fn empty() -> Self { ArrayMtPerS { data: Vec::new().into_boxed_slice() } }empty65,2810
-        pub fn singleton(item: T) -> Self { ArrayMtPerS { data: vec![item].into_boxed_slice() } singleton66,2897
-        pub fn new(length: N, init_value: T) -> Self where T: Clone { Self::from_vec(vec![init_vnew67,2995
-        pub fn length(&self) -> N { self.data.len() }length68,3108
-        pub fn nth(&self, index: N) -> &T { &self.data[index] }nth69,3162
-    impl<T: MtT> ArrayMtPerS<T> {ArrayMtPerS72,3237
-        pub fn new_mt(length: N, init_value: T) -> Self { new_mt73,3271
-        pub fn set(&self, index: N, item: T) -> Result<Self, &'static str> set81,3517
-        pub fn subseq_copy_mt(&self, start: N, length: N) -> Self {subseq_copy_mt89,3846
-    impl<T: MtT> Clone for ArrayMtPerS<T> {ArrayMtPerS98,4173
-        fn clone(&self) -> Self {clone99,4217
-    impl<T: MtT + StT + Send + Sync> MtT for ArrayMtPerS<T> {ArrayMtPerS105,4427
-        type Inner = ArrayMtPerS<T>;Inner106,4489
-        fn clone_mt(&self) -> Self {clone_mt107,4526
-        fn new_mt(inner: Self::Inner) -> Self {new_mt110,4598
-    impl<T: Eq> PartialEq for ArrayMtPerS<T> {ArrayMtPerS116,4682
-        fn eq(&self, other: &Self) -> bool {eq117,4729
-    impl<T: Eq> Eq for ArrayMtPerS<T> {}ArrayMtPerS123,4963
-    impl<T: Debug> Debug for ArrayMtPerS<T> {ArrayMtPerS125,5005
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt126,5051
-    impl<T: Display> Display for ArrayMtPerS<T> {ArrayMtPerS132,5244
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt133,5294
-    impl<T: MtT> ArraySeqMtPerTrait<T> for ArrayMtPerS<T> {ArrayMtPerS143,5579
-        fn new(length: N, init_value: T) -> Self {new144,5639
-        fn length(&self) -> N { self.data.len() }length147,5752
-        fn nth(&self, index: N) -> &T { &self.data[index] }nth148,5802
-        fn empty() -> Self { Self::from_vec(Vec::new()) }empty149,5862
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str> {set150,5920
-        fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }singleton153,6037
-        fn isEmpty(&self) -> B { if self.data.len() == 0 { B::True } else { B::False } }isEmpty154,6106
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }isSingleton155,6195
-        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy156,6288
-    macro_rules! ArraySeqMtPer {ArraySeqMtPer163,6434
-    fn _ArraySeqMtPer_macro_type_checks() {_ArraySeqMtPer_macro_type_checks170,6786
+    pub struct ArrayMtPerS<T> {ArrayMtPerS16,633
+        data: Box<[T]>,data17,665
+    pub trait ArraySeqMtPerTrait<T: MtT> {ArraySeqMtPerTrait21,767
+        fn new(length: N, init_value: T) -> Self;new24,912
+        fn length(&self) -> N;length27,1054
+        fn nth(&self, index: N) -> &T;nth30,1177
+        fn empty() -> Self;empty33,1308
+        fn set(&self, index: N, item: T) -> Result<Self, &'static str>set36,1497
+        fn singleton(item: T) -> Self;singleton41,1699
+        fn isEmpty(&self) -> B;isEmpty44,1830
+        fn isSingleton(&self) -> B;isSingleton47,1954
+        fn subseq_copy(&self, start: N, length: N) -> Selfsubseq_copy50,2092
+    impl<T> ArrayMtPerS<T> {ArrayMtPerS55,2197
+        pub fn subseq(&self, start: N, length: N) -> &[T] {subseq57,2267
+        pub fn from_vec(v: Vec<T>) -> Self {from_vec66,2630
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }iter72,2770
+        pub fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }iter_mut73,2833
+        pub fn empty() -> Self {empty75,2912
+        pub fn singleton(item: T) -> Self {singleton80,3048
+        pub fn new(length: N, init_value: T) -> Selfnew85,3195
+        pub fn length(&self) -> N { self.data.len() }length91,3357
+        pub fn nth(&self, index: N) -> &T { &self.data[index] }nth92,3411
+    impl<T: MtT> ArrayMtPerS<T> {ArrayMtPerS95,3482
+        pub fn new_mt(length: N, init_value: T) -> Self {new_mt96,3516
+        pub fn set(&self, index: N, item: T) -> Result<Self, &'static str> {set104,3761
+        pub fn subseq_copy_mt(&self, start: N, length: N) -> Self {subseq_copy_mt113,4101
+    impl<T: MtT> Clone for ArrayMtPerS<T> {ArrayMtPerS122,4428
+        fn clone(&self) -> Self {clone123,4472
+    impl<T: MtT + StT + Send + Sync> MtT for ArrayMtPerS<T> {ArrayMtPerS131,4711
+        type Inner = ArrayMtPerS<T>;Inner132,4773
+        fn clone_mt(&self) -> Self { self.clone() }clone_mt133,4810
+        fn new_mt(inner: Self::Inner) -> Self { inner }new_mt134,4862
+    impl<T: Eq> PartialEq for ArrayMtPerS<T> {ArrayMtPerS137,4925
+        fn eq(&self, other: &Self) -> bool {eq138,4972
+    impl<T: Eq> Eq for ArrayMtPerS<T> {}ArrayMtPerS150,5298
+    impl<T: Debug> Debug for ArrayMtPerS<T> {ArrayMtPerS152,5340
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt153,5386
+    impl<T: Display> Display for ArrayMtPerS<T> {ArrayMtPerS159,5579
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt160,5629
+    impl<T: MtT> ArraySeqMtPerTrait<T> for ArrayMtPerS<T> {ArrayMtPerS172,5950
+        fn new(length: N, init_value: T) -> Self { ArrayMtPerS::new_mt(length, init_value) }new173,6010
+        fn length(&self) -> N { self.data.len() }length174,6103
+        fn nth(&self, index: N) -> &T { &self.data[index] }nth175,6153
+        fn empty() -> Self { Self::from_vec(Vec::new()) }empty176,6213
+        fn set(&self, index: N, item: T) -> Result<Self, &'static str> { self.set(index, item) }set177,6271
+        fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }singleton178,6368
+        fn isEmpty(&self) -> B {isEmpty179,6437
+        fn isSingleton(&self) -> B {isSingleton186,6602
+        fn subseq_copy(&self, start: N, length: N) -> Self { self.subseq_copy_mt(start, length) subseq_copy193,6771
+    macro_rules! ArraySeqMtPer {ArraySeqMtPer197,6896
+    fn _ArraySeqMtPer_macro_type_checks() {_ArraySeqMtPer_macro_type_checks204,7248
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/AVLTreeSeqStEph.rs,4183
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTSetRBMtEph.rs,5410
+pub mod BSTSetRBMtEph {BSTSetRBMtEph3,79
+    pub struct BSTSetRBMtEph<T: StTinMtT + Ord> {BSTSetRBMtEph10,282
+        tree: BSTRBMtEph<T>,tree11,332
+    pub type BSTSetRBMt<T> = BSTSetRBMtEph<T>;BSTSetRBMt14,368
+    pub trait BSTSetRBMtEphTrait<T: StTinMtT + Ord>: Sized {BSTSetRBMtEphTrait16,416
+        fn empty() -> Self;empty17,477
+        fn singleton(value: T) -> Self;singleton18,505
+        fn size(&self) -> N;size19,545
+        fn is_empty(&self) -> B;is_empty20,574
+        fn find(&self, value: &T) -> Option<T>;find21,607
+        fn contains(&self, value: &T) -> B;contains22,655
+        fn minimum(&self) -> Option<T>;minimum23,699
+        fn maximum(&self) -> Option<T>;maximum24,739
+        fn insert(&mut self, value: T);insert25,779
+        fn delete(&mut self, target: &T);delete26,819
+        fn union(&self, other: &Self) -> Self;union27,861
+        fn intersection(&self, other: &Self) -> Self;intersection28,908
+        fn difference(&self, other: &Self) -> Self;difference29,962
+        fn split(&self, pivot: &T) -> (Self, B, Self);split30,1014
+        fn join_pair(left: Self, right: Self) -> Self;join_pair31,1069
+        fn join_m(left: Self, pivot: T, right: Self) -> Self;join_m32,1124
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self;filter33,1186
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T;reduce34,1256
+        fn iter_in_order(&self) -> ArrayStPerS<T>;iter_in_order35,1324
+        fn as_tree(&self) -> &BSTRBMtEph<T>;as_tree36,1375
+    impl<T: StTinMtT + Ord> BSTSetRBMtEph<T> {BSTSetRBMtEph39,1427
+        pub fn empty() -> Self {empty40,1474
+        pub fn singleton(value: T) -> Self {singleton46,1592
+        pub fn size(&self) -> N { self.tree.size() }size52,1748
+        pub fn is_empty(&self) -> B { self.tree.is_empty() }is_empty54,1802
+        pub fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }find56,1864
+        pub fn contains(&self, value: &T) -> B { self.tree.contains(value) }contains58,1942
+        pub fn minimum(&self) -> Option<T> { self.tree.minimum() }minimum60,2020
+        pub fn maximum(&self) -> Option<T> { self.tree.maximum() }maximum62,2088
+        pub fn insert(&mut self, value: T) { self.tree.insert(value); }insert64,2156
+        pub fn delete(&mut self, target: &T) {delete66,2229
+        pub fn union(&self, other: &Self) -> Self {union74,2518
+        pub fn intersection(&self, other: &Self) -> Self {intersection82,2817
+        pub fn difference(&self, other: &Self) -> Self {difference99,3395
+        pub fn split(&self, pivot: &T) -> (Self, B, Self) {split116,3972
+        pub fn join_pair(left: Self, right: Self) -> Self {join_pair136,4663
+        pub fn join_m(left: Self, pivot: T, right: Self) -> Self {join_m144,4976
+        pub fn filter<F>(&self, mut predicate: F) -> Selffilter153,5332
+        pub fn reduce<F>(&self, mut op: F, base: T) -> Treduce166,5741
+        pub fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }iter_in_order176,6005
+        pub fn as_tree(&self) -> &BSTRBMtEph<T> { &self.tree }as_tree178,6085
+        fn values_vec(&self) -> Vec<T> { self.tree.in_order().iter().cloned().collect() }values_vec180,6149
+        fn rebuild_from_vec(values: Vec<T>) -> BSTRBMtEph<T> {rebuild_from_vec182,6240
+        fn from_sorted_iter<I>(values: I) -> Selffrom_sorted_iter190,6457
+    impl<T: StTinMtT + Ord> BSTSetRBMtEphTrait<T> for BSTSetRBMtEph<T> {BSTSetRBMtEph202,6739
+        fn empty() -> Self { Self::empty() }empty203,6812
+        fn singleton(value: T) -> Self { Self::singleton(value) }singleton205,6858
+        fn size(&self) -> N { self.tree.size() }size207,6925
+        fn is_empty(&self) -> B { self.tree.is_empty() }is_empty209,6975
+        fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }find211,7033
+        fn contains(&self, value: &T) -> B { self.tree.contains(value) }contains213,7107
+        fn minimum(&self) -> Option<T> { self.tree.minimum() }minimum215,7181
+        fn maximum(&self) -> Option<T> { self.tree.maximum() }maximum217,7245
+        fn insert(&mut self, value: T) { self.tree.insert(value); }insert219,7309
+        fn delete(&mut self, target: &T) { BSTSetRBMtEph::delete(self, target) }delete221,7378
+        fn union(&self, other: &Self) -> Self { BSTSetRBMtEph::union(self, other) }union223,7460
+        fn intersection(&self, other: &Self) -> Self { BSTSetRBMtEph::intersection(self, other) intersection225,7545
+        fn difference(&self, other: &Self) -> Self { BSTSetRBMtEph::difference(self, other) }difference227,7644
+        fn split(&self, pivot: &T) -> (Self, B, Self) { BSTSetRBMtEph::split(self, pivot) }split229,7739
+        fn join_pair(left: Self, right: Self) -> Self { BSTSetRBMtEph::join_pair(left, right) }join_pair231,7832
+        fn join_m(left: Self, pivot: T, right: Self) -> Self { BSTSetRBMtEph::join_m(left, pivotjoin_m233,7929
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self { BSTSetRBMtEph::filter(selfilter235,8037
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T { BSTSetRBMtEph::reduce(self,reduce237,8150
+        fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }iter_in_order239,8260
+        fn as_tree(&self) -> &BSTRBMtEph<T> { &self.tree }as_tree241,8336
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/AVLTreeSeqStEph.rs,4695
 pub mod AVLTreeSeqStEph {AVLTreeSeqStEph3,61
-type Link<T> = Option<Box<AVLTreeNode<T>>>;Link8,181
-pub struct AVLTreeNode<T: StT> {AVLTreeNode10,226
-    pub value: T,value11,259
-    pub height: N,height12,277
-    pub left_size: N,left_size13,296
-    pub right_size: N,right_size14,318
-    pub left: Link<T>,left15,341
-    pub right: Link<T>,right16,364
-    pub index: N,index17,388
-impl<T: StT> AVLTreeNode<T> {AVLTreeNode20,409
-    fn new(value: T, index: N) -> Self {new21,439
-pub struct AVLTreeSeqStEphS<T: StT> {AVLTreeSeqStEphS34,684
-    pub root: Link<T>,root35,722
-    pub next_key: N,next_key36,745
-pub trait AVLTreeSeqStEphTrait<T: StT> {AVLTreeSeqStEphTrait39,769
-    fn empty() -> Self;empty42,894
-    fn new() -> Self;new45,1002
-    fn length(&self) -> N;length48,1108
-    fn nth(&self, index: N) -> &T;nth51,1235
-    fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;set54,1370
-    fn singleton(item: T) -> Self;singleton57,1531
-    fn isEmpty(&self) -> B;isEmpty60,1650
-    fn isSingleton(&self) -> B;isSingleton63,1762
-    fn subseq_copy(&self, start: N, length: N) -> Self;subseq_copy66,1918
-impl<T: StT> AVLTreeSeqStEphS<T> {AVLTreeSeqStEphS69,1977
-    pub fn new_root() -> Self {new_root70,2012
-    pub fn new() -> Self {new76,2136
-    pub fn update(&mut self, (index, item): (N, T)) -> &mut AVLTreeSeqStEphS<T> {update79,2194
-    pub fn from_vec(values: Vec<T>) -> AVLTreeSeqStEphS<T>from_vec83,2385
-    pub fn to_arrayseq(&self) -> ArraySeqStEphS<T>to_arrayseq93,2736
-    pub fn iter<'a>(&'a self) -> AVLTreeSeqIterStEph<'a, T> {iter113,3363
-    pub fn push_back(&mut self, value: T) {push_back116,3476
-    pub fn contains_value(&self, target: &T) -> Bcontains_value121,3670
-    pub fn insert_value(&mut self, value: T) {insert_value130,3865
-    pub fn delete_value(&mut self, target: &T) -> booldelete_value133,3949
-impl<T: StT> AVLTreeSeqStEphTrait<T> for AVLTreeSeqStEphS<T> {AVLTreeSeqStEphS159,4675
-    fn empty() -> Self {empty160,4738
-    fn new() -> Self {new164,4807
-    fn length(&self) -> N {length168,4874
-    fn nth(&self, index: N) -> &T {nth172,4939
-    fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {set176,5018
-    fn singleton(item: T) -> Self {singleton181,5168
-    fn isEmpty(&self) -> B {isEmpty187,5345
-    fn isSingleton(&self) -> B {isSingleton195,5481
-    fn subseq_copy(&self, start: N, length: N) -> Selfsubseq_copy203,5621
-pub struct AVLTreeSeqIterStEph<'a, T: StT> {AVLTreeSeqIterStEph219,6090
-    stack: Vec<&'a AVLTreeNode<T>>,stack220,6135
-    current: Option<&'a AVLTreeNode<T>>,current221,6171
-impl<'a, T: StT> AVLTreeSeqIterStEph<'a, T> {AVLTreeSeqIterStEph224,6215
-    fn new(root: &'a Link<T>) -> Self {new225,6261
-    fn push_left(&mut self, link: &'a Link<T>) {push_left233,6458
-impl<'a, T: StT> Iterator for AVLTreeSeqIterStEph<'a, T> {AVLTreeSeqIterStEph242,6678
-    type Item = &'a T;Item243,6737
-    fn next(&mut self) -> Option<Self::Item> {next244,6760
-    fn h<T: StT>(n: &Link<T>) -> N {h253,7012
-    fn size_link<T: StT>(n: &Link<T>) -> N {size_link257,7099
-    fn update_meta<T: StT>(n: &mut Box<AVLTreeNode<T>>) {update_meta265,7264
-    fn rotate_right<T: StT>(mut y: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {rotate_right273,7509
-    fn rotate_left<T: StT>(mut x: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {rotate_left284,7872
-    fn rebalance<T: StT>(mut n: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {rebalance295,8233
-    fn nth_link<'a, T: StT>(node: &'a Link<T>, index: N) -> &'a T {nth_link316,8998
-    fn set_link<T: StT>(node: &mut Link<T>, index: N, value: T) -> Result<(), &'static str> {set_link328,9378
-    pub(crate) fn insert_at_link<T: StT>(insert_at_link345,9964
-    macro_rules! AVLTreeSeqStEph {AVLTreeSeqStEph371,10815
-    fn _AVLTreeSeqStEph_type_checks() {_AVLTreeSeqStEph_type_checks386,11400
-    impl<T: StT> PartialEq for AVLTreeSeqStEphS<T> {AVLTreeSeqStEphS391,11659
-        fn eq(&self, other: &Self) -> bool {eq392,11712
-    impl<T: StT> Eq for AVLTreeSeqStEphS<T> {}AVLTreeSeqStEphS405,12039
+    type Link<T> = Option<Box<AVLTreeNode<T>>>;Link8,193
+    pub struct AVLTreeNode<T: StT> {AVLTreeNode10,242
+        pub value: T,value11,279
+        pub height: N,height12,301
+        pub left_size: N,left_size13,324
+        pub right_size: N,right_size14,350
+        pub left: Link<T>,left15,377
+        pub right: Link<T>,right16,404
+        pub index: N,index17,432
+    impl<T: StT> AVLTreeNode<T> {AVLTreeNode20,461
+        fn new(value: T, index: N) -> Self {new21,495
+    pub struct AVLTreeSeqStEphS<T: StT> {AVLTreeSeqStEphS34,788
+        pub root: Link<T>,root35,830
+        pub next_key: N,next_key36,857
+    pub trait AVLTreeSeqStEphTrait<T: StT> {AVLTreeSeqStEphTrait39,889
+        fn empty() -> Self;empty42,1026
+        fn new() -> Self;new45,1146
+        fn length(&self) -> N;length48,1264
+        fn nth(&self, index: N) -> &T;nth51,1403
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;set54,1550
+        fn singleton(item: T) -> Self;singleton57,1723
+        fn isEmpty(&self) -> B;isEmpty60,1854
+        fn isSingleton(&self) -> B;isSingleton63,1978
+        fn subseq_copy(&self, start: N, length: N) -> Self;subseq_copy66,2146
+    impl<T: StT> AVLTreeSeqStEphS<T> {AVLTreeSeqStEphS69,2213
+        pub fn new_root() -> Self {new_root70,2252
+        pub fn new() -> Self { Self::new_root() }new76,2400
+        pub fn update(&mut self, (index, item): (N, T)) -> &mut AVLTreeSeqStEphS<T> {update77,2450
+        pub fn from_vec(values: Vec<T>) -> AVLTreeSeqStEphS<T> {from_vec81,2657
+        pub fn to_arrayseq(&self) -> ArraySeqStEphS<T> {to_arrayseq90,3040
+        pub fn iter<'a>(&'a self) -> AVLTreeSeqIterStEph<'a, T> { AVLTreeSeqIterStEph::new(&selfiter106,3688
+        pub fn push_back(&mut self, value: T) {push_back107,3793
+        pub fn contains_value(&self, target: &T) -> B {contains_value112,4007
+        pub fn insert_value(&mut self, value: T) { self.push_back(value); }insert_value120,4230
+        pub fn delete_value(&mut self, target: &T) -> bool {delete_value121,4306
+    impl<T: StT> AVLTreeSeqStEphTrait<T> for AVLTreeSeqStEphS<T> {AVLTreeSeqStEphS146,5124
+        fn empty() -> Self { AVLTreeSeqStEphS::new_root() }empty147,5191
+        fn new() -> Self { AVLTreeSeqStEphS::new_root() }new149,5252
+        fn length(&self) -> N { size_link(&self.root) }length151,5311
+        fn nth(&self, index: N) -> &T { nth_link(&self.root, index) }nth153,5368
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {set155,5439
+        fn singleton(item: T) -> Self {singleton160,5605
+        fn isEmpty(&self) -> B {isEmpty166,5802
+        fn isSingleton(&self) -> B {isSingleton174,5966
+        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy182,6134
+    pub struct AVLTreeSeqIterStEph<'a, T: StT> {AVLTreeSeqIterStEph197,6655
+        stack: Vec<&'a AVLTreeNode<T>>,stack198,6704
+        current: Option<&'a AVLTreeNode<T>>,current199,6744
+    impl<'a, T: StT> AVLTreeSeqIterStEph<'a, T> {AVLTreeSeqIterStEph202,6796
+        fn new(root: &'a Link<T>) -> Self {new203,6846
+        fn push_left(&mut self, link: &'a Link<T>) {push_left211,7075
+    impl<'a, T: StT> Iterator for AVLTreeSeqIterStEph<'a, T> {AVLTreeSeqIterStEph220,7327
+        type Item = &'a T;Item221,7390
+        fn next(&mut self) -> Option<Self::Item> {next222,7417
+    fn h<T: StT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |b| b.height) }h231,7697
+    fn size_link<T: StT>(n: &Link<T>) -> N {size_link233,7772
+    fn update_meta<T: StT>(n: &mut Box<AVLTreeNode<T>>) {update_meta241,7937
+    fn rotate_right<T: StT>(mut y: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {rotate_right249,8182
+    fn rotate_left<T: StT>(mut x: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {rotate_left260,8545
+    fn rebalance<T: StT>(mut n: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {rebalance271,8906
+    fn nth_link<'a, T: StT>(node: &'a Link<T>, index: N) -> &'a T {nth_link292,9671
+    fn set_link<T: StT>(node: &mut Link<T>, index: N, value: T) -> Result<(), &'static str> {set_link304,10051
+    pub(crate) fn insert_at_link<T: StT>(node: Link<T>, index: N, value: T, next_key: &mut N) ->insert_at_link321,10641
+    macro_rules! AVLTreeSeqStEph {AVLTreeSeqStEph342,11457
+    fn _AVLTreeSeqStEph_type_checks() {_AVLTreeSeqStEph_type_checks357,12042
+    impl<T: StT> PartialEq for AVLTreeSeqStEphS<T> {AVLTreeSeqStEphS362,12254
+        fn eq(&self, other: &Self) -> bool {eq363,12307
+    impl<T: StT> Eq for AVLTreeSeqStEphS<T> {}AVLTreeSeqStEphS376,12634
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chapter36St.rs,2088
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chapter36St.rs,1495
 pub mod Chapter36St {Chapter36St3,95
     pub trait Chapter36StTrait<T: StT + Ord> {Chapter36StTrait9,225
         fn pivot_st_first(&self, lo: N, hi: N) -> T;pivot_st_first10,272
@@ -904,22 +1703,88 @@ pub mod Chapter36St {Chapter36St3,95
     impl<T: StT + Ord> Chapter36StTrait<T> for ArraySeqStEphS<T> {ArraySeqStEphS19,574
         fn pivot_st_first(&self, lo: N, _hi: N) -> T { self.nth(lo).clone() }pivot_st_first20,641
         fn pivot_st_median3(&self, lo: N, hi: N) -> T {pivot_st_median321,719
-        fn pivot_st_random(&self, lo: N, hi: N) -> T {pivot_st_random30,1132
-        fn quick_sort_st_first(&mut self) {quick_sort_st_first36,1309
-            fn swap<T: StT>(a: &mut ArraySeqStEphS<T>, i: N, j: N) {swap37,1353
-            fn partition<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N, p: &T) -> (N, N)partition44,1636
-            fn sort<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N) {sort56,2135
-        fn quick_sort_st_median3(&mut self) {quick_sort_st_median367,2512
-            fn swap<T: StT>(a: &mut ArraySeqStEphS<T>, i: N, j: N) {swap68,2558
-            fn median3<T: StT + Ord>(a: &ArraySeqStEphS<T>, lo: N, hi: N) -> T {median375,2841
-            fn partition<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N, p: &T) -> (N, N)partition84,3302
-            fn sort<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N) {sort96,3801
-        fn quick_sort_st_random(&mut self) {quick_sort_st_random107,4179
-            fn swap<T: StT>(a: &mut ArraySeqStEphS<T>, i: N, j: N) {swap108,4224
-            fn partition<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N, p: &T) -> (N, N)partition115,4507
-            fn sort<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N) {sort127,5006
+        fn pivot_st_random(&self, lo: N, hi: N) -> T {pivot_st_random34,1192
+        fn quick_sort_st_first(&mut self) {quick_sort_st_first40,1369
+            fn sort<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N) {sort41,1413
+        fn quick_sort_st_median3(&mut self) {quick_sort_st_median375,2596
+            fn median3<T: StT + Ord>(a: &ArraySeqStEphS<T>, lo: N, hi: N) -> T {median376,2642
+            fn sort<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N) {sort89,3179
+        fn quick_sort_st_random(&mut self) {quick_sort_st_random123,4363
+            fn sort<T: StT + Ord>(a: &mut ArraySeqStEphS<T>, lo: N, hi: N) {sort124,4408
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListStPerChap18.rs,2608
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTSetTreapMtEph.rs,5480
+pub mod BSTSetTreapMtEph {BSTSetTreapMtEph3,75
+    pub struct BSTSetTreapMtEph<T: StTinMtT + Ord> {BSTSetTreapMtEph10,290
+        tree: BSTTreapMtEph<T>,tree11,343
+    pub type BSTSetTreapMt<T> = BSTSetTreapMtEph<T>;BSTSetTreapMt14,382
+    pub trait BSTSetTreapMtEphTrait<T: StTinMtT + Ord>: Sized {BSTSetTreapMtEphTrait16,436
+        fn empty() -> Self;empty17,500
+        fn singleton(value: T) -> Self;singleton18,528
+        fn size(&self) -> N;size19,568
+        fn is_empty(&self) -> B;is_empty20,597
+        fn find(&self, value: &T) -> Option<T>;find21,630
+        fn contains(&self, value: &T) -> B;contains22,678
+        fn minimum(&self) -> Option<T>;minimum23,722
+        fn maximum(&self) -> Option<T>;maximum24,762
+        fn insert(&mut self, value: T);insert25,802
+        fn delete(&mut self, target: &T);delete26,842
+        fn union(&self, other: &Self) -> Self;union27,884
+        fn intersection(&self, other: &Self) -> Self;intersection28,931
+        fn difference(&self, other: &Self) -> Self;difference29,985
+        fn split(&self, pivot: &T) -> (Self, B, Self);split30,1037
+        fn join_pair(left: Self, right: Self) -> Self;join_pair31,1092
+        fn join_m(left: Self, pivot: T, right: Self) -> Self;join_m32,1147
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self;filter33,1209
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T;reduce34,1279
+        fn iter_in_order(&self) -> ArrayStPerS<T>;iter_in_order35,1347
+        fn as_tree(&self) -> &BSTTreapMtEph<T>;as_tree36,1398
+    impl<T: StTinMtT + Ord> BSTSetTreapMtEph<T> {BSTSetTreapMtEph39,1453
+        pub fn empty() -> Self {empty40,1503
+        pub fn singleton(value: T) -> Self {singleton46,1624
+        pub fn size(&self) -> N { self.tree.size() }size52,1783
+        pub fn is_empty(&self) -> B { self.tree.is_empty() }is_empty54,1837
+        pub fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }find56,1899
+        pub fn contains(&self, value: &T) -> B { self.tree.contains(value) }contains58,1977
+        pub fn minimum(&self) -> Option<T> { self.tree.minimum() }minimum60,2055
+        pub fn maximum(&self) -> Option<T> { self.tree.maximum() }maximum62,2123
+        pub fn insert(&mut self, value: T) { self.tree.insert(value); }insert64,2191
+        pub fn delete(&mut self, target: &T) {delete66,2264
+        pub fn union(&self, other: &Self) -> Self {union74,2553
+        pub fn intersection(&self, other: &Self) -> Self {intersection82,2852
+        pub fn difference(&self, other: &Self) -> Self {difference99,3430
+        pub fn split(&self, pivot: &T) -> (Self, B, Self) {split116,4007
+        pub fn join_pair(left: Self, right: Self) -> Self {join_pair136,4698
+        pub fn join_m(left: Self, pivot: T, right: Self) -> Self {join_m144,5011
+        pub fn filter<F>(&self, mut predicate: F) -> Selffilter153,5367
+        pub fn reduce<F>(&self, mut op: F, base: T) -> Treduce166,5776
+        pub fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }iter_in_order176,6040
+        pub fn as_tree(&self) -> &BSTTreapMtEph<T> { &self.tree }as_tree178,6120
+        fn values_vec(&self) -> Vec<T> { self.tree.in_order().iter().cloned().collect() }values_vec180,6187
+        fn rebuild_from_vec(values: Vec<T>) -> BSTTreapMtEph<T> {rebuild_from_vec182,6278
+        fn from_sorted_iter<I>(values: I) -> Selffrom_sorted_iter190,6501
+    impl<T: StTinMtT + Ord> BSTSetTreapMtEphTrait<T> for BSTSetTreapMtEph<T> {BSTSetTreapMtEph202,6786
+        fn empty() -> Self { Self::empty() }empty203,6865
+        fn singleton(value: T) -> Self { Self::singleton(value) }singleton205,6911
+        fn size(&self) -> N { self.tree.size() }size207,6978
+        fn is_empty(&self) -> B { self.tree.is_empty() }is_empty209,7028
+        fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }find211,7086
+        fn contains(&self, value: &T) -> B { self.tree.contains(value) }contains213,7160
+        fn minimum(&self) -> Option<T> { self.tree.minimum() }minimum215,7234
+        fn maximum(&self) -> Option<T> { self.tree.maximum() }maximum217,7298
+        fn insert(&mut self, value: T) { self.tree.insert(value); }insert219,7362
+        fn delete(&mut self, target: &T) { BSTSetTreapMtEph::delete(self, target) }delete221,7431
+        fn union(&self, other: &Self) -> Self { BSTSetTreapMtEph::union(self, other) }union223,7516
+        fn intersection(&self, other: &Self) -> Self { BSTSetTreapMtEph::intersection(self, otheintersection225,7604
+        fn difference(&self, other: &Self) -> Self { BSTSetTreapMtEph::difference(self, other) }difference227,7706
+        fn split(&self, pivot: &T) -> (Self, B, Self) { BSTSetTreapMtEph::split(self, pivot) }split229,7804
+        fn join_pair(left: Self, right: Self) -> Self { BSTSetTreapMtEph::join_pair(left, right)join_pair231,7900
+        fn join_m(left: Self, pivot: T, right: Self) -> Self { BSTSetTreapMtEph::join_m(left, pijoin_m233,8000
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self { BSTSetTreapMtEph::filter(filter235,8111
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T { BSTSetTreapMtEph::reduce(sereduce237,8227
+        fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }iter_in_order239,8340
+        fn as_tree(&self) -> &BSTTreapMtEph<T> { &self.tree }as_tree241,8416
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListStPerChap18.rs,2907
 pub mod LinkedListStPerChap18 {LinkedListStPerChap183,48
     pub trait LinkedListStPerChap18Trait<T: StT> {LinkedListStPerChap18Trait7,165
         fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStPerS<T>;tabulate10,384
@@ -927,63 +1792,85 @@ pub mod LinkedListStPerChap18 {LinkedListStPerChap183,48
         fn append(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>) -> LinkedListStPerS<T>;append18,833
         fn filter(a: &LinkedListStPerS<T>, pred: impl Fn(&T) -> B) -> LinkedListStPerS<T>;filter22,1132
         fn update(a: &LinkedListStPerS<T>, item_at: Pair<N, T>) -> LinkedListStPerS<T>;update26,1324
-        fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>,)inject29,1490
-        fn ninject(ninject33,1667
-        fn iterate<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;iterate39,1888
-        fn iteratePrefixes<A: StT>(iteratePrefixes42,2023
-        fn reduce(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce49,2274
-        fn scan(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStPerS<Tscan52,2404
-        fn flatten(ss: &LinkedListStPerS<LinkedListStPerS<T>>) -> LinkedListStPerS<T>;flatten55,2578
-        fn collect<A: StT, Bv: StT>(collect58,2745
-    impl<T: StT> LinkedListStPerChap18Trait<T> for LinkedListStPerS<T> {LinkedListStPerS64,2937
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStPerS<T> {tabulate65,3010
-        fn map<U: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&T) -> U) -> LinkedListStPerS<U> {map73,3261
-        fn append(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>) -> LinkedListStPerS<T> {append81,3724
-        fn filter(a: &LinkedListStPerS<T>, pred: impl Fn(&T) -> B) -> LinkedListStPerS<T> {filter93,4366
-        fn update(a: &LinkedListStPerS<T>, Pair(index, item): Pair<N, T>) -> LinkedListStPerS<T>update103,4836
-        fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>,) inject112,5380
-        fn ninject(ninject137,6481
-        fn iterate<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate163,7575
-        fn iteratePrefixes<A: StT>(iteratePrefixes173,7971
-        fn reduce(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce190,8652
-        fn scan(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStPerS<Tscan206,9486
-        fn flatten(ss: &LinkedListStPerS<LinkedListStPerS<T>>) -> LinkedListStPerS<T> {flatten227,10482
-        fn collect<A: StT, Bv: StT>(collect242,11224
+        fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListinject29,1490
+        fn ninject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedLisninject32,1657
+        fn iterate<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;iterate35,1843
+        fn iteratePrefixes<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LiteratePrefixes38,1978
+        fn reduce(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce41,2182
+        fn scan(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStPerS<Tscan44,2312
+        fn flatten(ss: &LinkedListStPerS<LinkedListStPerS<T>>) -> LinkedListStPerS<T>;flatten47,2486
+        fn collect<A: StT, Bv: StT>(collect50,2653
+    impl<T: StT> LinkedListStPerChap18Trait<T> for LinkedListStPerS<T> {LinkedListStPerS56,2845
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStPerS<T> {tabulate57,2918
+        fn map<U: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&T) -> U) -> LinkedListStPerS<U> {map65,3169
+        fn append(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>) -> LinkedListStPerS<T> {append72,3616
+        fn filter(a: &LinkedListStPerS<T>, pred: impl Fn(&T) -> B) -> LinkedListStPerS<T> {filter84,4258
+        fn update(a: &LinkedListStPerS<T>, Pair(index, item): Pair<N, T>) -> LinkedListStPerS<T>update94,4728
+        fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListinject102,5256
+        fn ninject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedLisninject120,6223
+        fn iterate<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate137,7159
+        fn iteratePrefixes<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LiteratePrefixes144,7496
+        fn reduce(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce153,8055
+        fn scan(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStPerS<Tscan168,8873
+        fn flatten(ss: &LinkedListStPerS<LinkedListStPerS<T>>) -> LinkedListStPerS<T> {flatten185,9790
+        fn collect<A: StT, Bv: StT>(collect197,10482
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/lib.rs,1740
-pub mod Types;Types7,226
-pub mod MathSeq;MathSeq10,274
-pub mod SetStEphChap5_1;SetStEphChap5_113,351
-pub mod RelationStEphChap5_2;RelationStEphChap5_216,429
-pub mod MappingStEphChap5_5;MappingStEphChap5_519,522
-pub mod DirGraphStEphChap6_1;DirGraphStEphChap6_122,612
-pub mod UnDirGraphStEphChap6_1;UnDirGraphStEphChap6_124,704
-pub mod LinkedListStPer;LinkedListStPer27,803
-pub mod LinkedListStPerChap18;LinkedListStPerChap1829,880
-pub mod LinkedListStPerChap19;LinkedListStPerChap1931,975
-pub mod LinkedListStEph;LinkedListStEph34,1071
-pub mod LinkedListStEphChap18;LinkedListStEphChap1836,1148
-pub mod LinkedListStEphChap19;LinkedListStEphChap1938,1243
-pub mod ArraySeqStPer;ArraySeqStPer41,1339
-pub mod ArraySeqStPerChap18;ArraySeqStPerChap1844,1411
-pub mod ArraySeqStPerChap19;ArraySeqStPerChap1947,1501
-pub mod ArraySeqMtPer;ArraySeqMtPer51,1626
-pub mod ArraySeqMtPerChap18;ArraySeqMtPerChap1853,1697
-pub mod ArraySeqMtPerChap19;ArraySeqMtPerChap1955,1786
-pub mod ArraySeqStEph;ArraySeqStEph58,1876
-pub mod ArraySeqStEphChap18;ArraySeqStEphChap1861,1948
-pub mod ArraySeqStEphChap19;ArraySeqStEphChap1963,2037
-pub mod ArraySeqMtEph;ArraySeqMtEph67,2161
-pub mod ArraySeqMtEphChap18;ArraySeqMtEphChap1869,2232
-pub mod ArraySeqMtEphChap19;ArraySeqMtEphChap1971,2321
-pub mod AVLTreeSeqStPer;AVLTreeSeqStPer74,2411
-pub mod AVLTreeSeqStPerChap18;AVLTreeSeqStPerChap1876,2488
-pub mod AVLTreeSeqStPerChap19;AVLTreeSeqStPerChap1978,2583
-pub mod AVLTreeSeqStEph;AVLTreeSeqStEph81,2679
-pub mod AVLTreeSeqStEphChap18;AVLTreeSeqStEphChap1883,2756
-pub mod AVLTreeSeqStEphChap19;AVLTreeSeqStEphChap1985,2851
-pub mod Chapter36St;Chapter36St89,2972
-pub mod Chapter36Mt;Chapter36Mt91,3037
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/lib.rs,2769
+pub mod Types;Types9,256
+pub mod MathSeq;MathSeq12,304
+pub mod SetStEphChap5_1;SetStEphChap5_115,381
+pub mod RelationStEphChap5_2;RelationStEphChap5_218,459
+pub mod MappingStEphChap5_5;MappingStEphChap5_521,552
+pub mod DirGraphStEphChap6_1;DirGraphStEphChap6_124,642
+pub mod UnDirGraphStEphChap6_1;UnDirGraphStEphChap6_126,734
+pub mod LinkedListStPer;LinkedListStPer29,833
+pub mod LinkedListStPerChap18;LinkedListStPerChap1831,910
+pub mod LinkedListStPerChap19;LinkedListStPerChap1933,1005
+pub mod LinkedListStEph;LinkedListStEph36,1101
+pub mod LinkedListStEphChap18;LinkedListStEphChap1838,1178
+pub mod LinkedListStEphChap19;LinkedListStEphChap1940,1273
+pub mod ArraySeqStPer;ArraySeqStPer43,1369
+pub mod ArraySeqStPerChap18;ArraySeqStPerChap1846,1441
+pub mod ArraySeqStPerChap19;ArraySeqStPerChap1949,1531
+pub mod ArraySeqMtPer;ArraySeqMtPer53,1656
+pub mod ArraySeqMtPerChap18;ArraySeqMtPerChap1855,1727
+pub mod ArraySeqMtPerChap19;ArraySeqMtPerChap1957,1816
+pub mod ArraySeqStEph;ArraySeqStEph60,1906
+pub mod ArraySeqStEphChap18;ArraySeqStEphChap1863,1978
+pub mod ArraySeqStEphChap19;ArraySeqStEphChap1965,2067
+pub mod ArraySeqMtEph;ArraySeqMtEph69,2191
+pub mod ArraySeqMtEphSlice;ArraySeqMtEphSlice71,2262
+pub mod ArraySeqMtEphChap18;ArraySeqMtEphChap1873,2348
+pub mod ArraySeqMtEphChap19;ArraySeqMtEphChap1975,2437
+pub mod AVLTreeSeqStPer;AVLTreeSeqStPer78,2527
+pub mod AVLTreeSeqStPerChap18;AVLTreeSeqStPerChap1880,2604
+pub mod AVLTreeSeqStPerChap19;AVLTreeSeqStPerChap1982,2699
+pub mod AVLTreeSeqStEph;AVLTreeSeqStEph85,2795
+pub mod AVLTreeSeqStEphChap18;AVLTreeSeqStEphChap1887,2872
+pub mod AVLTreeSeqStEphChap19;AVLTreeSeqStEphChap1989,2967
+pub mod Chapter36St;Chapter36St93,3088
+pub mod Chapter36Mt;Chapter36Mt95,3153
+pub mod Chapter36MtSlice;Chapter36MtSlice97,3218
+pub mod BBTEph;BBTEph101,3326
+pub mod BSTPlainStEph;BSTPlainStEph104,3392
+pub mod BSTAVLStEph;BSTAVLStEph106,3515
+pub mod BSTRBStEph;BSTRBStEph108,3626
+pub mod BSTBBAlphaStEph;BSTBBAlphaStEph110,3731
+pub mod BSTTreapStEph;BSTTreapStEph112,3866
+pub mod BSTSplayStEph;BSTSplayStEph114,3989
+pub mod BSTPlainMtEph;BSTPlainMtEph117,4113
+pub mod BSTAVLMtEph;BSTAVLMtEph119,4236
+pub mod BSTRBMtEph;BSTRBMtEph121,4347
+pub mod BSTBBAlphaMtEph;BSTBBAlphaMtEph123,4452
+pub mod BSTTreapMtEph;BSTTreapMtEph125,4587
+pub mod BSTSplayMtEph;BSTSplayMtEph127,4710
+pub mod BSTParaMtEph;BSTParaMtEph129,4833
+pub mod BSTSetAVLMtEph;BSTSetAVLMtEph132,4961
+pub mod BSTSetBBAlphaMtEph;BSTSetBBAlphaMtEph133,4985
+pub mod BSTSetPlainMtEph;BSTSetPlainMtEph134,5013
+pub mod BSTSetRBMtEph;BSTSetRBMtEph135,5039
+pub mod BSTSetSplayMtEph;BSTSetSplayMtEph136,5062
+pub mod BSTSetTreapMtEph;BSTSetTreapMtEph137,5088
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListStPerChap19.rs,2712
 pub mod LinkedListStPerChap19 {LinkedListStPerChap193,48
@@ -1014,61 +1901,131 @@ pub mod LinkedListStPerChap19 {LinkedListStPerChap193,48
         fn flatten(s: &LinkedListStPerS<LinkedListStPerS<T>>) -> LinkedListStPerS<T> {flatten76,3858
         fn inject(values: &LinkedListStPerS<T>, changes: &LinkedListStPerS<Pair<N, T>>) -> Linkeinject80,4035
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/SetStEphChap5_1.rs,3489
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/SetStEphChap5_1.rs,3609
 pub mod SetStEphChap5_1 {SetStEphChap5_13,69
-pub struct Set<T> { data: HashSet<T> }Set11,236
-pub struct Set<T> { data: HashSet<T> }data11,236
-pub trait SetStEphChap5_1Trait<T: Eq + Hash + Clone + Display + Debug + Sized> {SetStEphChap5_1Trait13,276
-    fn empty() -> Set<T>;empty16,441
-    fn singleton(x: T) -> Set<T>;singleton19,551
-    fn size(&self) -> N;size22,669
-    fn mem(&self, x: &T) -> B;mem25,778
-    fn union(&self, other: &Set<T>) -> Set<T>;union28,909
-    fn intersection(&self, other: &Set<T>) -> Set<T>;intersection31,1056
-    fn partition(&self, parts: &Set<Set<T>>) -> B;partition34,1224
-    fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>>;CartesianProduct38,1378
-    fn insert(&mut self, x: T) -> &mut Self;insert42,1545
-    fn iter(&self) -> std::collections::hash_set::Iter<'_, T>;iter46,1675
-    fn FromVec(v: Vec<T>) -> Set<T>;FromVec49,1826
-impl<T: Eq + Hash> PartialEq for Set<T> {Set52,1866
-    fn eq(&self, other: &Self) -> bool { self.data == other.data }eq53,1908
-impl<T: Eq + Hash> Eq for Set<T> {}Set56,1978
-impl<T: Eq + Hash> std::fmt::Debug for Set<T>Set58,2015
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt62,2093
-impl<T: Eq + Hash> std::fmt::Display for Set<T>Set67,2232
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt71,2314
-impl<T: Eq + Hash > Hash for Set<T> {Set83,2704
-    fn hash<H: Hasher>(&self, state: &mut H) {hash84,2742
-impl<T: Eq + Hash> Set<T> {Set98,3226
-    pub fn empty() -> Set<T> {empty99,3254
-    pub fn singleton(x: T) -> Set<T> {singleton103,3329
-    pub fn size(&self) -> N { self.data.len() }size109,3475
-    pub fn mem(&self, x: &T) -> B {mem111,3524
-    pub fn union(&self, other: &Set<T>) -> Set<T> where T: Clone {union115,3630
-    pub fn intersection(&self, other: &Set<T>) -> Set<T> where T: Clone {intersection121,3827
-    pub fn partition(&self, parts: &Set<Set<T>>) -> B {partition127,4107
-    pub fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>> where T: ClCartesianProduct141,4522
-    pub fn insert(&mut self, x: T) -> &mut Self {insert151,4891
-    pub fn iter(&self) -> std::collections::hash_set::Iter<'_, T> { self.data.iter() }iter156,4998
-    pub fn FromVec(v: Vec<T>) -> Set<T> {FromVec158,5086
-impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetStEphChap5_1Trait<T> for Set<T> {Set165,5258
-    fn empty() -> Set<T> {empty166,5348
-    fn singleton(x: T) -> Set<T> {singleton170,5419
-    fn size(&self) -> N { self.data.len() }size176,5561
-    fn mem(&self, x: &T) -> B {mem178,5606
-    fn union(&self, other: &Set<T>) -> Set<T> where T: Clone {union182,5708
-    fn intersection(&self, other: &Set<T>) -> Set<T> where T: Clone {intersection188,5901
-    fn partition(&self, parts: &Set<Set<T>>) -> B {partition194,6177
-    fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>> where T: Clone,CartesianProduct208,6588
-    fn insert(&mut self, x: T) -> &mut Self {insert218,6953
-    fn iter(&self) -> std::collections::hash_set::Iter<'_, T> { self.data.iter() }iter223,7056
-    fn FromVec(v: Vec<T>) -> Set<T> {FromVec225,7140
-    macro_rules! SetLit {SetLit234,7329
-    fn _SetLit_type_checks() {_SetLit_type_checks246,7683
-    pub fn __set_macro_typecheck_exercise() {__set_macro_typecheck_exercise252,7939
-        let _s0: Set<&'static str> = SetLit![];str253,7985
+    pub struct Set<T> {Set11,256
+        data: HashSet<T>,data12,280
+    pub trait SetStEphChap5_1Trait<T: Eq + Hash + Clone + Display + Debug + Sized> {SetStEphChap5_1Trait15,313
+        fn empty() -> Set<T>;empty18,490
+        fn singleton(x: T) -> Set<T>;singleton21,612
+        fn size(&self) -> N;size24,742
+        fn mem(&self, x: &T) -> B;mem27,863
+        fn union(&self, other: &Set<T>) -> Set<T>;union30,1006
+        fn intersection(&self, other: &Set<T>) -> Set<T>;intersection33,1165
+        fn partition(&self, parts: &Set<Set<T>>) -> B;partition36,1345
+        fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>>;CartesianProduct40,1511
+        fn insert(&mut self, x: T) -> &mut Self;insert44,1690
+        fn iter(&self) -> std::collections::hash_set::Iter<'_, T>;iter48,1832
+        fn FromVec(v: Vec<T>) -> Set<T>;FromVec51,1995
+    impl<T: Eq + Hash> PartialEq for Set<T> {Set54,2043
+        fn eq(&self, other: &Self) -> bool { self.data == other.data }eq55,2089
+    impl<T: Eq + Hash> Eq for Set<T> {}Set58,2167
+    impl<T: Eq + Hash> std::fmt::Debug for Set<T>Set60,2208
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt64,2302
+    impl<T: Eq + Hash> std::fmt::Display for Set<T>Set69,2457
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt73,2555
+    impl<T: Eq + Hash> Hash for Set<T> {Set89,3061
+        fn hash<H: Hasher>(&self, state: &mut H) {hash90,3102
+    impl<T: Eq + Hash> Set<T> {Set106,3666
+        pub fn empty() -> Set<T> { Set { data: HashSet::new() } }empty107,3698
+        pub fn singleton(x: T) -> Set<T> {singleton109,3765
+        pub fn size(&self) -> N { self.data.len() }size115,3931
+        pub fn mem(&self, x: &T) -> B {mem117,3984
+        pub fn union(&self, other: &Set<T>) -> Set<T>union125,4158
+        pub fn intersection(&self, other: &Set<T>) -> Set<T>intersection136,4432
+        pub fn partition(&self, parts: &Set<Set<T>>) -> B {partition147,4789
+        pub fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>>CartesianProduct165,5344
+        pub fn insert(&mut self, x: T) -> &mut Self {insert179,5790
+        pub fn iter(&self) -> std::collections::hash_set::Iter<'_, T> { self.data.iter() }iter184,5913
+        pub fn FromVec(v: Vec<T>) -> Set<T> {FromVec186,6005
+    impl<T: Eq + Hash + Clone + Display + Debug + Sized> SetStEphChap5_1Trait<T> for Set<T> {Set195,6229
+        fn empty() -> Set<T> { Set { data: HashSet::new() } }empty196,6323
+        fn singleton(x: T) -> Set<T> {singleton198,6386
+        fn size(&self) -> N { self.data.len() }size204,6548
+        fn mem(&self, x: &T) -> B {mem206,6597
+        fn union(&self, other: &Set<T>) -> Set<T>union214,6767
+        fn intersection(&self, other: &Set<T>) -> Set<T>intersection225,7037
+        fn partition(&self, parts: &Set<Set<T>>) -> B {partition236,7390
+        fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>>CartesianProduct254,7941
+        fn insert(&mut self, x: T) -> &mut Self {insert268,8383
+        fn iter(&self) -> std::collections::hash_set::Iter<'_, T> { self.data.iter() }iter273,8502
+        fn FromVec(v: Vec<T>) -> Set<T> {FromVec275,8590
+    macro_rules! SetLit {SetLit285,8830
+    fn _SetLit_type_checks() {_SetLit_type_checks297,9184
+    pub fn __set_macro_typecheck_exercise() {__set_macro_typecheck_exercise303,9380
+        let _s0: Set<&'static str> = SetLit![];str304,9426
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListStEphChap19.rs,2622
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTRBMtEph.rs,4385
+pub mod BSTRBMtEph {BSTRBMtEph3,102
+    enum Color {Color11,341
+        Red,Red12,358
+        Black,Black13,371
+    type Link<T> = Option<Box<Node<T>>>;Link16,393
+    struct Node<T: StTinMtT + Ord> {Node19,456
+        key: T,key20,493
+        color: Color,color21,509
+        size: N,size22,531
+        left: Link<T>,left23,548
+        right: Link<T>,right24,571
+    impl<T: StTinMtT + Ord> Node<T> {Node27,602
+        fn new(key: T) -> Self {new28,640
+    pub struct BSTRBMtEph<T: StTinMtT + Ord> {BSTRBMtEph40,882
+        root: Arc<RwLock<Link<T>>>,root41,929
+    pub type BSTreeRB<T> = BSTRBMtEph<T>;BSTreeRB44,972
+    pub trait BSTRBMtEphTrait<T: StTinMtT + Ord>: Sized {BSTRBMtEphTrait46,1015
+        fn new() -> Self;new47,1073
+        fn insert(&self, value: T);insert48,1099
+        fn find(&self, target: &T) -> Option<T>;find49,1135
+        fn contains(&self, target: &T) -> B;contains50,1184
+        fn size(&self) -> N;size51,1229
+        fn is_empty(&self) -> B;is_empty52,1258
+        fn height(&self) -> N;height53,1291
+        fn minimum(&self) -> Option<T>;minimum54,1322
+        fn maximum(&self) -> Option<T>;maximum55,1362
+        fn in_order(&self) -> ArrayStPerS<T>;in_order56,1402
+        fn pre_order(&self) -> ArrayStPerS<T>;pre_order57,1448
+    impl<T: StTinMtT + Ord> Default for BSTRBMtEph<T> {BSTRBMtEph60,1502
+        fn default() -> Self { Self::new() }default61,1558
+    impl<T: StTinMtT + Ord> BSTRBMtEph<T> {BSTRBMtEph64,1610
+        pub fn new() -> Self {new65,1654
+        pub fn size(&self) -> N {size71,1786
+        pub fn is_empty(&self) -> B {is_empty76,1919
+        pub fn height(&self) -> N {height84,2086
+            fn height_rec<T: StTinMtT + Ord>(link: &Link<T>) -> N {height_rec85,2122
+        pub fn insert(&self, value: T) {insert96,2472
+        pub fn find(&self, target: &T) -> Option<T> {find104,2737
+        pub fn contains(&self, target: &T) -> B {contains109,2907
+        pub fn minimum(&self) -> Option<T> {minimum117,3097
+        pub fn maximum(&self) -> Option<T> {maximum122,3249
+        pub fn in_order(&self) -> ArrayStPerS<T> {in_order127,3401
+        pub fn pre_order(&self) -> ArrayStPerS<T> {pre_order134,3680
+        fn is_red(link: &Link<T>) -> bool { matches!(link, Some(node) if node.color == Color::Reis_red141,3961
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }size_link143,4063
+        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::sizeupdate145,4146
+        fn rotate_left(link: &mut Link<T>) {rotate_left147,4265
+        fn rotate_right(link: &mut Link<T>) {rotate_right166,4925
+        fn flip_colors(link: &mut Link<T>) {flip_colors185,5589
+        fn fix_up(link: &mut Link<T>) {fix_up206,6394
+        fn insert_link(link: &mut Link<T>, value: T) {insert_link242,7548
+        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {find_link258,8090
+        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {min_link273,8607
+        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {max_link283,8928
+        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {in_order_collect293,9251
+        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {pre_order_collect301,9538
+    impl<T: StTinMtT + Ord> BSTRBMtEphTrait<T> for BSTRBMtEph<T> {BSTRBMtEph310,9834
+        fn new() -> Self { BSTRBMtEph::new() }new311,9901
+        fn insert(&self, value: T) { BSTRBMtEph::insert(self, value) }insert313,9949
+        fn find(&self, target: &T) -> Option<T> { BSTRBMtEph::find(self, target) }find315,10021
+        fn contains(&self, target: &T) -> B { BSTRBMtEph::contains(self, target) }contains317,10105
+        fn size(&self) -> N { BSTRBMtEph::size(self) }size319,10189
+        fn is_empty(&self) -> B { BSTRBMtEph::is_empty(self) }is_empty321,10245
+        fn height(&self) -> N { BSTRBMtEph::height(self) }height323,10309
+        fn minimum(&self) -> Option<T> { BSTRBMtEph::minimum(self) }minimum325,10369
+        fn maximum(&self) -> Option<T> { BSTRBMtEph::maximum(self) }maximum327,10439
+        fn in_order(&self) -> ArrayStPerS<T> { BSTRBMtEph::in_order(self) }in_order329,10509
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTRBMtEph::pre_order(self) }pre_order331,10586
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListStEphChap19.rs,2712
 pub mod LinkedListStEphChap19 {LinkedListStEphChap193,60
     pub trait LinkedListStEphChap19Trait<T: StT> {LinkedListStEphChap19Trait8,241
         fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStEphS<T>;tabulate9,292
@@ -1082,22 +2039,70 @@ pub mod LinkedListStEphChap19 {LinkedListStEphChap193,60
         fn reduce(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;reduce17,986
         fn scan(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<Tscan18,1068
         fn flatten(s: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T>;flatten19,1171
-        fn inject(inject20,1257
-    impl<T: StT> LinkedListStEphChap19Trait<T> for LinkedListStEphS<T> {LinkedListStEphS26,1411
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStEphS<T> {tabulate27,1484
-        fn map<U: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&T) -> U) -> LinkedListStEphS<U> {map30,1648
-        fn select<'a>(a: &'a LinkedListStEphS<T>, b: &'a LinkedListStEphS<T>, i: N) -> Option<T>select33,1830
-        fn append(a: &LinkedListStEphS<T>, b: &LinkedListStEphS<T>) -> LinkedListStEphS<T> {append47,2478
-        fn append2(a: &LinkedListStEphS<T>, b: &LinkedListStEphS<T>) -> LinkedListStEphS<T> {append250,2662
-        fn deflate(f: impl Fn(&T) -> B, x: &T) -> LinkedListStEphS<T> {deflate53,2847
-        fn filter(a: &LinkedListStEphS<T>, f: impl Fn(&T) -> B) -> LinkedListStEphS<T> {filter60,3158
-        fn iterate<A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate63,3338
-    fn reduce(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce66,3523
-    fn scan(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<T>, Tscan69,3689
-        fn flatten(s: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T> {flatten72,3874
-        fn inject(values: &LinkedListStEphS<T>,changes: &LinkedListStEphS<Pair<N, T>>,) inject75,4050
+        fn inject(values: &LinkedListStEphS<T>, changes: &LinkedListStEphS<Pair<N, T>>) -> Linkeinject20,1257
+    impl<T: StT> LinkedListStEphChap19Trait<T> for LinkedListStEphS<T> {LinkedListStEphS23,1376
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStEphS<T> {tabulate24,1449
+        fn map<U: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&T) -> U) -> LinkedListStEphS<U> {map27,1613
+        fn select<'a>(a: &'a LinkedListStEphS<T>, b: &'a LinkedListStEphS<T>, i: N) -> Option<T>select30,1795
+        fn append(a: &LinkedListStEphS<T>, b: &LinkedListStEphS<T>) -> LinkedListStEphS<T> {append44,2443
+        fn append2(a: &LinkedListStEphS<T>, b: &LinkedListStEphS<T>) -> LinkedListStEphS<T> {append247,2627
+        fn deflate(f: impl Fn(&T) -> B, x: &T) -> LinkedListStEphS<T> {deflate50,2812
+        fn filter(a: &LinkedListStEphS<T>, f: impl Fn(&T) -> B) -> LinkedListStEphS<T> {filter57,3123
+        fn iterate<A: StT>(a: &LinkedListStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {iterate60,3303
+        fn reduce(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {reduce63,3488
+        fn scan(a: &LinkedListStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<Tscan66,3666
+        fn flatten(s: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T> {flatten69,3863
+        fn inject(values: &LinkedListStEphS<T>, changes: &LinkedListStEphS<Pair<N, T>>) -> Linkeinject72,4039
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqMtEph.rs,2820
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTParaMtEph.rs,2894
+pub mod BSTParaMtEph {BSTParaMtEph3,69
+    pub enum Exposed<T: StTinMtT + Ord> {Exposed10,229
+        Leaf,Leaf11,271
+        Node(ParamBST<T>, T, ParamBST<T>),Node12,285
+    struct NodeInner<T: StTinMtT + Ord> {NodeInner16,356
+        key: T,key17,398
+        size: N,size18,414
+        left: ParamBST<T>,left19,431
+        right: ParamBST<T>,right20,458
+    pub struct ParamBST<T: StTinMtT + Ord> {ParamBST24,514
+        root: Arc<RwLock<Option<Box<NodeInner<T>>>>>,root25,559
+    pub trait ParamBSTTrait<T: StTinMtT + Ord>: Sized {ParamBSTTrait28,620
+        fn new() -> Self;new29,676
+        fn expose(&self) -> Exposed<T>;expose30,702
+        fn join_mid(exposed: Exposed<T>) -> Self;join_mid31,742
+        fn size(&self) -> N;size32,792
+        fn is_empty(&self) -> B;is_empty33,821
+        fn insert(&self, key: T);insert34,854
+        fn delete(&self, key: &T);delete35,888
+        fn find(&self, key: &T) -> Option<T>;find36,923
+        fn split(&self, key: &T) -> (Self, B, Self);split37,969
+        fn join_pair(&self, other: Self) -> Self;join_pair38,1022
+        fn union(&self, other: &Self) -> Self;union39,1072
+        fn in_order(&self) -> ArrayStPerS<T>;in_order40,1119
+    impl<T: StTinMtT + Ord> ParamBST<T> {ParamBST43,1172
+        fn expose_internal(&self) -> Exposed<T> {expose_internal44,1214
+        fn join_mid(exposed: Exposed<T>) -> Self {join_mid52,1513
+        fn split_inner(tree: &Self, key: &T) -> (Self, B, Self) {split_inner64,1965
+        fn join_m(left: Self, key: T, right: Self) -> Self { ParamBST::join_mid(Exposed::Node(lejoin_m83,2950
+        fn min_key(tree: &Self) -> Option<T> {min_key85,3066
+        fn join_pair_inner(left: Self, right: Self) -> Self {join_pair_inner95,3410
+        fn union_inner(a: &Self, b: &Self) -> Self {union_inner106,3880
+        fn collect_in_order(tree: &Self, out: &mut Vec<T>) {collect_in_order118,4387
+    impl<T: StTinMtT + Ord> ParamBSTTrait<T> for ParamBST<T> {ParamBST130,4789
+        fn new() -> Self {new131,4852
+        fn expose(&self) -> Exposed<T> { self.expose_internal() }expose137,4978
+        fn join_mid(exposed: Exposed<T>) -> Self { ParamBST::join_mid(exposed) }join_mid139,5045
+        fn size(&self) -> N {size141,5127
+        fn is_empty(&self) -> B {is_empty146,5274
+        fn insert(&self, key: T) {insert154,5437
+        fn delete(&self, key: &T) {delete162,5769
+        fn find(&self, key: &T) -> Option<T> {find170,6103
+        fn split(&self, key: &T) -> (Self, B, Self) { ParamBST::split_inner(self, key) }split181,6600
+        fn join_pair(&self, other: Self) -> Self { ParamBST::join_pair_inner(self.clone(), otherjoin_pair183,6690
+        fn union(&self, other: &Self) -> Self { ParamBST::union_inner(self, other) }union185,6791
+        fn in_order(&self) -> ArrayStPerS<T> {in_order187,6877
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqMtEph.rs,2782
 pub mod ArraySeqMtEph {ArraySeqMtEph8,381
     pub struct ArraySeqMtEphS<T: StT> {ArraySeqMtEphS17,646
         data: Mutex<Box<[T]>>,data18,686
@@ -1113,122 +2118,367 @@ pub mod ArraySeqMtEph {ArraySeqMtEph8,381
         fn subseq_copy(&self, start: N, length: N) -> Self;subseq_copy41,1625
     impl<T: StT> ArraySeqMtEphS<T> {ArraySeqMtEphS44,1692
         pub fn from_vec(v: Vec<T>) -> Self {from_vec46,1770
-        pub fn length(&self) -> N {length51,1937
-        pub fn nth_cloned(&self, index: N) -> T {nth_cloned57,2100
-        pub fn iter_snapshot(&self) -> Iter<'_, T> where T: 'static {iter_snapshot64,2369
-        pub fn to_vec(&self) -> Vec<T> {to_vec74,2838
-        pub fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy80,3031
-    impl<T: StT> Clone for ArraySeqMtEphS<T> {ArraySeqMtEphS90,3395
-        fn clone(&self) -> Self {clone91,3442
-    impl<T: StT> PartialEq for ArraySeqMtEphS<T> {ArraySeqMtEphS96,3545
-        fn eq(&self, other: &Self) -> bool {eq97,3596
-    impl<T: StT> Eq for ArraySeqMtEphS<T> {}ArraySeqMtEphS103,3747
-    impl<T: StT> Debug for ArraySeqMtEphS<T> {ArraySeqMtEphS105,3793
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt106,3840
-    impl<T: StT> Display for ArraySeqMtEphS<T> {ArraySeqMtEphS112,4008
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt113,4057
-    impl<T: StT> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {ArraySeqMtEphS124,4374
-        fn new(length: N, init_value: T) -> Self {new125,4437
-        fn length(&self) -> N { self.length() }length128,4561
-        fn nth_cloned(&self, index: N) -> T { self.nth_cloned(index) }nth_cloned129,4609
-        fn empty() -> Self { ArraySeqMtEphS::from_vec(Vec::new()) }empty130,4680
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {set131,4748
-        fn singleton(item: T) -> Self { ArraySeqMtEphS::from_vec(vec![item]) }singleton142,5128
-        fn isEmpty(&self) -> B { if self.length() == 0 { B::True } else { B::False } }isEmpty143,5207
-        fn isSingleton(&self) -> B { if self.length() == 1 { B::True } else { B::False } }isSingleton144,5294
-        fn subseq_copy(&self, start: N, length: N) -> Self { self.subseq_copy(start, length) }subseq_copy145,5385
-    macro_rules! ArraySeqMtEph {ArraySeqMtEph149,5507
+        pub fn length(&self) -> N {length53,1966
+        pub fn nth_cloned(&self, index: N) -> T {nth_cloned59,2129
+        pub fn iter_snapshot(&self) -> Iter<'_, T>iter_snapshot66,2398
+        pub fn to_vec(&self) -> Vec<T> {to_vec79,2896
+        pub fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy85,3089
+    impl<T: StT> Clone for ArraySeqMtEphS<T> {ArraySeqMtEphS95,3453
+        fn clone(&self) -> Self { ArraySeqMtEphS::from_vec(self.to_vec()) }clone96,3500
+    impl<T: StT> PartialEq for ArraySeqMtEphS<T> {ArraySeqMtEphS99,3583
+        fn eq(&self, other: &Self) -> bool {eq100,3634
+    impl<T: StT> Eq for ArraySeqMtEphS<T> {}ArraySeqMtEphS106,3785
+    impl<T: StT> Debug for ArraySeqMtEphS<T> {ArraySeqMtEphS108,3831
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt109,3878
+    impl<T: StT> Display for ArraySeqMtEphS<T> {ArraySeqMtEphS115,4046
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt116,4095
+    impl<T: StT> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {ArraySeqMtEphS129,4448
+        fn new(length: N, init_value: T) -> Self { ArraySeqMtEphS::from_vec(vec![init_value; lennew130,4511
+        fn length(&self) -> N { self.length() }length131,4615
+        fn nth_cloned(&self, index: N) -> T { self.nth_cloned(index) }nth_cloned132,4663
+        fn empty() -> Self { ArraySeqMtEphS::from_vec(Vec::new()) }empty133,4734
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {set134,4802
+        fn singleton(item: T) -> Self { ArraySeqMtEphS::from_vec(vec![item]) }singleton145,5182
+        fn isEmpty(&self) -> B {isEmpty146,5261
+        fn isSingleton(&self) -> B {isSingleton153,5424
+        fn subseq_copy(&self, start: N, length: N) -> Self { self.subseq_copy(start, length) }subseq_copy160,5591
+    macro_rules! ArraySeqMtEph {ArraySeqMtEph164,5713
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListStEph.rs,2892
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTSplayStEph.rs,4126
+pub mod BSTSplayStEph {BSTSplayStEph3,84
+    type Link<T> = Option<Box<Node<T>>>;Link8,249
+    struct Node<T: StT + Ord> {Node11,312
+        key: T,key12,344
+        size: N,size13,360
+        left: Link<T>,left14,377
+        right: Link<T>,right15,400
+    impl<T: StT + Ord> Node<T> {Node18,431
+        fn new(key: T) -> Self {new19,464
+    pub struct BSTSplayStEph<T: StT + Ord> {BSTSplayStEph29,650
+        root: Link<T>,root30,695
+    pub type BSTreeSplay<T> = BSTSplayStEph<T>;BSTreeSplay33,725
+    pub trait BSTSplayStEphTrait<T: StT + Ord> {BSTSplayStEphTrait35,774
+        fn new() -> Self;new36,823
+        fn size(&self) -> N;size37,849
+        fn is_empty(&self) -> B;is_empty38,878
+        fn height(&self) -> N;height39,911
+        fn insert(&mut self, value: T);insert40,942
+        fn find(&self, target: &T) -> Option<&T>;find41,982
+        fn contains(&self, target: &T) -> B;contains42,1032
+        fn minimum(&self) -> Option<&T>;minimum43,1077
+        fn maximum(&self) -> Option<&T>;maximum44,1118
+        fn in_order(&self) -> ArrayStPerS<T>;in_order45,1159
+        fn pre_order(&self) -> ArrayStPerS<T>;pre_order46,1205
+    impl<T: StT + Ord> Default for BSTSplayStEph<T> {BSTSplayStEph49,1259
+        fn default() -> Self { Self::new() }default50,1313
+    impl<T: StT + Ord> BSTSplayStEph<T> {BSTSplayStEph53,1365
+        pub fn new() -> Self { BSTSplayStEph { root: None } }new54,1407
+        pub fn size(&self) -> N { Self::size_link(&self.root) }size56,1470
+        pub fn is_empty(&self) -> B {is_empty58,1535
+        pub fn height(&self) -> N {height66,1702
+            fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {height_rec67,1738
+        pub fn insert(&mut self, value: T) { Self::insert_link(&mut self.root, value); }insert76,2034
+        pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }find78,2124
+        pub fn contains(&self, target: &T) -> B {contains80,2218
+        pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }minimum88,2408
+        pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }maximum90,2484
+        pub fn in_order(&self) -> ArrayStPerS<T> {in_order92,2560
+        pub fn pre_order(&self) -> ArrayStPerS<T> {pre_order98,2778
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }size_link104,2998
+        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::sizeupdate106,3081
+        fn insert_link(link: &mut Link<T>, value: T) -> bool {insert_link108,3200
+        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {find_link130,3946
+        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {min_link145,4463
+        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {max_link155,4784
+        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {in_order_collect165,5107
+        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {pre_order_collect173,5394
+    impl<T: StT + Ord> BSTSplayStEphTrait<T> for BSTSplayStEph<T> {BSTSplayStEph182,5690
+        fn new() -> Self { BSTSplayStEph::new() }new183,5758
+        fn size(&self) -> N { BSTSplayStEph::size(self) }size185,5809
+        fn is_empty(&self) -> B { BSTSplayStEph::is_empty(self) }is_empty187,5868
+        fn height(&self) -> N { BSTSplayStEph::height(self) }height189,5935
+        fn insert(&mut self, value: T) { BSTSplayStEph::insert(self, value) }insert191,5998
+        fn find(&self, target: &T) -> Option<&T> { BSTSplayStEph::find(self, target) }find193,6077
+        fn contains(&self, target: &T) -> B { BSTSplayStEph::contains(self, target) }contains195,6165
+        fn minimum(&self) -> Option<&T> { BSTSplayStEph::minimum(self) }minimum197,6252
+        fn maximum(&self) -> Option<&T> { BSTSplayStEph::maximum(self) }maximum199,6326
+        fn in_order(&self) -> ArrayStPerS<T> { BSTSplayStEph::in_order(self) }in_order201,6400
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTSplayStEph::pre_order(self) }pre_order203,6480
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTAVLMtEph.rs,4107
+pub mod BSTAVLMtEph {BSTAVLMtEph3,96
+    type Link<T> = Option<Box<Node<T>>>;Link10,294
+    struct Node<T: StTinMtT + Ord> {Node13,357
+        key: T,key14,394
+        height: i32,height15,410
+        size: N,size16,431
+        left: Link<T>,left17,448
+        right: Link<T>,right18,471
+    impl<T: StTinMtT + Ord> Node<T> {Node21,502
+        fn new(key: T) -> Self {new22,540
+    pub struct BSTAVLMtEph<T: StTinMtT + Ord> {BSTAVLMtEph34,774
+        root: Arc<RwLock<Link<T>>>,root35,822
+    pub type BSTreeAVL<T> = BSTAVLMtEph<T>;BSTreeAVL38,865
+    pub trait BSTAVLMtEphTrait<T: StTinMtT + Ord>: Sized {BSTAVLMtEphTrait40,910
+        fn new() -> Self;new41,969
+        fn insert(&self, value: T);insert42,995
+        fn find(&self, target: &T) -> Option<T>;find43,1031
+        fn contains(&self, target: &T) -> B;contains44,1080
+        fn size(&self) -> N;size45,1125
+        fn is_empty(&self) -> B;is_empty46,1154
+        fn height(&self) -> N;height47,1187
+        fn minimum(&self) -> Option<T>;minimum48,1218
+        fn maximum(&self) -> Option<T>;maximum49,1258
+        fn in_order(&self) -> ArrayStPerS<T>;in_order50,1298
+        fn pre_order(&self) -> ArrayStPerS<T>;pre_order51,1344
+    impl<T: StTinMtT + Ord> Default for BSTAVLMtEph<T> {BSTAVLMtEph54,1398
+        fn default() -> Self { Self::new() }default55,1455
+    impl<T: StTinMtT + Ord> BSTAVLMtEph<T> {BSTAVLMtEph58,1507
+        pub fn new() -> Self {new59,1552
+        pub fn size(&self) -> N {size65,1685
+        pub fn is_empty(&self) -> B {is_empty70,1818
+        pub fn height(&self) -> N {height78,1985
+        pub fn insert(&self, value: T) {insert83,2127
+        pub fn find(&self, target: &T) -> Option<T> {find88,2286
+        pub fn contains(&self, target: &T) -> B {contains93,2456
+        pub fn minimum(&self) -> Option<T> {minimum101,2646
+        pub fn maximum(&self) -> Option<T> {maximum106,2798
+        pub fn in_order(&self) -> ArrayStPerS<T> {in_order111,2950
+        pub fn pre_order(&self) -> ArrayStPerS<T> {pre_order118,3229
+        fn height_link(link: &Link<T>) -> i32 { link.as_ref().map_or(0, |n| n.height) }height_link125,3510
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }size_link127,3599
+        fn update(node: &mut Node<T>) {update129,3682
+        fn rotate_right(link: &mut Link<T>) {rotate_right134,3918
+        fn rotate_left(link: &mut Link<T>) {rotate_left148,4374
+        fn rebalance(link: &mut Link<T>) {rebalance162,4829
+        fn insert_link(link: &mut Link<T>, value: T) {insert_link187,5875
+        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {find_link206,6510
+        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {min_link221,7027
+        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {max_link231,7349
+        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {in_order_collect241,7673
+        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {pre_order_collect249,7960
+    impl<T: StTinMtT + Ord> BSTAVLMtEphTrait<T> for BSTAVLMtEph<T> {BSTAVLMtEph258,8256
+        fn new() -> Self { BSTAVLMtEph::new() }new259,8325
+        fn insert(&self, value: T) { BSTAVLMtEph::insert(self, value) }insert261,8374
+        fn find(&self, target: &T) -> Option<T> { BSTAVLMtEph::find(self, target) }find263,8447
+        fn contains(&self, target: &T) -> B { BSTAVLMtEph::contains(self, target) }contains265,8532
+        fn size(&self) -> N { BSTAVLMtEph::size(self) }size267,8617
+        fn is_empty(&self) -> B { BSTAVLMtEph::is_empty(self) }is_empty269,8674
+        fn height(&self) -> N { BSTAVLMtEph::height(self) }height271,8739
+        fn minimum(&self) -> Option<T> { BSTAVLMtEph::minimum(self) }minimum273,8800
+        fn maximum(&self) -> Option<T> { BSTAVLMtEph::maximum(self) }maximum275,8871
+        fn in_order(&self) -> ArrayStPerS<T> { BSTAVLMtEph::in_order(self) }in_order277,8942
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTAVLMtEph::pre_order(self) }pre_order279,9020
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/LinkedListStEph.rs,3123
 pub mod LinkedListStEph {LinkedListStEph3,90
-pub struct NodeE<T: StT> {NodeE7,162
-    pub value: T,value8,189
-    pub next: Option<Box<NodeE<T>>>,next9,207
-pub struct LinkedListStEphS<T: StT> {LinkedListStEphS13,264
-    head: Option<Box<NodeE<T>>>,head14,302
-    len: N,len15,335
-pub trait LinkedListStEphTrait<T: StT> {LinkedListStEphTrait18,350
-    fn empty() -> LinkedListStEphS<T>;empty21,475
-    fn new(length: N, init_value: T) -> Self;new24,608
-    fn length(&self) -> N;length27,738
-    fn nth(&self, index: N) -> &T;nth30,865
-    fn isEmpty(&self) -> B;isEmpty33,984
-    fn isSingleton(&self) -> B;isSingleton36,1096
-    fn singleton(item: T) -> Self;singleton39,1212
-    fn update(&mut self, item_at: Pair<N, T>) -> &mut Self;update42,1347
-    fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;set45,1507
-    fn subseq_copy(&self, start: N, length: N) -> Self;subseq_copy48,1720
-impl<T: StT> LinkedListStEphS<T> {LinkedListStEphS51,1779
-    fn push_front_node(&mut self, node: Box<NodeE<T>>) {push_front_node54,1898
-    pub fn from_vec(v: Vec<T>) -> Self {from_vec63,2163
-    pub fn iter<'a>(&'a self) -> LinkedListStEphIter<'a, T> {iter73,2484
-impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {LinkedListStEphS78,2616
-    fn empty() -> Self {empty81,2763
-    fn new(length: N, init_value: T) -> Self {new86,2936
-    fn length(&self) -> N {length107,3625
-    fn nth(&self, index: N) -> &T {nth112,3776
-    fn isEmpty(&self) -> B {isEmpty126,4179
-    fn isSingleton(&self) -> B {isSingleton135,4393
-    fn singleton(item: T) -> Self {singleton144,4611
-    fn update(&mut self, Pair(index, item): Pair<N, T>) -> &mut Self {update155,4924
-    fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {set170,5375
-    fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy185,5901
-impl<T: StT> std::fmt::Debug for LinkedListStEphS<T> {LinkedListStEphS221,6943
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt222,6998
-pub struct LinkedListStEphIter<'a, T: StT> {LinkedListStEphIter233,7324
-    cursor: Option<&'a NodeE<T>>,cursor234,7369
-impl<'a, T: StT> Iterator for LinkedListStEphIter<'a, T> {LinkedListStEphIter237,7406
-    type Item = &'a T;Item238,7465
-    fn next(&mut self) -> Option<Self::Item> {next239,7488
-impl<T: StT> PartialEq for LinkedListStEphS<T> {LinkedListStEphS247,7679
-    fn eq(&self, other: &Self) -> bool {eq248,7728
-impl<T: StT> Eq for LinkedListStEphS<T> {}LinkedListStEphS265,8153
-impl<T: StT> std::fmt::Display for LinkedListStEphS<T> {LinkedListStEphS267,8197
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt268,8254
-    macro_rules! LinkedListStEph {LinkedListStEph283,8663
-    fn _LinkedListStEph_type_checks() {_LinkedListStEph_type_checks305,9958
+    pub struct NodeE<T: StT> {NodeE7,170
+        pub value: T,value8,201
+        pub next: Option<Box<NodeE<T>>>,next9,223
+    pub struct LinkedListStEphS<T: StT> {LinkedListStEphS13,292
+        head: Option<Box<NodeE<T>>>,head14,334
+        len: N,len15,371
+    pub trait LinkedListStEphTrait<T: StT> {LinkedListStEphTrait18,394
+        fn empty() -> LinkedListStEphS<T>;empty21,531
+        fn new(length: N, init_value: T) -> Self;new24,676
+        fn length(&self) -> N;length27,818
+        fn nth(&self, index: N) -> &T;nth30,957
+        fn isEmpty(&self) -> B;isEmpty33,1088
+        fn isSingleton(&self) -> B;isSingleton36,1212
+        fn singleton(item: T) -> Self;singleton39,1340
+        fn update(&mut self, item_at: Pair<N, T>) -> &mut Self;update42,1487
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;set45,1659
+        fn subseq_copy(&self, start: N, length: N) -> Self;subseq_copy48,1884
+    impl<T: StT> LinkedListStEphS<T> {LinkedListStEphS51,1951
+        fn push_front_node(&mut self, node: Box<NodeE<T>>) {push_front_node54,2082
+        pub fn from_vec(v: Vec<T>) -> Self {from_vec63,2379
+        pub fn iter<'a>(&'a self) -> LinkedListStEphIter<'a, T> {iter73,2736
+    impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {LinkedListStEphS80,2913
+        fn empty() -> Self { LinkedListStEphS { head: None, len: 0 } }empty83,3072
+        fn new(length: N, init_value: T) -> Self {new86,3245
+        fn length(&self) -> N { self.len }length107,4018
+        fn nth(&self, index: N) -> &T {nth110,4169
+        fn isEmpty(&self) -> B {isEmpty124,4628
+        fn isSingleton(&self) -> B {isSingleton133,4878
+        fn singleton(item: T) -> Self {singleton142,5132
+        fn update(&mut self, Pair(index, item): Pair<N, T>) -> &mut Self {update153,5489
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {set168,6000
+        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy183,6586
+    impl<T: StT> std::fmt::Debug for LinkedListStEphS<T> {LinkedListStEphS219,7768
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt220,7827
+    pub struct LinkedListStEphIter<'a, T: StT> {LinkedListStEphIter231,8193
+        cursor: Option<&'a NodeE<T>>,cursor232,8242
+    impl<'a, T: StT> Iterator for LinkedListStEphIter<'a, T> {LinkedListStEphIter235,8287
+        type Item = &'a T;Item236,8350
+        fn next(&mut self) -> Option<Self::Item> {next237,8377
+    impl<T: StT> PartialEq for LinkedListStEphS<T> {LinkedListStEphS247,8624
+        fn eq(&self, other: &Self) -> bool {eq248,8677
+    impl<T: StT> Eq for LinkedListStEphS<T> {}LinkedListStEphS265,9166
+    impl<T: StT> std::fmt::Display for LinkedListStEphS<T> {LinkedListStEphS267,9214
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt268,9275
+    macro_rules! LinkedListStEph {LinkedListStEph286,9803
+    fn _LinkedListStEph_type_checks() {_LinkedListStEph_type_checks308,11097
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqStPer.rs,3080
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/ArraySeqStPer.rs,2718
 pub mod ArraySeqStPer {ArraySeqStPer8,354
-    pub struct ArrayStPerS<T: StT> { data: Box<[T]> }ArrayStPerS17,650
-    pub struct ArrayStPerS<T: StT> { data: Box<[T]> }data17,650
-    pub trait ArraySeqStPerTrait<T: StT + Clone> {ArraySeqStPerTrait20,776
-        fn new(length: N, init_value: T) -> Self;new23,929
-        fn length(&self) -> N;length26,1071
-        fn nth(&self, index: N) -> &T;nth29,1194
-        fn empty() -> Self;empty32,1325
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str> where Self: Sized;set35,1514
-        fn singleton(item: T) -> Self;singleton38,1696
-        fn isEmpty(&self) -> B;isEmpty41,1827
-        fn isSingleton(&self) -> B;isSingleton44,1951
-        fn subseq_copy(&self, start: N, length: N) -> Self where Self: Sized;subseq_copy47,2089
-    impl<T: StT> ArrayStPerS<T> {ArrayStPerS50,2174
-        pub fn subseq(&self, start: N, length: N) -> &[T] {subseq53,2300
-        pub fn from_vec(v: Vec<T>) -> Self { ArrayStPerS { data: v.into_boxed_slice() } }from_vec62,2663
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }iter64,2754
-        pub fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }iter_mut65,2817
-        pub fn empty() -> Self { ArrayStPerS { data: Vec::new().into_boxed_slice() } }empty67,2896
-        pub fn singleton(item: T) -> Self { ArrayStPerS { data: vec![item].into_boxed_slice() } singleton68,2983
-        pub fn new(length: N, init_value: T) -> Self where T: Clone { Self::from_vec(vec![init_vnew69,3081
-        pub fn length(&self) -> N { self.data.len() }length70,3194
-        pub fn nth(&self, index: N) -> &T { &self.data[index] }nth71,3248
-        pub fn set(&self, index: N, item: T) -> Result<Self, &'static str> where T: Clone {set72,3312
-    impl<T: StT + Debug> Debug for ArrayStPerS<T> {ArrayStPerS81,3616
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt82,3668
-    impl<T: StT + Display> Display for ArrayStPerS<T> {ArrayStPerS88,3861
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt89,3917
-    impl<T: StT + Clone> ArraySeqStPerTrait<T> for ArrayStPerS<T> {ArrayStPerS99,4202
-        fn new(length: N, init_value: T) -> Self {new100,4270
-        fn length(&self) -> N { self.data.len() }length103,4384
-        fn nth(&self, index: N) -> &T { &self.data[index] }nth104,4434
-        fn empty() -> Self { Self::from_vec(Vec::new()) }empty105,4494
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str> {set106,4552
-        fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }singleton112,4829
-        fn isEmpty(&self) -> B { if self.data.len() == 0 { B::True } else { B::False } }isEmpty113,4898
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }isSingleton114,4987
-        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy115,5080
-    macro_rules! ArraySeqStPer {ArraySeqStPer127,5440
-    fn _ArraySeqStPer_macro_type_checks() {_ArraySeqStPer_macro_type_checks134,5792
+    pub struct ArrayStPerS<T: StT> {ArrayStPerS17,650
+        data: Box<[T]>,data18,687
+    pub trait ArraySeqStPerTrait<T: StT + Clone> {ArraySeqStPerTrait22,789
+        fn new(length: N, init_value: T) -> Self;new25,942
+        fn length(&self) -> N;length28,1084
+        fn nth(&self, index: N) -> &T;nth31,1207
+        fn empty() -> Self;empty34,1338
+        fn set(&self, index: N, item: T) -> Result<Self, &'static str>set37,1527
+        fn singleton(item: T) -> Self;singleton42,1729
+        fn isEmpty(&self) -> B;isEmpty45,1860
+        fn isSingleton(&self) -> B;isSingleton48,1984
+        fn subseq_copy(&self, start: N, length: N) -> Selfsubseq_copy51,2122
+    impl<T: StT> ArrayStPerS<T> {ArrayStPerS56,2227
+        pub fn subseq(&self, start: N, length: N) -> &[T] {subseq59,2353
+        pub fn from_vec(v: Vec<T>) -> Self {from_vec68,2716
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }iter74,2856
+        pub fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }iter_mut75,2919
+        pub fn empty() -> Self {empty77,2998
+        pub fn singleton(item: T) -> Self {singleton82,3134
+        pub fn new(length: N, init_value: T) -> Selfnew87,3281
+        pub fn length(&self) -> N { self.data.len() }length93,3443
+        pub fn nth(&self, index: N) -> &T { &self.data[index] }nth94,3497
+        pub fn set(&self, index: N, item: T) -> Result<Self, &'static str>set95,3561
+    impl<T: StT + Debug> Debug for ArrayStPerS<T> {ArrayStPerS108,3921
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt109,3973
+    impl<T: StT + Display> Display for ArrayStPerS<T> {ArrayStPerS115,4166
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {fmt116,4222
+    impl<T: StT + Clone> ArraySeqStPerTrait<T> for ArrayStPerS<T> {ArrayStPerS128,4543
+        fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }new129,4611
+        fn length(&self) -> N { self.data.len() }length130,4705
+        fn nth(&self, index: N) -> &T { &self.data[index] }nth131,4755
+        fn empty() -> Self { Self::from_vec(Vec::new()) }empty132,4815
+        fn set(&self, index: N, item: T) -> Result<Self, &'static str> {set133,4873
+        fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }singleton141,5178
+        fn isEmpty(&self) -> B {isEmpty142,5247
+        fn isSingleton(&self) -> B {isSingleton149,5412
+        fn subseq_copy(&self, start: N, length: N) -> Self {subseq_copy156,5581
+    macro_rules! ArraySeqStPer {ArraySeqStPer169,5968
+    fn _ArraySeqStPer_macro_type_checks() {_ArraySeqStPer_macro_type_checks176,6320
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTPlainStEph.rs,3408
+pub mod BSTPlainStEph {BSTPlainStEph3,64
+    pub struct BSTPlainStEph<T: StT + Ord> {BSTPlainStEph8,208
+        root: BBTree<T>,root9,253
+    pub type BSTree<T> = BSTPlainStEph<T>;BSTree12,285
+    pub trait BSTPlainStEphTrait<T: StT + Ord> {BSTPlainStEphTrait14,329
+        fn new() -> Self;new15,378
+        fn size(&self) -> N;size16,404
+        fn is_empty(&self) -> B;is_empty17,433
+        fn height(&self) -> N;height18,466
+        fn insert(&mut self, value: T);insert19,497
+        fn find(&self, target: &T) -> Option<&T>;find20,537
+        fn contains(&self, target: &T) -> B;contains21,587
+        fn minimum(&self) -> Option<&T>;minimum22,632
+        fn maximum(&self) -> Option<&T>;maximum23,673
+        fn in_order(&self) -> ArrayStPerS<T>;in_order24,714
+        fn pre_order(&self) -> ArrayStPerS<T>;pre_order25,760
+    impl<T: StT + Ord> BSTPlainStEph<T> {BSTPlainStEph28,814
+        pub fn new() -> Self { BSTPlainStEph { root: BBTree::leaf() } }new29,856
+        pub fn size(&self) -> N { self.root.size() }size31,929
+        pub fn is_empty(&self) -> B { self.root.is_leaf() }is_empty33,983
+        pub fn height(&self) -> N { self.root.height() }height35,1044
+        pub fn insert(&mut self, value: T) { insert_node(&mut self.root, value); }insert37,1102
+        pub fn find(&self, target: &T) -> Option<&T> { find_node(&self.root, target) }find39,1186
+        pub fn contains(&self, target: &T) -> B { contains_node(&self.root, target) }contains41,1274
+        pub fn minimum(&self) -> Option<&T> { min_node(&self.root) }minimum43,1361
+        pub fn maximum(&self) -> Option<&T> { max_node(&self.root) }maximum45,1431
+        pub fn in_order(&self) -> ArrayStPerS<T> { self.root.in_order() }in_order47,1501
+        pub fn pre_order(&self) -> ArrayStPerS<T> { self.root.pre_order() }pre_order49,1576
+    impl<T: StT + Ord> BSTPlainStEphTrait<T> for BSTPlainStEph<T> {BSTPlainStEph52,1659
+        fn new() -> Self { BSTPlainStEph::new() }new53,1727
+        fn size(&self) -> N { BSTPlainStEph::size(self) }size55,1778
+        fn is_empty(&self) -> B { BSTPlainStEph::is_empty(self) }is_empty57,1837
+        fn height(&self) -> N { BSTPlainStEph::height(self) }height59,1904
+        fn insert(&mut self, value: T) { BSTPlainStEph::insert(self, value) }insert61,1967
+        fn find(&self, target: &T) -> Option<&T> { BSTPlainStEph::find(self, target) }find63,2046
+        fn contains(&self, target: &T) -> B { BSTPlainStEph::contains(self, target) }contains65,2134
+        fn minimum(&self) -> Option<&T> { BSTPlainStEph::minimum(self) }minimum67,2221
+        fn maximum(&self) -> Option<&T> { BSTPlainStEph::maximum(self) }maximum69,2295
+        fn in_order(&self) -> ArrayStPerS<T> { BSTPlainStEph::in_order(self) }in_order71,2369
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTPlainStEph::pre_order(self) }pre_order73,2449
+    fn insert_node<T: StT + Ord>(node: &mut BBTree<T>, value: T) {insert_node76,2537
+    fn contains_node<'a, T: StT + Ord>(node: &'a BBTree<T>, target: &T) -> B {contains_node91,3040
+    fn find_node<'a, T: StT + Ord>(node: &'a BBTree<T>, target: &T) -> Option<&'a T> {find_node106,3526
+    fn min_node<'a, T: StT + Ord>(node: &'a BBTree<T>) -> Option<&'a T> {min_node121,4019
+    fn max_node<'a, T: StT + Ord>(node: &'a BBTree<T>) -> Option<&'a T> {max_node131,4339
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTSetBBAlphaMtEph.rs,5525
+pub mod BSTSetBBAlphaMtEph {BSTSetBBAlphaMtEph3,78
+    pub struct BSTSetBBAlphaMtEph<T: StTinMtT + Ord> {BSTSetBBAlphaMtEph10,301
+        tree: BSTBBAlphaMtEph<T>,tree11,356
+    pub type BSTSetBBAlphaMt<T> = BSTSetBBAlphaMtEph<T>;BSTSetBBAlphaMt14,397
+    pub trait BSTSetBBAlphaMtEphTrait<T: StTinMtT + Ord>: Sized {BSTSetBBAlphaMtEphTrait16,455
+        fn empty() -> Self;empty17,521
+        fn singleton(value: T) -> Self;singleton18,549
+        fn size(&self) -> N;size19,589
+        fn is_empty(&self) -> B;is_empty20,618
+        fn find(&self, value: &T) -> Option<T>;find21,651
+        fn contains(&self, value: &T) -> B;contains22,699
+        fn minimum(&self) -> Option<T>;minimum23,743
+        fn maximum(&self) -> Option<T>;maximum24,783
+        fn insert(&mut self, value: T);insert25,823
+        fn delete(&mut self, target: &T);delete26,863
+        fn union(&self, other: &Self) -> Self;union27,905
+        fn intersection(&self, other: &Self) -> Self;intersection28,952
+        fn difference(&self, other: &Self) -> Self;difference29,1006
+        fn split(&self, pivot: &T) -> (Self, B, Self);split30,1058
+        fn join_pair(left: Self, right: Self) -> Self;join_pair31,1113
+        fn join_m(left: Self, pivot: T, right: Self) -> Self;join_m32,1168
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self;filter33,1230
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T;reduce34,1300
+        fn iter_in_order(&self) -> ArrayStPerS<T>;iter_in_order35,1368
+        fn as_tree(&self) -> &BSTBBAlphaMtEph<T>;as_tree36,1419
+    impl<T: StTinMtT + Ord> BSTSetBBAlphaMtEph<T> {BSTSetBBAlphaMtEph39,1476
+        pub fn empty() -> Self {empty40,1528
+        pub fn singleton(value: T) -> Self {singleton46,1651
+        pub fn size(&self) -> N { self.tree.size() }size52,1812
+        pub fn is_empty(&self) -> B { self.tree.is_empty() }is_empty54,1866
+        pub fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }find56,1928
+        pub fn contains(&self, value: &T) -> B { self.tree.contains(value) }contains58,2006
+        pub fn minimum(&self) -> Option<T> { self.tree.minimum() }minimum60,2084
+        pub fn maximum(&self) -> Option<T> { self.tree.maximum() }maximum62,2152
+        pub fn insert(&mut self, value: T) { self.tree.insert(value); }insert64,2220
+        pub fn delete(&mut self, target: &T) {delete66,2293
+        pub fn union(&self, other: &Self) -> Self {union74,2582
+        pub fn intersection(&self, other: &Self) -> Self {intersection82,2881
+        pub fn difference(&self, other: &Self) -> Self {difference99,3459
+        pub fn split(&self, pivot: &T) -> (Self, B, Self) {split116,4036
+        pub fn join_pair(left: Self, right: Self) -> Self {join_pair136,4727
+        pub fn join_m(left: Self, pivot: T, right: Self) -> Self {join_m144,5040
+        pub fn filter<F>(&self, mut predicate: F) -> Selffilter153,5396
+        pub fn reduce<F>(&self, mut op: F, base: T) -> Treduce166,5805
+        pub fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }iter_in_order176,6069
+        pub fn as_tree(&self) -> &BSTBBAlphaMtEph<T> { &self.tree }as_tree178,6149
+        fn values_vec(&self) -> Vec<T> { self.tree.in_order().iter().cloned().collect() }values_vec180,6218
+        fn rebuild_from_vec(values: Vec<T>) -> BSTBBAlphaMtEph<T> {rebuild_from_vec182,6309
+        fn from_sorted_iter<I>(values: I) -> Selffrom_sorted_iter190,6536
+    impl<T: StTinMtT + Ord> BSTSetBBAlphaMtEphTrait<T> for BSTSetBBAlphaMtEph<T> {BSTSetBBAlphaMtEph202,6823
+        fn empty() -> Self { Self::empty() }empty203,6906
+        fn singleton(value: T) -> Self { Self::singleton(value) }singleton205,6952
+        fn size(&self) -> N { self.tree.size() }size207,7019
+        fn is_empty(&self) -> B { self.tree.is_empty() }is_empty209,7069
+        fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }find211,7127
+        fn contains(&self, value: &T) -> B { self.tree.contains(value) }contains213,7201
+        fn minimum(&self) -> Option<T> { self.tree.minimum() }minimum215,7275
+        fn maximum(&self) -> Option<T> { self.tree.maximum() }maximum217,7339
+        fn insert(&mut self, value: T) { self.tree.insert(value); }insert219,7403
+        fn delete(&mut self, target: &T) { BSTSetBBAlphaMtEph::delete(self, target) }delete221,7472
+        fn union(&self, other: &Self) -> Self { BSTSetBBAlphaMtEph::union(self, other) }union223,7559
+        fn intersection(&self, other: &Self) -> Self { BSTSetBBAlphaMtEph::intersection(self, otintersection225,7649
+        fn difference(&self, other: &Self) -> Self { BSTSetBBAlphaMtEph::difference(self, other)difference227,7753
+        fn split(&self, pivot: &T) -> (Self, B, Self) { BSTSetBBAlphaMtEph::split(self, pivot) }split229,7853
+        fn join_pair(left: Self, right: Self) -> Self { BSTSetBBAlphaMtEph::join_pair(left, righjoin_pair231,7951
+        fn join_m(left: Self, pivot: T, right: Self) -> Self { BSTSetBBAlphaMtEph::join_m(left, join_m233,8053
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self { BSTSetBBAlphaMtEph::filtefilter235,8166
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T { BSTSetBBAlphaMtEph::reduce(reduce237,8284
+        fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }iter_in_order239,8399
+        fn as_tree(&self) -> &BSTBBAlphaMtEph<T> { &self.tree }as_tree241,8475
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/AVLTreeSeqStPerChap18.rs,1050
 pub mod AVLTreeSeqStPerChap18 {AVLTreeSeqStPerChap183,46
@@ -1243,94 +2493,336 @@ pub mod AVLTreeSeqStPerChap18 {AVLTreeSeqStPerChap183,46
         fn append(a: &AVLTreeSeqStPerS<T>, b: &AVLTreeSeqStPerS<T>) -> AVLTreeSeqStPerS<T> {append32,1654
         fn filter(a: &AVLTreeSeqStPerS<T>, pred: impl Fn(&T) -> B) -> AVLTreeSeqStPerS<T> {filter42,2154
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/UnDirGraphStEphChap6_1.rs,2921
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BSTTreapStEph.rs,4285
+pub mod BSTTreapStEph {BSTTreapStEph3,72
+    type Link<T> = Option<Box<Node<T>>>;Link9,263
+    struct Node<T: StT + Ord> {Node12,326
+        key: T,key13,358
+        priority: u64,priority14,374
+        size: N,size15,397
+        left: Link<T>,left16,414
+        right: Link<T>,right17,437
+    impl<T: StT + Ord> Node<T> {Node20,468
+        fn new(key: T, priority: u64) -> Self {new21,501
+    pub struct BSTTreapStEph<T: StT + Ord> {BSTTreapStEph32,728
+        root: Link<T>,root33,773
+    pub type BSTreeTreap<T> = BSTTreapStEph<T>;BSTreeTreap36,803
+    pub trait BSTTreapStEphTrait<T: StT + Ord> {BSTTreapStEphTrait38,852
+        fn new() -> Self;new39,901
+        fn size(&self) -> N;size40,927
+        fn is_empty(&self) -> B;is_empty41,956
+        fn height(&self) -> N;height42,989
+        fn insert(&mut self, value: T);insert43,1020
+        fn find(&self, target: &T) -> Option<&T>;find44,1060
+        fn contains(&self, target: &T) -> B;contains45,1110
+        fn minimum(&self) -> Option<&T>;minimum46,1155
+        fn maximum(&self) -> Option<&T>;maximum47,1196
+        fn in_order(&self) -> ArrayStPerS<T>;in_order48,1237
+        fn pre_order(&self) -> ArrayStPerS<T>;pre_order49,1283
+    impl<T: StT + Ord> Default for BSTTreapStEph<T> {BSTTreapStEph52,1337
+        fn default() -> Self { Self::new() }default53,1391
+    impl<T: StT + Ord> BSTTreapStEph<T> {BSTTreapStEph56,1443
+        pub fn new() -> Self { BSTTreapStEph { root: None } }new57,1485
+        pub fn size(&self) -> N { Self::size_link(&self.root) }size59,1548
+        pub fn is_empty(&self) -> B {is_empty61,1613
+        pub fn height(&self) -> N {height69,1780
+            fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {height_rec70,1816
+        pub fn insert(&mut self, value: T) {insert79,2112
+        pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }find84,2261
+        pub fn contains(&self, target: &T) -> B {contains86,2355
+        pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }minimum94,2545
+        pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }maximum96,2621
+        pub fn in_order(&self) -> ArrayStPerS<T> {in_order98,2697
+        pub fn pre_order(&self) -> ArrayStPerS<T> {pre_order104,2915
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }size_link110,3135
+        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::sizeupdate112,3218
+        fn rotate_left(link: &mut Link<T>) {rotate_left114,3337
+        fn rotate_right(link: &mut Link<T>) {rotate_right128,3792
+        fn insert_link(link: &mut Link<T>, value: T, rng: &mut impl Rng) {insert_link142,4248
+        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {find_link167,5268
+        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {min_link182,5785
+        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {max_link192,6106
+        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {in_order_collect202,6429
+        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {pre_order_collect210,6716
+    impl<T: StT + Ord> BSTTreapStEphTrait<T> for BSTTreapStEph<T> {BSTTreapStEph219,7012
+        fn new() -> Self { BSTTreapStEph::new() }new220,7080
+        fn size(&self) -> N { BSTTreapStEph::size(self) }size222,7131
+        fn is_empty(&self) -> B { BSTTreapStEph::is_empty(self) }is_empty224,7190
+        fn height(&self) -> N { BSTTreapStEph::height(self) }height226,7257
+        fn insert(&mut self, value: T) { BSTTreapStEph::insert(self, value) }insert228,7320
+        fn find(&self, target: &T) -> Option<&T> { BSTTreapStEph::find(self, target) }find230,7399
+        fn contains(&self, target: &T) -> B { BSTTreapStEph::contains(self, target) }contains232,7487
+        fn minimum(&self) -> Option<&T> { BSTTreapStEph::minimum(self) }minimum234,7574
+        fn maximum(&self) -> Option<&T> { BSTTreapStEph::maximum(self) }maximum236,7648
+        fn in_order(&self) -> ArrayStPerS<T> { BSTTreapStEph::in_order(self) }in_order238,7722
+        fn pre_order(&self) -> ArrayStPerS<T> { BSTTreapStEph::pre_order(self) }pre_order240,7802
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/BBTEph.rs,1830
+pub mod BBTEph {BBTEph3,56
+    pub enum BBTree<T: StT> {BBTree10,318
+        Leaf,Leaf11,348
+        Node(Box<BBNode<T>>),Node12,362
+    pub struct BBNode<T: StT> {BBNode16,442
+        pub left: BBTree<T>,left17,474
+        pub value: T,value18,503
+        pub right: BBTree<T>,right19,525
+    pub trait BBTEphTrait<T: StT> {BBTEphTrait22,562
+        fn leaf() -> Self;leaf23,598
+        fn node(left: Self, value: T, right: Self) -> Self;node24,625
+        fn is_leaf(&self) -> B;is_leaf25,685
+        fn in_order(&self) -> ArrayStPerS<T>;in_order26,717
+        fn pre_order(&self) -> ArrayStPerS<T>;pre_order27,763
+        fn height(&self) -> N;height28,810
+        fn size(&self) -> N;size29,841
+    impl<T: StT> BBTree<T> {BBTree32,877
+        pub fn leaf() -> Self { BBTree::Leaf }leaf33,906
+        pub fn node(left: BBTree<T>, value: T, right: BBTree<T>) -> Self {node35,954
+        pub fn is_leaf(&self) -> B {is_leaf39,1106
+        pub fn in_order(&self) -> ArrayStPerS<T> {in_order46,1283
+        pub fn pre_order(&self) -> ArrayStPerS<T> {pre_order59,1948
+        pub fn height(&self) -> N {height72,2614
+        pub fn size(&self) -> N {size83,2949
+    impl<T: StT> BBTEphTrait<T> for BBTree<T> {BBTree91,3158
+        fn leaf() -> Self { BBTree::leaf() }leaf92,3206
+        fn node(left: Self, value: T, right: Self) -> Self { BBTree::node(left, value, right) }node94,3252
+        fn is_leaf(&self) -> B { BBTree::is_leaf(self) }is_leaf96,3349
+        fn in_order(&self) -> ArrayStPerS<T> { BBTree::in_order(self) }in_order98,3407
+        fn pre_order(&self) -> ArrayStPerS<T> { BBTree::pre_order(self) }pre_order100,3480
+        fn height(&self) -> N { BBTree::height(self) }height102,3555
+        fn size(&self) -> N { BBTree::size(self) }size104,3611
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/UnDirGraphStEphChap6_1.rs,2952
 pub mod UnDirGraphStEphChap6_1 {UnDirGraphStEphChap6_13,80
-pub struct UnDirGraphStEph<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {UnDirGraphStEph10,247
-    V: Set<V>,V11,336
-    E: Set<Pair<V, V>>,E12,351
-pub trait UnDirGraphStEphChap6_1Trait<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::DebugUnDirGraphStEphChap6_1Trait15,378
-    fn empty() -> UnDirGraphStEph<V>;empty18,562
-    fn FromSets(V: Set<V>, E: Set<Pair<V, V>>) -> UnDirGraphStEph<V>;FromSets21,700
-    fn vertices(&self) -> &Set<V>;vertices24,854
-    fn edges(&self) -> &Set<Pair<V, V>>;edges27,973
-    fn sizeV(&self) -> N;sizeV30,1098
-    fn sizeE(&self) -> N;sizeE33,1208
-    fn Neighbor(&self, u: &V, v: &V) -> B;Neighbor36,1318
-    fn NG(&self, v: &V) -> Set<V>;NG39,1449
-    fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V>;NGOfVertices42,1594
-    fn Incident(&self, e: &Pair<V, V>, v: &V) -> B;Incident45,1732
-    fn Degree(&self, v: &V) -> N;Degree48,1872
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> UnDirGraphStEphChap6_1Trait<V> UnDirGraphStEph51,1909
-    fn empty() -> UnDirGraphStEph<V> { UnDirGraphStEph { V: SetLit![], E: SetLit![] } }empty52,2030
-    fn FromSets(V: Set<V>, E: Set<Pair<V, V>>) -> UnDirGraphStEph<V> { UnDirGraphStEph { V, E } FromSets53,2118
-    fn vertices(&self) -> &Set<V> { &self.V }vertices54,2216
-    fn edges(&self) -> &Set<Pair<V, V>> { &self.E }edges55,2262
-    fn sizeV(&self) -> N { self.V.size() }sizeV56,2314
-    fn sizeE(&self) -> N { self.E.size() }sizeE57,2357
-    fn Neighbor(&self, u: &V, v: &V) -> B {Neighbor59,2401
-    fn NG(&self, v: &V) -> Set<V> {NG64,2641
-    fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V> {NGOfVertices73,2915
-    fn Incident(&self, e: &Pair<V, V>, v: &V) -> B { if &e.0 == v || &e.1 == v { B::True } else Incident82,3155
-    fn Degree(&self, v: &V) -> N { self.NG(v).size() }Degree84,3267
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> std::fmt::Debug for UnDirGraphSUnDirGraphStEph87,3325
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt88,3431
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> std::fmt::Display for UnDirGrapUnDirGraphStEph93,3604
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt94,3712
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> PartialEq for UnDirGraphStEph<VUnDirGraphStEph99,3843
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> PartialEq for UnDirGraphStEph<Veq99,3843
-impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> Eq for UnDirGraphStEph<V> {}UnDirGraphStEph100,4023
-    macro_rules! UnDirGraphLit {UnDirGraphLit103,4138
-    fn _UnDirGraphLit_type_checks() {_UnDirGraphLit_type_checks121,5329
-    pub fn __undirgraph_macro_typecheck_exercise() {__undirgraph_macro_typecheck_exercise127,5597
+    pub struct UnDirGraphStEph<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {UnDirGraphStEph10,267
+        V: Set<V>,V11,360
+        E: Set<Pair<V, V>>,E12,379
+    pub trait UnDirGraphStEphChap6_1Trait<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::DUnDirGraphStEphChap6_1Trait15,414
+        fn empty() -> UnDirGraphStEph<V>;empty18,610
+        fn FromSets(V: Set<V>, E: Set<Pair<V, V>>) -> UnDirGraphStEph<V>;FromSets21,760
+        fn vertices(&self) -> &Set<V>;vertices24,926
+        fn edges(&self) -> &Set<Pair<V, V>>;edges27,1057
+        fn sizeV(&self) -> N;sizeV30,1194
+        fn sizeE(&self) -> N;sizeE33,1316
+        fn Neighbor(&self, u: &V, v: &V) -> B;Neighbor36,1438
+        fn NG(&self, v: &V) -> Set<V>;NG39,1581
+        fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V>;NGOfVertices42,1738
+        fn Incident(&self, e: &Pair<V, V>, v: &V) -> B;Incident45,1888
+        fn Degree(&self, v: &V) -> N;Degree48,2040
+    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> UnDirGraphStEphChap6_1TraitUnDirGraphStEph51,2085
+        fn empty() -> UnDirGraphStEph<V> {empty52,2210
+        fn FromSets(V: Set<V>, E: Set<Pair<V, V>>) -> UnDirGraphStEph<V> { UnDirGraphStEph { V, FromSets58,2367
+        fn vertices(&self) -> &Set<V> { &self.V }vertices59,2469
+        fn edges(&self) -> &Set<Pair<V, V>> { &self.E }edges60,2519
+        fn sizeV(&self) -> N { self.V.size() }sizeV61,2575
+        fn sizeE(&self) -> N { self.E.size() }sizeE62,2622
+        fn Neighbor(&self, u: &V, v: &V) -> B {Neighbor64,2670
+        fn NG(&self, v: &V) -> Set<V> {NG74,2994
+        fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V> {NGOfVertices86,3356
+        fn Incident(&self, e: &Pair<V, V>, v: &V) -> B {Incident95,3628
+        fn Degree(&self, v: &V) -> N { self.NG(v).size() }Degree103,3820
+    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> std::fmt::Debug for UnDirGrUnDirGraphStEph106,3886
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt107,3996
+    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> std::fmt::Display for UnDirUnDirGraphStEph115,4236
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "V={} E={fmt116,4348
+    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> PartialEq for UnDirGraphStEUnDirGraphStEph119,4475
+        fn eq(&self, other: &Self) -> bool { self.V == other.V && self.E == other.E }eq120,4579
+    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> Eq for UnDirGraphStEph<V> {UnDirGraphStEph122,4671
+    macro_rules! UnDirGraphLit {UnDirGraphLit125,4790
+    fn _UnDirGraphLit_type_checks() {_UnDirGraphLit_type_checks143,5981
+    pub fn __undirgraph_macro_typecheck_exercise() {__undirgraph_macro_typecheck_exercise149,6229
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test42BBTEph.rs,189
+fn inorder_and_preorder_traversals_match_definitions() {inorder_and_preorder_traversals_match_definitions6,103
+fn bst_insert_and_search_behavior() {bst_insert_and_search_behavior21,571
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test51BSTSetMtEph.rs,11097
+trait TestSet: Sized {TestSet3,17
+    fn empty() -> Self;empty4,40
+    fn insert(&mut self, value: i32);insert5,64
+    fn delete(&mut self, value: &i32);delete6,102
+    fn size(&self) -> usize;size7,141
+    fn is_empty(&self) -> B;is_empty8,170
+    fn contains(&self, value: &i32) -> B;contains9,199
+    fn minimum(&self) -> Option<i32>;minimum10,241
+    fn maximum(&self) -> Option<i32>;maximum11,279
+    fn union(&self, other: &Self) -> Self;union12,317
+    fn intersection(&self, other: &Self) -> Self;intersection13,360
+    fn difference(&self, other: &Self) -> Self;difference14,410
+    fn split(&self, pivot: &i32) -> (Self, B, Self);split15,458
+    fn join_pair(left: Self, right: Self) -> Self;join_pair16,511
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self;join_m17,562
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self;filter18,622
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32;reduce19,690
+    fn iter_seq(&self) -> ArrayStPerS<i32>;iter_seq20,764
+impl TestSet for apas_ai::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMt<i32> {BSTSetPlainMt23,811
+    fn empty() -> Self { Self::empty() }empty24,894
+    fn insert(&mut self, value: i32) { self.insert(value); }insert26,936
+    fn delete(&mut self, value: &i32) { self.delete(value); }delete28,998
+    fn size(&self) -> usize { self.size() }size30,1061
+    fn is_empty(&self) -> B { self.is_empty() }is_empty32,1106
+    fn contains(&self, value: &i32) -> B { self.contains(value) }contains34,1155
+    fn minimum(&self) -> Option<i32> { self.minimum() }minimum36,1222
+    fn maximum(&self) -> Option<i32> { self.maximum() }maximum38,1279
+    fn union(&self, other: &Self) -> Self { self.union(other) }union40,1336
+    fn intersection(&self, other: &Self) -> Self { self.intersection(other) }intersection42,1401
+    fn difference(&self, other: &Self) -> Self { self.difference(other) }difference44,1480
+    fn split(&self, pivot: &i32) -> (Self, B, Self) { self.split(pivot) }split46,1555
+    fn join_pair(left: Self, right: Self) -> Self { Self::join_pair(left, right) }join_pair48,1630
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self { Self::join_m(left, pivot, right) }join_m50,1714
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self { self.filter(predicate) }filter52,1811
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 { self.reduce(op, base)reduce54,1906
+    fn iter_seq(&self) -> ArrayStPerS<i32> { self.iter_in_order() }iter_seq56,2006
+impl TestSet for apas_ai::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt<i32> {BSTSetAVLMt59,2077
+    fn empty() -> Self { Self::empty() }empty60,2154
+    fn insert(&mut self, value: i32) { self.insert(value); }insert62,2196
+    fn delete(&mut self, value: &i32) { self.delete(value); }delete64,2258
+    fn size(&self) -> usize { self.size() }size66,2321
+    fn is_empty(&self) -> B { self.is_empty() }is_empty68,2366
+    fn contains(&self, value: &i32) -> B { self.contains(value) }contains70,2415
+    fn minimum(&self) -> Option<i32> { self.minimum() }minimum72,2482
+    fn maximum(&self) -> Option<i32> { self.maximum() }maximum74,2539
+    fn union(&self, other: &Self) -> Self { self.union(other) }union76,2596
+    fn intersection(&self, other: &Self) -> Self { self.intersection(other) }intersection78,2661
+    fn difference(&self, other: &Self) -> Self { self.difference(other) }difference80,2740
+    fn split(&self, pivot: &i32) -> (Self, B, Self) { self.split(pivot) }split82,2815
+    fn join_pair(left: Self, right: Self) -> Self { Self::join_pair(left, right) }join_pair84,2890
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self { Self::join_m(left, pivot, right) }join_m86,2974
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self { self.filter(predicate) }filter88,3071
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 { self.reduce(op, base)reduce90,3166
+    fn iter_seq(&self) -> ArrayStPerS<i32> { self.iter_in_order() }iter_seq92,3266
+impl TestSet for apas_ai::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt<i32> {BSTSetRBMt95,3337
+    fn empty() -> Self { Self::empty() }empty96,3411
+    fn insert(&mut self, value: i32) { self.insert(value); }insert98,3453
+    fn delete(&mut self, value: &i32) { self.delete(value); }delete100,3515
+    fn size(&self) -> usize { self.size() }size102,3578
+    fn is_empty(&self) -> B { self.is_empty() }is_empty104,3623
+    fn contains(&self, value: &i32) -> B { self.contains(value) }contains106,3672
+    fn minimum(&self) -> Option<i32> { self.minimum() }minimum108,3739
+    fn maximum(&self) -> Option<i32> { self.maximum() }maximum110,3796
+    fn union(&self, other: &Self) -> Self { self.union(other) }union112,3853
+    fn intersection(&self, other: &Self) -> Self { self.intersection(other) }intersection114,3918
+    fn difference(&self, other: &Self) -> Self { self.difference(other) }difference116,3997
+    fn split(&self, pivot: &i32) -> (Self, B, Self) { self.split(pivot) }split118,4072
+    fn join_pair(left: Self, right: Self) -> Self { Self::join_pair(left, right) }join_pair120,4147
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self { Self::join_m(left, pivot, right) }join_m122,4231
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self { self.filter(predicate) }filter124,4328
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 { self.reduce(op, base)reduce126,4423
+    fn iter_seq(&self) -> ArrayStPerS<i32> { self.iter_in_order() }iter_seq128,4523
+impl TestSet for apas_ai::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSetBBAlphaMt<i32> {BSTSetBBAlphaMt131,4594
+    fn empty() -> Self { Self::empty() }empty132,4683
+    fn insert(&mut self, value: i32) { self.insert(value); }insert134,4725
+    fn delete(&mut self, value: &i32) { self.delete(value); }delete136,4787
+    fn size(&self) -> usize { self.size() }size138,4850
+    fn is_empty(&self) -> B { self.is_empty() }is_empty140,4895
+    fn contains(&self, value: &i32) -> B { self.contains(value) }contains142,4944
+    fn minimum(&self) -> Option<i32> { self.minimum() }minimum144,5011
+    fn maximum(&self) -> Option<i32> { self.maximum() }maximum146,5068
+    fn union(&self, other: &Self) -> Self { self.union(other) }union148,5125
+    fn intersection(&self, other: &Self) -> Self { self.intersection(other) }intersection150,5190
+    fn difference(&self, other: &Self) -> Self { self.difference(other) }difference152,5269
+    fn split(&self, pivot: &i32) -> (Self, B, Self) { self.split(pivot) }split154,5344
+    fn join_pair(left: Self, right: Self) -> Self { Self::join_pair(left, right) }join_pair156,5419
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self { Self::join_m(left, pivot, right) }join_m158,5503
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self { self.filter(predicate) }filter160,5600
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 { self.reduce(op, base)reduce162,5695
+    fn iter_seq(&self) -> ArrayStPerS<i32> { self.iter_in_order() }iter_seq164,5795
+impl TestSet for apas_ai::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt<i32> {BSTSetTreapMt167,5866
+    fn empty() -> Self { Self::empty() }empty168,5949
+    fn insert(&mut self, value: i32) { self.insert(value); }insert170,5991
+    fn delete(&mut self, value: &i32) { self.delete(value); }delete172,6053
+    fn size(&self) -> usize { self.size() }size174,6116
+    fn is_empty(&self) -> B { self.is_empty() }is_empty176,6161
+    fn contains(&self, value: &i32) -> B { self.contains(value) }contains178,6210
+    fn minimum(&self) -> Option<i32> { self.minimum() }minimum180,6277
+    fn maximum(&self) -> Option<i32> { self.maximum() }maximum182,6334
+    fn union(&self, other: &Self) -> Self { self.union(other) }union184,6391
+    fn intersection(&self, other: &Self) -> Self { self.intersection(other) }intersection186,6456
+    fn difference(&self, other: &Self) -> Self { self.difference(other) }difference188,6535
+    fn split(&self, pivot: &i32) -> (Self, B, Self) { self.split(pivot) }split190,6610
+    fn join_pair(left: Self, right: Self) -> Self { Self::join_pair(left, right) }join_pair192,6685
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self { Self::join_m(left, pivot, right) }join_m194,6769
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self { self.filter(predicate) }filter196,6866
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 { self.reduce(op, base)reduce198,6961
+    fn iter_seq(&self) -> ArrayStPerS<i32> { self.iter_in_order() }iter_seq200,7061
+impl TestSet for apas_ai::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMt<i32> {BSTSetSplayMt203,7132
+    fn empty() -> Self { Self::empty() }empty204,7215
+    fn insert(&mut self, value: i32) { self.insert(value); }insert206,7257
+    fn delete(&mut self, value: &i32) { self.delete(value); }delete208,7319
+    fn size(&self) -> usize { self.size() }size210,7382
+    fn is_empty(&self) -> B { self.is_empty() }is_empty212,7427
+    fn contains(&self, value: &i32) -> B { self.contains(value) }contains214,7476
+    fn minimum(&self) -> Option<i32> { self.minimum() }minimum216,7543
+    fn maximum(&self) -> Option<i32> { self.maximum() }maximum218,7600
+    fn union(&self, other: &Self) -> Self { self.union(other) }union220,7657
+    fn intersection(&self, other: &Self) -> Self { self.intersection(other) }intersection222,7722
+    fn difference(&self, other: &Self) -> Self { self.difference(other) }difference224,7801
+    fn split(&self, pivot: &i32) -> (Self, B, Self) { self.split(pivot) }split226,7876
+    fn join_pair(left: Self, right: Self) -> Self { Self::join_pair(left, right) }join_pair228,7951
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self { Self::join_m(left, pivot, right) }join_m230,8035
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self { self.filter(predicate) }filter232,8132
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 { self.reduce(op, base)reduce234,8227
+    fn iter_seq(&self) -> ArrayStPerS<i32> { self.iter_in_order() }iter_seq236,8327
+fn exercise_set<S: TestSet>() {exercise_set239,8398
+fn test_plain_bst_set_ops() { exercise_set::<apas_ai::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSettest_plain_bst_set_ops299,10152
+fn test_avl_bst_set_ops() { exercise_set::<apas_ai::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt<test_avl_bst_set_ops302,10276
+fn test_rb_bst_set_ops() { exercise_set::<apas_ai::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt<i32>test_rb_bst_set_ops305,10392
+fn test_bbalpha_bst_set_ops() {test_bbalpha_bst_set_ops308,10504
+fn test_treap_bst_set_ops() { exercise_set::<apas_ai::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSettest_treap_bst_set_ops313,10640
+fn test_splay_bst_set_ops() { exercise_set::<apas_ai::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSettest_splay_bst_set_ops316,10764
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test29Algorithm_21_1.rs,427
 fn points2d_tab_flat(n: N) -> ArrayStPerS<Pair<N, N>> {points2d_tab_flat11,442
-fn test_points2d_n3_example() {test_points2d_n3_example22,950
-fn test_points2d_n1_empty() {test_points2d_n1_empty29,1159
-fn test_points2d_n2_basic_values() {test_points2d_n2_basic_values35,1265
-fn test_points2d_iterator_in_order() {test_points2d_iterator_in_order43,1456
-fn test_points2d_debug_shape() {test_points2d_debug_shape51,1785
+fn test_points2d_n3_example() {test_points2d_n3_example24,962
+fn test_points2d_n1_empty() {test_points2d_n1_empty31,1171
+fn test_points2d_n2_basic_values() {test_points2d_n2_basic_values37,1277
+fn test_points2d_iterator_in_order() {test_points2d_iterator_in_order45,1468
+fn test_points2d_debug_shape() {test_points2d_debug_shape66,1923
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test12ArraySeqStEph.rs,271
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test12ArraySeqStEph.rs,283
 pub mod TestArraySeqEph {TestArraySeqEph1,0
-fn test_ephemeral_arrayseq_basic() {test_ephemeral_arrayseq_basic10,272
-fn test_ephemeral_ch18_map_append_filter() {test_ephemeral_ch18_map_append_filter19,502
-fn test_iterators_collect() {test_iterators_collect29,1001
+    fn test_ephemeral_arrayseq_basic() {test_ephemeral_arrayseq_basic10,296
+    fn test_ephemeral_ch18_map_append_filter() {test_ephemeral_ch18_map_append_filter19,558
+    fn test_iterators_collect() {test_iterators_collect35,1173
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test18AVLTreeSeqStEph.rs,113
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test18AVLTreeSeqStEph.rs,117
 pub mod TestAVLTreeSeqEph {TestAVLTreeSeqEph1,0
-fn test_avl_ephemeral_basic() {test_avl_ephemeral_basic7,218
+    fn test_avl_ephemeral_basic() {test_avl_ephemeral_basic7,234
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test07LinkedListStEphChap18.rs,809
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test47BSTBBAlphaStEph.rs,162
+fn bbalpha_insert_find_balances() {bbalpha_insert_find_balances5,75
+fn bbalpha_duplicate_insert_is_idempotent() {bbalpha_duplicate_insert_is_idempotent25,695
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test07LinkedListStEphChap18.rs,939
 pub mod TestLinkedListStEphChap18 {TestLinkedListStEphChap181,0
-fn test_construct_eph_from_vec() {test_construct_eph_from_vec10,337
-fn test_eph_is_empty_and_singleton() {test_eph_is_empty_and_singleton16,474
-fn test_eph_set_and_subseq_copy() {test_eph_set_and_subseq_copy24,729
-fn test_iter_inorder_collect_eph_ch18() {test_iter_inorder_collect_eph_ch1833,960
-fn test_tabulate_and_map_ch18() {test_tabulate_and_map_ch1840,1162
-fn test_append_ch18() {test_append_ch1848,1520
-fn test_filter_ch18() {test_filter_ch1857,1866
-fn test_update_ch18() {test_update_ch1865,2180
-fn test_inject_and_ninject_ch18() {test_inject_and_ninject_ch1873,2443
-fn test_iterate_reduce_scan_ch18() {test_iterate_reduce_scan_ch1883,2980
-fn test_flatten_and_collect_ch18() {test_flatten_and_collect_ch1895,3557
+    fn expect_list(list: &LinkedListStEphS<N>, expected: &[N]) {expect_list7,241
+    fn test_construct_eph_from_vec() {test_construct_eph_from_vec18,610
+    fn test_eph_is_empty_and_singleton() {test_eph_is_empty_and_singleton24,767
+    fn test_eph_set_and_subseq_copy() {test_eph_set_and_subseq_copy32,1050
+    fn test_iter_inorder_collect_eph_ch18() {test_iter_inorder_collect_eph_ch1841,1313
+    fn test_tabulate_and_map_ch18() {test_tabulate_and_map_ch1847,1479
+    fn test_append_ch18() {test_append_ch1854,1805
+    fn test_filter_ch18() {test_filter_ch1862,2123
+    fn test_update_ch18() {test_update_ch1875,2485
+    fn test_inject_and_ninject_ch18() {test_inject_and_ninject_ch1882,2716
+    fn test_iterate_reduce_scan_ch18() {test_iterate_reduce_scan_ch1892,3215
+    fn test_flatten_and_collect_ch18() {test_flatten_and_collect_ch18104,3799
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test10ArraySeqStPerChap18.rs,948
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test10ArraySeqStPerChap18.rs,949
 pub mod TestArraySeqStPerChap18 {TestArraySeqStPerChap181,0
-fn test_tabulate_fibonacci() {test_tabulate_fibonacci10,293
-    fn fib(n: N) -> N { match n { 0 => 0, 1 => 1, _ => fib(n - 1) + fib(n - 2) } }fib11,324
-fn test_map_increment() {test_map_increment22,756
-fn test_subseq() {test_subseq29,971
-fn test_append() {test_append40,1265
-fn test_sequence_literals_and_append() {test_sequence_literals_and_append48,1503
-fn test_filter_even() {test_filter_even61,2075
-fn test_flatten() {test_flatten72,2660
-fn test_update_sequence() {test_update_sequence86,3368
-fn test_inject_and_ninject() {test_inject_and_ninject96,3837
-fn test_iterate_and_prefixes_and_reduce_and_scan() {test_iterate_and_prefixes_and_reduce_and_scan115,5050
-fn test_iterate_sum_basic() {test_iterate_sum_basic134,5950
-fn test_iterate_prefixes_sum() {test_iterate_prefixes_sum142,6193
-fn test_collect_groups_by_key() {test_collect_groups_by_key154,6609
+    fn test_tabulate_fibonacci() {test_tabulate_fibonacci10,321
+        fn fib(n: N) -> N {fib11,356
+    fn test_map_increment() {test_map_increment36,1011
+    fn test_subseq() {test_subseq43,1250
+    fn test_append() {test_append54,1584
+    fn test_sequence_literals_and_append() {test_sequence_literals_and_append62,1850
+    fn test_filter_even() {test_filter_even75,2474
+    fn test_flatten() {test_flatten98,3271
+    fn test_update_sequence() {test_update_sequence112,4032
+    fn test_inject_and_ninject() {test_inject_and_ninject122,4537
+    fn test_iterate_and_prefixes_and_reduce_and_scan() {test_iterate_and_prefixes_and_reduce_and_scan147,5884
+    fn test_iterate_sum_basic() {test_iterate_sum_basic166,6856
+    fn test_iterate_prefixes_sum() {test_iterate_prefixes_sum174,7127
+    fn test_collect_groups_by_key() {test_collect_groups_by_key186,7587
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test01Types.rs,677
 pub mod TestTypes {TestTypes1,0
@@ -1342,358 +2834,404 @@ pub mod TestTypes {TestTypes1,0
     fn test_debug_format_for_b_variants() {test_debug_format_for_b_variants57,1648
     fn test_display_format_for_b_variants() {test_display_format_for_b_variants63,1821
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test22RelationStEphChap5_2.rs,147
-pub mod TestRelationStEphChap5_2 {TestRelationStEphChap5_21,0
-fn test_relation_domain_range_and_mem() {test_relation_domain_range_and_mem8,221
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test46BSTRBStEph.rs,146
+fn rb_insert_find_and_bounds() {rb_insert_find_and_bounds5,65
+fn rb_duplicate_insert_is_idempotent() {rb_duplicate_insert_is_idempotent25,683
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test15AVLTreeSeqStPer.rs,207
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test22RelationStEphChap5_2.rs,151
+pub mod TestRelationStEphChap5_2 {TestRelationStEphChap5_21,0
+    fn test_relation_domain_range_and_mem() {test_relation_domain_range_and_mem8,241
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test15AVLTreeSeqStPer.rs,215
 pub mod TestAVLTreeSeqPer {TestAVLTreeSeqPer1,0
-fn test_persistent_set_does_not_mutate() {test_persistent_set_does_not_mutate7,179
-fn test_iterator_inorder_values() {test_iterator_inorder_values16,536
+    fn test_persistent_set_does_not_mutate() {test_persistent_set_does_not_mutate7,195
+    fn test_iterator_inorder_values() {test_iterator_inorder_values16,584
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test39Chapter36.rs.claude,0
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test13ArraySeqStEphChap18.rs,1048
-pub mod TestArraySeqStEphChap18 {TestArraySeqStEphChap183,93
-fn test_tabulate_fibonacci() {test_tabulate_fibonacci10,314
-    fn fib(n: N) -> N { match n { 0 => 0, 1 => 1, _ => fib(n - 1) + fib(n - 2) } }fib11,345
-fn test_map_increment() {test_map_increment22,820
-fn test_subseq() {test_subseq29,1034
-fn test_append() {test_append40,1472
-fn test_sequence_literals_and_append() {test_sequence_literals_and_append48,1709
-fn test_filter_even() {test_filter_even61,2322
-fn test_flatten() {test_flatten71,2828
-fn test_update_sequence() {test_update_sequence85,3473
-fn test_inject_conflicts_last_wins() {test_inject_conflicts_last_wins97,3928
-fn test_ninject_conflicts_last_wins() {test_ninject_conflicts_last_wins110,4634
-fn test_iterate_and_prefixes_and_reduce_and_scan() {test_iterate_and_prefixes_and_reduce_and_scan126,5318
-fn test_iterate_sum_basic() {test_iterate_sum_basic145,6266
-fn test_iterate_prefixes_sum() {test_iterate_prefixes_sum153,6512
-fn test_collect_groups_by_key() {test_collect_groups_by_key165,6931
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test45BSTAVLStEph.rs,150
+fn avl_insert_find_and_bounds() {avl_insert_find_and_bounds5,67
+fn avl_duplicate_insert_is_idempotent() {avl_duplicate_insert_is_idempotent27,774
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test17AVLTreeSeqStPerChap19.rs,367
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test49BSTSplayStEph.rs,144
+fn splay_basic_behaviour() {splay_basic_behaviour5,71
+fn splay_duplicate_insert_is_idempotent() {splay_duplicate_insert_is_idempotent24,643
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test13ArraySeqStEphChap18.rs,1052
+pub mod TestArraySeqStEphChap18 {TestArraySeqStEphChap183,93
+    fn test_tabulate_fibonacci() {test_tabulate_fibonacci10,334
+        fn fib(n: N) -> N {fib11,369
+    fn test_map_increment() {test_map_increment36,1047
+    fn test_subseq() {test_subseq43,1285
+    fn test_append() {test_append54,1763
+    fn test_sequence_literals_and_append() {test_sequence_literals_and_append62,2028
+    fn test_filter_even() {test_filter_even75,2693
+    fn test_flatten() {test_flatten97,3407
+    fn test_update_sequence() {test_update_sequence111,4104
+    fn test_inject_conflicts_last_wins() {test_inject_conflicts_last_wins123,4603
+    fn test_ninject_conflicts_last_wins() {test_ninject_conflicts_last_wins136,5353
+    fn test_iterate_and_prefixes_and_reduce_and_scan() {test_iterate_and_prefixes_and_reduce_and_scan152,6097
+    fn test_iterate_sum_basic() {test_iterate_sum_basic171,7117
+    fn test_iterate_prefixes_sum() {test_iterate_prefixes_sum179,7391
+    fn test_collect_groups_by_key() {test_collect_groups_by_key192,7866
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test17AVLTreeSeqStPerChap19.rs,383
 pub mod TestAVLTreeSeqStPerChap19 {TestAVLTreeSeqStPerChap191,0
-fn test_tabulate_and_map_ch19() {test_tabulate_and_map_ch198,233
-fn test_select_and_append_ch19() {test_select_and_append_ch1916,577
-fn test_deflate_and_filter_ch19() {test_deflate_and_filter_ch1928,1331
-fn test_iter_inorder_after_pipeline_ch19() {test_iter_inorder_after_pipeline_ch1939,1937
+    fn test_tabulate_and_map_ch19() {test_tabulate_and_map_ch198,253
+    fn test_select_and_append_ch19() {test_select_and_append_ch1916,625
+    fn test_deflate_and_filter_ch19() {test_deflate_and_filter_ch1937,1525
+    fn test_iter_inorder_after_pipeline_ch19() {test_iter_inorder_after_pipeline_ch1955,2265
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test35Exercsise_21_9.rs,0
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test38Problem21_1.rs,424
 fn points2d(n: N) -> ArrayStPerS<Pair<N, N>> {points2d9,293
-fn test_points2d_n3_example() {test_points2d_n3_example22,600
-fn test_points2d_n1_empty() {test_points2d_n1_empty30,845
-fn test_points2d_n2_basic_values() {test_points2d_n2_basic_values36,942
-fn test_points2d_iterator_in_order() {test_points2d_iterator_in_order44,1124
-fn test_points2d_debug_display_shapes() {test_points2d_debug_display_shapes52,1444
+fn test_points2d_n3_example() {test_points2d_n3_example24,612
+fn test_points2d_n1_empty() {test_points2d_n1_empty32,857
+fn test_points2d_n2_basic_values() {test_points2d_n2_basic_values38,954
+fn test_points2d_iterator_in_order() {test_points2d_iterator_in_order46,1136
+fn test_points2d_debug_display_shapes() {test_points2d_debug_display_shapes67,1582
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test14ArraySeqStEphChap19.rs,1335
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test14ArraySeqStEphChap19.rs,1431
 pub mod TestArraySeqStEphChap19 {TestArraySeqStEphChap193,93
-fn test_empty() {test_empty8,290
-fn test_singleton() {test_singleton14,406
-fn test_map() {test_map20,540
-fn test_append() {test_append27,756
-fn test_append2() {test_append235,1041
-fn test_deflate_true() {test_deflate_true43,1328
-fn test_deflate_false() {test_deflate_false49,1516
-fn test_filter_even_numbers() {test_filter_even_numbers55,1698
-fn test_filter_none() {test_filter_none62,1981
-fn test_update_in_bounds() {test_update_in_bounds69,2249
-fn test_update_out_of_bounds() {test_update_out_of_bounds76,2457
-fn test_isEmpty() {test_isEmpty83,2662
-fn test_isSingleton() {test_isSingleton93,2993
-fn test_iterate_sum() {test_iterate_sum103,3340
-fn test_iterate_concat() {test_iterate_concat110,3546
-fn test_map_empty() {test_map_empty124,3891
-fn test_append_with_empty() {test_append_with_empty131,4089
-fn test_append2_equivalence() {test_append2_equivalence141,4496
-fn test_filter_empty_sequence() {test_filter_empty_sequence150,4834
-fn test_select_boundary() {test_select_boundary157,5049
-fn test_subseq_basic() {test_subseq_basic168,5527
-fn test_reduce_sum_basic_ch19() {test_reduce_sum_basic_ch19175,5721
-fn test_scan_sum_basic_ch19() {test_scan_sum_basic_ch19189,6248
-fn test_flatten_ch19() {test_flatten_ch19200,6607
+    fn test_empty() {test_empty8,302
+    fn test_singleton() {test_singleton14,438
+    fn test_map() {test_map20,592
+    fn test_append() {test_append27,832
+    fn test_append2() {test_append235,1145
+    fn test_deflate_true() {test_deflate_true43,1460
+    fn test_deflate_false() {test_deflate_false49,1668
+    fn test_filter_even_numbers() {test_filter_even_numbers55,1870
+    fn test_filter_none() {test_filter_none62,2177
+    fn test_update_in_bounds() {test_update_in_bounds69,2469
+    fn test_update_out_of_bounds() {test_update_out_of_bounds76,2701
+    fn test_isEmpty() {test_isEmpty83,2930
+    fn test_isSingleton() {test_isSingleton93,3297
+    fn test_iterate_sum() {test_iterate_sum103,3680
+    fn test_iterate_concat() {test_iterate_concat110,3910
+    fn test_map_empty() {test_map_empty124,4327
+    fn test_append_with_empty() {test_append_with_empty131,4549
+    fn test_append2_equivalence() {test_append2_equivalence141,4992
+    fn test_filter_empty_sequence() {test_filter_empty_sequence150,5362
+    fn test_select_boundary() {test_select_boundary157,5601
+    fn test_subseq_basic() {test_subseq_basic168,6119
+    fn test_reduce_sum_basic_ch19() {test_reduce_sum_basic_ch19175,6337
+    fn test_scan_sum_basic_ch19() {test_scan_sum_basic_ch19189,6916
+    fn test_flatten_ch19() {test_flatten_ch19200,7315
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test19AVLTreeSeqStEphChap18.rs,276
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test19AVLTreeSeqStEphChap18.rs,292
 pub mod TestAVLTreeSeqStEphChap18 {TestAVLTreeSeqStEphChap183,79
-fn test_tabulate_inorder() {test_tabulate_inorder11,355
-fn test_map_increment() {test_map_increment17,525
-fn test_append_union() {test_append_union25,836
-fn test_filter_even() {test_filter_even35,1236
+    fn test_tabulate_inorder() {test_tabulate_inorder11,379
+    fn test_map_increment() {test_map_increment17,569
+    fn test_append_union() {test_append_union25,908
+    fn test_filter_even() {test_filter_even39,1392
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test41ArraySeqMtEph.rs,156
 fn test_arrayseq_mteph_basic_ops() {test_arrayseq_mteph_basic_ops4,25
-fn test_arrayseq_mteph_append_and_map() {test_arrayseq_mteph_append_and_map17,458
+fn test_arrayseq_mteph_append_and_map() {test_arrayseq_mteph_append_and_map21,482
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test39Chapter36St.rs,499
-trait ToVec<T: StT> { fn to_vec(&self) -> Vec<T>; }ToVec4,74
-trait ToVec<T: StT> { fn to_vec(&self) -> Vec<T>; }to_vec4,74
-impl<T: StT> ToVec<T> for ArraySeqStEphS<T> {ArraySeqStEphS5,126
-    fn to_vec(&self) -> Vec<T> {to_vec6,172
-fn quick_sort_variants_produce_sorted_output() {quick_sort_variants_produce_sorted_output12,288
-fn quick_sort_handles_edge_cases() {quick_sort_handles_edge_cases27,785
-fn pivot_strategies_match_expectations() {pivot_strategies_match_expectations46,1386
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test39Chapter36St.rs,608
+trait ToVec<T: StT> {ToVec4,74
+    fn to_vec(&self) -> Vec<T>;to_vec5,96
+impl<T: StT> ToVec<T> for ArraySeqStEphS<T> {ArraySeqStEphS7,130
+    fn to_vec(&self) -> Vec<T> { (0..self.length()).map(|i| self.nth(i).clone()).collect() }to_vec8,176
+fn quick_sort_variants_produce_sorted_output() {quick_sort_variants_produce_sorted_output12,280
+fn quick_sort_handles_edge_cases() {quick_sort_handles_edge_cases27,777
+fn pivot_strategies_match_expectations() {pivot_strategies_match_expectations50,1497
+fn quick_sort_small_inputs_use_shared_pivots() {quick_sort_small_inputs_use_shared_pivots75,2260
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test26ArraySeqMtPer.rs,849
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test26ArraySeqMtPer.rs,910
 pub mod Test26ArraySeqMtPer {Test26ArraySeqMtPer3,93
-fn test_new_and_set() {test_new_and_set8,241
-fn test_length_and_nth_basic() {test_length_and_nth_basic22,637
-fn test_empty() {test_empty30,818
-fn test_sequence_basic() {test_sequence_basic37,978
-fn test_singleton() {test_singleton50,1453
-fn test_from_vec() {test_from_vec58,1643
-fn test_subseq_copy() {test_subseq_copy67,1837
-fn test_subseq_view() {test_subseq_view77,2087
-fn test_iterators() {test_iterators87,2319
-fn test_set_out_of_bounds() {test_set_out_of_bounds100,2640
-fn test_macro_literals() {test_macro_literals107,2794
-fn test_equality_and_debug() {test_equality_and_debug127,3341
-fn test_display_format() {test_display_format143,3734
-fn test_string_sequences() {test_string_sequences152,3969
-fn test_boolean_sequences() {test_boolean_sequences160,4158
+    fn test_new_and_set() {test_new_and_set8,253
+    fn test_length_and_nth_basic() {test_length_and_nth_basic22,701
+    fn test_empty() {test_empty30,910
+    fn test_sequence_basic() {test_sequence_basic37,1094
+    fn test_singleton() {test_singleton50,1617
+    fn test_from_vec() {test_from_vec58,1835
+    fn test_subseq_copy() {test_subseq_copy67,2061
+    fn test_subseq_view() {test_subseq_view77,2347
+    fn test_iterators() {test_iterators87,2615
+    fn test_set_out_of_bounds() {test_set_out_of_bounds100,2983
+    fn test_macro_literals() {test_macro_literals107,3161
+    fn test_equality_and_debug() {test_equality_and_debug127,3760
+    fn test_display_format() {test_display_format143,4197
+    fn test_string_sequences() {test_string_sequences152,4464
+    fn test_boolean_sequences() {test_boolean_sequences160,4681
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test08LinkedListStEphChap19.rs,520
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test08LinkedListStEphChap19.rs,626
 pub mod TestLinkedListStEphChap19 {TestLinkedListStEphChap191,0
-fn test_eph_set_and_nth() {test_eph_set_and_nth8,233
-fn test_eph_subseq_copy_and_display_debug() {test_eph_subseq_copy_and_display_debug15,388
-fn test_iter_inorder_collect_eph_ch19() {test_iter_inorder_collect_eph_ch1925,705
-fn test_tabulate_map_select_append_ch19() {test_tabulate_map_select_append_ch1932,907
-fn test_deflate_filter_iterate_reduce_scan_flatten_inject_ch19() {test_deflate_filter_iterate_reduce_scan_flatten_inject_ch1942,1532
+    fn expect_list(list: &LinkedListStEphS<N>, expected: &[N]) {expect_list7,241
+    fn test_eph_set_and_nth() {test_eph_set_and_nth16,502
+    fn test_eph_subseq_copy_and_display_debug() {test_eph_subseq_copy_and_display_debug23,681
+    fn test_iter_inorder_collect_eph_ch19() {test_iter_inorder_collect_eph_ch1933,1034
+    fn test_tabulate_map_select_append_ch19() {test_tabulate_map_select_append_ch1939,1200
+    fn test_deflate_filter_iterate_reduce_scan_flatten_inject_ch19() {test_deflate_filter_iterate_reduce_scan_flatten_inject_ch1952,1821
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test21SetStEphChap5_1.rs,550
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test21SetStEphChap5_1.rs,575
 pub mod TestSetStEphChap5_1 {TestSetStEphChap5_11,0
-fn macro_typecheck_exercise() {macro_typecheck_exercise8,169
-    let _empty: Set<&'static str> = SetLit![];str9,201
-fn test_cartesian_product_example_5_1() {test_cartesian_product_example_5_115,331
-fn test_partition_example_5_2_true() {test_partition_example_5_2_true33,967
-fn test_partition_example_5_2_false_due_to_overlap() {test_partition_example_5_2_false_due_to_overlap42,1232
-fn test_partition_false_due_to_missing_element() {test_partition_false_due_to_missing_element51,1545
+    fn macro_typecheck_exercise() {macro_typecheck_exercise8,185
+        let _empty: Set<&'static str> = SetLit![];str9,221
+    fn test_cartesian_product_example_5_1() {test_cartesian_product_example_5_115,371
+    fn test_partition_example_5_2_true() {test_partition_example_5_2_true37,1119
+    fn test_partition_example_5_2_false_due_to_overlap() {test_partition_example_5_2_false_due_to_overlap46,1416
+    fn test_partition_false_due_to_missing_element() {test_partition_false_due_to_missing_element55,1761
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test30Algorithm_21_2.rs,527
 fn points3d_tab_flat(n: N) -> ArrayStPerS<Pair<N, Pair<N, N>>> {points3d_tab_flat12,521
-fn test_points3d_tab_flat_n0_empty() {test_points3d_tab_flat_n0_empty33,1718
-fn test_points3d_tab_flat_n1_single() {test_points3d_tab_flat_n1_single39,1833
-fn test_points3d_tab_flat_n2_values_and_order() {test_points3d_tab_flat_n2_values_and_order46,1999
-fn test_points3d_tab_flat_iterator_order() {test_points3d_tab_flat_iterator_order59,2372
-fn test_points3d_tab_flat_debug_shape() {test_points3d_tab_flat_debug_shape66,2715
+fn test_points3d_tab_flat_n0_empty() {test_points3d_tab_flat_n0_empty35,1730
+fn test_points3d_tab_flat_n1_single() {test_points3d_tab_flat_n1_single41,1845
+fn test_points3d_tab_flat_n2_values_and_order() {test_points3d_tab_flat_n2_values_and_order48,2011
+fn test_points3d_tab_flat_iterator_order() {test_points3d_tab_flat_iterator_order65,2436
+fn test_points3d_tab_flat_debug_shape() {test_points3d_tab_flat_debug_shape84,2930
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test34Exercise_21_8_and_Algorithm_21_5.rs,393
-fn is_divisible(n: N, i: N) -> B { if n % i == 0 { B::True } else { B::False } }is_divisible8,272
-fn is_prime(n: N) -> B {is_prime13,515
-fn primes_bf(n: N) -> ArrayStPerS<N> {primes_bf25,1106
-fn test_is_prime_small_values() {test_is_prime_small_values33,1452
-fn test_primes_bf_small() {test_primes_bf_small43,1729
-fn test_primes_bf_debug_shape() {test_primes_bf_debug_shape50,1881
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test34Exercise_21_8_and_Algorithm_21_5.rs,347
+fn is_divisible(n: N, i: N) -> B {is_divisible8,272
+fn is_prime(n: N) -> B {is_prime19,543
+fn primes_bf(n: N) -> ArrayStPerS<N> {primes_bf37,1170
+fn test_is_prime_small_values() {test_is_prime_small_values47,1528
+fn test_primes_bf_small() {test_primes_bf_small57,1805
+fn test_primes_bf_debug_shape() {test_primes_bf_debug_shape64,1957
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Exercise_21_2.txt,0
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test11ArraySeqStPerChap19.rs,342
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test50BSTMtEph.rs,309
+fn mt_plain_basic_ops() {mt_plain_basic_ops10,295
+fn mt_avl_basic_ops() {mt_avl_basic_ops23,636
+fn mt_rb_basic_ops() {mt_rb_basic_ops34,903
+fn mt_bbalpha_basic_ops() {mt_bbalpha_basic_ops44,1104
+fn mt_treap_basic_ops() {mt_treap_basic_ops54,1317
+fn mt_splay_basic_ops() {mt_splay_basic_ops64,1526
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test11ArraySeqStPerChap19.rs,358
 pub mod TestArraySeqPerChap19 {TestArraySeqPerChap191,0
-fn test_map_and_select_and_append() {test_map_and_select_and_append10,261
-fn test_deflate_and_filter() {test_deflate_and_filter20,744
-fn test_iterate_reduce_scan_flatten() {test_iterate_reduce_scan_flatten29,1220
-fn test_inject_and_parallel() {test_inject_and_parallel48,2160
+    fn test_map_and_select_and_append() {test_map_and_select_and_append10,289
+    fn test_deflate_and_filter() {test_deflate_and_filter23,842
+    fn test_iterate_reduce_scan_flatten() {test_iterate_reduce_scan_flatten39,1444
+    fn test_inject_and_parallel() {test_inject_and_parallel58,2456
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test02MathSeq.rs,1282
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test02MathSeq.rs,1346
 pub mod TestMathSeq {TestMathSeq3,93
-fn test_length_and_nth_basic() {test_length_and_nth_basic9,210
-fn test_add_last_and_delete_last() {test_add_last_and_delete_last17,398
-fn test_new_empty_singleton_and_predicates() {test_new_empty_singleton_and_predicates30,795
-fn test_set_in_bounds_and_out_of_bounds() {test_set_in_bounds_and_out_of_bounds49,1317
-fn test_subseq_view_bounds() {test_subseq_view_bounds60,1632
-fn test_subseq_copy_bounds() {test_subseq_copy_bounds73,1977
-fn test_domain() {test_domain83,2233
-fn test_range_deduplicates_preserving_order() {test_range_deduplicates_preserving_order89,2350
-fn test_debug_format_for_mathseq() {test_debug_format_for_mathseq96,2550
-fn test_display_format_for_mathseq() {test_display_format_for_mathseq102,2691
-fn test_multiset_range_counts_first_occurrence_order() {test_multiset_range_counts_first_occurrence_order108,2832
-fn test_nth_out_of_bounds_panics() {test_nth_out_of_bounds_panics116,3050
-fn test_range_empty_returns_empty() {test_range_empty_returns_empty122,3156
-fn test_multiset_range_empty_returns_empty() {test_multiset_range_empty_returns_empty129,3301
-fn test_domain_empty_is_empty() {test_domain_empty_is_empty136,3469
-fn test_iter_collect_and_sum() {test_iter_collect_and_sum143,3603
+    fn test_length_and_nth_basic() {test_length_and_nth_basic9,226
+    fn test_add_last_and_delete_last() {test_add_last_and_delete_last17,445
+    fn test_new_empty_singleton_and_predicates() {test_new_empty_singleton_and_predicates30,893
+    fn test_set_in_bounds_and_out_of_bounds() {test_set_in_bounds_and_out_of_bounds49,1488
+    fn test_subseq_view_bounds() {test_subseq_view_bounds60,1846
+    fn test_subseq_copy_bounds() {test_subseq_copy_bounds73,2242
+    fn test_domain() {test_domain83,2537
+    fn test_range_deduplicates_preserving_order() {test_range_deduplicates_preserving_order89,2677
+    fn test_debug_format_for_mathseq() {test_debug_format_for_mathseq96,2904
+    fn test_display_format_for_mathseq() {test_display_format_for_mathseq102,3068
+    fn test_multiset_range_counts_first_occurrence_order() {test_multiset_range_counts_first_occurrence_order108,3232
+    fn test_nth_out_of_bounds_panics() {test_nth_out_of_bounds_panics116,3481
+    fn test_range_empty_returns_empty() {test_range_empty_returns_empty122,3610
+    fn test_multiset_range_empty_returns_empty() {test_multiset_range_empty_returns_empty129,3782
+    fn test_domain_empty_is_empty() {test_domain_empty_is_empty136,3977
+    fn test_iter_collect_and_sum() {test_iter_collect_and_sum143,4138
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test03LinkedListStPer.rs,508
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test03LinkedListStPer.rs,537
 pub mod TestLinkedListPer {TestLinkedListPer1,0
-fn test_empty_singleton_and_predicates() {test_empty_singleton_and_predicates7,163
-fn test_new_and_nth_set() {test_new_and_nth_set16,418
-fn test_subseq_copy() {test_subseq_copy28,741
-fn test_from_vec_and_debug_format() {test_from_vec_and_debug_format37,944
-fn test_iter_inorder_collect() {test_iter_inorder_collect44,1112
-fn test_nth_out_of_bounds_panics() {test_nth_out_of_bounds_panics52,1306
-fn test_display_impl() {test_display_impl58,1412
+    fn test_empty_singleton_and_predicates() {test_empty_singleton_and_predicates7,179
+    fn test_new_and_nth_set() {test_new_and_nth_set16,466
+    fn test_subseq_copy() {test_subseq_copy28,833
+    fn test_from_vec_and_debug_format() {test_from_vec_and_debug_format37,1068
+    fn test_iter_inorder_collect() {test_iter_inorder_collect44,1260
+    fn test_nth_out_of_bounds_panics() {test_nth_out_of_bounds_panics52,1482
+    fn test_display_impl() {test_display_impl58,1608
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test33Exercise_21_7.rs,431
-fn is_even(x: &N) -> B { if *x % 2 == 0 { B::True } else { B::False } }is_even9,319
-fn is_vowel(c: &char) -> B {is_vowel10,391
-fn pair_even_with_vowels(a: &ArrayStPerS<N>, b: &ArrayStPerS<char>) -> ArrayStPerS<Pair<N, char>pair_even_with_vowels19,658
-fn test_pair_even_with_vowels_basic() {test_pair_even_with_vowels_basic34,1343
-fn test_pair_even_with_vowels_debug_shape() {test_pair_even_with_vowels_debug_shape43,1636
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test33Exercise_21_7.rs,384
+fn is_even(x: &N) -> B {is_even9,319
+fn is_vowel(c: &char) -> B {is_vowel16,419
+fn pair_even_with_vowels(a: &ArrayStPerS<N>, b: &ArrayStPerS<char>) -> ArrayStPerS<Pair<N, char>pair_even_with_vowels25,708
+fn test_pair_even_with_vowels_basic() {test_pair_even_with_vowels_basic43,1537
+fn test_pair_even_with_vowels_debug_shape() {test_pair_even_with_vowels_debug_shape52,1830
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test37Problem_21_4.rs,1362
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test48BSTTreapStEph.rs,166
+fn treap_insert_find_stays_balanced() {treap_insert_find_stays_balanced5,71
+fn treap_duplicate_insert_is_idempotent() {treap_duplicate_insert_is_idempotent25,698
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test44Chapter36MtSlice.rs,769
+fn to_vec<T: StT>(a: &ArraySeqMtEphSliceS<T>) -> Vec<T> { a.to_vec() }to_vec6,112
+fn is_sorted<T: StT + Ord>(values: &[T]) -> bool { values.windows(2).all(|w| w[0] <= w[1]) }is_sorted8,184
+fn mk_seq(data: &[i32]) -> ArraySeqMtEphSliceS<i32> { ArraySeqMtEphSliceS::from_vec(data.to_vec(mk_seq10,278
+fn quick_sort_slice_variants_produce_sorted_output() {quick_sort_slice_variants_produce_sorted_output13,388
+fn quick_sort_slice_edge_cases() {quick_sort_slice_edge_cases31,877
+fn quick_sort_slice_large_inputs() {quick_sort_slice_large_inputs54,1555
+fn slice_pivot_strategies_match_expectations() {slice_pivot_strategies_match_expectations67,2040
+fn quick_sort_slice_small_inputs_use_shared_pivots() {quick_sort_slice_small_inputs_use_shared_pivots87,2665
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test37Problem_21_4.rs,1302
 fn cartesian_loops(a: &ArrayStPerS<N>, b: &ArrayStPerS<&'static str>) -> ArrayStPerS<Pair<N, &'scartesian_loops11,379
     let mut v: Vec<Pair<N, &'static str>> = Vec::with_capacity(a.length() * b.length());str12,489
 fn cartesian_tab_flat(a: &ArrayStPerS<N>, b: &ArrayStPerS<&'static str>) -> ArrayStPerS<Pair<N, cartesian_tab_flat23,869
     let nested: ArrayStPerS<ArrayStPerS<Pair<N, &'static str>>> =str24,982
-        <ArrayStPerS<ArrayStPerS<Pair<N, &'static str>>> as ArraySeqStPerChap19Trait<ArrayStPerSstr25,1048
-        <ArrayStPerS<ArrayStPerS<Pair<N, &'static str>>> as ArraySeqStPerChap19Trait<ArrayStPerSstr25,1048
-            |i| <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap19Trait<Pair<N, &'staticstr26,1181
-            |i| <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap19Trait<Pair<N, &'staticstr26,1181
-    <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap18Trait<Pair<N, &'static str>>>::flastr30,1392
-    <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap18Trait<Pair<N, &'static str>>>::flastr30,1392
-fn test_cartesian_loops_basic() {test_cartesian_loops_basic34,1513
-fn test_cartesian_tab_flat_basic() {test_cartesian_tab_flat_basic43,1834
-fn test_cartesian_iterator_order() {test_cartesian_iterator_order52,2161
-fn test_cartesian_debug_shape() {test_cartesian_debug_shape61,2463
+        <ArrayStPerS<ArrayStPerS<Pair<N, &'static str>>> as ArraySeqStPerChap19Trait<str25,1048
+            ArrayStPerS<Pair<N, &'static str>>,str26,1134
+                <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap19Trait<Pair<N, &'staticstr29,1222
+                <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap19Trait<Pair<N, &'staticstr29,1222
+    <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap18Trait<Pair<N, &'static str>>>::flastr36,1489
+    <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap18Trait<Pair<N, &'static str>>>::flastr36,1489
+fn test_cartesian_loops_basic() {test_cartesian_loops_basic40,1610
+fn test_cartesian_tab_flat_basic() {test_cartesian_tab_flat_basic56,1985
+fn test_cartesian_iterator_order() {test_cartesian_iterator_order72,2366
+fn test_cartesian_debug_shape() {test_cartesian_debug_shape81,2668
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test20AVLTreeSeqStEphChap19.rs,248
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test20AVLTreeSeqStEphChap19.rs,260
 pub mod TestAVLTreeSeqStEphChap19 {TestAVLTreeSeqStEphChap193,80
-fn test_tabulate_and_map() {test_tabulate_and_map11,342
-fn test_select_and_append() {test_select_and_append19,646
-fn test_deflate_and_filter() {test_deflate_and_filter38,1458
+    fn test_tabulate_and_map() {test_tabulate_and_map11,365
+    fn test_select_and_append() {test_select_and_append19,697
+    fn test_deflate_and_filter() {test_deflate_and_filter49,1745
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test27ArraySeqMtPerChap18.rs,562
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test27ArraySeqMtPerChap18.rs,597
 pub mod Test27ArraySeqMtPerChap18 {Test27ArraySeqMtPerChap183,61
-fn test_tabulate_basic() {test_tabulate_basic10,284
-fn test_tabulate_fibonacci() {test_tabulate_fibonacci24,583
-    fn fib(n: N) -> N {fib25,614
-fn test_tabulate_empty() {test_tabulate_empty56,1328
-fn test_tabulate_single() {test_tabulate_single63,1512
-fn test_tabulate_string() {test_tabulate_string70,1690
-fn test_tabulate_boolean() {test_tabulate_boolean88,2178
-fn test_tabulate_squares() {test_tabulate_squares106,2657
-fn test_tabulate_large() {test_tabulate_large121,3019
+    fn test_tabulate_basic() {test_tabulate_basic10,304
+    fn test_tabulate_fibonacci() {test_tabulate_fibonacci19,589
+        fn fib(n: N) -> N {fib20,624
+    fn test_tabulate_empty() {test_tabulate_empty51,1448
+    fn test_tabulate_single() {test_tabulate_single58,1656
+    fn test_tabulate_string() {test_tabulate_string65,1858
+    fn test_tabulate_boolean() {test_tabulate_boolean80,2371
+    fn test_tabulate_squares() {test_tabulate_squares95,2875
+    fn test_tabulate_large() {test_tabulate_large110,3285
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test05LinkedListStPerChap19.rs,407
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test52BSTParaMtEph.rs,322
+fn make_tree(values: &[i32]) -> ParamBST<i32> {make_tree4,61
+fn para_basic_insert_find() {para_basic_insert_find13,222
+fn para_split_and_join_pair() {para_split_and_join_pair23,535
+fn para_union_and_delete() {para_union_and_delete35,939
+fn para_join_mid_expose_roundtrip() {para_join_mid_expose_roundtrip49,1356
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test05LinkedListStPerChap19.rs,439
 pub mod TestLinkedListPerChap19 {TestLinkedListPerChap191,0
-fn test_select() {test_select8,231
-fn test_append_variants() {test_append_variants21,697
-fn test_deflate() {test_deflate31,1086
-fn test_map() {test_map39,1466
-fn test_iterate_and_reduce() {test_iterate_and_reduce46,1666
-fn test_scan() {test_scan55,1999
-fn test_flatten() {test_flatten63,2257
-fn test_inject() {test_inject73,2528
+    fn test_select() {test_select8,251
+    fn test_append_variants() {test_append_variants21,761
+    fn test_deflate() {test_deflate31,1186
+    fn test_map() {test_map45,1665
+    fn test_iterate_and_reduce() {test_iterate_and_reduce52,1889
+    fn test_scan() {test_scan61,2254
+    fn test_flatten() {test_flatten69,2540
+    fn test_inject() {test_inject76,2813
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test06LinkedListStEph.rs,517
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test06LinkedListStEph.rs,546
 pub mod TestLinkedListEph {TestLinkedListEph2,56
-fn test_empty_singleton_and_predicates() {test_empty_singleton_and_predicates9,220
-fn test_new_and_nth_set() {test_new_and_nth_set18,514
-fn test_subseq_copy() {test_subseq_copy27,717
-fn test_linkedlisteph_basic() {test_linkedlisteph_basic36,920
-fn test_debug_format_for_eph() {test_debug_format_for_eph45,1128
-fn test_display_format_for_eph() {test_display_format_for_eph51,1260
-fn test_iter_inorder_collect_eph() {test_iter_inorder_collect_eph57,1392
+    fn test_empty_singleton_and_predicates() {test_empty_singleton_and_predicates9,236
+    fn test_new_and_nth_set() {test_new_and_nth_set18,562
+    fn test_subseq_copy() {test_subseq_copy27,797
+    fn test_linkedlisteph_basic() {test_linkedlisteph_basic36,1032
+    fn test_debug_format_for_eph() {test_debug_format_for_eph45,1272
+    fn test_display_format_for_eph() {test_display_format_for_eph51,1424
+    fn test_iter_inorder_collect_eph() {test_iter_inorder_collect_eph57,1576
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test04LinkedListStPerChap18.rs,531
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test04LinkedListStPerChap18.rs,580
 pub mod TestLinkedListStPerChap18 {TestLinkedListStPerChap181,0
-fn test_tabulate() {test_tabulate8,233
-fn test_map() {test_map15,418
-fn test_filter() {test_filter23,685
-fn test_append() {test_append30,983
-fn test_update() {test_update38,1254
-fn test_inject() {test_inject45,1477
-fn test_ninject() {test_ninject53,1758
-fn test_iterate() {test_iterate61,2043
-fn test_reduce() {test_reduce68,2247
-fn test_scan() {test_scan75,2446
-fn test_flatten() {test_flatten83,2716
-fn test_collect() {test_collect94,3026
+    fn test_tabulate() {test_tabulate8,253
+    fn test_map() {test_map15,462
+    fn test_filter() {test_filter23,757
+    fn test_append() {test_append36,1159
+    fn test_update() {test_update44,1458
+    fn test_inject() {test_inject51,1705
+    fn test_ninject() {test_ninject59,2014
+    fn test_iterate() {test_iterate67,2327
+    fn test_reduce() {test_reduce74,2555
+    fn test_scan() {test_scan81,2778
+    fn test_flatten() {test_flatten89,3076
+    fn test_collect() {test_collect96,3380
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test09ArraySeqStPer.rs,2188
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test09ArraySeqStPer.rs,2133
 pub mod TestArraySeqStPer {TestArraySeqStPer3,93
-fn test_new_and_set() {test_new_and_set8,239
-fn test_length_and_nth_basic() {test_length_and_nth_basic22,635
-fn test_empty() {test_empty30,816
-fn test_sequence_basic() {test_sequence_basic37,976
-fn test_singleton() {test_singleton50,1616
-fn test_is_empty_and_is_singleton() {test_is_empty_and_is_singleton58,1793
-fn test_from_vec() {test_from_vec73,2211
-fn test_sequence_equality_natural_numbers() {test_sequence_equality_natural_numbers88,2804
-fn test_sequence_equality_strings() {test_sequence_equality_strings113,3614
-fn test_eq_vs_partial_eq_difference() {test_eq_vs_partial_eq_difference138,4518
-    struct PartialComparable { value: i32 } // Use i32 instead of f64 so Eq can be implementedPartialComparable140,4601
-    struct PartialComparable { value: i32 } // Use i32 instead of f64 so Eq can be implementedvalue140,4601
-    impl std::fmt::Display for PartialComparable {PartialComparable142,4701
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt143,4752
-    struct TotalComparable { value: N }TotalComparable155,5336
-    struct TotalComparable { value: N }value155,5336
-    impl std::fmt::Display for TotalComparable {TotalComparable157,5381
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt158,5430
-fn test_ordering_numbers_basic() {test_ordering_numbers_basic173,6023
-fn test_numbers_equal_is_equal() {test_numbers_equal_is_equal182,6238
-fn test_ordering_strings_basic() {test_ordering_strings_basic188,6346
-fn test_strings_equal_is_equal() {test_strings_equal_is_equal197,6559
-fn test_nth_on_empty_panics() {test_nth_on_empty_panics204,6684
-fn test_nth_upper_bound_panics() {test_nth_upper_bound_panics211,6807
-fn test_set_out_of_bounds_panics_on_unwrap() {test_set_out_of_bounds_panics_on_unwrap218,6920
-fn test_set_in_bounds_ok_and_writes() {test_set_in_bounds_ok_and_writes224,7063
-fn test_subseq_copy_trait_form_basic() {test_subseq_copy_trait_form_basic233,7268
-fn test_new_set_persistent() {test_new_set_persistent242,7575
-fn test_iterator_collects_in_order() {test_iterator_collects_in_order252,7810
+    fn test_new_and_set() {test_new_and_set8,251
+    fn test_length_and_nth_basic() {test_length_and_nth_basic22,699
+    fn test_empty() {test_empty30,908
+    fn test_sequence_basic() {test_sequence_basic37,1092
+    fn test_singleton() {test_singleton50,1780
+    fn test_is_empty_and_is_singleton() {test_is_empty_and_is_singleton58,1985
+    fn test_from_vec() {test_from_vec73,2451
+    fn test_sequence_equality_natural_numbers() {test_sequence_equality_natural_numbers88,3099
+    fn test_sequence_equality_strings() {test_sequence_equality_strings113,4001
+    fn test_eq_vs_partial_eq_difference() {test_eq_vs_partial_eq_difference138,4997
+        struct PartialComparable {PartialComparable140,5088
+            value: i32,value141,5123
+        impl std::fmt::Display for PartialComparable {PartialComparable144,5209
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt145,5264
+        struct TotalComparable {TotalComparable157,5892
+            value: N,value158,5925
+        impl std::fmt::Display for TotalComparable {TotalComparable161,5958
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {fmt162,6011
+    fn test_ordering_numbers_basic() {test_ordering_numbers_basic177,6660
+    fn test_numbers_equal_is_equal() {test_numbers_equal_is_equal186,6907
+    fn test_ordering_strings_basic() {test_ordering_strings_basic192,7035
+    fn test_strings_equal_is_equal() {test_strings_equal_is_equal201,7280
+    fn test_nth_on_empty_panics() {test_nth_on_empty_panics208,7429
+    fn test_nth_upper_bound_panics() {test_nth_upper_bound_panics215,7576
+    fn test_set_out_of_bounds_panics_on_unwrap() {test_set_out_of_bounds_panics_on_unwrap222,7713
+    fn test_set_in_bounds_ok_and_writes() {test_set_in_bounds_ok_and_writes228,7876
+    fn test_subseq_copy_trait_form_basic() {test_subseq_copy_trait_form_basic237,8113
+    fn test_new_set_persistent() {test_new_set_persistent246,8452
+    fn test_iterator_collects_in_order() {test_iterator_collects_in_order255,8718
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test24DirGraphStEphChap6_1.rs,139
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test24DirGraphStEphChap6_1.rs,143
 pub mod TestDirGraphStEphChap6_1 {TestDirGraphStEphChap6_11,0
-fn test_digraph_vertices_and_arcs() {test_digraph_vertices_and_arcs8,205
+    fn test_digraph_vertices_and_arcs() {test_digraph_vertices_and_arcs8,225
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test25UnDirGraphStEphChap6_1.rs,149
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test25UnDirGraphStEphChap6_1.rs,153
 pub mod TestUnDirGraphStEphChap6_1 {TestUnDirGraphStEphChap6_11,0
-fn test_undigraph_vertices_and_edges() {test_undigraph_vertices_and_edges8,211
+    fn test_undigraph_vertices_and_edges() {test_undigraph_vertices_and_edges8,231
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test23MappingStEphChap5_5.rs,529
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test23MappingStEphChap5_5.rs,562
 pub mod Test23MappingStEphChap5_5 {Test23MappingStEphChap5_53,55
-fn test_empty_mapping() {test_empty_mapping11,319
-fn test_from_vec_basic() {test_from_vec_basic19,508
-fn test_from_vec_duplicate_keys() {test_from_vec_duplicate_keys31,959
-fn test_from_relation() {test_from_relation42,1465
-fn test_domain_and_range() {test_domain_and_range56,2178
-fn test_iter() {test_iter75,2825
-fn test_mem_comprehensive() {test_mem_comprehensive88,3261
-fn test_empty_mapping_operations() {test_empty_mapping_operations107,3870
+    fn test_empty_mapping() {test_empty_mapping11,343
+    fn test_from_vec_basic() {test_from_vec_basic19,560
+    fn test_from_vec_duplicate_keys() {test_from_vec_duplicate_keys31,1055
+    fn test_from_relation() {test_from_relation42,1601
+    fn test_domain_and_range() {test_domain_and_range56,2382
+    fn test_iter() {test_iter75,3085
+    fn test_mem_comprehensive() {test_mem_comprehensive88,3553
+    fn test_empty_mapping_operations() {test_empty_mapping_operations107,4210
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test40Chapter36Mt.rs,325
-fn to_vec<T: StT>(a: &ArraySeqMtEphS<T>) -> Vec<T> {to_vec4,74
-fn quick_sort_mt_variants_produce_sorted_output() {quick_sort_mt_variants_produce_sorted_output9,193
-fn quick_sort_mt_edge_cases() {quick_sort_mt_edge_cases27,696
-fn pivot_mt_strategies_match_expectations() {pivot_mt_strategies_match_expectations46,1281
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test40Chapter36Mt.rs,653
+fn to_vec<T: StT>(a: &ArraySeqMtEphS<T>) -> Vec<T> { (0..a.length()).map(|i| a.nth_cloned(i)).coto_vec6,97
+fn is_sorted<T: StT + Ord>(values: &[T]) -> bool { values.windows(2).all(|w| w[0] <= w[1]) }is_sorted8,204
+fn quick_sort_mt_variants_produce_sorted_output() {quick_sort_mt_variants_produce_sorted_output11,306
+fn quick_sort_mt_edge_cases() {quick_sort_mt_edge_cases29,809
+fn pivot_mt_strategies_match_expectations() {pivot_mt_strategies_match_expectations52,1513
+fn quick_sort_mt_large_inputs() {quick_sort_mt_large_inputs73,2208
+fn quick_sort_mt_small_inputs_use_shared_pivots() {quick_sort_mt_small_inputs_use_shared_pivots86,2688
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test32Exercise_21_5_and_21_6.rs,380
 fn all_contiguous_subseqs<T: StT>(a: &ArrayStPerS<T>) -> ArrayStPerS<ArrayStPerS<T>> {all_contiguous_subseqs12,458
-fn test_all_contiguous_subseqs_n0() {test_all_contiguous_subseqs_n029,1168
-fn test_all_contiguous_subseqs_n3_values() {test_all_contiguous_subseqs_n3_values36,1338
-fn test_all_contiguous_subseqs_debug_shape() {test_all_contiguous_subseqs_debug_shape49,1700
+fn test_all_contiguous_subseqs_n0() {test_all_contiguous_subseqs_n031,1212
+fn test_all_contiguous_subseqs_n3_values() {test_all_contiguous_subseqs_n3_values38,1382
+fn test_all_contiguous_subseqs_debug_shape() {test_all_contiguous_subseqs_debug_shape47,1717
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test36Problem_21_3.rs,488
 fn points3d_loops(n: N) -> ArrayStPerS<Pair<N, Pair<N, N>>> {points3d_loops9,348
-fn test_points3d_loops_n0_empty() {test_points3d_loops_n0_empty24,738
-fn test_points3d_loops_n1_single() {test_points3d_loops_n1_single30,847
-fn test_points3d_loops_n2_values_and_order() {test_points3d_loops_n2_values_and_order37,1007
-fn test_points3d_loops_iterator_order() {test_points3d_loops_iterator_order50,1374
-fn test_points3d_loops_debug_shape() {test_points3d_loops_debug_shape57,1711
+fn test_points3d_loops_n0_empty() {test_points3d_loops_n0_empty26,750
+fn test_points3d_loops_n1_single() {test_points3d_loops_n1_single32,859
+fn test_points3d_loops_n2_values_and_order() {test_points3d_loops_n2_values_and_order39,1019
+fn test_points3d_loops_iterator_order() {test_points3d_loops_iterator_order56,1438
+fn test_points3d_loops_debug_shape() {test_points3d_loops_debug_shape75,1926
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test28ArraySeqMtPerChap19.rs,557
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test28ArraySeqMtPerChap19.rs,585
 pub mod Test28ArraySeqMtPerChap19 {Test28ArraySeqMtPerChap193,61
-fn test_inject_basic() {test_inject_basic11,306
-fn test_inject_conflicting_updates() {test_inject_conflicting_updates27,857
-fn test_inject_out_of_bounds() {test_inject_out_of_bounds43,1463
-fn test_inject_empty_changes() {test_inject_empty_changes55,1934
-fn test_inject_empty_values() {test_inject_empty_values67,2320
-fn test_atomic_write_migrated_from_st_test() {test_atomic_write_migrated_from_st_test81,2918
-fn test_inject_string_values() {test_inject_string_values106,4015
+    fn test_inject_basic() {test_inject_basic11,330
+    fn test_inject_conflicting_updates() {test_inject_conflicting_updates27,933
+    fn test_inject_out_of_bounds() {test_inject_out_of_bounds43,1591
+    fn test_inject_empty_changes() {test_inject_empty_changes55,2097
+    fn test_inject_empty_values() {test_inject_empty_values67,2519
+    fn test_atomic_write_migrated_from_st_test() {test_atomic_write_migrated_from_st_test81,3157
+    fn test_inject_string_values() {test_inject_string_values106,4326
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test31Algorithm_21_6.rs,261
 fn prime_sieve(n: N) -> ArrayStPerS<N> {prime_sieve12,500
-fn test_prime_sieve_small() {test_prime_sieve_small46,2297
-fn test_prime_sieve_n2_empty() {test_prime_sieve_n2_empty53,2453
-fn test_prime_sieve_debug_shape() {test_prime_sieve_debug_shape59,2556
+fn test_prime_sieve_small() {test_prime_sieve_small60,2448
+fn test_prime_sieve_n2_empty() {test_prime_sieve_n2_empty66,2565
+fn test_prime_sieve_debug_shape() {test_prime_sieve_debug_shape72,2668
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test16AVLTreeSeqStPerChap18.rs,276
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Test16AVLTreeSeqStPerChap18.rs,292
 pub mod TestAVLTreeSeqStPerChap18 {TestAVLTreeSeqStPerChap183,49
-fn test_tabulate_inorder() {test_tabulate_inorder12,352
-fn test_map_increment() {test_map_increment18,565
-fn test_append_union() {test_append_union25,897
-fn test_filter_even() {test_filter_even33,1343
+    fn test_tabulate_inorder() {test_tabulate_inorder12,380
+    fn test_map_increment() {test_map_increment18,613
+    fn test_append_union() {test_append_union25,969
+    fn test_filter_even() {test_filter_even33,1443
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchAVLTreeSeqStEphChap19.rs,68
 fn bench_avl_eph_ch19(c: &mut Criterion) {bench_avl_eph_ch196,191
@@ -1701,11 +3239,19 @@ fn bench_avl_eph_ch19(c: &mut Criterion) {bench_avl_eph_ch196,191
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchUnDirGraphStEphChap6_1.rs,76
 fn bench_undirgraph_build(c: &mut Criterion) {bench_undirgraph_build7,255
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTAVLStEph.rs,128
+fn build_tree(len: usize) -> BSTreeAVL<i32> {build_tree7,189
+fn bench_bsteph_avl(c: &mut Criterion) {bench_bsteph_avl15,351
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTSplayMtEph.rs,134
+fn build_tree(len: usize) -> BSTreeSplay<i32> {build_tree7,195
+fn bench_bsteph_splay(c: &mut Criterion) {bench_bsteph_splay15,357
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchChapter36.rs.claude,0
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchChapter36Mt.rs,129
-fn gen_data(n: usize) -> ArraySeqMtEphS<i32> {gen_data4,89
-fn bench_quicksort_mt(c: &mut Criterion) {bench_quicksort_mt8,199
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchChapter36Mt.rs,131
+fn gen_data(n: usize) -> ArraySeqMtEphS<i32> {gen_data7,185
+fn bench_quicksort_mt(c: &mut Criterion) {bench_quicksort_mt17,485
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchMathSeq.rs,72
 fn bench_mathseq_basics(c: &mut Criterion) {bench_mathseq_basics8,213
@@ -1716,13 +3262,21 @@ fn bench_tabulate_map_eph_ch19(c: &mut Criterion) {bench_tabulate_map_eph_ch19
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchLinkedListStPer.rs,80
 fn bench_sll_persistent_ops(c: &mut Criterion) {bench_sll_persistent_ops8,229
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchArraySeqStEph.rs,455
-struct LinearCongruentialGenerator32 { state: u32 }LinearCongruentialGenerator3211,377
-struct LinearCongruentialGenerator32 { state: u32 }state11,377
-impl LinearCongruentialGenerator32 {LinearCongruentialGenerator3213,430
-    fn new(seed: u32) -> LinearCongruentialGenerator32 { LinearCongruentialGenerator32 { state: new14,467
-    fn next_N(&mut self) -> N {next_N16,586
-fn bench_build_random_s(c: &mut Criterion) {bench_build_random_s25,823
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTTreapStEph.rs,134
+fn build_tree(len: usize) -> BSTreeTreap<i32> {build_tree7,195
+fn bench_bsteph_treap(c: &mut Criterion) {bench_bsteph_treap15,361
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchArraySeqStEph.rs,406
+struct LinearCongruentialGenerator32 {LinearCongruentialGenerator3211,377
+    state: u32,state12,416
+impl LinearCongruentialGenerator32 {LinearCongruentialGenerator3215,435
+    fn new(seed: u32) -> LinearCongruentialGenerator32 { LinearCongruentialGenerator32 { state: new16,472
+    fn next_N(&mut self) -> N {next_N18,591
+fn bench_build_random_s(c: &mut Criterion) {bench_build_random_s27,828
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTTreapMtEph.rs,134
+fn build_tree(len: usize) -> BSTreeTreap<i32> {build_tree7,195
+fn bench_bsteph_treap(c: &mut Criterion) {bench_bsteph_treap15,357
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchLinkedListStEphChap19.rs,66
 fn bench_ll_eph_ch19(c: &mut Criterion) {bench_ll_eph_ch197,232
@@ -1730,13 +3284,21 @@ fn bench_ll_eph_ch19(c: &mut Criterion) {bench_ll_eph_ch197,232
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchArraySeqStPerChap18.rs,86
 fn bench_tabulate_map_per_ch18(c: &mut Criterion) {bench_tabulate_map_per_ch187,245
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchArraySeqStPer.rs,477
-struct LinearCongruentialGenerator32 { state: u32 }LinearCongruentialGenerator3211,425
-struct LinearCongruentialGenerator32 { state: u32 }state11,425
-impl LinearCongruentialGenerator32 {LinearCongruentialGenerator3213,478
-    fn new(seed: u32) -> LinearCongruentialGenerator32 { LinearCongruentialGenerator32 { state: new14,515
-    fn next_N(&mut self) -> N {next_N16,634
-fn bench_build_random_s_persistent(c: &mut Criterion) {bench_build_random_s_persistent25,871
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTBBAlphaMtEph.rs,140
+fn build_tree(len: usize) -> BSTreeBBAlpha<i32> {build_tree7,201
+fn bench_bsteph_bbalpha(c: &mut Criterion) {bench_bsteph_bbalpha15,367
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTAVLMtEph.rs,128
+fn build_tree(len: usize) -> BSTreeAVL<i32> {build_tree7,189
+fn bench_bsteph_avl(c: &mut Criterion) {bench_bsteph_avl15,347
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchArraySeqStPer.rs,428
+struct LinearCongruentialGenerator32 {LinearCongruentialGenerator3211,425
+    state: u32,state12,464
+impl LinearCongruentialGenerator32 {LinearCongruentialGenerator3215,483
+    fn new(seed: u32) -> LinearCongruentialGenerator32 { LinearCongruentialGenerator32 { state: new16,520
+    fn next_N(&mut self) -> N {next_N18,639
+fn bench_build_random_s_persistent(c: &mut Criterion) {bench_build_random_s_persistent27,876
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchLinkedListStEphChap18.rs,66
 fn bench_ll_eph_ch18(c: &mut Criterion) {bench_ll_eph_ch187,232
@@ -1747,15 +3309,23 @@ fn bench_avl_eph(c: &mut Criterion) {bench_avl_eph6,191
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchArraySeqMtPerChap18.rs,90
 fn bench_tabulate_map_mtper_ch18(c: &mut Criterion) {bench_tabulate_map_mtper_ch187,245
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTRBMtEph.rs,125
+fn build_tree(len: usize) -> BSTreeRB<i32> {build_tree7,186
+fn bench_bsteph_rb(c: &mut Criterion) {bench_bsteph_rb15,342
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchDirGraphStEphChap6_1.rs,72
 fn bench_dirgraph_build(c: &mut Criterion) {bench_dirgraph_build7,251
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchRelationStEphChap5_2.rs,106
 fn bench_relation_build_and_domain_range(c: &mut Criterion) {bench_relation_build_and_domain_range8,272
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchChapter36St.rs,129
-fn gen_data(n: usize) -> ArraySeqStEphS<i32> {gen_data4,89
-fn bench_quicksort_st(c: &mut Criterion) {bench_quicksort_st8,199
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchChapter36St.rs,131
+fn gen_data(n: usize) -> ArraySeqStEphS<i32> {gen_data7,185
+fn bench_quicksort_st(c: &mut Criterion) {bench_quicksort_st17,482
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchChapter26Mt.rs,162
+fn gen_sequence(n: usize) -> ArrayMtPerS<usize> { ArrayMtPerS::new(n, 0) }gen_sequence7,217
+fn bench_chapter26_mt(c: &mut Criterion) {bench_chapter26_mt9,293
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchArraySeqStEphChap18.rs,68
 fn bench_tabulate_map(c: &mut Criterion) {bench_tabulate_map8,285
@@ -1763,17 +3333,93 @@ fn bench_tabulate_map(c: &mut Criterion) {bench_tabulate_map8,285
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchMappingStEphChap5_5.rs,70
 fn bench_mapping_build(c: &mut Criterion) {bench_mapping_build8,309
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTSetMtEph.rs,5039
+trait BenchSet: Sized {BenchSet11,567
+    fn empty() -> Self;empty12,591
+    fn insert_value(&mut self, value: i32);insert_value13,615
+    fn union_with(&self, other: &Self) -> Self;union_with14,659
+    fn difference_with(&self, other: &Self) -> Self;difference_with15,707
+    fn filter_divisible_by(&self, divisor: i32) -> Self;filter_divisible_by16,760
+    fn reduce_sum(&self) -> i32;reduce_sum17,817
+fn build_pair<S: BenchSet>(len: usize) -> (S, S) {build_pair20,853
+fn build_single<S: BenchSet>(len: usize) -> S {build_single33,1132
+fn bench_set_variants<S: BenchSet>(c: &mut Criterion, label: &str) {bench_set_variants41,1293
+impl BenchSet for PlainSet<i32> {PlainSet84,2756
+    fn empty() -> Self { Self::empty() }empty85,2790
+    fn insert_value(&mut self, value: i32) { self.insert(value); }insert_value87,2832
+    fn union_with(&self, other: &Self) -> Self { self.union(other) }union_with89,2900
+    fn difference_with(&self, other: &Self) -> Self { self.difference(other) }difference_with91,2970
+    fn filter_divisible_by(&self, divisor: i32) -> Self { self.filter(|value| *value % divisor =filter_divisible_by93,3050
+    fn reduce_sum(&self) -> i32 { self.reduce(|acc, value| acc + value, 0) }reduce_sum95,3154
+impl BenchSet for AVLSet<i32> {AVLSet98,3234
+    fn empty() -> Self { Self::empty() }empty99,3266
+    fn insert_value(&mut self, value: i32) { self.insert(value); }insert_value101,3308
+    fn union_with(&self, other: &Self) -> Self { self.union(other) }union_with103,3376
+    fn difference_with(&self, other: &Self) -> Self { self.difference(other) }difference_with105,3446
+    fn filter_divisible_by(&self, divisor: i32) -> Self { self.filter(|value| *value % divisor =filter_divisible_by107,3526
+    fn reduce_sum(&self) -> i32 { self.reduce(|acc, value| acc + value, 0) }reduce_sum109,3630
+impl BenchSet for RBSet<i32> {RBSet112,3710
+    fn empty() -> Self { Self::empty() }empty113,3741
+    fn insert_value(&mut self, value: i32) { self.insert(value); }insert_value115,3783
+    fn union_with(&self, other: &Self) -> Self { self.union(other) }union_with117,3851
+    fn difference_with(&self, other: &Self) -> Self { self.difference(other) }difference_with119,3921
+    fn filter_divisible_by(&self, divisor: i32) -> Self { self.filter(|value| *value % divisor =filter_divisible_by121,4001
+    fn reduce_sum(&self) -> i32 { self.reduce(|acc, value| acc + value, 0) }reduce_sum123,4105
+impl BenchSet for BBAlphaSet<i32> {BBAlphaSet126,4185
+    fn empty() -> Self { Self::empty() }empty127,4221
+    fn insert_value(&mut self, value: i32) { self.insert(value); }insert_value129,4263
+    fn union_with(&self, other: &Self) -> Self { self.union(other) }union_with131,4331
+    fn difference_with(&self, other: &Self) -> Self { self.difference(other) }difference_with133,4401
+    fn filter_divisible_by(&self, divisor: i32) -> Self { self.filter(|value| *value % divisor =filter_divisible_by135,4481
+    fn reduce_sum(&self) -> i32 { self.reduce(|acc, value| acc + value, 0) }reduce_sum137,4585
+impl BenchSet for TreapSet<i32> {TreapSet140,4665
+    fn empty() -> Self { Self::empty() }empty141,4699
+    fn insert_value(&mut self, value: i32) { self.insert(value); }insert_value143,4741
+    fn union_with(&self, other: &Self) -> Self { self.union(other) }union_with145,4809
+    fn difference_with(&self, other: &Self) -> Self { self.difference(other) }difference_with147,4879
+    fn filter_divisible_by(&self, divisor: i32) -> Self { self.filter(|value| *value % divisor =filter_divisible_by149,4959
+    fn reduce_sum(&self) -> i32 { self.reduce(|acc, value| acc + value, 0) }reduce_sum151,5063
+impl BenchSet for SplaySet<i32> {SplaySet154,5143
+    fn empty() -> Self { Self::empty() }empty155,5177
+    fn insert_value(&mut self, value: i32) { self.insert(value); }insert_value157,5219
+    fn union_with(&self, other: &Self) -> Self { self.union(other) }union_with159,5287
+    fn difference_with(&self, other: &Self) -> Self { self.difference(other) }difference_with161,5357
+    fn filter_divisible_by(&self, divisor: i32) -> Self { self.filter(|value| *value % divisor =filter_divisible_by163,5437
+    fn reduce_sum(&self) -> i32 { self.reduce(|acc, value| acc + value, 0) }reduce_sum165,5541
+fn bench_plain_set(c: &mut Criterion) { bench_set_variants::<PlainSet<i32>>(c, "BSTSetPlainMtEphbench_plain_set168,5621
+fn bench_avl_set(c: &mut Criterion) { bench_set_variants::<AVLSet<i32>>(c, "BSTSetAVLMtEph"); }bench_avl_set170,5724
+fn bench_rb_set(c: &mut Criterion) { bench_set_variants::<RBSet<i32>>(c, "BSTSetRBMtEph"); }bench_rb_set172,5821
+fn bench_bbalpha_set(c: &mut Criterion) { bench_set_variants::<BBAlphaSet<i32>>(c, "BSTSetBBAlphbench_bbalpha_set174,5915
+fn bench_treap_set(c: &mut Criterion) { bench_set_variants::<TreapSet<i32>>(c, "BSTSetTreapMtEphbench_treap_set176,6024
+fn bench_splay_set(c: &mut Criterion) { bench_set_variants::<SplaySet<i32>>(c, "BSTSetSplayMtEphbench_splay_set178,6127
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchArraySeqStPerChap19.rs,86
 fn bench_tabulate_map_per_ch19(c: &mut Criterion) {bench_tabulate_map_per_ch197,245
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchAVLTreeSeqStPerChap19.rs,95
 fn bench_build_and_read_persistent(c: &mut Criterion) {bench_build_and_read_persistent10,335
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTRBStEph.rs,125
+fn build_tree(len: usize) -> BSTreeRB<i32> {build_tree7,186
+fn bench_bsteph_rb(c: &mut Criterion) {bench_bsteph_rb15,346
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTParaMtEph.rs,123
+fn build_tree(len: usize) -> ParamBST<i32> {build_tree7,190
+fn bench_para_bst(c: &mut Criterion) {bench_para_bst15,346
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchAVLTreeSeqStPer.rs,80
 fn bench_build_and_contains(c: &mut Criterion) {bench_build_and_contains9,270
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTPlainMtEph.rs,117
+fn build_tree(len: usize) -> BSTree<i32> {build_tree7,190
+fn bench_bsteph(c: &mut Criterion) {bench_bsteph17,388
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchArraySeqMtPerChap19.rs,90
 fn bench_tabulate_map_mtper_ch19(c: &mut Criterion) {bench_tabulate_map_mtper_ch197,245
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTBBAlphaStEph.rs,140
+fn build_tree(len: usize) -> BSTreeBBAlpha<i32> {build_tree7,201
+fn bench_bsteph_bbalpha(c: &mut Criterion) {bench_bsteph_bbalpha15,371
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchLinkedListStPerChap19.rs,66
 fn bench_ll_per_ch19(c: &mut Criterion) {bench_ll_per_ch198,297
@@ -1784,16 +3430,24 @@ fn bench_avl_per_ch18(c: &mut Criterion) {bench_avl_per_ch187,232
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchAVLTreeSeqStEphChap18.rs,68
 fn bench_avl_eph_ch18(c: &mut Criterion) {bench_avl_eph_ch186,191
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTPlainStEph.rs,117
+fn build_tree(len: usize) -> BSTree<i32> {build_tree7,190
+fn bench_bsteph(c: &mut Criterion) {bench_bsteph17,392
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchBSTSplayStEph.rs,134
+fn build_tree(len: usize) -> BSTreeSplay<i32> {build_tree7,195
+fn bench_bsteph_splay(c: &mut Criterion) {bench_bsteph_splay15,361
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchLinkedListStPerChap18.rs,66
 fn bench_ll_per_ch18(c: &mut Criterion) {bench_ll_per_ch187,232
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchArraySeqMtPer.rs,505
-struct LinearCongruentialGenerator32 { state: u32 }LinearCongruentialGenerator3211,425
-struct LinearCongruentialGenerator32 { state: u32 }state11,425
-impl LinearCongruentialGenerator32 {LinearCongruentialGenerator3213,478
-    fn new(seed: u32) -> LinearCongruentialGenerator32 { LinearCongruentialGenerator32 { state: new14,515
-    fn next_N(&mut self) -> N {next_N16,634
-fn bench_build_random_s_multithreaded_persistent(c: &mut Criterion) {bench_build_random_s_multithreaded_persistent25,871
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchArraySeqMtPer.rs,456
+struct LinearCongruentialGenerator32 {LinearCongruentialGenerator3211,425
+    state: u32,state12,464
+impl LinearCongruentialGenerator32 {LinearCongruentialGenerator3215,483
+    fn new(seed: u32) -> LinearCongruentialGenerator32 { LinearCongruentialGenerator32 { state: new16,520
+    fn next_N(&mut self) -> N {next_N18,639
+fn bench_build_random_s_multithreaded_persistent(c: &mut Criterion) {bench_build_random_s_multithreaded_persistent27,876
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/BenchLinkedListStEph.rs,56
 fn bench_ll_eph(c: &mut Criterion) {bench_ll_eph6,191

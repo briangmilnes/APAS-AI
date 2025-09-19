@@ -10,9 +10,9 @@ pub mod TestArraySeqStPerChap18 {
     fn test_tabulate_fibonacci() {
         fn fib(n: N) -> N {
             match n {
-                0 => 0,
-                1 => 1,
-                _ => fib(n - 1) + fib(n - 2),
+                | 0 => 0,
+                | 1 => 1,
+                | _ => fib(n - 1) + fib(n - 2),
             }
         }
         let a: ArrayStPerS<N> = ArrayStPerS::tabulate(fib, 10);
@@ -75,12 +75,20 @@ pub mod TestArraySeqStPerChap18 {
     fn test_filter_even() {
         let numbers = ArraySeqStPer![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         let evens = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::filter(&numbers, |&x| {
-            if x % 2 == 0 { B::True } else { B::False }
+            if x % 2 == 0 {
+                B::True
+            } else {
+                B::False
+            }
         });
         assert_eq!(evens, ArraySeqStPer![2, 4, 6, 8, 10]);
         let odds_only = ArraySeqStPer![1, 3, 5, 7];
         let no_evens = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::filter(&odds_only, |&x| {
-            if x % 2 == 0 { B::True } else { B::False }
+            if x % 2 == 0 {
+                B::True
+            } else {
+                B::False
+            }
         });
         assert_eq!(no_evens.length(), 0);
     }
@@ -177,7 +185,11 @@ pub mod TestArraySeqStPerChap18 {
     #[test]
     fn test_collect_groups_by_key() {
         // Use N, N pairs since collect requires same types
-        let pairs = ArraySeqStPer![Pair(1_usize, 10_usize), Pair(2_usize, 20_usize), Pair(1_usize, 30_usize)];
+        let pairs = ArraySeqStPer![
+            Pair(1_usize, 10_usize),
+            Pair(2_usize, 20_usize),
+            Pair(1_usize, 30_usize)
+        ];
         let grouped: ArrayStPerS<Pair<N, ArrayStPerS<N>>> =
             <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::collect(&pairs, |k1, k2| k1.cmp(k2));
         assert_eq!(grouped.length(), 2);

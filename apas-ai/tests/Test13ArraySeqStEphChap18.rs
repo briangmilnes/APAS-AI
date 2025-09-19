@@ -10,9 +10,9 @@ pub mod TestArraySeqStEphChap18 {
     fn test_tabulate_fibonacci() {
         fn fib(n: N) -> N {
             match n {
-                0 => 0,
-                1 => 1,
-                _ => fib(n - 1) + fib(n - 2),
+                | 0 => 0,
+                | 1 => 1,
+                | _ => fib(n - 1) + fib(n - 2),
             }
         }
         let a = <ArraySeqStEphS<N> as ArraySeqStEphChap18Trait<N>>::tabulate(fib, 10);
@@ -75,12 +75,20 @@ pub mod TestArraySeqStEphChap18 {
     fn test_filter_even() {
         let numbers = ArraySeqStEph![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         let evens = <ArraySeqStEphS<N> as ArraySeqStEphChap18Trait<N>>::filter(&numbers, |&x| {
-            if x % 2 == 0 { B::True } else { B::False }
+            if x % 2 == 0 {
+                B::True
+            } else {
+                B::False
+            }
         });
         assert_eq!(evens, ArraySeqStEph![2, 4, 6, 8, 10]);
         let odds_only = ArraySeqStEph![1, 3, 5, 7];
         let no_evens = <ArraySeqStEphS<N> as ArraySeqStEphChap18Trait<N>>::filter(&odds_only, |&x| {
-            if x % 2 == 0 { B::True } else { B::False }
+            if x % 2 == 0 {
+                B::True
+            } else {
+                B::False
+            }
         });
         assert_eq!(no_evens.length(), 0);
     }

@@ -110,9 +110,9 @@ pub mod TestArraySeqStEphChap19 {
     fn test_iterate_concat() {
         let a: ArraySeqStEphS<&str> = ArraySeqStEphS::tabulate(
             |i| match i {
-                0 => "a",
-                1 => "b",
-                _ => "c",
+                | 0 => "a",
+                | 1 => "b",
+                | _ => "c",
             },
             3,
         );

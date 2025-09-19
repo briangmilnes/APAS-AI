@@ -88,7 +88,12 @@ pub mod Test26ArraySeqMtPer {
         let a = ArraySeqMtPer![1, 2, 3];
         let collected: Vec<N> = a.iter().copied().collect();
         // For MT, order might vary, so use set comparison
-        assert!(ArraySeqSetEq(collected.len(), |i| collected[i].clone(), 3, |i| [1, 2, 3][i].clone()));
+        assert!(ArraySeqSetEq(
+            collected.len(),
+            |i| collected[i].clone(),
+            3,
+            |i| [1, 2, 3][i].clone()
+        ));
     }
 
     #[test]

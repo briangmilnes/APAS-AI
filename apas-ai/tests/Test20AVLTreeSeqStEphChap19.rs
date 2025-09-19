@@ -25,7 +25,11 @@ pub mod TestAVLTreeSeqStEphChap19 {
                 Some(*a.nth(i))
             } else {
                 let off = i - a.length();
-                if off < b.length() { Some(*b.nth(off)) } else { None }
+                if off < b.length() {
+                    Some(*b.nth(off))
+                } else {
+                    None
+                }
             }
         };
         assert_eq!(select(&a, &b, 0), Some(0));
@@ -44,7 +48,11 @@ pub mod TestAVLTreeSeqStEphChap19 {
     #[test]
     fn test_deflate_and_filter() {
         let t: AVLTreeSeqStEphS<N> = AVLTreeSeqStEph![0, 1, 2, 3, 4, 5];
-        let d = if 2 % 2 == 0 { AVLTreeSeqStEph![2] } else { AVLTreeSeqStEph![] };
+        let d = if 2 % 2 == 0 {
+            AVLTreeSeqStEph![2]
+        } else {
+            AVLTreeSeqStEph![]
+        };
         assert_eq!(d.to_arrayseq(), ArraySeqStEph![2]);
         let kept: Vec<N> = t.iter().filter(|x| **x < 3).map(|x| *x).collect();
         let f = AVLTreeSeqStEphS::from_vec(kept);

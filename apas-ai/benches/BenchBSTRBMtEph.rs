@@ -2,7 +2,7 @@ use std::time::Duration;
 
 use apas_ai::BSTRBMtEph::BSTRBMtEph::BSTreeRB;
 use apas_ai::*;
-use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
 
 fn build_tree(len: usize) -> BSTreeRB<i32> {
     let tree = BSTreeRB::new();
@@ -38,7 +38,11 @@ fn bench_bsteph_rb(c: &mut Criterion) {
         });
 
         group.bench_with_input(BenchmarkId::new("traversal", n), &n, |b, &len| {
-            b.iter_batched(|| build_tree(len), |tree| black_box(tree.in_order()), BatchSize::SmallInput);
+            b.iter_batched(
+                || build_tree(len),
+                |tree| black_box(tree.in_order()),
+                BatchSize::SmallInput,
+            );
         });
     }
 
