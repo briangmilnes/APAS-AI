@@ -3,6 +3,7 @@ pub mod TestSetStEphChap5_1 {
     use apas_ai::SetLit;
     use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
     use apas_ai::Types::Types::*; // macro import
+    use apas_ai::{PairLit};
 
     #[allow(dead_code)]
     fn macro_typecheck_exercise() {
@@ -17,18 +18,12 @@ pub mod TestSetStEphChap5_1 {
         let b: Set<char> = SetLit!['a', 'b'];
         let prod = a.CartesianProduct(&b);
 
-        let expect: Set<Pair<N, char>> = {
-            let mut s: Set<Pair<N, char>> = Set::empty();
-            let _ = s.insert(Pair(0, 'a'));
-            let _ = s.insert(Pair(0, 'b'));
-            let _ = s.insert(Pair(1, 'a'));
-            let _ = s.insert(Pair(1, 'b'));
-            let _ = s.insert(Pair(2, 'a'));
-            let _ = s.insert(Pair(2, 'b'));
-            let _ = s.insert(Pair(3, 'a'));
-            let _ = s.insert(Pair(3, 'b'));
-            s
-        };
+        let expect: Set<Pair<N, char>> = SetLit![
+            PairLit!(0, 'a'), PairLit!(0, 'b'),
+            PairLit!(1, 'a'), PairLit!(1, 'b'),
+            PairLit!(2, 'a'), PairLit!(2, 'b'),
+            PairLit!(3, 'a'), PairLit!(3, 'b')
+        ];
         assert_eq!(prod, expect);
         assert_eq!(prod.size(), 8);
     }

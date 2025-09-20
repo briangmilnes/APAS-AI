@@ -3,11 +3,12 @@ pub mod TestRelationStEphChap5_2 {
     use apas_ai::SetLit;
     use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
     use apas_ai::Types::Types::*; // macro import
+    use apas_ai::{RelationLit, PairLit};
 
     #[test]
     fn test_relation_domain_range_and_mem() {
         // R subset of A x B
-        let pairs = SetLit![Pair(1usize, 'a'), Pair(2usize, 'b'), Pair(1usize, 'b')];
+        let pairs = SetLit![PairLit!(1usize, 'a'), PairLit!(2usize, 'b'), PairLit!(1usize, 'b')];
         let r = Relation::FromSet(pairs);
 
         let d = r.domain();

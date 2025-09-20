@@ -3,6 +3,7 @@
 pub mod TestArraySeqStPer {
     use apas_ai::ArraySeqStPer;
     use apas_ai::{ArraySeqStPer::ArraySeqStPer::*, Types::Types::*}; // macro import
+    use apas_ai::ArrayStPerSLit;
 
     #[test]
     fn test_new_and_set() {
@@ -20,7 +21,7 @@ pub mod TestArraySeqStPer {
 
     #[test]
     fn test_length_and_nth_basic() {
-        let a = ArraySeqStPer![10, 20, 30, 40];
+        let a = ArrayStPerSLit![10, 20, 30, 40];
         assert_eq!(a.length(), 4);
         assert_eq!(*a.nth(0), 10);
         assert_eq!(*a.nth(3), 40);
@@ -42,8 +43,8 @@ pub mod TestArraySeqStPer {
         let c = <ArrayStPerS<B> as ArraySeqStPerTrait<B>>::set(&b, 1, B::False).unwrap();
         let d = <ArrayStPerS<B> as ArraySeqStPerTrait<B>>::set(&c, 2, B::True).unwrap();
         assert_eq!(d.length(), 10);
-        let head4 = ArraySeqStPer![*d.nth(0), *d.nth(1), *d.nth(2), *d.nth(3)];
-        assert_eq!(head4, ArraySeqStPer![B::True, B::False, B::True, B::False]);
+        let head4 = ArrayStPerSLit![*d.nth(0), *d.nth(1), *d.nth(2), *d.nth(3)];
+        assert_eq!(head4, ArrayStPerSLit![B::True, B::False, B::True, B::False]);
     }
 
     #[test]
@@ -64,20 +65,20 @@ pub mod TestArraySeqStPer {
         assert_eq!(s.isEmpty(), B::False);
         assert_eq!(s.isSingleton(), B::True);
 
-        let a = ArraySeqStPer![1, 2];
+        let a = ArrayStPerSLit![1, 2];
         assert_eq!(a.isEmpty(), B::False);
         assert_eq!(a.isSingleton(), B::False);
     }
 
     #[test]
     fn test_from_vec() {
-        let empty_seq: ArrayStPerS<N> = ArraySeqStPer![];
+        let empty_seq: ArrayStPerS<N> = ArrayStPerSLit![];
         assert_eq!(empty_seq.length(), 0);
         assert_eq!(empty_seq.isEmpty(), B::True);
         let single_vec = vec![42];
         let single_seq = ArrayStPerS::from_vec(single_vec);
-        assert_eq!(single_seq, ArraySeqStPer![42]);
-        let multi_seq = ArraySeqStPer![1, 2, 3, 4, 5];
+        assert_eq!(single_seq, ArrayStPerSLit![42]);
+        let multi_seq = ArrayStPerSLit![1, 2, 3, 4, 5];
         assert_eq!(multi_seq, ArrayStPerS::from_vec(vec![1, 2, 3, 4, 5]));
         let str_vec = vec!["hello", "world"];
         let str_seq = ArrayStPerS::from_vec(str_vec);
@@ -86,20 +87,20 @@ pub mod TestArraySeqStPer {
 
     #[test]
     fn test_sequence_equality_natural_numbers() {
-        let seq1 = ArraySeqStPer![42];
-        let seq2 = ArraySeqStPer![42];
-        let seq3 = ArraySeqStPer![99];
+        let seq1 = ArrayStPerSLit![42];
+        let seq2 = ArrayStPerSLit![42];
+        let seq3 = ArrayStPerSLit![99];
         assert_eq!(seq1.length(), 1);
         assert_eq!(seq2.length(), 1);
         assert_eq!(seq3.length(), 1);
-        assert_eq!(seq1, ArraySeqStPer![42]);
-        assert_eq!(seq2, ArraySeqStPer![42]);
-        assert_eq!(seq3, ArraySeqStPer![99]);
+        assert_eq!(seq1, ArrayStPerSLit![42]);
+        assert_eq!(seq2, ArrayStPerSLit![42]);
+        assert_eq!(seq3, ArrayStPerSLit![99]);
 
-        let seq4 = ArraySeqStPer![1, 2, 3, 4, 5];
-        let seq5 = ArraySeqStPer![1, 2, 3, 4, 5];
-        let seq6 = ArraySeqStPer![1, 2, 3, 4, 6];
-        let seq7 = ArraySeqStPer![1, 2, 3, 4];
+        let seq4 = ArrayStPerSLit![1, 2, 3, 4, 5];
+        let seq5 = ArrayStPerSLit![1, 2, 3, 4, 5];
+        let seq6 = ArrayStPerSLit![1, 2, 3, 4, 6];
+        let seq7 = ArrayStPerSLit![1, 2, 3, 4];
         assert_eq!(seq4.length(), 5);
         assert_eq!(seq5.length(), 5);
         assert_eq!(seq6.length(), 5);
@@ -111,20 +112,20 @@ pub mod TestArraySeqStPer {
 
     #[test]
     fn test_sequence_equality_strings() {
-        let seq1 = ArraySeqStPer!["hello"];
-        let seq2 = ArraySeqStPer!["hello"];
-        let seq3 = ArraySeqStPer!["world"];
+        let seq1 = ArrayStPerSLit!["hello"];
+        let seq2 = ArrayStPerSLit!["hello"];
+        let seq3 = ArrayStPerSLit!["world"];
         assert_eq!(seq1.length(), 1);
         assert_eq!(seq2.length(), 1);
         assert_eq!(seq3.length(), 1);
-        assert_eq!(seq1, ArraySeqStPer!["hello"]);
-        assert_eq!(seq2, ArraySeqStPer!["hello"]);
-        assert_eq!(seq3, ArraySeqStPer!["world"]);
+        assert_eq!(seq1, ArrayStPerSLit!["hello"]);
+        assert_eq!(seq2, ArrayStPerSLit!["hello"]);
+        assert_eq!(seq3, ArrayStPerSLit!["world"]);
 
-        let seq4 = ArraySeqStPer!["the", "cat", "in", "the", "hat"];
-        let seq5 = ArraySeqStPer!["the", "cat", "in", "the", "hat"];
-        let seq6 = ArraySeqStPer!["the", "cat", "in", "the", "mat"];
-        let seq7 = ArraySeqStPer!["the", "cat", "in", "the"];
+        let seq4 = ArrayStPerSLit!["the", "cat", "in", "the", "hat"];
+        let seq5 = ArrayStPerSLit!["the", "cat", "in", "the", "hat"];
+        let seq6 = ArrayStPerSLit!["the", "cat", "in", "the", "mat"];
+        let seq7 = ArrayStPerSLit!["the", "cat", "in", "the"];
         assert_eq!(seq4.length(), 5);
         assert_eq!(seq5.length(), 5);
         assert_eq!(seq6.length(), 5);
@@ -146,11 +147,11 @@ pub mod TestArraySeqStPer {
                 write!(f, "PartialComparable({})", self.value)
             }
         }
-        let seq1 = ArraySeqStPer![PartialComparable { value: 1 }];
-        let seq2 = ArraySeqStPer![PartialComparable { value: 1 }];
+        let seq1 = ArrayStPerSLit![PartialComparable { value: 1 }];
+        let seq2 = ArrayStPerSLit![PartialComparable { value: 1 }];
         assert_eq!(seq1.nth(0), seq2.nth(0));
-        let nan_seq = ArraySeqStPer![PartialComparable { value: -1 }];
-        let nan_seq2 = ArraySeqStPer![PartialComparable { value: -1 }];
+        let nan_seq = ArrayStPerSLit![PartialComparable { value: -1 }];
+        let nan_seq2 = ArrayStPerSLit![PartialComparable { value: -1 }];
         assert_eq!(nan_seq.nth(0), nan_seq2.nth(0)); // Since they're the same value now
 
         #[derive(Clone, Debug, PartialEq, Eq)]
@@ -163,11 +164,11 @@ pub mod TestArraySeqStPer {
                 write!(f, "TotalComparable({})", self.value)
             }
         }
-        let total_seq1 = ArraySeqStPer![TotalComparable { value: 42 }];
-        let total_seq2 = ArraySeqStPer![TotalComparable { value: 42 }];
+        let total_seq1 = ArrayStPerSLit![TotalComparable { value: 42 }];
+        let total_seq2 = ArrayStPerSLit![TotalComparable { value: 42 }];
         assert_eq!(total_seq1.nth(0), total_seq2.nth(0));
-        let b_seq1 = ArraySeqStPer![B::True, B::False];
-        let b_seq2 = ArraySeqStPer![B::True, B::False];
+        let b_seq1 = ArrayStPerSLit![B::True, B::False];
+        let b_seq2 = ArrayStPerSLit![B::True, B::False];
         assert_eq!(b_seq1.nth(0), b_seq2.nth(0));
         assert_eq!(b_seq1.nth(1), b_seq2.nth(1));
         assert_ne!(b_seq1.nth(0), b_seq1.nth(1));
@@ -213,7 +214,7 @@ pub mod TestArraySeqStPer {
     #[test]
     #[should_panic]
     fn test_nth_upper_bound_panics() {
-        let a = ArraySeqStPer![1, 2, 3];
+        let a = ArrayStPerSLit![1, 2, 3];
         a.nth(3);
     }
 
@@ -235,9 +236,9 @@ pub mod TestArraySeqStPer {
 
     #[test]
     fn test_subseq_copy_trait_form_basic() {
-        let a = ArraySeqStPer![10, 20, 30, 40, 50];
+        let a = ArrayStPerSLit![10, 20, 30, 40, 50];
         let b: ArrayStPerS<N> = ArrayStPerS::subseq_copy(&a, 1, 3);
-        assert_eq!(b, ArraySeqStPer![20, 30, 40]);
+        assert_eq!(b, ArrayStPerSLit![20, 30, 40]);
         let e: ArrayStPerS<N> = ArrayStPerS::subseq_copy(&a, 10, 2);
         assert_eq!(e.length(), 0);
     }
@@ -253,7 +254,7 @@ pub mod TestArraySeqStPer {
 
     #[test]
     fn test_iterator_collects_in_order() {
-        let s = ArraySeqStPer![1, 2, 3, 4];
+        let s = ArrayStPerSLit![1, 2, 3, 4];
         let collected: Vec<N> = s.iter().copied().collect();
         assert_eq!(collected, vec![1, 2, 3, 4]);
     }

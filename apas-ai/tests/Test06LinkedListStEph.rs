@@ -4,19 +4,20 @@ pub mod TestLinkedListEph {
     use apas_ai::LinkedListStEph;
     use apas_ai::LinkedListStEph::LinkedListStEph::*;
     use apas_ai::Types::Types::*; // macro import
+    use apas_ai::LinkedListStEphSLit;
 
     #[test]
     fn test_empty_singleton_and_predicates() {
-        let l: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::empty();
+        let l: LinkedListStEphS<N> = LinkedListStEphSLit![];
         assert_eq!(l.length(), 0);
         assert_eq!(l.isEmpty(), B::True);
-        let one = LinkedListStEph![7];
+        let one = LinkedListStEphSLit![7];
         assert_eq!(one.isSingleton(), B::True);
     }
 
     #[test]
     fn test_new_and_nth_set() {
-        let mut l = LinkedListStEph![1; 3];
+        let mut l = LinkedListStEphSLit![1; 3];
         assert_eq!(*l.nth(0), 1);
         assert_eq!(*l.nth(2), 1);
         let _ = l.set(1, 9).unwrap();
@@ -25,7 +26,7 @@ pub mod TestLinkedListEph {
 
     #[test]
     fn test_subseq_copy() {
-        let l = LinkedListStEph![2; 5];
+        let l = LinkedListStEphSLit![2; 5];
         let sub = l.subseq_copy(1, 3);
         assert_eq!(sub.length(), 3);
         assert_eq!(*sub.nth(0), 2);
@@ -34,7 +35,7 @@ pub mod TestLinkedListEph {
 
     #[test]
     fn test_linkedlisteph_basic() {
-        let mut s = LinkedListStEph![1; 3];
+        let mut s = LinkedListStEphSLit![1; 3];
         assert_eq!(s.length(), 3);
         assert_eq!(*s.nth(0), 1);
         let _ = s.set(1, 9).unwrap();
@@ -43,19 +44,19 @@ pub mod TestLinkedListEph {
 
     #[test]
     fn test_debug_format_for_eph() {
-        let l = LinkedListStEph![1, 2, 3];
+        let l = LinkedListStEphSLit![1, 2, 3];
         assert_eq!(format!("{:?}", l), "[1, 2, 3]");
     }
 
     #[test]
     fn test_display_format_for_eph() {
-        let l = LinkedListStEph![1, 2, 3];
+        let l = LinkedListStEphSLit![1, 2, 3];
         assert_eq!(format!("{}", l), "[1, 2, 3]");
     }
 
     #[test]
     fn test_iter_inorder_collect_eph() {
-        let l = LinkedListStEph![5, 6, 7];
+        let l = LinkedListStEphSLit![5, 6, 7];
         let mut it = l.iter();
         assert_eq!(it.next().copied(), Some(5));
         assert_eq!(it.next().copied(), Some(6));

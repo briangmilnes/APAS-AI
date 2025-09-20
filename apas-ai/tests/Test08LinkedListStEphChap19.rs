@@ -3,6 +3,7 @@ pub mod TestLinkedListStEphChap19 {
     use apas_ai::LinkedListStEph::LinkedListStEph::*;
     use apas_ai::LinkedListStEphChap19::LinkedListStEphChap19::*;
     use apas_ai::Types::Types::*;
+    use apas_ai::LinkedListStEphSLit;
 
     fn expect_list(list: &LinkedListStEphS<N>, expected: &[N]) {
         let mut iter = list.iter();
@@ -14,24 +15,24 @@ pub mod TestLinkedListStEphChap19 {
 
     #[test]
     fn test_eph_set_and_nth() {
-        let mut a: LinkedListStEphS<N> = LinkedListStEph![1; 3];
+        let mut a: LinkedListStEphS<N> = LinkedListStEphSLit![1; 3];
         let _ = a.set(1, 9);
         assert_eq!(*a.nth(1), 9);
     }
 
     #[test]
     fn test_eph_subseq_copy_and_display_debug() {
-        let a: LinkedListStEphS<N> = LinkedListStEph![1; 3];
+        let a: LinkedListStEphS<N> = LinkedListStEphSLit![1; 3];
         let sub = a.subseq_copy(1, 2);
         assert_eq!(sub.length(), 2);
-        let v = LinkedListStEph![1, 2, 3];
+        let v = LinkedListStEphSLit![1, 2, 3];
         assert_eq!(format!("{:?}", v), "[1, 2, 3]");
         assert_eq!(format!("{}", v), "[1, 2, 3]");
     }
 
     #[test]
     fn test_iter_inorder_collect_eph_ch19() {
-        let a: LinkedListStEphS<N> = LinkedListStEph![2, 4, 6];
+        let a: LinkedListStEphS<N> = LinkedListStEphSLit![2, 4, 6];
         expect_list(&a, &[2, 4, 6]);
     }
 
@@ -55,7 +56,7 @@ pub mod TestLinkedListStEphChap19 {
             &1,
         );
         expect_list(&one, &[1]);
-        let a: LinkedListStEphS<N> = LinkedListStEph![1, 2, 3, 4];
+        let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
         let even = <LinkedListStEphS<N> as LinkedListStEphChap19Trait<N>>::filter(&a, |x| {
             if *x % 2 == 0 {
                 B::True
@@ -70,10 +71,10 @@ pub mod TestLinkedListStEphChap19 {
         assert_eq!(total, 10);
         expect_list(&prefixes, &[0, 1, 3, 6]);
         let outer: LinkedListStEphS<LinkedListStEphS<N>> =
-            LinkedListStEph![LinkedListStEph![1], LinkedListStEph![2, 3]];
+            LinkedListStEphSLit![LinkedListStEphSLit![1], LinkedListStEphSLit![2, 3]];
         let flat = <LinkedListStEphS<N> as LinkedListStEphChap19Trait<N>>::flatten(&outer);
         expect_list(&flat, &[1, 2, 3]);
-        let ups: LinkedListStEphS<Pair<N, N>> = LinkedListStEph![Pair(1, 9), Pair(2, 8)];
+        let ups: LinkedListStEphS<Pair<N, N>> = LinkedListStEphSLit![Pair(1, 9), Pair(2, 8)];
         let inj = <LinkedListStEphS<N> as LinkedListStEphChap19Trait<N>>::inject(&a, &ups);
         expect_list(&inj, &[1, 9, 8, 4]);
     }

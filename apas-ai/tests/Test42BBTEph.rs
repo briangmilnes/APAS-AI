@@ -1,4 +1,5 @@
 use apas_ai::BBTEph::BBTEph::*;
+    use apas_ai::ArrayStPerSLit;
 use apas_ai::BSTPlainStEph::BSTPlainStEph::*;
 use apas_ai::*;
 
@@ -11,8 +12,8 @@ fn inorder_and_preorder_traversals_match_definitions() {
     );
     let inorder = tree.in_order();
     let preorder = tree.pre_order();
-    assert_eq!(inorder, ArraySeqStPer![2, 4, 6]);
-    assert_eq!(preorder, ArraySeqStPer![4, 2, 6]);
+    assert_eq!(inorder, ArrayStPerSLit![2, 4, 6]);
+    assert_eq!(preorder, ArrayStPerSLit![4, 2, 6]);
     assert_eq!(tree.size(), 3);
     assert_eq!(tree.height(), 2);
 }
@@ -20,7 +21,7 @@ fn inorder_and_preorder_traversals_match_definitions() {
 #[test]
 fn bst_insert_and_search_behavior() {
     let mut bst = BSTree::new();
-    let keys = ArraySeqStPer![4, 2, 6, 1, 3, 5, 7];
+    let keys = ArrayStPerSLit![4, 2, 6, 1, 3, 5, 7];
     for index in 0..keys.length() {
         bst.insert(keys.nth(index).clone());
     }
@@ -33,9 +34,9 @@ fn bst_insert_and_search_behavior() {
     assert_eq!(bst.find(&6), Some(&6));
     assert_eq!(bst.find(&9), None);
     let inorder = bst.in_order();
-    assert_eq!(inorder, ArraySeqStPer![1, 2, 3, 4, 5, 6, 7]);
+    assert_eq!(inorder, ArrayStPerSLit![1, 2, 3, 4, 5, 6, 7]);
     let preorder = bst.pre_order();
-    assert_eq!(preorder, ArraySeqStPer![4, 2, 1, 3, 6, 5, 7]);
+    assert_eq!(preorder, ArrayStPerSLit![4, 2, 1, 3, 6, 5, 7]);
     assert_eq!(bst.minimum().copied(), Some(1));
     assert_eq!(bst.maximum().copied(), Some(7));
 }

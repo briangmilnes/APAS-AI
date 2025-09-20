@@ -1,6 +1,7 @@
 //! Algorithm 21.6 (Prime Sieve) using ArraySeqPer and ninject.
 
 use apas_ai::ArraySeqStPer;
+    use apas_ai::ArrayStPerSLit;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
 use apas_ai::Types::Types::*;
@@ -11,7 +12,7 @@ use apas_ai::{ArraySeqStPerTrait, ArrayStPerS};
 /// APAS: Work: Θ(n lg n), Span: Θ(lg n)
 fn prime_sieve(n: N) -> ArrayStPerS<N> {
     if n <= 2 {
-        return ArraySeqStPer![];
+        return ArrayStPerSLit![];
     }
     // cs = 〈 i * j : 2 ≤ i ≤ floor(sqrt(n)) , 2 ≤ j ≤ n/i 〉
     let root: N = (n as f64).sqrt().floor() as N;
@@ -59,7 +60,7 @@ fn prime_sieve(n: N) -> ArrayStPerS<N> {
 #[test]
 fn test_prime_sieve_small() {
     let p = prime_sieve(10);
-    assert_eq!(p, ArraySeqStPer![2, 3, 5, 7]);
+    assert_eq!(p, ArrayStPerSLit![2, 3, 5, 7]);
 }
 
 #[test]

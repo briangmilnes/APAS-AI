@@ -251,4 +251,22 @@ pub mod BSTAVLStEph {
 
         fn pre_order(&self) -> ArrayStPerS<T> { BSTAVLStEph::pre_order(self) }
     }
+
+    #[macro_export]
+    macro_rules! BSTAVLStEphLit {
+        () => {
+            < $crate::BSTAVLStEph::BSTAVLStEph::BSTAVLStEph<_> as $crate::BSTAVLStEph::BSTAVLStEph::BSTAVLStEphTrait<_> >::new()
+        };
+        ( $( $x:expr ),* $(,)? ) => {{
+            let mut __tree = < $crate::BSTAVLStEph::BSTAVLStEph::BSTAVLStEph<_> as $crate::BSTAVLStEph::BSTAVLStEph::BSTAVLStEphTrait<_> >::new();
+            $( __tree.insert($x); )*
+            __tree
+        }};
+    }
+
+    #[allow(dead_code)]
+    fn _BSTAVLStEphLit_type_checks() {
+        let _ = BSTAVLStEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
+        let _: BSTAVLStEph<i32> = BSTAVLStEphLit![]; // empty form requires explicit type
+    }
 }

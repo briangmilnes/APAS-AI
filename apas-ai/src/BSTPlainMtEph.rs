@@ -222,4 +222,27 @@ pub mod BSTPlainMtEph {
         fn maximum(&self) -> Option<T> { BSTPlainMtEph::maximum(self) }
         fn in_order(&self) -> ArrayStPerS<T> { BSTPlainMtEph::in_order(self) }
     }
+
+    #[macro_export]
+    macro_rules! BSTPlainMtEphLit {
+        () => { $crate::BSTPlainMtEph::BSTPlainMtEph::BSTPlainMtEph::new() };
+        ($x:expr; $n:expr) => {{
+            let __tree = $crate::BSTPlainMtEph::BSTPlainMtEph::BSTPlainMtEph::new();
+            for _ in 0..$n { __tree.insert($x.clone()); }
+            __tree
+        }};
+        ($($x:expr),+ $(,)?) => {{
+            let __tree = $crate::BSTPlainMtEph::BSTPlainMtEph::BSTPlainMtEph::new();
+            $( __tree.insert($x); )*
+            __tree
+        }};
+    }
+
+    #[allow(dead_code)]
+    fn _BSTPlainMtEphLit_type_checks() {
+        use crate::BSTPlainMtEph::BSTPlainMtEph::BSTPlainMtEph;
+        let _: BSTPlainMtEph<i32> = BSTPlainMtEphLit![];
+        let _ = BSTPlainMtEphLit![1, 2, 3];
+        let _ = BSTPlainMtEphLit![0; 2];
+    }
 }

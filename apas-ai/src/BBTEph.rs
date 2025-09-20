@@ -103,4 +103,21 @@ pub mod BBTEph {
 
         fn size(&self) -> N { BBTree::size(self) }
     }
+
+    #[macro_export]
+    macro_rules! BBNodeLit {
+        ({ left: $left:expr, value: $value:expr, right: $right:expr }) => {
+            $crate::BBTEph::BBTEph::BBNode {
+                left: $left,
+                value: $value,
+                right: $right,
+            }
+        };
+    }
+
+    #[allow(dead_code)]
+    fn _BBNodeLit_type_checks() {
+        use crate::BBTEph::BBTEph::BBNode;
+        let _: BBNode<i32> = BBNodeLit!({ left: crate::BBTEph::BBTEph::BBTree::Leaf, value: 0, right: crate::BBTEph::BBTEph::BBTree::Leaf });
+    }
 }

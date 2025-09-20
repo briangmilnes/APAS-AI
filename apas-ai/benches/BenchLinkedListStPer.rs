@@ -1,5 +1,6 @@
 use apas_ai::LinkedListStPer::LinkedListStPer::*;
 use apas_ai::Types::Types::*;
+use apas_ai::LinkedListStPerSLit;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::env;
 use std::path::PathBuf;
@@ -13,7 +14,7 @@ fn bench_sll_persistent_ops(c: &mut Criterion) {
 
     group.bench_with_input(BenchmarkId::new("new_then_updates", n), &n, |b, &len| {
         b.iter(|| {
-            let mut s: LinkedListStPerS<N> = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::new(len, 0);
+            let mut s: LinkedListStPerS<N> = LinkedListStPerSLit![0; len]; // *Per: from_vec pattern
             for i in 0..len {
                 s = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::set(&s, i, i).unwrap();
             }

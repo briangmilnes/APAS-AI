@@ -2,6 +2,7 @@
 
 pub mod TestArraySeqStEphChap19 {
     use apas_ai::ArraySeqStEph;
+    use apas_ai::ArraySeqStEphSLit;
     use apas_ai::{ArraySeqStEph::ArraySeqStEph::*, ArraySeqStEphChap19::ArraySeqStEphChap19::*, Types::Types::*}; // macro import
 
     #[test]
@@ -13,14 +14,14 @@ pub mod TestArraySeqStEphChap19 {
     #[test]
     fn test_singleton() {
         let s: ArraySeqStEphS<N> = ArraySeqStEphS::singleton(42);
-        assert_eq!(s, ArraySeqStEph![42]);
+        assert_eq!(s, ArraySeqStEphSLit![42]);
     }
 
     #[test]
     fn test_map() {
         let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| i + 1, 5);
         let b: ArraySeqStEphS<N> = ArraySeqStEphS::map(&a, |x| x * 2);
-        assert_eq!(b, ArraySeqStEph![2, 4, 6, 8, 10]);
+        assert_eq!(b, ArraySeqStEphSLit![2, 4, 6, 8, 10]);
     }
 
     #[test]
@@ -28,7 +29,7 @@ pub mod TestArraySeqStEphChap19 {
         let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| i + 1, 3);
         let b: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| i + 4, 2);
         let c: ArraySeqStEphS<N> = ArraySeqStEphS::append(&a, &b);
-        assert_eq!(c, ArraySeqStEph![1, 2, 3, 4, 5]);
+        assert_eq!(c, ArraySeqStEphSLit![1, 2, 3, 4, 5]);
     }
 
     #[test]
@@ -36,13 +37,13 @@ pub mod TestArraySeqStEphChap19 {
         let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| i + 1, 3);
         let b: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| i + 4, 2);
         let c: ArraySeqStEphS<N> = ArraySeqStEphS::append2(&a, &b);
-        assert_eq!(c, ArraySeqStEph![1, 2, 3, 4, 5]);
+        assert_eq!(c, ArraySeqStEphSLit![1, 2, 3, 4, 5]);
     }
 
     #[test]
     fn test_deflate_true() {
         let y: ArraySeqStEphS<N> = ArraySeqStEphS::deflate(|&x: &N| if x % 2 == 0 { B::True } else { B::False }, &6);
-        assert_eq!(y, ArraySeqStEph![6]);
+        assert_eq!(y, ArraySeqStEphSLit![6]);
     }
 
     #[test]
@@ -55,28 +56,28 @@ pub mod TestArraySeqStEphChap19 {
     fn test_filter_even_numbers() {
         let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| i + 1, 10);
         let evens: ArraySeqStEphS<N> = ArraySeqStEphS::filter(&a, |x| if *x % 2 == 0 { B::True } else { B::False });
-        assert_eq!(evens, ArraySeqStEph![2, 4, 6, 8, 10]);
+        assert_eq!(evens, ArraySeqStEphSLit![2, 4, 6, 8, 10]);
     }
 
     #[test]
     fn test_filter_none() {
         let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| i, 5);
         let odds_only: ArraySeqStEphS<N> = ArraySeqStEphS::filter(&a, |x| if *x % 2 == 1 { B::True } else { B::False });
-        assert_eq!(odds_only, ArraySeqStEph![1, 3]);
+        assert_eq!(odds_only, ArraySeqStEphSLit![1, 3]);
     }
 
     #[test]
     fn test_update_in_bounds() {
         let mut a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| i + 1, 5);
         let _ = a.update(Pair(2, 99).into());
-        assert_eq!(a, ArraySeqStEph![1, 2, 99, 4, 5]);
+        assert_eq!(a, ArraySeqStEphSLit![1, 2, 99, 4, 5]);
     }
 
     #[test]
     fn test_update_out_of_bounds() {
         let mut a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| i + 1, 3);
         let _ = a.update(Pair(10, 7).into());
-        assert_eq!(a, ArraySeqStEph![1, 2, 3]);
+        assert_eq!(a, ArraySeqStEphSLit![1, 2, 3]);
     }
 
     #[test]
@@ -132,9 +133,9 @@ pub mod TestArraySeqStEphChap19 {
         let e: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|_| 0, 0);
         let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| i + 1, 3);
         let left: ArraySeqStEphS<N> = ArraySeqStEphS::append(&e, &a);
-        assert_eq!(left, ArraySeqStEph![1, 2, 3]);
+        assert_eq!(left, ArraySeqStEphSLit![1, 2, 3]);
         let right: ArraySeqStEphS<N> = ArraySeqStEphS::append(&a, &e);
-        assert_eq!(right, ArraySeqStEph![1, 2, 3]);
+        assert_eq!(right, ArraySeqStEphSLit![1, 2, 3]);
     }
 
     #[test]
@@ -168,7 +169,7 @@ pub mod TestArraySeqStEphChap19 {
     fn test_subseq_basic() {
         let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| (i + 1) * 10, 5);
         let s = a.subseq_copy(1, 3);
-        assert_eq!(s, ArraySeqStEph![20, 30, 40]);
+        assert_eq!(s, ArraySeqStEphSLit![20, 30, 40]);
     }
 
     #[test]
@@ -200,8 +201,8 @@ pub mod TestArraySeqStEphChap19 {
     fn test_flatten_ch19() {
         let s1: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| i + 1, 2);
         let s2: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(|i| i + 3, 2);
-        let nested: ArraySeqStEphS<ArraySeqStEphS<N>> = ArraySeqStEph![s1, s2];
+        let nested: ArraySeqStEphS<ArraySeqStEphS<N>> = ArraySeqStEphSLit![s1, s2];
         let flat: ArraySeqStEphS<N> = ArraySeqStEphS::flatten(&nested);
-        assert_eq!(flat, ArraySeqStEph![1, 2, 3, 4]);
+        assert_eq!(flat, ArraySeqStEphSLit![1, 2, 3, 4]);
     }
 }

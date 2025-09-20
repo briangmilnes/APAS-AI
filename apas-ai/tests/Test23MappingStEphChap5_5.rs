@@ -6,10 +6,11 @@ pub mod Test23MappingStEphChap5_5 {
     use apas_ai::SetLit;
     use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
     use apas_ai::Types::Types::*;
+    use apas_ai::{MappingLit, PairLit};
 
     #[test]
     fn test_empty_mapping() {
-        let m: Mapping<N, &str> = Mapping::empty();
+        let m: Mapping<N, &str> = MappingLit![];
         assert_eq!(m.size(), 0);
         assert_eq!(m.domain().size(), 0);
         assert_eq!(m.range().size(), 0);
@@ -17,7 +18,7 @@ pub mod Test23MappingStEphChap5_5 {
 
     #[test]
     fn test_from_vec_basic() {
-        let pairs = vec![Pair(1, "one"), Pair(2, "two"), Pair(3, "three")];
+        let pairs = vec![PairLit!(1, "one"), PairLit!(2, "two"), PairLit!(3, "three")];
         let m = <Mapping<N, &str> as MappingStEphChap5_5Trait<N, &str>>::FromVec(pairs);
         assert_eq!(m.size(), 3);
         assert_eq!(m.mem(&1, &"one"), B::True);
@@ -30,7 +31,7 @@ pub mod Test23MappingStEphChap5_5 {
     #[test]
     fn test_from_vec_duplicate_keys() {
         // Mappings should handle duplicate keys by keeping latest value
-        let pairs = vec![Pair(1, "first"), Pair(2, "two"), Pair(1, "second")];
+        let pairs = vec![PairLit!(1, "first"), PairLit!(2, "two"), PairLit!(1, "second")];
         let m = <Mapping<N, &str> as MappingStEphChap5_5Trait<N, &str>>::FromVec(pairs);
         assert_eq!(m.size(), 2); // Only 2 unique keys
         assert_eq!(m.mem(&1, &"second"), B::True); // Latest value
@@ -40,7 +41,7 @@ pub mod Test23MappingStEphChap5_5 {
 
     #[test]
     fn test_from_relation() {
-        let rel_pairs = vec![Pair(1, "one"), Pair(2, "two"), Pair(1, "uno")];
+        let rel_pairs = vec![PairLit!(1, "one"), PairLit!(2, "two"), PairLit!(1, "uno")];
         let pairs_set = <Set<Pair<N, &str>> as SetStEphChap5_1Trait<Pair<N, &str>>>::FromVec(rel_pairs);
         let rel = <Relation<N, &str> as RelationStEphChap5_2Trait<N, &str>>::FromSet(pairs_set);
         let m = <Mapping<N, &str> as MappingStEphChap5_5Trait<N, &str>>::FromRelation(&rel);
@@ -54,7 +55,7 @@ pub mod Test23MappingStEphChap5_5 {
 
     #[test]
     fn test_domain_and_range() {
-        let pairs = vec![Pair(1, "one"), Pair(2, "two"), Pair(3, "one")];
+        let pairs = vec![PairLit!(1, "one"), PairLit!(2, "two"), PairLit!(3, "one")];
         let m = <Mapping<N, &str> as MappingStEphChap5_5Trait<N, &str>>::FromVec(pairs);
 
         let domain = m.domain();
@@ -73,20 +74,20 @@ pub mod Test23MappingStEphChap5_5 {
 
     #[test]
     fn test_iter() {
-        let pairs = vec![Pair(1, "one"), Pair(2, "two")];
+        let pairs = vec![PairLit!(1, "one"), PairLit!(2, "two")];
         let m = <Mapping<N, &str> as MappingStEphChap5_5Trait<N, &str>>::FromVec(pairs);
 
         let collected: Vec<_> = m.iter().cloned().collect();
         assert_eq!(collected.len(), 2);
 
         // Check that all expected pairs are present (order may vary)
-        assert!(collected.contains(&Pair(1, "one")));
-        assert!(collected.contains(&Pair(2, "two")));
+        assert!(collected.contains(&PairLit!(1, "one")));
+        assert!(collected.contains(&PairLit!(2, "two")));
     }
 
     #[test]
     fn test_mem_comprehensive() {
-        let pairs = vec![Pair("a", 1), Pair("b", 2), Pair("c", 3)];
+        let pairs = vec![PairLit!("a", 1), PairLit!("b", 2), PairLit!("c", 3)];
         let m = <Mapping<&str, N> as MappingStEphChap5_5Trait<&str, N>>::FromVec(pairs);
 
         // Test existing pairs
@@ -105,7 +106,7 @@ pub mod Test23MappingStEphChap5_5 {
 
     #[test]
     fn test_empty_mapping_operations() {
-        let m: Mapping<N, &str> = Mapping::empty();
+        let m: Mapping<N, &str> = MappingLit![];
 
         assert_eq!(m.size(), 0);
         assert_eq!(m.domain().size(), 0);

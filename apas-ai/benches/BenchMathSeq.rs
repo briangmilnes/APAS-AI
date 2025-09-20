@@ -1,5 +1,6 @@
 use apas_ai::MathSeq::MathSeq::*;
 use apas_ai::Types::Types::*;
+use apas_ai::MathSeqSLit;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::env;
 use std::path::PathBuf;
@@ -13,7 +14,7 @@ fn bench_mathseq_basics(c: &mut Criterion) {
 
     group.bench_with_input(BenchmarkId::new("new_then_set", n), &n, |b, &len| {
         b.iter(|| {
-            let mut s = <MathSeqS<N> as MathSeqTrait<N>>::new(len, 0);
+            let mut s = MathSeqSLit![0; len]; // *Eph: constructor + set pattern
             for i in 0..len {
                 let _ = s.set(i, i);
             }
@@ -23,7 +24,7 @@ fn bench_mathseq_basics(c: &mut Criterion) {
 
     group.bench_with_input(BenchmarkId::new("push_then_pop", n), &n, |b, &len| {
         b.iter(|| {
-            let mut s: MathSeqS<N> = <MathSeqS<N> as MathSeqTrait<N>>::empty();
+            let mut s: MathSeqS<N> = MathSeqSLit![]; // *Eph: empty constructor
             for i in 0..len {
                 let _ = s.add_last(i);
             }

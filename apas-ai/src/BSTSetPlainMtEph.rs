@@ -323,4 +323,22 @@ pub mod BSTSetPlainMtEph {
 
         fn as_tree(&self) -> &BSTPlainMtEph<T> { &self.tree }
     }
+
+    #[macro_export]
+    macro_rules! BSTSetPlainMtEphLit {
+        () => {
+            < $crate::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMtEph<_> as $crate::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMtEphTrait<_> >::empty()
+        };
+        ( $( $x:expr ),* $(,)? ) => {{
+            let mut __set = < $crate::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMtEph<_> as $crate::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMtEphTrait<_> >::empty();
+            $( __set.insert($x); )*
+            __set
+        }};
+    }
+
+    #[allow(dead_code)]
+    fn _BSTSetPlainMtEphLit_type_checks() {
+        let _ = BSTSetPlainMtEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
+        let _: BSTSetPlainMtEph<i32> = BSTSetPlainMtEphLit![]; // empty form requires explicit type
+    }
 }

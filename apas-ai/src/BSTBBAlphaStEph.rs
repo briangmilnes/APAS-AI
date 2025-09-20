@@ -247,4 +247,22 @@ pub mod BSTBBAlphaStEph {
 
         fn pre_order(&self) -> ArrayStPerS<T> { BSTBBAlphaStEph::pre_order(self) }
     }
+
+    #[macro_export]
+    macro_rules! BSTBBAlphaStEphLit {
+        () => {
+            < $crate::BSTBBAlphaStEph::BSTBBAlphaStEph::BSTBBAlphaStEph<_> as $crate::BSTBBAlphaStEph::BSTBBAlphaStEph::BSTBBAlphaStEphTrait<_> >::new()
+        };
+        ( $( $x:expr ),* $(,)? ) => {{
+            let mut __tree = < $crate::BSTBBAlphaStEph::BSTBBAlphaStEph::BSTBBAlphaStEph<_> as $crate::BSTBBAlphaStEph::BSTBBAlphaStEph::BSTBBAlphaStEphTrait<_> >::new();
+            $( __tree.insert($x); )*
+            __tree
+        }};
+    }
+
+    #[allow(dead_code)]
+    fn _BSTBBAlphaStEphLit_type_checks() {
+        let _ = BSTBBAlphaStEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
+        let _: BSTBBAlphaStEph<i32> = BSTBBAlphaStEphLit![]; // empty form requires explicit type
+    }
 }

@@ -170,7 +170,7 @@ pub mod DirGraphStEphChap6_1 {
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> Eq for DirGraphStEph<V> {}
 
     #[macro_export]
-    macro_rules! DirGraphLit {
+    macro_rules! DirGraphStEphLit {
         () => {{
             let __V: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![];
             let __A: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<$crate::Types::Types::Pair<_, _>> = $crate::SetLit![];
@@ -187,14 +187,14 @@ pub mod DirGraphStEphChap6_1 {
         }}}
 
     #[allow(dead_code)]
-    fn _DirGraphLit_type_checks() {
-        let _ = DirGraphLit!( V: [1], A: [(1,2)] ); // non-empty infers (e.g., i32)
-        let _: DirGraphStEph<i32> = DirGraphLit![]; // empty form requires explicit type
+    fn _DirGraphStEphLit_type_checks() {
+        let _ = DirGraphStEphLit!( V: [1], A: [(1,2)] ); // non-empty infers (e.g., i32)
+        let _: DirGraphStEph<i32> = DirGraphStEphLit![]; // empty form requires explicit type
     }
 
     #[allow(dead_code)]
     pub fn __dirgraph_macro_typecheck_exercise() {
-        let _g0: DirGraphStEph<usize> = DirGraphLit!( V: [], A: [] );
-        let _g1 = DirGraphLit!( V: [0,1,2], A: [(0,1),(1,2)] );
+        let _g0: DirGraphStEph<usize> = DirGraphStEphLit!( V: [], A: [] );
+        let _g1 = DirGraphStEphLit!( V: [0,1,2], A: [(0,1),(1,2)] );
     }
 }

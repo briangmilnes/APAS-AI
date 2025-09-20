@@ -1,17 +1,17 @@
 use std::time::Duration;
 
 use apas_ai::Chapter36Mt::Chapter36Mt::Chapter36MtTrait;
-use apas_ai::*;
+use apas_ai::{ArraySeqMtEphSLit, *};
 use criterion::{criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
 
 fn gen_data(n: usize) -> ArraySeqMtEphS<i32> {
     let mut seed = 0x1234_5678_9ABC_DEF0u64;
-    let mut v = Vec::with_capacity(n);
-    for _ in 0..n {
+    let mut arr = ArraySeqMtEphSLit![0; n]; // *Eph struct: constructor + set pattern
+    for i in 0..n {
         seed = seed.wrapping_mul(6364136223846793005).wrapping_add(1);
-        v.push((seed >> 32) as i32);
+        let _ = arr.set(i, (seed >> 32) as i32);
     }
-    ArraySeqMtEphS::from_vec(v)
+    arr
 }
 
 fn bench_quicksort_mt(c: &mut Criterion) {

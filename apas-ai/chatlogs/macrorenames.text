@@ -1,0 +1,26 @@
+# Macro Rename Mappings
+# Format: oldname -> newname
+# Based on audit of pub struct <X> requiring <X>Lit macros
+
+# Files with badly named macros that need renaming:
+
+# MathSeq.rs
+MathSeqLit -> MathSeqSLit
+
+# UnDirGraphStEphChap6_1.rs  
+UnDirGraphLit -> UnDirGraphStEphLit
+
+# DirGraphStEphChap6_1.rs
+DirGraphLit -> DirGraphStEphLit
+
+# ArraySeqMtPer.rs
+ArraySeqMtPerLit -> ArrayMtPerSLit
+
+# AVLTreeSeqStPer.rs
+AVLTreeSeqStPerLit -> AVLTreeSeqStPerSLit
+
+# LinkedListStPer.rs
+LinkedListStPerLit -> LinkedListStPerSLit
+
+# ArraySeqStEph.rs
+ArraySeqStEphLit -> ArraySeqStEphSLit

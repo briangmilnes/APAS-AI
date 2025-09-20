@@ -1,6 +1,7 @@
 pub mod TestArraySeqEph {
 
     use apas_ai::ArraySeqStEph; // macro import
+    use apas_ai::ArraySeqStEphSLit;
     use apas_ai::ArraySeqStEph::ArraySeqStEph::*;
     use apas_ai::ArraySeqStEphChap18::ArraySeqStEphChap18::*;
     use apas_ai::ArraySeqStEphChap19::ArraySeqStEphChap19::*;
@@ -8,7 +9,7 @@ pub mod TestArraySeqEph {
 
     #[test]
     fn test_ephemeral_arrayseq_basic() {
-        let mut s: ArraySeqStEphS<N> = ArraySeqStEph![1; 3];
+        let mut s: ArraySeqStEphS<N> = ArraySeqStEphSLit![1; 3];
         assert_eq!(s.length(), 3);
         assert_eq!(*s.nth(0), 1);
         let _ = s.set(1, 9).unwrap();
@@ -33,7 +34,7 @@ pub mod TestArraySeqEph {
 
     #[test]
     fn test_iterators_collect() {
-        let s = ArraySeqStEph![1, 2, 3];
+        let s = ArraySeqStEphSLit![1, 2, 3];
         let collected: Vec<N> = s.iter().copied().collect();
         assert_eq!(collected, vec![1, 2, 3]);
     }

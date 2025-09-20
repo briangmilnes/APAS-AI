@@ -339,7 +339,62 @@ pub mod AVLTreeSeqStEph {
     }
 
     #[macro_export]
-    macro_rules! AVLTreeSeqStEph {
+    macro_rules! AVLTreeNodeLit {
+        ({
+            value: $value:expr,
+            height: $height:expr,
+            left_size: $left_size:expr,
+            right_size: $right_size:expr,
+            left: $left:expr,
+            right: $right:expr,
+            index: $index:expr
+        }) => {
+            $crate::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeNode {
+                value: $value,
+                height: $height,
+                left_size: $left_size,
+                right_size: $right_size,
+                left: $left,
+                right: $right,
+                index: $index,
+            }
+        };
+    }
+
+    #[macro_export]
+    macro_rules! AVLTreeSeqIterStEphLit {
+        ({ stack: $stack:expr, current: $current:expr }) => {
+            $crate::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqIterStEph {
+                stack: $stack,
+                current: $current,
+            }
+        };
+    }
+
+    #[allow(dead_code)]
+    fn _AVLTreeSeqStEph_struct_macro_checks() {
+        use crate::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeNode, AVLTreeSeqIterStEph};
+
+        let node: AVLTreeNode<i32> = AVLTreeNodeLit!({
+            value: 1,
+            height: 1,
+            left_size: 0,
+            right_size: 0,
+            left: None,
+            right: None,
+            index: 0
+        });
+        let _: AVLTreeNode<i32> = node;
+
+        let iter: AVLTreeSeqIterStEph<'_, i32> = AVLTreeSeqIterStEphLit!({
+            stack: Vec::<&AVLTreeNode<i32>>::new(),
+            current: None
+        });
+        let _ = iter;
+    }
+
+    #[macro_export]
+    macro_rules! AVLTreeSeqStEphSLit {
         () => { $crate::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS::from_vec(Vec::new()) };
         ($x:expr; $n:expr) => {{
             let mut t = $crate::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS::from_vec(Vec::new());
@@ -354,9 +409,9 @@ pub mod AVLTreeSeqStEph {
     }
 
     #[allow(dead_code)]
-    fn _AVLTreeSeqStEph_type_checks() {
-        let _ = AVLTreeSeqStEph![1]; // non-empty infers (e.g., i32)
-        let _: AVLTreeSeqStEphS<i32> = AVLTreeSeqStEph![]; // empty form requires explicit type
+    fn _AVLTreeSeqStEphSLit_type_checks() {
+        let _ = AVLTreeSeqStEphSLit![1]; // non-empty infers (e.g., i32)
+        let _: AVLTreeSeqStEphS<i32> = AVLTreeSeqStEphSLit![]; // empty form requires explicit type
     }
 
     impl<T: StT> PartialEq for AVLTreeSeqStEphS<T> {

@@ -330,4 +330,22 @@ pub mod BSTRBMtEph {
 
         fn pre_order(&self) -> ArrayStPerS<T> { BSTRBMtEph::pre_order(self) }
     }
+
+    #[macro_export]
+    macro_rules! BSTRBMtEphLit {
+        () => {
+            < $crate::BSTRBMtEph::BSTRBMtEph::BSTRBMtEph<_> as $crate::BSTRBMtEph::BSTRBMtEph::BSTRBMtEphTrait<_> >::new()
+        };
+        ( $( $x:expr ),* $(,)? ) => {{
+            let __tree = < $crate::BSTRBMtEph::BSTRBMtEph::BSTRBMtEph<_> as $crate::BSTRBMtEph::BSTRBMtEph::BSTRBMtEphTrait<_> >::new();
+            $( __tree.insert($x); )*
+            __tree
+        }};
+    }
+
+    #[allow(dead_code)]
+    fn _BSTRBMtEphLit_type_checks() {
+        let _ = BSTRBMtEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
+        let _: BSTRBMtEph<i32> = BSTRBMtEphLit![]; // empty form requires explicit type
+    }
 }

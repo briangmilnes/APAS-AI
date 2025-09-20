@@ -122,7 +122,7 @@ pub mod UnDirGraphStEphChap6_1 {
     impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> Eq for UnDirGraphStEph<V> {}
 
     #[macro_export]
-    macro_rules! UnDirGraphLit {
+    macro_rules! UnDirGraphStEphLit {
         () => {{
             let __V: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![];
             let __E: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<$crate::Types::Types::Pair<_, _>> = $crate::SetLit![];
@@ -140,14 +140,14 @@ pub mod UnDirGraphStEphChap6_1 {
     }
 
     #[allow(dead_code)]
-    fn _UnDirGraphLit_type_checks() {
-        let _ = UnDirGraphLit!( V: [1], E: [(1,2)] ); // non-empty infers (e.g., i32)
-        let _: UnDirGraphStEph<i32> = UnDirGraphLit![]; // empty form requires explicit type
+    fn _UnDirGraphStEphLit_type_checks() {
+        let _ = UnDirGraphStEphLit!( V: [1], E: [(1,2)] ); // non-empty infers (e.g., i32)
+        let _: UnDirGraphStEph<i32> = UnDirGraphStEphLit![]; // empty form requires explicit type
     }
 
     #[allow(dead_code)]
     pub fn __undirgraph_macro_typecheck_exercise() {
-        let _g0: UnDirGraphStEph<usize> = UnDirGraphLit!( V: [], E: [] );
-        let _g1 = UnDirGraphLit!( V: [0,1,2], E: [(0,1),(1,2)] );
+        let _g0: UnDirGraphStEph<usize> = UnDirGraphStEphLit!( V: [], E: [] );
+        let _g1 = UnDirGraphStEphLit!( V: [0,1,2], E: [(0,1),(1,2)] );
     }
 }

@@ -158,8 +158,15 @@ pub mod Types {
         fn from(t: (A, B)) -> Self { Pair(t.0, t.1) }
     }
 
-    impl<A, B> From<Pair<A, B>> for (A, B) {
-        fn from(p: Pair<A, B>) -> (A, B) { (p.0, p.1) }
+    #[macro_export]
+    macro_rules! ParaPair {
+        ( $left:expr || $right:expr ) => {{
+            let left_handle = std::thread::spawn($left);
+            let right_handle = std::thread::spawn($right);
+            let left_result = left_handle.join().expect("left ParaPair task panicked");
+            let right_result = right_handle.join().expect("right ParaPair task panicked");
+            $crate::Types::Types::Pair(left_result, right_result)
+        }};
     }
 
     /// Set equivalence comparison for sequences (order-independent, useful for MT tests)
@@ -201,5 +208,63 @@ pub mod Types {
         }
 
         true
+    }
+
+    #[macro_export]
+    macro_rules! EdgeLit {
+        ($a:expr, $b:expr) => {
+            $crate::Types::Types::Edge($a, $b)
+        };
+    }
+
+    #[macro_export]
+    macro_rules! PairLit {
+        ($a:expr, $b:expr) => {
+            $crate::Types::Types::Pair($a, $b)
+        };
+    }
+
+    #[macro_export]
+    macro_rules! EdgeList {
+        () => {
+            Vec::new()
+        };
+        ( $( ($a:expr, $b:expr) ),* $(,)? ) => {
+            vec![ $( $crate::EdgeLit!($a, $b) ),* ]
+        };
+    }
+
+    #[macro_export]
+    macro_rules! PairList {
+        () => {
+            Vec::new()
+        };
+        ( $( ($a:expr, $b:expr) ),* $(,)? ) => {
+            vec![ $( $crate::PairLit!($a, $b) ),* ]
+        };
+    }
+
+    #[allow(dead_code)]
+    fn _EdgeLit_type_checks() {
+        let _ = EdgeLit!(1, 2); // non-empty infers (e.g., i32)
+        let _: Edge<i32> = EdgeLit!(1, 2); // explicit type
+    }
+
+    #[allow(dead_code)]
+    fn _PairLit_type_checks() {
+        let _ = PairLit!(1, 2); // non-empty infers (e.g., i32)
+        let _: Pair<i32, i32> = PairLit!(1, 2); // explicit type
+    }
+
+    #[allow(dead_code)]
+    fn _EdgeList_type_checks() {
+        let _ = EdgeList![(1, 2), (3, 4)]; // non-empty infers
+        let _: Vec<Edge<i32>> = EdgeList![]; // empty form requires explicit type
+    }
+
+    #[allow(dead_code)]
+    fn _PairList_type_checks() {
+        let _ = PairList![(1, 2), (3, 4)]; // non-empty infers
+        let _: Vec<Pair<i32, i32>> = PairList![]; // empty form requires explicit type
     }
 }

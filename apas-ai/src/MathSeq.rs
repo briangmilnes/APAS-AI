@@ -281,7 +281,7 @@ pub mod MathSeq {
     }
 
     #[macro_export]
-    macro_rules! MathSeqLit {
+    macro_rules! MathSeqSLit {
         () => {
             $crate::MathSeq::MathSeq::MathSeqS::empty()
         };
@@ -294,9 +294,9 @@ pub mod MathSeq {
     }
 
     #[allow(dead_code)]
-    fn _MathSeqLit_type_checks() {
-        let _ = MathSeqLit![1];
-        let _ = MathSeqLit![0; 3];
-        let _: crate::MathSeq::MathSeq::MathSeqS<i32> = MathSeqLit![];
+    fn _MathSeqSLit_type_checks() {
+        let _ = MathSeqSLit![1];
+        let _ = MathSeqSLit![0; 3];
+        let _: crate::MathSeq::MathSeq::MathSeqS<i32> = MathSeqSLit![];
     }
 }

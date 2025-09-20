@@ -1,6 +1,7 @@
 //! Problem 21.4 (Cartesian Product) tests.
 
 use apas_ai::ArraySeqStPer;
+    use apas_ai::ArrayStPerSLit;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
@@ -38,10 +39,10 @@ fn cartesian_tab_flat(a: &ArrayStPerS<N>, b: &ArrayStPerS<&'static str>) -> Arra
 
 #[test]
 fn test_cartesian_loops_basic() {
-    let a = ArraySeqStPer![1, 2];
-    let b = ArraySeqStPer!["3.0", "4.0", "5.0"];
+    let a = ArrayStPerSLit![1, 2];
+    let b = ArrayStPerSLit!["3.0", "4.0", "5.0"];
     let s = cartesian_loops(&a, &b);
-    let expect = ArraySeqStPer![
+    let expect = ArrayStPerSLit![
         Pair(1, "3.0"),
         Pair(1, "4.0"),
         Pair(1, "5.0"),
@@ -54,10 +55,10 @@ fn test_cartesian_loops_basic() {
 
 #[test]
 fn test_cartesian_tab_flat_basic() {
-    let a = ArraySeqStPer![1, 2];
-    let b = ArraySeqStPer!["3.0", "4.0", "5.0"];
+    let a = ArrayStPerSLit![1, 2];
+    let b = ArrayStPerSLit!["3.0", "4.0", "5.0"];
     let s = cartesian_tab_flat(&a, &b);
-    let expect = ArraySeqStPer![
+    let expect = ArrayStPerSLit![
         Pair(1, "3.0"),
         Pair(1, "4.0"),
         Pair(1, "5.0"),
@@ -70,8 +71,8 @@ fn test_cartesian_tab_flat_basic() {
 
 #[test]
 fn test_cartesian_iterator_order() {
-    let a = ArraySeqStPer![1, 2];
-    let b = ArraySeqStPer!["3", "4"];
+    let a = ArrayStPerSLit![1, 2];
+    let b = ArrayStPerSLit!["3", "4"];
     let s = cartesian_tab_flat(&a, &b);
     let v: Vec<Pair<N, &str>> = s.iter().copied().collect();
     assert_eq!(v, vec![Pair(1, "3"), Pair(1, "4"), Pair(2, "3"), Pair(2, "4")]);
@@ -79,8 +80,8 @@ fn test_cartesian_iterator_order() {
 
 #[test]
 fn test_cartesian_debug_shape() {
-    let a = ArraySeqStPer![1];
-    let b = ArraySeqStPer!["x"];
+    let a = ArrayStPerSLit![1];
+    let b = ArrayStPerSLit!["x"];
     let s = cartesian_loops(&a, &b);
     let dbg_str = format!("{:?}", s);
     assert!(!dbg_str.is_empty());

@@ -254,7 +254,37 @@ pub mod LinkedListStPer {
     }
 
     #[macro_export]
-    macro_rules! LinkedListStPer {
+    macro_rules! NodePLit {
+        ({ value: $value:expr, next: $next:expr }) => {
+            $crate::LinkedListStPer::LinkedListStPer::NodeP {
+                value: $value,
+                next: $next,
+            }
+        };
+    }
+
+    #[macro_export]
+    macro_rules! LinkedListStPerIterLit {
+        ({ cursor: $cursor:expr }) => {
+            $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerIter {
+                cursor: $cursor,
+            }
+        };
+    }
+
+    #[allow(dead_code)]
+    fn _LinkedListStPer_struct_macro_checks() {
+        use crate::LinkedListStPer::LinkedListStPer::{LinkedListStPerIter, NodeP};
+
+        let node: NodeP<i32> = NodePLit!({ value: 1, next: None });
+        let _ = node;
+
+        let iter: LinkedListStPerIter<'_, i32> = LinkedListStPerIterLit!({ cursor: None });
+        let _ = iter;
+    }
+
+    #[macro_export]
+    macro_rules! LinkedListStPerSLit {
         () => { $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS::from_vec(Vec::new()) };
         ($x:expr; $n:expr) => {{
             < $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS<_> as $crate::LinkedListStPer::LinkedListStPer::LinkedListStPerTrait<_> >::new($n, $x)
@@ -263,9 +293,9 @@ pub mod LinkedListStPer {
     }
 
     #[allow(dead_code)]
-    fn _LinkedListStPer_type_checks() {
+    fn _LinkedListStPerSLit_type_checks() {
         use crate::LinkedListStPer::LinkedListStPer::LinkedListStPerS;
-        let _ = LinkedListStPer![1]; // non-empty infers (e.g., i32)
-        let _: LinkedListStPerS<i32> = LinkedListStPer![]; // empty form requires explicit type
+        let _ = LinkedListStPerSLit![1]; // non-empty infers (e.g., i32)
+        let _: LinkedListStPerS<i32> = LinkedListStPerSLit![]; // empty form requires explicit type
     }
 }

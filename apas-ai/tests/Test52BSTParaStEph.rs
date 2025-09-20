@@ -1,4 +1,4 @@
-use apas_ai::BSTParaMtEph::BSTParaMtEph::*;
+use apas_ai::BSTParaStEph::BSTParaStEph::*;
 use apas_ai::ArrayStPerSLit;
 use apas_ai::*;
 
@@ -66,30 +66,4 @@ fn para_join_mid_expose_roundtrip() {
             assert_eq!(r.size(), 0);
         }
     }
-}
-
-#[test]
-fn para_intersect_and_difference() {
-    let a = make_tree(&[1, 2, 3, 4, 5, 6]);
-    let b = make_tree(&[4, 5, 6, 7, 8]);
-
-    let intersection = a.intersect(&b);
-    assert_eq!(intersection.in_order(), ArrayStPerSLit![4, 5, 6]);
-
-    let difference = a.difference(&b);
-    assert_eq!(difference.in_order(), ArrayStPerSLit![1, 2, 3]);
-}
-
-#[test]
-fn para_filter_and_reduce() {
-    let tree = make_tree(&[1, 2, 3, 4, 5, 6]);
-
-    let evens = tree.filter(|v| v % 2 == 0);
-    assert_eq!(evens.in_order(), ArrayStPerSLit![2, 4, 6]);
-
-    let sum = tree.reduce(|a, b| a + b, 0);
-    assert_eq!(sum, 21);
-
-    let empty_sum = ParamBST::<i32>::new().reduce(|a, b| a + b, 0);
-    assert_eq!(empty_sum, 0);
 }

@@ -1,5 +1,6 @@
 use apas_ai::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
 use apas_ai::Types::Types::*;
+use apas_ai::AVLTreeSeqStEphSLit;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
@@ -11,11 +12,11 @@ fn bench_avl_eph_ch19(c: &mut Criterion) {
     let n: N = 1_000;
     group.bench_with_input(BenchmarkId::new("push_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let mut t: AVLTreeSeqStEphS<N> = <AVLTreeSeqStEphS<N> as AVLTreeSeqStEphTrait<N>>::empty();
+            let mut t: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphSLit![]; // *Eph: constructor pattern
             for i in 0..len {
                 t.push_back(i);
             }
-            let mut m: AVLTreeSeqStEphS<N> = <AVLTreeSeqStEphS<N> as AVLTreeSeqStEphTrait<N>>::empty();
+            let mut m: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphSLit![]; // *Eph: constructor pattern
             for i in 0..len {
                 m.push_back(*<AVLTreeSeqStEphS<N> as AVLTreeSeqStEphTrait<N>>::nth(&t, i) + 1);
             }

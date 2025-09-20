@@ -137,4 +137,27 @@ pub mod BSTPlainStEph {
             },
         }
     }
+
+    #[macro_export]
+    macro_rules! BSTPlainStEphLit {
+        () => { $crate::BSTPlainStEph::BSTPlainStEph::BSTPlainStEph::new() };
+        ($x:expr; $n:expr) => {{
+            let mut __tree = $crate::BSTPlainStEph::BSTPlainStEph::BSTPlainStEph::new();
+            for _ in 0..$n { __tree.insert($x.clone()); }
+            __tree
+        }};
+        ($($x:expr),+ $(,)?) => {{
+            let mut __tree = $crate::BSTPlainStEph::BSTPlainStEph::BSTPlainStEph::new();
+            $( __tree.insert($x); )*
+            __tree
+        }};
+    }
+
+    #[allow(dead_code)]
+    fn _BSTPlainStEphLit_type_checks() {
+        use crate::BSTPlainStEph::BSTPlainStEph::BSTPlainStEph;
+        let _: BSTPlainStEph<i32> = BSTPlainStEphLit![];
+        let _ = BSTPlainStEphLit![1, 2, 3];
+        let _ = BSTPlainStEphLit![0; 2];
+    }
 }

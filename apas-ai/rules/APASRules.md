@@ -39,3 +39,12 @@
 - When code naturally descends a structure or mirrors the textbook recursion, opt for a compact recursive implementation (often as a nested function) instead of piling logic into a `loop { … }`.
 - Straightforward iterative loops are still fine for generators or linear scans; switch only when the recursion matches the idea more clearly.
 - If only one call site uses the recursive routine, keep it local to that function; hoist it out only when multiple entry points need it shared.
+
+### Benchmark Macro Usage Patterns
+- When using `StructLit!` macros in benchmark files, follow struct-specific patterns based on suffix:
+  - `*Per` structs (persistent): Use `from_vec` pattern—collect data into `Vec`, then use `from_vec` or let macro handle `from_vec` internally
+  - `*Eph` structs (ephemeral): Use constructor + set pattern—create with initial size/value using macro, then set individual values via `.set()` calls
+  - Literal cases: Use direct macro form `StructLit![x, y, z]` when values are compile-time known
+- **CRITICAL: Never replace the actual operation being benchmarked**—only replace setup/construction code that isn't the performance measurement target
+- Benchmark files that specifically test `tabulate`, `map`, or other API methods must preserve those exact calls to maintain measurement validity
+- This preserves performance characteristics and design patterns of persistent vs ephemeral data structures while maintaining benchmark accuracy.

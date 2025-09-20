@@ -1,0 +1,88 @@
+
+Rename (and change calls to) BSTParaMtEph.rs BSTParaStEph. Put in single threaded type StT.  
+Rename, fix tests and benches.
+Execute relentlessly.
+
+ First, undo the parapair in Types.
+
+|| makes a parallel pair in APAS notation.  Add a macro for it Types
+and have its creation be truely multi-threaded but returns a Pair.
+Name the macro ParaPair.
+
+
+ Then fix BSTParaMtEph using real threaded parallelism with the parallel
+algorithm below. 
+
+Build a to-do list and wait for me to review it before you execute.
+
+
+So far all our algorithms have been sequential, and, as we will show, all take O(log n)
+work. We now look at some functions and corresponding algorithms that take advantage
+of parallelism.
+
+Algorithm 38.6 (Union). The union algorithm uses divide and conquer.
+union(T1, T2) =
+case (expose T1, expose T2) of
+(Leaf , ) ⇒ T2
+( , Leaf ) ⇒ T1
+| (Node(L1, k1, R1), ) ⇒
+let (L2, , R2) = split(T2, k1)
+(L, R) = (union(L1, L2) || union(R1, R2))
+in joinM (L, k1, R) end
+
+The idea is to split both trees at some key k, recursively union the two parts with keys
+less than k, and the two parts with keys greater than k and then join them. Note that the
+key k might exists in both trees but will only be placed in the result once, because the split
+operation will not include k in any of the two trees returned.
+Note that we chose the key at the root of the first tree, T1, to split the second, T2. We could
+equally well have done it the other way, choosing the root of T2 to split T1.
+
+
+Algorithm 38.7 (Intersect). The intersection algorithm is similar to union.
+intersect(T1, T2) =
+case (expose T1, expose T2) of
+(Leaf , ) ⇒ empty
+( , Leaf ) ⇒ empty
+| (Node(L1, k1, R1), ) ⇒
+let (L2, a, R2) = split(T2, k1)
+(L, R) = (intersect(L1, L2) || intersect(R1, R2))
+in if a then joinM (L, k1, R)
+else joinPair (L, R)
+end
+As with union, the implementation splits both trees by using the key k1 at the root of the
+first tree, and computes intersections recursively. It then computes the result by joining the
+results from the recursive calls and including the key k1 if it is found in both trees. Note
+that since the trees are BSTs, checking for the intersections of the left and right subtrees
+recursively suffices to find all shared keys because the split function places all keys less
+than and greater than the given key to two separate trees.
+
+Algorithm 38.8 (Difference). And there is little difference with the difference algorithm.
+
+difference(T1, T2) =
+case (expose T1, expose T2) of
+(Leaf , ) ⇒ empty
+( , Leaf ) ⇒ T1
+| (Node(L1, k1, R1), ) ⇒
+let (L2, a, R2) = split(T2, k1)
+(L, R) = (difference(L1, L2) || difference(R1, R2))
+in if a then joinPair (L, R)
+else joinM (L, k1, R)
+end
+
+Algorithm 38.9 (Filter).
+filter f T =
+case expose T of
+Leaf ⇒ empty
+| Node(L, k, R) ⇒
+let (L′, R′) = (filter f L) || (filter f R)
+in if f (k) then joinM (L′, k, R′)
+else joinPair (L′, R′)
+end
+Algorithm 38.10 (Reduce).
+reduce f I T =
+case expose T of
+Leaf ⇒ I
+| Node(L, k, R) ⇒
+let (L′, R′) = (reduce f I L) || (reduce f I R)
+in f (L′, f (k, R′)) end
+

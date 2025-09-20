@@ -1,6 +1,7 @@
 //! Problem 21.3 (Points in 3D) using ArraySeqPer — imperative triple loop.
 
 use apas_ai::ArraySeqStPer;
+    use apas_ai::ArrayStPerSLit;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Types::Types::*;
 
@@ -8,7 +9,7 @@ use apas_ai::Types::Types::*;
 /// gpt-5-hard: Work: Θ(n^3), Span: Θ(n^3)
 fn points3d_loops(n: N) -> ArrayStPerS<Pair<N, Pair<N, N>>> {
     if n == 0 {
-        return ArraySeqStPer![];
+        return ArrayStPerSLit![];
     }
     let len = n * n * n;
     let mut v: Vec<Pair<N, Pair<N, N>>> = Vec::with_capacity(len);
@@ -31,14 +32,14 @@ fn test_points3d_loops_n0_empty() {
 #[test]
 fn test_points3d_loops_n1_single() {
     let s = points3d_loops(1);
-    let expect = ArraySeqStPer![Pair(0, Pair(1, 2))];
+    let expect = ArrayStPerSLit![Pair(0, Pair(1, 2))];
     assert_eq!(s, expect);
 }
 
 #[test]
 fn test_points3d_loops_n2_values_and_order() {
     let s = points3d_loops(2);
-    let expect = ArraySeqStPer![
+    let expect = ArrayStPerSLit![
         Pair(0, Pair(1, 2)),
         Pair(0, Pair(1, 3)),
         Pair(0, Pair(2, 2)),

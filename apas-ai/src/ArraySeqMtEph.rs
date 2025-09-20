@@ -161,7 +161,7 @@ pub mod ArraySeqMtEph {
     }
 
     #[macro_export]
-    macro_rules! ArraySeqMtEph {
+    macro_rules! ArraySeqMtEphSLit {
         () => { $crate::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(Vec::new()) };
         ($x:expr; $n:expr) => { $crate::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(vec![$x; $n]) };
         ($($x:expr),* $(,)?) => { $crate::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(vec![$($x),*]) };

@@ -240,4 +240,22 @@ pub mod BSTSetBBAlphaMtEph {
 
         fn as_tree(&self) -> &BSTBBAlphaMtEph<T> { &self.tree }
     }
+
+    #[macro_export]
+    macro_rules! BSTSetBBAlphaMtEphLit {
+        () => {
+            < $crate::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph<_> as $crate::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEphTrait<_> >::empty()
+        };
+        ( $( $x:expr ),* $(,)? ) => {{
+            let mut __set = < $crate::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph<_> as $crate::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEphTrait<_> >::empty();
+            $( __set.insert($x); )*
+            __set
+        }};
+    }
+
+    #[allow(dead_code)]
+    fn _BSTSetBBAlphaMtEphLit_type_checks() {
+        let _ = BSTSetBBAlphaMtEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
+        let _: BSTSetBBAlphaMtEph<i32> = BSTSetBBAlphaMtEphLit![]; // empty form requires explicit type
+    }
 }

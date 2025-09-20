@@ -2,6 +2,7 @@
 
 pub mod TestAVLTreeSeqStPerChap18 {
     use apas_ai::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use apas_ai::ArrayStPerSLit;
     use apas_ai::AVLTreeSeqStPerChap18::AVLTreeSeqStPerChap18::*;
     use apas_ai::ArraySeqStPer; // macro import
     use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
@@ -11,14 +12,14 @@ pub mod TestAVLTreeSeqStPerChap18 {
     #[test]
     fn test_tabulate_inorder() {
         let t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap18Trait<N>>::tabulate(|i| i, 5);
-        assert_eq!(t.to_arrayseq(), ArraySeqStPer![0, 1, 2, 3, 4]);
+        assert_eq!(t.to_arrayseq(), ArrayStPerSLit![0, 1, 2, 3, 4]);
     }
 
     #[test]
     fn test_map_increment() {
         let base: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap18Trait<N>>::tabulate(|i| i, 4);
         let mapped: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap18Trait<N>>::map(&base, |x| x + 1);
-        assert_eq!(mapped.to_arrayseq(), ArraySeqStPer![1, 2, 3, 4]);
+        assert_eq!(mapped.to_arrayseq(), ArrayStPerSLit![1, 2, 3, 4]);
     }
 
     #[test]
@@ -26,7 +27,7 @@ pub mod TestAVLTreeSeqStPerChap18 {
         let a: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap18Trait<N>>::tabulate(|i| i, 4); // 0..3
         let b: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap18Trait<N>>::tabulate(|i| i + 2, 4); // 2..5
         let u: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap18Trait<N>>::append(&a, &b);
-        assert_eq!(u.to_arrayseq(), ArraySeqStPer![0, 1, 2, 3, 4, 5]);
+        assert_eq!(u.to_arrayseq(), ArrayStPerSLit![0, 1, 2, 3, 4, 5]);
     }
 
     #[test]
@@ -39,6 +40,6 @@ pub mod TestAVLTreeSeqStPerChap18 {
                 B::False
             }
         });
-        assert_eq!(evens.to_arrayseq(), ArraySeqStPer![0, 2, 4]);
+        assert_eq!(evens.to_arrayseq(), ArrayStPerSLit![0, 2, 4]);
     }
 }

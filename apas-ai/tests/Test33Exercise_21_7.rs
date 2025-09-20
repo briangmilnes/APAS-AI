@@ -1,6 +1,7 @@
 //! Exercise 21.7 (Comprehension with Conditionals): even elements of a paired with vowels of b.
 
 use apas_ai::ArraySeqStPer;
+    use apas_ai::ArrayStPerSLit;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
@@ -41,17 +42,17 @@ fn pair_even_with_vowels(a: &ArrayStPerS<N>, b: &ArrayStPerS<char>) -> ArrayStPe
 
 #[test]
 fn test_pair_even_with_vowels_basic() {
-    let a = ArraySeqStPer![1, 2, 3, 4];
-    let b = ArraySeqStPer!['a', 'b', 'e'];
+    let a = ArrayStPerSLit![1, 2, 3, 4];
+    let b = ArrayStPerSLit!['a', 'b', 'e'];
     let s = pair_even_with_vowels(&a, &b);
-    let expect = ArraySeqStPer![Pair(2, 'a'), Pair(2, 'e'), Pair(4, 'a'), Pair(4, 'e')];
+    let expect = ArrayStPerSLit![Pair(2, 'a'), Pair(2, 'e'), Pair(4, 'a'), Pair(4, 'e')];
     assert_eq!(s, expect);
 }
 
 #[test]
 fn test_pair_even_with_vowels_debug_shape() {
-    let a = ArraySeqStPer![2];
-    let b = ArraySeqStPer!['a', 'x'];
+    let a = ArrayStPerSLit![2];
+    let b = ArrayStPerSLit!['a', 'x'];
     let s = pair_even_with_vowels(&a, &b);
     let dbg_str = format!("{:?}", s);
     assert!(!dbg_str.is_empty());

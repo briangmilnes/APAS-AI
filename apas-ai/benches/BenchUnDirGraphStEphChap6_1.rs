@@ -1,6 +1,7 @@
 use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
 use apas_ai::Types::Types::*;
 use apas_ai::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1::*;
+use apas_ai::{SetLit, PairLit};
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
@@ -13,13 +14,13 @@ fn bench_undirgraph_build(c: &mut Criterion) {
     let n: N = 50_000;
     group.bench_with_input(BenchmarkId::new("build_vertices_edges", n), &n, |b, &len| {
         b.iter(|| {
-            let mut v: Set<N> = Set::empty();
+            let mut v: Set<N> = SetLit![]; // Set: empty constructor
             for i in 0..len {
                 let _ = Set::insert(&mut v, i);
             }
-            let mut e: Set<Pair<N, N>> = Set::empty();
+            let mut e: Set<Pair<N, N>> = SetLit![]; // Set: empty constructor
             for i in 0..len {
-                let _ = Set::insert(&mut e, Pair(i.min((i + 1) % len), i.max((i + 1) % len)));
+                let _ = Set::insert(&mut e, PairLit!(i.min((i + 1) % len), i.max((i + 1) % len)));
             }
             let g = <UnDirGraphStEph<N> as UnDirGraphStEphChap6_1Trait<N>>::FromSets(v, e);
             black_box(g)

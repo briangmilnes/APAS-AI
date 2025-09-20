@@ -2,6 +2,7 @@ use apas_ai::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::ArraySeqStEphChap18Trait;
 use apas_ai::ArraySeqStEphChap19Trait;
 use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqStEphSLit;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::env;
 use std::path::PathBuf;
@@ -33,7 +34,7 @@ fn bench_build_random_s(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("zeros_then_update", n), &n, |b, &len| {
         b.iter(|| {
             let mut rng = LinearCongruentialGenerator32::new(0xDEADBEEF);
-            let mut s = <ArraySeqStEphS<N> as ArraySeqStEphChap19Trait<N>>::tabulate(|_| 0, len);
+            let mut s = ArraySeqStEphSLit![0; len]; // *Eph: constructor + set pattern
             for i in 0..len {
                 let _ = <ArraySeqStEphS<N> as ArraySeqStEphChap18Trait<N>>::update(&mut s, (i, rng.next_N()));
             }

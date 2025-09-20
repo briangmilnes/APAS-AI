@@ -1,11 +1,11 @@
 use std::time::Duration;
 
 use apas_ai::BSTRBStEph::BSTRBStEph::BSTreeRB;
-use apas_ai::*;
+use apas_ai::{BSTRBStEphLit, *};
 use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
 
 fn build_tree(len: usize) -> BSTreeRB<i32> {
-    let mut tree = BSTreeRB::new();
+    let mut tree = BSTRBStEphLit![]; // BST Eph: empty constructor
     for value in 0..len {
         tree.insert(value as i32);
     }

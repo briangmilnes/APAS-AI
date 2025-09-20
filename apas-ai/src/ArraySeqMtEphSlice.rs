@@ -205,4 +205,18 @@ pub mod ArraySeqMtEphSlice {
         }
         data
     }
+
+    #[macro_export]
+    macro_rules! ArraySeqMtEphSliceSLit {
+        () => { $crate::ArraySeqMtEphSlice::ArraySeqMtEphSlice::ArraySeqMtEphSliceS::from_vec(Vec::new()) };
+        ($x:expr; $n:expr) => { $crate::ArraySeqMtEphSlice::ArraySeqMtEphSlice::ArraySeqMtEphSliceS::from_vec(vec![$x; $n]) };
+        ($($x:expr),* $(,)?) => { $crate::ArraySeqMtEphSlice::ArraySeqMtEphSlice::ArraySeqMtEphSliceS::from_vec(vec![$($x),*]) };
+    }
+
+    #[allow(dead_code)]
+    fn _ArraySeqMtEphSliceSLit_type_checks() {
+        let _ = ArraySeqMtEphSliceSLit![1];
+        let _ = ArraySeqMtEphSliceSLit![0; 2];
+        let _: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceSLit![];
+    }
 }

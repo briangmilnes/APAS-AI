@@ -1,4 +1,5 @@
 use apas_ai::*;
+    use apas_ai::ArrayStPerSLit;
 
 trait TestSet: Sized {
     fn empty() -> Self;
@@ -292,7 +293,7 @@ fn exercise_set<S: TestSet>() {
     assert_eq!(sum, 12);
 
     let in_order = union.iter_seq();
-    assert_eq!(in_order, ArraySeqStPer![1, 2, 4, 5]);
+    assert_eq!(in_order, ArrayStPerSLit![1, 2, 4, 5]);
 }
 
 #[test]

@@ -166,15 +166,15 @@ pub mod ArraySeqStPer {
     }
 
     #[macro_export]
-    macro_rules! ArraySeqStPer {
+    macro_rules! ArrayStPerSLit {
         () => { $crate::ArraySeqStPer::ArraySeqStPer::ArrayStPerS::empty() };
         ($x:expr; $n:expr) => { $crate::ArraySeqStPer::ArraySeqStPer::ArrayStPerS::new($n, $x) };
         ($($x:expr),* $(,)?) => { $crate::ArraySeqStPer::ArraySeqStPer::ArrayStPerS::from_vec(vec![$($x),*]) };
     }
 
     #[allow(dead_code)]
-    fn _ArraySeqStPer_macro_type_checks() {
-        let _ = ArraySeqStPer![1];
-        let _: crate::ArraySeqStPer::ArraySeqStPer::ArrayStPerS<i32> = ArraySeqStPer![];
+    fn _ArrayStPerSLit_type_checks() {
+        let _ = ArrayStPerSLit![1];
+        let _: crate::ArraySeqStPer::ArraySeqStPer::ArrayStPerS<i32> = ArrayStPerSLit![];
     }
 }

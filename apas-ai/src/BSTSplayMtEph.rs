@@ -228,4 +228,22 @@ pub mod BSTSplayMtEph {
 
         fn pre_order(&self) -> ArrayStPerS<T> { BSTSplayMtEph::pre_order(self) }
     }
+
+    #[macro_export]
+    macro_rules! BSTSplayMtEphLit {
+        () => {
+            < $crate::BSTSplayMtEph::BSTSplayMtEph::BSTSplayMtEph<_> as $crate::BSTSplayMtEph::BSTSplayMtEph::BSTSplayMtEphTrait<_> >::new()
+        };
+        ( $( $x:expr ),* $(,)? ) => {{
+            let __tree = < $crate::BSTSplayMtEph::BSTSplayMtEph::BSTSplayMtEph<_> as $crate::BSTSplayMtEph::BSTSplayMtEph::BSTSplayMtEphTrait<_> >::new();
+            $( __tree.insert($x); )*
+            __tree
+        }};
+    }
+
+    #[allow(dead_code)]
+    fn _BSTSplayMtEphLit_type_checks() {
+        let _ = BSTSplayMtEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
+        let _: BSTSplayMtEph<i32> = BSTSplayMtEphLit![]; // empty form requires explicit type
+    }
 }

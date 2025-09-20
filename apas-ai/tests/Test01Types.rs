@@ -35,6 +35,8 @@ pub mod TestTypes {
         set.insert(B::True);
 
         let ordered: Vec<B> = set.into_iter().collect();
+        // Note: vec![B::True, B::False] kept as-is since it's a simple test assertion
+        // and there's no BLit! macro for Boolean enum values
         assert_eq!(ordered, vec![B::True, B::False]);
     }
 

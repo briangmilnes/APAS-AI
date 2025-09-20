@@ -194,15 +194,15 @@ pub mod ArraySeqMtPer {
     }
 
     #[macro_export]
-    macro_rules! ArraySeqMtPer {
+    macro_rules! ArrayMtPerSLit {
         () => { $crate::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS::empty() };
         ($x:expr; $n:expr) => { $crate::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS::new($n, $x) };
         ($($x:expr),* $(,)?) => { $crate::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS::from_vec(vec![$($x),*]) };
     }
 
     #[allow(dead_code)]
-    fn _ArraySeqMtPer_macro_type_checks() {
-        let _ = ArraySeqMtPer![1];
-        let _: crate::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS<i32> = ArraySeqMtPer![];
+    fn _ArrayMtPerSLit_type_checks() {
+        let _ = ArrayMtPerSLit![1];
+        let _: crate::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS<i32> = ArrayMtPerSLit![];
     }
 }

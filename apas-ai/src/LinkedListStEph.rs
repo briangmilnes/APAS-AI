@@ -283,7 +283,37 @@ pub mod LinkedListStEph {
     }
 
     #[macro_export]
-    macro_rules! LinkedListStEph {
+    macro_rules! NodeELit {
+        ({ value: $value:expr, next: $next:expr }) => {
+            $crate::LinkedListStEph::LinkedListStEph::NodeE {
+                value: $value,
+                next: $next,
+            }
+        };
+    }
+
+    #[macro_export]
+    macro_rules! LinkedListStEphIterLit {
+        ({ cursor: $cursor:expr }) => {
+            $crate::LinkedListStEph::LinkedListStEph::LinkedListStEphIter {
+                cursor: $cursor,
+            }
+        };
+    }
+
+    #[allow(dead_code)]
+    fn _LinkedListStEph_struct_macro_checks() {
+        use crate::LinkedListStEph::LinkedListStEph::{LinkedListStEphIter, NodeE};
+
+        let node: NodeE<i32> = NodeELit!({ value: 1, next: None });
+        let _ = node;
+
+        let iter: LinkedListStEphIter<'_, i32> = LinkedListStEphIterLit!({ cursor: None });
+        let _ = iter;
+    }
+
+    #[macro_export]
+    macro_rules! LinkedListStEphSLit {
         () => {
             < $crate::LinkedListStEph::LinkedListStEph::LinkedListStEphS<_> as $crate::LinkedListStEph::LinkedListStEph::LinkedListStEphTrait<_> >::empty()
         };
@@ -305,8 +335,8 @@ pub mod LinkedListStEph {
     }
 
     #[allow(dead_code)]
-    fn _LinkedListStEph_type_checks() {
-        let _ = LinkedListStEph![1]; // non-empty infers (e.g., i32)
-        let _: LinkedListStEphS<i32> = LinkedListStEph![]; // empty form requires explicit type
+    fn _LinkedListStEphSLit_type_checks() {
+        let _ = LinkedListStEphSLit![1]; // non-empty infers (e.g., i32)
+        let _: LinkedListStEphS<i32> = LinkedListStEphSLit![]; // empty form requires explicit type
     }
 }

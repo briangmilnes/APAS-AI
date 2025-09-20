@@ -2,6 +2,7 @@ use apas_ai::MappingStEphChap5_5::MappingStEphChap5_5::*;
 use apas_ai::RelationStEphChap5_2::RelationStEphChap5_2::*;
 use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
 use apas_ai::Types::Types::*;
+use apas_ai::{SetLit, PairLit};
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
@@ -14,9 +15,9 @@ fn bench_mapping_build(c: &mut Criterion) {
     let n: N = 50_000;
     group.bench_with_input(BenchmarkId::new("from_relation_overwrite_dups", n), &n, |b, &len| {
         b.iter(|| {
-            let mut pairs: Set<Pair<N, N>> = Set::empty();
+            let mut pairs: Set<Pair<N, N>> = SetLit![]; // Set: empty constructor
             for i in 0..len {
-                let _ = Set::insert(&mut pairs, Pair(i % 10_000, i));
+                let _ = Set::insert(&mut pairs, PairLit!(i % 10_000, i));
             }
             let r = Relation::FromSet(pairs);
             let m = Mapping::FromRelation(&r);

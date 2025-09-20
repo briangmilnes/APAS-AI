@@ -6,6 +6,7 @@ use apas_ai::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMt as PlainSet;
 use apas_ai::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt as RBSet;
 use apas_ai::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMt as SplaySet;
 use apas_ai::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt as TreapSet;
+use apas_ai::{BSTSetAVLMtEphLit, BSTSetBBAlphaMtEphLit, BSTSetPlainMtEphLit, BSTSetRBMtEphLit, BSTSetSplayMtEphLit, BSTSetTreapMtEphLit};
 use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
 
 trait BenchSet: Sized {
@@ -82,7 +83,7 @@ fn bench_set_variants<S: BenchSet>(c: &mut Criterion, label: &str) {
 }
 
 impl BenchSet for PlainSet<i32> {
-    fn empty() -> Self { Self::empty() }
+    fn empty() -> Self { BSTSetPlainMtEphLit![] }
 
     fn insert_value(&mut self, value: i32) { self.insert(value); }
 
@@ -96,7 +97,7 @@ impl BenchSet for PlainSet<i32> {
 }
 
 impl BenchSet for AVLSet<i32> {
-    fn empty() -> Self { Self::empty() }
+    fn empty() -> Self { BSTSetAVLMtEphLit![] }
 
     fn insert_value(&mut self, value: i32) { self.insert(value); }
 
@@ -110,7 +111,7 @@ impl BenchSet for AVLSet<i32> {
 }
 
 impl BenchSet for RBSet<i32> {
-    fn empty() -> Self { Self::empty() }
+    fn empty() -> Self { BSTSetRBMtEphLit![] }
 
     fn insert_value(&mut self, value: i32) { self.insert(value); }
 
@@ -124,7 +125,7 @@ impl BenchSet for RBSet<i32> {
 }
 
 impl BenchSet for BBAlphaSet<i32> {
-    fn empty() -> Self { Self::empty() }
+    fn empty() -> Self { BSTSetBBAlphaMtEphLit![] }
 
     fn insert_value(&mut self, value: i32) { self.insert(value); }
 
@@ -138,7 +139,7 @@ impl BenchSet for BBAlphaSet<i32> {
 }
 
 impl BenchSet for TreapSet<i32> {
-    fn empty() -> Self { Self::empty() }
+    fn empty() -> Self { BSTSetTreapMtEphLit![] }
 
     fn insert_value(&mut self, value: i32) { self.insert(value); }
 
@@ -152,7 +153,7 @@ impl BenchSet for TreapSet<i32> {
 }
 
 impl BenchSet for SplaySet<i32> {
-    fn empty() -> Self { Self::empty() }
+    fn empty() -> Self { BSTSetSplayMtEphLit![] }
 
     fn insert_value(&mut self, value: i32) { self.insert(value); }
 

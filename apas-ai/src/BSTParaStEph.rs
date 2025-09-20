@@ -1,19 +1,20 @@
-//! Parametric multi-threaded BST built around a joinMid interface.
+//! Parametric single-threaded BST built around a joinMid interface.
 
-pub mod BSTParaMtEph {
-    use std::sync::{Arc, RwLock};
+pub mod BSTParaStEph {
+    use std::cell::RefCell;
+    use std::rc::Rc;
 
     use crate::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     #[derive(Clone)]
-    pub enum Exposed<T: StTinMtT + Ord> {
+    pub enum Exposed<T: StT + Ord> {
         Leaf,
         Node(ParamBST<T>, T, ParamBST<T>),
     }
 
     #[derive(Clone)]
-    struct NodeInner<T: StTinMtT + Ord> {
+    struct NodeInner<T: StT + Ord> {
         key: T,
         size: N,
         left: ParamBST<T>,
@@ -21,11 +22,11 @@ pub mod BSTParaMtEph {
     }
 
     #[derive(Clone)]
-    pub struct ParamBST<T: StTinMtT + Ord> {
-        root: Arc<RwLock<Option<Box<NodeInner<T>>>>>,
+    pub struct ParamBST<T: StT + Ord> {
+        root: Rc<RefCell<Option<Box<NodeInner<T>>>>>,
     }
 
-    pub trait ParamBSTTrait<T: StTinMtT + Ord>: Sized {
+    pub trait ParamBSTTrait<T: StT + Ord>: Sized {
         fn new() -> Self;
         fn expose(&self) -> Exposed<T>;
         fn join_mid(exposed: Exposed<T>) -> Self;
@@ -33,16 +34,16 @@ pub mod BSTParaMtEph {
         fn is_empty(&self) -> B;
         fn insert(&self, key: T);
         fn delete(&self, key: &T);
-        fn find(&self, key: &T) -> Option<T;>
+        fn find(&self, key: &T) -> Option<T>;
         fn split(&self, key: &T) -> (Self, B, Self);
         fn join_pair(&self, other: Self) -> Self;
         fn union(&self, other: &Self) -> Self;
         fn in_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StTinMtT + Ord> ParamBST<T> {
+    impl<T: StT + Ord> ParamBST<T> {
         fn expose_internal(&self) -> Exposed<T> {
-            let guard = self.root.read().unwrap();
+            let guard = self.root.borrow();
             match &*guard {
                 | None => Exposed::Leaf,
                 | Some(node) => Exposed::Node(node.left.clone(), node.key.clone(), node.right.clone()),
@@ -55,7 +56,7 @@ pub mod BSTParaMtEph {
                 | Exposed::Node(left, key, right) => {
                     let size = 1 + left.size() + right.size();
                     ParamBST {
-                        root: Arc::new(RwLock::new(Some(Box::new(NodeInner { key, size, left, right })))),
+                        root: Rc::new(RefCell::new(Some(Box::new(NodeInner { key, size, left, right })))),
                     }
                 }
             }
@@ -127,10 +128,10 @@ pub mod BSTParaMtEph {
         }
     }
 
-    impl<T: StTinMtT + Ord> ParamBSTTrait<T> for ParamBST<T> {
+    impl<T: StT + Ord> ParamBSTTrait<T> for ParamBST<T> {
         fn new() -> Self {
             ParamBST {
-                root: Arc::new(RwLock::new(None)),
+                root: Rc::new(RefCell::new(None)),
             }
         }
 
@@ -139,8 +140,7 @@ pub mod BSTParaMtEph {
         fn join_mid(exposed: Exposed<T>) -> Self { ParamBST::join_mid(exposed) }
 
         fn size(&self) -> N {
-            let guard = self.root.read().unwrap();
-            guard.as_ref().map_or(0, |node| node.size)
+            self.root.borrow().as_ref().map_or(0, |node| node.size)
         }
 
         fn is_empty(&self) -> B {
@@ -154,17 +154,15 @@ pub mod BSTParaMtEph {
         fn insert(&self, key: T) {
             let (left, _, right) = ParamBST::split_inner(self, &key);
             let rebuilt = ParamBST::join_m(left, key, right);
-            let new_state = rebuilt.root.read().unwrap().clone();
-            let mut guard = self.root.write().unwrap();
-            *guard = new_state;
+            let new_state = { rebuilt.root.borrow().clone() };
+            *self.root.borrow_mut() = new_state;
         }
 
         fn delete(&self, key: &T) {
             let (left, _, right) = ParamBST::split_inner(self, key);
             let merged = ParamBST::join_pair_inner(left, right);
-            let new_state = merged.root.read().unwrap().clone();
-            let mut guard = self.root.write().unwrap();
-            *guard = new_state;
+            let new_state = { merged.root.borrow().clone() };
+            *self.root.borrow_mut() = new_state;
         }
 
         fn find(&self, key: &T) -> Option<T> {
@@ -194,10 +192,10 @@ pub mod BSTParaMtEph {
     #[macro_export]
     macro_rules! ParamBSTLit {
         () => {
-            < $crate::BSTParaMtEph::BSTParaMtEph::ParamBST<_> as $crate::BSTParaMtEph::BSTParaMtEph::ParamBSTTrait<_> >::new()
+            < $crate::BSTParaStEph::BSTParaStEph::ParamBST<_> as $crate::BSTParaStEph::BSTParaStEph::ParamBSTTrait<_> >::new()
         };
         ( $( $x:expr ),* $(,)? ) => {{
-            let __tree = < $crate::BSTParaMtEph::BSTParaMtEph::ParamBST<_> as $crate::BSTParaMtEph::BSTParaMtEph::ParamBSTTrait<_> >::new();
+            let __tree = < $crate::BSTParaStEph::BSTParaStEph::ParamBST<_> as $crate::BSTParaStEph::BSTParaStEph::ParamBSTTrait<_> >::new();
             $( __tree.insert($x); )*
             __tree
         }};

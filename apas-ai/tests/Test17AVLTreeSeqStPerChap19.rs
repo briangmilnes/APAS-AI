@@ -1,5 +1,6 @@
 pub mod TestAVLTreeSeqStPerChap19 {
     use apas_ai::AVLTreeSeqStPer;
+    use apas_ai::AVLTreeSeqStPerSLit;
     use apas_ai::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use apas_ai::AVLTreeSeqStPerChap19::AVLTreeSeqStPerChap19::*;
     use apas_ai::Types::Types::*; // macro import
@@ -8,7 +9,7 @@ pub mod TestAVLTreeSeqStPerChap19 {
     fn test_tabulate_and_map_ch19() {
         let t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap19Trait<N>>::tabulate(|i| i, 5);
         let m: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap19Trait<N>>::map(&t, |x| x * 2);
-        let expected = AVLTreeSeqStPer![0, 2, 4, 6, 8];
+        let expected = AVLTreeSeqStPerSLit![0, 2, 4, 6, 8];
         assert_eq!(m, expected);
     }
 
@@ -29,7 +30,7 @@ pub mod TestAVLTreeSeqStPerChap19 {
             None
         );
         let c: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap19Trait<N>>::append(&a, &b);
-        let expected = AVLTreeSeqStPer![0, 1, 2, 3, 4, 5];
+        let expected = AVLTreeSeqStPerSLit![0, 1, 2, 3, 4, 5];
         assert_eq!(c, expected);
     }
 
@@ -40,14 +41,14 @@ pub mod TestAVLTreeSeqStPerChap19 {
             |x| if *x % 2 == 0 { B::True } else { B::False },
             &2,
         );
-        let expected_d = AVLTreeSeqStPer![2];
+        let expected_d = AVLTreeSeqStPerSLit![2];
         assert_eq!(d, expected_d);
         let f: AVLTreeSeqStPerS<N> =
             <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap19Trait<N>>::filter(
                 &t,
                 |x| if *x < 3 { B::True } else { B::False },
             );
-        let expected_f = AVLTreeSeqStPer![0, 1, 2];
+        let expected_f = AVLTreeSeqStPerSLit![0, 1, 2];
         assert_eq!(f, expected_f);
     }
 

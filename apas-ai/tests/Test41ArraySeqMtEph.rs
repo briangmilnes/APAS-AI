@@ -1,8 +1,9 @@
 use apas_ai::*;
+    use apas_ai::ArraySeqMtEphSLit;
 
 #[test]
 fn test_arrayseq_mteph_basic_ops() {
-    let mut a = ArraySeqMtEph![0; 5];
+    let mut a = ArraySeqMtEphSLit![0; 5];
     for i in 0..a.length() {
         let _ = a.set(i, i as i32);
     }
@@ -19,8 +20,8 @@ fn test_arrayseq_mteph_basic_ops() {
 
 #[test]
 fn test_arrayseq_mteph_append_and_map() {
-    let a = ArraySeqMtEph![1, 2, 3];
-    let b = ArraySeqMtEph![4, 5];
+    let a = ArraySeqMtEphSLit![1, 2, 3];
+    let b = ArraySeqMtEphSLit![4, 5];
     let c = <ArraySeqMtEphS<i32> as ArraySeqMtEphChap18Trait<i32>>::append(&a, &b);
     assert_eq!(c.length(), 5);
     let d = <ArraySeqMtEphS<i32> as ArraySeqMtEphChap18Trait<i32>>::map(&c, |x| x + 1);

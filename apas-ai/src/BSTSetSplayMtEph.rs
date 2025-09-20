@@ -240,4 +240,22 @@ pub mod BSTSetSplayMtEph {
 
         fn as_tree(&self) -> &BSTSplayMtEph<T> { &self.tree }
     }
+
+    #[macro_export]
+    macro_rules! BSTSetSplayMtEphLit {
+        () => {
+            < $crate::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMtEph<_> as $crate::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMtEphTrait<_> >::empty()
+        };
+        ( $( $x:expr ),* $(,)? ) => {{
+            let mut __set = < $crate::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMtEph<_> as $crate::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMtEphTrait<_> >::empty();
+            $( __set.insert($x); )*
+            __set
+        }};
+    }
+
+    #[allow(dead_code)]
+    fn _BSTSetSplayMtEphLit_type_checks() {
+        let _ = BSTSetSplayMtEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
+        let _: BSTSetSplayMtEph<i32> = BSTSetSplayMtEphLit![]; // empty form requires explicit type
+    }
 }

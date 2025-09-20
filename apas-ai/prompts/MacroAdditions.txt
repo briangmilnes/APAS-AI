@@ -6,3 +6,22 @@
   Look for macros in src that are not of the name <Module>Lit! and fix
  them and the test and bench code. Be sure to leave or place the macros
  and their test code in the module. Execute relentlessly.
+
+Now scan tests for the old macro names and replace them with the new names. Then cargo nextest run.
+Then scan benches for the old macro names and replace them with the new names. Then cargo bench.
+Execute relentlessly.
+
+
+I've just done this naming wrong.
+
+The macros should be named for each <pub struct <X>> there should be an <X>Lit macro.
+Go through all of the src files and list for each which macros should be in there marking them present, badly named or missing.
+Estimate the task time.
+
+
+Make a plan with to-dos to sweep the tests files using the new macros.
+Look carefully at each use of Vec? Can it be replaced with a macro?
+
+Make a plan with to-dos to sweep the benches files using the new macros.
+Look carefully at each use of Vec? Can it be replaced with a macro?
+

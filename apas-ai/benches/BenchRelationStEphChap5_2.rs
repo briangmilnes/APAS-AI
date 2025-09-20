@@ -1,5 +1,5 @@
 use apas_ai::RelationStEphChap5_2::RelationStEphChap5_2::*;
-use apas_ai::SetLit;
+use apas_ai::{SetLit, PairLit};
 use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
 use apas_ai::Types::Types::*;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
@@ -15,9 +15,9 @@ fn bench_relation_build_and_domain_range(c: &mut Criterion) {
 
     group.bench_with_input(BenchmarkId::new("build_pairs_and_domain_range", n), &n, |b, &len| {
         b.iter(|| {
-            let mut pairs: Set<Pair<N, N>> = Set::empty();
+            let mut pairs: Set<Pair<N, N>> = SetLit![]; // Set: empty constructor
             for i in 0..len {
-                let _ = Set::insert(&mut pairs, Pair(i, i % 128));
+                let _ = Set::insert(&mut pairs, PairLit!(i, i % 128));
             }
             let r = Relation::FromSet(pairs);
             let d = r.domain();

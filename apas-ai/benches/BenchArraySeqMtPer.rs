@@ -2,6 +2,7 @@ use apas_ai::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS;
 use apas_ai::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
 use apas_ai::ArraySeqMtPerChap19::ArraySeqMtPerChap19::*;
 use apas_ai::Types::Types::*;
+use apas_ai::{ArrayMtPerSLit, PairLit};
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::env;
 use std::path::PathBuf;
@@ -34,9 +35,9 @@ fn bench_build_random_s_multithreaded_persistent(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("zeros_then_persistent_update", n), &n, |b, &len| {
         b.iter(|| {
             let mut rng = LinearCongruentialGenerator32::new(0xDEADBEEF);
-            let mut s: ArrayMtPerS<N> = <ArrayMtPerS<N> as ArraySeqMtPerChap19Trait<N>>::tabulate(|_| 0, len);
+            let mut s: ArrayMtPerS<N> = ArrayMtPerSLit![0; len]; // *Per: from_vec pattern
             for i in 0..len {
-                s = <ArrayMtPerS<N> as ArraySeqMtPerChap18Trait<N>>::update(&s, Pair(i, rng.next_N()));
+                s = <ArrayMtPerS<N> as ArraySeqMtPerChap18Trait<N>>::update(&s, PairLit!(i, rng.next_N()));
             }
             black_box(s)
         })

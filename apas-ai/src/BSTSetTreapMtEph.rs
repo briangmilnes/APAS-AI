@@ -240,4 +240,22 @@ pub mod BSTSetTreapMtEph {
 
         fn as_tree(&self) -> &BSTTreapMtEph<T> { &self.tree }
     }
+
+    #[macro_export]
+    macro_rules! BSTSetTreapMtEphLit {
+        () => {
+            < $crate::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEph<_> as $crate::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEphTrait<_> >::empty()
+        };
+        ( $( $x:expr ),* $(,)? ) => {{
+            let mut __set = < $crate::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEph<_> as $crate::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEphTrait<_> >::empty();
+            $( __set.insert($x); )*
+            __set
+        }};
+    }
+
+    #[allow(dead_code)]
+    fn _BSTSetTreapMtEphLit_type_checks() {
+        let _ = BSTSetTreapMtEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
+        let _: BSTSetTreapMtEph<i32> = BSTSetTreapMtEphLit![]; // empty form requires explicit type
+    }
 }

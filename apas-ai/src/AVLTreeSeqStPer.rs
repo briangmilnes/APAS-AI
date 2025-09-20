@@ -282,7 +282,25 @@ pub mod AVLTreeSeqStPer {
     }
 
     #[macro_export]
-    macro_rules! AVLTreeSeqStPer {
+    macro_rules! AVLTreeSeqStPerIterLit {
+        ({ stack: $stack:expr, current: $current:expr }) => {
+            $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerIter {
+                stack: $stack,
+                current: $current,
+            }
+        };
+    }
+
+    #[allow(dead_code)]
+    fn _AVLTreeSeqStPer_struct_macro_checks() {
+        use crate::AVLTreeSeqStPer::AVLTreeSeqStPer::{AVLTreeSeqStPerIter, AVLTreeSeqStPerS};
+        let iter: AVLTreeSeqStPerIter<'_, i32> = AVLTreeSeqStPerIterLit!({ stack: Vec::new(), current: None });
+        let _ = iter;
+        let _seq: AVLTreeSeqStPerS<i32> = crate::AVLTreeSeqStPerSLit![];
+    }
+
+    #[macro_export]
+    macro_rules! AVLTreeSeqStPerSLit {
         () => { < $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS<_> as $crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait<_> >::empty() };
         ($x:expr; $n:expr) => {{
             let __vals = vec![$x; $n];
@@ -295,9 +313,9 @@ pub mod AVLTreeSeqStPer {
     }
 
     #[allow(dead_code)]
-    fn _AVLTreeSeqStPer_type_checks() {
+    fn _AVLTreeSeqStPerSLit_type_checks() {
         use crate::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS;
-        let _ = AVLTreeSeqStPer![1]; // non-empty infers (e.g., i32)
-        let _: AVLTreeSeqStPerS<i32> = AVLTreeSeqStPer![]; // empty form requires explicit type
+        let _ = crate::AVLTreeSeqStPerSLit![1];
+        let _: AVLTreeSeqStPerS<i32> = crate::AVLTreeSeqStPerSLit![];
     }
 }

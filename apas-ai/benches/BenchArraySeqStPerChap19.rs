@@ -1,6 +1,7 @@
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
 use apas_ai::Types::Types::*;
+use apas_ai::ArrayStPerSLit;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 

@@ -1,6 +1,7 @@
 use apas_ai::DirGraphStEphChap6_1::DirGraphStEphChap6_1::*;
 use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
 use apas_ai::Types::Types::*;
+use apas_ai::{SetLit, PairLit};
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
@@ -13,13 +14,13 @@ fn bench_dirgraph_build(c: &mut Criterion) {
     let n: N = 50_000;
     group.bench_with_input(BenchmarkId::new("build_vertices_arcs", n), &n, |b, &len| {
         b.iter(|| {
-            let mut v: Set<N> = Set::empty();
+            let mut v: Set<N> = SetLit![]; // Set: empty constructor
             for i in 0..len {
                 let _ = Set::insert(&mut v, i);
             }
-            let mut a: Set<Pair<N, N>> = Set::empty();
+            let mut a: Set<Pair<N, N>> = SetLit![]; // Set: empty constructor
             for i in 0..len {
-                let _ = Set::insert(&mut a, Pair(i, (i + 1) % len));
+                let _ = Set::insert(&mut a, PairLit!(i, (i + 1) % len));
             }
             let g = DirGraphStEph::FromSets(v, a);
             black_box(g)

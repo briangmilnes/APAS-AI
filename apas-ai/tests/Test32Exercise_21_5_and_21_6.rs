@@ -1,6 +1,7 @@
 //! Exercises 21.5 and 21.6: All contiguous subsequences and cost analysis.
 
 use apas_ai::ArraySeqStPer;
+    use apas_ai::ArrayStPerSLit;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
@@ -29,14 +30,14 @@ fn all_contiguous_subseqs<T: StT>(a: &ArrayStPerS<T>) -> ArrayStPerS<ArrayStPerS
 
 #[test]
 fn test_all_contiguous_subseqs_n0() {
-    let a: ArrayStPerS<N> = ArraySeqStPer![];
+    let a: ArrayStPerS<N> = ArrayStPerSLit![];
     let res = all_contiguous_subseqs(&a);
     assert_eq!(res.length(), 0);
 }
 
 #[test]
 fn test_all_contiguous_subseqs_n3_values() {
-    let a = ArraySeqStPer![1, 2, 3];
+    let a = ArrayStPerSLit![1, 2, 3];
     let res = all_contiguous_subseqs(&a);
     let v: Vec<Vec<N>> = res.iter().map(|s| s.iter().copied().collect()).collect();
     let expect = vec![vec![1], vec![1, 2], vec![1, 2, 3], vec![2], vec![2, 3], vec![3]];
@@ -45,7 +46,7 @@ fn test_all_contiguous_subseqs_n3_values() {
 
 #[test]
 fn test_all_contiguous_subseqs_debug_shape() {
-    let a = ArraySeqStPer![1, 2];
+    let a = ArrayStPerSLit![1, 2];
     let res = all_contiguous_subseqs(&a);
     let dbg_str = format!("{:?}", res);
     assert!(!dbg_str.is_empty());

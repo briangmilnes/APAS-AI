@@ -179,9 +179,16 @@ pub mod ArraySeqStEph {
     }
 
     #[macro_export]
-    macro_rules! ArraySeqStEph {
+    macro_rules! ArraySeqStEphSLit {
         () => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(Vec::new()) };
         ($x:expr; $n:expr) => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$x; $n]) };
         ($($x:expr),* $(,)?) => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$($x),*]) };
+    }
+
+    #[allow(dead_code)]
+    fn _ArraySeqStEphSLit_type_checks() {
+        let _ = ArraySeqStEphSLit![1];
+        let _ = ArraySeqStEphSLit![0; 2];
+        let _: ArraySeqStEphS<i32> = ArraySeqStEphSLit![];
     }
 }
