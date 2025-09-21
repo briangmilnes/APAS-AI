@@ -2,7 +2,7 @@ use std::time::Duration;
 
 use apas_ai::Chapter36Mt::Chapter36Mt::Chapter36MtTrait;
 use apas_ai::{ArraySeqMtEphSLit, *};
-use criterion::{criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
+use criterion::{BatchSize, BenchmarkId, Criterion, criterion_group, criterion_main};
 
 fn gen_data(n: usize) -> ArraySeqMtEphS<i32> {
     let mut seed = 0x1234_5678_9ABC_DEF0u64;

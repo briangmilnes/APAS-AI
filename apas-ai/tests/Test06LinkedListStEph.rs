@@ -3,8 +3,8 @@ pub mod TestLinkedListEph {
 
     use apas_ai::LinkedListStEph;
     use apas_ai::LinkedListStEph::LinkedListStEph::*;
-    use apas_ai::Types::Types::*; // macro import
     use apas_ai::LinkedListStEphSLit;
+    use apas_ai::Types::Types::*; // macro import
 
     #[test]
     fn test_empty_singleton_and_predicates() {

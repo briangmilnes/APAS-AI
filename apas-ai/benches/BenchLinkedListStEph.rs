@@ -1,7 +1,7 @@
 use apas_ai::LinkedListStEph::LinkedListStEph::*;
-use apas_ai::Types::Types::*;
 use apas_ai::LinkedListStEphSLit;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use apas_ai::Types::Types::*;
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_ll_eph(c: &mut Criterion) {

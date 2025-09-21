@@ -1,12 +1,16 @@
-use rand::{rng, Rng};
+use rand::{Rng, rng};
 
+use apas_ai::ArraySeqMtEphSLit;
 use apas_ai::Chapter36Mt::Chapter36Mt::Chapter36MtTrait;
-    use apas_ai::ArraySeqMtEphSLit;
 use apas_ai::*;
 
-fn to_vec<T: StT>(a: &ArraySeqMtEphS<T>) -> Vec<T> { (0..a.length()).map(|i| a.nth_cloned(i)).collect() }
+fn to_vec<T: StT>(a: &ArraySeqMtEphS<T>) -> Vec<T> {
+    (0..a.length()).map(|i| a.nth_cloned(i)).collect()
+}
 
-fn is_sorted<T: StT + Ord>(values: &[T]) -> bool { values.windows(2).all(|w| w[0] <= w[1]) }
+fn is_sorted<T: StT + Ord>(values: &[T]) -> bool {
+    values.windows(2).all(|w| w[0] <= w[1])
+}
 
 #[test]
 fn quick_sort_mt_variants_produce_sorted_output() {

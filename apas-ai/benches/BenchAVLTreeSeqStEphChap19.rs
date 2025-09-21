@@ -1,7 +1,7 @@
 use apas_ai::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
-use apas_ai::Types::Types::*;
 use apas_ai::AVLTreeSeqStEphSLit;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use apas_ai::Types::Types::*;
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_avl_eph_ch19(c: &mut Criterion) {

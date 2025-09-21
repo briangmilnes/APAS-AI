@@ -1,0 +1,7 @@
+
+ Build a plan for this, including test but not benchmark.
+ Show it to me and estimate time.
+ I will tell you when to execute. 
+ When the code is written do the checklist process on both
+ files.
+ Wait for me to tell you when to fix, build and test.

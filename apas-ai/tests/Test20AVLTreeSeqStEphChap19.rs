@@ -2,11 +2,11 @@
 
 pub mod TestAVLTreeSeqStEphChap19 {
     use apas_ai::AVLTreeSeqStEph; // macro import
-    use apas_ai::AVLTreeSeqStEphSLit;
-    use apas_ai::ArraySeqStEphSLit;
     use apas_ai::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
+    use apas_ai::AVLTreeSeqStEphSLit;
     use apas_ai::ArraySeqStEph;
     use apas_ai::ArraySeqStEph::ArraySeqStEph::*;
+    use apas_ai::ArraySeqStEphSLit;
     use apas_ai::Types::Types::*; // macro import
 
     #[test]
@@ -27,11 +27,7 @@ pub mod TestAVLTreeSeqStEphChap19 {
                 Some(*a.nth(i))
             } else {
                 let off = i - a.length();
-                if off < b.length() {
-                    Some(*b.nth(off))
-                } else {
-                    None
-                }
+                if off < b.length() { Some(*b.nth(off)) } else { None }
             }
         };
         assert_eq!(select(&a, &b, 0), Some(0));

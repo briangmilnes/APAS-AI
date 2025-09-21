@@ -1,8 +1,8 @@
 //! Problem 21.3 (Points in 3D) using ArraySeqPer — imperative triple loop.
 
 use apas_ai::ArraySeqStPer;
-    use apas_ai::ArrayStPerSLit;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::ArrayStPerSLit;
 use apas_ai::Types::Types::*;
 
 /// Generate points (x, y, z) with 0 ≤ x ≤ n−1, 1 ≤ y ≤ n, 2 ≤ z ≤ n+1 in x-major, then y, then z order.

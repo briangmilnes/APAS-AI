@@ -1,10 +1,10 @@
 //! Exercises 21.5 and 21.6: All contiguous subsequences and cost analysis.
 
 use apas_ai::ArraySeqStPer;
-    use apas_ai::ArrayStPerSLit;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+use apas_ai::ArrayStPerSLit;
 use apas_ai::Types::Types::*;
 
 /// Generate all contiguous subsequences using nested tabulate + flatten.

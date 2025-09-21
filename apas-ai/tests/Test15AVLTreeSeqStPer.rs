@@ -1,8 +1,8 @@
 pub mod TestAVLTreeSeqPer {
     use apas_ai::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use apas_ai::AVLTreeSeqStPerChap18::AVLTreeSeqStPerChap18::*;
-    use apas_ai::Types::Types::*;
     use apas_ai::AVLTreeSeqStPerSLit;
+    use apas_ai::Types::Types::*;
 
     #[test]
     fn test_persistent_set_does_not_mutate() {

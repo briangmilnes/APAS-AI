@@ -1,10 +1,10 @@
 //! Problem 21.4 (Cartesian Product) tests.
 
 use apas_ai::ArraySeqStPer;
-    use apas_ai::ArrayStPerSLit;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+use apas_ai::ArrayStPerSLit;
 use apas_ai::Types::Types::*;
 
 /// Cartesian product by explicit loops (x-major then y).

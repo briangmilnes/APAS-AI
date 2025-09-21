@@ -1,5 +1,5 @@
-use apas_ai::BSTParaTreapMtEph::BSTParaTreapMtEph::*;
 use apas_ai::ArrayStPerSLit;
+use apas_ai::BSTParaTreapMtEph::BSTParaTreapMtEph::*;
 use apas_ai::*;
 
 fn make_tree(values: &[i32]) -> ParamTreap<i32> {
@@ -81,8 +81,8 @@ fn treap_join_mid_roundtrip() {
     let combined = ParamTreap::<i32>::join_mid(Exposed::Node(left, 10, right));
 
     match combined.expose() {
-        Exposed::Leaf => panic!("expected node"),
-        Exposed::Node(l, key, r) => {
+        | Exposed::Leaf => panic!("expected node"),
+        | Exposed::Node(l, key, r) => {
             assert_eq!(key, 10);
             assert_eq!(l.size(), 0);
             assert_eq!(r.size(), 0);

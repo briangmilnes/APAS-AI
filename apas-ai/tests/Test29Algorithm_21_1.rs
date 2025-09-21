@@ -1,12 +1,12 @@
 //! Algorithm 21.1 (2D Points) using ArraySeqPer: points2D via tabulate + flatten.
 
 use apas_ai::ArraySeqStPer;
-    use apas_ai::ArrayStPerSLit;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
-use apas_ai::Types::Types::*;
+use apas_ai::ArrayStPerSLit;
 use apas_ai::PairLit;
+use apas_ai::Types::Types::*;
 
 /// Functional form: points2D n = flatten (tabulate (\x. tabulate (\y. (x, y+1)) (n-1)) n)
 /// gpt-5-hard: Work: Θ(n^2), Span: Θ(lg n)
@@ -16,7 +16,12 @@ fn points2d_tab_flat(n: N) -> ArrayStPerS<Pair<N, N>> {
     }
     let inner: ArrayStPerS<ArrayStPerS<Pair<N, N>>> =
         <ArrayStPerS<ArrayStPerS<Pair<N, N>>> as ArraySeqStPerChap19Trait<ArrayStPerS<Pair<N, N>>>>::tabulate(
-            |x| <ArrayStPerS<Pair<N, N>> as ArraySeqStPerChap18Trait<Pair<N, N>>>::tabulate(|y| PairLit!(x, y + 1), n - 1),
+            |x| {
+                <ArrayStPerS<Pair<N, N>> as ArraySeqStPerChap18Trait<Pair<N, N>>>::tabulate(
+                    |y| PairLit!(x, y + 1),
+                    n - 1,
+                )
+            },
             n,
         );
     <ArrayStPerS<Pair<N, N>> as ArraySeqStPerChap18Trait<Pair<N, N>>>::flatten(&inner)
@@ -25,7 +30,14 @@ fn points2d_tab_flat(n: N) -> ArrayStPerS<Pair<N, N>> {
 #[test]
 fn test_points2d_n3_example() {
     let s = points2d_tab_flat(3);
-    let expect = ArrayStPerSLit![PairLit!(0, 1), PairLit!(0, 2), PairLit!(1, 1), PairLit!(1, 2), PairLit!(2, 1), PairLit!(2, 2)];
+    let expect = ArrayStPerSLit![
+        PairLit!(0, 1),
+        PairLit!(0, 2),
+        PairLit!(1, 1),
+        PairLit!(1, 2),
+        PairLit!(2, 1),
+        PairLit!(2, 2)
+    ];
     assert_eq!(s, expect);
 }
 

@@ -1,9 +1,9 @@
 //! Algorithm 21.6 (Prime Sieve) using ArraySeqPer and ninject.
 
 use apas_ai::ArraySeqStPer;
-    use apas_ai::ArrayStPerSLit;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+use apas_ai::ArrayStPerSLit;
 use apas_ai::Types::Types::*;
 use apas_ai::{ArraySeqStPerTrait, ArrayStPerS};
 

@@ -1,7 +1,7 @@
 pub mod TestLinkedListPer {
     use apas_ai::LinkedListStPer;
-    use apas_ai::LinkedListStPerSLit;
     use apas_ai::LinkedListStPer::LinkedListStPer::*;
+    use apas_ai::LinkedListStPerSLit;
     use apas_ai::Types::Types::*; // macro import
 
     #[test]

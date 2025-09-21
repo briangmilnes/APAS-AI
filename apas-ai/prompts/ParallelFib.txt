@@ -1,0 +1,17 @@
+
+ Make a src/Chap11/FibonacciMt, test and benchmark code.
+ Show me the module in a text box before I let you save it.
+
+ Don't build or run test as there is another AI running.
+
+ Example 11.10 (Parallel Fibonacci in SPARC). Using SPARC, we can write the parallel
+
+Fibonacci function as
+
+fib x =
+if x ≤ 1 then
+x
+else
+let (ra, rb) = (fib (x − 1)) || (fib (x − 2)) in
+ra + rb
+end

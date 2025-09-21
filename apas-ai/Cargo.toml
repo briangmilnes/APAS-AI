@@ -22,12 +22,14 @@ members = [ "." ]
 
 [[bench]]
 name = "BenchArraySeqStEph"
+path = "benches/Chap19/BenchArraySeqStEph.rs"
 harness = false
 
 ## DoublyLinkedList benchmarks moved to src/attic
 
 [[bench]]
 name = "BenchMathSeq"
+path = "benches/Chap18/BenchMathSeq.rs"
 harness = false
 
 [[bench]]
@@ -37,14 +39,17 @@ harness = false
 
 [[bench]]
 name = "BenchArraySeqStEphChap18"
+path = "benches/Chap19/BenchArraySeqStEphChap18.rs"
 harness = false
 
 [[bench]]
 name = "BenchArraySeqStPer"
+path = "benches/Chap19/BenchArraySeqStPer.rs"
 harness = false
 
 [[bench]]
 name = "BenchArraySeqStPerChap19"
+path = "benches/Chap19/BenchArraySeqStPerChap19.rs"
 harness = false
 
 ## SinglyLinkedList benchmarks moved to src/attic
@@ -81,10 +86,27 @@ name = "BenchLinkedListStEphChap19"
 harness = false
 [[bench]]
 name = "BenchArraySeqStPerChap18"
+path = "benches/Chap19/BenchArraySeqStPerChap18.rs"
 harness = false
 
 [[bench]]
 name = "BenchArraySeqStEphChap19"
+path = "benches/Chap19/BenchArraySeqStEphChap19.rs"
+harness = false
+
+[[bench]]
+name = "BenchArraySeqMtPer"
+path = "benches/Chap19/BenchArraySeqMtPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchArraySeqMtPerChap18"
+path = "benches/Chap19/BenchArraySeqMtPerChap18.rs"
+harness = false
+
+[[bench]]
+name = "BenchArraySeqMtPerChap19"
+path = "benches/Chap19/BenchArraySeqMtPerChap19.rs"
 harness = false
 
 [[bench]]

@@ -175,73 +175,8 @@ pub mod Types {
         fn from(e: LabEdge<V, L>) -> (V, V, L) { (e.0, e.1, e.2) }
     }
 
-    /// OrderedFloat wrapper to make floating-point types usable in hash-based collections
-    /// and as graph edge weights by providing Eq and Hash implementations.
-    /// 
-    /// This wrapper treats NaN values as equal to themselves and provides a consistent
-    /// hash implementation, making it suitable for use in HashSet, HashMap, and graph labels.
-    #[derive(Clone, Copy, PartialEq, Debug)]
-    pub struct OrderedFloat<T>(pub T);
-
-    impl<T: PartialEq> Eq for OrderedFloat<T> {}
-
-    impl<T: Clone + Debug + Display> Display for OrderedFloat<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "{}", self.0)
-        }
-    }
-
-    impl<T> Hash for OrderedFloat<T> 
-    where 
-        T: Clone + std::fmt::Debug + std::fmt::Display
-    {
-        fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
-            // For floating-point types, we need special handling
-            // This is a simplified approach - in production you'd want more sophisticated NaN handling
-            format!("{:?}", self.0).hash(state);
-        }
-    }
-
-    // Implement arithmetic operations for OrderedFloat
-    impl<T: std::ops::Add<Output = T>> std::ops::Add for OrderedFloat<T> {
-        type Output = OrderedFloat<T>;
-        fn add(self, other: OrderedFloat<T>) -> OrderedFloat<T> {
-            OrderedFloat(self.0 + other.0)
-        }
-    }
-
-    impl<T: std::ops::Sub<Output = T>> std::ops::Sub for OrderedFloat<T> {
-        type Output = OrderedFloat<T>;
-        fn sub(self, other: OrderedFloat<T>) -> OrderedFloat<T> {
-            OrderedFloat(self.0 - other.0)
-        }
-    }
-
-    impl<T: std::ops::Mul<Output = T>> std::ops::Mul for OrderedFloat<T> {
-        type Output = OrderedFloat<T>;
-        fn mul(self, other: OrderedFloat<T>) -> OrderedFloat<T> {
-            OrderedFloat(self.0 * other.0)
-        }
-    }
-
-    impl<T: std::ops::Div<Output = T>> std::ops::Div for OrderedFloat<T> {
-        type Output = OrderedFloat<T>;
-        fn div(self, other: OrderedFloat<T>) -> OrderedFloat<T> {
-            OrderedFloat(self.0 / other.0)
-        }
-    }
-
-    impl<T: PartialOrd> PartialOrd for OrderedFloat<T> {
-        fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-            self.0.partial_cmp(&other.0)
-        }
-    }
-
-    impl<T: PartialOrd> Ord for OrderedFloat<T> {
-        fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-            self.partial_cmp(other).unwrap_or(std::cmp::Ordering::Equal)
-        }
-    }
+    // Import OrderedFloat from the ordered-float crate
+    pub use ordered_float::OrderedFloat;
 
     // Convenience type aliases for common float types
     pub type OrderedF32 = OrderedFloat<f32>;

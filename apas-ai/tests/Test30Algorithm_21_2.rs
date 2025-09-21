@@ -1,10 +1,10 @@
 //! Algorithm 21.2 (3D Points) using ArraySeqPer: flatten of nested tabulates.
 
 use apas_ai::ArraySeqStPer;
-    use apas_ai::ArrayStPerSLit;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+use apas_ai::ArrayStPerSLit;
 use apas_ai::Types::Types::*;
 
 /// Comprehension form: 〈(x,y,z): 0 ≤ x ≤ n−1, 1 ≤ y ≤ n, 2 ≤ z ≤ n+1〉

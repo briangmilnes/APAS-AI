@@ -2,11 +2,11 @@
 
 pub mod TestAVLTreeSeqStPerChap18 {
     use apas_ai::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use apas_ai::ArrayStPerSLit;
     use apas_ai::AVLTreeSeqStPerChap18::AVLTreeSeqStPerChap18::*;
     use apas_ai::ArraySeqStPer; // macro import
     use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::ArrayStPerS;
+    use apas_ai::ArrayStPerSLit;
     use apas_ai::Types::Types::*;
 
     #[test]
@@ -34,11 +34,7 @@ pub mod TestAVLTreeSeqStPerChap18 {
     fn test_filter_even() {
         let base: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap18Trait<N>>::tabulate(|i| i, 6);
         let evens: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap18Trait<N>>::filter(&base, |x| {
-            if x % 2 == 0 {
-                B::True
-            } else {
-                B::False
-            }
+            if x % 2 == 0 { B::True } else { B::False }
         });
         assert_eq!(evens.to_arrayseq(), ArrayStPerSLit![0, 2, 4]);
     }

@@ -2,11 +2,11 @@
 
 pub mod TestAVLTreeSeqStEphChap18 {
     use apas_ai::AVLTreeSeqStEph;
-    use apas_ai::AVLTreeSeqStEphSLit;
-    use apas_ai::ArraySeqStEphSLit;
     use apas_ai::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS;
+    use apas_ai::AVLTreeSeqStEphSLit;
     use apas_ai::ArraySeqStEph; // macro import
     use apas_ai::ArraySeqStEph::ArraySeqStEph::*;
+    use apas_ai::ArraySeqStEphSLit;
     use apas_ai::Types::Types::*; // macro import
 
     #[test]

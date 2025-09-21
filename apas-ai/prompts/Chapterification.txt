@@ -64,3 +64,6 @@ Sweep this through src, tests, and benches.
 Show me a to-do list and and estimate and
 I'll tell you when to start.
 
+
+Rename all of the src, test, and benches Chap<D> for single digit to
+Chap<0D>. build and test. 

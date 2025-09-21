@@ -1,8 +1,8 @@
 pub mod TestLinkedListPerChap19 {
     use apas_ai::LinkedListStPer; // macro import
-    use apas_ai::LinkedListStPerSLit;
     use apas_ai::LinkedListStPer::LinkedListStPer::*;
     use apas_ai::LinkedListStPerChap19::LinkedListStPerChap19::*;
+    use apas_ai::LinkedListStPerSLit;
     use apas_ai::Types::Types::*;
 
     #[test]

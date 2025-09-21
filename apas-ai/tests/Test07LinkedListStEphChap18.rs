@@ -2,8 +2,8 @@ pub mod TestLinkedListStEphChap18 {
     use apas_ai::LinkedListStEph; // macro import
     use apas_ai::LinkedListStEph::LinkedListStEph::*;
     use apas_ai::LinkedListStEphChap18::LinkedListStEphChap18::*;
-    use apas_ai::Types::Types::*;
     use apas_ai::LinkedListStEphSLit;
+    use apas_ai::Types::Types::*;
 
     fn expect_list(list: &LinkedListStEphS<N>, expected: &[N]) {
         let mut iter = list.iter();
@@ -63,11 +63,7 @@ pub mod TestLinkedListStEphChap18 {
     fn test_filter_ch18() {
         let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
         let b = <LinkedListStEphS<N> as LinkedListStEphChap18Trait<N>>::filter(&a, |x| {
-            if *x % 2 == 0 {
-                B::True
-            } else {
-                B::False
-            }
+            if *x % 2 == 0 { B::True } else { B::False }
         });
         expect_list(&b, &[2, 4]);
     }

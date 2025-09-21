@@ -1,7 +1,7 @@
 use apas_ai::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::AVLTreeSeqStPerChap19Trait;
 use apas_ai::Types::Types::*;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;

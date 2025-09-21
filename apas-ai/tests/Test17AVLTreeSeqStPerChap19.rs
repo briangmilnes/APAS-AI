@@ -1,8 +1,8 @@
 pub mod TestAVLTreeSeqStPerChap19 {
     use apas_ai::AVLTreeSeqStPer;
-    use apas_ai::AVLTreeSeqStPerSLit;
     use apas_ai::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use apas_ai::AVLTreeSeqStPerChap19::AVLTreeSeqStPerChap19::*;
+    use apas_ai::AVLTreeSeqStPerSLit;
     use apas_ai::Types::Types::*; // macro import
 
     #[test]
@@ -58,11 +58,7 @@ pub mod TestAVLTreeSeqStPerChap19 {
         let b: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap19Trait<N>>::tabulate(|i| i + 3, 4);
         let c = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap19Trait<N>>::append(&a, &b);
         let f = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap19Trait<N>>::filter(&c, |x| {
-            if *x >= 2 {
-                B::True
-            } else {
-                B::False
-            }
+            if *x >= 2 { B::True } else { B::False }
         });
         let m = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerChap19Trait<N>>::map(&f, |x| x * 2);
         let vals: Vec<N> = m.iter().map(|x| *x).collect();

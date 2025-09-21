@@ -2,7 +2,7 @@ use std::time::Duration;
 
 use apas_ai::Chapter36St::Chapter36St::Chapter36StTrait;
 use apas_ai::{ArraySeqStEphSLit, *};
-use criterion::{criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
+use criterion::{BatchSize, BenchmarkId, Criterion, criterion_group, criterion_main};
 
 fn gen_data(n: usize) -> ArraySeqStEphS<i32> {
     let mut seed = 0xDEADBEEF12345678u64;

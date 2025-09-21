@@ -2,8 +2,8 @@ pub mod TestLinkedListStEphChap19 {
     use apas_ai::LinkedListStEph; // macro import
     use apas_ai::LinkedListStEph::LinkedListStEph::*;
     use apas_ai::LinkedListStEphChap19::LinkedListStEphChap19::*;
-    use apas_ai::Types::Types::*;
     use apas_ai::LinkedListStEphSLit;
+    use apas_ai::Types::Types::*;
 
     fn expect_list(list: &LinkedListStEphS<N>, expected: &[N]) {
         let mut iter = list.iter();
@@ -58,11 +58,7 @@ pub mod TestLinkedListStEphChap19 {
         expect_list(&one, &[1]);
         let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
         let even = <LinkedListStEphS<N> as LinkedListStEphChap19Trait<N>>::filter(&a, |x| {
-            if *x % 2 == 0 {
-                B::True
-            } else {
-                B::False
-            }
+            if *x % 2 == 0 { B::True } else { B::False }
         });
         expect_list(&even, &[2, 4]);
         let sum = <LinkedListStEphS<N> as LinkedListStEphChap19Trait<N>>::reduce(&a, &|x, y| x + y, 0);

@@ -1,8 +1,8 @@
 pub mod TestLinkedListStPerChap18 {
     use apas_ai::LinkedListStPer; // macro import
-    use apas_ai::LinkedListStPerSLit;
     use apas_ai::LinkedListStPer::LinkedListStPer::*;
     use apas_ai::LinkedListStPerChap18::LinkedListStPerChap18::*;
+    use apas_ai::LinkedListStPerSLit;
     use apas_ai::Types::Types::*;
 
     #[test]
@@ -24,11 +24,7 @@ pub mod TestLinkedListStPerChap18 {
     fn test_filter() {
         let a = <LinkedListStPerS<N> as LinkedListStPerChap18Trait<N>>::tabulate(|i| i + 1, 5);
         let c = <LinkedListStPerS<N> as LinkedListStPerChap18Trait<N>>::filter(&a, |x| {
-            if *x % 2 == 1 {
-                B::True
-            } else {
-                B::False
-            }
+            if *x % 2 == 1 { B::True } else { B::False }
         });
         assert_eq!(c, LinkedListStPerSLit![1, 3, 5]);
     }
@@ -88,7 +84,11 @@ pub mod TestLinkedListStPerChap18 {
 
     #[test]
     fn test_flatten() {
-        let nested = LinkedListStPerSLit![LinkedListStPerSLit![1, 2], LinkedListStPerSLit![3], LinkedListStPerSLit![4, 5],];
+        let nested = LinkedListStPerSLit![
+            LinkedListStPerSLit![1, 2],
+            LinkedListStPerSLit![3],
+            LinkedListStPerSLit![4, 5],
+        ];
         let flat = <LinkedListStPerS<N> as LinkedListStPerChap18Trait<N>>::flatten(&nested);
         assert_eq!(flat, LinkedListStPerSLit![1, 2, 3, 4, 5]);
     }

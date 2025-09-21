@@ -1,0 +1,36 @@
+- [ ] Code Elegance and Minimalism
+  - [ ] Terminology alignment
+  - [ ] Always choose the minimal solution
+  - [ ] Closure Mutation Patterns
+  - [ ] Formatting discipline
+  - [ ] Zero Warnings Policy (MANDATORY)
+- [ ] Imports and Module Scope
+  - [ ] Standard Library Imports and Result usage (module-top; no aliasing)
+  - [ ] Specialized import rules
+  - [ ] Module import style for this project
+  - [ ] No trailing per-file re-exports (use lib.rs instead)
+  - [ ] Wildcard-first imports; group to minimize `use crate`
+  - [ ] Use Lit! macros for literal data construction
+  - [ ] Helper function extraction threshold
+  - [ ] Module/file layout and Mandatory Encapsulation
+- [ ] Traits and Implementations (Mandatory Pattern)
+- [ ] Types, Bounds, and Lifting
+  - [ ] Types and Bounds (Baseline + Minimal Additions)
+  - [ ] Generalized lifting rule (applies to every trait/impl)
+  - [ ] Type Creation Traits (align with baseline)
+  - [ ] Function argument bounds without where-clauses (new)
+  - [ ] Callable parameter style (`impl Fn` in parameter position)
+  - [ ] Default element bound (StT by default)
+- [ ] APIs, Macros, Constructors, Encapsulation
+  - [ ] Macro Normalization (Exported and Type‑Checked)
+  - [ ] Constructor No Raw Backing Collections
+  - [ ] Struct Field Encapsulation
+  - [ ] No Free‑Function Wrappers
+  - [ ] Type Conversions and Naming
+- [ ] Iteration, Iterators, and Tests
+  - [ ] Iterator impls (three forms)
+  - [ ] Tests Format
+  - [ ] Test via Public API Only
+  - [ ] CamlCase not SnakeCase
+  - [ ] Type Inference Cleanup
+  - [ ] Contain UFCS (call‑site elimination)
