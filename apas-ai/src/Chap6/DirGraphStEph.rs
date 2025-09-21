@@ -1,30 +1,30 @@
 //! Chapter 6.1 Directed Graph (ephemeral) using Set for vertices and arcs.
 
-pub mod DirGraphStEphChap6_1 {
+pub mod DirGraphStEph {
     use crate::SetLit;
-    use crate::SetStEphChap5_1::SetStEphChap5_1::*;
+    use crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use crate::Types::Types::*;
     use std::hash::Hash;
 
     #[derive(Clone)]
     pub struct DirGraphStEph<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {
         V: Set<V>,
-        A: Set<Pair<V, V>>,
+        A: Set<Edge<V>>,
     }
 
-    pub trait DirGraphStEphChap6_1Trait<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {
+    pub trait DirGraphStEphTrait<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> DirGraphStEph<V>;
         /// APAS: Work Θ(|V| + |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |A|), Span Θ(1)
-        fn FromSets(V: Set<V>, A: Set<Pair<V, V>>) -> DirGraphStEph<V>;
+        fn FromSets(V: Set<V>, A: Set<Edge<V>>) -> DirGraphStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn vertices(&self) -> &Set<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn arcs(&self) -> &Set<Pair<V, V>>;
+        fn arcs(&self) -> &Set<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn sizeV(&self) -> N;
@@ -66,22 +66,22 @@ pub mod DirGraphStEphChap6_1 {
         fn OutDegree(&self, v: &V) -> N;
     }
 
-    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> DirGraphStEphChap6_1Trait<V> for DirGraphStEph<V> {
+    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> DirGraphStEphTrait<V> for DirGraphStEph<V> {
         fn empty() -> DirGraphStEph<V> {
             DirGraphStEph {
                 V: SetLit![],
                 A: SetLit![],
             }
         }
-        fn FromSets(V: Set<V>, A: Set<Pair<V, V>>) -> DirGraphStEph<V> { DirGraphStEph { V, A } }
+        fn FromSets(V: Set<V>, A: Set<Edge<V>>) -> DirGraphStEph<V> { DirGraphStEph { V, A } }
         fn vertices(&self) -> &Set<V> { &self.V }
-        fn arcs(&self) -> &Set<Pair<V, V>> { &self.A }
+        fn arcs(&self) -> &Set<Edge<V>> { &self.A }
         fn sizeV(&self) -> N { self.V.size() }
         fn sizeA(&self) -> N { self.A.size() }
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Adjacent if there is an arc either way
-            if B::True == self.A.mem(&Pair(u.clone(), v.clone())) || B::True == self.A.mem(&Pair(v.clone(), u.clone()))
+            if B::True == self.A.mem(&Edge(u.clone(), v.clone()))
             {
                 B::True
             } else {
@@ -102,7 +102,7 @@ pub mod DirGraphStEphChap6_1 {
 
         fn NPlus(&self, v: &V) -> Set<V> {
             let mut out: Set<V> = SetLit![];
-            for Pair(x, y) in self.A.iter().cloned() {
+            for Edge(x, y) in self.A.iter().cloned() {
                 if x == *v {
                     let _ = out.insert(y.clone());
                 }
@@ -112,7 +112,7 @@ pub mod DirGraphStEphChap6_1 {
 
         fn NMinus(&self, v: &V) -> Set<V> {
             let mut inn: Set<V> = SetLit![];
-            for Pair(x, y) in self.A.iter().cloned() {
+            for Edge(x, y) in self.A.iter().cloned() {
                 if y == *v {
                     let _ = inn.insert(x.clone());
                 }
@@ -172,18 +172,18 @@ pub mod DirGraphStEphChap6_1 {
     #[macro_export]
     macro_rules! DirGraphStEphLit {
         () => {{
-            let __V: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![];
-            let __A: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<$crate::Types::Types::Pair<_, _>> = $crate::SetLit![];
-            < $crate::DirGraphStEphChap6_1::DirGraphStEphChap6_1::DirGraphStEph<_> as $crate::DirGraphStEphChap6_1::DirGraphStEphChap6_1::DirGraphStEphChap6_1Trait<_> >::FromSets(__V, __A)
+            let __V: $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![];
+            let __A: $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<$crate::Types::Types::Edge<_>> = $crate::SetLit![];
+            < $crate::Chap6::DirGraphStEph::DirGraphStEph::DirGraphStEph<_> as $crate::Chap6::DirGraphStEph::DirGraphStEph::DirGraphStEphTrait<_> >::FromSets(__V, __A)
         }};
         ( V: [ $( $v:expr ),* $(,)? ], A: [ $( ( $u:expr , $w:expr ) ),* $(,)? ] ) => {{
-            let __V: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![ $( $v ),* ];
-            let __A: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> = {
-                let mut __s = < $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
-                $( let _ = __s.insert($crate::Types::Types::Pair($u, $w)); )*
+            let __V: $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![ $( $v ),* ];
+            let __A: $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<_> = {
+                let mut __s = < $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
+                $( let _ = __s.insert($crate::Types::Types::Edge($u, $w)); )*
                 __s
             };
-            < $crate::DirGraphStEphChap6_1::DirGraphStEphChap6_1::DirGraphStEph<_> as $crate::DirGraphStEphChap6_1::DirGraphStEphChap6_1::DirGraphStEphChap6_1Trait<_> >::FromSets(__V, __A)
+            < $crate::Chap6::DirGraphStEph::DirGraphStEph::DirGraphStEph<_> as $crate::Chap6::DirGraphStEph::DirGraphStEph::DirGraphStEphTrait<_> >::FromSets(__V, __A)
         }}}
 
     #[allow(dead_code)]

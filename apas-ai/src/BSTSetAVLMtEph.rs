@@ -7,13 +7,13 @@ pub mod BSTSetAVLMtEph {
     use crate::BSTAVLMtEph::BSTAVLMtEph::BSTAVLMtEph;
     use crate::Types::Types::*;
 
-    pub struct BSTSetAVLMtEph<T: StTinMtT + Ord> {
+    pub struct BSTSetAVLMtEph<T: StTInMtT + Ord> {
         tree: BSTAVLMtEph<T>,
     }
 
     pub type BSTSetAVLMt<T> = BSTSetAVLMtEph<T>;
 
-    pub trait BSTSetAVLMtEphTrait<T: StTinMtT + Ord>: Sized {
+    pub trait BSTSetAVLMtEphTrait<T: StTInMtT + Ord>: Sized {
         fn empty() -> Self;
         fn singleton(value: T) -> Self;
         fn size(&self) -> N;
@@ -36,7 +36,7 @@ pub mod BSTSetAVLMtEph {
         fn as_tree(&self) -> &BSTAVLMtEph<T>;
     }
 
-    impl<T: StTinMtT + Ord> BSTSetAVLMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTSetAVLMtEph<T> {
         pub fn empty() -> Self {
             Self {
                 tree: BSTAVLMtEph::new(),
@@ -199,7 +199,7 @@ pub mod BSTSetAVLMtEph {
         }
     }
 
-    impl<T: StTinMtT + Ord> BSTSetAVLMtEphTrait<T> for BSTSetAVLMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTSetAVLMtEphTrait<T> for BSTSetAVLMtEph<T> {
         fn empty() -> Self { Self::empty() }
 
         fn singleton(value: T) -> Self { Self::singleton(value) }

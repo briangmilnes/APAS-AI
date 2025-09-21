@@ -284,10 +284,10 @@ pub mod SetStEphChap5_1 {
     #[macro_export]
     macro_rules! SetLit {
         () => {{
-            < $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty()
+            < $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty()
         }};
         ($($x:expr),* $(,)?) => {{
-            let mut __s = < $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
+            let mut __s = < $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
             $( let _ = __s.insert($x); )*
             __s
         }};

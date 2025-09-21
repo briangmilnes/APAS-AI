@@ -10,14 +10,14 @@ pub mod BSTSplayMtEph {
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone)]
-    struct Node<T: StTinMtT + Ord> {
+    struct Node<T: StTInMtT + Ord> {
         key: T,
         size: N,
         left: Link<T>,
         right: Link<T>,
     }
 
-    impl<T: StTinMtT + Ord> Node<T> {
+    impl<T: StTInMtT + Ord> Node<T> {
         fn new(key: T) -> Self {
             Node {
                 key,
@@ -29,13 +29,13 @@ pub mod BSTSplayMtEph {
     }
 
     #[derive(Clone)]
-    pub struct BSTSplayMtEph<T: StTinMtT + Ord> {
+    pub struct BSTSplayMtEph<T: StTInMtT + Ord> {
         root: Arc<RwLock<Link<T>>>,
     }
 
     pub type BSTreeSplay<T> = BSTSplayMtEph<T>;
 
-    pub trait BSTSplayMtEphTrait<T: StTinMtT + Ord>: Sized {
+    pub trait BSTSplayMtEphTrait<T: StTInMtT + Ord>: Sized {
         fn new() -> Self;
         fn insert(&self, value: T);
         fn find(&self, target: &T) -> Option<T>;
@@ -49,11 +49,11 @@ pub mod BSTSplayMtEph {
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StTinMtT + Ord> Default for BSTSplayMtEph<T> {
+    impl<T: StTInMtT + Ord> Default for BSTSplayMtEph<T> {
         fn default() -> Self { Self::new() }
     }
 
-    impl<T: StTinMtT + Ord> BSTSplayMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTSplayMtEph<T> {
         pub fn new() -> Self {
             BSTSplayMtEph {
                 root: Arc::new(RwLock::new(None)),
@@ -74,7 +74,7 @@ pub mod BSTSplayMtEph {
         }
 
         pub fn height(&self) -> N {
-            fn height_rec<T: StTinMtT + Ord>(link: &Link<T>) -> N {
+            fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {
                 match link {
                     | None => 0,
                     | Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
@@ -205,7 +205,7 @@ pub mod BSTSplayMtEph {
         }
     }
 
-    impl<T: StTinMtT + Ord> BSTSplayMtEphTrait<T> for BSTSplayMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTSplayMtEphTrait<T> for BSTSplayMtEph<T> {
         fn new() -> Self { BSTSplayMtEph::new() }
 
         fn insert(&self, value: T) { BSTSplayMtEph::insert(self, value) }

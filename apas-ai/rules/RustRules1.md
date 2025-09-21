@@ -22,6 +22,17 @@
 - Do not run `cargo fmt` or `rustfmt`; leave formatting passes to the user.
 - User formatting target: keep `rustfmt` max line width at 120 characters.
 
+#### Zero Warnings Policy (MANDATORY)
+- **ALL CODE MUST COMPILE WITH ZERO WARNINGS**: No `warning:` messages are acceptable in any build output.
+- **Fix immediately**: Address all compiler warnings before considering any task complete.
+- **Common fixes**:
+  - Unused variables: prefix with underscore (`_var`) or remove if truly unused
+  - Unused imports: remove or conditionally compile with `#[cfg(...)]`
+  - Dead code: remove or mark with `#[allow(dead_code)]` only if intentionally kept
+  - Deprecated items: update to non-deprecated alternatives
+- **No blanket allows**: Do not use `#[allow(warnings)]` or similar broad suppressions.
+- **CI/build requirement**: All builds must pass with `-D warnings` (warnings as errors).
+
 ### Imports and Module Scope
 
 #### Standard Library Imports and Result usage (module-top; no aliasing)
@@ -71,6 +82,7 @@ Result guidance
 - Minimize repeated `use crate::...` lines: group them once with braces, e.g. `use crate::{Types::Types::*, LinkedListStPer::LinkedListStPer::*, LinkedListStPerChap18::LinkedListStPerChap18::*};`.
 - Fall back to explicit symbol imports only to resolve name collisions.
 - `PartialEq` and `Eq` definitions should be inside the file’s single module.
+- Don’t create root shim files (e.g., `Chap3.rs`) purely to re-export a directory; declare inline modules with `#[path]` or reference the directory structure directly.
 
 #### No trailing per-file re-exports (use lib.rs instead)
 - Do not place lines like `pub use FooMod::FooModTrait;` at the end of source files.

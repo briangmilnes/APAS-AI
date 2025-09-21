@@ -10,7 +10,7 @@ pub mod BSTAVLMtEph {
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone)]
-    struct Node<T: StTinMtT + Ord> {
+    struct Node<T: StTInMtT + Ord> {
         key: T,
         height: i32,
         size: N,
@@ -18,7 +18,7 @@ pub mod BSTAVLMtEph {
         right: Link<T>,
     }
 
-    impl<T: StTinMtT + Ord> Node<T> {
+    impl<T: StTInMtT + Ord> Node<T> {
         fn new(key: T) -> Self {
             Node {
                 key,
@@ -31,13 +31,13 @@ pub mod BSTAVLMtEph {
     }
 
     #[derive(Clone)]
-    pub struct BSTAVLMtEph<T: StTinMtT + Ord> {
+    pub struct BSTAVLMtEph<T: StTInMtT + Ord> {
         root: Arc<RwLock<Link<T>>>,
     }
 
     pub type BSTreeAVL<T> = BSTAVLMtEph<T>;
 
-    pub trait BSTAVLMtEphTrait<T: StTinMtT + Ord>: Sized {
+    pub trait BSTAVLMtEphTrait<T: StTInMtT + Ord>: Sized {
         fn new() -> Self;
         fn insert(&self, value: T);
         fn find(&self, target: &T) -> Option<T>;
@@ -51,11 +51,11 @@ pub mod BSTAVLMtEph {
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StTinMtT + Ord> Default for BSTAVLMtEph<T> {
+    impl<T: StTInMtT + Ord> Default for BSTAVLMtEph<T> {
         fn default() -> Self { Self::new() }
     }
 
-    impl<T: StTinMtT + Ord> BSTAVLMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTAVLMtEph<T> {
         pub fn new() -> Self {
             BSTAVLMtEph {
                 root: Arc::new(RwLock::new(None)),
@@ -255,7 +255,7 @@ pub mod BSTAVLMtEph {
         }
     }
 
-    impl<T: StTinMtT + Ord> BSTAVLMtEphTrait<T> for BSTAVLMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTAVLMtEphTrait<T> for BSTAVLMtEph<T> {
         fn new() -> Self { BSTAVLMtEph::new() }
 
         fn insert(&self, value: T) { BSTAVLMtEph::insert(self, value) }

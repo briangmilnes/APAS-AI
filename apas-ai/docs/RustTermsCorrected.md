@@ -215,7 +215,41 @@ Attribute                      | Purpose
 
 ## Limitations
 
-Rust’s type aliases (`type Alias = ExistingType;`) are purely compile-time nicknames: they inherit exactly the methods and trait implementations of the underlying type, but you cannot add new inherent methods or blanket trait impls to the alias itself. As a result, using a type abbreviation to replace a wrapper struct prevents you from extending the API—any new behavior must still be implemented on the original type. Whenever you need a distinct method/trait surface (for example, to expose multithreaded semantics or tailor bounds per module), you must keep a real `struct` newtype rather than a type alias.
+### Type System Limitations
+
+Rust's type aliases (`type Alias = ExistingType;`) are purely compile-time nicknames: they inherit exactly the methods and trait implementations of the underlying type, but you cannot add new inherent methods or blanket trait impls to the alias itself. As a result, using a type abbreviation to replace a wrapper struct prevents you from extending the API—any new behavior must still be implemented on the original type. Whenever you need a distinct method/trait surface (for example, to expose multithreaded semantics or tailor bounds per module), you must keep a real `struct` newtype rather than a type alias.
+
+### Floating-Point Types as Hash Keys or Labels
+
+Floating-point types (`f32`, `f64`) **cannot** be used as hash keys, set elements, or labels in data structures that require `Eq` and `Hash` traits. This limitation affects:
+- Graph edge labels in `LabDirGraphStEph`, `LabDirGraphMtEph`, `LabUnDirGraphStEph`, `LabUnDirGraphMtEph`
+- Hash-based collections like `HashMap<f64, V>` or `HashSet<f32>`
+- Any generic type requiring `T: Eq + Hash`
+
+**Reason:** Floating-point types implement only `PartialEq` (not `Eq`) due to `NaN` values that don't equal themselves, and they don't implement `Hash` due to precision and `NaN` handling complexities.
+
+**Workarounds:**
+- Use integer types for numeric labels: `i32`, `u64`, `usize`
+- Wrap floats in custom types that implement `Eq` and `Hash` with appropriate semantics
+- Use `BTreeMap` instead of `HashMap` for ordered float keys (requires `Ord`, which floats do implement)
+
+### Pair Types Display and Debug Limitations
+
+The built-in `Pair<A, B>` type in this codebase has limited formatting support:
+- **Missing `Display`**: `Pair<A, B>` doesn't implement `std::fmt::Display`, so it cannot be used in contexts requiring user-facing string formatting
+- **Debug only**: Only `Debug` formatting is available via `{:?}`, suitable for developer diagnostics but not end-user output
+
+**Impact:** This affects any generic code requiring `T: Display` when `T` is instantiated with `Pair<A, B>`.
+
+**Workarounds:**
+- Use tuples `(A, B)` which implement both `Display` and `Debug` when their components do
+- Implement custom `Display` for `Pair<A, B>` if modifying the codebase
+- Use `format!("{:?}", pair)` for debug output instead of `Display`
+
+### Separate ST and MT Graph Modules
+
+Directed graph support lives in both `DirGraphStEph` and `DirGraphMtEph` modules because Rust relies solely on trait-based type classes rather than a richer module system with functor instantiation. The single-threaded implementation only needs the `StT` bundle (`Eq + Clone + Display + Debug + Sized`), while the multi-threaded version must require `MtT` and call into clone helpers that guarantee `Send + Sync`. Collapsing them into one module would smear those bounds together, forcing single-threaded code to import multi-threaded requirements and violating the MT module discipline that keeps concurrency guarantees verifiable. Maintaining two dedicated modules lets each implementation expose the correct trait surface without leaking hidden synchronization assumptions.
+
 
 Modules may contain:
 - type definitions (struct, enum, type alias)

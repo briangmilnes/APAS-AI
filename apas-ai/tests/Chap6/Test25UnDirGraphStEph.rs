@@ -1,8 +1,8 @@
-pub mod TestUnDirGraphStEphChap6_1 {
+pub mod TestUnDirGraphStEph {
     use apas_ai::SetLit;
-    use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
+    use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use apas_ai::Types::Types::*;
-    use apas_ai::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1::*;
+    use apas_ai::Chap6::UnDirGraphStEph::UnDirGraphStEph::*;
 
     #[test]
     fn test_undigraph_vertices_and_edges() {

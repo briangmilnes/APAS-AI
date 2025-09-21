@@ -16,7 +16,7 @@ pub mod BSTRBMtEph {
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone)]
-    struct Node<T: StTinMtT + Ord> {
+    struct Node<T: StTInMtT + Ord> {
         key: T,
         color: Color,
         size: N,
@@ -24,7 +24,7 @@ pub mod BSTRBMtEph {
         right: Link<T>,
     }
 
-    impl<T: StTinMtT + Ord> Node<T> {
+    impl<T: StTInMtT + Ord> Node<T> {
         fn new(key: T) -> Self {
             Node {
                 key,
@@ -37,13 +37,13 @@ pub mod BSTRBMtEph {
     }
 
     #[derive(Clone)]
-    pub struct BSTRBMtEph<T: StTinMtT + Ord> {
+    pub struct BSTRBMtEph<T: StTInMtT + Ord> {
         root: Arc<RwLock<Link<T>>>,
     }
 
     pub type BSTreeRB<T> = BSTRBMtEph<T>;
 
-    pub trait BSTRBMtEphTrait<T: StTinMtT + Ord>: Sized {
+    pub trait BSTRBMtEphTrait<T: StTInMtT + Ord>: Sized {
         fn new() -> Self;
         fn insert(&self, value: T);
         fn find(&self, target: &T) -> Option<T>;
@@ -57,11 +57,11 @@ pub mod BSTRBMtEph {
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StTinMtT + Ord> Default for BSTRBMtEph<T> {
+    impl<T: StTInMtT + Ord> Default for BSTRBMtEph<T> {
         fn default() -> Self { Self::new() }
     }
 
-    impl<T: StTinMtT + Ord> BSTRBMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTRBMtEph<T> {
         pub fn new() -> Self {
             BSTRBMtEph {
                 root: Arc::new(RwLock::new(None)),
@@ -82,7 +82,7 @@ pub mod BSTRBMtEph {
         }
 
         pub fn height(&self) -> N {
-            fn height_rec<T: StTinMtT + Ord>(link: &Link<T>) -> N {
+            fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {
                 match link {
                     | None => 0,
                     | Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
@@ -307,7 +307,7 @@ pub mod BSTRBMtEph {
         }
     }
 
-    impl<T: StTinMtT + Ord> BSTRBMtEphTrait<T> for BSTRBMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTRBMtEphTrait<T> for BSTRBMtEph<T> {
         fn new() -> Self { BSTRBMtEph::new() }
 
         fn insert(&self, value: T) { BSTRBMtEph::insert(self, value) }

@@ -1,6 +1,6 @@
-use apas_ai::RelationStEphChap5_2::RelationStEphChap5_2::*;
+use apas_ai::Chap5::RelationStEphChap5_2::RelationStEphChap5_2::*;
 use apas_ai::{SetLit, PairLit};
-use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
+use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
 use apas_ai::Types::Types::*;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;

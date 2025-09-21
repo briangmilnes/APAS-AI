@@ -1,0 +1,32 @@
+
+ Put APAS's algorithmic analysis into BSTParMtEph.
+ One line per Trait function typing and one line per
+ impl function. 
+
+ In // APAS - work ..., span .. lines.
+ Perform you own and add it as
+    // gpt-5-codex-medium: work ..., span ... lines.
+ Note a //BUG APAS and gpt-5-codex-medium disagree for each disagreement.
+
+ Write a todo, give an estimate and then proceed relentlessly.
+
+Cost Specification 38.11 (BSTs). The BST cost specification is defined as follows. The vari-
+ables n and m are defined as n = max (|t1|, |t2|) and m = min (|t1|, |t2|) when applicable.
+Here, |t| denotes the size of the tree t, defined as the number of keys in t.
+Work Span
+empty O (1) O (1)
+singleton k O (1) O (1)
+split t k O (lg |t|) O (lg |t|)
+join t1 t2 O (lg (|t1| + |t2|)) O (lg (|t1| + |t2|))
+find t k O (lg |t|) O (lg |t|)
+insert t k O (lg |t|) O (lg |t|)
+delete t k O (lg |t|) O (lg |t|)
+intersect t1 t2 O (m · lg n
+m
+) O (lg n)
+difference t1 t2 O (m · lg n
+m
+) O (lg n)
+union t1 t2 O (m · lg n
+m
+) O (lg n)

@@ -1,0 +1,21 @@
+
+
+
+3 Subgraphs
+When working with graphs, we sometimes wish to refer to parts of a graph. To this end,
+we can use the notion of a subgraph, which refers to a graph contained in a larger graph.
+A subgraph can be defined as any subsets of edges and vertices that together constitute a
+well defined graph.
+Definition 6.18 (Subgraph). Let G = (V, E) and H = (V ′, E′) be two graphs. H is a
+subgraph of if V ′ ⊆ V and E′ ⊆ E.
+Note. Note that since H is a graph, the vertices defining each edge are in the vertex set V ′,
+i.e., for an undirected graph E′ ⊆ (V ′
+2
+). There are many possible subgraphs of a graph.
+An important class of subgraphs are vertex-induced subgraphs, which are maximal sub-
+graphs defined by a set of vertices. A vertex-induced subgraph is maximal in the sense that
+it contains all the edges that it can possibly contain. In general when an object is said to be
+a maximal “X”, it means that nothing more can be added to the object without violating
+the property “X”.
+Definition 6.19 (Vertex-Induced Subgraph). The subgraph of G = (V, E) induced by V ′ ⊆
+V is the graph H = (V ′, E′) where E′ = {{u, v} ∈ E | u ∈ V ′, v ∈ V ′}

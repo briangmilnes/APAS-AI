@@ -1,7 +1,7 @@
 pub mod TestSetStEphChap5_1 {
 
     use apas_ai::SetLit;
-    use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
+    use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use apas_ai::Types::Types::*; // macro import
     use apas_ai::{PairLit};
 

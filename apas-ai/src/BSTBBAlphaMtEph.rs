@@ -12,14 +12,14 @@ pub mod BSTBBAlphaMtEph {
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone)]
-    struct Node<T: StTinMtT + Ord> {
+    struct Node<T: StTInMtT + Ord> {
         key: T,
         size: N,
         left: Link<T>,
         right: Link<T>,
     }
 
-    impl<T: StTinMtT + Ord> Node<T> {
+    impl<T: StTInMtT + Ord> Node<T> {
         fn new(key: T) -> Self {
             Node {
                 key,
@@ -31,13 +31,13 @@ pub mod BSTBBAlphaMtEph {
     }
 
     #[derive(Clone)]
-    pub struct BSTBBAlphaMtEph<T: StTinMtT + Ord> {
+    pub struct BSTBBAlphaMtEph<T: StTInMtT + Ord> {
         root: Arc<RwLock<Link<T>>>,
     }
 
     pub type BSTreeBBAlpha<T> = BSTBBAlphaMtEph<T>;
 
-    pub trait BSTBBAlphaMtEphTrait<T: StTinMtT + Ord>: Sized {
+    pub trait BSTBBAlphaMtEphTrait<T: StTInMtT + Ord>: Sized {
         fn new() -> Self;
         fn insert(&self, value: T);
         fn find(&self, target: &T) -> Option<T>;
@@ -51,11 +51,11 @@ pub mod BSTBBAlphaMtEph {
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StTinMtT + Ord> Default for BSTBBAlphaMtEph<T> {
+    impl<T: StTInMtT + Ord> Default for BSTBBAlphaMtEph<T> {
         fn default() -> Self { Self::new() }
     }
 
-    impl<T: StTinMtT + Ord> BSTBBAlphaMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTBBAlphaMtEph<T> {
         pub fn new() -> Self {
             BSTBBAlphaMtEph {
                 root: Arc::new(RwLock::new(None)),
@@ -76,7 +76,7 @@ pub mod BSTBBAlphaMtEph {
         }
 
         pub fn height(&self) -> N {
-            fn height_rec<T: StTinMtT + Ord>(link: &Link<T>) -> N {
+            fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {
                 match link {
                     | None => 0,
                     | Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
@@ -248,7 +248,7 @@ pub mod BSTBBAlphaMtEph {
         }
     }
 
-    impl<T: StTinMtT + Ord> BSTBBAlphaMtEphTrait<T> for BSTBBAlphaMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTBBAlphaMtEphTrait<T> for BSTBBAlphaMtEph<T> {
         fn new() -> Self { BSTBBAlphaMtEph::new() }
 
         fn insert(&self, value: T) { BSTBBAlphaMtEph::insert(self, value) }

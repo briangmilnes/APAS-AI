@@ -12,19 +12,54 @@ pub use crate::Types::Types::*;
 pub mod MathSeq;
 pub use crate::MathSeq::MathSeq::{MathSeqS, MathSeqTrait};
 
-pub mod SetStEphChap5_1;
-pub use crate::SetStEphChap5_1::SetStEphChap5_1::*;
+pub mod Chap3 {
+    pub mod InsertionSortSt;
+    pub use InsertionSortSt::*;
+}
 
-pub mod RelationStEphChap5_2;
-pub use crate::RelationStEphChap5_2::RelationStEphChap5_2::*;
+pub mod Chap5 {
+    pub mod SetStEphChap5_1;
+    pub mod RelationStEphChap5_2;
+    pub mod MappingStEphChap5_5;
+}
+pub use crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
+pub use crate::Chap5::RelationStEphChap5_2::RelationStEphChap5_2::*;
+pub use crate::Chap5::MappingStEphChap5_5::MappingStEphChap5_5::*;
 
-pub mod MappingStEphChap5_5;
-pub use crate::MappingStEphChap5_5::MappingStEphChap5_5::*;
-
-pub mod DirGraphStEphChap6_1;
-pub use crate::DirGraphStEphChap6_1::DirGraphStEphChap6_1::*;
-pub mod UnDirGraphStEphChap6_1;
-pub use crate::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1::*;
+pub mod Chap6 {
+    pub mod DirGraphStEph;
+    pub mod UnDirGraphStEph;
+    pub mod LabDirGraphStEph;
+    pub mod LabUnDirGraphStEph;
+    pub mod DirGraphMtEph;
+    pub mod UnDirGraphMtEph;
+    pub mod LabDirGraphMtEph;
+    pub mod LabUnDirGraphMtEph;
+    pub mod WeightedDirGraphStEphInt;
+    pub mod WeightedDirGraphStEphFloat;
+    pub mod WeightedDirGraphMtEphInt;
+    pub mod WeightedDirGraphMtEphFloat;
+    pub mod WeightedUnDirGraphStEphInt;
+    pub mod WeightedUnDirGraphStEphFloat;
+    pub mod WeightedUnDirGraphMtEphInt;
+    pub mod WeightedUnDirGraphMtEphFloat;
+}
+pub use crate::Chap6::DirGraphStEph::DirGraphStEph::*;
+pub use crate::Chap6::UnDirGraphStEph::UnDirGraphStEph::*;
+pub use crate::Chap6::LabDirGraphStEph::LabDirGraphStEph::*;
+pub use crate::Chap6::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
+pub use crate::Chap6::DirGraphMtEph::DirGraphMtEph::*;
+pub use crate::Chap6::UnDirGraphMtEph::UnDirGraphMtEph::*;
+pub use crate::Chap6::LabDirGraphMtEph::LabDirGraphMtEph::*;
+pub use crate::Chap6::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
+pub use crate::Chap6::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
+pub use crate::Chap6::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
+pub use crate::Chap6::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
+pub use crate::Chap6::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::*;
+pub use crate::Chap6::WeightedUnDirGraphStEphInt::WeightedUnDirGraphStEphInt::*;
+pub use crate::Chap6::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::*;
+pub use crate::Chap6::WeightedUnDirGraphMtEphInt::WeightedUnDirGraphMtEphInt::*;
+pub use crate::Chap6::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::*;
 
 pub mod LinkedListStPer;
 pub use crate::LinkedListStPer::LinkedListStPer::*;
@@ -128,6 +163,8 @@ pub mod BSTSplayMtEph;
 pub use crate::BSTSplayMtEph::BSTSplayMtEph::{BSTSplayMtEph as BSTSplayMtTree, BSTSplayMtEphTrait};
 pub mod BSTParaMtEph;
 pub use crate::BSTParaMtEph::BSTParaMtEph::{ParamBST as BSTParaMtTree, ParamBSTTrait as BSTParaMtTrait};
+pub mod BSTParaTreapMtEph;
+pub use crate::BSTParaTreapMtEph::BSTParaTreapMtEph::{ParamTreap as BSTParaTreapMtTree, ParamTreapTrait as BSTParaTreapMtTrait};
 pub mod BSTParaStEph;
 pub use crate::BSTParaStEph::BSTParaStEph::{ParamBST as BSTParaStTree, ParamBSTTrait as BSTParaStTrait};
 

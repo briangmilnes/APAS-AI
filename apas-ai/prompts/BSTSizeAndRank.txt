@@ -1,0 +1,24 @@
+286 CHAPTER 40. AUGMENTING BINARY SEARCH TREES
+
+Then in the join algorithm for Treaps , we could replace the three occurrences TNode(·, ·, ·, ·)
+with makeNode. That is the only change that needs to be made.
+2.1 Example: Rank and Select in BSTs
+Suppose that we wish to extend the BST ADT with the following additional functions.
+• Function rank T k returns the rank of the key k in the tree, i.e., the number of keys
+in t that are less than or equal to k.
+• Function select T i returns the key with the rank i in t.
+Such functions arise in many applications.
+Algorithm 40.1 (Rank and Select). If we have a way to count the number of nodes in a
+subtree, then we can easily implement the rank and select functions. The algorithms below
+give implementations by using a size operation for computing the size of a tree, written |T |
+for tree T .
+1 rank T k =
+2 case expose T of
+3 Leaf ⇒ 0
+4 | Node (L, k′, R) ⇒
+5 case compare (k, k′) of
+6 Less ⇒ rank L k
+7 | Equal ⇒ |L| + 1
+8 | Greater ⇒ |L| + 1 + (rank R k)
+
+

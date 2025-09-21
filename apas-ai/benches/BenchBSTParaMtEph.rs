@@ -37,14 +37,73 @@ fn bench_para_bst(c: &mut Criterion) {
             b.iter_batched(
                 || {
                     let left = build_tree(len / 2);
-                    let right = ParamBST::new();
-                    for value in len..(len + len / 2) {
-                        right.insert(value as i32);
-                    }
+                    let right = build_tree(len / 2);
                     (left, right)
                 },
                 |(left, right)| {
                     let _ = black_box(left.join_pair(right));
+                },
+                BatchSize::SmallInput,
+            );
+        });
+
+        group.bench_with_input(BenchmarkId::new("union", n), &n, |b, &len| {
+            b.iter_batched(
+                || {
+                    let left = build_tree(len);
+                    let right = build_tree(len);
+                    (left, right)
+                },
+                |(left, right)| {
+                    let _ = black_box(left.union(&right));
+                },
+                BatchSize::SmallInput,
+            );
+        });
+
+        group.bench_with_input(BenchmarkId::new("intersect", n), &n, |b, &len| {
+            b.iter_batched(
+                || {
+                    let left = build_tree(len);
+                    let right = build_tree(len);
+                    (left, right)
+                },
+                |(left, right)| {
+                    let _ = black_box(left.intersect(&right));
+                },
+                BatchSize::SmallInput,
+            );
+        });
+
+        group.bench_with_input(BenchmarkId::new("difference", n), &n, |b, &len| {
+            b.iter_batched(
+                || {
+                    let left = build_tree(len);
+                    let right = build_tree(len);
+                    (left, right)
+                },
+                |(left, right)| {
+                    let _ = black_box(left.difference(&right));
+                },
+                BatchSize::SmallInput,
+            );
+        });
+
+        group.bench_with_input(BenchmarkId::new("filter", n), &n, |b, &len| {
+            b.iter_batched(
+                || build_tree(len),
+                |tree| {
+                    let _ = black_box(tree.filter(|v| v % 2 == 0));
+                },
+                BatchSize::SmallInput,
+            );
+        });
+
+        group.bench_with_input(BenchmarkId::new("reduce", n), &n, |b, &len| {
+            b.iter_batched(
+                || build_tree(len),
+                |tree| {
+                    let _ = black_box(tree.reduce(|a, b| a + b, 0));
                 },
                 BatchSize::SmallInput,
             );

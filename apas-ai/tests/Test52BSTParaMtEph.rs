@@ -10,6 +10,14 @@ fn make_tree(values: &[i32]) -> ParamBST<i32> {
     tree
 }
 
+fn make_range_tree(start: i32, end: i32) -> ParamBST<i32> {
+    let tree = ParamBST::new();
+    for value in start..end {
+        tree.insert(value);
+    }
+    tree
+}
+
 #[test]
 fn para_basic_insert_find() {
     let tree = make_tree(&[4, 2, 6, 1, 3, 5, 7]);
@@ -92,4 +100,51 @@ fn para_filter_and_reduce() {
 
     let empty_sum = ParamBST::<i32>::new().reduce(|a, b| a + b, 0);
     assert_eq!(empty_sum, 0);
+}
+
+#[test]
+fn para_union_large_balanced() {
+    let a = make_range_tree(0, 200);
+    let b = make_range_tree(100, 300);
+
+    let union = a.union(&b);
+    let values: Vec<_> = union.in_order().iter().copied().collect();
+    let expected: Vec<_> = (0..300).collect();
+    assert_eq!(values, expected);
+}
+
+#[test]
+fn para_intersect_and_difference_large() {
+    let a = make_range_tree(0, 256);
+    let b = make_range_tree(128, 384);
+
+    let intersection = a.intersect(&b);
+    let intersect_values: Vec<_> = intersection.in_order().iter().copied().collect();
+    let expected_intersection: Vec<_> = (128..256).collect();
+    assert_eq!(intersect_values, expected_intersection);
+
+    let difference = a.difference(&b);
+    let diff_values: Vec<_> = difference.in_order().iter().copied().collect();
+    let expected_difference: Vec<_> = (0..128).collect();
+    assert_eq!(diff_values, expected_difference);
+}
+
+#[test]
+fn para_filter_and_reduce_edge_cases() {
+    let tree = make_range_tree(0, 64);
+
+    let odds = tree.filter(|v| v % 2 == 1);
+    let odd_values: Vec<_> = odds.in_order().iter().copied().collect();
+    let expected_odds: Vec<_> = (0..64).filter(|v| v % 2 == 1).collect();
+    assert_eq!(odd_values, expected_odds);
+
+    let sum_squares = tree.reduce(|acc, v| acc + v * v, 0);
+    let expected_sum_squares = (63 * 64 * 127) / 6; // sum_{i=0}^{63} i^2
+    assert_eq!(sum_squares, expected_sum_squares);
+
+    let single = make_tree(&[42]);
+    let filtered_single = single.filter(|v| *v == 42);
+    assert_eq!(filtered_single.in_order().iter().copied().collect::<Vec<_>>(), vec![42]);
+    let reduced_single = single.reduce(|a, b| a + b, 0);
+    assert_eq!(reduced_single, 42);
 }

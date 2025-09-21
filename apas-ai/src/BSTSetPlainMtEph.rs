@@ -7,13 +7,13 @@ pub mod BSTSetPlainMtEph {
     use crate::BSTPlainMtEph::BSTPlainMtEph::BSTPlainMtEph;
     use crate::Types::Types::*;
 
-    pub struct BSTSetPlainMtEph<T: StTinMtT + Ord> {
+    pub struct BSTSetPlainMtEph<T: StTInMtT + Ord> {
         tree: BSTPlainMtEph<T>,
     }
 
     pub type BSTSetPlainMt<T> = BSTSetPlainMtEph<T>;
 
-    pub trait BSTSetPlainMtEphTrait<T: StTinMtT + Ord>: Sized {
+    pub trait BSTSetPlainMtEphTrait<T: StTInMtT + Ord>: Sized {
         fn empty() -> Self;
         fn singleton(value: T) -> Self;
         fn size(&self) -> N;
@@ -36,7 +36,7 @@ pub mod BSTSetPlainMtEph {
         fn as_tree(&self) -> &BSTPlainMtEph<T>;
     }
 
-    impl<T: StTinMtT + Ord> BSTSetPlainMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTSetPlainMtEph<T> {
         pub fn empty() -> Self {
             Self {
                 tree: BSTPlainMtEph::new(),
@@ -199,7 +199,7 @@ pub mod BSTSetPlainMtEph {
         }
     }
 
-    impl<T: StTinMtT + Ord> BSTSetPlainMtEphTrait<T> for BSTSetPlainMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTSetPlainMtEphTrait<T> for BSTSetPlainMtEph<T> {
         fn empty() -> Self { Self::empty() }
 
         fn singleton(value: T) -> Self { Self::singleton(value) }

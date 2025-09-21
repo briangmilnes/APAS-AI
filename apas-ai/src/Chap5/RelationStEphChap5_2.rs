@@ -7,7 +7,7 @@ pub mod RelationStEphChap5_2 {
     use std::hash::Hash;
 
     use crate::SetLit;
-    use crate::SetStEphChap5_1::SetStEphChap5_1::*;
+    use crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use crate::Types::Types::*;
 
     #[derive(Clone)]
@@ -139,16 +139,16 @@ pub mod RelationStEphChap5_2 {
     #[macro_export]
     macro_rules! RelationLit {
         () => {{
-            let __pairs: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<$crate::Types::Types::Pair<_, _>> = < $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
-            < $crate::RelationStEphChap5_2::RelationStEphChap5_2::Relation<_, _> as $crate::RelationStEphChap5_2::RelationStEphChap5_2::RelationStEphChap5_2Trait<_, _> >::FromSet(__pairs)
+            let __pairs: $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<$crate::Types::Types::Pair<_, _>> = < $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
+            < $crate::Chap5::RelationStEphChap5_2::RelationStEphChap5_2::Relation<_, _> as $crate::Chap5::RelationStEphChap5_2::RelationStEphChap5_2::RelationStEphChap5_2Trait<_, _> >::FromSet(__pairs)
         }};
         ( $( ($a:expr, $b:expr) ),* $(,)? ) => {{
             let __pairs = {
-                let mut __s = < $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
+                let mut __s = < $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
                 $( let _ = __s.insert($crate::Types::Types::Pair($a, $b)); )*
                 __s
             };
-            < $crate::RelationStEphChap5_2::RelationStEphChap5_2::Relation<_, _> as $crate::RelationStEphChap5_2::RelationStEphChap5_2::RelationStEphChap5_2Trait<_, _> >::FromSet(__pairs)
+            < $crate::Chap5::RelationStEphChap5_2::RelationStEphChap5_2::Relation<_, _> as $crate::Chap5::RelationStEphChap5_2::RelationStEphChap5_2::RelationStEphChap5_2Trait<_, _> >::FromSet(__pairs)
         }};
     }
 

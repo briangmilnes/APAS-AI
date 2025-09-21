@@ -1,0 +1,66 @@
+
+We are going to restructure by adding chapter specific subdirectories.
+Do not create mod.rs. 
+Do simple imports like for 
+pub mod Chap3 {
+    pub mod InsertionSortSt;   
+}
+in lib.rs. 
+
+Under no circumstance create old mod.rs or Chap<N>.rs files.
+
+Do not sweep for path changes in src, tests and benches until I say
+so later. This will save time. 
+
+
+Show me the output of all cargo commands in a program box.
+Show me a to-do list before you start and estimate time.
+
+Leave Types at the top level as it is used so much.
+
+src/Types.rs
+
+make src, tests, benches Chap5 subdirectory.
+
+move src/SetStEphChap5_1.rs 
+     src/RelationStEphChap5_2.rs
+     src/MappingStEphChap5_5.rs
+     src/DirGraphStEphChap6_1.rs 
+     src/UnDirGraphStEphChap6_1.rs
+
+into Chap5 and its
+tests and benches files into Chap5. 
+
+Then, sweep for and change use paths and any UFCSs calls in
+src.
+
+Run cargo build and get it clean. 
+
+Then, sweep for and change use paths and any UFCSs calls in
+tests.
+
+Run cargo nextest run and get it clean.
+
+Then, sweep for and change use paths and any UFCSs calls in
+benches. 
+
+Run cargo bench file by file please and get them clean.
+
+
+Whoops, I put some Chap6 files in Chap5.
+     src/DirGraphStEphChap6_1.rs 
+     src/UnDirGraphStEphChap6_1.rs
+
+Fix that.
+
+
+
+Rename these without the Chap6_1:
+DirGraphStEphChap6_1.rs
+UnDirGraphStEphChap6_1.rs
+
+Change the module, trait and impl names.
+Sweep this through src, tests, and benches.
+Show me a to-do list and and estimate and
+I'll tell you when to start.
+

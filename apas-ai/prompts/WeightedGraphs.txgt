@@ -1,0 +1,92 @@
+
+
+Make Chap6/LabDirGraphStEph.rs
+and  Chap6/LabUnDirGraphStEph.rs
+and their tests and benches files,
+the label is to be a generic type.
+
+
+Make modules that specialize each of the 
+src/Chap6/LabDirGraphMtEph.rs
+src/Chap6/LabDirGraphStEph.rs
+src/Chap6/LabUnDirGraphMtEph.rs
+src/Chap6/LabUnDirGraphStEph.rs
+
+to add both floating point and integer weights as
+labels using the definitions below.
+
+Show me a to-do list and and estimate and I'll tell you when to start.
+
+
+2 Weighted Graphs
+Many applications of graphs require associating weights or other values with the edges of
+a graph.
+
+Definition 6.17 (Weighted and Edge-Labeled Graphs). An edge-labeled graph or a weighted
+graph is a triple G = (E, V, w) where w : E → L is a function mapping edges or directed
+edges to their labels (weights) , and L is the set of possible labels (weights).
+In a graph, if the data associated with the edges are real numbers, we often use the term
+“weight” to refer to the edge labels, and use the term “weighted graph” to refer to the
+graph. In the general case, we use the terms “edge label” and edge-labeled graph. Weights
+or other values on edges could represent many things, such as a distance, or a capacity, or
+the strength of a relationship.
+
+
+
+  I see the problem that caused you to make this too complicated: 
+ Edge from types was not being used in DirGraph and UnDirGraph.
+
+ Fix DirGraph and UndirGraph to use Edge. Set is fine.
+
+ Write LabDirGraph and LabUnDirGraph. Using the labelled edge,
+ and allow floating point 
+
+ Show me a to-do list and and estimate time and I'll tell you when to start.
+
+
+  I think Labelled is too long in file names and data structures. Please
+ rename files and data strucutures to use just 'Lab'.
+ Show me a to-do list and and estimate time and I'll tell you when to start.
+
+
+Make Chap6/LabDirGraphStEph.rs
+and  Chap6/LabUnDirGraphStEph.rs
+and their tests and benches files,
+the label is to be a generic type.
+
+You need to make Lab*St* use StT.
+Show me a to-do list and and estimate time and I'll tell you when to start.
+
+
+I'm replaced StinM with StInMt. 
+
+
+Now make an Mt of 
+LabDirGraphStEph.rs
+LabUnDirGraphStEph.rs
+DirGraphStEph.rs
+UnDirGraphStEph.rs
+each of these.
+Use MtT where appropriate but the labels
+can be StinMt. 
+
+
+
+Then make modules that use these but specialize the weight to
+a number, real or int, and their tests and benches files,
+
+Show me a to-do list and and estimate and I'll tell you when to start.
+
+
+2 Weighted Graphs
+Many applications of graphs require associating weights or other values with the edges of
+a graph.
+
+Definition 6.17 (Weighted and Edge-Labeled Graphs). An edge-labeled graph or a weighted
+graph is a triple G = (E, V, w) where w : E → L is a function mapping edges or directed
+edges to their labels (weights) , and L is the set of possible labels (weights).
+In a graph, if the data associated with the edges are real numbers, we often use the term
+“weight” to refer to the edge labels, and use the term “weighted graph” to refer to the
+graph. In the general case, we use the terms “edge label” and edge-labeled graph. Weights
+or other values on edges could represent many things, such as a distance, or a capacity, or
+the strength of a relationship.

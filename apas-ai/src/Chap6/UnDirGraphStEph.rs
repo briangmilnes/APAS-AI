@@ -1,30 +1,30 @@
 //! Chapter 6.1 Undirected Graph (ephemeral) using Set for vertices and edges.
 
-pub mod UnDirGraphStEphChap6_1 {
+pub mod UnDirGraphStEph {
     use crate::SetLit;
-    use crate::SetStEphChap5_1::SetStEphChap5_1::*;
+    use crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use crate::Types::Types::*;
     use std::hash::Hash;
 
     #[derive(Clone)]
     pub struct UnDirGraphStEph<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {
         V: Set<V>,
-        E: Set<Pair<V, V>>,
+        E: Set<Edge<V>>,
     }
 
-    pub trait UnDirGraphStEphChap6_1Trait<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {
+    pub trait UnDirGraphStEphTrait<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> UnDirGraphStEph<V>;
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(1)
-        fn FromSets(V: Set<V>, E: Set<Pair<V, V>>) -> UnDirGraphStEph<V>;
+        fn FromSets(V: Set<V>, E: Set<Edge<V>>) -> UnDirGraphStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn vertices(&self) -> &Set<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn edges(&self) -> &Set<Pair<V, V>>;
+        fn edges(&self) -> &Set<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn sizeV(&self) -> N;
@@ -42,28 +42,28 @@ pub mod UnDirGraphStEphChap6_1 {
         fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn Incident(&self, e: &Pair<V, V>, v: &V) -> B;
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(1)
         fn Degree(&self, v: &V) -> N;
     }
 
-    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> UnDirGraphStEphChap6_1Trait<V> for UnDirGraphStEph<V> {
+    impl<V: Eq + Hash + Clone + std::fmt::Display + std::fmt::Debug> UnDirGraphStEphTrait<V> for UnDirGraphStEph<V> {
         fn empty() -> UnDirGraphStEph<V> {
             UnDirGraphStEph {
                 V: SetLit![],
                 E: SetLit![],
             }
         }
-        fn FromSets(V: Set<V>, E: Set<Pair<V, V>>) -> UnDirGraphStEph<V> { UnDirGraphStEph { V, E } }
+        fn FromSets(V: Set<V>, E: Set<Edge<V>>) -> UnDirGraphStEph<V> { UnDirGraphStEph { V, E } }
         fn vertices(&self) -> &Set<V> { &self.V }
-        fn edges(&self) -> &Set<Pair<V, V>> { &self.E }
+        fn edges(&self) -> &Set<Edge<V>> { &self.E }
         fn sizeV(&self) -> N { self.V.size() }
         fn sizeE(&self) -> N { self.E.size() }
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Treat edges as unordered: {u,v}
-            if B::True == self.E.mem(&Pair(u.clone(), v.clone())) || B::True == self.E.mem(&Pair(v.clone(), u.clone()))
+            if B::True == self.E.mem(&Edge(u.clone(), v.clone())) || B::True == self.E.mem(&Edge(v.clone(), u.clone()))
             {
                 B::True
             } else {
@@ -73,7 +73,7 @@ pub mod UnDirGraphStEphChap6_1 {
 
         fn NG(&self, v: &V) -> Set<V> {
             let mut ng: Set<V> = SetLit![];
-            for Pair(a, b) in self.E.iter().cloned() {
+            for Edge(a, b) in self.E.iter().cloned() {
                 if a == *v {
                     let _ = ng.insert(b.clone());
                 } else if b == *v {
@@ -92,7 +92,7 @@ pub mod UnDirGraphStEphChap6_1 {
             result
         }
 
-        fn Incident(&self, e: &Pair<V, V>, v: &V) -> B {
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B {
             if &e.0 == v || &e.1 == v {
                 B::True
             } else {
@@ -124,18 +124,18 @@ pub mod UnDirGraphStEphChap6_1 {
     #[macro_export]
     macro_rules! UnDirGraphStEphLit {
         () => {{
-            let __V: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![];
-            let __E: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<$crate::Types::Types::Pair<_, _>> = $crate::SetLit![];
-            < $crate::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1::UnDirGraphStEph<_> as $crate::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1Trait<_> >::FromSets(__V, __E)
+            let __V: $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![];
+            let __E: $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<$crate::Types::Types::Edge<_>> = $crate::SetLit![];
+            < $crate::Chap6::UnDirGraphStEph::UnDirGraphStEph::UnDirGraphStEph<_> as $crate::Chap6::UnDirGraphStEph::UnDirGraphStEph::UnDirGraphStEphTrait<_> >::FromSets(__V, __E)
         }};
         ( V: [ $( $v:expr ),* $(,)? ], E: [ $( ( $u:expr , $w:expr ) ),* $(,)? ] ) => {{
-            let __V: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![ $( $v ),* ];
-            let __E: $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> = {
-                let mut __s = < $crate::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
-                $( let _ = __s.insert($crate::Types::Types::Pair($u, $w)); )*
+            let __V: $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![ $( $v ),* ];
+            let __E: $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<_> = {
+                let mut __s = < $crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
+                $( let _ = __s.insert($crate::Types::Types::Edge($u, $w)); )*
                 __s
             };
-            < $crate::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1::UnDirGraphStEph<_> as $crate::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1::UnDirGraphStEphChap6_1Trait<_> >::FromSets(__V, __E)
+            < $crate::Chap6::UnDirGraphStEph::UnDirGraphStEph::UnDirGraphStEph<_> as $crate::Chap6::UnDirGraphStEph::UnDirGraphStEph::UnDirGraphStEphTrait<_> >::FromSets(__V, __E)
         }};
     }
 

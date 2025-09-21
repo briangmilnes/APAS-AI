@@ -1,28 +1,28 @@
-use apas_ai::DirGraphStEphChap6_1::DirGraphStEphChap6_1::*;
-use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
+use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
 use apas_ai::Types::Types::*;
+use apas_ai::Chap6::UnDirGraphStEph::UnDirGraphStEph::*;
 use apas_ai::{SetLit, PairLit};
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
-fn bench_dirgraph_build(c: &mut Criterion) {
-    let mut group = c.benchmark_group("BenchDirGraphStEphChap6_1");
+fn bench_undirgraph_build(c: &mut Criterion) {
+    let mut group = c.benchmark_group("BenchUnDirGraphEphChap6_1");
     group.sample_size(10);
     group.warm_up_time(Duration::from_secs(1));
     group.measurement_time(Duration::from_secs(5));
 
     let n: N = 50_000;
-    group.bench_with_input(BenchmarkId::new("build_vertices_arcs", n), &n, |b, &len| {
+    group.bench_with_input(BenchmarkId::new("build_vertices_edges", n), &n, |b, &len| {
         b.iter(|| {
             let mut v: Set<N> = SetLit![]; // Set: empty constructor
             for i in 0..len {
                 let _ = Set::insert(&mut v, i);
             }
-            let mut a: Set<Pair<N, N>> = SetLit![]; // Set: empty constructor
+            let mut e: Set<Pair<N, N>> = SetLit![]; // Set: empty constructor
             for i in 0..len {
-                let _ = Set::insert(&mut a, PairLit!(i, (i + 1) % len));
+                let _ = Set::insert(&mut e, PairLit!(i.min((i + 1) % len), i.max((i + 1) % len)));
             }
-            let g = DirGraphStEph::FromSets(v, a);
+            let g = <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(v, e);
             black_box(g)
         })
     });
@@ -30,5 +30,5 @@ fn bench_dirgraph_build(c: &mut Criterion) {
     group.finish();
 }
 
-criterion_group!(benches, bench_dirgraph_build);
+criterion_group!(benches, bench_undirgraph_build);
 criterion_main!(benches);

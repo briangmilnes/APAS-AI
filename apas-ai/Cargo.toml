@@ -161,3 +161,43 @@ harness = false
 [[bench]]
 name = "BenchBSTSetMtEph"
 harness = false
+
+[[bench]]
+name = "BenchBSTParaTreapMtEph"
+harness = false
+
+[[bench]]
+name = "BenchInsertionSortSt"
+path = "benches/Chap3/BenchInsertionSortSt.rs"
+harness = false
+
+[[bench]]
+name = "BenchRelationStEphChap5_2"
+path = "benches/Chap5/BenchRelationStEphChap5_2.rs"
+harness = false
+
+[[bench]]
+name = "BenchMappingStEphChap5_5"
+path = "benches/Chap5/BenchMappingStEphChap5_5.rs"
+harness = false
+
+[[bench]]
+name = "BenchDirGraphStEph"
+path = "benches/Chap6/BenchDirGraphStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchUnDirGraphStEph"
+path = "benches/Chap6/BenchUnDirGraphStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchLabDirGraphStEph"
+path = "benches/Chap6/BenchLabDirGraphStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchLabUnDirGraphStEph"
+path = "benches/Chap6/BenchLabUnDirGraphStEph.rs"
+harness = false
+

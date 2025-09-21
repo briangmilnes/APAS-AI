@@ -11,7 +11,7 @@ pub mod BSTTreapMtEph {
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone)]
-    struct Node<T: StTinMtT + Ord> {
+    struct Node<T: StTInMtT + Ord> {
         key: T,
         priority: u64,
         size: N,
@@ -19,7 +19,7 @@ pub mod BSTTreapMtEph {
         right: Link<T>,
     }
 
-    impl<T: StTinMtT + Ord> Node<T> {
+    impl<T: StTInMtT + Ord> Node<T> {
         fn new(key: T, priority: u64) -> Self {
             Node {
                 key,
@@ -32,13 +32,13 @@ pub mod BSTTreapMtEph {
     }
 
     #[derive(Clone)]
-    pub struct BSTTreapMtEph<T: StTinMtT + Ord> {
+    pub struct BSTTreapMtEph<T: StTInMtT + Ord> {
         root: Arc<RwLock<Link<T>>>,
     }
 
     pub type BSTreeTreap<T> = BSTTreapMtEph<T>;
 
-    pub trait BSTTreapMtEphTrait<T: StTinMtT + Ord>: Sized {
+    pub trait BSTTreapMtEphTrait<T: StTInMtT + Ord>: Sized {
         fn new() -> Self;
         fn insert(&self, value: T);
         fn find(&self, target: &T) -> Option<T>;
@@ -52,11 +52,11 @@ pub mod BSTTreapMtEph {
         fn pre_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StTinMtT + Ord> Default for BSTTreapMtEph<T> {
+    impl<T: StTInMtT + Ord> Default for BSTTreapMtEph<T> {
         fn default() -> Self { Self::new() }
     }
 
-    impl<T: StTinMtT + Ord> BSTTreapMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTTreapMtEph<T> {
         pub fn new() -> Self {
             BSTTreapMtEph {
                 root: Arc::new(RwLock::new(None)),
@@ -77,7 +77,7 @@ pub mod BSTTreapMtEph {
         }
 
         pub fn height(&self) -> N {
-            fn height_rec<T: StTinMtT + Ord>(link: &Link<T>) -> N {
+            fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {
                 match link {
                     | None => 0,
                     | Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
@@ -240,7 +240,7 @@ pub mod BSTTreapMtEph {
         }
     }
 
-    impl<T: StTinMtT + Ord> BSTTreapMtEphTrait<T> for BSTTreapMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTTreapMtEphTrait<T> for BSTTreapMtEph<T> {
         fn new() -> Self { BSTTreapMtEph::new() }
 
         fn insert(&self, value: T) { BSTTreapMtEph::insert(self, value) }

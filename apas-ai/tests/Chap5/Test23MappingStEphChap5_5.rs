@@ -1,10 +1,10 @@
 //! Tests for MappingStEphChap5_5 ephemeral mappings.
 
 pub mod Test23MappingStEphChap5_5 {
-    use apas_ai::MappingStEphChap5_5::MappingStEphChap5_5::*;
-    use apas_ai::RelationStEphChap5_2::RelationStEphChap5_2::*;
+    use apas_ai::Chap5::MappingStEphChap5_5::MappingStEphChap5_5::*;
+    use apas_ai::Chap5::RelationStEphChap5_2::RelationStEphChap5_2::*;
     use apas_ai::SetLit;
-    use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
+    use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use apas_ai::Types::Types::*;
     use apas_ai::{MappingLit, PairLit};
 

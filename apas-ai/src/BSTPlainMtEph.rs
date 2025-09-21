@@ -9,7 +9,7 @@ pub mod BSTPlainMtEph {
     type Link<T> = Arc<RwLock<Option<Node<T>>>>;
 
     #[derive(Clone)]
-    struct Node<T: StTinMtT + Ord> {
+    struct Node<T: StTInMtT + Ord> {
         key: T,
         height: i32,
         size: N,
@@ -17,7 +17,7 @@ pub mod BSTPlainMtEph {
         right: Link<T>,
     }
 
-    impl<T: StTinMtT + Ord> Node<T> {
+    impl<T: StTInMtT + Ord> Node<T> {
         fn new(key: T) -> Self {
             Node {
                 key,
@@ -36,13 +36,13 @@ pub mod BSTPlainMtEph {
         }
     }
 
-    pub struct BSTPlainMtEph<T: StTinMtT + Ord> {
+    pub struct BSTPlainMtEph<T: StTInMtT + Ord> {
         root: Link<T>,
     }
 
     pub type BSTree<T> = BSTPlainMtEph<T>;
 
-    pub trait BSTPlainMtEphTrait<T: StTinMtT + Ord>: Sized {
+    pub trait BSTPlainMtEphTrait<T: StTInMtT + Ord>: Sized {
         fn new() -> Self;
         fn insert(&self, value: T);
         fn find(&self, target: &T) -> Option<T>;
@@ -55,7 +55,7 @@ pub mod BSTPlainMtEph {
         fn in_order(&self) -> ArrayStPerS<T>;
     }
 
-    impl<T: StTinMtT + Ord> BSTPlainMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTPlainMtEph<T> {
         pub fn new() -> Self {
             Self {
                 root: Arc::new(RwLock::new(None)),
@@ -63,7 +63,7 @@ pub mod BSTPlainMtEph {
         }
 
         pub fn insert(&self, value: T) {
-            fn descend<T: StTinMtT + Ord>(link: &Link<T>, value: T) -> bool {
+            fn descend<T: StTInMtT + Ord>(link: &Link<T>, value: T) -> bool {
                 let mut guard = link.write().unwrap();
                 match guard.as_mut() {
                     | Some(node) => {
@@ -98,7 +98,7 @@ pub mod BSTPlainMtEph {
         }
 
         pub fn find(&self, target: &T) -> Option<T> {
-            fn find_rec<T: StTinMtT + Ord>(link: &Link<T>, target: &T) -> Option<T> {
+            fn find_rec<T: StTInMtT + Ord>(link: &Link<T>, target: &T) -> Option<T> {
                 let guard = link.read().unwrap();
                 match guard.as_ref() {
                     | Some(node) if target == &node.key => Some(node.key.clone()),
@@ -143,7 +143,7 @@ pub mod BSTPlainMtEph {
         }
 
         pub fn minimum(&self) -> Option<T> {
-            fn leftmost<T: StTinMtT + Ord>(link: &Link<T>) -> Option<T> {
+            fn leftmost<T: StTInMtT + Ord>(link: &Link<T>) -> Option<T> {
                 let guard = link.read().unwrap();
                 if let Some(node) = guard.as_ref() {
                     let child = node.left.clone();
@@ -165,7 +165,7 @@ pub mod BSTPlainMtEph {
         }
 
         pub fn maximum(&self) -> Option<T> {
-            fn rightmost<T: StTinMtT + Ord>(link: &Link<T>) -> Option<T> {
+            fn rightmost<T: StTInMtT + Ord>(link: &Link<T>) -> Option<T> {
                 let guard = link.read().unwrap();
                 if let Some(node) = guard.as_ref() {
                     let child = node.right.clone();
@@ -187,7 +187,7 @@ pub mod BSTPlainMtEph {
         }
 
         pub fn in_order(&self) -> ArrayStPerS<T> {
-            fn traverse<T: StTinMtT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
+            fn traverse<T: StTInMtT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
                 let guard = link.read().unwrap();
                 if let Some(node) = guard.as_ref() {
                     let left = node.left.clone();
@@ -206,11 +206,11 @@ pub mod BSTPlainMtEph {
         }
     }
 
-    fn height_of<T: StTinMtT + Ord>(link: &Option<Node<T>>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
+    fn height_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
 
-    fn size_of<T: StTinMtT + Ord>(link: &Option<Node<T>>) -> N { link.as_ref().map_or(0, |n| n.size) }
+    fn size_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
-    impl<T: StTinMtT + Ord> BSTPlainMtEphTrait<T> for BSTPlainMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTPlainMtEphTrait<T> for BSTPlainMtEph<T> {
         fn new() -> Self { BSTPlainMtEph::new() }
         fn insert(&self, value: T) { BSTPlainMtEph::insert(self, value) }
         fn find(&self, target: &T) -> Option<T> { BSTPlainMtEph::find(self, target) }

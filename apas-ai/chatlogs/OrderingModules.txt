@@ -1,0 +1,188 @@
+# Src Files Ordered by Test Numbers
+
+## Test01 - Types.rs
+- src/Types.rs
+
+## Test02 - MathSeq.rs  
+- src/MathSeq.rs
+
+## Test03-08 - LinkedList files
+- src/LinkedListStPer.rs (Test03)
+- src/LinkedListStPerChap18.rs (Test04)
+- src/LinkedListStPerChap19.rs (Test05)
+- src/LinkedListStEph.rs (Test06)
+- src/LinkedListStEphChap18.rs (Test07)
+- src/LinkedListStEphChap19.rs (Test08)
+
+## Test09-14 - ArraySeq St files
+- src/ArraySeqStPer.rs (Test09)
+- src/ArraySeqStPerChap18.rs (Test10)
+- src/ArraySeqStPerChap19.rs (Test11)
+- src/ArraySeqStEph.rs (Test12)
+- src/ArraySeqStEphChap18.rs (Test13)
+- src/ArraySeqStEphChap19.rs (Test14)
+
+## Test15-20 - AVLTreeSeq files
+- src/AVLTreeSeqStPer.rs (Test15)
+- src/AVLTreeSeqStPerChap18.rs (Test16)
+- src/AVLTreeSeqStPerChap19.rs (Test17)
+- src/AVLTreeSeqStEph.rs (Test18)
+- src/AVLTreeSeqStEphChap18.rs (Test19)
+- src/AVLTreeSeqStEphChap19.rs (Test20)
+
+## Test21 - Set files
+- src/SetStEphChap5_1.rs (Test21)
+
+## Test22 - Relation files
+- src/RelationStEphChap5_2.rs (Test22)
+
+## Test23 - Mapping files
+- src/MappingStEphChap5_5.rs (Test23)
+
+## Test24 - DirGraph files
+- src/DirGraphStEphChap6_1.rs (Test24)
+
+## Test25 - UnDirGraph files
+- src/UnDirGraphStEphChap6_1.rs (Test25)
+
+## Test26-28 - ArraySeq Mt files
+- src/ArraySeqMtPer.rs (Test26)
+- src/ArraySeqMtPerChap18.rs (Test27)
+- src/ArraySeqMtPerChap19.rs (Test28)
+
+## Test29-38 - Algorithm/Exercise/Problem files
+- Various algorithm implementations (no direct src mapping)
+
+## Test39-40 - Chapter36 files
+- src/Chapter36St.rs (Test39)
+- src/Chapter36Mt.rs (Test40)
+
+## Test41 - ArraySeqMtEph files
+- src/ArraySeqMtEph.rs (Test41)
+- src/ArraySeqMtEphChap18.rs 
+- src/ArraySeqMtEphChap19.rs
+- src/ArraySeqMtEphSlice.rs
+
+## Test42 - BBTEph files
+- src/BBTEph.rs (Test42)
+
+## Test44 - Chapter36MtSlice files
+- src/Chapter36MtSlice.rs (Test44)
+
+## Test45-49 - BST StEph files
+- src/BSTAVLStEph.rs (Test45)
+- src/BSTRBStEph.rs (Test46)
+- src/BSTBBAlphaStEph.rs (Test47)
+- src/BSTTreapStEph.rs (Test48)
+- src/BSTSplayStEph.rs (Test49)
+
+## Test50 - BST MtEph files
+- src/BSTPlainMtEph.rs (Test50)
+- src/BSTAVLMtEph.rs
+- src/BSTRBMtEph.rs
+- src/BSTBBAlphaMtEph.rs
+- src/BSTTreapMtEph.rs
+- src/BSTSplayMtEph.rs
+
+## Test51 - BSTSet files
+- src/BSTSetAVLMtEph.rs (Test51)
+- src/BSTSetBBAlphaMtEph.rs
+- src/BSTSetPlainMtEph.rs
+- src/BSTSetRBMtEph.rs
+- src/BSTSetSplayMtEph.rs
+- src/BSTSetTreapMtEph.rs
+
+## Test52-53 - BSTParam files
+- src/BSTParaMtEph.rs (Test52)
+- src/BSTParaStEph.rs (Test52)
+- src/BSTParaTreapMtEph.rs (Test53)
+
+## Unmapped src files:
+- src/BSTPlainStEph.rs
+- src/lib.rs
+- src/main.rs
+
+## Proposed Chapter-based Directory Structure:
+
+### Chap01/ (Types and Basics)
+- Types.rs
+
+### Chap02/ (Mathematical Sequences)
+- MathSeq.rs
+
+### Chap03-08/ (Linked Lists)
+- LinkedListStPer.rs
+- LinkedListStPerChap18.rs
+- LinkedListStPerChap19.rs
+- LinkedListStEph.rs
+- LinkedListStEphChap18.rs
+- LinkedListStEphChap19.rs
+
+### Chap09-14/ (Array Sequences - Single Thread)
+- ArraySeqStPer.rs
+- ArraySeqStPerChap18.rs
+- ArraySeqStPerChap19.rs
+- ArraySeqStEph.rs
+- ArraySeqStEphChap18.rs
+- ArraySeqStEphChap19.rs
+
+### Chap15-20/ (AVL Tree Sequences)
+- AVLTreeSeqStPer.rs
+- AVLTreeSeqStPerChap18.rs
+- AVLTreeSeqStPerChap19.rs
+- AVLTreeSeqStEph.rs
+- AVLTreeSeqStEphChap18.rs
+- AVLTreeSeqStEphChap19.rs
+
+### Chap21-25/ (Sets, Relations, Mappings, Graphs)
+- SetStEphChap5_1.rs
+- RelationStEphChap5_2.rs
+- MappingStEphChap5_5.rs
+- DirGraphStEphChap6_1.rs
+- UnDirGraphStEphChap6_1.rs
+
+### Chap26-28/ (Array Sequences - Multi Thread)
+- ArraySeqMtPer.rs
+- ArraySeqMtPerChap18.rs
+- ArraySeqMtPerChap19.rs
+
+### Chap36/ (Sorting Algorithms)
+- Chapter36St.rs
+- Chapter36Mt.rs
+- Chapter36MtSlice.rs
+
+### Chap41-44/ (Advanced Array Sequences)
+- ArraySeqMtEph.rs
+- ArraySeqMtEphChap18.rs
+- ArraySeqMtEphChap19.rs
+- ArraySeqMtEphSlice.rs
+- BBTEph.rs
+
+### Chap45-53/ (Binary Search Trees)
+- BSTAVLStEph.rs
+- BSTRBStEph.rs
+- BSTBBAlphaStEph.rs
+- BSTTreapStEph.rs
+- BSTSplayStEph.rs
+- BSTPlainStEph.rs
+- BSTPlainMtEph.rs
+- BSTAVLMtEph.rs
+- BSTRBMtEph.rs
+- BSTBBAlphaMtEph.rs
+- BSTTreapMtEph.rs
+- BSTSplayMtEph.rs
+- BSTSetAVLMtEph.rs
+- BSTSetBBAlphaMtEph.rs
+- BSTSetPlainMtEph.rs
+- BSTSetRBMtEph.rs
+- BSTSetSplayMtEph.rs
+- BSTSetTreapMtEph.rs
+- BSTParaMtEph.rs
+- BSTParaStEph.rs
+- BSTParaTreapMtEph.rs
+
+### Root/
+- lib.rs
+- main.rs
+
+This organization would make the codebase much more manageable and align with the test structure.

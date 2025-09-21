@@ -1,7 +1,7 @@
 pub mod TestRelationStEphChap5_2 {
-    use apas_ai::RelationStEphChap5_2::RelationStEphChap5_2::*;
+    use apas_ai::Chap5::RelationStEphChap5_2::RelationStEphChap5_2::*;
     use apas_ai::SetLit;
-    use apas_ai::SetStEphChap5_1::SetStEphChap5_1::*;
+    use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use apas_ai::Types::Types::*; // macro import
     use apas_ai::{RelationLit, PairLit};
 

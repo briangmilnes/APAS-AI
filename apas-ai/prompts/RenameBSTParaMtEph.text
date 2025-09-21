@@ -10,8 +10,8 @@ and have its creation be truely multi-threaded but returns a Pair.
 Name the macro ParaPair.
 
 
- Then fix BSTParaMtEph using real threaded parallelism with the parallel
-algorithm below. 
+ Now fix BSTParaMtEph using real threaded parallelism with the parallel
+algorithm below and parapair.
 
 Build a to-do list and wait for me to review it before you execute.
 

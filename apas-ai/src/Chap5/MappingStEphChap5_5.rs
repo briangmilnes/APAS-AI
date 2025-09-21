@@ -1,9 +1,9 @@
 //! Chapter 5.5 ephemeral Mapping (Function) built on `Relation<A,B>`.
 
 pub mod MappingStEphChap5_5 {
-    use crate::RelationStEphChap5_2::RelationStEphChap5_2::*;
+    use crate::Chap5::RelationStEphChap5_2::RelationStEphChap5_2::*;
     use crate::SetLit;
-    use crate::SetStEphChap5_1::SetStEphChap5_1::*;
+    use crate::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use crate::Types::Types::*;
     use std::collections::HashMap;
     use std::hash::Hash;
@@ -116,11 +116,11 @@ pub mod MappingStEphChap5_5 {
     #[macro_export]
     macro_rules! MappingLit {
         () => {{
-            < $crate::MappingStEphChap5_5::MappingStEphChap5_5::Mapping<_, _> as $crate::MappingStEphChap5_5::MappingStEphChap5_5::MappingStEphChap5_5Trait<_, _> >::FromRelation(& $crate::RelationLit![])
+            < $crate::Chap5::MappingStEphChap5_5::MappingStEphChap5_5::Mapping<_, _> as $crate::Chap5::MappingStEphChap5_5::MappingStEphChap5_5::MappingStEphChap5_5Trait<_, _> >::FromRelation(& $crate::RelationLit![])
         }};
         ( $( ($a:expr, $b:expr) ),* $(,)? ) => {{
             let __r = $crate::RelationLit![ $( ($a, $b) ),* ];
-            < $crate::MappingStEphChap5_5::MappingStEphChap5_5::Mapping<_, _> as $crate::MappingStEphChap5_5::MappingStEphChap5_5::MappingStEphChap5_5Trait<_, _> >::FromRelation(&__r)
+            < $crate::Chap5::MappingStEphChap5_5::MappingStEphChap5_5::Mapping<_, _> as $crate::Chap5::MappingStEphChap5_5::MappingStEphChap5_5::MappingStEphChap5_5Trait<_, _> >::FromRelation(&__r)
         }};
     }
 
