@@ -67,3 +67,14 @@ I'll tell you when to start.
 
 Rename all of the src, test, and benches Chap<D> for single digit to
 Chap<0D>. build and test. 
+
+Make the dirs for Chap18. Move MathSeq in src, tests, benches into them.
+Review MathSeq against the checklists.
+
+Make the dirs for Chap19 for src, tests and benches. Move all ArraySeq* into them.
+
+
+Many source files have been moved into their Chap<NN> (always add a zero on <9)
+files. List the test and benchmark files that should be moved into Chap<NN>
+directories to match.
+

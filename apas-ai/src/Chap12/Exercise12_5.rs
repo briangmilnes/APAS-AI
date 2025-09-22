@@ -1,10 +1,11 @@
 //! Chapter 12 — Exercise 12.5: lock-free concurrent stack using compare-and-swap.
 
 pub mod Exercise12_5 {
-    use crate::Types::Types::StTInMtT;
     use std::mem::ManuallyDrop;
     use std::ptr::null_mut;
     use std::sync::atomic::{AtomicPtr, Ordering};
+
+    use crate::Types::Types::StTInMtT;
 
     struct Node<T: StTInMtT> {
         value: ManuallyDrop<T>,

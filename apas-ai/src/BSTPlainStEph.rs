@@ -1,7 +1,7 @@
 //! Ephemeral binary search tree built on `BBTEph` primitives.
 
 pub mod BSTPlainStEph {
-    use crate::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::BBTEph::BBTEph::BBTree;
     use crate::Types::Types::*;
 

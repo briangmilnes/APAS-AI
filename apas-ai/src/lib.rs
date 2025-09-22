@@ -14,6 +14,18 @@ pub mod Chap03 {
     pub use InsertionSortSt::*;
 }
 
+pub mod Chap3 {
+    pub use crate::Chap03::InsertionSortSt::*;
+
+    pub mod InsertionSortSt {
+        pub use crate::Chap03::InsertionSortSt::InsertionSortSt::*;
+
+        pub mod InsertionSortSt {
+            pub use crate::Chap03::InsertionSortSt::InsertionSortSt::*;
+        }
+    }
+}
+
 pub mod Chap05 {
     pub mod SetStEphChap5_1;
     pub mod RelationStEphChap5_2;
@@ -24,6 +36,14 @@ pub mod Chap18 {
     pub mod MathSeq;
 }
 pub use crate::Chap18::MathSeq::MathSeq::{MathSeqS, MathSeqTrait};
+
+pub mod MathSeq {
+    pub use crate::Chap18::MathSeq::MathSeq::*;
+
+    pub mod MathSeq {
+        pub use crate::Chap18::MathSeq::MathSeq::*;
+    }
+}
 
 pub mod Chap19 {
     pub mod ArraySeqStPer;
@@ -40,9 +60,121 @@ pub mod Chap19 {
     pub mod ArraySeqMtEphChap19;
     pub mod ArraySeqMtEphSlice;
 }
+pub use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+pub use crate::Chap19::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
+pub use crate::Chap19::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+pub use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArrayStPerS;
+pub use crate::Chap19::ArraySeqStPerChap18::ArraySeqStPerChap18::ArraySeqStPerChap18Trait;
+pub use crate::Chap19::ArraySeqStPerChap19::ArraySeqStPerChap19::ArraySeqStPerChap19Trait;
+
+pub mod ArraySeqStPer {
+    pub use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+
+    pub mod ArraySeqStPer {
+        pub use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    }
+}
+
+pub mod ArraySeqStPerChap18 {
+    pub use crate::Chap19::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
+
+    pub mod ArraySeqStPerChap18 {
+        pub use crate::Chap19::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
+    }
+}
+
+pub mod ArraySeqStPerChap19 {
+    pub use crate::Chap19::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+
+    pub mod ArraySeqStPerChap19 {
+        pub use crate::Chap19::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+    }
+}
+
+pub mod ArraySeqMtPer {
+    pub use crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::*;
+
+    pub mod ArraySeqMtPer {
+        pub use crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::*;
+    }
+}
+
+pub mod ArraySeqMtPerChap18 {
+    pub use crate::Chap19::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
+
+    pub mod ArraySeqMtPerChap18 {
+        pub use crate::Chap19::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
+    }
+}
+
+pub mod ArraySeqMtPerChap19 {
+    pub use crate::Chap19::ArraySeqMtPerChap19::ArraySeqMtPerChap19::*;
+
+    pub mod ArraySeqMtPerChap19 {
+        pub use crate::Chap19::ArraySeqMtPerChap19::ArraySeqMtPerChap19::*;
+    }
+}
+
+pub mod ArraySeqStEph {
+    pub use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+
+    pub mod ArraySeqStEph {
+        pub use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    }
+}
+
+pub mod ArraySeqStEphChap18 {
+    pub use crate::Chap19::ArraySeqStEphChap18::ArraySeqStEphChap18::*;
+
+    pub mod ArraySeqStEphChap18 {
+        pub use crate::Chap19::ArraySeqStEphChap18::ArraySeqStEphChap18::*;
+    }
+}
+
+pub mod ArraySeqStEphChap19 {
+    pub use crate::Chap19::ArraySeqStEphChap19::ArraySeqStEphChap19::*;
+
+    pub mod ArraySeqStEphChap19 {
+        pub use crate::Chap19::ArraySeqStEphChap19::ArraySeqStEphChap19::*;
+    }
+}
+
+pub use crate::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+pub use crate::Chap19::ArraySeqStEphChap18::ArraySeqStEphChap18::ArraySeqStEphChap18Trait;
+pub use crate::Chap19::ArraySeqStEphChap19::ArraySeqStEphChap19::ArraySeqStEphChap19Trait;
 pub use crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::*;
 pub use crate::Chap05::RelationStEphChap5_2::RelationStEphChap5_2::*;
 pub use crate::Chap05::MappingStEphChap5_5::MappingStEphChap5_5::*;
+
+pub mod Chap5 {
+    pub use crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::*;
+    pub use crate::Chap05::RelationStEphChap5_2::RelationStEphChap5_2::*;
+    pub use crate::Chap05::MappingStEphChap5_5::MappingStEphChap5_5::*;
+
+    pub mod SetStEphChap5_1 {
+        pub use crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::*;
+
+        pub mod SetStEphChap5_1 {
+            pub use crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::*;
+        }
+    }
+
+    pub mod RelationStEphChap5_2 {
+        pub use crate::Chap05::RelationStEphChap5_2::RelationStEphChap5_2::*;
+
+        pub mod RelationStEphChap5_2 {
+            pub use crate::Chap05::RelationStEphChap5_2::RelationStEphChap5_2::*;
+        }
+    }
+
+    pub mod MappingStEphChap5_5 {
+        pub use crate::Chap05::MappingStEphChap5_5::MappingStEphChap5_5::*;
+
+        pub mod MappingStEphChap5_5 {
+            pub use crate::Chap05::MappingStEphChap5_5::MappingStEphChap5_5::*;
+        }
+    }
+}
 
 pub mod Chap06 {
     pub mod DirGraphStEph;
@@ -78,6 +210,153 @@ pub use crate::Chap06::WeightedUnDirGraphStEphInt::WeightedUnDirGraphStEphInt::*
 pub use crate::Chap06::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::*;
 pub use crate::Chap06::WeightedUnDirGraphMtEphInt::WeightedUnDirGraphMtEphInt::*;
 pub use crate::Chap06::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::*;
+
+pub mod Chap6 {
+    pub use crate::Chap06::DirGraphStEph::DirGraphStEph::*;
+    pub use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+    pub use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
+    pub use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
+    pub use crate::Chap06::DirGraphMtEph::DirGraphMtEph::*;
+    pub use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+    pub use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
+    pub use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
+    pub use crate::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
+    pub use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
+    pub use crate::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
+    pub use crate::Chap06::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::*;
+    pub use crate::Chap06::WeightedUnDirGraphStEphInt::WeightedUnDirGraphStEphInt::*;
+    pub use crate::Chap06::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::*;
+    pub use crate::Chap06::WeightedUnDirGraphMtEphInt::WeightedUnDirGraphMtEphInt::*;
+    pub use crate::Chap06::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::*;
+
+    pub mod DirGraphStEph {
+        pub use crate::Chap06::DirGraphStEph::DirGraphStEph::*;
+
+        pub mod DirGraphStEph {
+            pub use crate::Chap06::DirGraphStEph::DirGraphStEph::*;
+        }
+    }
+
+    pub mod UnDirGraphStEph {
+        pub use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+
+        pub mod UnDirGraphStEph {
+            pub use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+        }
+    }
+
+    pub mod LabDirGraphStEph {
+        pub use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
+
+        pub mod LabDirGraphStEph {
+            pub use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
+        }
+    }
+
+    pub mod LabUnDirGraphStEph {
+        pub use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
+
+        pub mod LabUnDirGraphStEph {
+            pub use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
+        }
+    }
+
+    pub mod DirGraphMtEph {
+        pub use crate::Chap06::DirGraphMtEph::DirGraphMtEph::*;
+
+        pub mod DirGraphMtEph {
+            pub use crate::Chap06::DirGraphMtEph::DirGraphMtEph::*;
+        }
+    }
+
+    pub mod UnDirGraphMtEph {
+        pub use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+
+        pub mod UnDirGraphMtEph {
+            pub use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+        }
+    }
+
+    pub mod LabDirGraphMtEph {
+        pub use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
+
+        pub mod LabDirGraphMtEph {
+            pub use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
+        }
+    }
+
+    pub mod LabUnDirGraphMtEph {
+        pub use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
+
+        pub mod LabUnDirGraphMtEph {
+            pub use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
+        }
+    }
+
+    pub mod WeightedDirGraphStEphInt {
+        pub use crate::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
+
+        pub mod WeightedDirGraphStEphInt {
+            pub use crate::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
+        }
+    }
+
+    pub mod WeightedDirGraphStEphFloat {
+        pub use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
+
+        pub mod WeightedDirGraphStEphFloat {
+            pub use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
+        }
+    }
+
+    pub mod WeightedDirGraphMtEphInt {
+        pub use crate::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
+
+        pub mod WeightedDirGraphMtEphInt {
+            pub use crate::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
+        }
+    }
+
+    pub mod WeightedDirGraphMtEphFloat {
+        pub use crate::Chap06::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::*;
+
+        pub mod WeightedDirGraphMtEphFloat {
+            pub use crate::Chap06::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::*;
+        }
+    }
+
+    pub mod WeightedUnDirGraphStEphInt {
+        pub use crate::Chap06::WeightedUnDirGraphStEphInt::WeightedUnDirGraphStEphInt::*;
+
+        pub mod WeightedUnDirGraphStEphInt {
+            pub use crate::Chap06::WeightedUnDirGraphStEphInt::WeightedUnDirGraphStEphInt::*;
+        }
+    }
+
+    pub mod WeightedUnDirGraphStEphFloat {
+        pub use crate::Chap06::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::*;
+
+        pub mod WeightedUnDirGraphStEphFloat {
+            pub use crate::Chap06::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::*;
+        }
+    }
+
+    pub mod WeightedUnDirGraphMtEphInt {
+        pub use crate::Chap06::WeightedUnDirGraphMtEphInt::WeightedUnDirGraphMtEphInt::*;
+
+        pub mod WeightedUnDirGraphMtEphInt {
+            pub use crate::Chap06::WeightedUnDirGraphMtEphInt::WeightedUnDirGraphMtEphInt::*;
+        }
+    }
+
+    pub mod WeightedUnDirGraphMtEphFloat {
+        pub use crate::Chap06::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::*;
+
+        pub mod WeightedUnDirGraphMtEphFloat {
+            pub use crate::Chap06::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::*;
+        }
+    }
+}
 
 pub mod Chap11 {
     pub mod FibonacciMt;

@@ -5,8 +5,8 @@ pub mod LinkedListStEph {
 
     #[derive(Clone)]
     pub struct NodeE<T: StT> {
-        pub value: T,
-        pub next: Option<Box<NodeE<T>>>,
+        value: T,
+        next: Option<Box<NodeE<T>>>,
     }
 
     #[derive(Clone)]

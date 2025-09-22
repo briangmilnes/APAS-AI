@@ -1,10 +1,11 @@
 //! Chapter 19 algorithms for AVLTreeSeqStPerS.
 
 pub mod AVLTreeSeqStPerChap19 {
+    use std::fmt::{Debug, Display};
+
     use crate::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::AVLTreeSeqStPerChap18::AVLTreeSeqStPerChap18::*;
     use crate::Types::Types::*;
-    use std::fmt::{Debug, Display};
 
     pub trait AVLTreeSeqStPerChap19Trait<T: StT> {
         fn tabulate(f: impl Fn(N) -> T, n: N) -> AVLTreeSeqStPerS<T>;

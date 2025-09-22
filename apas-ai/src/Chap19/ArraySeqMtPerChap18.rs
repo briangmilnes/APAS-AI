@@ -1,7 +1,7 @@
 //! Chapter 18 algorithms for ArraySeqMtPer multithreaded, just tabulate needed.
 
 pub mod ArraySeqMtPerChap18 {
-    use crate::ArraySeqMtPer::ArraySeqMtPer::*;
+    use crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::*;
     use crate::Types::Types::*;
 
     pub trait ArraySeqMtPerChap18Trait<T: MtT> {
@@ -121,7 +121,7 @@ pub mod ArraySeqMtPerChap18 {
         }
 
         fn reduce(a: &ArrayMtPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
-            if a.length() == 0 {
+            if a.length() == 0usize {
                 return id;
             }
             let mut result = a.nth(0).clone_mt();
@@ -153,7 +153,7 @@ pub mod ArraySeqMtPerChap18 {
         }
 
         fn collect(a: &ArrayMtPerS<Pair<T, T>>, cmp: impl Fn(&T, &T) -> O) -> ArrayMtPerS<Pair<T, ArrayMtPerS<T>>> {
-            if a.length() == 0 {
+            if a.length() == 0usize {
                 return ArrayMtPerS::from_vec(vec![]);
             }
 

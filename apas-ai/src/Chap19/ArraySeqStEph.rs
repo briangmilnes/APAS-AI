@@ -11,7 +11,7 @@ pub mod ArraySeqStEph {
     /// Fixed-length sequence backed by `Box<[T]>` (ephemeral variant).
     #[derive(Clone)]
     pub struct ArraySeqStEphS<T: StT> {
-        pub data: Box<[T]>,
+        data: Box<[T]>,
     }
 
     /// Sequence trait for `ArraySeqStEphS<T>`.
@@ -180,9 +180,9 @@ pub mod ArraySeqStEph {
 
     #[macro_export]
     macro_rules! ArraySeqStEphSLit {
-        () => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(Vec::new()) };
-        ($x:expr; $n:expr) => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$x; $n]) };
-        ($($x:expr),* $(,)?) => { $crate::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$($x),*]) };
+        () => { $crate::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(Vec::new()) };
+        ($x:expr; $n:expr) => { $crate::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$x; $n]) };
+        ($($x:expr),* $(,)?) => { $crate::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$($x),*]) };
     }
 
     #[allow(dead_code)]

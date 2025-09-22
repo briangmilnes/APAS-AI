@@ -5,7 +5,7 @@ pub mod Chapter36MtSlice {
 
     use rand::{rng, Rng};
 
-    use crate::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
+    use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
     use crate::Types::Types::*;
 
     const MIN_PAR_SLICE: N = 2;
@@ -44,7 +44,7 @@ pub mod Chapter36MtSlice {
         }
 
         fn quick_sort_mt_first(&self) {
-            if self.length() <= 1 {
+            if self.length() <= 1usize {
                 return;
             }
             self.with_exclusive(|data| {
@@ -86,7 +86,7 @@ pub mod Chapter36MtSlice {
         }
 
         fn quick_sort_mt_median3(&self) {
-            if self.length() <= 1 {
+            if self.length() <= 1usize {
                 return;
             }
             self.with_exclusive(|data| {
@@ -141,7 +141,7 @@ pub mod Chapter36MtSlice {
         }
 
         fn quick_sort_mt_random(&self) {
-            if self.length() <= 1 {
+            if self.length() <= 1usize {
                 return;
             }
             self.with_exclusive(|data| {

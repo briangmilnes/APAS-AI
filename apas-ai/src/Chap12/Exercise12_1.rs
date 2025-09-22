@@ -1,11 +1,12 @@
 //! Chapter 12 — Exercise 12.1: spin-lock via fetch-and-add tickets.
 
 pub mod Exercise12_1 {
-    use crate::Types::Types::*;
     use std::hint::spin_loop;
     use std::sync::atomic::{AtomicUsize, Ordering};
     use std::sync::Arc;
     use std::thread;
+
+    use crate::Types::Types::*;
 
     #[derive(Debug)]
     pub struct SpinLock {

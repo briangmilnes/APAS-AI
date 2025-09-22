@@ -1,10 +1,11 @@
 //! Chapter 6.1 Undirected Graph (ephemeral) using Set for vertices and edges - Multi-threaded version.
 
 pub mod UnDirGraphMtEph {
+    use std::hash::Hash;
+
     use crate::SetLit;
     use crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::*;
     use crate::Types::Types::*;
-    use std::hash::Hash;
 
     #[derive(Clone)]
     pub struct UnDirGraphMtEph<V: StT + MtT + Hash> {

@@ -1,9 +1,10 @@
 //! Chapter 18 algorithms for LinkedListStEph (ephemeral).
 
 pub mod LinkedListStEphChap18 {
+    use std::collections::HashSet;
+
     use crate::LinkedListStEph::LinkedListStEph::*;
     use crate::Types::Types::*;
-    use std::collections::HashSet;
 
     pub trait LinkedListStEphChap18Trait<T: StT> {
         /// APAS: Work Θ(n), Span Θ(1)

@@ -5,7 +5,7 @@ pub mod Chapter36Mt {
 
     use rand::{rng, Rng};
 
-    use crate::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
 
     // Spawning threads all the way down (always parallelize).
@@ -54,7 +54,7 @@ pub mod Chapter36Mt {
         }
 
         fn quick_sort_mt_first(&mut self) {
-            if self.length() <= 1 {
+            if self.length() <= 1usize {
                 return;
             }
 
@@ -97,7 +97,7 @@ pub mod Chapter36Mt {
             *self = ArraySeqMtEphS::from_vec(data);
         }
         fn quick_sort_mt_median3(&mut self) {
-            if self.length() <= 1 {
+            if self.length() <= 1usize {
                 return;
             }
 
@@ -152,7 +152,7 @@ pub mod Chapter36Mt {
             *self = ArraySeqMtEphS::from_vec(data);
         }
         fn quick_sort_mt_random(&mut self) {
-            if self.length() <= 1 {
+            if self.length() <= 1usize {
                 return;
             }
 

@@ -1,8 +1,8 @@
 //! Chapter 19 algorithms for ArraySeqMtPer.
 
 pub mod ArraySeqStPerChap19 {
-    use crate::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
     use crate::Types::Types::*;
 
     pub trait ArraySeqStPerChap19Trait<T: StT> {
@@ -86,9 +86,9 @@ pub mod ArraySeqStPerChap19 {
 
         fn iterate<A: StT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
             let n = a.length();
-            if n == 0 {
+            if n == 0usize {
                 x
-            } else if n == 1 {
+            } else if n == 1usize {
                 f(&x, a.nth(0))
             } else {
                 let first = f(&x, a.nth(0));
@@ -98,10 +98,10 @@ pub mod ArraySeqStPerChap19 {
         }
         fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
             let n = a.length();
-            if n == 0 {
+            if n == 0usize {
                 return id;
             }
-            if n == 1 {
+            if n == 1usize {
                 return a.nth(0).clone();
             }
             let m = n / 2;
@@ -113,12 +113,12 @@ pub mod ArraySeqStPerChap19 {
         }
         fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T) {
             let n = a.length();
-            if n == 0 {
+            if n == 0usize {
                 (
                     <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(|_| id.clone(), 0),
                     id,
                 )
-            } else if n == 1 {
+            } else if n == 1usize {
                 (
                     <ArrayStPerS<T> as ArraySeqStPerChap18Trait<T>>::tabulate(|_| id.clone(), 1),
                     a.nth(0).clone(),

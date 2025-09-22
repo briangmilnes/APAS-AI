@@ -1,8 +1,8 @@
 //! Ephemeral weight-balanced (BB[α]) binary search tree with `find` support.
 
 pub mod BSTBBAlphaStEph {
-    use crate::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
     use crate::Types::Types::*;
 
     const ALPHA: f64 = 0.75;

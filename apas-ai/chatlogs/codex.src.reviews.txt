@@ -1,0 +1,416 @@
+File: src/Chap05/RelationStEphChap5_2.rs
+Rust Rules Checklist:
+- Code Elegance and Minimalism:
+  - Terminology alignment — Correct
+  - Always choose the minimal solution — Correct
+  - Closure Mutation Patterns — Correct
+  - Formatting discipline — Correct
+  - Zero Warnings Policy (MANDATORY) — Correct
+- Imports and Module Scope:
+  - Standard Library Imports and Result usage (module-top; no aliasing) — Correct
+  - Specialized import rules — Correct
+  - Module import style for this project — Correct
+  - No trailing per-file re-exports (use lib.rs instead) — Correct
+  - Wildcard-first imports; group to minimize `use crate` — Correct
+  - Use Lit! macros for literal data construction — Correct
+  - Helper function extraction threshold — Correct
+  - Module/file layout and Mandatory Encapsulation — Correct
+- Traits and Implementations (Mandatory Pattern) — Correct
+- Types, Bounds, and Lifting:
+  - Types and Bounds (Baseline + Minimal Additions) — Defect (explicit Eq+Hash+Display+Debug+Clone bounds instead of StT)
+  - Generalized lifting rule (applies to every trait/impl) — Defect (trait header should hoist StT shorthand)
+  - Type Creation Traits (align with baseline) — Correct
+  - Function argument bounds without where-clauses (new) — Correct
+  - Callable parameter style (`impl Fn` in parameter position) — Correct
+  - Default element bound (StT by default) — Defect (trait uses raw bounds rather than StT)
+- APIs, Macros, Constructors, Encapsulation:
+  - Macro Normalization (Exported and Type-Checked) — Correct
+  - Constructor No Raw Backing Collections — Correct
+  - Struct Field Encapsulation — Correct
+  - No Free-Function Wrappers — Correct
+  - Type Conversions and Naming — Correct
+- Iteration, Iterators, and Tests:
+  - Iterator impls (three forms) — Correct
+  - Tests Format — Correct
+  - Test via Public API Only — Correct
+  - CamlCase not SnakeCase — Correct
+  - Type Inference Cleanup — Correct
+  - Contain UFCS (call-site elimination) — Correct
+APAS Rules Checklist:
+- Assistant Vec Prohibition — Correct
+- Element Shorthands and Delegation — Defect (should rely on StT shorthand)
+- APAS Naming Fidelity — Correct
+- Iterator-based Assertions — Correct
+- Criterion Bench Configuration — Correct
+- Chapter Trait Hoisting (Option A) — Correct
+- Parallel Spawn/Join Model — Correct
+- MT Module Discipline — Correct
+- Iteration vs. Recursion Hygiene — Correct
+- Graph Notation Convention — Correct
+- Benchmark Macro Usage Patterns — Correct
+- Parallel Pair Semantics — Correct
+
+File: src/AVLTreeSeqStEph.rs
+Rust Rules Checklist:
+- Code Elegance and Minimalism:
+  - Terminology alignment — Correct
+  - Always choose the minimal solution — Correct
+  - Closure Mutation Patterns — Correct
+  - Formatting discipline — Correct
+  - Zero Warnings Policy (MANDATORY) — Correct
+- Imports and Module Scope:
+  - Standard Library Imports and Result usage (module-top; no aliasing) — Defect (std imports should precede crate imports)
+  - Specialized import rules — Correct
+  - Module import style for this project — Correct
+  - No trailing per-file re-exports (use lib.rs instead) — Correct
+  - Wildcard-first imports; group to minimize `use crate` — Correct
+  - Use Lit! macros for literal data construction — Correct
+  - Helper function extraction threshold — Correct
+  - Module/file layout and Mandatory Encapsulation — Correct
+- Traits and Implementations (Mandatory Pattern) — Correct
+- Types, Bounds, and Lifting:
+  - Types and Bounds (Baseline + Minimal Additions) — Correct
+  - Generalized lifting rule (applies to every trait/impl) — Correct
+  - Type Creation Traits (align with baseline) — Correct
+  - Function argument bounds without where-clauses (new) — Correct
+  - Callable parameter style (`impl Fn` in parameter position) — Correct
+  - Default element bound (StT by default) — Correct
+- APIs, Macros, Constructors, Encapsulation:
+  - Macro Normalization (Exported and Type-Checked) — Correct
+  - Constructor No Raw Backing Collections — Correct
+  - Struct Field Encapsulation — Defect (public struct fields exposed; make fields private)
+  - No Free-Function Wrappers — Correct
+  - Type Conversions and Naming — Correct
+- Iteration, Iterators, and Tests:
+  - Iterator impls (three forms) — Correct
+  - Tests Format — Correct
+  - Test via Public API Only — Correct
+  - CamlCase not SnakeCase — Correct
+  - Type Inference Cleanup — Correct
+  - Contain UFCS (call-site elimination) — Correct
+APAS Rules Checklist:
+- Assistant Vec Prohibition — Correct
+- Element Shorthands and Delegation — Correct
+- APAS Naming Fidelity — Correct
+- Iterator-based Assertions — Correct
+- Criterion Bench Configuration — Correct
+- Chapter Trait Hoisting (Option A) — Correct
+- Parallel Spawn/Join Model — Correct
+- MT Module Discipline — Correct
+- Iteration vs. Recursion Hygiene — Correct
+- Graph Notation Convention — Correct
+- Benchmark Macro Usage Patterns — Correct
+- Parallel Pair Semantics — Correct
+
+File: src/AVLTreeSeqStEphChap18.rs
+Rust Rules Checklist:
+- Code Elegance and Minimalism:
+  - Terminology alignment — Correct
+  - Always choose the minimal solution — Correct
+  - Closure Mutation Patterns — Correct
+  - Formatting discipline — Correct
+  - Zero Warnings Policy (MANDATORY) — Correct
+- Imports and Module Scope:
+  - Standard Library Imports and Result usage (module-top; no aliasing) — Correct
+  - Specialized import rules — Correct
+  - Module import style for this project — Correct
+  - No trailing per-file re-exports (use lib.rs instead) — Correct
+  - Wildcard-first imports; group to minimize `use crate` — Correct
+  - Use Lit! macros for literal data construction — Correct
+  - Helper function extraction threshold — Correct
+  - Module/file layout and Mandatory Encapsulation — Correct
+- Traits and Implementations (Mandatory Pattern) — Correct
+- Types, Bounds, and Lifting:
+  - Types and Bounds (Baseline + Minimal Additions) — Correct
+  - Generalized lifting rule (applies to every trait/impl) — Correct
+  - Type Creation Traits (align with baseline) — Correct
+  - Function argument bounds without where-clauses (new) — Correct
+  - Callable parameter style (`impl Fn` in parameter position) — Correct
+  - Default element bound (StT by default) — Correct
+- APIs, Macros, Constructors, Encapsulation:
+  - Macro Normalization (Exported and Type-Checked) — Correct
+  - Constructor No Raw Backing Collections — Correct
+  - Struct Field Encapsulation — Correct
+  - No Free-Function Wrappers — Correct
+  - Type Conversions and Naming — Correct
+- Iteration, Iterators, and Tests:
+  - Iterator impls (three forms) — Correct
+  - Tests Format — Correct
+  - Test via Public API Only — Correct
+  - CamlCase not SnakeCase — Correct
+  - Type Inference Cleanup — Correct
+  - Contain UFCS (call-site elimination) — Correct
+APAS Rules Checklist:
+- Assistant Vec Prohibition — Correct
+- Element Shorthands and Delegation — Correct
+- APAS Naming Fidelity — Correct
+- Iterator-based Assertions — Correct
+- Criterion Bench Configuration — Correct
+- Chapter Trait Hoisting (Option A) — Correct
+- Parallel Spawn/Join Model — Correct
+- MT Module Discipline — Correct
+- Iteration vs. Recursion Hygiene — Correct
+- Graph Notation Convention — Correct
+- Benchmark Macro Usage Patterns — Correct
+- Parallel Pair Semantics — Correct
+
+File: src/AVLTreeSeqStEphChap19.rs
+Rust Rules Checklist:
+- Code Elegance and Minimalism:
+  - Terminology alignment — Correct
+  - Always choose the minimal solution — Correct
+  - Closure Mutation Patterns — Correct
+  - Formatting discipline — Correct
+  - Zero Warnings Policy (MANDATORY) — Correct
+- Imports and Module Scope:
+  - Standard Library Imports and Result usage (module-top; no aliasing) — Correct
+  - Specialized import rules — Correct
+  - Module import style for this project — Correct
+  - No trailing per-file re-exports (use lib.rs instead) — Correct
+  - Wildcard-first imports; group to minimize `use crate` — Correct
+  - Use Lit! macros for literal data construction — Correct
+  - Helper function extraction threshold — Correct
+  - Module/file layout and Mandatory Encapsulation — Correct
+- Traits and Implementations (Mandatory Pattern) — Correct
+- Types, Bounds, and Lifting:
+  - Types and Bounds (Baseline + Minimal Additions) — Correct
+  - Generalized lifting rule (applies to every trait/impl) — Correct
+  - Type Creation Traits (align with baseline) — Correct
+  - Function argument bounds without where-clauses (new) — Correct
+  - Callable parameter style (`impl Fn` in parameter position) — Correct
+  - Default element bound (StT by default) — Correct
+- APIs, Macros, Constructors, Encapsulation:
+  - Macro Normalization (Exported and Type-Checked) — Correct
+  - Constructor No Raw Backing Collections — Correct
+  - Struct Field Encapsulation — Correct
+  - No Free-Function Wrappers — Correct
+  - Type Conversions and Naming — Correct
+- Iteration, Iterators, and Tests:
+  - Iterator impls (three forms) — Correct
+  - Tests Format — Correct
+  - Test via Public API Only — Correct
+  - CamlCase not SnakeCase — Correct
+  - Type Inference Cleanup — Correct
+  - Contain UFCS (call-site elimination) — Correct
+APAS Rules Checklist:
+- Assistant Vec Prohibition — Correct
+- Element Shorthands and Delegation — Correct
+- APAS Naming Fidelity — Correct
+- Iterator-based Assertions — Correct
+- Criterion Bench Configuration — Correct
+- Chapter Trait Hoisting (Option A) — Correct
+- Parallel Spawn/Join Model — Correct
+- MT Module Discipline — Correct
+- Iteration vs. Recursion Hygiene — Correct
+- Graph Notation Convention — Correct
+- Benchmark Macro Usage Patterns — Correct
+- Parallel Pair Semantics — Correct
+
+File: src/AVLTreeSeqStPer.rs
+Rust Rules Checklist:
+- Code Elegance and Minimalism:
+  - Terminology alignment — Correct
+  - Always choose the minimal solution — Correct
+  - Closure Mutation Patterns — Correct
+  - Formatting discipline — Correct
+  - Zero Warnings Policy (MANDATORY) — Correct
+- Imports and Module Scope:
+  - Standard Library Imports and Result usage (module-top; no aliasing) — Defect (std imports should appear before crate imports)
+  - Specialized import rules — Correct
+  - Module import style for this project — Correct
+  - No trailing per-file re-exports (use lib.rs instead) — Correct
+  - Wildcard-first imports; group to minimize `use crate` — Correct
+  - Use Lit! macros for literal data construction — Correct
+  - Helper function extraction threshold — Correct
+  - Module/file layout and Mandatory Encapsulation — Correct
+- Traits and Implementations (Mandatory Pattern) — Correct
+- Types, Bounds, and Lifting:
+  - Types and Bounds (Baseline + Minimal Additions) — Correct
+  - Generalized lifting rule (applies to every trait/impl) — Correct
+  - Type Creation Traits (align with baseline) — Correct
+  - Function argument bounds without where-clauses (new) — Correct
+  - Callable parameter style (`impl Fn` in parameter position) — Correct
+  - Default element bound (StT by default) — Correct
+- APIs, Macros, Constructors, Encapsulation:
+  - Macro Normalization (Exported and Type-Checked) — Correct
+  - Constructor No Raw Backing Collections — Correct
+  - Struct Field Encapsulation — Correct
+  - No Free-Function Wrappers — Correct
+  - Type Conversions and Naming — Correct
+- Iteration, Iterators, and Tests:
+  - Iterator impls (three forms) — Correct
+  - Tests Format — Correct
+  - Test via Public API Only — Correct
+  - CamlCase not SnakeCase — Correct
+  - Type Inference Cleanup — Correct
+  - Contain UFCS (call-site elimination) — Correct
+APAS Rules Checklist:
+- Assistant Vec Prohibition — Correct (Vec usage localized to module helpers)
+- Element Shorthands and Delegation — Correct
+- APAS Naming Fidelity — Correct
+- Iterator-based Assertions — Correct
+- Criterion Bench Configuration — Correct
+- Chapter Trait Hoisting (Option A) — Correct
+- Parallel Spawn/Join Model — Correct
+- MT Module Discipline — Correct
+- Iteration vs. Recursion Hygiene — Correct
+- Graph Notation Convention — Correct
+- Benchmark Macro Usage Patterns — Correct
+- Parallel Pair Semantics — Correct
+
+File: src/AVLTreeSeqStPerChap18.rs
+Rust Rules Checklist:
+- Code Elegance and Minimalism:
+  - Terminology alignment — Correct
+  - Always choose the minimal solution — Correct
+  - Closure Mutation Patterns — Correct
+  - Formatting discipline — Correct
+  - Zero Warnings Policy (MANDATORY) — Correct
+- Imports and Module Scope:
+  - Standard Library Imports and Result usage (module-top; no aliasing) — Defect (std imports should come before crate imports)
+  - Specialized import rules — Correct
+  - Module import style for this project — Correct
+  - No trailing per-file re-exports (use lib.rs instead) — Correct
+  - Wildcard-first imports; group to minimize `use crate` — Correct
+  - Use Lit! macros for literal data construction — Correct
+  - Helper function extraction threshold — Correct
+  - Module/file layout and Mandatory Encapsulation — Correct
+- Traits and Implementations (Mandatory Pattern) — Correct
+- Types, Bounds, and Lifting:
+  - Types and Bounds (Baseline + Minimal Additions) — Correct
+  - Generalized lifting rule (applies to every trait/impl) — Correct
+  - Type Creation Traits (align with baseline) — Correct
+  - Function argument bounds without where-clauses (new) — Correct
+  - Callable parameter style (`impl Fn` in parameter position) — Correct
+  - Default element bound (StT by default) — Correct
+- APIs, Macros, Constructors, Encapsulation:
+  - Macro Normalization (Exported and Type-Checked) — Correct
+  - Constructor No Raw Backing Collections — Correct
+  - Struct Field Encapsulation — Correct
+  - No Free-Function Wrappers — Correct
+  - Type Conversions and Naming — Correct
+- Iteration, Iterators, and Tests:
+  - Iterator impls (three forms) — Correct
+  - Tests Format — Correct
+  - Test via Public API Only — Correct
+  - CamlCase not SnakeCase — Correct
+  - Type Inference Cleanup — Correct
+  - Contain UFCS (call-site elimination) — Correct
+APAS Rules Checklist:
+- Assistant Vec Prohibition — Correct (Vec usage for tree reconstruction is internal)
+- Element Shorthands and Delegation — Correct
+- APAS Naming Fidelity — Correct
+- Iterator-based Assertions — Correct
+- Criterion Bench Configuration — Correct
+- Chapter Trait Hoisting (Option A) — Correct
+- Parallel Spawn/Join Model — Correct
+- MT Module Discipline — Correct
+- Iteration vs. Recursion Hygiene — Correct
+- Graph Notation Convention — Correct
+- Benchmark Macro Usage Patterns — Correct
+- Parallel Pair Semantics — Correct
+
+File: src/AVLTreeSeqStPerChap19.rs
+Rust Rules Checklist:
+- Code Elegance and Minimalism:
+  - Terminology alignment — Correct
+  - Always choose the minimal solution — Correct
+  - Closure Mutation Patterns — Correct
+  - Formatting discipline — Correct
+  - Zero Warnings Policy (MANDATORY) — Correct
+- Imports and Module Scope:
+  - Standard Library Imports and Result usage (module-top; no aliasing) — Defect (std imports should appear before crate imports)
+  - Specialized import rules — Correct
+  - Module import style for this project — Correct
+  - No trailing per-file re-exports (use lib.rs instead) — Correct
+  - Wildcard-first imports; group to minimize `use crate` — Correct
+  - Use Lit! macros for literal data construction — Correct
+  - Helper function extraction threshold — Correct
+  - Module/file layout and Mandatory Encapsulation — Correct
+- Traits and Implementations (Mandatory Pattern) — Correct
+- Types, Bounds, and Lifting:
+  - Types and Bounds (Baseline + Minimal Additions) — Correct
+  - Generalized lifting rule (applies to every trait/impl) — Correct
+  - Type Creation Traits (align with baseline) — Correct
+  - Function argument bounds without where-clauses (new) — Correct
+  - Callable parameter style (`impl Fn` in parameter position) — Correct
+  - Default element bound (StT by default) — Correct
+- APIs, Macros, Constructors, Encapsulation:
+  - Macro Normalization (Exported and Type-Checked) — Correct
+  - Constructor No Raw Backing Collections — Correct
+  - Struct Field Encapsulation — Correct
+  - No Free-Function Wrappers — Correct
+  - Type Conversions and Naming — Correct
+- Iteration, Iterators, and Tests:
+  - Iterator impls (three forms) — Correct
+  - Tests Format — Correct
+  - Test via Public API Only — Correct
+  - CamlCase not SnakeCase — Correct
+  - Type Inference Cleanup — Correct
+  - Contain UFCS (call-site elimination) — Correct
+APAS Rules Checklist:
+- Assistant Vec Prohibition — Correct
+- Element Shorthands and Delegation — Correct
+- APAS Naming Fidelity — Correct
+- Iterator-based Assertions — Correct
+- Criterion Bench Configuration — Correct
+- Chapter Trait Hoisting (Option A) — Correct
+- Parallel Spawn/Join Model — Correct
+- MT Module Discipline — Correct
+- Iteration vs. Recursion Hygiene — Correct
+- Graph Notation Convention — Correct
+- Benchmark Macro Usage Patterns — Correct
+- Parallel Pair Semantics — Correct
+
+File: src/BBTEph.rs
+Rust Rules Checklist:
+- Code Elegance and Minimalism:
+  - Terminology alignment — Correct
+  - Always choose the minimal solution — Correct
+  - Closure Mutation Patterns — Correct
+  - Formatting discipline — Correct
+  - Zero Warnings Policy (MANDATORY) — Correct
+- Imports and Module Scope:
+  - Standard Library Imports and Result usage (module-top; no aliasing) — Defect (std imports should precede crate imports)
+  - Specialized import rules — Correct
+  - Module import style for this project — Correct
+  - No trailing per-file re-exports (use lib.rs instead) — Correct
+  - Wildcard-first imports; group to minimize `use crate` — Correct
+  - Use Lit! macros for literal data construction — Correct
+  - Helper function extraction threshold — Correct
+  - Module/file layout and Mandatory Encapsulation — Correct
+- Traits and Implementations (Mandatory Pattern) — Correct
+- Types, Bounds, and Lifting:
+  - Types and Bounds (Baseline + Minimal Additions) — Correct
+  - Generalized lifting rule (applies to every trait/impl) — Correct
+  - Type Creation Traits (align with baseline) — Correct
+  - Function argument bounds without where-clauses (new) — Correct
+  - Callable parameter style (`impl Fn` in parameter position) — Correct
+  - Default element bound (StT by default) — Correct
+- APIs, Macros, Constructors, Encapsulation:
+  - Macro Normalization (Exported and Type-Checked) — Correct
+  - Constructor No Raw Backing Collections — Correct
+  - Struct Field Encapsulation — Defect (BBNode exposes public fields)
+  - No Free-Function Wrappers — Correct
+  - Type Conversions and Naming — Correct
+- Iteration, Iterators, and Tests:
+  - Iterator impls (three forms) — Correct
+  - Tests Format — Correct
+  - Test via Public API Only — Correct
+  - CamlCase not SnakeCase — Correct
+  - Type Inference Cleanup — Correct
+  - Contain UFCS (call-site elimination) — Correct
+APAS Rules Checklist:
+- Assistant Vec Prohibition — Correct
+- Element Shorthands and Delegation — Correct
+- APAS Naming Fidelity — Correct
+- Iterator-based Assertions — Correct
+- Criterion Bench Configuration — Correct
+- Chapter Trait Hoisting (Option A) — Correct
+- Parallel Spawn/Join Model — Correct
+- MT Module Discipline — Correct
+- Iteration vs. Recursion Hygiene — Correct
+- Graph Notation Convention — Correct
+- Benchmark Macro Usage Patterns — Correct
+- Parallel Pair Semantics — Correct
+

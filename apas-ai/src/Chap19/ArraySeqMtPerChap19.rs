@@ -1,12 +1,12 @@
 //! Chapter 19 algorithms for ArraySeqMtPer, just the one multi-threaded set of code that Umut and Guy snuck into this chapter.
 
 pub mod ArraySeqMtPerChap19 {
+    use std::fmt::{Debug, Display};
     use std::sync::Mutex;
 
-    use crate::ArraySeqMtPer::ArraySeqMtPer::*;
-    use crate::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
+    use crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::*;
+    use crate::Chap19::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
     use crate::Types::Types::*;
-    use std::fmt::{Debug, Display};
 
     pub trait ArraySeqMtPerChap19Trait<T: MtT> {
         // Chapter 18 wrappers
@@ -118,7 +118,7 @@ pub mod ArraySeqMtPerChap19 {
         }
 
         fn collect(a: &ArrayMtPerS<Pair<T, T>>, cmp: impl Fn(&T, &T) -> O) -> ArrayMtPerS<Pair<T, ArrayMtPerS<T>>> {
-            if a.length() == 0 {
+            if a.length() == 0usize {
                 return ArrayMtPerS::from_vec(vec![]);
             }
 

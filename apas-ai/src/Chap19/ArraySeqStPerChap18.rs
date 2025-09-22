@@ -1,7 +1,7 @@
 //! Chapter 18 algorithms for ArraySeqStPer.
 
 pub mod ArraySeqStPerChap18 {
-    use crate::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     pub trait ArraySeqStPerChap18Trait<T: StT> {
@@ -58,7 +58,7 @@ pub mod ArraySeqStPerChap18 {
             ArrayStPerS::from_vec(data)
         }
         fn map<U: StT + Clone>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U> {
-            if a.length() == 0 {
+            if a.length() == 0usize {
                 return <ArrayStPerS<U> as ArraySeqStPerTrait<U>>::empty();
             }
             let first = f(a.nth(0));
@@ -71,7 +71,7 @@ pub mod ArraySeqStPerChap18 {
         }
         fn append(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T> {
             let n = a.length() + b.length();
-            if n == 0 {
+            if n == 0usize {
                 return <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::empty();
             }
             let mut v: Vec<T> = Vec::with_capacity(n);
@@ -139,10 +139,10 @@ pub mod ArraySeqStPerChap18 {
         fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
             fn rec<T: StT>(s: &[T], f: &impl Fn(&T, &T) -> T, id: T) -> T {
                 let n = s.len();
-                if n == 0 {
+                if n == 0usize {
                     return id;
                 }
-                if n == 1 {
+                if n == 1usize {
                     return s[0].clone();
                 }
                 let m = n / 2;
@@ -155,10 +155,10 @@ pub mod ArraySeqStPerChap18 {
         fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T) {
             fn rec<T: StT>(s: &[T], f: &impl Fn(&T, &T) -> T, id: T) -> T {
                 let n = s.len();
-                if n == 0 {
+                if n == 0usize {
                     return id;
                 }
-                if n == 1 {
+                if n == 1usize {
                     return s[0].clone();
                 }
                 let m = n / 2;

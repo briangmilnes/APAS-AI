@@ -1,17 +1,18 @@
 //! Chapter 6 Labeled Undirected Graph (ephemeral) using Set for vertices and labeled edges.
 
 pub mod LabUnDirGraphStEph {
+    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::hash::Hash;
+
     use crate::SetLit;
     use crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::*;
     use crate::Types::Types::*;
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::hash::Hash;
 
     #[derive(Clone)]
     pub struct LabUnDirGraphStEph<V, L>
     where
         V: StT + Hash + Ord,
-        L: Clone + Display + Debug + Eq + Hash,
+        L: StT + Hash,
     {
         vertices: Set<V>,
         labeled_edges: Set<LabEdge<V, L>>,
@@ -20,7 +21,7 @@ pub mod LabUnDirGraphStEph {
     pub trait LabUnDirGraphStEphTrait<V, L>
     where
         V: StT + Hash + Ord,
-        L: Clone + Display + Debug + Eq + Hash,
+        L: StT + Hash,
     {
         fn empty() -> Self;
         fn from_vertices_and_labeled_edges(vertices: Set<V>, labeled_edges: Set<LabEdge<V, L>>) -> Self;
@@ -38,7 +39,7 @@ pub mod LabUnDirGraphStEph {
     impl<V, L> LabUnDirGraphStEphTrait<V, L> for LabUnDirGraphStEph<V, L>
     where
         V: StT + Hash + Ord,
-        L: Clone + Display + Debug + Eq + Hash,
+        L: StT + Hash,
     {
         fn empty() -> Self {
             LabUnDirGraphStEph {
@@ -127,7 +128,7 @@ pub mod LabUnDirGraphStEph {
     impl<V, L> Display for LabUnDirGraphStEph<V, L>
     where
         V: StT + Hash + Ord,
-        L: Clone + Display + Debug + Eq + Hash,
+        L: StT + Hash,
     {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "LabUnDirGraph(V: {}, E: {})", self.vertices, self.labeled_edges)
@@ -137,7 +138,7 @@ pub mod LabUnDirGraphStEph {
     impl<V, L> Debug for LabUnDirGraphStEph<V, L>
     where
         V: StT + Hash + Ord,
-        L: Clone + Display + Debug + Eq + Hash,
+        L: StT + Hash,
     {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "LabUnDirGraph {{ vertices: {:?}, labeled_edges: {:?} }}", 

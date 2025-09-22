@@ -15,11 +15,7 @@ pub mod RelationStEphChap5_2 {
         pairs: Set<Pair<A, B>>,
     }
 
-    pub trait RelationStEphChap5_2Trait<
-        X: Eq + Hash + Display + Debug + Clone + Sized,
-        Y: Eq + Hash + Display + Debug + Clone + Sized,
-    >
-    {
+    pub trait RelationStEphChap5_2Trait<X: StT + Hash, Y: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Relation<X, Y>;
@@ -54,45 +50,27 @@ pub mod RelationStEphChap5_2 {
         fn iter(&self) -> Iter<'_, Pair<X, Y>>;
     }
 
-    impl<A, B> Relation<A, B> {
-        pub fn FromVec(v: Vec<Pair<A, B>>) -> Relation<A, B>
-        where
-            A: Eq + Hash + Display + Debug + Clone,
-            B: Eq + Hash + Display + Debug + Clone,
-        {
+    impl<A: StT + Hash, B: StT + Hash> Relation<A, B> {
+        pub fn FromVec(v: Vec<Pair<A, B>>) -> Relation<A, B> {
             Relation { pairs: Set::FromVec(v) }
         }
     }
 
-    impl<A: Eq + Hash + Display + Debug, B: Eq + Hash + Display + Debug> PartialEq for Relation<A, B> {
+    impl<A: StT + Hash, B: StT + Hash> PartialEq for Relation<A, B> {
         fn eq(&self, other: &Self) -> bool { self.pairs == other.pairs }
     }
 
-    impl<A: Eq + Hash + Display + Debug, B: Eq + Hash + Display + Debug> Eq for Relation<A, B> {}
+    impl<A: StT + Hash, B: StT + Hash> Eq for Relation<A, B> {}
 
-    impl<A: Debug + Eq + Hash, B: Debug + Eq + Hash> Debug for Relation<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { self.pairs.fmt(f) }
+    impl<A: StT + Hash, B: StT + Hash> Debug for Relation<A, B> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Debug::fmt(&self.pairs, f) }
     }
 
-    impl<A: Display + Eq + Hash, B: Display + Eq + Hash> Display for Relation<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "{{")?;
-            let mut first = true;
-            for Pair(a, b) in self.pairs.iter() {
-                if !first {
-                    write!(f, ", ")?;
-                } else {
-                    first = false;
-                }
-                write!(f, "({},{}),", a, b)?;
-            }
-            write!(f, "}}")
-        }
+    impl<A: StT + Hash, B: StT + Hash> Display for Relation<A, B> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Display::fmt(&self.pairs, f) }
     }
 
-    impl<X: StT + Hash, Y: StT + Hash>
-        RelationStEphChap5_2Trait<X, Y> for Relation<X, Y>
-    {
+    impl<X: StT + Hash, Y: StT + Hash> RelationStEphChap5_2Trait<X, Y> for Relation<X, Y> {
         fn empty() -> Relation<X, Y> { Relation { pairs: SetLit![] } }
 
         fn FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y> { Relation { pairs } }

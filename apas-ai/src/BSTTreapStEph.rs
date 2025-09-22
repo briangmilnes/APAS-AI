@@ -1,8 +1,8 @@
 //! Ephemeral Treap (randomized heap-ordered BST) with `find` support.
 
 pub mod BSTTreapStEph {
-    use crate::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
     use crate::Types::Types::*;
     use rand::{rng, Rng};
 

@@ -71,3 +71,19 @@ in v end. (12.3)
 Here ⊕ is the addition operation on machine words.
 
 Exercise 12.1. Implement a spin-lock using fetch-and-add 
+
+
+Propose an implemention of Chap12/Exercise12_2 and test code in text
+boxes. 
+Checklist them.
+
+Exercise 12.2. Implement fetch-and-add using compare-and-swap . How does the effi-
+ciency of your implementation compare to that of the fetch-and-add instruction.
+
+
+Exercise 12.5. Using the compare-and-swap instruction for synchronization, design a
+concurrent stack data structure that can be shared by multiple threads. Such a concurrent
+stack data structure can be used to implement a thread scheduler for executing the threads
+in a parallel language such as SPARC or MPL.
+
+ Be sure to use our MtT and StTInMtT types as needed.

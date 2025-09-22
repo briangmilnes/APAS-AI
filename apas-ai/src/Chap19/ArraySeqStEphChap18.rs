@@ -1,7 +1,7 @@
 //! Chapter 18 algorithms for `ArraySeqStEph<T>`.
 
 pub mod ArraySeqStEphChap18 {
-    use crate::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
 
     pub trait ArraySeqStEphChap18Trait<T: StT> {
@@ -47,7 +47,7 @@ pub mod ArraySeqStEphChap18 {
         }
         fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U> {
             let n = a.length();
-            if n == 0 {
+            if n == 0usize {
                 return <ArraySeqStEphS<U> as ArraySeqStEphTrait<U>>::empty();
             }
             let first = f(a.nth(0)).clone();
@@ -62,10 +62,10 @@ pub mod ArraySeqStEphChap18 {
             let na = a.length();
             let nb = b.length();
             let n = na + nb;
-            if n == 0 {
+            if n == 0usize {
                 return <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty();
             }
-            let init = if na > 0 { a.nth(0).clone() } else { b.nth(0).clone() };
+            let init = if na > 0usize { a.nth(0).clone() } else { b.nth(0).clone() };
             let mut out = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::new(n, init.clone());
             for i in 0..na {
                 let _ = out.set(i, a.nth(i).clone());
@@ -111,7 +111,7 @@ pub mod ArraySeqStEphChap18 {
         fn iteratePrefixes<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (ArraySeqStEphS<A>, A) {
             let n = a.length();
             let mut acc = x;
-            if n == 0 {
+            if n == 0usize {
                 return (<ArraySeqStEphS<A> as ArraySeqStEphTrait<A>>::empty(), acc);
             }
             let mut out = <ArraySeqStEphS<A> as ArraySeqStEphTrait<A>>::new(n, acc.clone());
@@ -131,7 +131,7 @@ pub mod ArraySeqStEphChap18 {
         fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, T) {
             let n = a.length();
             let mut acc = id;
-            let mut out = if n == 0 {
+            let mut out = if n == 0usize {
                 <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty()
             } else {
                 <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::new(n, acc.clone())
@@ -153,7 +153,7 @@ pub mod ArraySeqStEphChap18 {
             let mut init: Option<T> = None;
             for i in 0..ss.length() {
                 let inner = ss.nth(i);
-                if inner.length() > 0 {
+                if inner.length() > 0usize {
                     init = Some(inner.nth(0).clone());
                     break;
                 }

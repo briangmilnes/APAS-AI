@@ -1,8 +1,8 @@
 //! Chapter 19 algorithms for `ArraySeqStEph<T>`.
 
 pub mod ArraySeqStEphChap19 {
-    use crate::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::ArraySeqStEphChap18::ArraySeqStEphChap18::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEphChap18::ArraySeqStEphChap18::*;
     use crate::Types::Types::*;
 
     pub trait ArraySeqStEphChap19Trait<T: StT> {

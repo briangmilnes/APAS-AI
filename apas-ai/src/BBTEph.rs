@@ -1,8 +1,8 @@
 //! Ephemeral full binary tree utilities (Chapter 37).
 
 pub mod BBTEph {
-    use crate::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
     use crate::Types::Types::*;
 
     /// Full binary tree nodes (`Leaf` has no stored value).
@@ -14,9 +14,13 @@ pub mod BBTEph {
 
     #[derive(Clone, PartialEq, Eq, Debug)]
     pub struct BBNode<T: StT> {
-        pub left: BBTree<T>,
-        pub value: T,
-        pub right: BBTree<T>,
+        pub(crate) left: BBTree<T>,
+        pub(crate) value: T,
+        pub(crate) right: BBTree<T>,
+    }
+
+    impl<T: StT> BBNode<T> {
+        fn new(left: BBTree<T>, value: T, right: BBTree<T>) -> Self { BBNode { left, value, right } }
     }
 
     pub trait BBTEphTrait<T: StT> {
@@ -33,7 +37,7 @@ pub mod BBTEph {
         pub fn leaf() -> Self { BBTree::Leaf }
 
         pub fn node(left: BBTree<T>, value: T, right: BBTree<T>) -> Self {
-            BBTree::Node(Box::new(BBNode { left, value, right }))
+            BBTree::Node(Box::new(BBNode::new(left, value, right)))
         }
 
         pub fn is_leaf(&self) -> B {
@@ -107,11 +111,7 @@ pub mod BBTEph {
     #[macro_export]
     macro_rules! BBNodeLit {
         ({ left: $left:expr, value: $value:expr, right: $right:expr }) => {
-            $crate::BBTEph::BBTEph::BBNode {
-                left: $left,
-                value: $value,
-                right: $right,
-            }
+            $crate::BBTEph::BBTEph::BBNode::new($left, $value, $right)
         };
     }
 

@@ -1,9 +1,10 @@
 //! Chapter 18 algorithms for AVLTreeStPerS.
 
 pub mod AVLTreeSeqStPerChap18 {
+    use std::fmt::{Debug, Display};
+
     use crate::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Types::Types::*;
-    use std::fmt::{Debug, Display};
 
     pub trait AVLTreeSeqStPerChap18Trait<T: StT> {
         /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + lg(n) + max i S(f(i))).

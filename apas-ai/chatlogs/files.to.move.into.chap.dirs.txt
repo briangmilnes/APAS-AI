@@ -1,0 +1,103 @@
+FILES TO MOVE INTO CHAPTER DIRECTORIES (Chap<NN> with zero-padding for <9)
+==============================================================================
+
+Based on source file organization, the following test and benchmark files should be moved into matching chapter directories:
+
+TESTS TO MOVE:
+==============
+
+Move to tests/Chap11/:
+- tests/Test29Algorithm_21_1.rs → tests/Chap11/Test29Algorithm_21_1.rs
+- tests/Test30Algorithm_21_2.rs → tests/Chap11/Test30Algorithm_21_2.rs
+- tests/Test31Algorithm_21_6.rs → tests/Chap11/Test31Algorithm_21_6.rs
+- tests/Test32Exercise_21_5_and_21_6.rs → tests/Chap11/Test32Exercise_21_5_and_21_6.rs
+- tests/Test33Exercise_21_7.rs → tests/Chap11/Test33Exercise_21_7.rs
+- tests/Test34Exercise_21_8_and_Algorithm_21_5.rs → tests/Chap11/Test34Exercise_21_8_and_Algorithm_21_5.rs
+- tests/Test35Exercsise_21_9.rs → tests/Chap11/Test35Exercsise_21_9.rs
+- tests/Test36Problem_21_3.rs → tests/Chap11/Test36Problem_21_3.rs
+- tests/Test37Problem_21_4.rs → tests/Chap11/Test37Problem_21_4.rs
+- tests/Test38Problem21_1.rs → tests/Chap11/Test38Problem21_1.rs
+
+Move to tests/Chap12/:
+- tests/TestExercise12_1.rs → tests/Chap12/TestExercise12_1.rs
+- tests/TestExercise12_2.rs → tests/Chap12/TestExercise12_2.rs
+- tests/TestExercise12_5.rs → tests/Chap12/TestExercise12_5.rs
+
+Move to tests/Chap18/ (LinkedList Chapter 18 tests):
+- tests/Test04LinkedListStPerChap18.rs → tests/Chap18/Test04LinkedListStPerChap18.rs
+- tests/Test07LinkedListStEphChap18.rs → tests/Chap18/Test07LinkedListStEphChap18.rs
+
+Move to tests/Chap19/ (LinkedList Chapter 19 tests):
+- tests/Test05LinkedListStPerChap19.rs → tests/Chap19/Test05LinkedListStPerChap19.rs
+- tests/Test08LinkedListStEphChap19.rs → tests/Chap19/Test08LinkedListStEphChap19.rs
+
+Move to tests/Chap36/:
+- tests/Test39Chapter36St.rs → tests/Chap36/Test39Chapter36St.rs
+- tests/Test40Chapter36Mt.rs → tests/Chap36/Test40Chapter36Mt.rs
+- tests/Test44Chapter36MtSlice.rs → tests/Chap36/Test44Chapter36MtSlice.rs
+
+Move to tests/Chap37/:
+- tests/Test42BBTEph.rs → tests/Chap37/Test42BBTEph.rs
+
+Keep in root (no specific chapter):
+- tests/Test01Types.rs (Types is top-level)
+- tests/Test03LinkedListStPer.rs (base LinkedList)
+- tests/Test06LinkedListStEph.rs (base LinkedList)
+- tests/Test15AVLTreeSeqStPer.rs (base AVLTreeSeq)
+- tests/Test18AVLTreeSeqStEph.rs (base AVLTreeSeq)
+- tests/Test16AVLTreeSeqStPerChap18.rs (already moved to Chap19 - should be Chap18)
+- tests/Test17AVLTreeSeqStPerChap19.rs (already in Chap19)
+- tests/Test19AVLTreeSeqStEphChap18.rs (already moved to Chap19 - should be Chap18)
+- tests/Test20AVLTreeSeqStEphChap19.rs (already in Chap19)
+- All BST tests (Test45-53) - no specific chapter assignments
+
+BENCHMARKS TO MOVE:
+==================
+
+Move to benches/Chap11/:
+- benches/BenchFibonacciMt.rs → benches/Chap11/BenchFibonacciMt.rs
+
+Move to benches/Chap18/ (LinkedList and AVLTreeSeq Chapter 18 benchmarks):
+- benches/BenchLinkedListStPerChap18.rs → benches/Chap18/BenchLinkedListStPerChap18.rs
+- benches/BenchLinkedListStEphChap18.rs → benches/Chap18/BenchLinkedListStEphChap18.rs
+- benches/BenchAVLTreeSeqStPerChap18.rs → benches/Chap18/BenchAVLTreeSeqStPerChap18.rs
+- benches/BenchAVLTreeSeqStEphChap18.rs → benches/Chap18/BenchAVLTreeSeqStEphChap18.rs
+
+Move to benches/Chap19/ (LinkedList and AVLTreeSeq Chapter 19 benchmarks):
+- benches/BenchLinkedListStPerChap19.rs → benches/Chap19/BenchLinkedListStPerChap19.rs
+- benches/BenchLinkedListStEphChap19.rs → benches/Chap19/BenchLinkedListStEphChap19.rs
+- benches/BenchAVLTreeSeqStPerChap19.rs → benches/Chap19/BenchAVLTreeSeqStPerChap19.rs
+- benches/BenchAVLTreeSeqStEphChap19.rs → benches/Chap19/BenchAVLTreeSeqStEphChap19.rs
+
+Move to benches/Chap26/:
+- benches/BenchChapter26Mt.rs → benches/Chap26/BenchChapter26Mt.rs
+
+Move to benches/Chap36/:
+- benches/BenchChapter36St.rs → benches/Chap36/BenchChapter36St.rs
+- benches/BenchChapter36Mt.rs → benches/Chap36/BenchChapter36Mt.rs
+
+Keep in root (no specific chapter):
+- benches/BenchLinkedListStPer.rs (base LinkedList)
+- benches/BenchLinkedListStEph.rs (base LinkedList)
+- benches/BenchAVLTreeSeqStPer.rs (base AVLTreeSeq)
+- benches/BenchAVLTreeSeqStEph.rs (base AVLTreeSeq)
+- All BST benchmarks (BenchBST*) - no specific chapter assignments
+
+CORRECTIONS NEEDED:
+==================
+
+Already moved but in wrong chapter directories:
+- tests/Chap19/Test16AVLTreeSeqStPerChap18.rs → should be tests/Chap18/Test16AVLTreeSeqStPerChap18.rs
+- tests/Chap19/Test19AVLTreeSeqStEphChap18.rs → should be tests/Chap18/Test19AVLTreeSeqStEphChap18.rs
+
+DIRECTORIES TO CREATE:
+=====================
+- tests/Chap11/
+- tests/Chap12/
+- tests/Chap36/
+- tests/Chap37/
+- benches/Chap11/
+- benches/Chap26/
+- benches/Chap36/
+
+Note: Chap03, Chap05, Chap06, Chap18, Chap19 directories already exist.

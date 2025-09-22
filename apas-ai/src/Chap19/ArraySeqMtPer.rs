@@ -195,14 +195,14 @@ pub mod ArraySeqMtPer {
 
     #[macro_export]
     macro_rules! ArrayMtPerSLit {
-        () => { $crate::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS::empty() };
-        ($x:expr; $n:expr) => { $crate::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS::new($n, $x) };
-        ($($x:expr),* $(,)?) => { $crate::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS::from_vec(vec![$($x),*]) };
+        () => { $crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS::empty() };
+        ($x:expr; $n:expr) => { $crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS::new($n, $x) };
+        ($($x:expr),* $(,)?) => { $crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS::from_vec(vec![$($x),*]) };
     }
 
     #[allow(dead_code)]
     fn _ArrayMtPerSLit_type_checks() {
         let _ = ArrayMtPerSLit![1];
-        let _: crate::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS<i32> = ArrayMtPerSLit![];
+        let _: crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::ArrayMtPerS<i32> = ArrayMtPerSLit![];
     }
 }

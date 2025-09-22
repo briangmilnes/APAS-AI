@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+ordered-float = "4.2"
 rand = "0.9.2"
 rayon = "1.11.0"
 tree_collections = "0.1.8"
@@ -190,36 +191,36 @@ harness = false
 
 [[bench]]
 name = "BenchInsertionSortSt"
-path = "benches/Chap3/BenchInsertionSortSt.rs"
+path = "benches/Chap03/BenchInsertionSortSt.rs"
 harness = false
 
 [[bench]]
 name = "BenchRelationStEphChap5_2"
-path = "benches/Chap5/BenchRelationStEphChap5_2.rs"
+path = "benches/Chap05/BenchRelationStEphChap5_2.rs"
 harness = false
 
 [[bench]]
 name = "BenchMappingStEphChap5_5"
-path = "benches/Chap5/BenchMappingStEphChap5_5.rs"
+path = "benches/Chap05/BenchMappingStEphChap5_5.rs"
 harness = false
 
 [[bench]]
 name = "BenchDirGraphStEph"
-path = "benches/Chap6/BenchDirGraphStEph.rs"
+path = "benches/Chap06/BenchDirGraphStEph.rs"
 harness = false
 
 [[bench]]
 name = "BenchUnDirGraphStEph"
-path = "benches/Chap6/BenchUnDirGraphStEph.rs"
+path = "benches/Chap06/BenchUnDirGraphStEph.rs"
 harness = false
 
 [[bench]]
 name = "BenchLabDirGraphStEph"
-path = "benches/Chap6/BenchLabDirGraphStEph.rs"
+path = "benches/Chap06/BenchLabDirGraphStEph.rs"
 harness = false
 
 [[bench]]
 name = "BenchLabUnDirGraphStEph"
-path = "benches/Chap6/BenchLabUnDirGraphStEph.rs"
+path = "benches/Chap06/BenchLabUnDirGraphStEph.rs"
 harness = false
 

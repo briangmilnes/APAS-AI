@@ -3,7 +3,7 @@
 pub mod BSTParaMtEph {
     use std::sync::{Arc, RwLock};
 
-    use crate::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     #[derive(Clone)]

@@ -3,7 +3,7 @@
 pub mod Chapter36St {
     use rand::{rng, Rng};
 
-    use crate::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
 
     pub trait Chapter36StTrait<T: StT + Ord> {

@@ -1,0 +1,50 @@
+FILE 40/186: src/AVLTreeSeqStEphChap18.rs
+────────────────────────────────────────────────────────────────────────────────
+RUST RULES:
+  R2.1 Standard Library Imports: Defect - Missing std::fmt imports at module top
+
+APAS RULES:
+
+
+PROGRESS: 64/186 files analyzed (34.4% complete)
+FILES 46-64 SUMMARY:
+- FILE 47: Exercise12_2.rs - 98% (1 defect: free function wrapper)
+- FILE 54: RelationStEphChap5_2.rs - 89.8% (5 defects: explicit bounds instead of StT)
+- FILE 55: MappingStEphChap5_5.rs - 98% (1 defect: FromVec constructor)
+- FILE 59: AVLTreeSeqStEph.rs - 98% (1 defect: std imports not at module top)
+- FILE 63: MathSeq.rs - 98% (1 defect: Vec usage)
+
+
+FILE 41/186: src/LinkedListStEphChap18.rs
+────────────────────────────────────────────────────────────────────────────────
+RUST RULES:
+  R2.1 Standard Library Imports: Defect - std imports not at module top
+
+APAS RULES:
+
+
+PROGRESS: 64/186 files analyzed (34.4% complete)
+FILES 46-64 SUMMARY:
+- FILE 47: Exercise12_2.rs - 98% (1 defect: free function wrapper)
+- FILE 54: RelationStEphChap5_2.rs - 89.8% (5 defects: explicit bounds instead of StT)
+- FILE 55: MappingStEphChap5_5.rs - 98% (1 defect: FromVec constructor)
+- FILE 59: AVLTreeSeqStEph.rs - 98% (1 defect: std imports not at module top)
+- FILE 63: MathSeq.rs - 98% (1 defect: Vec usage)
+
+FILE 42/186: src/AVLTreeSeqStPerChap19.rs
+────────────────────────────────────────────────────────────────────────────────
+RUST RULES:
+  R2.1 Standard Library Imports: Defect - std imports not at module top
+
+APAS RULES:
+
+
+PROGRESS: 64/186 files analyzed (34.4% complete)
+FILES 46-64 SUMMARY:
+- FILE 47: Exercise12_2.rs - 98% (1 defect: free function wrapper)
+- FILE 54: RelationStEphChap5_2.rs - 89.8% (5 defects: explicit bounds instead of StT)
+- FILE 55: MappingStEphChap5_5.rs - 98% (1 defect: FromVec constructor)
+- FILE 59: AVLTreeSeqStEph.rs - 98% (1 defect: std imports not at module top)
+- FILE 63: MathSeq.rs - 98% (1 defect: Vec usage)
+
+

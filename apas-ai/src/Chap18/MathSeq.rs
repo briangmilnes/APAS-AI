@@ -283,13 +283,13 @@ pub mod MathSeq {
     #[macro_export]
     macro_rules! MathSeqSLit {
         () => {
-            $crate::MathSeq::MathSeq::MathSeqS::empty()
+            $crate::Chap18::MathSeq::MathSeq::MathSeqS::empty()
         };
         ($x:expr; $n:expr) => {
-            $crate::MathSeq::MathSeq::MathSeqS::with_len($n, $x)
+            $crate::Chap18::MathSeq::MathSeq::MathSeqS::with_len($n, $x)
         };
         ($($x:expr),* $(,)?) => {
-            $crate::MathSeq::MathSeq::MathSeqS::from_vec(vec![$($x),*])
+            $crate::Chap18::MathSeq::MathSeq::MathSeqS::from_vec(vec![$($x),*])
         };
     }
 
@@ -297,6 +297,6 @@ pub mod MathSeq {
     fn _MathSeqSLit_type_checks() {
         let _ = MathSeqSLit![1];
         let _ = MathSeqSLit![0; 3];
-        let _: crate::MathSeq::MathSeq::MathSeqS<i32> = MathSeqSLit![];
+        let _: crate::Chap18::MathSeq::MathSeq::MathSeqS<i32> = MathSeqSLit![];
     }
 }

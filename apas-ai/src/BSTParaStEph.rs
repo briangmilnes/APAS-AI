@@ -4,7 +4,7 @@ pub mod BSTParaStEph {
     use std::cell::RefCell;
     use std::rc::Rc;
 
-    use crate::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     #[derive(Clone)]

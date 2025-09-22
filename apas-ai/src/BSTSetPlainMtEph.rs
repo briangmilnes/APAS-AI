@@ -3,7 +3,7 @@
 pub mod BSTSetPlainMtEph {
     use std::collections::BTreeSet;
 
-    use crate::ArraySeqStPer::ArraySeqStPer::ArrayStPerS;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArrayStPerS;
     use crate::BSTPlainMtEph::BSTPlainMtEph::BSTPlainMtEph;
     use crate::Types::Types::*;
 

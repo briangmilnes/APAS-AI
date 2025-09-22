@@ -144,7 +144,7 @@ pub mod ArraySeqMtEph {
         }
         fn singleton(item: T) -> Self { ArraySeqMtEphS::from_vec(vec![item]) }
         fn isEmpty(&self) -> B {
-            if self.length() == 0 {
+            if self.length() == 0usize {
                 B::True
             } else {
                 B::False
@@ -162,8 +162,8 @@ pub mod ArraySeqMtEph {
 
     #[macro_export]
     macro_rules! ArraySeqMtEphSLit {
-        () => { $crate::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(Vec::new()) };
-        ($x:expr; $n:expr) => { $crate::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(vec![$x; $n]) };
-        ($($x:expr),* $(,)?) => { $crate::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(vec![$($x),*]) };
+        () => { $crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(Vec::new()) };
+        ($x:expr; $n:expr) => { $crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(vec![$x; $n]) };
+        ($($x:expr),* $(,)?) => { $crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(vec![$($x),*]) };
     }
 }

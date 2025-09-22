@@ -1,17 +1,18 @@
 //! Chapter 6 Labeled Directed Graph (ephemeral) using Set for vertices and labeled arcs.
 
 pub mod LabDirGraphStEph {
+    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::hash::Hash;
+
     use crate::SetLit;
     use crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::*;
     use crate::Types::Types::*;
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::hash::Hash;
 
     #[derive(Clone)]
     pub struct LabDirGraphStEph<V, L>
     where
         V: StT + Hash,
-        L: Clone + Display + Debug + Eq + Hash,
+        L: StT + Hash,
     {
         vertices: Set<V>,
         labeled_arcs: Set<LabEdge<V, L>>,
@@ -20,7 +21,7 @@ pub mod LabDirGraphStEph {
     pub trait LabDirGraphStEphTrait<V, L>
     where
         V: StT + Hash,
-        L: Clone + Display + Debug + Eq + Hash,
+        L: StT + Hash,
     {
         fn empty() -> Self;
         fn from_vertices_and_labeled_arcs(vertices: Set<V>, labeled_arcs: Set<LabEdge<V, L>>) -> Self;
@@ -38,7 +39,7 @@ pub mod LabDirGraphStEph {
     impl<V, L> LabDirGraphStEphTrait<V, L> for LabDirGraphStEph<V, L>
     where
         V: StT + Hash,
-        L: Clone + Display + Debug + Eq + Hash,
+        L: StT + Hash,
     {
         fn empty() -> Self {
             LabDirGraphStEph {

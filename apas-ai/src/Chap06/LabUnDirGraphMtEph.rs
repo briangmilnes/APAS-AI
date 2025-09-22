@@ -1,11 +1,12 @@
 //! Chapter 6 Labeled Undirected Graph (ephemeral) using Set for vertices and labeled edges - Multi-threaded version.
 
 pub mod LabUnDirGraphMtEph {
+    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::hash::Hash;
+
     use crate::SetLit;
     use crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::*;
     use crate::Types::Types::*;
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::hash::Hash;
 
     #[derive(Clone)]
     pub struct LabUnDirGraphMtEph<V, L>

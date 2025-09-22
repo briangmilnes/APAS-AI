@@ -1,0 +1,17 @@
+
+ Run the checklist process against every tests and benches file.
+ PRINT EVERY RULE CHECKED, DON'T ABBREVIATE OR JUST SUMMATE.
+ Estimate the time.
+ Log output to chatlogs/codex.test.reviews.txt
+ Review just the first test file to start.
+
+
+ Now review them all remaining test files.
+ Execute relentlessly.
+
+ List all source files.
+ Checlist review just the first src file to start.
+
+ 
+ Now review them all remaining src files.
+ Execute relentlessly.

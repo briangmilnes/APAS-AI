@@ -1,0 +1,55 @@
+FILES WITH REDUNDANT CHAP NAMES IN FILENAMES
+==============================================
+
+Note: AVL* files should be in Chap37, not Chap19 as previously stated.
+
+FILES THAT ARE IN Chap<DD> DIRECTORIES BUT STILL HAVE "Chap" IN THEIR FILENAME:
+
+SRC FILES (9):
+==============
+src/Chap05/MappingStEphChap5_5.rs → should be: src/Chap05/MappingStEph.rs
+src/Chap05/RelationStEphChap5_2.rs → should be: src/Chap05/RelationStEph.rs
+src/Chap05/SetStEphChap5_1.rs → should be: src/Chap05/SetStEph.rs
+src/Chap19/ArraySeqMtEphChap18.rs → should be: src/Chap18/ArraySeqMtEph.rs (wrong chapter too)
+src/Chap19/ArraySeqMtEphChap19.rs → should be: src/Chap19/ArraySeqMtEph.rs
+src/Chap19/ArraySeqMtPerChap18.rs → should be: src/Chap18/ArraySeqMtPer.rs (wrong chapter too)
+src/Chap19/ArraySeqMtPerChap19.rs → should be: src/Chap19/ArraySeqMtPer.rs
+src/Chap19/ArraySeqStEphChap18.rs → should be: src/Chap18/ArraySeqStEph.rs (wrong chapter too)
+src/Chap19/ArraySeqStEphChap19.rs → should be: src/Chap19/ArraySeqStEph.rs
+src/Chap19/ArraySeqStPerChap18.rs → should be: src/Chap18/ArraySeqStPer.rs (wrong chapter too)
+src/Chap19/ArraySeqStPerChap19.rs → should be: src/Chap19/ArraySeqStPer.rs
+
+TEST FILES (8):
+===============
+tests/Chap05/Test21SetStEphChap5_1.rs → should be: tests/Chap05/Test21SetStEph.rs
+tests/Chap05/Test22RelationStEphChap5_2.rs → should be: tests/Chap05/Test22RelationStEph.rs
+tests/Chap05/Test23MappingStEphChap5_5.rs → should be: tests/Chap05/Test23MappingStEph.rs
+tests/Chap19/Test10ArraySeqStPerChap18.rs → should be: tests/Chap18/Test10ArraySeqStPer.rs (wrong chapter too)
+tests/Chap19/Test11ArraySeqStPerChap19.rs → should be: tests/Chap19/Test11ArraySeqStPer.rs
+tests/Chap19/Test13ArraySeqStEphChap18.rs → should be: tests/Chap18/Test13ArraySeqStEph.rs (wrong chapter too)
+tests/Chap19/Test14ArraySeqStEphChap19.rs → should be: tests/Chap19/Test14ArraySeqStEph.rs
+tests/Chap19/Test27ArraySeqMtPerChap18.rs → should be: tests/Chap18/Test27ArraySeqMtPer.rs (wrong chapter too)
+tests/Chap19/Test28ArraySeqMtPerChap19.rs → should be: tests/Chap19/Test28ArraySeqMtPer.rs
+
+BENCHMARK FILES (8):
+====================
+benches/Chap05/BenchMappingStEphChap5_5.rs → should be: benches/Chap05/BenchMappingStEph.rs
+benches/Chap05/BenchRelationStEphChap5_2.rs → should be: benches/Chap05/BenchRelationStEph.rs
+benches/Chap19/BenchArraySeqMtPerChap18.rs → should be: benches/Chap18/BenchArraySeqMtPer.rs (wrong chapter too)
+benches/Chap19/BenchArraySeqMtPerChap19.rs → should be: benches/Chap19/BenchArraySeqMtPer.rs
+benches/Chap19/BenchArraySeqStEphChap18.rs → should be: benches/Chap18/BenchArraySeqStEph.rs (wrong chapter too)
+benches/Chap19/BenchArraySeqStEphChap19.rs → should be: benches/Chap19/BenchArraySeqStEph.rs
+benches/Chap19/BenchArraySeqStPerChap18.rs → should be: benches/Chap18/BenchArraySeqStPer.rs (wrong chapter too)
+benches/Chap19/BenchArraySeqStPerChap19.rs → should be: benches/Chap19/BenchArraySeqStPer.rs
+
+SUMMARY:
+========
+- Total files with redundant Chap names: 25
+- Files also in wrong chapter directory: 8 (all the Chap18 files currently in Chap19)
+- Need to create Chap18 directories for: src/, tests/, benches/
+
+CORRECTED AVL INFORMATION:
+=========================
+AVL* files should be moved to Chap37 (not Chap19 as previously stated):
+- All AVLTreeSeq* files in src/, tests/, benches/ should go to Chap37/
+- This includes both base AVLTreeSeq files and their Chap18/Chap19 variants

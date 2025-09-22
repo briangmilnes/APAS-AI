@@ -1,8 +1,8 @@
 //! Ephemeral Red-Black balanced binary search tree with `find` support and public helpers.
 
 pub mod BSTRBStEph {
-    use crate::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
     use crate::Types::Types::*;
 
     #[derive(Clone, Copy, PartialEq, Eq)]

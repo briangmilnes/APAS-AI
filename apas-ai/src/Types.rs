@@ -159,19 +159,19 @@ pub mod Types {
 
     /// Labeled Edge wrapper to enable edges with labels.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
-    pub struct LabEdge<V: StT, L: Clone + Debug + Display + Eq + Hash>(pub V, pub V, pub L);
+    pub struct LabEdge<V: StT, L: StT + Hash>(pub V, pub V, pub L);
 
-    impl<V: StT, L: Clone + Debug + Display + Eq + Hash> std::fmt::Display for LabEdge<V, L> {
+    impl<V: StT, L: StT + Hash> std::fmt::Display for LabEdge<V, L> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { 
             write!(f, "({}, {}, {})", self.0, self.1, self.2) 
         }
     }
 
-    impl<V: StT, L: Clone + Debug + Display + Eq + Hash> From<(V, V, L)> for LabEdge<V, L> {
+    impl<V: StT, L: StT + Hash> From<(V, V, L)> for LabEdge<V, L> {
         fn from(t: (V, V, L)) -> Self { LabEdge(t.0, t.1, t.2) }
     }
 
-    impl<V: StT, L: Clone + Debug + Display + Eq + Hash> From<LabEdge<V, L>> for (V, V, L) {
+    impl<V: StT, L: StT + Hash> From<LabEdge<V, L>> for (V, V, L) {
         fn from(e: LabEdge<V, L>) -> (V, V, L) { (e.0, e.1, e.2) }
     }
 

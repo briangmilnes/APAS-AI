@@ -2,10 +2,11 @@
 
 pub mod SetStEphChap5_1 {
 
-    use crate::Types::Types::*;
     use std::collections::HashSet;
     use std::fmt::{Debug, Display};
     use std::hash::{Hash, Hasher};
+
+    use crate::Types::Types::*;
 
     #[derive(Clone)]
     pub struct Set<T> {

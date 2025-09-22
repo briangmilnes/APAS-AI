@@ -1,20 +1,21 @@
 //! StEphemeral (mutable) implicit-order AVL tree sequence.
 
 pub mod AVLTreeSeqStEph {
-    use crate::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Types::Types::*;
     use std::fmt::Debug;
+
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Types::Types::*;
 
     type Link<T> = Option<Box<AVLTreeNode<T>>>;
 
     pub struct AVLTreeNode<T: StT> {
-        pub value: T,
-        pub height: N,
-        pub left_size: N,
-        pub right_size: N,
-        pub left: Link<T>,
-        pub right: Link<T>,
-        pub index: N,
+        value: T,
+        height: N,
+        left_size: N,
+        right_size: N,
+        left: Link<T>,
+        right: Link<T>,
+        index: N,
     }
 
     impl<T: StT> AVLTreeNode<T> {
@@ -32,8 +33,8 @@ pub mod AVLTreeSeqStEph {
     }
 
     pub struct AVLTreeSeqStEphS<T: StT> {
-        pub root: Link<T>,
-        pub next_key: N,
+        root: Link<T>,
+        next_key: N,
     }
 
     pub trait AVLTreeSeqStEphTrait<T: StT> {

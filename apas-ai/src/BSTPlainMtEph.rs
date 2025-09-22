@@ -3,7 +3,7 @@
 pub mod BSTPlainMtEph {
     use std::sync::{Arc, RwLock};
 
-    use crate::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     type Link<T> = Arc<RwLock<Option<Node<T>>>>;

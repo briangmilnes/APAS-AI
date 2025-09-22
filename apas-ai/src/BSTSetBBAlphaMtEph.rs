@@ -3,7 +3,7 @@
 pub mod BSTSetBBAlphaMtEph {
     use std::collections::BTreeSet;
 
-    use crate::ArraySeqStPer::ArraySeqStPer::ArrayStPerS;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArrayStPerS;
     use crate::BSTBBAlphaMtEph::BSTBBAlphaMtEph::BSTBBAlphaMtEph;
     use crate::Types::Types::*;
 

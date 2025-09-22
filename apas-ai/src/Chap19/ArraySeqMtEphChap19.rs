@@ -1,8 +1,8 @@
 //! Chapter 19 algorithms for `ArraySeqMtEph<T>` (ephemeral, MT).
 
 pub mod ArraySeqMtEphChap19 {
-    use crate::ArraySeqMtEph::ArraySeqMtEph::*;
-    use crate::ArraySeqMtEphChap18::ArraySeqMtEphChap18::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap19::ArraySeqMtEphChap18::ArraySeqMtEphChap18::*;
     use crate::Types::Types::*;
 
     pub trait ArraySeqMtEphChap19Trait<T: StT> {
@@ -68,7 +68,7 @@ pub mod ArraySeqMtEphChap19 {
         }
         fn scan(a: &ArraySeqMtEphS<T>, f: &impl Fn(&T, &T) -> T, mut id: T) -> (ArraySeqMtEphS<T>, T) {
             let n = a.length();
-            let mut out = if n == 0 {
+            let mut out = if n == 0usize {
                 ArraySeqMtEphS::from_vec(Vec::new())
             } else {
                 ArraySeqMtEphS::from_vec(vec![id.clone(); n])
@@ -92,7 +92,7 @@ pub mod ArraySeqMtEphChap19 {
             let mut init: Option<T> = None;
             for i in 0..n_outer {
                 let inner = s.nth_cloned(i);
-                if inner.length() > 0 {
+                if inner.length() > 0usize {
                     init = Some(inner.nth_cloned(0));
                     break;
                 }
