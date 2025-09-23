@@ -26,46 +26,6 @@ name = "BenchArraySeqStEph"
 path = "benches/Chap19/BenchArraySeqStEph.rs"
 harness = false
 
-[[bench]]
-name = "BenchArraySeqStEphChap18"
-path = "benches/Chap19/BenchArraySeqStEphChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStEphChap19"
-path = "benches/Chap19/BenchArraySeqStEphChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPer"
-path = "benches/Chap19/BenchArraySeqStPer.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPerChap18"
-path = "benches/Chap19/BenchArraySeqStPerChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPerChap19"
-path = "benches/Chap19/BenchArraySeqStPerChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPer"
-path = "benches/Chap19/BenchArraySeqMtPer.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPerChap18"
-path = "benches/Chap19/BenchArraySeqMtPerChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPerChap19"
-path = "benches/Chap19/BenchArraySeqMtPerChap19.rs"
-harness = false
-
 ## DoublyLinkedList benchmarks moved to src/attic
 
 [[bench]]
@@ -79,18 +39,8 @@ harness = false
 ## SharedSinglyLinkedList removed
 
 [[bench]]
-name = "BenchArraySeqStEph"
-path = "benches/Chap19/BenchArraySeqStEph.rs"
-harness = false
-
-[[bench]]
 name = "BenchArraySeqStEphChap18"
 path = "benches/Chap19/BenchArraySeqStEphChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStEphChap19"
-path = "benches/Chap19/BenchArraySeqStEphChap19.rs"
 harness = false
 
 [[bench]]
@@ -99,118 +49,8 @@ path = "benches/Chap19/BenchArraySeqStPer.rs"
 harness = false
 
 [[bench]]
-name = "BenchArraySeqStPerChap18"
-path = "benches/Chap19/BenchArraySeqStPerChap18.rs"
-harness = false
-
-[[bench]]
 name = "BenchArraySeqStPerChap19"
 path = "benches/Chap19/BenchArraySeqStPerChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPer"
-path = "benches/Chap19/BenchArraySeqMtPer.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPerChap18"
-path = "benches/Chap19/BenchArraySeqMtPerChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPerChap19"
-path = "benches/Chap19/BenchArraySeqMtPerChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStEph"
-path = "benches/Chap19/BenchArraySeqStEph.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStEphChap18"
-path = "benches/Chap19/BenchArraySeqStEphChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStEphChap19"
-path = "benches/Chap19/BenchArraySeqStEphChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPer"
-path = "benches/Chap19/BenchArraySeqStPer.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPerChap18"
-path = "benches/Chap19/BenchArraySeqStPerChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPerChap19"
-path = "benches/Chap19/BenchArraySeqStPerChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPer"
-path = "benches/Chap19/BenchArraySeqMtPer.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPerChap18"
-path = "benches/Chap19/BenchArraySeqMtPerChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPerChap19"
-path = "benches/Chap19/BenchArraySeqMtPerChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStEph"
-path = "benches/Chap19/BenchArraySeqStEph.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStEphChap18"
-path = "benches/Chap19/BenchArraySeqStEphChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStEphChap19"
-path = "benches/Chap19/BenchArraySeqStEphChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPer"
-path = "benches/Chap19/BenchArraySeqStPer.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPerChap18"
-path = "benches/Chap19/BenchArraySeqStPerChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPerChap19"
-path = "benches/Chap19/BenchArraySeqStPerChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPer"
-path = "benches/Chap19/BenchArraySeqMtPer.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPerChap18"
-path = "benches/Chap19/BenchArraySeqMtPerChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPerChap19"
-path = "benches/Chap19/BenchArraySeqMtPerChap19.rs"
 harness = false
 
 ## SinglyLinkedList benchmarks moved to src/attic
@@ -246,78 +86,13 @@ harness = false
 name = "BenchLinkedListStEphChap19"
 harness = false
 [[bench]]
-name = "BenchArraySeqStEph"
-path = "benches/Chap19/BenchArraySeqStEph.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStEphChap18"
-path = "benches/Chap19/BenchArraySeqStEphChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStEphChap19"
-path = "benches/Chap19/BenchArraySeqStEphChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPer"
-path = "benches/Chap19/BenchArraySeqStPer.rs"
-harness = false
-
-[[bench]]
 name = "BenchArraySeqStPerChap18"
 path = "benches/Chap19/BenchArraySeqStPerChap18.rs"
 harness = false
 
 [[bench]]
-name = "BenchArraySeqStPerChap19"
-path = "benches/Chap19/BenchArraySeqStPerChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPer"
-path = "benches/Chap19/BenchArraySeqMtPer.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPerChap18"
-path = "benches/Chap19/BenchArraySeqMtPerChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqMtPerChap19"
-path = "benches/Chap19/BenchArraySeqMtPerChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStEph"
-path = "benches/Chap19/BenchArraySeqStEph.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStEphChap18"
-path = "benches/Chap19/BenchArraySeqStEphChap18.rs"
-harness = false
-
-[[bench]]
 name = "BenchArraySeqStEphChap19"
 path = "benches/Chap19/BenchArraySeqStEphChap19.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPer"
-path = "benches/Chap19/BenchArraySeqStPer.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPerChap18"
-path = "benches/Chap19/BenchArraySeqStPerChap18.rs"
-harness = false
-
-[[bench]]
-name = "BenchArraySeqStPerChap19"
-path = "benches/Chap19/BenchArraySeqStPerChap19.rs"
 harness = false
 
 [[bench]]
@@ -337,6 +112,7 @@ harness = false
 
 [[bench]]
 name = "BenchAVLTreeSeqStEph"
+path = "benches/Chap37/BenchAVLTreeSeqStEph.rs"
 harness = false
 
 [[bench]]
@@ -416,36 +192,36 @@ harness = false
 
 [[bench]]
 name = "BenchInsertionSortSt"
-path = "benches/Chap3/BenchInsertionSortSt.rs"
+path = "benches/Chap03/BenchInsertionSortSt.rs"
 harness = false
 
 [[bench]]
 name = "BenchRelationStEphChap5_2"
-path = "benches/Chap5/BenchRelationStEphChap5_2.rs"
+path = "benches/Chap05/BenchRelationStEphChap5_2.rs"
 harness = false
 
 [[bench]]
 name = "BenchMappingStEphChap5_5"
-path = "benches/Chap5/BenchMappingStEphChap5_5.rs"
+path = "benches/Chap05/BenchMappingStEphChap5_5.rs"
 harness = false
 
 [[bench]]
 name = "BenchDirGraphStEph"
-path = "benches/Chap6/BenchDirGraphStEph.rs"
+path = "benches/Chap06/BenchDirGraphStEph.rs"
 harness = false
 
 [[bench]]
 name = "BenchUnDirGraphStEph"
-path = "benches/Chap6/BenchUnDirGraphStEph.rs"
+path = "benches/Chap06/BenchUnDirGraphStEph.rs"
 harness = false
 
 [[bench]]
 name = "BenchLabDirGraphStEph"
-path = "benches/Chap6/BenchLabDirGraphStEph.rs"
+path = "benches/Chap06/BenchLabDirGraphStEph.rs"
 harness = false
 
 [[bench]]
 name = "BenchLabUnDirGraphStEph"
-path = "benches/Chap6/BenchLabUnDirGraphStEph.rs"
+path = "benches/Chap06/BenchLabUnDirGraphStEph.rs"
 harness = false
 

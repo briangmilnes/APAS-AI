@@ -176,6 +176,10 @@ Rust rule: when referencing a Rust-specific term, include the corresponding prog
 - SCREAMING_SNAKE_CASE for constants and statics.
 - Leading underscores mark intentionally unused bindings.
 
+Rust uses crate:: inside your crate's source even though it knows the crate name.
+So if you go looking at source file (through some search) you can't immediately
+see which crate your source is in.
+
 ## Macros
 
 Rust macros (syntactic macros) are defined with the macro_rules! form or the newer
@@ -248,7 +252,15 @@ The built-in `Pair<A, B>` type in this codebase has limited formatting support:
 
 ### Separate ST and MT Graph Modules
 
-Directed graph support lives in both `DirGraphStEph` and `DirGraphMtEph` modules because Rust relies solely on trait-based type classes rather than a richer module system with functor instantiation. The single-threaded implementation only needs the `StT` bundle (`Eq + Clone + Display + Debug + Sized`), while the multi-threaded version must require `MtT` and call into clone helpers that guarantee `Send + Sync`. Collapsing them into one module would smear those bounds together, forcing single-threaded code to import multi-threaded requirements and violating the MT module discipline that keeps concurrency guarantees verifiable. Maintaining two dedicated modules lets each implementation expose the correct trait surface without leaking hidden synchronization assumptions.
+Directed graph support lives in both `DirGraphStEph` and `DirGraphMtEph` modules because
+Rust relies solely on trait-based type classes rather than a richer module system with
+functor instantiation. The single-threaded implementation only needs the `StT` bundle
+(`Eq + Clone + Display + Debug + Sized`), while the multi-threaded version must require
+`MtT` and call into clone helpers that guarantee `Send + Sync`. Collapsing them into one
+module would smear those bounds together, forcing single-threaded code to import
+multi-threaded requirements and violating the MT module discipline that keeps concurrency
+guarantees verifiable. Maintaining two dedicated modules lets each implementation expose
+the correct trait surface without leaking hidden synchronization assumptions.
 
 
 Modules may contain:
@@ -288,7 +300,9 @@ Type inference limitations:
 - Trait methods that return concrete associated types (for example, fn build() -> Widget)
   do not identify the implementor, so callers often need explicit type annotations or
   turbofish syntax (explicit type application).
-- Associated functions on traits cannot be called without specifying the concrete impl type (e.g., `<ArrayStPerS<_> as ArraySeqStPerChap18Trait<_>>::filter(...)`); Hindley–Milner would infer the target automatically.
+- Associated functions on traits cannot be called without specifying the concrete impl type 
+ (e.g., `<ArrayStPerS<_> as ArraySeqStPerChap18Trait<_>>::filter(...)`); 
+  Hindley–Milner would infer the target automatically.
 - Trait object upcasts (dyn Trait) erase concrete types, so methods that return Self are
   disallowed and callers must rely on associated types or where bounds.
 - Inference does not speculate across trait obligations; when multiple traits provide the
@@ -311,3 +325,4 @@ Rust vs. ML type inference:
   differently.
 - Rust generics require explicit type parameters (no global inference) but permit
   specialization; ML infers type variables but lacks trait-style overloading.
+

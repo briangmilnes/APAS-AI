@@ -13,8 +13,8 @@ Sizes:
 
 Assumptions:
 - Each pair construction (x, y+1) costs Θ(1) work and Θ(1) span.
-- ArraySeqPerChap19::tabulate and ArraySeqPerChap18::tabulate implement Θ(n) work and Θ(1) span builders (PRAM model), as documented in code comments.
-- ArraySeqPerChap18::flatten has APAS bound Work Θ(1 + |s| + Σ |x|), Span Θ(1 + lg|s|), where s is the outer sequence of sequences.
+- ArraySeqPer::tabulate and ArraySeqPer::tabulate implement Θ(n) work and Θ(1) span builders (PRAM model), as documented in code comments.
+- ArraySeqPer::flatten has APAS bound Work Θ(1 + |s| + Σ |x|), Span Θ(1 + lg|s|), where s is the outer sequence of sequences.
 
 Work:
 - Inner tabulate for a fixed x: builds (n−1) items → Θ(n) work.

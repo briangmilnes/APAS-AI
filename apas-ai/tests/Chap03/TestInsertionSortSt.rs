@@ -1,4 +1,4 @@
-use apas_ai::Chap3::InsertionSortSt::*;
+use apas_ai::Chap03::InsertionSortSt::InsertionSortSt::{InsertionSortSt, InsertionSortStTrait};
 
 fn sort_and_assert(mut data: Vec<i32>, expected: &[i32]) {
     InsertionSortSt::default().insSort(&mut data);

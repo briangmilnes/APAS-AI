@@ -1,180 +1,169 @@
-//! StPer (immutable, structurally shared semantics) Array sequence variants.
-//!
-//! Abstract:
-//! - Defines `ArrayStPerS<T>` backed by `Box<[T]>` with immutable APIs.
-//! - Provides trait `ArraySeqStPer<T>` mirroring `ArraySeq` but all updates return new values.
-//! - Uses only safe Rust. Builders may allocate via `Vec` and convert to boxed slices.
+//! Chapter 19 algorithms for ArraySeqMtPer.
 
 pub mod ArraySeqStPer {
-    use std::fmt;
-    use std::fmt::{Debug, Display, Formatter};
-    use std::slice::{Iter, IterMut};
-
     use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 
-    /// Fixed-length sequence backed by `Box<[T]>` (persistent/immutable variant).
-    #[derive(Clone, PartialEq, Eq, PartialOrd, Ord)]
-    pub struct ArrayStPerS<T: StT> {
-        data: Box<[T]>,
+
+    pub trait ArraySeqStPerTrait<T: StT> {
+        /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayStPerS<T>;
+        /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x)))
+        fn map<U: StT>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U>;
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn select<'a>(a: &'a ArrayStPerS<T>, b: &'a ArrayStPerS<T>, i: N) -> Option<&'a T>;
+        /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
+        fn append(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T>;
+        /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
+        fn append2(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T>;
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArrayStPerS<T>;
+        /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(1 + max i S(f(a[i])))
+        fn filter(a: &ArrayStPerS<T>, f: impl Fn(&T) -> B) -> ArrayStPerS<T>;
+        /// APAS: Work Θ(1 + Σ W(f)), Span Θ(1 + Σ S(f))
+        /// gpt-5-hard: Work Θ(|a|^2), Span Θ(|a|)
+        /// BUG: APAS and gpt-5-hard algorithmic analyses differ.
+        fn iterate<A: StT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
+        /// APAS: Work Θ(|a|), Span Θ(lg|a|)
+        fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
+        /// APAS: Work Θ(|a|), Span Θ(lg|a|)
+        fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T);
+        /// APAS: Work Θ(1 + |a| + Σ |x|), Span Θ(1 + lg|a|)
+        fn flatten(s: &ArrayStPerS<ArrayStPerS<T>>) -> ArrayStPerS<T>;
+        /// APAS: Work Θ(|a| + |updates|), Span Θ(lg|a|)
+        fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T>;
+        /// APAS: Work Θ(|a| + |updates|), Span Θ(lg|a|)
+        fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T>;
     }
 
-    /// Sequence trait for `ArrayStPerS<T>` with immutable operations.
-    pub trait ArraySeqStPerTrait<T: StT + Clone> {
-        /// APAS: Work Θ(length), Span Θ(1)
-        /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn new(length: N, init_value: T) -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn nth(&self, index: N) -> &T;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
-        /// APAS: Work Θ(1) in ephemeral arrays; persistent update requires copy. Work Θ(|a|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str>
-        where
-            Self: Sized;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(&self) -> B;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isSingleton(&self) -> B;
-        /// APAS: Work Θ(length), Span Θ(1)
-        /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn subseq_copy(&self, start: N, length: N) -> Self
-        where
-            Self: Sized;
-    }
-
-    impl<T: StT> ArrayStPerS<T> {
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn subseq(&self, start: N, length: N) -> &[T] {
-            let n = self.data.len();
-            let s = start.min(n);
-            let e = start.saturating_add(length).min(n);
-            &self.data[s..e]
+    impl<T: StT> ArraySeqStPerTrait<T> for ArrayStPerS<T> {
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArrayStPerS<T> {
+            <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(f, n)
         }
 
-        /// Convenience: build from a Vec without extra copies when capacity==len.
-        /// APAS: Work Θ(n) worst case, Span Θ(1)
-        pub fn from_vec(v: Vec<T>) -> Self {
-            ArrayStPerS {
-                data: v.into_boxed_slice(),
-            }
+        fn map<U: StT>(a: &ArrayStPerS<T>, f: impl Fn(&T) -> U) -> ArrayStPerS<U> {
+            <ArrayStPerS<U> as ArraySeqStPerTrait<U>>::tabulate(|i| f(a.nth(i)), a.length())
         }
-
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
-        pub fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }
-
-        pub fn empty() -> Self {
-            ArrayStPerS {
-                data: Vec::new().into_boxed_slice(),
-            }
-        }
-        pub fn singleton(item: T) -> Self {
-            ArrayStPerS {
-                data: vec![item].into_boxed_slice(),
-            }
-        }
-        pub fn new(length: N, init_value: T) -> Self
-        where
-            T: Clone,
-        {
-            Self::from_vec(vec![init_value; length])
-        }
-        pub fn length(&self) -> N { self.data.len() }
-        pub fn nth(&self, index: N) -> &T { &self.data[index] }
-        pub fn set(&self, index: N, item: T) -> Result<Self, &'static str>
-        where
-            T: Clone,
-        {
-            if index >= self.data.len() {
-                return Err("Index out of bounds");
-            }
-            let mut v: Vec<T> = self.data.to_vec();
-            v[index] = item;
-            Ok(Self::from_vec(v))
-        }
-    }
-
-    impl<T: StT + Debug> Debug for ArrayStPerS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-            let elts = (0..self.length()).map(|i| self.nth(i));
-            f.debug_list().entries(elts).finish()
-        }
-    }
-
-    impl<T: StT + Display> Display for ArrayStPerS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-            write!(f, "[")?;
-            for (i, x) in self.iter().enumerate() {
-                if i > 0 {
-                    write!(f, ", ")?;
+        fn select<'a>(a: &'a ArrayStPerS<T>, b: &'a ArrayStPerS<T>, i: N) -> Option<&'a T> {
+            if i < a.length() {
+                Some(a.nth(i))
+            } else {
+                let j = i - a.length();
+                if j < b.length() {
+                    Some(b.nth(j))
+                } else {
+                    None
                 }
-                write!(f, "{}", x)?;
             }
-            write!(f, "]")
         }
-    }
 
-    impl<T: StT + Clone> ArraySeqStPerTrait<T> for ArrayStPerS<T> {
-        fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
-        fn length(&self) -> N { self.data.len() }
-        fn nth(&self, index: N) -> &T { &self.data[index] }
-        fn empty() -> Self { Self::from_vec(Vec::new()) }
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str> {
-            if index >= self.data.len() {
-                return Err("Index out of bounds");
-            }
-            let mut v: Vec<T> = self.data.to_vec();
-            v[index] = item;
-            Ok(Self::from_vec(v))
+        fn append(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T> {
+            <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(
+                |i| Self::select(a, b, i).unwrap().clone(),
+                a.length() + b.length(),
+            )
         }
-        fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
-        fn isEmpty(&self) -> B {
-            if self.data.len() == 0 {
-                B::True
+
+        fn append2(a: &ArrayStPerS<T>, b: &ArrayStPerS<T>) -> ArrayStPerS<T> {
+            <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(
+                |i| Self::select(a, b, i).unwrap().clone(),
+                a.length() + b.length(),
+            )
+        }
+
+        fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArrayStPerS<T> {
+            let keep = f(x) == B::True;
+            <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(|_| x.clone(), if keep { 1 } else { 0 })
+        }
+        fn filter(a: &ArrayStPerS<T>, f: impl Fn(&T) -> B) -> ArrayStPerS<T> {
+            let mapped: ArrayStPerS<ArrayStPerS<T>> = <ArrayStPerS<ArrayStPerS<T>> as ArraySeqStPerTrait<
+                ArrayStPerS<T>,
+            >>::tabulate(
+                |i| Self::deflate(|elt| f(elt), a.nth(i)), a.length()
+            );
+            <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::flatten(&mapped)
+        }
+
+        fn iterate<A: StT>(a: &ArrayStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
+            let n = a.length();
+            if 0 == n.clone() {
+                x
+            } else if 1 == n.clone() {
+                f(&x, a.nth(0))
             } else {
-                B::False
+                let first = f(&x, a.nth(0));
+                let rest = ArrayStPerS::from_vec(a.subseq(1, n - 1).to_vec());
+                <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::iterate(&rest, f, first)
             }
         }
-        fn isSingleton(&self) -> B {
-            if self.data.len() == 1 {
-                B::True
+        fn reduce(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
+            let n = a.length();
+            if 0 == n.clone() {
+                return id;
+            }
+            if 1 == n.clone() {
+                return a.nth(0).clone();
+            }
+            let m = n / 2;
+            let left = ArrayStPerS::from_vec(a.subseq(0, m).to_vec());
+            let right = ArrayStPerS::from_vec(a.subseq(m, n - m).to_vec());
+            let l = <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::reduce(&left, &f, id.clone());
+            let r = <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::reduce(&right, &f, id);
+            f(&l, &r)
+        }
+        fn scan(a: &ArrayStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArrayStPerS<T>, T) {
+            let n = a.length();
+            if 0 == n.clone() {
+                (
+                    <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(|_| id.clone(), 0),
+                    id,
+                )
+            } else if 1 == n.clone() {
+                (
+                    <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(|_| id.clone(), 1),
+                    a.nth(0).clone(),
+                )
             } else {
-                B::False
+                let half = (n + 1) / 2;
+                let pairwise = <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(
+                    |i| {
+                        let l = a.nth(2 * i);
+                        let r_i = 2 * i + 1;
+                        if r_i < n {
+                            let r = a.nth(r_i);
+                            f(l, r)
+                        } else {
+                            l.clone()
+                        }
+                    },
+                    half,
+                );
+                let (reductions, total) = <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::scan(&pairwise, &f, id);
+                let prefixes = <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(
+                    |i| {
+                        if i % 2 == 0 {
+                            reductions.nth(i / 2).clone()
+                        } else {
+                            let prev = a.nth(i - 1);
+                            let base = reductions.nth(i / 2);
+                            f(base, prev)
+                        }
+                    },
+                    n,
+                );
+                (prefixes, total)
             }
         }
-        fn subseq_copy(&self, start: N, length: N) -> Self {
-            let n = self.data.len();
-            let s = start.min(n);
-            let e = start.saturating_add(length).min(n);
-            if e <= s {
-                return Self::empty();
-            }
-            let slice = &self.data[s..e];
-            Self::from_vec(slice.to_vec())
+        fn flatten(s: &ArrayStPerS<ArrayStPerS<T>>) -> ArrayStPerS<T> {
+            <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::flatten(s)
         }
-    }
 
-    #[macro_export]
-    macro_rules! ArrayStPerSLit {
-        () => { $crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArrayStPerS::empty() };
-        ($x:expr; $n:expr) => { $crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArrayStPerS::new($n, $x) };
-        ($($x:expr),* $(,)?) => { $crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArrayStPerS::from_vec(vec![$($x),*]) };
-    }
+        fn inject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {
+            <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::inject(a, updates)
+        }
 
-    #[allow(dead_code)]
-    fn _ArrayStPerSLit_type_checks() {
-        let _ = ArrayStPerSLit![1];
-        let _: crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArrayStPerS<i32> = ArrayStPerSLit![];
+        fn ninject(a: &ArrayStPerS<T>, updates: &ArrayStPerS<Pair<N, T>>) -> ArrayStPerS<T> {
+            <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::ninject(a, updates)
+        }
     }
 }

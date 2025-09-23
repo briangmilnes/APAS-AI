@@ -2,8 +2,8 @@
 
 use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
-use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArrayStPerSLit;
 use apas_ai::PairLit;
 use apas_ai::Types::Types::*;
@@ -15,16 +15,16 @@ fn points2d_tab_flat(n: N) -> ArrayStPerS<Pair<N, N>> {
         return ArrayStPerSLit![];
     }
     let inner: ArrayStPerS<ArrayStPerS<Pair<N, N>>> =
-        <ArrayStPerS<ArrayStPerS<Pair<N, N>>> as ArraySeqStPerChap19Trait<ArrayStPerS<Pair<N, N>>>>::tabulate(
+        <ArrayStPerS<ArrayStPerS<Pair<N, N>>> as ArraySeqStPerTrait<ArrayStPerS<Pair<N, N>>>>::tabulate(
             |x| {
-                <ArrayStPerS<Pair<N, N>> as ArraySeqStPerChap18Trait<Pair<N, N>>>::tabulate(
+                <ArrayStPerS<Pair<N, N>> as ArraySeqStPerTrait<Pair<N, N>>>::tabulate(
                     |y| PairLit!(x, y + 1),
                     n - 1,
                 )
             },
             n,
         );
-    <ArrayStPerS<Pair<N, N>> as ArraySeqStPerChap18Trait<Pair<N, N>>>::flatten(&inner)
+    <ArrayStPerS<Pair<N, N>> as ArraySeqStPerTrait<Pair<N, N>>>::flatten(&inner)
 }
 
 #[test]

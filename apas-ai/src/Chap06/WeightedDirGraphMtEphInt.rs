@@ -5,7 +5,7 @@ pub mod WeightedDirGraphMtEphInt {
     use std::hash::Hash;
 
     use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
-    use crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Types::Types::*;
 
     /// Weighted directed graph with integer weights (multi-threaded, type alias)

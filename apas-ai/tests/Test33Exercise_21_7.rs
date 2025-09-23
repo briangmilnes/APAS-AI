@@ -2,8 +2,8 @@
 
 use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
-use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArrayStPerSLit;
 use apas_ai::Types::Types::*;
 
@@ -20,21 +20,21 @@ fn is_vowel(c: &char) -> B {
 /// flatten 〈 〈 (x, y) : y ∈ b | isVowel y 〉 : x ∈ a | isEven x 〉
 /// gpt-5-hard: Work: Θ(|a|·|b|), Span: Θ(lg |a|)
 fn pair_even_with_vowels(a: &ArrayStPerS<N>, b: &ArrayStPerS<char>) -> ArrayStPerS<Pair<N, char>> {
-    let filtered_a = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::filter(a, |x| is_even(x));
-    let filtered_b = <ArrayStPerS<char> as ArraySeqStPerChap18Trait<char>>::filter(b, |y| is_vowel(y));
+    let filtered_a = <ArrayStPerS<N> as ArraySeqStPerTrait<N>>::filter(a, |x| is_even(x));
+    let filtered_b = <ArrayStPerS<char> as ArraySeqStPerTrait<char>>::filter(b, |y| is_vowel(y));
 
     let nested =
-        <ArrayStPerS<ArrayStPerS<Pair<N, char>>> as ArraySeqStPerChap18Trait<ArrayStPerS<Pair<N, char>>>>::tabulate(
+        <ArrayStPerS<ArrayStPerS<Pair<N, char>>> as ArraySeqStPerTrait<ArrayStPerS<Pair<N, char>>>>::tabulate(
             |i| {
                 let x = filtered_a.nth(i);
-                <ArrayStPerS<Pair<N, char>> as ArraySeqStPerChap18Trait<Pair<N, char>>>::tabulate(
+                <ArrayStPerS<Pair<N, char>> as ArraySeqStPerTrait<Pair<N, char>>>::tabulate(
                     |j| Pair(*x, *filtered_b.nth(j)),
                     filtered_b.length(),
                 )
             },
             filtered_a.length(),
         );
-    <ArrayStPerS<Pair<N, char>> as ArraySeqStPerChap18Trait<Pair<N, char>>>::flatten(&nested)
+    <ArrayStPerS<Pair<N, char>> as ArraySeqStPerTrait<Pair<N, char>>>::flatten(&nested)
 }
 
 #[test]

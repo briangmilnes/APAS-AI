@@ -78,3 +78,28 @@ Many source files have been moved into their Chap<NN> (always add a zero on <9)
 files. List the test and benchmark files that should be moved into Chap<NN>
 directories to match.
 
+Go through all src, then test, then bencmark files and find all traits and
+impls with Chap<D*> in their names. List them.
+
+Move all of these to their right directories
+
+LinkedListStEph.rs (Chap18)
+LinkedListStPer.rs (Chap18)
+LinkedListStEphChap18.rs
+LinkedListStPerChap18.rs
+LinkedListStEphChap19.rs
+LinkedListStPerChap19.rs
+
+change the file names and traits/impls.
+Sweep for import changes.
+Move their tests and benches to the right
+directories.
+Sweep in tests and benches for these.
+Fix up libs.rs and ensure all tests run.
+Cargo build, then fix any problems.
+Fix up the benchmark bindings in Cargo
+and cargo bench --no-run and fix any problems.
+And do a full benchmark run.
+Make a to-do list but don't wait for me.
+I will be AFK.
+Execute relentlessly do not pause for review.

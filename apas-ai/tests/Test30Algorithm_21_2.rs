@@ -2,8 +2,8 @@
 
 use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
-use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArrayStPerSLit;
 use apas_ai::Types::Types::*;
 
@@ -15,21 +15,21 @@ fn points3d_tab_flat(n: N) -> ArrayStPerS<Pair<N, Pair<N, N>>> {
         return ArrayStPerSLit![];
     }
     let outer: ArrayStPerS<ArrayStPerS<Pair<N, Pair<N, N>>>> =
-        <ArrayStPerS<ArrayStPerS<Pair<N, Pair<N, N>>>> as ArraySeqStPerChap19Trait<ArrayStPerS<Pair<N, Pair<N, N>>>>>::tabulate(
+        <ArrayStPerS<ArrayStPerS<Pair<N, Pair<N, N>>>> as ArraySeqStPerTrait<ArrayStPerS<Pair<N, Pair<N, N>>>>>::tabulate(
             |x| {
                 let mid: ArrayStPerS<ArrayStPerS<Pair<N, Pair<N, N>>>> =
-                    <ArrayStPerS<ArrayStPerS<Pair<N, Pair<N, N>>>> as ArraySeqStPerChap19Trait<ArrayStPerS<Pair<N, Pair<N, N>>>>>::tabulate(
-                        |y| <ArrayStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerChap18Trait<Pair<N, Pair<N, N>>>>::tabulate(
+                    <ArrayStPerS<ArrayStPerS<Pair<N, Pair<N, N>>>> as ArraySeqStPerTrait<ArrayStPerS<Pair<N, Pair<N, N>>>>>::tabulate(
+                        |y| <ArrayStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerTrait<Pair<N, Pair<N, N>>>>::tabulate(
                             |z_idx| Pair(x, Pair(y + 1, z_idx + 2)),
                             n + 1 - 2 + 1, // z: 2..=n+1 has length n
                         ),
                         n, // y: 1..=n has length n
                     );
-                <ArrayStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerChap18Trait<Pair<N, Pair<N, N>>>>::flatten(&mid)
+                <ArrayStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerTrait<Pair<N, Pair<N, N>>>>::flatten(&mid)
             },
             n, // x: 0..=n−1 has length n
         );
-    <ArrayStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerChap18Trait<Pair<N, Pair<N, N>>>>::flatten(&outer)
+    <ArrayStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerTrait<Pair<N, Pair<N, N>>>>::flatten(&outer)
 }
 
 #[test]

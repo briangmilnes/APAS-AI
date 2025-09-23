@@ -1,194 +1,84 @@
-//! StEphemeral (mutable) Array sequence variants. Mirrors `ArraySeq` under distinct names.
+//! Chapter 19 algorithms for `ArraySeqStEph<T>`.
 
 pub mod ArraySeqStEph {
-
-    use std::fmt;
-    use std::fmt::{Debug, Display, Formatter};
-    use std::slice::Iter;
-
+    // Self-import removed;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
 
-    /// Fixed-length sequence backed by `Box<[T]>` (ephemeral variant).
-    #[derive(Clone)]
-    pub struct ArraySeqStEphS<T: StT> {
-        data: Box<[T]>,
-    }
-
-    /// Sequence trait for `ArraySeqStEphS<T>`.
     pub trait ArraySeqStEphTrait<T: StT> {
-        /// APAS: Work Θ(length), Span Θ(1)
-        /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn new(length: N, init_value: T) -> Self;
+        /// APAS: Work Θ(n), Span Θ(1)
+        /// claude-4-sonet: Work Θ(n), Span Θ(1)
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqStEphS<T>;
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
+        fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N;
+        fn select<'a>(a: &'a ArraySeqStEphS<T>, b: &'a ArraySeqStEphS<T>, i: N) -> Option<T>;
+        /// APAS: Work Θ(|a| + |b|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
+        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;
+        /// APAS: Work Θ(|a| + |b|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
+        fn append2(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn nth(&self, index: N) -> &T;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(&self) -> B;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isSingleton(&self) -> B;
-        /// APAS: Work Θ(length), Span Θ(1)
-        /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn subseq_copy(&self, start: N, length: N) -> Self;
-    }
-
-    impl<T: StT> ArraySeqStEphS<T> {
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn subseq(&self, start: N, length: N) -> &[T] {
-            let n = self.data.len();
-            let s = start.min(n);
-            let e = start.saturating_add(length).min(n);
-            &self.data[s..e]
-        }
-        /// APAS: Work Θ(length), Span Θ(1)
-        /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        pub fn subseq_copy(&self, start: N, length: N) -> Self {
-            let n = self.data.len();
-            let s = start.min(n);
-            let e = start.saturating_add(length).min(n);
-            if e <= s {
-                return <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty();
-            }
-            let len = e - s;
-            let first = self.nth(s).clone();
-            let mut out = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::new(len, first.clone());
-            let _ = out.set(0, first);
-            for i in 1..len {
-                let _ = out.set(i, self.nth(s + i).clone());
-            }
-            out
-        }
-        /// APAS: Work Θ(|v|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
-        pub fn from_vec(v: Vec<T>) -> Self {
-            ArraySeqStEphS {
-                data: v.into_boxed_slice(),
-            }
-        }
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn update(&mut self, (index, item): (N, T)) -> &mut ArraySeqStEphS<T> {
-            if index < self.data.len() {
-                self.data[index] = item;
-            }
-            self
-        }
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
-    }
-
-    impl<T: StT> PartialEq for ArraySeqStEphS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            if self.length() != other.length() {
-                return false;
-            }
-            for i in 0..self.length() {
-                if self.nth(i) != other.nth(i) {
-                    return false;
-                }
-            }
-            true
-        }
-    }
-
-    impl<T: StT> Eq for ArraySeqStEphS<T> {}
-
-    impl<T: StT> Debug for ArraySeqStEphS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-            let elts = (0..self.length()).map(|i| self.nth(i));
-            f.debug_list().entries(elts).finish()
-        }
-    }
-
-    impl<T: StT> Display for ArraySeqStEphS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-            write!(f, "[")?;
-            for i in 0..self.length() {
-                if i > 0 {
-                    write!(f, ", ")?;
-                }
-                write!(f, "{}", self.nth(i))?;
-            }
-            write!(f, "]")
-        }
+        fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqStEphS<T>;
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
+        fn filter(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> B) -> ArraySeqStEphS<T>;
+        fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
+        fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
+        fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, T);
+        fn flatten(s: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;
     }
 
     impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {
-        /// APAS: Work Θ(length), Span Θ(1)
-        /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn new(length: N, init_value: T) -> Self { ArraySeqStEphS::from_vec(vec![init_value; length]) }
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N { self.data.len() }
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn nth(&self, index: N) -> &T { &self.data[index] }
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self { ArraySeqStEphS::from_vec(Vec::new()) }
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
-            if index < self.data.len() {
-                self.data[index] = item;
-                Ok(self)
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqStEphS<T> {
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::tabulate(f, n)
+        }
+        fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U> {
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::map(a, f)
+        }
+        fn select<'a>(a: &'a ArraySeqStEphS<T>, b: &'a ArraySeqStEphS<T>, i: N) -> Option<T> {
+            if i < a.length() {
+                Some(a.nth(i).clone())
             } else {
-                Err("Index out of bounds")
+                let off = i - a.length();
+                if off < b.length() {
+                    Some(b.nth(off).clone())
+                } else {
+                    None
+                }
             }
         }
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> Self { ArraySeqStEphS::from_vec(vec![item]) }
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(&self) -> B {
-            if self.data.len() == 0 {
-                B::True
+        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::append(a, b)
+        }
+        fn append2(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::append(a, b)
+        }
+        fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqStEphS<T> {
+            if f(x) == B::True {
+                <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::singleton(x.clone())
             } else {
-                B::False
+                <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty()
             }
         }
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isSingleton(&self) -> B {
-            if self.data.len() == 1 {
-                B::True
-            } else {
-                B::False
-            }
+        fn filter(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> B) -> ArraySeqStEphS<T> {
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::filter(a, f)
         }
-        /// APAS: Work Θ(length), Span Θ(1)
-        /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn subseq_copy(&self, start: N, length: N) -> Self { self.subseq_copy(start, length) }
-    }
-
-    #[macro_export]
-    macro_rules! ArraySeqStEphSLit {
-        () => { $crate::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(Vec::new()) };
-        ($x:expr; $n:expr) => { $crate::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$x; $n]) };
-        ($($x:expr),* $(,)?) => { $crate::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$($x),*]) };
-    }
-
-    #[allow(dead_code)]
-    fn _ArraySeqStEphSLit_type_checks() {
-        let _ = ArraySeqStEphSLit![1];
-        let _ = ArraySeqStEphSLit![0; 2];
-        let _: ArraySeqStEphS<i32> = ArraySeqStEphSLit![];
+        fn iterate<A: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::iterate(a, f, x)
+        }
+        fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::reduce(a, f, id)
+        }
+        fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, T) {
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::scan(a, f, id)
+        }
+        fn flatten(s: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T> {
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::flatten(s)
+        }
     }
 }

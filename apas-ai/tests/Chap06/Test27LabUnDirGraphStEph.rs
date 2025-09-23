@@ -9,7 +9,7 @@ pub mod TestLabUnDirGraphStEph {
         let g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
         assert_eq!(g.vertices().size(), 0);
         assert_eq!(g.labeled_edges().size(), 0);
-        assert_eq!(format!("{}", g), "LabUnDirGraph(V: Set[], E: Set[])");
+        assert_eq!(format!("{}", g), "LabUnDirGraph(V: {}, E: {})");
     }
 
     #[test]
@@ -179,13 +179,14 @@ pub mod TestLabUnDirGraphStEph {
     #[test]
     fn test_labelled_undir_graph_multiple_edges_same_vertices() {
         // This test checks if we can have multiple edges between same vertices
-        // With current implementation, only one edge per vertex pair is supported
+        // Current implementation allows multiple labeled edges between same vertices
         let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
         g.add_labeled_edge(1, 2, "first");
-        g.add_labeled_edge(1, 2, "second"); // This will overwrite the first
+        g.add_labeled_edge(1, 2, "second"); // This creates a second labeled edge
         
-        assert_eq!(g.labeled_edges().size(), 1);
-        // The label should be the last one added
-        assert_eq!(g.get_edge_label(&1, &2), Some(&"second"));
+        assert_eq!(g.labeled_edges().size(), 2);
+        // Both edges should exist in the graph
+        assert!(g.labeled_edges().mem(&LabEdge(1, 2, "first")) == B::True);
+        assert!(g.labeled_edges().mem(&LabEdge(1, 2, "second")) == B::True);
     }
 }

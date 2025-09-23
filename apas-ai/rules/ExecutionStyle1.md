@@ -146,6 +146,8 @@
 
 #### Cargo Nextest
 - `cargo nextest` writes to stderr; use `2>&1 | cat` to capture output.
+- When matching Claude's workflow, run `cargo nextest --no-fail-fast --no-capture --color never 2>&1 | cat` so the full stream is visible while preserving identical options.
+- When touching benchmark code or configs, begin with `cargo bench --no-run 2>&1 | cat` to surface compile issues quickly before full runs.
 
 #### No Perl; awk acceptable
 - Use `rg/grep`; `awk` only if needed; never Perl.

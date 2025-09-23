@@ -5,7 +5,7 @@ pub mod UnDirGraphStEph {
     use std::hash::Hash;
     
     use crate::SetLit;
-    use crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Types::Types::*;
 
     #[derive(Clone)]
@@ -126,14 +126,14 @@ pub mod UnDirGraphStEph {
     #[macro_export]
     macro_rules! UnDirGraphStEphLit {
         () => {{
-            let __V: $crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![];
-            let __E: $crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::Set<$crate::Types::Types::Edge<_>> = $crate::SetLit![];
+            let __V: $crate::Chap05::SetStEph::SetStEph::Set<_> = $crate::SetLit![];
+            let __E: $crate::Chap05::SetStEph::SetStEph::Set<$crate::Types::Types::Edge<_>> = $crate::SetLit![];
             < $crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::UnDirGraphStEph<_> as $crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::UnDirGraphStEphTrait<_> >::FromSets(__V, __E)
         }};
         ( V: [ $( $v:expr ),* $(,)? ], E: [ $( ( $u:expr , $w:expr ) ),* $(,)? ] ) => {{
-            let __V: $crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::Set<_> = $crate::SetLit![ $( $v ),* ];
-            let __E: $crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::Set<_> = {
-                let mut __s = < $crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::Set<_> >::empty();
+            let __V: $crate::Chap05::SetStEph::SetStEph::Set<_> = $crate::SetLit![ $( $v ),* ];
+            let __E: $crate::Chap05::SetStEph::SetStEph::Set<_> = {
+                let mut __s = < $crate::Chap05::SetStEph::SetStEph::Set<_> >::empty();
                 $( let _ = __s.insert($crate::Types::Types::Edge($u, $w)); )*
                 __s
             };

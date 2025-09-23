@@ -1,8 +1,8 @@
 //! Algorithm 21.6 (Prime Sieve) using ArraySeqPer and ninject.
 
 use apas_ai::ArraySeqStPer;
-use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
-use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArrayStPerSLit;
 use apas_ai::Types::Types::*;
 use apas_ai::{ArraySeqStPerTrait, ArrayStPerS};
@@ -17,33 +17,33 @@ fn prime_sieve(n: N) -> ArrayStPerS<N> {
     // cs = 〈 i * j : 2 ≤ i ≤ floor(sqrt(n)) , 2 ≤ j ≤ n/i 〉
     let root: N = (n as f64).sqrt().floor() as N;
     let nested: ArrayStPerS<ArrayStPerS<N>> =
-        <ArrayStPerS<ArrayStPerS<N>> as ArraySeqStPerChap19Trait<ArrayStPerS<N>>>::tabulate(
+        <ArrayStPerS<ArrayStPerS<N>> as ArraySeqStPerTrait<ArrayStPerS<N>>>::tabulate(
             |i0| {
                 let i = i0 + 2; // i in [2..=root]
                 let limit = if i == 0 { 0 } else { n / i };
                 let len = if limit >= 2 { limit - 1 } else { 0 }; // j in [2..=limit] => length max(limit-1,0)
-                <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::tabulate(|j0| i * (j0 + 2), len)
+                <ArrayStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(|j0| i * (j0 + 2), len)
             },
             if root >= 2 { root - 1 } else { 0 },
         );
-    let cs: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::flatten(&nested);
+    let cs: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerTrait<N>>::flatten(&nested);
 
     // sieve = 〈 (x, false) : x ∈ cs 〉
     let sieve_pairs: ArrayStPerS<Pair<N, B>> =
-        <ArrayStPerS<Pair<N, B>> as ArraySeqStPerChap19Trait<Pair<N, B>>>::tabulate(
+        <ArrayStPerS<Pair<N, B>> as ArraySeqStPerTrait<Pair<N, B>>>::tabulate(
             |i| Pair(*cs.nth(i), B::False),
             cs.length(),
         );
 
     // all = 〈 true : 0 ≤ i < n 〉
-    let all: ArrayStPerS<B> = <ArrayStPerS<B> as ArraySeqStPerChap19Trait<B>>::tabulate(|_| B::True, n);
+    let all: ArrayStPerS<B> = <ArrayStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(|_| B::True, n);
 
     // isPrime = ninject all sieve
-    let is_prime: ArrayStPerS<B> = <ArrayStPerS<B> as ArraySeqStPerChap19Trait<B>>::ninject(&all, &sieve_pairs);
+    let is_prime: ArrayStPerS<B> = <ArrayStPerS<B> as ArraySeqStPerTrait<B>>::ninject(&all, &sieve_pairs);
 
     // primes = 〈 i : 2 ≤ i < n | isPrime[i] = true 〉
-    let candidates: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::tabulate(|i| i, n);
-    let filtered_idx: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::filter(&candidates, |i| {
+    let candidates: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(|i| i, n);
+    let filtered_idx: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerTrait<N>>::filter(&candidates, |i| {
         if *i >= 2 && *i < n {
             if *is_prime.nth(*i) == B::True {
                 B::True

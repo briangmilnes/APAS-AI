@@ -5,7 +5,7 @@ pub mod LabUnDirGraphStEph {
     use std::hash::Hash;
 
     use crate::SetLit;
-    use crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Types::Types::*;
 
     #[derive(Clone)]
@@ -154,7 +154,7 @@ pub mod LabUnDirGraphStEph {
         ( V: [ $( $v:expr ),* $(,)? ], E: [ $( ($v1:expr, $v2:expr, $label:expr) ),* $(,)? ] ) => {{
             let vertices = $crate::SetLit![ $( $v ),* ];
             let labeled_edges = {
-                let mut edges = $crate::Chap05::SetStEphChap5_1::SetStEphChap5_1::Set::empty();
+                let mut edges = $crate::Chap05::SetStEph::SetStEph::Set::empty();
                 $(
                     let normalized_edge = if $v1 <= $v2 {
                         $crate::Types::Types::LabEdge($v1, $v2, $label)

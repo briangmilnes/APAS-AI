@@ -9,7 +9,7 @@ pub mod TestLabDirGraphStEph {
         let g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
         assert_eq!(g.vertices().size(), 0);
         assert_eq!(g.labeled_arcs().size(), 0);
-        assert_eq!(format!("{}", g), "LabDirGraph(V: Set[], A: Set[])");
+        assert_eq!(format!("{}", g), "LabDirGraph(V: {}, A: {})");
     }
 
     #[test]

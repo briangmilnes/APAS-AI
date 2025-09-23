@@ -1,8 +1,8 @@
 //! Exercise 21.8 (isPrime) and Algorithm 21.5 (primesBF) tests and analysis.
 
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
-use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Types::Types::*;
 
 fn is_divisible(n: N, i: N) -> B {
@@ -17,8 +17,8 @@ fn is_prime(n: N) -> B {
         return B::False;
     }
     let k: N = (n as f64).sqrt().floor() as N;
-    let all: ArrayStPerS<B> = <ArrayStPerS<B> as ArraySeqStPerChap19Trait<B>>::tabulate(|i| is_divisible(n, i + 1), k);
-    let zeros: ArrayStPerS<B> = <ArrayStPerS<B> as ArraySeqStPerChap18Trait<B>>::filter(&all, |x| *x);
+    let all: ArrayStPerS<B> = <ArrayStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(|i| is_divisible(n, i + 1), k);
+    let zeros: ArrayStPerS<B> = <ArrayStPerS<B> as ArraySeqStPerTrait<B>>::filter(&all, |x| *x);
     if zeros.length() == 1 { B::True } else { B::False }
 }
 
@@ -30,8 +30,8 @@ fn primes_bf(n: N) -> ArrayStPerS<N> {
     if n <= 2 {
         return ArrayStPerS::from_vec(Vec::new());
     }
-    let all: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap19Trait<N>>::tabulate(|i| i + 2, n - 2);
-    let filtered: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::filter(&all, |x| is_prime(*x));
+    let all: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(|i| i + 2, n - 2);
+    let filtered: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerTrait<N>>::filter(&all, |x| is_prime(*x));
     filtered
 }
 

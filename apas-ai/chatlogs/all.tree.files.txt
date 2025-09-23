@@ -1,0 +1,134 @@
+ALL *TREE* AND *BST* FILES FOR CHAP37
+====================================
+
+ATTIC FILES (1):
+===============
+./attic/AVLTreeSeq.rs
+
+SRC FILES (6):
+==============
+./src/AVLTreeSeqStEph.rs
+./src/AVLTreeSeqStEphChap18.rs
+./src/AVLTreeSeqStEphChap19.rs
+./src/AVLTreeSeqStPer.rs
+./src/AVLTreeSeqStPerChap18.rs
+./src/AVLTreeSeqStPerChap19.rs
+
+TEST FILES (6):
+===============
+./tests/Test15AVLTreeSeqStPer.rs
+./tests/Test16AVLTreeSeqStPerChap18.rs
+./tests/Test17AVLTreeSeqStPerChap19.rs
+./tests/Test18AVLTreeSeqStEph.rs
+./tests/Test19AVLTreeSeqStEphChap18.rs
+./tests/Test20AVLTreeSeqStEphChap19.rs
+
+BENCHMARK FILES (6):
+====================
+./benches/BenchAVLTreeSeqStEph.rs
+./benches/BenchAVLTreeSeqStEphChap18.rs
+./benches/BenchAVLTreeSeqStEphChap19.rs
+./benches/BenchAVLTreeSeqStPer.rs
+./benches/BenchAVLTreeSeqStPerChap18.rs
+./benches/BenchAVLTreeSeqStPerChap19.rs
+
+BST SRC FILES (21):
+===================
+./src/BSTAVLMtEph.rs
+./src/BSTAVLStEph.rs
+./src/BSTBBAlphaMtEph.rs
+./src/BSTBBAlphaStEph.rs
+./src/BSTParaMtEph.rs
+./src/BSTParaStEph.rs
+./src/BSTParaTreapMtEph.rs
+./src/BSTPlainMtEph.rs
+./src/BSTPlainStEph.rs
+./src/BSTRBMtEph.rs
+./src/BSTRBStEph.rs
+./src/BSTSetAVLMtEph.rs
+./src/BSTSetBBAlphaMtEph.rs
+./src/BSTSetPlainMtEph.rs
+./src/BSTSetRBMtEph.rs
+./src/BSTSetSplayMtEph.rs
+./src/BSTSetTreapMtEph.rs
+./src/BSTSplayMtEph.rs
+./src/BSTSplayStEph.rs
+./src/BSTTreapMtEph.rs
+./src/BSTTreapStEph.rs
+
+BST TEST FILES (10):
+====================
+./tests/Test45BSTAVLStEph.rs
+./tests/Test46BSTRBStEph.rs
+./tests/Test47BSTBBAlphaStEph.rs
+./tests/Test48BSTTreapStEph.rs
+./tests/Test49BSTSplayStEph.rs
+./tests/Test50BSTMtEph.rs
+./tests/Test51BSTSetMtEph.rs
+./tests/Test52BSTParaMtEph.rs
+./tests/Test52BSTParaStEph.rs
+./tests/Test53BSTParaTreapMtEph.rs
+
+BST BENCHMARK FILES (16):
+=========================
+./benches/BenchBSTAVLMtEph.rs
+./benches/BenchBSTAVLStEph.rs
+./benches/BenchBSTBBAlphaMtEph.rs
+./benches/BenchBSTBBAlphaStEph.rs
+./benches/BenchBSTParaMtEph.rs
+./benches/BenchBSTParaStEph.rs
+./benches/BenchBSTParaTreapMtEph.rs
+./benches/BenchBSTPlainMtEph.rs
+./benches/BenchBSTPlainStEph.rs
+./benches/BenchBSTRBMtEph.rs
+./benches/BenchBSTRBStEph.rs
+./benches/BenchBSTSetMtEph.rs
+./benches/BenchBSTSplayMtEph.rs
+./benches/BenchBSTSplayStEph.rs
+./benches/BenchBSTTreapMtEph.rs
+./benches/BenchBSTTreapStEph.rs
+
+SUMMARY:
+========
+Total *Tree* files: 19 (1 attic + 6 src + 6 tests + 6 benches)
+Total *BST* files: 47 (21 src + 10 tests + 16 benches)
+GRAND TOTAL FOR CHAP37: 66 files (1 attic + 27 src + 16 tests + 22 benches)
+
+All Tree files are AVLTreeSeq variants
+BST files include: AVL, RB (Red-Black), BBAlpha, Treap, Splay, Plain, Para, and Set variants
+
+ORGANIZATION NEEDED FOR CHAP37:
+===============================
+Based on your correction that both AVL* and BST* should be in Chap37, these files should be organized as:
+
+src/Chap37/ (27 files):
+- All 6 AVLTreeSeq* files (base + Chap18/19 variants)
+- All 21 BST* files (various tree implementations and set interfaces)
+
+tests/Chap37/ (16 files):
+- All 6 AVLTreeSeq test files (Test15, Test16-20)
+- All 10 BST test files (Test45-53)
+
+benches/Chap37/ (22 files):
+- All 6 AVLTreeSeq benchmark files
+- All 16 BST benchmark files
+
+BST VARIANTS TO BE MOVED:
+========================
+- BSTAVLStEph/MtEph (AVL-balanced BSTs)
+- BSTRBStEph/MtEph (Red-Black BSTs)
+- BSTBBAlphaStEph/MtEph (Weight-balanced BSTs)
+- BSTTreapStEph/MtEph (Randomized Treaps)
+- BSTSplayStEph/MtEph (Splay Trees)
+- BSTPlainStEph/MtEph (Plain BSTs)
+- BSTParaStEph/MtEph (Parametric BSTs)
+- BSTParaTreapMtEph (Parametric Treaps)
+- BSTSet* variants (Set interfaces for BSTs)
+
+DIRECTORIES TO CREATE:
+=====================
+- src/Chap37/
+- tests/Chap37/
+- benches/Chap37/
+
+This represents a major reorganization moving all tree-related data structures into Chapter 37.

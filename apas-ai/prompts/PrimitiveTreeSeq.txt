@@ -1,0 +1,32 @@
+
+ Write a PrimTreeSeqSt.rs in src/Chap23 from this specification.
+Write test code in the right place.
+
+ Don't build yet, I'm working on lib.rs.
+
+
+Data Type 23.1 (Primitive Tree Sequences). For any element type α, the α tree sequence
+data type Sα is defined as:
+type Tα = Zero | One of α | Two of Sα × Sα
+length : Sα → N
+expose : Sα → Tα
+join : Tα → Sα
+The expose function takes a tree sequence and returns Zero if it is empty One(x) if it con-
+tains a single element x, and Two(L, R) otherwise. In the third case the results L and R are
+the result of some cut of the sequence into two pieces, consisting of the left side L and the
+right side R, respectively.
+
+From the point of view of a tree, the expose function is telling us whether the tree is empty,
+has a single value, or is a node with two children, L and R.
+The join function can be viewed as the inverse. If given a Zero it will create an empty tree
+sequence. If given One(v) it will create a tree sequence with a single element v. If given
+Two(L, R) it appends the two tree sequences L and R together.
+From the point of view of a tree, the join function is building an empty tree, a single valued
+tree, or it is joining two trees to form a new tree. The third case can be thought of as creating
+a new node with L and R as children. However, the implementation has to be smarter than
+that. In particular the two trees L and R might have very different sizes and heights. In
+this case the join might need to rebalance the tree to keep the result almost balanced.
+Using the primitive tree sequence datatype we can implement all the functionality of the
+sequence datatype. Furthermore, assuming certain cost bounds on the functionality of the
+primitive sequence interface, all the costs will satisfy the cost bounds discussed in Section 3
+

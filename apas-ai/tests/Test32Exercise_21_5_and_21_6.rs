@@ -2,8 +2,8 @@
 
 use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
-use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArrayStPerSLit;
 use apas_ai::Types::Types::*;
 
@@ -13,9 +13,9 @@ use apas_ai::Types::Types::*;
 fn all_contiguous_subseqs<T: StT>(a: &ArrayStPerS<T>) -> ArrayStPerS<ArrayStPerS<T>> {
     let n = a.length();
     let nested: ArrayStPerS<ArrayStPerS<ArrayStPerS<T>>> =
-        <ArrayStPerS<ArrayStPerS<ArrayStPerS<T>>> as ArraySeqStPerChap19Trait<ArrayStPerS<ArrayStPerS<T>>>>::tabulate(
+        <ArrayStPerS<ArrayStPerS<ArrayStPerS<T>>> as ArraySeqStPerTrait<ArrayStPerS<ArrayStPerS<T>>>>::tabulate(
             |i| {
-                <ArrayStPerS<ArrayStPerS<T>> as ArraySeqStPerChap19Trait<ArrayStPerS<T>>>::tabulate(
+                <ArrayStPerS<ArrayStPerS<T>> as ArraySeqStPerTrait<ArrayStPerS<T>>>::tabulate(
                     |j| ArrayStPerS::from_vec(a.subseq(i, j + 1).to_vec()),
                     n - i,
                 )
@@ -24,7 +24,7 @@ fn all_contiguous_subseqs<T: StT>(a: &ArrayStPerS<T>) -> ArrayStPerS<ArrayStPerS
         );
     // flatten twice
     let mid: ArrayStPerS<ArrayStPerS<T>> =
-        <ArrayStPerS<ArrayStPerS<T>> as ArraySeqStPerChap18Trait<ArrayStPerS<T>>>::flatten(&nested);
+        <ArrayStPerS<ArrayStPerS<T>> as ArraySeqStPerTrait<ArrayStPerS<T>>>::flatten(&nested);
     mid
 }
 

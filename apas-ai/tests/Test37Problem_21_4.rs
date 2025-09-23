@@ -2,8 +2,8 @@
 
 use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
-use apas_ai::ArraySeqStPerChap19::ArraySeqStPerChap19::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArrayStPerSLit;
 use apas_ai::Types::Types::*;
 
@@ -23,18 +23,18 @@ fn cartesian_loops(a: &ArrayStPerS<N>, b: &ArrayStPerS<&'static str>) -> ArraySt
 /// gpt-5-hard: Work: Θ(|a|·|b|), Span: Θ(lg |a|)
 fn cartesian_tab_flat(a: &ArrayStPerS<N>, b: &ArrayStPerS<&'static str>) -> ArrayStPerS<Pair<N, &'static str>> {
     let nested: ArrayStPerS<ArrayStPerS<Pair<N, &'static str>>> =
-        <ArrayStPerS<ArrayStPerS<Pair<N, &'static str>>> as ArraySeqStPerChap19Trait<
+        <ArrayStPerS<ArrayStPerS<Pair<N, &'static str>>> as ArraySeqStPerTrait<
             ArrayStPerS<Pair<N, &'static str>>,
         >>::tabulate(
             |i| {
-                <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap19Trait<Pair<N, &'static str>>>::tabulate(
+                <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerTrait<Pair<N, &'static str>>>::tabulate(
                     |j| Pair(*a.nth(i), *b.nth(j)),
                     b.length(),
                 )
             },
             a.length(),
         );
-    <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerChap18Trait<Pair<N, &'static str>>>::flatten(&nested)
+    <ArrayStPerS<Pair<N, &'static str>> as ArraySeqStPerTrait<Pair<N, &'static str>>>::flatten(&nested)
 }
 
 #[test]

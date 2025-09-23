@@ -1,169 +1,113 @@
-//! MtEph (ephemeral, mutable) Array sequence variant backed by a Mutex.
-//!
-//! Abstract:
-//! - Defines `ArraySeqMtEphS<T>` backed by `Mutex<Box<[T]>>` for thread-safe, in-place updates.
-//! - Provides trait `ArraySeqMtEphTrait<T>` mirroring the ST ephemeral API with cloned reads.
-//! - All reads return owned values to avoid leaking references across the mutex guard lifetime.
+//! Chapter 19 algorithms for `ArraySeqMtEph<T>` (ephemeral, MT).
 
 pub mod ArraySeqMtEph {
-    use std::fmt;
-    use std::fmt::{Debug, Display, Formatter};
-    use std::slice::Iter;
-    use std::sync::Mutex;
-
+    // Self-import removed;
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
 
-    /// Fixed-length sequence backed by `Mutex<Box<[T]>>` (ephemeral/mutable MT variant).
-    pub struct ArraySeqMtEphS<T: StT> {
-        data: Mutex<Box<[T]>>,
-    }
-
-    /// Sequence trait for `ArraySeqMtEphS<T>`.
     pub trait ArraySeqMtEphTrait<T: StT> {
-        /// APAS: Work Θ(length), Span Θ(1)
-        fn new(length: N, init_value: T) -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N;
-        /// Returns a cloned element to avoid returning references tied to a lock guard.
-        /// APAS: Work Θ(1), Span Θ(1)
-        fn nth_cloned(&self, index: N) -> T;
-        /// APAS: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
-        /// APAS: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        fn isEmpty(&self) -> B;
-        /// APAS: Work Θ(1), Span Θ(1)
-        fn isSingleton(&self) -> B;
-        /// APAS: Work Θ(length), Span Θ(1)
-        fn subseq_copy(&self, start: N, length: N) -> Self;
-    }
-
-    impl<T: StT> ArraySeqMtEphS<T> {
-        /// APAS: Work Θ(1), Span Θ(1)
-        pub fn from_vec(v: Vec<T>) -> Self {
-            ArraySeqMtEphS {
-                data: Mutex::new(v.into_boxed_slice()),
-            }
-        }
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        pub fn length(&self) -> N {
-            let guard = self.data.lock().unwrap();
-            guard.len()
-        }
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        pub fn nth_cloned(&self, index: N) -> T {
-            let guard = self.data.lock().unwrap();
-            guard[index].clone()
-        }
-
-        /// Convenience iterator snapshot (clones out to a Vec and iterates it).
-        /// APAS: Work Θ(|a|), Span Θ(1)
-        pub fn iter_snapshot(&self) -> Iter<'_, T>
-        where
-            T: 'static,
-        {
-            // Materialize a snapshot Vec and leak it for a short-lived iter; used only in Debug/Display.
-            // This is kept private to avoid lifetime leaks in public API.
-            let v = self.to_vec();
-            let b = v.into_boxed_slice();
-            let static_ref: &'static [T] = Box::leak(b);
-            static_ref.iter()
-        }
-
-        /// APAS: Work Θ(|a|), Span Θ(1)
-        pub fn to_vec(&self) -> Vec<T> {
-            let guard = self.data.lock().unwrap();
-            guard.iter().cloned().collect()
-        }
-
-        /// APAS: Work Θ(length), Span Θ(1)
-        pub fn subseq_copy(&self, start: N, length: N) -> Self {
-            let guard = self.data.lock().unwrap();
-            let n = guard.len();
-            let s = start.min(n);
-            let e = start.saturating_add(length).min(n);
-            let v: Vec<T> = guard[s..e].iter().cloned().collect();
-            ArraySeqMtEphS::from_vec(v)
-        }
-    }
-
-    impl<T: StT> Clone for ArraySeqMtEphS<T> {
-        fn clone(&self) -> Self { ArraySeqMtEphS::from_vec(self.to_vec()) }
-    }
-
-    impl<T: StT> PartialEq for ArraySeqMtEphS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            let a = self.to_vec();
-            let b = other.to_vec();
-            a == b
-        }
-    }
-    impl<T: StT> Eq for ArraySeqMtEphS<T> {}
-
-    impl<T: StT> Debug for ArraySeqMtEphS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-            let v = self.to_vec();
-            f.debug_list().entries(v.iter()).finish()
-        }
-    }
-
-    impl<T: StT> Display for ArraySeqMtEphS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-            let v = self.to_vec();
-            write!(f, "[")?;
-            for (i, x) in v.iter().enumerate() {
-                if i > 0 {
-                    write!(f, ", ")?;
-                }
-                write!(f, "{}", x)?;
-            }
-            write!(f, "]")
-        }
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqMtEphS<T>;
+        fn map<U: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqMtEphS<U>;
+        fn select<'a>(a: &'a ArraySeqMtEphS<T>, b: &'a ArraySeqMtEphS<T>, i: N) -> Option<T>;
+        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T>;
+        fn append2(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T>;
+        fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqMtEphS<T>;
+        fn filter(a: &ArraySeqMtEphS<T>, f: impl Fn(&T) -> B) -> ArraySeqMtEphS<T>;
+        fn iterate<A: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
+        fn reduce(a: &ArraySeqMtEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
+        fn scan(a: &ArraySeqMtEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqMtEphS<T>, T);
+        fn flatten(s: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T>;
     }
 
     impl<T: StT> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
-        fn new(length: N, init_value: T) -> Self { ArraySeqMtEphS::from_vec(vec![init_value; length]) }
-        fn length(&self) -> N { self.length() }
-        fn nth_cloned(&self, index: N) -> T { self.nth_cloned(index) }
-        fn empty() -> Self { ArraySeqMtEphS::from_vec(Vec::new()) }
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
-            {
-                let mut guard = self.data.lock().unwrap();
-                if index < guard.len() {
-                    guard[index] = item;
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqMtEphS<T> {
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(f, n)
+        }
+        fn map<U: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqMtEphS<U> {
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::map(a, f)
+        }
+        fn select<'a>(a: &'a ArraySeqMtEphS<T>, b: &'a ArraySeqMtEphS<T>, i: N) -> Option<T> {
+            if i < a.length() {
+                Some(a.nth_cloned(i))
+            } else {
+                let off = i - a.length();
+                if off < b.length() {
+                    Some(b.nth_cloned(off))
                 } else {
-                    return Err("Index out of bounds");
+                    None
                 }
             }
-            Ok(self)
         }
-        fn singleton(item: T) -> Self { ArraySeqMtEphS::from_vec(vec![item]) }
-        fn isEmpty(&self) -> B {
-            if self.length() == 0usize {
-                B::True
+        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T> {
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::append(a, b)
+        }
+        fn append2(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T> {
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::append(a, b)
+        }
+        fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqMtEphS<T> {
+            if f(x) == B::True {
+                ArraySeqMtEphS::from_vec(vec![x.clone()])
             } else {
-                B::False
+                ArraySeqMtEphS::from_vec(Vec::new())
             }
         }
-        fn isSingleton(&self) -> B {
-            if self.length() == 1 {
-                B::True
-            } else {
-                B::False
-            }
+        fn filter(a: &ArraySeqMtEphS<T>, f: impl Fn(&T) -> B) -> ArraySeqMtEphS<T> {
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::filter(a, f)
         }
-        fn subseq_copy(&self, start: N, length: N) -> Self { self.subseq_copy(start, length) }
-    }
-
-    #[macro_export]
-    macro_rules! ArraySeqMtEphSLit {
-        () => { $crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(Vec::new()) };
-        ($x:expr; $n:expr) => { $crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(vec![$x; $n]) };
-        ($($x:expr),* $(,)?) => { $crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(vec![$($x),*]) };
+        fn iterate<A: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&A, &T) -> A, mut x: A) -> A {
+            for i in 0..a.length() {
+                x = f(&x, &a.nth_cloned(i));
+            }
+            x
+        }
+        fn reduce(a: &ArraySeqMtEphS<T>, f: &impl Fn(&T, &T) -> T, mut id: T) -> T {
+            for i in 0..a.length() {
+                id = f(&id, &a.nth_cloned(i));
+            }
+            id
+        }
+        fn scan(a: &ArraySeqMtEphS<T>, f: &impl Fn(&T, &T) -> T, mut id: T) -> (ArraySeqMtEphS<T>, T) {
+            let n = a.length();
+            let mut out = if 0 == n.clone() {
+                ArraySeqMtEphS::from_vec(Vec::new())
+            } else {
+                ArraySeqMtEphS::from_vec(vec![id.clone(); n])
+            };
+            for i in 0..n {
+                let _ = out.set(i, id.clone());
+                id = f(&id, &a.nth_cloned(i));
+            }
+            (out, id)
+        }
+        fn flatten(s: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {
+            let mut total: N = 0;
+            let n_outer = s.length();
+            for i in 0..n_outer {
+                total += s.nth_cloned(i).length();
+            }
+            if total == 0 {
+                return ArraySeqMtEphS::from_vec(Vec::new());
+            }
+            // Initialize with first available value to build fixed-length vector
+            let mut init: Option<T> = None;
+            for i in 0..n_outer {
+                let inner = s.nth_cloned(i);
+                if inner.length() > 0 {
+                    init = Some(inner.nth_cloned(0));
+                    break;
+                }
+            }
+            let initv = init.expect("total > 0 implies some inner non-empty");
+            let mut out = ArraySeqMtEphS::from_vec(vec![initv.clone(); total]);
+            let mut w: N = 0;
+            for i in 0..n_outer {
+                let inner = s.nth_cloned(i);
+                for j in 0..inner.length() {
+                    let _ = out.set(w, inner.nth_cloned(j));
+                    w += 1;
+                }
+            }
+            out
+        }
     }
 }
