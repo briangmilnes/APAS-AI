@@ -1,0 +1,19 @@
+
+ Now fix up: 
+
+ls -1 src/Chap18
+ArraySeqMtEph.rs
+ArraySeqMtPer.rs
+LinkedListStEph.rs
+LinkedListStPer.rs
+
+to match APAS ordering, traits and impl.
+
+Remember they are stand alone and should not be importing any other files.
+*Per has no set/update copy does not slice.
+Run cargo build and only look at errors reported in Chap18,
+tee it into a file it's still too big.
+
+Fix any issues, KISS it.
+
+Execute relentlessly.

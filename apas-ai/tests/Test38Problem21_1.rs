@@ -1,15 +1,16 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Problem 21.1 (Points in 2D) tests and construction using ArraySeqPer.
 
 use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArrayStPerSLit;
+use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Types::Types::*;
 
 /// Construct the sequence of 2D points (x, y) with 0 ≤ x < n and 1 ≤ y < n,
 /// ordered by x major, then y.
-fn points2d(n: N) -> ArrayStPerS<Pair<N, N>> {
+fn points2d(n: N) -> ArraySeqStPerS<Pair<N, N>> {
     if n == 0 {
-        return ArrayStPerSLit![];
+        return ArraySeqStPerSLit![];
     }
     let len = n * (n - 1);
     let mut v: Vec<Pair<N, N>> = Vec::with_capacity(len);
@@ -18,13 +19,13 @@ fn points2d(n: N) -> ArrayStPerS<Pair<N, N>> {
             v.push(Pair(x, y));
         }
     }
-    ArrayStPerS::from_vec(v)
+    ArraySeqStPerS::from_vec(v)
 }
 
 #[test]
 fn test_points2d_n3_example() {
     let s = points2d(3);
-    let expect = ArrayStPerSLit![Pair(0, 1), Pair(0, 2), Pair(1, 1), Pair(1, 2), Pair(2, 1), Pair(2, 2)];
+    let expect = ArraySeqStPerSLit![Pair(0, 1), Pair(0, 2), Pair(1, 1), Pair(1, 2), Pair(2, 1), Pair(2, 2)];
     assert_eq!(s.length(), expect.length());
     assert_eq!(s, expect);
 }

@@ -1,11 +1,12 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6 Weighted Directed Graph (ephemeral) with floating-point weights - Multi-threaded version.
 
 pub mod WeightedDirGraphMtEphFloat {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
-    use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
     use crate::Types::Types::*;
 
     /// Weighted directed graph with floating-point weights (multi-threaded, type alias)
@@ -15,15 +16,16 @@ pub mod WeightedDirGraphMtEphFloat {
     impl<V: StT + MtT + Hash> WeightedDirGraphMtEphFloat<V> {
         /// Create from vertices and weighted edges
         pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, OrderedFloat<f64>)>) -> Self {
-            let labeled_edges = edges.iter().map(|(from, to, weight)| {
-                LabEdge(from.clone(), to.clone(), *weight)
-            }).collect::<Vec<_>>();
-            
+            let labeled_edges = edges
+                .iter()
+                .map(|(from, to, weight)| LabEdge(from.clone(), to.clone(), *weight))
+                .collect::<Vec<_>>();
+
             let mut edge_set = Set::empty();
             for edge in labeled_edges {
                 edge_set.insert(edge);
             }
-            
+
             Self::from_vertices_and_labeled_arcs(vertices, edge_set)
         }
 
@@ -70,7 +72,10 @@ pub mod WeightedDirGraphMtEphFloat {
 
         /// Get the total weight of all edges
         pub fn total_weight(&self) -> OrderedFloat<f64> {
-            self.labeled_arcs().iter().map(|edge| edge.2).fold(OrderedFloat(0.0), |acc, w| acc + w)
+            self.labeled_arcs()
+                .iter()
+                .map(|edge| edge.2)
+                .fold(OrderedFloat(0.0), |acc, w| acc + w)
         }
     }
 

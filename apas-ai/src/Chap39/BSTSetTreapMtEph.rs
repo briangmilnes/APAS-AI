@@ -1,12 +1,14 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Set interface built atop the Treap multi-threaded BST implementation.
 
 pub mod BSTSetTreapMtEph {
     use std::collections::BTreeSet;
 
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::BSTTreapMtEph::BSTTreapMtEph::BSTTreapMtEph;
+    use crate::Chap39::BSTTreapMtEph::BSTTreapMtEph::*;
     use crate::Types::Types::*;
 
+    #[derive(Debug, Clone)]
     pub struct BSTSetTreapMtEph<T: StTInMtT + Ord> {
         tree: BSTTreapMtEph<T>,
     }
@@ -32,7 +34,7 @@ pub mod BSTSetTreapMtEph {
         fn join_m(left: Self, pivot: T, right: Self) -> Self;
         fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self;
         fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T;
-        fn iter_in_order(&self) -> ArrayStPerS<T>;
+        fn iter_in_order(&self) -> ArraySeqStPerS<T>;
         fn as_tree(&self) -> &BSTTreapMtEph<T>;
     }
 
@@ -173,7 +175,7 @@ pub mod BSTSetTreapMtEph {
                 .fold(base, |acc, value| op(acc, value.clone()))
         }
 
-        pub fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }
+        pub fn iter_in_order(&self) -> ArraySeqStPerS<T> { self.tree.in_order() }
 
         pub fn as_tree(&self) -> &BSTTreapMtEph<T> { &self.tree }
 
@@ -236,7 +238,7 @@ pub mod BSTSetTreapMtEph {
 
         fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T { BSTSetTreapMtEph::reduce(self, op, base) }
 
-        fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }
+        fn iter_in_order(&self) -> ArraySeqStPerS<T> { self.tree.in_order() }
 
         fn as_tree(&self) -> &BSTTreapMtEph<T> { &self.tree }
     }
@@ -244,10 +246,10 @@ pub mod BSTSetTreapMtEph {
     #[macro_export]
     macro_rules! BSTSetTreapMtEphLit {
         () => {
-            < $crate::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEph<_> as $crate::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEphTrait<_> >::empty()
+            < $crate::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEph<_> as $crate::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEphTrait<_> >::empty()
         };
         ( $( $x:expr ),* $(,)? ) => {{
-            let mut __set = < $crate::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEph<_> as $crate::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEphTrait<_> >::empty();
+            let mut __set = < $crate::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEph<_> as $crate::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEphTrait<_> >::empty();
             $( __set.insert($x); )*
             __set
         }};

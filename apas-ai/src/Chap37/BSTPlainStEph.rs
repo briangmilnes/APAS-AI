@@ -1,10 +1,12 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Ephemeral binary search tree built on `BBTEph` primitives.
 
 pub mod BSTPlainStEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::BBTEph::BBTEph::BBTree;
+    use crate::Chap23::BBTEph::BBTEph::BBTree;
     use crate::Types::Types::*;
 
+    #[derive(Debug, Clone)]
     pub struct BSTPlainStEph<T: StT + Ord> {
         root: BBTree<T>,
     }
@@ -21,8 +23,8 @@ pub mod BSTPlainStEph {
         fn contains(&self, target: &T) -> B;
         fn minimum(&self) -> Option<&T>;
         fn maximum(&self) -> Option<&T>;
-        fn in_order(&self) -> ArrayStPerS<T>;
-        fn pre_order(&self) -> ArrayStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn pre_order(&self) -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT + Ord> BSTPlainStEph<T> {
@@ -44,9 +46,9 @@ pub mod BSTPlainStEph {
 
         pub fn maximum(&self) -> Option<&T> { max_node(&self.root) }
 
-        pub fn in_order(&self) -> ArrayStPerS<T> { self.root.in_order() }
+        pub fn in_order(&self) -> ArraySeqStPerS<T> { self.root.in_order() }
 
-        pub fn pre_order(&self) -> ArrayStPerS<T> { self.root.pre_order() }
+        pub fn pre_order(&self) -> ArraySeqStPerS<T> { self.root.pre_order() }
     }
 
     impl<T: StT + Ord> BSTPlainStEphTrait<T> for BSTPlainStEph<T> {
@@ -68,9 +70,9 @@ pub mod BSTPlainStEph {
 
         fn maximum(&self) -> Option<&T> { BSTPlainStEph::maximum(self) }
 
-        fn in_order(&self) -> ArrayStPerS<T> { BSTPlainStEph::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> { BSTPlainStEph::in_order(self) }
 
-        fn pre_order(&self) -> ArrayStPerS<T> { BSTPlainStEph::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> { BSTPlainStEph::pre_order(self) }
     }
 
     fn insert_node<T: StT + Ord>(node: &mut BBTree<T>, value: T) {

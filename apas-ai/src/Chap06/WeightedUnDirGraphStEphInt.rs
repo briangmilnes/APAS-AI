@@ -1,11 +1,12 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6 Weighted Undirected Graph (ephemeral) with integer weights - Single-threaded version.
 
 pub mod WeightedUnDirGraphStEphInt {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
-    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::Types::Types::*;
 
     /// Weighted undirected graph with integer weights (type alias)
@@ -15,27 +16,24 @@ pub mod WeightedUnDirGraphStEphInt {
     impl<V: StT + Hash + Ord> WeightedUnDirGraphStEphInt<V> {
         /// Create from vertices and weighted edges
         pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, i32)>) -> Self {
-            let labeled_edges = edges.iter().map(|(v1, v2, weight)| {
-                LabEdge(v1.clone(), v2.clone(), *weight)
-            }).collect::<Vec<_>>();
-            
+            let labeled_edges = edges
+                .iter()
+                .map(|(v1, v2, weight)| LabEdge(v1.clone(), v2.clone(), *weight))
+                .collect::<Vec<_>>();
+
             let mut edge_set = Set::empty();
             for edge in labeled_edges {
                 edge_set.insert(edge);
             }
-            
+
             Self::from_vertices_and_labeled_edges(vertices, edge_set)
         }
 
         /// Add a weighted edge to the graph (undirected)
-        pub fn add_weighted_edge(&mut self, v1: V, v2: V, weight: i32) {
-            self.add_labeled_edge(v1, v2, weight);
-        }
+        pub fn add_weighted_edge(&mut self, v1: V, v2: V, weight: i32) { self.add_labeled_edge(v1, v2, weight); }
 
         /// Get the weight of an edge, if it exists
-        pub fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<i32> {
-            self.get_edge_label(v1, v2).copied()
-        }
+        pub fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<i32> { self.get_edge_label(v1, v2).copied() }
 
         /// Get all weighted edges as (v1, v2, weight) tuples
         pub fn weighted_edges(&self) -> Set<(V, V, i32)> {
@@ -60,28 +58,24 @@ pub mod WeightedUnDirGraphStEphInt {
         }
 
         /// Get the total weight of all edges
-        pub fn total_weight(&self) -> i32 {
-            self.labeled_edges().iter().map(|edge| edge.2).sum()
-        }
+        pub fn total_weight(&self) -> i32 { self.labeled_edges().iter().map(|edge| edge.2).sum() }
 
         /// Get the degree of a vertex (number of incident edges)
-        pub fn vertex_degree(&self, v: &V) -> usize {
-            self.neighbors(v).size()
-        }
+        pub fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
 
         /// Check if the graph is connected (all vertices reachable from any vertex)
         pub fn is_connected(&self) -> bool {
             if self.vertices().size() == 0 {
                 return true; // Empty graph is considered connected
             }
-            
+
             // Simple connectivity check using DFS from first vertex
             let mut visited = Set::empty();
             let mut stack = Vec::new();
-            
+
             if let Some(start) = self.vertices().iter().next() {
                 stack.push(start.clone());
-                
+
                 while let Some(current) = stack.pop() {
                     if visited.mem(&current) == B::False {
                         visited.insert(current.clone());
@@ -93,7 +87,7 @@ pub mod WeightedUnDirGraphStEphInt {
                     }
                 }
             }
-            
+
             visited.size() == self.vertices().size()
         }
     }

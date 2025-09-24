@@ -1,0 +1,27 @@
+
+ Scan through all src files and make sure that the files Trait appears
+ before the impl. And that the order of the functions defined matches
+
+length : Sα → N
+nth : Sα → N → α
+empty : Sα
+singleton : α → Sα
+tabulate : (N → α) → N → Sα
+map : (α → β) → Sα → Sβ
+subseq : Sα → N → N → Sα
+append : Sα → Sα → Sα
+filter : (α → B) → Sα → Sα
+flatten : SSα → Sα
+update : Sα → (N × α) → Sα
+inject : Sα → SN×α → Sα
+isEmpty : Sα → B
+isSingleton : Sα → B
+collect : (α × α → O) → Sα×β → Sα×Sβ
+iterate : (α × β → α) → α → Sβ → α
+reduce : (α × α → α) → α → Sα → α
+scan : (α × α → α) → α → Sα → (Sα × α)
+
+in both the trait and the impl. 
+
+Don't add any functions.
+

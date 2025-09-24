@@ -1,6 +1,7 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestLabDirGraphStEph {
+    use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::Chap6::LabDirGraphStEph::LabDirGraphStEph::*;
-    use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use apas_ai::Types::Types::*;
     use apas_ai::{LabDirGraphStEphLit, SetLit};
 
@@ -17,7 +18,7 @@ pub mod TestLabDirGraphStEph {
         let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
         g.add_vertex(1);
         g.add_vertex(2);
-        
+
         assert_eq!(g.vertices().size(), 2);
         assert!(g.vertices().mem(&1) == B::True);
         assert!(g.vertices().mem(&2) == B::True);
@@ -29,13 +30,13 @@ pub mod TestLabDirGraphStEph {
         let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
         g.add_labeled_arc(1, 2, "edge12");
         g.add_labeled_arc(2, 3, "edge23");
-        
+
         assert_eq!(g.vertices().size(), 3);
         assert_eq!(g.labeled_arcs().size(), 2);
         assert!(g.has_arc(&1, &2));
         assert!(g.has_arc(&2, &3));
         assert!(!g.has_arc(&3, &1));
-        
+
         assert_eq!(g.get_arc_label(&1, &2), Some(&"edge12"));
         assert_eq!(g.get_arc_label(&2, &3), Some(&"edge23"));
         assert_eq!(g.get_arc_label(&3, &1), None);
@@ -47,19 +48,19 @@ pub mod TestLabDirGraphStEph {
         g.add_labeled_arc(1, 2, "a");
         g.add_labeled_arc(1, 3, "b");
         g.add_labeled_arc(3, 1, "c");
-        
+
         let out_neighbors_1 = g.out_neighbors(&1);
         assert_eq!(out_neighbors_1.size(), 2);
         assert!(out_neighbors_1.mem(&2) == B::True);
         assert!(out_neighbors_1.mem(&3) == B::True);
-        
+
         let in_neighbors_1 = g.in_neighbors(&1);
         assert_eq!(in_neighbors_1.size(), 1);
         assert!(in_neighbors_1.mem(&3) == B::True);
-        
+
         let out_neighbors_2 = g.out_neighbors(&2);
         assert_eq!(out_neighbors_2.size(), 0);
-        
+
         let in_neighbors_2 = g.in_neighbors(&2);
         assert_eq!(in_neighbors_2.size(), 1);
         assert!(in_neighbors_2.mem(&1) == B::True);
@@ -70,7 +71,7 @@ pub mod TestLabDirGraphStEph {
         let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
         g.add_labeled_arc(1, 2, "label");
         g.add_labeled_arc(2, 3, "another");
-        
+
         let arcs = g.arcs();
         assert_eq!(arcs.size(), 2);
         assert!(arcs.mem(&Edge(1, 2)) == B::True);
@@ -90,7 +91,7 @@ pub mod TestLabDirGraphStEph {
             V: [1, 2, 3],
             A: [(1, 2, "first"), (2, 3, "second")]
         );
-        
+
         assert_eq!(g.vertices().size(), 3);
         assert_eq!(g.labeled_arcs().size(), 2);
         assert!(g.has_arc(&1, &2));
@@ -107,7 +108,7 @@ pub mod TestLabDirGraphStEph {
             A: [("a", "b", 42)]
         );
         assert_eq!(g1.get_arc_label(&"a", &"b"), Some(&42));
-        
+
         // Test with string labels
         let g2 = LabDirGraphStEphLit!(
             V: [1, 2],
@@ -144,14 +145,14 @@ pub mod TestLabDirGraphStEph {
     fn test_labelled_dir_graph_self_loop() {
         let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
         g.add_labeled_arc(1, 1, "self_loop");
-        
+
         assert!(g.has_arc(&1, &1));
         assert_eq!(g.get_arc_label(&1, &1), Some(&"self_loop"));
-        
+
         let out_neighbors = g.out_neighbors(&1);
         assert_eq!(out_neighbors.size(), 1);
         assert!(out_neighbors.mem(&1) == B::True);
-        
+
         let in_neighbors = g.in_neighbors(&1);
         assert_eq!(in_neighbors.size(), 1);
         assert!(in_neighbors.mem(&1) == B::True);

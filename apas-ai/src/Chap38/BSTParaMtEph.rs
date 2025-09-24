@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Parametric multi-threaded BST built around a joinMid interface.
 
 pub mod BSTParaMtEph {
@@ -20,7 +21,7 @@ pub mod BSTParaMtEph {
         right: ParamBST<T>,
     }
 
-    #[derive(Clone)]
+    #[derive(Debug, Clone)]
     pub struct ParamBST<T: StTInMtT + Ord> {
         root: Arc<RwLock<Option<Box<NodeInner<T>>>>>,
     }
@@ -77,7 +78,7 @@ pub mod BSTParaMtEph {
             F: Fn(T, T) -> T + Send + Sync + 'static;
         // APAS - work O(|t|), span O(|t|)
         // gpt-5-codex-medium: work O(|t|), span O(|t|)
-        fn in_order(&self) -> ArrayStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
     }
 
     impl<T: StTInMtT + Ord + 'static> ParamBST<T> {
@@ -178,10 +179,10 @@ pub mod BSTParaMtEph {
                 | (Exposed::Leaf, _) | (_, Exposed::Leaf) => ParamBST::new(),
                 | (Exposed::Node(al, ak, ar), _) => {
                     let (bl, found, br) = ParamBST::split_inner(b, &ak);
-                    let Pair(left_res, right_res) = crate::ParaPair!(
-                        move || ParamBST::intersect_inner(&al, &bl),
-                        move || ParamBST::intersect_inner(&ar, &br)
-                    );
+                    let Pair(left_res, right_res) =
+                        crate::ParaPair!(move || ParamBST::intersect_inner(&al, &bl), move || {
+                            ParamBST::intersect_inner(&ar, &br)
+                        });
                     if found == B::True {
                         ParamBST::join_m(left_res, ak, right_res)
                     } else {
@@ -199,10 +200,10 @@ pub mod BSTParaMtEph {
                 | (_, Exposed::Leaf) => a.clone(),
                 | (Exposed::Node(al, ak, ar), _) => {
                     let (bl, found, br) = ParamBST::split_inner(b, &ak);
-                    let Pair(left_res, right_res) = crate::ParaPair!(
-                        move || ParamBST::difference_inner(&al, &bl),
-                        move || ParamBST::difference_inner(&ar, &br)
-                    );
+                    let Pair(left_res, right_res) =
+                        crate::ParaPair!(move || ParamBST::difference_inner(&al, &bl), move || {
+                            ParamBST::difference_inner(&ar, &br)
+                        });
                     if found == B::True {
                         ParamBST::join_pair_inner(left_res, right_res)
                     } else {
@@ -223,10 +224,10 @@ pub mod BSTParaMtEph {
                 | Exposed::Node(left, key, right) => {
                     let pred_left = Arc::clone(predicate);
                     let pred_right = Arc::clone(predicate);
-                    let Pair(left_filtered, right_filtered) = crate::ParaPair!(
-                        move || ParamBST::filter_inner(&left, &pred_left),
-                        move || ParamBST::filter_inner(&right, &pred_right)
-                    );
+                    let Pair(left_filtered, right_filtered) =
+                        crate::ParaPair!(move || ParamBST::filter_inner(&left, &pred_left), move || {
+                            ParamBST::filter_inner(&right, &pred_right)
+                        });
                     if (**predicate)(&key) {
                         ParamBST::join_m(left_filtered, key, right_filtered)
                     } else {
@@ -259,10 +260,10 @@ pub mod BSTParaMtEph {
                     let op_right = Arc::clone(op);
                     let left_base = identity.clone();
                     let right_base = identity;
-                    let Pair(left_acc, right_acc) = crate::ParaPair!(
-                        move || ParamBST::reduce_inner(&left, &op_left, left_base),
-                        move || ParamBST::reduce_inner(&right, &op_right, right_base)
-                    );
+                    let Pair(left_acc, right_acc) =
+                        crate::ParaPair!(move || ParamBST::reduce_inner(&left, &op_left, left_base), move || {
+                            ParamBST::reduce_inner(&right, &op_right, right_base)
+                        });
                     let op_ref = op.as_ref();
                     let right_with_key = op_ref(key, right_acc);
                     op_ref(left_acc, right_with_key)
@@ -320,13 +321,7 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { B::True } else { B::False } }
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)
@@ -401,11 +396,10 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(|t|), span O(|t|)
         // gpt-5-codex-medium: work O(|t|), span O(|t|)
-        fn in_order(&self) -> ArrayStPerS<T> {
+        fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
             ParamBST::collect_in_order(self, &mut out);
-            ArrayStPerS::from_vec(out)
+            ArraySeqStPerS::from_vec(out)
         }
     }
-
 }

@@ -1,0 +1,5 @@
+
+We want Debug, Display, Copy and Clone on every struct we can.
+
+Sweep the src code base and do this where possible,
+explain each place that we can not.

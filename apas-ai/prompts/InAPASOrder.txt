@@ -1,0 +1,34 @@
+
+APAS orders the trait like this, but we add a new to all modules and a set to *Eph files.
+
+fn new(length: N, init_value: T) -> XS<T>;
+fn set(&mut self, index: N, value: T) -> Result<&mut Self, &'static str>; // *Eph only.
+length : Sα → N
+nth : Sα → N → α
+empty : Sα
+singleton : α → Sα
+tabulate : (N → α) → N → Sα
+map : (α → β) → Sα → Sβ
+subseq : Sα → N → N → Sα
+append : Sα → Sα → Sα
+filter : (α → B) → Sα → Sα
+flatten : SSα → Sα
+update : Sα → (N × α) → Sα
+inject : Sα → SN×α → Sα
+isEmpty : Sα → B
+isSingleton : Sα → B
+collect : (α × α → O) → Sα×β → Sα×Sβ
+iterate : (α × β → α) → α → Sβ → α
+reduce : (α × α → α) → α → Sα → α
+scan : (α × α → α) → α → Sα → (Sα × α)
+
+not every file implements every function though.
+
+Read src/Chap18/*Mt* and put it in this order. 
+If they are missing a fn tell me but don't add any functions.
+
+Reorder the traits and impl to match this order.
+
+Do not run cargo build, it's too big for you. I will.
+
+

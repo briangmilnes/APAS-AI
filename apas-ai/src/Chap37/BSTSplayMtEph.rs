@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Ephemeral splay-style (simple BST) structure with interior locking for multi-threaded access.
 
 pub mod BSTSplayMtEph {
@@ -9,7 +10,7 @@ pub mod BSTSplayMtEph {
 
     type Link<T> = Option<Box<Node<T>>>;
 
-    #[derive(Clone)]
+    #[derive(Debug, Clone)]
     struct Node<T: StTInMtT + Ord> {
         key: T,
         size: N,
@@ -28,7 +29,7 @@ pub mod BSTSplayMtEph {
         }
     }
 
-    #[derive(Clone)]
+    #[derive(Debug, Clone)]
     pub struct BSTSplayMtEph<T: StTInMtT + Ord> {
         root: Arc<RwLock<Link<T>>>,
     }
@@ -45,8 +46,8 @@ pub mod BSTSplayMtEph {
         fn height(&self) -> N;
         fn minimum(&self) -> Option<T>;
         fn maximum(&self) -> Option<T>;
-        fn in_order(&self) -> ArrayStPerS<T>;
-        fn pre_order(&self) -> ArrayStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn pre_order(&self) -> ArraySeqStPerS<T>;
     }
 
     impl<T: StTInMtT + Ord> Default for BSTSplayMtEph<T> {
@@ -65,13 +66,7 @@ pub mod BSTSplayMtEph {
             Self::size_link(&*guard)
         }
 
-        pub fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        pub fn is_empty(&self) -> B { if self.size() == 0 { B::True } else { B::False } }
 
         pub fn height(&self) -> N {
             fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {
@@ -95,13 +90,7 @@ pub mod BSTSplayMtEph {
             Self::find_link(&*guard, target).cloned()
         }
 
-        pub fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { B::True } else { B::False } }
 
         pub fn minimum(&self) -> Option<T> {
             let guard = self.root.read().unwrap();
@@ -113,18 +102,18 @@ pub mod BSTSplayMtEph {
             Self::max_link(&*guard).cloned()
         }
 
-        pub fn in_order(&self) -> ArrayStPerS<T> {
+        pub fn in_order(&self) -> ArraySeqStPerS<T> {
             let guard = self.root.read().unwrap();
             let mut out = Vec::with_capacity(Self::size_link(&*guard));
             Self::in_order_collect(&*guard, &mut out);
-            ArrayStPerS::from_vec(out)
+            ArraySeqStPerS::from_vec(out)
         }
 
-        pub fn pre_order(&self) -> ArrayStPerS<T> {
+        pub fn pre_order(&self) -> ArraySeqStPerS<T> {
             let guard = self.root.read().unwrap();
             let mut out = Vec::with_capacity(Self::size_link(&*guard));
             Self::pre_order_collect(&*guard, &mut out);
-            ArrayStPerS::from_vec(out)
+            ArraySeqStPerS::from_vec(out)
         }
 
         fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
@@ -224,9 +213,9 @@ pub mod BSTSplayMtEph {
 
         fn maximum(&self) -> Option<T> { BSTSplayMtEph::maximum(self) }
 
-        fn in_order(&self) -> ArrayStPerS<T> { BSTSplayMtEph::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> { BSTSplayMtEph::in_order(self) }
 
-        fn pre_order(&self) -> ArrayStPerS<T> { BSTSplayMtEph::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> { BSTSplayMtEph::pre_order(self) }
     }
 
     #[macro_export]

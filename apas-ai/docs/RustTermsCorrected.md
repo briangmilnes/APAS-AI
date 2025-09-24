@@ -262,6 +262,123 @@ multi-threaded requirements and violating the MT module discipline that keeps co
 guarantees verifiable. Maintaining two dedicated modules lets each implementation expose
 the correct trait surface without leaking hidden synchronization assumptions.
 
+### No Disjunctive/Union Types
+
+Rust lacks disjunctive types (union types) found in languages like TypeScript or Ceylon. You cannot express `i32 | i64` or `String | &str` directly in the type system. This limitation forces verbose boilerplate when implementing the same behavior across multiple primitive types.
+
+**Example Problem:** The `clone_mt` method in the `MtT` trait (`src/Types.rs`) requires 12+ nearly identical implementations for primitive types:
+
+```rust
+impl MtT for i32 {
+    type Inner = i32;
+    fn clone_mt(&self) -> Self { *self }      // Same code
+    fn new_mt(inner: Self::Inner) -> Self { inner }  // Same code
+}
+
+impl MtT for i64 {
+    type Inner = i64;
+    fn clone_mt(&self) -> Self { *self }      // Same code  
+    fn new_mt(inner: Self::Inner) -> Self { inner }  // Same code
+}
+
+impl MtT for u32 {
+    type Inner = u32;
+    fn clone_mt(&self) -> Self { *self }      // Same code
+    fn new_mt(inner: Self::Inner) -> Self { inner }  // Same code
+}
+
+impl MtT for bool {
+    type Inner = bool;
+    fn clone_mt(&self) -> Self { *self }      // Same code
+    fn new_mt(inner: Self::Inner) -> Self { inner }  // Same code
+}
+// ... 8 more identical implementations for u64, usize, isize, char, etc.
+```
+
+The `clone_mt` method exists because `Mutex<T>` cannot use regular `.clone()` - it needs special handling to lock, clone the inner value, and create a new `Mutex`. However, for primitive types, `clone_mt` is just a copy operation, leading to repetitive stub implementations.
+
+**Root Cause:** Rust's type system cannot express "any type that is `Copy + Send + Sync`" as a union. Each primitive type requires its own explicit `impl` block to avoid trait coherence conflicts.
+
+**Workarounds:**
+1. **Macro-generated implementations** (cleanest approach for `clone_mt` stubs):
+   ```rust
+   macro_rules! impl_mtt_for_copy {
+       ($($t:ty),*) => {
+           $(impl MtT for $t {
+               type Inner = $t;
+               fn clone_mt(&self) -> Self { *self }
+               fn new_mt(inner: Self::Inner) -> Self { inner }
+           })*
+       };
+   }
+   impl_mtt_for_copy!(i32, i64, u32, u64, usize, isize, bool, char);
+   ```
+   This would eliminate 8+ repetitive `clone_mt` implementations while preserving the special-case handling for `Mutex<T>` and `String`.
+
+2. **Blanket implementation** (conflicts with specific impls):
+   ```rust
+   impl<T: Copy + Send + Sync> MtT for T { ... }  // Would conflict with Mutex<T> impl
+   ```
+
+3. **Newtype wrapper** (changes API):
+   ```rust
+   struct CopyMt<T: Copy>(T);
+   impl<T: Copy + Send + Sync> MtT for CopyMt<T> { ... }
+   ```
+
+**Impact:** This limitation leads to repetitive stub implementations whenever uniform behavior is needed across multiple primitive types, making the codebase more verbose and harder to maintain than languages with proper union types.
+
+### Trait Delegation and Module Composition Limitations
+
+Rust lacks elegant mechanisms for trait delegation and module composition, forcing verbose workarounds when one module wants to re-export and extend functionality from another module.
+
+**Common Pattern:** Module M2 wants to include all functions from Module M1's trait while adding its own methods, similar to trait inheritance or module functors in other languages.
+
+**Problem:** Rust provides no direct way to express "M2Trait extends M1Trait" or "module M2 = M1 with additional methods."
+
+**Available Workarounds:**
+
+1. **UFCS Delegation** (verbose but explicit):
+   ```rust
+   // M2 must manually delegate every M1 method
+   impl<T> M2Trait<T> for M2Struct<T> {
+       fn m1_function(x: T) -> T {
+           <M1Struct<T> as M1Trait<T>>::m1_function(x)  // UFCS stub
+       }
+       fn another_m1_function(a: &T, b: &T) -> T {
+           <M1Struct<T> as M1Trait<T>>::another_m1_function(a, b)  // More boilerplate
+       }
+       // ... repeat for every M1 method
+   }
+   ```
+
+2. **Type Aliases** (loses module identity):
+   ```rust
+   pub use M1::M1Trait as M2Trait;  // Just re-export, can't extend
+   pub type M2Struct<T> = M1::M1Struct<T>;
+   ```
+
+3. **Composition + Deref** (limited to `&self` methods):
+   ```rust
+   pub struct M2Struct<T> { m1: M1Struct<T> }
+   impl<T> Deref for M2Struct<T> {
+       type Target = M1Struct<T>;
+       fn deref(&self) -> &Self::Target { &self.m1 }
+   }
+   // Doesn't work for associated functions or `&mut self` methods
+   ```
+
+**What Other Languages Provide:**
+
+- **ML Functors**: `module M2 = M1 with additional_functions`
+- **Trait Inheritance**: `trait M2Trait: M1Trait { /* additional methods */ }`
+- **Mixin Composition**: Automatic method forwarding with selective override
+- **F* Function Aliasing**: `let ffromM2 = ffromM1` (simple function re-export)
+
+**Impact on APAS Codebase:** This limitation requires extensive UFCS delegation stubs when Chapter N+1 modules want to re-export Chapter N functionality, leading to hundreds of lines of boilerplate code that simply forwards method calls. The verbosity obscures the actual algorithmic content and makes maintenance more difficult.
+
+**Recommendation:** Use explicit UFCS delegation despite the verbosity, as it maintains clear module boundaries and allows selective re-export of only needed methods.
+
 
 Modules may contain:
 - type definitions (struct, enum, type alias)

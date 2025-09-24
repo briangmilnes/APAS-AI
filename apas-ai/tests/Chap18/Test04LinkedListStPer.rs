@@ -1,7 +1,8 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestLinkedListStPer {
+    use apas_ai::Chap18::LinkedListStPer::LinkedListStPer::*;
     use apas_ai::LinkedListStPer; // macro import
     use apas_ai::LinkedListStPer::LinkedListStPer::*;
-    use apas_ai::Chap18::LinkedListStPer::LinkedListStPer::*;
     use apas_ai::LinkedListStPerSLit;
     use apas_ai::Types::Types::*;
 
@@ -23,9 +24,13 @@ pub mod TestLinkedListStPer {
     #[test]
     fn test_filter() {
         let a = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::tabulate(|i| i + 1, 5);
-        let c = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(&a, |x| {
-            if *x % 2 == 1 { B::True } else { B::False }
-        });
+        let c =
+            <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(
+                &a,
+                |x| {
+                    if *x % 2 == 1 { B::True } else { B::False }
+                },
+            );
         assert_eq!(c, LinkedListStPerSLit![1, 3, 5]);
     }
 
@@ -96,16 +101,15 @@ pub mod TestLinkedListStPer {
     #[test]
     fn test_collect() {
         let pairs = LinkedListStPerSLit![Pair(1, 10), Pair(2, 20), Pair(1, 30)];
-        let grouped =
-            <LinkedListStPerS<Pair<N, N>> as LinkedListStPerTrait<Pair<N, N>>>::collect(&pairs, |a, b| {
-                if a < b {
-                    O::Less
-                } else if a > b {
-                    O::Greater
-                } else {
-                    O::Equal
-                }
-            });
+        let grouped = <LinkedListStPerS<Pair<N, N>> as LinkedListStPerTrait<Pair<N, N>>>::collect(&pairs, |a, b| {
+            if a < b {
+                O::Less
+            } else if a > b {
+                O::Greater
+            } else {
+                O::Equal
+            }
+        });
         // Expect two groups with keys 1 and 2
         assert_eq!(grouped.length(), 2);
     }

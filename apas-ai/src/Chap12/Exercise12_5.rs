@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 12 — Exercise 12.5: lock-free concurrent stack using compare-and-swap.
 
 pub mod Exercise12_5 {
@@ -13,6 +14,7 @@ pub mod Exercise12_5 {
     }
 
     /// Concurrent stack backed by a Treiber-style CAS list.
+    #[derive(Clone, Copy)]
     pub struct ConcurrentStackMt<T: StTInMtT> {
         head: AtomicPtr<Node<T>>,
     }

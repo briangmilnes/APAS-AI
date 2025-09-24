@@ -75,9 +75,13 @@ pub mod TestArraySeqStEph {
     #[test]
     fn test_filter_even() {
         let numbers = ArraySeqStEphSLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&numbers, |&x| {
-            if x % 2 == 0 { B::True } else { B::False }
-        });
+        let evens =
+            <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(
+                &numbers,
+                |&x| {
+                    if x % 2 == 0 { B::True } else { B::False }
+                },
+            );
         assert_eq!(evens, ArraySeqStEphSLit![2, 4, 6, 8, 10]);
         let odds_only = ArraySeqStEphSLit![1, 3, 5, 7];
         let no_evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&odds_only, |&x| {
@@ -172,8 +176,7 @@ pub mod TestArraySeqStEph {
     fn test_iterate_prefixes_sum() {
         let numbers = ArraySeqStEphSLit![1, 2, 3];
         let sum_fn = |a: &N, x: &N| a + x;
-        let (prefixes, total) =
-            <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::iteratePrefixes(&numbers, sum_fn, 0);
+        let (prefixes, total) = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::iteratePrefixes(&numbers, sum_fn, 0);
         assert_eq!(prefixes.length(), 3);
         assert_eq!(*prefixes.nth(0), 0);
         assert_eq!(*prefixes.nth(1), 1);

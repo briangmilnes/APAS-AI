@@ -1,12 +1,11 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
-use apas_ai::ArraySeqMtPer::ArraySeqMtPer::{ArrayMtPerS, ArraySeqMtPerTrait};
+use apas_ai::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
 use apas_ai::*;
 use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 
-fn gen_sequence(n: usize) -> ArrayMtPerS<usize> {
-    ArrayMtPerS::new(n, 0)
-}
+fn gen_sequence(n: usize) -> ArraySeqMtPerS<usize> { ArrayMtPerS::new(n, 0) }
 
 fn bench_chapter26_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chapter26Mt");

@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 5.1 ephemeral Set built on `std::collections::HashSet`.
 
 pub mod SetStEph {
@@ -115,13 +116,7 @@ pub mod SetStEph {
 
         pub fn size(&self) -> N { self.data.len() }
 
-        pub fn mem(&self, x: &T) -> B {
-            if self.data.contains(x) {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        pub fn mem(&self, x: &T) -> B { if self.data.contains(x) { B::True } else { B::False } }
 
         pub fn union(&self, other: &Set<T>) -> Set<T>
         where
@@ -204,13 +199,7 @@ pub mod SetStEph {
 
         fn size(&self) -> N { self.data.len() }
 
-        fn mem(&self, x: &T) -> B {
-            if self.data.contains(x) {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        fn mem(&self, x: &T) -> B { if self.data.contains(x) { B::True } else { B::False } }
 
         fn union(&self, other: &Set<T>) -> Set<T>
         where

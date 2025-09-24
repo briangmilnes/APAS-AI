@@ -1,13 +1,14 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 5.5 ephemeral Mapping (Function) built on `Relation<A,B>`.
 
 pub mod MappingStEph {
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
-    
+
     use crate::Chap05::RelationStEph::RelationStEph::*;
-    use crate::SetLit;
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
     use crate::Types::Types::*;
 
     #[derive(Clone)]
@@ -15,11 +16,7 @@ pub mod MappingStEph {
         rel: Relation<A, B>,
     }
 
-    pub trait MappingStEphTrait<
-        X: StT + Hash,
-        Y: StT + Hash,
-    >
-    {
+    pub trait MappingStEphTrait<X: StT + Hash, Y: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Mapping<X, Y>;
@@ -62,15 +59,10 @@ pub mod MappingStEph {
         }
     }
 
-    impl<A: StT + Hash, B: StT + Hash>
-        PartialEq for Mapping<A, B>
-    {
+    impl<A: StT + Hash, B: StT + Hash> PartialEq for Mapping<A, B> {
         fn eq(&self, other: &Self) -> bool { self.rel == other.rel }
     }
-    impl<A: StT + Hash, B: StT + Hash> Eq
-        for Mapping<A, B>
-    {
-    }
+    impl<A: StT + Hash, B: StT + Hash> Eq for Mapping<A, B> {}
 
     impl<A: StT + Hash, B: StT + Hash> Debug for Mapping<A, B> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result { Debug::fmt(&self.rel, f) }
@@ -79,11 +71,7 @@ pub mod MappingStEph {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result { Display::fmt(&self.rel, f) }
     }
 
-        impl<
-            X: StT + Hash,
-            Y: StT + Hash,
-        > MappingStEphTrait<X, Y> for Mapping<X, Y>
-    {
+    impl<X: StT + Hash, Y: StT + Hash> MappingStEphTrait<X, Y> for Mapping<X, Y> {
         fn empty() -> Mapping<X, Y> {
             Mapping {
                 rel: <Relation<X, Y> as RelationStEphTrait<X, Y>>::empty(),

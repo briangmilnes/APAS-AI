@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Parametric single-threaded BST built around a joinMid interface.
 
 pub mod BSTParaStEph {
@@ -7,13 +8,14 @@ pub mod BSTParaStEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
-    #[derive(Clone)]
+    #[derive(Debug, Clone, Default)]
     pub enum Exposed<T: StT + Ord> {
+        #[default]
         Leaf,
         Node(ParamBST<T>, T, ParamBST<T>),
     }
 
-    #[derive(Clone)]
+    #[derive(Debug, Clone)]
     struct NodeInner<T: StT + Ord> {
         key: T,
         size: N,
@@ -21,7 +23,7 @@ pub mod BSTParaStEph {
         right: ParamBST<T>,
     }
 
-    #[derive(Clone)]
+    #[derive(Debug, Clone)]
     pub struct ParamBST<T: StT + Ord> {
         root: Rc<RefCell<Option<Box<NodeInner<T>>>>>,
     }
@@ -38,7 +40,7 @@ pub mod BSTParaStEph {
         fn split(&self, key: &T) -> (Self, B, Self);
         fn join_pair(&self, other: Self) -> Self;
         fn union(&self, other: &Self) -> Self;
-        fn in_order(&self) -> ArrayStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT + Ord> ParamBST<T> {
@@ -139,17 +141,9 @@ pub mod BSTParaStEph {
 
         fn join_mid(exposed: Exposed<T>) -> Self { ParamBST::join_mid(exposed) }
 
-        fn size(&self) -> N {
-            self.root.borrow().as_ref().map_or(0, |node| node.size)
-        }
+        fn size(&self) -> N { self.root.borrow().as_ref().map_or(0, |node| node.size) }
 
-        fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { B::True } else { B::False } }
 
         fn insert(&self, key: T) {
             let (left, _, right) = ParamBST::split_inner(self, &key);
@@ -182,20 +176,21 @@ pub mod BSTParaStEph {
 
         fn union(&self, other: &Self) -> Self { ParamBST::union_inner(self, other) }
 
-        fn in_order(&self) -> ArrayStPerS<T> {
+        fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
             ParamBST::collect_in_order(self, &mut out);
-            ArrayStPerS::from_vec(out)
+            ArraySeqStPerS::from_vec(out)
         }
     }
 
     #[macro_export]
     macro_rules! ParamBSTLit {
         () => {
-            < $crate::Chap37::BSTParaStEph::BSTParaStEph::ParamBST<_> as $crate::Chap37::BSTParaStEph::BSTParaStEph::ParamBSTTrait<_> >::new()
+            < $crate::Chap38::BSTParaStEph::BSTParaStEph::ParamBST<_> as $crate::Chap38::BSTParaStEph::BSTParaStEph::ParamBSTTrait<_> >::new()
         };
         ( $( $x:expr ),* $(,)? ) => {{
-            let __tree = < $crate::Chap37::BSTParaStEph::BSTParaStEph::ParamBST<_> as $crate::Chap37::BSTParaStEph::BSTParaStEph::ParamBSTTrait<_> >::new();
+            let __tree = < $crate::Chap38::BSTParaStEph::BSTParaStEph::ParamBST<_> as
+                           $crate::Chap38::BSTParaStEph::BSTParaStEph::ParamBSTTrait<_> >::new();
             $( __tree.insert($x); )*
             __tree
         }};

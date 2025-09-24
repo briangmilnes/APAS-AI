@@ -1,4 +1,5 @@
-use apas_ai::ArrayStPerSLit;
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+use apas_ai::ArraySeqStPerSLit;
 use apas_ai::BSTParaTreapMtEph::BSTParaTreapMtEph::*;
 use apas_ai::*;
 
@@ -25,7 +26,7 @@ fn treap_basic_insert_find() {
     assert_eq!(tree.find(&3), Some(3));
     assert_eq!(tree.find(&8), None);
     assert_eq!(tree.is_empty(), B::False);
-    assert_eq!(tree.in_order(), ArrayStPerSLit![1, 2, 3, 4, 5, 6, 7]);
+    assert_eq!(tree.in_order(), ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7]);
 }
 
 #[test]
@@ -33,11 +34,11 @@ fn treap_split_join_pair() {
     let tree = make_tree(&[0, 1, 2, 3, 4, 5]);
     let (left, present, right) = tree.split(&3);
     assert_eq!(present, B::True);
-    assert_eq!(left.in_order(), ArrayStPerSLit![0, 1, 2]);
-    assert_eq!(right.in_order(), ArrayStPerSLit![4, 5]);
+    assert_eq!(left.in_order(), ArraySeqStPerSLit![0, 1, 2]);
+    assert_eq!(right.in_order(), ArraySeqStPerSLit![4, 5]);
 
     let rejoined = left.join_pair(right);
-    assert_eq!(rejoined.in_order(), ArrayStPerSLit![0, 1, 2, 4, 5]);
+    assert_eq!(rejoined.in_order(), ArraySeqStPerSLit![0, 1, 2, 4, 5]);
 }
 
 #[test]

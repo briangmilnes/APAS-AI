@@ -1,0 +1,86 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+use apas_ai::Types::Types::*;
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use std::time::Duration;
+
+fn bench_tabulate_map_mteph_ch18(c: &mut Criterion) {
+    let mut group = c.benchmark_group("BenchArraySeqMtEphChap18");
+    group.sample_size(10);
+    group.warm_up_time(Duration::from_secs(1));
+    group.measurement_time(Duration::from_secs(5));
+    
+    // Test both small (sequential) and large (parallel) sizes
+    for &n in &[1_000, 10_000] {
+        group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
+            b.iter(|| {
+                let s: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(|i| i, len);
+                let m: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::map(&s, |x| x + 1);
+                black_box((s.length(), m.length()))
+            })
+        });
+    }
+    group.finish();
+}
+
+fn bench_reduce_parallel_mteph_ch18(c: &mut Criterion) {
+    let mut group = c.benchmark_group("BenchArraySeqMtEphReduce");
+    group.sample_size(10);
+    group.warm_up_time(Duration::from_secs(1));
+    group.measurement_time(Duration::from_secs(5));
+    
+    // Test both small (sequential) and large (parallel) sizes
+    for &n in &[1_000, 10_000] {
+        group.bench_with_input(BenchmarkId::new("reduce_sum", n), &n, |b, &len| {
+            let s: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(|i| i + 1, len);
+            b.iter(|| {
+                let sum = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::reduce(&s, &|x, y| x + y, 0);
+                black_box(sum)
+            })
+        });
+    }
+    group.finish();
+}
+
+fn bench_filter_mteph_ch18(c: &mut Criterion) {
+    let mut group = c.benchmark_group("BenchArraySeqMtEphFilter");
+    group.sample_size(10);
+    group.warm_up_time(Duration::from_secs(1));
+    group.measurement_time(Duration::from_secs(5));
+    
+    let n: N = 10_000;
+    group.bench_with_input(BenchmarkId::new("filter_evens", n), &n, |b, &len| {
+        let s: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(|i| i, len);
+        b.iter(|| {
+            let evens = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::filter(&s, |x| if x % 2 == 0 { B::True } else { B::False });
+            black_box(evens.length())
+        })
+    });
+    group.finish();
+}
+
+fn bench_scan_mteph_ch18(c: &mut Criterion) {
+    let mut group = c.benchmark_group("BenchArraySeqMtEphScan");
+    group.sample_size(10);
+    group.warm_up_time(Duration::from_secs(1));
+    group.measurement_time(Duration::from_secs(5));
+    
+    let n: N = 5_000;
+    group.bench_with_input(BenchmarkId::new("scan_sum", n), &n, |b, &len| {
+        let s: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(|i| i + 1, len);
+        b.iter(|| {
+            let (prefixes, final_sum) = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::scan(&s, &|x, y| x + y, 0);
+            black_box((prefixes.length(), final_sum))
+        })
+    });
+    group.finish();
+}
+
+criterion_group!(
+    benches, 
+    bench_tabulate_map_mteph_ch18,
+    bench_reduce_parallel_mteph_ch18,
+    bench_filter_mteph_ch18,
+    bench_scan_mteph_ch18
+);
+criterion_main!(benches);

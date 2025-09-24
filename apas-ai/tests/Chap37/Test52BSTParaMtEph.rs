@@ -1,4 +1,5 @@
-use apas_ai::ArrayStPerSLit;
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Chap37::BSTParaMtEph::BSTParaMtEph::*;
 use apas_ai::*;
 
@@ -25,7 +26,7 @@ fn para_basic_insert_find() {
     assert_eq!(tree.find(&3), Some(3));
     assert_eq!(tree.find(&8), None);
     assert_eq!(tree.is_empty(), B::False);
-    assert_eq!(tree.in_order(), ArrayStPerSLit![1, 2, 3, 4, 5, 6, 7]);
+    assert_eq!(tree.in_order(), ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7]);
 }
 
 #[test]
@@ -33,11 +34,11 @@ fn para_split_and_join_pair() {
     let tree = make_tree(&[0, 1, 2, 3, 4, 5]);
     let (less, present, greater) = tree.split(&3);
     assert_eq!(present, B::True);
-    assert_eq!(less.in_order(), ArrayStPerSLit![0, 1, 2]);
-    assert_eq!(greater.in_order(), ArrayStPerSLit![4, 5]);
+    assert_eq!(less.in_order(), ArraySeqStPerSLit![0, 1, 2]);
+    assert_eq!(greater.in_order(), ArraySeqStPerSLit![4, 5]);
 
     let rejoined = less.join_pair(greater);
-    assert_eq!(rejoined.in_order(), ArrayStPerSLit![0, 1, 2, 4, 5]);
+    assert_eq!(rejoined.in_order(), ArraySeqStPerSLit![0, 1, 2, 4, 5]);
 }
 
 #[test]
@@ -45,13 +46,13 @@ fn para_union_and_delete() {
     let a = make_tree(&[1, 3, 5, 7]);
     let b = make_tree(&[0, 2, 4, 6, 8]);
     let union = a.union(&b);
-    assert_eq!(union.in_order(), ArrayStPerSLit![0, 1, 2, 3, 4, 5, 6, 7, 8]);
+    assert_eq!(union.in_order(), ArraySeqStPerSLit![0, 1, 2, 3, 4, 5, 6, 7, 8]);
 
     union.delete(&4);
     union.delete(&7);
     assert_eq!(union.find(&4), None);
     assert_eq!(union.find(&7), None);
-    assert_eq!(union.in_order(), ArrayStPerSLit![0, 1, 2, 3, 5, 6, 8]);
+    assert_eq!(union.in_order(), ArraySeqStPerSLit![0, 1, 2, 3, 5, 6, 8]);
 }
 
 #[test]
@@ -82,10 +83,10 @@ fn para_intersect_and_difference() {
     let b = make_tree(&[4, 5, 6, 7, 8]);
 
     let intersection = a.intersect(&b);
-    assert_eq!(intersection.in_order(), ArrayStPerSLit![4, 5, 6]);
+    assert_eq!(intersection.in_order(), ArraySeqStPerSLit![4, 5, 6]);
 
     let difference = a.difference(&b);
-    assert_eq!(difference.in_order(), ArrayStPerSLit![1, 2, 3]);
+    assert_eq!(difference.in_order(), ArraySeqStPerSLit![1, 2, 3]);
 }
 
 #[test]
@@ -93,7 +94,7 @@ fn para_filter_and_reduce() {
     let tree = make_tree(&[1, 2, 3, 4, 5, 6]);
 
     let evens = tree.filter(|v| v % 2 == 0);
-    assert_eq!(evens.in_order(), ArrayStPerSLit![2, 4, 6]);
+    assert_eq!(evens.in_order(), ArraySeqStPerSLit![2, 4, 6]);
 
     let sum = tree.reduce(|a, b| a + b, 0);
     assert_eq!(sum, 21);

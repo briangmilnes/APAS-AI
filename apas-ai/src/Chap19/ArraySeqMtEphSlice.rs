@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! MtEph slice-oriented Array sequence variant sharing a single mutex.
 //!
 //! Abstract:
@@ -12,6 +13,7 @@ pub mod ArraySeqMtEphSlice {
 
     use crate::Types::Types::*;
 
+    #[derive(Debug, Clone)]
     struct Inner<T: StT> {
         data: Mutex<Box<[T]>>,
     }
@@ -26,6 +28,7 @@ pub mod ArraySeqMtEphSlice {
     }
 
     /// Shared slice view over the mutex-protected backing buffer.
+    #[derive(Clone)]
     pub struct ArraySeqMtEphSliceS<T: StT> {
         inner: Arc<Inner<T>>,
         range: Range<N>,
@@ -37,7 +40,7 @@ pub mod ArraySeqMtEphSlice {
         fn length(&self) -> N;
         fn nth_cloned(&self, index: N) -> T;
         fn empty() -> Self;
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
+        fn update(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
         fn singleton(item: T) -> Self;
         fn isEmpty(&self) -> B;
         fn isSingleton(&self) -> B;
@@ -102,7 +105,7 @@ pub mod ArraySeqMtEphSlice {
 
         fn empty() -> Self { ArraySeqMtEphSliceS::from_vec(Vec::new()) }
 
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
+        fn update(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
             if index >= self.len() {
                 return Err("Index out of bounds");
             }
@@ -116,21 +119,9 @@ pub mod ArraySeqMtEphSlice {
 
         fn singleton(item: T) -> Self { ArraySeqMtEphSliceS::from_vec(vec![item]) }
 
-        fn isEmpty(&self) -> B {
-            if self.len() == 0 {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        fn isEmpty(&self) -> B { if self.len() == 0 { B::True } else { B::False } }
 
-        fn isSingleton(&self) -> B {
-            if self.len() == 1 {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        fn isSingleton(&self) -> B { if self.len() == 1 { B::True } else { B::False } }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let sub = self.clamp_subrange(start, length);

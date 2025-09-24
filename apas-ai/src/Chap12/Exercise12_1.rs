@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 12 — Exercise 12.1: spin-lock via fetch-and-add tickets.
 
 pub mod Exercise12_1 {
@@ -8,7 +9,7 @@ pub mod Exercise12_1 {
 
     use crate::Types::Types::*;
 
-    #[derive(Debug)]
+    #[derive(Clone, Copy)]
     pub struct SpinLock {
         ticket: AtomicUsize,
         turn: AtomicUsize,

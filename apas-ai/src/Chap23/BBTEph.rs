@@ -1,8 +1,8 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Ephemeral full binary tree utilities (Chapter 37).
 
 pub mod BBTEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::ArraySeqStPerTrait;
     use crate::Types::Types::*;
 
     /// Full binary tree nodes (`Leaf` has no stored value).
@@ -27,8 +27,8 @@ pub mod BBTEph {
         fn leaf() -> Self;
         fn node(left: Self, value: T, right: Self) -> Self;
         fn is_leaf(&self) -> B;
-        fn in_order(&self) -> ArrayStPerS<T>;
-        fn pre_order(&self) -> ArrayStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn pre_order(&self) -> ArraySeqStPerS<T>;
         fn height(&self) -> N;
         fn size(&self) -> N;
     }
@@ -47,28 +47,28 @@ pub mod BBTEph {
             }
         }
 
-        pub fn in_order(&self) -> ArrayStPerS<T> {
+        pub fn in_order(&self) -> ArraySeqStPerS<T> {
             match self {
-                | BBTree::Leaf => <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::empty(),
+                | BBTree::Leaf => <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::empty(),
                 | BBTree::Node(node) => {
                     let left = node.left.in_order();
-                    let middle = <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::singleton(node.value.clone());
+                    let middle = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::singleton(node.value.clone());
                     let right = node.right.in_order();
-                    let left_mid = <ArrayStPerS<T> as ArraySeqStPer18Trait<T>>::append(&left, &middle);
-                    <ArrayStPerS<T> as ArraySeqStPer18Trait<T>>::append(&left_mid, &right)
+                    let left_mid = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::append(&left, &middle);
+                    <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::append(&left_mid, &right)
                 }
             }
         }
 
-        pub fn pre_order(&self) -> ArrayStPerS<T> {
+        pub fn pre_order(&self) -> ArraySeqStPerS<T> {
             match self {
-                | BBTree::Leaf => <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::empty(),
+                | BBTree::Leaf => <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::empty(),
                 | BBTree::Node(node) => {
-                    let root = <ArrayStPerS<T> as ArraySeqStPerTrait<T>>::singleton(node.value.clone());
+                    let root = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::singleton(node.value.clone());
                     let left = node.left.pre_order();
                     let right = node.right.pre_order();
-                    let root_left = <ArrayStPerS<T> as ArraySeqStPer18Trait<T>>::append(&root, &left);
-                    <ArrayStPerS<T> as ArraySeqStPer18Trait<T>>::append(&root_left, &right)
+                    let root_left = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::append(&root, &left);
+                    <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::append(&root_left, &right)
                 }
             }
         }
@@ -99,9 +99,9 @@ pub mod BBTEph {
 
         fn is_leaf(&self) -> B { BBTree::is_leaf(self) }
 
-        fn in_order(&self) -> ArrayStPerS<T> { BBTree::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> { BBTree::in_order(self) }
 
-        fn pre_order(&self) -> ArrayStPerS<T> { BBTree::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> { BBTree::pre_order(self) }
 
         fn height(&self) -> N { BBTree::height(self) }
 
@@ -111,13 +111,12 @@ pub mod BBTEph {
     #[macro_export]
     macro_rules! BBNodeLit {
         ({ left: $left:expr, value: $value:expr, right: $right:expr }) => {
-            $crate::BBTEph::BBTEph::BBNode::new($left, $value, $right)
+            $crate::Chap23::BBTEph::BBTEph::BBNode::new($left, $value, $right)
         };
     }
 
     #[allow(dead_code)]
     fn _BBNodeLit_type_checks() {
-        use crate::BBTEph::BBTEph::BBNode;
-        let _: BBNode<i32> = BBNodeLit!({ left: crate::BBTEph::BBTEph::BBTree::Leaf, value: 0, right: crate::BBTEph::BBTEph::BBTree::Leaf });
+        let _: BBNode<i32> = BBNodeLit!({ left: crate::Chap23::BBTEph::BBTEph::BBTree::Leaf, value: 0, right: crate::Chap23::BBTEph::BBTEph::BBTree::Leaf });
     }
 }

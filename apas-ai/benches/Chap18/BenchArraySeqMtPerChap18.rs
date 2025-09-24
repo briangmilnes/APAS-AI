@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
 use apas_ai::Types::Types::*;

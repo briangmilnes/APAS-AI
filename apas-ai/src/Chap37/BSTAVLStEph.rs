@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Ephemeral AVL-balanced binary search tree with `find` support and public traversal helpers.
 
 pub mod BSTAVLStEph {
@@ -28,6 +29,7 @@ pub mod BSTAVLStEph {
         }
     }
 
+    #[derive(Debug, Clone)]
     pub struct BSTAVLStEph<T: StT + Ord> {
         root: Link<T>,
     }
@@ -44,8 +46,8 @@ pub mod BSTAVLStEph {
         fn contains(&self, target: &T) -> B;
         fn minimum(&self) -> Option<&T>;
         fn maximum(&self) -> Option<&T>;
-        fn in_order(&self) -> ArrayStPerS<T>;
-        fn pre_order(&self) -> ArrayStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn pre_order(&self) -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT + Ord> Default for BSTAVLStEph<T> {
@@ -57,13 +59,7 @@ pub mod BSTAVLStEph {
 
         pub fn size(&self) -> N { Self::size_link(&self.root) }
 
-        pub fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        pub fn is_empty(&self) -> B { if self.size() == 0 { B::True } else { B::False } }
 
         pub fn height(&self) -> N { Self::height_link(&self.root) as N }
 
@@ -71,28 +67,22 @@ pub mod BSTAVLStEph {
 
         pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
 
-        pub fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { B::True } else { B::False } }
 
         pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
 
         pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
 
-        pub fn in_order(&self) -> ArrayStPerS<T> {
+        pub fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
             Self::in_order_collect(&self.root, &mut out);
-            ArrayStPerS::from_vec(out)
+            ArraySeqStPerS::from_vec(out)
         }
 
-        pub fn pre_order(&self) -> ArrayStPerS<T> {
+        pub fn pre_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
             Self::pre_order_collect(&self.root, &mut out);
-            ArrayStPerS::from_vec(out)
+            ArraySeqStPerS::from_vec(out)
         }
 
         fn height_link(link: &Link<T>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
@@ -247,9 +237,9 @@ pub mod BSTAVLStEph {
 
         fn maximum(&self) -> Option<&T> { BSTAVLStEph::maximum(self) }
 
-        fn in_order(&self) -> ArrayStPerS<T> { BSTAVLStEph::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> { BSTAVLStEph::in_order(self) }
 
-        fn pre_order(&self) -> ArrayStPerS<T> { BSTAVLStEph::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> { BSTAVLStEph::pre_order(self) }
     }
 
     #[macro_export]

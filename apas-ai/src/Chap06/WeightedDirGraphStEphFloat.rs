@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6 Weighted Directed Graph (ephemeral) with floating-point weights - Single-threaded version.
 //!
 //! This module provides weighted directed graphs using `OrderedFloat<f64>` for edge weights,
@@ -16,7 +17,7 @@
 //!
 //! // Create graph using macro with APAS notation (A: for directed arcs)
 //! let graph_macro = WeightedDirGraphStEphFloatLit!(
-//!     V: ["A", "B", "C"], 
+//!     V: ["A", "B", "C"],
 //!     A: [("A", "B", 3.14), ("B", "C", 2.71)]
 //! );
 //!
@@ -30,8 +31,8 @@ pub mod WeightedDirGraphStEphFloat {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
-    use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
     use crate::Types::Types::*;
 
     /// Weighted directed graph with floating-point weights (type alias)
@@ -41,15 +42,16 @@ pub mod WeightedDirGraphStEphFloat {
     impl<V: StT + Hash> WeightedDirGraphStEphFloat<V> {
         /// Create from vertices and weighted edges
         pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, OrderedFloat<f64>)>) -> Self {
-            let labeled_edges = edges.iter().map(|(from, to, weight)| {
-                LabEdge(from.clone(), to.clone(), *weight)
-            }).collect::<Vec<_>>();
-            
+            let labeled_edges = edges
+                .iter()
+                .map(|(from, to, weight)| LabEdge(from.clone(), to.clone(), *weight))
+                .collect::<Vec<_>>();
+
             let mut edge_set = Set::empty();
             for edge in labeled_edges {
                 edge_set.insert(edge);
             }
-            
+
             Self::from_vertices_and_labeled_arcs(vertices, edge_set)
         }
 
@@ -96,7 +98,10 @@ pub mod WeightedDirGraphStEphFloat {
 
         /// Get the total weight of all edges
         pub fn total_weight(&self) -> OrderedFloat<f64> {
-            self.labeled_arcs().iter().map(|edge| edge.2).fold(OrderedFloat(0.0), |acc, w| acc + w)
+            self.labeled_arcs()
+                .iter()
+                .map(|edge| edge.2)
+                .fold(OrderedFloat(0.0), |acc, w| acc + w)
         }
 
         /// Get edges with weight greater than threshold
@@ -123,14 +128,16 @@ pub mod WeightedDirGraphStEphFloat {
 
         /// Get the minimum weight edge
         pub fn min_weight_edge(&self) -> Option<(V, V, OrderedFloat<f64>)> {
-            self.labeled_arcs().iter()
+            self.labeled_arcs()
+                .iter()
                 .min_by_key(|edge| edge.2)
                 .map(|edge| (edge.0.clone(), edge.1.clone(), edge.2))
         }
 
         /// Get the maximum weight edge
         pub fn max_weight_edge(&self) -> Option<(V, V, OrderedFloat<f64>)> {
-            self.labeled_arcs().iter()
+            self.labeled_arcs()
+                .iter()
                 .max_by_key(|edge| edge.2)
                 .map(|edge| (edge.0.clone(), edge.1.clone(), edge.2))
         }
@@ -138,14 +145,14 @@ pub mod WeightedDirGraphStEphFloat {
         /// Scale all weights by a factor
         pub fn scale_weights(&mut self, factor: OrderedFloat<f64>) {
             let current_edges: Vec<_> = self.labeled_arcs().iter().cloned().collect();
-            
+
             // Clear current edges and re-add with scaled weights
             *self = Self::empty();
             let vertices: Vec<_> = current_edges.iter().map(|e| e.0.clone()).collect();
             for v in vertices {
                 self.add_vertex(v);
             }
-            
+
             // Add scaled edges
             for edge in current_edges {
                 self.add_labeled_arc(edge.0, edge.1, edge.2 * factor);

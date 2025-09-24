@@ -1,10 +1,11 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6.1 Undirected Graph (ephemeral) using Set for vertices and edges - Multi-threaded version.
 
 pub mod UnDirGraphMtEph {
     use std::hash::Hash;
 
-    use crate::SetLit;
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
     use crate::Types::Types::*;
 
     #[derive(Clone)]
@@ -64,7 +65,8 @@ pub mod UnDirGraphMtEph {
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Treat edges as unordered: {u,v}
-            if B::True == self.E.mem(&Edge(u.clone_mt(), v.clone_mt())) || B::True == self.E.mem(&Edge(v.clone_mt(), u.clone_mt()))
+            if B::True == self.E.mem(&Edge(u.clone_mt(), v.clone_mt()))
+                || B::True == self.E.mem(&Edge(v.clone_mt(), u.clone_mt()))
             {
                 B::True
             } else {
@@ -93,13 +95,7 @@ pub mod UnDirGraphMtEph {
             result
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B {
-            if &e.0 == v || &e.1 == v {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { B::True } else { B::False } }
 
         fn Degree(&self, v: &V) -> N { self.NG(v).size() }
     }

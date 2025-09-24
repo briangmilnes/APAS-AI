@@ -1,222 +1,335 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 18 algorithms for LinkedListStPer.
 
 pub mod LinkedListStPer {
-    // Self-import removed*;
+    use std::collections::HashSet;
+
     use crate::Types::Types::*;
 
+    #[derive(Debug, Clone)]
+    pub struct NodeP<T: StT> {
+        pub value: T,
+        pub next: Option<Box<NodeP<T>>>,
+    }
+
+    #[derive(Debug, Clone)]
+    pub struct LinkedListStPerS<T: StT> {
+        head: Option<Box<NodeP<T>>>,
+        len: N,
+    }
+
     pub trait LinkedListStPerTrait<T: StT> {
-        /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i S(f(i)))
-        /// claude-4-sonet: Work Θ(n + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i S(f(i)))
+        fn new(length: N, init_value: T) -> LinkedListStPerS<T>
+        where
+            T: Clone;
+        fn empty() -> LinkedListStPerS<T>;
+        fn singleton(item: T) -> LinkedListStPerS<T>;
+        fn length(&self) -> N;
+        fn nth(&self, index: N) -> &T;
+        fn subseq_copy(&self, start: N, length: N) -> LinkedListStPerS<T>;
         fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStPerS<T>;
-
-        /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x)))
-        /// claude-4-sonet: Work Θ(|a| + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x)))
         fn map<U: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&T) -> U) -> LinkedListStPerS<U>;
-
-        /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
         fn append(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>) -> LinkedListStPerS<T>;
-
-        /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(pred(a[i]))), Span Θ(lg|a| + max i S(pred(a[i])))
-        /// claude-4-sonet: Work Θ(|a| + Σ i=0..|a|-1 W(pred(a[i]))), Span Θ(lg|a| + max i S(pred(a[i])))
         fn filter(a: &LinkedListStPerS<T>, pred: impl Fn(&T) -> B) -> LinkedListStPerS<T>;
-
-        /// APAS: Work Θ(1 + |a|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
         fn update(a: &LinkedListStPerS<T>, item_at: Pair<N, T>) -> LinkedListStPerS<T>;
-
-        /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(lg(degree(updates)))
         fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T>;
-
-        /// APAS: Work Θ(1 + |a| + |updates|), Span Θ(1)
         fn ninject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T>;
-
-        /// APAS: Work Θ(1 + Σ (y,z) W(f(y,z))), Span Θ(1 + Σ S(f(y,z)))
         fn iterate<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
-
-        /// APAS: Work Θ(|a|), Span Θ(|a|)
         fn iteratePrefixes<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LinkedListStPerS<A>, A);
-
-        /// APAS: Work Θ(1 + Σ (y,z) W(f(y,z))), Span Θ(lg|a| · max S(f(y,z)))
         fn reduce(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
 
-        /// APAS: Work Θ(|a|), Span Θ(lg|a|)
         fn scan(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStPerS<T>, T);
 
-        /// APAS: Work Θ(1 + |a| + Σ x∈a |x|), Span Θ(1 + lg|a|)
         fn flatten(ss: &LinkedListStPerS<LinkedListStPerS<T>>) -> LinkedListStPerS<T>;
 
-        /// APAS: Work Θ(1 + W(f) · |a| lg|a|), Span Θ(1 + S(f) · lg^2|a|)
         fn collect<A: StT, Bv: StT>(
             a: &LinkedListStPerS<Pair<A, Bv>>,
             cmp: impl Fn(&A, &A) -> O,
         ) -> LinkedListStPerS<Pair<A, LinkedListStPerS<Bv>>>;
     }
 
-    impl<T: StT> LinkedListStPerTrait<T> for LinkedListStPerS<T> {
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStPerS<T> {
-            let mut v: Vec<T> = Vec::with_capacity(n);
-            for i in 0..n {
-                v.push(f(i));
+    impl<T: StT> LinkedListStPerS<T> {
+        pub fn empty() -> Self { LinkedListStPerS { head: None, len: 0 } }
+
+        pub fn new(length: N, init_value: T) -> Self
+        where
+            T: Clone,
+        {
+            LinkedListStPerS::from_vec(vec![init_value; length])
+        }
+
+        pub fn singleton(item: T) -> Self { LinkedListStPerS::from_vec(vec![item]) }
+
+        pub fn from_vec(elts: Vec<T>) -> Self {
+            let mut head: Option<Box<NodeP<T>>> = None;
+            let mut len = 0usize;
+            for value in elts.into_iter().rev() {
+                head = Some(Box::new(NodeP { value, next: head }));
+                len += 1;
             }
-            LinkedListStPerS::from_vec(v)
+            LinkedListStPerS { head, len }
+        }
+
+        pub fn length(&self) -> N { self.len }
+
+        pub fn nth(&self, index: N) -> &T {
+            self.node_at(index)
+                .map(|node| &node.value)
+                .expect("Index out of bounds")
+        }
+
+        pub fn subseq_copy(&self, start: N, length: N) -> Self {
+            if length == 0 || start >= self.len {
+                return LinkedListStPerS::empty();
+            }
+            let mut current = self.head.as_deref();
+            let mut skipped = 0usize;
+            while skipped < start {
+                match current {
+                    | Some(node) => {
+                        current = node.next.as_deref();
+                        skipped += 1;
+                    }
+                    | None => return LinkedListStPerS::empty(),
+                }
+            }
+            let mut out: Vec<T> = Vec::with_capacity(length);
+            let mut taken = 0usize;
+            while taken < length {
+                match current {
+                    | Some(node) => {
+                        out.push(node.value.clone());
+                        current = node.next.as_deref();
+                        taken += 1;
+                    }
+                    | None => break,
+                }
+            }
+            LinkedListStPerS::from_vec(out)
+        }
+
+        fn node_at(&self, index: N) -> Option<&NodeP<T>> {
+            if index >= self.len {
+                return None;
+            }
+            let mut current = self.head.as_deref();
+            let mut i = 0usize;
+            while let Some(node) = current {
+                if i == index {
+                    return Some(node);
+                }
+                current = node.next.as_deref();
+                i += 1;
+            }
+            None
+        }
+    }
+
+    impl<T: StT> std::fmt::Display for LinkedListStPerS<T> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "[")?;
+            let mut first = true;
+            let mut current = self.head.as_deref();
+            while let Some(node) = current {
+                if !first {
+                    write!(f, ", ")?;
+                } else {
+                    first = false;
+                }
+                write!(f, "{}", node.value)?;
+                current = node.next.as_deref();
+            }
+            write!(f, "]")
+        }
+    }
+
+    impl<T: StT> PartialEq for LinkedListStPerS<T> {
+        fn eq(&self, other: &Self) -> bool {
+            if self.len != other.len {
+                return false;
+            }
+            let mut left = self.head.as_deref();
+            let mut right = other.head.as_deref();
+            while let (Some(a), Some(b)) = (left, right) {
+                if a.value != b.value {
+                    return false;
+                }
+                left = a.next.as_deref();
+                right = b.next.as_deref();
+            }
+            true
+        }
+    }
+
+    impl<T: StT> Eq for LinkedListStPerS<T> {}
+
+    impl<T: StT> LinkedListStPerTrait<T> for LinkedListStPerS<T> {
+        fn new(length: N, init_value: T) -> LinkedListStPerS<T>
+        where
+            T: Clone,
+        {
+            LinkedListStPerS::new(length, init_value)
+        }
+
+        fn empty() -> LinkedListStPerS<T> { LinkedListStPerS::empty() }
+        fn singleton(item: T) -> LinkedListStPerS<T> { LinkedListStPerS::singleton(item) }
+        fn length(&self) -> N { LinkedListStPerS::length(self) }
+        fn nth(&self, index: N) -> &T { LinkedListStPerS::nth(self, index) }
+        fn subseq_copy(&self, start: N, length: N) -> LinkedListStPerS<T> {
+            LinkedListStPerS::subseq_copy(self, start, length)
+        }
+
+        fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStPerS<T> {
+            let mut values: Vec<T> = Vec::with_capacity(n);
+            for i in 0..n {
+                values.push(f(i));
+            }
+            LinkedListStPerS::from_vec(values)
         }
 
         fn map<U: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&T) -> U) -> LinkedListStPerS<U> {
-            let mut v: Vec<U> = Vec::with_capacity(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a));
-            for i in 0..<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a) {
-                v.push(f(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i)));
+            let mut values: Vec<U> = Vec::with_capacity(a.length());
+            for i in 0..a.length() {
+                values.push(f(a.nth(i)));
             }
-            LinkedListStPerS::from_vec(v)
+            LinkedListStPerS::from_vec(values)
         }
+
         fn append(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>) -> LinkedListStPerS<T> {
-            let na = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a);
-            let nb = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(b);
-            let mut v: Vec<T> = Vec::with_capacity(na + nb);
-            for i in 0..na {
-                v.push(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i).clone());
+            let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+            for i in 0..a.length() {
+                values.push(a.nth(i).clone());
             }
-            for j in 0..nb {
-                v.push(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(b, j).clone());
+            for j in 0..b.length() {
+                values.push(b.nth(j).clone());
             }
-            LinkedListStPerS::from_vec(v)
+            LinkedListStPerS::from_vec(values)
         }
+
         fn filter(a: &LinkedListStPerS<T>, pred: impl Fn(&T) -> B) -> LinkedListStPerS<T> {
-            let mut v: Vec<T> = Vec::new();
-            for i in 0..<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a) {
-                let x = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i);
-                if pred(x) == B::True {
-                    v.push(x.clone());
+            let mut kept: Vec<T> = Vec::new();
+            for i in 0..a.length() {
+                let value = a.nth(i);
+                if pred(value) == B::True {
+                    kept.push(value.clone());
                 }
             }
-            LinkedListStPerS::from_vec(v)
+            LinkedListStPerS::from_vec(kept)
         }
+
         fn update(a: &LinkedListStPerS<T>, Pair(index, item): Pair<N, T>) -> LinkedListStPerS<T> {
-            let mut v: Vec<T> = Vec::with_capacity(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a));
-            for i in 0..<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a) {
-                let cur = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i).clone();
-                v.push(if i == index { item.clone() } else { cur });
+            let mut values: Vec<T> = Vec::with_capacity(a.length());
+            for i in 0..a.length() {
+                let current = a.nth(i).clone();
+                if i == index {
+                    values.push(item.clone());
+                } else {
+                    values.push(current);
+                }
             }
-            LinkedListStPerS::from_vec(v)
+            LinkedListStPerS::from_vec(values)
         }
+
         fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T> {
-            // first-update wins
-            let n = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a);
-            let mut v: Vec<T> = Vec::with_capacity(n);
-            for i in 0..n {
-                let mut replaced: Option<T> = None;
-                for j in 0..<LinkedListStPerS<Pair<N, T>> as LinkedListStPerTrait<Pair<N, T>>>::length(updates) {
-                    let Pair(idx, val) =
-                        <LinkedListStPerS<Pair<N, T>> as LinkedListStPerTrait<Pair<N, T>>>::nth(updates, j).clone();
-                    if idx == i {
-                        replaced = Some(val);
-                        break;
-                    }
+            let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
+            let mut seen = std::collections::HashSet::new();
+            for k in 0..updates.length() {
+                let Pair(idx, val) = updates.nth(k).clone();
+                if idx < values.len() && !seen.contains(&idx) {
+                    values[idx] = val;
+                    seen.insert(idx);
                 }
-                v.push(replaced.unwrap_or_else(|| <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i).clone()));
             }
-            LinkedListStPerS::from_vec(v)
+            LinkedListStPerS::from_vec(values)
         }
+
         fn ninject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T> {
-            // last-update wins
-            let n = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a);
-            let mut v: Vec<T> = Vec::with_capacity(n);
-            for i in 0..n {
-                let mut replaced: Option<T> = None;
-                for j in 0..<LinkedListStPerS<Pair<N, T>> as LinkedListStPerTrait<Pair<N, T>>>::length(updates) {
-                    let Pair(idx, val) =
-                        <LinkedListStPerS<Pair<N, T>> as LinkedListStPerTrait<Pair<N, T>>>::nth(updates, j).clone();
-                    if idx == i {
-                        replaced = Some(val);
-                    }
+            let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
+            for k in 0..updates.length() {
+                let Pair(idx, val) = updates.nth(k).clone();
+                if idx < values.len() {
+                    values[idx] = val;
                 }
-                v.push(replaced.unwrap_or_else(|| <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i).clone()));
             }
-            LinkedListStPerS::from_vec(v)
+            LinkedListStPerS::from_vec(values)
         }
+
         fn iterate<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
             let mut acc = x;
-            for i in 0..<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a) {
-                acc = f(&acc, <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i));
+            for i in 0..a.length() {
+                acc = f(&acc, a.nth(i));
             }
             acc
         }
+
         fn iteratePrefixes<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LinkedListStPerS<A>, A) {
             let mut acc = x.clone();
-            let mut v: Vec<A> = Vec::with_capacity(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a));
-            for i in 0..<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a) {
-                v.push(acc.clone());
-                acc = f(&acc, <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, i));
+            let mut prefixes: Vec<A> = Vec::with_capacity(a.length());
+            for i in 0..a.length() {
+                prefixes.push(acc.clone());
+                acc = f(&acc, a.nth(i));
             }
-            (LinkedListStPerS::from_vec(v), acc)
+            (LinkedListStPerS::from_vec(prefixes), acc)
         }
+
         fn reduce(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
-            let n = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a);
-            if 0usize == n {
+            let len = a.length();
+            if len == 0 {
                 return id;
             }
-            if 1usize == n {
-                return <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(a, 0).clone();
+            if len == 1 {
+                return a.nth(0).clone();
             }
-            let m = n / 2usize;
-            let left = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::subseq_copy(a, 0, m);
-            let right = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::subseq_copy(a, m, n - m);
+            let mid = len / 2;
+            let left = a.subseq_copy(0, mid);
+            let right = a.subseq_copy(mid, len - mid);
             let l = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::reduce(&left, f, id.clone());
             let r = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::reduce(&right, f, id);
             f(&l, &r)
         }
+
         fn scan(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStPerS<T>, T) {
-            let n = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(a);
-            if 0usize == n {
-                return (
-                    <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::tabulate(|_| id.clone(), 0),
-                    id,
-                );
+            let len = a.length();
+            if len == 0 {
+                return (LinkedListStPerS::empty(), id);
             }
-            let mut prefixes: Vec<T> = Vec::with_capacity(n);
-            for i in 0..n {
-                let prefix = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::subseq_copy(a, 0, i);
+            let mut prefixes: Vec<T> = Vec::with_capacity(len);
+            for i in 0..len {
+                let prefix = a.subseq_copy(0, i);
                 let red = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::reduce(&prefix, f, id.clone());
                 prefixes.push(red);
             }
             let total = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::reduce(a, f, id);
             (LinkedListStPerS::from_vec(prefixes), total)
         }
+
         fn flatten(ss: &LinkedListStPerS<LinkedListStPerS<T>>) -> LinkedListStPerS<T> {
-            let mut v: Vec<T> = Vec::new();
-            for i in 0..<LinkedListStPerS<LinkedListStPerS<T>> as LinkedListStPerTrait<LinkedListStPerS<T>>>::length(ss)
-            {
-                let inner =
-                    <LinkedListStPerS<LinkedListStPerS<T>> as LinkedListStPerTrait<LinkedListStPerS<T>>>::nth(ss, i);
-                for j in 0..<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::length(inner) {
-                    v.push(<LinkedListStPerS<T> as LinkedListStPerTrait<T>>::nth(inner, j).clone());
+            let mut values: Vec<T> = Vec::new();
+            for i in 0..ss.length() {
+                let inner = ss.nth(i);
+                for j in 0..inner.length() {
+                    values.push(inner.nth(j).clone());
                 }
             }
-            LinkedListStPerS::from_vec(v)
+            LinkedListStPerS::from_vec(values)
         }
+
         fn collect<A: StT, Bv: StT>(
             a: &LinkedListStPerS<Pair<A, Bv>>,
             cmp: impl Fn(&A, &A) -> O,
         ) -> LinkedListStPerS<Pair<A, LinkedListStPerS<Bv>>> {
-            let mut groups: Vec<(A, Vec<Bv>)> = Vec::new();
-            for i in 0..<LinkedListStPerS<Pair<A, Bv>> as LinkedListStPerTrait<Pair<A, Bv>>>::length(a) {
-                let Pair(k, v) =
-                    <LinkedListStPerS<Pair<A, Bv>> as LinkedListStPerTrait<Pair<A, Bv>>>::nth(a, i).clone();
-                let mut found = false;
-                for (gk, gv) in &mut groups {
-                    if cmp(&k, gk) == O::Equal {
-                        gv.push(v.clone());
-                        found = true;
-                        break;
-                    }
-                }
-                if !found {
-                    groups.push((k, vec![v]));
+            let mut groups: Vec<Pair<A, Vec<Bv>>> = Vec::new();
+            for i in 0..a.length() {
+                let Pair(k, v) = a.nth(i).clone();
+                if let Some(Pair(_, existing)) = groups.iter_mut().find(|Pair(gk, _)| cmp(&k, gk) == O::Equal) {
+                    existing.push(v);
+                } else {
+                    groups.push(Pair(k, vec![v]));
                 }
             }
             let pairs: Vec<Pair<A, LinkedListStPerS<Bv>>> = groups
                 .into_iter()
-                .map(|(k, vs)| Pair(k, LinkedListStPerS::from_vec(vs)))
+                .map(|Pair(k, vs)| Pair(k, LinkedListStPerS::from_vec(vs)))
                 .collect();
             LinkedListStPerS::from_vec(pairs)
         }

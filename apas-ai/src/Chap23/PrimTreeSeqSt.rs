@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Primitive tree sequence implementation for Chapter 23.
 //!
 //!  This module defines a single-threaded primitive tree sequence based on the APAS
@@ -45,16 +46,13 @@ pub mod PrimTreeSeqSt {
         /// Exposes the internal structure as `Zero`, `One`, or `Two` parts.
         pub fn expose(&self) -> PrimTreeSeqStTree<T> {
             match self.data.len() {
-                0 => PrimTreeSeqStTree::Zero,
-                1 => PrimTreeSeqStTree::One(self.data[0].clone()),
-                _ => {
+                | 0 => PrimTreeSeqStTree::Zero,
+                | 1 => PrimTreeSeqStTree::One(self.data[0].clone()),
+                | _ => {
                     let mid = self.data.len() / 2;
                     let left = self.data[..mid].to_vec();
                     let right = self.data[mid..].to_vec();
-                    PrimTreeSeqStTree::Two(
-                        PrimTreeSeqStS::from_vec(left),
-                        PrimTreeSeqStS::from_vec(right),
-                    )
+                    PrimTreeSeqStTree::Two(PrimTreeSeqStS::from_vec(left), PrimTreeSeqStS::from_vec(right))
                 }
             }
         }
@@ -62,9 +60,9 @@ pub mod PrimTreeSeqSt {
         /// Reassembles a primitive tree sequence from an exposed tree.
         pub fn join(tree: PrimTreeSeqStTree<T>) -> Self {
             match tree {
-                PrimTreeSeqStTree::Zero => Self::empty(),
-                PrimTreeSeqStTree::One(value) => Self::singleton(value),
-                PrimTreeSeqStTree::Two(left, right) => {
+                | PrimTreeSeqStTree::Zero => Self::empty(),
+                | PrimTreeSeqStTree::One(value) => Self::singleton(value),
+                | PrimTreeSeqStTree::Two(left, right) => {
                     let mut combined = left.into_vec();
                     combined.extend(right.into_vec());
                     PrimTreeSeqStS::from_vec(combined)

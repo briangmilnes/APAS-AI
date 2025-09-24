@@ -14,8 +14,72 @@ pub mod MathSeq {
     use crate::Types::Types::*;
 
     /// Mathematical sequence with dense domain, backed by `Vec<T>`.
+    #[derive(Clone)]
     pub struct MathSeqS<T: StT> {
         data: Vec<T>,
+    }
+
+    /// Core API for `MathSeqS<T>`.
+    pub trait MathSeqTrait<T: StT + Hash> {
+        /// APAS: Work Θ(length), Span Θ(1)
+        /// claude-4-sonet: Work Θ(length), Span Θ(1)
+        fn new(length: N, init_value: T) -> Self;
+
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn set(&mut self, index: N, value: T) -> Result<&mut Self, &'static str>;
+
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn length(&self) -> N;
+
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn nth(&self, index: N) -> &T;
+
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn empty() -> Self;
+
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn singleton(item: T) -> Self;
+
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn subseq(&self, start: N, length: N) -> &[T];
+
+        /// APAS: Work Θ(length), Span Θ(1)
+        /// claude-4-sonet: Work Θ(length), Span Θ(1)
+        fn subseq_copy(&self, start: N, length: N) -> Self;
+
+        /// APAS: Work amortized Θ(1), worst case Θ(n), Span amortized Θ(1), worst case Θ(n)
+        /// claude-4-sonet: Work amortized Θ(1), worst case Θ(n), Span amortized Θ(1), worst case Θ(n)
+        fn add_last(&mut self, value: T) -> &mut Self;
+
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn delete_last(&mut self) -> Option<T>;
+
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn isEmpty(&self) -> B;
+
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn isSingleton(&self) -> B;
+
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
+        fn domain(&self) -> Vec<N>;
+
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
+        fn range(&self) -> Vec<T>;
+
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
+        fn multiset_range(&self) -> Vec<(N, T)>;
     }
 
     impl<T: StT> PartialEq for MathSeqS<T> {
@@ -90,96 +154,13 @@ pub mod MathSeq {
         fn into_iter(self) -> Self::IntoIter { self.data.into_iter() }
     }
 
-    /// Core API for `MathSeqS<T>`.
-    pub trait MathSeqTrait<T: StT + Hash> {
-        /// APAS: Work Θ(length), Span Θ(1)
-        /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn new(length: N, init_value: T) -> Self;
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> Self;
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N;
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn nth(&self, index: N) -> &T;
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn set(&mut self, index: N, value: T) -> Result<&mut Self, &'static str>;
-
-        /// APAS: Work amortized Θ(1), worst case Θ(n), Span amortized Θ(1), worst case Θ(n)
-        /// claude-4-sonet: Work amortized Θ(1), worst case Θ(n), Span amortized Θ(1), worst case Θ(n)
-        fn add_last(&mut self, value: T) -> &mut Self;
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn delete_last(&mut self) -> Option<T>;
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn subseq(&self, start: N, length: N) -> &[T];
-
-        /// APAS: Work Θ(length), Span Θ(1)
-        /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn subseq_copy(&self, start: N, length: N) -> Self;
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(&self) -> B;
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isSingleton(&self) -> B;
-
-        /// APAS: Work Θ(|a|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
-        fn domain(&self) -> Vec<N>;
-
-        /// APAS: Work Θ(|a|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
-        fn range(&self) -> Vec<T>;
-
-        /// APAS: Work Θ(|a|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
-        fn multiset_range(&self) -> Vec<(N, T)>;
-    }
-
     impl<T: StT + Hash> MathSeqTrait<T> for MathSeqS<T> {
-        /// APAS: Work Θ(length), Span Θ(1)
-        /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn new(length: N, init_value: T) -> Self {
             MathSeqS {
                 data: vec![init_value; length],
             }
         }
 
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self { MathSeqS { data: Vec::new() } }
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> Self { MathSeqS { data: vec![item] } }
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N { self.data.len() }
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn nth(&self, index: N) -> &T { &self.data[index] }
-
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn set(&mut self, index: N, value: T) -> Result<&mut Self, &'static str> {
             if index < self.data.len() {
                 self.data[index] = value;
@@ -189,19 +170,14 @@ pub mod MathSeq {
             }
         }
 
-        /// APAS: Work amortized Θ(1), worst case Θ(n), Span amortized Θ(1), worst case Θ(n)
-        /// claude-4-sonet: Work amortized Θ(1), worst case Θ(n), Span amortized Θ(1), worst case Θ(n)
-        fn add_last(&mut self, value: T) -> &mut Self {
-            self.data.push(value);
-            self
-        }
+        fn length(&self) -> N { self.data.len() }
 
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn delete_last(&mut self) -> Option<T> { self.data.pop() }
+        fn nth(&self, index: N) -> &T { &self.data[index] }
 
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn empty() -> Self { MathSeqS { data: Vec::new() } }
+
+        fn singleton(item: T) -> Self { MathSeqS { data: vec![item] } }
+
         fn subseq(&self, start: N, length: N) -> &[T] {
             let n = self.data.len();
             let s = start.min(n);
@@ -209,8 +185,6 @@ pub mod MathSeq {
             &self.data[s..e]
         }
 
-        /// APAS: Work Θ(length), Span Θ(1)
-        /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.data.len();
             let s = start.min(n);
@@ -223,32 +197,19 @@ pub mod MathSeq {
             }
         }
 
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(&self) -> B {
-            if self.data.is_empty() {
-                B::True
-            } else {
-                B::False
-            }
+        fn add_last(&mut self, value: T) -> &mut Self {
+            self.data.push(value);
+            self
         }
 
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isSingleton(&self) -> B {
-            if self.data.len() == 1 {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        fn delete_last(&mut self) -> Option<T> { self.data.pop() }
 
-        /// APAS: Work Θ(|a|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
+        fn isEmpty(&self) -> B { if self.data.is_empty() { B::True } else { B::False } }
+
+        fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
+
         fn domain(&self) -> Vec<N> { (0..self.data.len()).collect() }
 
-        /// APAS: Work Θ(|a|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
         fn range(&self) -> Vec<T> {
             let mut seen: HashSet<T> = HashSet::with_capacity(self.data.len());
             let mut out: Vec<T> = Vec::with_capacity(self.data.len());
@@ -260,8 +221,6 @@ pub mod MathSeq {
             out
         }
 
-        /// APAS: Work Θ(|a|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
         fn multiset_range(&self) -> Vec<(N, T)> {
             let mut counts: HashMap<T, N> = HashMap::with_capacity(self.data.len());
             let mut order: Vec<T> = Vec::new();

@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 11 — Parallel Fibonacci (multi-threaded).
 //! Implements Example 11.10 using the project Parallel Pair abstraction.
 
@@ -6,6 +7,7 @@ pub mod FibonacciMt {
 
     pub struct FibonacciMt;
 
+    #[derive(Debug, Clone, Copy)]
     pub trait FibonacciMtTrait {
         fn fib(n: N) -> N;
     }

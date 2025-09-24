@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Ephemeral binary search tree built on `BBTEph` primitives with fine-grained locking.
 
 pub mod BSTPlainMtEph {
@@ -36,6 +37,7 @@ pub mod BSTPlainMtEph {
         }
     }
 
+    #[derive(Clone)]
     pub struct BSTPlainMtEph<T: StTInMtT + Ord> {
         root: Link<T>,
     }
@@ -52,7 +54,7 @@ pub mod BSTPlainMtEph {
         fn height(&self) -> N;
         fn minimum(&self) -> Option<T>;
         fn maximum(&self) -> Option<T>;
-        fn in_order(&self) -> ArrayStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
     }
 
     impl<T: StTInMtT + Ord> BSTPlainMtEph<T> {
@@ -117,25 +119,13 @@ pub mod BSTPlainMtEph {
             find_rec(&self.root, target)
         }
 
-        pub fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { B::True } else { B::False } }
         pub fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             guard.as_ref().map_or(0, |node| node.size)
         }
 
-        pub fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        pub fn is_empty(&self) -> B { if self.size() == 0 { B::True } else { B::False } }
 
         pub fn height(&self) -> N {
             let guard = self.root.read().unwrap();
@@ -186,7 +176,7 @@ pub mod BSTPlainMtEph {
             rightmost(&self.root)
         }
 
-        pub fn in_order(&self) -> ArrayStPerS<T> {
+        pub fn in_order(&self) -> ArraySeqStPerS<T> {
             fn traverse<T: StTInMtT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
                 let guard = link.read().unwrap();
                 if let Some(node) = guard.as_ref() {
@@ -202,7 +192,7 @@ pub mod BSTPlainMtEph {
 
             let mut values = Vec::new();
             traverse(&self.root, &mut values);
-            ArrayStPerS::from_vec(values)
+            ArraySeqStPerS::from_vec(values)
         }
     }
 
@@ -220,7 +210,7 @@ pub mod BSTPlainMtEph {
         fn height(&self) -> N { BSTPlainMtEph::height(self) }
         fn minimum(&self) -> Option<T> { BSTPlainMtEph::minimum(self) }
         fn maximum(&self) -> Option<T> { BSTPlainMtEph::maximum(self) }
-        fn in_order(&self) -> ArrayStPerS<T> { BSTPlainMtEph::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> { BSTPlainMtEph::in_order(self) }
     }
 
     #[macro_export]

@@ -1,0 +1,5 @@
+
+ I was missinformed that pair tuples had no Display and Debug. If their arguments have
+ them then they have them.
+
+ So I have 

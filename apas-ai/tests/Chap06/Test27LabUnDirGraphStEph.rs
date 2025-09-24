@@ -1,6 +1,7 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestLabUnDirGraphStEph {
+    use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::Chap6::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
-    use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use apas_ai::Types::Types::*;
     use apas_ai::{LabUnDirGraphStEphLit, SetLit};
 
@@ -17,7 +18,7 @@ pub mod TestLabUnDirGraphStEph {
         let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
         g.add_vertex(1);
         g.add_vertex(2);
-        
+
         assert_eq!(g.vertices().size(), 2);
         assert!(g.vertices().mem(&1) == B::True);
         assert!(g.vertices().mem(&2) == B::True);
@@ -29,7 +30,7 @@ pub mod TestLabUnDirGraphStEph {
         let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
         g.add_labeled_edge(1, 2, "edge12");
         g.add_labeled_edge(2, 3, "edge23");
-        
+
         assert_eq!(g.vertices().size(), 3);
         assert_eq!(g.labeled_edges().size(), 2);
         assert!(g.has_edge(&1, &2));
@@ -37,7 +38,7 @@ pub mod TestLabUnDirGraphStEph {
         assert!(g.has_edge(&2, &3));
         assert!(g.has_edge(&3, &2)); // Undirected - both directions
         assert!(!g.has_edge(&1, &3));
-        
+
         assert_eq!(g.get_edge_label(&1, &2), Some(&"edge12"));
         assert_eq!(g.get_edge_label(&2, &1), Some(&"edge12")); // Undirected
         assert_eq!(g.get_edge_label(&2, &3), Some(&"edge23"));
@@ -51,17 +52,17 @@ pub mod TestLabUnDirGraphStEph {
         g.add_labeled_edge(1, 2, "a");
         g.add_labeled_edge(1, 3, "b");
         g.add_labeled_edge(2, 3, "c");
-        
+
         let neighbors_1 = g.neighbors(&1);
         assert_eq!(neighbors_1.size(), 2);
         assert!(neighbors_1.mem(&2) == B::True);
         assert!(neighbors_1.mem(&3) == B::True);
-        
+
         let neighbors_2 = g.neighbors(&2);
         assert_eq!(neighbors_2.size(), 2);
         assert!(neighbors_2.mem(&1) == B::True);
         assert!(neighbors_2.mem(&3) == B::True);
-        
+
         let neighbors_3 = g.neighbors(&3);
         assert_eq!(neighbors_3.size(), 2);
         assert!(neighbors_3.mem(&1) == B::True);
@@ -73,7 +74,7 @@ pub mod TestLabUnDirGraphStEph {
         let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
         g.add_labeled_edge(1, 2, "label");
         g.add_labeled_edge(2, 3, "another");
-        
+
         let edges = g.edges();
         assert_eq!(edges.size(), 2);
         // Note: edges are normalized, so (1,2) and (2,3) should be stored as is
@@ -95,7 +96,7 @@ pub mod TestLabUnDirGraphStEph {
             V: [1, 2, 3],
             E: [(1, 2, "first"), (2, 3, "second")]
         );
-        
+
         assert_eq!(g.vertices().size(), 3);
         assert_eq!(g.labeled_edges().size(), 2);
         assert!(g.has_edge(&1, &2));
@@ -113,7 +114,7 @@ pub mod TestLabUnDirGraphStEph {
             V: [1, 2],
             E: [(2, 1, "test")] // This should be normalized to (1, 2)
         );
-        
+
         assert!(g.has_edge(&1, &2));
         assert!(g.has_edge(&2, &1)); // Both directions should work
         assert_eq!(g.get_edge_label(&1, &2), Some(&"test"));
@@ -129,7 +130,7 @@ pub mod TestLabUnDirGraphStEph {
         );
         assert_eq!(g1.get_edge_label(&"a", &"b"), Some(&42));
         assert_eq!(g1.get_edge_label(&"b", &"a"), Some(&42)); // Undirected
-        
+
         // Test with string labels
         let g2 = LabUnDirGraphStEphLit!(
             V: [1, 2],
@@ -167,10 +168,10 @@ pub mod TestLabUnDirGraphStEph {
     fn test_labelled_undir_graph_self_loop() {
         let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
         g.add_labeled_edge(1, 1, "self_loop");
-        
+
         assert!(g.has_edge(&1, &1));
         assert_eq!(g.get_edge_label(&1, &1), Some(&"self_loop"));
-        
+
         let neighbors = g.neighbors(&1);
         assert_eq!(neighbors.size(), 1);
         assert!(neighbors.mem(&1) == B::True);
@@ -183,7 +184,7 @@ pub mod TestLabUnDirGraphStEph {
         let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
         g.add_labeled_edge(1, 2, "first");
         g.add_labeled_edge(1, 2, "second"); // This creates a second labeled edge
-        
+
         assert_eq!(g.labeled_edges().size(), 2);
         // Both edges should exist in the graph
         assert!(g.labeled_edges().mem(&LabEdge(1, 2, "first")) == B::True);

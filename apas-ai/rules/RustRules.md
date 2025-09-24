@@ -5,12 +5,13 @@
 #### Terminology alignment
 - Prefer standard programming-languages terminology alongside Rust usage: write `rust-term (programming-languages-term)` when referencing Rust-specific jargon (e.g., `blanket impl (polymorphic extension)`).
 
-#### Always choose the minimal solution
-- Extend existing types/traits rather than creating new ones
-- When sketching designs, start with the smallest possible change
-- Avoid over-engineering - most example code online is unnecessarily complex
-- Elegance comes from simplicity, not from adding features or abstractions
-- Strongly prefer simpler, more elegant solutions over feature-heavy alternatives; resist adding optional knobs unless the problem demands them.
+#### Always choose the minimal solution (KISS)
+- Extend existing types/traits rather than creating new ones; look first for the smallest viable patch
+- Start every sketch from the minimal change that satisfies the requirement before considering embellishments
+- Avoid over-engineering—most example code online is unnecessarily complex; remove anything that is not strictly required
+- Elegance comes from simplicity: prefer direct, single-purpose code over layers of helpers or abstractions
+- Strongly prefer simpler, more elegant solutions over feature-heavy alternatives; resist optional knobs unless the problem demands them
+- When in doubt, ask “does this extra code buy us behaviour the user requested?”—if not, keep it out
 
 #### Closure Mutation Patterns
 - **FnMut vs Fn**: When closures need to mutate captured variables, they require `FnMut` trait bounds
@@ -40,7 +41,7 @@
 - Don’t alias std items. Import by their real names.
 - Bounds in code should read minimally (see baseline rules below).
 - Prefer importing frequently used std items (`Iter`, `Formatter`, etc.) rather than repeating long paths.
-- Import order: after the module declaration add a blank line, then all `use std::…` lines, then a blank line, then `crate::…` imports.
+- Import order: after the module declaration add a blank line, then all `use std::…` lines, then a blank line, then `use` statements from external crates, then another blank line followed by `use crate::Types::Types::*;` if needed and the rest of the internal `crate::…` imports.
 
 Result guidance
 - Formatting-only files (no generic `Result<T, E>`):

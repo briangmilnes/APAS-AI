@@ -1,9 +1,10 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestRelationStEphChap5_2 {
-    use apas_ai::Chap5::RelationStEphChap5_2::RelationStEphChap5_2::*;
+    use apas_ai::Chap05::RelationStEph::RelationStEph::*;
+    use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::SetLit;
-    use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use apas_ai::Types::Types::*; // macro import
-    use apas_ai::{RelationLit, PairLit};
+    use apas_ai::{PairLit, RelationLit};
 
     #[test]
     fn test_relation_domain_range_and_mem() {

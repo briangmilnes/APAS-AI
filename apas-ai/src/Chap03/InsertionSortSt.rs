@@ -1,18 +1,16 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 3 insertion sort over mutable slices.
 
 pub mod InsertionSortSt {
 
-    pub trait InsertionSortStTrait {
+    pub trait InsertionSortStTrait<T: Ord + Clone> {
         // APAS - work O(n²), span O(n²)
         // gpt-5-codex-medium: work O(n²), span O(n²)
-        fn insSort<T: Ord + Clone>(&self, slice: &mut [T]);
+        fn insSort(&self, slice: &mut [T]);
     }
 
-    #[derive(Default, Clone, Copy)]
-    pub struct InsertionSortSt;
-
-    impl InsertionSortStTrait for InsertionSortSt {
-        fn insSort<T: Ord + Clone>(&self, slice: &mut [T]) {
+    impl<T: Ord + Clone> InsertionSortStTrait<T> for T {
+        fn insSort(&self, slice: &mut [T]) {
             for i in 1..slice.len() {
                 let key = slice[i].clone();
                 let mut j = i;

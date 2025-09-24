@@ -1,7 +1,8 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestDirGraphStEph {
+    use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::Chap6::DirGraphStEph::DirGraphStEph::*;
     use apas_ai::SetLit;
-    use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use apas_ai::Types::Types::*;
 
     #[test]

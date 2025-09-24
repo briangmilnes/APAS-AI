@@ -1,6 +1,7 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
-use apas_ai::ArrayStPerSLit;
+use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Types::Types::*;
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
@@ -13,8 +14,8 @@ fn bench_tabulate_map_per_ch18(c: &mut Criterion) {
     let n: N = 10_000;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let s: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::tabulate(|i| i, len);
-            let m: ArrayStPerS<N> = <ArrayStPerS<N> as ArraySeqStPerChap18Trait<N>>::map(&s, |x| x + 1);
+            let s: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerChap18Trait<N>>::tabulate(|i| i, len);
+            let m: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerChap18Trait<N>>::map(&s, |x| x + 1);
             black_box((s.length(), m.length()))
         })
     });

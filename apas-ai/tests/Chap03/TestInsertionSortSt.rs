@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::Chap03::InsertionSortSt::InsertionSortSt::{InsertionSortSt, InsertionSortStTrait};
 
 fn sort_and_assert(mut data: Vec<i32>, expected: &[i32]) {
@@ -13,24 +14,16 @@ fn insertion_sort_handles_empty() {
 }
 
 #[test]
-fn insertion_sort_single_element() {
-    sort_and_assert(vec![42], &[42]);
-}
+fn insertion_sort_single_element() { sort_and_assert(vec![42], &[42]); }
 
 #[test]
-fn insertion_sort_already_sorted() {
-    sort_and_assert(vec![1, 2, 3, 4, 5], &[1, 2, 3, 4, 5]);
-}
+fn insertion_sort_already_sorted() { sort_and_assert(vec![1, 2, 3, 4, 5], &[1, 2, 3, 4, 5]); }
 
 #[test]
-fn insertion_sort_reverse_order() {
-    sort_and_assert(vec![5, 4, 3, 2, 1], &[1, 2, 3, 4, 5]);
-}
+fn insertion_sort_reverse_order() { sort_and_assert(vec![5, 4, 3, 2, 1], &[1, 2, 3, 4, 5]); }
 
 #[test]
-fn insertion_sort_with_duplicates() {
-    sort_and_assert(vec![3, 1, 2, 3, 1], &[1, 1, 2, 3, 3]);
-}
+fn insertion_sort_with_duplicates() { sort_and_assert(vec![3, 1, 2, 3, 1], &[1, 1, 2, 3, 3]); }
 
 #[test]
 fn insertion_sort_random_slice() {

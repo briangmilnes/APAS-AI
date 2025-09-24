@@ -1,11 +1,12 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6 Labeled Directed Graph (ephemeral) using Set for vertices and labeled arcs.
 
 pub mod LabDirGraphStEph {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
-    use crate::SetLit;
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
     use crate::Types::Types::*;
 
     #[derive(Clone)]
@@ -52,13 +53,9 @@ pub mod LabDirGraphStEph {
             LabDirGraphStEph { vertices, labeled_arcs }
         }
 
-        fn vertices(&self) -> &Set<V> {
-            &self.vertices
-        }
+        fn vertices(&self) -> &Set<V> { &self.vertices }
 
-        fn labeled_arcs(&self) -> &Set<LabEdge<V, L>> {
-            &self.labeled_arcs
-        }
+        fn labeled_arcs(&self) -> &Set<LabEdge<V, L>> { &self.labeled_arcs }
 
         fn arcs(&self) -> Set<Edge<V>> {
             let mut arcs = Set::empty();
@@ -68,9 +65,7 @@ pub mod LabDirGraphStEph {
             arcs
         }
 
-        fn add_vertex(&mut self, v: V) {
-            self.vertices.insert(v);
-        }
+        fn add_vertex(&mut self, v: V) { self.vertices.insert(v); }
 
         fn add_labeled_arc(&mut self, from: V, to: V, label: L) {
             self.vertices.insert(from.clone());
@@ -133,8 +128,11 @@ pub mod LabDirGraphStEph {
         L: Clone + Display + Debug + Eq + Hash,
     {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "LabDirGraph {{ vertices: {:?}, labeled_arcs: {:?} }}", 
-                   self.vertices, self.labeled_arcs)
+            write!(
+                f,
+                "LabDirGraph {{ vertices: {:?}, labeled_arcs: {:?} }}",
+                self.vertices, self.labeled_arcs
+            )
         }
     }
 

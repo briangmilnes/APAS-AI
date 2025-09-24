@@ -1,9 +1,10 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 36 (Multi-threaded): Quicksort with three pivot strategies over `ArraySeqMtEph`.
 
 pub mod Chapter36Mt {
     use std::thread;
 
-    use rand::{rng, Rng};
+    use rand::{Rng, rng};
 
     use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;

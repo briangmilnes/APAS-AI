@@ -1,11 +1,12 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6 Labeled Undirected Graph (ephemeral) using Set for vertices and labeled edges.
 
 pub mod LabUnDirGraphStEph {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
-    use crate::SetLit;
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
     use crate::Types::Types::*;
 
     #[derive(Clone)]
@@ -49,16 +50,15 @@ pub mod LabUnDirGraphStEph {
         }
 
         fn from_vertices_and_labeled_edges(vertices: Set<V>, labeled_edges: Set<LabEdge<V, L>>) -> Self {
-            LabUnDirGraphStEph { vertices, labeled_edges }
+            LabUnDirGraphStEph {
+                vertices,
+                labeled_edges,
+            }
         }
 
-        fn vertices(&self) -> &Set<V> {
-            &self.vertices
-        }
+        fn vertices(&self) -> &Set<V> { &self.vertices }
 
-        fn labeled_edges(&self) -> &Set<LabEdge<V, L>> {
-            &self.labeled_edges
-        }
+        fn labeled_edges(&self) -> &Set<LabEdge<V, L>> { &self.labeled_edges }
 
         fn edges(&self) -> Set<Edge<V>> {
             let mut edges = Set::empty();
@@ -68,9 +68,7 @@ pub mod LabUnDirGraphStEph {
             edges
         }
 
-        fn add_vertex(&mut self, v: V) {
-            self.vertices.insert(v);
-        }
+        fn add_vertex(&mut self, v: V) { self.vertices.insert(v); }
 
         fn add_labeled_edge(&mut self, v1: V, v2: V, label: L) {
             self.vertices.insert(v1.clone());
@@ -86,8 +84,8 @@ pub mod LabUnDirGraphStEph {
         fn get_edge_label(&self, v1: &V, v2: &V) -> Option<&L> {
             // Check both orientations since this is undirected
             for labeled_edge in self.labeled_edges.iter() {
-                if (labeled_edge.0 == *v1 && labeled_edge.1 == *v2) || 
-                   (labeled_edge.0 == *v2 && labeled_edge.1 == *v1) {
+                if (labeled_edge.0 == *v1 && labeled_edge.1 == *v2) || (labeled_edge.0 == *v2 && labeled_edge.1 == *v1)
+                {
                     return Some(&labeled_edge.2);
                 }
             }
@@ -97,8 +95,8 @@ pub mod LabUnDirGraphStEph {
         fn has_edge(&self, v1: &V, v2: &V) -> bool {
             // Check both orientations since this is undirected
             for labeled_edge in self.labeled_edges.iter() {
-                if (labeled_edge.0 == *v1 && labeled_edge.1 == *v2) || 
-                   (labeled_edge.0 == *v2 && labeled_edge.1 == *v1) {
+                if (labeled_edge.0 == *v1 && labeled_edge.1 == *v2) || (labeled_edge.0 == *v2 && labeled_edge.1 == *v1)
+                {
                     return true;
                 }
             }
@@ -141,8 +139,11 @@ pub mod LabUnDirGraphStEph {
         L: StT + Hash,
     {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "LabUnDirGraph {{ vertices: {:?}, labeled_edges: {:?} }}", 
-                   self.vertices, self.labeled_edges)
+            write!(
+                f,
+                "LabUnDirGraph {{ vertices: {:?}, labeled_edges: {:?} }}",
+                self.vertices, self.labeled_edges
+            )
         }
     }
 

@@ -1,7 +1,8 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestAVLTreeSeqPer {
-    use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use apas_ai::AVLTreeSeqStPerSLit;
+    use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use apas_ai::Types::Types::*;
 
     #[test]

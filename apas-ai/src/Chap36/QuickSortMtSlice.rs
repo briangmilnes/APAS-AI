@@ -1,9 +1,10 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 36 (Multi-threaded Slice): Quicksort over `ArraySeqMtEphSlice` without extra copies.
 
 pub mod Chapter36MtSlice {
     use std::thread;
 
-    use rand::{rng, Rng};
+    use rand::{Rng, rng};
 
     use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
     use crate::Types::Types::*;

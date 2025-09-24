@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Set interface built atop the Plain multi-threaded BST implementation.
 
 pub mod BSTSetPlainMtEph {
@@ -7,6 +8,7 @@ pub mod BSTSetPlainMtEph {
     use crate::Chap37::BSTPlainMtEph::BSTPlainMtEph::BSTPlainMtEph;
     use crate::Types::Types::*;
 
+    #[derive(Debug, Clone)]
     pub struct BSTSetPlainMtEph<T: StTInMtT + Ord> {
         tree: BSTPlainMtEph<T>,
     }
@@ -32,7 +34,7 @@ pub mod BSTSetPlainMtEph {
         fn join_m(left: Self, pivot: T, right: Self) -> Self;
         fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self;
         fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T;
-        fn iter_in_order(&self) -> ArrayStPerS<T>;
+        fn iter_in_order(&self) -> ArraySeqStPerS<T>;
         fn as_tree(&self) -> &BSTPlainMtEph<T>;
     }
 
@@ -173,7 +175,7 @@ pub mod BSTSetPlainMtEph {
                 .fold(base, |acc, value| op(acc, value.clone()))
         }
 
-        pub fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }
+        pub fn iter_in_order(&self) -> ArraySeqStPerS<T> { self.tree.in_order() }
 
         pub fn as_tree(&self) -> &BSTPlainMtEph<T> { &self.tree }
 
@@ -319,7 +321,7 @@ pub mod BSTSetPlainMtEph {
             Self::reduce(self, op, base)
         }
 
-        fn iter_in_order(&self) -> ArrayStPerS<T> { self.tree.in_order() }
+        fn iter_in_order(&self) -> ArraySeqStPerS<T> { self.tree.in_order() }
 
         fn as_tree(&self) -> &BSTPlainMtEph<T> { &self.tree }
     }

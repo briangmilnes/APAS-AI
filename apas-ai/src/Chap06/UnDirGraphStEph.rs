@@ -1,11 +1,12 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6.1 Undirected Graph (ephemeral) using Set for vertices and edges.
 
 pub mod UnDirGraphStEph {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
-    
-    use crate::SetLit;
+
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
     use crate::Types::Types::*;
 
     #[derive(Clone)]
@@ -94,13 +95,7 @@ pub mod UnDirGraphStEph {
             result
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B {
-            if &e.0 == v || &e.1 == v {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { B::True } else { B::False } }
 
         fn Degree(&self, v: &V) -> N { self.NG(v).size() }
     }

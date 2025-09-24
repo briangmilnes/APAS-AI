@@ -1,6 +1,7 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::Chap12::Exercise12_5::Exercise12_5::{ConcurrentStackMt, ConcurrentStackMtTrait};
 use std::collections::HashSet;
-use std::sync::{mpsc, Arc};
+use std::sync::{Arc, mpsc};
 use std::thread;
 
 #[test]
@@ -69,8 +70,8 @@ fn multi_thread_pop_consumes_all_elements() {
             let mut items = Vec::new();
             loop {
                 match stack_clone.pop() {
-                    Some(value) => items.push(value),
-                    None => break,
+                    | Some(value) => items.push(value),
+                    | None => break,
                 }
             }
             tx_clone.send(items).expect("send popped items");

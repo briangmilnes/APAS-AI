@@ -1,8 +1,9 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestAVLTreeSeqStPer {
+    use apas_ai::AVLTreeSeqStPerSLit;
     use apas_ai::Chap37::AVLTreeSeqStPer;
     use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use apas_ai::AVLTreeSeqStPerSLit;
     use apas_ai::Types::Types::*; // macro import
 
     #[test]
@@ -44,10 +45,7 @@ pub mod TestAVLTreeSeqStPer {
         let expected_d = AVLTreeSeqStPerSLit![2];
         assert_eq!(d, expected_d);
         let f: AVLTreeSeqStPerS<N> =
-            <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::filter(
-                &t,
-                |x| if *x < 3 { B::True } else { B::False },
-            );
+            <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::filter(&t, |x| if *x < 3 { B::True } else { B::False });
         let expected_f = AVLTreeSeqStPerSLit![0, 1, 2];
         assert_eq!(f, expected_f);
     }
@@ -57,9 +55,8 @@ pub mod TestAVLTreeSeqStPer {
         let a: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::tabulate(|i| i, 4);
         let b: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::tabulate(|i| i + 3, 4);
         let c = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::append(&a, &b);
-        let f = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::filter(&c, |x| {
-            if *x >= 2 { B::True } else { B::False }
-        });
+        let f =
+            <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::filter(&c, |x| if *x >= 2 { B::True } else { B::False });
         let m = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::map(&f, |x| x * 2);
         let vals: Vec<N> = m.iter().map(|x| *x).collect();
         assert_eq!(vals, vec![4, 6, 8, 10, 12]);

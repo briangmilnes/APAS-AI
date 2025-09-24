@@ -1,7 +1,8 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestLinkedListStEph {
+    use apas_ai::Chap19::LinkedListStEph::LinkedListStEph::*;
     use apas_ai::LinkedListStEph; // macro import
     use apas_ai::LinkedListStEph::LinkedListStEph::*;
-    use apas_ai::Chap19::LinkedListStEph::LinkedListStEph::*;
     use apas_ai::LinkedListStEphSLit;
     use apas_ai::Types::Types::*;
 
@@ -51,15 +52,17 @@ pub mod TestLinkedListStEph {
 
     #[test]
     fn test_deflate_filter_iterate_reduce_scan_flatten_inject_ch19() {
-        let one = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(
-            |x| if *x == 1 { B::True } else { B::False },
-            &1,
-        );
+        let one =
+            <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(|x| if *x == 1 { B::True } else { B::False }, &1);
         expect_list(&one, &[1]);
         let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
-        let even = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&a, |x| {
-            if *x % 2 == 0 { B::True } else { B::False }
-        });
+        let even =
+            <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(
+                &a,
+                |x| {
+                    if *x % 2 == 0 { B::True } else { B::False }
+                },
+            );
         expect_list(&even, &[2, 4]);
         let sum = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::reduce(&a, &|x, y| x + y, 0);
         assert_eq!(sum, 10);

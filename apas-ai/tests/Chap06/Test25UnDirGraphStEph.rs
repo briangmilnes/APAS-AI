@@ -1,8 +1,9 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestUnDirGraphStEph {
-    use apas_ai::SetLit;
-    use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
-    use apas_ai::Types::Types::*;
+    use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::Chap6::UnDirGraphStEph::UnDirGraphStEph::*;
+    use apas_ai::SetLit;
+    use apas_ai::Types::Types::*;
 
     #[test]
     fn test_undigraph_vertices_and_edges() {

@@ -1,11 +1,12 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6 Weighted Undirected Graph (ephemeral) with floating-point weights - Multi-threaded version.
 
 pub mod WeightedUnDirGraphMtEphFloat {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
-    use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
     use crate::Types::Types::*;
 
     /// Weighted undirected graph with floating-point weights (multi-threaded, type alias)
@@ -15,15 +16,16 @@ pub mod WeightedUnDirGraphMtEphFloat {
     impl<V: StT + MtT + Hash + Ord> WeightedUnDirGraphMtEphFloat<V> {
         /// Create from vertices and weighted edges
         pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, OrderedFloat<f64>)>) -> Self {
-            let labeled_edges = edges.iter().map(|(v1, v2, weight)| {
-                LabEdge(v1.clone(), v2.clone(), *weight)
-            }).collect::<Vec<_>>();
-            
+            let labeled_edges = edges
+                .iter()
+                .map(|(v1, v2, weight)| LabEdge(v1.clone(), v2.clone(), *weight))
+                .collect::<Vec<_>>();
+
             let mut edge_set = Set::empty();
             for edge in labeled_edges {
                 edge_set.insert(edge);
             }
-            
+
             Self::from_vertices_and_labeled_edges(vertices, edge_set)
         }
 
@@ -61,13 +63,14 @@ pub mod WeightedUnDirGraphMtEphFloat {
 
         /// Get the total weight of all edges
         pub fn total_weight(&self) -> OrderedFloat<f64> {
-            self.labeled_edges().iter().map(|edge| edge.2).fold(OrderedFloat(0.0), |acc, w| acc + w)
+            self.labeled_edges()
+                .iter()
+                .map(|edge| edge.2)
+                .fold(OrderedFloat(0.0), |acc, w| acc + w)
         }
 
         /// Get the degree of a vertex (number of incident edges)
-        pub fn vertex_degree(&self, v: &V) -> usize {
-            self.neighbors(v).size()
-        }
+        pub fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
     }
 
     #[macro_export]

@@ -1,4 +1,5 @@
-use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap6::DirGraphStEph::DirGraphStEph::*;
 use apas_ai::Types::Types::*;
 use apas_ai::{PairLit, SetLit};

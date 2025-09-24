@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::LinkedListStEph::LinkedListStEph::*;
 use apas_ai::LinkedListStEphSLit;
 use apas_ai::Types::Types::*;

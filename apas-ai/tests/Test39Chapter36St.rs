@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chapter36St::Chapter36St::Chapter36StTrait;
 use apas_ai::*;
@@ -6,9 +7,7 @@ trait ToVec<T: StT> {
     fn to_vec(&self) -> Vec<T>;
 }
 impl<T: StT> ToVec<T> for ArraySeqStEphS<T> {
-    fn to_vec(&self) -> Vec<T> {
-        (0..self.length()).map(|i| self.nth(i).clone()).collect()
-    }
+    fn to_vec(&self) -> Vec<T> { (0..self.length()).map(|i| self.nth(i).clone()).collect() }
 }
 
 #[test]

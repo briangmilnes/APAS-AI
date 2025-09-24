@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::MathSeq::MathSeq::*;
 use apas_ai::MathSeqSLit;
 use apas_ai::Types::Types::*;

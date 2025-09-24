@@ -1,12 +1,13 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for AVLTreeSeq Eph Chap19-style operations using available Eph APIs.
 
 pub mod TestAVLTreeSeqStEph {
-    use apas_ai::Chap37::AVLTreeSeqStEph; // macro import
-    use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
     use apas_ai::AVLTreeSeqStEphSLit;
     use apas_ai::ArraySeqStEph;
     use apas_ai::ArraySeqStEph::ArraySeqStEph::*;
     use apas_ai::ArraySeqStEphSLit;
+    use apas_ai::Chap37::AVLTreeSeqStEph; // macro import
+    use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
     use apas_ai::Types::Types::*; // macro import
 
     #[test]

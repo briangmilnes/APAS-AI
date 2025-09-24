@@ -1,6 +1,7 @@
-use apas_ai::Chap12::Exercise12_2::Exercise12_2::{fetch_add_cas, FetchAddCasTrait};
-use std::sync::atomic::{AtomicUsize, Ordering};
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+use apas_ai::Chap12::Exercise12_2::Exercise12_2::{FetchAddCasTrait, fetch_add_cas};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicUsize, Ordering};
 use std::thread;
 
 #[test]

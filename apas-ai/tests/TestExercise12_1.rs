@@ -1,6 +1,7 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::Chap12::Exercise12_1::Exercise12_1::*;
-use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 use std::thread;
 use std::time::Duration;
 
@@ -24,7 +25,9 @@ fn spin_lock_excludes_parallel_threads() {
     }
 
     for handle in handles {
-        handle.join().expect("spin_lock_excludes_parallel_threads: worker panicked");
+        handle
+            .join()
+            .expect("spin_lock_excludes_parallel_threads: worker panicked");
     }
 
     assert_eq!(counter.load(Ordering::Relaxed), 4 * 128);

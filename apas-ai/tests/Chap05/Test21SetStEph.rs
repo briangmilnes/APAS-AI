@@ -1,9 +1,10 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestSetStEphChap5_1 {
 
+    use apas_ai::Chap05::SetStEph::SetStEph::*;
+    use apas_ai::PairLit;
     use apas_ai::SetLit;
-    use apas_ai::Chap5::SetStEphChap5_1::SetStEphChap5_1::*;
     use apas_ai::Types::Types::*; // macro import
-    use apas_ai::{PairLit};
 
     #[allow(dead_code)]
     fn macro_typecheck_exercise() {
@@ -19,10 +20,14 @@ pub mod TestSetStEphChap5_1 {
         let prod = a.CartesianProduct(&b);
 
         let expect: Set<Pair<N, char>> = SetLit![
-            PairLit!(0, 'a'), PairLit!(0, 'b'),
-            PairLit!(1, 'a'), PairLit!(1, 'b'),
-            PairLit!(2, 'a'), PairLit!(2, 'b'),
-            PairLit!(3, 'a'), PairLit!(3, 'b')
+            PairLit!(0, 'a'),
+            PairLit!(0, 'b'),
+            PairLit!(1, 'a'),
+            PairLit!(1, 'b'),
+            PairLit!(2, 'a'),
+            PairLit!(2, 'b'),
+            PairLit!(3, 'a'),
+            PairLit!(3, 'b')
         ];
         assert_eq!(prod, expect);
         assert_eq!(prod.size(), 8);

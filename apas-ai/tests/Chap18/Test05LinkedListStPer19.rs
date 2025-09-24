@@ -1,7 +1,8 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestLinkedListPer {
+    use apas_ai::Chap19::LinkedListStPer::LinkedListStPer::*;
     use apas_ai::LinkedListStPer; // macro import
     use apas_ai::LinkedListStPer::LinkedListStPer::*;
-    use apas_ai::Chap19::LinkedListStPer::LinkedListStPer::*;
     use apas_ai::LinkedListStPerSLit;
     use apas_ai::Types::Types::*;
 
@@ -30,15 +31,11 @@ pub mod TestLinkedListPer {
 
     #[test]
     fn test_deflate() {
-        let one = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::deflate(
-            |x| if *x > 0 { B::True } else { B::False },
-            &7,
-        );
+        let one =
+            <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::deflate(|x| if *x > 0 { B::True } else { B::False }, &7);
         assert_eq!(one, LinkedListStPerSLit![7]);
-        let none = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::deflate(
-            |x| if *x > 0 { B::True } else { B::False },
-            &0,
-        );
+        let none =
+            <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::deflate(|x| if *x > 0 { B::True } else { B::False }, &0);
         assert_eq!(none, LinkedListStPerS::new(0, 0));
     }
 

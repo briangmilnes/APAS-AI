@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
 use apas_ai::Chap37::BSTRBStEph::BSTRBStEph::BSTreeRB;

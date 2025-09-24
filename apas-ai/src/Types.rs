@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Common types used across the crate.
 //!
 
@@ -33,8 +34,8 @@ pub mod Types {
         type Output = B;
         fn not(self) -> B {
             match self {
-                B::True => B::False,
-                B::False => B::True,
+                | B::True => B::False,
+                | B::False => B::True,
             }
         }
     }
@@ -162,8 +163,8 @@ pub mod Types {
     pub struct LabEdge<V: StT, L: StT + Hash>(pub V, pub V, pub L);
 
     impl<V: StT, L: StT + Hash> std::fmt::Display for LabEdge<V, L> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { 
-            write!(f, "({}, {}, {})", self.0, self.1, self.2) 
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "({}, {}, {})", self.0, self.1, self.2)
         }
     }
 

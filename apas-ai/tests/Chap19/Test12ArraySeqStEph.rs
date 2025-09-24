@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestArraySeqEph {
 
     use apas_ai::ArraySeqStEph; // macro import
@@ -22,9 +23,8 @@ pub mod TestArraySeqEph {
         let m = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::map(&a, |x| x + 1);
         let c = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&a, &m);
         assert_eq!(c.length(), 10);
-        let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&c, |x| {
-            if *x % 2 == 0 { B::True } else { B::False }
-        });
+        let evens =
+            <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&c, |x| if *x % 2 == 0 { B::True } else { B::False });
         assert!(evens.length() > 0);
     }
 

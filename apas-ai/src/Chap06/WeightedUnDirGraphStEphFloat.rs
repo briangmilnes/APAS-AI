@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6 Weighted Undirected Graph (ephemeral) with floating-point weights - Single-threaded version.
 //!
 //! This module provides weighted undirected graphs using `OrderedFloat<f64>` for edge weights,
@@ -16,7 +17,7 @@
 //!
 //! // Create graph using macro with APAS notation (E: for undirected edges)
 //! let graph_macro = WeightedUnDirGraphStEphFloatLit!(
-//!     V: ["A", "B", "C"], 
+//!     V: ["A", "B", "C"],
 //!     E: [("A", "B", 3.14), ("B", "C", 2.71)]
 //! );
 //!
@@ -30,8 +31,8 @@ pub mod WeightedUnDirGraphStEphFloat {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
-    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::Types::Types::*;
 
     /// Weighted undirected graph with floating-point weights (type alias)
@@ -41,15 +42,16 @@ pub mod WeightedUnDirGraphStEphFloat {
     impl<V: StT + Hash + Ord> WeightedUnDirGraphStEphFloat<V> {
         /// Create from vertices and weighted edges
         pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, OrderedFloat<f64>)>) -> Self {
-            let labeled_edges = edges.iter().map(|(v1, v2, weight)| {
-                LabEdge(v1.clone(), v2.clone(), *weight)
-            }).collect::<Vec<_>>();
-            
+            let labeled_edges = edges
+                .iter()
+                .map(|(v1, v2, weight)| LabEdge(v1.clone(), v2.clone(), *weight))
+                .collect::<Vec<_>>();
+
             let mut edge_set = Set::empty();
             for edge in labeled_edges {
                 edge_set.insert(edge);
             }
-            
+
             Self::from_vertices_and_labeled_edges(vertices, edge_set)
         }
 
@@ -87,27 +89,28 @@ pub mod WeightedUnDirGraphStEphFloat {
 
         /// Get the total weight of all edges
         pub fn total_weight(&self) -> OrderedFloat<f64> {
-            self.labeled_edges().iter().map(|edge| edge.2).fold(OrderedFloat(0.0), |acc, w| acc + w)
+            self.labeled_edges()
+                .iter()
+                .map(|edge| edge.2)
+                .fold(OrderedFloat(0.0), |acc, w| acc + w)
         }
 
         /// Get the degree of a vertex (number of incident edges)
-        pub fn vertex_degree(&self, v: &V) -> usize {
-            self.neighbors(v).size()
-        }
+        pub fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
 
         /// Check if the graph is connected (all vertices reachable from any vertex)
         pub fn is_connected(&self) -> bool {
             if self.vertices().size() == 0 {
                 return true; // Empty graph is considered connected
             }
-            
+
             // Simple connectivity check using DFS from first vertex
             let mut visited = Set::empty();
             let mut stack = Vec::new();
-            
+
             if let Some(start) = self.vertices().iter().next() {
                 stack.push(start.clone());
-                
+
                 while let Some(current) = stack.pop() {
                     if visited.mem(&current) == B::False {
                         visited.insert(current.clone());
@@ -119,20 +122,22 @@ pub mod WeightedUnDirGraphStEphFloat {
                     }
                 }
             }
-            
+
             visited.size() == self.vertices().size()
         }
 
         /// Get the minimum weight edge
         pub fn min_weight_edge(&self) -> Option<(V, V, OrderedFloat<f64>)> {
-            self.labeled_edges().iter()
+            self.labeled_edges()
+                .iter()
                 .min_by_key(|edge| edge.2)
                 .map(|edge| (edge.0.clone(), edge.1.clone(), edge.2))
         }
 
         /// Get the maximum weight edge
         pub fn max_weight_edge(&self) -> Option<(V, V, OrderedFloat<f64>)> {
-            self.labeled_edges().iter()
+            self.labeled_edges()
+                .iter()
                 .max_by_key(|edge| edge.2)
                 .map(|edge| (edge.0.clone(), edge.1.clone(), edge.2))
         }

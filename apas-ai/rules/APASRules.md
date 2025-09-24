@@ -38,6 +38,10 @@
 - Treat wrapper structs in `*Mt*` files as genuine MT types: their fields should employ `MtT` or thread-safe containers (e.g., mutexes, atomic references) and expose APIs safe for concurrent use.
 - Never mirror a single-threaded implementation inside an `Mt` module; if functionality cannot be parallelised safely, move it to the `St` counterpart instead of duplicating it under the MT name.
 
+### Persistent Mutation Ban
+- Modules whose names end in `Per` represent persistent data structures. They must not expose in-place mutators such as `set`/`update`; persistent APIs always return a new value instead of mutating the receiver.
+- `Per` implementations never expose slices or other borrowed views of private storage. Subsequence operations must allocate a fresh persistent value (e.g., `subseq_copy`) rather than returning `&[T]`.
+
 ### Iteration vs. Recursion Hygiene
 - When code naturally descends a structure or mirrors the textbook recursion, opt for a compact recursive implementation (often as a nested function) instead of piling logic into a `loop { … }`.
 - Straightforward iterative loops are still fine for generators or linear scans; switch only when the recursion matches the idea more clearly.

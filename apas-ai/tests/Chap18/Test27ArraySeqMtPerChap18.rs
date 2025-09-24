@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for ArraySeqMtPerChap18 multithreaded algorithms.
 
 pub mod Test27ArraySeqMtPerChap {

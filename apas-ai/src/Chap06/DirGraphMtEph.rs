@@ -1,10 +1,11 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6.1 Directed Graph (ephemeral) using Set for vertices and arcs - Multi-threaded version.
 
 pub mod DirGraphMtEph {
     use std::hash::Hash;
 
-    use crate::SetLit;
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
     use crate::Types::Types::*;
 
     #[derive(Clone)]
@@ -82,8 +83,7 @@ pub mod DirGraphMtEph {
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Adjacent if there is an arc either way
-            if B::True == self.A.mem(&Edge(u.clone_mt(), v.clone_mt()))
-            {
+            if B::True == self.A.mem(&Edge(u.clone_mt(), v.clone_mt())) {
                 B::True
             } else {
                 B::False
@@ -139,13 +139,7 @@ pub mod DirGraphMtEph {
             result
         }
 
-        fn Incident(&self, e: &Pair<V, V>, v: &V) -> B {
-            if &e.0 == v || &e.1 == v {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        fn Incident(&self, e: &Pair<V, V>, v: &V) -> B { if &e.0 == v || &e.1 == v { B::True } else { B::False } }
 
         fn Degree(&self, v: &V) -> N { self.NPlus(v).size() }
         fn InDegree(&self, v: &V) -> N { self.NMinus(v).size() }

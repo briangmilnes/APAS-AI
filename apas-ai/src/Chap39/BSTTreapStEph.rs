@@ -1,10 +1,11 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Ephemeral Treap (randomized heap-ordered BST) with `find` support.
 
 pub mod BSTTreapStEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
-    use rand::{rng, Rng};
+    use rand::{Rng, rng};
 
     type Link<T> = Option<Box<Node<T>>>;
 
@@ -29,6 +30,7 @@ pub mod BSTTreapStEph {
         }
     }
 
+    #[derive(Debug, Clone)]
     pub struct BSTTreapStEph<T: StT + Ord> {
         root: Link<T>,
     }
@@ -45,11 +47,11 @@ pub mod BSTTreapStEph {
         fn contains(&self, target: &T) -> B;
         fn minimum(&self) -> Option<&T>;
         fn maximum(&self) -> Option<&T>;
-        fn in_order(&self) -> ArrayStPerS<T>;
-        fn pre_order(&self) -> ArrayStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn pre_order(&self) -> ArraySeqStPerS<T>;
     }
 
-    impl<T: StT + Ord> Default for BSTTreapStEph<T> {
+    impl<T: StT + Ord> Default for BSTreeTreap<T> {
         fn default() -> Self { Self::new() }
     }
 
@@ -58,13 +60,7 @@ pub mod BSTTreapStEph {
 
         pub fn size(&self) -> N { Self::size_link(&self.root) }
 
-        pub fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        pub fn is_empty(&self) -> B { if self.size() == 0 { B::True } else { B::False } }
 
         pub fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
@@ -83,28 +79,22 @@ pub mod BSTTreapStEph {
 
         pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
 
-        pub fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { B::True } else { B::False } }
 
         pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
 
         pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
 
-        pub fn in_order(&self) -> ArrayStPerS<T> {
+        pub fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
             Self::in_order_collect(&self.root, &mut out);
-            ArrayStPerS::from_vec(out)
+            ArraySeqStPerS::from_vec(out)
         }
 
-        pub fn pre_order(&self) -> ArrayStPerS<T> {
+        pub fn pre_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
             Self::pre_order_collect(&self.root, &mut out);
-            ArrayStPerS::from_vec(out)
+            ArraySeqStPerS::from_vec(out)
         }
 
         fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
@@ -235,18 +225,18 @@ pub mod BSTTreapStEph {
 
         fn maximum(&self) -> Option<&T> { BSTTreapStEph::maximum(self) }
 
-        fn in_order(&self) -> ArrayStPerS<T> { BSTTreapStEph::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> { BSTTreapStEph::in_order(self) }
 
-        fn pre_order(&self) -> ArrayStPerS<T> { BSTTreapStEph::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> { BSTTreapStEph::pre_order(self) }
     }
 
     #[macro_export]
     macro_rules! BSTTreapStEphLit {
         () => {
-            < $crate::BSTTreapStEph::BSTTreapStEph::BSTTreapStEph<_> as $crate::BSTTreapStEph::BSTTreapStEph::BSTTreapStEphTrait<_> >::new()
+            < $crate::Chap39::BSTTreapStEph::BSTTreapStEph::BSTTreapStEph<_> as $crate::Chap39::BSTTreapStEph::BSTTreapStEph::BSTTreapStEphTrait<_> >::new()
         };
         ( $( $x:expr ),* $(,)? ) => {{
-            let mut __tree = < $crate::BSTTreapStEph::BSTTreapStEph::BSTTreapStEph<_> as $crate::BSTTreapStEph::BSTTreapStEph::BSTTreapStEphTrait<_> >::new();
+            let mut __tree = < $crate::Chap39::BSTTreapStEph::BSTTreapStEph::BSTTreapStEph<_> as $crate::Chap39::BSTTreapStEph::BSTTreapStEph::BSTTreapStEphTrait<_> >::new();
             $( __tree.insert($x); )*
             __tree
         }};

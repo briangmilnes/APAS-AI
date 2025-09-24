@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 5.2 ephemeral Relation built on `Set<Pair<A,B>>`.
 
 pub mod RelationStEph {
@@ -6,8 +7,8 @@ pub mod RelationStEph {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
-    use crate::SetLit;
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
     use crate::Types::Types::*;
 
     #[derive(Clone)]
@@ -51,9 +52,7 @@ pub mod RelationStEph {
     }
 
     impl<A: StT + Hash, B: StT + Hash> Relation<A, B> {
-        pub fn FromVec(v: Vec<Pair<A, B>>) -> Relation<A, B> {
-            Relation { pairs: Set::FromVec(v) }
-        }
+        pub fn FromVec(v: Vec<Pair<A, B>>) -> Relation<A, B> { Relation { pairs: Set::FromVec(v) } }
     }
 
     impl<A: StT + Hash, B: StT + Hash> PartialEq for Relation<A, B> {

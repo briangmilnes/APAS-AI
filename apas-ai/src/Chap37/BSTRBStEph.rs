@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Ephemeral Red-Black balanced binary search tree with `find` support and public helpers.
 
 pub mod BSTRBStEph {
@@ -13,7 +14,7 @@ pub mod BSTRBStEph {
 
     type Link<T> = Option<Box<Node<T>>>;
 
-    #[derive(Clone)]
+    #[derive(Debug, Clone)]
     struct Node<T: StT + Ord> {
         key: T,
         color: Color,
@@ -34,6 +35,7 @@ pub mod BSTRBStEph {
         }
     }
 
+    #[derive(Debug, Clone)]
     pub struct BSTRBStEph<T: StT + Ord> {
         root: Link<T>,
     }
@@ -50,8 +52,8 @@ pub mod BSTRBStEph {
         fn contains(&self, target: &T) -> B;
         fn minimum(&self) -> Option<&T>;
         fn maximum(&self) -> Option<&T>;
-        fn in_order(&self) -> ArrayStPerS<T>;
-        fn pre_order(&self) -> ArrayStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn pre_order(&self) -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT + Ord> Default for BSTRBStEph<T> {
@@ -63,13 +65,7 @@ pub mod BSTRBStEph {
 
         pub fn size(&self) -> N { Self::size_link(&self.root) }
 
-        pub fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        pub fn is_empty(&self) -> B { if self.size() == 0 { B::True } else { B::False } }
 
         pub fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
@@ -90,28 +86,22 @@ pub mod BSTRBStEph {
 
         pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
 
-        pub fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() {
-                B::True
-            } else {
-                B::False
-            }
-        }
+        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { B::True } else { B::False } }
 
         pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
 
         pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
 
-        pub fn in_order(&self) -> ArrayStPerS<T> {
+        pub fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
             Self::in_order_collect(&self.root, &mut out);
-            ArrayStPerS::from_vec(out)
+            ArraySeqStPerS::from_vec(out)
         }
 
-        pub fn pre_order(&self) -> ArrayStPerS<T> {
+        pub fn pre_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
             Self::pre_order_collect(&self.root, &mut out);
-            ArrayStPerS::from_vec(out)
+            ArraySeqStPerS::from_vec(out)
         }
 
         fn is_red(link: &Link<T>) -> bool { matches!(link, Some(node) if node.color == Color::Red) }
@@ -279,9 +269,9 @@ pub mod BSTRBStEph {
 
         fn maximum(&self) -> Option<&T> { BSTRBStEph::maximum(self) }
 
-        fn in_order(&self) -> ArrayStPerS<T> { BSTRBStEph::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> { BSTRBStEph::in_order(self) }
 
-        fn pre_order(&self) -> ArrayStPerS<T> { BSTRBStEph::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> { BSTRBStEph::pre_order(self) }
     }
 
     #[macro_export]

@@ -1,11 +1,12 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6 Weighted Directed Graph (ephemeral) with integer weights - Multi-threaded version.
 
 pub mod WeightedDirGraphMtEphInt {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
-    use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
     use crate::Types::Types::*;
 
     /// Weighted directed graph with integer weights (multi-threaded, type alias)
@@ -15,27 +16,24 @@ pub mod WeightedDirGraphMtEphInt {
     impl<V: StT + MtT + Hash> WeightedDirGraphMtEphInt<V> {
         /// Create from vertices and weighted edges
         pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, i32)>) -> Self {
-            let labeled_edges = edges.iter().map(|(from, to, weight)| {
-                LabEdge(from.clone(), to.clone(), *weight)
-            }).collect::<Vec<_>>();
-            
+            let labeled_edges = edges
+                .iter()
+                .map(|(from, to, weight)| LabEdge(from.clone(), to.clone(), *weight))
+                .collect::<Vec<_>>();
+
             let mut edge_set = Set::empty();
             for edge in labeled_edges {
                 edge_set.insert(edge);
             }
-            
+
             Self::from_vertices_and_labeled_arcs(vertices, edge_set)
         }
 
         /// Add a weighted edge to the graph
-        pub fn add_weighted_edge(&mut self, from: V, to: V, weight: i32) {
-            self.add_labeled_arc(from, to, weight);
-        }
+        pub fn add_weighted_edge(&mut self, from: V, to: V, weight: i32) { self.add_labeled_arc(from, to, weight); }
 
         /// Get the weight of an edge, if it exists
-        pub fn get_edge_weight(&self, from: &V, to: &V) -> Option<i32> {
-            self.get_arc_label(from, to).copied()
-        }
+        pub fn get_edge_weight(&self, from: &V, to: &V) -> Option<i32> { self.get_arc_label(from, to).copied() }
 
         /// Get all weighted edges as (from, to, weight) tuples
         pub fn weighted_edges(&self) -> Set<(V, V, i32)> {
@@ -69,9 +67,7 @@ pub mod WeightedDirGraphMtEphInt {
         }
 
         /// Get the total weight of all edges
-        pub fn total_weight(&self) -> i32 {
-            self.labeled_arcs().iter().map(|edge| edge.2).sum()
-        }
+        pub fn total_weight(&self) -> i32 { self.labeled_arcs().iter().map(|edge| edge.2).sum() }
     }
 
     #[macro_export]
