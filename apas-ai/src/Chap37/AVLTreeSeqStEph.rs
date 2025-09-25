@@ -68,7 +68,7 @@ pub mod AVLTreeSeqStEph {
         }
         pub fn new() -> Self { Self::new_root() }
         pub fn update(&mut self, (index, item): (N, T)) -> &mut AVLTreeSeqStEphS<T> {
-            let _ = <AVLTreeSeqStEphS<T> as ArraySeqStEphTrait<T>>::update(self, index, item);
+            let _ = self.set(index, item);
             self
         }
         pub fn from_vec(values: Vec<T>) -> AVLTreeSeqStEphS<T> {
@@ -83,11 +83,11 @@ pub mod AVLTreeSeqStEph {
         pub fn to_arrayseq(&self) -> ArraySeqStEphS<T> {
             let len = self.length();
             if len == 0 {
-                return <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty();
+                return ArraySeqStEphS::empty();
             }
             let mut it = self.iter();
             let first = it.next().expect("length > 0 but iter was empty").clone();
-            let mut out = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::new(len, first.clone());
+            let mut out = ArraySeqStEphS::new(len, first.clone());
             let _ = out.update(0, first);
             let mut index: N = 1;
             for v in it {
@@ -165,7 +165,7 @@ pub mod AVLTreeSeqStEph {
             let s = start.min(n);
             let e = start.saturating_add(length).min(n);
             if e <= s {
-                return <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::empty();
+                return AVLTreeSeqStEphS::empty();
             }
             let mut vals: Vec<T> = Vec::with_capacity(e - s);
             for i in s..e {

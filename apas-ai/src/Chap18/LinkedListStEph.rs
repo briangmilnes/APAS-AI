@@ -175,17 +175,17 @@ pub mod LinkedListStEph {
 
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(1)
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> Self;
+        fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
-        fn map<U: StT>(a: &Self, f: impl Fn(&T) -> U) -> LinkedListStEphS<U>;
+        fn map<U: StT, F: Fn(&T) -> U>(a: &Self, f: &F) -> LinkedListStEphS<U>;
         fn subseq_copy(&self, start: N, length: N) -> Self;
         /// APAS: Work Θ(|a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
         fn append(a: &Self, b: &Self) -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
-        fn filter(a: &Self, pred: impl Fn(&T) -> B) -> Self;
+        fn filter<F: Fn(&T) -> B>(a: &Self, pred: &F) -> Self;
         fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T>;
         /// APAS: Work Θ(index), Span Θ(index)
         /// claude-4-sonet: Work Θ(index), Span Θ(index)
@@ -198,12 +198,12 @@ pub mod LinkedListStEph {
         fn ninject(a: &Self, updates: &LinkedListStEphS<Pair<N, T>>) -> Self;
         fn collect<A: StT, Bv: StT>(
             a: &LinkedListStEphS<Pair<A, Bv>>,
-            cmp: impl Fn(&A, &A) -> O,
+            cmp: fn(&A, &A) -> O,
         ) -> LinkedListStEphS<Pair<A, LinkedListStEphS<Bv>>>;
-        fn iterate<A: StT>(a: &Self, f: impl Fn(&A, &T) -> A, x: A) -> A;
-        fn iteratePrefixes<A: StT>(a: &Self, f: impl Fn(&A, &T) -> A, x: A) -> (LinkedListStEphS<A>, A);
-        fn reduce(a: &Self, f: &impl Fn(&T, &T) -> T, id: T) -> T;
-        fn scan(a: &Self, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<T>, T);
+        fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &Self, f: &F, x: A) -> A;
+        fn iteratePrefixes<A: StT, F: Fn(&A, &T) -> A>(a: &Self, f: &F, x: A) -> (LinkedListStEphS<A>, A);
+        fn reduce<F: Fn(&T, &T) -> T>(a: &Self, f: &F, id: T) -> T;
+        fn scan<F: Fn(&T, &T) -> T>(a: &Self, f: &F, id: T) -> (LinkedListStEphS<T>, T);
     }
 
     impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
@@ -226,7 +226,7 @@ pub mod LinkedListStEph {
 
         fn singleton(item: T) -> Self { LinkedListStEphS::singleton(item) }
 
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> Self {
+        fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> Self {
             let mut values: Vec<T> = Vec::with_capacity(n);
             for i in 0..n {
                 values.push(f(i));
@@ -234,7 +234,7 @@ pub mod LinkedListStEph {
             LinkedListStEphS::from_vec(values)
         }
 
-        fn map<U: StT>(a: &Self, f: impl Fn(&T) -> U) -> LinkedListStEphS<U> {
+        fn map<U: StT, F: Fn(&T) -> U>(a: &Self, f: &F) -> LinkedListStEphS<U> {
             let mut values: Vec<U> = Vec::with_capacity(a.length());
             for i in 0..a.length() {
                 values.push(f(a.nth(i)));
@@ -255,7 +255,7 @@ pub mod LinkedListStEph {
             LinkedListStEphS::from_vec(values)
         }
 
-        fn filter(a: &Self, pred: impl Fn(&T) -> B) -> Self {
+        fn filter<F: Fn(&T) -> B>(a: &Self, pred: &F) -> Self {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
@@ -305,7 +305,7 @@ pub mod LinkedListStEph {
 
         fn collect<A: StT, Bv: StT>(
             a: &LinkedListStEphS<Pair<A, Bv>>,
-            cmp: impl Fn(&A, &A) -> O,
+            cmp: fn(&A, &A) -> O,
         ) -> LinkedListStEphS<Pair<A, LinkedListStEphS<Bv>>> {
             let mut groups: Vec<Pair<A, Vec<Bv>>> = Vec::new();
             for i in 0..a.length() {
@@ -323,7 +323,7 @@ pub mod LinkedListStEph {
             LinkedListStEphS::from_vec(pairs)
         }
 
-        fn iterate<A: StT>(a: &Self, f: impl Fn(&A, &T) -> A, x: A) -> A {
+        fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &Self, f: &F, x: A) -> A {
             let mut acc = x;
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
@@ -331,7 +331,7 @@ pub mod LinkedListStEph {
             acc
         }
 
-        fn iteratePrefixes<A: StT>(a: &Self, f: impl Fn(&A, &T) -> A, x: A) -> (LinkedListStEphS<A>, A) {
+        fn iteratePrefixes<A: StT, F: Fn(&A, &T) -> A>(a: &Self, f: &F, x: A) -> (LinkedListStEphS<A>, A) {
             let mut acc = x.clone();
             let mut prefixes: Vec<A> = Vec::with_capacity(a.length());
             for i in 0..a.length() {
@@ -341,7 +341,7 @@ pub mod LinkedListStEph {
             (LinkedListStEphS::from_vec(prefixes), acc)
         }
 
-        fn reduce(a: &Self, f: &impl Fn(&T, &T) -> T, id: T) -> T {
+        fn reduce<F: Fn(&T, &T) -> T>(a: &Self, f: &F, id: T) -> T {
             let len = a.length();
             if len == 0 {
                 return id;
@@ -357,7 +357,7 @@ pub mod LinkedListStEph {
             f(&l, &r)
         }
 
-        fn scan(a: &Self, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStEphS<T>, T) {
+        fn scan<F: Fn(&T, &T) -> T>(a: &Self, f: &F, id: T) -> (LinkedListStEphS<T>, T) {
             let len = a.length();
             if len == 0 {
                 return (LinkedListStEphS::empty(), id);

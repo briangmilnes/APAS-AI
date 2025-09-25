@@ -27,24 +27,24 @@ pub mod LinkedListStPer {
         fn length(&self) -> N;
         fn nth(&self, index: N) -> &T;
         fn subseq_copy(&self, start: N, length: N) -> LinkedListStPerS<T>;
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStPerS<T>;
-        fn map<U: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&T) -> U) -> LinkedListStPerS<U>;
+        fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> LinkedListStPerS<T>;
+        fn map<U: StT, F: Fn(&T) -> U>(a: &LinkedListStPerS<T>, f: &F) -> LinkedListStPerS<U>;
         fn append(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>) -> LinkedListStPerS<T>;
-        fn filter(a: &LinkedListStPerS<T>, pred: impl Fn(&T) -> B) -> LinkedListStPerS<T>;
+        fn filter<F: Fn(&T) -> B>(a: &LinkedListStPerS<T>, pred: &F) -> LinkedListStPerS<T>;
         fn update(a: &LinkedListStPerS<T>, item_at: Pair<N, T>) -> LinkedListStPerS<T>;
         fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T>;
         fn ninject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T>;
-        fn iterate<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A;
-        fn iteratePrefixes<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LinkedListStPerS<A>, A);
-        fn reduce(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
+        fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &LinkedListStPerS<T>, f: &F, x: A) -> A;
+        fn iteratePrefixes<A: StT, F: Fn(&A, &T) -> A>(a: &LinkedListStPerS<T>, f: &F, x: A) -> (LinkedListStPerS<A>, A);
+        fn reduce<F: Fn(&T, &T) -> T>(a: &LinkedListStPerS<T>, f: &F, id: T) -> T;
 
-        fn scan(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStPerS<T>, T);
+        fn scan<F: Fn(&T, &T) -> T>(a: &LinkedListStPerS<T>, f: &F, id: T) -> (LinkedListStPerS<T>, T);
 
         fn flatten(ss: &LinkedListStPerS<LinkedListStPerS<T>>) -> LinkedListStPerS<T>;
 
         fn collect<A: StT, Bv: StT>(
             a: &LinkedListStPerS<Pair<A, Bv>>,
-            cmp: impl Fn(&A, &A) -> O,
+            cmp: fn(&A, &A) -> O,
         ) -> LinkedListStPerS<Pair<A, LinkedListStPerS<Bv>>>;
     }
 
@@ -179,7 +179,7 @@ pub mod LinkedListStPer {
             LinkedListStPerS::subseq_copy(self, start, length)
         }
 
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> LinkedListStPerS<T> {
+        fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> LinkedListStPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(n);
             for i in 0..n {
                 values.push(f(i));
@@ -187,7 +187,7 @@ pub mod LinkedListStPer {
             LinkedListStPerS::from_vec(values)
         }
 
-        fn map<U: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&T) -> U) -> LinkedListStPerS<U> {
+        fn map<U: StT, F: Fn(&T) -> U>(a: &LinkedListStPerS<T>, f: &F) -> LinkedListStPerS<U> {
             let mut values: Vec<U> = Vec::with_capacity(a.length());
             for i in 0..a.length() {
                 values.push(f(a.nth(i)));
@@ -206,7 +206,7 @@ pub mod LinkedListStPer {
             LinkedListStPerS::from_vec(values)
         }
 
-        fn filter(a: &LinkedListStPerS<T>, pred: impl Fn(&T) -> B) -> LinkedListStPerS<T> {
+        fn filter<F: Fn(&T) -> B>(a: &LinkedListStPerS<T>, pred: &F) -> LinkedListStPerS<T> {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
@@ -254,7 +254,7 @@ pub mod LinkedListStPer {
             LinkedListStPerS::from_vec(values)
         }
 
-        fn iterate<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A {
+        fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &LinkedListStPerS<T>, f: &F, x: A) -> A {
             let mut acc = x;
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
@@ -262,7 +262,7 @@ pub mod LinkedListStPer {
             acc
         }
 
-        fn iteratePrefixes<A: StT>(a: &LinkedListStPerS<T>, f: impl Fn(&A, &T) -> A, x: A) -> (LinkedListStPerS<A>, A) {
+        fn iteratePrefixes<A: StT, F: Fn(&A, &T) -> A>(a: &LinkedListStPerS<T>, f: &F, x: A) -> (LinkedListStPerS<A>, A) {
             let mut acc = x.clone();
             let mut prefixes: Vec<A> = Vec::with_capacity(a.length());
             for i in 0..a.length() {
@@ -272,7 +272,7 @@ pub mod LinkedListStPer {
             (LinkedListStPerS::from_vec(prefixes), acc)
         }
 
-        fn reduce(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
+        fn reduce<F: Fn(&T, &T) -> T>(a: &LinkedListStPerS<T>, f: &F, id: T) -> T {
             let len = a.length();
             if len == 0 {
                 return id;
@@ -288,7 +288,7 @@ pub mod LinkedListStPer {
             f(&l, &r)
         }
 
-        fn scan(a: &LinkedListStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (LinkedListStPerS<T>, T) {
+        fn scan<F: Fn(&T, &T) -> T>(a: &LinkedListStPerS<T>, f: &F, id: T) -> (LinkedListStPerS<T>, T) {
             let len = a.length();
             if len == 0 {
                 return (LinkedListStPerS::empty(), id);
@@ -316,7 +316,7 @@ pub mod LinkedListStPer {
 
         fn collect<A: StT, Bv: StT>(
             a: &LinkedListStPerS<Pair<A, Bv>>,
-            cmp: impl Fn(&A, &A) -> O,
+            cmp: fn(&A, &A) -> O,
         ) -> LinkedListStPerS<Pair<A, LinkedListStPerS<Bv>>> {
             let mut groups: Vec<Pair<A, Vec<Bv>>> = Vec::new();
             for i in 0..a.length() {

@@ -10,7 +10,7 @@
 pub mod AVLTreeSeq {
     use std::fmt::Debug;
 
-    use crate::Chap18::ArraySeq::ArraySeq::*;
+    use crate::Chap18::ArraySeq::ArraySeq::{ArraySeqS, ArraySeq};
     pub use crate::Types::Types::*;
 
     type Link<T> = Option<Box<AVLTreeNode<T>>>;
@@ -108,17 +108,17 @@ pub mod AVLTreeSeq {
             t
         }
 
-        pub fn to_arrayseq(&self) -> ArrayS<T>
+        pub fn to_arrayseq(&self) -> ArraySeqS<T>
         where
             T: Clone,
         {
             let len = self.length();
             if len == 0 {
-                return <ArrayS<T> as ArraySeq<T>>::empty();
+                return <ArraySeqS<T> as ArraySeq<T>>::empty();
             }
             let mut it = self.iter();
             let first = it.next().expect("length > 0 but iter was empty").clone();
-            let mut out = <ArrayS<T> as ArraySeq<T>>::new(len, first);
+            let mut out = <ArraySeqS<T> as ArraySeq<T>>::new(len, first);
             let mut index: N = 1;
             for v in it {
                 let _ = out.set(index, v.clone());

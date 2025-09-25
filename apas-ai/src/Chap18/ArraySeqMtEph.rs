@@ -3,7 +3,7 @@
 
 pub mod ArraySeqMtEph {
     use std::collections::HashSet;
-    use std::sync::Mutex;
+    use std::sync::{Mutex, Arc};
     use std::thread;
 
     use crate::Types::Types::*;
@@ -58,6 +58,12 @@ pub mod ArraySeqMtEph {
             Ok(self)
         }
 
+        /// Iterator over cloned elements (due to Mutex)
+        pub fn iter_cloned(&self) -> Vec<T> {
+            let guard = self.data.lock().unwrap();
+            guard.iter().cloned().collect()
+        }
+
         pub fn subseq_copy(&self, start: N, length: N) -> Self {
             let guard = self.data.lock().unwrap();
             let n = guard.len();
@@ -90,11 +96,11 @@ pub mod ArraySeqMtEph {
         fn nth_cloned(&self, index: N) -> T;
         fn empty() -> ArraySeqMtEphS<T>;
         fn singleton(item: T) -> ArraySeqMtEphS<T>;
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqMtEphS<T>;
-        fn map<U: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&T) -> U + Send + Sync) -> ArraySeqMtEphS<U>;
+        fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T>;
+        fn map<U: StT + Send + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F) -> ArraySeqMtEphS<U> where T: Send + 'static;
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtEphS<T>;
         fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T>;
-        fn filter(a: &ArraySeqMtEphS<T>, pred: impl Fn(&T) -> B + Send + Sync) -> ArraySeqMtEphS<T>;
+        fn filter<F: Fn(&T) -> B + Send + Sync>(a: &ArraySeqMtEphS<T>, pred: &F) -> ArraySeqMtEphS<T>;
         fn update(a: &mut ArraySeqMtEphS<T>, item_at: (N, T)) -> &mut ArraySeqMtEphS<T>;
         fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T>;
         fn isEmpty(&self) -> B;
@@ -102,11 +108,11 @@ pub mod ArraySeqMtEph {
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T>;
         fn collect(
             a: &ArraySeqMtEphS<Pair<T, T>>,
-            cmp: impl Fn(&T, &T) -> O + Send + Sync,
+            cmp: fn(&T, &T) -> O,
         ) -> ArraySeqMtEphS<Pair<T, ArraySeqMtEphS<T>>>;
-        fn iterate<A: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&A, &T) -> A + Send + Sync, x: A) -> A;
-        fn reduce(a: &ArraySeqMtEphS<T>, f: &(impl Fn(&T, &T) -> T + Send + Sync), id: T) -> T;
-        fn scan(a: &ArraySeqMtEphS<T>, f: &(impl Fn(&T, &T) -> T + Send + Sync), id: T) -> (ArraySeqMtEphS<T>, T);
+        fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T where T: Send + 'static;
+        fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T);
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T>;
     }
 
@@ -139,7 +145,7 @@ pub mod ArraySeqMtEph {
 
         fn singleton(item: T) -> ArraySeqMtEphS<T> { ArraySeqMtEphS::singleton(item) }
 
-        fn tabulate(f: impl Fn(N) -> T, n: N) -> ArraySeqMtEphS<T> {
+        fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T> {
             let mut values: Vec<T> = Vec::with_capacity(n);
             for i in 0..n {
                 values.push(f(i));
@@ -147,7 +153,8 @@ pub mod ArraySeqMtEph {
             ArraySeqMtEphS::from_vec(values)
         }
 
-        fn map<U: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&T) -> U + Send + Sync) -> ArraySeqMtEphS<U> {
+        fn map<U: StT + Send + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F) -> ArraySeqMtEphS<U> 
+        where T: Send + 'static {
             let n = a.length();
             if n == 0 {
                 return ArraySeqMtEphS::from_vec(Vec::new());
@@ -164,9 +171,10 @@ pub mod ArraySeqMtEph {
                 let mid = n / 2;
                 let left = a.subseq_copy(0, mid);
                 let right = a.subseq_copy(mid, n - mid);
+                let f_clone = f.clone();
                 
                 let left_handle = thread::spawn(move || {
-                    <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::map(&left, f)
+                    <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::map(&left, f_clone)
                 });
                 let right_result = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::map(&right, f);
                 let left_result = left_handle.join().unwrap();
@@ -192,7 +200,7 @@ pub mod ArraySeqMtEph {
             ArraySeqMtEphS::from_vec(values)
         }
 
-        fn filter(a: &ArraySeqMtEphS<T>, pred: impl Fn(&T) -> B + Send + Sync) -> ArraySeqMtEphS<T> {
+        fn filter<F: Fn(&T) -> B + Send + Sync>(a: &ArraySeqMtEphS<T>, pred: &F) -> ArraySeqMtEphS<T> {
             let mut kept: Vec<T> = Vec::new();
             let n = a.length();
             for i in 0..n {
@@ -238,7 +246,7 @@ pub mod ArraySeqMtEph {
 
         fn collect(
             a: &ArraySeqMtEphS<Pair<T, T>>,
-            cmp: impl Fn(&T, &T) -> O + Send + Sync,
+            cmp: fn(&T, &T) -> O,
         ) -> ArraySeqMtEphS<Pair<T, ArraySeqMtEphS<T>>> {
             if a.length() == 0 {
                 return ArraySeqMtEphS::from_vec(vec![]);
@@ -266,7 +274,7 @@ pub mod ArraySeqMtEph {
             ArraySeqMtEphS::from_vec(groups)
         }
 
-        fn iterate<A: StT>(a: &ArraySeqMtEphS<T>, f: impl Fn(&A, &T) -> A + Send + Sync, x: A) -> A {
+        fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A {
             let mut acc = x;
             for i in 0..a.length() {
                 let item = a.nth_cloned(i);
@@ -275,7 +283,8 @@ pub mod ArraySeqMtEph {
             acc
         }
 
-        fn reduce(a: &ArraySeqMtEphS<T>, f: &(impl Fn(&T, &T) -> T + Send + Sync), id: T) -> T {
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T 
+        where T: Send + 'static {
             if a.length() == 0 {
                 return id;
             }
@@ -287,26 +296,30 @@ pub mod ArraySeqMtEph {
                 let mid = a.length() / 2;
                 let left = a.subseq_copy(0, mid);
                 let right = a.subseq_copy(mid, a.length() - mid);
-                let l = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&left, f, id.clone());
-                let r = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&right, f, id);
+                let f_clone = f.clone();
+                let f_clone2 = f.clone();
+                let l = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&left, f_clone, id.clone());
+                let r = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&right, f_clone2, id);
                 f(&l, &r)
             } else {
                 // Parallel for large arrays
                 let mid = a.length() / 2;
                 let left = a.subseq_copy(0, mid);
                 let right = a.subseq_copy(mid, a.length() - mid);
+                let f_clone = f.clone();
+                let f_clone2 = f.clone();
                 
                 let id_clone = id.clone();
                 let left_handle = thread::spawn(move || {
-                    <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&left, f, id_clone)
+                    <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&left, f_clone, id_clone)
                 });
-                let r = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&right, f, id);
+                let r = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&right, f_clone2, id);
                 let l = left_handle.join().unwrap();
                 f(&l, &r)
             }
         }
 
-        fn scan(a: &ArraySeqMtEphS<T>, f: &(impl Fn(&T, &T) -> T + Send + Sync), id: T) -> (ArraySeqMtEphS<T>, T) {
+        fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T) {
             let mut acc = id.clone();
             let mut values: Vec<T> = Vec::with_capacity(a.length());
             for i in 0..a.length() {

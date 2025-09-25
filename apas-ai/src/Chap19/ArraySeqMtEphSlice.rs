@@ -13,7 +13,7 @@ pub mod ArraySeqMtEphSlice {
 
     use crate::Types::Types::*;
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug)]
     struct Inner<T: StT> {
         data: Mutex<Box<[T]>>,
     }
@@ -28,7 +28,6 @@ pub mod ArraySeqMtEphSlice {
     }
 
     /// Shared slice view over the mutex-protected backing buffer.
-    #[derive(Clone)]
     pub struct ArraySeqMtEphSliceS<T: StT> {
         inner: Arc<Inner<T>>,
         range: Range<N>,
@@ -46,6 +45,7 @@ pub mod ArraySeqMtEphSlice {
         fn isSingleton(&self) -> B;
         fn subseq_copy(&self, start: N, length: N) -> Self;
         fn slice(&self, start: N, length: N) -> Self;
+        fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> Self;
     }
 
     impl<T: StT> ArraySeqMtEphSliceS<T> {
@@ -103,7 +103,10 @@ pub mod ArraySeqMtEphSlice {
             guard[idx].clone()
         }
 
-        fn empty() -> Self { ArraySeqMtEphSliceS::from_vec(Vec::new()) }
+        fn empty() -> Self {
+            // Algorithm 19.1: empty = tabulate(lambda i.i, 0) - use trait method
+            <Self as ArraySeqMtEphSliceTrait<T>>::tabulate(&|_| unreachable!("empty sequence has no elements"), 0)
+        }
 
         fn update(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
             if index >= self.len() {
@@ -117,7 +120,18 @@ pub mod ArraySeqMtEphSlice {
             Ok(self)
         }
 
-        fn singleton(item: T) -> Self { ArraySeqMtEphSliceS::from_vec(vec![item]) }
+        fn singleton(item: T) -> Self {
+            // Algorithm 19.2: singleton x = tabulate(lambda i.x, 1) - use trait method
+            // Implement directly since we can't capture with &F
+            let data = vec![item];
+            let inner = Arc::new(Inner {
+                data: Mutex::new(data.into_boxed_slice()),
+            });
+            Self {
+                inner,
+                range: 0..1,
+            }
+        }
 
         fn isEmpty(&self) -> B { if self.len() == 0 { B::True } else { B::False } }
 
@@ -136,6 +150,14 @@ pub mod ArraySeqMtEphSlice {
                 inner: Arc::clone(&self.inner),
                 range: sub,
             }
+        }
+
+        fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> Self {
+            let mut values: Vec<T> = Vec::with_capacity(n);
+            for i in 0..n {
+                values.push(f(i));
+            }
+            ArraySeqMtEphSliceS::from_vec(values)
         }
     }
 

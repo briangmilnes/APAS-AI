@@ -5,6 +5,10 @@ use apas_ai::Types::Types::*;
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
+// Helper functions for benchmarks
+fn identity(i: N) -> N { i }
+fn add_one(x: &N) -> N { x + 1 }
+
 fn bench_tabulate_map_mtper_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtPerChap18");
     group.sample_size(10);
@@ -13,8 +17,8 @@ fn bench_tabulate_map_mtper_ch18(c: &mut Criterion) {
     let n: N = 10_000;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let s: ArrayMtPerS<N> = <ArrayMtPerS<N> as ArraySeqMtPerChap18Trait<N>>::tabulate(|i| i, len);
-            let m: ArrayMtPerS<N> = <ArrayMtPerS<N> as ArraySeqMtPerChap18Trait<N>>::map(&s, |x| x + 1);
+            let s: ArrayMtPerS<N> = <ArrayMtPerS<N> as ArraySeqMtPerChap18Trait<N>>::tabulate(identity, len);
+            let m: ArrayMtPerS<N> = <ArrayMtPerS<N> as ArraySeqMtPerChap18Trait<N>>::map(&s, add_one);
             black_box((s.length(), m.length()))
         })
     });

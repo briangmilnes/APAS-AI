@@ -44,11 +44,11 @@ pub mod ArraySeq {
 
         /// Algorithm 18.3 (tabulate). Build a sequence by applying `f` to each index. <br/>
         /// Work: Θ(length), Span: Θ(1).
-        fn tabulate(f: impl Fn(N) -> T, length: N) -> ArraySeqS<T>;
+        fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqS<T>;
 
         /// Algorithm 18.4 (map). Transform each element via `f`. <br/>
         /// Work: Θ(|a|), Span: Θ(1).
-        fn map<U: Clone>(a: &ArraySeqS<T>, f: impl Fn(&T) -> U) -> ArraySeqS<U>;
+        fn map<U: Clone, F: Fn(&T) -> U>(a: &ArraySeqS<T>, f: &F) -> ArraySeqS<U>;
 
         /// Definition 18.12 (subseq). Extract a contiguous subsequence, truncating out-of-bounds ranges. <br/>
         /// Work: Θ(length), Span: Θ(1).
@@ -62,7 +62,7 @@ pub mod ArraySeq {
 
         /// Definition 18.14 (filter). Keep elements satisfying `pred`. <br/>
         /// Work: Θ(|a|), Span: Θ(1).
-        fn filter(a: &ArraySeqS<T>, pred: impl Fn(&T) -> B) -> ArraySeqS<T>;
+        fn filter<F: Fn(&T) -> B>(a: &ArraySeqS<T>, pred: &F) -> ArraySeqS<T>;
 
         /// Definition 18.15 (flatten). Concatenate a sequence of sequences. <br/>
         /// Work: Θ(total length), Span: Θ(1).
@@ -92,22 +92,22 @@ pub mod ArraySeq {
         ) -> ArraySeqS<Pair<K, ArraySeqS<V>>>;
 
         /// Definition 18.7 (iterate). Fold with accumulator `seed`.
-        fn iterate<A>(a: &ArraySeqS<T>, f: impl Fn(&A, &T) -> A, seed: A) -> A;
+        fn iterate<A, F: Fn(&A, &T) -> A>(a: &ArraySeqS<T>, f: &F, seed: A) -> A;
 
         /// Definition 18.18 (reduce). Combine elements using associative `f` and identity `id`. <br/>
         /// Work: Θ(|a|), Span: Θ(1).
-        fn reduce(a: &ArraySeqS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T
+        fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqS<T>, f: &F, id: T) -> T
         where
             T: Clone;
 
         /// Definition 18.19 (scan). Prefix-reduce returning partial sums and total. <br/>
         /// Work: Θ(|a|), Span: Θ(1).
-        fn scan(a: &ArraySeqS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqS<T>, T)
+        fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqS<T>, f: &F, id: T) -> (ArraySeqS<T>, T)
         where
             T: Clone;
     }
 
-    impl<T> ArraySeqS<T> {
+    impl<T: Clone> ArraySeqS<T> {
         fn new(length: N, init_value: T) -> ArraySeqS<T>
         {
             let mut data = Vec::with_capacity(length);
@@ -184,7 +184,7 @@ pub mod ArraySeq {
         pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, T> { self.data.iter_mut() }
     }
 
-    impl<T> ArraySeq<T> for ArraySeqS<T> {
+    impl<T: Clone> ArraySeq<T> for ArraySeqS<T> {
         fn new(length: N, init_value: T) -> ArraySeqS<T>
         {
             ArraySeqS::new(length, init_value)
@@ -202,7 +202,7 @@ pub mod ArraySeq {
 
         fn singleton(item: T) -> ArraySeqS<T> { ArraySeqS::singleton(item) }
 
-        fn tabulate(f: impl Fn(N) -> T, length: N) -> ArraySeqS<T> {
+        fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqS<T> {
             let mut values: Vec<T> = Vec::with_capacity(length);
             for i in 0..length {
                 values.push(f(i));
@@ -210,7 +210,7 @@ pub mod ArraySeq {
             ArraySeqS::from_vec(values)
         }
 
-        fn map<U: Clone>(a: &ArraySeqS<T>, f: impl Fn(&T) -> U) -> ArraySeqS<U> {
+        fn map<U: Clone, F: Fn(&T) -> U>(a: &ArraySeqS<T>, f: &F) -> ArraySeqS<U> {
             let len = a.length();
             let mut values: Vec<U> = Vec::with_capacity(len);
             for i in 0..len {
@@ -240,7 +240,7 @@ pub mod ArraySeq {
             ArraySeqS::from_vec(values)
         }
 
-        fn filter(a: &ArraySeqS<T>, pred: impl Fn(&T) -> B) -> ArraySeqS<T>
+        fn filter<F: Fn(&T) -> B>(a: &ArraySeqS<T>, pred: &F) -> ArraySeqS<T>
         {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
@@ -313,7 +313,7 @@ pub mod ArraySeq {
             ArraySeqS::from_vec(grouped)
         }
 
-        fn iterate<A>(a: &ArraySeqS<T>, f: impl Fn(&A, &T) -> A, seed: A) -> A {
+        fn iterate<A, F: Fn(&A, &T) -> A>(a: &ArraySeqS<T>, f: &F, seed: A) -> A {
             let mut acc = seed;
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
@@ -321,7 +321,7 @@ pub mod ArraySeq {
             acc
         }
 
-        fn reduce(a: &ArraySeqS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T
+        fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqS<T>, f: &F, id: T) -> T
         {
             let mut acc = id;
             for i in 0..a.length() {
@@ -330,7 +330,7 @@ pub mod ArraySeq {
             acc
         }
 
-        fn scan(a: &ArraySeqS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqS<T>, T)
+        fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqS<T>, f: &F, id: T) -> (ArraySeqS<T>, T)
         {
             let len = a.length();
             let mut prefixes: Vec<T> = Vec::with_capacity(len);

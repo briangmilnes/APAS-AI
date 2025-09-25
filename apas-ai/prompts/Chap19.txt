@@ -2,9 +2,27 @@
  The idea of Chap19 is to use Chap18 but redefine things in terms of this set of
  primitives:
 
+ I think our primitives are good.
+
+  But we want Chap19/<X> to import and stub out any missing functions in Chap18/<X>
+ and reimplement all of the ones below in terms of the 7 primitives.
+
+  Review the Chap19 functions and notice they all have the same trait/impl
+ names so an as in importing the Chap18 version <X> files is going to be
+ needed.
+
+ Explore Chap18 and Chap19 files.
+
+ Then make a detailed to-do list and let me review it. 
+
+ Then give me an estimate of the time.
+
+ Then execute when I tell you.
+
 From APAS:
 
 1 A Parametric Implementation
+
 The sequence ADT, as we described in ADT Chapter , includes more than a dozen func-
 tions. Although it is possible to present an implementation by considering each function
 independently, it usually suffices to implement directly a smaller subset of the functions,
@@ -107,5 +125,5 @@ r[i/2] even(i)
 f (r[i/2], a[i − 1]) otherwise
 end
 
-I think our primitives are good.
+
 

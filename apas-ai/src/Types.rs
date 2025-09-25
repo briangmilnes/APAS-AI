@@ -220,7 +220,7 @@ pub mod Types {
     /// Set equivalence comparison for sequences (order-independent, useful for MT tests)
     /// APAS: Work Θ(n²), Span Θ(1) - simple membership test both ways
     /// claude-4-sonet: Work Θ(n²), Span Θ(1) - simple membership test both ways
-    pub fn ArraySeqSetEq<T: PartialEq>(a_len: N, a_nth: impl Fn(N) -> T, b_len: N, b_nth: impl Fn(N) -> T) -> bool {
+    pub fn ArraySeqSetEq<T: PartialEq>(a_len: N, a_nth: fn(N) -> T, b_len: N, b_nth: fn(N) -> T) -> bool {
         if a_len != b_len {
             return false;
         }

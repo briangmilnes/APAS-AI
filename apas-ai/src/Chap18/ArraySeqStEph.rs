@@ -27,6 +27,11 @@ pub mod ArraySeqStEph {
 
         pub fn nth(&self, index: N) -> &T { &self.data[index] }
 
+        /// Iterator over references to elements
+        pub fn iter(&self) -> std::slice::Iter<'_, T> {
+            self.data.iter()
+        }
+
         pub fn subseq(&self, start: N, length: N) -> Self {
             let total = self.data.len();
             let begin = start.min(total);
@@ -70,6 +75,24 @@ pub mod ArraySeqStEph {
         fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { f.debug_list().entries(self.data.iter()).finish() }
     }
 
+    impl<'a, T: StT> IntoIterator for &'a ArraySeqStEphS<T> {
+        type Item = &'a T;
+        type IntoIter = std::slice::Iter<'a, T>;
+        
+        fn into_iter(self) -> Self::IntoIter {
+            self.data.iter()
+        }
+    }
+
+    impl<T: StT> IntoIterator for ArraySeqStEphS<T> {
+        type Item = T;
+        type IntoIter = std::vec::IntoIter<T>;
+        
+        fn into_iter(self) -> Self::IntoIter {
+            self.data.into_vec().into_iter()
+        }
+    }
+
     impl<T: StT> Display for ArraySeqStEphS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
             write!(f, "[")?;
@@ -90,11 +113,11 @@ pub mod ArraySeqStEph {
         fn nth(&self, index: N) -> &T;
         fn empty() -> ArraySeqStEphS<T>;
         fn singleton(item: T) -> ArraySeqStEphS<T>;
-        fn tabulate(f: impl Fn(N) -> T, length: N) -> ArraySeqStEphS<T>;
-        fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U>;
+        fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStEphS<T>;
+        fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStEphS<T>, f: &F) -> ArraySeqStEphS<U>;
         fn subseq(a: &ArraySeqStEphS<T>, start: N, length: N) -> ArraySeqStEphS<T>;
         fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;
-        fn filter(a: &ArraySeqStEphS<T>, pred: impl Fn(&T) -> B) -> ArraySeqStEphS<T>;
+        fn filter<F: Fn(&T) -> B>(a: &ArraySeqStEphS<T>, pred: &F) -> ArraySeqStEphS<T>;
         fn flatten(a: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;
         fn update(&mut self, update: Pair<N, T>) -> &mut ArraySeqStEphS<T>;
         fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut ArraySeqStEphS<T>;
@@ -102,11 +125,11 @@ pub mod ArraySeqStEph {
         fn isSingleton(&self) -> B;
         fn collect<K: StT, V: StT>(
             pairs: &ArraySeqStEphS<Pair<K, V>>,
-            cmp: impl Fn(&K, &K) -> O,
+            cmp: fn(&K, &K) -> O,
         ) -> ArraySeqStEphS<Pair<K, ArraySeqStEphS<V>>>;
-        fn iterate<A>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, seed: A) -> A;
-        fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
-        fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, T);
+        fn iterate<A, F: Fn(&A, &T) -> A>(a: &ArraySeqStEphS<T>, f: &F, seed: A) -> A;
+        fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> T;
+        fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T);
     }
 
     impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {
@@ -124,7 +147,7 @@ pub mod ArraySeqStEph {
 
         fn singleton(item: T) -> ArraySeqStEphS<T> { ArraySeqStEphS::singleton(item) }
 
-        fn tabulate(f: impl Fn(N) -> T, length: N) -> ArraySeqStEphS<T> {
+        fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStEphS<T> {
             let mut values: Vec<T> = Vec::with_capacity(length);
             for i in 0..length {
                 values.push(f(i));
@@ -132,7 +155,7 @@ pub mod ArraySeqStEph {
             ArraySeqStEphS::from_vec(values)
         }
 
-        fn map<U: StT>(a: &ArraySeqStEphS<T>, f: impl Fn(&T) -> U) -> ArraySeqStEphS<U> {
+        fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStEphS<T>, f: &F) -> ArraySeqStEphS<U> {
             let mut values: Vec<U> = Vec::with_capacity(a.length());
             for i in 0..a.length() {
                 values.push(f(a.nth(i)));
@@ -154,7 +177,7 @@ pub mod ArraySeqStEph {
             ArraySeqStEphS::from_vec(values)
         }
 
-        fn filter(a: &ArraySeqStEphS<T>, pred: impl Fn(&T) -> B) -> ArraySeqStEphS<T> {
+        fn filter<F: Fn(&T) -> B>(a: &ArraySeqStEphS<T>, pred: &F) -> ArraySeqStEphS<T> {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
@@ -188,7 +211,7 @@ pub mod ArraySeqStEph {
 
         fn collect<K: StT, V: StT>(
             pairs: &ArraySeqStEphS<Pair<K, V>>,
-            cmp: impl Fn(&K, &K) -> O,
+            cmp: fn(&K, &K) -> O,
         ) -> ArraySeqStEphS<Pair<K, ArraySeqStEphS<V>>> {
             let mut groups: Vec<Pair<K, Vec<V>>> = Vec::new();
             'outer: for i in 0..pairs.length() {
@@ -208,7 +231,7 @@ pub mod ArraySeqStEph {
             ArraySeqStEphS::from_vec(collected)
         }
 
-        fn iterate<A>(a: &ArraySeqStEphS<T>, f: impl Fn(&A, &T) -> A, seed: A) -> A {
+        fn iterate<A, F: Fn(&A, &T) -> A>(a: &ArraySeqStEphS<T>, f: &F, seed: A) -> A {
             let mut acc = seed;
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
@@ -216,7 +239,7 @@ pub mod ArraySeqStEph {
             acc
         }
 
-        fn reduce(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
+        fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> T {
             let mut acc = id;
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
@@ -224,7 +247,7 @@ pub mod ArraySeqStEph {
             acc
         }
 
-        fn scan(a: &ArraySeqStEphS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStEphS<T>, T) {
+        fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T) {
             let mut prefixes: Vec<T> = Vec::with_capacity(a.length());
             let mut acc = id;
             for i in 0..a.length() {

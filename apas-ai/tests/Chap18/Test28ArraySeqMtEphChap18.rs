@@ -5,6 +5,15 @@ pub mod Test28ArraySeqMtEphChap {
     use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     use apas_ai::Types::Types::*;
 
+    // Helper functions for common patterns
+    fn identity(i: N) -> N { i }
+    fn double(i: N) -> N { i * 2 }
+    fn add_one(i: N) -> N { i + 1 }
+    fn add_ten(i: N) -> N { i + 10 }
+    fn multiply_by_two(x: &N) -> N { x * 2 }
+    fn add_nums(x: &N, y: &N) -> N { x + y }
+    fn is_even_bool(x: &N) -> B { if x % 2 == 0 { B::True } else { B::False } }
+
     #[test]
     fn test_new_and_set() {
         let mut a: ArraySeqMtEphS<N> = ArraySeqMtEphS::new(5, 0);
@@ -21,7 +30,7 @@ pub mod Test28ArraySeqMtEphChap {
 
     #[test]
     fn test_tabulate_basic() {
-        let a: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::tabulate(|i| i * 2, 5);
+        let a: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::tabulate(double, 5);
         assert_eq!(a.length(), 5);
         
         for i in 0..5 {
@@ -31,8 +40,8 @@ pub mod Test28ArraySeqMtEphChap {
 
     #[test]
     fn test_map_parallel() {
-        let a: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::tabulate(|i| i, 2000); // Large enough for parallel
-        let doubled: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::map(&a, |x| x * 2);
+        let a: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::tabulate(identity, 2000); // Large enough for parallel
+        let doubled: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::map(&a, multiply_by_two);
         
         assert_eq!(doubled.length(), 2000);
         for i in 0..2000 {
@@ -42,8 +51,8 @@ pub mod Test28ArraySeqMtEphChap {
 
     #[test]
     fn test_reduce_parallel() {
-        let a: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::tabulate(|i| i + 1, 2000); // [1, 2, 3, ..., 2000]
-        let sum = ArraySeqMtEphTrait::reduce(&a, &|x, y| x + y, 0);
+        let a: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::tabulate(add_one, 2000); // [1, 2, 3, ..., 2000]
+        let sum = ArraySeqMtEphTrait::reduce(&a, add_nums, 0);
         
         // Sum of 1 to 2000 = 2000 * 2001 / 2 = 2001000
         assert_eq!(sum, 2001000);
@@ -51,8 +60,8 @@ pub mod Test28ArraySeqMtEphChap {
 
     #[test]
     fn test_filter() {
-        let a: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::tabulate(|i| i, 10);
-        let evens = ArraySeqMtEphTrait::filter(&a, |x| if x % 2 == 0 { B::True } else { B::False });
+        let a: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::tabulate(identity, 10);
+        let evens = ArraySeqMtEphTrait::filter(&a, is_even_bool);
         
         assert_eq!(evens.length(), 5); // 0, 2, 4, 6, 8
         for i in 0..5 {
@@ -62,8 +71,8 @@ pub mod Test28ArraySeqMtEphChap {
 
     #[test]
     fn test_append() {
-        let a: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::tabulate(|i| i, 3);
-        let b: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::tabulate(|i| i + 10, 2);
+        let a: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::tabulate(identity, 3);
+        let b: ArraySeqMtEphS<N> = ArraySeqMtEphTrait::tabulate(add_ten, 2);
         let combined = ArraySeqMtEphTrait::append(&a, &b);
         
         assert_eq!(combined.length(), 5);

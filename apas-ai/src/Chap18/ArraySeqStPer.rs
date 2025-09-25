@@ -29,6 +29,11 @@ pub mod ArraySeqStPer {
             let slice: Vec<T> = self.data[begin..end].iter().cloned().collect();
             Self::from_vec(slice)
         }
+
+        /// Iterator over references to elements
+        pub fn iter(&self) -> std::slice::Iter<'_, T> {
+            self.data.iter()
+        }
     }
 
     impl<T: StT> PartialEq for ArraySeqStPerS<T> {
@@ -39,6 +44,24 @@ pub mod ArraySeqStPer {
 
     impl<T: StT> Debug for ArraySeqStPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { f.debug_list().entries(self.data.iter()).finish() }
+    }
+
+    impl<'a, T: StT> IntoIterator for &'a ArraySeqStPerS<T> {
+        type Item = &'a T;
+        type IntoIter = std::slice::Iter<'a, T>;
+        
+        fn into_iter(self) -> Self::IntoIter {
+            self.data.iter()
+        }
+    }
+
+    impl<T: StT> IntoIterator for ArraySeqStPerS<T> {
+        type Item = T;
+        type IntoIter = std::vec::IntoIter<T>;
+        
+        fn into_iter(self) -> Self::IntoIter {
+            self.data.into_vec().into_iter()
+        }
     }
 
     impl<T: StT> Display for ArraySeqStPerS<T> {
@@ -54,29 +77,29 @@ pub mod ArraySeqStPer {
         }
     }
 
-    /// Persistent ArraySeq API matching the APAS ordering (no `set` or `update`).
     pub trait ArraySeqStPerTrait<T: StT> {
         fn new(length: N, init_value: T) -> ArraySeqStPerS<T>;
         fn length(&self) -> N;
         fn nth(&self, index: N) -> &T;
         fn empty() -> ArraySeqStPerS<T>;
         fn singleton(item: T) -> ArraySeqStPerS<T>;
-        fn tabulate(f: impl Fn(N) -> T, length: N) -> ArraySeqStPerS<T>;
-        fn map<U: StT>(a: &ArraySeqStPerS<T>, f: impl Fn(&T) -> U) -> ArraySeqStPerS<U>;
+        fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStPerS<T>;
+        fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStPerS<T>, f: &F) -> ArraySeqStPerS<U>;
         fn subseq_copy(a: &ArraySeqStPerS<T>, start: N, length: N) -> ArraySeqStPerS<T>;
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T>;
-        fn filter(a: &ArraySeqStPerS<T>, pred: impl Fn(&T) -> B) -> ArraySeqStPerS<T>;
+        fn filter<F: Fn(&T) -> B>(a: &ArraySeqStPerS<T>, pred: &F) -> ArraySeqStPerS<T>;
         fn flatten(a: &ArraySeqStPerS<ArraySeqStPerS<T>>) -> ArraySeqStPerS<T>;
         fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T>;
         fn isEmpty(&self) -> B;
         fn isSingleton(&self) -> B;
         fn collect<K: StT, V: StT>(
-            pairs: &ArraySeqStPerS<Pair<K, V>>,
-            cmp: impl Fn(&K, &K) -> O,
+            a: &ArraySeqStPerS<Pair<K, V>>,
+            cmp: fn(&K, &K) -> O,
         ) -> ArraySeqStPerS<Pair<K, ArraySeqStPerS<V>>>;
-        fn iterate<A>(a: &ArraySeqStPerS<T>, f: impl Fn(&A, &T) -> A, seed: A) -> A;
-        fn reduce(a: &ArraySeqStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T;
-        fn scan(a: &ArraySeqStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStPerS<T>, T);
+        fn iterate<A, F: Fn(&A, &T) -> A>(a: &ArraySeqStPerS<T>, f: &F, seed: A) -> A;
+        fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> T;
+        fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T);
+        fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT> ArraySeqStPerTrait<T> for ArraySeqStPerS<T> {
@@ -86,7 +109,7 @@ pub mod ArraySeqStPer {
         fn empty() -> ArraySeqStPerS<T> { ArraySeqStPerS::empty() }
         fn singleton(item: T) -> ArraySeqStPerS<T> { ArraySeqStPerS::singleton(item) }
 
-        fn tabulate(f: impl Fn(N) -> T, length: N) -> ArraySeqStPerS<T> {
+        fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(length);
             for i in 0..length {
                 values.push(f(i));
@@ -94,7 +117,7 @@ pub mod ArraySeqStPer {
             ArraySeqStPerS::from_vec(values)
         }
 
-        fn map<U: StT>(a: &ArraySeqStPerS<T>, f: impl Fn(&T) -> U) -> ArraySeqStPerS<U> {
+        fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStPerS<T>, f: &F) -> ArraySeqStPerS<U> {
             let mut values: Vec<U> = Vec::with_capacity(a.length());
             for i in 0..a.length() {
                 values.push(f(a.nth(i)));
@@ -107,8 +130,7 @@ pub mod ArraySeqStPer {
         }
 
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
-            let total = a.length() + b.length();
-            let mut values: Vec<T> = Vec::with_capacity(total);
+            let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
             for i in 0..a.length() {
                 values.push(a.nth(i).clone());
             }
@@ -118,67 +140,74 @@ pub mod ArraySeqStPer {
             ArraySeqStPerS::from_vec(values)
         }
 
-        fn filter(a: &ArraySeqStPerS<T>, pred: impl Fn(&T) -> B) -> ArraySeqStPerS<T> {
-            let mut kept: Vec<T> = Vec::new();
+        fn filter<F: Fn(&T) -> B>(a: &ArraySeqStPerS<T>, pred: &F) -> ArraySeqStPerS<T> {
+            let mut values: Vec<T> = Vec::new();
             for i in 0..a.length() {
-                let value = a.nth(i);
-                if pred(value) == B::True {
-                    kept.push(value.clone());
+                let item = a.nth(i);
+                if pred(item) == B::True {
+                    values.push(item.clone());
                 }
             }
-            ArraySeqStPerS::from_vec(kept)
+            ArraySeqStPerS::from_vec(values)
         }
 
         fn flatten(a: &ArraySeqStPerS<ArraySeqStPerS<T>>) -> ArraySeqStPerS<T> {
             let mut values: Vec<T> = Vec::new();
             for i in 0..a.length() {
-                let inner = a.nth(i);
-                for j in 0..inner.length() {
-                    values.push(inner.nth(j).clone());
+                let inner_seq = a.nth(i);
+                for j in 0..inner_seq.length() {
+                    values.push(inner_seq.nth(j).clone());
                 }
             }
             ArraySeqStPerS::from_vec(values)
         }
 
         fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T> {
-            let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
-            let mut seen: HashSet<N> = HashSet::new();
+            let mut result = a.clone();
+            let mut updated: HashSet<N> = HashSet::new();
             for i in 0..updates.length() {
-                let Pair(index, value) = updates.nth(i).clone();
-                if index < values.len() && seen.insert(index) {
-                    values[index] = value;
+                let Pair(index, value) = updates.nth(i);
+                if *index < result.length() && updated.insert(*index) {
+                    let mut new_data: Vec<T> = result.data.iter().cloned().collect();
+                    new_data[*index] = value.clone();
+                    result = ArraySeqStPerS::from_vec(new_data);
                 }
             }
-            ArraySeqStPerS::from_vec(values)
+            result
         }
 
-        fn isEmpty(&self) -> B { if self.length() == 0 { B::True } else { B::False } }
+        fn isEmpty(&self) -> B { if self.data.is_empty() { B::True } else { B::False } }
 
-        fn isSingleton(&self) -> B { if self.length() == 1 { B::True } else { B::False } }
+        fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
 
         fn collect<K: StT, V: StT>(
-            pairs: &ArraySeqStPerS<Pair<K, V>>,
-            cmp: impl Fn(&K, &K) -> O,
+            a: &ArraySeqStPerS<Pair<K, V>>,
+            cmp: fn(&K, &K) -> O,
         ) -> ArraySeqStPerS<Pair<K, ArraySeqStPerS<V>>> {
-            let mut groups: Vec<Pair<K, Vec<V>>> = Vec::new();
-            'outer: for i in 0..pairs.length() {
-                let Pair(key, value) = pairs.nth(i).clone();
-                for group in groups.iter_mut() {
-                    if cmp(&group.0, &key) == O::Equal {
-                        group.1.push(value.clone());
-                        continue 'outer;
+            if a.length() == 0 {
+                return ArraySeqStPerS::from_vec(vec![]);
+            }
+            let mut groups: Vec<Pair<K, ArraySeqStPerS<V>>> = Vec::new();
+            for i in 0..a.length() {
+                let Pair(key, value) = a.nth(i);
+                let mut found_group = false;
+                for group in &mut groups {
+                    if cmp(&key, &group.0) == O::Equal {
+                        let mut values: Vec<V> = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect();
+                        values.push(value.clone());
+                        group.1 = ArraySeqStPerS::from_vec(values);
+                        found_group = true;
+                        break;
                     }
                 }
-                groups.push(Pair(key, vec![value]));
+                if !found_group {
+                    groups.push(Pair(key.clone(), ArraySeqStPerS::from_vec(vec![value.clone()])));
+                }
             }
-            let collected: Vec<Pair<K, ArraySeqStPerS<V>>> = groups
-                .into_iter()
-                .map(|Pair(key, bucket)| Pair(key, ArraySeqStPerS::from_vec(bucket)))
-                .collect();
-            ArraySeqStPerS::from_vec(collected)
+            ArraySeqStPerS::from_vec(groups)
         }
 
-        fn iterate<A>(a: &ArraySeqStPerS<T>, f: impl Fn(&A, &T) -> A, seed: A) -> A {
+        fn iterate<A, F: Fn(&A, &T) -> A>(a: &ArraySeqStPerS<T>, f: &F, seed: A) -> A {
             let mut acc = seed;
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
@@ -186,42 +215,43 @@ pub mod ArraySeqStPer {
             acc
         }
 
-        fn reduce(a: &ArraySeqStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> T {
-            let mut acc = id;
-            for i in 0..a.length() {
-                acc = f(&acc, a.nth(i));
+        fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> T {
+            if a.length() == 0 {
+                return id;
             }
-            acc
+            if a.length() == 1 {
+                return a.nth(0).clone();
+            }
+            let mid = a.length() / 2;
+            let left = a.subseq_copy(0, mid);
+            let right = a.subseq_copy(mid, a.length() - mid);
+            let l = ArraySeqStPerS::reduce(&left, f, id.clone());
+            let r = ArraySeqStPerS::reduce(&right, f, id);
+            f(&l, &r)
         }
 
-        fn scan(a: &ArraySeqStPerS<T>, f: &impl Fn(&T, &T) -> T, id: T) -> (ArraySeqStPerS<T>, T) {
-            let mut prefixes: Vec<T> = Vec::with_capacity(a.length());
-            let mut acc = id;
+        fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T) {
+            let mut acc = id.clone();
+            let mut values: Vec<T> = Vec::with_capacity(a.length());
             for i in 0..a.length() {
-                acc = f(&acc, a.nth(i));
-                prefixes.push(acc.clone());
+                let item = a.nth(i);
+                acc = f(&acc, item);
+                values.push(acc.clone());
             }
-            (ArraySeqStPerS::from_vec(prefixes), acc)
+            (ArraySeqStPerS::from_vec(values), acc)
         }
-    }
 
-    #[macro_export]
-    macro_rules! ArraySeqStPerS {
-        () => {
-            $crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::from_vec(Vec::new())
-        };
-        ($elem:expr; $len:expr) => {
-            $crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::from_vec(vec![$elem; $len])
-        };
-        ($($elem:expr),+ $(,)?) => {
-            $crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::from_vec(vec![$($elem),+])
-        };
-    }
-
-    #[allow(dead_code)]
-    fn _arrayseqstpers_macro_type_checks() {
-        let _: ArraySeqStPerS<i32> = ArraySeqStPerS![];
-        let _: ArraySeqStPerS<&str> = ArraySeqStPerS!["alpha", "beta"];
-        let _: ArraySeqStPerS<i64> = ArraySeqStPerS![1; 2];
+        fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T> {
+            let mut result = a.clone();
+            for i in 0..updates.length() {
+                let Pair(index, value) = updates.nth(i);
+                if *index < result.length() {
+                    let mut new_data: Vec<T> = result.data.iter().cloned().collect();
+                    new_data[*index] = value.clone();
+                    result = ArraySeqStPerS::from_vec(new_data);
+                }
+            }
+            result
+        }
     }
 }
