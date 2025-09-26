@@ -19,6 +19,8 @@
 
  Then execute when I tell you.
 
+ 
+
 From APAS:
 
 1 A Parametric Implementation
@@ -106,6 +108,7 @@ mid = f loor(|a|/2)
 in
 f (rb, rc)
 end
+
 Algorithm 19.10 (Scan Using Contraction). We will cover scan in more detail in Section 3.
 But for completeness, we present an implementation below. For simplicity, we assume that
 the length of the sequence is a power of two, though this is not difficult to eliminate
@@ -126,4 +129,115 @@ f (r[i/2], a[i − 1]) otherwise
 end
 
 
+Algorithm 19.10 (Scan Using Contraction). We will cover scan in more detail in Section 3.
+But for completeness, we present an implementation below. For simplicity, we assume that
+the length of the sequence is a power of two, though this is not difficult to eliminate.
+
+
+(* Assumption: |a| is a power of two. *)
+scan f id a =
+case |a|
+| 0 ⇒ (〈 〉 , id)
+| 1 ⇒ (〈 id 〉 , a[0])
+| n ⇒
+let
+a′ = 〈 f (a[2i], a[2i + 1]) : 0 ≤ i < n/2 〉
+(r, t) = scan f id a′
+in
+(〈 pi : 0 ≤ i < n 〉 , t), where pi =
+{
+r[i/2] even(i)
+f (r[i/2], a[i − 1]) otherwise
+end
+
+
+2. IMPLEMENTING THE PRIMITIVE FUNCTIONS 129
+(* Assumption: |a| is a power of two. *)
+scan f id a =
+case |a|
+| 0 ⇒ (〈 〉 , id)
+| 1 ⇒ (〈 id 〉 , a[0])
+| n ⇒
+let
+a′ = 〈 f (a[2i], a[2i + 1]) : 0 ≤ i < n/2 〉
+(r, t) = scan f id a′
+in
+(〈 pi : 0 ≤ i < n 〉 , t), where pi =
+{
+r[i/2] even(i)
+f (r[i/2], a[i − 1]) otherwise
+end
+2 Implementing the Primitive Functions
+To support the primitive operations efficiently we represent a sequence as an array segment
+(a.k.a., slice) contained within a possibly larger array along with a few additional pieces of
+information. More precisely, a sequence is represented as:
+• an array of elements contains the elements in the sequence (but possibly more)
+• a “left” and a “right” position indicates the boundaries of the slice in terms of the be-
+ginning and the ending of a contiguous section of the array that contains the elements
+in the sequence (in order),
+Algorithm 19.11 (Function nth). Using arrays, indexing into any location requires a simple
+array access and can be achieved in constant work and span.
+Algorithm 19.12 (Function length). Because we know the boundary positions of the array
+slice that corresponds to the sequence, we can calculate length by using simple arithmetic
+in constant work and span.
+Algorithm 19.13 (Function subseq). Taking a subsequence of a sequence requires deter-
+mining the boundaries for the new slice. We do not need to copy the elements of the array
+within the boundary. This operation therefore requires basic arithmetic and thus can be
+done in constant work and span.
+Algorithm 19.14 (Function tabulate). Consider a call to tabulate of the form:
+tabulate f n.
+To construct the sequence of length n, we allocate a fresh array of n elements, evaluate f at
+each position i and write the result into position i of the array.
+
+Because the function f can be evaluated at each element independently in parallel, this
+operation has the same span and that of the function f itself (maximized over all positions)
+and the total work is the sum of the work required to evaluate f at each position.
+Algorithm 19.15 (Function flatten). Consider a call to flatten of the form:
+flatten a,
+where a is a sequences of sequences.
+To compute the resulting sequence, we first map each element of a to its length; let ` be the
+resulting sequence. We then perform the scan scan + 0 `. This computation returns for
+each element of a its position in the result sequence of flatten. Finally, we allocate an array
+that can hold all of the elements of the sequences in a and write each element of a into its
+corresponding segment in parallel.
+This cost of scan is O(|a|) work and O(lg |a|) span. The cost of the final write of each
+element requires O(||a||) work, where ||a|| = ∑|a|−1
+i=0 |a[i]| and constant span. Thus the total
+work is O(|a| + ||a||) and span is O(lg |a|).
+
+Algorithm 19.16 (Function inject). Consider a call to inject of the form:
+inject a b,
+where a is a sequence of length n and b is a sequence of m updates.
+To inject the updates into the sequence, we create a new array aa from a, where for all
+0 ≤ i < |a|, aa[i] = (a[i], |a|). We then “inject” all updates in b into aa in parallel. To handle
+each update of the form (j, v) at position k, we perform an atomic update operation that
+proceeds as follows.
+atomicW rite aa b k =
+atomically do:
+(j, v) ← b[k]
+(w, i) ← aa[j]
+if k < i then
+aa[j] ← (v, k)
+This update operation guarantees that of the possibly many conflicting operations the first
+(leftmost) one in the update sequence wins and is transferred to the result; the other up-
+dates either don’t take place or are overwritten. After all updates complete, we take aa and
+create another array consisting of only the value component of each element.
+Under the assumption that all updates occur uniformly randomly, it is possible to prove
+that the number of updates to a position that is targeted by d updates is O(lg d) in expecta-
+tion and the total work is O(n + m). Note that d ≤ m and therefore O(lg m) span is also a
+decent upper bound but as we will see in many cases d, which is the degree, is constant.
+Algorithm 19.17 (Function ninject). Consider a call to ninject of the form:
+ninject a b,
+
+2. IMPLEMENTING THE PRIMITIVE FUNCTIONS 131
+where a is a sequence to be injected into and b is the updates.
+To inject the updates into the sequence, we make a copy of the array a and then use an
+atomic write operation to write or “inject” each update independently in parallel. Each
+instance of the atomic write operation updates the relevant element of the copied array
+atomically. Assuming that each atomic write operation requires constant-work, this imple-
+mentation requires linear work in the number of updates and constant span.
+Remark (Benign Effects). We made careful use of side effects (memory updates) in imple-
+menting the primitive functions. Because these side effects are not visible to the program-
+mer, the ADT remains to be purely functional and thus is safe for parallelism. Effects such
+as these that have no impact on purity are sometimes called benign effects.
 

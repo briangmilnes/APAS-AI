@@ -88,10 +88,10 @@ pub mod AVLTreeSeqStEph {
             let mut it = self.iter();
             let first = it.next().expect("length > 0 but iter was empty").clone();
             let mut out = ArraySeqStEphS::new(len, first.clone());
-            let _ = out.update(0, first);
+            let _ = out.set(0, first);
             let mut index: N = 1;
             for v in it {
-                let _ = out.update(index, v.clone());
+                let _ = out.set(index, v.clone());
                 index += 1;
             }
             out
@@ -319,15 +319,15 @@ pub mod AVLTreeSeqStEph {
     }
 
     #[macro_export]
-    macro_rules! AVLTreeSeqStEph {
-        () => { $crate::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS::from_vec(Vec::new()) };
+    macro_rules! AVLTreeSeqStEphLit {
+        () => { $crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS::from_vec(Vec::new()) };
         ($x:expr; $n:expr) => {{
-            let mut t = $crate::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS::from_vec(Vec::new());
+            let mut t = $crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS::from_vec(Vec::new());
             for _ in 0..$n { t.push_back($x); }
             t
         }};
         ($($x:expr),* $(,)?) => {{
-            let mut t = $crate::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS::from_vec(Vec::new());
+            let mut t = $crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS::from_vec(Vec::new());
             $( { t.push_back($x); } )*
             t
         }};

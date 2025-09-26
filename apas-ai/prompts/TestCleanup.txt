@@ -1,0 +1,18 @@
+
+ Are any test files directly importing both Chap18 and Chap19?
+
+ Is it because the file is too broad and testing both or is
+ it because it's using something from 18 that is not in 19?
+
+ List the files and classify them as above.
+
+ Make plan to fix them.
+
+
+ Go through each test file and check that all public fn and
+ methods are tested and which tests call things that no
+ longer exist.
+
+ Make list per file and a plan to fix them.
+
+

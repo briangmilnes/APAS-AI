@@ -13,6 +13,7 @@ pub mod BSTBBAlphaMtEph {
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone)]
+    #[derive(Debug)]
     struct Node<T: StTInMtT + Ord> {
         key: T,
         size: N,

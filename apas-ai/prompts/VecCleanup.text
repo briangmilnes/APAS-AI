@@ -1,0 +1,12 @@
+
+ Look for vec in test code.
+
+ Identify every vec literal and think about whether it should be a
+ XLit!.
+ Look for vec in test code.
+
+ Where are we using vec programatically where the correct type for
+ the test could be used?
+
+ Make a detailed plan to fix these and show it to me.
+ 

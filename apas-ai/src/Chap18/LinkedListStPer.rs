@@ -12,7 +12,7 @@ pub mod LinkedListStPer {
         pub next: Option<Box<NodeP<T>>>,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Clone)]
     pub struct LinkedListStPerS<T: StT> {
         head: Option<Box<NodeP<T>>>,
         len: N,
@@ -30,6 +30,7 @@ pub mod LinkedListStPer {
         fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> LinkedListStPerS<T>;
         fn map<U: StT, F: Fn(&T) -> U>(a: &LinkedListStPerS<T>, f: &F) -> LinkedListStPerS<U>;
         fn append(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>) -> LinkedListStPerS<T>;
+        fn select(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>, index: N) -> Option<T>;
         fn filter<F: Fn(&T) -> B>(a: &LinkedListStPerS<T>, pred: &F) -> LinkedListStPerS<T>;
         fn update(a: &LinkedListStPerS<T>, item_at: Pair<N, T>) -> LinkedListStPerS<T>;
         fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T>;
@@ -143,6 +144,24 @@ pub mod LinkedListStPer {
         }
     }
 
+    impl<T: StT> std::fmt::Debug for LinkedListStPerS<T> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "[")?;
+            let mut first = true;
+            let mut current = self.head.as_deref();
+            while let Some(node) = current {
+                if !first {
+                    write!(f, ", ")?;
+                } else {
+                    first = false;
+                }
+                write!(f, "{}", node.value)?;
+                current = node.next.as_deref();
+            }
+            write!(f, "]")
+        }
+    }
+
     impl<T: StT> PartialEq for LinkedListStPerS<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.len != other.len {
@@ -204,6 +223,20 @@ pub mod LinkedListStPer {
                 values.push(b.nth(j).clone());
             }
             LinkedListStPerS::from_vec(values)
+        }
+
+        fn select(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>, index: N) -> Option<T> {
+            // Select from concatenated sequences: if index < |a| then a[index] else b[index - |a|]
+            if index < a.length() {
+                Some(a.nth(index).clone())
+            } else {
+                let b_index = index - a.length();
+                if b_index < b.length() {
+                    Some(b.nth(b_index).clone())
+                } else {
+                    None
+                }
+            }
         }
 
         fn filter<F: Fn(&T) -> B>(a: &LinkedListStPerS<T>, pred: &F) -> LinkedListStPerS<T> {

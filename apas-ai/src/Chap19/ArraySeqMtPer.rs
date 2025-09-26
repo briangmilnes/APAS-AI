@@ -19,8 +19,8 @@ pub mod ArraySeqMtPer {
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
         fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F) -> ArraySeqMtPerS<W> where T: 'static;
         fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
-        fn filter<F: Fn(&T) -> B + Send + Sync>(a: &ArraySeqMtPerS<T>, pred: &F) -> ArraySeqMtPerS<T>;
-        fn update(a: &ArraySeqMtPerS<T>, item_at: Pair<N, T>) -> ArraySeqMtPerS<T>;
+        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T> where T: 'static;
+        fn update_single(a: &ArraySeqMtPerS<T>, index: N, item: T) -> ArraySeqMtPerS<T>;
         fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T>;
         fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A;
         fn iteratePrefixes<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> (ArraySeqMtPerS<A>, A);
@@ -39,6 +39,11 @@ pub mod ArraySeqMtPer {
             changes: &ArraySeqMtPerS<Pair<N, T>>,
             change_index: N,
         );
+        fn isEmpty(a: &ArraySeqMtPerS<T>) -> bool;
+        fn isSingleton(a: &ArraySeqMtPerS<T>) -> bool;
+        fn append_select(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
+        fn select<'a>(a: &'a ArraySeqMtPerS<T>, b: &'a ArraySeqMtPerS<T>, i: N) -> Option<&'a T>;
+        fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtPerS<T>;
     }
 
     impl<T: StTInMtT> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
@@ -54,8 +59,7 @@ pub mod ArraySeqMtPer {
 
         fn singleton(item: T) -> ArraySeqMtPerS<T> {
             // Algorithm 19.2: singleton x = tabulate(lambda i.x, 1)
-            // Implement directly since we can't capture with &F
-            ArraySeqMtPerS::from_vec(vec![item])
+            <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::tabulate(&|_| item.clone(), 1)
         }
 
         fn length(&self) -> N { ArraySeqMtPerTraitChap18::length(self) }
@@ -100,32 +104,52 @@ pub mod ArraySeqMtPer {
 
         fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T> {
             // Algorithm 19.4: append a b = flatten([a, b])
-            // Implement directly since we can't capture with &F
-            let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
-            for i in 0..a.length() {
-                values.push(a.nth(i).clone());
-            }
-            for i in 0..b.length() {
-                values.push(b.nth(i).clone());
-            }
-            ArraySeqMtPerS::from_vec(values)
+            let sequences = <ArraySeqMtPerS<ArraySeqMtPerS<T>> as ArraySeqMtPerTrait<ArraySeqMtPerS<T>>>::tabulate(&|i| if i == 0 { a.clone() } else { b.clone() }, 2);
+            <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::flatten(&sequences)
         }
 
-        fn filter<F: Fn(&T) -> B + Send + Sync>(a: &ArraySeqMtPerS<T>, pred: &F) -> ArraySeqMtPerS<T> {
-            // Algorithm 19.5: filter f a = flatten(map(deflate f, a))
-            // Implement directly since we can't capture with owned F
-            let mut kept: Vec<T> = Vec::new();
+        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T> where T: 'static {
+            // Algorithm 19.5 with parallelism: fork thread per element + serial compaction
+            if a.length() == 0 {
+                return <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::empty();
+            }
+            
+            // Fork thread per element to evaluate predicate
+            let mut handles = Vec::with_capacity(a.length());
             for i in 0..a.length() {
-                let value = a.nth(i);
-                if pred(value) == B::True {
-                    kept.push(value.clone());
+                let value = a.nth(i).clone();
+                let pred_clone = pred.clone();
+                let handle = std::thread::spawn(move || {
+                    if pred_clone(&value) == B::True {
+                        Some(value)
+                    } else {
+                        None
+                    }
+                });
+                handles.push(handle);
+            }
+            
+            // Serial compaction: collect all Some values
+            let mut kept: Vec<T> = Vec::new();
+            for handle in handles {
+                if let Some(value) = handle.join().unwrap() {
+                    kept.push(value);
                 }
             }
-            ArraySeqMtPerS::from_vec(kept)
+            
+            if kept.is_empty() {
+                <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::empty()
+            } else {
+                ArraySeqMtPerS::from_vec(kept)
+            }
         }
 
-        fn update(a: &ArraySeqMtPerS<T>, item_at: Pair<N, T>) -> ArraySeqMtPerS<T> {
-            <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::update(a, item_at)
+        fn update_single(a: &ArraySeqMtPerS<T>, index: N, item: T) -> ArraySeqMtPerS<T> {
+            // Algorithm 19.6: update a (i, x) = tabulate(lambda j. if i = j then x else a[j], |a|)
+            <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::tabulate(
+                &|j| if j == index { item.clone() } else { a.nth(j).clone() },
+                a.length()
+            )
         }
 
         fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T> {
@@ -213,8 +237,56 @@ pub mod ArraySeqMtPer {
             // Stub implementation - complex atomic operations not needed for basic functionality
         }
 
+        fn isEmpty(a: &ArraySeqMtPerS<T>) -> bool {
+            // Algorithm 19.7: isEmpty a = |a| = 0
+            a.length() == 0
+        }
+
+        fn isSingleton(a: &ArraySeqMtPerS<T>) -> bool {
+            // Algorithm 19.7: isSingleton a = |a| = 1
+            a.length() == 1
+        }
+
+        fn append_select(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T> {
+            // Algorithm 19.4 alternative: append a b = tabulate(select(a,b), |a|+|b|)
+            <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::tabulate(
+                &|i| <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::select(a, b, i).unwrap().clone(),
+                a.length() + b.length()
+            )
+        }
+
+        fn select<'a>(a: &'a ArraySeqMtPerS<T>, b: &'a ArraySeqMtPerS<T>, i: N) -> Option<&'a T> {
+            let len_a = a.length();
+            if i < len_a {
+                return Some(a.nth(i));
+            }
+            let offset = i - len_a;
+            let len_b = b.length();
+            if offset < len_b {
+                Some(b.nth(offset))
+            } else {
+                None
+            }
+        }
+
+        fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtPerS<T> {
+            // Helper for filter: deflate f x = if f(x) then [x] else []
+            if f(x) == B::True {
+                <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::singleton(x.clone())
+            } else {
+                <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::empty()
+            }
+        }
 
 
 
+
+    }
+
+    #[macro_export]
+    macro_rules! ArraySeqMtPerS {
+        () => { $crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(Vec::new()) };
+        ($x:expr; $n:expr) => { $crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(vec![$x; $n]) };
+        ($($x:expr),* $(,)?) => { $crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(vec![$($x),*]) };
     }
 }

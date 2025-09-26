@@ -264,7 +264,7 @@ pub mod AVLTreeSeqStPer {
 }
 
 #[macro_export]
-macro_rules! AVLTreeSeqStPer {
+macro_rules! AVLTreeSeqStPerLit {
     () => { < $crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS<_> as
               $crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait<_> >::empty() };
     ($x:expr; $n:expr) => {{

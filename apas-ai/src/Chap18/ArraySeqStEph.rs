@@ -54,12 +54,15 @@ pub mod ArraySeqStEph {
         }
 
         pub fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut Self {
-            let mut seen: HashSet<N> = HashSet::new();
+            let mut last_values: std::collections::HashMap<N, T> = std::collections::HashMap::new();
             for i in 0..updates.length() {
                 let Pair(index, value) = updates.nth(i).clone();
-                if index < self.data.len() && seen.insert(index) {
-                    let _ = self.set(index, value);
+                if index < self.data.len() {
+                    last_values.insert(index, value);
                 }
+            }
+            for (index, value) in last_values {
+                let _ = self.set(index, value);
             }
             self
         }
@@ -249,10 +252,13 @@ pub mod ArraySeqStEph {
 
         fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T) {
             let mut prefixes: Vec<T> = Vec::with_capacity(a.length());
-            let mut acc = id;
+            let mut acc = id.clone();
+            prefixes.push(acc.clone()); // Include initial value
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
-                prefixes.push(acc.clone());
+                if i < a.length() - 1 {
+                    prefixes.push(acc.clone());
+                }
             }
             (ArraySeqStEphS::from_vec(prefixes), acc)
         }

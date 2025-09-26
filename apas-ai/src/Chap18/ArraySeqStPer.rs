@@ -167,7 +167,10 @@ pub mod ArraySeqStPer {
             let mut updated: HashSet<N> = HashSet::new();
             for i in 0..updates.length() {
                 let Pair(index, value) = updates.nth(i);
-                if *index < result.length() && updated.insert(*index) {
+                if *index >= result.length() {
+                    panic!("Index {} out of bounds for sequence of length {}", index, result.length());
+                }
+                if updated.insert(*index) {
                     let mut new_data: Vec<T> = result.data.iter().cloned().collect();
                     new_data[*index] = value.clone();
                     result = ArraySeqStPerS::from_vec(new_data);
@@ -233,10 +236,13 @@ pub mod ArraySeqStPer {
         fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T) {
             let mut acc = id.clone();
             let mut values: Vec<T> = Vec::with_capacity(a.length());
+            values.push(acc.clone()); // Include initial value
             for i in 0..a.length() {
                 let item = a.nth(i);
                 acc = f(&acc, item);
-                values.push(acc.clone());
+                if i < a.length() - 1 {
+                    values.push(acc.clone());
+                }
             }
             (ArraySeqStPerS::from_vec(values), acc)
         }
@@ -253,5 +259,12 @@ pub mod ArraySeqStPer {
             }
             result
         }
+    }
+
+    #[macro_export]
+    macro_rules! ArraySeqStPerS {
+        () => { $crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::from_vec(Vec::new()) };
+        ($x:expr; $n:expr) => { $crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::from_vec(vec![$x; $n]) };
+        ($($x:expr),* $(,)?) => { $crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::from_vec(vec![$($x),*]) };
     }
 }

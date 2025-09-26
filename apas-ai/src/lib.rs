@@ -34,6 +34,16 @@ pub mod Chap06 {
     pub mod WeightedUnDirGraphStEphInt;
 }
 
+pub mod Chap11 {
+    pub mod FibonacciMt;
+}
+
+pub mod Chap12 {
+    pub mod Exercise12_1;
+    pub mod Exercise12_2;
+    pub mod Exercise12_5;
+}
+
 pub mod Chap17 {
     pub mod MathSeq;
 }

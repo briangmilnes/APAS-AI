@@ -168,3 +168,6 @@
 
 #### Minimal Constructor Surface
 - Prefer inherent constructors/macros (`new`, `from_vec`, `Lit![]`) over struct literals in tests.
+
+#### Claude and sed
+- Claude is not allowed to run sed to attempt to fix bracket problems.

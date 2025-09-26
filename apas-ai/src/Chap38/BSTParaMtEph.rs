@@ -14,6 +14,7 @@ pub mod BSTParaMtEph {
     }
 
     #[derive(Clone)]
+    #[derive(Debug)]
     struct NodeInner<T: StTInMtT + Ord> {
         key: T,
         size: N,

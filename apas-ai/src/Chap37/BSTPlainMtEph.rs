@@ -10,6 +10,7 @@ pub mod BSTPlainMtEph {
     type Link<T> = Arc<RwLock<Option<Node<T>>>>;
 
     #[derive(Clone)]
+    #[derive(Debug)]
     struct Node<T: StTInMtT + Ord> {
         key: T,
         height: i32,
@@ -38,6 +39,7 @@ pub mod BSTPlainMtEph {
     }
 
     #[derive(Clone)]
+    #[derive(Debug)]
     pub struct BSTPlainMtEph<T: StTInMtT + Ord> {
         root: Link<T>,
     }

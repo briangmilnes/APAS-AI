@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::ArraySeqMtPer::ArraySeqMtPer::*;
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
 use apas_ai::Types::Types::*;
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
@@ -17,8 +17,8 @@ fn bench_tabulate_map_mtper_ch18(c: &mut Criterion) {
     let n: N = 10_000;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let s: ArrayMtPerS<N> = <ArrayMtPerS<N> as ArraySeqMtPerChap18Trait<N>>::tabulate(identity, len);
-            let m: ArrayMtPerS<N> = <ArrayMtPerS<N> as ArraySeqMtPerChap18Trait<N>>::map(&s, add_one);
+            let s: ArraySeqMtPerS<N> = <ArraySeqMtPerS<N> as ArraySeqMtPerChap18Trait<N>>::tabulate(identity, len);
+            let m: ArraySeqMtPerS<N> = <ArraySeqMtPerS<N> as ArraySeqMtPerChap18Trait<N>>::map(&s, add_one);
             black_box((s.length(), m.length()))
         })
     });

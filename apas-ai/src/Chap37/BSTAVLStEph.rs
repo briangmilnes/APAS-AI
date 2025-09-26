@@ -9,6 +9,7 @@ pub mod BSTAVLStEph {
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone)]
+    #[derive(Debug)]
     struct Node<T: StT + Ord> {
         key: T,
         height: i32,

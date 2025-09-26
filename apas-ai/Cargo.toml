@@ -87,14 +87,17 @@ harness = false
 
 [[bench]]
 name = "BenchChapter36St"
+path = "benches/Chap36/BenchChapter36St.rs"
 harness = false
 
 [[bench]]
 name = "BenchChapter36Mt"
+path = "benches/Chap36/BenchChapter36Mt.rs"
 harness = false
 
 [[bench]]
 name = "BenchChapter26Mt"
+path = "benches/Chap26/BenchChapter26Mt.rs"
 harness = false
 
 [[bench]]
@@ -119,6 +122,7 @@ harness = false
 
 [[bench]]
 name = "BenchBSTTreapStEph"
+path = "benches/Chap39/BenchBSTTreapStEph.rs"
 harness = false
 
 [[bench]]
@@ -147,6 +151,7 @@ harness = false
 
 [[bench]]
 name = "BenchBSTTreapMtEph"
+path = "benches/Chap39/BenchBSTTreapMtEph.rs"
 harness = false
 
 [[bench]]
@@ -161,6 +166,7 @@ harness = false
 
 [[bench]]
 name = "BenchBSTParaTreapMtEph"
+path = "benches/Chap39/BenchBSTParaTreapMtEph.rs"
 harness = false
 
 [[bench]]
@@ -242,7 +248,7 @@ path = "tests/Chap19/Test09ArraySeqStPer.rs"
 
 [[test]]
 name = "Test10ArraySeqStPerChap18"
-path = "tests/Chap19/Test10ArraySeqStPer18.rs"
+path = "tests/Chap18/Test10ArraySeqStPerChap18.rs"
 
 [[test]]
 name = "Test11ArraySeqStPerChap19"
@@ -254,7 +260,7 @@ path = "tests/Chap19/Test12ArraySeqStEph.rs"
 
 [[test]]
 name = "Test13ArraySeqStEphChap18"
-path = "tests/Chap19/Test13ArraySeqStEph18.rs"
+path = "tests/Chap18/Test13ArraySeqStEphChap18.rs"
 
 [[test]]
 name = "Test14ArraySeqStEphChap19"
@@ -266,7 +272,7 @@ path = "tests/Chap19/Test26ArraySeqMtPer.rs"
 
 [[test]]
 name = "Test27ArraySeqMtPerChap18"
-path = "tests/Chap19/Test27ArraySeqMtPer18.rs"
+path = "tests/Chap18/Test27ArraySeqMtPerChap18.rs"
 
 [[test]]
 name = "Test28ArraySeqMtPerChap19"
@@ -367,3 +373,119 @@ harness = false
 name = "BenchLinkedListStPer19"
 path = "benches/Chap18/BenchLinkedListStPer19.rs"
 harness = false
+
+# Chapter 36 tests
+[[test]]
+name = "Test39Chapter36St"
+path = "tests/Chap36/Test39Chapter36St.rs"
+
+[[test]]
+name = "Test40Chapter36Mt"
+path = "tests/Chap36/Test40Chapter36Mt.rs"
+
+[[test]]
+name = "Test44Chapter36MtSlice"
+path = "tests/Chap36/Test44Chapter36MtSlice.rs"
+
+# Chapter 39 tests
+[[test]]
+name = "Test48BSTTreapStEph"
+path = "tests/Chap39/Test48BSTTreapStEph.rs"
+
+[[test]]
+name = "Test53BSTParaTreapMtEph"
+path = "tests/Chap39/Test53BSTParaTreapMtEph.rs"
+
+# Chapter 12 tests
+[[test]]
+name = "TestExercise12_1"
+path = "tests/Chap12/TestExercise12_1.rs"
+
+[[test]]
+name = "TestExercise12_2"
+path = "tests/Chap12/TestExercise12_2.rs"
+
+[[test]]
+name = "TestExercise12_5"
+path = "tests/Chap12/TestExercise12_5.rs"
+
+# Chapter 21 tests
+[[test]]
+name = "Test29Algorithm_21_1"
+path = "tests/Chap21/Test29Algorithm_21_1.rs"
+
+[[test]]
+name = "Test30Algorithm_21_2"
+path = "tests/Chap21/Test30Algorithm_21_2.rs"
+
+[[test]]
+name = "Test31Algorithm_21_6"
+path = "tests/Chap21/Test31Algorithm_21_6.rs"
+
+[[test]]
+name = "Test32Exercise_21_5_and_21_6"
+path = "tests/Chap21/Test32Exercise_21_5_and_21_6.rs"
+
+[[test]]
+name = "Test33Exercise_21_7"
+path = "tests/Chap21/Test33Exercise_21_7.rs"
+
+[[test]]
+name = "Test34Exercise_21_8_and_Algorithm_21_5"
+path = "tests/Chap21/Test34Exercise_21_8_and_Algorithm_21_5.rs"
+
+[[test]]
+name = "Test36Problem_21_3"
+path = "tests/Chap21/Test36Problem_21_3.rs"
+
+[[test]]
+name = "Test37Problem_21_4"
+path = "tests/Chap21/Test37Problem_21_4.rs"
+
+[[test]]
+name = "Test38Problem21_1"
+path = "tests/Chap21/Test38Problem21_1.rs"
+
+# Additional missing test files
+[[test]]
+name = "Test01Types"
+path = "tests/Test01Types.rs"
+
+[[test]]
+name = "Test01ArraySeqMacro"
+path = "tests/Chap18/Test01ArraySeqMacro.rs"
+
+[[test]]
+name = "Test03LinkedListStPer"
+path = "tests/Chap18/Test03LinkedListStPer.rs"
+
+[[test]]
+name = "Test06LinkedListStEph"
+path = "tests/Chap18/Test06LinkedListStEph.rs"
+
+
+[[test]]
+name = "Test11ArraySeqStPerMacro"
+path = "tests/Chap18/Test11ArraySeqStPerMacro.rs"
+
+[[test]]
+name = "Test12ArraySeqStEphMacro"
+path = "tests/Chap18/Test12ArraySeqStEphMacro.rs"
+
+
+
+[[test]]
+name = "Test28ArraySeqMtEphChap18"
+path = "tests/Chap18/Test28ArraySeqMtEphChap18.rs"
+
+[[test]]
+name = "TestPrimTreeSeqSt"
+path = "tests/Chap23/TestPrimTreeSeqSt.rs"
+
+[[test]]
+name = "Test35Exercsise_21_9"
+path = "tests/Test35Exercsise_21_9.rs"
+
+[[test]]
+name = "Test42BBTEph"
+path = "tests/Test42BBTEph.rs"

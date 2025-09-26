@@ -14,7 +14,7 @@ pub mod Exercise12_5 {
     }
 
     /// Concurrent stack backed by a Treiber-style CAS list.
-    #[derive(Clone, Copy)]
+    #[derive(Debug)]
     pub struct ConcurrentStackMt<T: StTInMtT> {
         head: AtomicPtr<Node<T>>,
     }

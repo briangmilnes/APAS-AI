@@ -1,0 +1,35 @@
+Exercise 21.2 — Analysis of Algorithm_21_1 (2D Points)
+
+Goal: Analyze work and span for points2d_tab_flat(n) that generates
+〈(x, y) : 1 ≤ y < n, 0 ≤ x < n〉 using ArraySeqPer tabulate + flatten.
+
+Construction:
+- Outer: tabulate over x in 0..n, producing n sequences.
+- Inner: for each x, tabulate over y in 0..(n-1), producing a length-(n-1) sequence of pairs (x, y+1).
+- Finally: flatten the n inner sequences.
+
+Sizes:
+- There are n·(n−1) total output pairs.
+
+Assumptions:
+- Each pair construction (x, y+1) costs Θ(1) work and Θ(1) span.
+- ArraySeqPer::tabulate and ArraySeqPer::tabulate implement Θ(n) work and Θ(1) span builders (PRAM model), as documented in code comments.
+- ArraySeqPer::flatten has APAS bound Work Θ(1 + |s| + Σ |x|), Span Θ(1 + lg|s|), where s is the outer sequence of sequences.
+
+Work:
+- Inner tabulate for a fixed x: builds (n−1) items → Θ(n) work.
+- Outer tabulate creates n inner sequences: cost to produce n closures + collect them = Θ(n) work, not counting inner work.
+- Total work for all inners: n · Θ(n−1) = Θ(n^2).
+- Flatten: |s| = n, and Σ|x| = n·(n−1) = Θ(n^2). So flatten work = Θ(1 + n + n^2) = Θ(n^2).
+- Overall work: Θ(n^2) + Θ(n) + Θ(n^2) = Θ(n^2).
+
+Span:
+- Inner tabulate span Θ(1) each under PRAM assumption; with n instances in parallel, the overall span for generating all inners is Θ(1).
+- Outer tabulate span Θ(1).
+- Flatten span Θ(1 + lg|s|) = Θ(1 + lg n) = Θ(lg n).
+- Overall span: Θ(lg n).
+
+Discussion / Differences:
+- The imperative nested-for formulation performs Θ(n^2) work with Θ(n^2) span if executed serially; on a PRAM with sufficient parallelism, its span can be reduced to Θ(1) for generation plus Θ(lg n) for flatten-like join steps, matching the tabulate+flatten formulation’s span bound.
+- Our library’s comments sometimes include alternative “gpt-5-hard” notes for certain operations. For tabulate and flatten here, APAS and implementation align: work Θ(n^2), span Θ(lg n).
+- Minor constant-factor differences arise between building via tabulate-of-tabulate then flatten versus pushing into a single Vec; these do not affect asymptotic bounds.

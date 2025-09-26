@@ -1,0 +1,16 @@
+
+ Look at every where in the src and think 
+ about if it is redundant.
+
+ Are some of these because StT is not in use?
+
+ List the files and lines.
+
+ Make a plan to remove those that can be.
+
+ Let me inspect it.
+
+ Then fix them, compiling or testing at each file.
+
+
+ 

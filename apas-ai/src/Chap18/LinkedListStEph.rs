@@ -12,7 +12,7 @@ pub mod LinkedListStEph {
         pub next: Option<Box<NodeE<T>>>,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Clone)]
     pub struct LinkedListStEphS<T: StT> {
         head: Option<Box<NodeE<T>>>,
         len: N,
@@ -138,6 +138,24 @@ pub mod LinkedListStEph {
         }
     }
 
+    impl<T: StT> std::fmt::Debug for LinkedListStEphS<T> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "[")?;
+            let mut first = true;
+            let mut current = self.head.as_deref();
+            while let Some(node) = current {
+                if !first {
+                    write!(f, ", ")?;
+                } else {
+                    first = false;
+                }
+                write!(f, "{}", node.value)?;
+                current = node.next.as_deref();
+            }
+            write!(f, "]")
+        }
+    }
+
     impl<T: StT> PartialEq for LinkedListStEphS<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.len != other.len {
@@ -186,6 +204,8 @@ pub mod LinkedListStEph {
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
         fn filter<F: Fn(&T) -> B>(a: &Self, pred: &F) -> Self;
+        /// Helper for filter: deflate f x = if f(x) then [x] else []
+        fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> Self;
         fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T>;
         /// APAS: Work Θ(index), Span Θ(index)
         /// claude-4-sonet: Work Θ(index), Span Θ(index)
@@ -264,6 +284,15 @@ pub mod LinkedListStEph {
                 }
             }
             LinkedListStEphS::from_vec(kept)
+        }
+
+        fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> Self {
+            // Helper for filter: deflate f x = if f(x) then [x] else []
+            if f(x) == B::True {
+                LinkedListStEphS::from_vec(vec![x.clone()])
+            } else {
+                LinkedListStEphS::empty()
+            }
         }
 
         fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T> {

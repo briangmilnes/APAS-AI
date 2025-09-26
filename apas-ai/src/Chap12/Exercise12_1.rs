@@ -9,7 +9,7 @@ pub mod Exercise12_1 {
 
     use crate::Types::Types::*;
 
-    #[derive(Clone, Copy)]
+    #[derive(Debug)]
     pub struct SpinLock {
         ticket: AtomicUsize,
         turn: AtomicUsize,

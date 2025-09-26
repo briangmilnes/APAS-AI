@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-use apas_ai::ArraySeqStEph::ArraySeqStEph::*;
+use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::ArraySeqStEphTrait;
 use apas_ai::Types::Types::*;

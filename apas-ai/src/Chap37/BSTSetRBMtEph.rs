@@ -122,7 +122,7 @@ pub mod BSTSetRBMtEph {
             for value in self.tree.in_order().iter() {
                 if value < pivot {
                     left.push(value.clone());
-                } else if value > *pivot {
+                } else if value > pivot {
                     right.push(value.clone());
                 } else {
                     found = B::True;

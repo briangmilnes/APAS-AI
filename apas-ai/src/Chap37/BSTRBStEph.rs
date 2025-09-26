@@ -7,6 +7,7 @@ pub mod BSTRBStEph {
     use crate::Types::Types::*;
 
     #[derive(Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug)]
     enum Color {
         Red,
         Black,

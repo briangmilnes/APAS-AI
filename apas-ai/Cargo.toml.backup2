@@ -1,0 +1,446 @@
+[package]
+name = "apas-ai"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+ordered-float = "4.2"
+rand = "0.9.2"
+rayon = "1.11.0"
+tree_collections = "0.1.8"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[lints.rust]
+non_snake_case = "allow"
+non_upper_case_globals = "allow"
+unused_imports = "allow"
+dead_code = "allow"
+
+[workspace]
+members = [ "." ]
+
+[[bench]]
+name = "BenchArraySeqStEph"
+path = "benches/Chap19/BenchArraySeqStEph.rs"
+harness = false
+
+## DoublyLinkedList benchmarks moved to src/attic
+
+[[bench]]
+name = "BenchMathSeq"
+path = "benches/Chap18/BenchMathSeq.rs"
+harness = false
+
+[[bench]]
+name = "BenchAVLTreeSeqStPer"
+path = "benches/Chap37/BenchAVLTreeSeqStPer.rs"
+harness = false
+## SharedSinglyLinkedList removed
+
+[[bench]]
+name = "BenchArraySeqStEphChap18"
+path = "benches/Chap19/BenchArraySeqStEph18.rs"
+harness = false
+
+[[bench]]
+name = "BenchArraySeqStPer"
+path = "benches/Chap19/BenchArraySeqStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchAVLTreeSeqStPerChap19"
+path = "benches/Chap37/BenchAVLTreeSeqStPer19.rs"
+harness = false
+
+[[bench]]
+name = "BenchAVLTreeSeqStPerChap18"
+path = "benches/Chap37/BenchAVLTreeSeqStPer18.rs"
+
+harness = false
+
+[[bench]]
+name = "BenchArraySeqMtPer"
+path = "benches/Chap19/BenchArraySeqMtPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchArraySeqMtPerChap18"
+path = "benches/Chap19/BenchArraySeqMtPer18.rs"
+harness = false
+
+[[bench]]
+name = "BenchAVLTreeSeqStEph"
+path = "benches/Chap37/BenchAVLTreeSeqStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchAVLTreeSeqStEphChap18"
+path = "benches/Chap37/BenchAVLTreeSeqStEph18.rs"
+harness = false
+
+[[bench]]
+name = "BenchAVLTreeSeqStEphChap19"
+path = "benches/Chap37/BenchAVLTreeSeqStEph19.rs"
+harness = false
+
+[[bench]]
+name = "BenchChapter36St"
+path = "benches/Chap36/BenchChapter36St.rs"
+harness = false
+
+[[bench]]
+name = "BenchChapter36Mt"
+path = "benches/Chap36/BenchChapter36Mt.rs"
+harness = false
+
+[[bench]]
+name = "BenchChapter26Mt"
+harness = false
+
+[[bench]]
+name = "BenchBSTPlainStEph"
+path = "benches/Chap37/BenchBSTPlainStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTAVLStEph"
+path = "benches/Chap37/BenchBSTAVLStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTRBStEph"
+path = "benches/Chap37/BenchBSTRBStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTBBAlphaStEph"
+path = "benches/Chap37/BenchBSTBBAlphaStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTTreapStEph"
+path = "benches/Chap39/BenchBSTTreapStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTSplayStEph"
+path = "benches/Chap37/BenchBSTSplayStEph.rs"
+harness = false
+[[bench]]
+name = "BenchBSTPlainMtEph"
+path = "benches/Chap37/BenchBSTPlainMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTAVLMtEph"
+path = "benches/Chap37/BenchBSTAVLMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTRBMtEph"
+path = "benches/Chap37/BenchBSTRBMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTBBAlphaMtEph"
+path = "benches/Chap37/BenchBSTBBAlphaMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTTreapMtEph"
+path = "benches/Chap39/BenchBSTTreapMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTSplayMtEph"
+path = "benches/Chap37/BenchBSTSplayMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTSetMtEph"
+path = "benches/Chap37/BenchBSTSetMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTParaTreapMtEph"
+path = "benches/Chap39/BenchBSTParaTreapMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchInsertionSortSt"
+path = "benches/Chap03/BenchInsertionSortSt.rs"
+harness = false
+
+[[bench]]
+name = "BenchRelationStEphChap5_2"
+path = "benches/Chap05/BenchRelationStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchMappingStEphChap5_5"
+path = "benches/Chap05/BenchMappingStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchDirGraphStEph"
+path = "benches/Chap06/BenchDirGraphStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchUnDirGraphStEph"
+path = "benches/Chap06/BenchUnDirGraphStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchLabDirGraphStEph"
+path = "benches/Chap06/BenchLabDirGraphStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchLabUnDirGraphStEph"
+path = "benches/Chap06/BenchLabUnDirGraphStEph.rs"
+harness = false
+
+
+# Test files in chapter subdirectories
+[[test]]
+name = "TestInsertionSortSt"
+path = "tests/Chap03/TestInsertionSortSt.rs"
+
+[[test]]
+name = "Test21SetStEphChap5_1"
+path = "tests/Chap05/Test21SetStEph.rs"
+
+[[test]]
+name = "Test22RelationStEphChap5_2"
+path = "tests/Chap05/Test22RelationStEph.rs"
+
+[[test]]
+name = "Test23MappingStEphChap5_5"
+path = "tests/Chap05/Test23MappingStEph.rs"
+
+[[test]]
+name = "Test24DirGraphStEph"
+path = "tests/Chap06/Test24DirGraphStEph.rs"
+
+[[test]]
+name = "Test25UnDirGraphStEph"
+path = "tests/Chap06/Test25UnDirGraphStEph.rs"
+
+[[test]]
+name = "Test26LabDirGraphStEph"
+path = "tests/Chap06/Test26LabDirGraphStEph.rs"
+
+[[test]]
+name = "Test27LabUnDirGraphStEph"
+path = "tests/Chap06/Test27LabUnDirGraphStEph.rs"
+
+[[test]]
+name = "Test02MathSeq"
+path = "tests/Chap18/Test02MathSeq.rs"
+
+[[test]]
+name = "Test09ArraySeqStPer"
+path = "tests/Chap19/Test09ArraySeqStPer.rs"
+
+[[test]]
+name = "Test10ArraySeqStPerChap18"
+path = "tests/Chap19/Test10ArraySeqStPer18.rs"
+
+[[test]]
+name = "Test11ArraySeqStPerChap19"
+path = "tests/Chap19/Test11ArraySeqStPer.rs"
+
+[[test]]
+name = "Test12ArraySeqStEph"
+path = "tests/Chap19/Test12ArraySeqStEph.rs"
+
+[[test]]
+name = "Test13ArraySeqStEphChap18"
+path = "tests/Chap19/Test13ArraySeqStEph18.rs"
+
+[[test]]
+name = "Test14ArraySeqStEphChap19"
+path = "tests/Chap19/Test14ArraySeqStEph.rs"
+
+[[test]]
+name = "Test26ArraySeqMtPer"
+path = "tests/Chap19/Test26ArraySeqMtPer.rs"
+
+[[test]]
+name = "Test27ArraySeqMtPerChap18"
+path = "tests/Chap19/Test27ArraySeqMtPer18.rs"
+
+[[test]]
+name = "Test28ArraySeqMtPerChap19"
+path = "tests/Chap19/Test28ArraySeqMtPer.rs"
+
+[[test]]
+name = "Test41ArraySeqMtEph"
+path = "tests/Chap19/Test41ArraySeqMtEph.rs"
+
+[[test]]
+name = "Test15AVLTreeSeqStPer"
+path = "tests/Chap37/Test15AVLTreeSeqStPer.rs"
+
+[[test]]
+name = "Test16AVLTreeSeqStPerChap18"
+path = "tests/Chap37/Test16AVLTreeSeqStPer18.rs"
+
+[[test]]
+name = "Test17AVLTreeSeqStPerChap19"
+path = "tests/Chap37/Test17AVLTreeSeqStPer19.rs"
+
+[[test]]
+name = "Test18AVLTreeSeqStEph"
+path = "tests/Chap37/Test18AVLTreeSeqStEph.rs"
+
+[[test]]
+name = "Test19AVLTreeSeqStEphChap18"
+path = "tests/Chap37/Test19AVLTreeSeqStEph18.rs"
+
+[[test]]
+name = "Test20AVLTreeSeqStEphChap19"
+path = "tests/Chap37/Test20AVLTreeSeqStEph.rs"
+
+[[test]]
+name = "Test45BSTAVLStEph"
+path = "tests/Chap37/Test45BSTAVLStEph.rs"
+
+[[test]]
+name = "Test46BSTRBStEph"
+path = "tests/Chap37/Test46BSTRBStEph.rs"
+
+[[test]]
+name = "Test47BSTBBAlphaStEph"
+path = "tests/Chap37/Test47BSTBBAlphaStEph.rs"
+
+[[test]]
+name = "Test49BSTSplayStEph"
+path = "tests/Chap37/Test49BSTSplayStEph.rs"
+
+[[test]]
+name = "Test50BSTMtEph"
+path = "tests/Chap37/Test50BSTMtEph.rs"
+
+[[test]]
+name = "Test51BSTSetMtEph"
+path = "tests/Chap37/Test51BSTSetMtEph.rs"
+
+[[test]]
+name = "Test52BSTParaMtEph"
+path = "tests/Chap37/Test52BSTParaMtEph.rs"
+
+[[test]]
+name = "Test52BSTParaStEph"
+path = "tests/Chap37/Test52BSTParaStEph.rs"
+
+[[test]]
+name = "Test07LinkedListStEph"
+path = "tests/Chap18/Test07LinkedListStEph.rs"
+
+[[test]]
+name = "Test04LinkedListStPer"
+path = "tests/Chap18/Test04LinkedListStPer.rs"
+
+[[test]]
+name = "Test08LinkedListStEph19"
+path = "tests/Chap18/Test08LinkedListStEph19.rs"
+
+[[test]]
+name = "Test05LinkedListStPer19"
+path = "tests/Chap18/Test05LinkedListStPer19.rs"
+
+[[bench]]
+name = "BenchLinkedListStEph"
+path = "benches/Chap18/BenchLinkedListStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchLinkedListStPer"
+path = "benches/Chap18/BenchLinkedListStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchLinkedListStEph19"
+path = "benches/Chap18/BenchLinkedListStEph19.rs"
+harness = false
+
+[[bench]]
+name = "BenchLinkedListStPer19"
+path = "benches/Chap18/BenchLinkedListStPer19.rs"
+harness = false
+
+# Chapter 36 tests
+[[test]]
+name = "Test39Chapter36St"
+path = "tests/Chap36/Test39Chapter36St.rs"
+
+[[test]]
+name = "Test40Chapter36Mt"
+path = "tests/Chap36/Test40Chapter36Mt.rs"
+
+[[test]]
+name = "Test44Chapter36MtSlice"
+path = "tests/Chap36/Test44Chapter36MtSlice.rs"
+
+# Chapter 39 tests
+[[test]]
+name = "Test48BSTTreapStEph"
+path = "tests/Chap39/Test48BSTTreapStEph.rs"
+
+[[test]]
+name = "Test53BSTParaTreapMtEph"
+path = "tests/Chap39/Test53BSTParaTreapMtEph.rs"
+
+# Chapter 12 tests
+[[test]]
+name = "TestExercise12_1"
+path = "tests/Chap12/TestExercise12_1.rs"
+
+[[test]]
+name = "TestExercise12_2"
+path = "tests/Chap12/TestExercise12_2.rs"
+
+[[test]]
+name = "TestExercise12_5"
+path = "tests/Chap12/TestExercise12_5.rs"
+
+# Chapter 21 tests
+[[test]]
+name = "Test29Algorithm_21_1"
+path = "tests/Chap21/Test29Algorithm_21_1.rs"
+
+[[test]]
+name = "Test30Algorithm_21_2"
+path = "tests/Chap21/Test30Algorithm_21_2.rs"
+
+[[test]]
+name = "Test31Algorithm_21_6"
+path = "tests/Chap21/Test31Algorithm_21_6.rs"
+
+[[test]]
+name = "Test32Exercise_21_5_and_21_6"
+path = "tests/Chap21/Test32Exercise_21_5_and_21_6.rs"
+
+[[test]]
+name = "Test33Exercise_21_7"
+path = "tests/Chap21/Test33Exercise_21_7.rs"
+
+[[test]]
+name = "Test34Exercise_21_8_and_Algorithm_21_5"
+path = "tests/Chap21/Test34Exercise_21_8_and_Algorithm_21_5.rs"
+
+[[test]]
+name = "Test36Problem_21_3"
+path = "tests/Chap21/Test36Problem_21_3.rs"
+
+[[test]]
+name = "Test37Problem_21_4"
+path = "tests/Chap21/Test37Problem_21_4.rs"
+
+[[test]]
+name = "Test38Problem21_1"
+path = "tests/Chap21/Test38Problem21_1.rs"

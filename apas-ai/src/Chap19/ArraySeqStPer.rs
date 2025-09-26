@@ -9,9 +9,7 @@ pub mod ArraySeqStPer {
     pub type ArraySeqStPerS<T> = ArraySeqStPerSChap18<T>;
 
     pub trait ArraySeqStPerTrait<T: StT> {
-        fn new(length: N, init_value: T) -> ArraySeqStPerS<T>
-        where
-            T: Clone;
+        fn new(length: N, init_value: T) -> ArraySeqStPerS<T>;
         fn empty() -> ArraySeqStPerS<T>;
         fn singleton(item: T) -> ArraySeqStPerS<T>;
         fn length(&self) -> N;
@@ -27,7 +25,7 @@ pub mod ArraySeqStPer {
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T>;
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
-        fn append2(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T>;
+        fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> ArraySeqStPerS<T>;
         /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(1 + max i S(f(a[i])))
@@ -38,13 +36,13 @@ pub mod ArraySeqStPer {
         fn flatten(s: &ArraySeqStPerS<ArraySeqStPerS<T>>) -> ArraySeqStPerS<T>;
         fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T>;
         fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T>;
+        fn isEmpty(a: &ArraySeqStPerS<T>) -> bool;
+        fn isSingleton(a: &ArraySeqStPerS<T>) -> bool;
+        fn update(a: &ArraySeqStPerS<T>, index: N, item: T) -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT> ArraySeqStPerTrait<T> for ArraySeqStPerS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqStPerS<T>
-        where
-            T: Clone,
-        {
+        fn new(length: N, init_value: T) -> ArraySeqStPerS<T> {
             // Keep as primitive - delegates to tabulate
             <ArraySeqStPerS<T> as ArraySeqStPerTraitChap18<T>>::new(length, init_value)
         }
@@ -56,8 +54,7 @@ pub mod ArraySeqStPer {
 
         fn singleton(item: T) -> ArraySeqStPerS<T> {
             // Algorithm 19.2: singleton x = tabulate(lambda i.x, 1)
-            // Use direct delegation to Chap18 since we can't capture with fn pointers
-            ArraySeqStPerS::from_vec(vec![item])
+            <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(&|_| item.clone(), 1)
         }
 
         fn length(&self) -> N { ArraySeqStPerTraitChap18::length(self) }
@@ -81,12 +78,7 @@ pub mod ArraySeqStPer {
 
         fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStPerS<T>, f: &F) -> ArraySeqStPerS<U> {
             // Algorithm 19.3: map f a = tabulate(lambda i.f(a[i]), |a|)
-            // Implement directly since we can't capture with &F
-            let mut values: Vec<U> = Vec::with_capacity(a.length());
-            for i in 0..a.length() {
-                values.push(f(a.nth(i)));
-            }
-            ArraySeqStPerS::from_vec(values)
+            <ArraySeqStPerS<U> as ArraySeqStPerTrait<U>>::tabulate(&|i| f(a.nth(i)), a.length())
         }
 
         fn select<'a>(a: &'a ArraySeqStPerS<T>, b: &'a ArraySeqStPerS<T>, i: N) -> Option<&'a T> {
@@ -105,29 +97,16 @@ pub mod ArraySeqStPer {
 
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
             // Algorithm 19.4: append a b = flatten([a, b])
-            // Implement directly since we can't capture with &F
-            let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
-            for i in 0..a.length() {
-                values.push(a.nth(i).clone());
-            }
-            for i in 0..b.length() {
-                values.push(b.nth(i).clone());
-            }
-            ArraySeqStPerS::from_vec(values)
+            let sequences = <ArraySeqStPerS<ArraySeqStPerS<T>> as ArraySeqStPerTrait<ArraySeqStPerS<T>>>::tabulate(&|i| if i == 0 { a.clone() } else { b.clone() }, 2);
+            <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::flatten(&sequences)
         }
 
-        fn append2(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
-            // Alternative append using tabulate with select helper
-            // Implement directly since we can't capture with &F
-            let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
-            for i in 0..(a.length() + b.length()) {
-                if i < a.length() {
-                    values.push(a.nth(i).clone());
-                } else {
-                    values.push(b.nth(i - a.length()).clone());
-                }
-            }
-            ArraySeqStPerS::from_vec(values)
+        fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
+            // Algorithm 19.4 alternative: append a b = tabulate(select(a,b), |a|+|b|)
+            <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(
+                &|i| <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::select(a, b, i).unwrap().clone(),
+                a.length() + b.length()
+            )
         }
 
         fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> ArraySeqStPerS<T> {
@@ -141,15 +120,8 @@ pub mod ArraySeqStPer {
 
         fn filter<F: Fn(&T) -> B>(a: &ArraySeqStPerS<T>, pred: &F) -> ArraySeqStPerS<T> {
             // Algorithm 19.5: filter f a = flatten(map(deflate f, a))
-            // Implement directly since we can't capture with &F
-            let mut kept: Vec<T> = Vec::new();
-            for i in 0..a.length() {
-                let value = a.nth(i);
-                if pred(value) == B::True {
-                    kept.push(value.clone());
-                }
-            }
-            ArraySeqStPerS::from_vec(kept)
+            let deflated = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::map(a, &|x| <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::deflate(pred, x));
+            <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::flatten(&deflated)
         }
 
         fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &ArraySeqStPerS<T>, f: &F, x: A) -> A {
@@ -203,6 +175,24 @@ pub mod ArraySeqStPer {
         fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T> {
             // Keep as primitive - ninject is one of the 7 APAS primitives
             <ArraySeqStPerS<T> as ArraySeqStPerTraitChap18<T>>::ninject(a, updates)
+        }
+
+        fn isEmpty(a: &ArraySeqStPerS<T>) -> bool {
+            // Algorithm 19.7: isEmpty a = |a| = 0
+            a.length() == 0
+        }
+
+        fn isSingleton(a: &ArraySeqStPerS<T>) -> bool {
+            // Algorithm 19.7: isSingleton a = |a| = 1
+            a.length() == 1
+        }
+
+        fn update(a: &ArraySeqStPerS<T>, index: N, item: T) -> ArraySeqStPerS<T> {
+            // Algorithm 19.6: update a (i, x) = tabulate(lambda j. if i = j then x else a[j], |a|)
+            <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(
+                &|j| if j == index { item.clone() } else { a.nth(j).clone() },
+                a.length()
+            )
         }
     }
 }

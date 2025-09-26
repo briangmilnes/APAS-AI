@@ -9,6 +9,7 @@ pub mod BSTRBMtEph {
     use crate::Types::Types::*;
 
     #[derive(Clone, Copy, PartialEq, Eq)]
+    #[derive(Debug)]
     enum Color {
         Red,
         Black,
@@ -17,6 +18,7 @@ pub mod BSTRBMtEph {
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone)]
+    #[derive(Debug)]
     struct Node<T: StTInMtT + Ord> {
         key: T,
         color: Color,

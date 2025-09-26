@@ -9,9 +9,7 @@ pub mod ArraySeqStEph {
     pub type ArraySeqStEphS<T> = ArraySeqStEphSChap18<T>;
 
     pub trait ArraySeqStEphTrait<T: StT> {
-        fn new(length: N, init_value: T) -> ArraySeqStEphS<T>
-        where
-            T: Clone;
+        fn new(length: N, init_value: T) -> ArraySeqStEphS<T>;
         fn empty() -> ArraySeqStEphS<T>;
         fn singleton(item: T) -> ArraySeqStEphS<T>;
         fn length(&self) -> N;
@@ -27,7 +25,7 @@ pub mod ArraySeqStEph {
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
         fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
-        fn append2(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;
+        fn append_select(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(1 + max i S(f(a[i])))
@@ -36,13 +34,13 @@ pub mod ArraySeqStEph {
         fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> T;
         fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T);
         fn flatten(s: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;
+        fn isEmpty(a: &ArraySeqStEphS<T>) -> bool;
+        fn isSingleton(a: &ArraySeqStEphS<T>) -> bool;
+        fn update(a: &ArraySeqStEphS<T>, index: N, item: T) -> ArraySeqStEphS<T>;
     }
 
     impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqStEphS<T>
-        where
-            T: Clone,
-        {
+        fn new(length: N, init_value: T) -> ArraySeqStEphS<T> {
             // Keep as primitive - delegates to tabulate
             <ArraySeqStEphS<T> as ArraySeqStEphTraitChap18<T>>::new(length, init_value)
         }
@@ -54,8 +52,7 @@ pub mod ArraySeqStEph {
 
         fn singleton(item: T) -> ArraySeqStEphS<T> {
             // Algorithm 19.2: singleton x = tabulate(lambda i.x, 1)
-            // Implement directly since we can't capture with &F
-            ArraySeqStEphS::from_vec(vec![item])
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::tabulate(&|_| item.clone(), 1)
         }
 
         fn length(&self) -> N { ArraySeqStEphTraitChap18::length(self) }
@@ -69,22 +66,19 @@ pub mod ArraySeqStEph {
 
         fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> ArraySeqStEphS<T> {
             // Keep as primitive - tabulate is one of the 7 APAS primitives
-            // Implement directly to handle closures (can't delegate to Chap18 fn pointers)
-            let mut values: Vec<T> = Vec::with_capacity(n);
-            for i in 0..n {
-                values.push(f(i));
+            if n == 0 {
+                return <ArraySeqStEphS<T> as ArraySeqStEphTraitChap18<T>>::empty();
             }
-            ArraySeqStEphS::from_vec(values)
+            let mut result = <ArraySeqStEphS<T> as ArraySeqStEphTraitChap18<T>>::new(n, f(0));
+            for i in 1..n {
+                result.set(i, f(i)).unwrap();
+            }
+            result
         }
 
         fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStEphS<T>, f: &F) -> ArraySeqStEphS<U> {
             // Algorithm 19.3: map f a = tabulate(lambda i.f(a[i]), |a|)
-            // Implement directly since we can't capture with &F
-            let mut values: Vec<U> = Vec::with_capacity(a.length());
-            for i in 0..a.length() {
-                values.push(f(a.nth(i)));
-            }
-            ArraySeqStEphS::from_vec(values)
+            <ArraySeqStEphS<U> as ArraySeqStEphTrait<U>>::tabulate(&|i| f(a.nth(i)), a.length())
         }
 
         fn select(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>, index: N) -> Option<T> {
@@ -103,29 +97,27 @@ pub mod ArraySeqStEph {
 
         fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {
             // Algorithm 19.4: append a b = flatten([a, b])
-            // Implement directly since we can't capture with &F
-            let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
-            for i in 0..a.length() {
-                values.push(a.nth(i).clone());
+            let total_len = a.length() + b.length();
+            if total_len == 0 {
+                return <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty();
+            }
+            let first_elem = if a.length() > 0 { a.nth(0).clone() } else { b.nth(0).clone() };
+            let mut result = <ArraySeqStEphS<T> as ArraySeqStEphTraitChap18<T>>::new(total_len, first_elem);
+            for i in 1..a.length() {
+                result.set(i, a.nth(i).clone()).unwrap();
             }
             for i in 0..b.length() {
-                values.push(b.nth(i).clone());
+                result.set(a.length() + i, b.nth(i).clone()).unwrap();
             }
-            ArraySeqStEphS::from_vec(values)
+            result
         }
 
-        fn append2(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {
-            // Alternative append using tabulate with select helper
-            // Implement directly since we can't capture with &F
-            let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
-            for i in 0..(a.length() + b.length()) {
-                if i < a.length() {
-                    values.push(a.nth(i).clone());
-                } else {
-                    values.push(b.nth(i - a.length()).clone());
-                }
-            }
-            ArraySeqStEphS::from_vec(values)
+        fn append_select(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {
+            // Algorithm 19.4 alternative: append a b = tabulate(select(a,b), |a|+|b|)
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::tabulate(
+                &|i| <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::select(a, b, i).unwrap(),
+                a.length() + b.length()
+            )
         }
 
         fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> ArraySeqStEphS<T> {
@@ -139,15 +131,8 @@ pub mod ArraySeqStEph {
 
         fn filter<F: Fn(&T) -> B>(a: &ArraySeqStEphS<T>, pred: &F) -> ArraySeqStEphS<T> {
             // Algorithm 19.5: filter f a = flatten(map(deflate f, a))
-            // Implement directly since we can't capture with &F
-            let mut kept: Vec<T> = Vec::new();
-            for i in 0..a.length() {
-                let value = a.nth(i);
-                if pred(value) == B::True {
-                    kept.push(value.clone());
-                }
-            }
-            ArraySeqStEphS::from_vec(kept)
+            let deflated = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::map(a, &|x| <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::deflate(pred, x));
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::flatten(&deflated)
         }
 
         fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &ArraySeqStEphS<T>, f: &F, x: A) -> A {
@@ -177,20 +162,40 @@ pub mod ArraySeqStEph {
 
         fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T) {
             // Algorithm 19.10: scan using contraction (simplified version)
-            let mut acc = id.clone();
-            let mut results = Vec::with_capacity(a.length());
-            for i in 0..a.length() {
-                acc = f(&acc, a.nth(i));
-                results.push(acc.clone());
+            if a.length() == 0 {
+                return (<ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty(), id);
             }
-            // Implement directly since we can't capture with &F
-            let result_seq = ArraySeqStEphS::from_vec(results);
+            let mut acc = id.clone();
+            acc = f(&acc, a.nth(0));
+            let mut result_seq = <ArraySeqStEphS<T> as ArraySeqStEphTraitChap18<T>>::new(a.length(), acc.clone());
+            for i in 1..a.length() {
+                acc = f(&acc, a.nth(i));
+                result_seq.set(i, acc.clone()).unwrap();
+            }
             (result_seq, acc)
         }
 
         fn flatten(s: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T> {
             // Keep as primitive - flatten is one of the 7 APAS primitives
             <ArraySeqStEphS<T> as ArraySeqStEphTraitChap18<T>>::flatten(s)
+        }
+
+        fn isEmpty(a: &ArraySeqStEphS<T>) -> bool {
+            // Algorithm 19.7: isEmpty a = |a| = 0
+            a.length() == 0
+        }
+
+        fn isSingleton(a: &ArraySeqStEphS<T>) -> bool {
+            // Algorithm 19.7: isSingleton a = |a| = 1
+            a.length() == 1
+        }
+
+        fn update(a: &ArraySeqStEphS<T>, index: N, item: T) -> ArraySeqStEphS<T> {
+            // Algorithm 19.6: update a (i, x) = tabulate(lambda j. if i = j then x else a[j], |a|)
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::tabulate(
+                &|j| if j == index { item.clone() } else { a.nth(j).clone() },
+                a.length()
+            )
         }
     }
 }

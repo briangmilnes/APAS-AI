@@ -7,7 +7,6 @@ pub mod FibonacciMt {
 
     pub struct FibonacciMt;
 
-    #[derive(Debug, Clone, Copy)]
     pub trait FibonacciMtTrait {
         fn fib(n: N) -> N;
     }
