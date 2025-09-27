@@ -13,8 +13,8 @@ pub mod Test26ArraySeqMtPer {
         assert_eq!(*a.nth(0), 7);
         assert_eq!(*a.nth(1), 7);
         assert_eq!(*a.nth(2), 7);
-        let b = ArraySeqMtPerS::update(&a, 1, 9);
-        let c = ArraySeqMtPerS::update(&b, 0, 2);
+        let b = a.update(Pair(1, 9));
+        let c = b.update(Pair(0, 2));
         assert_eq!(*c.nth(0), 2);
         assert_eq!(*c.nth(1), 9);
         assert_eq!(*c.nth(2), 7);
