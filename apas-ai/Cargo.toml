@@ -304,36 +304,36 @@ name = "TestInsertionSortSt"
 path = "tests/Chap03/TestInsertionSortSt.rs"
 
 [[test]]
-name = "Test21SetStEphChap5_1"
-path = "tests/Chap05/Test21SetStEph.rs"
+name = "TestSetStEph"
+path = "tests/Chap05/TestSetStEph.rs"
 
 [[test]]
-name = "Test22RelationStEphChap5_2"
-path = "tests/Chap05/Test22RelationStEph.rs"
+name = "TestRelationStEph"
+path = "tests/Chap05/TestRelationStEph.rs"
 
 [[test]]
-name = "Test23MappingStEphChap5_5"
-path = "tests/Chap05/Test23MappingStEph.rs"
+name = "TestMappingStEph"
+path = "tests/Chap05/TestMappingStEph.rs"
 
 [[test]]
-name = "Test24DirGraphStEph"
-path = "tests/Chap06/Test24DirGraphStEph.rs"
+name = "TestDirGraphStEph"
+path = "tests/Chap06/TestDirGraphStEph.rs"
 
 [[test]]
-name = "Test25UnDirGraphStEph"
-path = "tests/Chap06/Test25UnDirGraphStEph.rs"
+name = "TestUnDirGraphStEph"
+path = "tests/Chap06/TestUnDirGraphStEph.rs"
 
 [[test]]
-name = "Test26LabDirGraphStEph"
-path = "tests/Chap06/Test26LabDirGraphStEph.rs"
+name = "TestLabDirGraphStEph"
+path = "tests/Chap06/TestLabDirGraphStEph.rs"
 
 [[test]]
-name = "Test27LabUnDirGraphStEph"
-path = "tests/Chap06/Test27LabUnDirGraphStEph.rs"
+name = "TestLabUnDirGraphStEph"
+path = "tests/Chap06/TestLabUnDirGraphStEph.rs"
 
 [[test]]
-name = "Test28DirGraphMtEph"
-path = "tests/Chap06/Test28DirGraphMtEph.rs"
+name = "TestDirGraphMtEph"
+path = "tests/Chap06/TestDirGraphMtEph.rs"
 
 [[test]]
 name = "TestLabDirGraphMtEph"
@@ -369,124 +369,124 @@ name = "TestArraySeqMtEphSlice"
 path = "tests/Chap19/TestArraySeqMtEphSlice.rs"
 
 [[test]]
-name = "Test02MathSeq"
-path = "tests/Chap18/Test02MathSeq.rs"
+name = "TestMathSeq"
+path = "tests/Chap18/TestMathSeq.rs"
 
 [[test]]
-name = "Test09ArraySeqStPer"
-path = "tests/Chap19/Test09ArraySeqStPer.rs"
+name = "TestArraySeqStPerChap19"
+path = "tests/Chap19/TestArraySeqStPerChap19.rs"
 
 [[test]]
-name = "Test10ArraySeqStPerChap18"
-path = "tests/Chap18/Test10ArraySeqStPerChap18.rs"
+name = "TestArraySeqStPerChap18"
+path = "tests/Chap18/TestArraySeqStPerChap18.rs"
 
 [[test]]
-name = "Test11ArraySeqStPerChap19"
-path = "tests/Chap19/Test11ArraySeqStPer.rs"
+name = "TestArraySeqStPerChap19_Advanced"
+path = "tests/Chap19/TestArraySeqStPerChap19_Advanced.rs"
 
 [[test]]
-name = "Test12ArraySeqStEph"
-path = "tests/Chap19/Test12ArraySeqStEph.rs"
+name = "TestArraySeqStEphChap19"
+path = "tests/Chap19/TestArraySeqStEphChap19.rs"
 
 [[test]]
-name = "Test13ArraySeqStEphChap18"
-path = "tests/Chap18/Test13ArraySeqStEphChap18.rs"
+name = "TestArraySeqStEphChap18"
+path = "tests/Chap18/TestArraySeqStEphChap18.rs"
 
 [[test]]
-name = "Test14ArraySeqStEphChap19"
-path = "tests/Chap19/Test14ArraySeqStEph.rs"
+name = "TestArraySeqStEphChap19_Advanced"
+path = "tests/Chap19/TestArraySeqStEphChap19_Advanced.rs"
 
 [[test]]
-name = "Test26ArraySeqMtPer"
-path = "tests/Chap19/Test26ArraySeqMtPer.rs"
+name = "TestArraySeqMtPerChap19"
+path = "tests/Chap19/TestArraySeqMtPerChap19.rs"
 
 [[test]]
-name = "Test27ArraySeqMtPerChap18"
-path = "tests/Chap18/Test27ArraySeqMtPerChap18.rs"
+name = "TestArraySeqMtPerChap18"
+path = "tests/Chap18/TestArraySeqMtPerChap18.rs"
 
 [[test]]
-name = "Test28ArraySeqMtPerChap19"
-path = "tests/Chap19/Test28ArraySeqMtPer.rs"
+name = "TestArraySeqMtPerChap19_Advanced"
+path = "tests/Chap19/TestArraySeqMtPerChap19_Advanced.rs"
 
 [[test]]
-name = "Test41ArraySeqMtEph"
-path = "tests/Chap19/Test41ArraySeqMtEph.rs"
+name = "TestArraySeqMtEph"
+path = "tests/Chap19/TestArraySeqMtEph.rs"
 
 [[test]]
-name = "Test15AVLTreeSeqStPer"
-path = "tests/Chap37/Test15AVLTreeSeqStPer.rs"
+name = "TestAVLTreeSeqStPer"
+path = "tests/Chap37/TestAVLTreeSeqStPer.rs"
 
 [[test]]
-name = "Test16AVLTreeSeqStPerChap18"
-path = "tests/Chap37/Test16AVLTreeSeqStPer18.rs"
+name = "TestAVLTreeSeqStPerChap18"
+path = "tests/Chap37/TestAVLTreeSeqStPer18.rs"
 
 [[test]]
-name = "Test17AVLTreeSeqStPerChap19"
-path = "tests/Chap37/Test17AVLTreeSeqStPer19.rs"
+name = "TestAVLTreeSeqStPerChap19"
+path = "tests/Chap37/TestAVLTreeSeqStPer19.rs"
 
 [[test]]
-name = "Test18AVLTreeSeqStEph"
-path = "tests/Chap37/Test18AVLTreeSeqStEph.rs"
+name = "TestAVLTreeSeqStEphChap37"
+path = "tests/Chap37/TestAVLTreeSeqStEphChap37.rs"
 
 [[test]]
-name = "Test19AVLTreeSeqStEphChap18"
-path = "tests/Chap37/Test19AVLTreeSeqStEph18.rs"
+name = "TestAVLTreeSeqStEph18"
+path = "tests/Chap37/TestAVLTreeSeqStEph18.rs"
 
 [[test]]
-name = "Test20AVLTreeSeqStEphChap19"
-path = "tests/Chap37/Test20AVLTreeSeqStEph.rs"
+name = "TestAVLTreeSeqStEphChap37_Advanced"
+path = "tests/Chap37/TestAVLTreeSeqStEphChap37_Advanced.rs"
 
 [[test]]
 name = "TestAVLTreeSeq"
 path = "tests/Chap37/TestAVLTreeSeq.rs"
 
 [[test]]
-name = "Test45BSTAVLStEph"
-path = "tests/Chap37/Test45BSTAVLStEph.rs"
+name = "TestBSTAVLStEph"
+path = "tests/Chap37/TestBSTAVLStEph.rs"
 
 [[test]]
-name = "Test46BSTRBStEph"
-path = "tests/Chap37/Test46BSTRBStEph.rs"
+name = "TestBSTRBStEph"
+path = "tests/Chap37/TestBSTRBStEph.rs"
 
 [[test]]
-name = "Test47BSTBBAlphaStEph"
-path = "tests/Chap37/Test47BSTBBAlphaStEph.rs"
+name = "TestBSTBBAlphaStEph"
+path = "tests/Chap37/TestBSTBBAlphaStEph.rs"
 
 [[test]]
-name = "Test49BSTSplayStEph"
-path = "tests/Chap37/Test49BSTSplayStEph.rs"
+name = "TestBSTSplayStEph"
+path = "tests/Chap37/TestBSTSplayStEph.rs"
 
 [[test]]
-name = "Test50BSTMtEph"
-path = "tests/Chap37/Test50BSTMtEph.rs"
+name = "TestBSTMtEph"
+path = "tests/Chap37/TestBSTMtEph.rs"
 
 [[test]]
-name = "Test51BSTSetMtEph"
-path = "tests/Chap37/Test51BSTSetMtEph.rs"
+name = "TestBSTSetMtEph"
+path = "tests/Chap37/TestBSTSetMtEph.rs"
 
 [[test]]
-name = "Test52BSTParaMtEph"
-path = "tests/Chap38/Test52BSTParaMtEph.rs"
+name = "TestBSTParaMtEph"
+path = "tests/Chap38/TestBSTParaMtEph.rs"
 
 [[test]]
-name = "Test52BSTParaStEph"
-path = "tests/Chap38/Test52BSTParaStEph.rs"
+name = "TestBSTParaStEph"
+path = "tests/Chap38/TestBSTParaStEph.rs"
 
 [[test]]
-name = "Test07LinkedListStEph"
-path = "tests/Chap18/Test07LinkedListStEph.rs"
+name = "TestLinkedListStEphChap18"
+path = "tests/Chap18/TestLinkedListStEphChap18.rs"
 
 [[test]]
-name = "Test04LinkedListStPer"
-path = "tests/Chap18/Test04LinkedListStPer.rs"
+name = "TestLinkedListStPerChap18_Advanced"
+path = "tests/Chap18/TestLinkedListStPerChap18_Advanced.rs"
 
 [[test]]
-name = "Test08LinkedListStEph19"
-path = "tests/Chap18/Test08LinkedListStEph19.rs"
+name = "TestLinkedListStEph19"
+path = "tests/Chap18/TestLinkedListStEph19.rs"
 
 [[test]]
-name = "Test05LinkedListStPer19"
-path = "tests/Chap18/Test05LinkedListStPer19.rs"
+name = "TestLinkedListStPer19"
+path = "tests/Chap18/TestLinkedListStPer19.rs"
 
 [[bench]]
 name = "BenchLinkedListStEph"
@@ -510,25 +510,25 @@ harness = false
 
 # Chapter 36 tests
 [[test]]
-name = "Test39Chapter36St"
-path = "tests/Chap36/Test39Chapter36St.rs"
+name = "TestChapter36St"
+path = "tests/Chap36/TestChapter36St.rs"
 
 [[test]]
-name = "Test40Chapter36Mt"
-path = "tests/Chap36/Test40Chapter36Mt.rs"
+name = "TestChapter36Mt"
+path = "tests/Chap36/TestChapter36Mt.rs"
 
 [[test]]
-name = "Test44Chapter36MtSlice"
-path = "tests/Chap36/Test44Chapter36MtSlice.rs"
+name = "TestChapter36MtSlice"
+path = "tests/Chap36/TestChapter36MtSlice.rs"
 
 # Chapter 39 tests
 [[test]]
-name = "Test48BSTTreapStEph"
-path = "tests/Chap39/Test48BSTTreapStEph.rs"
+name = "TestBSTTreapStEph"
+path = "tests/Chap39/TestBSTTreapStEph.rs"
 
 [[test]]
-name = "Test53BSTParaTreapMtEph"
-path = "tests/Chap39/Test53BSTParaTreapMtEph.rs"
+name = "TestBSTParaTreapMtEph"
+path = "tests/Chap39/TestBSTParaTreapMtEph.rs"
 
 [[test]]
 name = "TestBSTSetTreapMtEph"
@@ -550,89 +550,89 @@ path = "tests/Chap12/TestExercise12_5.rs"
 
 # Chapter 21 tests
 [[test]]
-name = "Test29Algorithm_21_1"
-path = "tests/Chap21/Test29Algorithm_21_1.rs"
+name = "TestAlgorithm_21_1"
+path = "tests/Chap21/TestAlgorithm_21_1.rs"
 
 [[test]]
-name = "Test30Algorithm_21_2"
-path = "tests/Chap21/Test30Algorithm_21_2.rs"
+name = "TestAlgorithm_21_2"
+path = "tests/Chap21/TestAlgorithm_21_2.rs"
 
 [[test]]
-name = "Test31Algorithm_21_6"
-path = "tests/Chap21/Test31Algorithm_21_6.rs"
+name = "TestAlgorithm_21_6"
+path = "tests/Chap21/TestAlgorithm_21_6.rs"
 
 [[test]]
-name = "Test32Exercise_21_5"
-path = "tests/Chap21/Test32Exercise_21_5.rs"
+name = "TestExercise_21_5"
+path = "tests/Chap21/TestExercise_21_5.rs"
 
 [[test]]
-name = "Test32Exercise_21_6"
-path = "tests/Chap21/Test32Exercise_21_6.rs"
+name = "TestExercise_21_6"
+path = "tests/Chap21/TestExercise_21_6.rs"
 
 [[test]]
-name = "Test33Exercise_21_7"
-path = "tests/Chap21/Test33Exercise_21_7.rs"
+name = "TestExercise_21_7"
+path = "tests/Chap21/TestExercise_21_7.rs"
 
 [[test]]
-name = "Test34Exercise_21_8"
-path = "tests/Chap21/Test34Exercise_21_8.rs"
+name = "TestExercise_21_8"
+path = "tests/Chap21/TestExercise_21_8.rs"
 
 [[test]]
-name = "Test34Algorithm_21_5"
-path = "tests/Chap21/Test34Algorithm_21_5.rs"
+name = "TestAlgorithm_21_5"
+path = "tests/Chap21/TestAlgorithm_21_5.rs"
 
 [[test]]
-name = "Test36Problem_21_3"
-path = "tests/Chap21/Test36Problem_21_3.rs"
+name = "TestProblem_21_3"
+path = "tests/Chap21/TestProblem_21_3.rs"
 
 [[test]]
-name = "Test37Problem_21_4"
-path = "tests/Chap21/Test37Problem_21_4.rs"
+name = "TestProblem_21_4"
+path = "tests/Chap21/TestProblem_21_4.rs"
 
 [[test]]
-name = "Test38Problem21_1"
-path = "tests/Chap21/Test38Problem21_1.rs"
+name = "TestProblem_21_1"
+path = "tests/Chap21/TestProblem_21_1.rs"
 
 # Additional missing test files
 [[test]]
-name = "Test01Types"
-path = "tests/Test01Types.rs"
+name = "TestTypes"
+path = "tests/TestTypes.rs"
 
 [[test]]
-name = "Test01ArraySeqMacro"
-path = "tests/Chap18/Test01ArraySeqMacro.rs"
+name = "TestArraySeqMacro"
+path = "tests/Chap18/TestArraySeqMacro.rs"
 
 [[test]]
-name = "Test03LinkedListStPer"
-path = "tests/Chap18/Test03LinkedListStPer.rs"
+name = "TestLinkedListStPerChap18"
+path = "tests/Chap18/TestLinkedListStPerChap18.rs"
 
 [[test]]
-name = "Test06LinkedListStEph"
-path = "tests/Chap18/Test06LinkedListStEph.rs"
-
-
-[[test]]
-name = "Test11ArraySeqStPerMacro"
-path = "tests/Chap18/Test11ArraySeqStPerMacro.rs"
-
-[[test]]
-name = "Test12ArraySeqStEphMacro"
-path = "tests/Chap18/Test12ArraySeqStEphMacro.rs"
-
+name = "TestLinkedListStEphChap18_Advanced"
+path = "tests/Chap18/TestLinkedListStEphChap18_Advanced.rs"
 
 
 [[test]]
-name = "Test28ArraySeqMtEphChap18"
-path = "tests/Chap18/Test28ArraySeqMtEphChap18.rs"
+name = "TestArraySeqStPerMacro"
+path = "tests/Chap18/TestArraySeqStPerMacro.rs"
+
+[[test]]
+name = "TestArraySeqStEphMacro"
+path = "tests/Chap18/TestArraySeqStEphMacro.rs"
+
+
+
+[[test]]
+name = "TestArraySeqMtEphChap18"
+path = "tests/Chap18/TestArraySeqMtEphChap18.rs"
 
 [[test]]
 name = "TestPrimTreeSeqSt"
 path = "tests/Chap23/TestPrimTreeSeqSt.rs"
 
 [[test]]
-name = "Test35Exercise_21_9"
-path = "tests/Chap21/Test35Exercise_21_9.rs"
+name = "TestExercise_21_9"
+path = "tests/Chap21/TestExercise_21_9.rs"
 
 [[test]]
-name = "Test42BBTStEph"
-path = "tests/Chap23/Test42BBTStEph.rs"
+name = "TestBBTStEph"
+path = "tests/Chap23/TestBBTStEph.rs"
