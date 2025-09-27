@@ -30,7 +30,7 @@ fn arrayseqs_repeat_macro_clones_element() {
 
 #[test]
 fn arrayseq_tabulate_and_map_work() {
-    let squares = <ArraySeqS<i32> as ArraySeq>::tabulate(&|i| i * i, 5);
+    let squares = <ArraySeqS<i32> as ArraySeq<i32>>::tabulate(&|i| i * i, 5);
     assert_eq!(ArraySeq::length(&squares), 5);
     assert_eq!(ArraySeq::nth(&squares, 3), &9);
 
@@ -42,7 +42,7 @@ fn arrayseq_tabulate_and_map_work() {
 #[test]
 fn arrayseq_subseq_append_filter_flatten() {
     let seq = ArraySeqS![1, 2, 3, 4, 5];
-    let middle = <ArraySeqS<i32> as ArraySeq>::subseq(&seq, 1, 3);
+    let middle = <ArraySeqS<i32> as ArraySeq<i32>>::subseq(&seq, 1, 3);
     assert_eq!(ArraySeq::length(&middle), 3);
     assert_eq!(ArraySeq::nth(&middle, 0), &2);
     assert_eq!(ArraySeq::nth(&middle, 2), &4);
@@ -68,7 +68,7 @@ fn arrayseq_subseq_append_filter_flatten() {
 #[test]
 fn arrayseq_update_and_inject_preserve_original() {
     let original = ArraySeqS![10, 20, 30];
-    let updated = <ArraySeqS<i32> as ArraySeq>::update(&original, Pair(1, 99));
+    let updated = <ArraySeqS<i32> as ArraySeq<i32>>::update(&original, Pair(1, 99));
 
     assert_eq!(ArraySeq::nth(&original, 1), &20);
     assert_eq!(ArraySeq::nth(&updated, 1), &99);
@@ -83,7 +83,7 @@ fn arrayseq_update_and_inject_preserve_original() {
 #[test]
 fn arrayseq_collect_iterate_reduce_scan() {
     let pairs = ArraySeqS![Pair("a", 1), Pair("a", 2), Pair("b", 3)];
-    let collected = <ArraySeqS<Pair<&str, ArraySeqS<i32>>> as ArraySeq>::collect(&pairs, |lhs, rhs| lhs.cmp(rhs));
+    let collected = <ArraySeqS<Pair<&str, ArraySeqS<i32>>> as ArraySeq<Pair<&str, ArraySeqS<i32>>>>::collect(&pairs, |lhs, rhs| lhs.cmp(rhs));
     assert_eq!(ArraySeq::<Pair<&str, ArraySeqS<i32>>>::length(&collected), 2);
 
     let first_group = ArraySeq::<Pair<&str, ArraySeqS<i32>>>::nth(&collected, 0);
