@@ -97,8 +97,8 @@ pub mod Test28ArraySeqMtPer {
         ];
 
         // Apply atomic writes with different change numbers
-        <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::AtomicWriteLowestChangeNumberWins(&with_num, &changes, 1);
-        <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::AtomicWriteLowestChangeNumberWins(&with_num, &changes, 0);
+        <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::atomicWrite(&with_num, &changes, 1);
+        <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::atomicWrite(&with_num, &changes, 0);
 
         // Check that the value at index 2 was updated (change number 0 should win over 1)
         let guard = with_num.nth(2).lock();

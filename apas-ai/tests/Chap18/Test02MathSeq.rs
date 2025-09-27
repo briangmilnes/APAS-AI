@@ -72,10 +72,10 @@ pub mod TestMathSeq {
     #[test]
     fn test_subseq_bounds() {
         let s: MathSeqS<N> = MathSeqSLit![1, 2, 3, 4, 5];
-        let c1 = s.subseq(1, 3);
+        let c1 = s.subseq_copy(1, 3);
         assert_eq!(c1.length(), 3);
         assert_eq!(*c1.nth(0), 2);
-        let c2 = s.subseq(10, 3);
+        let c2 = s.subseq_copy(10, 3);
         assert_eq!(c2.length(), 0);
     }
 

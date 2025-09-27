@@ -237,9 +237,9 @@ pub mod TestArraySeqStPer {
     #[test]
     fn test_subseq_trait_form_basic() {
         let a = ArraySeqStPerSLit![10, 20, 30, 40, 50];
-        let b: ArraySeqStPerS<N> = ArraySeqStPerS::subseq(&a, 1, 3);
+        let b: ArraySeqStPerS<N> = a.subseq_copy(1, 3);
         assert_eq!(b, ArraySeqStPerSLit![20, 30, 40]);
-        let e: ArraySeqStPerS<N> = ArraySeqStPerS::subseq(&a, 10, 2);
+        let e: ArraySeqStPerS<N> = a.subseq_copy(10, 2);
         assert_eq!(e.length(), 0);
     }
 

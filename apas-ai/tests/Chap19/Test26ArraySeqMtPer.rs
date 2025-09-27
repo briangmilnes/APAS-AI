@@ -13,8 +13,10 @@ pub mod Test26ArraySeqMtPer {
         assert_eq!(*a.nth(0), 7);
         assert_eq!(*a.nth(1), 7);
         assert_eq!(*a.nth(2), 7);
-        let b = a.update(Pair(1, 9));
-        let c = b.update(Pair(0, 2));
+        let changes1 = ArrayMtPerSLit![Pair(1, 9)];
+        let b = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&a, &changes1);
+        let changes2 = ArrayMtPerSLit![Pair(0, 2)];
+        let c = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&b, &changes2);
         assert_eq!(*c.nth(0), 2);
         assert_eq!(*c.nth(1), 9);
         assert_eq!(*c.nth(2), 7);
@@ -40,9 +42,8 @@ pub mod Test26ArraySeqMtPer {
         let a: ArraySeqMtPerS<B> = ArrayMtPerSLit![B::False; 10];
         assert_eq!(a.length() == 0, false);
         assert_eq!(a.length(), 10);
-        let b = a.update(0, B::True);
-        let c = b.update(1, B::False);
-        let d = c.update(2, B::True);
+        let changes1 = ArrayMtPerSLit![Pair(0, B::True), Pair(1, B::False), Pair(2, B::True)];
+        let d = <ArraySeqMtPerS<B> as ArraySeqMtPerTrait<B>>::inject(&a, &changes1);
         assert_eq!(d.length(), 10);
         let head4 = ArrayMtPerSLit![*d.nth(0), *d.nth(1), *d.nth(2), *d.nth(3)];
         assert_eq!(head4, ArrayMtPerSLit![B::True, B::False, B::True, B::False]);
@@ -77,11 +78,11 @@ pub mod Test26ArraySeqMtPer {
     #[test]
     fn test_subseq_view() {
         let a = ArrayMtPerSLit![10, 20, 30, 40, 50];
-        let view = a.subseq(1, 3);
-        assert_eq!(view.len(), 3);
-        assert_eq!(view[0], 20);
-        assert_eq!(view[1], 30);
-        assert_eq!(view[2], 40);
+        let view = a.subseq_copy(1, 3);
+        assert_eq!(view.length(), 3);
+        assert_eq!(*view.nth(0), 20);
+        assert_eq!(*view.nth(1), 30);
+        assert_eq!(*view.nth(2), 40);
     }
 
     #[test]

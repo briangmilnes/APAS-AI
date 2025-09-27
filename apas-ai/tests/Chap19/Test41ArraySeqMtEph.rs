@@ -7,7 +7,7 @@ use apas_ai::Types::Types::*;
 fn test_arrayseq_mteph_basic_ops() {
     let mut a = ArraySeqMtEphSLit![0; 5];
     for i in 0..a.length() {
-        let _ = a.update(i, i as i32);
+        a.set(i, i as i32);
     }
     for i in 0..a.length() {
         assert_eq!(a.nth_cloned(i), i as i32);

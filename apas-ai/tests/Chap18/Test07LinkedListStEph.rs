@@ -31,7 +31,7 @@ pub mod TestLinkedListStEph {
     #[test]
     fn test_eph_set_and_subseq() {
         let mut a: LinkedListStEphS<N> = LinkedListStEphSLit![0; 3];
-        let _ = a.update(1, 2);
+        let _ = LinkedListStEphTrait::update(&mut a, Pair(1, 2));
         assert_eq!(*a.nth(1), 2);
         let sub = a.subseq_copy(1, 2);
         assert_eq!(sub.length(), 2);

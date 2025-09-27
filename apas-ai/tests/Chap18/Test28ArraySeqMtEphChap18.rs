@@ -61,7 +61,7 @@ pub mod Test28ArraySeqMtEphChap {
     #[test]
     fn test_filter() {
         let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&identity, 10);
-        let evens = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::filter(&a, is_even_bool);
+        let evens = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::filter(&a, &is_even_bool);
         
         assert_eq!(evens.length(), 5); // 0, 2, 4, 6, 8
         for i in 0..5 {
@@ -71,8 +71,8 @@ pub mod Test28ArraySeqMtEphChap {
 
     #[test]
     fn test_append() {
-        let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(identity, 3);
-        let b: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(add_ten, 2);
+        let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&identity, 3);
+        let b: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&add_ten, 2);
         let combined = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::append(&a, &b);
         
         assert_eq!(combined.length(), 5);

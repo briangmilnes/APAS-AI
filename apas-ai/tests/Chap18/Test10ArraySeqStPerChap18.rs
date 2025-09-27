@@ -73,12 +73,12 @@ pub mod TestArraySeqStPerChap {
     #[test]
     fn test_filter_even() {
         let numbers = ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        let evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&a, &|&x| {
+        let evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&numbers, &|&x| {
             if x % 2 == 0 { B::True } else { B::False }
         });
         assert_eq!(evens, ArraySeqStPerSLit![2, 4, 6, 8, 10]);
         let odds_only = ArraySeqStPerSLit![1, 3, 5, 7];
-        let no_evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&a, &|&x| {
+        let no_evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&odds_only, &|&x| {
             if x % 2 == 0 { B::True } else { B::False }
         });
         assert_eq!(no_evens.length(), 0);
@@ -99,15 +99,11 @@ pub mod TestArraySeqStPerChap {
         assert_eq!(mixed_flat, ArraySeqStPerSLit![1, 2, 3]);
     }
 
-    #[test]
-    fn test_update_sequence() {
-        let a = ArraySeqStPerSLit!["hello", "world", "test"];
-        let b = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::update(&a, Pair(1, "rust"));
-        assert_eq!(b, ArraySeqStPerSLit!["hello", "rust", "test"]);
-        let c = ArraySeqStPerSLit!["hello", "world", "test"];
-        let d = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::update(&c, Pair(5, "out_of_bounds"));
-        assert_eq!(d, ArraySeqStPerSLit!["hello", "world", "test"]);
-    }
+    // ArraySeqStPer is persistent - no update method
+    // #[test]
+    // fn test_update_sequence() {
+    //     // Per types don't have update methods
+    // }
 
     #[test]
     fn test_inject_and_ninject() {

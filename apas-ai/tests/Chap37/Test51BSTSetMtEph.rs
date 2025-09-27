@@ -167,7 +167,7 @@ impl TestSet for apas_ai::Chap37::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSet
     fn iter_seq(&self) -> ArraySeqStPerS<i32> { self.iter_in_order() }
 }
 
-impl TestSet for apas_ai::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt<i32> {
+impl TestSet for apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt<i32> {
     fn empty() -> Self { Self::empty() }
 
     fn insert(&mut self, value: i32) { self.insert(value); }
@@ -315,7 +315,7 @@ fn test_bbalpha_bst_set_ops() {
 }
 
 #[test]
-fn test_treap_bst_set_ops() { exercise_set::<apas_ai::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt<i32>>(); }
+fn test_treap_bst_set_ops() { exercise_set::<apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt<i32>>(); }
 
 #[test]
 fn test_splay_bst_set_ops() {

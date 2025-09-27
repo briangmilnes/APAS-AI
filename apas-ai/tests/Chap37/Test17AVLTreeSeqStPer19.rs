@@ -42,8 +42,8 @@ pub mod TestAVLTreeSeqStPer {
 
     #[test]
     fn test_iter_inorder_after_pipeline_ch19() {
-        let a: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::tabulate(&|i| i, 4);
-        let b: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::tabulate(&|i| i + 3, 4);
+        let a: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::tabulate(&|i| i, 4);
+        let b: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::tabulate(&|i| i + 3, 4);
         let c = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::append(&a, &b);
         let f =
             <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::filter(&a, &|x| if *x >= 2 { B::True } else { B::False });
