@@ -30,7 +30,7 @@ fn arrayseqs_repeat_macro_clones_element() {
 
 #[test]
 fn arrayseq_tabulate_and_map_work() {
-    let squares = <ArraySeqS<i32> as ArraySeq<i32>>::tabulate(&|i| i * i, 5);
+    let squares = <ArraySeqS<i32> as ArraySeq<i32>>::tabulate(&|i: usize| (i * i) as i32, 5);
     assert_eq!(ArraySeq::length(&squares), 5);
     assert_eq!(ArraySeq::nth(&squares, 3), &9);
 

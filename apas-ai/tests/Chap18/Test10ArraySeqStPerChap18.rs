@@ -102,10 +102,10 @@ pub mod TestArraySeqStPerChap {
     #[test]
     fn test_update_sequence() {
         let a = ArraySeqStPerSLit!["hello", "world", "test"];
-        let b = a.update(Pair(1, "rust"));
+        let b = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::update(&a, Pair(1, "rust"));
         assert_eq!(b, ArraySeqStPerSLit!["hello", "rust", "test"]);
         let c = ArraySeqStPerSLit!["hello", "world", "test"];
-        let d = c.update(Pair(5, "out_of_bounds"));
+        let d = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::update(&c, Pair(5, "out_of_bounds"));
         assert_eq!(d, ArraySeqStPerSLit!["hello", "world", "test"]);
     }
 
