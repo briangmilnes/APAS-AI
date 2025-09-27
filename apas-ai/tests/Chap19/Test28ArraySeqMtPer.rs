@@ -11,8 +11,8 @@ pub mod Test28ArraySeqMtPer {
 
     #[test]
     fn test_inject_basic() {
-        let values = ArraySeqMtPerSLit![0, 1, 2, 3, 4, 5];
-        let changes = ArraySeqMtPerSLit![PairLit!(2, 99), PairLit!(4, 88)];
+        let values = ArrayMtPerSLit![0, 1, 2, 3, 4, 5];
+        let changes = ArrayMtPerSLit![PairLit!(2, 99), PairLit!(4, 88)];
         let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
 
         assert_eq!(result.length(), 6);
@@ -27,8 +27,8 @@ pub mod Test28ArraySeqMtPer {
 
     #[test]
     fn test_inject_conflicting_updates() {
-        let values = ArraySeqMtPerSLit![0, 1, 2, 3, 4, 5];
-        let changes = ArraySeqMtPerSLit![PairLit!(2, 99), PairLit!(2, 77), PairLit!(4, 88)];
+        let values = ArrayMtPerSLit![0, 1, 2, 3, 4, 5];
+        let changes = ArrayMtPerSLit![PairLit!(2, 99), PairLit!(2, 77), PairLit!(4, 88)];
         let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
 
         assert_eq!(result.length(), 6);
@@ -43,8 +43,8 @@ pub mod Test28ArraySeqMtPer {
 
     #[test]
     fn test_inject_out_of_bounds() {
-        let values = ArraySeqMtPerSLit![0, 1, 2];
-        let changes = ArraySeqMtPerSLit![PairLit!(1, 99), PairLit!(5, 77)]; // index 5 is out of bounds
+        let values = ArrayMtPerSLit![0, 1, 2];
+        let changes = ArrayMtPerSLit![PairLit!(1, 99), PairLit!(5, 77)]; // index 5 is out of bounds
         let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
 
         assert_eq!(result.length(), 3);
@@ -55,8 +55,8 @@ pub mod Test28ArraySeqMtPer {
 
     #[test]
     fn test_inject_empty_changes() {
-        let values = ArraySeqMtPerSLit![1, 2, 3];
-        let changes: ArraySeqMtPerS<Pair<N, N>> = ArraySeqMtPerSLit![];
+        let values = ArrayMtPerSLit![1, 2, 3];
+        let changes: ArraySeqMtPerS<Pair<N, N>> = ArrayMtPerSLit![];
         let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
 
         assert_eq!(result.length(), 3);
@@ -67,8 +67,8 @@ pub mod Test28ArraySeqMtPer {
 
     #[test]
     fn test_inject_empty_values() {
-        let values: ArraySeqMtPerS<N> = ArraySeqMtPerSLit![];
-        let changes = ArraySeqMtPerSLit![PairLit!(0, 99)];
+        let values: ArraySeqMtPerS<N> = ArrayMtPerSLit![];
+        let changes = ArrayMtPerSLit![PairLit!(0, 99)];
         let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
 
         assert_eq!(result.length(), 0); // No values to update
@@ -81,19 +81,19 @@ pub mod Test28ArraySeqMtPer {
     // Migrated from tests/11_TestArraySeqStPerChap19.rs - this was the commented MT code
     #[test]
     fn test_atomic_write_migrated_from_st_test() {
-        let values = ArraySeqMtPerSLit![0, 1, 2, 3, 4, 5];
-        let changes = ArraySeqMtPerSLit![PairLit!(2, 99), PairLit!(2, 7), PairLit!(4, 20)];
+        let values = ArrayMtPerSLit![0, 1, 2, 3, 4, 5];
+        let changes = ArrayMtPerSLit![PairLit!(2, 99), PairLit!(2, 7), PairLit!(4, 20)];
         let n = values.length();
 
         // Create values with change numbers initialized to n
-        let with_num = ArraySeqMtPerSLit![
+        let with_num = ArraySeqMtPerS::from_vec(vec![
             Mutex::new(PairLit!(*values.nth(0), n)),
             Mutex::new(PairLit!(*values.nth(1), n)),
             Mutex::new(PairLit!(*values.nth(2), n)),
             Mutex::new(PairLit!(*values.nth(3), n)),
             Mutex::new(PairLit!(*values.nth(4), n)),
             Mutex::new(PairLit!(*values.nth(5), n))
-        ];
+        ]);
 
         // Apply atomic writes with different change numbers
         <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::atomicWrite(&with_num, &changes, 1);
@@ -106,8 +106,8 @@ pub mod Test28ArraySeqMtPer {
 
     #[test]
     fn test_inject_string_values() {
-        let values = ArraySeqMtPerSLit!["hello", "world", "test"];
-        let changes = ArraySeqMtPerSLit![PairLit!(1, "rust"), PairLit!(0, "hi")];
+        let values = ArrayMtPerSLit!["hello", "world", "test"];
+        let changes = ArrayMtPerSLit![PairLit!(1, "rust"), PairLit!(0, "hi")];
         let result = <ArraySeqMtPerS<&str> as ArraySeqMtPerTrait<&str>>::inject(&values, &changes);
 
         assert_eq!(result.length(), 3);

@@ -5,21 +5,21 @@ use apas_ai::Types::Types::{B, Pair};
 
 #[test]
 fn arrayseq_stper_macro_empty() {
-    let seq: Seq<i32> = ArraySeqStPerS![];
-    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&seq), 0);
-    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::isEmpty(&seq), B::True);
+    let seq: Seq<i32> = ArraySeqStPerSLit![];
+    assert_eq!(<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::length(&seq), 0);
+    assert_eq!(<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::isEmpty(&seq), true);
 }
 
 #[test]
 fn arrayseq_stper_macro_literal() {
-    let seq = ArraySeqStPerS![1, 2, 3];
+    let seq = ArraySeqStPerSLit![1, 2, 3];
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&seq), 3);
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&seq, 1), &2);
 }
 
 #[test]
 fn arrayseq_stper_macro_repeat() {
-    let seq = ArraySeqStPerS!["rust"; 2];
+    let seq = ArraySeqStPerSLit!["rust"; 2];
     assert_eq!(<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::length(&seq), 2);
     assert_eq!(<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::nth(&seq, 0), &"rust");
     assert_eq!(<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::nth(&seq, 1), &"rust");
@@ -38,7 +38,7 @@ fn arrayseq_stper_operations() {
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&subseq), 2);
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&subseq, 0), &5);
 
-    let appended = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::append(&mapped, &ArraySeqStPerS![42]);
+    let appended = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::append(&mapped, &ArraySeqStPerSLit![42]);
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&appended), 5);
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&appended, 4), &42);
 
@@ -48,16 +48,16 @@ fn arrayseq_stper_operations() {
     });
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&filtered), 3);
 
-    let nested = ArraySeqStPerS![ArraySeqStPerS![1, 2], ArraySeqStPerS![3], ArraySeqStPerS![4, 5]];
+    let nested = ArraySeqStPerSLit![ArraySeqStPerSLit![1, 2], ArraySeqStPerSLit![3], ArraySeqStPerSLit![4, 5]];
     let flattened = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::flatten(&nested);
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&flattened, 3), &4);
 
-    let injected = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::inject(&flattened, &ArraySeqStPerS![Pair(0, 99), Pair(0, 100), Pair(4, 77)]);
+    let injected = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::inject(&flattened, &ArraySeqStPerSLit![Pair(0, 99), Pair(0, 100), Pair(4, 77)]);
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&injected, 0), &99);
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&injected, 4), &77);
 
     let collected = <ArraySeqStPerS<Pair<&str, usize>> as ArraySeqStPerTrait<Pair<&str, usize>>>::collect(
-        &ArraySeqStPerS![Pair("a", 1), Pair("b", 2), Pair("a", 3)],
+        &ArraySeqStPerSLit![Pair("a", 1), Pair("b", 2), Pair("a", 3)],
         |lhs: &&str, rhs: &&str| lhs.cmp(rhs),
     );
     assert_eq!(<ArraySeqStPerS<Pair<&str, ArraySeqStPerS<usize>>> as ArraySeqStPerTrait<Pair<&str, ArraySeqStPerS<usize>>>>::length(&collected), 2);

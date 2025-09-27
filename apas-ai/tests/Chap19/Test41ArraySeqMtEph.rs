@@ -26,7 +26,7 @@ fn test_arrayseq_mteph_append_and_map() {
     let b = ArraySeqMtEphSLit![4, 5];
     let c = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::append(&a, &b);
     assert_eq!(c.length(), 5);
-    let d = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::map(&a, &|x| x + 1);
+    let d = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::map(&a, |x| x + 1);
     assert_eq!(d.nth_cloned(0), 2);
     assert_eq!(d.nth_cloned(4), 6);
 }
