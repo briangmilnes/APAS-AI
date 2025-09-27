@@ -52,7 +52,7 @@ fn bench_filter_mteph_ch18(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("filter_evens", n), &n, |b, &len| {
         let s: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(|i| i, len);
         b.iter(|| {
-            let evens = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::filter(&s, |x| if x % 2 == 0 { B::True } else { B::False });
+            let evens = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::filter(&s, |x| if x % 2 == 0 { true } else { false });
             black_box(evens.length())
         })
     });

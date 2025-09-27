@@ -122,7 +122,7 @@ pub mod ArraySeqStEph {
 
         fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> ArraySeqStEphS<T> {
             // Helper for filter: deflate f x = if f(x) then [x] else []
-            if f(x) == B::True {
+            if f(x) == true {
                     <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::singleton(x.clone())
             } else {
                     <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty()

@@ -20,7 +20,7 @@ fn test_append_and_filter() {
     let b = <ListS<N> as ListSeqChap18>::tabulate(|i| i + 4, 2);
     let c = <ListS<N> as ListSeqChap18>::append(&a, &b);
     assert_eq!(c.length(), 5);
-    let evens = <ListS<N> as ListSeqChap18>::filter(&c, |x| if *x % 2 == 0 { B::True } else { B::False });
+    let evens = <ListS<N> as ListSeqChap18>::filter(&c, |x| if *x % 2 == 0 { true } else { false });
     assert_eq!(evens.length(), 2);
     assert_eq!(*evens.nth(0), 2);
     assert_eq!(*evens.nth(1), 4);

@@ -76,11 +76,11 @@ pub mod ArraySeq {
         /// Work: Θ(|a| + |updates|), Span: Θ(1).
         fn inject(a: &ArraySeqS<T>, updates: &ArraySeqS<Pair<N, T>>) -> ArraySeqS<T>;
 
-        /// Definition 18.5 (isEmpty). B::True iff the sequence has length zero. <br/>
+        /// Definition 18.5 (isEmpty). true iff the sequence has length zero. <br/>
         /// Work: Θ(1), Span: Θ(1).
         fn isEmpty(&self) -> B;
 
-        /// Definition 18.5 (isSingleton). B::True iff the sequence has length one. <br/>
+        /// Definition 18.5 (isSingleton). true iff the sequence has length one. <br/>
         /// Work: Θ(1), Span: Θ(1).
         fn isSingleton(&self) -> B;
 
@@ -132,9 +132,9 @@ pub mod ArraySeq {
 
         fn singleton(item: T) -> ArraySeqS<T> { ArraySeqS::from_vec(vec![item]) }
 
-        fn isEmpty(&self) -> B { if self.data.is_empty() { B::True } else { B::False } }
+        fn isEmpty(&self) -> B { if self.data.is_empty() { true } else { false } }
 
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
+        fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
 
         /// Definition 18.2 (subseq view). Return a slice for the subsequence starting at `start`
         /// and of length `length` without copying or allocation (zero‑copy view). <br/>
@@ -245,7 +245,7 @@ pub mod ArraySeq {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
-                if pred(value) == B::True {
+                if pred(value) == true {
                     kept.push(value.clone());
                 }
             }

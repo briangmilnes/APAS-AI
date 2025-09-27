@@ -45,7 +45,7 @@ pub mod ArraySeqMtEphChap19 {
             <ArraySeqMtEphS<T> as ArraySeqMtEphChap18Trait<T>>::append(a, b)
         }
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqMtEphS<T> {
-            if f(x) == B::True {
+            if f(x) == true {
                 ArraySeqMtEphS::from_vec(vec![x.clone()])
             } else {
                 ArraySeqMtEphS::from_vec(Vec::new())

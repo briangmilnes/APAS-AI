@@ -66,7 +66,7 @@ pub mod BSTParaStEph {
 
         fn split_inner(tree: &Self, key: &T) -> (Self, B, Self) {
             match tree.expose_internal() {
-                | Exposed::Leaf => (ParamBST::new(), B::False, ParamBST::new()),
+                | Exposed::Leaf => (ParamBST::new(), false, ParamBST::new()),
                 | Exposed::Node(left, root_key, right) => match key.cmp(&root_key) {
                     | std::cmp::Ordering::Less => {
                         let (ll, found, lr) = ParamBST::split_inner(&left, key);
@@ -78,7 +78,7 @@ pub mod BSTParaStEph {
                         let rebuilt = ParamBST::join_mid(Exposed::Node(left, root_key, rl));
                         (rebuilt, found, rr)
                     }
-                    | std::cmp::Ordering::Equal => (left, B::True, right),
+                    | std::cmp::Ordering::Equal => (left, true, right),
                 },
             }
         }
@@ -143,7 +143,7 @@ pub mod BSTParaStEph {
 
         fn size(&self) -> N { self.root.borrow().as_ref().map_or(0, |node| node.size) }
 
-        fn is_empty(&self) -> B { if self.size() == 0 { B::True } else { B::False } }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         fn insert(&self, key: T) {
             let (left, _, right) = ParamBST::split_inner(self, &key);

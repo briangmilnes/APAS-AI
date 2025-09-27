@@ -105,10 +105,10 @@ pub mod AVLTreeSeqStEph {
         pub fn contains_value(&self, target: &T) -> B {
             for v in self.iter() {
                 if v == target {
-                    return B::True;
+                    return true;
                 }
             }
-            B::False
+            false
         }
         pub fn insert_value(&mut self, value: T) { self.push_back(value); }
         pub fn delete_value(&mut self, target: &T) -> bool {
@@ -156,9 +156,9 @@ pub mod AVLTreeSeqStEph {
             t
         }
 
-        fn isEmpty(&self) -> B { if self.length() == 0 { B::True } else { B::False } }
+        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
 
-        fn isSingleton(&self) -> B { if self.length() == 1 { B::True } else { B::False } }
+        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.length();

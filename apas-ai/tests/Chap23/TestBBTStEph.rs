@@ -28,9 +28,9 @@ fn bst_insert_and_search_behavior() {
     }
     assert_eq!(bst.size(), 7);
     assert_eq!(bst.height(), 3);
-    assert_eq!(bst.contains(&4), B::True);
-    assert_eq!(bst.contains(&5), B::True);
-    assert_eq!(bst.contains(&8), B::False);
+    assert_eq!(bst.contains(&4), true);
+    assert_eq!(bst.contains(&5), true);
+    assert_eq!(bst.contains(&8), false);
     assert_eq!(bst.find(&4), Some(&4));
     assert_eq!(bst.find(&6), Some(&6));
     assert_eq!(bst.find(&9), None);
@@ -86,7 +86,7 @@ fn bstree_empty_operations() {
     let empty_bst = BSTree::<N>::new();
     assert_eq!(empty_bst.size(), 0);
     assert_eq!(empty_bst.height(), 0);
-    assert_eq!(empty_bst.contains(&42), B::False);
+    assert_eq!(empty_bst.contains(&42), false);
     assert_eq!(empty_bst.find(&42), None);
     assert_eq!(empty_bst.minimum(), None);
     assert_eq!(empty_bst.maximum(), None);
@@ -101,8 +101,8 @@ fn bstree_single_element() {
     
     assert_eq!(bst.size(), 1);
     assert_eq!(bst.height(), 1);
-    assert_eq!(bst.contains(&42), B::True);
-    assert_eq!(bst.contains(&99), B::False);
+    assert_eq!(bst.contains(&42), true);
+    assert_eq!(bst.contains(&99), false);
     assert_eq!(bst.find(&42), Some(&42));
     assert_eq!(bst.find(&99), None);
     assert_eq!(bst.minimum().copied(), Some(42));
@@ -121,9 +121,9 @@ fn bstree_duplicate_insertions() {
     bst.insert(7);
     
     // BST should handle duplicates appropriately
-    assert_eq!(bst.contains(&5), B::True);
-    assert_eq!(bst.contains(&3), B::True);
-    assert_eq!(bst.contains(&7), B::True);
+    assert_eq!(bst.contains(&5), true);
+    assert_eq!(bst.contains(&3), true);
+    assert_eq!(bst.contains(&7), true);
     
     let inorder = bst.in_order();
     // Check that inorder traversal is still sorted
@@ -175,7 +175,7 @@ fn bstree_random_insertions() {
     
     // Verify all keys are present
     for i in 0..keys.length() {
-        assert_eq!(bst.contains(keys.nth(i)), B::True);
+        assert_eq!(bst.contains(keys.nth(i)), true);
         assert_eq!(bst.find(keys.nth(i)), Some(keys.nth(i)));
     }
     
@@ -240,10 +240,10 @@ fn bstree_edge_case_searches() {
     }
     
     // Test searches for non-existent keys
-    assert_eq!(bst.contains(&1), B::False);   // Less than minimum
-    assert_eq!(bst.contains(&20), B::False);  // Greater than maximum
-    assert_eq!(bst.contains(&6), B::False);   // Between existing keys
-    assert_eq!(bst.contains(&14), B::False);  // Between existing keys
+    assert_eq!(bst.contains(&1), false);   // Less than minimum
+    assert_eq!(bst.contains(&20), false);  // Greater than maximum
+    assert_eq!(bst.contains(&6), false);   // Between existing keys
+    assert_eq!(bst.contains(&14), false);  // Between existing keys
     
     assert_eq!(bst.find(&1), None);
     assert_eq!(bst.find(&20), None);

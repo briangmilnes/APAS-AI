@@ -131,7 +131,7 @@ impl<T2> ArraySeqChap19 for ArrayS<T2> {
     }
     /// APAS: Work Θ(1), Span Θ(1).
     fn deflate<T: Clone>(f: impl Fn(&T) -> B, x: &T) -> ArrayS<T> {
-        let keep = f(x) == B::True;
+        let keep = f(x) == true;
         <ArrayS<T> as ArraySeqChap18>::tabulate(|_| x.clone(), if keep { 1 } else { 0 })
     }
     /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(1 + max i=0..|a|-1 S(f(a[i]))).

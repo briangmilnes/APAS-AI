@@ -51,14 +51,14 @@ pub mod TestLinkedListStEph {
     #[test]
     fn test_deflate_filter_iterate_reduce_scan_flatten_inject_ch19() {
         let one =
-            <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x: &N| if *x == 1 { B::True } else { B::False }, &1);
+            <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x: &N| if *x == 1 { true } else { false }, &1);
         expect_list(&one, &[1]);
         let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
         let even =
             <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(
                 &a,
                 &|x: &N| {
-                    if *x % 2 == 0 { B::True } else { B::False }
+                    if *x % 2 == 0 { true } else { false }
                 },
             );
         expect_list(&even, &[2, 4]);

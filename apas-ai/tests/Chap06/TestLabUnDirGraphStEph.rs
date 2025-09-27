@@ -20,8 +20,8 @@ pub mod TestLabUnDirGraphStEph {
         g.add_vertex(2);
 
         assert_eq!(g.vertices().size(), 2);
-        assert!(g.vertices().mem(&1) == B::True);
-        assert!(g.vertices().mem(&2) == B::True);
+        assert!(g.vertices().mem(&1) == true);
+        assert!(g.vertices().mem(&2) == true);
         assert_eq!(g.labeled_edges().size(), 0);
     }
 
@@ -55,18 +55,18 @@ pub mod TestLabUnDirGraphStEph {
 
         let neighbors_1 = g.neighbors(&1);
         assert_eq!(neighbors_1.size(), 2);
-        assert!(neighbors_1.mem(&2) == B::True);
-        assert!(neighbors_1.mem(&3) == B::True);
+        assert!(neighbors_1.mem(&2) == true);
+        assert!(neighbors_1.mem(&3) == true);
 
         let neighbors_2 = g.neighbors(&2);
         assert_eq!(neighbors_2.size(), 2);
-        assert!(neighbors_2.mem(&1) == B::True);
-        assert!(neighbors_2.mem(&3) == B::True);
+        assert!(neighbors_2.mem(&1) == true);
+        assert!(neighbors_2.mem(&3) == true);
 
         let neighbors_3 = g.neighbors(&3);
         assert_eq!(neighbors_3.size(), 2);
-        assert!(neighbors_3.mem(&1) == B::True);
-        assert!(neighbors_3.mem(&2) == B::True);
+        assert!(neighbors_3.mem(&1) == true);
+        assert!(neighbors_3.mem(&2) == true);
     }
 
     #[test]
@@ -79,8 +79,8 @@ pub mod TestLabUnDirGraphStEph {
         assert_eq!(edges.size(), 2);
         // Note: edges are normalized, so (1,2) and (2,3) should be stored as is
         // since 1 < 2 and 2 < 3
-        assert!(edges.mem(&Edge(1, 2)) == B::True);
-        assert!(edges.mem(&Edge(2, 3)) == B::True);
+        assert!(edges.mem(&Edge(1, 2)) == true);
+        assert!(edges.mem(&Edge(2, 3)) == true);
     }
 
     #[test]
@@ -174,7 +174,7 @@ pub mod TestLabUnDirGraphStEph {
 
         let neighbors = g.neighbors(&1);
         assert_eq!(neighbors.size(), 1);
-        assert!(neighbors.mem(&1) == B::True);
+        assert!(neighbors.mem(&1) == true);
     }
 
     #[test]
@@ -187,7 +187,7 @@ pub mod TestLabUnDirGraphStEph {
 
         assert_eq!(g.labeled_edges().size(), 2);
         // Both edges should exist in the graph
-        assert!(g.labeled_edges().mem(&LabEdge(1, 2, "first")) == B::True);
-        assert!(g.labeled_edges().mem(&LabEdge(1, 2, "second")) == B::True);
+        assert!(g.labeled_edges().mem(&LabEdge(1, 2, "first")) == true);
+        assert!(g.labeled_edges().mem(&LabEdge(1, 2, "second")) == true);
     }
 }

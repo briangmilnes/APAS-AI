@@ -47,12 +47,12 @@ pub mod TestDirGraphMtEph {
         let g = DirGraphMtEph::FromSets(v, a);
         
         // Test Neighbor method - checks if edge exists between two vertices
-        assert_eq!(g.Neighbor(&0, &1), B::True);  // edge 0->1 exists
-        assert_eq!(g.Neighbor(&0, &2), B::True);  // edge 0->2 exists
-        assert_eq!(g.Neighbor(&1, &2), B::True);  // edge 1->2 exists
-        assert_eq!(g.Neighbor(&1, &0), B::False); // edge 1->0 does not exist
-        assert_eq!(g.Neighbor(&2, &0), B::False); // edge 2->0 does not exist
-        assert_eq!(g.Neighbor(&2, &1), B::False); // edge 2->1 does not exist
+        assert_eq!(g.Neighbor(&0, &1), true);  // edge 0->1 exists
+        assert_eq!(g.Neighbor(&0, &2), true);  // edge 0->2 exists
+        assert_eq!(g.Neighbor(&1, &2), true);  // edge 1->2 exists
+        assert_eq!(g.Neighbor(&1, &0), false); // edge 1->0 does not exist
+        assert_eq!(g.Neighbor(&2, &0), false); // edge 2->0 does not exist
+        assert_eq!(g.Neighbor(&2, &1), false); // edge 2->1 does not exist
     }
 
     #[test]
@@ -68,11 +68,11 @@ pub mod TestDirGraphMtEph {
         
         let ng_0 = g.NG(&0);
         assert_eq!(ng_0.size(), 1);
-        assert_eq!(ng_0.mem(&1), B::True);
+        assert_eq!(ng_0.mem(&1), true);
         
         let ng_2 = g.NG(&2);
         assert_eq!(ng_2.size(), 1); // vertex 2 has incoming neighbor 1
-        assert_eq!(ng_2.mem(&1), B::True);
+        assert_eq!(ng_2.mem(&1), true);
     }
 
     #[test]
@@ -89,9 +89,9 @@ pub mod TestDirGraphMtEph {
         let vertices_subset = SetLit![0, 1];
         let ng_subset = g.NGOfVertices(&vertices_subset);
         assert_eq!(ng_subset.size(), 3); // NG(0)={1} ∪ NG(1)={0,2} = {0,1,2}
-        assert_eq!(ng_subset.mem(&0), B::True);
-        assert_eq!(ng_subset.mem(&1), B::True);
-        assert_eq!(ng_subset.mem(&2), B::True);
+        assert_eq!(ng_subset.mem(&0), true);
+        assert_eq!(ng_subset.mem(&1), true);
+        assert_eq!(ng_subset.mem(&2), true);
     }
 
     #[test]
@@ -107,7 +107,7 @@ pub mod TestDirGraphMtEph {
         
         let nplus_0 = g.NPlus(&0);
         assert_eq!(nplus_0.size(), 1);
-        assert_eq!(nplus_0.mem(&1), B::True);
+        assert_eq!(nplus_0.mem(&1), true);
         
         let nplus_2 = g.NPlus(&2);
         assert_eq!(nplus_2.size(), 0);
@@ -126,7 +126,7 @@ pub mod TestDirGraphMtEph {
         
         let nminus_1 = g.NMinus(&1);
         assert_eq!(nminus_1.size(), 1);
-        assert_eq!(nminus_1.mem(&0), B::True);
+        assert_eq!(nminus_1.mem(&0), true);
         
         let nminus_0 = g.NMinus(&0);
         assert_eq!(nminus_0.size(), 0);
@@ -146,8 +146,8 @@ pub mod TestDirGraphMtEph {
         let vertices_subset = SetLit![0, 1];
         let nplus_subset = g.NPlusOfVertices(&vertices_subset);
         assert_eq!(nplus_subset.size(), 2);
-        assert_eq!(nplus_subset.mem(&1), B::True);
-        assert_eq!(nplus_subset.mem(&2), B::True);
+        assert_eq!(nplus_subset.mem(&1), true);
+        assert_eq!(nplus_subset.mem(&2), true);
     }
 
     #[test]
@@ -164,8 +164,8 @@ pub mod TestDirGraphMtEph {
         let vertices_subset = SetLit![1, 2];
         let nminus_subset = g.NMinusOfVertices(&vertices_subset);
         assert_eq!(nminus_subset.size(), 2);
-        assert_eq!(nminus_subset.mem(&0), B::True);
-        assert_eq!(nminus_subset.mem(&1), B::True);
+        assert_eq!(nminus_subset.mem(&0), true);
+        assert_eq!(nminus_subset.mem(&1), true);
     }
 
     #[test]
@@ -181,11 +181,11 @@ pub mod TestDirGraphMtEph {
         let g = DirGraphMtEph::FromSets(v, a);
         
         // Test Incident method - checks if edge is incident to vertex
-        assert_eq!(g.Incident(&Edge(0, 1), &0), B::True);  // edge (0,1) is incident to vertex 0
-        assert_eq!(g.Incident(&Edge(0, 1), &1), B::True);  // edge (0,1) is incident to vertex 1
-        assert_eq!(g.Incident(&Edge(0, 1), &2), B::False); // edge (0,1) is not incident to vertex 2
-        assert_eq!(g.Incident(&Edge(1, 2), &1), B::True);  // edge (1,2) is incident to vertex 1
-        assert_eq!(g.Incident(&Edge(1, 2), &2), B::True);  // edge (1,2) is incident to vertex 2
+        assert_eq!(g.Incident(&Edge(0, 1), &0), true);  // edge (0,1) is incident to vertex 0
+        assert_eq!(g.Incident(&Edge(0, 1), &1), true);  // edge (0,1) is incident to vertex 1
+        assert_eq!(g.Incident(&Edge(0, 1), &2), false); // edge (0,1) is not incident to vertex 2
+        assert_eq!(g.Incident(&Edge(1, 2), &1), true);  // edge (1,2) is incident to vertex 1
+        assert_eq!(g.Incident(&Edge(1, 2), &2), true);  // edge (1,2) is incident to vertex 2
     }
 
     #[test]
@@ -298,14 +298,14 @@ pub mod TestDirGraphMtEph {
             let g_clone = Arc::clone(&g);
             let handle = thread::spawn(move || {
                 // Perform various read operations
-                assert_eq!(g_clone.Neighbor(&0, &1), B::True);
-                assert_eq!(g_clone.Neighbor(&1, &0), B::False);
+                assert_eq!(g_clone.Neighbor(&0, &1), true);
+                assert_eq!(g_clone.Neighbor(&1, &0), false);
                 assert_eq!(g_clone.sizeV(), 3);
                 assert_eq!(g_clone.sizeA(), 2);
                 
                 let ng_0 = g_clone.NG(&0);
                 assert_eq!(ng_0.size(), 1);
-                assert_eq!(ng_0.mem(&1), B::True);
+                assert_eq!(ng_0.mem(&1), true);
             });
             handles.push(handle);
         }
@@ -364,7 +364,7 @@ pub mod TestDirGraphMtEph {
                     let neighbor_01 = graph_clone.Neighbor(&0, &1);
                     let neighbor_10 = graph_clone.Neighbor(&1, &0);
                     
-                    if neighbor_01 != B::True || neighbor_10 != B::False {
+                    if neighbor_01 != true || neighbor_10 != false {
                         race_detected_clone.store(true, Ordering::SeqCst);
                     }
                     

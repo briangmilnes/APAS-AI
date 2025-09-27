@@ -243,7 +243,7 @@ pub mod LinkedListStPer {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
-                if pred(value) == B::True {
+                if pred(value) == true {
                     kept.push(value.clone());
                 }
             }

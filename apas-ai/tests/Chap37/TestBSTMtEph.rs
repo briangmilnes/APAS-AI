@@ -17,7 +17,7 @@ fn mt_plain_basic_ops() {
     }
     assert_eq!(bst.size(), 7);
     assert_eq!(bst.find(&3), Some(3));
-    assert_eq!(bst.contains(&9), B::False);
+    assert_eq!(bst.contains(&9), false);
     assert_eq!(bst.minimum(), Some(1));
     assert_eq!(bst.maximum(), Some(7));
 }
@@ -30,7 +30,7 @@ fn mt_avl_basic_ops() {
     }
     assert_eq!(bst.size(), 7);
     assert_eq!(bst.find(&7), Some(7));
-    assert_eq!(bst.contains(&30), B::False);
+    assert_eq!(bst.contains(&30), false);
 }
 
 #[test]
@@ -80,12 +80,12 @@ fn mt_plain_comprehensive_operations() {
     
     // Test empty state
     assert_eq!(bst.size(), 0);
-    assert_eq!(bst.is_empty(), B::True);
+    assert_eq!(bst.is_empty(), true);
     assert_eq!(bst.height(), 0);
     assert_eq!(bst.minimum(), None);
     assert_eq!(bst.maximum(), None);
     assert_eq!(bst.find(&42), None);
-    assert_eq!(bst.contains(&42), B::False);
+    assert_eq!(bst.contains(&42), false);
     
     // Test insertions
     let values = [50, 25, 75, 12, 37, 62, 87, 6, 18, 31, 43];
@@ -94,7 +94,7 @@ fn mt_plain_comprehensive_operations() {
     }
     
     assert_eq!(bst.size(), values.len());
-    assert_eq!(bst.is_empty(), B::False);
+    assert_eq!(bst.is_empty(), false);
     assert!(bst.height() > 0);
     assert_eq!(bst.minimum(), Some(6));
     assert_eq!(bst.maximum(), Some(87));
@@ -102,15 +102,15 @@ fn mt_plain_comprehensive_operations() {
     // Test find and contains
     for &val in &values {
         assert_eq!(bst.find(&val), Some(val));
-        assert_eq!(bst.contains(&val), B::True);
+        assert_eq!(bst.contains(&val), true);
     }
     assert_eq!(bst.find(&99), None);
-    assert_eq!(bst.contains(&99), B::False);
+    assert_eq!(bst.contains(&99), false);
     
     // Note: BSTPlainMtEph doesn't have delete method - test only insertion and search
     // Verify all inserted values are present
     for &val in &values {
-        assert_eq!(bst.contains(&val), B::True);
+        assert_eq!(bst.contains(&val), true);
     }
     
     // Test in-order traversal
@@ -141,14 +141,14 @@ fn mt_avl_comprehensive_operations() {
     
     // Test that all elements are accessible
     for i in 1..=20 {
-        assert_eq!(bst.contains(&i), B::True);
+        assert_eq!(bst.contains(&i), true);
         assert_eq!(bst.find(&i), Some(i));
     }
     
     // Note: BSTAVLMtEph doesn't have delete method - test balance properties only
     // Verify all elements are accessible and tree maintains balance
     for i in 1..=20 {
-        assert_eq!(bst.contains(&i), B::True);
+        assert_eq!(bst.contains(&i), true);
         assert_eq!(bst.find(&i), Some(i));
     }
     
@@ -178,7 +178,7 @@ fn mt_rb_comprehensive_operations() {
     // Test comprehensive search
     for &val in &values {
         assert_eq!(bst.find(&val), Some(val));
-        assert_eq!(bst.contains(&val), B::True);
+        assert_eq!(bst.contains(&val), true);
     }
     
     // Test edge values
@@ -188,7 +188,7 @@ fn mt_rb_comprehensive_operations() {
     // Note: BSTRBMtEph doesn't have delete method - test comprehensive search only
     // Verify all values are accessible
     for &val in &values {
-        assert_eq!(bst.contains(&val), B::True);
+        assert_eq!(bst.contains(&val), true);
         assert_eq!(bst.find(&val), Some(val));
     }
     
@@ -223,7 +223,7 @@ fn mt_bbalpha_comprehensive_operations() {
     // Note: BSTBBAlphaMtEph doesn't have delete method - test balance properties only
     // Verify all elements are accessible
     for i in 1..=30 {
-        assert_eq!(bst.contains(&i), B::True);
+        assert_eq!(bst.contains(&i), true);
         assert_eq!(bst.find(&i), Some(i));
     }
     
@@ -255,21 +255,21 @@ fn mt_treap_comprehensive_operations() {
     // Test search operations
     for &val in &values {
         assert_eq!(bst.find(&val), Some(val));
-        assert_eq!(bst.contains(&val), B::True);
+        assert_eq!(bst.contains(&val), true);
     }
     
     // Test non-existent values
     for &val in &[0, 100, 50, 25] {
         if !values.contains(&val) {
             assert_eq!(bst.find(&val), None);
-            assert_eq!(bst.contains(&val), B::False);
+            assert_eq!(bst.contains(&val), false);
         }
     }
     
     // Note: BSTTreapMtEph doesn't have delete method - test comprehensive search only
     // Verify all values are accessible
     for &val in &values {
-        assert_eq!(bst.contains(&val), B::True);
+        assert_eq!(bst.contains(&val), true);
         assert_eq!(bst.find(&val), Some(val));
     }
     
@@ -296,7 +296,7 @@ fn mt_splay_comprehensive_operations() {
     let frequent_values = [25, 75];
     for _ in 0..5 {
         for &val in &frequent_values {
-            assert_eq!(bst.contains(&val), B::True);
+            assert_eq!(bst.contains(&val), true);
         }
     }
     
@@ -306,13 +306,13 @@ fn mt_splay_comprehensive_operations() {
     
     for &val in &values {
         assert_eq!(bst.find(&val), Some(val));
-        assert_eq!(bst.contains(&val), B::True);
+        assert_eq!(bst.contains(&val), true);
     }
     
     // Note: BSTSplayMtEph doesn't have delete method - test splay behavior only
     // Verify all values are accessible
     for &val in &values {
-        assert_eq!(bst.contains(&val), B::True);
+        assert_eq!(bst.contains(&val), true);
         assert_eq!(bst.find(&val), Some(val));
     }
     
@@ -330,12 +330,12 @@ fn mt_all_variants_empty_operations() {
         ($variant:ty) => {
             let bst = <$variant>::new();
             assert_eq!(bst.size(), 0);
-            assert_eq!(bst.is_empty(), B::True);
+            assert_eq!(bst.is_empty(), true);
             assert_eq!(bst.height(), 0);
             assert_eq!(bst.minimum(), None);
             assert_eq!(bst.maximum(), None);
             assert_eq!(bst.find(&42), None);
-            assert_eq!(bst.contains(&42), B::False);
+            assert_eq!(bst.contains(&42), false);
             
             let in_order = bst.in_order();
             assert_eq!(in_order.length(), 0);
@@ -361,13 +361,13 @@ fn mt_all_variants_single_element() {
             bst.insert(42);
             
             assert_eq!(bst.size(), 1);
-            assert_eq!(bst.is_empty(), B::False);
+            assert_eq!(bst.is_empty(), false);
             assert_eq!(bst.height(), 1);
             assert_eq!(bst.minimum(), Some(42));
             assert_eq!(bst.maximum(), Some(42));
             assert_eq!(bst.find(&42), Some(42));
-            assert_eq!(bst.contains(&42), B::True);
-            assert_eq!(bst.contains(&99), B::False);
+            assert_eq!(bst.contains(&42), true);
+            assert_eq!(bst.contains(&99), false);
             
             let in_order = bst.in_order();
             assert_eq!(in_order.length(), 1);
@@ -401,9 +401,9 @@ fn mt_all_variants_duplicate_handling() {
             
             // Size should reflect actual unique elements (behavior may vary by implementation)
             assert!(bst.size() >= 3); // At least the unique elements
-            assert_eq!(bst.contains(&10), B::True);
-            assert_eq!(bst.contains(&5), B::True);
-            assert_eq!(bst.contains(&15), B::True);
+            assert_eq!(bst.contains(&10), true);
+            assert_eq!(bst.contains(&5), true);
+            assert_eq!(bst.contains(&15), true);
             
             // Tree should still be sorted
             let in_order = bst.in_order();
@@ -460,7 +460,7 @@ fn mt_concurrent_plain_bst_operations() {
         barrier3.wait();
         let mut found_count = 0;
         for i in 1..=50 {
-            if bst3.contains(&i) == B::True {
+            if bst3.contains(&i) == true {
                 found_count += 1;
             }
         }
@@ -696,7 +696,7 @@ fn mt_concurrent_splay_access_patterns() {
         let frequent_values = [5, 10, 15];
         for _ in 0..10 {
             for &val in &frequent_values {
-                assert_eq!(bst1.contains(&val), B::True);
+                assert_eq!(bst1.contains(&val), true);
             }
         }
         

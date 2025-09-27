@@ -123,7 +123,7 @@ pub mod ArraySeqMtEph {
 
         fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtEphS<T> {
             // Helper for filter: deflate f x = if f(x) then [x] else []
-            if f(x) == B::True {
+            if f(x) == true {
                 Self::singleton(x.clone())
             } else {
                 Self::empty()
@@ -137,7 +137,7 @@ pub mod ArraySeqMtEph {
             }
             
             // Create boolean sequence for keep/filter results
-            let mut keep_results = <ArraySeqMtEphS<B> as ArraySeqMtEphTraitChap18<B>>::new(a.length(), B::False);
+            let mut keep_results = <ArraySeqMtEphS<B> as ArraySeqMtEphTraitChap18<B>>::new(a.length(), false);
             
             // Fork thread per element to evaluate predicate, collect results serially
             for i in 0..a.length() {
@@ -155,7 +155,7 @@ pub mod ArraySeqMtEph {
             // Serial compaction phase: count kept values
             let mut kept_count = 0;
             for i in 0..keep_results.length() {
-                if keep_results.nth_cloned(i) == B::True {
+                if keep_results.nth_cloned(i) == true {
                     kept_count += 1;
                 }
             }
@@ -167,7 +167,7 @@ pub mod ArraySeqMtEph {
             // Find first kept value and create result sequence
             let mut first_kept = None;
             for i in 0..a.length() {
-                if keep_results.nth_cloned(i) == B::True {
+                if keep_results.nth_cloned(i) == true {
                     first_kept = Some(a.nth_cloned(i));
                     break;
                 }
@@ -178,7 +178,7 @@ pub mod ArraySeqMtEph {
             let mut result_idx = 1;
             
             for i in 0..a.length() {
-                if keep_results.nth_cloned(i) == B::True && result_idx < kept_count {
+                if keep_results.nth_cloned(i) == true && result_idx < kept_count {
                     result.set(result_idx, a.nth_cloned(i)).unwrap();
                     result_idx += 1;
                 }

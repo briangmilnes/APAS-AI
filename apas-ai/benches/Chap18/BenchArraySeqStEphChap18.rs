@@ -40,7 +40,7 @@ fn bench_tabulate_map(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("filter", n), &n, |b, &len| {
         let s: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::tabulate(&|i| i, len);
         b.iter(|| {
-            let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&s, &|x| if *x % 2 == 0 { B::True } else { B::False });
+            let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&s, &|x| if *x % 2 == 0 { true } else { false });
             black_box(evens)
         })
     });

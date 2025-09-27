@@ -40,7 +40,7 @@ pub mod AVLTreeSeqStPerChap19 {
             <AVLTreeSeqStPerS<T> as AVLTreeSeqStPerChap18Trait<T>>::append(a, b)
         }
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> AVLTreeSeqStPerS<T> {
-            if f(x) == B::True {
+            if f(x) == true {
                 <AVLTreeSeqStPerS<T> as AVLTreeSeqStPerTrait<T>>::singleton(x.clone())
             } else {
                 <AVLTreeSeqStPerS<T> as AVLTreeSeqStPerTrait<T>>::empty()

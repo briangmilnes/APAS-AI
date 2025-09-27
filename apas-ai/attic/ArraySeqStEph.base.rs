@@ -159,18 +159,18 @@ pub mod ArraySeqStEph {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(&self) -> B {
             if self.data.len() == 0 {
-                B::True
+                true
             } else {
-                B::False
+                false
             }
         }
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(&self) -> B {
             if self.data.len() == 1 {
-                B::True
+                true
             } else {
-                B::False
+                false
             }
         }
         /// APAS: Work Θ(length), Span Θ(1)

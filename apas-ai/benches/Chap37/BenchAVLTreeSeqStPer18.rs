@@ -11,13 +11,11 @@ fn bench_avl_per_ch18(c: &mut Criterion) {
     group.warm_up_time(Duration::from_secs(1));
     group.measurement_time(Duration::from_secs(1));
     let n: N = 1_000;
-    group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
+    group.bench_with_input(BenchmarkId::new("build_then_length", n), &n, |b, &len| {
         b.iter(|| {
-            let mut t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::empty();
-            for i in 0..len {
-                t = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::set(&t, i, i).unwrap();
-            }
-            // Focus on build performance - map operation not available in this API
+            // For persistent sequences, from_vec is the intended bulk construction method
+            let values: Vec<N> = (0..len).collect();
+            let t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(values);
             black_box(t.length())
         })
     });

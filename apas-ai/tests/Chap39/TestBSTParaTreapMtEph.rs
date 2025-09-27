@@ -28,7 +28,7 @@ fn treap_basic_insert_find() {
     assert_eq!(tree.size(), 7);
     assert_eq!(tree.find(&3), Some(3));
     assert_eq!(tree.find(&8), None);
-    assert_eq!(tree.is_empty(), B::False);
+    assert_eq!(tree.is_empty(), false);
     assert_eq!(tree.in_order(), ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7]);
 }
 
@@ -36,7 +36,7 @@ fn treap_basic_insert_find() {
 fn treap_split_join_pair() {
     let tree = make_tree(&[0, 1, 2, 3, 4, 5]);
     let (left, present, right) = tree.split(&3);
-    assert_eq!(present, B::True);
+    assert_eq!(present, true);
     assert_eq!(left.in_order(), ArraySeqStPerSLit![0, 1, 2]);
     assert_eq!(right.in_order(), ArraySeqStPerSLit![4, 5]);
 
@@ -147,7 +147,7 @@ fn treap_concurrent_insertions() {
         // Due to concurrent execution timing, size might be less than 25 when a thread finishes
         // if other threads haven't completed their insertions yet
         assert!(size >= 1); // At least some insertions should succeed
-        assert_eq!(is_empty, B::False);
+        assert_eq!(is_empty, false);
     }
 }
 
@@ -262,10 +262,10 @@ fn treap_concurrent_split_join() {
     
     let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
     
-    assert_eq!(results[0], (25, B::True, 74));
-    assert_eq!(results[1], (50, B::True, 49));
-    assert_eq!(results[2], (75, B::True, 24));
-    assert_eq!(results[3], (90, B::True, 9));
+    assert_eq!(results[0], (25, true, 74));
+    assert_eq!(results[1], (50, true, 49));
+    assert_eq!(results[2], (75, true, 24));
+    assert_eq!(results[3], (90, true, 9));
 }
 
 #[test]

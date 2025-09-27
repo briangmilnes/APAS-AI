@@ -23,21 +23,21 @@ pub mod TestAVLTreeSeqEph {
     fn test_avl_empty_constructor() {
         let empty: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::empty();
         assert_eq!(empty.length(), 0);
-        assert_eq!(empty.isEmpty(), B::True);
-        assert_eq!(empty.isSingleton(), B::False);
+        assert_eq!(empty.isEmpty(), true);
+        assert_eq!(empty.isSingleton(), false);
         
         let new_empty: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::new();
         assert_eq!(new_empty.length(), 0);
-        assert_eq!(new_empty.isEmpty(), B::True);
-        assert_eq!(new_empty.isSingleton(), B::False);
+        assert_eq!(new_empty.isEmpty(), true);
+        assert_eq!(new_empty.isSingleton(), false);
     }
 
     #[test]
     fn test_avl_singleton_constructor() {
         let single = AVLTreeSeqStEphS::singleton(42);
         assert_eq!(single.length(), 1);
-        assert_eq!(single.isEmpty(), B::False);
-        assert_eq!(single.isSingleton(), B::True);
+        assert_eq!(single.isEmpty(), false);
+        assert_eq!(single.isSingleton(), true);
         assert_eq!(*single.nth(0), 42);
     }
 
@@ -54,7 +54,7 @@ pub mod TestAVLTreeSeqEph {
         // Test empty vec
         let empty_tree: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::from_vec(vec![]);
         assert_eq!(empty_tree.length(), 0);
-        assert_eq!(empty_tree.isEmpty(), B::True);
+        assert_eq!(empty_tree.isEmpty(), true);
     }
 
     #[test]
@@ -116,12 +116,12 @@ pub mod TestAVLTreeSeqEph {
         // Test empty subseq (length 0)
         let empty_sub = tree.subseq_copy(5, 0);
         assert_eq!(empty_sub.length(), 0);
-        assert_eq!(empty_sub.isEmpty(), B::True);
+        assert_eq!(empty_sub.isEmpty(), true);
         
         // Test out-of-bounds start
         let oob_sub = tree.subseq_copy(15, 3);
         assert_eq!(oob_sub.length(), 0);
-        assert_eq!(oob_sub.isEmpty(), B::True);
+        assert_eq!(oob_sub.isEmpty(), true);
         
         // Test partial out-of-bounds (extends beyond end)
         let partial_sub = tree.subseq_copy(8, 5); // Should get [9, 10]
@@ -155,18 +155,18 @@ pub mod TestAVLTreeSeqEph {
         let tree = AVLTreeSeqStEphS::from_vec(vec![10, 20, 30, 40, 50]);
         
         // Test existing values
-        assert_eq!(tree.contains_value(&20), B::True);
-        assert_eq!(tree.contains_value(&50), B::True);
-        assert_eq!(tree.contains_value(&10), B::True);
+        assert_eq!(tree.contains_value(&20), true);
+        assert_eq!(tree.contains_value(&50), true);
+        assert_eq!(tree.contains_value(&10), true);
         
         // Test non-existing values
-        assert_eq!(tree.contains_value(&15), B::False);
-        assert_eq!(tree.contains_value(&60), B::False);
-        assert_eq!(tree.contains_value(&0), B::False);
+        assert_eq!(tree.contains_value(&15), false);
+        assert_eq!(tree.contains_value(&60), false);
+        assert_eq!(tree.contains_value(&0), false);
         
         // Test empty tree
         let empty = AVLTreeSeqStEphS::new();
-        assert_eq!(empty.contains_value(&42), B::False);
+        assert_eq!(empty.contains_value(&42), false);
     }
 
     #[test]
@@ -331,14 +331,14 @@ pub mod TestAVLTreeSeqEph {
         assert_eq!(*tree.nth(10), 999);
         
         // Test contains after modification
-        assert_eq!(tree.contains_value(&999), B::True);
-        assert_eq!(tree.contains_value(&11), B::False); // 11 was replaced by 999
+        assert_eq!(tree.contains_value(&999), true);
+        assert_eq!(tree.contains_value(&11), false); // 11 was replaced by 999
         
         // Test deletion
         let deleted = tree.delete_value(&5);
         assert!(deleted);
         assert_eq!(tree.length(), 19);
-        assert_eq!(tree.contains_value(&5), B::False);
+        assert_eq!(tree.contains_value(&5), false);
     }
 
     #[test]

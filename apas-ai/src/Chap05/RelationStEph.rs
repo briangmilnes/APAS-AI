@@ -103,10 +103,10 @@ pub mod RelationStEph {
             X: Clone,
             Y: Clone,
         {
-            if self.pairs.mem(&Pair(a.clone(), b.clone())) == B::True {
-                B::True
+            if self.pairs.mem(&Pair(a.clone(), b.clone())) == true {
+                true
             } else {
-                B::False
+                false
             }
         }
 

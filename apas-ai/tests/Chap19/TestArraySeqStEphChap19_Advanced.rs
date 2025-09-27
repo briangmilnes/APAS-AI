@@ -42,27 +42,27 @@ pub mod TestArraySeqStEph {
 
     #[test]
     fn test_deflate_true() {
-        let y: ArraySeqStEphS<N> = ArraySeqStEphS::deflate(&|&x: &N| if x % 2 == 0 { B::True } else { B::False }, &6);
+        let y: ArraySeqStEphS<N> = ArraySeqStEphS::deflate(&|&x: &N| if x % 2 == 0 { true } else { false }, &6);
         assert_eq!(y, ArraySeqStEphSLit![6]);
     }
 
     #[test]
     fn test_deflate_false() {
-        let y: ArraySeqStEphS<N> = ArraySeqStEphS::deflate(&|&x: &N| if x % 2 == 0 { B::True } else { B::False }, &5);
+        let y: ArraySeqStEphS<N> = ArraySeqStEphS::deflate(&|&x: &N| if x % 2 == 0 { true } else { false }, &5);
         assert_eq!(y.length(), 0);
     }
 
     #[test]
     fn test_filter_even_numbers() {
         let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i + 1, 10);
-        let evens: ArraySeqStEphS<N> = ArraySeqStEphS::filter(&a, &|x| if *x % 2 == 0 { B::True } else { B::False });
+        let evens: ArraySeqStEphS<N> = ArraySeqStEphS::filter(&a, &|x| if *x % 2 == 0 { true } else { false });
         assert_eq!(evens, ArraySeqStEphSLit![2, 4, 6, 8, 10]);
     }
 
     #[test]
     fn test_filter_none() {
         let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i, 5);
-        let odds_only: ArraySeqStEphS<N> = ArraySeqStEphS::filter(&a, &|x| if *x % 2 == 1 { B::True } else { B::False });
+        let odds_only: ArraySeqStEphS<N> = ArraySeqStEphS::filter(&a, &|x| if *x % 2 == 1 { true } else { false });
         assert_eq!(odds_only, ArraySeqStEphSLit![1, 3]);
     }
 
@@ -156,7 +156,7 @@ pub mod TestArraySeqStEph {
     #[test]
     fn test_filter_empty_sequence() {
         let e: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|_| 0, 0);
-        let f: ArraySeqStEphS<N> = ArraySeqStEphS::filter(&e, &|_| B::True);
+        let f: ArraySeqStEphS<N> = ArraySeqStEphS::filter(&e, &|_| true);
         assert_eq!(f.length(), 0);
     }
 

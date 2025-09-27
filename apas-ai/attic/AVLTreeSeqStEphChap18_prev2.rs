@@ -42,7 +42,7 @@ pub mod AVLTreeSeqStEphChap18 {
                 out.push_back(x.clone());
             }
             for x in b.iter() {
-                if out.contains_value(x) == B::False {
+                if out.contains_value(x) == false {
                     out.push_back(x.clone());
                 }
             }
@@ -51,7 +51,7 @@ pub mod AVLTreeSeqStEphChap18 {
         fn filter(a: &AVLTreeSeqStEphS<T>, pred: impl Fn(&T) -> B) -> AVLTreeSeqStEphS<T> {
             let mut out: AVLTreeSeqStEphS<T> = <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::empty();
             for x in a.iter() {
-                if pred(x) == B::True {
+                if pred(x) == true {
                     out.push_back(x.clone());
                 }
             }

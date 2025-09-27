@@ -10,7 +10,7 @@ fn test_tabulate_map_append_filter() {
     let b = <ListS<N> as ListSeqChap18>::map(&a, |x| x + 1);
     let c = <ListS<N> as ListSeqChap18>::append(&a, &b);
     assert_eq!(c.length(), 10);
-    let evens = <ListS<N> as ListSeqChap18>::filter(&c, |x| if *x % 2 == 0 { B::True } else { B::False });
+    let evens = <ListS<N> as ListSeqChap18>::filter(&c, |x| if *x % 2 == 0 { true } else { false });
     assert!(evens.length() > 0);
 }
 

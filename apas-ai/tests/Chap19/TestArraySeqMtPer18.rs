@@ -79,11 +79,11 @@ pub mod Test27ArraySeqMtPer {
 
     #[test]
     fn test_tabulate_boolean() {
-        let bools: ArraySeqMtPerS<B> = ArraySeqMtPerS::tabulate(&|i| if i % 2 == 0 { B::True } else { B::False }, 6);
+        let bools: ArraySeqMtPerS<B> = ArraySeqMtPerS::tabulate(&|i| if i % 2 == 0 { true } else { false }, 6);
         assert_eq!(bools.length(), 6);
 
         // Expected: [True, False, True, False, True, False]
-        let expected = [B::True, B::False, B::True, B::False, B::True, B::False];
+        let expected = [true, false, true, false, true, false];
         assert!(ArraySeqSetEq(
             bools.length(),
             |i| *bools.nth(i),

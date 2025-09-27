@@ -38,17 +38,17 @@ pub mod TestLabUnDirGraphMtEph {
         // Test NG (neighbors) - should be symmetric
         let ng0 = g.neighbors(&0);
         assert_eq!(ng0.size(), 1);
-        assert_eq!(ng0.mem(&1), B::True);
+        assert_eq!(ng0.mem(&1), true);
         
         let ng1 = g.neighbors(&1);
         assert_eq!(ng1.size(), 2);
-        assert_eq!(ng1.mem(&0), B::True);
-        assert_eq!(ng1.mem(&2), B::True);
+        assert_eq!(ng1.mem(&0), true);
+        assert_eq!(ng1.mem(&2), true);
         
         let ng2 = g.neighbors(&2);
         assert_eq!(ng2.size(), 2);
-        assert_eq!(ng2.mem(&1), B::True);
-        assert_eq!(ng2.mem(&3), B::True);
+        assert_eq!(ng2.mem(&1), true);
+        assert_eq!(ng2.mem(&3), true);
         
         // Test degrees (in undirected graph, InDegree = OutDegree = Degree)
         assert_eq!(g.neighbors(&0).size(), 1);
@@ -106,8 +106,8 @@ pub mod TestLabUnDirGraphMtEph {
         // Neighbors of {0, 1} should include all vertices connected to 0 or 1
         // assert_eq!(ng_subset.size(), 3); // TODO: method not available
         // assert_eq!(ng_subset.mem(&1), true); // 0-1 // TODO: method not available
-        // assert_eq!(ng_subset.mem(&2), B::True); // 1-2 // TODO: method not available
-        // assert_eq!(ng_subset.mem(&3), B::True); // 0-3 // TODO: method not available
+        // assert_eq!(ng_subset.mem(&2), true); // 1-2 // TODO: method not available
+        // assert_eq!(ng_subset.mem(&3), true); // 0-3 // TODO: method not available
     }
 
     #[test]

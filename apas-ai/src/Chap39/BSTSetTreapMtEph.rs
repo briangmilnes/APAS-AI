@@ -118,14 +118,14 @@ pub mod BSTSetTreapMtEph {
         pub fn split(&self, pivot: &T) -> (Self, B, Self) {
             let mut left: Vec<T> = Vec::new();
             let mut right: Vec<T> = Vec::new();
-            let mut found = B::False;
+            let mut found = false;
             for value in self.tree.in_order().iter() {
                 if value < pivot {
                     left.push(value.clone());
                 } else if value > pivot {
                     right.push(value.clone());
                 } else {
-                    found = B::True;
+                    found = true;
                 }
             }
             (

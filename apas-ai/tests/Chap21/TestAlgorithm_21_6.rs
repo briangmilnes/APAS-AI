@@ -32,12 +32,12 @@ fn prime_sieve(n: N) -> ArraySeqStPerS<N> {
     // sieve = 〈 (x, false) : x ∈ cs 〉
     let sieve_pairs: ArraySeqStPerS<Pair<N, B>> =
         <ArraySeqStPerS<Pair<N, B>> as ArraySeqStPerTrait<Pair<N, B>>>::tabulate(
-            &|i| PairLit!(*cs.nth(i), B::False),
+            &|i| PairLit!(*cs.nth(i), false),
             cs.length(),
         );
 
     // all = 〈 true : 0 ≤ i < n 〉
-    let all: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(&|_| B::True, n);
+    let all: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(&|_| true, n);
 
     // isPrime = ninject all sieve
     let is_prime: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::ninject(&all, &sieve_pairs);
@@ -46,13 +46,13 @@ fn prime_sieve(n: N) -> ArraySeqStPerS<N> {
     let candidates: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i, n);
     let filtered_idx: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&candidates, &|i| {
         if *i >= 2 && *i < n {
-            if *is_prime.nth(*i) == B::True {
-                B::True
+            if *is_prime.nth(*i) == true {
+                true
             } else {
-                B::False
+                false
             }
         } else {
-            B::False
+            false
         }
     });
     filtered_idx

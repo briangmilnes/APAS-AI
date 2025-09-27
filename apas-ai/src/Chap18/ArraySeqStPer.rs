@@ -144,7 +144,7 @@ pub mod ArraySeqStPer {
             let mut values: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let item = a.nth(i);
-                if pred(item) == B::True {
+                if pred(item) == true {
                     values.push(item.clone());
                 }
             }
@@ -179,9 +179,9 @@ pub mod ArraySeqStPer {
             result
         }
 
-        fn isEmpty(&self) -> B { if self.data.is_empty() { B::True } else { B::False } }
+        fn isEmpty(&self) -> B { if self.data.is_empty() { true } else { false } }
 
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
+        fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
 
         fn collect<K: StT, V: StT>(
             a: &ArraySeqStPerS<Pair<K, V>>,

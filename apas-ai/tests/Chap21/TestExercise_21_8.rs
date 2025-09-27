@@ -7,20 +7,20 @@ pub mod Test34Exercise_21_8 {
 
 #[test]
 fn test_is_prime_small_values() {
-    assert_eq!(is_prime(0), B::False);
-    assert_eq!(is_prime(1), B::False);
-    assert_eq!(is_prime(2), B::True);
-    assert_eq!(is_prime(3), B::True);
-    assert_eq!(is_prime(4), B::False);
-    assert_eq!(is_prime(9), B::False);
+    assert_eq!(is_prime(0), false);
+    assert_eq!(is_prime(1), false);
+    assert_eq!(is_prime(2), true);
+    assert_eq!(is_prime(3), true);
+    assert_eq!(is_prime(4), false);
+    assert_eq!(is_prime(9), false);
 }
 
 #[test]
 fn test_is_divisible_helper() {
-    assert_eq!(is_divisible(6, 2), B::True);
-    assert_eq!(is_divisible(6, 3), B::True);
-    assert_eq!(is_divisible(7, 2), B::False);
-    assert_eq!(is_divisible(7, 3), B::False);
+    assert_eq!(is_divisible(6, 2), true);
+    assert_eq!(is_divisible(6, 3), true);
+    assert_eq!(is_divisible(7, 2), false);
+    assert_eq!(is_divisible(7, 3), false);
 }
 
 }

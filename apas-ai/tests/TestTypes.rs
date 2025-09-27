@@ -4,12 +4,12 @@ pub mod TestTypes {
 
     #[test]
     fn test_boolean_eq_neq_and_ordering() {
-        assert_eq!(B::True, B::True);
-        assert_ne!(B::True, B::False);
-        assert_ne!(B::False, B::True);
-        assert_eq!(B::False, B::False);
+        assert_eq!(true, true);
+        assert_ne!(true, false);
+        assert_ne!(false, true);
+        assert_eq!(false, false);
 
-        assert!(B::True < B::False);
+        assert!(false < true);  // bool ordering: false < true
     }
 
     #[test]
@@ -23,22 +23,21 @@ pub mod TestTypes {
 
     #[test]
     fn test_cmp_on_b_returns_expected_ordering_variants() {
-        assert!(matches!(B::True.cmp(&B::False), O::Less));
-        assert!(matches!(B::False.cmp(&B::True), O::Greater));
-        assert!(matches!(B::True.cmp(&B::True), O::Equal));
-        assert!(matches!(B::False.cmp(&B::False), O::Equal));
+        assert!(matches!(false.cmp(&true), O::Less));   // false < true
+        assert!(matches!(true.cmp(&false), O::Greater)); // true > false
+        assert!(matches!(true.cmp(&true), O::Equal));
+        assert!(matches!(false.cmp(&false), O::Equal));
     }
 
     #[test]
-    fn test_btree_set_orders_b_true_before_false() {
+    fn test_btree_set_orders_b_false_before_true() {
         let mut set = std::collections::BTreeSet::new();
-        set.insert(B::False);
-        set.insert(B::True);
+        set.insert(false);
+        set.insert(true);
 
         let ordered: Vec<B> = set.into_iter().collect();
-        // Note: vec![B::True, B::False] kept as-is since it's a simple test assertion
-        // and there's no BLit! macro for Boolean enum values
-        assert_eq!(ordered, vec![B::True, B::False]);
+        // bool ordering: false < true, so BTreeSet orders false before true
+        assert_eq!(ordered, vec![false, true]);
     }
 
     #[test]
@@ -58,13 +57,13 @@ pub mod TestTypes {
 
     #[test]
     fn test_debug_format_for_b_variants() {
-        assert_eq!(format!("{:?}", B::True), "True");
-        assert_eq!(format!("{:?}", B::False), "False");
+        assert_eq!(format!("{:?}", true), "true");   // bool debug format
+        assert_eq!(format!("{:?}", false), "false"); // bool debug format
     }
 
     #[test]
     fn test_display_format_for_b_variants() {
-        assert_eq!(format!("{}", B::True), "True");
-        assert_eq!(format!("{}", B::False), "False");
+        assert_eq!(format!("{}", true), "true");   // bool display format
+        assert_eq!(format!("{}", false), "false"); // bool display format
     }
 }

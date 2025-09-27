@@ -86,7 +86,7 @@ impl<T2> DoublyLinkedListSeqChap18 for DoublyLinkedListS<T2> {
     fn filter<T: Clone + Eq>(a: &DoublyLinkedListS<T>, pred: impl Fn(&T) -> B) -> DoublyLinkedListS<T> {
         let mut out = std::collections::LinkedList::new();
         for x in a.data.iter() {
-            if pred(x) == B::True { out.push_back(x.clone()); }
+            if pred(x) == true { out.push_back(x.clone()); }
         }
         DoublyLinkedListS { data: out }
     }

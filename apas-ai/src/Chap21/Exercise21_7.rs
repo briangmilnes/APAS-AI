@@ -7,14 +7,14 @@ pub mod Exercise21_7 {
 
     /// Check if a number is even
     pub fn is_even(x: &N) -> B {
-        if *x % 2 == 0 { B::True } else { B::False } 
+        if *x % 2 == 0 { true } else { false } 
     }
 
     /// Check if a character is a vowel (case-insensitive)
     pub fn is_vowel(c: &char) -> B {
         match *c {
-            | 'a' | 'e' | 'i' | 'o' | 'u' | 'A' | 'E' | 'I' | 'O' | 'U' => B::True,
-            | _ => B::False,
+            | 'a' | 'e' | 'i' | 'o' | 'u' | 'A' | 'E' | 'I' | 'O' | 'U' => true,
+            | _ => false,
         }
     }
 

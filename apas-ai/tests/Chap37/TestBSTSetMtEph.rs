@@ -241,19 +241,19 @@ impl TestSet for apas_ai::Chap37::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSpla
 
 fn exercise_set<S: TestSet>() {
     let mut set = S::empty();
-    assert_eq!(set.is_empty(), B::True);
+    assert_eq!(set.is_empty(), true);
 
     for value in [3, 1, 4, 2] {
         set.insert(value);
     }
 
     assert_eq!(set.size(), 4);
-    assert_eq!(set.contains(&2), B::True);
+    assert_eq!(set.contains(&2), true);
     assert_eq!(set.minimum(), Some(1));
     assert_eq!(set.maximum(), Some(4));
 
     set.delete(&3);
-    assert_eq!(set.contains(&3), B::False);
+    assert_eq!(set.contains(&3), false);
     assert_eq!(set.size(), 3);
 
     let mut other = S::empty();
@@ -266,15 +266,15 @@ fn exercise_set<S: TestSet>() {
 
     let intersection = set.intersection(&other);
     assert_eq!(intersection.size(), 1);
-    assert_eq!(intersection.contains(&2), B::True);
+    assert_eq!(intersection.contains(&2), true);
 
     let difference = set.difference(&other);
     assert_eq!(difference.size(), 2);
-    assert_eq!(difference.contains(&1), B::True);
-    assert_eq!(difference.contains(&4), B::True);
+    assert_eq!(difference.contains(&1), true);
+    assert_eq!(difference.contains(&4), true);
 
     let (lt, found_missing, gt) = union.split(&3);
-    assert_eq!(found_missing, B::False);
+    assert_eq!(found_missing, false);
     assert_eq!(lt.size(), 2);
     assert_eq!(gt.size(), 2);
 
@@ -282,14 +282,14 @@ fn exercise_set<S: TestSet>() {
     assert_eq!(rejoined_pair.size(), union.size());
 
     let (lt_with_pivot, found_pivot, gt_with_pivot) = union.split(&4);
-    assert_eq!(found_pivot, B::True);
+    assert_eq!(found_pivot, true);
     let rejoined_mid = S::join_m(lt_with_pivot, 4, gt_with_pivot);
     assert_eq!(rejoined_mid.size(), union.size());
 
     let evens = union.filter(|value| *value % 2 == 0);
     assert_eq!(evens.size(), 2);
-    assert_eq!(evens.contains(&2), B::True);
-    assert_eq!(evens.contains(&4), B::True);
+    assert_eq!(evens.contains(&2), true);
+    assert_eq!(evens.contains(&4), true);
 
     let sum = union.reduce(|acc, value| acc + value, 0);
     assert_eq!(sum, 12);
@@ -328,7 +328,7 @@ fn test_plain_bst_individual_operations() {
     use apas_ai::Chap37::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMt;
     
     let mut set = BSTSetPlainMt::<i32>::empty();
-    assert_eq!(set.is_empty(), B::True);
+    assert_eq!(set.is_empty(), true);
     assert_eq!(set.size(), 0);
     assert_eq!(set.minimum(), None);
     assert_eq!(set.maximum(), None);
@@ -336,7 +336,7 @@ fn test_plain_bst_individual_operations() {
     // Test individual insertions
     set.insert(10);
     assert_eq!(set.size(), 1);
-    assert_eq!(set.contains(&10), B::True);
+    assert_eq!(set.contains(&10), true);
     assert_eq!(set.minimum(), Some(10));
     assert_eq!(set.maximum(), Some(10));
     
@@ -353,7 +353,7 @@ fn test_plain_bst_individual_operations() {
     
     // Test deletions
     set.delete(&10);
-    assert_eq!(set.contains(&10), B::False);
+    assert_eq!(set.contains(&10), false);
     assert_eq!(set.size(), 6);
     
     // Test set operations
@@ -364,17 +364,17 @@ fn test_plain_bst_individual_operations() {
     
     let union_result = set.union(&other);
     assert_eq!(union_result.size(), 8); // 6 from set + 2 new from other
-    assert_eq!(union_result.contains(&7), B::True);
-    assert_eq!(union_result.contains(&20), B::True);
+    assert_eq!(union_result.contains(&7), true);
+    assert_eq!(union_result.contains(&20), true);
     
     let intersection_result = set.intersection(&other);
     assert_eq!(intersection_result.size(), 1); // Only 7 is common
-    assert_eq!(intersection_result.contains(&7), B::True);
+    assert_eq!(intersection_result.contains(&7), true);
     
     let difference_result = set.difference(&other);
     assert_eq!(difference_result.size(), 5); // set minus common element
-    assert_eq!(difference_result.contains(&7), B::False);
-    assert_eq!(difference_result.contains(&5), B::True);
+    assert_eq!(difference_result.contains(&7), false);
+    assert_eq!(difference_result.contains(&5), true);
 }
 
 #[test]
@@ -394,14 +394,14 @@ fn test_avl_bst_individual_operations() {
     
     // Test split operation
     let (left, found, right) = set.split(&8);
-    assert_eq!(found, B::True);
+    assert_eq!(found, true);
     assert_eq!(left.size(), 7); // 1-7
     assert_eq!(right.size(), 7); // 9-15
     
     // Test join operations
     let rejoined = BSTSetAVLMt::join_m(left, 8, right);
     assert_eq!(rejoined.size(), 15);
-    assert_eq!(rejoined.contains(&8), B::True);
+    assert_eq!(rejoined.contains(&8), true);
     
     // Test filter
     let evens = set.filter(|x| *x % 2 == 0);
@@ -428,7 +428,7 @@ fn test_rb_bst_individual_operations() {
     
     // Verify all values are present
     for &val in &values {
-        assert_eq!(set.contains(&val), B::True);
+        assert_eq!(set.contains(&val), true);
     }
     
     // Test iterator ordering
@@ -445,8 +445,8 @@ fn test_rb_bst_individual_operations() {
     set.delete(&25);
     set.delete(&75);
     assert_eq!(set.size(), values.len() - 2);
-    assert_eq!(set.contains(&25), B::False);
-    assert_eq!(set.contains(&75), B::False);
+    assert_eq!(set.contains(&25), false);
+    assert_eq!(set.contains(&75), false);
 }
 
 #[test]
@@ -470,7 +470,7 @@ fn test_bbalpha_bst_individual_operations() {
     
     // Test complex split and join
     let (left_part, found_10, right_part) = set.split(&10);
-    assert_eq!(found_10, B::True);
+    assert_eq!(found_10, true);
     assert_eq!(left_part.size(), 9);  // 1-9
     assert_eq!(right_part.size(), 10); // 11-20
     
@@ -480,8 +480,8 @@ fn test_bbalpha_bst_individual_operations() {
     // Test filter with complex predicate
     let multiples_of_3 = set.filter(|x| *x % 3 == 0);
     assert_eq!(multiples_of_3.size(), 6); // 3,6,9,12,15,18
-    assert_eq!(multiples_of_3.contains(&9), B::True);
-    assert_eq!(multiples_of_3.contains(&10), B::False);
+    assert_eq!(multiples_of_3.contains(&9), true);
+    assert_eq!(multiples_of_3.contains(&10), false);
 }
 
 #[test]
@@ -511,9 +511,9 @@ fn test_treap_bst_individual_operations() {
     
     let intersection_result = set.intersection(&other);
     assert_eq!(intersection_result.size(), 3); // 17,56,78
-    assert_eq!(intersection_result.contains(&17), B::True);
-    assert_eq!(intersection_result.contains(&56), B::True);
-    assert_eq!(intersection_result.contains(&78), B::True);
+    assert_eq!(intersection_result.contains(&17), true);
+    assert_eq!(intersection_result.contains(&56), true);
+    assert_eq!(intersection_result.contains(&78), true);
     
     // Test reduce operation
     let product = intersection_result.reduce(|acc, x| acc * x, 1);
@@ -536,7 +536,7 @@ fn test_splay_bst_individual_operations() {
     
     // Repeatedly access certain elements (should splay to root)
     for _ in 0..5 {
-        assert_eq!(set.contains(&75), B::True);
+        assert_eq!(set.contains(&75), true);
     }
     
     // Test difference operation
@@ -546,9 +546,9 @@ fn test_splay_bst_individual_operations() {
     
     let difference_result = set.difference(&subtract_set);
     assert_eq!(difference_result.size(), 5); // Original 7 minus 2
-    assert_eq!(difference_result.contains(&50), B::False);
-    assert_eq!(difference_result.contains(&150), B::False);
-    assert_eq!(difference_result.contains(&100), B::True);
+    assert_eq!(difference_result.contains(&50), false);
+    assert_eq!(difference_result.contains(&150), false);
+    assert_eq!(difference_result.contains(&100), true);
     
     // Test join_pair operation
     let (left_split, _, right_split) = difference_result.split(&100);
@@ -562,11 +562,11 @@ fn test_all_variants_empty_operations() {
     macro_rules! test_empty_variant {
         ($variant:ty) => {
             let set = <$variant>::empty();
-            assert_eq!(set.is_empty(), B::True);
+            assert_eq!(set.is_empty(), true);
             assert_eq!(set.size(), 0);
             assert_eq!(set.minimum(), None);
             assert_eq!(set.maximum(), None);
-            assert_eq!(set.contains(&42), B::False);
+            assert_eq!(set.contains(&42), false);
             
             let in_order = set.iter_in_order();
             assert_eq!(in_order.length(), 0);
@@ -595,12 +595,12 @@ fn test_all_variants_single_element() {
             let mut set = <$variant>::empty();
             set.insert(42);
             
-            assert_eq!(set.is_empty(), B::False);
+            assert_eq!(set.is_empty(), false);
             assert_eq!(set.size(), 1);
             assert_eq!(set.minimum(), Some(42));
             assert_eq!(set.maximum(), Some(42));
-            assert_eq!(set.contains(&42), B::True);
-            assert_eq!(set.contains(&99), B::False);
+            assert_eq!(set.contains(&42), true);
+            assert_eq!(set.contains(&99), false);
             
             let in_order = set.iter_in_order();
             assert_eq!(in_order.length(), 1);
@@ -608,14 +608,14 @@ fn test_all_variants_single_element() {
             
             // Test split on single element
             let (left, found, right) = set.split(&42);
-            assert_eq!(found, B::True);
+            assert_eq!(found, true);
             assert_eq!(left.size(), 0);
             assert_eq!(right.size(), 0);
             
             // Test filter
             let filtered = set.filter(|x| *x > 40);
             assert_eq!(filtered.size(), 1);
-            assert_eq!(filtered.contains(&42), B::True);
+            assert_eq!(filtered.contains(&42), true);
             
             let filtered_empty = set.filter(|x| *x > 50);
             assert_eq!(filtered_empty.size(), 0);
@@ -699,10 +699,10 @@ fn test_concurrent_plain_bst_operations() {
     let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
     
     // Verify thread results
-    assert_eq!(results[0], (25, B::True));  // Thread 1: size 25, contains 15
-    assert_eq!(results[1], (25, B::True));  // Thread 2: size 25, contains 30
-    assert_eq!(results[2], (4, B::True));   // Thread 3: union size 4, intersection contains 20
-    assert_eq!(results[3], (5, B::True));   // Thread 4: rejoined size 5, found 25
+    assert_eq!(results[0], (25, true));  // Thread 1: size 25, contains 15
+    assert_eq!(results[1], (25, true));  // Thread 2: size 25, contains 30
+    assert_eq!(results[2], (4, true));   // Thread 3: union size 4, intersection contains 20
+    assert_eq!(results[3], (5, true));   // Thread 4: rejoined size 5, found 25
 }
 
 #[test]
@@ -940,7 +940,7 @@ fn test_concurrent_splay_access_patterns() {
         let frequent_values = [5, 10, 15];
         for _ in 0..10 {
             for &val in &frequent_values {
-                assert_eq!(set.contains(&val), B::True);
+                assert_eq!(set.contains(&val), true);
             }
         }
         
@@ -961,7 +961,7 @@ fn test_concurrent_splay_access_patterns() {
         let (left, found, right) = set.split(&100);
         
         // Test that split worked correctly
-        assert_eq!(found, B::True);
+        assert_eq!(found, true);
         assert_eq!(left.size() + right.size(), 6); // 7 - 1 (pivot) = 6
         
         // Rejoin using join_pair
@@ -1018,7 +1018,7 @@ fn test_all_variants_concurrent_stress() {
                 assert_eq!(*size, 10);
                 assert_eq!(*min, Some((thread_id * 10 + 1) as i32));
                 assert_eq!(*max, Some((thread_id * 10 + 10) as i32));
-                assert_eq!(*contains_mid, B::True);
+                assert_eq!(*contains_mid, true);
             }
         };
     }
@@ -1190,7 +1190,7 @@ fn test_race_condition_verification_concurrent_modifications() {
                     set.insert(value);
                     
                     // Verify the insertion worked
-                    if set.contains(&value) != B::True {
+                    if set.contains(&value) != true {
                         inconsistency_clone.store(true, Ordering::SeqCst);
                     }
                     

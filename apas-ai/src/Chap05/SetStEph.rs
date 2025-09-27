@@ -116,7 +116,7 @@ pub mod SetStEph {
 
         pub fn size(&self) -> N { self.data.len() }
 
-        pub fn mem(&self, x: &T) -> B { if self.data.contains(x) { B::True } else { B::False } }
+        pub fn mem(&self, x: &T) -> B { if self.data.contains(x) { true } else { false } }
 
         pub fn union(&self, other: &Set<T>) -> Set<T>
         where
@@ -147,15 +147,15 @@ pub mod SetStEph {
                     if subset.data.contains(x) {
                         count += 1;
                         if count > 1 {
-                            return B::False;
+                            return false;
                         }
                     }
                 }
                 if count == 0 {
-                    return B::False;
+                    return false;
                 }
             }
-            B::True
+            true
         }
 
         pub fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>>
@@ -199,7 +199,7 @@ pub mod SetStEph {
 
         fn size(&self) -> N { self.data.len() }
 
-        fn mem(&self, x: &T) -> B { if self.data.contains(x) { B::True } else { B::False } }
+        fn mem(&self, x: &T) -> B { if self.data.contains(x) { true } else { false } }
 
         fn union(&self, other: &Set<T>) -> Set<T>
         where
@@ -230,15 +230,15 @@ pub mod SetStEph {
                     if subset.data.contains(x) {
                         count += 1;
                         if count > 1 {
-                            return B::False;
+                            return false;
                         }
                     }
                 }
                 if count == 0 {
-                    return B::False;
+                    return false;
                 }
             }
-            B::True
+            true
         }
 
         fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>>

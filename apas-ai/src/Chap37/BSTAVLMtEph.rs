@@ -68,7 +68,7 @@ pub mod BSTAVLMtEph {
             Self::size_link(&*guard)
         }
 
-        pub fn is_empty(&self) -> B { if self.size() == 0 { B::True } else { B::False } }
+        pub fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         pub fn height(&self) -> N {
             let guard = self.root.read().unwrap();
@@ -85,7 +85,7 @@ pub mod BSTAVLMtEph {
             Self::find_link(&*guard, target).cloned()
         }
 
-        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { B::True } else { B::False } }
+        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
 
         pub fn minimum(&self) -> Option<T> {
             let guard = self.root.read().unwrap();

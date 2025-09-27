@@ -149,9 +149,9 @@ pub mod ArraySeqMtEphSlice {
             }
         }
 
-        fn isEmpty(&self) -> B { if self.len() == 0 { B::True } else { B::False } }
+        fn isEmpty(&self) -> B { if self.len() == 0 { true } else { false } }
 
-        fn isSingleton(&self) -> B { if self.len() == 1 { B::True } else { B::False } }
+        fn isSingleton(&self) -> B { if self.len() == 1 { true } else { false } }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let sub = self.clamp_subrange(start, length);
@@ -225,7 +225,7 @@ pub mod ArraySeqMtEphSlice {
             // Serial compaction phase: collect kept values
             let mut kept_values = Vec::new();
             for i in 0..a.length() {
-                if keep_results[i] == B::True {
+                if keep_results[i] == true {
                     kept_values.push(a.nth_cloned(i));
                 }
             }

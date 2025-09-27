@@ -142,10 +142,10 @@ pub mod AVLTreeSeq {
         {
             for v in self.iter() {
                 if v == target {
-                    return B::True;
+                    return true;
                 }
             }
-            B::False
+            false
         }
 
         pub fn insert_value(&mut self, value: T) { self.push_back(value); }
@@ -217,9 +217,9 @@ pub mod AVLTreeSeq {
         }
 
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isEmpty(&self) -> B { if self.length() == 0 { B::True } else { B::False } }
+        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isSingleton(&self) -> B { if self.length() == 1 { B::True } else { B::False } }
+        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
 
         /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
         fn subseq_copy(&self, start: N, length: N) -> AVLTreeS<T>

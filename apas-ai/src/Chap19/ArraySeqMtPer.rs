@@ -127,7 +127,7 @@ pub mod ArraySeqMtPer {
                 let value = a.nth(i).clone();
                 let pred_clone = pred.clone();
                 let handle = std::thread::spawn(move || {
-                    if pred_clone(&value) == B::True {
+                    if pred_clone(&value) == true {
                         Some(value)
                     } else {
                         None
@@ -278,7 +278,7 @@ pub mod ArraySeqMtPer {
 
         fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtPerS<T> {
             // Helper for filter: deflate f x = if f(x) then [x] else []
-            if f(x) == B::True {
+            if f(x) == true {
                 <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::singleton(x.clone())
             } else {
                 <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::empty()

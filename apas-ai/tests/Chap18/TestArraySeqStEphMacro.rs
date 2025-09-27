@@ -23,7 +23,7 @@ fn arrayseq_steph_full_pipeline() {
     assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::nth(&subseq, 2), &8);
 
     let appended = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::append(&mapped, &ArraySeqStEphSLit![99]);
-    let evens = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::filter(&appended, &|value| if *value % 2 == 0 { B::True } else { B::False });
+    let evens = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::filter(&appended, &|value| if *value % 2 == 0 { true } else { false });
     assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::length(&evens), 5);
 
     let nested = ArraySeqStEphSLit![ArraySeqStEphSLit![1, 2], ArraySeqStEphSLit![3], ArraySeqStEphSLit![4, 5]];

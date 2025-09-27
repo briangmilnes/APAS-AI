@@ -114,10 +114,10 @@ pub mod WeightedUnDirGraphStEphFloat {
                 stack.push(start.clone());
 
                 while let Some(current) = stack.pop() {
-                    if visited.mem(&current) == B::False {
+                    if visited.mem(&current) == false {
                         visited.insert(current.clone());
                         for neighbor in self.neighbors(&current).iter() {
-                            if visited.mem(neighbor) == B::False {
+                            if visited.mem(neighbor) == false {
                                 stack.push(neighbor.clone());
                             }
                         }

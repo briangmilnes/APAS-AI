@@ -67,9 +67,9 @@ impl<T> SinglyList<T> for SinglyLinkedList<T> {
         panic!("index out of bounds");
     }
 
-    fn isEmpty(&self) -> B { if self.len == 0 { B::True } else { B::False } }
+    fn isEmpty(&self) -> B { if self.len == 0 { true } else { false } }
 
-    fn isSingleton(&self) -> B { if self.len == 1 { B::True } else { B::False } }
+    fn isSingleton(&self) -> B { if self.len == 1 { true } else { false } }
 
     fn singleton(item: T) -> SinglyLinkedList<T> {
         SinglyLinkedList { head: Some(Box::new(Node { value: item, next: None })), len: 1 }

@@ -111,7 +111,7 @@ pub mod TestLinkedListEph {
     #[test]
     fn test_filter_predicate() {
         let l = LinkedListStEphSLit![1, 2, 3, 4, 5];
-        let evens = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&l, &|x| if *x % 2 == 0 { B::True } else { B::False });
+        let evens = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&l, &|x| if *x % 2 == 0 { true } else { false });
         assert_eq!(evens.length(), 2);
         assert_eq!(*evens.nth(0), 2);
         assert_eq!(*evens.nth(1), 4);
@@ -119,11 +119,11 @@ pub mod TestLinkedListEph {
 
     #[test]
     fn test_deflate_helper() {
-        let result_true = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| if *x > 5 { B::True } else { B::False }, &10);
+        let result_true = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| if *x > 5 { true } else { false }, &10);
         assert_eq!(result_true.length(), 1);
         assert_eq!(*result_true.nth(0), 10);
         
-        let result_false = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| if *x > 5 { B::True } else { B::False }, &3);
+        let result_false = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| if *x > 5 { true } else { false }, &3);
         assert_eq!(result_false.length(), 0);
     }
 

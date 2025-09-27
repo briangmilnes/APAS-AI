@@ -7,7 +7,7 @@ use apas_ai::Types::Types::{B, Pair};
 fn arrayseqs_empty_macro() {
     let seq: ArraySeqS<i32> = ArraySeqS![];
     assert_eq!(ArraySeq::length(&seq), 0);
-    assert_eq!(ArraySeq::isEmpty(&seq), B::True);
+    assert_eq!(ArraySeq::isEmpty(&seq), true);
 }
 
 #[test]
@@ -25,7 +25,7 @@ fn arrayseqs_repeat_macro_clones_element() {
     for index in 0..3 {
         assert_eq!(ArraySeq::nth(&seq, index), &"hi");
     }
-    assert_eq!(ArraySeq::isSingleton(&seq), B::False);
+    assert_eq!(ArraySeq::isSingleton(&seq), false);
 }
 
 #[test]
@@ -53,8 +53,8 @@ fn arrayseq_subseq_append_filter_flatten() {
     assert_eq!(ArraySeq::nth(&combined, 5), &6);
 
     let evens = <ArraySeqS<i32> as ArraySeq<i32>>::filter(&combined, &|value| match value % 2 {
-        0 => B::True,
-        _ => B::False,
+        0 => true,
+        _ => false,
     });
     assert_eq!(ArraySeq::length(&evens), 3);
     assert_eq!(ArraySeq::nth(&evens, 1), &4);

@@ -41,28 +41,28 @@ pub mod TestWeightedDirGraphMtEphInt {
         // Test NG (neighbors)
         let ng0 = g.out_neighbors(&0);
         assert_eq!(ng0.size(), 2);
-        assert_eq!(ng0.mem(&1), B::True);
-        assert_eq!(ng0.mem(&3), B::True);
+        assert_eq!(ng0.mem(&1), true);
+        assert_eq!(ng0.mem(&3), true);
         
         let ng1 = g.out_neighbors(&1);
         assert_eq!(ng1.size(), 1);
-        assert_eq!(ng1.mem(&2), B::True);
+        assert_eq!(ng1.mem(&2), true);
         
         // Test NPlus (out-neighbors)
         let nplus0 = g.out_neighbors(&0);
         assert_eq!(nplus0.size(), 2);
-        assert_eq!(nplus0.mem(&1), B::True);
-        assert_eq!(nplus0.mem(&3), B::True);
+        assert_eq!(nplus0.mem(&1), true);
+        assert_eq!(nplus0.mem(&3), true);
         
         // Test NMinus (in-neighbors)
         let nminus1 = g.in_neighbors(&1);
         assert_eq!(nminus1.size(), 1);
-        assert_eq!(nminus1.mem(&0), B::True);
+        assert_eq!(nminus1.mem(&0), true);
         
         let nminus3 = g.in_neighbors(&3);
         assert_eq!(nminus3.size(), 2);
-        assert_eq!(nminus3.mem(&0), B::True);
-        assert_eq!(nminus3.mem(&2), B::True);
+        assert_eq!(nminus3.mem(&0), true);
+        assert_eq!(nminus3.mem(&2), true);
         
         // Test degrees
         assert_eq!(g.out_neighbors(&0).size(), 2);
@@ -115,9 +115,9 @@ pub mod TestWeightedDirGraphMtEphInt {
         
         // Neighbors of {0, 1} should be {1, 2, 3}
         // assert_eq!(_ng_subset.size(), 3); // TODO: method not available
-        // assert_eq!(_ng_subset.mem(&1), B::True); // TODO: method not available
-        // assert_eq!(_ng_subset.mem(&2), B::True); // TODO: method not available
-        // assert_eq!(_ng_subset.mem(&3), B::True); // TODO: method not available
+        // assert_eq!(_ng_subset.mem(&1), true); // TODO: method not available
+        // assert_eq!(_ng_subset.mem(&2), true); // TODO: method not available
+        // assert_eq!(_ng_subset.mem(&3), true); // TODO: method not available
     }
 
     #[test]
@@ -136,14 +136,14 @@ pub mod TestWeightedDirGraphMtEphInt {
         // Test NPlusOfVertices (out-neighbors)
         // let _nplus_subset = g.NPlusOfVertices(&vertices_subset); // TODO: method not available
         // assert_eq!(_nplus_subset.size(), 2); // TODO: method not available
-        // assert_eq!(_nplus_subset.mem(&1), B::True); // 0->1 // TODO: method not available
-        // assert_eq!(_nplus_subset.mem(&2), B::True); // 1->2 // TODO: method not available
+        // assert_eq!(_nplus_subset.mem(&1), true); // 0->1 // TODO: method not available
+        // assert_eq!(_nplus_subset.mem(&2), true); // 1->2 // TODO: method not available
         
         // Test NMinusOfVertices (in-neighbors)
         // let _nminus_subset = g.NMinusOfVertices(&vertices_subset); // TODO: method not available
         // assert_eq!(_nminus_subset.size(), 2); // TODO: method not available
-        // assert_eq!(_nminus_subset.mem(&2), B::True); // 2->0 // TODO: method not available
-        // assert_eq!(_nminus_subset.mem(&3), B::True); // 3->1 // TODO: method not available
+        // assert_eq!(_nminus_subset.mem(&2), true); // 2->0 // TODO: method not available
+        // assert_eq!(_nminus_subset.mem(&3), true); // 3->1 // TODO: method not available
     }
 
     #[test]

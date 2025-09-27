@@ -65,7 +65,7 @@ fn bench_set_operations(c: &mut Criterion) {
         b.iter(|| {
             let mut found = 0;
             for i in 0..len {
-                if set.mem(&i) == B::True {
+                if set.mem(&i) == true {
                     found += 1;
                 }
             }

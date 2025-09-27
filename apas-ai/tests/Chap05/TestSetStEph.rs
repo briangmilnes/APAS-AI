@@ -39,7 +39,7 @@ pub mod TestSetStEphChap5_1 {
         let odd: Set<N> = SetLit![1, 3, 5];
         let even: Set<N> = SetLit![2, 4, 6];
         let p: Set<Set<N>> = SetLit![odd, even];
-        assert_eq!(a.partition(&p), B::True);
+        assert_eq!(a.partition(&p), true);
     }
 
     #[test]
@@ -48,7 +48,7 @@ pub mod TestSetStEphChap5_1 {
         let odd_with_6: Set<N> = SetLit![1, 3, 5, 6];
         let even_with_6: Set<N> = SetLit![2, 4, 6];
         let q: Set<Set<N>> = SetLit![odd_with_6, even_with_6];
-        assert_eq!(a.partition(&q), B::False);
+        assert_eq!(a.partition(&q), false);
     }
 
     #[test]
@@ -57,22 +57,22 @@ pub mod TestSetStEphChap5_1 {
         let s1: Set<N> = SetLit![1];
         let s2: Set<N> = SetLit![2];
         let parts: Set<Set<N>> = SetLit![s1, s2];
-        assert_eq!(a.partition(&parts), B::False);
+        assert_eq!(a.partition(&parts), false);
     }
 
     #[test]
     fn test_set_empty() {
         let empty_set: Set<i32> = Set::empty();
         assert_eq!(empty_set.size(), 0);
-        assert_eq!(empty_set.mem(&42), B::False);
+        assert_eq!(empty_set.mem(&42), false);
     }
 
     #[test]
     fn test_set_singleton() {
         let single_set = Set::singleton(42);
         assert_eq!(single_set.size(), 1);
-        assert_eq!(single_set.mem(&42), B::True);
-        assert_eq!(single_set.mem(&99), B::False);
+        assert_eq!(single_set.mem(&42), true);
+        assert_eq!(single_set.mem(&99), false);
     }
 
     #[test]
@@ -90,11 +90,11 @@ pub mod TestSetStEphChap5_1 {
     #[test]
     fn test_set_mem_comprehensive() {
         let set = SetLit![1, 2, 3];
-        assert_eq!(set.mem(&1), B::True);
-        assert_eq!(set.mem(&2), B::True);
-        assert_eq!(set.mem(&3), B::True);
-        assert_eq!(set.mem(&4), B::False);
-        assert_eq!(set.mem(&0), B::False);
+        assert_eq!(set.mem(&1), true);
+        assert_eq!(set.mem(&2), true);
+        assert_eq!(set.mem(&3), true);
+        assert_eq!(set.mem(&4), false);
+        assert_eq!(set.mem(&0), false);
     }
 
     #[test]
@@ -104,12 +104,12 @@ pub mod TestSetStEphChap5_1 {
         let union_set = set1.union(&set2);
         
         assert_eq!(union_set.size(), 5);
-        assert_eq!(union_set.mem(&1), B::True);
-        assert_eq!(union_set.mem(&2), B::True);
-        assert_eq!(union_set.mem(&3), B::True);
-        assert_eq!(union_set.mem(&4), B::True);
-        assert_eq!(union_set.mem(&5), B::True);
-        assert_eq!(union_set.mem(&6), B::False);
+        assert_eq!(union_set.mem(&1), true);
+        assert_eq!(union_set.mem(&2), true);
+        assert_eq!(union_set.mem(&3), true);
+        assert_eq!(union_set.mem(&4), true);
+        assert_eq!(union_set.mem(&5), true);
+        assert_eq!(union_set.mem(&6), false);
     }
 
     #[test]
@@ -119,10 +119,10 @@ pub mod TestSetStEphChap5_1 {
         let intersect_set = set1.intersection(&set2);
         
         assert_eq!(intersect_set.size(), 2);
-        assert_eq!(intersect_set.mem(&3), B::True);
-        assert_eq!(intersect_set.mem(&4), B::True);
-        assert_eq!(intersect_set.mem(&1), B::False);
-        assert_eq!(intersect_set.mem(&5), B::False);
+        assert_eq!(intersect_set.mem(&3), true);
+        assert_eq!(intersect_set.mem(&4), true);
+        assert_eq!(intersect_set.mem(&1), false);
+        assert_eq!(intersect_set.mem(&5), false);
     }
 
     #[test]
@@ -133,8 +133,8 @@ pub mod TestSetStEphChap5_1 {
         set.insert(1); // duplicate
         
         assert_eq!(set.size(), 2);
-        assert_eq!(set.mem(&1), B::True);
-        assert_eq!(set.mem(&2), B::True);
+        assert_eq!(set.mem(&1), true);
+        assert_eq!(set.mem(&2), true);
     }
 
     #[test]
@@ -152,9 +152,9 @@ pub mod TestSetStEphChap5_1 {
         let set = Set::FromVec(vec_data);
         
         assert_eq!(set.size(), 3);
-        assert_eq!(set.mem(&1), B::True);
-        assert_eq!(set.mem(&2), B::True);
-        assert_eq!(set.mem(&3), B::True);
+        assert_eq!(set.mem(&1), true);
+        assert_eq!(set.mem(&2), true);
+        assert_eq!(set.mem(&3), true);
     }
 
     #[test]
@@ -176,7 +176,7 @@ pub mod TestSetStEphChap5_1 {
         
         let single = SetLit![42];
         assert_eq!(single.size(), 1);
-        assert_eq!(single.mem(&42), B::True);
+        assert_eq!(single.mem(&42), true);
         
         let multi = SetLit![1, 2, 3];
         assert_eq!(multi.size(), 3);
@@ -219,8 +219,8 @@ pub mod TestSetStEphChap5_1 {
         let large_set = Set::FromVec(large_vec);
         
         assert_eq!(large_set.size(), 10000);
-        assert_eq!(large_set.mem(&5000), B::True);
-        assert_eq!(large_set.mem(&15000), B::False);
+        assert_eq!(large_set.mem(&5000), true);
+        assert_eq!(large_set.mem(&15000), false);
         
         // Test union with another large set
         let large_vec2: Vec<i32> = (5000..15000).collect();
@@ -247,14 +247,14 @@ pub mod TestSetStEphChap5_1 {
         // Test single element set operations
         let single = Set::singleton(42);
         assert_eq!(single.size(), 1);
-        assert_eq!(single.mem(&42), B::True);
-        assert_eq!(single.mem(&43), B::False);
+        assert_eq!(single.mem(&42), true);
+        assert_eq!(single.mem(&43), false);
         
         // Operations with single element set
         let empty: Set<i32> = Set::empty();
         let union_with_empty = single.union(&empty);
         assert_eq!(union_with_empty.size(), 1);
-        assert_eq!(union_with_empty.mem(&42), B::True);
+        assert_eq!(union_with_empty.mem(&42), true);
         
         let intersection_with_empty = single.intersection(&empty);
         assert_eq!(intersection_with_empty.size(), 0);
@@ -263,14 +263,14 @@ pub mod TestSetStEphChap5_1 {
         let single2 = Set::singleton(99);
         let union_singles = single.union(&single2);
         assert_eq!(union_singles.size(), 2);
-        assert_eq!(union_singles.mem(&42), B::True);
-        assert_eq!(union_singles.mem(&99), B::True);
+        assert_eq!(union_singles.mem(&42), true);
+        assert_eq!(union_singles.mem(&99), true);
         
         // Intersection with same element
         let single_same = Set::singleton(42);
         let intersection_same = single.intersection(&single_same);
         assert_eq!(intersection_same.size(), 1);
-        assert_eq!(intersection_same.mem(&42), B::True);
+        assert_eq!(intersection_same.mem(&42), true);
         
         // Intersection with different element
         let intersection_diff = single.intersection(&single2);
@@ -280,7 +280,7 @@ pub mod TestSetStEphChap5_1 {
         let single_char = Set::singleton('a');
         let cartesian = single.CartesianProduct(&single_char);
         assert_eq!(cartesian.size(), 1);
-        assert_eq!(cartesian.mem(&Pair(42, 'a')), B::True);
+        assert_eq!(cartesian.mem(&Pair(42, 'a')), true);
         
         // Iterator on single element
         let collected: Vec<i32> = single.iter().cloned().collect();
@@ -306,7 +306,7 @@ pub mod TestSetStEphChap5_1 {
         assert_eq!(collected.len(), 5);
         // Note: HashSet iteration order is not guaranteed, so we check membership
         for val in &collected {
-            assert_eq!(set.mem(val), B::True);
+            assert_eq!(set.mem(val), true);
         }
         
         // Test iterator on single element - both beginning and end
@@ -341,7 +341,7 @@ pub mod TestSetStEphChap5_1 {
         // First element via iterator (order not guaranteed)
         let first = set_func.iter().next();
         assert!(first.is_some());
-        assert_eq!(set_func.mem(first.unwrap()), B::True);
+        assert_eq!(set_func.mem(first.unwrap()), true);
         
         // Count elements via iterator
         let count = set_func.iter().count();
@@ -354,7 +354,7 @@ pub mod TestSetStEphChap5_1 {
         assert_eq!(chained.len(), 4);
         // Check all elements are present
         for val in &chained {
-            assert!(set1.mem(val) == B::True || set2.mem(val) == B::True);
+            assert!(set1.mem(val) == true || set2.mem(val) == true);
         }
         
         // Test iterator skip/take boundaries
@@ -363,14 +363,14 @@ pub mod TestSetStEphChap5_1 {
         assert_eq!(skipped.len(), 3);
         // All skipped elements should be in original set
         for val in &skipped {
-            assert_eq!(set_skip.mem(val), B::True);
+            assert_eq!(set_skip.mem(val), true);
         }
         
         let taken: Vec<i32> = set_skip.iter().take(3).cloned().collect();
         assert_eq!(taken.len(), 3);
         // All taken elements should be in original set
         for val in &taken {
-            assert_eq!(set_skip.mem(val), B::True);
+            assert_eq!(set_skip.mem(val), true);
         }
         
         // Test iterator collect and verify completeness
@@ -396,9 +396,9 @@ pub mod TestSetStEphChap5_1 {
         
         // Verify basic operations work on large set
         assert_eq!(large_set.size(), large_size);
-        assert_eq!(large_set.mem(&0), B::True);
-        assert_eq!(large_set.mem(&((large_size - 1) as i32)), B::True);
-        assert_eq!(large_set.mem(&(large_size as i32)), B::False);
+        assert_eq!(large_set.mem(&0), true);
+        assert_eq!(large_set.mem(&((large_size - 1) as i32)), true);
+        assert_eq!(large_set.mem(&(large_size as i32)), false);
         
         // Test operations on maximum size set
         let empty_set: Set<i32> = Set::empty();
@@ -422,7 +422,7 @@ pub mod TestSetStEphChap5_1 {
         let mut count = 0;
         for val in large_set.iter() {
             if count < 10 {
-                assert_eq!(large_set.mem(val), B::True);
+                assert_eq!(large_set.mem(val), true);
             }
             count += 1;
             if count > large_size + 100 { // Safety check
@@ -435,7 +435,7 @@ pub mod TestSetStEphChap5_1 {
         let small_set = Set::singleton('a');
         let cartesian_large = large_set.CartesianProduct(&small_set);
         assert_eq!(cartesian_large.size(), large_size);
-        assert_eq!(cartesian_large.mem(&Pair(0, 'a')), B::True);
-        assert_eq!(cartesian_large.mem(&Pair((large_size - 1) as i32, 'a')), B::True);
+        assert_eq!(cartesian_large.mem(&Pair(0, 'a')), true);
+        assert_eq!(cartesian_large.mem(&Pair((large_size - 1) as i32, 'a')), true);
     }
 }

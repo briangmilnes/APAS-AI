@@ -13,7 +13,7 @@ pub mod Test28ArraySeqMtEphChap {
     fn add_ten(i: N) -> N { i + 10 }
     fn multiply_by_two(x: &N) -> N { x * 2 }
     fn add_nums(x: &N, y: &N) -> N { x + y }
-    fn is_even_bool(x: &N) -> B { if x % 2 == 0 { B::True } else { B::False } }
+    fn is_even_bool(x: &N) -> B { if x % 2 == 0 { true } else { false } }
 
     #[test]
     fn test_new_and_set() {

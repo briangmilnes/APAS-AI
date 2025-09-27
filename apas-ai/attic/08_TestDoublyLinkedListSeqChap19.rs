@@ -29,10 +29,10 @@ fn test_select_and_append2() {
 
 #[test]
 fn test_deflate_filter() {
-    let keep6 = <ListS<N> as ListSeqChap19>::deflate(|&x| if x % 2 == 0 { B::True } else { B::False }, &6);
+    let keep6 = <ListS<N> as ListSeqChap19>::deflate(|&x| if x % 2 == 0 { true } else { false }, &6);
     assert_eq!(keep6.length(), 1);
     let a = <ListS<N> as ListSeqChap19>::tabulate(|i| i + 1, 6);
-    let evens = <ListS<N> as ListSeqChap19>::filter(&a, |x| if *x % 2 == 0 { B::True } else { B::False });
+    let evens = <ListS<N> as ListSeqChap19>::filter(&a, |x| if *x % 2 == 0 { true } else { false });
     assert_eq!(evens.length(), 3);
 }
 

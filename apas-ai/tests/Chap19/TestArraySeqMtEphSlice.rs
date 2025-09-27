@@ -9,16 +9,16 @@ pub mod TestArraySeqMtEphSlice {
     fn test_arrayseqmtephslice_empty() {
         let empty: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::empty();
         assert_eq!(empty.length(), 0);
-        assert_eq!(empty.isEmpty(), B::True);
-        assert_eq!(empty.isSingleton(), B::False);
+        assert_eq!(empty.isEmpty(), true);
+        assert_eq!(empty.isSingleton(), false);
     }
 
     #[test]
     fn test_arrayseqmtephslice_new() {
         let seq = ArraySeqMtEphSliceS::new(5, 42);
         assert_eq!(seq.length(), 5);
-        assert_eq!(seq.isEmpty(), B::False);
-        assert_eq!(seq.isSingleton(), B::False);
+        assert_eq!(seq.isEmpty(), false);
+        assert_eq!(seq.isSingleton(), false);
         
         for i in 0..5 {
             assert_eq!(seq.nth_cloned(i), 42);
@@ -29,8 +29,8 @@ pub mod TestArraySeqMtEphSlice {
     fn test_arrayseqmtephslice_singleton() {
         let seq = ArraySeqMtEphSliceS::singleton(99);
         assert_eq!(seq.length(), 1);
-        assert_eq!(seq.isEmpty(), B::False);
-        assert_eq!(seq.isSingleton(), B::True);
+        assert_eq!(seq.isEmpty(), false);
+        assert_eq!(seq.isSingleton(), true);
         assert_eq!(seq.nth_cloned(0), 99);
     }
 
@@ -71,7 +71,7 @@ pub mod TestArraySeqMtEphSlice {
         // Test empty subseq
         let empty_sub = seq.subseq_copy(2, 0);
         assert_eq!(empty_sub.length(), 0);
-        assert_eq!(empty_sub.isEmpty(), B::True);
+        assert_eq!(empty_sub.isEmpty(), true);
         
         // Test out-of-bounds start (should return empty)
         let oob_sub = seq.subseq_copy(10, 2);
@@ -98,7 +98,7 @@ pub mod TestArraySeqMtEphSlice {
         // Test empty slice
         let empty_slice = seq.slice(3, 0);
         assert_eq!(empty_slice.length(), 0);
-        assert_eq!(empty_slice.isEmpty(), B::True);
+        assert_eq!(empty_slice.isEmpty(), true);
     }
 
     #[test]
@@ -126,7 +126,7 @@ pub mod TestArraySeqMtEphSlice {
     #[test]
     fn test_arrayseqmtephslice_filter() {
         let seq = ArraySeqMtEphSliceS::tabulate(&|i| i, 6);
-        let filtered = ArraySeqMtEphSliceS::filter(&seq, |x| if *x % 2 == 0 { B::True } else { B::False });
+        let filtered = ArraySeqMtEphSliceS::filter(&seq, |x| if *x % 2 == 0 { true } else { false });
         
         assert_eq!(filtered.length(), 3); // 0, 2, 4
         assert_eq!(filtered.nth_cloned(0), 0);
@@ -157,7 +157,7 @@ pub mod TestArraySeqMtEphSlice {
                 
                 // Verify basic properties
                 assert_eq!(seq_clone.length(), 10);
-                assert_eq!(seq_clone.isEmpty(), B::False);
+                assert_eq!(seq_clone.isEmpty(), false);
                 
                 (thread_id, sum, seq_clone.length())
             }));
@@ -215,8 +215,8 @@ pub mod TestArraySeqMtEphSlice {
         // Test with zero-length sequence
         let empty = ArraySeqMtEphSliceS::new(0, 42);
         assert_eq!(empty.length(), 0);
-        assert_eq!(empty.isEmpty(), B::True);
-        assert_eq!(empty.isSingleton(), B::False);
+        assert_eq!(empty.isEmpty(), true);
+        assert_eq!(empty.isSingleton(), false);
         
         // Test subseq on empty sequence
         let empty_sub = empty.subseq_copy(0, 0);
@@ -231,7 +231,7 @@ pub mod TestArraySeqMtEphSlice {
         assert_eq!(empty_mapped.length(), 0);
         
         // Test filter on empty sequence
-        let empty_filtered = ArraySeqMtEphSliceS::filter(&empty, |_| B::True);
+        let empty_filtered = ArraySeqMtEphSliceS::filter(&empty, |_| true);
         assert_eq!(empty_filtered.length(), 0);
     }
 
@@ -261,16 +261,16 @@ pub mod TestArraySeqMtEphSlice {
     #[test]
     fn test_arrayseqmtephslice_predicates() {
         let seq1: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::empty();
-        assert_eq!(seq1.isEmpty(), B::True);
-        assert_eq!(seq1.isSingleton(), B::False);
+        assert_eq!(seq1.isEmpty(), true);
+        assert_eq!(seq1.isSingleton(), false);
         
         let seq2 = ArraySeqMtEphSliceS::singleton(42);
-        assert_eq!(seq2.isEmpty(), B::False);
-        assert_eq!(seq2.isSingleton(), B::True);
+        assert_eq!(seq2.isEmpty(), false);
+        assert_eq!(seq2.isSingleton(), true);
         
         let seq3 = ArraySeqMtEphSliceS::new(3, 0);
-        assert_eq!(seq3.isEmpty(), B::False);
-        assert_eq!(seq3.isSingleton(), B::False);
+        assert_eq!(seq3.isEmpty(), false);
+        assert_eq!(seq3.isSingleton(), false);
     }
 
     #[test]

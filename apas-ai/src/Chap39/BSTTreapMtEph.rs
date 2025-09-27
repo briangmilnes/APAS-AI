@@ -68,7 +68,7 @@ pub mod BSTTreapMtEph {
             Self::size_link(&*guard)
         }
 
-        pub fn is_empty(&self) -> B { if self.size() == 0 { B::True } else { B::False } }
+        pub fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         pub fn height(&self) -> N {
             fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {
@@ -93,7 +93,7 @@ pub mod BSTTreapMtEph {
             Self::find_link(&*guard, target).cloned()
         }
 
-        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { B::True } else { B::False } }
+        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
 
         pub fn minimum(&self) -> Option<T> {
             let guard = self.root.read().unwrap();

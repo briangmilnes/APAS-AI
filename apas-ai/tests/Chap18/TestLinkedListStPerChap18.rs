@@ -109,7 +109,7 @@ pub mod TestLinkedListPer {
     #[test]
     fn test_filter_predicate() {
         let l = LinkedListStPerSLit![1, 2, 3, 4, 5];
-        let evens = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(&l, &|x| if *x % 2 == 0 { B::True } else { B::False });
+        let evens = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(&l, &|x| if *x % 2 == 0 { true } else { false });
         assert_eq!(evens.length(), 2);
         assert_eq!(*evens.nth(0), 2);
         assert_eq!(*evens.nth(1), 4);

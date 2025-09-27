@@ -20,8 +20,8 @@ pub mod TestLabDirGraphStEph {
         g.add_vertex(2);
 
         assert_eq!(g.vertices().size(), 2);
-        assert!(g.vertices().mem(&1) == B::True);
-        assert!(g.vertices().mem(&2) == B::True);
+        assert!(g.vertices().mem(&1) == true);
+        assert!(g.vertices().mem(&2) == true);
         assert_eq!(g.labeled_arcs().size(), 0);
     }
 
@@ -51,19 +51,19 @@ pub mod TestLabDirGraphStEph {
 
         let out_neighbors_1 = g.out_neighbors(&1);
         assert_eq!(out_neighbors_1.size(), 2);
-        assert!(out_neighbors_1.mem(&2) == B::True);
-        assert!(out_neighbors_1.mem(&3) == B::True);
+        assert!(out_neighbors_1.mem(&2) == true);
+        assert!(out_neighbors_1.mem(&3) == true);
 
         let in_neighbors_1 = g.in_neighbors(&1);
         assert_eq!(in_neighbors_1.size(), 1);
-        assert!(in_neighbors_1.mem(&3) == B::True);
+        assert!(in_neighbors_1.mem(&3) == true);
 
         let out_neighbors_2 = g.out_neighbors(&2);
         assert_eq!(out_neighbors_2.size(), 0);
 
         let in_neighbors_2 = g.in_neighbors(&2);
         assert_eq!(in_neighbors_2.size(), 1);
-        assert!(in_neighbors_2.mem(&1) == B::True);
+        assert!(in_neighbors_2.mem(&1) == true);
     }
 
     #[test]
@@ -74,8 +74,8 @@ pub mod TestLabDirGraphStEph {
 
         let arcs = g.arcs();
         assert_eq!(arcs.size(), 2);
-        assert!(arcs.mem(&Edge(1, 2)) == B::True);
-        assert!(arcs.mem(&Edge(2, 3)) == B::True);
+        assert!(arcs.mem(&Edge(1, 2)) == true);
+        assert!(arcs.mem(&Edge(2, 3)) == true);
     }
 
     #[test]
@@ -151,10 +151,10 @@ pub mod TestLabDirGraphStEph {
 
         let out_neighbors = g.out_neighbors(&1);
         assert_eq!(out_neighbors.size(), 1);
-        assert!(out_neighbors.mem(&1) == B::True);
+        assert!(out_neighbors.mem(&1) == true);
 
         let in_neighbors = g.in_neighbors(&1);
         assert_eq!(in_neighbors.size(), 1);
-        assert!(in_neighbors.mem(&1) == B::True);
+        assert!(in_neighbors.mem(&1) == true);
     }
 }

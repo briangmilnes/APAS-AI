@@ -118,17 +118,17 @@ impl<T2> ArraySeqChap18 for ArrayS<T2> {
         let keep_mask: ArrayS<B> = <ArrayS<B> as ArraySeqChap18>::map(a, |x| pred(x));
         // Count kept
         let mut kept_count: N = 0;
-        for index in 0..input_length { if *keep_mask.nth(index) == B::True { kept_count += 1; } }
+        for index in 0..input_length { if *keep_mask.nth(index) == true { kept_count += 1; } }
         if kept_count == 0 { return <ArrayS<T> as ArraySeq<T>>::empty(); }
         // Seed allocation with first kept elt
         let mut first_kept_index: N = 0;
-        while first_kept_index < input_length && *keep_mask.nth(first_kept_index) != B::True { first_kept_index += 1; }
+        while first_kept_index < input_length && *keep_mask.nth(first_kept_index) != true { first_kept_index += 1; }
         let initial_elt = a.nth(first_kept_index).clone();
         let mut result_seq = <ArrayS<T> as ArraySeq<T>>::new(kept_count, initial_elt.clone());
         // Fill output
         let mut write_index: N = 0;
         for index in 0..input_length {
-            if *keep_mask.nth(index) == B::True {
+            if *keep_mask.nth(index) == true {
                 let _ = result_seq.set(write_index, a.nth(index).clone());
                 write_index += 1;
             }

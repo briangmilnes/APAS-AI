@@ -40,17 +40,17 @@ pub mod TestWeightedUnDirGraphMtEphInt {
         // Test NG (neighbors) - should be symmetric
         let ng0 = g.neighbors(&0);
         assert_eq!(ng0.size(), 1);
-        assert_eq!(ng0.mem(&1), B::True);
+        assert_eq!(ng0.mem(&1), true);
         
         let ng1 = g.neighbors(&1);
         assert_eq!(ng1.size(), 2);
-        assert_eq!(ng1.mem(&0), B::True);
-        assert_eq!(ng1.mem(&2), B::True);
+        assert_eq!(ng1.mem(&0), true);
+        assert_eq!(ng1.mem(&2), true);
         
         let ng2 = g.neighbors(&2);
         assert_eq!(ng2.size(), 2);
-        assert_eq!(ng2.mem(&1), B::True);
-        assert_eq!(ng2.mem(&3), B::True);
+        assert_eq!(ng2.mem(&1), true);
+        assert_eq!(ng2.mem(&3), true);
         
         // Test degrees (in undirected graph, InDegree = OutDegree = Degree)
         assert_eq!(g.vertex_degree(&0), 1);

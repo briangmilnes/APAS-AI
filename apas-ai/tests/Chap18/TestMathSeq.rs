@@ -199,22 +199,22 @@ pub mod TestMathSeq {
     #[test]
     fn test_isEmpty_predicate() {
         let empty: MathSeqS<N> = MathSeqSLit![];
-        assert_eq!(empty.isEmpty(), B::True);
+        assert_eq!(empty.isEmpty(), true);
         
         let non_empty: MathSeqS<N> = MathSeqSLit![1];
-        assert_eq!(non_empty.isEmpty(), B::False);
+        assert_eq!(non_empty.isEmpty(), false);
     }
 
     #[test]
     fn test_isSingleton_predicate() {
         let empty: MathSeqS<N> = MathSeqSLit![];
-        assert_eq!(empty.isSingleton(), B::False);
+        assert_eq!(empty.isSingleton(), false);
         
         let singleton: MathSeqS<N> = MathSeqSLit![42];
-        assert_eq!(singleton.isSingleton(), B::True);
+        assert_eq!(singleton.isSingleton(), true);
         
         let multi: MathSeqS<N> = MathSeqSLit![1, 2];
-        assert_eq!(multi.isSingleton(), B::False);
+        assert_eq!(multi.isSingleton(), false);
     }
 
     #[test]
@@ -256,8 +256,8 @@ pub mod TestMathSeq {
         
         // Basic properties
         assert_eq!(empty.length(), 0);
-        assert_eq!(empty.isEmpty(), B::True);
-        assert_eq!(empty.isSingleton(), B::False);
+        assert_eq!(empty.isEmpty(), true);
+        assert_eq!(empty.isSingleton(), false);
         
         // Operations on empty sequence should return empty or appropriate defaults
         let empty_subseq = empty.subseq(0, 0);
@@ -293,8 +293,8 @@ pub mod TestMathSeq {
         
         // Basic properties
         assert_eq!(single.length(), 1);
-        assert_eq!(single.isEmpty(), B::False);
-        assert_eq!(single.isSingleton(), B::True);
+        assert_eq!(single.isEmpty(), false);
+        assert_eq!(single.isSingleton(), true);
         
         // Access operations
         assert_eq!(*single.nth(0), 42);
@@ -473,8 +473,8 @@ pub mod TestMathSeq {
         assert_eq!(large_seq.length(), large_size);
         assert_eq!(*large_seq.nth(0), 42);
         assert_eq!(*large_seq.nth(large_size - 1), 42);
-        assert_eq!(large_seq.isEmpty(), B::False);
-        assert_eq!(large_seq.isSingleton(), B::False);
+        assert_eq!(large_seq.isEmpty(), false);
+        assert_eq!(large_seq.isSingleton(), false);
         
         // Test subseq on large sequence
         let large_subseq = large_seq.subseq(1000, 5000);

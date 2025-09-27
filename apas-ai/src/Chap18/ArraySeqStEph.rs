@@ -184,7 +184,7 @@ pub mod ArraySeqStEph {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
-                if pred(value) == B::True {
+                if pred(value) == true {
                     kept.push(value.clone());
                 }
             }
@@ -208,9 +208,9 @@ pub mod ArraySeqStEph {
             ArraySeqStEphS::inject(self, updates)
         }
 
-        fn isEmpty(&self) -> B { if self.length() == 0 { B::True } else { B::False } }
+        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
 
-        fn isSingleton(&self) -> B { if self.length() == 1 { B::True } else { B::False } }
+        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
 
         fn collect<K: StT, V: StT>(
             pairs: &ArraySeqStEphS<Pair<K, V>>,

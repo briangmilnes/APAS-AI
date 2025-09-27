@@ -145,16 +145,16 @@ pub mod ArraySeqMtEph {
         fn singleton(item: T) -> Self { ArraySeqMtEphS::from_vec(vec![item]) }
         fn isEmpty(&self) -> B {
             if self.length() == 0 {
-                B::True
+                true
             } else {
-                B::False
+                false
             }
         }
         fn isSingleton(&self) -> B {
             if self.length() == 1 {
-                B::True
+                true
             } else {
-                B::False
+                false
             }
         }
         fn subseq_copy(&self, start: N, length: N) -> Self { self.subseq_copy(start, length) }

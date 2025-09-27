@@ -113,10 +113,10 @@ impl<T: StT> AVLTreeSeqStEphS<T> {
     {
         for v in self.iter() {
             if v == target {
-                return B::True;
+                return true;
             }
         }
-        B::False
+        false
     }
     pub fn insert_value(&mut self, value: T) {
         self.push_back(value);
@@ -177,17 +177,17 @@ impl<T: StT> AVLTreeSeqStEphTrait<T> for AVLTreeSeqStEphS<T> {
 
     fn isEmpty(&self) -> B {
         if self.length() == 0 {
-            B::True
+            true
         } else {
-            B::False
+            false
         }
     }
 
     fn isSingleton(&self) -> B {
         if self.length() == 1 {
-            B::True
+            true
         } else {
-            B::False
+            false
         }
     }
 

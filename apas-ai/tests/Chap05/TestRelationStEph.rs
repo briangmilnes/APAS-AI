@@ -20,15 +20,15 @@ pub mod TestRelationStEphChap5_2 {
         let rexp = SetLit!['a', 'b'];
         assert_eq!(rg, rexp);
 
-        assert_eq!(r.mem(&1usize, &'a'), B::True);
-        assert_eq!(r.mem(&2usize, &'a'), B::False);
+        assert_eq!(r.mem(&1usize, &'a'), true);
+        assert_eq!(r.mem(&2usize, &'a'), false);
     }
 
     #[test]
     fn test_relation_empty() {
         let empty_rel: Relation<i32, char> = Relation::empty();
         assert_eq!(empty_rel.size(), 0);
-        assert_eq!(empty_rel.mem(&1, &'a'), B::False);
+        assert_eq!(empty_rel.mem(&1, &'a'), false);
     }
 
     #[test]
@@ -62,8 +62,8 @@ pub mod TestRelationStEphChap5_2 {
     #[test]
     fn test_relation_mem_empty_edge() {
         let empty_rel: Relation<i32, char> = Relation::empty();
-        assert_eq!(empty_rel.mem(&1, &'a'), B::False);
-        assert_eq!(empty_rel.mem(&0, &'z'), B::False);
+        assert_eq!(empty_rel.mem(&1, &'a'), false);
+        assert_eq!(empty_rel.mem(&0, &'z'), false);
     }
 
     #[test]
@@ -83,9 +83,9 @@ pub mod TestRelationStEphChap5_2 {
         let rel = Relation::FromVec(vec_pairs);
         
         assert_eq!(rel.size(), 3);
-        assert_eq!(rel.mem(&1, &'a'), B::True);
-        assert_eq!(rel.mem(&2, &'b'), B::True);
-        assert_eq!(rel.mem(&1, &'c'), B::True);
+        assert_eq!(rel.mem(&1, &'a'), true);
+        assert_eq!(rel.mem(&2, &'b'), true);
+        assert_eq!(rel.mem(&1, &'c'), true);
     }
 
     #[test]
@@ -95,13 +95,13 @@ pub mod TestRelationStEphChap5_2 {
         
         let single_rel = RelationLit![(1, 'a')];
         assert_eq!(single_rel.size(), 1);
-        assert_eq!(single_rel.mem(&1, &'a'), B::True);
+        assert_eq!(single_rel.mem(&1, &'a'), true);
         
         let multi_rel = RelationLit![(1, 'a'), (2, 'b'), (3, 'c')];
         assert_eq!(multi_rel.size(), 3);
-        assert_eq!(multi_rel.mem(&1, &'a'), B::True);
-        assert_eq!(multi_rel.mem(&2, &'b'), B::True);
-        assert_eq!(multi_rel.mem(&3, &'c'), B::True);
+        assert_eq!(multi_rel.mem(&1, &'a'), true);
+        assert_eq!(multi_rel.mem(&2, &'b'), true);
+        assert_eq!(multi_rel.mem(&3, &'c'), true);
     }
 
     #[test]
@@ -114,7 +114,7 @@ pub mod TestRelationStEphChap5_2 {
         let range = empty_rel.range();
         assert_eq!(range.size(), 0);
         
-        assert_eq!(empty_rel.mem(&42, &"test".to_string()), B::False);
+        assert_eq!(empty_rel.mem(&42, &"test".to_string()), false);
     }
 
     #[test]
@@ -135,7 +135,7 @@ pub mod TestRelationStEphChap5_2 {
         assert_eq!(collected.len(), 5);
         // Note: HashSet iteration order is not guaranteed, so we check membership
         for pair in &collected {
-            assert_eq!(rel.mem(&pair.0, &pair.1), B::True);
+            assert_eq!(rel.mem(&pair.0, &pair.1), true);
         }
         
         // Test iterator on single element - both beginning and end
@@ -170,7 +170,7 @@ pub mod TestRelationStEphChap5_2 {
         // First element via iterator (order not guaranteed)
         let first = rel_func.iter().next();
         assert!(first.is_some());
-        assert_eq!(rel_func.mem(&first.unwrap().0, &first.unwrap().1), B::True);
+        assert_eq!(rel_func.mem(&first.unwrap().0, &first.unwrap().1), true);
         
         // Count elements via iterator
         let count = rel_func.iter().count();
@@ -183,7 +183,7 @@ pub mod TestRelationStEphChap5_2 {
         assert_eq!(chained.len(), 4);
         // Check all elements are present
         for pair in &chained {
-            assert!(rel1.mem(&pair.0, &pair.1) == B::True || rel2.mem(&pair.0, &pair.1) == B::True);
+            assert!(rel1.mem(&pair.0, &pair.1) == true || rel2.mem(&pair.0, &pair.1) == true);
         }
         
         // Test iterator skip/take boundaries
@@ -192,14 +192,14 @@ pub mod TestRelationStEphChap5_2 {
         assert_eq!(skipped.len(), 3);
         // All skipped elements should be in original relation
         for pair in &skipped {
-            assert_eq!(rel_skip.mem(&pair.0, &pair.1), B::True);
+            assert_eq!(rel_skip.mem(&pair.0, &pair.1), true);
         }
         
         let taken: Vec<Pair<i32, char>> = rel_skip.iter().take(3).cloned().collect();
         assert_eq!(taken.len(), 3);
         // All taken elements should be in original relation
         for pair in &taken {
-            assert_eq!(rel_skip.mem(&pair.0, &pair.1), B::True);
+            assert_eq!(rel_skip.mem(&pair.0, &pair.1), true);
         }
         
         // Test iterator collect and verify completeness
@@ -231,28 +231,28 @@ pub mod TestRelationStEphChap5_2 {
         
         // Verify basic operations work on large relation
         assert_eq!(large_rel.size(), large_size);
-        assert_eq!(large_rel.mem(&0, &0), B::True);
-        assert_eq!(large_rel.mem(&((large_size - 1) as i32), &(((large_size - 1) * 2) as i32)), B::True);
-        assert_eq!(large_rel.mem(&(large_size as i32), &0), B::False);
+        assert_eq!(large_rel.mem(&0, &0), true);
+        assert_eq!(large_rel.mem(&((large_size - 1) as i32), &(((large_size - 1) * 2) as i32)), true);
+        assert_eq!(large_rel.mem(&(large_size as i32), &0), false);
         
         // Test domain and range on large relation
         let domain = large_rel.domain();
         assert_eq!(domain.size(), large_size);
-        assert_eq!(domain.mem(&0), B::True);
-        assert_eq!(domain.mem(&((large_size - 1) as i32)), B::True);
-        assert_eq!(domain.mem(&(large_size as i32)), B::False);
+        assert_eq!(domain.mem(&0), true);
+        assert_eq!(domain.mem(&((large_size - 1) as i32)), true);
+        assert_eq!(domain.mem(&(large_size as i32)), false);
         
         let range = large_rel.range();
         assert_eq!(range.size(), large_size);
-        assert_eq!(range.mem(&0), B::True);
-        assert_eq!(range.mem(&(((large_size - 1) * 2) as i32)), B::True);
-        assert_eq!(range.mem(&(((large_size * 2) + 1) as i32)), B::False); // Value not in range
+        assert_eq!(range.mem(&0), true);
+        assert_eq!(range.mem(&(((large_size - 1) * 2) as i32)), true);
+        assert_eq!(range.mem(&(((large_size * 2) + 1) as i32)), false); // Value not in range
         
         // Test iterator on large relation (sample check)
         let mut count = 0;
         for pair in large_rel.iter() {
             if count < 10 {
-                assert_eq!(large_rel.mem(&pair.0, &pair.1), B::True);
+                assert_eq!(large_rel.mem(&pair.0, &pair.1), true);
                 assert_eq!(pair.1, pair.0 * 2); // Verify relationship
             }
             count += 1;
@@ -270,8 +270,8 @@ pub mod TestRelationStEphChap5_2 {
         
         // Verify the second relation
         assert_eq!(large_rel2.size(), 50_000);
-        assert_eq!(large_rel2.mem(&25_000, &75_000), B::True);
-        assert_eq!(large_rel2.mem(&74_999, &224_997), B::True);
+        assert_eq!(large_rel2.mem(&25_000, &75_000), true);
+        assert_eq!(large_rel2.mem(&74_999, &224_997), true);
         
         // Test operations between large relations would be memory intensive,
         // so we test with smaller subsets
@@ -281,7 +281,7 @@ pub mod TestRelationStEphChap5_2 {
         // Verify these work as expected (proxy for large relation operations)
         assert_eq!(small_rel1.size(), 3);
         assert_eq!(small_rel2.size(), 3);
-        assert_eq!(small_rel1.mem(&2, &4), B::True);
-        assert_eq!(small_rel2.mem(&2, &4), B::True);
+        assert_eq!(small_rel1.mem(&2, &4), true);
+        assert_eq!(small_rel2.mem(&2, &4), true);
     }
 }

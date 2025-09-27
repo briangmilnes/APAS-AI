@@ -39,14 +39,14 @@ pub mod Test26ArraySeqMtPer {
 
     #[test]
     fn test_sequence_basic() {
-        let a: ArraySeqMtPerS<B> = ArrayMtPerSLit![B::False; 10];
+        let a: ArraySeqMtPerS<B> = ArrayMtPerSLit![false; 10];
         assert_eq!(a.length() == 0, false);
         assert_eq!(a.length(), 10);
-        let changes1 = ArrayMtPerSLit![Pair(0, B::True), Pair(1, B::False), Pair(2, B::True)];
+        let changes1 = ArrayMtPerSLit![Pair(0, true), Pair(1, false), Pair(2, true)];
         let d = <ArraySeqMtPerS<B> as ArraySeqMtPerTrait<B>>::inject(&a, &changes1);
         assert_eq!(d.length(), 10);
         let head4 = ArrayMtPerSLit![*d.nth(0), *d.nth(1), *d.nth(2), *d.nth(3)];
-        assert_eq!(head4, ArrayMtPerSLit![B::True, B::False, B::True, B::False]);
+        assert_eq!(head4, ArrayMtPerSLit![true, false, true, false]);
     }
 
     #[test]
@@ -157,11 +157,11 @@ pub mod Test26ArraySeqMtPer {
 
     #[test]
     fn test_boolean_sequences() {
-        let a = ArrayMtPerSLit![B::True, B::False, B::True];
+        let a = ArrayMtPerSLit![true, false, true];
         assert_eq!(a.length(), 3);
-        assert_eq!(*a.nth(0), B::True);
-        assert_eq!(*a.nth(1), B::False);
-        assert_eq!(*a.nth(2), B::True);
+        assert_eq!(*a.nth(0), true);
+        assert_eq!(*a.nth(1), false);
+        assert_eq!(*a.nth(2), true);
     }
 
     #[test]

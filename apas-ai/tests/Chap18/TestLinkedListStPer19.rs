@@ -31,10 +31,10 @@ pub mod TestLinkedListPer {
     fn test_deflate() {
         // Note: deflate method not implemented in LinkedListStPerTrait
         // let one =
-        //     <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::deflate(|x| if *x > 0 { B::True } else { B::False }, &7);
+        //     <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::deflate(|x| if *x > 0 { true } else { false }, &7);
         // assert_eq!(one, LinkedListStPerSLit![7]);
         // let none =
-        //     <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::deflate(|x| if *x > 0 { B::True } else { B::False }, &0);
+        //     <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::deflate(|x| if *x > 0 { true } else { false }, &0);
         // assert_eq!(none, LinkedListStPerS::new(0, 0));
     }
 

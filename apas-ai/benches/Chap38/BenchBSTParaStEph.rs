@@ -13,7 +13,7 @@ fn bench_bst_para_st_eph(c: &mut Criterion) {
     let n: N = 1_000;
     group.bench_with_input(BenchmarkId::new("build_tree", n), &n, |b, &len| {
         b.iter(|| {
-            let mut tree = ParamBST::new();
+            let tree = ParamBST::new();
             for i in 0..len {
                 tree.insert(i);
             }
@@ -22,7 +22,7 @@ fn bench_bst_para_st_eph(c: &mut Criterion) {
     });
 
     group.bench_with_input(BenchmarkId::new("search_operations", n), &n, |b, &len| {
-        let mut tree = ParamBST::new();
+        let tree = ParamBST::new();
         for i in 0..len {
             tree.insert(i);
         }

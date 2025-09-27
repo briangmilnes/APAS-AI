@@ -12,7 +12,7 @@ fn test_module_accessibility() {
     let _set: Set<i32> = Set::empty();
     let _seq: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
     let _pair = Pair(1, 2);
-    let _bool = B::True;
+    let _bool = true;
 }
 
 #[test]

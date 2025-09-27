@@ -57,7 +57,7 @@ impl<T2> SinglyLinkedListSeqChap18 for SinglyLinkedListS<T2> {
     }
     fn filter<T: Clone + Eq>(a: &SinglyLinkedListS<T>, pred: impl Fn(&T) -> B) -> SinglyLinkedListS<T> {
         let mut out = std::collections::LinkedList::new();
-        for x in a.data.iter() { if pred(x) == B::True { out.push_back(x.clone()); } }
+        for x in a.data.iter() { if pred(x) == true { out.push_back(x.clone()); } }
         SinglyLinkedListS { data: out }
     }
     fn update<T: Clone + Eq>(a: &mut SinglyLinkedListS<T>, (index, item): (N, T)) -> &mut SinglyLinkedListS<T> { a.update((index, item)) }

@@ -21,11 +21,11 @@ pub mod Test23MappingStEphChap5_5 {
     fn test_from_vec_basic() {
         let m = MappingLit![(1, "one"), (2, "two"), (3, "three")];
         assert_eq!(m.size(), 3);
-        assert_eq!(m.mem(&1, &"one"), B::True);
-        assert_eq!(m.mem(&2, &"two"), B::True);
-        assert_eq!(m.mem(&3, &"three"), B::True);
-        assert_eq!(m.mem(&1, &"wrong"), B::False);
-        assert_eq!(m.mem(&99, &"one"), B::False);
+        assert_eq!(m.mem(&1, &"one"), true);
+        assert_eq!(m.mem(&2, &"two"), true);
+        assert_eq!(m.mem(&3, &"three"), true);
+        assert_eq!(m.mem(&1, &"wrong"), false);
+        assert_eq!(m.mem(&99, &"one"), false);
     }
 
     #[test]
@@ -44,8 +44,8 @@ pub mod Test23MappingStEphChap5_5 {
         // Mapping should convert relation to function (one value per key)
         assert!(m.size() <= 2); // At most 2 keys (1 and 2)
         // Either "one" or "uno" for key 1, depending on implementation
-        assert!(m.mem(&1, &"one") == B::True || m.mem(&1, &"uno") == B::True);
-        assert_eq!(m.mem(&2, &"two"), B::True);
+        assert!(m.mem(&1, &"one") == true || m.mem(&1, &"uno") == true);
+        assert_eq!(m.mem(&2, &"two"), true);
     }
 
     #[test]
@@ -54,16 +54,16 @@ pub mod Test23MappingStEphChap5_5 {
 
         let domain = m.domain();
         assert_eq!(domain.size(), 3);
-        assert_eq!(domain.mem(&1), B::True);
-        assert_eq!(domain.mem(&2), B::True);
-        assert_eq!(domain.mem(&3), B::True);
-        assert_eq!(domain.mem(&4), B::False);
+        assert_eq!(domain.mem(&1), true);
+        assert_eq!(domain.mem(&2), true);
+        assert_eq!(domain.mem(&3), true);
+        assert_eq!(domain.mem(&4), false);
 
         let range = m.range();
         assert_eq!(range.size(), 2); // "one" and "two"
-        assert_eq!(range.mem(&"one"), B::True);
-        assert_eq!(range.mem(&"two"), B::True);
-        assert_eq!(range.mem(&"three"), B::False);
+        assert_eq!(range.mem(&"one"), true);
+        assert_eq!(range.mem(&"two"), true);
+        assert_eq!(range.mem(&"three"), false);
     }
 
     #[test]
@@ -83,17 +83,17 @@ pub mod Test23MappingStEphChap5_5 {
         let m = MappingLit![("a", 1), ("b", 2), ("c", 3)];
 
         // Test existing pairs
-        assert_eq!(m.mem(&"a", &1), B::True);
-        assert_eq!(m.mem(&"b", &2), B::True);
-        assert_eq!(m.mem(&"c", &3), B::True);
+        assert_eq!(m.mem(&"a", &1), true);
+        assert_eq!(m.mem(&"b", &2), true);
+        assert_eq!(m.mem(&"c", &3), true);
 
         // Test wrong key-value combinations
-        assert_eq!(m.mem(&"a", &2), B::False);
-        assert_eq!(m.mem(&"b", &3), B::False);
+        assert_eq!(m.mem(&"a", &2), false);
+        assert_eq!(m.mem(&"b", &3), false);
 
         // Test non-existent keys/values
-        assert_eq!(m.mem(&"d", &1), B::False);
-        assert_eq!(m.mem(&"a", &99), B::False);
+        assert_eq!(m.mem(&"d", &1), false);
+        assert_eq!(m.mem(&"a", &99), false);
     }
 
     #[test]
@@ -103,7 +103,7 @@ pub mod Test23MappingStEphChap5_5 {
         assert_eq!(m.size(), 0);
         assert_eq!(m.domain().size(), 0);
         assert_eq!(m.range().size(), 0);
-        assert_eq!(m.mem(&1, &"anything"), B::False);
+        assert_eq!(m.mem(&1, &"anything"), false);
 
         let collected: Vec<_> = m.iter().collect();
         assert_eq!(collected.len(), 0);
@@ -118,7 +118,7 @@ pub mod Test23MappingStEphChap5_5 {
         assert_eq!(m.size(), 0);
         assert_eq!(m.domain().size(), 0);
         assert_eq!(m.range().size(), 0);
-        assert_eq!(m.mem(&42, &"test".to_string()), B::False);
+        assert_eq!(m.mem(&42, &"test".to_string()), false);
     }
 
     #[test]
@@ -132,24 +132,24 @@ pub mod Test23MappingStEphChap5_5 {
         let m = MappingLit![(large_key, "max"), (small_key, "min"), (0, "zero")];
         
         assert_eq!(m.size(), 3);
-        assert_eq!(m.mem(&large_key, &"max"), B::True);
-        assert_eq!(m.mem(&small_key, &"min"), B::True);
-        assert_eq!(m.mem(&0, &"zero"), B::True);
+        assert_eq!(m.mem(&large_key, &"max"), true);
+        assert_eq!(m.mem(&small_key, &"min"), true);
+        assert_eq!(m.mem(&0, &"zero"), true);
         
         // Test domain and range operations with extreme values
         let domain = m.domain();
         assert_eq!(domain.size(), 3);
-        assert_eq!(domain.mem(&large_key), B::True);
-        assert_eq!(domain.mem(&small_key), B::True);
+        assert_eq!(domain.mem(&large_key), true);
+        assert_eq!(domain.mem(&small_key), true);
         
         let range = m.range();
         assert_eq!(range.size(), 3);
-        assert_eq!(range.mem(&"max"), B::True);
-        assert_eq!(range.mem(&"min"), B::True);
+        assert_eq!(range.mem(&"max"), true);
+        assert_eq!(range.mem(&"min"), true);
         
         // Test with non-existent extreme keys - should return False, not panic
-        assert_eq!(m.mem(&(large_key - 1), &"max"), B::False);
-        assert_eq!(m.mem(&(small_key + 1), &"min"), B::False);
+        assert_eq!(m.mem(&(large_key - 1), &"max"), false);
+        assert_eq!(m.mem(&(small_key + 1), &"min"), false);
     }
 
     #[test]
@@ -162,19 +162,19 @@ pub mod Test23MappingStEphChap5_5 {
         let m = <Mapping<i32, String> as MappingStEphTrait<i32, String>>::FromVec(large_pairs);
         
         assert_eq!(m.size(), 10000);
-        assert_eq!(m.mem(&5000, &"value_5000".to_string()), B::True);
-        assert_eq!(m.mem(&15000, &"value_15000".to_string()), B::False);
+        assert_eq!(m.mem(&5000, &"value_5000".to_string()), true);
+        assert_eq!(m.mem(&15000, &"value_15000".to_string()), false);
         
         // Test domain and range operations on large mapping
         let domain = m.domain();
         assert_eq!(domain.size(), 10000);
-        assert_eq!(domain.mem(&9999), B::True);
-        assert_eq!(domain.mem(&10000), B::False);
+        assert_eq!(domain.mem(&9999), true);
+        assert_eq!(domain.mem(&10000), false);
         
         let range = m.range();
         assert_eq!(range.size(), 10000);
-        assert_eq!(range.mem(&"value_0".to_string()), B::True);
-        assert_eq!(range.mem(&"value_10000".to_string()), B::False);
+        assert_eq!(range.mem(&"value_0".to_string()), true);
+        assert_eq!(range.mem(&"value_10000".to_string()), false);
         
         // Test iteration on large mapping - should not panic
         let mut count = 0;

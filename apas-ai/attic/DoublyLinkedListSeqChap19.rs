@@ -63,7 +63,7 @@ impl<T2> DoublyLinkedListSeqChap19 for DoublyLinkedListS<T2> {
         DoublyLinkedListS { data: out }
     }
     fn deflate<T: Clone>(f: impl Fn(&T) -> B, x: &T) -> DoublyLinkedListS<T> {
-        let keep = f(x) == B::True;
+        let keep = f(x) == true;
         if keep { <DoublyLinkedListS<T> as DoublyLinkedListSeq<T>>::singleton(x.clone()) } else { <DoublyLinkedListS<T> as DoublyLinkedListSeq<T>>::empty() }
     }
     fn filter<T: Clone + Eq>(a: &DoublyLinkedListS<T>, f: impl Fn(&T) -> B) -> DoublyLinkedListS<T> {

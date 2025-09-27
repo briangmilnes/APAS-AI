@@ -42,7 +42,7 @@ pub mod AVLTreeSeqStEphChap19 {
             <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphChap18Trait<T>>::append(a, b)
         }
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> AVLTreeSeqStEphS<T> {
-            if f(x) == B::True {
+            if f(x) == true {
                 <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::singleton(x.clone())
             } else {
                 <AVLTreeSeqStEphS<T> as AVLTreeSeqStEphTrait<T>>::empty()

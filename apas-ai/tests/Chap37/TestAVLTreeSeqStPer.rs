@@ -159,15 +159,15 @@ pub mod TestAVLTreeSeqPer {
         // Test empty tree
         let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
         assert_eq!(empty.length(), 0);
-        assert_eq!(empty.isEmpty(), B::True);
-        assert_eq!(empty.isSingleton(), B::False);
+        assert_eq!(empty.isEmpty(), true);
+        assert_eq!(empty.isSingleton(), false);
         assert_eq!(empty.values_in_order(), vec![]);
         
         // Test singleton
         let single = AVLTreeSeqStPerS::singleton(42);
         assert_eq!(single.length(), 1);
-        assert_eq!(single.isEmpty(), B::False);
-        assert_eq!(single.isSingleton(), B::True);
+        assert_eq!(single.isEmpty(), false);
+        assert_eq!(single.isSingleton(), true);
         assert_eq!(*single.nth(0), 42);
         assert_eq!(single.values_in_order(), vec![42]);
         
@@ -202,11 +202,11 @@ pub mod TestAVLTreeSeqPer {
         // Test edge cases
         let empty_sub = tree.subseq_copy(5, 0); // Empty subseq
         assert_eq!(empty_sub.length(), 0);
-        assert_eq!(empty_sub.isEmpty(), B::True);
+        assert_eq!(empty_sub.isEmpty(), true);
         
         let out_of_bounds = tree.subseq_copy(15, 5); // Start beyond end
         assert_eq!(out_of_bounds.length(), 0);
-        assert_eq!(out_of_bounds.isEmpty(), B::True);
+        assert_eq!(out_of_bounds.isEmpty(), true);
         
         let partial_bounds = tree.subseq_copy(8, 5); // Extends beyond end
         assert_eq!(partial_bounds.length(), 2); // Should get [9, 10]

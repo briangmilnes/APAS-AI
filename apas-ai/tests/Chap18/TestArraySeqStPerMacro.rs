@@ -7,7 +7,7 @@ use apas_ai::Types::Types::{ArraySeqSetEq, B, Pair};
 fn arrayseq_stper_macro_empty() {
     let seq: Seq<i32> = ArraySeqStPerSLit![];
     assert_eq!(<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::length(&seq), 0);
-    assert_eq!(<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::isEmpty(&seq), B::True);
+    assert_eq!(<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::isEmpty(&seq), true);
 }
 
 #[test]
@@ -23,7 +23,7 @@ fn arrayseq_stper_macro_repeat() {
     assert_eq!(<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::length(&seq), 2);
     assert_eq!(<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::nth(&seq, 0), &"rust");
     assert_eq!(<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::nth(&seq, 1), &"rust");
-    assert_eq!(<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::isSingleton(&seq), B::False);
+    assert_eq!(<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::isSingleton(&seq), false);
 }
 
 #[test]
@@ -44,7 +44,7 @@ fn arrayseq_stper_operations() {
 
     let a = ArraySeqStPerSLit![1, 2, 3, 4, 5];
     let filtered = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::filter(&a, &|value| {
-        if *value % 2 == 0 { B::True } else { B::False }
+        if *value % 2 == 0 { true } else { false }
     });
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&filtered), 2);
 

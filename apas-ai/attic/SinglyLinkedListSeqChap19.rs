@@ -75,7 +75,7 @@ impl<T2> SinglyLinkedListSeqChap19 for SinglyLinkedListS<T2> {
         for x in b.data.iter() { out.push_back(x.clone()); }
         SinglyLinkedListS { data: out }
     }
-    fn deflate<T: Clone>(f: impl Fn(&T) -> B, x: &T) -> SinglyLinkedListS<T> { let keep = f(x) == B::True; if keep { <SinglyLinkedListS<T> as SinglyLinkedListSeq<T>>::singleton(x.clone()) } else { <SinglyLinkedListS<T> as SinglyLinkedListSeq<T>>::empty() } }
+    fn deflate<T: Clone>(f: impl Fn(&T) -> B, x: &T) -> SinglyLinkedListS<T> { let keep = f(x) == true; if keep { <SinglyLinkedListS<T> as SinglyLinkedListSeq<T>>::singleton(x.clone()) } else { <SinglyLinkedListS<T> as SinglyLinkedListSeq<T>>::empty() } }
     fn filter<T: Clone + Eq>(a: &SinglyLinkedListS<T>, f: impl Fn(&T) -> B) -> SinglyLinkedListS<T> { let mapped: SinglyLinkedListS<SinglyLinkedListS<T>> = <SinglyLinkedListS<SinglyLinkedListS<T>> as SinglyLinkedListSeqChap19>::tabulate(|i| Self::deflate(|elt| f(elt), a.nth(i)), a.length()); <SinglyLinkedListS<T> as SinglyLinkedListSeqChap18>::flatten(&mapped) }
     fn iterate<T: Clone + Eq, A: Clone>(a: &SinglyLinkedListS<T>, f: impl Fn(&A, &T) -> A, x: A) -> A { <SinglyLinkedListS<T2> as SinglyLinkedListSeqChap18>::iterate(a, f, x) }
     fn reduce<T: Clone + Eq, F>(a: &SinglyLinkedListS<T>, f: &F, id: T) -> T where F: Fn(&T, &T) -> T { <SinglyLinkedListS<T2> as SinglyLinkedListSeqChap18>::reduce(a, f, id) }

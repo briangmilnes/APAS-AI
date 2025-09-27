@@ -86,7 +86,7 @@ pub mod ArraySeqStPerChap {
         fn filter(a: &ArrayStPerS<T>, pred: impl Fn(&T) -> B) -> ArrayStPerS<T> {
             let mut v: Vec<T> = Vec::new();
             for i in 0..a.length() {
-                if pred(a.nth(i)) == B::True {
+                if pred(a.nth(i)) == true {
                     v.push(a.nth(i).clone());
                 }
             }

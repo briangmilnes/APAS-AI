@@ -36,15 +36,15 @@ pub mod TestArraySeqStPer {
 
     #[test]
     fn test_sequence_basic() {
-        let a: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::new(10, B::False);
+        let a: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::new(10, false);
         assert_eq!(a.length() == 0, false);
         assert_eq!(a.length(), 10);
-        let b = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::update(&a, 0, B::True);
-        let c = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::update(&b, 1, B::False);
-        let d = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::update(&c, 2, B::True);
+        let b = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::update(&a, 0, true);
+        let c = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::update(&b, 1, false);
+        let d = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::update(&c, 2, true);
         assert_eq!(d.length(), 10);
         let head4 = ArraySeqStPerSLit![*d.nth(0), *d.nth(1), *d.nth(2), *d.nth(3)];
-        assert_eq!(head4, ArraySeqStPerSLit![B::True, B::False, B::True, B::False]);
+        assert_eq!(head4, ArraySeqStPerSLit![true, false, true, false]);
     }
 
     #[test]
@@ -167,8 +167,8 @@ pub mod TestArraySeqStPer {
         let total_seq1 = ArraySeqStPerSLit![TotalComparable { value: 42 }];
         let total_seq2 = ArraySeqStPerSLit![TotalComparable { value: 42 }];
         assert_eq!(total_seq1.nth(0), total_seq2.nth(0));
-        let b_seq1 = ArraySeqStPerSLit![B::True, B::False];
-        let b_seq2 = ArraySeqStPerSLit![B::True, B::False];
+        let b_seq1 = ArraySeqStPerSLit![true, false];
+        let b_seq2 = ArraySeqStPerSLit![true, false];
         assert_eq!(b_seq1.nth(0), b_seq2.nth(0));
         assert_eq!(b_seq1.nth(1), b_seq2.nth(1));
         assert_ne!(b_seq1.nth(0), b_seq1.nth(1));

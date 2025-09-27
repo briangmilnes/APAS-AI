@@ -11,34 +11,15 @@ pub mod Types {
     pub type N = usize;
 
     /// Data Type 18.1 (Boolean) type used by APAS.
-    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-    pub enum B {
-        True,
-        False,
-    }
+    /// Using Rust's built-in bool with normal true/false literals
+    pub type B = bool;
 
     /// Data Type 18.1 (Ordering) relationships used by APAS, using Rust's as it matches.
     /// Enumerated values in `std::cmp::Ordering` are named: Less, Equal, Greater.
     pub use std::cmp::Ordering as O;
 
-    impl std::fmt::Display for B {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            match self {
-                | B::True => write!(f, "True"),
-                | B::False => write!(f, "False"),
-            }
-        }
-    }
-
-    impl std::ops::Not for B {
-        type Output = B;
-        fn not(self) -> B {
-            match self {
-                | B::True => B::False,
-                | B::False => B::True,
-            }
-        }
-    }
+    // Note: bool already implements Display, Debug, Not, etc.
+    // No custom implementations needed when B = bool
 
     // Type bounds shorthands
     // StT: single-threaded friendly elements: Eq + Clone + Display + Debug + Sized
@@ -135,12 +116,8 @@ pub mod Types {
         fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
-    // Custom boolean enum implementation
-    impl MtT for B {
-        type Inner = B;
-        fn clone_mt(&self) -> Self { *self }
-        fn new_mt(inner: Self::Inner) -> Self { inner }
-    }
+    // Note: bool already has MtT implementation above (line ~112)
+    // No custom implementation needed when B = bool
 
     /// Edge wrapper to enable Display/Debug for pairs (V,V) under baseline bounds.
     #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]

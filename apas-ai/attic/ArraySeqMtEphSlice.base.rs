@@ -118,17 +118,17 @@ pub mod ArraySeqMtEphSlice {
 
         fn isEmpty(&self) -> B {
             if self.len() == 0 {
-                B::True
+                true
             } else {
-                B::False
+                false
             }
         }
 
         fn isSingleton(&self) -> B {
             if self.len() == 1 {
-                B::True
+                true
             } else {
-                B::False
+                false
             }
         }
 

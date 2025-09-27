@@ -49,9 +49,9 @@ pub mod ArraySeqMtPer {
             ArraySeqMtPerS::from_vec(values)
         }
 
-        pub fn is_empty(&self) -> B { if self.data.is_empty() { B::True } else { B::False } }
+        pub fn is_empty(&self) -> B { if self.data.is_empty() { true } else { false } }
 
-        pub fn is_singleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
+        pub fn is_singleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
 
         /// Iterator over references to elements
         pub fn iter(&self) -> std::slice::Iter<'_, T> {
@@ -200,7 +200,7 @@ pub mod ArraySeqMtPer {
             let mut values: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let item = a.nth(i);
-                if pred(item) == B::True {
+                if pred(item) == true {
                     values.push(item.clone());
                 }
             }

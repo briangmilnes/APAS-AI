@@ -72,7 +72,7 @@ pub mod ArraySeqStPerChap19 {
         }
 
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArrayStPerS<T> {
-            let keep = f(x) == B::True;
+            let keep = f(x) == true;
             <ArrayStPerS<T> as ArraySeqStPerChap19Trait<T>>::tabulate(|_| x.clone(), if keep { 1 } else { 0 })
         }
         fn filter(a: &ArrayStPerS<T>, f: impl Fn(&T) -> B) -> ArrayStPerS<T> {

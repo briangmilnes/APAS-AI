@@ -21,13 +21,13 @@ pub mod TestArraySeqPer {
     #[test]
     fn test_deflate_and_filter() {
         let y = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::deflate(
-            &|&x: &N| if x % 2 == 0 { B::True } else { B::False },
+            &|&x: &N| if x % 2 == 0 { true } else { false },
             &6,
         );
         assert_eq!(y, ArraySeqStPerSLit![6]);
         let a = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 1, 10);
         let evens =
-            <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&a, &|x| if *x % 2 == 0 { B::True } else { B::False });
+            <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&a, &|x| if *x % 2 == 0 { true } else { false });
         assert_eq!(evens, ArraySeqStPerSLit![2, 4, 6, 8, 10]);
     }
 

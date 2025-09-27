@@ -18,8 +18,8 @@ pub mod TestBSTSetTreapMtEph {
     fn treap_set_empty() {
         let set: BSTSetTreapMt<i32> = BSTSetTreapMt::empty();
         assert_eq!(set.size(), 0);
-        assert_eq!(set.is_empty(), B::True);
-        assert_eq!(set.contains(&42), B::False);
+        assert_eq!(set.is_empty(), true);
+        assert_eq!(set.contains(&42), false);
         assert_eq!(set.minimum(), None);
         assert_eq!(set.maximum(), None);
     }
@@ -34,14 +34,14 @@ pub mod TestBSTSetTreapMtEph {
         set.insert(9);
         
         assert_eq!(set.size(), 5);
-        assert_eq!(set.is_empty(), B::False);
-        assert_eq!(set.contains(&5), B::True);
-        assert_eq!(set.contains(&3), B::True);
-        assert_eq!(set.contains(&7), B::True);
-        assert_eq!(set.contains(&1), B::True);
-        assert_eq!(set.contains(&9), B::True);
-        assert_eq!(set.contains(&2), B::False);
-        assert_eq!(set.contains(&8), B::False);
+        assert_eq!(set.is_empty(), false);
+        assert_eq!(set.contains(&5), true);
+        assert_eq!(set.contains(&3), true);
+        assert_eq!(set.contains(&7), true);
+        assert_eq!(set.contains(&1), true);
+        assert_eq!(set.contains(&9), true);
+        assert_eq!(set.contains(&2), false);
+        assert_eq!(set.contains(&8), false);
     }
 
     #[test]
@@ -50,17 +50,17 @@ pub mod TestBSTSetTreapMtEph {
         
         set.delete(&5);
         assert_eq!(set.size(), 4);
-        assert_eq!(set.contains(&5), B::False);
-        assert_eq!(set.contains(&3), B::True);
-        assert_eq!(set.contains(&7), B::True);
+        assert_eq!(set.contains(&5), false);
+        assert_eq!(set.contains(&3), true);
+        assert_eq!(set.contains(&7), true);
         
         set.delete(&1);
         set.delete(&9);
         assert_eq!(set.size(), 2);
-        assert_eq!(set.contains(&1), B::False);
-        assert_eq!(set.contains(&9), B::False);
-        assert_eq!(set.contains(&3), B::True);
-        assert_eq!(set.contains(&7), B::True);
+        assert_eq!(set.contains(&1), false);
+        assert_eq!(set.contains(&9), false);
+        assert_eq!(set.contains(&3), true);
+        assert_eq!(set.contains(&7), true);
     }
 
     #[test]
@@ -84,7 +84,7 @@ pub mod TestBSTSetTreapMtEph {
         assert_eq!(union.size(), 8);
         
         for i in 1..=8 {
-            assert_eq!(union.contains(&i), B::True);
+            assert_eq!(union.contains(&i), true);
         }
         
         let overlapping_a = make_set(&[1, 2, 3]);
@@ -92,7 +92,7 @@ pub mod TestBSTSetTreapMtEph {
         let overlapping_union = overlapping_a.union(&overlapping_b);
         assert_eq!(overlapping_union.size(), 5);
         for i in 1..=5 {
-            assert_eq!(overlapping_union.contains(&i), B::True);
+            assert_eq!(overlapping_union.contains(&i), true);
         }
     }
 
@@ -103,17 +103,17 @@ pub mod TestBSTSetTreapMtEph {
         
         let intersection = set_a.intersection(&set_b);
         assert_eq!(intersection.size(), 3);
-        assert_eq!(intersection.contains(&3), B::True);
-        assert_eq!(intersection.contains(&4), B::True);
-        assert_eq!(intersection.contains(&5), B::True);
-        assert_eq!(intersection.contains(&1), B::False);
-        assert_eq!(intersection.contains(&7), B::False);
+        assert_eq!(intersection.contains(&3), true);
+        assert_eq!(intersection.contains(&4), true);
+        assert_eq!(intersection.contains(&5), true);
+        assert_eq!(intersection.contains(&1), false);
+        assert_eq!(intersection.contains(&7), false);
         
         let disjoint_a = make_set(&[1, 3, 5]);
         let disjoint_b = make_set(&[2, 4, 6]);
         let empty_intersection = disjoint_a.intersection(&disjoint_b);
         assert_eq!(empty_intersection.size(), 0);
-        assert_eq!(empty_intersection.is_empty(), B::True);
+        assert_eq!(empty_intersection.is_empty(), true);
     }
 
     #[test]
@@ -123,11 +123,11 @@ pub mod TestBSTSetTreapMtEph {
         
         let difference = set_a.difference(&set_b);
         assert_eq!(difference.size(), 2);
-        assert_eq!(difference.contains(&1), B::True);
-        assert_eq!(difference.contains(&2), B::True);
-        assert_eq!(difference.contains(&3), B::False);
-        assert_eq!(difference.contains(&4), B::False);
-        assert_eq!(difference.contains(&5), B::False);
+        assert_eq!(difference.contains(&1), true);
+        assert_eq!(difference.contains(&2), true);
+        assert_eq!(difference.contains(&3), false);
+        assert_eq!(difference.contains(&4), false);
+        assert_eq!(difference.contains(&5), false);
     }
 
     #[test]
@@ -135,19 +135,19 @@ pub mod TestBSTSetTreapMtEph {
         let set = make_set(&[1, 2, 3, 4, 5, 6, 7, 8, 9]);
         
         let (left, found, right) = set.split(&5);
-        assert_eq!(found, B::True);
+        assert_eq!(found, true);
         assert_eq!(left.size(), 4);
         assert_eq!(right.size(), 4);
         
         for i in 1..5 {
-            assert_eq!(left.contains(&i), B::True);
+            assert_eq!(left.contains(&i), true);
         }
         for i in 6..=9 {
-            assert_eq!(right.contains(&i), B::True);
+            assert_eq!(right.contains(&i), true);
         }
         
         let (left_missing, found_missing, right_missing) = set.split(&10);
-        assert_eq!(found_missing, B::False);
+        assert_eq!(found_missing, false);
         assert_eq!(left_missing.size(), 9);
         assert_eq!(right_missing.size(), 0);
     }
@@ -161,10 +161,10 @@ pub mod TestBSTSetTreapMtEph {
         assert_eq!(joined.size(), 6);
         
         for i in [1, 2, 3, 7, 8, 9] {
-            assert_eq!(joined.contains(&i), B::True);
+            assert_eq!(joined.contains(&i), true);
         }
         for i in [4, 5, 6] {
-            assert_eq!(joined.contains(&i), B::False);
+            assert_eq!(joined.contains(&i), false);
         }
     }
 
@@ -177,7 +177,7 @@ pub mod TestBSTSetTreapMtEph {
         assert_eq!(joined.size(), 7);
         
         for i in [1, 2, 3, 5, 7, 8, 9] {
-            assert_eq!(joined.contains(&i), B::True);
+            assert_eq!(joined.contains(&i), true);
         }
     }
 
@@ -188,16 +188,16 @@ pub mod TestBSTSetTreapMtEph {
         let evens = set.filter(|x| x % 2 == 0);
         assert_eq!(evens.size(), 5);
         for i in [2, 4, 6, 8, 10] {
-            assert_eq!(evens.contains(&i), B::True);
+            assert_eq!(evens.contains(&i), true);
         }
         for i in [1, 3, 5, 7, 9] {
-            assert_eq!(evens.contains(&i), B::False);
+            assert_eq!(evens.contains(&i), false);
         }
         
         let greater_than_five = set.filter(|x| *x > 5);
         assert_eq!(greater_than_five.size(), 5);
         for i in 6..=10 {
-            assert_eq!(greater_than_five.contains(&i), B::True);
+            assert_eq!(greater_than_five.contains(&i), true);
         }
     }
 
@@ -253,7 +253,7 @@ pub mod TestBSTSetTreapMtEph {
         
         for (size, is_empty) in results {
             assert!(size >= 25);
-            assert_eq!(is_empty, B::False);
+            assert_eq!(is_empty, false);
         }
     }
 
@@ -320,10 +320,10 @@ pub mod TestBSTSetTreapMtEph {
         
         let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
         
-        assert_eq!(results[0], (25, B::True, 74));
-        assert_eq!(results[1], (50, B::True, 49));
-        assert_eq!(results[2], (75, B::True, 24));
-        assert_eq!(results[3], (90, B::True, 9));
+        assert_eq!(results[0], (25, true, 74));
+        assert_eq!(results[1], (50, true, 49));
+        assert_eq!(results[2], (75, true, 24));
+        assert_eq!(results[3], (90, true, 9));
     }
 
     #[test]

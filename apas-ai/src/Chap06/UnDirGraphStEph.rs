@@ -66,11 +66,11 @@ pub mod UnDirGraphStEph {
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Treat edges as unordered: {u,v}
-            if B::True == self.E.mem(&Edge(u.clone(), v.clone())) || B::True == self.E.mem(&Edge(v.clone(), u.clone()))
+            if true == self.E.mem(&Edge(u.clone(), v.clone())) || true == self.E.mem(&Edge(v.clone(), u.clone()))
             {
-                B::True
+                true
             } else {
-                B::False
+                false
             }
         }
 
@@ -95,7 +95,7 @@ pub mod UnDirGraphStEph {
             result
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { B::True } else { B::False } }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { true } else { false } }
 
         fn Degree(&self, v: &V) -> N { self.NG(v).size() }
     }

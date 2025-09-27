@@ -119,7 +119,7 @@ pub mod BSTParaTreapMtEph {
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)
         fn split_inner(tree: &Self, key: &T) -> (Self, B, Self) {
             match tree.expose_with_priority() {
-                | None => (ParamTreap::new(), B::False, ParamTreap::new()),
+                | None => (ParamTreap::new(), false, ParamTreap::new()),
                 | Some((left, root_key, priority, right)) => match key.cmp(&root_key) {
                     | std::cmp::Ordering::Less => {
                         let (ll, found, lr) = ParamTreap::split_inner(&left, key);
@@ -131,7 +131,7 @@ pub mod BSTParaTreapMtEph {
                         let rebuilt = ParamTreap::join_with_priority(left, root_key, priority, rl);
                         (rebuilt, found, rr)
                     }
-                    | std::cmp::Ordering::Equal => (left, B::True, right),
+                    | std::cmp::Ordering::Equal => (left, true, right),
                 },
             }
         }
@@ -177,7 +177,7 @@ pub mod BSTParaTreapMtEph {
                         crate::ParaPair!(move || ParamTreap::intersect_inner(&al, &bl), move || {
                             ParamTreap::intersect_inner(&ar, &br)
                         });
-                    if found == B::True {
+                    if found == true {
                         ParamTreap::join_with_priority(left_res, ak, ap, right_res)
                     } else {
                         ParamTreap::join_pair_inner(left_res, right_res)
@@ -197,7 +197,7 @@ pub mod BSTParaTreapMtEph {
                         crate::ParaPair!(move || ParamTreap::difference_inner(&al, &bl), move || {
                             ParamTreap::difference_inner(&ar, &br)
                         });
-                    if found == B::True {
+                    if found == true {
                         ParamTreap::join_pair_inner(left_res, right_res)
                     } else {
                         ParamTreap::join_with_priority(left_res, ak, ap, right_res)
@@ -366,7 +366,7 @@ pub mod BSTParaTreapMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn is_empty(&self) -> B { if self.size() == 0 { B::True } else { B::False } }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)

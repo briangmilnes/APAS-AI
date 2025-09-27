@@ -101,9 +101,9 @@ impl<T> SinglyLinkedListSeq<T> for SinglyLinkedListS<T> {
     /// APAS 20.7 (singleton x): Work Θ(1), Span Θ(1).
     fn singleton(item: T) -> SinglyLinkedListS<T> { let mut ll = LinkedList::new(); ll.push_back(item); SinglyLinkedListS { data: ll } }
     /// APAS 20.7 (isEmpty x): Work Θ(1), Span Θ(1).
-    fn isEmpty(&self) -> B { if self.data.len() == 0 { B::True } else { B::False } }
+    fn isEmpty(&self) -> B { if self.data.len() == 0 { true } else { false } }
     /// APAS 20.7 (isSingleton x): Work Θ(1), Span Θ(1).
-    fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
+    fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
     /// gpt-5-hard: Work Θ(1 + start + length), Span Θ(1 + start).
     /// BUG: APAS and gpt-5 algorithmic analysis differs.
     fn subseq_copy(&self, start: N, length: N) -> SinglyLinkedListS<T>

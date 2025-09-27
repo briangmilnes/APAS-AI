@@ -83,10 +83,10 @@ pub mod DirGraphMtEph {
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Adjacent if there is an arc either way
-            if B::True == self.A.mem(&Edge(u.clone_mt(), v.clone_mt())) {
-                B::True
+            if true == self.A.mem(&Edge(u.clone_mt(), v.clone_mt())) {
+                true
             } else {
-                B::False
+                false
             }
         }
 
@@ -139,7 +139,7 @@ pub mod DirGraphMtEph {
             result
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { B::True } else { B::False } }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { true } else { false } }
 
         fn Degree(&self, v: &V) -> N { self.InDegree(v) + self.OutDegree(v) }
         fn InDegree(&self, v: &V) -> N { self.NMinus(v).size() }

@@ -43,7 +43,7 @@ pub mod AVLTreeSeqStPerChap18 {
             let vals = <AVLTreeSeqStPerS<T> as AVLTreeSeqStPerTrait<T>>::values_in_order(a);
             let mut out: Vec<T> = Vec::new();
             for x in vals.iter() {
-                if pred(x) == B::True {
+                if pred(x) == true {
                     out.push(x.clone());
                 }
             }

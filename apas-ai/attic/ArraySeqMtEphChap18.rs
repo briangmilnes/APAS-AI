@@ -58,7 +58,7 @@ pub mod ArraySeqMtEphChap {
             kept.reserve(n);
             for i in 0..n {
                 let x = a.nth_cloned(i);
-                if pred(&x) == B::True {
+                if pred(&x) == true {
                     kept.push(x);
                 }
             }

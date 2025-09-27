@@ -7,7 +7,7 @@ pub mod Exercise21_8 {
 
     /// Helper function to check divisibility
     pub fn is_divisible(n: N, i: N) -> B { 
-        if n % i == 0 { B::True } else { B::False } 
+        if n % i == 0 { true } else { false } 
     }
 
     /// Exercise 21.8 / Algorithm 21.4 (Brute Force Primality Test)
@@ -20,11 +20,11 @@ pub mod Exercise21_8 {
     /// APAS: Work: Θ(√n), Span: Θ(lg n)
     pub fn is_prime(n: N) -> B {
         if n < 2 {
-            return B::False;
+            return false;
         }
         let k: N = (n as f64).sqrt().floor() as N;
         let all: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(&|i| is_divisible(n, i + 1), k);
         let ones: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::filter(&all, &|x| *x);
-        if ones.length() == 1 { B::True } else { B::False }
+        if ones.length() == 1 { true } else { false }
     }
 }

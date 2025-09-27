@@ -205,7 +205,7 @@ pub mod ArraySeqMtEph {
             let n = a.length();
             for i in 0..n {
                 let value = a.nth_cloned(i);
-                if pred(&value) == B::True {
+                if pred(&value) == true {
                     kept.push(value);
                 }
             }
@@ -229,9 +229,9 @@ pub mod ArraySeqMtEph {
             out
         }
 
-        fn isEmpty(&self) -> B { if self.length() == 0 { B::True } else { B::False } }
+        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
 
-        fn isSingleton(&self) -> B { if self.length() == 1 { B::True } else { B::False } }
+        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
 
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {
             let mut values: Vec<T> = Vec::new();

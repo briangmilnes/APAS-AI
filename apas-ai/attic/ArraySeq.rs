@@ -49,11 +49,11 @@ pub trait ArraySeq<T> {
     /// Work: Θ(1), Span: Θ(1).
     fn singleton(item: T) -> ArrayS<T>;
 
-    /// Definition 18.5 (isEmpty). B::True iff the sequence has length zero. <br/>
+    /// Definition 18.5 (isEmpty). true iff the sequence has length zero. <br/>
     /// Work: Θ(1), Span: Θ(1).
     fn isEmpty(&self) -> B;
 
-    /// Definition 18.5 (isSingleton). B::True iff the sequence has length one. <br/>
+    /// Definition 18.5 (isSingleton). true iff the sequence has length one. <br/>
     /// Work: Θ(1), Span: Θ(1).
     fn isSingleton(&self) -> B;
 
@@ -152,9 +152,9 @@ impl<T> ArraySeq<T> for ArrayS<T> {
 
     fn singleton(item: T) -> ArrayS<T> { crate::arrayseq![item] }
 
-    fn isEmpty(&self) -> B { if self.data.len() == 0 { B::True } else { B::False } }
+    fn isEmpty(&self) -> B { if self.data.len() == 0 { true } else { false } }
 
-    fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
+    fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
 
     fn subseq_copy(&self, start: N, length: N) -> ArrayS<T>
     where

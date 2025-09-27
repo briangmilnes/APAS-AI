@@ -64,7 +64,7 @@ pub mod TestLinkedListStEph {
             <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(
                 &a,
                 &|x: &N| {
-                    if *x % 2 == 0 { B::True } else { B::False }
+                    if *x % 2 == 0 { true } else { false }
                 },
             );
         expect_list(&b, &[2, 4]);

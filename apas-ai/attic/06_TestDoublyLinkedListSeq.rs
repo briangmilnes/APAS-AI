@@ -20,13 +20,13 @@ fn test_new_and_update() {
 fn test_empty_singleton_and_predicates() {
     let e: ListS<N> = <ListS<N> as ListSeq<N>>::empty();
     assert_eq!(e.length(), 0);
-    assert_eq!(e.isEmpty(), B::True);
-    assert_eq!(e.isSingleton(), B::False);
+    assert_eq!(e.isEmpty(), true);
+    assert_eq!(e.isSingleton(), false);
 
     let s = <ListS<N> as ListSeq<N>>::singleton(42);
     assert_eq!(s.length(), 1);
-    assert_eq!(s.isEmpty(), B::False);
-    assert_eq!(s.isSingleton(), B::True);
+    assert_eq!(s.isEmpty(), false);
+    assert_eq!(s.isSingleton(), true);
 }
 
 #[test]

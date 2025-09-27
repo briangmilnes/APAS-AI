@@ -42,8 +42,8 @@ pub mod BBTStEph {
 
         pub fn is_leaf(&self) -> B {
             match self {
-                | BBTree::Leaf => B::True,
-                | BBTree::Node(_) => B::False,
+                | BBTree::Leaf => true,
+                | BBTree::Node(_) => false,
             }
         }
 

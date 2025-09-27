@@ -59,7 +59,7 @@ pub mod ArraySeqStEphChap19 {
             <ArraySeqStEphS<T> as ArraySeqStEphChap18Trait<T>>::append(a, b)
         }
         fn deflate(f: impl Fn(&T) -> B, x: &T) -> ArraySeqStEphS<T> {
-            if f(x) == B::True {
+            if f(x) == true {
                 <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::singleton(x.clone())
             } else {
                 <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty()

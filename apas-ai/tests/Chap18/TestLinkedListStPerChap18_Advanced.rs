@@ -26,7 +26,7 @@ pub mod TestLinkedListStPer {
             <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(
                 &a,
                 &|x: &N| {
-                    if *x % 2 == 1 { B::True } else { B::False }
+                    if *x % 2 == 1 { true } else { false }
                 },
             );
         assert_eq!(c, LinkedListStPerSLit![1, 3, 5]);

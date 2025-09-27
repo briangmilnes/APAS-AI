@@ -37,20 +37,20 @@ pub mod TestLabDirGraphMtEph {
         // Test out-neighbors
         let out0 = g.out_neighbors(&0);
         assert_eq!(out0.size(), 1);
-        assert_eq!(out0.mem(&1), B::True);
+        assert_eq!(out0.mem(&1), true);
         
         let out1 = g.out_neighbors(&1);
         assert_eq!(out1.size(), 1);
-        assert_eq!(out1.mem(&2), B::True);
+        assert_eq!(out1.mem(&2), true);
         
         // Test in-neighbors
         let in1 = g.in_neighbors(&1);
         assert_eq!(in1.size(), 1);
-        assert_eq!(in1.mem(&0), B::True);
+        assert_eq!(in1.mem(&0), true);
         
         let in3 = g.in_neighbors(&3);
         assert_eq!(in3.size(), 1);
-        assert_eq!(in3.mem(&2), B::True);
+        assert_eq!(in3.mem(&2), true);
         
         // Test arc labels
         assert_eq!(g.get_arc_label(&0, &1), Some(&"edge01".to_string()));
@@ -69,9 +69,9 @@ pub mod TestLabDirGraphMtEph {
         g.add_vertex(2);
         
         assert_eq!(g.vertices().size(), 3);
-        assert_eq!(g.vertices().mem(&0), B::True);
-        assert_eq!(g.vertices().mem(&1), B::True);
-        assert_eq!(g.vertices().mem(&2), B::True);
+        assert_eq!(g.vertices().mem(&0), true);
+        assert_eq!(g.vertices().mem(&1), true);
+        assert_eq!(g.vertices().mem(&2), true);
         
         // Add labeled arcs
         g.add_labeled_arc(0, 1, "first".to_string());
@@ -101,12 +101,12 @@ pub mod TestLabDirGraphMtEph {
         // Test out-neighbors
         let out0 = g.out_neighbors(&0);
         assert_eq!(out0.size(), 2);
-        assert_eq!(out0.mem(&1), B::True);
-        assert_eq!(out0.mem(&3), B::True);
+        assert_eq!(out0.mem(&1), true);
+        assert_eq!(out0.mem(&3), true);
         
         let out1 = g.out_neighbors(&1);
         assert_eq!(out1.size(), 1);
-        assert_eq!(out1.mem(&2), B::True);
+        assert_eq!(out1.mem(&2), true);
         
         let out3 = g.out_neighbors(&3);
         assert_eq!(out3.size(), 0);
@@ -117,12 +117,12 @@ pub mod TestLabDirGraphMtEph {
         
         let in1 = g.in_neighbors(&1);
         assert_eq!(in1.size(), 1);
-        assert_eq!(in1.mem(&0), B::True);
+        assert_eq!(in1.mem(&0), true);
         
         let in3 = g.in_neighbors(&3);
         assert_eq!(in3.size(), 2);
-        assert_eq!(in3.mem(&0), B::True);
-        assert_eq!(in3.mem(&2), B::True);
+        assert_eq!(in3.mem(&0), true);
+        assert_eq!(in3.mem(&2), true);
     }
 
     #[test]
@@ -221,8 +221,8 @@ pub mod TestLabDirGraphMtEph {
         // Test arcs() method that converts labeled arcs to unlabeled edges
         let arcs = g.arcs();
         assert_eq!(arcs.size(), 2);
-        assert_eq!(arcs.mem(&Edge(0, 1)), B::True);
-        assert_eq!(arcs.mem(&Edge(1, 2)), B::True);
-        assert_eq!(arcs.mem(&Edge(0, 2)), B::False);
+        assert_eq!(arcs.mem(&Edge(0, 1)), true);
+        assert_eq!(arcs.mem(&Edge(1, 2)), true);
+        assert_eq!(arcs.mem(&Edge(0, 2)), false);
     }
 }

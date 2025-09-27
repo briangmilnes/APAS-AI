@@ -44,11 +44,11 @@ pub trait DoublyLinkedListSeq<T> {
     /// chatgpt-5-hard: Work Θ(1), Span Θ(1).
     fn singleton(item: T) -> DoublyLinkedListS<T>;
 
-    /// B::True iff the sequence has length zero. <br/>
+    /// true iff the sequence has length zero. <br/>
     /// chatgpt-5-hard: Work Θ(1), Span Θ(1).
     fn isEmpty(&self) -> B;
 
-    /// B::True iff the sequence has length one. <br/>
+    /// true iff the sequence has length one. <br/>
     /// chatgpt-5-hard: Work Θ(1), Span Θ(1).
     fn isSingleton(&self) -> B;
 
@@ -123,10 +123,10 @@ impl<T> DoublyLinkedListSeq<T> for DoublyLinkedListS<T> {
     fn singleton(item: T) -> DoublyLinkedListS<T> { let mut ll = LinkedList::new(); ll.push_back(item); DoublyLinkedListS { data: ll } }
 
     /// gpt-5-hard: Work Θ(1), Span Θ(1).
-    fn isEmpty(&self) -> B { if self.data.len() == 0 { B::True } else { B::False } }
+    fn isEmpty(&self) -> B { if self.data.len() == 0 { true } else { false } }
 
     /// gpt-5-hard: Work Θ(1), Span Θ(1).
-    fn isSingleton(&self) -> B { if self.data.len() == 1 { B::True } else { B::False } }
+    fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
 
     /// gpt-5-hard: Work Θ(1 + start + length), Span Θ(1 + start).
     fn subseq_copy(&self, start: N, length: N) -> DoublyLinkedListS<T>

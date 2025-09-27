@@ -59,7 +59,7 @@ pub mod BSTBBAlphaStEph {
 
         pub fn size(&self) -> N { Self::size_link(&self.root) }
 
-        pub fn is_empty(&self) -> B { if self.size() == 0 { B::True } else { B::False } }
+        pub fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         pub fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
@@ -81,7 +81,7 @@ pub mod BSTBBAlphaStEph {
 
         pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
 
-        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { B::True } else { B::False } }
+        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
 
         pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
 

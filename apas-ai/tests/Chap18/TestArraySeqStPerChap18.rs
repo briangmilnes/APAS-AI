@@ -74,12 +74,12 @@ pub mod TestArraySeqStPerChap {
     fn test_filter_even() {
         let numbers = ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         let evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&numbers, &|&x| {
-            if x % 2 == 0 { B::True } else { B::False }
+            if x % 2 == 0 { true } else { false }
         });
         assert_eq!(evens, ArraySeqStPerSLit![2, 4, 6, 8, 10]);
         let odds_only = ArraySeqStPerSLit![1, 3, 5, 7];
         let no_evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&odds_only, &|&x| {
-            if x % 2 == 0 { B::True } else { B::False }
+            if x % 2 == 0 { true } else { false }
         });
         assert_eq!(no_evens.length(), 0);
     }
@@ -258,8 +258,8 @@ pub mod TestArraySeqStPerChap {
         
         // Basic properties
         assert_eq!(empty.length(), 0);
-        assert_eq!(empty.isEmpty(), B::True);
-        assert_eq!(empty.isSingleton(), B::False);
+        assert_eq!(empty.isEmpty(), true);
+        assert_eq!(empty.isSingleton(), false);
         
         // Operations on empty sequence should return empty or appropriate defaults
         let empty_subseq = empty.subseq_copy(0, 0);
@@ -273,7 +273,7 @@ pub mod TestArraySeqStPerChap {
         assert_eq!(mapped.length(), 0);
         
         // Filter on empty sequence should return empty
-        let filtered = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&empty, &|x| if *x > 0 { B::True } else { B::False });
+        let filtered = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&empty, &|x| if *x > 0 { true } else { false });
         assert_eq!(filtered.length(), 0);
         
         // Reduce on empty sequence should return base value
@@ -312,8 +312,8 @@ pub mod TestArraySeqStPerChap {
         
         // Basic properties
         assert_eq!(single.length(), 1);
-        assert_eq!(single.isEmpty(), B::False);
-        assert_eq!(single.isSingleton(), B::True);
+        assert_eq!(single.isEmpty(), false);
+        assert_eq!(single.isSingleton(), true);
         
         // Access operations
         assert_eq!(*single.nth(0), 42);
@@ -335,11 +335,11 @@ pub mod TestArraySeqStPerChap {
         assert_eq!(*mapped.nth(0), 84);
         
         // Filter operations
-        let filtered_true = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&single, &|x| if *x > 0 { B::True } else { B::False });
+        let filtered_true = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&single, &|x| if *x > 0 { true } else { false });
         assert_eq!(filtered_true.length(), 1);
         assert_eq!(*filtered_true.nth(0), 42);
         
-        let filtered_false = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&single, &|x| if *x > 100 { B::True } else { B::False });
+        let filtered_false = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&single, &|x| if *x > 100 { true } else { false });
         assert_eq!(filtered_false.length(), 0);
         
         // Reduce operations
@@ -390,38 +390,38 @@ pub mod TestArraySeqStPerChap {
         // Zero-length subseq at start
         let zero_start = seq.subseq_copy(0, 0);
         assert_eq!(zero_start.length(), 0);
-        assert_eq!(zero_start.isEmpty(), B::True);
+        assert_eq!(zero_start.isEmpty(), true);
         
         // Zero-length subseq in middle
         let zero_middle = seq.subseq_copy(2, 0);
         assert_eq!(zero_middle.length(), 0);
-        assert_eq!(zero_middle.isEmpty(), B::True);
+        assert_eq!(zero_middle.isEmpty(), true);
         
         // Zero-length subseq at end
         let zero_end = seq.subseq_copy(5, 0);
         assert_eq!(zero_end.length(), 0);
-        assert_eq!(zero_end.isEmpty(), B::True);
+        assert_eq!(zero_end.isEmpty(), true);
         
         // Zero-length subseq beyond end should still return empty
         let zero_beyond = seq.subseq_copy(10, 0);
         assert_eq!(zero_beyond.length(), 0);
-        assert_eq!(zero_beyond.isEmpty(), B::True);
+        assert_eq!(zero_beyond.isEmpty(), true);
         
         // Test with single element sequence
         let single = ArraySeqStPerSLit![42];
         let zero_single_start = single.subseq_copy(0, 0);
         assert_eq!(zero_single_start.length(), 0);
-        assert_eq!(zero_single_start.isEmpty(), B::True);
+        assert_eq!(zero_single_start.isEmpty(), true);
         
         let zero_single_end = single.subseq_copy(1, 0);
         assert_eq!(zero_single_end.length(), 0);
-        assert_eq!(zero_single_end.isEmpty(), B::True);
+        assert_eq!(zero_single_end.isEmpty(), true);
         
         // Test with empty sequence
         let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
         let zero_empty = empty.subseq_copy(0, 0);
         assert_eq!(zero_empty.length(), 0);
-        assert_eq!(zero_empty.isEmpty(), B::True);
+        assert_eq!(zero_empty.isEmpty(), true);
         
         // All zero-length subsequences should be equal to empty
         assert_eq!(zero_start, empty);
@@ -436,7 +436,7 @@ pub mod TestArraySeqStPerChap {
         let mapped_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&zero_start, &|x| x * 2);
         assert_eq!(mapped_zero.length(), 0);
         
-        let filtered_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&zero_start, &|x| if *x > 0 { B::True } else { B::False });
+        let filtered_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&zero_start, &|x| if *x > 0 { true } else { false });
         assert_eq!(filtered_zero.length(), 0);
         
         let reduced_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::reduce(&zero_start, &|a, b| a + b, 100);
@@ -537,8 +537,8 @@ pub mod TestArraySeqStPerChap {
         assert_eq!(large_seq.length(), large_size);
         assert_eq!(*large_seq.nth(0), 0);
         assert_eq!(*large_seq.nth(large_size - 1), (large_size - 1) as i32);
-        assert_eq!(large_seq.isEmpty(), B::False);
-        assert_eq!(large_seq.isSingleton(), B::False);
+        assert_eq!(large_seq.isEmpty(), false);
+        assert_eq!(large_seq.isSingleton(), false);
         
         // Test subseq_copy on large sequence
         let large_subseq = large_seq.subseq_copy(1000, 5000);
@@ -554,7 +554,7 @@ pub mod TestArraySeqStPerChap {
         assert_eq!(*mapped_large.nth(large_size - 1), ((large_size - 1) as i32) * 2);
         
         // Test filter operation on large sequence (sample)
-        let filtered_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&large_seq, &|x| if *x % 1000 == 0 { B::True } else { B::False });
+        let filtered_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&large_seq, &|x| if *x % 1000 == 0 { true } else { false });
         assert_eq!(filtered_large.length(), 50); // 0, 1000, 2000, ..., 49000
         assert_eq!(*filtered_large.nth(0), 0);
         assert_eq!(*filtered_large.nth(1), 1000);

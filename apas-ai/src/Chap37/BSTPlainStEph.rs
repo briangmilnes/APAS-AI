@@ -92,10 +92,10 @@ pub mod BSTPlainStEph {
 
     fn contains_node<'a, T: StT + Ord>(node: &'a BBTree<T>, target: &T) -> B {
         match node {
-            | BBTree::Leaf => B::False,
+            | BBTree::Leaf => false,
             | BBTree::Node(inner) => {
                 if target == &inner.value {
-                    B::True
+                    true
                 } else if target < &inner.value {
                     contains_node(&inner.left, target)
                 } else {

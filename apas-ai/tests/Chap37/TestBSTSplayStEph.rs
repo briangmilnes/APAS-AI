@@ -9,7 +9,7 @@ fn splay_basic_behaviour() {
         bst.insert(value);
     }
     assert_eq!(bst.size(), 7);
-    assert_eq!(bst.contains(&3), B::True);
+    assert_eq!(bst.contains(&3), true);
     assert_eq!(bst.find(&9), None);
     assert_eq!(bst.minimum(), Some(&1));
     assert_eq!(bst.maximum(), Some(&7));
