@@ -117,12 +117,12 @@ pub mod TestArraySeqStEphChap {
         let mut a_mut = a.clone();
         let injected = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&mut a_mut, &updates);
         assert_eq!(injected.length(), 5);
-        assert_eq!(injected, ArraySeqStEphSLit!["a", "cat", "on", "the", "mat"]);
+        assert_eq!(*injected, ArraySeqStEphSLit!["a", "cat", "on", "the", "mat"]);
 
         let conflicting_updates = ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")];
         let mut a_mut2 = a.clone();
         let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&mut a_mut2, &conflicting_updates);
-        assert_eq!(result_last, ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]);
+        assert_eq!(*result_last, ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]);
     }
 
     #[test]

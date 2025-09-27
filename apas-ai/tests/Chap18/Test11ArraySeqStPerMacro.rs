@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqStPerSLit;
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS as Seq, ArraySeqStPerTrait};
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerS as Seq, ArraySeqStPerTrait};
 use apas_ai::Types::Types::{B, Pair};
 
 #[test]
@@ -20,10 +20,10 @@ fn arrayseq_stper_macro_literal() {
 #[test]
 fn arrayseq_stper_macro_repeat() {
     let seq = ArraySeqStPerS!["rust"; 2];
-    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&seq), 2);
-    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&seq, 0), &"rust");
-    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&seq, 1), &"rust");
-    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::isSingleton(&seq), B::False);
+    assert_eq!(<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::length(&seq), 2);
+    assert_eq!(<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::nth(&seq, 0), &"rust");
+    assert_eq!(<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::nth(&seq, 1), &"rust");
+    assert_eq!(<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::isSingleton(&seq), B::False);
 }
 
 #[test]
