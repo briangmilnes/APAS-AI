@@ -8,7 +8,7 @@ fn bench_tabulate_map_mteph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtEphChap18");
     group.sample_size(10);
     group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(5));
+    group.measurement_time(Duration::from_secs(1));
     
     // Test both small (sequential) and large (parallel) sizes
     for &n in &[1_000, 10_000] {
@@ -27,7 +27,7 @@ fn bench_reduce_parallel_mteph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtEphReduce");
     group.sample_size(10);
     group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(5));
+    group.measurement_time(Duration::from_secs(1));
     
     // Test both small (sequential) and large (parallel) sizes
     for &n in &[1_000, 10_000] {
@@ -46,7 +46,7 @@ fn bench_filter_mteph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtEphFilter");
     group.sample_size(10);
     group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(5));
+    group.measurement_time(Duration::from_secs(1));
     
     let n: N = 10_000;
     group.bench_with_input(BenchmarkId::new("filter_evens", n), &n, |b, &len| {
@@ -63,7 +63,7 @@ fn bench_scan_mteph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtEphScan");
     group.sample_size(10);
     group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(5));
+    group.measurement_time(Duration::from_secs(1));
     
     let n: N = 5_000;
     group.bench_with_input(BenchmarkId::new("scan_sum", n), &n, |b, &len| {

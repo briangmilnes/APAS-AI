@@ -7,3 +7,7 @@
  any trait list which are tested or not.
 
  Third, 
+
+ Chap23/BBTEph.rs should be renamed BBTStEph. Fix all test and benches file naming and
+ and import paths. Rerun test and benches (on that file) and fix any errors.
+ 

@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::AVLTreeSeqStPerTrait;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Types::Types::*;
@@ -11,12 +11,15 @@ use std::time::Duration;
 fn bench_build_and_read_persistent(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchAVLTreeSeqPer");
     group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(5));
+    group.measurement_time(Duration::from_secs(1));
     let n: N = 1_000;
 
     group.bench_with_input(BenchmarkId::new("tabulate_then_nth", n), &n, |b, &len| {
         b.iter(|| {
-            let t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::tabulate(|i| i, len);
+            let mut t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::empty();
+            for i in 0..len {
+                t = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::set(&t, i, i).unwrap();
+            }
             let v = *<AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::nth(&t, len - 1);
             black_box((t.length(), v))
         })

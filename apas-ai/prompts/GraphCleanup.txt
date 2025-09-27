@@ -1,0 +1,15 @@
+
+ Review the *Graph* files.
+
+ Which files do not have the full interface exposed in
+ DirGraphStEph?
+
+ List these files and the missing funs and methods.
+
+ Can they be extended with stubs to call [Un]*DirGraphStEph?
+
+ Make a plan with to-dos to do this and fix their test and
+ benchmark files.
+
+ We should be using Edge in undirected graph not Pair.
+ 

@@ -191,6 +191,76 @@ path = "benches/Chap06/BenchUnDirGraphStEph.rs"
 harness = false
 
 [[bench]]
+name = "BenchWeightedDirGraphMtEphFloat"
+path = "benches/Chap06/BenchWeightedDirGraphMtEphFloat.rs"
+harness = false
+
+[[bench]]
+name = "BenchWeightedDirGraphMtEphInt"
+path = "benches/Chap06/BenchWeightedDirGraphMtEphInt.rs"
+harness = false
+
+[[bench]]
+name = "BenchWeightedDirGraphStEphFloat"
+path = "benches/Chap06/BenchWeightedDirGraphStEphFloat.rs"
+harness = false
+
+[[bench]]
+name = "BenchWeightedDirGraphStEphInt"
+path = "benches/Chap06/BenchWeightedDirGraphStEphInt.rs"
+harness = false
+
+[[bench]]
+name = "BenchWeightedUnDirGraphMtEphFloat"
+path = "benches/Chap06/BenchWeightedUnDirGraphMtEphFloat.rs"
+harness = false
+
+[[bench]]
+name = "BenchWeightedUnDirGraphMtEphInt"
+path = "benches/Chap06/BenchWeightedUnDirGraphMtEphInt.rs"
+harness = false
+
+[[bench]]
+name = "BenchWeightedUnDirGraphStEphFloat"
+path = "benches/Chap06/BenchWeightedUnDirGraphStEphFloat.rs"
+harness = false
+
+[[bench]]
+name = "BenchWeightedUnDirGraphStEphInt"
+path = "benches/Chap06/BenchWeightedUnDirGraphStEphInt.rs"
+harness = false
+
+[[bench]]
+name = "BenchExercise12_1"
+path = "benches/Chap12/BenchExercise12_1.rs"
+harness = false
+
+[[bench]]
+name = "BenchExercise12_2"
+path = "benches/Chap12/BenchExercise12_2.rs"
+harness = false
+
+[[bench]]
+name = "BenchExercise12_5"
+path = "benches/Chap12/BenchExercise12_5.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTParaStEph"
+path = "benches/Chap38/BenchBSTParaStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBBTStEph"
+path = "benches/Chap23/BenchBBTStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchPrimTreeSeqSt"
+path = "benches/Chap23/BenchPrimTreeSeqSt.rs"
+harness = false
+
+[[bench]]
 name = "BenchLabDirGraphStEph"
 path = "benches/Chap06/BenchLabDirGraphStEph.rs"
 harness = false
@@ -293,21 +363,6 @@ path = "tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs"
 name = "TestWeightedUnDirGraphMtEphInt"
 path = "tests/Chap06/TestWeightedUnDirGraphMtEphInt.rs"
 
-[[test]]
-name = "TestWeightedDirGraphStEphFloat"
-path = "tests/Chap06/TestWeightedDirGraphStEphFloat.rs"
-
-[[test]]
-name = "TestWeightedDirGraphStEphInt"
-path = "tests/Chap06/TestWeightedDirGraphStEphInt.rs"
-
-[[test]]
-name = "TestWeightedUnDirGraphStEphFloat"
-path = "tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs"
-
-[[test]]
-name = "TestWeightedUnDirGraphStEphInt"
-path = "tests/Chap06/TestWeightedUnDirGraphStEphInt.rs"
 
 [[test]]
 name = "TestArraySeqMtEphSlice"
@@ -571,5 +626,5 @@ name = "Test35Exercsise_21_9"
 path = "tests/Test35Exercsise_21_9.rs"
 
 [[test]]
-name = "Test42BBTEph"
-path = "tests/Chap23/Test42BBTEph.rs"
+name = "Test42BBTStEph"
+path = "tests/Chap23/Test42BBTStEph.rs"

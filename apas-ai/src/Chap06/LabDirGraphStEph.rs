@@ -110,6 +110,20 @@ pub mod LabDirGraphStEph {
             }
             neighbors
         }
+
+        fn FromSets(vertices: Set<V>, arcs: Set<Pair<V, V>>) -> Self
+        where
+            L: Default,
+        {
+            let labeled_arcs = arcs.iter()
+                .map(|pair| LabEdge(pair.0.clone(), pair.1.clone(), L::default()))
+                .collect::<Set<_>>();
+            Self::from_vertices_and_labeled_arcs(vertices, labeled_arcs)
+        }
+
+        fn Incident(&self, arc: &Pair<V, V>, v: &V) -> B {
+            if &arc.0 == v || &arc.1 == v { B::True } else { B::False }
+        }
     }
 
     impl<V, L> Display for LabDirGraphStEph<V, L>

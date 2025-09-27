@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
-use apas_ai::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt as TreapSet;
+use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt as TreapSet;
 use apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt as AVLSet;
 use apas_ai::Chap37::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSetBBAlphaMt as BBAlphaSet;
 use apas_ai::Chap37::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMt as PlainSet;

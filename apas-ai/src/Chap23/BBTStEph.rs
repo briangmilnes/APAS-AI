@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Ephemeral full binary tree utilities (Chapter 37).
 
-pub mod BBTEph {
+pub mod BBTStEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
@@ -23,7 +23,7 @@ pub mod BBTEph {
         fn new(left: BBTree<T>, value: T, right: BBTree<T>) -> Self { BBNode { left, value, right } }
     }
 
-    pub trait BBTEphTrait<T: StT> {
+    pub trait BBTStEphTrait<T: StT> {
         fn leaf() -> Self;
         fn node(left: Self, value: T, right: Self) -> Self;
         fn is_leaf(&self) -> B;
@@ -92,7 +92,7 @@ pub mod BBTEph {
         }
     }
 
-    impl<T: StT> BBTEphTrait<T> for BBTree<T> {
+    impl<T: StT> BBTStEphTrait<T> for BBTree<T> {
         fn leaf() -> Self { BBTree::leaf() }
 
         fn node(left: Self, value: T, right: Self) -> Self { BBTree::node(left, value, right) }
@@ -111,12 +111,12 @@ pub mod BBTEph {
     #[macro_export]
     macro_rules! BBNodeLit {
         ({ left: $left:expr, value: $value:expr, right: $right:expr }) => {
-            $crate::Chap23::BBTEph::BBTEph::BBNode::new($left, $value, $right)
+            $crate::Chap23::BBTStEph::BBTStEph::BBNode::new($left, $value, $right)
         };
     }
 
     #[allow(dead_code)]
     fn _BBNodeLit_type_checks() {
-        let _: BBNode<i32> = BBNodeLit!({ left: crate::Chap23::BBTEph::BBTEph::BBTree::Leaf, value: 0, right: crate::Chap23::BBTEph::BBTEph::BBTree::Leaf });
+        let _: BBNode<i32> = BBNodeLit!({ left: crate::Chap23::BBTStEph::BBTStEph::BBTree::Leaf, value: 0, right: crate::Chap23::BBTStEph::BBTStEph::BBTree::Leaf });
     }
 }

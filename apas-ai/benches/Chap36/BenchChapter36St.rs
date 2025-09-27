@@ -1,8 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
-use apas_ai::Chapter36St::Chapter36St::Chapter36StTrait;
-use apas_ai::{ArraySeqStEphSLit, *};
+use apas_ai::Chap36::QuickSortSt::Chapter36St::Chapter36StTrait;
+use apas_ai::{ArraySeqStEphSLit, Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS};
 use criterion::{BatchSize, BenchmarkId, Criterion, criterion_group, criterion_main};
 
 fn gen_data(n: usize) -> ArraySeqStEphS<i32> {
@@ -18,8 +18,8 @@ fn gen_data(n: usize) -> ArraySeqStEphS<i32> {
 fn bench_quicksort_st(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chapter36St");
     group.sample_size(20);
-    group.warm_up_time(Duration::from_millis(500));
-    group.measurement_time(Duration::from_secs(3));
+    group.warm_up_time(Duration::from_millis(100));
+    group.measurement_time(Duration::from_secs(1));
 
     for &n in &[128usize, 2_048, 16_384] {
         group.bench_with_input(BenchmarkId::new("first", n), &n, |b, &len| {

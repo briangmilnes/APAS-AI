@@ -100,6 +100,33 @@ pub mod UnDirGraphStEph {
         fn Degree(&self, v: &V) -> N { self.NG(v).size() }
     }
 
+    // DirGraphStEph-compatible interface for undirected graphs
+    impl<V: StT + Hash> UnDirGraphStEph<V> {
+        /// Arc count (alias for edge count in undirected graphs)
+        pub fn sizeA(&self) -> N { self.sizeE() }
+        
+        /// Arcs (alias for edges in undirected graphs)
+        pub fn arcs(&self) -> &Set<Edge<V>> { self.edges() }
+        
+        /// Neighbors (in undirected graphs, all neighbors are both in and out)
+        pub fn NPlus(&self, v: &V) -> Set<V> { self.NG(v) }
+        
+        /// Neighbors (in undirected graphs, all neighbors are both in and out)
+        pub fn NMinus(&self, v: &V) -> Set<V> { self.NG(v) }
+        
+        /// Neighbors of vertex set
+        pub fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V> { self.NGOfVertices(u_set) }
+        
+        /// Neighbors of vertex set
+        pub fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V> { self.NGOfVertices(u_set) }
+        
+        /// Degree (in undirected graphs, in-degree equals total degree)
+        pub fn InDegree(&self, v: &V) -> N { self.Degree(v) }
+        
+        /// Degree (in undirected graphs, out-degree equals total degree)
+        pub fn OutDegree(&self, v: &V) -> N { self.Degree(v) }
+    }
+
     impl<V: StT + Hash> Debug for UnDirGraphStEph<V> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             f.debug_struct("UnDirGraphStEph")

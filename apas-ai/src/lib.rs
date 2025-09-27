@@ -68,7 +68,7 @@ pub mod Chap19 {
 }
 
 pub mod Chap23 {
-    pub mod BBTEph;
+    pub mod BBTStEph;
     pub mod PrimTreeSeqSt;
 }
 

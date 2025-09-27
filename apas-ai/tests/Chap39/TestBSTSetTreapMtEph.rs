@@ -231,7 +231,7 @@ pub mod TestBSTSetTreapMtEph {
         let mut handles = vec![];
         
         for thread_id in 0..4 {
-            let set_clone = Arc::clone(&set);
+            let _set_clone = Arc::clone(&set);
             let barrier_clone = Arc::clone(&barrier);
             
             handles.push(thread::spawn(move || {

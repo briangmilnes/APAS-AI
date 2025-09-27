@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::AVLTreeSeqStEphSLit;
+use apas_ai::AVLTreeSeqStEphLit;
 use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
 use apas_ai::Types::Types::*;
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
@@ -9,7 +9,7 @@ fn bench_avl_eph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchAVLTreeSeqEph");
     group.sample_size(10);
     group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(5));
+    group.measurement_time(Duration::from_secs(1));
     let n: N = 1_000;
     group.bench_with_input(BenchmarkId::new("push_then_nth", n), &n, |b, &len| {
         b.iter(|| {

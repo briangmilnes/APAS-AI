@@ -6,5 +6,5 @@
  Use native rust pairs with + Display + Debug.
  Use native rust triples for weighted edges.
 
- Where is Pair constraited to <T,T>?
+ Exercises out of test and in their right chapter.
  

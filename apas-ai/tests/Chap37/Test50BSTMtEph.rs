@@ -482,7 +482,8 @@ fn mt_concurrent_plain_bst_operations() {
     assert!(results[0] >= 25); // Thread 1 size
     assert!(results[1] >= 25); // Thread 2 size  
     // Thread 3 found count can vary
-    assert!(results[3] >= 0);  // Thread 4 height
+    // Height can be 0 for empty tree or vary based on timing in concurrent operations
+    // Just verify it's a valid height value (non-negative, which is always true for usize)
 }
 
 #[test]
