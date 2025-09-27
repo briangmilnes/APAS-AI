@@ -67,7 +67,7 @@ pub mod Test27ArraySeqMtPerChap {
 
     #[test]
     fn test_tabulate_empty() {
-        let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(double, 0);
+        let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&double, 0);
         assert_eq!(empty.length(), 0);
         assert_eq!(empty.length() == 0, true);
     }
