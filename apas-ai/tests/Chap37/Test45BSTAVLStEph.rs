@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::Chap37::BSTAVLStEph::BSTAVLStEph::*;
-use apas_ai::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn avl_insert_find_and_bounds() {

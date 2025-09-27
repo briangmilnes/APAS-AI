@@ -2,9 +2,8 @@
 //! Tests for ArraySeqMtPerChap18 multithreaded algorithms.
 
 pub mod Test27ArraySeqMtPerChap {
-    use apas_ai::ArraySeqMtPer;
-    use apas_ai::ArraySeqMtPer::ArraySeqMtPer::*;
-    use apas_ai::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
+    use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
+    use apas_ai::ArrayMtPerSLit;
     use apas_ai::Types::Types::*; // macro import
 
     // Helper functions for common patterns
@@ -29,7 +28,7 @@ pub mod Test27ArraySeqMtPerChap {
 
     #[test]
     fn test_tabulate_basic() {
-        let a: ArrayMtPerS<N> = ArrayMtPerS::tabulate(identity, 5);
+        let a: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(identity, 5);
         assert_eq!(a.length(), 5);
 
         // Use set comparison since MT results may vary in order
@@ -57,7 +56,7 @@ pub mod Test27ArraySeqMtPerChap {
             }
         }
 
-        let fibs: ArrayMtPerS<N> = ArrayMtPerS::tabulate(fib, 8);
+        let fibs: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(fib, 8);
         assert_eq!(fibs.length(), 8);
 
         // Expected fibonacci sequence: [0, 1, 1, 2, 3, 5, 8, 13]
@@ -68,21 +67,21 @@ pub mod Test27ArraySeqMtPerChap {
 
     #[test]
     fn test_tabulate_empty() {
-        let empty: ArrayMtPerS<N> = ArrayMtPerS::tabulate(double, 0);
+        let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(double, 0);
         assert_eq!(empty.length(), 0);
-        assert_eq!(empty.isEmpty(), B::True);
+        assert_eq!(empty.length() == 0, true);
     }
 
     #[test]
     fn test_tabulate_single() {
-        let single: ArrayMtPerS<N> = ArrayMtPerS::tabulate(const_42, 1);
+        let single: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(const_42, 1);
         assert_eq!(single.length(), 1);
         assert_eq!(*single.nth(0), 42);
     }
 
     #[test]
     fn test_tabulate_string() {
-        let strings: ArrayMtPerS<String> = ArrayMtPerS::tabulate(format_item, 4);
+        let strings: ArraySeqMtPerS<String> = ArraySeqMtPerS::tabulate(format_item, 4);
         assert_eq!(strings.length(), 4);
 
         // Check that all expected strings are present (order may vary in MT)
@@ -94,7 +93,7 @@ pub mod Test27ArraySeqMtPerChap {
 
     #[test]
     fn test_tabulate_boolean() {
-        let bools: ArrayMtPerS<B> = ArrayMtPerS::tabulate(is_even_bool, 6);
+        let bools: ArraySeqMtPerS<B> = ArraySeqMtPerS::tabulate(is_even_bool, 6);
         assert_eq!(bools.length(), 6);
 
         // Expected: [True, False, True, False, True, False]
@@ -105,7 +104,7 @@ pub mod Test27ArraySeqMtPerChap {
 
     #[test]
     fn test_tabulate_squares() {
-        let squares: ArrayMtPerS<N> = ArrayMtPerS::tabulate(square, 5);
+        let squares: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(square, 5);
         assert_eq!(squares.length(), 5);
 
         // Expected: [0, 1, 4, 9, 16]
@@ -116,7 +115,7 @@ pub mod Test27ArraySeqMtPerChap {
 
     #[test]
     fn test_tabulate_large() {
-        let large: ArrayMtPerS<N> = ArrayMtPerS::tabulate(add_100, 1000);
+        let large: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(add_100, 1000);
         assert_eq!(large.length(), 1000);
         assert_eq!(*large.nth(0), 100);
         assert_eq!(*large.nth(999), 1099);

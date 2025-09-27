@@ -2,8 +2,9 @@
 /// Exercise 21.7 (Comprehension with Conditionals): even elements of a paired with vowels of b.
 
 pub mod Test33Exercise_21_7 {
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
+    use apas_ai::PairLit;
 
 fn is_even(x: &N) -> B {
     if *x % 2 == 0 {

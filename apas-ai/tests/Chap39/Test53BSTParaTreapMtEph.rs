@@ -1,9 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 pub mod Test53BSTParaTreapMtEph {
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use apas_ai::Chap39::BSTParaTreapMtEph::BSTParaTreapMtEph::*;
-    use apas_ai::Types::Types::*;
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::Chap39::BSTParaTreapMtEph::BSTParaTreapMtEph::*;
+use apas_ai::Types::Types::*;
+use apas_ai::ArraySeqStPerSLit;
 
 fn make_tree(values: &[i32]) -> ParamTreap<i32> {
     let tree = ParamTreap::new();
@@ -28,7 +29,7 @@ fn treap_basic_insert_find() {
     assert_eq!(tree.find(&3), Some(3));
     assert_eq!(tree.find(&8), None);
     assert_eq!(tree.is_empty(), B::False);
-    assert_eq!(tree.in_order(), ArraySeqStPerS::from_vec(vec![1, 2, 3, 4, 5, 6, 7]));
+    assert_eq!(tree.in_order(), ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7]);
 }
 
 #[test]
@@ -36,11 +37,11 @@ fn treap_split_join_pair() {
     let tree = make_tree(&[0, 1, 2, 3, 4, 5]);
     let (left, present, right) = tree.split(&3);
     assert_eq!(present, B::True);
-    assert_eq!(left.in_order(), ArraySeqStPerS::from_vec(vec![0, 1, 2]));
-    assert_eq!(right.in_order(), ArraySeqStPerS::from_vec(vec![4, 5]));
+    assert_eq!(left.in_order(), ArraySeqStPerSLit![0, 1, 2]);
+    assert_eq!(right.in_order(), ArraySeqStPerSLit![4, 5]);
 
     let rejoined = left.join_pair(right);
-    assert_eq!(rejoined.in_order(), ArraySeqStPerS::from_vec(vec![0, 1, 2, 4, 5]));
+    assert_eq!(rejoined.in_order(), ArraySeqStPerSLit![0, 1, 2, 4, 5]);
 }
 
 #[test]

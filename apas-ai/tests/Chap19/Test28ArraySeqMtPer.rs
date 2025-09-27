@@ -2,19 +2,18 @@
 //! Tests for ArraySeqMtPer multithreaded algorithms.
 
 pub mod Test28ArraySeqMtPer {
+    use apas_ai::Chap19::ArraySeqMtPer::ArraySeqMtPer::*;
+    use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS;
     use apas_ai::ArrayMtPerSLit;
-    use apas_ai::ArraySeqMtPer; // macro import
-    use apas_ai::ArraySeqMtPer::ArraySeqMtPer::*;
-    use apas_ai::ArraySeqMtPer::ArraySeqMtPer::*;
     use apas_ai::PairLit;
     use apas_ai::Types::Types::*;
     use std::sync::Mutex;
 
     #[test]
     fn test_inject_basic() {
-        let values = ArrayMtPerSLit![0, 1, 2, 3, 4, 5];
-        let changes = ArrayMtPerSLit![PairLit!(2, 99), PairLit!(4, 88)];
-        let result = <ArrayMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
+        let values = ArraySeqMtPerSLit![0, 1, 2, 3, 4, 5];
+        let changes = ArraySeqMtPerSLit![PairLit!(2, 99), PairLit!(4, 88)];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
 
         assert_eq!(result.length(), 6);
         // inject should apply first occurrence of each index
@@ -28,9 +27,9 @@ pub mod Test28ArraySeqMtPer {
 
     #[test]
     fn test_inject_conflicting_updates() {
-        let values = ArrayMtPerSLit![0, 1, 2, 3, 4, 5];
-        let changes = ArrayMtPerSLit![PairLit!(2, 99), PairLit!(2, 77), PairLit!(4, 88)];
-        let result = <ArrayMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
+        let values = ArraySeqMtPerSLit![0, 1, 2, 3, 4, 5];
+        let changes = ArraySeqMtPerSLit![PairLit!(2, 99), PairLit!(2, 77), PairLit!(4, 88)];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
 
         assert_eq!(result.length(), 6);
         // inject takes FIRST update for each index (99 for index 2)
@@ -44,9 +43,9 @@ pub mod Test28ArraySeqMtPer {
 
     #[test]
     fn test_inject_out_of_bounds() {
-        let values = ArrayMtPerSLit![0, 1, 2];
-        let changes = ArrayMtPerSLit![PairLit!(1, 99), PairLit!(5, 77)]; // index 5 is out of bounds
-        let result = <ArrayMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
+        let values = ArraySeqMtPerSLit![0, 1, 2];
+        let changes = ArraySeqMtPerSLit![PairLit!(1, 99), PairLit!(5, 77)]; // index 5 is out of bounds
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
 
         assert_eq!(result.length(), 3);
         assert_eq!(*result.nth(0), 0);
@@ -56,9 +55,9 @@ pub mod Test28ArraySeqMtPer {
 
     #[test]
     fn test_inject_empty_changes() {
-        let values = ArrayMtPerSLit![1, 2, 3];
-        let changes: ArrayMtPerS<Pair<N, N>> = ArrayMtPerSLit![];
-        let result = <ArrayMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
+        let values = ArraySeqMtPerSLit![1, 2, 3];
+        let changes: ArraySeqMtPerS<Pair<N, N>> = ArraySeqMtPerSLit![];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
 
         assert_eq!(result.length(), 3);
         assert_eq!(*result.nth(0), 1);
@@ -68,9 +67,9 @@ pub mod Test28ArraySeqMtPer {
 
     #[test]
     fn test_inject_empty_values() {
-        let values: ArrayMtPerS<N> = ArrayMtPerSLit![];
-        let changes = ArrayMtPerSLit![PairLit!(0, 99)];
-        let result = <ArrayMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
+        let values: ArraySeqMtPerS<N> = ArraySeqMtPerSLit![];
+        let changes = ArraySeqMtPerSLit![PairLit!(0, 99)];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
 
         assert_eq!(result.length(), 0); // No values to update
     }
@@ -82,12 +81,12 @@ pub mod Test28ArraySeqMtPer {
     // Migrated from tests/11_TestArraySeqStPerChap19.rs - this was the commented MT code
     #[test]
     fn test_atomic_write_migrated_from_st_test() {
-        let values = ArrayMtPerSLit![0, 1, 2, 3, 4, 5];
-        let changes = ArrayMtPerSLit![PairLit!(2, 99), PairLit!(2, 7), PairLit!(4, 20)];
+        let values = ArraySeqMtPerSLit![0, 1, 2, 3, 4, 5];
+        let changes = ArraySeqMtPerSLit![PairLit!(2, 99), PairLit!(2, 7), PairLit!(4, 20)];
         let n = values.length();
 
         // Create values with change numbers initialized to n
-        let with_num = ArrayMtPerSLit![
+        let with_num = ArraySeqMtPerSLit![
             Mutex::new(PairLit!(*values.nth(0), n)),
             Mutex::new(PairLit!(*values.nth(1), n)),
             Mutex::new(PairLit!(*values.nth(2), n)),
@@ -97,8 +96,8 @@ pub mod Test28ArraySeqMtPer {
         ];
 
         // Apply atomic writes with different change numbers
-        <ArrayMtPerS<N> as ArraySeqMtPerTrait<N>>::AtomicWriteLowestChangeNumberWins(&with_num, &changes, 1);
-        <ArrayMtPerS<N> as ArraySeqMtPerTrait<N>>::AtomicWriteLowestChangeNumberWins(&with_num, &changes, 0);
+        <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::AtomicWriteLowestChangeNumberWins(&with_num, &changes, 1);
+        <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::AtomicWriteLowestChangeNumberWins(&with_num, &changes, 0);
 
         // Check that the value at index 2 was updated (change number 0 should win over 1)
         let guard = with_num.nth(2).lock().unwrap();
@@ -107,9 +106,9 @@ pub mod Test28ArraySeqMtPer {
 
     #[test]
     fn test_inject_string_values() {
-        let values = ArrayMtPerSLit!["hello", "world", "test"];
-        let changes = ArrayMtPerSLit![PairLit!(1, "rust"), PairLit!(0, "hi")];
-        let result = <ArrayMtPerS<&str> as ArraySeqMtPerTrait<&str>>::inject(&values, &changes);
+        let values = ArraySeqMtPerSLit!["hello", "world", "test"];
+        let changes = ArraySeqMtPerSLit![PairLit!(1, "rust"), PairLit!(0, "hi")];
+        let result = <ArraySeqMtPerS<&str> as ArraySeqMtPerTrait<&str>>::inject(&values, &changes);
 
         assert_eq!(result.length(), 3);
         assert_eq!(*result.nth(0), "hi");

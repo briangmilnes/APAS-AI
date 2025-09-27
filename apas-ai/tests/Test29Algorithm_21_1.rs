@@ -1,12 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Algorithm 21.1 (2D Points) using ArraySeqPer: points2D via tabulate + flatten.
 
-use apas_ai::ArraySeqStPer;
-use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPerSLit;
-use apas_ai::PairLit;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Types::Types::*;
 
 /// Functional form: points2D n = flatten (tabulate (\x. tabulate (\y. (x, y+1)) (n-1)) n)
@@ -17,7 +12,7 @@ fn points2d_tab_flat(n: N) -> ArraySeqStPerS<Pair<N, N>> {
     }
     let inner: ArraySeqStPerS<ArraySeqStPerS<Pair<N, N>>> =
         <ArraySeqStPerS<ArraySeqStPerS<Pair<N, N>>> as ArraySeqStPerTrait<ArraySeqStPerS<Pair<N, N>>>>::tabulate(
-            |x| <ArraySeqStPerS<Pair<N, N>> as ArraySeqStPerTrait<Pair<N, N>>>::tabulate(|y| PairLit!(x, y + 1), n - 1),
+            |x| <ArraySeqStPerS<Pair<N, N>> as ArraySeqStPerTrait<Pair<N, N>>>::tabulate(&|y| PairLit!(x, y + 1), n - 1),
             n,
         );
     <ArraySeqStPerS<Pair<N, N>> as ArraySeqStPerTrait<Pair<N, N>>>::flatten(&inner)

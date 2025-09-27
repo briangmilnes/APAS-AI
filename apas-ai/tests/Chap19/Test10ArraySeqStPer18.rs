@@ -3,7 +3,6 @@ pub mod TestArraySeqStPer {
     use apas_ai::ArraySeqStPer;
     use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-    use apas_ai::ArraySeqStPerSLit;
     use apas_ai::ArraySeqStPerTrait;
     use apas_ai::Types::Types::Pair;
     use apas_ai::Types::Types::*; // macro import
@@ -37,18 +36,18 @@ pub mod TestArraySeqStPer {
     #[test]
     fn test_map_increment() {
         let a = ArraySeqStPerSLit![1, 2, 3, 4, 5];
-        let b = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&a, |x| x + 1);
+        let b = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&a, &|x| x + 1);
         assert_eq!(b, ArraySeqStPerSLit![2, 3, 4, 5, 6]);
     }
 
     #[test]
     fn test_subseq() {
         let a = ArraySeqStPerSLit![10, 20, 30, 40, 50];
-        let b = a.subseq_copy(1, 3);
+        let b = a.subseq(1, 3);
         assert_eq!(b, ArraySeqStPerSLit![20, 30, 40]);
-        let c = a.subseq_copy(2, 0);
+        let c = a.subseq(2, 0);
         assert_eq!(c.length(), 0);
-        let d = a.subseq_copy(0, 1);
+        let d = a.subseq(0, 1);
         assert_eq!(d, ArraySeqStPerSLit![10]);
     }
 
@@ -85,7 +84,7 @@ pub mod TestArraySeqStPer {
             );
         assert_eq!(evens, ArraySeqStPerSLit![2, 4, 6, 8, 10]);
         let odds_only = ArraySeqStPerSLit![1, 3, 5, 7];
-        let no_evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&odds_only, |&x| {
+        let no_evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&a, &|&x| {
             if x % 2 == 0 { B::True } else { B::False }
         });
         assert_eq!(no_evens.length(), 0);

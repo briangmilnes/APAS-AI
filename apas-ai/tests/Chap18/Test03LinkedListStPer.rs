@@ -1,7 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestLinkedListPer {
-    use apas_ai::LinkedListStPer;
-    use apas_ai::LinkedListStPer::LinkedListStPer::*;
+    use apas_ai::Chap18::LinkedListStPer::LinkedListStPer::*;
     use apas_ai::LinkedListStPerSLit;
     use apas_ai::Types::Types::*; // macro import
 
@@ -9,9 +8,9 @@ pub mod TestLinkedListPer {
     fn test_empty_singleton_and_predicates() {
         let l: LinkedListStPerS<N> = LinkedListStPerSLit![];
         assert_eq!(l.length(), 0);
-        assert_eq!(l.isEmpty(), B::True);
+        assert_eq!(l.length() == 0, true);
         let one = LinkedListStPerSLit![7];
-        assert_eq!(one.isSingleton(), B::True);
+        assert_eq!(one.length() == 1, true);
     }
 
     #[test]
@@ -19,7 +18,7 @@ pub mod TestLinkedListPer {
         let l = LinkedListStPerSLit![1; 3];
         assert_eq!(*l.nth(0), 1);
         assert_eq!(*l.nth(2), 1);
-        let l2 = l.set(1, 9).unwrap();
+        let l2 = l.update(1, 9).unwrap();
         // original remains unchanged (persistent semantics)
         assert_eq!(*l.nth(1), 1);
         // updated copy has the change
@@ -27,9 +26,9 @@ pub mod TestLinkedListPer {
     }
 
     #[test]
-    fn test_subseq_copy() {
+    fn test_subseq() {
         let l = LinkedListStPerSLit![2; 5];
-        let sub = l.subseq_copy(1, 3);
+        let sub = l.subseq(1, 3);
         assert_eq!(sub.length(), 3);
         assert_eq!(*sub.nth(0), 2);
         assert_eq!(*sub.nth(2), 2);

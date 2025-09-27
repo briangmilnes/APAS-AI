@@ -4,7 +4,6 @@
 use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Types::Types::*;
 use apas_ai::{ArraySeqStPerS, ArraySeqStPerTrait};
 
@@ -23,7 +22,7 @@ fn prime_sieve(n: N) -> ArraySeqStPerS<N> {
                 let i = i0 + 2; // i in [2..=root]
                 let limit = if i == 0 { 0 } else { n / i };
                 let len = if limit >= 2 { limit - 1 } else { 0 }; // j in [2..=limit] => length max(limit-1,0)
-                <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(|j0| i * (j0 + 2), len)
+                <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|j0| i * (j0 + 2), len)
             },
             if root >= 2 { root - 1 } else { 0 },
         );
@@ -37,14 +36,14 @@ fn prime_sieve(n: N) -> ArraySeqStPerS<N> {
         );
 
     // all = 〈 true : 0 ≤ i < n 〉
-    let all: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(|_| B::True, n);
+    let all: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(&|_| B::True, n);
 
     // isPrime = ninject all sieve
     let is_prime: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::ninject(&all, &sieve_pairs);
 
     // primes = 〈 i : 2 ≤ i < n | isPrime[i] = true 〉
-    let candidates: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(|i| i, n);
-    let filtered_idx: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&candidates, |i| {
+    let candidates: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i, n);
+    let filtered_idx: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&a, &|i| {
         if *i >= 2 && *i < n {
             if *is_prime.nth(*i) == B::True {
                 B::True

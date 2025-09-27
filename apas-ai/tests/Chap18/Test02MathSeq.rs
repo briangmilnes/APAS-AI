@@ -1,8 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 pub mod TestMathSeq {
-    use apas_ai::MathSeq;
-    use apas_ai::MathSeq::MathSeq::*;
+    use apas_ai::Chap17::MathSeq::MathSeq::*;
     use apas_ai::MathSeqSLit;
     use apas_ai::Types::Types::*;
 
@@ -31,28 +30,28 @@ pub mod TestMathSeq {
     fn test_new_empty_singleton_and_predicates() {
         let e: MathSeqS<N> = MathSeqSLit![];
         assert_eq!(e.length(), 0);
-        assert_eq!(e.isEmpty(), B::True);
-        assert_eq!(e.isSingleton(), B::False);
+        assert_eq!(e.length() == 0, true);
+        assert_eq!(e.length() == 1, false);
 
         let s: MathSeqS<N> = MathSeqSLit![7];
         assert_eq!(s.length(), 1);
-        assert_eq!(s.isEmpty(), B::False);
-        assert_eq!(s.isSingleton(), B::True);
+        assert_eq!(s.length() == 0, false);
+        assert_eq!(s.length() == 1, true);
 
         let mut a: MathSeqS<N> = MathSeqSLit![0; 3];
         assert_eq!(a.length(), 3);
         assert_eq!(*a.nth(1), 0);
-        let _ = a.set(1, 42);
+        let _ = a.update(1, 42);
         assert_eq!(*a.nth(1), 42);
     }
 
     #[test]
     fn test_set_in_bounds_and_out_of_bounds() {
         let mut s: MathSeqS<&str> = MathSeqSLit!["a", "b", "c"];
-        assert!(s.set(1, "x").is_ok());
+        assert!(s.update(1, "x").is_ok());
         assert_eq!(s.length(), 3);
         assert_eq!(*s.nth(1), "x");
-        assert!(s.set(5, "oops").is_err());
+        assert!(s.update(5, "oops").is_err());
         assert_eq!(*s.nth(0), "a");
         assert_eq!(*s.nth(2), "c");
     }
@@ -71,12 +70,12 @@ pub mod TestMathSeq {
     }
 
     #[test]
-    fn test_subseq_copy_bounds() {
+    fn test_subseq_bounds() {
         let s: MathSeqS<N> = MathSeqSLit![1, 2, 3, 4, 5];
-        let c1 = s.subseq_copy(1, 3);
+        let c1 = s.subseq(1, 3);
         assert_eq!(c1.length(), 3);
         assert_eq!(*c1.nth(0), 2);
-        let c2 = s.subseq_copy(10, 3);
+        let c2 = s.subseq(10, 3);
         assert_eq!(c2.length(), 0);
     }
 

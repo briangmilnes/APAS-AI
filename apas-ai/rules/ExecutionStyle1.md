@@ -171,3 +171,21 @@
 
 #### Claude and sed
 - Claude is not allowed to run sed to attempt to fix bracket problems.
+
+#### Git State Verification Before Assumptions
+- **MANDATORY**: Before assuming code state or declaring regressions, ALWAYS check:
+  1. `git status` - to see current working tree state
+  2. `git log --oneline -5` - to verify recent commits/reverts
+  3. File timestamps if needed - to understand when changes occurred
+  4. `git show --stat HEAD` - to see what the last commit actually changed
+- **Never assume** the user has reverted code without verifying git state first
+- **Common scenario**: User may commit structural changes but not commit Claude's fixes, leaving fixes uncommitted and lost
+- **Rule violation**: Making assumptions about code regressions without git verification is a workflow error
+
+#### Pre-Sweep Git Commit Reminder (MANDATORY)
+- **CRITICAL**: Before starting ANY sweep operation (vec! cleanup, macro replacement, refactoring, etc.), ALWAYS remind the user:
+  - "REMINDER: Please run `git commit -am "checkpoint before sweep"` to save current progress before we begin the sweep"
+  - "This prevents losing fixes if the sweep encounters issues or needs to be reverted"
+- **Wait for confirmation**: Do not proceed with sweep until user confirms they have committed or explicitly says to proceed
+- **Rationale**: Sweeps can cause massive regressions if uncommitted fixes are lost during the process
+- **SEV1 violation**: Starting a sweep without this reminder and confirmation is a critical workflow error

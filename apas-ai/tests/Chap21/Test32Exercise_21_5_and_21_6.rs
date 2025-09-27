@@ -2,7 +2,7 @@
 /// Exercises 21.5 and 21.6: All contiguous subsequences and cost analysis.
 
 pub mod Test32Exercise_21_5_and_21_6 {
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
 
 /// Generate all contiguous subsequences using nested tabulate + flatten.
@@ -14,7 +14,7 @@ fn all_contiguous_subseqs<T: StT>(a: &ArraySeqStPerS<T>) -> ArraySeqStPerS<Array
         <ArraySeqStPerS<ArraySeqStPerS<ArraySeqStPerS<T>>> as ArraySeqStPerTrait<ArraySeqStPerS<ArraySeqStPerS<T>>>>::tabulate(
             &|i| {
                 <ArraySeqStPerS<ArraySeqStPerS<T>> as ArraySeqStPerTrait<ArraySeqStPerS<T>>>::tabulate(
-                    &|j| a.subseq_copy(i, j + 1),
+                    &|j| a.subseq(i, j + 1),
                     n - i,
                 )
             },

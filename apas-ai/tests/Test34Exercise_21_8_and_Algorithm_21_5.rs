@@ -16,8 +16,8 @@ fn is_prime(n: N) -> B {
         return B::False;
     }
     let k: N = (n as f64).sqrt().floor() as N;
-    let all: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(|i| is_divisible(n, i + 1), k);
-    let zeros: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::filter(&all, |x| *x);
+    let all: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(&|i| is_divisible(n, i + 1), k);
+    let zeros: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::filter(&a, &|x| *x);
     if zeros.length() == 1 { B::True } else { B::False }
 }
 
@@ -29,8 +29,8 @@ fn primes_bf(n: N) -> ArraySeqStPerS<N> {
     if n <= 2 {
         return ArraySeqStPerS::from_vec(Vec::new());
     }
-    let all: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(|i| i + 2, n - 2);
-    let filtered: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&all, |x| is_prime(*x));
+    let all: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 2, n - 2);
+    let filtered: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&a, &|x| is_prime(*x));
     filtered
 }
 

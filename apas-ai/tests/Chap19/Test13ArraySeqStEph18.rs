@@ -4,7 +4,6 @@ pub mod TestArraySeqStEph {
     use apas_ai::ArraySeqStEph;
     use apas_ai::ArraySeqStEph::ArraySeqStEph::*;
     use apas_ai::ArraySeqStEph::ArraySeqStEph::*;
-    use apas_ai::ArraySeqStEphSLit;
     use apas_ai::Types::Types::*; // macro import
 
     #[test]
@@ -36,18 +35,18 @@ pub mod TestArraySeqStEph {
     #[test]
     fn test_map_increment() {
         let a = ArraySeqStEphSLit![1, 2, 3, 4, 5];
-        let b = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::map(&a, |x| x + 1);
+        let b = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::map(&a, &|x| x + 1);
         assert_eq!(b, ArraySeqStEphSLit![2, 3, 4, 5, 6]);
     }
 
     #[test]
     fn test_subseq() {
         let a = ArraySeqStEphSLit![10, 20, 30, 40, 50];
-        let b = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::subseq_copy(&a, 1, 3);
+        let b = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::subseq(&a, 1, 3);
         assert_eq!(b, ArraySeqStEphSLit![20, 30, 40]);
-        let c = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::subseq_copy(&a, 2, 0);
+        let c = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::subseq(&a, 2, 0);
         assert_eq!(c.length(), 0);
-        let d = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::subseq_copy(&a, 0, 1);
+        let d = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::subseq(&a, 0, 1);
         assert_eq!(d, ArraySeqStEphSLit![10]);
     }
 
@@ -84,7 +83,7 @@ pub mod TestArraySeqStEph {
             );
         assert_eq!(evens, ArraySeqStEphSLit![2, 4, 6, 8, 10]);
         let odds_only = ArraySeqStEphSLit![1, 3, 5, 7];
-        let no_evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&odds_only, |&x| {
+        let no_evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&a, &|&x| {
             if x % 2 == 0 { B::True } else { B::False }
         });
         assert_eq!(no_evens.length(), 0);

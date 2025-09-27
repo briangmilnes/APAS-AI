@@ -1,15 +1,15 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap03::InsertionSortSt::InsertionSortSt::{InsertionSortSt, InsertionSortStTrait};
+use apas_ai::Chap03::InsertionSortSt::InsertionSortSt::InsertionSortStTrait;
 
 fn sort_and_assert(mut data: Vec<i32>, expected: &[i32]) {
-    InsertionSortSt::default().insSort(&mut data);
+    0i32.insSort(&mut data);
     assert_eq!(data, expected);
 }
 
 #[test]
 fn insertion_sort_handles_empty() {
     let mut data: Vec<i32> = Vec::new();
-    InsertionSortSt::default().insSort(&mut data);
+    0i32.insSort(&mut data);
     assert!(data.is_empty());
 }
 
@@ -30,6 +30,6 @@ fn insertion_sort_random_slice() {
     let mut data = vec![10, -1, 7, 3, 3, 9, 0, -5];
     let mut expected = data.clone();
     expected.sort();
-    InsertionSortSt::default().insSort(&mut data);
+    0i32.insSort(&mut data);
     assert_eq!(data, expected);
 }

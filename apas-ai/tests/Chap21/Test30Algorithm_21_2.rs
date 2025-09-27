@@ -2,8 +2,9 @@
 /// Algorithm 21.2 (3D Points) using ArraySeqPer: flatten of nested tabulates.
 
 pub mod Test30Algorithm_21_2 {
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
+    use apas_ai::PairLit;
 
 /// Comprehension form: 〈(x,y,z): 0 ≤ x ≤ n−1, 1 ≤ y ≤ n, 2 ≤ z ≤ n+1〉
 /// Implemented as: flatten ∘ (tabulate_x (flatten ∘ (tabulate_y (tabulate_z))))

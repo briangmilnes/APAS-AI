@@ -3,7 +3,6 @@
 
 use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Types::Types::*;
 
 /// Construct the sequence of 2D points (x, y) with 0 ≤ x < n and 1 ≤ y < n,

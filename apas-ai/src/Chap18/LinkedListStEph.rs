@@ -401,4 +401,11 @@ pub mod LinkedListStEph {
             (LinkedListStEphS::from_vec(prefixes), total)
         }
     }
+
+    #[macro_export]
+    macro_rules! LinkedListStEphSLit {
+        () => { $crate::Chap18::LinkedListStEph::LinkedListStEph::LinkedListStEphS::from_vec(Vec::new()) };
+        ($x:expr; $n:expr) => { $crate::Chap18::LinkedListStEph::LinkedListStEph::LinkedListStEphS::from_vec(vec![$x; $n]) };
+        ($($x:expr),* $(,)?) => { $crate::Chap18::LinkedListStEph::LinkedListStEph::LinkedListStEphS::from_vec(vec![$($x),*]) };
+    }
 }

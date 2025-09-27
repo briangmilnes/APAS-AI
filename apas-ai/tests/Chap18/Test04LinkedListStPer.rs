@@ -1,29 +1,27 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestLinkedListStPer {
     use apas_ai::Chap18::LinkedListStPer::LinkedListStPer::*;
-    use apas_ai::LinkedListStPer; // macro import
-    use apas_ai::LinkedListStPer::LinkedListStPer::*;
     use apas_ai::LinkedListStPerSLit;
     use apas_ai::Types::Types::*;
 
     #[test]
     fn test_tabulate() {
-        let a = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::tabulate(|i| i * 2, 5);
+        let a = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::tabulate(&|i| i * 2, 5);
         assert_eq!(a.length(), 5);
         assert_eq!(a.nth(3), &6);
     }
 
     #[test]
     fn test_map() {
-        let a = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::tabulate(|i| i * 2, 5);
-        let b = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::map(&a, |x| x + 1);
+        let a = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::tabulate(&|i| i * 2, 5);
+        let b = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::map(&a, &|x| x + 1);
         assert_eq!(b.nth(0), &1);
         assert_eq!(b.nth(4), &9);
     }
 
     #[test]
     fn test_filter() {
-        let a = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::tabulate(|i| i + 1, 5);
+        let a = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::tabulate(&|i| i + 1, 5);
         let c =
             <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(
                 &a,
@@ -68,7 +66,7 @@ pub mod TestLinkedListStPer {
     #[test]
     fn test_iterate() {
         let a = LinkedListStPerSLit![1, 2, 3, 2, 1];
-        let sum = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::iterate(&a, |acc, x| acc + x, 0);
+        let sum = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::iterate(&a, &|acc, x| acc + x, 0);
         assert_eq!(sum, 9);
     }
 

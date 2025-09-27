@@ -13,7 +13,7 @@ pub mod TestAVLTreeSeqEph {
         t.push_back(3);
         assert_eq!(t.length(), 3);
         assert_eq!(*t.nth(1), 2);
-        let _ = t.set(1, 9).unwrap();
+        let _ = t.update(1, 9).unwrap();
         assert_eq!(*t.nth(1), 9);
     }
 }

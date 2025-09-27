@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 pub mod Test34Exercise_21_8_and_Algorithm_21_5 {
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
 
 /// Exercise 21.8 (isPrime) and Algorithm 21.5 (primesBF) tests and analysis.

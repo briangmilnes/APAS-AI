@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::ArraySeqStPerSLit;
-use apas_ai::Chap37::BSTParaStEph::BSTParaStEph::*;
+use apas_ai::Chap38::BSTParaStEph::BSTParaStEph::*;
+use apas_ai::Types::Types::*;
 use apas_ai::*;
 
 fn make_tree(values: &[i32]) -> ParamBST<i32> {

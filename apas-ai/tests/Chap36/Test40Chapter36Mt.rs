@@ -3,7 +3,7 @@
 pub mod Test40Chapter36Mt {
     use rand::{rng, Rng};
 
-    use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use apas_ai::Chap36::QuickSortMt::Chapter36Mt::Chapter36MtTrait;
     use apas_ai::Types::Types::*;
 

@@ -1,8 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestLinkedListStEph {
     use apas_ai::Chap18::LinkedListStEph::LinkedListStEph::*;
-    use apas_ai::LinkedListStEph; // macro import
-    use apas_ai::LinkedListStEph::LinkedListStEph::*;
     use apas_ai::LinkedListStEphSLit;
     use apas_ai::Types::Types::*;
 
@@ -25,17 +23,17 @@ pub mod TestLinkedListStEph {
     #[test]
     fn test_eph_is_empty_and_singleton() {
         let e: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::empty();
-        assert_eq!(e.isEmpty(), B::True);
+        assert_eq!(e.length() == 0, true);
         let s = LinkedListStEphSLit![1];
-        assert_eq!(s.isSingleton(), B::True);
+        assert_eq!(s.length() == 1, true);
     }
 
     #[test]
-    fn test_eph_set_and_subseq_copy() {
+    fn test_eph_set_and_subseq() {
         let mut a: LinkedListStEphS<N> = LinkedListStEphSLit![0; 3];
-        let _ = a.set(1, 2);
+        let _ = a.update(1, 2);
         assert_eq!(*a.nth(1), 2);
-        let sub = a.subseq_copy(1, 2);
+        let sub = a.subseq(1, 2);
         assert_eq!(sub.length(), 2);
     }
 
@@ -47,8 +45,8 @@ pub mod TestLinkedListStEph {
 
     #[test]
     fn test_tabulate_and_map_ch18() {
-        let a: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::tabulate(|i| i, 5);
-        let b: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::map(&a, |x| x + 1);
+        let a: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::tabulate(&|i| i, 5);
+        let b: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::map(&a, &|x| x + 1);
         expect_list(&b, &[1, 2, 3, 4, 5]);
     }
 
@@ -95,7 +93,7 @@ pub mod TestLinkedListStEph {
         let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3];
         let sum = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::reduce(&a, &|x, y| x + y, 0);
         assert_eq!(sum, 6);
-        let pref = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::iterate(&a, |acc, x| acc + x, 0);
+        let pref = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::iterate(&a, &|acc, x| acc + x, 0);
         assert_eq!(pref, 6);
         let (prefixes, total) = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::scan(&a, &|x, y| x + y, 0);
         assert_eq!(total, 6);

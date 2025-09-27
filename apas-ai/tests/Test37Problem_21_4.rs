@@ -5,7 +5,6 @@ use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Types::Types::*;
 
 /// Cartesian product by explicit loops (x-major then y).

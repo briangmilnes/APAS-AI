@@ -1,6 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 19 algorithms for ArraySeqMtPer, just the one multi-threaded update of code that Umut and Guy snuck into this chapter.
 
+#[macro_export]
+macro_rules! ArrayMtPerSLit {
+    () => { $crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(Vec::new()) };
+    ($x:expr; $n:expr) => { $crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(vec![$x; $n]) };
+    ($($x:expr),* $(,)?) => { $crate::Chap19::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(vec![$($x),*]) };
+}
+
 pub mod ArraySeqMtPer {
     use std::sync::Mutex;
 

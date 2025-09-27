@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 pub mod Test39Chapter36St {
-    use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use apas_ai::Chap36::QuickSortSt::Chapter36St::Chapter36StTrait;
     use apas_ai::Types::Types::*;
     use apas_ai::*;

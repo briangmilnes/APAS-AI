@@ -3,10 +3,27 @@
 
  Identify every vec literal and think about whether it should be a
  XLit!.
- Look for vec in test code.
 
  Where are we using vec programatically where the correct type for
  the test could be used?
 
  Make a detailed plan to fix these and show it to me.
- 
+ Each file should get an independent set of to-dos steps of the form:
+  - Does it have vecs that can be XLit!?
+  - Check and update any uses to get the macros in.
+  - Sed change just that one file.
+  - compile the test file
+  - Fix any errors.
+
+ You may use sed carefully as each Test* file is likely only touching
+ one data structure. 
+
+ Test each sed on one occurence in the file.
+
+ If it works, you may sed a file globally.
+
+ Go file by file and check that tests build.
+
+ Show me the plan as to-dos before you execute.
+
+

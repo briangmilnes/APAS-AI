@@ -5,7 +5,6 @@ use apas_ai::ArraySeqStPer;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Types::Types::*;
 
 fn is_even(x: &N) -> B { if *x % 2 == 0 { B::True } else { B::False } }

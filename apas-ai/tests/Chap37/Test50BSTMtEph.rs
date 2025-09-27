@@ -1,10 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::BSTTreapMtEph::BSTTreapMtEph::*;
+use apas_ai::Chap39::BSTTreapMtEph::BSTTreapMtEph::*;
+use apas_ai::Types::Types::*;
 use apas_ai::Chap37::BSTAVLMtEph::BSTAVLMtEph::*;
 use apas_ai::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::*;
 use apas_ai::Chap37::BSTPlainMtEph::BSTPlainMtEph::*;
 use apas_ai::Chap37::BSTRBMtEph::BSTRBMtEph::*;
 use apas_ai::Chap37::BSTSplayMtEph::BSTSplayMtEph::*;
+use apas_ai::Types::*;
 use apas_ai::*;
 
 #[test]

@@ -1,11 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqS;
-use apas_ai::Chap18::ArraySeq::ArraySeq::{ArrayS, ArraySeq};
+use apas_ai::Chap18::ArraySeq::ArraySeq::{ArraySeqS, ArraySeq};
 use apas_ai::Types::Types::{B, Pair};
 
 #[test]
 fn arrayseqs_empty_macro() {
-    let seq: ArrayS<i32> = ArraySeqS![];
+    let seq: ArraySeqS<i32> = ArraySeqS![];
     assert_eq!(ArraySeq::<i32>::length(&seq), 0);
     assert_eq!(ArraySeq::<i32>::isEmpty(&seq), B::True);
 }
@@ -30,11 +30,11 @@ fn arrayseqs_repeat_macro_clones_element() {
 
 #[test]
 fn arrayseq_tabulate_and_map_work() {
-    let squares = ArraySeq::<usize>::tabulate(|i| i * i, 5);
+    let squares = ArraySeq::<usize>::tabulate(&|i| i * i, 5);
     assert_eq!(ArraySeq::<usize>::length(&squares), 5);
     assert_eq!(ArraySeq::<usize>::nth(&squares, 3), &9);
 
-    let doubled = ArraySeq::map(&squares, |value| value * 2);
+    let doubled = ArraySeq::map(&squares, &|value| value * 2);
     assert_eq!(ArraySeq::<usize>::nth(&doubled, 0), &0);
     assert_eq!(ArraySeq::<usize>::nth(&doubled, 4), &32);
 }
@@ -52,7 +52,7 @@ fn arrayseq_subseq_append_filter_flatten() {
     assert_eq!(ArraySeq::<i32>::length(&combined), 7);
     assert_eq!(ArraySeq::<i32>::nth(&combined, 5), &6);
 
-    let evens = ArraySeq::<i32>::filter(&combined, |value| match value % 2 {
+    let evens = ArraySeq::<i32>::filter(&combined, &|value| match value % 2 {
         0 => B::True,
         _ => B::False,
     });
@@ -84,14 +84,14 @@ fn arrayseq_update_and_inject_preserve_original() {
 fn arrayseq_collect_iterate_reduce_scan() {
     let pairs = ArraySeqS![Pair("a", 1), Pair("a", 2), Pair("b", 3)];
     let collected = ArraySeq::collect(&pairs, |lhs, rhs| lhs.cmp(rhs));
-    assert_eq!(ArraySeq::<Pair<&str, ArrayS<i32>>>::length(&collected), 2);
+    assert_eq!(ArraySeq::<Pair<&str, ArraySeqS<i32>>>::length(&collected), 2);
 
-    let first_group = ArraySeq::<Pair<&str, ArrayS<i32>>>::nth(&collected, 0);
+    let first_group = ArraySeq::<Pair<&str, ArraySeqS<i32>>>::nth(&collected, 0);
     assert_eq!(first_group.0, "a");
     assert_eq!(ArraySeq::<i32>::length(&first_group.1), 2);
 
     let seq = ArraySeqS![1, 2, 3, 4];
-    let iter_sum = ArraySeq::<i32>::iterate(&seq, |acc, item| *acc + *item, 0);
+    let iter_sum = ArraySeq::<i32>::iterate(&seq, &|acc, item| *acc + *item, 0);
     assert_eq!(iter_sum, 10);
 
     let reduced = ArraySeq::<i32>::reduce(&seq, &|lhs, rhs| *lhs + *rhs, 0);

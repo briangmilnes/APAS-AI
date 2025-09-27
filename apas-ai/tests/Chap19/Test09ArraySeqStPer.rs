@@ -1,9 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 pub mod TestArraySeqStPer {
-    use apas_ai::ArraySeqStPer;
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::ArraySeqStPerSLit;
-    use apas_ai::{ArraySeqStPer::ArraySeqStPer::*, Types::Types::*}; // macro import
+    use apas_ai::Types::Types::*;
 
     #[test]
     fn test_new_and_set() {
@@ -12,8 +12,8 @@ pub mod TestArraySeqStPer {
         assert_eq!(*a.nth(0), 7);
         assert_eq!(*a.nth(1), 7);
         assert_eq!(*a.nth(2), 7);
-        let b = ArraySeqStPerS::set(&a, 1, 9).unwrap();
-        let c = ArraySeqStPerS::set(&b, 0, 2).unwrap();
+        let b = ArraySeqStPerS::update(&a, 1, 9).unwrap();
+        let c = ArraySeqStPerS::update(&b, 0, 2).unwrap();
         assert_eq!(*c.nth(0), 2);
         assert_eq!(*c.nth(1), 9);
         assert_eq!(*c.nth(2), 7);
@@ -31,17 +31,17 @@ pub mod TestArraySeqStPer {
     fn test_empty() {
         let empty: ArraySeqStPerS<N> = ArraySeqStPerS::empty();
         assert_eq!(empty.length(), 0);
-        assert_eq!(empty.isEmpty(), B::True);
+        assert_eq!(<ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::isEmpty(&empty), B::True);
     }
 
     #[test]
     fn test_sequence_basic() {
         let a: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::new(10, B::False);
-        assert_eq!(a.isEmpty(), B::False);
+        assert_eq!(a.length() == 0, false);
         assert_eq!(a.length(), 10);
-        let b = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::set(&a, 0, B::True).unwrap();
-        let c = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::set(&b, 1, B::False).unwrap();
-        let d = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::set(&c, 2, B::True).unwrap();
+        let b = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::update(&a, 0, B::True);
+        let c = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::update(&b, 1, B::False);
+        let d = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::update(&c, 2, B::True);
         assert_eq!(d.length(), 10);
         let head4 = ArraySeqStPerSLit![*d.nth(0), *d.nth(1), *d.nth(2), *d.nth(3)];
         assert_eq!(head4, ArraySeqStPerSLit![B::True, B::False, B::True, B::False]);
@@ -52,29 +52,29 @@ pub mod TestArraySeqStPer {
         let s = ArraySeqStPerS::singleton(42);
         assert_eq!(s.length(), 1);
         assert_eq!(*s.nth(0), 42);
-        assert_eq!(s.isSingleton(), B::True);
+        assert_eq!(s.length() == 1, true);
     }
 
     #[test]
     fn test_is_empty_and_is_singleton() {
         let e: ArraySeqStPerS<N> = ArraySeqStPerS::empty();
-        assert_eq!(e.isEmpty(), B::True);
-        assert_eq!(e.isSingleton(), B::False);
+        assert_eq!(e.length() == 0, true);
+        assert_eq!(e.length() == 1, false);
 
         let s = ArraySeqStPerS::singleton(7);
-        assert_eq!(s.isEmpty(), B::False);
-        assert_eq!(s.isSingleton(), B::True);
+        assert_eq!(s.length() == 0, false);
+        assert_eq!(s.length() == 1, true);
 
         let a = ArraySeqStPerSLit![1, 2];
-        assert_eq!(a.isEmpty(), B::False);
-        assert_eq!(a.isSingleton(), B::False);
+        assert_eq!(a.length() == 0, false);
+        assert_eq!(a.length() == 1, false);
     }
 
     #[test]
     fn test_from_vec() {
         let empty_seq: ArraySeqStPerS<N> = ArraySeqStPerSLit![];
         assert_eq!(empty_seq.length(), 0);
-        assert_eq!(empty_seq.isEmpty(), B::True);
+        assert_eq!(empty_seq.length() == 0, true);
         let single_vec = vec![42];
         let single_seq = ArraySeqStPerS::from_vec(single_vec);
         assert_eq!(single_seq, ArraySeqStPerSLit![42]);
@@ -222,24 +222,24 @@ pub mod TestArraySeqStPer {
     #[should_panic]
     fn test_set_out_of_bounds_panics_on_unwrap() {
         let a = ArraySeqStPerS::new(3, 0);
-        let _ = ArraySeqStPerS::set(&a, 3, 1).unwrap();
+        let _ = ArraySeqStPerS::update(&a, 3, 1).unwrap();
     }
 
     #[test]
     fn test_set_in_bounds_ok_and_writes() {
         let a = ArraySeqStPerS::new(3, 0);
-        let b = ArraySeqStPerS::set(&a, 1, 5);
+        let b = ArraySeqStPerS::update(&a, 1, 5);
         assert!(b.is_ok());
         let c = b.unwrap();
         assert_eq!(*c.nth(1), 5);
     }
 
     #[test]
-    fn test_subseq_copy_trait_form_basic() {
+    fn test_subseq_trait_form_basic() {
         let a = ArraySeqStPerSLit![10, 20, 30, 40, 50];
-        let b: ArraySeqStPerS<N> = ArraySeqStPerS::subseq_copy(&a, 1, 3);
+        let b: ArraySeqStPerS<N> = ArraySeqStPerS::subseq(&a, 1, 3);
         assert_eq!(b, ArraySeqStPerSLit![20, 30, 40]);
-        let e: ArraySeqStPerS<N> = ArraySeqStPerS::subseq_copy(&a, 10, 2);
+        let e: ArraySeqStPerS<N> = ArraySeqStPerS::subseq(&a, 10, 2);
         assert_eq!(e.length(), 0);
     }
 
@@ -247,7 +247,7 @@ pub mod TestArraySeqStPer {
     fn test_new_set_persistent() {
         let a: ArraySeqStPerS<N> = ArraySeqStPerS::new(3, 7);
         assert_eq!(a.length(), 3);
-        let b = ArraySeqStPerS::set(&a, 1, 9).unwrap();
+        let b = ArraySeqStPerS::update(&a, 1, 9).unwrap();
         assert_eq!(*a.nth(1), 7);
         assert_eq!(*b.nth(1), 9);
     }

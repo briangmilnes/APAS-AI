@@ -367,4 +367,11 @@ pub mod LinkedListStPer {
             LinkedListStPerS::from_vec(pairs)
         }
     }
+
+    #[macro_export]
+    macro_rules! LinkedListStPerSLit {
+        () => { $crate::Chap18::LinkedListStPer::LinkedListStPer::LinkedListStPerS::from_vec(Vec::new()) };
+        ($x:expr; $n:expr) => { $crate::Chap18::LinkedListStPer::LinkedListStPer::LinkedListStPerS::from_vec(vec![$x; $n]) };
+        ($($x:expr),* $(,)?) => { $crate::Chap18::LinkedListStPer::LinkedListStPer::LinkedListStPerS::from_vec(vec![$($x),*]) };
+    }
 }

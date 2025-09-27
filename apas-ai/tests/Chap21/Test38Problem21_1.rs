@@ -2,8 +2,9 @@
 /// Problem 21.1 (Points in 2D) tests and construction using ArraySeqPer.
 
 pub mod Test38Problem21_1 {
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
+    use apas_ai::PairLit;
 
 /// Construct the sequence of 2D points (x, y) with 0 ≤ x < n and 1 ≤ y < n,
 /// ordered by x major, then y.
