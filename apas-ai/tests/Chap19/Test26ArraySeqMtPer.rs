@@ -2,6 +2,7 @@
 
 pub mod Test26ArraySeqMtPer {
     use apas_ai::Chap19::ArraySeqMtPer::ArraySeqMtPer::*;
+    use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS;
     use apas_ai::ArrayMtPerSLit;
     use apas_ai::Types::Types::*;
 
