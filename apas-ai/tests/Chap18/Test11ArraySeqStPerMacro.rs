@@ -7,7 +7,7 @@ use apas_ai::Types::Types::{B, Pair};
 fn arrayseq_stper_macro_empty() {
     let seq: Seq<i32> = ArraySeqStPerSLit![];
     assert_eq!(<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::length(&seq), 0);
-    assert_eq!(<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::isEmpty(&seq), true);
+    assert_eq!(<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::isEmpty(&seq), B::True);
 }
 
 #[test]
