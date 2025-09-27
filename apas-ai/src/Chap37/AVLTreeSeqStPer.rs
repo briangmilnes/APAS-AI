@@ -87,7 +87,14 @@ pub mod AVLTreeSeqStPer {
 
     fn set_rec<T: StT>(cur: &Link<T>, index: N, value: T) -> Result<Link<T>, &'static str> {
         match cur {
-            | None => Err("Index out of bounds"),
+            | None => {
+                // Allow setting at index 0 on empty tree (append to empty)
+                if index == 0 {
+                    Ok(Some(mk(value, None, None)))
+                } else {
+                    Err("Index out of bounds")
+                }
+            },
             | Some(n) => {
                 let ls = size(&n.left);
                 if index < ls {

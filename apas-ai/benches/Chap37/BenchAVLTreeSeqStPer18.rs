@@ -13,9 +13,12 @@ fn bench_avl_per_ch18(c: &mut Criterion) {
     let n: N = 1_000;
     group.bench_with_input(BenchmarkId::new("build_then_length", n), &n, |b, &len| {
         b.iter(|| {
-            // For persistent sequences, from_vec is the intended bulk construction method
-            let values: Vec<N> = (0..len).collect();
-            let t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(values);
+            // Build sequence incrementally: set(0,0) on empty, then set(1,1), set(2,2), etc.
+            let mut t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::empty();
+            for i in 0..len {
+                // set(i, i) appends when i == length()
+                t = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::set(&t, i, i).unwrap();
+            }
             black_box(t.length())
         })
     });
