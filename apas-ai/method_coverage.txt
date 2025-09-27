@@ -1,0 +1,183 @@
+=== METHOD-LEVEL COVERAGE ANALYSIS ===
+CHAPTER 03 - InsertionSortSt.rs:
+  TRAIT: InsertionSortStTrait<T>
+    ✓ insSort(&self, slice: &mut [T]) - WELL TESTED
+      ✓ Empty input test
+      ✓ Single element test
+      ✓ Already sorted test
+      ✓ Reverse order test
+      ✓ Duplicates test
+      ✓ Random data test
+      ✓ Negative numbers test
+      ✗ Missing: Large input stress test
+
+CHAPTER 05 - SetStEph.rs:
+  TRAIT: SetStEphTrait<T>
+    ✗ empty() -> Set<T> - NOT DIRECTLY TESTED
+    ✗ singleton(x: T) -> Set<T> - NOT DIRECTLY TESTED
+    ✗ size(&self) -> N - PARTIALLY TESTED (only in CartesianProduct test)
+    ✗ mem(&self, x: &T) -> B - NOT TESTED
+    ✗ union(&self, other: &Set<T>) -> Set<T> - NOT TESTED
+    ✗ intersection(&self, other: &Set<T>) -> Set<T> - NOT TESTED
+    ✓ partition(&self, parts: &Set<Set<T>>) -> B - WELL TESTED
+      ✓ Valid partition test
+      ✓ Overlap detection test
+      ✓ Missing element test
+    ✓ CartesianProduct<U>(&self, other: &Set<U>) -> Set<Pair<T, U>> - TESTED
+      ✓ Basic functionality test
+      ✗ Missing: Empty set edge cases
+    ✗ insert(&mut self, x: T) -> &mut Self - NOT TESTED
+    ✗ iter(&self) -> Iterator - NOT TESTED
+    ✗ FromVec(v: Vec<T>) -> Set<T> - NOT TESTED
+  MACRO: SetLit! - USED BUT NOT TESTED
+
+CHAPTER 05 - RelationStEph.rs:
+  TRAIT: RelationStEphTrait<X, Y>
+    ✗ empty() -> Relation<X, Y> - NOT DIRECTLY TESTED
+    ✓ FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y> - TESTED
+    ✗ size(&self) -> N - NOT TESTED
+    ✓ domain(&self) -> Set<X> - TESTED
+      ✓ Basic functionality test
+      ✗ Missing: Empty relation edge case
+    ✓ range(&self) -> Set<Y> - TESTED
+      ✓ Basic functionality test
+      ✗ Missing: Empty relation edge case
+    ✓ mem(&self, a: &X, b: &Y) -> B - TESTED
+      ✓ True case test
+      ✓ False case test
+      ✗ Missing: Empty relation edge case
+    ✗ iter(&self) -> Iterator - NOT TESTED
+  IMPL METHODS:
+    ✗ FromVec(v: Vec<Pair<A, B>>) -> Relation<A, B> - NOT TESTED
+  MACRO: RelationLit! - USED BUT NOT TESTED
+
+CHAPTER 05 - MappingStEph.rs:
+  TRAIT: MappingStEphTrait<X, Y>
+    ✓ empty() -> Mapping<X, Y> - WELL TESTED
+      ✓ Empty mapping creation test
+      ✓ Empty mapping operations test
+    ✓ FromVec(v: Vec<Pair<X, Y>>) -> Mapping<X, Y> - WELL TESTED
+      ✓ Basic functionality test
+      ✓ Duplicate key panic test
+    ✓ FromRelation(r: &Relation<X, Y>) -> Mapping<X, Y> - TESTED
+      ✓ Relation to mapping conversion test
+      ✗ Missing: Empty relation edge case
+    ✓ size(&self) -> N - WELL TESTED
+      ✓ Multiple size tests across different scenarios
+    ✓ domain(&self) -> Set<X> - WELL TESTED
+      ✓ Domain extraction test
+      ✓ Empty mapping domain test
+    ✓ range(&self) -> Set<Y> - WELL TESTED
+      ✓ Range extraction test (with duplicates)
+      ✓ Empty mapping range test
+    ✓ mem(&self, a: &X, b: &Y) -> B - EXCELLENTLY TESTED
+      ✓ Existing pairs test
+      ✓ Wrong combinations test
+      ✓ Non-existent keys/values test
+      ✓ Empty mapping membership test
+    ✓ iter(&self) -> Iterator - WELL TESTED
+      ✓ Iterator functionality test
+      ✓ Empty mapping iterator test
+  MACRO: MappingLit! - EXCELLENTLY TESTED
+    ✓ Empty mapping creation
+    ✓ Non-empty mapping creation
+    ✓ Duplicate key panic behavior
+
+CHAPTER 18 - ArraySeqStPer.rs:
+  TRAIT: ArraySeqStPerTrait<T> (17 methods)
+    ✓ new(length: N, init_value: T) -> ArraySeqStPerS<T> - TESTED
+    ✓ length(&self) -> N - WELL TESTED
+    ✓ nth(&self, index: N) -> &T - WELL TESTED
+    ✓ empty() -> ArraySeqStPerS<T> - TESTED
+    ✓ singleton(item: T) -> ArraySeqStPerS<T> - TESTED
+    ✓ subseq_copy(a: &ArraySeqStPerS<T>, start: N, length: N) -> ArraySeqStPerS<T> - TESTED
+    ✓ append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> - TESTED
+    ✓ flatten(a: &ArraySeqStPerS<ArraySeqStPerS<T>>) -> ArraySeqStPerS<T> - TESTED
+    ✓ inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T> - TESTED
+    ✓ isEmpty(&self) -> B - TESTED
+    ✓ isSingleton(&self) -> B - TESTED
+    ✓ ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T> - TESTED
+    ✓ tabulate<F>(length: N, f: F) -> ArraySeqStPerS<T> - TESTED (fibonacci)
+    ✓ map<F, U>(a: &ArraySeqStPerS<T>, f: F) -> ArraySeqStPerS<U> - TESTED
+    ✓ filter<F>(a: &ArraySeqStPerS<T>, f: F) -> ArraySeqStPerS<T> - TESTED
+    ✓ iterate<F>(a: &ArraySeqStPerS<T>, f: F) -> ArraySeqStPerS<T> - TESTED
+    ✓ scan<F>(a: &ArraySeqStPerS<T>, f: F, init: T) -> ArraySeqStPerS<T> - TESTED
+    ✓ collect<F>(a: &ArraySeqStPerS<T>, f: F) -> ArraySeqStPerS<U> - TESTED
+  IMPL METHODS:
+    ✓ from_vec(elts: Vec<T>) -> Self - IMPLICITLY TESTED
+    ✗ iter(&self) -> std::slice::Iter<'_, T> - NOT DIRECTLY TESTED
+  EDGE CASES TESTED:
+    ✓ Empty sequences
+    ✓ Single element sequences
+    ✓ Large sequences (fibonacci)
+    ✗ Missing: Out-of-bounds access tests
+    ✗ Missing: Invalid subseq parameters
+    ✗ Missing: Inject with invalid indices
+
+
+=== METHOD-LEVEL COVERAGE SUMMARY ===
+
+COVERAGE QUALITY PATTERNS:
+
+EXCELLENT COVERAGE (90%+ methods tested):
+- Chapter 05: MappingStEph.rs (8/8 methods + edge cases)
+- Chapter 18: ArraySeqStPer.rs (17/17 trait methods)
+
+GOOD COVERAGE (70-89% methods tested):
+- Chapter 03: InsertionSortSt.rs (1/1 method + comprehensive edge cases)
+- Chapter 05: RelationStEph.rs (5/7 methods tested)
+
+POOR COVERAGE (30-69% methods tested):
+- Chapter 05: SetStEph.rs (3/11 methods tested)
+
+CRITICAL MISSING EDGE CASE PATTERNS:
+1. Empty input handling - Often missing
+2. Out-of-bounds access - Rarely tested
+3. Invalid parameter combinations - Rarely tested
+4. Panic conditions - Only tested in MappingLit!
+5. Large input stress tests - Rarely tested
+6. Iterator edge cases - Often not tested
+
+PRIORITY MISSING TESTS BY CATEGORY:
+
+HIGH PRIORITY (Core functionality untested):
+1. SetStEph: empty(), singleton(), size(), mem(), union(), intersection()
+2. SetStEph: insert(), iter(), FromVec() - all basic operations
+3. RelationStEph: empty(), size(), iter() - basic operations
+4. All Mt (multithreaded) variants - completely untested
+5. All Weighted graph variants - completely untested
+
+MEDIUM PRIORITY (Edge cases and error handling):
+1. Out-of-bounds access tests for all sequence types
+2. Invalid parameter tests (negative indices, invalid ranges)
+3. Empty collection edge cases across all data structures
+4. Iterator boundary conditions
+5. Large input stress tests
+
+LOW PRIORITY (Performance and specialized cases):
+1. Memory efficiency tests
+2. Concurrent access patterns for Mt variants
+3. Complex nested data structure tests
+
+SPECIFIC EDGE CASE GAPS:
+
+PANIC/ERROR CONDITION TESTS NEEDED:
+1. ArraySeq.nth() with out-of-bounds index
+2. ArraySeq.subseq_copy() with invalid start/length
+3. Set operations on very large sets
+4. Mapping operations with null/invalid keys
+5. Graph operations with invalid node/edge references
+
+EMPTY INPUT TESTS NEEDED:
+1. Set.union() with empty sets
+2. Set.intersection() with empty sets
+3. Relation.domain()/range() on empty relations
+4. ArraySeq operations on empty sequences
+5. Graph algorithms on empty graphs
+
+BOUNDARY CONDITION TESTS NEEDED:
+1. Single element collections in all operations
+2. Maximum size collections
+3. Zero-length operations (subseq with length 0)
+4. Iterator at beginning/end boundaries
+

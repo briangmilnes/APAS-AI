@@ -1,0 +1,23 @@
+
+ First, go through all the source files, listing them,
+ and confirming that each has a bench file and it is
+ in the right directory.
+
+ Second, move any benchmark files to the right directories.
+ Be sure to update Cargo.toml for this.
+
+ Third, for each file and each pub fun or method in
+ any trait list which are benched or not.
+ Mark each fn or method as worth benching or not, for
+ example, isEmpty, or is already benched.
+ 
+ Fourth, make a plan with each file and fun or method
+ getting its own todo to add the necessary benchmarks.
+ Keep the benchmarks of each  function to 1 sec.
+
+ After each file modification run the new benchmark
+ (just the new one if you can, the file if you must). 
+ Fix any errors. Warmups should be 100 ms.
+
+ Then run all the benchmarks in that modified file
+ and get all of the benchmarks running at about 1 sec.

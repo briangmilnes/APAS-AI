@@ -9,9 +9,9 @@ use std::time::Duration;
 
 fn bench_mathseq_basics(c: &mut Criterion) {
     let mut group = c.benchmark_group("MathSeq_ops");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(5));
-    let n: N = 100_000;
+    group.warm_up_time(Duration::from_millis(100));
+    group.measurement_time(Duration::from_secs(1));
+    let n: N = 10_000;
 
     group.bench_with_input(BenchmarkId::new("new_then_set", n), &n, |b, &len| {
         b.iter(|| {
@@ -33,6 +33,44 @@ fn bench_mathseq_basics(c: &mut Criterion) {
                 let _ = s.delete_last();
             }
             black_box(s.length())
+        })
+    });
+
+    group.bench_with_input(BenchmarkId::new("subseq_copy", n), &n, |b, &len| {
+        let s = MathSeqSLit![42; len];
+        b.iter(|| {
+            let sub = s.subseq_copy(len / 4, len / 2);
+            black_box(sub)
+        })
+    });
+
+    group.bench_with_input(BenchmarkId::new("domain", n), &n, |b, &len| {
+        let s = MathSeqSLit![42; len];
+        b.iter(|| {
+            let dom = s.domain();
+            black_box(dom)
+        })
+    });
+
+    group.bench_with_input(BenchmarkId::new("range", n), &n, |b, &len| {
+        let mut s = MathSeqSLit![0; len];
+        for i in 0..len {
+            let _ = s.set(i, i % 100); // Create some duplicates
+        }
+        b.iter(|| {
+            let rng = s.range();
+            black_box(rng)
+        })
+    });
+
+    group.bench_with_input(BenchmarkId::new("multiset_range", n), &n, |b, &len| {
+        let mut s = MathSeqSLit![0; len];
+        for i in 0..len {
+            let _ = s.set(i, i % 50); // Create duplicates for counting
+        }
+        b.iter(|| {
+            let multi = s.multiset_range();
+            black_box(multi)
         })
     });
 

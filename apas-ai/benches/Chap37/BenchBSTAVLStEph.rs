@@ -16,10 +16,10 @@ fn build_tree(len: usize) -> BSTreeAVL<i32> {
 fn bench_bsteph_avl(c: &mut Criterion) {
     let mut group = c.benchmark_group("BSTAVLStEph");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_millis(200));
-    group.measurement_time(Duration::from_millis(800));
+    group.warm_up_time(Duration::from_millis(100));
+    group.measurement_time(Duration::from_secs(1));
 
-    for &n in &[1_024usize, 2_048] {
+    for &n in &[512usize, 1_024] {
         group.bench_with_input(BenchmarkId::new("build", n), &n, |b, &len| {
             b.iter(|| black_box(build_tree(len)));
         });
@@ -38,10 +38,64 @@ fn bench_bsteph_avl(c: &mut Criterion) {
             );
         });
 
-        group.bench_with_input(BenchmarkId::new("traversal", n), &n, |b, &len| {
+        group.bench_with_input(BenchmarkId::new("contains", n), &n, |b, &len| {
+            b.iter_batched(
+                || build_tree(len),
+                |tree| {
+                    let mut key = 0usize;
+                    while key < len {
+                        let _ = black_box(tree.contains(&(key as i32)));
+                        key += 23;
+                    }
+                },
+                BatchSize::SmallInput,
+            );
+        });
+
+        group.bench_with_input(BenchmarkId::new("minimum", n), &n, |b, &len| {
+            b.iter_batched(
+                || build_tree(len),
+                |tree| black_box(tree.minimum().cloned()),
+                BatchSize::SmallInput,
+            );
+        });
+
+        group.bench_with_input(BenchmarkId::new("maximum", n), &n, |b, &len| {
+            b.iter_batched(
+                || build_tree(len),
+                |tree| black_box(tree.maximum().cloned()),
+                BatchSize::SmallInput,
+            );
+        });
+
+        group.bench_with_input(BenchmarkId::new("size", n), &n, |b, &len| {
+            b.iter_batched(
+                || build_tree(len),
+                |tree| black_box(tree.size()),
+                BatchSize::SmallInput,
+            );
+        });
+
+        group.bench_with_input(BenchmarkId::new("height", n), &n, |b, &len| {
+            b.iter_batched(
+                || build_tree(len),
+                |tree| black_box(tree.height()),
+                BatchSize::SmallInput,
+            );
+        });
+
+        group.bench_with_input(BenchmarkId::new("in_order", n), &n, |b, &len| {
             b.iter_batched(
                 || build_tree(len),
                 |tree| black_box(tree.in_order()),
+                BatchSize::SmallInput,
+            );
+        });
+
+        group.bench_with_input(BenchmarkId::new("pre_order", n), &n, |b, &len| {
+            b.iter_batched(
+                || build_tree(len),
+                |tree| black_box(tree.pre_order()),
                 BatchSize::SmallInput,
             );
         });

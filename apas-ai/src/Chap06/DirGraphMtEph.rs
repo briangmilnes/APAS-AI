@@ -90,7 +90,7 @@ pub mod DirGraphMtEph {
             }
         }
 
-        fn NG(&self, v: &V) -> Set<V> { self.NPlus(v) }
+        fn NG(&self, v: &V) -> Set<V> { self.NPlus(v).union(&self.NMinus(v)) }
 
         fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V> {
             let mut result: Set<V> = SetLit![];
@@ -141,7 +141,7 @@ pub mod DirGraphMtEph {
 
         fn Incident(&self, e: &Pair<V, V>, v: &V) -> B { if &e.0 == v || &e.1 == v { B::True } else { B::False } }
 
-        fn Degree(&self, v: &V) -> N { self.NPlus(v).size() }
+        fn Degree(&self, v: &V) -> N { self.InDegree(v) + self.OutDegree(v) }
         fn InDegree(&self, v: &V) -> N { self.NMinus(v).size() }
         fn OutDegree(&self, v: &V) -> N { self.NPlus(v).size() }
     }

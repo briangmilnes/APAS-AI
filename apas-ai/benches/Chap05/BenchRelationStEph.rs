@@ -2,33 +2,80 @@
 use apas_ai::Chap05::RelationStEph::RelationStEph::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Types::Types::*;
-use apas_ai::{PairLit, SetLit};
+use apas_ai::{SetLit, PairLit};
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
-fn bench_relation_build_and_domain_range(c: &mut Criterion) {
-    let mut group = c.benchmark_group("BenchRelationEphChap5_2");
-    group.sample_size(10);
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(5));
-
-    let n: N = 50_000;
-
-    group.bench_with_input(BenchmarkId::new("build_pairs_and_domain_range", n), &n, |b, &len| {
+fn bench_relation_operations(c: &mut Criterion) {
+    let mut group = c.benchmark_group("RelationStEph");
+    group.warm_up_time(Duration::from_millis(100));
+    group.measurement_time(Duration::from_secs(1));
+    
+    let n: N = 1_000;
+    
+    group.bench_with_input(BenchmarkId::new("FromSet", n), &n, |b, &len| {
+        let pairs: Set<Pair<N, N>> = Set::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
         b.iter(|| {
-            let mut pairs: Set<Pair<N, N>> = SetLit![]; // Set: empty constructor
+            let relation = Relation::FromSet(pairs.clone());
+            black_box(relation)
+        })
+    });
+
+    group.bench_with_input(BenchmarkId::new("domain", n), &n, |b, &len| {
+        let pairs: Set<Pair<N, N>> = Set::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+        let relation = Relation::FromSet(pairs);
+        b.iter(|| {
+            let dom = relation.domain();
+            black_box(dom)
+        })
+    });
+
+    group.bench_with_input(BenchmarkId::new("range", n), &n, |b, &len| {
+        let pairs: Set<Pair<N, N>> = Set::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+        let relation = Relation::FromSet(pairs);
+        b.iter(|| {
+            let rng = relation.range();
+            black_box(rng)
+        })
+    });
+
+    group.bench_with_input(BenchmarkId::new("mem", n), &n, |b, &len| {
+        let pairs: Set<Pair<N, N>> = Set::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+        let relation = Relation::FromSet(pairs);
+        b.iter(|| {
+            let mut found = 0;
             for i in 0..len {
-                let _ = Set::insert(&mut pairs, PairLit!(i, i % 128));
+                if relation.mem(&i, &(i * 2)) == B::True {
+                    found += 1;
+                }
             }
-            let r = Relation::FromSet(pairs);
-            let d = r.domain();
-            let g = r.range();
-            black_box((r, d, g))
+            black_box(found)
+        })
+    });
+
+    group.bench_with_input(BenchmarkId::new("iter", n), &n, |b, &len| {
+        let pairs: Set<Pair<N, N>> = Set::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+        let relation = Relation::FromSet(pairs);
+        b.iter(|| {
+            let mut count = 0;
+            for _pair in relation.iter() {
+                count += 1;
+            }
+            black_box(count)
+        })
+    });
+
+    group.bench_with_input(BenchmarkId::new("size", n), &n, |b, &len| {
+        let pairs: Set<Pair<N, N>> = Set::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+        let relation = Relation::FromSet(pairs);
+        b.iter(|| {
+            let sz = relation.size();
+            black_box(sz)
         })
     });
 
     group.finish();
 }
 
-criterion_group!(benches, bench_relation_build_and_domain_range);
+criterion_group!(benches, bench_relation_operations);
 criterion_main!(benches);

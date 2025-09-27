@@ -30,7 +30,7 @@ harness = false
 
 [[bench]]
 name = "BenchMathSeq"
-path = "benches/Chap18/BenchMathSeq.rs"
+path = "benches/Chap17/BenchMathSeq.rs"
 harness = false
 
 [[bench]]
@@ -41,7 +41,7 @@ harness = false
 
 [[bench]]
 name = "BenchArraySeqStEphChap18"
-path = "benches/Chap19/BenchArraySeqStEph18.rs"
+path = "benches/Chap18/BenchArraySeqStEphChap18.rs"
 harness = false
 
 [[bench]]
@@ -174,10 +174,6 @@ name = "BenchInsertionSortSt"
 path = "benches/Chap03/BenchInsertionSortSt.rs"
 harness = false
 
-[[bench]]
-name = "BenchRelationStEphChap5_2"
-path = "benches/Chap05/BenchRelationStEph.rs"
-harness = false
 
 [[bench]]
 name = "BenchMappingStEphChap5_5"
@@ -203,6 +199,33 @@ harness = false
 name = "BenchLabUnDirGraphStEph"
 path = "benches/Chap06/BenchLabUnDirGraphStEph.rs"
 harness = false
+
+[[bench]]
+name = "BenchSetStEph"
+path = "benches/Chap05/BenchSetStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchRelationStEph"
+path = "benches/Chap05/BenchRelationStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTSetTreapMtEph"
+path = "benches/Chap39/BenchBSTSetTreapMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchArraySeq"
+path = "benches/Chap18/BenchArraySeq.rs"
+harness = false
+
+[[bench]]
+name = "BenchArraySeqMtEph"
+path = "benches/Chap18/BenchArraySeqMtEph.rs"
+harness = false
+
+
 
 
 # Test files in chapter subdirectories
@@ -237,6 +260,58 @@ path = "tests/Chap06/Test26LabDirGraphStEph.rs"
 [[test]]
 name = "Test27LabUnDirGraphStEph"
 path = "tests/Chap06/Test27LabUnDirGraphStEph.rs"
+
+[[test]]
+name = "Test28DirGraphMtEph"
+path = "tests/Chap06/Test28DirGraphMtEph.rs"
+
+[[test]]
+name = "TestLabDirGraphMtEph"
+path = "tests/Chap06/TestLabDirGraphMtEph.rs"
+
+[[test]]
+name = "TestLabUnDirGraphMtEph"
+path = "tests/Chap06/TestLabUnDirGraphMtEph.rs"
+
+[[test]]
+name = "TestUnDirGraphMtEph"
+path = "tests/Chap06/TestUnDirGraphMtEph.rs"
+
+[[test]]
+name = "TestWeightedDirGraphMtEphFloat"
+path = "tests/Chap06/TestWeightedDirGraphMtEphFloat.rs"
+
+[[test]]
+name = "TestWeightedDirGraphMtEphInt"
+path = "tests/Chap06/TestWeightedDirGraphMtEphInt.rs"
+
+[[test]]
+name = "TestWeightedUnDirGraphMtEphFloat"
+path = "tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs"
+
+[[test]]
+name = "TestWeightedUnDirGraphMtEphInt"
+path = "tests/Chap06/TestWeightedUnDirGraphMtEphInt.rs"
+
+[[test]]
+name = "TestWeightedDirGraphStEphFloat"
+path = "tests/Chap06/TestWeightedDirGraphStEphFloat.rs"
+
+[[test]]
+name = "TestWeightedDirGraphStEphInt"
+path = "tests/Chap06/TestWeightedDirGraphStEphInt.rs"
+
+[[test]]
+name = "TestWeightedUnDirGraphStEphFloat"
+path = "tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs"
+
+[[test]]
+name = "TestWeightedUnDirGraphStEphInt"
+path = "tests/Chap06/TestWeightedUnDirGraphStEphInt.rs"
+
+[[test]]
+name = "TestArraySeqMtEphSlice"
+path = "tests/Chap19/TestArraySeqMtEphSlice.rs"
 
 [[test]]
 name = "Test02MathSeq"
@@ -307,6 +382,10 @@ name = "Test20AVLTreeSeqStEphChap19"
 path = "tests/Chap37/Test20AVLTreeSeqStEph.rs"
 
 [[test]]
+name = "TestAVLTreeSeq"
+path = "tests/Chap37/TestAVLTreeSeq.rs"
+
+[[test]]
 name = "Test45BSTAVLStEph"
 path = "tests/Chap37/Test45BSTAVLStEph.rs"
 
@@ -332,11 +411,11 @@ path = "tests/Chap37/Test51BSTSetMtEph.rs"
 
 [[test]]
 name = "Test52BSTParaMtEph"
-path = "tests/Chap37/Test52BSTParaMtEph.rs"
+path = "tests/Chap38/Test52BSTParaMtEph.rs"
 
 [[test]]
 name = "Test52BSTParaStEph"
-path = "tests/Chap37/Test52BSTParaStEph.rs"
+path = "tests/Chap38/Test52BSTParaStEph.rs"
 
 [[test]]
 name = "Test07LinkedListStEph"
@@ -395,6 +474,11 @@ path = "tests/Chap39/Test48BSTTreapStEph.rs"
 [[test]]
 name = "Test53BSTParaTreapMtEph"
 path = "tests/Chap39/Test53BSTParaTreapMtEph.rs"
+
+[[test]]
+name = "TestBSTSetTreapMtEph"
+path = "tests/Chap39/TestBSTSetTreapMtEph.rs"
+
 
 # Chapter 12 tests
 [[test]]
@@ -488,4 +572,4 @@ path = "tests/Test35Exercsise_21_9.rs"
 
 [[test]]
 name = "Test42BBTEph"
-path = "tests/Test42BBTEph.rs"
+path = "tests/Chap23/Test42BBTEph.rs"

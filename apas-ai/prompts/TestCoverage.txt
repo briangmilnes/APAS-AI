@@ -3,3 +3,7 @@
  and confirming that each has a test file and it is
  in the right directory.
 
+ Second, for each file and each pub fun or method in
+ any trait list which are tested or not.
+
+ Third, 

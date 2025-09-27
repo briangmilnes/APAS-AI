@@ -49,6 +49,7 @@ fn parallel_increment_counts_all_iterations() {
     assert_eq!(parallel_increment(1_000), 4_000);
 }
 
+
 #[test]
 fn spin_lock_is_non_reentrant() {
     let lock = Arc::new(SpinLock::new());

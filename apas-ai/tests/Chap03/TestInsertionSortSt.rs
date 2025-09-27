@@ -33,3 +33,20 @@ fn insertion_sort_random_slice() {
     0i32.insSort(&mut data);
     assert_eq!(data, expected);
 }
+
+#[test]
+fn insertion_sort_large_input_stress_test() {
+    // Generate a large vector with 10,000+ elements
+    let mut data: Vec<i32> = (0..10_000).rev().collect(); // Reverse sorted - worst case
+    let mut expected = data.clone();
+    expected.sort();
+    
+    0i32.insSort(&mut data);
+    assert_eq!(data, expected);
+    assert_eq!(data.len(), 10_000);
+    
+    // Verify it's actually sorted
+    for i in 1..data.len() {
+        assert!(data[i-1] <= data[i], "Array not properly sorted at index {}", i);
+    }
+}

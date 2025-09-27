@@ -1,11 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
-use apas_ai::Chapter36Mt::Chapter36Mt::Chapter36MtTrait;
+use apas_ai::Chap36::QuickSortMt::Chapter36Mt::Chapter36MtTrait;
 use apas_ai::{ArraySeqMtEphSLit, *};
 use criterion::{BatchSize, BenchmarkId, Criterion, criterion_group, criterion_main};
 
-fn gen_data(n: usize) -> ArraySeqMtEphS<i32> {
+fn gen_data(n: usize) -> apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS<i32> {
     let mut seed = 0x1234_5678_9ABC_DEF0u64;
     let mut arr = ArraySeqMtEphSLit![0; n]; // *Eph struct: constructor + set pattern
     for i in 0..n {

@@ -77,3 +77,7 @@
 - **Do not create benchmarks for exercises unless explicitly requested**. Exercises are learning-focused implementations that don't require performance measurement.
 - **Only create benchmarks for**: Core algorithms, data structures, and implementations that are part of the main APAS library.
 - **When requested**: Follow standard Criterion configuration and naming conventions (`BenchExercise_X_Y.rs`).
+
+### Definsive interfaces
+- APAS follows a defensive programming style where bad arguments (like out-of-bounds indices or invalid parameters) most don't panic but instead produce empty sequences or sets or shorter
+results.

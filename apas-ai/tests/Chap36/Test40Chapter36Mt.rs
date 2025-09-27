@@ -100,4 +100,160 @@ fn quick_sort_mt_small_inputs_use_shared_pivots() {
     assert_eq!(to_vec(&seq_med), vec![1, 2, 5, 7, 8]);
 }
 
+#[test]
+fn quick_sort_mt_concurrent_execution_verification() {
+    use std::sync::{Arc, Barrier};
+    use std::thread;
+    
+    // Test concurrent execution of QuickSort Mt variants
+    let test_data = Arc::new(ArraySeqMtEphSLit![9, 3, 7, 1, 5, 8, 2, 6, 4]);
+    let expected = vec![1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let barrier = Arc::new(Barrier::new(3));
+    
+    let mut handles = vec![];
+    
+    // Thread 1: quick_sort_mt_first
+    let data1 = Arc::clone(&test_data);
+    let barrier1 = Arc::clone(&barrier);
+    handles.push(thread::spawn(move || {
+        barrier1.wait();
+        let mut seq = (*data1).clone();
+        <ArraySeqMtEphS<i32> as Chapter36MtTrait<i32>>::quick_sort_mt_first(&mut seq);
+        to_vec(&seq)
+    }));
+    
+    // Thread 2: quick_sort_mt_median3
+    let data2 = Arc::clone(&test_data);
+    let barrier2 = Arc::clone(&barrier);
+    handles.push(thread::spawn(move || {
+        barrier2.wait();
+        let mut seq = (*data2).clone();
+        <ArraySeqMtEphS<i32> as Chapter36MtTrait<i32>>::quick_sort_mt_median3(&mut seq);
+        to_vec(&seq)
+    }));
+    
+    // Thread 3: quick_sort_mt_random
+    let data3 = Arc::clone(&test_data);
+    let barrier3 = Arc::clone(&barrier);
+    handles.push(thread::spawn(move || {
+        barrier3.wait();
+        let mut seq = (*data3).clone();
+        <ArraySeqMtEphS<i32> as Chapter36MtTrait<i32>>::quick_sort_mt_random(&mut seq);
+        to_vec(&seq)
+    }));
+    
+    // Collect results from all threads
+    let mut results = vec![];
+    for handle in handles {
+        results.push(handle.join().unwrap());
+    }
+    
+    // All threads should produce the same sorted result
+    for result in results {
+        assert_eq!(result, expected);
+        assert!(is_sorted(&result));
+    }
+}
+
+#[test]
+fn quick_sort_mt_thread_safety_stress_test() {
+    use std::sync::Arc;
+    use std::thread;
+    
+    // Stress test with multiple threads sorting different data concurrently
+    let num_threads = 4;
+    let data_size: usize = 1000;
+    
+    let mut handles = vec![];
+    
+    for thread_id in 0..num_threads {
+        handles.push(thread::spawn(move || {
+            // Each thread gets different data based on thread_id
+            let mut data: Vec<i32> = (0..data_size).map(|i| ((i * thread_id + 1) % 100) as i32).collect();
+            data.reverse(); // Make it unsorted
+            
+            let mut seq = ArraySeqMtEphS::from_vec(data);
+            
+            // Use different sorting variants based on thread_id
+            match thread_id % 3 {
+                0 => <ArraySeqMtEphS<i32> as Chapter36MtTrait<i32>>::quick_sort_mt_first(&mut seq),
+                1 => <ArraySeqMtEphS<i32> as Chapter36MtTrait<i32>>::quick_sort_mt_median3(&mut seq),
+                _ => <ArraySeqMtEphS<i32> as Chapter36MtTrait<i32>>::quick_sort_mt_random(&mut seq),
+            }
+            
+            let result = to_vec(&seq);
+            (thread_id, is_sorted(&result), result.len())
+        }));
+    }
+    
+    // Verify all threads completed successfully
+    for handle in handles {
+        let (thread_id, is_sorted_result, length) = handle.join().unwrap();
+        assert!(is_sorted_result, "Thread {} failed to sort correctly", thread_id);
+        assert_eq!(length, data_size, "Thread {} lost data during sorting", thread_id);
+    }
+}
+
+#[test]
+fn quick_sort_mt_pivot_strategies_concurrent() {
+    use std::sync::Arc;
+    use std::thread;
+    
+    // Test pivot selection strategies concurrently
+    let test_seq = Arc::new(ArraySeqMtEphSLit![15, 3, 9, 1, 12, 7, 20, 5, 18, 11]);
+    let mut handles = vec![];
+    
+    // Test pivot_mt_first concurrently
+    for _ in 0..3 {
+        let seq = Arc::clone(&test_seq);
+        handles.push(thread::spawn(move || {
+            seq.pivot_mt_first(0, seq.length())
+        }));
+    }
+    
+    // Test pivot_mt_median3 concurrently
+    for _ in 0..3 {
+        let seq = Arc::clone(&test_seq);
+        handles.push(thread::spawn(move || {
+            seq.pivot_mt_median3(2, 8) // Test with subrange
+        }));
+    }
+    
+    // Test pivot_mt_random concurrently
+    for _ in 0..3 {
+        let seq = Arc::clone(&test_seq);
+        handles.push(thread::spawn(move || {
+            seq.pivot_mt_random(1, 9) // Test with subrange
+        }));
+    }
+    
+    // Collect all results
+    let mut results = vec![];
+    for handle in handles {
+        results.push(handle.join().unwrap());
+    }
+    
+    // Verify pivot_mt_first results (should be consistent)
+    assert_eq!(results[0], results[1]);
+    assert_eq!(results[1], results[2]);
+    assert_eq!(results[0], 15); // First element
+    
+    // Verify pivot_mt_median3 results (should be consistent for same range)
+    assert_eq!(results[3], results[4]);
+    assert_eq!(results[4], results[5]);
+    
+    // pivot_mt_random results may vary, but should be within valid range
+    for i in 6..9 {
+        let pivot = results[i];
+        let mut found = false;
+        for j in 1..9 {
+            if test_seq.nth_cloned(j) == pivot {
+                found = true;
+                break;
+            }
+        }
+        assert!(found, "Random pivot {} not found in expected range", pivot);
+    }
+}
+
 }

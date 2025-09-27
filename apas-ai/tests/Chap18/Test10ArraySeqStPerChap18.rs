@@ -187,4 +187,410 @@ pub mod TestArraySeqStPerChap {
         assert_eq!(pair1.0, 2);
         assert_eq!(pair1.1, ArraySeqStPerSLit![20]);
     }
+
+    #[test]
+    fn test_arrayseqstper_iter() {
+        let seq = ArraySeqStPerSLit![1, 2, 3, 4, 5];
+        let collected: Vec<i32> = seq.iter().cloned().collect();
+        assert_eq!(collected, vec![1, 2, 3, 4, 5]);
+        
+        let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+        let empty_collected: Vec<i32> = empty.iter().cloned().collect();
+        assert_eq!(empty_collected, Vec::<i32>::new());
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_arrayseqstper_nth_out_of_bounds() {
+        let seq = ArraySeqStPerSLit![1, 2, 3];
+        let _ = seq.nth(5); // Should panic - index out of bounds
+    }
+
+    #[test]
+    fn test_arrayseqstper_subseq_invalid_start() {
+        let seq = ArraySeqStPerSLit![1, 2, 3];
+        let result = seq.subseq_copy(5, 1); // Start index out of bounds - returns empty
+        assert_eq!(result.length(), 0);
+    }
+
+    #[test]
+    fn test_arrayseqstper_subseq_invalid_length() {
+        let seq = ArraySeqStPerSLit![1, 2, 3];
+        let result = seq.subseq_copy(1, 10); // Length extends beyond bounds - clamps to available
+        assert_eq!(result.length(), 2); // Should return elements from index 1 to end
+        assert_eq!(result, ArraySeqStPerSLit![2, 3]);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_arrayseqstper_inject_invalid_index() {
+        let seq = ArraySeqStPerSLit![1, 2, 3];
+        let updates = ArraySeqStPerSLit![Pair(5, 99)]; // Index 5 is out of bounds
+        let _ = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::inject(&seq, &updates);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_arrayseqstper_nth_panic_outofbounds() {
+        let seq = ArraySeqStPerSLit![1, 2, 3];
+        let _ = seq.nth(10); // Index 10 is way out of bounds - should panic
+    }
+
+    #[test]
+    fn test_arrayseqstper_subseq_overflow_graceful() {
+        let seq = ArraySeqStPerSLit![1, 2, 3];
+        // APAS style: handles overflow gracefully by returning empty or clamping
+        let result = seq.subseq_copy(1, usize::MAX);
+        // Should either return empty or clamp to available elements
+        assert!(result.length() <= 2); // At most 2 elements from index 1 onwards
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_arrayseqstper_nth_panic_empty() {
+        let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+        let _ = empty.nth(0); // Any index on empty sequence should panic
+    }
+
+    #[test]
+    fn test_arrayseqstper_empty_operations_comprehensive() {
+        let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+        
+        // Basic properties
+        assert_eq!(empty.length(), 0);
+        assert_eq!(empty.isEmpty(), B::True);
+        assert_eq!(empty.isSingleton(), B::False);
+        
+        // Operations on empty sequence should return empty or appropriate defaults
+        let empty_subseq = empty.subseq_copy(0, 0);
+        assert_eq!(empty_subseq.length(), 0);
+        
+        let empty_subseq2 = empty.subseq_copy(0, 10);
+        assert_eq!(empty_subseq2.length(), 0);
+        
+        // Map on empty sequence should return empty
+        let mapped = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&empty, &|x| x * 2);
+        assert_eq!(mapped.length(), 0);
+        
+        // Filter on empty sequence should return empty
+        let filtered = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&empty, &|x| if *x > 0 { B::True } else { B::False });
+        assert_eq!(filtered.length(), 0);
+        
+        // Reduce on empty sequence should return base value
+        let reduced = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::reduce(&empty, &|a, b| a + b, 42);
+        assert_eq!(reduced, 42);
+        
+        // Scan on empty sequence should return sequence with base value
+        let scanned = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::scan(&empty, &|a, b| a + b, 0);
+        assert_eq!(scanned.0.length(), 1); // scan returns (sequence with base, final_value)
+        assert_eq!(*scanned.0.nth(0), 0); // Should contain the base value
+        
+        // Append with empty should work
+        let non_empty = ArraySeqStPerSLit![1, 2, 3];
+        let appended1 = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&empty, &non_empty);
+        assert_eq!(appended1.length(), 3);
+        assert_eq!(appended1, non_empty);
+        
+        let appended2 = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&non_empty, &empty);
+        assert_eq!(appended2.length(), 3);
+        assert_eq!(appended2, non_empty);
+        
+        // Inject on empty sequence with empty updates should return empty
+        let empty_updates: ArraySeqStPerS<Pair<usize, i32>> = ArraySeqStPerS::empty();
+        let injected = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::inject(&empty, &empty_updates);
+        assert_eq!(injected.length(), 0);
+        
+        // Iterator on empty sequence should be empty
+        let collected: Vec<i32> = empty.iter().cloned().collect();
+        assert_eq!(collected.len(), 0);
+    }
+
+    #[test]
+    fn test_arrayseqstper_single_element_boundary() {
+        // Test single element sequence operations
+        let single = ArraySeqStPerSLit![42];
+        
+        // Basic properties
+        assert_eq!(single.length(), 1);
+        assert_eq!(single.isEmpty(), B::False);
+        assert_eq!(single.isSingleton(), B::True);
+        
+        // Access operations
+        assert_eq!(*single.nth(0), 42);
+        
+        // Subseq operations
+        let full_subseq = single.subseq_copy(0, 1);
+        assert_eq!(full_subseq.length(), 1);
+        assert_eq!(*full_subseq.nth(0), 42);
+        
+        let empty_subseq = single.subseq_copy(1, 1);
+        assert_eq!(empty_subseq.length(), 0);
+        
+        let zero_length_subseq = single.subseq_copy(0, 0);
+        assert_eq!(zero_length_subseq.length(), 0);
+        
+        // Map operations
+        let mapped = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&single, &|x| x * 2);
+        assert_eq!(mapped.length(), 1);
+        assert_eq!(*mapped.nth(0), 84);
+        
+        // Filter operations
+        let filtered_true = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&single, &|x| if *x > 0 { B::True } else { B::False });
+        assert_eq!(filtered_true.length(), 1);
+        assert_eq!(*filtered_true.nth(0), 42);
+        
+        let filtered_false = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&single, &|x| if *x > 100 { B::True } else { B::False });
+        assert_eq!(filtered_false.length(), 0);
+        
+        // Reduce operations
+        let reduced = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::reduce(&single, &|a, b| a + b, 0);
+        assert_eq!(reduced, 42);
+        
+        // Scan operations
+        let scanned = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::scan(&single, &|a, b| a + b, 0);
+        assert_eq!(scanned.0.length(), 1); // Just the prefix sum result
+        assert_eq!(*scanned.0.nth(0), 0); // Base value is returned as first element
+        
+        // Append operations
+        let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+        let appended1 = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&single, &empty);
+        assert_eq!(appended1.length(), 1);
+        assert_eq!(appended1, single);
+        
+        let appended2 = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&empty, &single);
+        assert_eq!(appended2.length(), 1);
+        assert_eq!(appended2, single);
+        
+        // Inject operations
+        let updates = ArraySeqStPerSLit![Pair(0, 99)];
+        let injected = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::inject(&single, &updates);
+        assert_eq!(injected.length(), 1);
+        assert_eq!(*injected.nth(0), 99);
+        
+        // Iterator operations
+        let collected: Vec<i32> = single.iter().cloned().collect();
+        assert_eq!(collected.len(), 1);
+        assert_eq!(collected[0], 42);
+        
+        // Equality operations
+        let single_same = ArraySeqStPerSLit![42];
+        assert_eq!(single, single_same);
+        
+        let single_diff = ArraySeqStPerSLit![43];
+        assert_ne!(single, single_diff);
+        
+        assert_ne!(single, empty);
+    }
+
+    #[test]
+    fn test_arrayseqstper_zero_length_operations() {
+        // Test zero-length subseq operations
+        let seq = ArraySeqStPerSLit![1, 2, 3, 4, 5];
+        
+        // Zero-length subseq at start
+        let zero_start = seq.subseq_copy(0, 0);
+        assert_eq!(zero_start.length(), 0);
+        assert_eq!(zero_start.isEmpty(), B::True);
+        
+        // Zero-length subseq in middle
+        let zero_middle = seq.subseq_copy(2, 0);
+        assert_eq!(zero_middle.length(), 0);
+        assert_eq!(zero_middle.isEmpty(), B::True);
+        
+        // Zero-length subseq at end
+        let zero_end = seq.subseq_copy(5, 0);
+        assert_eq!(zero_end.length(), 0);
+        assert_eq!(zero_end.isEmpty(), B::True);
+        
+        // Zero-length subseq beyond end should still return empty
+        let zero_beyond = seq.subseq_copy(10, 0);
+        assert_eq!(zero_beyond.length(), 0);
+        assert_eq!(zero_beyond.isEmpty(), B::True);
+        
+        // Test with single element sequence
+        let single = ArraySeqStPerSLit![42];
+        let zero_single_start = single.subseq_copy(0, 0);
+        assert_eq!(zero_single_start.length(), 0);
+        assert_eq!(zero_single_start.isEmpty(), B::True);
+        
+        let zero_single_end = single.subseq_copy(1, 0);
+        assert_eq!(zero_single_end.length(), 0);
+        assert_eq!(zero_single_end.isEmpty(), B::True);
+        
+        // Test with empty sequence
+        let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+        let zero_empty = empty.subseq_copy(0, 0);
+        assert_eq!(zero_empty.length(), 0);
+        assert_eq!(zero_empty.isEmpty(), B::True);
+        
+        // All zero-length subsequences should be equal to empty
+        assert_eq!(zero_start, empty);
+        assert_eq!(zero_middle, empty);
+        assert_eq!(zero_end, empty);
+        assert_eq!(zero_beyond, empty);
+        assert_eq!(zero_single_start, empty);
+        assert_eq!(zero_single_end, empty);
+        assert_eq!(zero_empty, empty);
+        
+        // Test operations on zero-length subsequences
+        let mapped_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&zero_start, &|x| x * 2);
+        assert_eq!(mapped_zero.length(), 0);
+        
+        let filtered_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&zero_start, &|x| if *x > 0 { B::True } else { B::False });
+        assert_eq!(filtered_zero.length(), 0);
+        
+        let reduced_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::reduce(&zero_start, &|a, b| a + b, 100);
+        assert_eq!(reduced_zero, 100); // Should return base value
+        
+        let scanned_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::scan(&zero_start, &|a, b| a + b, 50);
+        assert_eq!(scanned_zero.0.length(), 1); // Should contain base value
+        assert_eq!(*scanned_zero.0.nth(0), 50);
+        
+        // Iterator on zero-length should be empty
+        let collected: Vec<i32> = zero_start.iter().cloned().collect();
+        assert_eq!(collected.len(), 0);
+    }
+
+    #[test]
+    fn test_arrayseqstper_iterator_boundaries() {
+        // Test iterator at beginning/end boundaries
+        let seq = ArraySeqStPerSLit![10, 20, 30, 40, 50];
+        
+        // Test iterator starting from beginning
+        let mut iter = seq.iter();
+        assert_eq!(iter.next(), Some(&10)); // First element
+        assert_eq!(iter.next(), Some(&20)); // Second element
+        
+        // Test iterator ending at end
+        let iter_end = seq.iter();
+        let collected: Vec<i32> = iter_end.cloned().collect();
+        assert_eq!(collected.len(), 5);
+        assert_eq!(collected[0], 10); // First boundary
+        assert_eq!(collected[4], 50); // Last boundary
+        
+        // Test iterator on single element - both beginning and end
+        let single = ArraySeqStPerSLit![99];
+        let mut single_iter = single.iter();
+        assert_eq!(single_iter.next(), Some(&99)); // Beginning = end
+        assert_eq!(single_iter.next(), None); // Past end
+        
+        // Test iterator on empty sequence - no boundaries
+        let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+        let mut empty_iter = empty.iter();
+        assert_eq!(empty_iter.next(), None); // No beginning
+        
+        // Test iterator exhaustion and reset
+        let seq_reset = ArraySeqStPerSLit![1, 2];
+        let mut iter1 = seq_reset.iter();
+        // Exhaust iterator by consuming all elements
+        assert_eq!(iter1.next(), Some(&1));
+        assert_eq!(iter1.next(), Some(&2));
+        assert_eq!(iter1.next(), None); // Should be exhausted
+        
+        // New iterator should start fresh at beginning
+        let mut iter2 = seq_reset.iter();
+        assert_eq!(iter2.next(), Some(&1)); // Fresh start at beginning
+        
+        // Test iterator with functional operations at boundaries
+        let seq_func = ArraySeqStPerSLit![100, 200, 300];
+        
+        // First element via iterator
+        let first = seq_func.iter().next();
+        assert_eq!(first, Some(&100));
+        
+        // Last element via iterator
+        let last = seq_func.iter().last();
+        assert_eq!(last, Some(&300));
+        
+        // Count elements via iterator
+        let count = seq_func.iter().count();
+        assert_eq!(count, 3);
+        
+        // Test iterator chain boundaries
+        let seq1 = ArraySeqStPerSLit![1, 2];
+        let seq2 = ArraySeqStPerSLit![3, 4];
+        let chained: Vec<i32> = seq1.iter().chain(seq2.iter()).cloned().collect();
+        assert_eq!(chained.len(), 4);
+        assert_eq!(chained[0], 1); // First from seq1
+        assert_eq!(chained[3], 4); // Last from seq2
+        
+        // Test iterator skip/take boundaries
+        let seq_skip = ArraySeqStPerSLit![10, 20, 30, 40, 50];
+        let skipped: Vec<i32> = seq_skip.iter().skip(2).cloned().collect();
+        assert_eq!(skipped.len(), 3);
+        assert_eq!(skipped[0], 30); // First after skip
+        
+        let taken: Vec<i32> = seq_skip.iter().take(3).cloned().collect();
+        assert_eq!(taken.len(), 3);
+        assert_eq!(taken[2], 30); // Last taken element
+    }
+
+    #[test]
+    fn test_arrayseqstper_maximum_size_boundary() {
+        // Test maximum size collection boundary - use reasonably large size
+        // to verify graceful handling without causing memory issues
+        let large_size = 50_000usize;
+        let large_vec: Vec<i32> = (0..large_size as i32).collect();
+        let large_seq = ArraySeqStPerS::from_vec(large_vec);
+        
+        // Verify basic operations work on large sequence
+        assert_eq!(large_seq.length(), large_size);
+        assert_eq!(*large_seq.nth(0), 0);
+        assert_eq!(*large_seq.nth(large_size - 1), (large_size - 1) as i32);
+        assert_eq!(large_seq.isEmpty(), B::False);
+        assert_eq!(large_seq.isSingleton(), B::False);
+        
+        // Test subseq_copy on large sequence
+        let large_subseq = large_seq.subseq_copy(1000, 5000);
+        assert_eq!(large_subseq.length(), 5000);
+        assert_eq!(*large_subseq.nth(0), 1000);
+        assert_eq!(*large_subseq.nth(4999), 5999);
+        
+        // Test map operation on large sequence (sample)
+        let mapped_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&large_seq, &|x| x * 2);
+        assert_eq!(mapped_large.length(), large_size);
+        assert_eq!(*mapped_large.nth(0), 0);
+        assert_eq!(*mapped_large.nth(1), 2);
+        assert_eq!(*mapped_large.nth(large_size - 1), ((large_size - 1) as i32) * 2);
+        
+        // Test filter operation on large sequence (sample)
+        let filtered_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&large_seq, &|x| if *x % 1000 == 0 { B::True } else { B::False });
+        assert_eq!(filtered_large.length(), 50); // 0, 1000, 2000, ..., 49000
+        assert_eq!(*filtered_large.nth(0), 0);
+        assert_eq!(*filtered_large.nth(1), 1000);
+        
+        // Test reduce operation on large sequence
+        let sum_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::reduce(&large_seq, &|a, b| a + b, 0);
+        let expected_sum = (large_size * (large_size - 1) / 2) as i32; // Sum of 0 to n-1
+        assert_eq!(sum_large, expected_sum);
+        
+        // Test iterator on large sequence (sample check)
+        let mut count = 0;
+        for val in large_seq.iter() {
+            if count < 10 {
+                assert_eq!(*val, count as i32);
+            }
+            count += 1;
+            if count > large_size + 100 { // Safety check
+                break;
+            }
+        }
+        assert_eq!(count, large_size);
+        
+        // Test append with large sequences
+        let medium_seq = ArraySeqStPerS::from_vec((0..1000).collect());
+        let appended_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&medium_seq, &large_seq);
+        assert_eq!(appended_large.length(), 1000 + large_size);
+        assert_eq!(*appended_large.nth(0), 0); // From medium_seq
+        assert_eq!(*appended_large.nth(999), 999); // Last from medium_seq
+        assert_eq!(*appended_large.nth(1000), 0); // First from large_seq
+        
+        // Test inject on large sequence (sample)
+        let updates = ArraySeqStPerSLit![Pair(0, 999), Pair(large_size - 1, 888)];
+        let injected_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::inject(&large_seq, &updates);
+        assert_eq!(injected_large.length(), large_size);
+        assert_eq!(*injected_large.nth(0), 999); // Updated
+        assert_eq!(*injected_large.nth(large_size - 1), 888); // Updated
+        assert_eq!(*injected_large.nth(1), 1); // Unchanged
+    }
 }

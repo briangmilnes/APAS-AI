@@ -1,0 +1,116 @@
+=== SOURCE FILE TO TEST FILE MAPPING ANALYSIS ===
+
+CHAPTER 03:
+✓ src/Chap03/InsertionSortSt.rs -> tests/Chap03/TestInsertionSortSt.rs
+
+CHAPTER 05:
+✓ src/Chap05/MappingStEph.rs -> tests/Chap05/Test23MappingStEph.rs
+✓ src/Chap05/RelationStEph.rs -> tests/Chap05/Test22RelationStEph.rs
+✓ src/Chap05/SetStEph.rs -> tests/Chap05/Test21SetStEph.rs
+
+CHAPTER 06:
+✓ src/Chap06/DirGraphStEph.rs -> tests/Chap06/Test24DirGraphStEph.rs
+✓ src/Chap06/UnDirGraphStEph.rs -> tests/Chap06/Test25UnDirGraphStEph.rs
+✓ src/Chap06/LabDirGraphStEph.rs -> tests/Chap06/Test26LabDirGraphStEph.rs
+✓ src/Chap06/LabUnDirGraphStEph.rs -> tests/Chap06/Test27LabUnDirGraphStEph.rs
+✗ src/Chap06/DirGraphMtEph.rs -> NO TEST FOUND
+✗ src/Chap06/LabDirGraphMtEph.rs -> NO TEST FOUND
+✗ src/Chap06/LabUnDirGraphMtEph.rs -> NO TEST FOUND
+✗ src/Chap06/UnDirGraphMtEph.rs -> NO TEST FOUND
+✗ src/Chap06/WeightedDirGraphMtEphFloat.rs -> NO TEST FOUND
+✗ src/Chap06/WeightedDirGraphMtEphInt.rs -> NO TEST FOUND
+✗ src/Chap06/WeightedDirGraphStEphFloat.rs -> NO TEST FOUND
+✗ src/Chap06/WeightedDirGraphStEphInt.rs -> NO TEST FOUND
+✗ src/Chap06/WeightedUnDirGraphMtEphFloat.rs -> NO TEST FOUND
+✗ src/Chap06/WeightedUnDirGraphMtEphInt.rs -> NO TEST FOUND
+✗ src/Chap06/WeightedUnDirGraphStEphFloat.rs -> NO TEST FOUND
+✗ src/Chap06/WeightedUnDirGraphStEphInt.rs -> NO TEST FOUND
+
+CHAPTER 11:
+✗ src/Chap11/FibonacciMt.rs -> NO TEST FOUND
+
+CHAPTER 12:
+✓ src/Chap12/Exercise12_1.rs -> tests/Chap12/TestExercise12_1.rs
+✓ src/Chap12/Exercise12_2.rs -> tests/Chap12/TestExercise12_2.rs
+✓ src/Chap12/Exercise12_5.rs -> tests/Chap12/TestExercise12_5.rs
+
+CHAPTER 17:
+✓ src/Chap17/MathSeq.rs -> tests/Chap18/Test02MathSeq.rs (cross-chapter)
+
+CHAPTER 18:
+✓ src/Chap18/ArraySeq.rs -> tests/Chap18/Test01ArraySeqMacro.rs
+✓ src/Chap18/ArraySeqStPer.rs -> tests/Chap18/Test10ArraySeqStPerChap18.rs, Test11ArraySeqStPerMacro.rs
+✓ src/Chap18/ArraySeqStEph.rs -> tests/Chap18/Test12ArraySeqStEphMacro.rs, Test13ArraySeqStEphChap18.rs
+✓ src/Chap18/LinkedListStPer.rs -> tests/Chap18/Test03LinkedListStPer.rs, Test04LinkedListStPer.rs, Test05LinkedListStPer19.rs
+✓ src/Chap18/LinkedListStEph.rs -> tests/Chap18/Test06LinkedListStEph.rs, Test07LinkedListStEph.rs, Test08LinkedListStEph19.rs
+✓ src/Chap18/ArraySeqMtPer.rs -> tests/Chap18/Test27ArraySeqMtPerChap18.rs
+✓ src/Chap18/ArraySeqMtEph.rs -> tests/Chap18/Test28ArraySeqMtEphChap18.rs
+
+CHAPTER 19:
+✓ src/Chap19/ArraySeqStPer.rs -> tests/Chap19/Test09ArraySeqStPer.rs, Test10ArraySeqStPer18.rs, Test11ArraySeqStPer.rs
+✓ src/Chap19/ArraySeqStEph.rs -> tests/Chap19/Test12ArraySeqStEph.rs, Test13ArraySeqStEph18.rs, Test14ArraySeqStEph.rs
+✓ src/Chap19/ArraySeqMtPer.rs -> tests/Chap19/Test26ArraySeqMtPer.rs, Test27ArraySeqMtPer18.rs, Test28ArraySeqMtPer.rs
+✓ src/Chap19/ArraySeqMtEph.rs -> tests/Chap19/Test41ArraySeqMtEph.rs
+✗ src/Chap19/ArraySeqMtEphSlice.rs -> NO TEST FOUND
+
+CHAPTER 23:
+✓ src/Chap23/PrimTreeSeqSt.rs -> tests/Chap23/TestPrimTreeSeqSt.rs
+✗ src/Chap23/BBTEph.rs -> tests/Test42BBTEph.rs (wrong directory)
+
+CHAPTER 36:
+✓ src/Chap36/QuickSortSt.rs -> tests/Chap36/Test39Chapter36St.rs
+✓ src/Chap36/QuickSortMt.rs -> tests/Chap36/Test40Chapter36Mt.rs
+✓ src/Chap36/QuickSortMtSlice.rs -> tests/Chap36/Test44Chapter36MtSlice.rs
+
+CHAPTER 37:
+✗ src/Chap37/AVLTreeSeq.rs -> NO TEST FOUND
+✓ src/Chap37/AVLTreeSeqStPer.rs -> tests/Chap37/Test15AVLTreeSeqStPer.rs, Test16AVLTreeSeqStPer18.rs, Test17AVLTreeSeqStPer19.rs
+✓ src/Chap37/AVLTreeSeqStEph.rs -> tests/Chap37/Test18AVLTreeSeqStEph.rs, Test19AVLTreeSeqStEph18.rs, Test20AVLTreeSeqStEph.rs
+✓ src/Chap37/BSTAVLStEph.rs -> tests/Chap37/Test45BSTAVLStEph.rs
+✓ src/Chap37/BSTRBStEph.rs -> tests/Chap37/Test46BSTRBStEph.rs
+✓ src/Chap37/BSTBBAlphaStEph.rs -> tests/Chap37/Test47BSTBBAlphaStEph.rs
+✓ src/Chap37/BSTSplayStEph.rs -> tests/Chap37/Test49BSTSplayStEph.rs
+✓ src/Chap37/BSTSetAVLMtEph.rs, BSTSetBBAlphaMtEph.rs, BSTSetPlainMtEph.rs, BSTSetRBMtEph.rs, BSTSetSplayMtEph.rs -> tests/Chap37/Test51BSTSetMtEph.rs
+✗ src/Chap37/BSTAVLMtEph.rs -> tests/Chap37/Test50BSTMtEph.rs (partial)
+✗ src/Chap37/BSTBBAlphaMtEph.rs -> tests/Chap37/Test50BSTMtEph.rs (partial)
+✗ src/Chap37/BSTPlainMtEph.rs -> tests/Chap37/Test50BSTMtEph.rs (partial)
+✗ src/Chap37/BSTRBMtEph.rs -> tests/Chap37/Test50BSTMtEph.rs (partial)
+✗ src/Chap37/BSTSplayMtEph.rs -> tests/Chap37/Test50BSTMtEph.rs (partial)
+
+CHAPTER 38:
+✓ src/Chap38/BSTParaStEph.rs -> tests/Chap37/Test52BSTParaStEph.rs (wrong directory)
+✓ src/Chap38/BSTParaMtEph.rs -> tests/Chap37/Test52BSTParaMtEph.rs (wrong directory)
+
+CHAPTER 39:
+✓ src/Chap39/BSTTreapStEph.rs -> tests/Chap39/Test48BSTTreapStEph.rs
+✓ src/Chap39/BSTParaTreapMtEph.rs -> tests/Chap39/Test53BSTParaTreapMtEph.rs
+✗ src/Chap39/BSTSetTreapMtEph.rs -> NO TEST FOUND
+✗ src/Chap39/BSTTreapMtEph.rs -> NO TEST FOUND
+
+CORE FILES:
+✓ src/Types.rs -> tests/Test01Types.rs (wrong directory)
+✗ src/lib.rs -> NO TEST FOUND
+✗ src/main.rs -> NO TEST FOUND
+
+
+=== SUMMARY ===
+
+TOTAL SOURCE FILES: 64
+FILES WITH TESTS: 39
+FILES WITHOUT TESTS: 25
+COVERAGE PERCENTAGE: 60.9%
+
+DIRECTORY MISMATCHES:
+- tests/Test42BBTEph.rs should be tests/Chap23/Test42BBTEph.rs
+- tests/Chap37/Test52BSTParaStEph.rs should be tests/Chap38/Test52BSTParaStEph.rs
+- tests/Chap37/Test52BSTParaMtEph.rs should be tests/Chap38/Test52BSTParaMtEph.rs
+- tests/Test01Types.rs should be tests/Core/Test01Types.rs or similar
+
+MISSING TESTS (25 files):
+Chapter 06: 12 files (all Mt variants and Weighted variants)
+Chapter 11: 1 file (FibonacciMt.rs)
+Chapter 19: 1 file (ArraySeqMtEphSlice.rs)
+Chapter 37: 6 files (AVLTreeSeq.rs + 5 Mt BST variants)
+Chapter 39: 2 files (BSTSetTreapMtEph.rs, BSTTreapMtEph.rs)
+Core: 2 files (lib.rs, main.rs)
+Chapter 21: 1 file (no direct source, only tests)
