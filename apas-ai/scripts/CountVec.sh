@@ -17,6 +17,4 @@ grep 'vec' benches/*/*.rs | wc -l
 
 echo "total vec counts"
 grep 'vec' src/*.rs src/*/*.rs tests/*.rs tests/*/*.rs benches/*/*.rs | wc -l
-echo "LOC" 
-wc -l src/*.rs src/*/*.rs tests/*.rs tests/*/*.rs benches/*/*.rs
 

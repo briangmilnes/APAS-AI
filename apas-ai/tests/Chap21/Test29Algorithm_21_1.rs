@@ -3,6 +3,7 @@
 
 pub mod Test29Algorithm_21_1 {
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use apas_ai::ArraySeqStPerSLit;
     use apas_ai::PairLit;
     use apas_ai::Types::Types::*;
 
@@ -10,7 +11,7 @@ pub mod Test29Algorithm_21_1 {
 /// gpt-5-hard: Work: Θ(n^2), Span: Θ(lg n)
 fn points2d_tab_flat(n: N) -> ArraySeqStPerS<Pair<N, N>> {
     if n == 0 {
-        return ArraySeqStPerS::from_vec(vec![]);
+        return ArraySeqStPerSLit![];
     }
     let inner: ArraySeqStPerS<ArraySeqStPerS<Pair<N, N>>> =
         <ArraySeqStPerS<ArraySeqStPerS<Pair<N, N>>> as ArraySeqStPerTrait<ArraySeqStPerS<Pair<N, N>>>>::tabulate(

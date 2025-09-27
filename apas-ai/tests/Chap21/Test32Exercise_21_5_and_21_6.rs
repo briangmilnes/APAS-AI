@@ -3,6 +3,7 @@
 
 pub mod Test32Exercise_21_5_and_21_6 {
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Types::Types::*;
 
 /// Generate all contiguous subsequences using nested tabulate + flatten.
@@ -28,14 +29,14 @@ fn all_contiguous_subseqs<T: StT>(a: &ArraySeqStPerS<T>) -> ArraySeqStPerS<Array
 
 #[test]
 fn test_all_contiguous_subseqs_n0() {
-    let a: ArraySeqStPerS<N> = ArraySeqStPerS::from_vec(vec![]);
+    let a: ArraySeqStPerS<N> = ArraySeqStPerSLit![];
     let res = all_contiguous_subseqs(&a);
     assert_eq!(res.length(), 0);
 }
 
 #[test]
 fn test_all_contiguous_subseqs_n3_values() {
-    let a = ArraySeqStPerS::from_vec(vec![1, 2, 3]);
+    let a = ArraySeqStPerSLit![1, 2, 3];
     let res = all_contiguous_subseqs(&a);
     let v: Vec<Vec<N>> = res.iter().map(|s| s.iter().copied().collect()).collect();
     let expect = vec![vec![1], vec![1, 2], vec![1, 2, 3], vec![2], vec![2, 3], vec![3]];
@@ -44,7 +45,7 @@ fn test_all_contiguous_subseqs_n3_values() {
 
 #[test]
 fn test_all_contiguous_subseqs_debug_shape() {
-    let a = ArraySeqStPerS::from_vec(vec![1, 2]);
+    let a = ArraySeqStPerSLit![1, 2];
     let res = all_contiguous_subseqs(&a);
     let dbg_str = format!("{:?}", res);
     assert!(!dbg_str.is_empty());

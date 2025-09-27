@@ -109,8 +109,16 @@ pub mod MappingStEph {
             < $crate::Chap05::MappingStEph::MappingStEph::Mapping<_, _> as $crate::Chap05::MappingStEph::MappingStEph::MappingStEphTrait<_, _> >::FromRelation(& $crate::RelationLit![])
         }};
         ( $( ($a:expr, $b:expr) ),* $(,)? ) => {{
-            let __r = $crate::RelationLit![ $( ($a, $b) ),* ];
-            < $crate::Chap05::MappingStEph::MappingStEph::Mapping<_, _> as $crate::Chap05::MappingStEph::MappingStEph::MappingStEphTrait<_, _> >::FromRelation(&__r)
+            let __pairs = vec![ $( $crate::Types::Types::Pair($a, $b) ),* ];
+            // Check for duplicate domain elements
+            let mut __seen_keys = std::collections::HashSet::new();
+            for pair in &__pairs {
+                let key = &pair.0;
+                if !__seen_keys.insert(key) {
+                    panic!("MappingLit!: duplicate domain element {:?}", key);
+                }
+            }
+            < $crate::Chap05::MappingStEph::MappingStEph::Mapping<_, _> as $crate::Chap05::MappingStEph::MappingStEph::MappingStEphTrait<_, _> >::FromVec(__pairs)
         }};
     }
 

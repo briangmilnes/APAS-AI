@@ -59,7 +59,7 @@ fn arrayseq_subseq_append_filter_flatten() {
     assert_eq!(ArraySeq::length(&evens), 3);
     assert_eq!(ArraySeq::nth(&evens, 1), &4);
 
-    let nested = ArraySeqS::from_vec(vec![ArraySeqS![1, 2], ArraySeqS![3], ArraySeqS![4, 5]]);
+    let nested = ArraySeqS![ArraySeqS![1, 2], ArraySeqS![3], ArraySeqS![4, 5]];
     let flat = <ArraySeqS<i32> as ArraySeq<i32>>::flatten(&nested);
     assert_eq!(ArraySeq::length(&flat), 5);
     assert_eq!(ArraySeq::nth(&flat, 3), &4);

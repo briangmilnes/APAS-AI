@@ -3,6 +3,7 @@
 
 pub mod Test28ArraySeqMtEphChap {
     use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use apas_ai::ArraySeqMtEphSLit;
     use apas_ai::Types::Types::*;
 
     // Helper functions for common patterns
@@ -87,7 +88,7 @@ pub mod Test28ArraySeqMtEphChap {
     fn test_flatten() {
         let inner1: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&|i| i, 2);
         let inner2: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&|i| i + 10, 3);
-        let outer = ArraySeqMtEphS::from_vec(vec![inner1, inner2]);
+        let outer = ArraySeqMtEphSLit![inner1, inner2];
         
         let flattened = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::flatten(&outer);
         assert_eq!(flattened.length(), 5);

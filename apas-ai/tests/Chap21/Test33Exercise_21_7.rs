@@ -5,6 +5,7 @@ pub mod Test33Exercise_21_7 {
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
     use apas_ai::PairLit;
+    use apas_ai::ArraySeqStPerSLit;
 
 fn is_even(x: &N) -> B {
     if *x % 2 == 0 {
@@ -42,17 +43,17 @@ fn pair_even_with_vowels(a: &ArraySeqStPerS<N>, b: &ArraySeqStPerS<char>) -> Arr
 
 #[test]
 fn test_pair_even_with_vowels_basic() {
-    let a = ArraySeqStPerS::from_vec(vec![1, 2, 3, 4]);
-    let b = ArraySeqStPerS::from_vec(vec!['a', 'b', 'e']);
+    let a = ArraySeqStPerSLit![1, 2, 3, 4];
+    let b = ArraySeqStPerSLit!['a', 'b', 'e'];
     let s = pair_even_with_vowels(&a, &b);
-    let expect = ArraySeqStPerS::from_vec(vec![PairLit!(2, 'a'), PairLit!(2, 'e'), PairLit!(4, 'a'), PairLit!(4, 'e')]);
+    let expect = ArraySeqStPerSLit![PairLit!(2, 'a'), PairLit!(2, 'e'), PairLit!(4, 'a'), PairLit!(4, 'e')];
     assert_eq!(s, expect);
 }
 
 #[test]
 fn test_pair_even_with_vowels_debug_shape() {
-    let a = ArraySeqStPerS::from_vec(vec![2]);
-    let b = ArraySeqStPerS::from_vec(vec!['a', 'x']);
+    let a = ArraySeqStPerSLit![2];
+    let b = ArraySeqStPerSLit!['a', 'x'];
     let s = pair_even_with_vowels(&a, &b);
     let dbg_str = format!("{:?}", s);
     assert!(!dbg_str.is_empty());

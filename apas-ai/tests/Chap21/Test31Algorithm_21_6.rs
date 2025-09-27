@@ -3,6 +3,7 @@
 
 pub mod Test31Algorithm_21_6 {
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Types::Types::*;
     use apas_ai::PairLit;
 
@@ -11,7 +12,7 @@ pub mod Test31Algorithm_21_6 {
 /// APAS: Work: Θ(n lg n), Span: Θ(lg n)
 fn prime_sieve(n: N) -> ArraySeqStPerS<N> {
     if n <= 2 {
-        return ArraySeqStPerS::from_vec(vec![]);
+        return ArraySeqStPerSLit![];
     }
     // cs = 〈 i * j : 2 ≤ i ≤ floor(sqrt(n)) , 2 ≤ j ≤ n/i 〉
     let root: N = (n as f64).sqrt().floor() as N;
@@ -59,7 +60,7 @@ fn prime_sieve(n: N) -> ArraySeqStPerS<N> {
 #[test]
 fn test_prime_sieve_small() {
     let p = prime_sieve(10);
-    assert_eq!(p, ArraySeqStPerS::from_vec(vec![2, 3, 5, 7]));
+    assert_eq!(p, ArraySeqStPerSLit![2, 3, 5, 7]);
 }
 
 #[test]

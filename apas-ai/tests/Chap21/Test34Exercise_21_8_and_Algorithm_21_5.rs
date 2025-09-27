@@ -3,6 +3,7 @@
 pub mod Test34Exercise_21_8_and_Algorithm_21_5 {
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
+    use apas_ai::ArraySeqStPerSLit;
 
 /// Exercise 21.8 (isPrime) and Algorithm 21.5 (primesBF) tests and analysis.
 
@@ -37,7 +38,7 @@ fn is_prime(n: N) -> B {
 /// gpt-5-hard: Work: Θ(n^{3/2}), Span: Θ(lg n)
 fn primes_bf(n: N) -> ArraySeqStPerS<N> {
     if n <= 2 {
-        return ArraySeqStPerS::from_vec(Vec::new());
+        return ArraySeqStPerSLit![];
     }
     let all: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 2, n - 2);
     let filtered: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&all, &|x| is_prime(*x));

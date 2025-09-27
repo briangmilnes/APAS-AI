@@ -5,6 +5,7 @@ pub mod Test37Problem_21_4 {
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
     use apas_ai::PairLit;
+    use apas_ai::ArraySeqStPerSLit;
 
 /// Cartesian product by explicit loops (x-major then y).
 /// gpt-5-hard: Work: Θ(|a|·|b|), Span: Θ(|a|·|b|)
@@ -41,8 +42,8 @@ fn cartesian_tab_flat(
 
 #[test]
 fn test_cartesian_loops_basic() {
-    let a = ArraySeqStPerS::from_vec(vec![1, 2]);
-    let b = ArraySeqStPerS::from_vec(vec!["3.0", "4.0", "5.0"]);
+    let a = ArraySeqStPerSLit![1, 2];
+    let b = ArraySeqStPerSLit!["3.0", "4.0", "5.0"];
     let s = cartesian_loops(&a, &b);
     let expect = ArraySeqStPerS::from_vec(vec![
         PairLit!(1, "3.0"),
@@ -57,8 +58,8 @@ fn test_cartesian_loops_basic() {
 
 #[test]
 fn test_cartesian_tab_flat_basic() {
-    let a = ArraySeqStPerS::from_vec(vec![1, 2]);
-    let b = ArraySeqStPerS::from_vec(vec!["3.0", "4.0", "5.0"]);
+    let a = ArraySeqStPerSLit![1, 2];
+    let b = ArraySeqStPerSLit!["3.0", "4.0", "5.0"];
     let s = cartesian_tab_flat(&a, &b);
     let expect = ArraySeqStPerS::from_vec(vec![
         PairLit!(1, "3.0"),
@@ -73,8 +74,8 @@ fn test_cartesian_tab_flat_basic() {
 
 #[test]
 fn test_cartesian_iterator_order() {
-    let a = ArraySeqStPerS::from_vec(vec![1, 2]);
-    let b = ArraySeqStPerS::from_vec(vec!["3", "4"]);
+    let a = ArraySeqStPerSLit![1, 2];
+    let b = ArraySeqStPerSLit!["3", "4"];
     let s = cartesian_tab_flat(&a, &b);
     let v: Vec<Pair<N, &str>> = s.iter().copied().collect();
     assert_eq!(v, vec![PairLit!(1, "3"), PairLit!(1, "4"), PairLit!(2, "3"), PairLit!(2, "4")]);
@@ -82,8 +83,8 @@ fn test_cartesian_iterator_order() {
 
 #[test]
 fn test_cartesian_debug_shape() {
-    let a = ArraySeqStPerS::from_vec(vec![1]);
-    let b = ArraySeqStPerS::from_vec(vec!["x"]);
+    let a = ArraySeqStPerSLit![1];
+    let b = ArraySeqStPerSLit!["x"];
     let s = cartesian_loops(&a, &b);
     let dbg_str = format!("{:?}", s);
     assert!(!dbg_str.is_empty());

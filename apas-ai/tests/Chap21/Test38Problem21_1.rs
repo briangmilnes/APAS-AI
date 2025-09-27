@@ -5,12 +5,13 @@ pub mod Test38Problem21_1 {
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
     use apas_ai::PairLit;
+    use apas_ai::ArraySeqStPerSLit;
 
 /// Construct the sequence of 2D points (x, y) with 0 ≤ x < n and 1 ≤ y < n,
 /// ordered by x major, then y.
 fn points2d(n: N) -> ArraySeqStPerS<Pair<N, N>> {
     if n == 0 {
-        return ArraySeqStPerS::from_vec(vec![]);
+        return ArraySeqStPerSLit![];
     }
     let len = n * (n - 1);
     let mut v: Vec<Pair<N, N>> = Vec::with_capacity(len);

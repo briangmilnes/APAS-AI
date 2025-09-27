@@ -5,12 +5,13 @@ pub mod Test36Problem_21_3 {
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
     use apas_ai::PairLit;
+    use apas_ai::ArraySeqStPerSLit;
 
 /// Generate points (x, y, z) with 0 ≤ x ≤ n−1, 1 ≤ y ≤ n, 2 ≤ z ≤ n+1 in x-major, then y, then z order.
 /// gpt-5-hard: Work: Θ(n^3), Span: Θ(n^3)
 fn points3d_loops(n: N) -> ArraySeqStPerS<Pair<N, Pair<N, N>>> {
     if n == 0 {
-        return ArraySeqStPerS::from_vec(vec![]);
+        return ArraySeqStPerSLit![];
     }
     let len = n * n * n;
     let mut v: Vec<Pair<N, Pair<N, N>>> = Vec::with_capacity(len);
@@ -33,7 +34,7 @@ fn test_points3d_loops_n0_empty() {
 #[test]
 fn test_points3d_loops_n1_single() {
     let s = points3d_loops(1);
-    let expect = ArraySeqStPerS::from_vec(vec![PairLit!(0, Pair(1, 2))]);
+    let expect = ArraySeqStPerSLit![PairLit!(0, Pair(1, 2))];
     assert_eq!(s, expect);
 }
 

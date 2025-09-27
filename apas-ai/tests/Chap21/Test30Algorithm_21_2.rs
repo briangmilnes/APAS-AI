@@ -3,6 +3,7 @@
 
 pub mod Test30Algorithm_21_2 {
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Types::Types::*;
     use apas_ai::PairLit;
 
@@ -11,7 +12,7 @@ pub mod Test30Algorithm_21_2 {
 /// gpt-5-hard: Work: Θ(n^3), Span: Θ(lg n)
 fn points3d_tab_flat(n: N) -> ArraySeqStPerS<Pair<N, Pair<N, N>>> {
     if n == 0 {
-        return ArraySeqStPerS::from_vec(vec![]);
+        return ArraySeqStPerSLit![];
     }
     let outer: ArraySeqStPerS<ArraySeqStPerS<Pair<N, Pair<N, N>>>> =
         <ArraySeqStPerS<ArraySeqStPerS<Pair<N, Pair<N, N>>>> as ArraySeqStPerTrait<
@@ -46,7 +47,7 @@ fn test_points3d_tab_flat_n0_empty() {
 #[test]
 fn test_points3d_tab_flat_n1_single() {
     let s = points3d_tab_flat(1);
-    let expect = ArraySeqStPerS::from_vec(vec![PairLit!(0, Pair(1, 2))]);
+    let expect = ArraySeqStPerSLit![PairLit!(0, Pair(1, 2))];
     assert_eq!(s, expect);
 }
 

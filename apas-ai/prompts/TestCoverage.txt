@@ -1,0 +1,5 @@
+
+ First, go through all the source files, listing them,
+ and confirming that each has a test file and it is
+ in the right directory.
+

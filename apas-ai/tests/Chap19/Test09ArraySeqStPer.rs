@@ -79,10 +79,10 @@ pub mod TestArraySeqStPer {
         let single_seq = ArraySeqStPerS::from_vec(single_vec);
         assert_eq!(single_seq, ArraySeqStPerSLit![42]);
         let multi_seq = ArraySeqStPerSLit![1, 2, 3, 4, 5];
-        assert_eq!(multi_seq, ArraySeqStPerS::from_vec(vec![1, 2, 3, 4, 5]));
+        assert_eq!(multi_seq, ArraySeqStPerSLit![1, 2, 3, 4, 5]);
         let str_vec = vec!["hello", "world"];
         let str_seq = ArraySeqStPerS::from_vec(str_vec);
-        assert_eq!(str_seq, ArraySeqStPerS::from_vec(vec!["hello", "world"]));
+        assert_eq!(str_seq, ArraySeqStPerSLit!["hello", "world"]);
     }
 
     #[test]
