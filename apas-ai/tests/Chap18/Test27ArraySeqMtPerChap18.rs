@@ -74,14 +74,14 @@ pub mod Test27ArraySeqMtPerChap {
 
     #[test]
     fn test_tabulate_single() {
-        let single: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(const_42, 1);
+        let single: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&const_42, 1);
         assert_eq!(single.length(), 1);
         assert_eq!(*single.nth(0), 42);
     }
 
     #[test]
     fn test_tabulate_string() {
-        let strings: ArraySeqMtPerS<String> = ArraySeqMtPerS::tabulate(format_item, 4);
+        let strings: ArraySeqMtPerS<String> = ArraySeqMtPerS::tabulate(&format_item, 4);
         assert_eq!(strings.length(), 4);
 
         // Check that all expected strings are present (order may vary in MT)

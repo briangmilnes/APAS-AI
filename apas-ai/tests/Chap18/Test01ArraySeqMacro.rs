@@ -48,7 +48,7 @@ fn arrayseq_subseq_append_filter_flatten() {
     assert_eq!(ArraySeq::nth(&middle, 2), &4);
 
     let tail = ArraySeqS![6, 7];
-    let combined = ArraySeq::append(&seq, &tail);
+    let combined = <ArraySeqS<i32> as ArraySeq<i32>>::append(&seq, &tail);
     assert_eq!(ArraySeq::length(&combined), 7);
     assert_eq!(ArraySeq::nth(&combined, 5), &6);
 
@@ -74,7 +74,7 @@ fn arrayseq_update_and_inject_preserve_original() {
     assert_eq!(ArraySeq::nth(&updated, 1), &99);
 
     let updates = ArraySeqS![Pair(0, -1), Pair(0, -5), Pair(2, -3)];
-    let injected = ArraySeq::inject(&updated, &updates);
+    let injected = <ArraySeqS<i32> as ArraySeq<i32>>::inject(&updated, &updates);
     assert_eq!(ArraySeq::nth(&injected, 0), &-1);
     assert_eq!(ArraySeq::nth(&injected, 1), &99);
     assert_eq!(ArraySeq::nth(&injected, 2), &-3);
@@ -94,7 +94,7 @@ fn arrayseq_collect_iterate_reduce_scan() {
     let iter_sum = ArraySeq::iterate(&seq, &|acc, item| *acc + *item, 0);
     assert_eq!(iter_sum, 10);
 
-    let reduced = ArraySeq::reduce(&seq, &|lhs, rhs| *lhs + *rhs, 0);
+    let reduced = <ArraySeqS<i32> as ArraySeq<i32>>::reduce(&seq, &|lhs, rhs| *lhs + *rhs, 0);
     assert_eq!(reduced, 10);
 
     let (prefixes, total) = ArraySeq::scan(&seq, &|lhs, rhs| *lhs + *rhs, 0);
