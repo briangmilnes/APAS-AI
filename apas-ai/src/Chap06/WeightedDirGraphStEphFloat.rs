@@ -7,7 +7,9 @@
 //! # Examples
 //!
 //! ```rust
-//! use apas_ai::*;
+//! use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
+//! use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
+//! use apas_ai::WeightedDirGraphStEphFloatLit;
 //! use ordered_float::OrderedFloat;
 //!
 //! // Create graph using API

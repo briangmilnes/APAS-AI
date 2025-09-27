@@ -6,7 +6,7 @@ pub mod Exercise21_7 {
     use crate::Types::Types::*;
 
     /// Check if a number is even
-    pub fn is_even(x: &N) -> B { 
+    pub fn is_even(x: &N) -> B {
         if *x % 2 == 0 { B::True } else { B::False } 
     }
 
