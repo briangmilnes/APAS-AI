@@ -41,14 +41,14 @@ pub mod TestMathSeq {
         let mut a: MathSeqS<N> = MathSeqSLit![0; 3];
         assert_eq!(a.length(), 3);
         assert_eq!(*a.nth(1), 0);
-        a.set(1, 42);
+        let _ = a.set(1, 42);
         assert_eq!(*a.nth(1), 42);
     }
 
     #[test]
     fn test_set_in_bounds_and_out_of_bounds() {
         let mut s: MathSeqS<&str> = MathSeqSLit!["a", "b", "c"];
-        s.set(1, "x");
+        let _ = s.set(1, "x");
         assert_eq!(s.length(), 3);
         assert_eq!(*s.nth(1), "x");
         // Note: set doesn't return Result, so no bounds checking test

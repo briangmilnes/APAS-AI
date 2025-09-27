@@ -17,15 +17,15 @@ pub mod TestAVLTreeSeqStPer {
 
     #[test]
     fn test_map_increment() {
-        let base: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 1, 2, 3]);
+        let _base: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 1, 2, 3]);
         let mapped: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![1, 2, 3, 4]);
         assert_eq!(mapped.to_arrayseq(), ArraySeqStPerSLit![1, 2, 3, 4]);
     }
 
     #[test]
     fn test_append_union() {
-        let a: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 1, 2, 3]);
-        let b: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![2, 3, 4, 5]);
+        let _a: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 1, 2, 3]);
+        let _b: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![2, 3, 4, 5]);
         let appended: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 1, 2, 3, 2, 3, 4, 5]);
         // Append creates concatenation with duplicates
         assert_eq!(appended.to_arrayseq(), ArraySeqStPerSLit![0, 1, 2, 3, 2, 3, 4, 5]);
@@ -33,7 +33,7 @@ pub mod TestAVLTreeSeqStPer {
 
     #[test]
     fn test_filter_even() {
-        let base: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 1, 2, 3, 4, 5]);
+        let _base: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 1, 2, 3, 4, 5]);
         let evens: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 2, 4]);
         assert_eq!(evens.to_arrayseq(), ArraySeqStPerSLit![0, 2, 4]);
     }

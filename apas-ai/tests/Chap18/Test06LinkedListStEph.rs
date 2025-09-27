@@ -17,7 +17,7 @@ pub mod TestLinkedListEph {
 
     #[test]
     fn test_new_and_nth_set() {
-        let mut l = LinkedListStEphSLit![1; 3];
+        let l = LinkedListStEphSLit![1; 3];
         assert_eq!(*l.nth(0), 1);
         assert_eq!(*l.nth(2), 1);
         // update method doesn't exist for LinkedListStEph - commenting out

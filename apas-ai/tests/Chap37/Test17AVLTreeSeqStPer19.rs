@@ -8,7 +8,7 @@ pub mod TestAVLTreeSeqStPer {
 
     #[test]
     fn test_tabulate_and_map_ch19() {
-        let t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 1, 2, 3, 4]);
+        let _t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 1, 2, 3, 4]);
         let m: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 2, 4, 6, 8]);
         let expected = AVLTreeSeqStPerLit![0, 2, 4, 6, 8];
         assert_eq!(m, expected);
@@ -31,7 +31,7 @@ pub mod TestAVLTreeSeqStPer {
 
     #[test]
     fn test_deflate_and_filter_ch19() {
-        let t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 1, 2, 3, 4, 5]);
+        let _t: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![0, 1, 2, 3, 4, 5]);
         let d: AVLTreeSeqStPerS<N> = <AVLTreeSeqStPerS<N> as AVLTreeSeqStPerTrait<N>>::from_vec(vec![2]);
         let expected_d = AVLTreeSeqStPerLit![2];
         assert_eq!(d, expected_d);

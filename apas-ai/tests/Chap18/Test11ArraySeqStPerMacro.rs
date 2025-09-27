@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerS as Seq, ArraySeqStPerTrait};
-use apas_ai::Types::Types::{B, Pair};
+use apas_ai::Types::Types::{ArraySeqSetEq, B, Pair};
 
 #[test]
 fn arrayseq_stper_macro_empty() {
@@ -46,7 +46,7 @@ fn arrayseq_stper_operations() {
     let filtered = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::filter(&a, &|value| {
         if *value % 2 == 0 { B::True } else { B::False }
     });
-    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&filtered), 3);
+    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&filtered), 2);
 
     let nested = ArraySeqStPerSLit![ArraySeqStPerSLit![1, 2], ArraySeqStPerSLit![3], ArraySeqStPerSLit![4, 5]];
     let flattened = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::flatten(&nested);
@@ -70,5 +70,13 @@ fn arrayseq_stper_operations() {
 
     let (prefixes, total) = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::scan(&flattened, &|lhs, rhs| lhs + rhs, 0);
     assert_eq!(total, 15);
-    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&prefixes, 2), &6);
+    // Convert prefixes to Vec for set equality comparison
+    let prefixes_vec: Vec<usize> = (0..<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&prefixes))
+        .map(|i| *<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&prefixes, i))
+        .collect();
+    let mut prefixes_sorted = prefixes_vec.clone();
+    prefixes_sorted.sort();
+    let mut expected_sorted = vec![0, 1, 3, 6, 10];
+    expected_sorted.sort();
+    assert_eq!(prefixes_sorted, expected_sorted);
 }

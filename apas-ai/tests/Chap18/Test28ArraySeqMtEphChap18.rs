@@ -20,8 +20,8 @@ pub mod Test28ArraySeqMtEphChap {
         assert_eq!(a.length(), 5);
         
         // Test set method
-        a.set(0, 10);
-        a.set(4, 40);
+        let _ = a.set(0, 10);
+        let _ = a.set(4, 40);
         // Note: set doesn't return Result, so no bounds checking test
         
         assert_eq!(a.nth_cloned(0), 10);

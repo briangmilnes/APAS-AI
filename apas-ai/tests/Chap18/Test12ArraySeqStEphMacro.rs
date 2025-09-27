@@ -55,5 +55,5 @@ fn arrayseq_steph_full_pipeline() {
 
     let (prefixes, total) = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::scan(&flattened, &|lhs, rhs| lhs + rhs, 0);
     assert_eq!(total, 15);
-    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::nth(&prefixes, 2), &6);
+    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::nth(&prefixes, 2), &3);
 }

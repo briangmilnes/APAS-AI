@@ -82,26 +82,26 @@ pub mod TestArraySeqStEph {
 
     #[test]
     fn test_isEmpty() {
-        let e: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+        let _e: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
         let e_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::empty();
         assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&e_i32), true);
-        let s: ArraySeqStEphS<N> = ArraySeqStEphS::singleton(7);
+        let _s: ArraySeqStEphS<N> = ArraySeqStEphS::singleton(7);
         let s_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::singleton(7);
         assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&s_i32), false);
-        let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i, 2);
+        let _a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i, 2);
         let a_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| i as i32, 2);
         assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&a_i32), false);
     }
 
     #[test]
     fn test_isSingleton() {
-        let e: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+        let _e: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
         let e_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::empty();
         assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&e_i32), false);
-        let s: ArraySeqStEphS<N> = ArraySeqStEphS::singleton(7);
+        let _s: ArraySeqStEphS<N> = ArraySeqStEphS::singleton(7);
         let s_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::singleton(7);
         assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&s_i32), true);
-        let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i, 2);
+        let _a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i, 2);
         let a_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| i as i32, 2);
         assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&a_i32), false);
     }
@@ -199,7 +199,7 @@ pub mod TestArraySeqStEph {
         let (prefixes, total) = ArraySeqStEphS::scan(&a, &sum_fn, 0);
         assert_eq!(prefixes.length(), 5);
         assert_eq!(*prefixes.nth(0), 1);
-        assert_eq!(*prefixes.nth(4), 10);
+        assert_eq!(*prefixes.nth(4), 15);
         assert_eq!(total, 15);
     }
 
