@@ -58,7 +58,7 @@ pub mod TestLinkedListEph {
     #[test]
     fn test_iter_inorder_collect_eph() {
         let l = LinkedListStEphSLit![5, 6, 7];
-        let mut it = l.iter();
+        let mut it = l.iter_in_order();
         assert_eq!(it.next().copied(), Some(5));
         assert_eq!(it.next().copied(), Some(6));
         assert_eq!(it.next().copied(), Some(7));

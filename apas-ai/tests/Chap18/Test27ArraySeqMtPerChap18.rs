@@ -93,7 +93,7 @@ pub mod Test27ArraySeqMtPerChap {
 
     #[test]
     fn test_tabulate_boolean() {
-        let bools: ArraySeqMtPerS<B> = ArraySeqMtPerS::tabulate(is_even_bool, 6);
+        let bools: ArraySeqMtPerS<B> = ArraySeqMtPerS::tabulate(&is_even_bool, 6);
         assert_eq!(bools.length(), 6);
 
         // Expected: [True, False, True, False, True, False]
@@ -104,7 +104,7 @@ pub mod Test27ArraySeqMtPerChap {
 
     #[test]
     fn test_tabulate_squares() {
-        let squares: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(square, 5);
+        let squares: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&square, 5);
         assert_eq!(squares.length(), 5);
 
         // Expected: [0, 1, 4, 9, 16]

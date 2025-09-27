@@ -14,7 +14,7 @@ pub mod TestArraySeqStPerChap {
                 | _ => fib(n - 1) + fib(n - 2),
             }
         }
-        let a: ArraySeqStPerS<N> = ArraySeqStPerS::tabulate(fib, 10);
+        let a: ArraySeqStPerS<N> = ArraySeqStPerS::tabulate(&fib, 10);
         let fib10_head = ArraySeqStPerSLit![
             *a.nth(0),
             *a.nth(1),

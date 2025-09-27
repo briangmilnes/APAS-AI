@@ -5,7 +5,7 @@ pub mod TestLinkedListStEph {
     use apas_ai::Types::Types::*;
 
     fn expect_list(list: &LinkedListStEphS<N>, expected: &[N]) {
-        let iter = list.iter();
+        let iter = list.iter_in_order();
         for &value in expected {
             assert_eq!(iter.next(), Some(&value));
         }

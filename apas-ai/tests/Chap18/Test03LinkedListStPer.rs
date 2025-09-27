@@ -45,7 +45,7 @@ pub mod TestLinkedListPer {
     #[test]
     fn test_iter_inorder_collect() {
         let l = LinkedListStPerSLit![10, 20, 30];
-        let vals: Vec<N> = l.iter().copied().collect();
+        let vals: Vec<N> = l.iter_in_order().copied().collect();
         assert_eq!(vals, vec![10, 20, 30]);
     }
 

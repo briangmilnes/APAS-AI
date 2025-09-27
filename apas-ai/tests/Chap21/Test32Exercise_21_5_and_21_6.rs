@@ -14,7 +14,7 @@ fn all_contiguous_subseqs<T: StT>(a: &ArraySeqStPerS<T>) -> ArraySeqStPerS<Array
         <ArraySeqStPerS<ArraySeqStPerS<ArraySeqStPerS<T>>> as ArraySeqStPerTrait<ArraySeqStPerS<ArraySeqStPerS<T>>>>::tabulate(
             &|i| {
                 <ArraySeqStPerS<ArraySeqStPerS<T>> as ArraySeqStPerTrait<ArraySeqStPerS<T>>>::tabulate(
-                    &|j| a.subseq(i, j + 1),
+                    &|j| a.subseq_copy(i, j + 1),
                     n - i,
                 )
             },

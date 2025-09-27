@@ -129,7 +129,7 @@ pub mod Test28ArraySeqMtEphChap {
             Pair("b".to_string(), 5),
         ]);
         
-        let grouped = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::collect(&pairs, |x, y| {
+        let grouped = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::collect(&pairs, &|x, y| {
             if x == y { O::Equal } else { O::Less }
         });
         
