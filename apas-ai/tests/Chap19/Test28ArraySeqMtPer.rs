@@ -100,7 +100,7 @@ pub mod Test28ArraySeqMtPer {
         <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::AtomicWriteLowestChangeNumberWins(&with_num, &changes, 0);
 
         // Check that the value at index 2 was updated (change number 0 should win over 1)
-        let guard = with_num.nth(2).lock().unwrap();
+        let guard = with_num.nth(2).lock();
         assert_eq!(guard.0, 99); // Value should be from the changes with change number 0
     }
 

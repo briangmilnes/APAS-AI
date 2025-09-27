@@ -9,7 +9,7 @@ pub mod TestAVLTreeSeqPer {
     fn test_persistent_set_does_not_mutate() {
         let _t: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerLit![7];
         let a: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerLit![0, 1, 2, 3]; // tabulate(&|i| i, 4)
-        let b = a.update(1, 99).unwrap();
+        let b = a.update(1, 99);
         assert_eq!(*a.nth(1), 1);
         assert_eq!(*b.nth(1), 99);
     }

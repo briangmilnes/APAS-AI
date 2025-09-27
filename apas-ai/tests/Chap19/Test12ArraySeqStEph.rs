@@ -10,7 +10,7 @@ pub mod TestArraySeqEph {
         let mut s: ArraySeqStEphS<N> = ArraySeqStEphSLit![1; 3];
         assert_eq!(s.length(), 3);
         assert_eq!(*s.nth(0), 1);
-        let _ = s.update(1, 9).unwrap();
+        let _ = s.update(Pair(1, 9));
         assert_eq!(*s.nth(1), 9);
     }
 

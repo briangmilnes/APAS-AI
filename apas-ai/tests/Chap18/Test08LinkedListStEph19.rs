@@ -14,14 +14,14 @@ pub mod TestLinkedListStEph {
     #[test]
     fn test_eph_set_and_nth() {
         let mut a: LinkedListStEphS<N> = LinkedListStEphSLit![1; 3];
-        let _ = a.update(1, 9);
+        let _ = LinkedListStEphTrait::update(&mut a, Pair(1, 9));
         assert_eq!(*a.nth(1), 9);
     }
 
     #[test]
     fn test_eph_subseq_and_display_debug() {
         let a: LinkedListStEphS<N> = LinkedListStEphSLit![1; 3];
-        let sub = a.subseq(1, 2);
+        let sub = a.subseq_copy(1, 2);
         assert_eq!(sub.length(), 2);
         let v = LinkedListStEphSLit![1, 2, 3];
         assert_eq!(format!("{:?}", v), "[1, 2, 3]");

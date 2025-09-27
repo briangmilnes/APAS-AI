@@ -28,7 +28,7 @@ pub mod Test27ArraySeqMtPerChap {
 
     #[test]
     fn test_tabulate_basic() {
-        let a: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(identity, 5);
+        let a: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&identity, 5);
         assert_eq!(a.length(), 5);
 
         // Use set comparison since MT results may vary in order
@@ -115,7 +115,7 @@ pub mod Test27ArraySeqMtPerChap {
 
     #[test]
     fn test_tabulate_large() {
-        let large: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(add_100, 1000);
+        let large: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&add_100, 1000);
         assert_eq!(large.length(), 1000);
         assert_eq!(*large.nth(0), 100);
         assert_eq!(*large.nth(999), 1099);

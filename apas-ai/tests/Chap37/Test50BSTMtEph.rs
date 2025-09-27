@@ -11,7 +11,7 @@ use apas_ai::*;
 
 #[test]
 fn mt_plain_basic_ops() {
-    let bst = BSTree::<i32>::new();
+    let bst = BSTree::new();
     for value in [4, 2, 6, 1, 3, 5, 7] {
         bst.insert(value);
     }
@@ -24,7 +24,7 @@ fn mt_plain_basic_ops() {
 
 #[test]
 fn mt_avl_basic_ops() {
-    let bst = BSTreeAVL::<i32>::new();
+    let bst = BSTreeAVL::new();
     for value in [10, 5, 15, 2, 7, 12, 20] {
         bst.insert(value);
     }
@@ -35,7 +35,7 @@ fn mt_avl_basic_ops() {
 
 #[test]
 fn mt_rb_basic_ops() {
-    let bst = BSTreeRB::<i32>::new();
+    let bst = BSTreeRB::new();
     for value in 0..16 {
         bst.insert(value);
     }
@@ -45,7 +45,7 @@ fn mt_rb_basic_ops() {
 
 #[test]
 fn mt_bbalpha_basic_ops() {
-    let bst = BSTreeBBAlpha::<i32>::new();
+    let bst = BSTreeBBAlpha::new();
     for value in 0..32 {
         bst.insert(value);
     }
@@ -55,7 +55,7 @@ fn mt_bbalpha_basic_ops() {
 
 #[test]
 fn mt_treap_basic_ops() {
-    let bst = BSTreeTreap::<i32>::new();
+    let bst = BSTreeTreap::new();
     for value in 0..16 {
         bst.insert(value);
     }
@@ -65,7 +65,7 @@ fn mt_treap_basic_ops() {
 
 #[test]
 fn mt_splay_basic_ops() {
-    let bst = BSTreeSplay::<i32>::new();
+    let bst = BSTreeSplay::new();
     for value in [4, 2, 6, 1, 3, 5, 7] {
         bst.insert(value);
     }

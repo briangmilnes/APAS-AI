@@ -73,12 +73,12 @@ fn treap_filter_reduce() {
 
 #[test]
 fn treap_join_mid_roundtrip() {
-    let empty = ParamTreap::<i32>::join_mid(Exposed::Leaf);
+    let empty = ParamTreap::join_mid(Exposed::Leaf);
     matches!(empty.expose(), Exposed::Leaf);
 
-    let left = ParamTreap::<i32>::join_mid(Exposed::Leaf);
-    let right = ParamTreap::<i32>::join_mid(Exposed::Leaf);
-    let combined = ParamTreap::<i32>::join_mid(Exposed::Node(left, 10, right));
+    let left = ParamTreap::join_mid(Exposed::Leaf);
+    let right = ParamTreap::join_mid(Exposed::Leaf);
+    let combined = ParamTreap::join_mid(Exposed::Node(left, 10, right));
 
     match combined.expose() {
         | Exposed::Leaf => panic!("expected node"),

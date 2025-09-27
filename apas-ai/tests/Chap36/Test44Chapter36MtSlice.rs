@@ -33,7 +33,7 @@ fn quick_sort_slice_variants_produce_sorted_output() {
 
 #[test]
 fn quick_sort_slice_edge_cases() {
-    let mut empty = ArraySeqMtEphSliceS::from_vec(Vec::<i32>::new());
+    let mut empty = ArraySeqMtEphSliceS::from_vec(Vec::new());
     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first(&mut empty);
     assert!(to_vec(&empty).is_empty());
 

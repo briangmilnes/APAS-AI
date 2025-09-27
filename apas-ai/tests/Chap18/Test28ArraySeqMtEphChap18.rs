@@ -20,8 +20,8 @@ pub mod Test28ArraySeqMtEphChap {
         assert_eq!(a.length(), 5);
         
         // Test set method
-        assert!(a.update(0, 10).is_ok());
-        assert!(a.update(4, 40).is_ok());
+        assert!(a.update(0, 10)== Ok(()));
+        assert!(a.update(4, 40)== Ok(()));
         assert!(a.update(5, 50).is_err()); // Out of bounds
         
         assert_eq!(a.nth_cloned(0), 10);

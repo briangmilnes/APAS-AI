@@ -41,11 +41,11 @@ pub mod TestArraySeqStPerChap {
     #[test]
     fn test_subseq() {
         let a = ArraySeqStPerSLit![10, 20, 30, 40, 50];
-        let b = a.subseq(1, 3);
+        let b = a.subseq_copy(1, 3);
         assert_eq!(b, ArraySeqStPerSLit![20, 30, 40]);
-        let c = a.subseq(2, 0);
+        let c = a.subseq_copy(2, 0);
         assert_eq!(c.length(), 0);
-        let d = a.subseq(0, 1);
+        let d = a.subseq_copy(0, 1);
         assert_eq!(d, ArraySeqStPerSLit![10]);
     }
 
@@ -102,10 +102,10 @@ pub mod TestArraySeqStPerChap {
     #[test]
     fn test_update_sequence() {
         let a = ArraySeqStPerSLit!["hello", "world", "test"];
-        let b = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::update(&a, Pair(1, "rust"));
+        let b = a.update(Pair(1, "rust"));
         assert_eq!(b, ArraySeqStPerSLit!["hello", "rust", "test"]);
         let c = ArraySeqStPerSLit!["hello", "world", "test"];
-        let d = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::update(&c, Pair(5, "out_of_bounds"));
+        let d = c.update(Pair(5, "out_of_bounds"));
         assert_eq!(d, ArraySeqStPerSLit!["hello", "world", "test"]);
     }
 
@@ -157,7 +157,7 @@ pub mod TestArraySeqStPerChap {
     fn test_iterate_sum_basic() {
         let numbers = ArraySeqStPerSLit![1, 2, 3, 4, 5];
         let sum_fn = |a: &N, x: &N| a + x;
-        let r = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::iterate(&numbers, sum_fn, 0);
+        let r = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::iterate(&numbers, &sum_fn, 0);
         assert_eq!(r, 15);
     }
 
@@ -165,7 +165,7 @@ pub mod TestArraySeqStPerChap {
     fn test_iterate_prefixes_sum() {
         let numbers = ArraySeqStPerSLit![1, 2, 3];
         let sum_fn = |a: &N, x: &N| a + x;
-        let (prefixes, total) = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::iteratePrefixes(&numbers, sum_fn, 0);
+        let (prefixes, total) = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::scan(&numbers, &sum_fn, 0);
         assert_eq!(prefixes.length(), 3);
         assert_eq!(*prefixes.nth(0), 0);
         assert_eq!(*prefixes.nth(1), 1);

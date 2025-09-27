@@ -5,7 +5,7 @@ pub mod TestLinkedListStEph {
     use apas_ai::Types::Types::*;
 
     fn expect_list(list: &LinkedListStEphS<N>, expected: &[N]) {
-        let mut iter = list.iter();
+        let mut iter = list.into_iter();
         for &value in expected {
             assert_eq!(iter.next().copied(), Some(value));
         }
@@ -74,7 +74,7 @@ pub mod TestLinkedListStEph {
     #[test]
     fn test_update_ch18() {
         let mut a: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::new(3, 0);
-        let _ = a.update(Pair(1, 7).into());
+        let _ = LinkedListStEphTrait::update(&mut a, Pair(1, 7));
         expect_list(&a, &[0, 7, 0]);
     }
 

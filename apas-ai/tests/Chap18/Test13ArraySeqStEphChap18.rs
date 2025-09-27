@@ -14,7 +14,7 @@ pub mod TestArraySeqStEphChap {
                 | _ => fib(n - 1) + fib(n - 2),
             }
         }
-        let a = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::tabulate(fib, 10);
+        let a = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::tabulate(&fib, 10);
         let fib10_head = ArraySeqStEphSLit![
             *a.nth(0),
             *a.nth(1),
@@ -73,12 +73,12 @@ pub mod TestArraySeqStEphChap {
     #[test]
     fn test_filter_even() {
         let numbers = ArraySeqStEphSLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&a, &|&x| {
+        let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&numbers, &|&x| {
             if x % 2 == 0 { B::True } else { B::False }
         });
         assert_eq!(evens, ArraySeqStEphSLit![2, 4, 6, 8, 10]);
         let odds_only = ArraySeqStEphSLit![1, 3, 5, 7];
-        let no_evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&a, &|&x| {
+        let no_evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&odds_only, &|&x| {
             if x % 2 == 0 { B::True } else { B::False }
         });
         assert_eq!(no_evens.length(), 0);
@@ -114,25 +114,28 @@ pub mod TestArraySeqStEphChap {
     fn test_inject_conflicts_last_wins() {
         let a = ArraySeqStEphSLit!["the", "cat", "in", "the", "hat"];
         let updates = ArraySeqStEphSLit![Pair(0, "a"), Pair(2, "on"), Pair(4, "mat")];
-        let injected = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&a, &updates);
+        let mut a_mut = a.clone();
+        let injected = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&mut a_mut, &updates);
         assert_eq!(injected.length(), 5);
         assert_eq!(injected, ArraySeqStEphSLit!["a", "cat", "on", "the", "mat"]);
 
         let conflicting_updates = ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")];
-        let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&a, &conflicting_updates);
+        let mut a_mut2 = a.clone();
+        let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&mut a_mut2, &conflicting_updates);
         assert_eq!(result_last, ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]);
     }
 
     #[test]
     fn test_ninject_conflicts_last_wins() {
         let a = ArraySeqStEphSLit!["the", "cat", "in", "the", "hat"];
-        let ninjected = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::ninject(
-            &a,
+        let mut a_mut3 = a.clone();
+        let ninjected = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(
+            &mut a_mut3,
             &ArraySeqStEphSLit![Pair(1, "dog"), Pair(3, "big"), Pair(6, "hog")],
         );
         assert_eq!(ninjected, ArraySeqStEphSLit!["the", "dog", "in", "big", "hat"]);
         assert_eq!(ninjected.length(), 5);
-        let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::ninject(
+        let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(
             &a,
             &ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")],
         );
@@ -162,7 +165,7 @@ pub mod TestArraySeqStEphChap {
     fn test_iterate_sum_basic() {
         let numbers = ArraySeqStEphSLit![1, 2, 3, 4, 5];
         let sum_fn = |a: &N, x: &N| a + x;
-        let r = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::iterate(&numbers, sum_fn, 0);
+        let r = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::iterate(&numbers, &sum_fn, 0);
         assert_eq!(r, 15);
     }
 
@@ -171,7 +174,7 @@ pub mod TestArraySeqStEphChap {
         let numbers = ArraySeqStEphSLit![1, 2, 3];
         let sum_fn = |a: &N, x: &N| a + x;
         let (prefixes, total) =
-            <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::iteratePrefixes(&numbers, sum_fn, 0);
+            <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::scan(&numbers, &sum_fn, 0);
         assert_eq!(prefixes.length(), 3);
         assert_eq!(*prefixes.nth(0), 0);
         assert_eq!(*prefixes.nth(1), 1);

@@ -48,7 +48,7 @@ pub mod TestMathSeq {
     #[test]
     fn test_set_in_bounds_and_out_of_bounds() {
         let mut s: MathSeqS<&str> = MathSeqSLit!["a", "b", "c"];
-        assert!(s.update(1, "x").is_ok());
+        assert!(s.update(1, "x")== Ok(()));
         assert_eq!(s.length(), 3);
         assert_eq!(*s.nth(1), "x");
         assert!(s.update(5, "oops").is_err());

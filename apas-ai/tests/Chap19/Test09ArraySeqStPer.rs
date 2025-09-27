@@ -12,8 +12,8 @@ pub mod TestArraySeqStPer {
         assert_eq!(*a.nth(0), 7);
         assert_eq!(*a.nth(1), 7);
         assert_eq!(*a.nth(2), 7);
-        let b = ArraySeqStPerS::update(&a, 1, 9).unwrap();
-        let c = ArraySeqStPerS::update(&b, 0, 2).unwrap();
+        let b = ArraySeqStPerS::update(&a, 1, 9);
+        let c = ArraySeqStPerS::update(&b, 0, 2);
         assert_eq!(*c.nth(0), 2);
         assert_eq!(*c.nth(1), 9);
         assert_eq!(*c.nth(2), 7);
@@ -222,15 +222,15 @@ pub mod TestArraySeqStPer {
     #[should_panic]
     fn test_set_out_of_bounds_panics_on_unwrap() {
         let a = ArraySeqStPerS::new(3, 0);
-        let _ = ArraySeqStPerS::update(&a, 3, 1).unwrap();
+        let _ = ArraySeqStPerS::update(&a, 3, 1);
     }
 
     #[test]
     fn test_set_in_bounds_ok_and_writes() {
         let a = ArraySeqStPerS::new(3, 0);
         let b = ArraySeqStPerS::update(&a, 1, 5);
-        assert!(b.is_ok());
-        let c = b.unwrap();
+        assert!(b== Ok(()));
+        let c = b;
         assert_eq!(*c.nth(1), 5);
     }
 
@@ -247,7 +247,7 @@ pub mod TestArraySeqStPer {
     fn test_new_set_persistent() {
         let a: ArraySeqStPerS<N> = ArraySeqStPerS::new(3, 7);
         assert_eq!(a.length(), 3);
-        let b = ArraySeqStPerS::update(&a, 1, 9).unwrap();
+        let b = ArraySeqStPerS::update(&a, 1, 9);
         assert_eq!(*a.nth(1), 7);
         assert_eq!(*b.nth(1), 9);
     }

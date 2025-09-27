@@ -83,21 +83,24 @@ pub mod TestArraySeqStEph {
     #[test]
     fn test_isEmpty() {
         let e: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
-        assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&e), true);
+        let e_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::empty();
+        assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&e_i32), true);
         let s: ArraySeqStEphS<N> = ArraySeqStEphS::singleton(7);
-        assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&s), false);
+        let s_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::singleton(7);
+        assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&s_i32), false);
         let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i, 2);
-        assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&a), false);
+        let a_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| i as i32, 2);
+        assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&a_i32), false);
     }
 
     #[test]
     fn test_isSingleton() {
         let e: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
-        assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&e), false);
+        assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&e_i32), false);
         let s: ArraySeqStEphS<N> = ArraySeqStEphS::singleton(7);
-        assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&s), true);
+        assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&s_i32), true);
         let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i, 2);
-        assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&a), false);
+        assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&a_i32), false);
     }
 
     #[test]

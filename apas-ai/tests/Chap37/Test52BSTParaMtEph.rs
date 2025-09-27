@@ -57,15 +57,15 @@ fn para_union_and_delete() {
 
 #[test]
 fn para_join_mid_expose_roundtrip() {
-    let empty = ParamBST::<i32>::join_mid(Exposed::Leaf);
+    let empty = ParamBST::join_mid(Exposed::Leaf);
     match empty.expose() {
         | Exposed::Leaf => {}
         | Exposed::Node(..) => panic!("expected leaf"),
     }
 
-    let left = ParamBST::<i32>::join_mid(Exposed::Leaf);
-    let right = ParamBST::<i32>::join_mid(Exposed::Leaf);
-    let combined = ParamBST::<i32>::join_mid(Exposed::Node(left, 10, right));
+    let left = ParamBST::join_mid(Exposed::Leaf);
+    let right = ParamBST::join_mid(Exposed::Leaf);
+    let combined = ParamBST::join_mid(Exposed::Node(left, 10, right));
 
     match combined.expose() {
         | Exposed::Leaf => panic!("expected node"),
@@ -99,7 +99,7 @@ fn para_filter_and_reduce() {
     let sum = tree.reduce(|a, b| a + b, 0);
     assert_eq!(sum, 21);
 
-    let empty_sum = ParamBST::<i32>::new().reduce(|a, b| a + b, 0);
+    let empty_sum = ParamBST::new().reduce(|a, b| a + b, 0);
     assert_eq!(empty_sum, 0);
 }
 

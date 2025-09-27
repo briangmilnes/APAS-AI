@@ -21,7 +21,7 @@ pub mod TestLinkedListEph {
         assert_eq!(*l.nth(0), 1);
         assert_eq!(*l.nth(2), 1);
         // update method doesn't exist for LinkedListStEph - commenting out
-        // let _ = l.update(1, 9).unwrap();
+        // let _ = l.update(1, 9);
         assert_eq!(*l.nth(1), 1); // unchanged since update was commented out
     }
 
@@ -39,7 +39,7 @@ pub mod TestLinkedListEph {
         let mut s = LinkedListStEphSLit![1; 3];
         assert_eq!(s.length(), 3);
         assert_eq!(*s.nth(0), 1);
-        let _ = s.update(1, 9).unwrap();
+        let _ = s.update(1, 9);
         assert_eq!(*s.nth(1), 9);
     }
 
