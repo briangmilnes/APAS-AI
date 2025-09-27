@@ -2,9 +2,11 @@
 //! Chapter 19 algorithms for `ArraySeqStEph<T>`.
 
 pub mod ArraySeqStEph {
-    use crate::Types::Types::*;
     use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS as ArraySeqStEphSChap18, ArraySeqStEphTrait as ArraySeqStEphTraitChap18};
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{
+        ArraySeqStEphS as ArraySeqStEphSChap18, ArraySeqStEphTrait as ArraySeqStEphTraitChap18,
+    };
+    use crate::Types::Types::*;
 
     pub type ArraySeqStEphS<T> = ArraySeqStEphSChap18<T>;
 
@@ -47,7 +49,10 @@ pub mod ArraySeqStEph {
 
         fn empty() -> ArraySeqStEphS<T> {
             // Algorithm 19.1: empty = tabulate(lambda i.i, 0)
-            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::tabulate(&|_| unreachable!("empty sequence has no elements"), 0)
+            <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::tabulate(
+                &|_| unreachable!("empty sequence has no elements"),
+                0,
+            )
         }
 
         fn singleton(item: T) -> ArraySeqStEphS<T> {
@@ -101,7 +106,11 @@ pub mod ArraySeqStEph {
             if total_len == 0 {
                 return <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty();
             }
-            let first_elem = if a.length() > 0 { a.nth(0).clone() } else { b.nth(0).clone() };
+            let first_elem = if a.length() > 0 {
+                a.nth(0).clone()
+            } else {
+                b.nth(0).clone()
+            };
             let mut result = <ArraySeqStEphS<T> as ArraySeqStEphTraitChap18<T>>::new(total_len, first_elem);
             for i in 1..a.length() {
                 result.set(i, a.nth(i).clone()).unwrap();
@@ -116,22 +125,24 @@ pub mod ArraySeqStEph {
             // Algorithm 19.4 alternative: append a b = tabulate(select(a,b), |a|+|b|)
             <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::tabulate(
                 &|i| <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::select(a, b, i).unwrap(),
-                a.length() + b.length()
+                a.length() + b.length(),
             )
         }
 
         fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> ArraySeqStEphS<T> {
             // Helper for filter: deflate f x = if f(x) then [x] else []
             if f(x) == true {
-                    <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::singleton(x.clone())
+                <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::singleton(x.clone())
             } else {
-                    <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty()
+                <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::empty()
             }
         }
 
         fn filter<F: Fn(&T) -> B>(a: &ArraySeqStEphS<T>, pred: &F) -> ArraySeqStEphS<T> {
             // Algorithm 19.5: filter f a = flatten(map(deflate f, a))
-            let deflated = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::map(a, &|x| <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::deflate(pred, x));
+            let deflated = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::map(a, &|x| {
+                <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::deflate(pred, x)
+            });
             <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::flatten(&deflated)
         }
 
@@ -194,7 +205,7 @@ pub mod ArraySeqStEph {
             // Algorithm 19.6: update a (i, x) = tabulate(lambda j. if i = j then x else a[j], |a|)
             <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::tabulate(
                 &|j| if j == index { item.clone() } else { a.nth(j).clone() },
-                a.length()
+                a.length(),
             )
         }
     }

@@ -5,7 +5,7 @@ pub mod BSTSetPlainMtEph {
     use std::collections::BTreeSet;
 
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap37::BSTPlainMtEph::BSTPlainMtEph::BSTPlainMtEph;
+    use crate::Chap37::BSTPlainMtEph::BSTPlainMtEph::{BSTPlainMtEph, BSTPlainMtEphTrait};
     use crate::Types::Types::*;
 
     #[derive(Debug, Clone)]

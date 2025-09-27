@@ -31,9 +31,9 @@ fn bench_prim_tree_seq_st(c: &mut Criterion) {
         b.iter(|| {
             let exposed = seq.expose();
             let rejoined = match exposed {
-                PrimTreeSeqStTree::Zero => PrimTreeSeqStS::empty(),
-                PrimTreeSeqStTree::One(val) => PrimTreeSeqStS::singleton(val),
-                PrimTreeSeqStTree::Two(left, right) => PrimTreeSeqStS::join(PrimTreeSeqStTree::Two(left, right)),
+                | PrimTreeSeqStTree::Zero => PrimTreeSeqStS::empty(),
+                | PrimTreeSeqStTree::One(val) => PrimTreeSeqStS::singleton(val),
+                | PrimTreeSeqStTree::Two(left, right) => PrimTreeSeqStS::join(PrimTreeSeqStTree::Two(left, right)),
             };
             black_box(rejoined)
         })

@@ -2,18 +2,32 @@
 //! Tests for ArraySeqMtPerChap18 multithreaded algorithms.
 
 pub mod Test27ArraySeqMtPerChap {
-    use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use apas_ai::ArrayMtPerSLit;
+    use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use apas_ai::Types::Types::*; // macro import
 
     // Helper functions for common patterns
-    fn identity(i: N) -> N { i }
-    fn double(i: N) -> N { i * 2 }
-    fn square(i: N) -> N { i * i }
-    fn add_100(i: N) -> N { i + 100 }
-    fn const_42(_i: N) -> N { 42 }
-    fn format_item(i: N) -> String { format!("item_{}", i) }
-    fn is_even_bool(i: N) -> B { if i % 2 == 0 { true } else { false } }
+    fn identity(i: N) -> N {
+        i
+    }
+    fn double(i: N) -> N {
+        i * 2
+    }
+    fn square(i: N) -> N {
+        i * i
+    }
+    fn add_100(i: N) -> N {
+        i + 100
+    }
+    fn const_42(_i: N) -> N {
+        42
+    }
+    fn format_item(i: N) -> String {
+        format!("item_{}", i)
+    }
+    fn is_even_bool(i: N) -> B {
+        if i % 2 == 0 { true } else { false }
+    }
 
     // Helper function for set equality comparison
     fn assert_set_eq<T: PartialEq + std::fmt::Debug>(actual: &[T], expected: &[T]) {

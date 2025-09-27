@@ -5,7 +5,9 @@ pub mod ArraySeqMtEph {
     use std::sync::Mutex;
     use std::thread;
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS as ArraySeqMtEphSChap18, ArraySeqMtEphTrait as ArraySeqMtEphTraitChap18};
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
+        ArraySeqMtEphS as ArraySeqMtEphSChap18, ArraySeqMtEphTrait as ArraySeqMtEphTraitChap18,
+    };
     use crate::Types::Types::*;
 
     pub type ArraySeqMtEphS<T> = ArraySeqMtEphSChap18<T>;
@@ -19,14 +21,23 @@ pub mod ArraySeqMtEph {
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtEphS<T>;
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T>;
-        fn map<U: StTInMtT + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F) -> ArraySeqMtEphS<U> where T: 'static;
+        fn map<U: StTInMtT + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
+            a: &ArraySeqMtEphS<T>,
+            f: F,
+        ) -> ArraySeqMtEphS<U>
+        where
+            T: 'static;
         fn select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>, index: N) -> Option<T>;
         fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T>;
         fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T>;
         fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtEphS<T>;
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, pred: F) -> ArraySeqMtEphS<T> where T: 'static;
+        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, pred: F) -> ArraySeqMtEphS<T>
+        where
+            T: 'static;
         fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T where T: 'static;
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
+        where
+            T: 'static;
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T);
         fn flatten(s: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T>;
         fn isEmpty(a: &ArraySeqMtEphS<T>) -> bool;
@@ -42,7 +53,10 @@ pub mod ArraySeqMtEph {
 
         fn empty() -> ArraySeqMtEphS<T> {
             // Algorithm 19.1: empty = tabulate(lambda i.i, 0)
-            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(&|_| unreachable!("empty sequence has no elements"), 0)
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(
+                &|_| unreachable!("empty sequence has no elements"),
+                0,
+            )
         }
 
         fn singleton(item: T) -> ArraySeqMtEphS<T> {
@@ -71,7 +85,13 @@ pub mod ArraySeqMtEph {
             result
         }
 
-        fn map<U: StTInMtT + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F) -> ArraySeqMtEphS<U> where T: 'static {
+        fn map<U: StTInMtT + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
+            a: &ArraySeqMtEphS<T>,
+            f: F,
+        ) -> ArraySeqMtEphS<U>
+        where
+            T: 'static,
+        {
             // Algorithm 19.3: map f a = tabulate(lambda i.f(a[i]), |a|)
             // Sequential implementation to maintain APAS algorithmic fidelity with closures
             // Can't use tabulate with closure capture, implement directly
@@ -102,7 +122,11 @@ pub mod ArraySeqMtEph {
             if total_len == 0 {
                 return <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::empty();
             }
-            let first_elem = if a.length() > 0 { a.nth_cloned(0) } else { b.nth_cloned(0) };
+            let first_elem = if a.length() > 0 {
+                a.nth_cloned(0)
+            } else {
+                b.nth_cloned(0)
+            };
             let mut result = <ArraySeqMtEphS<T> as ArraySeqMtEphTraitChap18<T>>::new(total_len, first_elem);
             for i in 1..a.length() {
                 result.set(i, a.nth_cloned(i)).unwrap();
@@ -117,7 +141,7 @@ pub mod ArraySeqMtEph {
             // Algorithm 19.4 alternative: append a b = tabulate(select(a,b), |a|+|b|)
             <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(
                 &|i| <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::select(a, b, i).unwrap(),
-                a.length() + b.length()
+                a.length() + b.length(),
             )
         }
 
@@ -130,28 +154,29 @@ pub mod ArraySeqMtEph {
             }
         }
 
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, pred: F) -> ArraySeqMtEphS<T> where T: 'static {
+        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, pred: F) -> ArraySeqMtEphS<T>
+        where
+            T: 'static,
+        {
             // Algorithm 19.5 with parallelism: fork thread per element + serial compaction
             if a.length() == 0 {
                 return <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::empty();
             }
-            
+
             // Create boolean sequence for keep/filter results
             let mut keep_results = <ArraySeqMtEphS<B> as ArraySeqMtEphTraitChap18<B>>::new(a.length(), false);
-            
+
             // Fork thread per element to evaluate predicate, collect results serially
             for i in 0..a.length() {
                 let value = a.nth_cloned(i);
                 let pred_clone = pred.clone();
-                
-                let handle = std::thread::spawn(move || {
-                    pred_clone(&value)
-                });
-                
+
+                let handle = std::thread::spawn(move || pred_clone(&value));
+
                 let keep = handle.join().unwrap();
                 keep_results.set(i, keep).unwrap();
             }
-            
+
             // Serial compaction phase: count kept values
             let mut kept_count = 0;
             for i in 0..keep_results.length() {
@@ -159,11 +184,11 @@ pub mod ArraySeqMtEph {
                     kept_count += 1;
                 }
             }
-            
+
             if kept_count == 0 {
                 return <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::empty();
             }
-            
+
             // Find first kept value and create result sequence
             let mut first_kept = None;
             for i in 0..a.length() {
@@ -173,17 +198,17 @@ pub mod ArraySeqMtEph {
                 }
             }
             let first_kept = first_kept.unwrap();
-            
+
             let mut result = <ArraySeqMtEphS<T> as ArraySeqMtEphTraitChap18<T>>::new(kept_count, first_kept);
             let mut result_idx = 1;
-            
+
             for i in 0..a.length() {
                 if keep_results.nth_cloned(i) == true && result_idx < kept_count {
                     result.set(result_idx, a.nth_cloned(i)).unwrap();
                     result_idx += 1;
                 }
             }
-            
+
             result
         }
 
@@ -197,7 +222,10 @@ pub mod ArraySeqMtEph {
             acc
         }
 
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T where T: 'static {
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
+        where
+            T: 'static,
+        {
             // Algorithm 19.9 with parallelism: always parallel divide-and-conquer
             if a.length() == 0 {
                 id
@@ -211,7 +239,9 @@ pub mod ArraySeqMtEph {
                 let id_clone = id.clone();
                 let f_clone = f.clone();
                 let f_clone2 = f.clone();
-                let handle = thread::spawn(move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&left, f_clone, id_clone));
+                let handle = thread::spawn(move || {
+                    <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&left, f_clone, id_clone)
+                });
                 let right_result = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&right, f_clone2, id);
                 let left_result = handle.join().unwrap();
                 f(&left_result, &right_result)
@@ -254,7 +284,7 @@ pub mod ArraySeqMtEph {
             // Algorithm 19.6: update a (i, x) = tabulate(lambda j. if i = j then x else a[j], |a|)
             <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(
                 &|j| if j == index { item.clone() } else { a.nth_cloned(j) },
-                a.length()
+                a.length(),
             )
         }
     }

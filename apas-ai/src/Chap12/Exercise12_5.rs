@@ -47,11 +47,16 @@ pub mod Exercise12_5 {
 
     impl<T: StTInMtT> ConcurrentStackMtTrait<T> for ConcurrentStackMt<T> {
         fn new() -> Self {
-            ConcurrentStackMt { head: AtomicPtr::new(null_mut()) }
+            ConcurrentStackMt {
+                head: AtomicPtr::new(null_mut()),
+            }
         }
 
         fn push(&self, value: T) {
-            let mut new_node = Box::new(Node { value: ManuallyDrop::new(value), next: null_mut() });
+            let mut new_node = Box::new(Node {
+                value: ManuallyDrop::new(value),
+                next: null_mut(),
+            });
             loop {
                 let head = self.head.load(Ordering::Acquire);
                 new_node.next = head;
@@ -74,9 +79,7 @@ pub mod Exercise12_5 {
             Some(value)
         }
 
-        fn is_empty(&self) -> bool {
-            self.head.load(Ordering::Acquire).is_null()
-        }
+        fn is_empty(&self) -> bool { self.head.load(Ordering::Acquire).is_null() }
     }
 
     impl<T: StTInMtT> Default for ConcurrentStackMt<T> {

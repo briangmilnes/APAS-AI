@@ -143,7 +143,13 @@ pub mod BSTParaStEph {
 
         fn size(&self) -> N { self.root.borrow().as_ref().map_or(0, |node| node.size) }
 
-        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        fn is_empty(&self) -> B {
+            if self.size() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
         fn insert(&self, key: T) {
             let (left, _, right) = ParamBST::split_inner(self, &key);

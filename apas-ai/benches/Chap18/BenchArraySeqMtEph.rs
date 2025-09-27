@@ -8,9 +8,9 @@ fn bench_arrayseqmteph_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySeqMtEph");
     group.warm_up_time(Duration::from_millis(100));
     group.measurement_time(Duration::from_secs(1));
-    
+
     let n: N = 5_000;
-    
+
     group.bench_with_input(BenchmarkId::new("new", n), &n, |b, &len| {
         b.iter(|| {
             let seq = ArraySeqMtEphS::new(len, 42);

@@ -17,7 +17,7 @@ fn bench_exercise12_1(c: &mut Criterion) {
         b.iter(|| {
             let lock = Arc::new(SpinLock::new());
             let mut handles = vec![];
-            
+
             for _ in 0..4 {
                 let lock_clone = Arc::clone(&lock);
                 let handle = thread::spawn(move || {
@@ -30,7 +30,7 @@ fn bench_exercise12_1(c: &mut Criterion) {
                 });
                 handles.push(handle);
             }
-            
+
             for handle in handles {
                 handle.join().unwrap();
             }

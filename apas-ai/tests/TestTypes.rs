@@ -9,7 +9,7 @@ pub mod TestTypes {
         assert_ne!(false, true);
         assert_eq!(false, false);
 
-        assert!(false < true);  // bool ordering: false < true
+        assert!(false < true); // bool ordering: false < true
     }
 
     #[test]
@@ -23,7 +23,7 @@ pub mod TestTypes {
 
     #[test]
     fn test_cmp_on_b_returns_expected_ordering_variants() {
-        assert!(matches!(false.cmp(&true), O::Less));   // false < true
+        assert!(matches!(false.cmp(&true), O::Less)); // false < true
         assert!(matches!(true.cmp(&false), O::Greater)); // true > false
         assert!(matches!(true.cmp(&true), O::Equal));
         assert!(matches!(false.cmp(&false), O::Equal));
@@ -57,13 +57,13 @@ pub mod TestTypes {
 
     #[test]
     fn test_debug_format_for_b_variants() {
-        assert_eq!(format!("{:?}", true), "true");   // bool debug format
+        assert_eq!(format!("{:?}", true), "true"); // bool debug format
         assert_eq!(format!("{:?}", false), "false"); // bool debug format
     }
 
     #[test]
     fn test_display_format_for_b_variants() {
-        assert_eq!(format!("{}", true), "true");   // bool display format
+        assert_eq!(format!("{}", true), "true"); // bool display format
         assert_eq!(format!("{}", false), "false"); // bool display format
     }
 }

@@ -6,13 +6,15 @@ pub mod Exercise21_5 {
     use crate::Types::Types::*;
 
     /// Exercise 21.5: Generate all contiguous subsequences using nested tabulate + flatten.
-    /// 
+    ///
     /// gpt-5-hard: Work: Θ(n²), Span: Θ(lg n)
     /// APAS: Work: Θ(n²), Span: Θ(lg n)
     pub fn all_contiguous_subseqs<T: StT>(a: &ArraySeqStPerS<T>) -> ArraySeqStPerS<ArraySeqStPerS<T>> {
         let n = a.length();
         let nested: ArraySeqStPerS<ArraySeqStPerS<ArraySeqStPerS<T>>> =
-            <ArraySeqStPerS<ArraySeqStPerS<ArraySeqStPerS<T>>> as ArraySeqStPerTrait<ArraySeqStPerS<ArraySeqStPerS<T>>>>::tabulate(
+            <ArraySeqStPerS<ArraySeqStPerS<ArraySeqStPerS<T>>> as ArraySeqStPerTrait<
+                ArraySeqStPerS<ArraySeqStPerS<T>>,
+            >>::tabulate(
                 &|i| {
                     <ArraySeqStPerS<ArraySeqStPerS<T>> as ArraySeqStPerTrait<ArraySeqStPerS<T>>>::tabulate(
                         &|j| a.subseq_copy(i, j + 1),

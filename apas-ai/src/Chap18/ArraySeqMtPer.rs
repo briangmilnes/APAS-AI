@@ -49,14 +49,24 @@ pub mod ArraySeqMtPer {
             ArraySeqMtPerS::from_vec(values)
         }
 
-        pub fn is_empty(&self) -> B { if self.data.is_empty() { true } else { false } }
+        pub fn is_empty(&self) -> B {
+            if self.data.is_empty() {
+                true
+            } else {
+                false
+            }
+        }
 
-        pub fn is_singleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
+        pub fn is_singleton(&self) -> B {
+            if self.data.len() == 1 {
+                true
+            } else {
+                false
+            }
+        }
 
         /// Iterator over references to elements
-        pub fn iter(&self) -> std::slice::Iter<'_, T> {
-            self.data.iter()
-        }
+        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
     }
 
     impl<T: StTInMtT> Clone for ArraySeqMtPerS<T> {
@@ -85,26 +95,24 @@ pub mod ArraySeqMtPer {
     impl<'a, T: StTInMtT> IntoIterator for &'a ArraySeqMtPerS<T> {
         type Item = &'a T;
         type IntoIter = std::slice::Iter<'a, T>;
-        
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.iter()
-        }
+
+        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
 
     impl<T: StTInMtT> IntoIterator for ArraySeqMtPerS<T> {
         type Item = T;
         type IntoIter = std::vec::IntoIter<T>;
-        
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.into_vec().into_iter()
-        }
+
+        fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
     }
 
     impl<T: StTInMtT> std::fmt::Display for ArraySeqMtPerS<T> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             write!(f, "ArraySeqMtPerS[")?;
             for (i, item) in self.data.iter().enumerate() {
-                if i > 0 { write!(f, ", ")?; }
+                if i > 0 {
+                    write!(f, ", ")?;
+                }
                 write!(f, "{}", item)?;
             }
             write!(f, "]")
@@ -120,20 +128,28 @@ pub mod ArraySeqMtPer {
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T>;
         fn set(&self, index: N, item: T) -> Result<ArraySeqMtPerS<T>, &'static str>;
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
-        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F) -> ArraySeqMtPerS<W> where T: 'static;
+        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(
+            a: &ArraySeqMtPerS<T>,
+            f: F,
+        ) -> ArraySeqMtPerS<W>
+        where
+            T: 'static;
         fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
         fn filter<F: Fn(&T) -> B + Send + Sync>(a: &ArraySeqMtPerS<T>, pred: &F) -> ArraySeqMtPerS<T>;
         fn update(a: &ArraySeqMtPerS<T>, item_at: Pair<N, T>) -> ArraySeqMtPerS<T>;
         fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T>;
         fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A;
-        fn iteratePrefixes<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> (ArraySeqMtPerS<A>, A);
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T where T: 'static;
+        fn iteratePrefixes<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(
+            a: &ArraySeqMtPerS<T>,
+            f: &F,
+            x: A,
+        ) -> (ArraySeqMtPerS<A>, A);
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T
+        where
+            T: 'static;
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T);
         fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T>;
-        fn collect(
-            a: &ArraySeqMtPerS<Pair<T, T>>,
-            cmp: fn(&T, &T) -> O,
-        ) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>>;
+        fn collect(a: &ArraySeqMtPerS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>>;
         fn inject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T>;
         fn isEmpty(&self) -> B;
         fn isSingleton(&self) -> B;
@@ -145,7 +161,9 @@ pub mod ArraySeqMtPer {
         fn singleton(item: T) -> ArraySeqMtPerS<T> { ArraySeqMtPerS::singleton(item) }
         fn length(&self) -> N { ArraySeqMtPerS::length(self) }
         fn nth(&self, index: N) -> &T { ArraySeqMtPerS::nth(self, index) }
-        fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T> { ArraySeqMtPerS::subseq_copy(self, start, length) }
+        fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T> {
+            ArraySeqMtPerS::subseq_copy(self, start, length)
+        }
 
         fn set(&self, index: N, item: T) -> Result<ArraySeqMtPerS<T>, &'static str> {
             if index >= self.data.len() {
@@ -164,8 +182,13 @@ pub mod ArraySeqMtPer {
             ArraySeqMtPerS::from_vec(values)
         }
 
-        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F) -> ArraySeqMtPerS<W> 
-        where T: 'static {
+        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(
+            a: &ArraySeqMtPerS<T>,
+            f: F,
+        ) -> ArraySeqMtPerS<W>
+        where
+            T: 'static,
+        {
             if a.length() == 0 {
                 return ArraySeqMtPerS::from_vec(Vec::new());
             }
@@ -177,9 +200,7 @@ pub mod ArraySeqMtPer {
             let left = a.subseq_copy(0, mid);
             let right = a.subseq_copy(mid, a.length() - mid);
             let f_clone = f.clone();
-            let left_handle = thread::spawn(move || {
-                ArraySeqMtPerS::map(&left, f_clone)
-            });
+            let left_handle = thread::spawn(move || ArraySeqMtPerS::map(&left, f_clone));
             let right_result = ArraySeqMtPerS::map(&right, f);
             let left_result = left_handle.join().unwrap();
             ArraySeqMtPerS::append(&left_result, &right_result)
@@ -236,7 +257,11 @@ pub mod ArraySeqMtPer {
             acc
         }
 
-        fn iteratePrefixes<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> (ArraySeqMtPerS<A>, A) {
+        fn iteratePrefixes<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(
+            a: &ArraySeqMtPerS<T>,
+            f: &F,
+            x: A,
+        ) -> (ArraySeqMtPerS<A>, A) {
             let mut acc = x;
             let mut values: Vec<A> = Vec::with_capacity(a.length());
             for i in 0..a.length() {
@@ -246,8 +271,10 @@ pub mod ArraySeqMtPer {
             (ArraySeqMtPerS::from_vec(values), acc)
         }
 
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T 
-        where T: 'static {
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T
+        where
+            T: 'static,
+        {
             if a.length() == 0 {
                 return id;
             }
@@ -271,7 +298,7 @@ pub mod ArraySeqMtPer {
                 let right = a.subseq_copy(mid, a.length() - mid);
                 let f_clone = f.clone();
                 let f_clone2 = f.clone();
-                
+
                 let id_clone = id.clone();
                 let left_handle = thread::spawn(move || {
                     <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::reduce(&left, f_clone, id_clone)
@@ -303,10 +330,7 @@ pub mod ArraySeqMtPer {
             ArraySeqMtPerS::from_vec(values)
         }
 
-        fn collect(
-            a: &ArraySeqMtPerS<Pair<T, T>>,
-            cmp: fn(&T, &T) -> O,
-        ) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>> {
+        fn collect(a: &ArraySeqMtPerS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>> {
             if a.length() == 0 {
                 return ArraySeqMtPerS::from_vec(vec![]);
             }

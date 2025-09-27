@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
-use apas_ai::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
+use apas_ai::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
 use apas_ai::Types::Types::*;
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
@@ -42,7 +42,7 @@ fn bench_weighted_dir_graph_mt_eph_int(c: &mut Criterion) {
             edges.insert((i, target, i as i32));
         }
         let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-        
+
         b.iter(|| {
             let mut total_weight = 0i32;
             for i in 0..len {

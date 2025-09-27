@@ -636,3 +636,33 @@ path = "tests/Chap21/TestExercise_21_9.rs"
 [[test]]
 name = "TestBBTStEph"
 path = "tests/Chap23/TestBBTStEph.rs"
+
+# Chapter 40: Augmenting Binary Search Trees
+
+[[bench]]
+name = "BenchBSTKeyValueStEph"
+path = "benches/Chap40/BenchBSTKeyValueStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTSizeStEph"
+path = "benches/Chap40/BenchBSTSizeStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBSTReducedStEph"
+path = "benches/Chap40/BenchBSTReducedStEph.rs"
+harness = false
+
+[[test]]
+name = "TestBSTKeyValueStEph"
+path = "tests/Chap40/TestBSTKeyValueStEph.rs"
+
+[[test]]
+name = "TestBSTSizeStEph"
+path = "tests/Chap40/TestBSTSizeStEph.rs"
+
+[[test]]
+name = "TestBSTReducedStEph"
+path = "tests/Chap40/TestBSTReducedStEph.rs"
+

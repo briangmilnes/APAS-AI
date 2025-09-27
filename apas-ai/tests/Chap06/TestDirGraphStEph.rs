@@ -43,11 +43,11 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         // Test Neighbor method - checks if edge exists between two vertices
-        assert_eq!(g.Neighbor(&0, &1), true);  // edge 0->1 exists
-        assert_eq!(g.Neighbor(&0, &2), true);  // edge 0->2 exists
-        assert_eq!(g.Neighbor(&1, &2), true);  // edge 1->2 exists
+        assert_eq!(g.Neighbor(&0, &1), true); // edge 0->1 exists
+        assert_eq!(g.Neighbor(&0, &2), true); // edge 0->2 exists
+        assert_eq!(g.Neighbor(&1, &2), true); // edge 1->2 exists
         assert_eq!(g.Neighbor(&1, &0), false); // edge 1->0 does not exist
         assert_eq!(g.Neighbor(&2, &0), false); // edge 2->0 does not exist
         assert_eq!(g.Neighbor(&2, &1), false); // edge 2->1 does not exist
@@ -63,11 +63,11 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         let ng_0 = g.NG(&0);
         assert_eq!(ng_0.size(), 1);
         assert_eq!(ng_0.mem(&1), true);
-        
+
         let ng_2 = g.NG(&2);
         assert_eq!(ng_2.size(), 1); // vertex 2 has incoming neighbor 1
         assert_eq!(ng_2.mem(&1), true);
@@ -83,7 +83,7 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         let vertices_subset = SetLit![0, 1];
         let ng_subset = g.NGOfVertices(&vertices_subset);
         assert_eq!(ng_subset.size(), 3); // NG(0)={1} ∪ NG(1)={0,2} = {0,1,2}
@@ -102,11 +102,11 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         let nplus_0 = g.NPlus(&0);
         assert_eq!(nplus_0.size(), 1);
         assert_eq!(nplus_0.mem(&1), true);
-        
+
         let nplus_2 = g.NPlus(&2);
         assert_eq!(nplus_2.size(), 0);
     }
@@ -121,11 +121,11 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         let nminus_1 = g.NMinus(&1);
         assert_eq!(nminus_1.size(), 1);
         assert_eq!(nminus_1.mem(&0), true);
-        
+
         let nminus_0 = g.NMinus(&0);
         assert_eq!(nminus_0.size(), 0);
     }
@@ -140,7 +140,7 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         let vertices_subset = SetLit![0, 1];
         let nplus_subset = g.NPlusOfVertices(&vertices_subset);
         assert_eq!(nplus_subset.size(), 2);
@@ -158,7 +158,7 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         let vertices_subset = SetLit![1, 2];
         let nminus_subset = g.NMinusOfVertices(&vertices_subset);
         assert_eq!(nminus_subset.size(), 2);
@@ -177,13 +177,13 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         // Test Incident method - checks if edge is incident to vertex
-        assert_eq!(g.Incident(&Edge(0, 1), &0), true);  // edge (0,1) is incident to vertex 0
-        assert_eq!(g.Incident(&Edge(0, 1), &1), true);  // edge (0,1) is incident to vertex 1
+        assert_eq!(g.Incident(&Edge(0, 1), &0), true); // edge (0,1) is incident to vertex 0
+        assert_eq!(g.Incident(&Edge(0, 1), &1), true); // edge (0,1) is incident to vertex 1
         assert_eq!(g.Incident(&Edge(0, 1), &2), false); // edge (0,1) is not incident to vertex 2
-        assert_eq!(g.Incident(&Edge(1, 2), &1), true);  // edge (1,2) is incident to vertex 1
-        assert_eq!(g.Incident(&Edge(1, 2), &2), true);  // edge (1,2) is incident to vertex 2
+        assert_eq!(g.Incident(&Edge(1, 2), &1), true); // edge (1,2) is incident to vertex 1
+        assert_eq!(g.Incident(&Edge(1, 2), &2), true); // edge (1,2) is incident to vertex 2
     }
 
     #[test]
@@ -197,7 +197,7 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         assert_eq!(g.Degree(&0), 2); // one in + one out = 2
         assert_eq!(g.Degree(&1), 2); // one in + one out = 2
         assert_eq!(g.Degree(&2), 2); // one in + one out = 2
@@ -214,7 +214,7 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         assert_eq!(g.InDegree(&0), 1); // edge from 2
         assert_eq!(g.InDegree(&1), 1); // edge from 0
         assert_eq!(g.InDegree(&2), 1); // edge from 1
@@ -231,7 +231,7 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         assert_eq!(g.OutDegree(&0), 1); // edge to 1
         assert_eq!(g.OutDegree(&1), 1); // edge to 2
         assert_eq!(g.OutDegree(&2), 1); // edge to 0
@@ -240,21 +240,21 @@ pub mod TestDirGraphStEph {
     #[test]
     fn test_dirgraph_empty_graph_edge_cases() {
         let empty_graph: DirGraphStEph<i32> = DirGraphStEph::empty();
-        
+
         // All operations on empty graph should return empty sets, false, or 0
         assert_eq!(empty_graph.Neighbor(&42, &99), false);
-        
+
         let ng = empty_graph.NG(&42);
         assert_eq!(ng.size(), 0);
-        
+
         let nplus = empty_graph.NPlus(&42);
         assert_eq!(nplus.size(), 0);
-        
+
         let nminus = empty_graph.NMinus(&42);
         assert_eq!(nminus.size(), 0);
-        
+
         assert_eq!(empty_graph.Incident(&Edge(42, 99), &42), true); // Incident always returns True for any edge-vertex pair
-        
+
         assert_eq!(empty_graph.Degree(&42), 0);
         assert_eq!(empty_graph.InDegree(&42), 0);
         assert_eq!(empty_graph.OutDegree(&42), 0);
@@ -265,13 +265,13 @@ pub mod TestDirGraphStEph {
         let v: Set<N> = SetLit![42];
         let a: Set<Edge<N>> = Set::empty();
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         // Single vertex with no edges
         assert_eq!(g.sizeV(), 1);
         assert_eq!(g.sizeA(), 0);
-        
+
         assert_eq!(g.Neighbor(&42, &42), false); // no self-loop
-        
+
         assert_eq!(g.Degree(&42), 0);
         assert_eq!(g.InDegree(&42), 0);
         assert_eq!(g.OutDegree(&42), 0);
@@ -286,14 +286,14 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         // Self-loop should be handled correctly
         assert_eq!(g.Neighbor(&0, &0), true); // self-loop exists
-        
+
         let ng_0 = g.NG(&0);
         assert_eq!(ng_0.size(), 1);
         assert_eq!(ng_0.mem(&0), true);
-        
+
         assert_eq!(g.Degree(&0), 2); // self-loop: in-degree 1 + out-degree 1 = 2
         assert_eq!(g.InDegree(&0), 1);
         assert_eq!(g.OutDegree(&0), 1);
@@ -308,14 +308,14 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         // Queries for non-existent vertex should return false/empty/0
         assert_eq!(g.Neighbor(&99, &0), false);
         assert_eq!(g.Neighbor(&0, &99), false);
-        
+
         let ng_99 = g.NG(&99);
         assert_eq!(ng_99.size(), 0);
-        
+
         assert_eq!(g.Degree(&99), 0);
         assert_eq!(g.InDegree(&99), 0);
         assert_eq!(g.OutDegree(&99), 0);
@@ -325,7 +325,7 @@ pub mod TestDirGraphStEph {
     fn test_dirgraph_extreme_vertex_references_graceful() {
         // Test with extreme vertex values to verify no panics occur
         // APAS style: bad arguments produce empty sequences/sets, not panics
-        
+
         let v: Set<i32> = SetLit![0, 1, i32::MAX, i32::MIN];
         let a: Set<Edge<i32>> = {
             let mut s: Set<Edge<i32>> = Set::empty();
@@ -335,22 +335,22 @@ pub mod TestDirGraphStEph {
             s
         };
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         // Test operations with extreme values - should not panic
         assert_eq!(g.Neighbor(&i32::MAX, &i32::MIN), true);
         assert_eq!(g.Neighbor(&i32::MIN, &0), true);
         assert_eq!(g.Neighbor(&i32::MAX, &0), false);
-        
+
         // Test degree operations with extreme values
         assert!(g.Degree(&i32::MAX) >= 1);
         assert!(g.Degree(&i32::MIN) >= 1);
         assert!(g.InDegree(&i32::MIN) >= 1);
         assert!(g.OutDegree(&i32::MAX) >= 1);
-        
+
         // Test with non-existent extreme values - should return graceful defaults
         assert_eq!(g.Neighbor(&(i32::MAX - 1), &0), false);
         assert_eq!(g.Degree(&(i32::MIN + 1)), 0);
-        
+
         let ng_extreme = g.NG(&(i32::MAX - 1));
         assert_eq!(ng_extreme.size(), 0);
     }
@@ -360,7 +360,7 @@ pub mod TestDirGraphStEph {
         // Test with large graph to verify no panics occur
         let vertices: Vec<i32> = (0..1000).collect();
         let v: Set<i32> = Set::FromVec(vertices);
-        
+
         // Create edges: each vertex connects to next vertex (0->1, 1->2, ..., 998->999)
         let mut a: Set<Edge<i32>> = Set::empty();
         for i in 0..999 {
@@ -370,30 +370,30 @@ pub mod TestDirGraphStEph {
         for i in (0..1000).step_by(100) {
             let _ = a.insert(Edge(i, (i + 500) % 1000));
         }
-        
+
         let g = DirGraphStEph::FromSets(v, a);
-        
+
         assert_eq!(g.sizeV(), 1000);
         assert!(g.sizeA() >= 999); // At least the chain edges
-        
+
         // Test operations on large graph - should not panic
         assert_eq!(g.Neighbor(&0, &1), true);
         assert_eq!(g.Neighbor(&999, &0), false);
-        
+
         // Test degree operations
         assert!(g.OutDegree(&0) >= 1);
         assert!(g.InDegree(&999) >= 1);
         assert_eq!(g.InDegree(&0), 1); // Only receives from vertex 900 (if exists)
-        
+
         // Test with vertices in the middle of the chain
         assert_eq!(g.Neighbor(&500, &501), true);
         assert!(g.Degree(&500) >= 2); // At least in-degree 1 and out-degree 1
-        
+
         // Test NGOfVertices with subset
         let subset: Set<i32> = SetLit![0, 1, 2, 3, 4];
         let ng_subset = g.NGOfVertices(&subset);
         assert!(ng_subset.size() >= 4); // At least vertices 1,2,3,4 are neighbors
-        
+
         // Test with non-existent vertices - should return graceful defaults
         assert_eq!(g.Neighbor(&2000, &0), false);
         assert_eq!(g.Degree(&2000), 0);

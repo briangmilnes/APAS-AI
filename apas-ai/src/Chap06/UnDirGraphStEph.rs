@@ -66,8 +66,7 @@ pub mod UnDirGraphStEph {
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Treat edges as unordered: {u,v}
-            if true == self.E.mem(&Edge(u.clone(), v.clone())) || true == self.E.mem(&Edge(v.clone(), u.clone()))
-            {
+            if true == self.E.mem(&Edge(u.clone(), v.clone())) || true == self.E.mem(&Edge(v.clone(), u.clone())) {
                 true
             } else {
                 false
@@ -95,7 +94,13 @@ pub mod UnDirGraphStEph {
             result
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { true } else { false } }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B {
+            if &e.0 == v || &e.1 == v {
+                true
+            } else {
+                false
+            }
+        }
 
         fn Degree(&self, v: &V) -> N { self.NG(v).size() }
     }
@@ -104,25 +109,25 @@ pub mod UnDirGraphStEph {
     impl<V: StT + Hash> UnDirGraphStEph<V> {
         /// Arc count (alias for edge count in undirected graphs)
         pub fn sizeA(&self) -> N { self.sizeE() }
-        
+
         /// Arcs (alias for edges in undirected graphs)
         pub fn arcs(&self) -> &Set<Edge<V>> { self.edges() }
-        
+
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
         pub fn NPlus(&self, v: &V) -> Set<V> { self.NG(v) }
-        
+
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
         pub fn NMinus(&self, v: &V) -> Set<V> { self.NG(v) }
-        
+
         /// Neighbors of vertex set
         pub fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V> { self.NGOfVertices(u_set) }
-        
+
         /// Neighbors of vertex set
         pub fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V> { self.NGOfVertices(u_set) }
-        
+
         /// Degree (in undirected graphs, in-degree equals total degree)
         pub fn InDegree(&self, v: &V) -> N { self.Degree(v) }
-        
+
         /// Degree (in undirected graphs, out-degree equals total degree)
         pub fn OutDegree(&self, v: &V) -> N { self.Degree(v) }
     }

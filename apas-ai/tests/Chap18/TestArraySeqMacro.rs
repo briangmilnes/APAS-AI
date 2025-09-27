@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqS;
-use apas_ai::Chap18::ArraySeq::ArraySeq::{ArraySeqS, ArraySeq};
+use apas_ai::Chap18::ArraySeq::ArraySeq::{ArraySeq, ArraySeqS};
 use apas_ai::Types::Types::{B, Pair};
 
 #[test]
@@ -53,8 +53,8 @@ fn arrayseq_subseq_append_filter_flatten() {
     assert_eq!(ArraySeq::nth(&combined, 5), &6);
 
     let evens = <ArraySeqS<i32> as ArraySeq<i32>>::filter(&combined, &|value| match value % 2 {
-        0 => true,
-        _ => false,
+        | 0 => true,
+        | _ => false,
     });
     assert_eq!(ArraySeq::length(&evens), 3);
     assert_eq!(ArraySeq::nth(&evens, 1), &4);
@@ -83,7 +83,10 @@ fn arrayseq_update_and_inject_preserve_original() {
 #[test]
 fn arrayseq_collect_iterate_reduce_scan() {
     let pairs = ArraySeqS![Pair("a", 1), Pair("a", 2), Pair("b", 3)];
-    let collected = <ArraySeqS<Pair<&str, ArraySeqS<i32>>> as ArraySeq<Pair<&str, ArraySeqS<i32>>>>::collect(&pairs, |lhs, rhs| lhs.cmp(rhs));
+    let collected =
+        <ArraySeqS<Pair<&str, ArraySeqS<i32>>> as ArraySeq<Pair<&str, ArraySeqS<i32>>>>::collect(&pairs, |lhs, rhs| {
+            lhs.cmp(rhs)
+        });
     assert_eq!(ArraySeq::<Pair<&str, ArraySeqS<i32>>>::length(&collected), 2);
 
     let first_group = ArraySeq::<Pair<&str, ArraySeqS<i32>>>::nth(&collected, 0);

@@ -16,7 +16,11 @@ pub mod ArraySeqStPer {
     pub type ArrayStPer<T> = ArraySeqStPerS<T>;
 
     impl<T: StT> ArraySeqStPerS<T> {
-        pub fn from_vec(elts: Vec<T>) -> Self { Self { data: elts.into_boxed_slice() } }
+        pub fn from_vec(elts: Vec<T>) -> Self {
+            Self {
+                data: elts.into_boxed_slice(),
+            }
+        }
         pub fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
         pub fn empty() -> Self { Self::from_vec(Vec::new()) }
         pub fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
@@ -31,9 +35,7 @@ pub mod ArraySeqStPer {
         }
 
         /// Iterator over references to elements
-        pub fn iter(&self) -> std::slice::Iter<'_, T> {
-            self.data.iter()
-        }
+        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
     }
 
     impl<T: StT> PartialEq for ArraySeqStPerS<T> {
@@ -49,19 +51,15 @@ pub mod ArraySeqStPer {
     impl<'a, T: StT> IntoIterator for &'a ArraySeqStPerS<T> {
         type Item = &'a T;
         type IntoIter = std::slice::Iter<'a, T>;
-        
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.iter()
-        }
+
+        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
 
     impl<T: StT> IntoIterator for ArraySeqStPerS<T> {
         type Item = T;
         type IntoIter = std::vec::IntoIter<T>;
-        
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.into_vec().into_iter()
-        }
+
+        fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
     }
 
     impl<T: StT> Display for ArraySeqStPerS<T> {
@@ -125,9 +123,7 @@ pub mod ArraySeqStPer {
             ArraySeqStPerS::from_vec(values)
         }
 
-        fn subseq_copy(a: &ArraySeqStPerS<T>, start: N, length: N) -> ArraySeqStPerS<T> {
-            a.subseq_copy(start, length)
-        }
+        fn subseq_copy(a: &ArraySeqStPerS<T>, start: N, length: N) -> ArraySeqStPerS<T> { a.subseq_copy(start, length) }
 
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
@@ -168,7 +164,11 @@ pub mod ArraySeqStPer {
             for i in 0..updates.length() {
                 let Pair(index, value) = updates.nth(i);
                 if *index >= result.length() {
-                    panic!("Index {} out of bounds for sequence of length {}", index, result.length());
+                    panic!(
+                        "Index {} out of bounds for sequence of length {}",
+                        index,
+                        result.length()
+                    );
                 }
                 if updated.insert(*index) {
                     let mut new_data: Vec<T> = result.data.iter().cloned().collect();
@@ -179,9 +179,21 @@ pub mod ArraySeqStPer {
             result
         }
 
-        fn isEmpty(&self) -> B { if self.data.is_empty() { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.data.is_empty() {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B {
+            if self.data.len() == 1 {
+                true
+            } else {
+                false
+            }
+        }
 
         fn collect<K: StT, V: StT>(
             a: &ArraySeqStPerS<Pair<K, V>>,

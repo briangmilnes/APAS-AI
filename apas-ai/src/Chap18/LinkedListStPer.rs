@@ -36,7 +36,11 @@ pub mod LinkedListStPer {
         fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T>;
         fn ninject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T>;
         fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &LinkedListStPerS<T>, f: &F, x: A) -> A;
-        fn iteratePrefixes<A: StT, F: Fn(&A, &T) -> A>(a: &LinkedListStPerS<T>, f: &F, x: A) -> (LinkedListStPerS<A>, A);
+        fn iteratePrefixes<A: StT, F: Fn(&A, &T) -> A>(
+            a: &LinkedListStPerS<T>,
+            f: &F,
+            x: A,
+        ) -> (LinkedListStPerS<A>, A);
         fn reduce<F: Fn(&T, &T) -> T>(a: &LinkedListStPerS<T>, f: &F, id: T) -> T;
 
         fn scan<F: Fn(&T, &T) -> T>(a: &LinkedListStPerS<T>, f: &F, id: T) -> (LinkedListStPerS<T>, T);
@@ -295,7 +299,11 @@ pub mod LinkedListStPer {
             acc
         }
 
-        fn iteratePrefixes<A: StT, F: Fn(&A, &T) -> A>(a: &LinkedListStPerS<T>, f: &F, x: A) -> (LinkedListStPerS<A>, A) {
+        fn iteratePrefixes<A: StT, F: Fn(&A, &T) -> A>(
+            a: &LinkedListStPerS<T>,
+            f: &F,
+            x: A,
+        ) -> (LinkedListStPerS<A>, A) {
             let mut acc = x.clone();
             let mut prefixes: Vec<A> = Vec::with_capacity(a.length());
             for i in 0..a.length() {

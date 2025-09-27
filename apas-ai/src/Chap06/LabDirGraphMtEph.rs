@@ -110,7 +110,6 @@ pub mod LabDirGraphMtEph {
             }
             neighbors
         }
-
     }
 
     impl<V, L> Display for LabDirGraphMtEph<V, L>

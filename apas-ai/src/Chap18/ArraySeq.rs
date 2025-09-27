@@ -13,7 +13,6 @@ pub mod ArraySeq {
         data: Box<[T]>,
     }
 
-
     /// Data Type 18.1: Generic sequence trait for array-backed sequences.
     pub trait ArraySeq<T> {
         /// Create a new sequence of length `length` with each element initialized to `init_value`. <br/>
@@ -108,8 +107,7 @@ pub mod ArraySeq {
     }
 
     impl<T: Clone> ArraySeqS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqS<T>
-        {
+        fn new(length: N, init_value: T) -> ArraySeqS<T> {
             let mut data = Vec::with_capacity(length);
             data.resize(length, init_value);
             ArraySeqS::from_vec(data)
@@ -132,9 +130,21 @@ pub mod ArraySeq {
 
         fn singleton(item: T) -> ArraySeqS<T> { ArraySeqS::from_vec(vec![item]) }
 
-        fn isEmpty(&self) -> B { if self.data.is_empty() { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.data.is_empty() {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B {
+            if self.data.len() == 1 {
+                true
+            } else {
+                false
+            }
+        }
 
         /// Definition 18.2 (subseq view). Return a slice for the subsequence starting at `start`
         /// and of length `length` without copying or allocation (zero‑copy view). <br/>
@@ -148,8 +158,7 @@ pub mod ArraySeq {
         /// Definition 18.12 (subseq). Extract a contiguous subsequence starting at `start` with length `length`. <br/>
         /// If out of bounds, returns only the in-bounds part. <br/>
         /// Work: Θ(1) to compute bounds; allocation and cloning Θ(length) in this owning representation.
-        pub fn subseq_copy(&self, start: N, length: N) -> ArraySeqS<T>
-        {
+        pub fn subseq_copy(&self, start: N, length: N) -> ArraySeqS<T> {
             let sequence_length = self.data.len();
             let start_index = start.min(sequence_length);
             let end_exclusive = start.saturating_add(length).min(sequence_length);
@@ -185,10 +194,7 @@ pub mod ArraySeq {
     }
 
     impl<T: Clone> ArraySeq<T> for ArraySeqS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqS<T>
-        {
-            ArraySeqS::new(length, init_value)
-        }
+        fn new(length: N, init_value: T) -> ArraySeqS<T> { ArraySeqS::new(length, init_value) }
 
         fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqS<T>, &'static str> {
             ArraySeqS::set(self, index, item)
@@ -219,13 +225,9 @@ pub mod ArraySeq {
             ArraySeqS::from_vec(values)
         }
 
-        fn subseq(a: &ArraySeqS<T>, start: N, length: N) -> ArraySeqS<T>
-        {
-            a.subseq_copy(start, length)
-        }
+        fn subseq(a: &ArraySeqS<T>, start: N, length: N) -> ArraySeqS<T> { a.subseq_copy(start, length) }
 
-        fn append(a: &ArraySeqS<T>, b: &ArraySeqS<T>) -> ArraySeqS<T>
-        {
+        fn append(a: &ArraySeqS<T>, b: &ArraySeqS<T>) -> ArraySeqS<T> {
             let total = a.length() + b.length();
             if total == 0 {
                 return ArraySeqS::from_vec(Vec::new());
@@ -240,8 +242,7 @@ pub mod ArraySeq {
             ArraySeqS::from_vec(values)
         }
 
-        fn filter<F: Fn(&T) -> B>(a: &ArraySeqS<T>, pred: &F) -> ArraySeqS<T>
-        {
+        fn filter<F: Fn(&T) -> B>(a: &ArraySeqS<T>, pred: &F) -> ArraySeqS<T> {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
@@ -252,8 +253,7 @@ pub mod ArraySeq {
             ArraySeqS::from_vec(kept)
         }
 
-        fn flatten(a: &ArraySeqS<ArraySeqS<T>>) -> ArraySeqS<T>
-        {
+        fn flatten(a: &ArraySeqS<ArraySeqS<T>>) -> ArraySeqS<T> {
             let mut values: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let inner = a.nth(i);
@@ -264,8 +264,7 @@ pub mod ArraySeq {
             ArraySeqS::from_vec(values)
         }
 
-        fn update(a: &ArraySeqS<T>, Pair(index, item): Pair<N, T>) -> ArraySeqS<T>
-        {
+        fn update(a: &ArraySeqS<T>, Pair(index, item): Pair<N, T>) -> ArraySeqS<T> {
             let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
             if index < values.len() {
                 values[index] = item;
@@ -273,8 +272,7 @@ pub mod ArraySeq {
             ArraySeqS::from_vec(values)
         }
 
-        fn inject(a: &ArraySeqS<T>, updates: &ArraySeqS<Pair<N, T>>) -> ArraySeqS<T>
-        {
+        fn inject(a: &ArraySeqS<T>, updates: &ArraySeqS<Pair<N, T>>) -> ArraySeqS<T> {
             let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
             let mut seen: HashSet<N> = HashSet::new();
             for i in 0..updates.length() {
@@ -297,10 +295,7 @@ pub mod ArraySeq {
             let mut groups: Vec<Pair<K, Vec<V>>> = Vec::new();
             for i in 0..pairs.length() {
                 let Pair(key, value) = pairs.nth(i).clone();
-                if let Some(group) = groups
-                    .iter_mut()
-                    .find(|existing| cmp(&existing.0, &key) == O::Equal)
-                {
+                if let Some(group) = groups.iter_mut().find(|existing| cmp(&existing.0, &key) == O::Equal) {
                     group.1.push(value);
                 } else {
                     groups.push(Pair(key, vec![value]));
@@ -321,8 +316,7 @@ pub mod ArraySeq {
             acc
         }
 
-        fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqS<T>, f: &F, id: T) -> T
-        {
+        fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqS<T>, f: &F, id: T) -> T {
             let mut acc = id;
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
@@ -330,8 +324,7 @@ pub mod ArraySeq {
             acc
         }
 
-        fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqS<T>, f: &F, id: T) -> (ArraySeqS<T>, T)
-        {
+        fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqS<T>, f: &F, id: T) -> (ArraySeqS<T>, T) {
             let len = a.length();
             let mut prefixes: Vec<T> = Vec::with_capacity(len);
             let mut acc = id;

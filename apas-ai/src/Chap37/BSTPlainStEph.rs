@@ -28,51 +28,32 @@ pub mod BSTPlainStEph {
     }
 
     impl<T: StT + Ord> BSTPlainStEph<T> {
-        pub fn new() -> Self { BSTPlainStEph { root: BBTree::leaf() } }
+        // Private helper methods only - no public delegation
 
-        pub fn size(&self) -> N { self.root.size() }
-
-        pub fn is_empty(&self) -> B { self.root.is_leaf() }
-
-        pub fn height(&self) -> N { self.root.height() }
-
-        pub fn insert(&mut self, value: T) { insert_node(&mut self.root, value); }
-
-        pub fn find(&self, target: &T) -> Option<&T> { find_node(&self.root, target) }
-
-        pub fn contains(&self, target: &T) -> B { contains_node(&self.root, target) }
-
-        pub fn minimum(&self) -> Option<&T> { min_node(&self.root) }
-
-        pub fn maximum(&self) -> Option<&T> { max_node(&self.root) }
-
-        pub fn in_order(&self) -> ArraySeqStPerS<T> { self.root.in_order() }
-
-        pub fn pre_order(&self) -> ArraySeqStPerS<T> { self.root.pre_order() }
     }
 
     impl<T: StT + Ord> BSTPlainStEphTrait<T> for BSTPlainStEph<T> {
-        fn new() -> Self { BSTPlainStEph::new() }
+        fn new() -> Self { BSTPlainStEph { root: BBTree::leaf() } }
 
-        fn size(&self) -> N { BSTPlainStEph::size(self) }
+        fn size(&self) -> N { self.root.size() }
 
-        fn is_empty(&self) -> B { BSTPlainStEph::is_empty(self) }
+        fn is_empty(&self) -> B { self.root.is_leaf() }
 
-        fn height(&self) -> N { BSTPlainStEph::height(self) }
+        fn height(&self) -> N { self.root.height() }
 
-        fn insert(&mut self, value: T) { BSTPlainStEph::insert(self, value) }
+        fn insert(&mut self, value: T) { insert_node(&mut self.root, value); }
 
-        fn find(&self, target: &T) -> Option<&T> { BSTPlainStEph::find(self, target) }
+        fn find(&self, target: &T) -> Option<&T> { find_node(&self.root, target) }
 
-        fn contains(&self, target: &T) -> B { BSTPlainStEph::contains(self, target) }
+        fn contains(&self, target: &T) -> B { contains_node(&self.root, target) }
 
-        fn minimum(&self) -> Option<&T> { BSTPlainStEph::minimum(self) }
+        fn minimum(&self) -> Option<&T> { min_node(&self.root) }
 
-        fn maximum(&self) -> Option<&T> { BSTPlainStEph::maximum(self) }
+        fn maximum(&self) -> Option<&T> { max_node(&self.root) }
 
-        fn in_order(&self) -> ArraySeqStPerS<T> { BSTPlainStEph::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> { self.root.in_order() }
 
-        fn pre_order(&self) -> ArraySeqStPerS<T> { BSTPlainStEph::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> { self.root.pre_order() }
     }
 
     fn insert_node<T: StT + Ord>(node: &mut BBTree<T>, value: T) {

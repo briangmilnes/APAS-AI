@@ -98,18 +98,34 @@ pub mod TestLinkedListPer {
     fn test_select_from_concatenated() {
         let a = LinkedListStPerSLit![10, 20];
         let b = LinkedListStPerSLit![30, 40];
-        
-        assert_eq!(<LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 0), Some(10));
-        assert_eq!(<LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 1), Some(20));
-        assert_eq!(<LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 2), Some(30));
-        assert_eq!(<LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 3), Some(40));
-        assert_eq!(<LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 4), None);
+
+        assert_eq!(
+            <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 0),
+            Some(10)
+        );
+        assert_eq!(
+            <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 1),
+            Some(20)
+        );
+        assert_eq!(
+            <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 2),
+            Some(30)
+        );
+        assert_eq!(
+            <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 3),
+            Some(40)
+        );
+        assert_eq!(
+            <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 4),
+            None
+        );
     }
 
     #[test]
     fn test_filter_predicate() {
         let l = LinkedListStPerSLit![1, 2, 3, 4, 5];
-        let evens = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(&l, &|x| if *x % 2 == 0 { true } else { false });
+        let evens =
+            <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(&l, &|x| if *x % 2 == 0 { true } else { false });
         assert_eq!(evens.length(), 2);
         assert_eq!(*evens.nth(0), 2);
         assert_eq!(*evens.nth(1), 4);
@@ -119,10 +135,10 @@ pub mod TestLinkedListPer {
     fn test_update_persistent() {
         let l = LinkedListStPerSLit![1, 2, 3];
         let updated = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::update(&l, Pair(1, 99));
-        
+
         // Original unchanged (persistent)
         assert_eq!(*l.nth(1), 2);
-        
+
         // Updated copy has change
         assert_eq!(updated.length(), 3);
         assert_eq!(*updated.nth(0), 1);
@@ -135,7 +151,7 @@ pub mod TestLinkedListPer {
         let l = LinkedListStPerSLit![1, 2, 3];
         let updates = LinkedListStPerSLit![Pair(1, 10), Pair(2, 20), Pair(1, 30)]; // Duplicate index 1
         let result = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::inject(&l, &updates);
-        
+
         assert_eq!(result.length(), 3);
         assert_eq!(*result.nth(0), 1);
         assert_eq!(*result.nth(1), 10); // First update wins
@@ -147,7 +163,7 @@ pub mod TestLinkedListPer {
         let l = LinkedListStPerSLit![1, 2, 3];
         let updates = LinkedListStPerSLit![Pair(1, 10), Pair(2, 20), Pair(1, 30)]; // Duplicate index 1
         let result = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::ninject(&l, &updates);
-        
+
         assert_eq!(result.length(), 3);
         assert_eq!(*result.nth(0), 1);
         assert_eq!(*result.nth(1), 30); // Last update wins
@@ -164,8 +180,9 @@ pub mod TestLinkedListPer {
     #[test]
     fn test_iteratePrefixes_scan_like() {
         let l = LinkedListStPerSLit![1, 2, 3];
-        let (prefixes, total) = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::iteratePrefixes(&l, &|acc, x| acc + x, 0);
-        
+        let (prefixes, total) =
+            <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::iteratePrefixes(&l, &|acc, x| acc + x, 0);
+
         assert_eq!(prefixes.length(), 3);
         assert_eq!(*prefixes.nth(0), 0); // Initial value
         assert_eq!(*prefixes.nth(1), 1); // 0 + 1
@@ -178,11 +195,11 @@ pub mod TestLinkedListPer {
         let l = LinkedListStPerSLit![1, 2, 3, 4];
         let sum = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::reduce(&l, &|a, b| a + b, 0);
         assert_eq!(sum, 10);
-        
+
         let empty: LinkedListStPerS<N> = LinkedListStPerSLit![];
         let empty_sum = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::reduce(&empty, &|a, b| a + b, 42);
         assert_eq!(empty_sum, 42);
-        
+
         let single = LinkedListStPerSLit![5];
         let single_sum = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::reduce(&single, &|a, b| a + b, 0);
         assert_eq!(single_sum, 5);
@@ -192,7 +209,7 @@ pub mod TestLinkedListPer {
     fn test_scan_prefix_sums() {
         let l = LinkedListStPerSLit![1, 2, 3];
         let (prefixes, total) = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::scan(&l, &|a, b| a + b, 0);
-        
+
         assert_eq!(prefixes.length(), 3);
         assert_eq!(*prefixes.nth(0), 0); // reduce([], +, 0) = 0
         assert_eq!(*prefixes.nth(1), 1); // reduce([1], +, 0) = 1
@@ -206,7 +223,7 @@ pub mod TestLinkedListPer {
         let inner2 = LinkedListStPerSLit![3];
         let inner3 = LinkedListStPerSLit![4, 5];
         let nested = LinkedListStPerSLit![inner1, inner2, inner3];
-        
+
         let flattened = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::flatten(&nested);
         assert_eq!(flattened.length(), 5);
         assert_eq!(*flattened.nth(0), 1);
@@ -219,18 +236,25 @@ pub mod TestLinkedListPer {
     #[test]
     fn test_collect_group_by_key() {
         let pairs = LinkedListStPerSLit![Pair(1, "a"), Pair(2, "b"), Pair(1, "c"), Pair(2, "d")];
-        let grouped = <LinkedListStPerS<Pair<N, &str>> as LinkedListStPerTrait<Pair<N, &str>>>::collect(&pairs, |a, b| {
-            if a < b { O::Less } else if a > b { O::Greater } else { O::Equal }
-        });
-        
+        let grouped =
+            <LinkedListStPerS<Pair<N, &str>> as LinkedListStPerTrait<Pair<N, &str>>>::collect(&pairs, |a, b| {
+                if a < b {
+                    O::Less
+                } else if a > b {
+                    O::Greater
+                } else {
+                    O::Equal
+                }
+            });
+
         assert_eq!(grouped.length(), 2);
-        
+
         let Pair(key1, vals1) = grouped.nth(0);
         assert_eq!(*key1, 1);
         assert_eq!(vals1.length(), 2);
         assert_eq!(*vals1.nth(0), "a");
         assert_eq!(*vals1.nth(1), "c");
-        
+
         let Pair(key2, vals2) = grouped.nth(1);
         assert_eq!(*key2, 2);
         assert_eq!(vals2.length(), 2);
@@ -243,7 +267,7 @@ pub mod TestLinkedListPer {
         let l1 = LinkedListStPerSLit![1, 2, 3];
         let l2 = LinkedListStPerSLit![1, 2, 3];
         let l3 = LinkedListStPerSLit![1, 2, 4];
-        
+
         assert_eq!(l1, l2);
         assert_ne!(l1, l3);
     }
@@ -251,20 +275,19 @@ pub mod TestLinkedListPer {
     #[test]
     fn test_subseq_copy_edge_cases() {
         let l = LinkedListStPerSLit![1, 2, 3, 4, 5];
-        
+
         // Zero length
         let empty_sub = l.subseq_copy(2, 0);
         assert_eq!(empty_sub.length(), 0);
-        
+
         // Start beyond bounds
         let beyond_sub = l.subseq_copy(10, 3);
         assert_eq!(beyond_sub.length(), 0);
-        
+
         // Length extends beyond bounds
         let partial_sub = l.subseq_copy(3, 10);
         assert_eq!(partial_sub.length(), 2);
         assert_eq!(*partial_sub.nth(0), 4);
         assert_eq!(*partial_sub.nth(1), 5);
     }
-
 }

@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::*;
 use apas_ai::BSTSetTreapMtEphLit;
+use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::*;
 use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 

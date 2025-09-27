@@ -17,7 +17,7 @@ fn bench_exercise12_5(c: &mut Criterion) {
         b.iter(|| {
             let stack = Arc::new(ConcurrentStackMt::new());
             let mut handles = vec![];
-            
+
             // Producer threads
             for i in 0..2 {
                 let stack_clone = Arc::clone(&stack);
@@ -28,7 +28,7 @@ fn bench_exercise12_5(c: &mut Criterion) {
                 });
                 handles.push(handle);
             }
-            
+
             // Consumer threads
             for _ in 0..2 {
                 let stack_clone = Arc::clone(&stack);
@@ -41,11 +41,11 @@ fn bench_exercise12_5(c: &mut Criterion) {
                 });
                 handles.push(handle);
             }
-            
+
             for handle in handles {
                 handle.join().unwrap();
             }
-            
+
             black_box(stack)
         })
     });

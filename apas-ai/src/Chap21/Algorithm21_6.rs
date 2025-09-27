@@ -7,7 +7,7 @@ pub mod Algorithm21_6 {
 
     /// Algorithm 21.6 (Prime Sieve) using ArraySeqPer - simplified version.
     /// Construct primes using a sieve: generate composites, then filter candidates.
-    /// 
+    ///
     /// Uses the sieve of Eratosthenes approach with functional programming constructs.
     /// gpt-5-hard: Work: Θ(n lg n), Span: Θ(lg n)
     /// APAS: Work: Θ(n lg n), Span: Θ(lg n)
@@ -30,10 +30,7 @@ pub mod Algorithm21_6 {
         let composites: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::flatten(&nested);
 
         // Create candidates: 2, 3, ..., n-1
-        let candidates: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(
-            &|i| i + 2,
-            n - 2,
-        );
+        let candidates: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 2, n - 2);
 
         // Filter out composites to get primes
         let filtered: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&candidates, &|x| {
@@ -45,7 +42,11 @@ pub mod Algorithm21_6 {
                     break;
                 }
             }
-            if is_composite { false } else { true }
+            if is_composite {
+                false
+            } else {
+                true
+            }
         });
         filtered
     }

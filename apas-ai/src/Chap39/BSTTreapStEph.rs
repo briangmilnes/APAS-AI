@@ -5,12 +5,11 @@ pub mod BSTTreapStEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
-    use rand::{Rng, rng};
+    use rand::{rng, Rng};
 
     type Link<T> = Option<Box<Node<T>>>;
 
-    #[derive(Clone)]
-    #[derive(Debug)]
+    #[derive(Clone, Debug)]
     struct Node<T: StT + Ord> {
         key: T,
         priority: u64,
@@ -57,46 +56,7 @@ pub mod BSTTreapStEph {
     }
 
     impl<T: StT + Ord> BSTTreapStEph<T> {
-        pub fn new() -> Self { BSTTreapStEph { root: None } }
-
-        pub fn size(&self) -> N { Self::size_link(&self.root) }
-
-        pub fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
-
-        pub fn height(&self) -> N {
-            fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
-                match link {
-                    | None => 0,
-                    | Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
-                }
-            }
-            height_rec(&self.root)
-        }
-
-        pub fn insert(&mut self, value: T) {
-            let mut r = rng();
-            Self::insert_link(&mut self.root, value, &mut r);
-        }
-
-        pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
-
-        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
-
-        pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
-
-        pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
-
-        pub fn in_order(&self) -> ArraySeqStPerS<T> {
-            let mut out = Vec::with_capacity(self.size());
-            Self::in_order_collect(&self.root, &mut out);
-            ArraySeqStPerS::from_vec(out)
-        }
-
-        pub fn pre_order(&self) -> ArraySeqStPerS<T> {
-            let mut out = Vec::with_capacity(self.size());
-            Self::pre_order_collect(&self.root, &mut out);
-            ArraySeqStPerS::from_vec(out)
-        }
+        // Private helper methods only - no public delegation
 
         fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
@@ -208,27 +168,52 @@ pub mod BSTTreapStEph {
     }
 
     impl<T: StT + Ord> BSTTreapStEphTrait<T> for BSTTreapStEph<T> {
-        fn new() -> Self { BSTTreapStEph::new() }
+        fn new() -> Self { BSTTreapStEph { root: None } }
 
-        fn size(&self) -> N { BSTTreapStEph::size(self) }
+        fn size(&self) -> N { Self::size_link(&self.root) }
 
-        fn is_empty(&self) -> B { BSTTreapStEph::is_empty(self) }
+        fn is_empty(&self) -> B {
+            if self.size() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn height(&self) -> N { BSTTreapStEph::height(self) }
+        fn height(&self) -> N {
+            fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
+                match link {
+                    | None => 0,
+                    | Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
+                }
+            }
+            height_rec(&self.root)
+        }
 
-        fn insert(&mut self, value: T) { BSTTreapStEph::insert(self, value) }
+        fn insert(&mut self, value: T) {
+            let mut r = rng();
+            Self::insert_link(&mut self.root, value, &mut r);
+        }
 
-        fn find(&self, target: &T) -> Option<&T> { BSTTreapStEph::find(self, target) }
+        fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
 
-        fn contains(&self, target: &T) -> B { BSTTreapStEph::contains(self, target) }
+        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
-        fn minimum(&self) -> Option<&T> { BSTTreapStEph::minimum(self) }
+        fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
 
-        fn maximum(&self) -> Option<&T> { BSTTreapStEph::maximum(self) }
+        fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
 
-        fn in_order(&self) -> ArraySeqStPerS<T> { BSTTreapStEph::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> {
+            let mut out = Vec::with_capacity(self.size());
+            Self::in_order_collect(&self.root, &mut out);
+            ArraySeqStPerS::from_vec(out)
+        }
 
-        fn pre_order(&self) -> ArraySeqStPerS<T> { BSTTreapStEph::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> {
+            let mut out = Vec::with_capacity(self.size());
+            Self::pre_order_collect(&self.root, &mut out);
+            ArraySeqStPerS::from_vec(out)
+        }
     }
 
     #[macro_export]

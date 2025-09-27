@@ -24,20 +24,30 @@ pub mod ArraySeqMtPer {
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T>;
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
-        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F) -> ArraySeqMtPerS<W> where T: 'static;
+        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(
+            a: &ArraySeqMtPerS<T>,
+            f: F,
+        ) -> ArraySeqMtPerS<W>
+        where
+            T: 'static;
         fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T> where T: 'static;
+        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T>
+        where
+            T: 'static;
         fn update_single(a: &ArraySeqMtPerS<T>, index: N, item: T) -> ArraySeqMtPerS<T>;
         fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T>;
         fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A;
-        fn iteratePrefixes<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> (ArraySeqMtPerS<A>, A);
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T where T: 'static;
+        fn iteratePrefixes<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(
+            a: &ArraySeqMtPerS<T>,
+            f: &F,
+            x: A,
+        ) -> (ArraySeqMtPerS<A>, A);
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T
+        where
+            T: 'static;
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T);
         fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T>;
-        fn collect(
-            a: &ArraySeqMtPerS<Pair<T, T>>,
-            cmp: fn(&T, &T) -> O,
-        ) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>>;
+        fn collect(a: &ArraySeqMtPerS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>>;
 
         // Chapter 19 specific functions
         fn inject(values: &ArraySeqMtPerS<T>, changes: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T>;
@@ -61,7 +71,10 @@ pub mod ArraySeqMtPer {
 
         fn empty() -> ArraySeqMtPerS<T> {
             // Algorithm 19.1: empty = tabulate(lambda i.i, 0)
-            <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::tabulate(&|_| unreachable!("empty sequence has no elements"), 0)
+            <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::tabulate(
+                &|_| unreachable!("empty sequence has no elements"),
+                0,
+            )
         }
 
         fn singleton(item: T) -> ArraySeqMtPerS<T> {
@@ -77,7 +90,6 @@ pub mod ArraySeqMtPer {
             <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::subseq_copy(self, start, length)
         }
 
-
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T> {
             // Keep as primitive - tabulate is one of the 7 APAS primitives
             // Implement directly to handle closures (can't delegate to Chap18 fn pointers)
@@ -88,7 +100,13 @@ pub mod ArraySeqMtPer {
             ArraySeqMtPerS::from_vec(values)
         }
 
-        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F) -> ArraySeqMtPerS<W> where T: 'static {
+        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(
+            a: &ArraySeqMtPerS<T>,
+            f: F,
+        ) -> ArraySeqMtPerS<W>
+        where
+            T: 'static,
+        {
             // Algorithm 19.3 with parallelism: map f a = tabulate(lambda i.f(a[i]), |a|)
             if a.length() <= 1 {
                 // Implement directly since we can't capture with &F
@@ -111,31 +129,31 @@ pub mod ArraySeqMtPer {
 
         fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T> {
             // Algorithm 19.4: append a b = flatten([a, b])
-            let sequences = <ArraySeqMtPerS<ArraySeqMtPerS<T>> as ArraySeqMtPerTrait<ArraySeqMtPerS<T>>>::tabulate(&|i| if i == 0 { a.clone() } else { b.clone() }, 2);
+            let sequences = <ArraySeqMtPerS<ArraySeqMtPerS<T>> as ArraySeqMtPerTrait<ArraySeqMtPerS<T>>>::tabulate(
+                &|i| if i == 0 { a.clone() } else { b.clone() },
+                2,
+            );
             <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::flatten(&sequences)
         }
 
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T> where T: 'static {
+        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T>
+        where
+            T: 'static,
+        {
             // Algorithm 19.5 with parallelism: fork thread per element + serial compaction
             if a.length() == 0 {
                 return <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::empty();
             }
-            
+
             // Fork thread per element to evaluate predicate
             let mut handles = Vec::with_capacity(a.length());
             for i in 0..a.length() {
                 let value = a.nth(i).clone();
                 let pred_clone = pred.clone();
-                let handle = std::thread::spawn(move || {
-                    if pred_clone(&value) == true {
-                        Some(value)
-                    } else {
-                        None
-                    }
-                });
+                let handle = std::thread::spawn(move || if pred_clone(&value) == true { Some(value) } else { None });
                 handles.push(handle);
             }
-            
+
             // Serial compaction: collect all Some values
             let mut kept: Vec<T> = Vec::new();
             for handle in handles {
@@ -143,7 +161,7 @@ pub mod ArraySeqMtPer {
                     kept.push(value);
                 }
             }
-            
+
             if kept.is_empty() {
                 <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::empty()
             } else {
@@ -155,7 +173,7 @@ pub mod ArraySeqMtPer {
             // Algorithm 19.6: update a (i, x) = tabulate(lambda j. if i = j then x else a[j], |a|)
             <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::tabulate(
                 &|j| if j == index { item.clone() } else { a.nth(j).clone() },
-                a.length()
+                a.length(),
             )
         }
 
@@ -173,7 +191,11 @@ pub mod ArraySeqMtPer {
             acc
         }
 
-        fn iteratePrefixes<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> (ArraySeqMtPerS<A>, A) {
+        fn iteratePrefixes<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(
+            a: &ArraySeqMtPerS<T>,
+            f: &F,
+            x: A,
+        ) -> (ArraySeqMtPerS<A>, A) {
             // Implement directly since we can't delegate impl Fn to fn pointer
             // This is a sequential operation anyway
             let mut result_vec = Vec::with_capacity(a.length());
@@ -185,7 +207,10 @@ pub mod ArraySeqMtPer {
             (ArraySeqMtPerS::from_vec(result_vec), acc)
         }
 
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T where T: 'static {
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T
+        where
+            T: 'static,
+        {
             // Algorithm 19.9 with parallelism: always parallel divide-and-conquer
             if a.length() == 0 {
                 id
@@ -200,7 +225,9 @@ pub mod ArraySeqMtPer {
                 let id_clone = id.clone();
                 let f_clone = f.clone();
                 let f_clone2 = f.clone();
-                let handle = std::thread::spawn(move || <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::reduce(&left, f_clone, id_clone));
+                let handle = std::thread::spawn(move || {
+                    <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::reduce(&left, f_clone, id_clone)
+                });
                 let right_result = <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::reduce(&right, f_clone2, id);
                 let left_result = handle.join().unwrap();
                 f(&left_result, &right_result)
@@ -225,10 +252,7 @@ pub mod ArraySeqMtPer {
             <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::flatten(ss)
         }
 
-        fn collect(
-            a: &ArraySeqMtPerS<Pair<T, T>>,
-            cmp: fn(&T, &T) -> O,
-        ) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>> {
+        fn collect(a: &ArraySeqMtPerS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>> {
             <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::collect(a, cmp)
         }
 
@@ -257,8 +281,12 @@ pub mod ArraySeqMtPer {
         fn append_select(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T> {
             // Algorithm 19.4 alternative: append a b = tabulate(select(a,b), |a|+|b|)
             <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::tabulate(
-                &|i| <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::select(a, b, i).unwrap().clone(),
-                a.length() + b.length()
+                &|i| {
+                    <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::select(a, b, i)
+                        .unwrap()
+                        .clone()
+                },
+                a.length() + b.length(),
             )
         }
 
@@ -284,10 +312,6 @@ pub mod ArraySeqMtPer {
                 <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::empty()
             }
         }
-
-
-
-
     }
 
     #[macro_export]

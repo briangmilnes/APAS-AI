@@ -2,7 +2,7 @@
 use apas_ai::Chap05::RelationStEph::RelationStEph::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Types::Types::*;
-use apas_ai::{SetLit, PairLit};
+use apas_ai::{PairLit, SetLit};
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
@@ -10,9 +10,9 @@ fn bench_relation_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("RelationStEph");
     group.warm_up_time(Duration::from_millis(100));
     group.measurement_time(Duration::from_secs(1));
-    
+
     let n: N = 1_000;
-    
+
     group.bench_with_input(BenchmarkId::new("FromSet", n), &n, |b, &len| {
         let pairs: Set<Pair<N, N>> = Set::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
         b.iter(|| {

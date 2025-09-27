@@ -15,7 +15,11 @@ pub mod ArraySeqStEph {
     pub type ArrayStEph<T> = ArraySeqStEphS<T>;
 
     impl<T: StT> ArraySeqStEphS<T> {
-        pub fn from_vec(elts: Vec<T>) -> Self { Self { data: elts.into_boxed_slice() } }
+        pub fn from_vec(elts: Vec<T>) -> Self {
+            Self {
+                data: elts.into_boxed_slice(),
+            }
+        }
 
         pub fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
 
@@ -28,9 +32,7 @@ pub mod ArraySeqStEph {
         pub fn nth(&self, index: N) -> &T { &self.data[index] }
 
         /// Iterator over references to elements
-        pub fn iter(&self) -> std::slice::Iter<'_, T> {
-            self.data.iter()
-        }
+        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
 
         pub fn subseq(&self, start: N, length: N) -> Self {
             let total = self.data.len();
@@ -81,19 +83,15 @@ pub mod ArraySeqStEph {
     impl<'a, T: StT> IntoIterator for &'a ArraySeqStEphS<T> {
         type Item = &'a T;
         type IntoIter = std::slice::Iter<'a, T>;
-        
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.iter()
-        }
+
+        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
 
     impl<T: StT> IntoIterator for ArraySeqStEphS<T> {
         type Item = T;
         type IntoIter = std::vec::IntoIter<T>;
-        
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.into_vec().into_iter()
-        }
+
+        fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
     }
 
     impl<T: StT> Display for ArraySeqStEphS<T> {
@@ -208,9 +206,21 @@ pub mod ArraySeqStEph {
             ArraySeqStEphS::inject(self, updates)
         }
 
-        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.length() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B {
+            if self.length() == 1 {
+                true
+            } else {
+                false
+            }
+        }
 
         fn collect<K: StT, V: StT>(
             pairs: &ArraySeqStEphS<Pair<K, V>>,

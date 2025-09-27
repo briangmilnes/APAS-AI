@@ -7,7 +7,7 @@ pub mod Problem21_3 {
 
     /// Problem 21.3 (Points in 3D) using ArraySeqPer — imperative triple loop.
     /// Generate points (x, y, z) with 0 ≤ x ≤ n−1, 1 ≤ y ≤ n, 2 ≤ z ≤ n+1 in x-major, then y, then z order.
-    /// 
+    ///
     /// This is an educational example showing imperative style for comparison with functional approaches.
     /// The triple loop is intentionally inefficient (sequential) to contrast with parallel functional methods.
     /// gpt-5-hard: Work: Θ(n³), Span: Θ(n³) (sequential due to imperative loops)

@@ -2,8 +2,8 @@
 use apas_ai::Chap12::Exercise12_2::Exercise12_2::*;
 use apas_ai::Types::Types::*;
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
-use std::sync::atomic::AtomicUsize;
 use std::sync::Arc;
+use std::sync::atomic::AtomicUsize;
 use std::thread;
 use std::time::Duration;
 
@@ -18,7 +18,7 @@ fn bench_exercise12_2(c: &mut Criterion) {
         b.iter(|| {
             let counter = Arc::new(AtomicUsize::new(0));
             let mut handles = vec![];
-            
+
             for _ in 0..4 {
                 let counter_clone = Arc::clone(&counter);
                 let handle = thread::spawn(move || {
@@ -28,11 +28,11 @@ fn bench_exercise12_2(c: &mut Criterion) {
                 });
                 handles.push(handle);
             }
-            
+
             for handle in handles {
                 handle.join().unwrap();
             }
-            
+
             let final_value = counter.load(std::sync::atomic::Ordering::Relaxed);
             black_box(final_value)
         })

@@ -57,59 +57,7 @@ pub mod BSTAVLMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTAVLMtEph<T> {
-        pub fn new() -> Self {
-            BSTAVLMtEph {
-                root: Arc::new(RwLock::new(None)),
-            }
-        }
-
-        pub fn size(&self) -> N {
-            let guard = self.root.read().unwrap();
-            Self::size_link(&*guard)
-        }
-
-        pub fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
-
-        pub fn height(&self) -> N {
-            let guard = self.root.read().unwrap();
-            Self::height_link(&*guard) as N
-        }
-
-        pub fn insert(&self, value: T) {
-            let mut guard = self.root.write().unwrap();
-            Self::insert_link(&mut *guard, value);
-        }
-
-        pub fn find(&self, target: &T) -> Option<T> {
-            let guard = self.root.read().unwrap();
-            Self::find_link(&*guard, target).cloned()
-        }
-
-        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
-
-        pub fn minimum(&self) -> Option<T> {
-            let guard = self.root.read().unwrap();
-            Self::min_link(&*guard).cloned()
-        }
-
-        pub fn maximum(&self) -> Option<T> {
-            let guard = self.root.read().unwrap();
-            Self::max_link(&*guard).cloned()
-        }
-
-        pub fn in_order(&self) -> ArraySeqStPerS<T> {
-            let guard = self.root.read().unwrap();
-            let mut out = Vec::with_capacity(Self::size_link(&*guard));
-            Self::in_order_collect(&*guard, &mut out);
-            ArraySeqStPerS::from_vec(out)
-        }
-
-        pub fn pre_order(&self) -> ArraySeqStPerS<T> {
-            let guard = self.root.read().unwrap();
-            let mut out = Vec::with_capacity(Self::size_link(&*guard));
-            Self::pre_order_collect(&*guard, &mut out);
-            ArraySeqStPerS::from_vec(out)
-        }
+        // Private helper methods only - no public delegation
 
         fn height_link(link: &Link<T>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
 
@@ -245,27 +193,65 @@ pub mod BSTAVLMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTAVLMtEphTrait<T> for BSTAVLMtEph<T> {
-        fn new() -> Self { BSTAVLMtEph::new() }
+        fn new() -> Self {
+            BSTAVLMtEph {
+                root: Arc::new(RwLock::new(None)),
+            }
+        }
 
-        fn insert(&self, value: T) { BSTAVLMtEph::insert(self, value) }
+        fn insert(&self, value: T) {
+            let mut guard = self.root.write().unwrap();
+            Self::insert_link(&mut *guard, value);
+        }
 
-        fn find(&self, target: &T) -> Option<T> { BSTAVLMtEph::find(self, target) }
+        fn find(&self, target: &T) -> Option<T> {
+            let guard = self.root.read().unwrap();
+            Self::find_link(&*guard, target).cloned()
+        }
 
-        fn contains(&self, target: &T) -> B { BSTAVLMtEph::contains(self, target) }
+        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
-        fn size(&self) -> N { BSTAVLMtEph::size(self) }
+        fn size(&self) -> N {
+            let guard = self.root.read().unwrap();
+            Self::size_link(&*guard)
+        }
 
-        fn is_empty(&self) -> B { BSTAVLMtEph::is_empty(self) }
+        fn is_empty(&self) -> B {
+            if self.size() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn height(&self) -> N { BSTAVLMtEph::height(self) }
+        fn height(&self) -> N {
+            let guard = self.root.read().unwrap();
+            Self::height_link(&*guard) as N
+        }
 
-        fn minimum(&self) -> Option<T> { BSTAVLMtEph::minimum(self) }
+        fn minimum(&self) -> Option<T> {
+            let guard = self.root.read().unwrap();
+            Self::min_link(&*guard).cloned()
+        }
 
-        fn maximum(&self) -> Option<T> { BSTAVLMtEph::maximum(self) }
+        fn maximum(&self) -> Option<T> {
+            let guard = self.root.read().unwrap();
+            Self::max_link(&*guard).cloned()
+        }
 
-        fn in_order(&self) -> ArraySeqStPerS<T> { BSTAVLMtEph::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> {
+            let guard = self.root.read().unwrap();
+            let mut out = Vec::with_capacity(Self::size_link(&*guard));
+            Self::in_order_collect(&*guard, &mut out);
+            ArraySeqStPerS::from_vec(out)
+        }
 
-        fn pre_order(&self) -> ArraySeqStPerS<T> { BSTAVLMtEph::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> {
+            let guard = self.root.read().unwrap();
+            let mut out = Vec::with_capacity(Self::size_link(&*guard));
+            Self::pre_order_collect(&*guard, &mut out);
+            ArraySeqStPerS::from_vec(out)
+        }
     }
 
     #[macro_export]

@@ -7,7 +7,7 @@ pub mod Algorithm21_1 {
 
     /// Algorithm 21.1 (2D Points) using ArraySeqPer: points2D via tabulate + flatten.
     /// Functional form: points2D n = flatten (tabulate (\x. tabulate (\y. (x, y+1)) (n-1)) n)
-    /// 
+    ///
     /// Generates all 2D points (x, y) where 0 ≤ x < n and 1 ≤ y < n.
     /// gpt-5-hard: Work: Θ(n²), Span: Θ(lg n)
     /// APAS: Work: Θ(n²), Span: Θ(lg n)

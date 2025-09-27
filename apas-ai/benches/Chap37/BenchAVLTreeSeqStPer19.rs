@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Types::Types::*;
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};

@@ -3,7 +3,7 @@
 
 pub mod ArraySeqMtEph {
     use std::collections::HashSet;
-    use std::sync::{Mutex, Arc};
+    use std::sync::{Arc, Mutex};
     use std::thread;
 
     use crate::Types::Types::*;
@@ -97,7 +97,12 @@ pub mod ArraySeqMtEph {
         fn empty() -> ArraySeqMtEphS<T>;
         fn singleton(item: T) -> ArraySeqMtEphS<T>;
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T>;
-        fn map<U: StT + Send + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F) -> ArraySeqMtEphS<U> where T: Send + 'static;
+        fn map<U: StT + Send + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
+            a: &ArraySeqMtEphS<T>,
+            f: F,
+        ) -> ArraySeqMtEphS<U>
+        where
+            T: Send + 'static;
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtEphS<T>;
         fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T>;
         fn filter<F: Fn(&T) -> B + Send + Sync>(a: &ArraySeqMtEphS<T>, pred: &F) -> ArraySeqMtEphS<T>;
@@ -106,12 +111,11 @@ pub mod ArraySeqMtEph {
         fn isEmpty(&self) -> B;
         fn isSingleton(&self) -> B;
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T>;
-        fn collect(
-            a: &ArraySeqMtEphS<Pair<T, T>>,
-            cmp: fn(&T, &T) -> O,
-        ) -> ArraySeqMtEphS<Pair<T, ArraySeqMtEphS<T>>>;
+        fn collect(a: &ArraySeqMtEphS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtEphS<Pair<T, ArraySeqMtEphS<T>>>;
         fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T where T: Send + 'static;
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
+        where
+            T: Send + 'static;
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T);
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T>;
     }
@@ -121,7 +125,9 @@ pub mod ArraySeqMtEph {
             write!(f, "ArraySeqMtEphS[")?;
             let guard = self.data.lock().unwrap();
             for (i, item) in guard.iter().enumerate() {
-                if i > 0 { write!(f, ", ")?; }
+                if i > 0 {
+                    write!(f, ", ")?;
+                }
                 write!(f, "{}", item)?;
             }
             write!(f, "]")
@@ -129,9 +135,7 @@ pub mod ArraySeqMtEph {
     }
 
     impl<T: StT> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqMtEphS<T> {
-            ArraySeqMtEphS::new(length, init_value)
-        }
+        fn new(length: N, init_value: T) -> ArraySeqMtEphS<T> { ArraySeqMtEphS::new(length, init_value) }
 
         fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqMtEphS<T>, &'static str> {
             ArraySeqMtEphS::set(self, index, item)
@@ -153,8 +157,13 @@ pub mod ArraySeqMtEph {
             ArraySeqMtEphS::from_vec(values)
         }
 
-        fn map<U: StT + Send + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F) -> ArraySeqMtEphS<U> 
-        where T: Send + 'static {
+        fn map<U: StT + Send + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
+            a: &ArraySeqMtEphS<T>,
+            f: F,
+        ) -> ArraySeqMtEphS<U>
+        where
+            T: Send + 'static,
+        {
             let n = a.length();
             if n == 0 {
                 return ArraySeqMtEphS::from_vec(Vec::new());
@@ -172,13 +181,12 @@ pub mod ArraySeqMtEph {
                 let left = a.subseq_copy(0, mid);
                 let right = a.subseq_copy(mid, n - mid);
                 let f_clone = f.clone();
-                
-                let left_handle = thread::spawn(move || {
-                    <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::map(&left, f_clone)
-                });
+
+                let left_handle =
+                    thread::spawn(move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::map(&left, f_clone));
                 let right_result = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::map(&right, f);
                 let left_result = left_handle.join().unwrap();
-                
+
                 <ArraySeqMtEphS<U> as ArraySeqMtEphTrait<U>>::append(&left_result, &right_result)
             }
         }
@@ -229,9 +237,21 @@ pub mod ArraySeqMtEph {
             out
         }
 
-        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.length() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B {
+            if self.length() == 1 {
+                true
+            } else {
+                false
+            }
+        }
 
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {
             let mut values: Vec<T> = Vec::new();
@@ -244,10 +264,7 @@ pub mod ArraySeqMtEph {
             ArraySeqMtEphS::from_vec(values)
         }
 
-        fn collect(
-            a: &ArraySeqMtEphS<Pair<T, T>>,
-            cmp: fn(&T, &T) -> O,
-        ) -> ArraySeqMtEphS<Pair<T, ArraySeqMtEphS<T>>> {
+        fn collect(a: &ArraySeqMtEphS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtEphS<Pair<T, ArraySeqMtEphS<T>>> {
             if a.length() == 0 {
                 return ArraySeqMtEphS::from_vec(vec![]);
             }
@@ -283,8 +300,10 @@ pub mod ArraySeqMtEph {
             acc
         }
 
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T 
-        where T: Send + 'static {
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
+        where
+            T: Send + 'static,
+        {
             if a.length() == 0 {
                 return id;
             }
@@ -308,7 +327,7 @@ pub mod ArraySeqMtEph {
                 let right = a.subseq_copy(mid, a.length() - mid);
                 let f_clone = f.clone();
                 let f_clone2 = f.clone();
-                
+
                 let id_clone = id.clone();
                 let left_handle = thread::spawn(move || {
                     <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&left, f_clone, id_clone)

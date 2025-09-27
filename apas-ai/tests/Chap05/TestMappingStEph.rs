@@ -114,7 +114,7 @@ pub mod Test23MappingStEphChap5_5 {
         // Test FromRelation with empty relation
         let empty_rel: Relation<i32, String> = Relation::empty();
         let m = <Mapping<i32, String> as MappingStEphTrait<i32, String>>::FromRelation(&empty_rel);
-        
+
         assert_eq!(m.size(), 0);
         assert_eq!(m.domain().size(), 0);
         assert_eq!(m.range().size(), 0);
@@ -125,28 +125,28 @@ pub mod Test23MappingStEphChap5_5 {
     fn test_mapping_extreme_values_graceful() {
         // Test with extreme values to verify no panics occur
         // APAS style: bad arguments produce empty sequences/sets, not panics
-        
+
         // Test with very large keys
         let large_key = i32::MAX;
         let small_key = i32::MIN;
         let m = MappingLit![(large_key, "max"), (small_key, "min"), (0, "zero")];
-        
+
         assert_eq!(m.size(), 3);
         assert_eq!(m.mem(&large_key, &"max"), true);
         assert_eq!(m.mem(&small_key, &"min"), true);
         assert_eq!(m.mem(&0, &"zero"), true);
-        
+
         // Test domain and range operations with extreme values
         let domain = m.domain();
         assert_eq!(domain.size(), 3);
         assert_eq!(domain.mem(&large_key), true);
         assert_eq!(domain.mem(&small_key), true);
-        
+
         let range = m.range();
         assert_eq!(range.size(), 3);
         assert_eq!(range.mem(&"max"), true);
         assert_eq!(range.mem(&"min"), true);
-        
+
         // Test with non-existent extreme keys - should return False, not panic
         assert_eq!(m.mem(&(large_key - 1), &"max"), false);
         assert_eq!(m.mem(&(small_key + 1), &"min"), false);
@@ -155,32 +155,31 @@ pub mod Test23MappingStEphChap5_5 {
     #[test]
     fn test_mapping_large_dataset_stress() {
         // Test with large mapping to verify no panics occur
-        let large_pairs: Vec<Pair<i32, String>> = (0..10000)
-            .map(|i| Pair(i, format!("value_{}", i)))
-            .collect();
-        
+        let large_pairs: Vec<Pair<i32, String>> = (0..10000).map(|i| Pair(i, format!("value_{}", i))).collect();
+
         let m = <Mapping<i32, String> as MappingStEphTrait<i32, String>>::FromVec(large_pairs);
-        
+
         assert_eq!(m.size(), 10000);
         assert_eq!(m.mem(&5000, &"value_5000".to_string()), true);
         assert_eq!(m.mem(&15000, &"value_15000".to_string()), false);
-        
+
         // Test domain and range operations on large mapping
         let domain = m.domain();
         assert_eq!(domain.size(), 10000);
         assert_eq!(domain.mem(&9999), true);
         assert_eq!(domain.mem(&10000), false);
-        
+
         let range = m.range();
         assert_eq!(range.size(), 10000);
         assert_eq!(range.mem(&"value_0".to_string()), true);
         assert_eq!(range.mem(&"value_10000".to_string()), false);
-        
+
         // Test iteration on large mapping - should not panic
         let mut count = 0;
         for _pair in m.iter() {
             count += 1;
-            if count > 10010 { // Safety check to prevent infinite loop
+            if count > 10010 {
+                // Safety check to prevent infinite loop
                 break;
             }
         }

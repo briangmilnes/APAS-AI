@@ -9,8 +9,7 @@ pub mod BSTPlainMtEph {
 
     type Link<T> = Arc<RwLock<Option<Node<T>>>>;
 
-    #[derive(Clone)]
-    #[derive(Debug)]
+    #[derive(Clone, Debug)]
     struct Node<T: StTInMtT + Ord> {
         key: T,
         height: i32,
@@ -38,8 +37,7 @@ pub mod BSTPlainMtEph {
         }
     }
 
-    #[derive(Clone)]
-    #[derive(Debug)]
+    #[derive(Clone, Debug)]
     pub struct BSTPlainMtEph<T: StTInMtT + Ord> {
         root: Link<T>,
     }
@@ -60,13 +58,22 @@ pub mod BSTPlainMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTPlainMtEph<T> {
-        pub fn new() -> Self {
+        // Private helper methods only - no public delegation
+
+    }
+
+    fn height_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
+
+    fn size_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> N { link.as_ref().map_or(0, |n| n.size) }
+
+    impl<T: StTInMtT + Ord> BSTPlainMtEphTrait<T> for BSTPlainMtEph<T> {
+        fn new() -> Self {
             Self {
                 root: Arc::new(RwLock::new(None)),
             }
         }
 
-        pub fn insert(&self, value: T) {
+        fn insert(&self, value: T) {
             fn descend<T: StTInMtT + Ord>(link: &Link<T>, value: T) -> bool {
                 let mut guard = link.write().unwrap();
                 match guard.as_mut() {
@@ -101,7 +108,7 @@ pub mod BSTPlainMtEph {
             descend(&self.root, value);
         }
 
-        pub fn find(&self, target: &T) -> Option<T> {
+        fn find(&self, target: &T) -> Option<T> {
             fn find_rec<T: StTInMtT + Ord>(link: &Link<T>, target: &T) -> Option<T> {
                 let guard = link.read().unwrap();
                 match guard.as_ref() {
@@ -121,20 +128,33 @@ pub mod BSTPlainMtEph {
             find_rec(&self.root, target)
         }
 
-        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
-        pub fn size(&self) -> N {
+        fn contains(&self, target: &T) -> B {
+            if self.find(target).is_some() {
+                true
+            } else {
+                false
+            }
+        }
+
+        fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             guard.as_ref().map_or(0, |node| node.size)
         }
 
-        pub fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        fn is_empty(&self) -> B {
+            if self.size() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
-        pub fn height(&self) -> N {
+        fn height(&self) -> N {
             let guard = self.root.read().unwrap();
             guard.as_ref().map_or(0, |node| node.height as N)
         }
 
-        pub fn minimum(&self) -> Option<T> {
+        fn minimum(&self) -> Option<T> {
             fn leftmost<T: StTInMtT + Ord>(link: &Link<T>) -> Option<T> {
                 let guard = link.read().unwrap();
                 if let Some(node) = guard.as_ref() {
@@ -156,7 +176,7 @@ pub mod BSTPlainMtEph {
             leftmost(&self.root)
         }
 
-        pub fn maximum(&self) -> Option<T> {
+        fn maximum(&self) -> Option<T> {
             fn rightmost<T: StTInMtT + Ord>(link: &Link<T>) -> Option<T> {
                 let guard = link.read().unwrap();
                 if let Some(node) = guard.as_ref() {
@@ -178,7 +198,7 @@ pub mod BSTPlainMtEph {
             rightmost(&self.root)
         }
 
-        pub fn in_order(&self) -> ArraySeqStPerS<T> {
+        fn in_order(&self) -> ArraySeqStPerS<T> {
             fn traverse<T: StTInMtT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
                 let guard = link.read().unwrap();
                 if let Some(node) = guard.as_ref() {
@@ -196,23 +216,6 @@ pub mod BSTPlainMtEph {
             traverse(&self.root, &mut values);
             ArraySeqStPerS::from_vec(values)
         }
-    }
-
-    fn height_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
-
-    fn size_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> N { link.as_ref().map_or(0, |n| n.size) }
-
-    impl<T: StTInMtT + Ord> BSTPlainMtEphTrait<T> for BSTPlainMtEph<T> {
-        fn new() -> Self { BSTPlainMtEph::new() }
-        fn insert(&self, value: T) { BSTPlainMtEph::insert(self, value) }
-        fn find(&self, target: &T) -> Option<T> { BSTPlainMtEph::find(self, target) }
-        fn contains(&self, target: &T) -> B { BSTPlainMtEph::contains(self, target) }
-        fn size(&self) -> N { BSTPlainMtEph::size(self) }
-        fn is_empty(&self) -> B { BSTPlainMtEph::is_empty(self) }
-        fn height(&self) -> N { BSTPlainMtEph::height(self) }
-        fn minimum(&self) -> Option<T> { BSTPlainMtEph::minimum(self) }
-        fn maximum(&self) -> Option<T> { BSTPlainMtEph::maximum(self) }
-        fn in_order(&self) -> ArraySeqStPerS<T> { BSTPlainMtEph::in_order(self) }
     }
 
     #[macro_export]

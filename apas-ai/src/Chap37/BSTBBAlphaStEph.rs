@@ -55,11 +55,16 @@ pub mod BSTBBAlphaStEph {
     }
 
     impl<T: StT + Ord> BSTBBAlphaStEph<T> {
-        pub fn new() -> Self { BSTBBAlphaStEph { root: None } }
+        // Private helper methods only - no public delegation
 
-        pub fn size(&self) -> N { Self::size_link(&self.root) }
 
-        pub fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        pub fn is_empty(&self) -> B {
+            if self.size() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
         pub fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
@@ -81,7 +86,13 @@ pub mod BSTBBAlphaStEph {
 
         pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
 
-        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
+        pub fn contains(&self, target: &T) -> B {
+            if self.find(target).is_some() {
+                true
+            } else {
+                false
+            }
+        }
 
         pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
 
@@ -215,27 +226,51 @@ pub mod BSTBBAlphaStEph {
     }
 
     impl<T: StT + Ord> BSTBBAlphaStEphTrait<T> for BSTBBAlphaStEph<T> {
-        fn new() -> Self { BSTBBAlphaStEph::new() }
+        fn new() -> Self { BSTBBAlphaStEph { root: None } }
 
-        fn size(&self) -> N { BSTBBAlphaStEph::size(self) }
+        fn size(&self) -> N { Self::size_link(&self.root) }
 
-        fn is_empty(&self) -> B { BSTBBAlphaStEph::is_empty(self) }
+        fn is_empty(&self) -> B {
+            if self.size() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn height(&self) -> N { BSTBBAlphaStEph::height(self) }
+        fn height(&self) -> N {
+            fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
+                match link {
+                    | None => 0,
+                    | Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
+                }
+            }
+            height_rec(&self.root)
+        }
 
-        fn insert(&mut self, value: T) { BSTBBAlphaStEph::insert(self, value) }
+        fn insert(&mut self, value: T) {
+            Self::insert_link(&mut self.root, value);
+        }
 
-        fn find(&self, target: &T) -> Option<&T> { BSTBBAlphaStEph::find(self, target) }
+        fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
 
-        fn contains(&self, target: &T) -> B { BSTBBAlphaStEph::contains(self, target) }
+        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
-        fn minimum(&self) -> Option<&T> { BSTBBAlphaStEph::minimum(self) }
+        fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
 
-        fn maximum(&self) -> Option<&T> { BSTBBAlphaStEph::maximum(self) }
+        fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
 
-        fn in_order(&self) -> ArraySeqStPerS<T> { BSTBBAlphaStEph::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> {
+            let mut out = Vec::with_capacity(self.size());
+            Self::in_order_collect(&self.root, &mut out);
+            ArraySeqStPerS::from_vec(out)
+        }
 
-        fn pre_order(&self) -> ArraySeqStPerS<T> { BSTBBAlphaStEph::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> {
+            let mut out = Vec::with_capacity(self.size());
+            Self::pre_order_collect(&self.root, &mut out);
+            ArraySeqStPerS::from_vec(out)
+        }
     }
 
     #[macro_export]

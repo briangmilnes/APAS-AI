@@ -10,7 +10,7 @@
 pub mod AVLTreeSeq {
     use std::fmt::Debug;
 
-    use crate::Chap18::ArraySeq::ArraySeq::{ArraySeqS, ArraySeq};
+    use crate::Chap18::ArraySeq::ArraySeq::{ArraySeq, ArraySeqS};
     pub use crate::Types::Types::*;
 
     type Link<T> = Option<Box<AVLTreeNode<T>>>;
@@ -217,9 +217,21 @@ pub mod AVLTreeSeq {
         }
 
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.length() == 0 {
+                true
+            } else {
+                false
+            }
+        }
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B {
+            if self.length() == 1 {
+                true
+            } else {
+                false
+            }
+        }
 
         /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
         fn subseq_copy(&self, start: N, length: N) -> AVLTreeS<T>

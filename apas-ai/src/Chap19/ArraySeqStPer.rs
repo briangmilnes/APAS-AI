@@ -3,7 +3,9 @@
 
 pub mod ArraySeqStPer {
     use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS as ArraySeqStPerSChap18, ArraySeqStPerTrait as ArraySeqStPerTraitChap18};
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{
+        ArraySeqStPerS as ArraySeqStPerSChap18, ArraySeqStPerTrait as ArraySeqStPerTraitChap18,
+    };
     use crate::Types::Types::*;
 
     pub type ArraySeqStPerS<T> = ArraySeqStPerSChap18<T>;
@@ -47,9 +49,12 @@ pub mod ArraySeqStPer {
             <ArraySeqStPerS<T> as ArraySeqStPerTraitChap18<T>>::new(length, init_value)
         }
 
-        fn empty() -> ArraySeqStPerS<T> { 
+        fn empty() -> ArraySeqStPerS<T> {
             // Algorithm 19.1: empty = tabulate(lambda i.i, 0)
-            <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(&|_| unreachable!("empty sequence has no elements"), 0)
+            <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(
+                &|_| unreachable!("empty sequence has no elements"),
+                0,
+            )
         }
 
         fn singleton(item: T) -> ArraySeqStPerS<T> {
@@ -97,15 +102,22 @@ pub mod ArraySeqStPer {
 
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
             // Algorithm 19.4: append a b = flatten([a, b])
-            let sequences = <ArraySeqStPerS<ArraySeqStPerS<T>> as ArraySeqStPerTrait<ArraySeqStPerS<T>>>::tabulate(&|i| if i == 0 { a.clone() } else { b.clone() }, 2);
+            let sequences = <ArraySeqStPerS<ArraySeqStPerS<T>> as ArraySeqStPerTrait<ArraySeqStPerS<T>>>::tabulate(
+                &|i| if i == 0 { a.clone() } else { b.clone() },
+                2,
+            );
             <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::flatten(&sequences)
         }
 
         fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
             // Algorithm 19.4 alternative: append a b = tabulate(select(a,b), |a|+|b|)
             <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(
-                &|i| <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::select(a, b, i).unwrap().clone(),
-                a.length() + b.length()
+                &|i| {
+                    <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::select(a, b, i)
+                        .unwrap()
+                        .clone()
+                },
+                a.length() + b.length(),
             )
         }
 
@@ -120,7 +132,9 @@ pub mod ArraySeqStPer {
 
         fn filter<F: Fn(&T) -> B>(a: &ArraySeqStPerS<T>, pred: &F) -> ArraySeqStPerS<T> {
             // Algorithm 19.5: filter f a = flatten(map(deflate f, a))
-            let deflated = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::map(a, &|x| <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::deflate(pred, x));
+            let deflated = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::map(a, &|x| {
+                <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::deflate(pred, x)
+            });
             <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::flatten(&deflated)
         }
 
@@ -191,7 +205,7 @@ pub mod ArraySeqStPer {
             // Algorithm 19.6: update a (i, x) = tabulate(lambda j. if i = j then x else a[j], |a|)
             <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(
                 &|j| if j == index { item.clone() } else { a.nth(j).clone() },
-                a.length()
+                a.length(),
             )
         }
     }

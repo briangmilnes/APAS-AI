@@ -1,8 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 pub mod TestArraySeqStEphChap {
-    use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use apas_ai::ArraySeqStEphSLit;
+    use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use apas_ai::Types::Types::*; // macro import
 
     #[test]
@@ -122,7 +122,10 @@ pub mod TestArraySeqStEphChap {
         let conflicting_updates = ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")];
         let mut a_mut2 = a.clone();
         let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&mut a_mut2, &conflicting_updates);
-        assert_eq!(*result_last, ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]);
+        assert_eq!(
+            *result_last,
+            ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]
+        );
     }
 
     #[test]
@@ -140,7 +143,10 @@ pub mod TestArraySeqStEphChap {
             &mut a_mut4,
             &ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")],
         );
-        assert_eq!(*result_last, ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]);
+        assert_eq!(
+            *result_last,
+            ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]
+        );
     }
 
     #[test]
@@ -174,8 +180,7 @@ pub mod TestArraySeqStEphChap {
     fn test_iterate_prefixes_sum() {
         let numbers = ArraySeqStEphSLit![1, 2, 3];
         let sum_fn = |a: &N, x: &N| a + x;
-        let (prefixes, total) =
-            <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::scan(&numbers, &sum_fn, 0);
+        let (prefixes, total) = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::scan(&numbers, &sum_fn, 0);
         assert_eq!(prefixes.length(), 3);
         assert_eq!(*prefixes.nth(0), 0);
         assert_eq!(*prefixes.nth(1), 1);

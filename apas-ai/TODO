@@ -1,12 +1,12 @@
 
  Add the Chap21 examples.
 
- Use native rust pairs with + Display + Debug.
- Use native rust triples for weighted edges.
-
- Can I type Type B = bool?
-
- Trim down benchmarking.
+  Trim down benchmarking, why are some taking 500% cpu that
+ appear St?
+ 
+  Search for and fix stub anti-patterns.
+  
+  Use the rust tool to get real test coverage.
 
 
 

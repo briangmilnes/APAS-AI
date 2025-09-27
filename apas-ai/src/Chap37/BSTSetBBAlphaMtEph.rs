@@ -5,7 +5,7 @@ pub mod BSTSetBBAlphaMtEph {
     use std::collections::BTreeSet;
 
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::BSTBBAlphaMtEph;
+    use crate::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::{BSTBBAlphaMtEph, BSTBBAlphaMtEphTrait};
     use crate::Types::Types::*;
 
     #[derive(Debug, Clone)]

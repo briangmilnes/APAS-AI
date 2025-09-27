@@ -114,7 +114,6 @@ pub mod LabUnDirGraphMtEph {
             neighbors
         }
 
-
         fn normalize_edge(_v1: V, _v2: V) -> LabEdge<V, L> {
             // This method signature doesn't make sense for LabEdge without a label
             // This is a design issue - we need the label to create a LabEdge
@@ -131,19 +130,19 @@ pub mod LabUnDirGraphMtEph {
     {
         /// Arc count (alias for edge count in undirected graphs)
         pub fn sizeA(&self) -> N { self.labeled_edges().size() }
-        
+
         /// Arcs (alias for edges in undirected graphs)
         pub fn arcs(&self) -> Set<LabEdge<V, L>> { self.labeled_edges().clone() }
-        
+
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
         pub fn NPlus(&self, v: &V) -> Set<V> { self.neighbors(v) }
-        
+
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
         pub fn NMinus(&self, v: &V) -> Set<V> { self.neighbors(v) }
-        
+
         /// Degree (in undirected graphs, in-degree equals total degree)
         pub fn InDegree(&self, v: &V) -> N { self.neighbors(v).size() }
-        
+
         /// Degree (in undirected graphs, out-degree equals total degree)
         pub fn OutDegree(&self, v: &V) -> N { self.neighbors(v).size() }
     }

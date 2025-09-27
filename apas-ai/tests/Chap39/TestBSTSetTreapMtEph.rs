@@ -32,7 +32,7 @@ pub mod TestBSTSetTreapMtEph {
         set.insert(7);
         set.insert(1);
         set.insert(9);
-        
+
         assert_eq!(set.size(), 5);
         assert_eq!(set.is_empty(), false);
         assert_eq!(set.contains(&5), true);
@@ -47,13 +47,13 @@ pub mod TestBSTSetTreapMtEph {
     #[test]
     fn treap_set_delete() {
         let mut set = make_set(&[1, 3, 5, 7, 9]);
-        
+
         set.delete(&5);
         assert_eq!(set.size(), 4);
         assert_eq!(set.contains(&5), false);
         assert_eq!(set.contains(&3), true);
         assert_eq!(set.contains(&7), true);
-        
+
         set.delete(&1);
         set.delete(&9);
         assert_eq!(set.size(), 2);
@@ -68,7 +68,7 @@ pub mod TestBSTSetTreapMtEph {
         let set = make_set(&[5, 2, 8, 1, 9, 3, 7]);
         assert_eq!(set.minimum(), Some(1));
         assert_eq!(set.maximum(), Some(9));
-        
+
         let mut single = BSTSetTreapMt::empty();
         single.insert(42);
         assert_eq!(single.minimum(), Some(42));
@@ -79,14 +79,14 @@ pub mod TestBSTSetTreapMtEph {
     fn treap_set_union() {
         let set_a = make_set(&[1, 3, 5, 7]);
         let set_b = make_set(&[2, 4, 6, 8]);
-        
+
         let union = set_a.union(&set_b);
         assert_eq!(union.size(), 8);
-        
+
         for i in 1..=8 {
             assert_eq!(union.contains(&i), true);
         }
-        
+
         let overlapping_a = make_set(&[1, 2, 3]);
         let overlapping_b = make_set(&[3, 4, 5]);
         let overlapping_union = overlapping_a.union(&overlapping_b);
@@ -100,7 +100,7 @@ pub mod TestBSTSetTreapMtEph {
     fn treap_set_intersection() {
         let set_a = make_set(&[1, 2, 3, 4, 5]);
         let set_b = make_set(&[3, 4, 5, 6, 7]);
-        
+
         let intersection = set_a.intersection(&set_b);
         assert_eq!(intersection.size(), 3);
         assert_eq!(intersection.contains(&3), true);
@@ -108,7 +108,7 @@ pub mod TestBSTSetTreapMtEph {
         assert_eq!(intersection.contains(&5), true);
         assert_eq!(intersection.contains(&1), false);
         assert_eq!(intersection.contains(&7), false);
-        
+
         let disjoint_a = make_set(&[1, 3, 5]);
         let disjoint_b = make_set(&[2, 4, 6]);
         let empty_intersection = disjoint_a.intersection(&disjoint_b);
@@ -120,7 +120,7 @@ pub mod TestBSTSetTreapMtEph {
     fn treap_set_difference() {
         let set_a = make_set(&[1, 2, 3, 4, 5]);
         let set_b = make_set(&[3, 4, 5, 6, 7]);
-        
+
         let difference = set_a.difference(&set_b);
         assert_eq!(difference.size(), 2);
         assert_eq!(difference.contains(&1), true);
@@ -133,19 +133,19 @@ pub mod TestBSTSetTreapMtEph {
     #[test]
     fn treap_set_split() {
         let set = make_set(&[1, 2, 3, 4, 5, 6, 7, 8, 9]);
-        
+
         let (left, found, right) = set.split(&5);
         assert_eq!(found, true);
         assert_eq!(left.size(), 4);
         assert_eq!(right.size(), 4);
-        
+
         for i in 1..5 {
             assert_eq!(left.contains(&i), true);
         }
         for i in 6..=9 {
             assert_eq!(right.contains(&i), true);
         }
-        
+
         let (left_missing, found_missing, right_missing) = set.split(&10);
         assert_eq!(found_missing, false);
         assert_eq!(left_missing.size(), 9);
@@ -156,10 +156,10 @@ pub mod TestBSTSetTreapMtEph {
     fn treap_set_join_pair() {
         let left = make_set(&[1, 2, 3]);
         let right = make_set(&[7, 8, 9]);
-        
+
         let joined = BSTSetTreapMt::join_pair(left, right);
         assert_eq!(joined.size(), 6);
-        
+
         for i in [1, 2, 3, 7, 8, 9] {
             assert_eq!(joined.contains(&i), true);
         }
@@ -172,10 +172,10 @@ pub mod TestBSTSetTreapMtEph {
     fn treap_set_join_m() {
         let left = make_set(&[1, 2, 3]);
         let right = make_set(&[7, 8, 9]);
-        
+
         let joined = BSTSetTreapMt::join_m(left, 5, right);
         assert_eq!(joined.size(), 7);
-        
+
         for i in [1, 2, 3, 5, 7, 8, 9] {
             assert_eq!(joined.contains(&i), true);
         }
@@ -184,7 +184,7 @@ pub mod TestBSTSetTreapMtEph {
     #[test]
     fn treap_set_filter() {
         let set = make_set(&[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-        
+
         let evens = set.filter(|x| x % 2 == 0);
         assert_eq!(evens.size(), 5);
         for i in [2, 4, 6, 8, 10] {
@@ -193,7 +193,7 @@ pub mod TestBSTSetTreapMtEph {
         for i in [1, 3, 5, 7, 9] {
             assert_eq!(evens.contains(&i), false);
         }
-        
+
         let greater_than_five = set.filter(|x| *x > 5);
         assert_eq!(greater_than_five.size(), 5);
         for i in 6..=10 {
@@ -204,13 +204,13 @@ pub mod TestBSTSetTreapMtEph {
     #[test]
     fn treap_set_reduce() {
         let set = make_set(&[1, 2, 3, 4, 5]);
-        
+
         let sum = set.reduce(|acc, x| acc + x, 0);
         assert_eq!(sum, 15);
-        
+
         let product = set.reduce(|acc, x| acc * x, 1);
         assert_eq!(product, 120);
-        
+
         let empty: BSTSetTreapMt<i32> = BSTSetTreapMt::empty();
         let empty_sum = empty.reduce(|acc, x| acc + x, 42);
         assert_eq!(empty_sum, 42);
@@ -229,17 +229,17 @@ pub mod TestBSTSetTreapMtEph {
         let set = Arc::new(BSTSetTreapMt::<i32>::empty());
         let barrier = Arc::new(Barrier::new(4));
         let mut handles = vec![];
-        
+
         for thread_id in 0..4 {
             let _set_clone = Arc::clone(&set);
             let barrier_clone = Arc::clone(&barrier);
-            
+
             handles.push(thread::spawn(move || {
                 barrier_clone.wait();
-                
+
                 let start = thread_id * 25;
                 let end = start + 25;
-                
+
                 // BSTSetTreapMt is not mutable through Arc, create local set
                 let mut local_set = BSTSetTreapMt::empty();
                 for i in start..end {
@@ -248,9 +248,9 @@ pub mod TestBSTSetTreapMtEph {
                 (local_set.size(), local_set.is_empty())
             }));
         }
-        
+
         let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
-        
+
         for (size, is_empty) in results {
             assert!(size >= 25);
             assert_eq!(is_empty, false);
@@ -263,7 +263,7 @@ pub mod TestBSTSetTreapMtEph {
         let set_b = Arc::new(make_set(&(25..75).collect::<Vec<_>>()));
         let barrier = Arc::new(Barrier::new(3));
         let mut handles = vec![];
-        
+
         // Thread 1: Union
         let set_a1 = Arc::clone(&set_a);
         let set_b1 = Arc::clone(&set_b);
@@ -273,7 +273,7 @@ pub mod TestBSTSetTreapMtEph {
             let union = set_a1.union(&set_b1);
             union.size()
         }));
-        
+
         // Thread 2: Intersection
         let set_a2 = Arc::clone(&set_a);
         let set_b2 = Arc::clone(&set_b);
@@ -283,7 +283,7 @@ pub mod TestBSTSetTreapMtEph {
             let intersection = set_a2.intersection(&set_b2);
             intersection.size()
         }));
-        
+
         // Thread 3: Difference
         let set_a3 = Arc::clone(&set_a);
         let set_b3 = Arc::clone(&set_b);
@@ -293,9 +293,9 @@ pub mod TestBSTSetTreapMtEph {
             let difference = set_a3.difference(&set_b3);
             difference.size()
         }));
-        
+
         let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
-        
+
         assert_eq!(results[0], 75); // Union: 0-74
         assert_eq!(results[1], 25); // Intersection: 25-49
         assert_eq!(results[2], 25); // Difference: 0-24
@@ -306,20 +306,20 @@ pub mod TestBSTSetTreapMtEph {
         let set = Arc::new(make_set(&(0..100).collect::<Vec<_>>()));
         let barrier = Arc::new(Barrier::new(4));
         let mut handles = vec![];
-        
+
         for pivot in [25, 50, 75, 90] {
             let set_clone = Arc::clone(&set);
             let barrier_clone = Arc::clone(&barrier);
-            
+
             handles.push(thread::spawn(move || {
                 barrier_clone.wait();
                 let (left, found, right) = set_clone.split(&pivot);
                 (left.size(), found, right.size())
             }));
         }
-        
+
         let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
-        
+
         assert_eq!(results[0], (25, true, 74));
         assert_eq!(results[1], (50, true, 49));
         assert_eq!(results[2], (75, true, 24));
@@ -331,7 +331,7 @@ pub mod TestBSTSetTreapMtEph {
         let set = Arc::new(make_set(&(0..100).collect::<Vec<_>>()));
         let barrier = Arc::new(Barrier::new(4));
         let mut handles = vec![];
-        
+
         // Thread 1: Filter evens
         let set1 = Arc::clone(&set);
         let barrier1 = Arc::clone(&barrier);
@@ -340,7 +340,7 @@ pub mod TestBSTSetTreapMtEph {
             let evens = set1.filter(|x| x % 2 == 0);
             evens.size()
         }));
-        
+
         // Thread 2: Filter odds
         let set2 = Arc::clone(&set);
         let barrier2 = Arc::clone(&barrier);
@@ -349,7 +349,7 @@ pub mod TestBSTSetTreapMtEph {
             let odds = set2.filter(|x| x % 2 == 1);
             odds.size()
         }));
-        
+
         // Thread 3: Reduce sum
         let set3 = Arc::clone(&set);
         let barrier3 = Arc::clone(&barrier);
@@ -357,7 +357,7 @@ pub mod TestBSTSetTreapMtEph {
             barrier3.wait();
             set3.reduce(|a, b| a + b, 0) as usize
         }));
-        
+
         // Thread 4: Reduce max
         let set4 = Arc::clone(&set);
         let barrier4 = Arc::clone(&barrier);
@@ -365,9 +365,9 @@ pub mod TestBSTSetTreapMtEph {
             barrier4.wait();
             set4.reduce(|a, b| if a > b { a } else { b }, 0) as usize
         }));
-        
+
         let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
-        
+
         assert_eq!(results[0], 50); // 50 even numbers
         assert_eq!(results[1], 50); // 50 odd numbers
         assert_eq!(results[2], 4950); // Sum 0+1+...+99

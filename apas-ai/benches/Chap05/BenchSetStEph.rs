@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::Chap05::SetStEph::SetStEph::*;
-use apas_ai::Types::Types::*;
 use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
@@ -9,12 +9,12 @@ fn bench_set_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("SetStEph");
     group.warm_up_time(Duration::from_millis(100));
     group.measurement_time(Duration::from_secs(1));
-    
+
     let n: N = 1_000;
-    
+
     group.bench_with_input(BenchmarkId::new("union", n), &n, |b, &len| {
         let set_a: Set<N> = Set::FromVec((0..len).collect());
-        let set_b: Set<N> = Set::FromVec((len/2..len + len/2).collect());
+        let set_b: Set<N> = Set::FromVec((len / 2..len + len / 2).collect());
         b.iter(|| {
             let result = set_a.union(&set_b);
             black_box(result)
@@ -23,7 +23,7 @@ fn bench_set_operations(c: &mut Criterion) {
 
     group.bench_with_input(BenchmarkId::new("intersection", n), &n, |b, &len| {
         let set_a: Set<N> = Set::FromVec((0..len).collect());
-        let set_b: Set<N> = Set::FromVec((len/2..len + len/2).collect());
+        let set_b: Set<N> = Set::FromVec((len / 2..len + len / 2).collect());
         b.iter(|| {
             let result = set_a.intersection(&set_b);
             black_box(result)

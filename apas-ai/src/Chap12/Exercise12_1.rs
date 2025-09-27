@@ -23,7 +23,10 @@ pub mod Exercise12_1 {
 
     impl SpinLock {
         pub fn new() -> Self {
-            SpinLock { ticket: AtomicUsize::new(0), turn: AtomicUsize::new(0) }
+            SpinLock {
+                ticket: AtomicUsize::new(0),
+                turn: AtomicUsize::new(0),
+            }
         }
 
         pub fn lock(&self) {
@@ -33,9 +36,7 @@ pub mod Exercise12_1 {
             }
         }
 
-        pub fn unlock(&self) {
-            self.turn.fetch_add(1, Ordering::Release);
-        }
+        pub fn unlock(&self) { self.turn.fetch_add(1, Ordering::Release); }
 
         pub fn with_lock<T>(&self, action: impl FnOnce() -> T) -> T {
             self.lock();

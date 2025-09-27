@@ -139,7 +139,13 @@ pub mod DirGraphMtEph {
             result
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { true } else { false } }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B {
+            if &e.0 == v || &e.1 == v {
+                true
+            } else {
+                false
+            }
+        }
 
         fn Degree(&self, v: &V) -> N { self.InDegree(v) + self.OutDegree(v) }
         fn InDegree(&self, v: &V) -> N { self.NMinus(v).size() }

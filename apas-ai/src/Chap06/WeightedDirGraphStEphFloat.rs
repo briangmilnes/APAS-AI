@@ -177,7 +177,8 @@ pub mod WeightedDirGraphStEphFloat {
     #[allow(dead_code)]
     fn _WeightedDirGraphStEphFloatLit_type_checks() {
         let _ = WeightedDirGraphStEphFloatLit!( V: [1], A: [(1, 2, 10.5)] ); // non-empty infers
-        let _: WeightedDirGraphStEphFloat<i32> = WeightedDirGraphStEphFloatLit!(); // empty form requires explicit type
+        let _: WeightedDirGraphStEphFloat<i32> = WeightedDirGraphStEphFloatLit!();
+        // empty form requires explicit type
     }
 
     #[allow(dead_code)]

@@ -13,8 +13,8 @@ pub mod TestPrimTreeSeqSt {
     fn expose_one_returns_one() {
         let seq = PrimTreeSeqStS::singleton(7);
         match seq.expose() {
-            PrimTreeSeqStTree::One(value) => assert_eq!(value, 7),
-            other => panic!("expected One variant, got {:?}", other),
+            | PrimTreeSeqStTree::One(value) => assert_eq!(value, 7),
+            | other => panic!("expected One variant, got {:?}", other),
         }
     }
 
@@ -22,14 +22,14 @@ pub mod TestPrimTreeSeqSt {
     fn expose_two_splits_sequence() {
         let seq = PrimTreeSeqStS::from_vec((0..6).collect());
         match seq.expose() {
-            PrimTreeSeqStTree::Two(left, right) => {
+            | PrimTreeSeqStTree::Two(left, right) => {
                 assert!(left.length() > 0);
                 assert!(right.length() > 0);
                 assert_eq!(left.length() + right.length(), 6);
                 assert_eq!(left.as_slice(), &[0, 1, 2]);
                 assert_eq!(right.as_slice(), &[3, 4, 5]);
             }
-            other => panic!("expected Two variant, got {:?}", other),
+            | other => panic!("expected Two variant, got {:?}", other),
         }
     }
 
@@ -100,10 +100,10 @@ pub mod TestPrimTreeSeqSt {
     fn test_length_method() {
         let empty = PrimTreeSeqStS::<N>::empty();
         assert_eq!(empty.length(), 0);
-        
+
         let single = PrimTreeSeqStS::singleton(1);
         assert_eq!(single.length(), 1);
-        
+
         let multi = PrimTreeSeqStS::from_vec(vec![1, 2, 3, 4, 5]);
         assert_eq!(multi.length(), 5);
     }
@@ -113,25 +113,25 @@ pub mod TestPrimTreeSeqSt {
         // Test with exactly 2 elements
         let two_elem = PrimTreeSeqStS::from_vec(vec![1, 2]);
         match two_elem.expose() {
-            PrimTreeSeqStTree::Two(left, right) => {
+            | PrimTreeSeqStTree::Two(left, right) => {
                 assert_eq!(left.length(), 1);
                 assert_eq!(right.length(), 1);
                 assert_eq!(left.as_slice(), &[1]);
                 assert_eq!(right.as_slice(), &[2]);
             }
-            other => panic!("expected Two variant for 2 elements, got {:?}", other),
+            | other => panic!("expected Two variant for 2 elements, got {:?}", other),
         }
-        
+
         // Test with odd number of elements
         let odd_elem = PrimTreeSeqStS::from_vec(vec![1, 2, 3, 4, 5]);
         match odd_elem.expose() {
-            PrimTreeSeqStTree::Two(left, right) => {
+            | PrimTreeSeqStTree::Two(left, right) => {
                 assert_eq!(left.length(), 2); // 5/2 = 2
                 assert_eq!(right.length(), 3);
                 assert_eq!(left.as_slice(), &[1, 2]);
                 assert_eq!(right.as_slice(), &[3, 4, 5]);
             }
-            other => panic!("expected Two variant for 5 elements, got {:?}", other),
+            | other => panic!("expected Two variant for 5 elements, got {:?}", other),
         }
     }
 
@@ -183,7 +183,7 @@ pub mod TestPrimTreeSeqSt {
         let seq1 = PrimTreeSeqStS::from_vec(vec![1, 2, 3]);
         let seq2 = PrimTreeSeqStS::from_vec(vec![1, 2, 3]);
         let seq3 = PrimTreeSeqStS::from_vec(vec![1, 2, 4]);
-        
+
         assert_eq!(seq1, seq2);
         assert_ne!(seq1, seq3);
     }
@@ -193,13 +193,13 @@ pub mod TestPrimTreeSeqSt {
         let tree1 = PrimTreeSeqStTree::<N>::Zero;
         let tree2 = PrimTreeSeqStTree::<N>::Zero;
         assert_eq!(tree1, tree2);
-        
+
         let tree3 = PrimTreeSeqStTree::One(42);
         let tree4 = PrimTreeSeqStTree::One(42);
         let tree5 = PrimTreeSeqStTree::One(43);
         assert_eq!(tree3, tree4);
         assert_ne!(tree3, tree5);
-        
+
         let left = PrimTreeSeqStS::from_vec(vec![1, 2]);
         let right = PrimTreeSeqStS::from_vec(vec![3, 4]);
         let tree6 = PrimTreeSeqStTree::Two(left.clone(), right.clone());
@@ -212,7 +212,7 @@ pub mod TestPrimTreeSeqSt {
         let large_seq = PrimTreeSeqStS::from_vec((0..1000).collect::<Vec<N>>());
         let exposed = large_seq.expose();
         let reconstructed = PrimTreeSeqStS::join(exposed);
-        
+
         assert_eq!(large_seq.length(), reconstructed.length());
         assert_eq!(large_seq.as_slice(), reconstructed.as_slice());
     }

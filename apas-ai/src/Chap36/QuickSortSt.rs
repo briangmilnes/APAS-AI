@@ -2,7 +2,7 @@
 //! Chapter 36 (Single-threaded): Quicksort with three pivot strategies over `ArraySeqStEph`.
 
 pub mod Chapter36St {
-    use rand::{Rng, rng};
+    use rand::{rng, Rng};
 
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;

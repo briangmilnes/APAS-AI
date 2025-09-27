@@ -116,7 +116,13 @@ pub mod SetStEph {
 
         pub fn size(&self) -> N { self.data.len() }
 
-        pub fn mem(&self, x: &T) -> B { if self.data.contains(x) { true } else { false } }
+        pub fn mem(&self, x: &T) -> B {
+            if self.data.contains(x) {
+                true
+            } else {
+                false
+            }
+        }
 
         pub fn union(&self, other: &Set<T>) -> Set<T>
         where
@@ -199,7 +205,13 @@ pub mod SetStEph {
 
         fn size(&self) -> N { self.data.len() }
 
-        fn mem(&self, x: &T) -> B { if self.data.contains(x) { true } else { false } }
+        fn mem(&self, x: &T) -> B {
+            if self.data.contains(x) {
+                true
+            } else {
+                false
+            }
+        }
 
         fn union(&self, other: &Set<T>) -> Set<T>
         where

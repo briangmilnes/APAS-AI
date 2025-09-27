@@ -69,7 +69,7 @@ pub mod TestLinkedListEph {
         let result = l.set(1, 99);
         assert!(result.is_ok());
         assert_eq!(*l.nth(1), 99);
-        
+
         // Test out of bounds
         let result_oob = l.set(10, 42);
         assert!(result_oob.is_err());
@@ -111,7 +111,8 @@ pub mod TestLinkedListEph {
     #[test]
     fn test_filter_predicate() {
         let l = LinkedListStEphSLit![1, 2, 3, 4, 5];
-        let evens = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&l, &|x| if *x % 2 == 0 { true } else { false });
+        let evens =
+            <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&l, &|x| if *x % 2 == 0 { true } else { false });
         assert_eq!(evens.length(), 2);
         assert_eq!(*evens.nth(0), 2);
         assert_eq!(*evens.nth(1), 4);
@@ -119,11 +120,13 @@ pub mod TestLinkedListEph {
 
     #[test]
     fn test_deflate_helper() {
-        let result_true = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| if *x > 5 { true } else { false }, &10);
+        let result_true =
+            <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| if *x > 5 { true } else { false }, &10);
         assert_eq!(result_true.length(), 1);
         assert_eq!(*result_true.nth(0), 10);
-        
-        let result_false = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| if *x > 5 { true } else { false }, &3);
+
+        let result_false =
+            <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| if *x > 5 { true } else { false }, &3);
         assert_eq!(result_false.length(), 0);
     }
 
@@ -133,7 +136,7 @@ pub mod TestLinkedListEph {
         let inner2 = LinkedListStEphSLit![3];
         let inner3 = LinkedListStEphSLit![4, 5];
         let nested = LinkedListStEphSLit![inner1, inner2, inner3];
-        
+
         let flattened = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::flatten(&nested);
         assert_eq!(flattened.length(), 5);
         assert_eq!(*flattened.nth(0), 1);
@@ -147,7 +150,7 @@ pub mod TestLinkedListEph {
     fn test_update_ephemeral() {
         let mut l = LinkedListStEphSLit![1, 2, 3];
         let updated = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::update(&mut l, Pair(1, 99));
-        
+
         // Ephemeral - original is modified, updated is a reference to the same object
         assert_eq!(*updated.nth(1), 99);
         // Can't access l after mutable borrow, but we can verify through updated
@@ -161,7 +164,7 @@ pub mod TestLinkedListEph {
         let l = LinkedListStEphSLit![1, 2, 3];
         let updates = LinkedListStEphSLit![Pair(1, 10), Pair(2, 20), Pair(1, 30)]; // Duplicate index 1
         let result = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::inject(&l, &updates);
-        
+
         assert_eq!(result.length(), 3);
         assert_eq!(*result.nth(0), 1);
         assert_eq!(*result.nth(1), 10); // First update wins
@@ -173,7 +176,7 @@ pub mod TestLinkedListEph {
         let l = LinkedListStEphSLit![1, 2, 3];
         let updates = LinkedListStEphSLit![Pair(1, 10), Pair(2, 20), Pair(1, 30)]; // Duplicate index 1
         let result = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::ninject(&l, &updates);
-        
+
         assert_eq!(result.length(), 3);
         assert_eq!(*result.nth(0), 1);
         assert_eq!(*result.nth(1), 30); // Last update wins
@@ -183,18 +186,25 @@ pub mod TestLinkedListEph {
     #[test]
     fn test_collect_group_by_key() {
         let pairs = LinkedListStEphSLit![Pair(1, "a"), Pair(2, "b"), Pair(1, "c"), Pair(2, "d")];
-        let grouped = <LinkedListStEphS<Pair<N, &str>> as LinkedListStEphTrait<Pair<N, &str>>>::collect(&pairs, |a, b| {
-            if a < b { O::Less } else if a > b { O::Greater } else { O::Equal }
-        });
-        
+        let grouped =
+            <LinkedListStEphS<Pair<N, &str>> as LinkedListStEphTrait<Pair<N, &str>>>::collect(&pairs, |a, b| {
+                if a < b {
+                    O::Less
+                } else if a > b {
+                    O::Greater
+                } else {
+                    O::Equal
+                }
+            });
+
         assert_eq!(grouped.length(), 2);
-        
+
         let Pair(key1, vals1) = grouped.nth(0);
         assert_eq!(*key1, 1);
         assert_eq!(vals1.length(), 2);
         assert_eq!(*vals1.nth(0), "a");
         assert_eq!(*vals1.nth(1), "c");
-        
+
         let Pair(key2, vals2) = grouped.nth(1);
         assert_eq!(*key2, 2);
         assert_eq!(vals2.length(), 2);
@@ -212,8 +222,9 @@ pub mod TestLinkedListEph {
     #[test]
     fn test_iteratePrefixes_scan_like() {
         let l = LinkedListStEphSLit![1, 2, 3];
-        let (prefixes, total) = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::iteratePrefixes(&l, &|acc, x| acc + x, 0);
-        
+        let (prefixes, total) =
+            <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::iteratePrefixes(&l, &|acc, x| acc + x, 0);
+
         assert_eq!(prefixes.length(), 3);
         assert_eq!(*prefixes.nth(0), 0); // Initial value
         assert_eq!(*prefixes.nth(1), 1); // 0 + 1
@@ -226,11 +237,11 @@ pub mod TestLinkedListEph {
         let l = LinkedListStEphSLit![1, 2, 3, 4];
         let sum = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::reduce(&l, &|a, b| a + b, 0);
         assert_eq!(sum, 10);
-        
+
         let empty: LinkedListStEphS<N> = LinkedListStEphSLit![];
         let empty_sum = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::reduce(&empty, &|a, b| a + b, 42);
         assert_eq!(empty_sum, 42);
-        
+
         let single = LinkedListStEphSLit![5];
         let single_sum = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::reduce(&single, &|a, b| a + b, 0);
         assert_eq!(single_sum, 5);
@@ -240,7 +251,7 @@ pub mod TestLinkedListEph {
     fn test_scan_prefix_sums() {
         let l = LinkedListStEphSLit![1, 2, 3];
         let (prefixes, total) = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::scan(&l, &|a, b| a + b, 0);
-        
+
         assert_eq!(prefixes.length(), 3);
         assert_eq!(*prefixes.nth(0), 0); // reduce([], +, 0) = 0
         assert_eq!(*prefixes.nth(1), 1); // reduce([1], +, 0) = 1
@@ -253,7 +264,7 @@ pub mod TestLinkedListEph {
         let l1 = LinkedListStEphSLit![1, 2, 3];
         let l2 = LinkedListStEphSLit![1, 2, 3];
         let l3 = LinkedListStEphSLit![1, 2, 4];
-        
+
         assert_eq!(l1, l2);
         assert_ne!(l1, l3);
     }
@@ -261,15 +272,15 @@ pub mod TestLinkedListEph {
     #[test]
     fn test_subseq_copy_edge_cases() {
         let l = LinkedListStEphSLit![1, 2, 3, 4, 5];
-        
+
         // Zero length
         let empty_sub = l.subseq_copy(2, 0);
         assert_eq!(empty_sub.length(), 0);
-        
+
         // Start beyond bounds
         let beyond_sub = l.subseq_copy(10, 3);
         assert_eq!(beyond_sub.length(), 0);
-        
+
         // Length extends beyond bounds
         let partial_sub = l.subseq_copy(3, 10);
         assert_eq!(partial_sub.length(), 2);

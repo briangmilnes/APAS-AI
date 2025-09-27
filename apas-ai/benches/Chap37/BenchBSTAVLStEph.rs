@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
-use apas_ai::Chap37::BSTAVLStEph::BSTAVLStEph::BSTreeAVL;
+use apas_ai::Chap37::BSTAVLStEph::BSTAVLStEph::{BSTreeAVL, BSTAVLStEphTrait};
 use apas_ai::{BSTAVLStEphLit, *};
 use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 
@@ -69,11 +69,7 @@ fn bench_bsteph_avl(c: &mut Criterion) {
         });
 
         group.bench_with_input(BenchmarkId::new("size", n), &n, |b, &len| {
-            b.iter_batched(
-                || build_tree(len),
-                |tree| black_box(tree.size()),
-                BatchSize::SmallInput,
-            );
+            b.iter_batched(|| build_tree(len), |tree| black_box(tree.size()), BatchSize::SmallInput);
         });
 
         group.bench_with_input(BenchmarkId::new("height", n), &n, |b, &len| {

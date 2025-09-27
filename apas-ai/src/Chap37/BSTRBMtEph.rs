@@ -8,8 +8,7 @@ pub mod BSTRBMtEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
-    #[derive(Clone, Copy, PartialEq, Eq)]
-    #[derive(Debug)]
+    #[derive(Clone, Copy, PartialEq, Eq, Debug)]
     enum Color {
         Red,
         Black,
@@ -17,8 +16,7 @@ pub mod BSTRBMtEph {
 
     type Link<T> = Option<Box<Node<T>>>;
 
-    #[derive(Clone)]
-    #[derive(Debug)]
+    #[derive(Clone, Debug)]
     struct Node<T: StTInMtT + Ord> {
         key: T,
         color: Color,
@@ -65,69 +63,8 @@ pub mod BSTRBMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTRBMtEph<T> {
-        pub fn new() -> Self {
-            BSTRBMtEph {
-                root: Arc::new(RwLock::new(None)),
-            }
-        }
+        // Private helper methods only - no public delegation
 
-        pub fn size(&self) -> N {
-            let guard = self.root.read().unwrap();
-            Self::size_link(&*guard)
-        }
-
-        pub fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
-
-        pub fn height(&self) -> N {
-            fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {
-                match link {
-                    | None => 0,
-                    | Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
-                }
-            }
-
-            let guard = self.root.read().unwrap();
-            height_rec(&*guard)
-        }
-
-        pub fn insert(&self, value: T) {
-            let mut guard = self.root.write().unwrap();
-            Self::insert_link(&mut *guard, value);
-            if let Some(node) = guard.as_mut() {
-                node.color = Color::Black;
-            }
-        }
-
-        pub fn find(&self, target: &T) -> Option<T> {
-            let guard = self.root.read().unwrap();
-            Self::find_link(&*guard, target).cloned()
-        }
-
-        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
-
-        pub fn minimum(&self) -> Option<T> {
-            let guard = self.root.read().unwrap();
-            Self::min_link(&*guard).cloned()
-        }
-
-        pub fn maximum(&self) -> Option<T> {
-            let guard = self.root.read().unwrap();
-            Self::max_link(&*guard).cloned()
-        }
-
-        pub fn in_order(&self) -> ArraySeqStPerS<T> {
-            let guard = self.root.read().unwrap();
-            let mut out = Vec::with_capacity(Self::size_link(&*guard));
-            Self::in_order_collect(&*guard, &mut out);
-            ArraySeqStPerS::from_vec(out)
-        }
-
-        pub fn pre_order(&self) -> ArraySeqStPerS<T> {
-            let guard = self.root.read().unwrap();
-            let mut out = Vec::with_capacity(Self::size_link(&*guard));
-            Self::pre_order_collect(&*guard, &mut out);
-            ArraySeqStPerS::from_vec(out)
-        }
 
         fn is_red(link: &Link<T>) -> bool { matches!(link, Some(node) if node.color == Color::Red) }
 
@@ -299,27 +236,74 @@ pub mod BSTRBMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTRBMtEphTrait<T> for BSTRBMtEph<T> {
-        fn new() -> Self { BSTRBMtEph::new() }
+        fn new() -> Self {
+            BSTRBMtEph {
+                root: Arc::new(RwLock::new(None)),
+            }
+        }
 
-        fn insert(&self, value: T) { BSTRBMtEph::insert(self, value) }
+        fn insert(&self, value: T) {
+            let mut guard = self.root.write().unwrap();
+            Self::insert_link(&mut *guard, value);
+            if let Some(node) = guard.as_mut() {
+                node.color = Color::Black;
+            }
+        }
 
-        fn find(&self, target: &T) -> Option<T> { BSTRBMtEph::find(self, target) }
+        fn find(&self, target: &T) -> Option<T> {
+            let guard = self.root.read().unwrap();
+            Self::find_link(&*guard, target).cloned()
+        }
 
-        fn contains(&self, target: &T) -> B { BSTRBMtEph::contains(self, target) }
+        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
-        fn size(&self) -> N { BSTRBMtEph::size(self) }
+        fn size(&self) -> N {
+            let guard = self.root.read().unwrap();
+            Self::size_link(&*guard)
+        }
 
-        fn is_empty(&self) -> B { BSTRBMtEph::is_empty(self) }
+        fn is_empty(&self) -> B {
+            if self.size() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn height(&self) -> N { BSTRBMtEph::height(self) }
+        fn height(&self) -> N {
+            fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {
+                match link {
+                    | None => 0,
+                    | Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
+                }
+            }
+            let guard = self.root.read().unwrap();
+            height_rec(&*guard)
+        }
 
-        fn minimum(&self) -> Option<T> { BSTRBMtEph::minimum(self) }
+        fn minimum(&self) -> Option<T> {
+            let guard = self.root.read().unwrap();
+            Self::min_link(&*guard).cloned()
+        }
 
-        fn maximum(&self) -> Option<T> { BSTRBMtEph::maximum(self) }
+        fn maximum(&self) -> Option<T> {
+            let guard = self.root.read().unwrap();
+            Self::max_link(&*guard).cloned()
+        }
 
-        fn in_order(&self) -> ArraySeqStPerS<T> { BSTRBMtEph::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> {
+            let guard = self.root.read().unwrap();
+            let mut out = Vec::with_capacity(Self::size_link(&*guard));
+            Self::in_order_collect(&*guard, &mut out);
+            ArraySeqStPerS::from_vec(out)
+        }
 
-        fn pre_order(&self) -> ArraySeqStPerS<T> { BSTRBMtEph::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> {
+            let guard = self.root.read().unwrap();
+            let mut out = Vec::with_capacity(Self::size_link(&*guard));
+            Self::pre_order_collect(&*guard, &mut out);
+            ArraySeqStPerS::from_vec(out)
+        }
     }
 
     #[macro_export]

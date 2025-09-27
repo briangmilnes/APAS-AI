@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestArraySeqPer {
-    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::ArraySeqStPerSLit;
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
     use std::sync::Mutex;
 
@@ -20,10 +20,8 @@ pub mod TestArraySeqPer {
 
     #[test]
     fn test_deflate_and_filter() {
-        let y = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::deflate(
-            &|&x: &N| if x % 2 == 0 { true } else { false },
-            &6,
-        );
+        let y =
+            <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::deflate(&|&x: &N| if x % 2 == 0 { true } else { false }, &6);
         assert_eq!(y, ArraySeqStPerSLit![6]);
         let a = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 1, 10);
         let evens =
