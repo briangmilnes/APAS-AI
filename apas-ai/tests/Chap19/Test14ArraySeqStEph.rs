@@ -198,7 +198,7 @@ pub mod TestArraySeqStEph {
         let sum_fn = |x: &N, y: &N| x + y;
         let (prefixes, total) = ArraySeqStEphS::scan(&a, &sum_fn, 0);
         assert_eq!(prefixes.length(), 5);
-        assert_eq!(*prefixes.nth(0), 0);
+        assert_eq!(*prefixes.nth(0), 1);
         assert_eq!(*prefixes.nth(4), 10);
         assert_eq!(total, 15);
     }

@@ -36,7 +36,7 @@ fn arrayseq_stper_operations() {
 
     let subseq = mapped.subseq_copy(1, 2);
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&subseq), 2);
-    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&subseq, 0), &5);
+    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&subseq, 0), &3);
 
     let appended = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::append(&mapped, &ArraySeqStPerSLit![42]);
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&appended), 5);

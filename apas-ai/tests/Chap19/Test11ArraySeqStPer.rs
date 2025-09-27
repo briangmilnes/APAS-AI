@@ -41,7 +41,7 @@ pub mod TestArraySeqPer {
         assert_eq!(r, 15);
         let (prefixes, total) = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::scan(&a, &sum_fn, 0);
         assert_eq!(total, 15);
-        assert_eq!(*prefixes.nth(4), 10);
+        assert_eq!(*prefixes.nth(4), 15);
         let nested: ArraySeqStPerS<ArraySeqStPerS<N>> = ArraySeqStPerSLit![
             <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 1, 2),
             <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 3, 2),

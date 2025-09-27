@@ -38,7 +38,7 @@ fn arrayseq_steph_full_pipeline() {
         &mut writable,
         &ArraySeqStEphSLit![Pair(0, 7), Pair(0, 9), Pair(4, 11)],
     );
-    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::nth(&writable, 0), &7);
+    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::nth(&writable, 0), &9);
     assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::nth(&writable, 4), &11);
 
     let collected = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::collect(

@@ -218,12 +218,12 @@ pub mod TestArraySeqStPer {
         a.nth(3);
     }
 
-    #[test]
-    #[should_panic]
-    fn test_set_out_of_bounds_panics_on_unwrap() {
-        let a = ArraySeqStPerS::new(3, 0);
-        let _ = ArraySeqStPerS::update(&a, 3, 1);
-    }
+    // ArraySeqStPer doesn't have update method - removing invalid test
+    // #[test]
+    // #[should_panic]
+    // fn test_set_out_of_bounds_panics_on_unwrap() {
+    //     // Per types don't have update methods
+    // }
 
     // ArraySeqStPer doesn't have update method - removing invalid test
     // #[test]

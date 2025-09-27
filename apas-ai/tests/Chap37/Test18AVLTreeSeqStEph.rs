@@ -13,7 +13,8 @@ pub mod TestAVLTreeSeqEph {
         t.push_back(3);
         assert_eq!(t.length(), 3);
         assert_eq!(*t.nth(1), 2);
-        // AVL trees are persistent - no update method
+        // AVL trees ephemeral - has update method
+        let _ = t.update((1, 9));
         assert_eq!(*t.nth(1), 9);
     }
 }

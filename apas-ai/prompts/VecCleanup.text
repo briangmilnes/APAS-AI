@@ -4,8 +4,8 @@
  Identify every vec literal and think about whether it should be a
  XLit!.
 
- Where are we using vec programatically where the correct type for
- the test could be used?
+ Where are we using vec programatically where the correct type for APAS
+ that the test could be used?
 
  You may use sed carefully as each Test* file is likely only touching
  one data structure. 
