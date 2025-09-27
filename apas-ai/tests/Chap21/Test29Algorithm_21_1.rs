@@ -6,22 +6,7 @@ pub mod Test29Algorithm_21_1 {
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::PairLit;
     use apas_ai::Types::Types::*;
-
-/// Functional form: points2D n = flatten (tabulate (\x. tabulate (\y. (x, y+1)) (n-1)) n)
-/// gpt-5-hard: Work: Θ(n^2), Span: Θ(lg n)
-fn points2d_tab_flat(n: N) -> ArraySeqStPerS<Pair<N, N>> {
-    if n == 0 {
-        return ArraySeqStPerSLit![];
-    }
-    let inner: ArraySeqStPerS<ArraySeqStPerS<Pair<N, N>>> =
-        <ArraySeqStPerS<ArraySeqStPerS<Pair<N, N>>> as ArraySeqStPerTrait<ArraySeqStPerS<Pair<N, N>>>>::tabulate(
-            &|x| {
-                <ArraySeqStPerS<Pair<N, N>> as ArraySeqStPerTrait<Pair<N, N>>>::tabulate(&|y| PairLit!(x, y + 1), n - 1)
-            },
-            n,
-        );
-    <ArraySeqStPerS<Pair<N, N>> as ArraySeqStPerTrait<Pair<N, N>>>::flatten(&inner)
-}
+    use apas_ai::Chap21::Algorithm21_1::Algorithm21_1::*;
 
 #[test]
 fn test_points2d_n3_example() {

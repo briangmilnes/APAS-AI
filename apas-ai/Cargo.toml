@@ -562,16 +562,24 @@ name = "Test31Algorithm_21_6"
 path = "tests/Chap21/Test31Algorithm_21_6.rs"
 
 [[test]]
-name = "Test32Exercise_21_5_and_21_6"
-path = "tests/Chap21/Test32Exercise_21_5_and_21_6.rs"
+name = "Test32Exercise_21_5"
+path = "tests/Chap21/Test32Exercise_21_5.rs"
+
+[[test]]
+name = "Test32Exercise_21_6"
+path = "tests/Chap21/Test32Exercise_21_6.rs"
 
 [[test]]
 name = "Test33Exercise_21_7"
 path = "tests/Chap21/Test33Exercise_21_7.rs"
 
 [[test]]
-name = "Test34Exercise_21_8_and_Algorithm_21_5"
-path = "tests/Chap21/Test34Exercise_21_8_and_Algorithm_21_5.rs"
+name = "Test34Exercise_21_8"
+path = "tests/Chap21/Test34Exercise_21_8.rs"
+
+[[test]]
+name = "Test34Algorithm_21_5"
+path = "tests/Chap21/Test34Algorithm_21_5.rs"
 
 [[test]]
 name = "Test36Problem_21_3"
@@ -622,8 +630,8 @@ name = "TestPrimTreeSeqSt"
 path = "tests/Chap23/TestPrimTreeSeqSt.rs"
 
 [[test]]
-name = "Test35Exercsise_21_9"
-path = "tests/Test35Exercsise_21_9.rs"
+name = "Test35Exercise_21_9"
+path = "tests/Chap21/Test35Exercise_21_9.rs"
 
 [[test]]
 name = "Test42BBTStEph"

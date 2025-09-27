@@ -6,6 +6,7 @@ pub mod Test31Algorithm_21_6 {
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Types::Types::*;
     use apas_ai::PairLit;
+    use apas_ai::Chap21::Algorithm21_6::Algorithm21_6::*;
 
 /// Construct primes using a sieve: generate composites cs, create sieve pairs (x,false), ninject, then filter indices.
 /// gpt-5-hard: Work: Θ(n lg n), Span: Θ(lg n)

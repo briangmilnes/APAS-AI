@@ -13,11 +13,11 @@ fn bench_avl_eph_ch19(c: &mut Criterion) {
     let n: N = 1_000;
     group.bench_with_input(BenchmarkId::new("push_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let mut t: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphSLit![]; // *Eph: constructor pattern
+            let mut t: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphLit![]; // *Eph: constructor pattern
             for i in 0..len {
                 t.push_back(i);
             }
-            let mut m: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphSLit![]; // *Eph: constructor pattern
+            let mut m: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphLit![]; // *Eph: constructor pattern
             for i in 0..len {
                 m.push_back(*<AVLTreeSeqStEphS<N> as AVLTreeSeqStEphTrait<N>>::nth(&t, i) + 1);
             }

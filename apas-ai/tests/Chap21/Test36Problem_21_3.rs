@@ -5,6 +5,7 @@ pub mod Test36Problem_21_3 {
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
     use apas_ai::PairLit;
+    use apas_ai::Chap21::Problem21_3::Problem21_3::*;
     use apas_ai::ArraySeqStPerSLit;
 
 /// Generate points (x, y, z) with 0 ≤ x ≤ n−1, 1 ≤ y ≤ n, 2 ≤ z ≤ n+1 in x-major, then y, then z order.
