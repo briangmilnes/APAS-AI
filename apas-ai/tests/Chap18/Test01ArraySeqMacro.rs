@@ -34,7 +34,7 @@ fn arrayseq_tabulate_and_map_work() {
     assert_eq!(ArraySeq::length(&squares), 5);
     assert_eq!(ArraySeq::nth(&squares, 3), &9);
 
-    let doubled = ArraySeq::map(&squares, &|value| value * 2);
+    let doubled = <ArraySeqS<i32> as ArraySeq<i32>>::map(&squares, &|value| value * 2);
     assert_eq!(ArraySeq::nth(&doubled, 0), &0);
     assert_eq!(ArraySeq::nth(&doubled, 4), &32);
 }
@@ -52,7 +52,7 @@ fn arrayseq_subseq_append_filter_flatten() {
     assert_eq!(ArraySeq::length(&combined), 7);
     assert_eq!(ArraySeq::nth(&combined, 5), &6);
 
-    let evens = ArraySeq::filter(&combined, &|value| match value % 2 {
+    let evens = <ArraySeqS<i32> as ArraySeq<i32>>::filter(&combined, &|value| match value % 2 {
         0 => B::True,
         _ => B::False,
     });
@@ -60,7 +60,7 @@ fn arrayseq_subseq_append_filter_flatten() {
     assert_eq!(ArraySeq::nth(&evens, 1), &4);
 
     let nested = ArraySeqS::from_vec(vec![ArraySeqS![1, 2], ArraySeqS![3], ArraySeqS![4, 5]]);
-    let flat = ArraySeq::flatten(&nested);
+    let flat = <ArraySeqS<i32> as ArraySeq<i32>>::flatten(&nested);
     assert_eq!(ArraySeq::length(&flat), 5);
     assert_eq!(ArraySeq::nth(&flat, 3), &4);
 }
@@ -91,13 +91,13 @@ fn arrayseq_collect_iterate_reduce_scan() {
     assert_eq!(ArraySeq::length(&first_group.1), 2);
 
     let seq = ArraySeqS![1, 2, 3, 4];
-    let iter_sum = ArraySeq::iterate(&seq, &|acc, item| *acc + *item, 0);
+    let iter_sum = <ArraySeqS<i32> as ArraySeq<i32>>::iterate(&seq, &|acc, item| *acc + *item, 0);
     assert_eq!(iter_sum, 10);
 
     let reduced = <ArraySeqS<i32> as ArraySeq<i32>>::reduce(&seq, &|lhs, rhs| *lhs + *rhs, 0);
     assert_eq!(reduced, 10);
 
-    let (prefixes, total) = ArraySeq::scan(&seq, &|lhs, rhs| *lhs + *rhs, 0);
+    let (prefixes, total) = <ArraySeqS<i32> as ArraySeq<i32>>::scan(&seq, &|lhs, rhs| *lhs + *rhs, 0);
     assert_eq!(total, 10);
     assert_eq!(ArraySeq::nth(&prefixes, 0), &1);
     assert_eq!(ArraySeq::nth(&prefixes, 3), &10);

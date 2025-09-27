@@ -33,7 +33,7 @@ pub mod TestLinkedListStEph {
         let mut a: LinkedListStEphS<N> = LinkedListStEphSLit![0; 3];
         let _ = a.update(1, 2);
         assert_eq!(*a.nth(1), 2);
-        let sub = a.subseq(1, 2);
+        let sub = a.subseq_copy(1, 2);
         assert_eq!(sub.length(), 2);
     }
 

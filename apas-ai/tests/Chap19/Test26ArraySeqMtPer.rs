@@ -67,7 +67,7 @@ pub mod Test26ArraySeqMtPer {
     #[test]
     fn test_subseq() {
         let a = ArrayMtPerSLit![10, 20, 30, 40, 50];
-        let sub = a.subseq(1, 3);
+        let sub = a.subseq_copy(1, 3);
         assert_eq!(sub.length(), 3);
         assert_eq!(*sub.nth(0), 20);
         assert_eq!(*sub.nth(1), 30);
