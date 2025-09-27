@@ -179,11 +179,11 @@ pub mod TestDirGraphStEph {
         let g = DirGraphStEph::FromSets(v, a);
         
         // Test Incident method - checks if edge is incident to vertex
-        assert_eq!(g.Incident(&Pair(0, 1), &0), B::True);  // edge (0,1) is incident to vertex 0
-        assert_eq!(g.Incident(&Pair(0, 1), &1), B::True);  // edge (0,1) is incident to vertex 1
-        assert_eq!(g.Incident(&Pair(0, 1), &2), B::False); // edge (0,1) is not incident to vertex 2
-        assert_eq!(g.Incident(&Pair(1, 2), &1), B::True);  // edge (1,2) is incident to vertex 1
-        assert_eq!(g.Incident(&Pair(1, 2), &2), B::True);  // edge (1,2) is incident to vertex 2
+        assert_eq!(g.Incident(&Edge(0, 1), &0), B::True);  // edge (0,1) is incident to vertex 0
+        assert_eq!(g.Incident(&Edge(0, 1), &1), B::True);  // edge (0,1) is incident to vertex 1
+        assert_eq!(g.Incident(&Edge(0, 1), &2), B::False); // edge (0,1) is not incident to vertex 2
+        assert_eq!(g.Incident(&Edge(1, 2), &1), B::True);  // edge (1,2) is incident to vertex 1
+        assert_eq!(g.Incident(&Edge(1, 2), &2), B::True);  // edge (1,2) is incident to vertex 2
     }
 
     #[test]
@@ -253,7 +253,7 @@ pub mod TestDirGraphStEph {
         let nminus = empty_graph.NMinus(&42);
         assert_eq!(nminus.size(), 0);
         
-        assert_eq!(empty_graph.Incident(&Pair(42, 99), &42), B::True); // Incident always returns True for any edge-vertex pair
+        assert_eq!(empty_graph.Incident(&Edge(42, 99), &42), B::True); // Incident always returns True for any edge-vertex pair
         
         assert_eq!(empty_graph.Degree(&42), 0);
         assert_eq!(empty_graph.InDegree(&42), 0);

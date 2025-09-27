@@ -181,11 +181,11 @@ pub mod TestDirGraphMtEph {
         let g = DirGraphMtEph::FromSets(v, a);
         
         // Test Incident method - checks if edge is incident to vertex
-        assert_eq!(g.Incident(&Pair(0, 1), &0), B::True);  // edge (0,1) is incident to vertex 0
-        assert_eq!(g.Incident(&Pair(0, 1), &1), B::True);  // edge (0,1) is incident to vertex 1
-        assert_eq!(g.Incident(&Pair(0, 1), &2), B::False); // edge (0,1) is not incident to vertex 2
-        assert_eq!(g.Incident(&Pair(1, 2), &1), B::True);  // edge (1,2) is incident to vertex 1
-        assert_eq!(g.Incident(&Pair(1, 2), &2), B::True);  // edge (1,2) is incident to vertex 2
+        assert_eq!(g.Incident(&Edge(0, 1), &0), B::True);  // edge (0,1) is incident to vertex 0
+        assert_eq!(g.Incident(&Edge(0, 1), &1), B::True);  // edge (0,1) is incident to vertex 1
+        assert_eq!(g.Incident(&Edge(0, 1), &2), B::False); // edge (0,1) is not incident to vertex 2
+        assert_eq!(g.Incident(&Edge(1, 2), &1), B::True);  // edge (1,2) is incident to vertex 1
+        assert_eq!(g.Incident(&Edge(1, 2), &2), B::True);  // edge (1,2) is incident to vertex 2
     }
 
     #[test]
@@ -657,7 +657,7 @@ pub mod TestDirGraphMtEph {
                 if let Ok(a) = graph_a_clone.try_lock() {
                     // Perform various operations on graph A
                     let _ = a.NMinus(&2);
-                    let _ = a.Incident(&Pair(0, 1), &0);
+                    let _ = a.Incident(&Edge(0, 1), &0);
                     let _ = a.NGOfVertices(&SetLit![0, 1]);
                     operations += 1;
                 }

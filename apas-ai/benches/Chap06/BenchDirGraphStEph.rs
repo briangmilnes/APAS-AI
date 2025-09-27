@@ -2,7 +2,7 @@
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::DirGraphStEph::DirGraphStEph::*;
 use apas_ai::Types::Types::*;
-use apas_ai::{PairLit, SetLit};
+use apas_ai::SetLit;
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 

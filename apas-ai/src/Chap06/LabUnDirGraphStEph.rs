@@ -115,9 +115,6 @@ pub mod LabUnDirGraphStEph {
             neighbors
         }
 
-        fn vertex_degree(&self, v: &V) -> N {
-            self.neighbors(v).size()
-        }
 
         fn normalize_edge(_v1: V, _v2: V) -> LabEdge<V, L> {
             // This method signature doesn't make sense for LabEdge without a label
@@ -146,10 +143,10 @@ pub mod LabUnDirGraphStEph {
         pub fn NMinus(&self, v: &V) -> Set<V> { self.neighbors(v) }
         
         /// Degree (in undirected graphs, in-degree equals total degree)
-        pub fn InDegree(&self, v: &V) -> N { self.vertex_degree(v) }
+        pub fn InDegree(&self, v: &V) -> N { self.neighbors(v).size() }
         
         /// Degree (in undirected graphs, out-degree equals total degree)
-        pub fn OutDegree(&self, v: &V) -> N { self.vertex_degree(v) }
+        pub fn OutDegree(&self, v: &V) -> N { self.neighbors(v).size() }
     }
 
     impl<V, L> Display for LabUnDirGraphStEph<V, L>

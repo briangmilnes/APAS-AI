@@ -57,7 +57,7 @@ pub mod DirGraphStEph {
         fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn Incident(&self, e: &Pair<V, V>, v: &V) -> B;
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
         fn Degree(&self, v: &V) -> N;
@@ -140,7 +140,7 @@ pub mod DirGraphStEph {
             result
         }
 
-        fn Incident(&self, e: &Pair<V, V>, v: &V) -> B { if &e.0 == v || &e.1 == v { B::True } else { B::False } }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { B::True } else { B::False } }
 
         fn Degree(&self, v: &V) -> N { self.InDegree(v) + self.OutDegree(v) }
         fn InDegree(&self, v: &V) -> N { self.NMinus(v).size() }
