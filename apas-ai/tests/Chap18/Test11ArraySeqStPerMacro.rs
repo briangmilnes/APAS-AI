@@ -56,11 +56,11 @@ fn arrayseq_stper_operations() {
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&injected, 0), &99);
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&injected, 4), &77);
 
-    let collected = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::collect(
+    let collected = <ArraySeqStPerS<Pair<&str, usize>> as ArraySeqStPerTrait<Pair<&str, usize>>>::collect(
         &ArraySeqStPerS![Pair("a", 1), Pair("b", 2), Pair("a", 3)],
-        |lhs: &Pair<&str, usize>, rhs: &Pair<&str, usize>| lhs.cmp(rhs),
+        |lhs: &&str, rhs: &&str| lhs.cmp(rhs),
     );
-    assert_eq!(<ArraySeqStPerS<Pair<&str, Seq<i32>>> as ArraySeqStPerTrait<Pair<&str, Seq<i32>>>>::length(&collected), 2);
+    assert_eq!(<ArraySeqStPerS<Pair<&str, ArraySeqStPerS<usize>>> as ArraySeqStPerTrait<Pair<&str, ArraySeqStPerS<usize>>>>::length(&collected), 2);
 
     let iterated = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::iterate(&a, &|acc, item| acc + item, 0);
     assert_eq!(iterated, 15);

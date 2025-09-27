@@ -135,8 +135,9 @@ pub mod TestArraySeqStEphChap {
         );
         assert_eq!(*ninjected, ArraySeqStEphSLit!["the", "dog", "in", "big", "hat"]);
         assert_eq!(ninjected.length(), 5);
+        let mut a_mut4 = a.clone();
         let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(
-            &a,
+            &mut a_mut4,
             &ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")],
         );
         assert_eq!(*result_last, ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]);

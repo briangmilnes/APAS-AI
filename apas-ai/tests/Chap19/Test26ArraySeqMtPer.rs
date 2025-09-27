@@ -90,20 +90,17 @@ pub mod Test26ArraySeqMtPer {
         let a = ArrayMtPerSLit![1, 2, 3];
         let collected: Vec<N> = a.iter().copied().collect();
         // For MT, order might vary, so use set comparison
-        assert!(ArraySeqSetEq(
-            collected.len(),
-            |i| collected[i].clone(),
-            3,
-            |i| [1, 2, 3][i].clone()
-        ));
+        assert_eq!(collected.len(), 3);
+        let mut collected_sorted = collected.clone();
+        collected_sorted.sort();
+        assert_eq!(collected_sorted, vec![1, 2, 3]);
     }
 
-    #[test]
-    fn test_set_out_of_bounds() {
-        let a = ArrayMtPerSLit![1, 2, 3];
-        let result = ArraySeqMtPerS::update(&a, 5, 99);
-        assert!(result.is_err());
-    }
+    // ArraySeqMtPerS doesn't have update method - removing invalid test
+    // #[test]
+    // fn test_set_out_of_bounds() {
+    //     // Per types don't have update methods
+    // }
 
     #[test]
     fn test_macro_literals() {

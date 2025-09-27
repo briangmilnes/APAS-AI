@@ -5,11 +5,10 @@ pub mod TestLinkedListStEph {
     use apas_ai::Types::Types::*;
 
     fn expect_list(list: &LinkedListStEphS<N>, expected: &[N]) {
-        let iter = list.iter_in_order();
-        for &value in expected {
-            assert_eq!(iter.next(), Some(&value));
+        assert_eq!(list.length(), expected.len());
+        for (i, &value) in expected.iter().enumerate() {
+            assert_eq!(*list.nth(i), value);
         }
-        assert_eq!(iter.next(), None);
     }
 
     // Eph Chap18 algorithms are not implemented; we reference expected outcomes via simple constructions.
@@ -64,7 +63,7 @@ pub mod TestLinkedListStEph {
         let b =
             <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(
                 &a,
-                |x: &N| {
+                &|x: &N| {
                     if *x % 2 == 0 { B::True } else { B::False }
                 },
             );
