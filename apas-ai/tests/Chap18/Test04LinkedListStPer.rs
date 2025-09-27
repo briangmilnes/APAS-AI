@@ -25,7 +25,7 @@ pub mod TestLinkedListStPer {
         let c =
             <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(
                 &a,
-                |x: &N| {
+                &|x: &N| {
                     if *x % 2 == 1 { B::True } else { B::False }
                 },
             );

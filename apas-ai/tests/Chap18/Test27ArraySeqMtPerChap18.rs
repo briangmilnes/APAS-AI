@@ -56,7 +56,7 @@ pub mod Test27ArraySeqMtPerChap {
             }
         }
 
-        let fibs: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(fib, 8);
+        let fibs: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&fib, 8);
         assert_eq!(fibs.length(), 8);
 
         // Expected fibonacci sequence: [0, 1, 1, 2, 3, 5, 8, 13]

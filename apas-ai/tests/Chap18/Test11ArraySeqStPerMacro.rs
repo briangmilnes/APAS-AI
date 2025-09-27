@@ -42,6 +42,7 @@ fn arrayseq_stper_operations() {
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&appended), 5);
     assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::nth(&appended, 4), &42);
 
+    let a = ArraySeqStPerSLit![1, 2, 3, 4, 5];
     let filtered = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::filter(&a, &|value| {
         if *value % 2 == 0 { B::True } else { B::False }
     });
@@ -57,7 +58,7 @@ fn arrayseq_stper_operations() {
 
     let collected = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::collect(
         &ArraySeqStPerS![Pair("a", 1), Pair("b", 2), Pair("a", 3)],
-        |lhs, rhs| lhs.cmp(rhs),
+        |lhs: &Pair<&str, usize>, rhs: &Pair<&str, usize>| lhs.cmp(rhs),
     );
     assert_eq!(<ArraySeqStPerS<Pair<&str, Seq<i32>>> as ArraySeqStPerTrait<Pair<&str, Seq<i32>>>>::length(&collected), 2);
 

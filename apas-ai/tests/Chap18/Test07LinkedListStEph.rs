@@ -64,7 +64,7 @@ pub mod TestLinkedListStEph {
         let b =
             <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(
                 &a,
-                |x| {
+                |x: &N| {
                     if *x % 2 == 0 { B::True } else { B::False }
                 },
             );
