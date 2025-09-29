@@ -14,3 +14,15 @@
 
 
  
+ Make a HashFunClone of HashFunction and Clone in types.
+
+ Sweep Chap47 minimizing Where clauses using this addition
+ to RustRules.
+
+#### Type Creation Traits (align with baseline)
+#### Function argument bounds without where-clauses (new)
+- Prefer inline generic bounds directly on the function’s generic parameters and arguments; avoid trailing `where` clauses unless:
+  - The bounds are too long to read inline, i.e., over  120 characters, you may put in a Where clause.
+  - You need higher-ranked trait bounds/lifetimes making inline form unreadable.
+- For methods returning sequence types, put the element bound inline on the method generic: `fn map<U: StT + Clone>(...) -> Seq<U>` not `fn map<U>(...) -> Seq<U> where U: StT + Clone`.
+- For inherent/trait methods that repeat a single bound across many items in the same impl, hoist to the impl header per the hoisting rules above; otherwise keep inline.

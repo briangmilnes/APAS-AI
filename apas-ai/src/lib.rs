@@ -191,5 +191,10 @@ pub mod Chap47 {
     pub mod QuadraticProbing;
     pub mod DoubleHashing;
     pub mod HashExamples;
+    pub mod AdvancedLinearProbing;
+    pub mod AdvancedQuadraticProbing;
+    pub mod AdvancedDoubleHashing;
+    pub mod ClusteringAnalysis;
+    pub mod ProbeSequenceExamples;
 }
 

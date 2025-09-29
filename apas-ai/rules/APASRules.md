@@ -28,6 +28,7 @@
 ### Criterion Bench Configuration
 - Supply representative iterator benchmarks (e.g., `iter_sum_*`).
 - Use APAS timing parameters: warm-up ≤ 1 s, measurement ≈ 6 s, sample size ≈ 30, total run ≤ 10 s.
+- All benchmarks must have warmup and a total time limit. The defaults are too long.
 
 ### Chapter Trait Hoisting (Option A)
 - Hoist shared bounds such as `T: StT`/`T: MtT` to chapter trait headers when every method shares the element type.

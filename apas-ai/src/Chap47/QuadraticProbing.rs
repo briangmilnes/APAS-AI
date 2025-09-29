@@ -8,22 +8,14 @@ pub mod QuadraticProbing {
 
     /// Quadratic probing: h_i(x) = (h(x) + c1*i + c2*i^2) mod m
     #[derive(Clone, Debug)]
-    pub struct QuadraticProbingStrategy<K, H> 
-    where
-        K: StT,
-        H: HashFunction<K> + Clone,
-    {
+    pub struct QuadraticProbingStrategy<K: StT, H: HashFunClone<K>> {
         base_hash: H,
         c1: N,
         c2: N,
         _phantom: std::marker::PhantomData<K>,
     }
 
-    impl<K, H> QuadraticProbingStrategy<K, H>
-    where
-        K: StT,
-        H: HashFunction<K> + Clone,
-    {
+    impl<K: StT, H: HashFunClone<K>> QuadraticProbingStrategy<K, H> {
         pub fn new(hash_fn: H, c1: N, c2: N) -> Self {
             QuadraticProbingStrategy {
                 base_hash: hash_fn,
@@ -39,11 +31,7 @@ pub mod QuadraticProbing {
         }
     }
 
-    impl<K, H> ProbeSequence<K> for QuadraticProbingStrategy<K, H>
-    where
-        K: StT,
-        H: HashFunction<K> + Clone,
-    {
+    impl<K: StT, H: HashFunClone<K>> ProbeSequence<K> for QuadraticProbingStrategy<K, H> {
         /// Claude Work: Θ(1), Span: Θ(1)
         fn probe_hash(&self, key: &K, probe_index: N, table_size: N) -> N {
             let base_hash = self.base_hash.hash(key, table_size);

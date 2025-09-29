@@ -10,21 +10,13 @@ pub mod FlatHashTable {
 
     /// Entry types for flat hash table from Data Structure 47.6
     #[derive(Clone, Debug, PartialEq, Eq)]
-    pub enum Entry<K, V> 
-    where
-        K: StT,
-        V: StT,
-    {
+    pub enum Entry<K: StT, V: StT> {
         Empty,
         Dead,
         Live(K, V),
     }
 
-    impl<K, V> Display for Entry<K, V>
-    where
-        K: StT,
-        V: StT,
-    {
+    impl<K: StT, V: StT> Display for Entry<K, V> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
                 Entry::Empty => write!(f, "Empty"),
@@ -35,10 +27,7 @@ pub mod FlatHashTable {
     }
 
     /// Trait for probe sequence generation
-    pub trait ProbeSequence<K> 
-    where
-        K: StT,
-    {
+    pub trait ProbeSequence<K: StT> {
         /// Generate i-th hash value in probe sequence
         fn probe_hash(&self, key: &K, probe_index: N, table_size: N) -> N;
         
@@ -48,12 +37,7 @@ pub mod FlatHashTable {
 
     /// Data Structure 47.6: Parametric Flat Hash Table
     #[derive(Clone, Debug)]
-    pub struct FlatHashTable<K, V, P> 
-    where
-        K: StT,
-        V: StT,
-        P: ProbeSequence<K>,
-    {
+    pub struct FlatHashTable<K: StT, V: StT, P: ProbeSequence<K>> {
         table: ArraySeqStPerS<Entry<K, V>>,
         probe_sequence: P,
         num_elements: N,
@@ -61,12 +45,7 @@ pub mod FlatHashTable {
         load_factor_manager: LoadFactorManager,
     }
 
-    impl<K, V, P> FlatHashTable<K, V, P>
-    where
-        K: StT,
-        V: StT,
-        P: ProbeSequence<K> + Clone,
-    {
+    impl<K: StT, V: StT, P: ProbeSequence<K> + Clone> FlatHashTable<K, V, P> {
         /// Claude Work: Θ(m), Span: Θ(m)
         pub fn create_table(probe_seq: P, initial_size: N) -> Self {
             let size = initial_size.max(8);
@@ -348,12 +327,7 @@ pub mod FlatHashTable {
         }
     }
 
-    impl<K, V, P> Display for FlatHashTable<K, V, P>
-    where
-        K: StT + Display,
-        V: StT + Display,
-        P: ProbeSequence<K> + Clone,
-    {
+    impl<K: StT + Display, V: StT + Display, P: ProbeSequence<K> + Clone> Display for FlatHashTable<K, V, P> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             writeln!(f, "FlatHashTable ({}) {{", self.probe_sequence.strategy_name())?;
             writeln!(f, "  elements: {}, size: {}, deleted: {}", 

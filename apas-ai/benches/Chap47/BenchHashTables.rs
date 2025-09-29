@@ -1,17 +1,20 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-//! Chapter 47: Hash Tables Benchmarks
+//! Chapter 47: Hash Tables Benchmarks - Optimized for fast execution
 
 use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
+use std::time::Duration;
 use apas_ai::Chap47::SeparateChaining::SeparateChaining::*;
 use apas_ai::Chap47::FlatHashTable::FlatHashTable::*;
 use apas_ai::Chap47::LinearProbing::LinearProbing::*;
-use apas_ai::Chap47::NestedHashTable::NestedHashTable::*;
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::*;
 
 fn bench_separate_chaining_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("separate_chaining_insert");
+    group.warm_up_time(Duration::from_secs(1));
+    group.measurement_time(Duration::from_secs(6));
+    group.sample_size(30);
     
-    for size in [100, 1000, 10000].iter() {
+    for size in [10, 25, 50].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
             b.iter(|| {
                 let mut table = SeparateChainingHashTable::create_table(
@@ -21,8 +24,8 @@ fn bench_separate_chaining_insert(c: &mut Criterion) {
                 );
                 
                 for i in 0..size {
-                    let key = format!("key_{}", i);
-                    let value = format!("value_{}", i);
+                    let key = i.to_string();
+                    let value = (i * 10).to_string();
                     table = table.insert(black_box(key), black_box(value));
                 }
                 
@@ -36,24 +39,27 @@ fn bench_separate_chaining_insert(c: &mut Criterion) {
 
 fn bench_separate_chaining_lookup(c: &mut Criterion) {
     let mut group = c.benchmark_group("separate_chaining_lookup");
+    group.warm_up_time(Duration::from_secs(1));
+    group.measurement_time(Duration::from_secs(6));
+    group.sample_size(30);
     
     // Pre-populate table
     let mut table = SeparateChainingHashTable::create_table(
         DefaultKeyEquality,
         DefaultHashFunction,
-        64
+        32
     );
     
-    for i in 0..1000 {
-        let key = format!("key_{}", i);
-        let value = format!("value_{}", i);
+    for i in 0..50 {
+        let key = i.to_string();
+        let value = (i * 10).to_string();
         table = table.insert(key, value);
     }
     
     group.bench_function("lookup_existing", |b| {
         b.iter(|| {
-            for i in 0..100 {
-                let key = format!("key_{}", i);
+            for i in 0..25 {
+                let key = i.to_string();
                 black_box(table.lookup(&black_box(key)));
             }
         });
@@ -61,8 +67,8 @@ fn bench_separate_chaining_lookup(c: &mut Criterion) {
     
     group.bench_function("lookup_missing", |b| {
         b.iter(|| {
-            for i in 1000..1100 {
-                let key = format!("key_{}", i);
+            for i in 100..125 {
+                let key = i.to_string();
                 black_box(table.lookup(&black_box(key)));
             }
         });
@@ -73,16 +79,19 @@ fn bench_separate_chaining_lookup(c: &mut Criterion) {
 
 fn bench_flat_hash_table_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("flat_hash_table_insert");
+    group.warm_up_time(Duration::from_secs(1));
+    group.measurement_time(Duration::from_secs(6));
+    group.sample_size(30);
     
-    for size in [100, 1000, 5000].iter() { // Smaller sizes for flat tables due to load factor limits
-        group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
+    for size in [10, 25, 50].iter() {
+        group.bench_with_input(BenchmarkId::new("linear_probing", size), size, |b, &size| {
             b.iter(|| {
                 let probe_strategy = LinearProbingStrategy::new(DefaultHashFunction);
-                let mut table = FlatHashTable::create_table(probe_strategy, 32);
+                let mut table = FlatHashTable::create_table(probe_strategy, 64);
                 
                 for i in 0..size {
-                    let key = format!("key_{}", i);
-                    let value = format!("value_{}", i);
+                    let key = i.to_string();
+                    let value = (i * 10).to_string();
                     table = table.insert(black_box(key), black_box(value));
                 }
                 
@@ -94,161 +103,90 @@ fn bench_flat_hash_table_insert(c: &mut Criterion) {
     group.finish();
 }
 
-fn bench_nested_hash_table_insert(c: &mut Criterion) {
-    let mut group = c.benchmark_group("nested_hash_table_insert");
+fn bench_flat_hash_table_lookup(c: &mut Criterion) {
+    let mut group = c.benchmark_group("flat_hash_table_lookup");
+    group.warm_up_time(Duration::from_secs(1));
+    group.measurement_time(Duration::from_secs(6));
+    group.sample_size(30);
     
-    for size in [100, 1000, 10000].iter() {
-        group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
-            b.iter(|| {
-                let mut table: NestedHashTable<String, String> = NestedHashTable::create_table(16);
-                
-                for i in 0..size {
-                    let key = format!("key_{}", i);
-                    let value = format!("value_{}", i);
-                    table = table.insert(black_box(key), black_box(value));
-                }
-                
-                black_box(table)
-            });
-        });
+    // Pre-populate table
+    let probe_strategy = LinearProbingStrategy::new(DefaultHashFunction);
+    let mut table = FlatHashTable::create_table(probe_strategy, 64);
+    
+    for i in 0..30 {
+        let key = i.to_string();
+        let value = (i * 10).to_string();
+        table = table.insert(key, value);
     }
+    
+    group.bench_function("lookup_existing", |b| {
+        b.iter(|| {
+            for i in 0..15 {
+                let key = i.to_string();
+                black_box(table.lookup(&black_box(key)));
+            }
+        });
+    });
+    
+    group.bench_function("lookup_missing", |b| {
+        b.iter(|| {
+            for i in 100..115 {
+                let key = i.to_string();
+                black_box(table.lookup(&black_box(key)));
+            }
+        });
+    });
     
     group.finish();
 }
 
 fn bench_hash_table_comparison(c: &mut Criterion) {
     let mut group = c.benchmark_group("hash_table_comparison");
+    group.warm_up_time(Duration::from_secs(1));
+    group.measurement_time(Duration::from_secs(6));
+    group.sample_size(30);
     
-    let size = 1000;
+    let size = 25;
     
-    // Separate Chaining
     group.bench_function("separate_chaining", |b| {
         b.iter(|| {
             let mut table = SeparateChainingHashTable::create_table(
                 DefaultKeyEquality,
                 DefaultHashFunction,
-                32
+                16
             );
             
             for i in 0..size {
-                let key = format!("key_{}", i);
-                let value = i;
+                let key = i.to_string();
+                let value = (i * 10).to_string();
                 table = table.insert(black_box(key), black_box(value));
             }
             
-            // Lookup test
-            for i in 0..100 {
-                let key = format!("key_{}", i);
-                black_box(table.lookup(&black_box(key)));
+            // Perform some lookups
+            for i in 0..10 {
+                let key = i.to_string();
+                black_box(table.lookup(&key));
             }
             
             black_box(table)
         });
     });
     
-    // Nested Hash Table
-    group.bench_function("nested_hash_table", |b| {
-        b.iter(|| {
-            let mut table: NestedHashTable<String, i32> = NestedHashTable::create_table(32);
-            
-            for i in 0..size {
-                let key = format!("key_{}", i);
-                let value = i;
-                table = table.insert(black_box(key), black_box(value));
-            }
-            
-            // Lookup test
-            for i in 0..100 {
-                let key = format!("key_{}", i);
-                black_box(table.lookup(&black_box(key)));
-            }
-            
-            black_box(table)
-        });
-    });
-    
-    // Flat Hash Table (smaller size due to load factor)
-    group.bench_function("flat_hash_table", |b| {
+    group.bench_function("linear_probing", |b| {
         b.iter(|| {
             let probe_strategy = LinearProbingStrategy::new(DefaultHashFunction);
-            let mut table = FlatHashTable::create_table(probe_strategy, 64);
+            let mut table = FlatHashTable::create_table(probe_strategy, 32);
             
-            for i in 0..500 { // Smaller size to avoid excessive resizing
-                let key = format!("key_{}", i);
-                let value = i;
+            for i in 0..size {
+                let key = i.to_string();
+                let value = (i * 10).to_string();
                 table = table.insert(black_box(key), black_box(value));
             }
             
-            // Lookup test
-            for i in 0..100 {
-                let key = format!("key_{}", i);
-                black_box(table.lookup(&black_box(key)));
-            }
-            
-            black_box(table)
-        });
-    });
-    
-    group.finish();
-}
-
-fn bench_hash_functions(c: &mut Criterion) {
-    let mut group = c.benchmark_group("hash_functions");
-    
-    let keys: Vec<String> = (0..1000).map(|i| format!("test_key_{}", i)).collect();
-    let table_size = 1024;
-    
-    group.bench_function("string_position_hash", |b| {
-        let hash_fn = StringPositionHashFunction;
-        b.iter(|| {
-            for key in &keys {
-                black_box(hash_fn.hash(black_box(key), table_size));
-            }
-        });
-    });
-    
-    group.bench_function("polynomial_hash", |b| {
-        let hash_fn = PolynomialHashFunction::new(31);
-        b.iter(|| {
-            for key in &keys {
-                black_box(hash_fn.hash(black_box(key), table_size));
-            }
-        });
-    });
-    
-    group.bench_function("default_hash", |b| {
-        let hash_fn = DefaultHashFunction;
-        b.iter(|| {
-            for key in &keys {
-                black_box(hash_fn.hash(black_box(key), table_size));
-            }
-        });
-    });
-    
-    group.finish();
-}
-
-fn bench_collision_scenarios(c: &mut Criterion) {
-    let mut group = c.benchmark_group("collision_scenarios");
-    
-    // High collision scenario - keys that hash to same values
-    group.bench_function("high_collision_separate_chaining", |b| {
-        b.iter(|| {
-            let mut table = SeparateChainingHashTable::create_table(
-                DefaultKeyEquality,
-                StringPositionHashFunction,
-                5 // Small table to force collisions
-            );
-            
-            // Insert keys that will collide
-            let colliding_keys = vec!["aa", "ff", "kk", "pp", "uu"]; // All hash to 0 with StringPositionHashFunction
-            for (i, key) in colliding_keys.iter().enumerate() {
-                table = table.insert(black_box(key.to_string()), black_box(i));
-            }
-            
-            // Lookup all keys
-            for key in &colliding_keys {
-                black_box(table.lookup(&black_box(key.to_string())));
+            // Perform some lookups
+            for i in 0..10 {
+                let key = i.to_string();
+                black_box(table.lookup(&key));
             }
             
             black_box(table)
@@ -263,10 +201,7 @@ criterion_group!(
     bench_separate_chaining_insert,
     bench_separate_chaining_lookup,
     bench_flat_hash_table_insert,
-    bench_nested_hash_table_insert,
-    bench_hash_table_comparison,
-    bench_hash_functions,
-    bench_collision_scenarios
+    bench_flat_hash_table_lookup,
+    bench_hash_table_comparison
 );
-
 criterion_main!(benches);

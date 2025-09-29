@@ -747,6 +747,26 @@ path = "tests/Chap41Codex/TestChap41CodexAVLTreeSetSt.rs"
 name = "TestChap41CodexAVLTreeSetMt"
 path = "tests/Chap41Codex/TestChap41CodexAVLTreeSetMt.rs"
 
+[[test]]
+name = "TestAdvancedLinearProbing"
+path = "tests/Chap47/TestAdvancedLinearProbing.rs"
+
+[[test]]
+name = "TestAdvancedQuadraticProbing"
+path = "tests/Chap47/TestAdvancedQuadraticProbing.rs"
+
+[[test]]
+name = "TestAdvancedDoubleHashing"
+path = "tests/Chap47/TestAdvancedDoubleHashing.rs"
+
+[[test]]
+name = "TestClusteringAnalysis"
+path = "tests/Chap47/TestClusteringAnalysis.rs"
+
+[[test]]
+name = "TestProbeSequenceExamples"
+path = "tests/Chap47/TestProbeSequenceExamples.rs"
+
 
 [[bench]]
 name = "BenchArraySetStEph"
@@ -803,10 +823,10 @@ name = "BenchTableMtEph"
 path = "benches/Chap42Claude/BenchTableMtEph.rs"
 harness = false
 
-[[bench]]
-name = "BenchOrderedSetStPer"
-path = "benches/Chap43Claude/BenchOrderedSetStPer.rs"
-harness = false
+# [[bench]]
+# name = "BenchOrderedSetStPer"
+# path = "benches/Chap43Claude/BenchOrderedSetStPer.rs"
+# harness = false
 
 [[bench]]
 name = "BenchOrderedSetStEph"
@@ -818,10 +838,10 @@ name = "BenchOrderedSetMtEph"
 path = "benches/Chap43Claude/BenchOrderedSetMtEph.rs"
 harness = false
 
-[[bench]]
-name = "BenchOrderedTableStPer"
-path = "benches/Chap43Claude/BenchOrderedTableStPer.rs"
-harness = false
+# [[bench]]
+# name = "BenchOrderedTableStPer"
+# path = "benches/Chap43Claude/BenchOrderedTableStPer.rs"
+# harness = false
 
 [[bench]]
 name = "BenchOrderedTableStEph"
@@ -831,5 +851,15 @@ harness = false
 [[bench]]
 name = "BenchOrderedTableMtEph"
 path = "benches/Chap43Claude/BenchOrderedTableMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchHashTables"
+path = "benches/Chap47/BenchHashTables.rs"
+harness = false
+
+[[bench]]
+name = "BenchAdvancedProbing"
+path = "benches/Chap47/BenchAdvancedProbing.rs"
 harness = false
 

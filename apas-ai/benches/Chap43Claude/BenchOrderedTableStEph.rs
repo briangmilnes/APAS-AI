@@ -1,5 +1,6 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
-use apas_ai::Chap43Claude::OrderedTableStEph::*;
+use apas_ai::Chap43Claude::OrderedTableStEph::OrderedTableStEph::*;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Types::Types::*;
 use std::time::Duration;
 
@@ -11,7 +12,7 @@ fn bench_ordered_table_st_eph_insert(c: &mut Criterion) {
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
             b.iter_batched(
-                || OrderedTableStEph::empty(),
+                || <OrderedTableStEph<i32, String>>::empty(),
                 |mut table| {
                     for i in 0..size {
                         table.insert(black_box(i), black_box(format!("value_{}", i)), |_old, new| new.clone());
@@ -31,7 +32,7 @@ fn bench_ordered_table_st_eph_lookup(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableStEph::empty();
+        let mut table = <OrderedTableStEph<i32, String>>::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
@@ -56,7 +57,7 @@ fn bench_ordered_table_st_eph_delete(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("delete", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut table = OrderedTableStEph::empty();
+                    let mut table = <OrderedTableStEph<i32, String>>::empty();
                     for i in 0..size {
                         table.insert(i, format!("value_{}", i), |_old, new| new.clone());
                     }
@@ -81,7 +82,7 @@ fn bench_ordered_table_st_eph_first_last_key(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableStEph::empty();
+        let mut table = <OrderedTableStEph<i32, String>>::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
@@ -107,7 +108,7 @@ fn bench_ordered_table_st_eph_previous_next_key(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableStEph::empty();
+        let mut table = <OrderedTableStEph<i32, String>>::empty();
         for i in 0..*size {
             table.insert(i * 2, format!("value_{}", i * 2), |_old, new| new.clone()); // Insert even numbers
         }
@@ -140,7 +141,7 @@ fn bench_ordered_table_st_eph_split_join_key(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("split_key", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut table = OrderedTableStEph::empty();
+                    let mut table = <OrderedTableStEph<i32, String>>::empty();
                     for i in 0..size {
                         table.insert(i, format!("value_{}", i), |_old, new| new.clone());
                     }
@@ -157,8 +158,8 @@ fn bench_ordered_table_st_eph_split_join_key(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("join_key", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut left = OrderedTableStEph::empty();
-                    let mut right = OrderedTableStEph::empty();
+                    let mut left = <OrderedTableStEph<i32, String>>::empty();
+                    let mut right = <OrderedTableStEph<i32, String>>::empty();
                     let mid = size / 2;
                     
                     for i in 0..mid {
@@ -169,8 +170,8 @@ fn bench_ordered_table_st_eph_split_join_key(c: &mut Criterion) {
                     }
                     (left, right)
                 },
-                |(mut left, mut right)| {
-                    left.join_key(&mut right);
+                |(mut left, right)| {
+                    left.join_key(right);
                     black_box(left)
                 },
                 criterion::BatchSize::SmallInput,
@@ -186,7 +187,7 @@ fn bench_ordered_table_st_eph_get_key_range(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableStEph::empty();
+        let mut table = <OrderedTableStEph<i32, String>>::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
@@ -208,7 +209,7 @@ fn bench_ordered_table_st_eph_rank_select_key(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableStEph::empty();
+        let mut table = <OrderedTableStEph<i32, String>>::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
@@ -224,7 +225,7 @@ fn bench_ordered_table_st_eph_rank_select_key(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("select_key", size), size, |b, &size| {
             b.iter(|| {
                 for i in 0..size {
-                    black_box(table.select_key(black_box(i)));
+                    black_box(table.select_key(black_box(i as usize)));
                 }
             });
         });
@@ -241,7 +242,7 @@ fn bench_ordered_table_st_eph_split_rank_key(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("split_rank_key", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut table = OrderedTableStEph::empty();
+                    let mut table = <OrderedTableStEph<i32, String>>::empty();
                     for i in 0..size {
                         table.insert(i, format!("value_{}", i), |_old, new| new.clone());
                     }
@@ -249,7 +250,7 @@ fn bench_ordered_table_st_eph_split_rank_key(c: &mut Criterion) {
                 },
                 |mut table| {
                     let mid_rank = size / 2;
-                    black_box(table.split_rank_key(mid_rank))
+                    black_box(table.split_rank_key(mid_rank as usize))
                 },
                 criterion::BatchSize::SmallInput,
             );
@@ -264,9 +265,9 @@ fn bench_ordered_table_st_eph_table_operations(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableStEph::empty();
+        let mut table = <OrderedTableStEph<i32, String>>::empty();
         for i in 0..*size {
-            table.insert(i, i * 10, |_old, new| new.clone());
+            table.insert(i, format!("value_{}", i * 10), |_old, new| new.clone());
         }
         
         group.bench_with_input(BenchmarkId::new("filter", size), size, |b, _size| {
@@ -283,7 +284,7 @@ fn bench_ordered_table_st_eph_table_operations(c: &mut Criterion) {
         
         group.bench_with_input(BenchmarkId::new("reduce", size), size, |b, _size| {
             b.iter(|| {
-                black_box(table.reduce(0, |acc, _k, v| acc + v))
+                black_box(table.reduce(0, |acc, _k, _v| acc + 1))
             });
         });
     }
@@ -296,7 +297,7 @@ fn bench_ordered_table_st_eph_collect(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableStEph::empty();
+        let mut table = <OrderedTableStEph<i32, String>>::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
@@ -322,7 +323,8 @@ fn bench_ordered_table_st_eph_from_sorted_entries(c: &mut Criterion) {
         
         group.bench_with_input(BenchmarkId::new("from_sorted_entries", size), &entries, |b, entries| {
             b.iter(|| {
-                black_box(OrderedTableStEph::from_sorted_entries(entries.clone()))
+                let seq = AVLTreeSeqStPerTrait::from_vec(entries.clone());
+                black_box(from_sorted_entries(seq))
             });
         });
     }

@@ -48,6 +48,49 @@ pub mod Types {
         fn new_mt(inner: Self::Inner) -> Self;
     }
 
+    // HashFunClone: Combines HashFunction and Clone for Chapter 47 hash tables
+    // Reduces where clause complexity by bundling common requirements
+    pub trait HashFunClone<K>: crate::Chap47::HashFunctionTraits::HashFunctionTraits::HashFunction<K> + Clone {}
+    impl<K, T> HashFunClone<K> for T where T: crate::Chap47::HashFunctionTraits::HashFunctionTraits::HashFunction<K> + Clone {}
+
+    // MtKey: Multi-threaded key type with ordering and static lifetime
+    // Common pattern: StTInMtT + Ord + 'static (appears 15+ times)
+    pub trait MtKey: StTInMtT + Ord + 'static {}
+    impl<T> MtKey for T where T: StTInMtT + Ord + 'static {}
+
+    // MtVal: Multi-threaded value type with static lifetime  
+    // Common pattern: StTInMtT + 'static (appears 15+ times)
+    pub trait MtVal: StTInMtT + 'static {}
+    impl<T> MtVal for T where T: StTInMtT + 'static {}
+
+    // MtFn: Multi-threaded function type with common bounds
+    // Common pattern: Fn(...) + Send + Sync + 'static (appears 30+ times)
+    pub trait MtFn<Args, Output>: Fn(Args) -> Output + Send + Sync + 'static {}
+    impl<T, Args, Output> MtFn<Args, Output> for T where T: Fn(Args) -> Output + Send + Sync + 'static {}
+
+    // MtFnClone: Multi-threaded function type with Clone
+    // Common pattern: Fn(...) + Send + Sync + Clone + 'static (appears 20+ times)
+    pub trait MtFnClone<Args, Output>: Fn(Args) -> Output + Send + Sync + Clone + 'static {}
+    impl<T, Args, Output> MtFnClone<Args, Output> for T where T: Fn(Args) -> Output + Send + Sync + Clone + 'static {}
+
+    // MtReduceFn: Multi-threaded reducer function type
+    // Common pattern: Fn(&V, &V) -> V + Clone + Send + Sync + 'static (appears 8+ times)
+    pub trait MtReduceFn<V>: Fn(&V, &V) -> V + Clone + Send + Sync + 'static {}
+    impl<T, V> MtReduceFn<V> for T where T: Fn(&V, &V) -> V + Clone + Send + Sync + 'static {}
+
+    // Note: StT + Send + Sync is already covered by existing StTInMtT trait
+    // StTInMtT + 'static pattern can be expressed as StTInMtT + 'static inline
+
+    // HashOrd: Type that can be hashed and ordered (for graph vertices)
+    // Common pattern: StT + MtT + Hash + Ord (appears in graph modules)
+    pub trait HashOrd: StT + Hash + Ord {}
+    impl<T> HashOrd for T where T: StT + Hash + Ord {}
+
+    // ArithmeticT: Type supporting arithmetic operations (for reductions)
+    // Common pattern: StT + std::ops::Add<Output = T> + Default + Copy
+    pub trait ArithmeticT: StT + std::ops::Add<Output = Self> + Default + Copy {}
+    impl<T> ArithmeticT for T where T: StT + std::ops::Add<Output = T> + Default + Copy {}
+
     impl<T: StT + Send> MtT for std::sync::Mutex<T> {
         type Inner = T;
         fn clone_mt(&self) -> Self {

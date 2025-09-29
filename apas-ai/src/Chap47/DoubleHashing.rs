@@ -2,29 +2,20 @@
 //! Chapter 47: Double Hashing Strategy
 
 pub mod DoubleHashing {
+    use crate::Types::Types::*;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     use crate::Chap47::FlatHashTable::FlatHashTable::*;
-    use crate::Types::Types::*;
+
 
     /// Double hashing: h_i(x) = (h1(x) + i * h2(x)) mod m
     #[derive(Clone, Debug)]
-    pub struct DoubleHashingStrategy<K, H1, H2> 
-    where
-        K: StT,
-        H1: HashFunction<K> + Clone,
-        H2: HashFunction<K> + Clone,
-    {
+    pub struct DoubleHashingStrategy<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> {
         hash1: H1,
         hash2: H2,
         _phantom: std::marker::PhantomData<K>,
     }
 
-    impl<K, H1, H2> DoubleHashingStrategy<K, H1, H2>
-    where
-        K: StT,
-        H1: HashFunction<K> + Clone,
-        H2: HashFunction<K> + Clone,
-    {
+    impl<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> DoubleHashingStrategy<K, H1, H2> {
         pub fn new(hash1: H1, hash2: H2) -> Self {
             DoubleHashingStrategy {
                 hash1,
@@ -34,12 +25,7 @@ pub mod DoubleHashing {
         }
     }
 
-    impl<K, H1, H2> ProbeSequence<K> for DoubleHashingStrategy<K, H1, H2>
-    where
-        K: StT,
-        H1: HashFunction<K> + Clone,
-        H2: HashFunction<K> + Clone,
-    {
+    impl<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> ProbeSequence<K> for DoubleHashingStrategy<K, H1, H2> {
         /// Claude Work: Θ(1), Span: Θ(1)
         fn probe_hash(&self, key: &K, probe_index: N, table_size: N) -> N {
             let h1 = self.hash1.hash(key, table_size);

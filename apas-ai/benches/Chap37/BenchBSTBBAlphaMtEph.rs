@@ -2,6 +2,7 @@
 use std::time::Duration;
 
 use apas_ai::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::BSTreeBBAlpha;
+use apas_ai::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::BSTBBAlphaMtEphTrait;
 use apas_ai::{BSTBBAlphaMtEphLit, *};
 use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 

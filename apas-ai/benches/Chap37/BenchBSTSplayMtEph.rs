@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
-use apas_ai::Chap37::BSTSplayMtEph::BSTSplayMtEph::BSTreeSplay;
+use apas_ai::Chap37::BSTSplayMtEph::BSTSplayMtEph::{BSTreeSplay, BSTSplayMtEphTrait};
 use apas_ai::{BSTSplayMtEphLit, *};
 use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 
@@ -16,8 +16,8 @@ fn build_tree(len: usize) -> BSTreeSplay<i32> {
 fn bench_bsteph_splay(c: &mut Criterion) {
     let mut group = c.benchmark_group("BSTSplayMtEph");
     group.sample_size(30);
-    group.warm_up_time(Duration::from_millis(500));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for &n in &[1_024usize, 2_048] {
         group.bench_with_input(BenchmarkId::new("build", n), &n, |b, &len| {

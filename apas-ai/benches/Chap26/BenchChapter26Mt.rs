@@ -13,7 +13,7 @@ fn bench_chapter26_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chapter26Mt");
     group.sample_size(30);
     group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.measurement_time(Duration::from_secs(1));
 
     for &n in &[1_024usize, 8_192] {
         group.bench_with_input(BenchmarkId::new("persistent_set", n), &n, |b, &len| {

@@ -13,3 +13,4 @@
 - [ ] Run the AlgorithmicAnalysis checklist. Was it met? 
 - [ ] Did you pause? Why and how can you prevent this in future?
 - [ ] Make a plan to fix any defects found, one to-do for each file.
+- [ ] Run the full benchmark, fix any defects found.
