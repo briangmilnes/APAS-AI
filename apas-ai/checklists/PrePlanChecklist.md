@@ -30,4 +30,6 @@
 - [ ] Estimate the time to execute this plan.
 - [ ] If the user says 'Execute relentlessly without pause' can you for this plan?
 - [ ] Add a step of running the the AlgorithmicAnalaysis to the rules/AlgorithmicAnalysisRules.md.
+- [ ] It is critical that the todo list is detailed to the file and each task on each file getting
+     their own todo. 
 - [ ] Add the last step of running the PostPlanChecklist.

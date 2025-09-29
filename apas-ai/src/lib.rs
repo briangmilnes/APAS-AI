@@ -162,6 +162,9 @@ pub mod Chap43Claude {
     pub mod OrderedTableStPer;
     pub mod OrderedTableStEph;
     pub mod OrderedTableMtEph;
+    pub mod AugOrderedTableStPer;
+    pub mod AugOrderedTableStEph;
+    pub mod AugOrderedTableMtEph;
     pub mod Example43_1;
 }
 
