@@ -30,10 +30,14 @@ pub mod WeightedUnDirGraphStEphInt {
         }
 
         /// Add a weighted edge to the graph (undirected)
-        pub fn add_weighted_edge(&mut self, v1: V, v2: V, weight: i32) { self.add_labeled_edge(v1, v2, weight); }
+        pub fn add_weighted_edge(&mut self, v1: V, v2: V, weight: i32) {
+            self.add_labeled_edge(v1, v2, weight);
+        }
 
         /// Get the weight of an edge, if it exists
-        pub fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<i32> { self.get_edge_label(v1, v2).copied() }
+        pub fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<i32> {
+            self.get_edge_label(v1, v2).copied()
+        }
 
         /// Get all weighted edges as (v1, v2, weight) tuples
         pub fn weighted_edges(&self) -> Set<(V, V, i32)> {
@@ -58,10 +62,14 @@ pub mod WeightedUnDirGraphStEphInt {
         }
 
         /// Get the total weight of all edges
-        pub fn total_weight(&self) -> i32 { self.labeled_edges().iter().map(|edge| edge.2).sum() }
+        pub fn total_weight(&self) -> i32 {
+            self.labeled_edges().iter().map(|edge| edge.2).sum()
+        }
 
         /// Get the degree of a vertex (number of incident edges)
-        pub fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
+        pub fn vertex_degree(&self, v: &V) -> usize {
+            self.neighbors(v).size()
+        }
 
         /// Check if the graph is connected (all vertices reachable from any vertex)
         pub fn is_connected(&self) -> bool {

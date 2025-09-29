@@ -53,14 +53,19 @@ pub mod BSTBBAlphaMtEph {
     }
 
     impl<T: StTInMtT + Ord> Default for BSTBBAlphaMtEph<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     impl<T: StTInMtT + Ord> BSTBBAlphaMtEph<T> {
+        fn size_link(link: &Link<T>) -> N {
+            link.as_ref().map_or(0, |n| n.size)
+        }
 
-        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
-
-        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right); }
+        fn update(node: &mut Node<T>) {
+            node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right);
+        }
 
         fn insert_link(link: &mut Link<T>, value: T) -> bool {
             match link {
@@ -195,11 +200,7 @@ pub mod BSTBBAlphaMtEph {
         }
 
         fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() {
-                true
-            } else {
-                false
-            }
+            if self.find(target).is_some() { true } else { false }
         }
 
         fn size(&self) -> N {
@@ -208,11 +209,7 @@ pub mod BSTBBAlphaMtEph {
         }
 
         fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
+            if self.size() == 0 { true } else { false }
         }
 
         fn height(&self) -> N {

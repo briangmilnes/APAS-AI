@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
-use apas_ai::Chap37::BSTPlainStEph::BSTPlainStEph::{BSTree, BSTPlainStEphTrait};
+use apas_ai::Chap37::BSTPlainStEph::BSTPlainStEph::{BSTPlainStEphTrait, BSTree};
 use apas_ai::{BSTPlainStEphLit, *};
 use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 

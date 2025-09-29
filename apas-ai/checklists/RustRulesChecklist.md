@@ -1,6 +1,6 @@
 - [ ] Code Elegance and Minimalism
   - [ ] Terminology alignment
-  - [ ] Always choose the minimal solution
+  - [ ] Always choose the minimal solution (KISS)
   - [ ] Closure Mutation Patterns
   - [ ] Formatting discipline
   - [ ] Zero Warnings Policy (MANDATORY)
@@ -22,10 +22,11 @@
   - [ ] Callable parameter style (`impl Fn` in parameter position)
   - [ ] Default element bound (StT by default)
 - [ ] APIs, Macros, Constructors, Encapsulation
-  - [ ] Macro Normalization (Exported and Type‑Checked)
+  - [ ] Macro Normalization (Exported and Type-Checked)
   - [ ] Constructor No Raw Backing Collections
   - [ ] Struct Field Encapsulation
-  - [ ] No Free‑Function Wrappers
+  - [ ] No Free-Function Wrappers
+  - [ ] No intra-module stub functions that simply call existing module functions/methods
   - [ ] Type Conversions and Naming
 - [ ] Iteration, Iterators, and Tests
   - [ ] Iterator impls (three forms)
@@ -33,4 +34,4 @@
   - [ ] Test via Public API Only
   - [ ] CamlCase not SnakeCase
   - [ ] Type Inference Cleanup
-  - [ ] Contain UFCS (call‑site elimination)
+  - [ ] Contain UFCS (call-site elimination)

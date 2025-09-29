@@ -7,11 +7,7 @@ pub mod Exercise21_7 {
 
     /// Check if a number is even
     pub fn is_even(x: &N) -> B {
-        if *x % 2 == 0 {
-            true
-        } else {
-            false
-        }
+        if *x % 2 == 0 { true } else { false }
     }
 
     /// Check if a character is a vowel (case-insensitive)

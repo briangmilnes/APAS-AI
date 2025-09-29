@@ -1,0 +1,14 @@
+- [ ] Was every plan TODO completed or explicitly deferred/updated with rationale?
+- [ ] Did actual work stay within the scope and constraints documented in the plan?
+- [ ] Were all required source files created?
+- [ ] Were all required test files created?
+- [ ] Were all required benchmark files created?
+- [ ] Were RustRulesChecklist and APASRulesChecklist executed at the points scheduled in the plan, and the results printed for the user?
+- [ ] Is cargo build clean (no errors, no warning).
+- [ ] Is cargo nextest run clean (no errors, no warning).
+- [ ] Are there uses of Vec that are of known length and should be a sequence type? Fix them.
+- [ ] Did you benchmark just each new src file created?
+- [ ] Did the plan correctly implement parallelism (or call it) in each *Mt file?
+- [ ] Were all planned per-file checklists (e.g., PerSrc, PerTest, PerBenchmark) run after each file creation/update?
+- [ ] Run the AlgorithmicAnalysis checklist. Was it met? 
+- [ ] Did you pause? Why and how can you prevent this in future?

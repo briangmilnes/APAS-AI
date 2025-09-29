@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
-use apas_ai::Chap40::BSTKeyValueStEph::BSTKeyValueStEph::{BSTreeKeyValue, BSTKeyValueStEphTrait};
+use apas_ai::Chap40::BSTKeyValueStEph::BSTKeyValueStEph::{BSTKeyValueStEphTrait, BSTreeKeyValue};
 use apas_ai::{BSTKeyValueStEphLit, *};
 use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 

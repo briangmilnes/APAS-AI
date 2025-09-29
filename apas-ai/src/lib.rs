@@ -131,3 +131,37 @@ pub mod Chap40 {
     pub mod BSTReducedStEph;
     pub mod BSTSizeStEph;
 }
+
+pub mod Chap41 {
+    pub mod AVLTreeSetStEph;
+    pub mod AVLTreeSetStPer;
+    pub mod ArraySetEnumMtEph;
+    pub mod ArraySetStEph;
+    pub mod Example41_3;
+}
+
+pub mod Chap41Codex {
+    pub mod AVLTreeSetMtEph;
+    pub mod AVLTreeSetStEph;
+    pub mod ArraySetEnumMtEph;
+    pub mod ArraySetEnumStEph;
+    pub mod Example41_3;
+}
+
+pub mod Chap42Claude {
+    pub mod TableStPer;
+    pub mod TableStEph;
+    pub mod TableMtEph;
+    pub mod Example42_1;
+}
+
+pub mod Chap43Claude {
+    pub mod OrderedSetStPer;
+    pub mod OrderedSetStEph;
+    pub mod OrderedSetMtEph;
+    pub mod OrderedTableStPer;
+    pub mod OrderedTableStEph;
+    pub mod OrderedTableMtEph;
+    pub mod Example43_1;
+}
+

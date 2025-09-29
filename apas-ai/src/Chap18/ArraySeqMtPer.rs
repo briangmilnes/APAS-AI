@@ -29,7 +29,9 @@ pub mod ArraySeqMtPer {
             ArraySeqMtPerS::from_vec(values)
         }
 
-        pub fn singleton(item: T) -> Self { ArraySeqMtPerS::from_vec(vec![item]) }
+        pub fn singleton(item: T) -> Self {
+            ArraySeqMtPerS::from_vec(vec![item])
+        }
 
         pub fn from_vec(values: Vec<T>) -> Self {
             ArraySeqMtPerS {
@@ -37,9 +39,13 @@ pub mod ArraySeqMtPer {
             }
         }
 
-        pub fn length(&self) -> N { self.data.len() }
+        pub fn length(&self) -> N {
+            self.data.len()
+        }
 
-        pub fn nth(&self, index: N) -> &T { &self.data[index] }
+        pub fn nth(&self, index: N) -> &T {
+            &self.data[index]
+        }
 
         pub fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.data.len();
@@ -50,23 +56,17 @@ pub mod ArraySeqMtPer {
         }
 
         pub fn is_empty(&self) -> B {
-            if self.data.is_empty() {
-                true
-            } else {
-                false
-            }
+            if self.data.is_empty() { true } else { false }
         }
 
         pub fn is_singleton(&self) -> B {
-            if self.data.len() == 1 {
-                true
-            } else {
-                false
-            }
+            if self.data.len() == 1 { true } else { false }
         }
 
         /// Iterator over references to elements
-        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
+        pub fn iter(&self) -> std::slice::Iter<'_, T> {
+            self.data.iter()
+        }
     }
 
     impl<T: StTInMtT> Clone for ArraySeqMtPerS<T> {
@@ -96,14 +96,18 @@ pub mod ArraySeqMtPer {
         type Item = &'a T;
         type IntoIter = std::slice::Iter<'a, T>;
 
-        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
+        fn into_iter(self) -> Self::IntoIter {
+            self.data.iter()
+        }
     }
 
     impl<T: StTInMtT> IntoIterator for ArraySeqMtPerS<T> {
         type Item = T;
         type IntoIter = std::vec::IntoIter<T>;
 
-        fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
+        fn into_iter(self) -> Self::IntoIter {
+            self.data.into_vec().into_iter()
+        }
     }
 
     impl<T: StTInMtT> std::fmt::Display for ArraySeqMtPerS<T> {
@@ -156,11 +160,21 @@ pub mod ArraySeqMtPer {
     }
 
     impl<T: StTInMtT> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqMtPerS<T> { ArraySeqMtPerS::new(length, init_value) }
-        fn empty() -> ArraySeqMtPerS<T> { ArraySeqMtPerS::empty() }
-        fn singleton(item: T) -> ArraySeqMtPerS<T> { ArraySeqMtPerS::singleton(item) }
-        fn length(&self) -> N { ArraySeqMtPerS::length(self) }
-        fn nth(&self, index: N) -> &T { ArraySeqMtPerS::nth(self, index) }
+        fn new(length: N, init_value: T) -> ArraySeqMtPerS<T> {
+            ArraySeqMtPerS::new(length, init_value)
+        }
+        fn empty() -> ArraySeqMtPerS<T> {
+            ArraySeqMtPerS::empty()
+        }
+        fn singleton(item: T) -> ArraySeqMtPerS<T> {
+            ArraySeqMtPerS::singleton(item)
+        }
+        fn length(&self) -> N {
+            ArraySeqMtPerS::length(self)
+        }
+        fn nth(&self, index: N) -> &T {
+            ArraySeqMtPerS::nth(self, index)
+        }
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T> {
             ArraySeqMtPerS::subseq_copy(self, start, length)
         }
@@ -366,8 +380,12 @@ pub mod ArraySeqMtPer {
             result
         }
 
-        fn isEmpty(&self) -> B { ArraySeqMtPerS::is_empty(self) }
+        fn isEmpty(&self) -> B {
+            ArraySeqMtPerS::is_empty(self)
+        }
 
-        fn isSingleton(&self) -> B { ArraySeqMtPerS::is_singleton(self) }
+        fn isSingleton(&self) -> B {
+            ArraySeqMtPerS::is_singleton(self)
+        }
     }
 }

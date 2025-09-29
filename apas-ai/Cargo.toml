@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+bitvec = "1.0"
 ordered-float = "4.2"
 rand = "0.9.2"
 rayon = "1.11.0"
@@ -665,4 +666,170 @@ path = "tests/Chap40/TestBSTSizeStEph.rs"
 [[test]]
 name = "TestBSTReducedStEph"
 path = "tests/Chap40/TestBSTReducedStEph.rs"
+
+[[test]]
+name = "TestArraySetStEph"
+path = "tests/Chap41/TestArraySetStEph.rs"
+
+[[test]]
+name = "TestArraySetEnumMtEph"
+path = "tests/Chap41/TestArraySetEnumMtEph.rs"
+
+[[test]]
+name = "TestAVLTreeSetStEph"
+path = "tests/Chap41/TestAVLTreeSetStEph.rs"
+
+[[test]]
+name = "TestAVLTreeSetStPer"
+path = "tests/Chap41/TestAVLTreeSetStPer.rs"
+
+[[test]]
+name = "TestExample41_3"
+path = "tests/Chap41/TestExample41_3.rs"
+
+[[test]]
+name = "TestTableStPer"
+path = "tests/Chap42Claude/TestTableStPer.rs"
+
+[[test]]
+name = "TestTableStEph"
+path = "tests/Chap42Claude/TestTableStEph.rs"
+
+[[test]]
+name = "TestTableMtEph"
+path = "tests/Chap42Claude/TestTableMtEph.rs"
+
+[[test]]
+name = "TestExample42_1"
+path = "tests/Chap42Claude/TestExample42_1.rs"
+
+[[test]]
+name = "TestOrderedSetStPer"
+path = "tests/Chap43Claude/TestOrderedSetStPer.rs"
+
+[[test]]
+name = "TestOrderedSetStEph"
+path = "tests/Chap43Claude/TestOrderedSetStEph.rs"
+
+[[test]]
+name = "TestOrderedSetMtEph"
+path = "tests/Chap43Claude/TestOrderedSetMtEph.rs"
+
+[[test]]
+name = "TestOrderedTableStPer"
+path = "tests/Chap43Claude/TestOrderedTableStPer.rs"
+
+[[test]]
+name = "TestOrderedTableStEph"
+path = "tests/Chap43Claude/TestOrderedTableStEph.rs"
+
+[[test]]
+name = "TestOrderedTableMtEph"
+path = "tests/Chap43Claude/TestOrderedTableMtEph.rs"
+
+[[test]]
+name = "TestExample43_1"
+path = "tests/Chap43Claude/TestExample43_1.rs"
+
+[[test]]
+name = "TestChap41CodexArraySetEnumSt"
+path = "tests/Chap41Codex/TestChap41CodexArraySetEnumSt.rs"
+
+[[test]]
+name = "TestChap41CodexArraySetEnumMt"
+path = "tests/Chap41Codex/TestChap41CodexArraySetEnumMt.rs"
+
+[[test]]
+name = "TestChap41CodexAVLTreeSetSt"
+path = "tests/Chap41Codex/TestChap41CodexAVLTreeSetSt.rs"
+
+[[test]]
+name = "TestChap41CodexAVLTreeSetMt"
+path = "tests/Chap41Codex/TestChap41CodexAVLTreeSetMt.rs"
+
+
+[[bench]]
+name = "BenchArraySetStEph"
+path = "benches/Chap41/BenchArraySetStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchArraySetEnumMtEph"
+path = "benches/Chap41/BenchArraySetEnumMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchAVLTreeSetStEph"
+path = "benches/Chap41/BenchAVLTreeSetStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchAVLTreeSetStPer"
+path = "benches/Chap41/BenchAVLTreeSetStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchChap41CodexArraySetEnumSt"
+path = "benches/Chap41Codex/BenchArraySetEnumStCodex.rs"
+harness = false
+
+[[bench]]
+name = "BenchChap41CodexArraySetEnumMt"
+path = "benches/Chap41Codex/BenchArraySetEnumMtCodex.rs"
+harness = false
+
+[[bench]]
+name = "BenchChap41CodexAVLTreeSetSt"
+path = "benches/Chap41Codex/BenchAVLTreeSetStCodex.rs"
+harness = false
+
+[[bench]]
+name = "BenchChap41CodexAVLTreeSetMt"
+path = "benches/Chap41Codex/BenchAVLTreeSetMtCodex.rs"
+harness = false
+
+[[bench]]
+name = "BenchTableStPer"
+path = "benches/Chap42Claude/BenchTableStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchTableStEph"
+path = "benches/Chap42Claude/BenchTableStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchTableMtEph"
+path = "benches/Chap42Claude/BenchTableMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchOrderedSetStPer"
+path = "benches/Chap43Claude/BenchOrderedSetStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchOrderedSetStEph"
+path = "benches/Chap43Claude/BenchOrderedSetStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchOrderedSetMtEph"
+path = "benches/Chap43Claude/BenchOrderedSetMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchOrderedTableStPer"
+path = "benches/Chap43Claude/BenchOrderedTableStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchOrderedTableStEph"
+path = "benches/Chap43Claude/BenchOrderedTableStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchOrderedTableMtEph"
+path = "benches/Chap43Claude/BenchOrderedTableMtEph.rs"
+harness = false
 

@@ -1,0 +1,3 @@
+- [ ] Identify applicable global checklists for this file (always `RustRulesChecklist`; add `APASRulesChecklist` when the file is part of chapter code).
+- [ ] Run the identified checklist(s) before editing; log any defects or constraints to honor during the change.
+- [ ] After modifications, rerun the same checklist(s) to confirm all items remain satisfied; document outcomes or outstanding issues.

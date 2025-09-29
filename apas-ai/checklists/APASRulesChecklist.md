@@ -1,0 +1,25 @@
+- [ ] Assistant Vec Prohibition
+  - [ ] No new `Vec` usage at call sites; reuse only inside defining modules where already established.
+  - [ ] Sweeps avoid `Vec`/`vec![]`/`to_vec()`/`into_vec()`; prefer sequence APIs (`tabulate`, `nth`, `iter`, literals).
+  - [ ] Core operations exposed as inherent methods (no free-function wrappers); mirror trait APIs in a single impl per type.
+  - [ ] Conversions (`from_vec`/`to_vec`) stay internal and keep representation hidden.
+  - [ ] Apply Seq-First (operate directly on sequences) and Vec-to-Seq rules when size is known.
+- [ ] Element Shorthands and Delegation
+  - [ ] Use `StT`/`MtT` bounds as defined (note: `StT` excludes `Copy`).
+  - [ ] Prefer `Pair` from `crate::Types::Types` in public APIs.
+  - [ ] Maintain chapter delegation chains (Chap.19 ST→Chap.18 ST, MT→MT; never mix).
+- [ ] APAS Naming Fidelity (mirror textbook identifiers exactly).
+- [ ] Iterator-based Assertions (validate contents via iterator APIs, never expose backing storage).
+- [ ] Criterion Bench Configuration
+  - [ ] Provide representative iterator benchmarks for new data structures.
+  - [ ] Timing parameters within APAS bounds (warm-up ≤ 1 s; measurement ≈ 6 s; sample ≈ 30; total ≤ 10 s) unless overridden by instructions.
+- [ ] Chapter Trait Hoisting (Option A) – hoist shared bounds to trait headers; keep method-specific generics local; reuse hoisted bounds in implementations.
+- [ ] Parallel Spawn/Join Model – use `std::thread::spawn`/`join`; avoid alternate thread pools.
+- [ ] MT Module Discipline – `*Mt*` files enforce real multi-threaded semantics (`MtT`, synchronization); no single-threaded duplicates.
+- [ ] Persistent Mutation Ban – `*Per` modules expose only persistent APIs; no in-place mutation or borrowed slices of backing storage.
+- [ ] Iteration vs. Recursion Hygiene – prefer recursion when it matches structure; keep helper recursion local unless reused; iterative loops only when clearer.
+- [ ] Graph Notation Convention – use `(V, A)` with `A:` for directed, `(V, E)` with `E:` for undirected in macros/docs/APIs.
+- [ ] Benchmark Macro Usage Patterns – follow `*Per`/`*Eph` setup conventions; never alter the operation being benchmarked.
+- [ ] Parallel Pair Semantics – implement textbook `||` constructs using the project’s parallel pair abstraction.
+- [ ] Exercise Benchmark Policy – no exercise benchmarks unless explicitly requested; follow naming/configuration when they are required.
+- [ ] Defensive Interfaces – handle invalid inputs defensively (e.g., return empty/shortened results instead of panicking).

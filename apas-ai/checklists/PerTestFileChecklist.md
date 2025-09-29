@@ -1,0 +1,3 @@
+- [ ] Determine which global rule sets govern this test (always `RustRulesChecklist`; include `APASRulesChecklist` if the test exercises APAS structures).
+- [ ] Execute the relevant checklist(s) prior to edits to capture current compliance and any constraints.
+- [ ] After updating the test, rerun the checklist(s) and record pass/fail status or remaining follow-ups.

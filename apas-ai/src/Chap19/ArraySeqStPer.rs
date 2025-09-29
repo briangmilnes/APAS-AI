@@ -62,9 +62,13 @@ pub mod ArraySeqStPer {
             <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(&|_| item.clone(), 1)
         }
 
-        fn length(&self) -> N { ArraySeqStPerTraitChap18::length(self) }
+        fn length(&self) -> N {
+            ArraySeqStPerTraitChap18::length(self)
+        }
 
-        fn nth(&self, index: N) -> &T { ArraySeqStPerTraitChap18::nth(self, index) }
+        fn nth(&self, index: N) -> &T {
+            ArraySeqStPerTraitChap18::nth(self, index)
+        }
 
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqStPerS<T> {
             // Keep as primitive - subseq is one of the 7 APAS primitives
@@ -93,11 +97,7 @@ pub mod ArraySeqStPer {
             }
             let offset = i - len_a;
             let len_b = b.length();
-            if offset < len_b {
-                Some(b.nth(offset))
-            } else {
-                None
-            }
+            if offset < len_b { Some(b.nth(offset)) } else { None }
         }
 
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {

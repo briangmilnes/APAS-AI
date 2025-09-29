@@ -19,7 +19,9 @@ pub mod LinkedListStEph {
     }
 
     impl<T: StT> LinkedListStEphS<T> {
-        pub fn empty() -> Self { LinkedListStEphS { head: None, len: 0 } }
+        pub fn empty() -> Self {
+            LinkedListStEphS { head: None, len: 0 }
+        }
 
         pub fn new(length: N, init_value: T) -> Self
         where
@@ -28,7 +30,9 @@ pub mod LinkedListStEph {
             LinkedListStEphS::from_vec(vec![init_value; length])
         }
 
-        pub fn singleton(item: T) -> Self { LinkedListStEphS::from_vec(vec![item]) }
+        pub fn singleton(item: T) -> Self {
+            LinkedListStEphS::from_vec(vec![item])
+        }
 
         pub fn from_vec(mut elts: Vec<T>) -> Self {
             let len = elts.len();
@@ -39,7 +43,9 @@ pub mod LinkedListStEph {
             LinkedListStEphS { head, len }
         }
 
-        pub fn length(&self) -> N { self.len }
+        pub fn length(&self) -> N {
+            self.len
+        }
 
         pub fn nth(&self, index: N) -> &T {
             self.node_at(index)
@@ -238,13 +244,21 @@ pub mod LinkedListStEph {
             LinkedListStEphS::set(self, index, item)
         }
 
-        fn length(&self) -> N { LinkedListStEphS::length(self) }
+        fn length(&self) -> N {
+            LinkedListStEphS::length(self)
+        }
 
-        fn nth(&self, index: N) -> &T { LinkedListStEphS::nth(self, index) }
+        fn nth(&self, index: N) -> &T {
+            LinkedListStEphS::nth(self, index)
+        }
 
-        fn empty() -> Self { LinkedListStEphS::empty() }
+        fn empty() -> Self {
+            LinkedListStEphS::empty()
+        }
 
-        fn singleton(item: T) -> Self { LinkedListStEphS::singleton(item) }
+        fn singleton(item: T) -> Self {
+            LinkedListStEphS::singleton(item)
+        }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> Self {
             let mut values: Vec<T> = Vec::with_capacity(n);
@@ -262,7 +276,9 @@ pub mod LinkedListStEph {
             LinkedListStEphS::from_vec(values)
         }
 
-        fn subseq_copy(&self, start: N, length: N) -> Self { LinkedListStEphS::subseq_copy(self, start, length) }
+        fn subseq_copy(&self, start: N, length: N) -> Self {
+            LinkedListStEphS::subseq_copy(self, start, length)
+        }
 
         fn append(a: &Self, b: &Self) -> Self {
             let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());

@@ -51,19 +51,16 @@ pub mod BSTBBAlphaStEph {
     }
 
     impl<T: StT + Ord> Default for BSTBBAlphaStEph<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     impl<T: StT + Ord> BSTBBAlphaStEph<T> {
         // Private helper methods only - no public delegation
 
-
         pub fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
+            if self.size() == 0 { true } else { false }
         }
 
         pub fn height(&self) -> N {
@@ -84,19 +81,21 @@ pub mod BSTBBAlphaStEph {
             }
         }
 
-        pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
-
-        pub fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() {
-                true
-            } else {
-                false
-            }
+        pub fn find(&self, target: &T) -> Option<&T> {
+            Self::find_link(&self.root, target)
         }
 
-        pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
+        pub fn contains(&self, target: &T) -> B {
+            if self.find(target).is_some() { true } else { false }
+        }
 
-        pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
+        pub fn minimum(&self) -> Option<&T> {
+            Self::min_link(&self.root)
+        }
+
+        pub fn maximum(&self) -> Option<&T> {
+            Self::max_link(&self.root)
+        }
 
         pub fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
@@ -110,9 +109,13 @@ pub mod BSTBBAlphaStEph {
             ArraySeqStPerS::from_vec(out)
         }
 
-        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
+        fn size_link(link: &Link<T>) -> N {
+            link.as_ref().map_or(0, |n| n.size)
+        }
 
-        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right); }
+        fn update(node: &mut Node<T>) {
+            node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right);
+        }
 
         fn insert_link(link: &mut Link<T>, value: T) -> bool {
             match link {
@@ -226,16 +229,16 @@ pub mod BSTBBAlphaStEph {
     }
 
     impl<T: StT + Ord> BSTBBAlphaStEphTrait<T> for BSTBBAlphaStEph<T> {
-        fn new() -> Self { BSTBBAlphaStEph { root: None } }
+        fn new() -> Self {
+            BSTBBAlphaStEph { root: None }
+        }
 
-        fn size(&self) -> N { Self::size_link(&self.root) }
+        fn size(&self) -> N {
+            Self::size_link(&self.root)
+        }
 
         fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
+            if self.size() == 0 { true } else { false }
         }
 
         fn height(&self) -> N {
@@ -252,13 +255,21 @@ pub mod BSTBBAlphaStEph {
             Self::insert_link(&mut self.root, value);
         }
 
-        fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
+        fn find(&self, target: &T) -> Option<&T> {
+            Self::find_link(&self.root, target)
+        }
 
-        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
+        fn contains(&self, target: &T) -> B {
+            self.find(target).is_some()
+        }
 
-        fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
+        fn minimum(&self) -> Option<&T> {
+            Self::min_link(&self.root)
+        }
 
-        fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
+        fn maximum(&self) -> Option<&T> {
+            Self::max_link(&self.root)
+        }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());

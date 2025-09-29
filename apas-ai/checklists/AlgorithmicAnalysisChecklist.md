@@ -1,0 +1,15 @@
+- [ ] Have Work and Span been reported for every algorithm/function, matching APAS conventions?
+- [ ] Are Big-O/Θ bounds accompanied by the supporting recurrence or summation, with simplified algebra?
+- [ ] Are assumptions (input size, cost model, deterministic vs probabilistic) stated clearly?
+- [ ] For each recurrence, is the derivation shown and solved (Master Theorem/tree/substitution) with base cases noted?
+- [ ] When combining subproblems, is the composition of work/span documented (parallel vs sequential joins)?
+- [ ] Are data-structure operation costs referenced from APAS tables or justified for new structures (including hidden constants)?
+- [ ] Are parallel segments identified along with synchronization costs and load-balancing considerations?
+- [ ] Are pathological inputs and probabilistic behaviors discussed, including their impact on bounds?
+- [ ] Are preconditions for the analysis (e.g., sorted input) explicitly stated?
+- [ ] Are final results presented precisely (e.g., “Work Θ(n log n), Span O(log n)”) with summary tables when multiple functions are analyzed?
+- [ ] Do analysis notes link back to the relevant code sections or lemmas?
+- [ ] For each function/method, is there an analysis annotation `/// <AGENT> Work: … Span: …` recorded? 
+      E.g., `/// Claude Work: … Span: …` or `/// APAS Work: … Span: …` or `/// Codex Work: … Span: …` or 
+- [ ] If APAS-provided analysis exists, is it marked per function (`/// APAS: Work … Span …`) and any disagreements tagged `/// BUG: <AGENT>`
+- [ ] List for the user any algorithmic analysis bugs.

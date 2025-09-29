@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
-use apas_ai::Chap37::BSTAVLMtEph::BSTAVLMtEph::{BSTreeAVL, BSTAVLMtEphTrait};
+use apas_ai::Chap37::BSTAVLMtEph::BSTAVLMtEph::{BSTAVLMtEphTrait, BSTreeAVL};
 use apas_ai::{BSTAVLMtEphLit, *};
 use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 

@@ -5,7 +5,7 @@ pub mod BSTTreapStEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
-    use rand::{rng, Rng};
+    use rand::{Rng, rng};
 
     type Link<T> = Option<Box<Node<T>>>;
 
@@ -52,15 +52,21 @@ pub mod BSTTreapStEph {
     }
 
     impl<T: StT + Ord> Default for BSTreeTreap<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     impl<T: StT + Ord> BSTTreapStEph<T> {
         // Private helper methods only - no public delegation
 
-        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
+        fn size_link(link: &Link<T>) -> N {
+            link.as_ref().map_or(0, |n| n.size)
+        }
 
-        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right); }
+        fn update(node: &mut Node<T>) {
+            node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right);
+        }
 
         fn rotate_left(link: &mut Link<T>) {
             if let Some(mut x) = link.take() {
@@ -168,16 +174,16 @@ pub mod BSTTreapStEph {
     }
 
     impl<T: StT + Ord> BSTTreapStEphTrait<T> for BSTTreapStEph<T> {
-        fn new() -> Self { BSTTreapStEph { root: None } }
+        fn new() -> Self {
+            BSTTreapStEph { root: None }
+        }
 
-        fn size(&self) -> N { Self::size_link(&self.root) }
+        fn size(&self) -> N {
+            Self::size_link(&self.root)
+        }
 
         fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
+            if self.size() == 0 { true } else { false }
         }
 
         fn height(&self) -> N {
@@ -195,13 +201,21 @@ pub mod BSTTreapStEph {
             Self::insert_link(&mut self.root, value, &mut r);
         }
 
-        fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
+        fn find(&self, target: &T) -> Option<&T> {
+            Self::find_link(&self.root, target)
+        }
 
-        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
+        fn contains(&self, target: &T) -> B {
+            self.find(target).is_some()
+        }
 
-        fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
+        fn minimum(&self) -> Option<&T> {
+            Self::min_link(&self.root)
+        }
 
-        fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
+        fn maximum(&self) -> Option<&T> {
+            Self::max_link(&self.root)
+        }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());

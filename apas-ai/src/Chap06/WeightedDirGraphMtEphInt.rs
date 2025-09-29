@@ -30,10 +30,14 @@ pub mod WeightedDirGraphMtEphInt {
         }
 
         /// Add a weighted edge to the graph
-        pub fn add_weighted_edge(&mut self, from: V, to: V, weight: i32) { self.add_labeled_arc(from, to, weight); }
+        pub fn add_weighted_edge(&mut self, from: V, to: V, weight: i32) {
+            self.add_labeled_arc(from, to, weight);
+        }
 
         /// Get the weight of an edge, if it exists
-        pub fn get_edge_weight(&self, from: &V, to: &V) -> Option<i32> { self.get_arc_label(from, to).copied() }
+        pub fn get_edge_weight(&self, from: &V, to: &V) -> Option<i32> {
+            self.get_arc_label(from, to).copied()
+        }
 
         /// Get all weighted edges as (from, to, weight) tuples
         pub fn weighted_edges(&self) -> Set<(V, V, i32)> {
@@ -67,7 +71,9 @@ pub mod WeightedDirGraphMtEphInt {
         }
 
         /// Get the total weight of all edges
-        pub fn total_weight(&self) -> i32 { self.labeled_arcs().iter().map(|edge| edge.2).sum() }
+        pub fn total_weight(&self) -> i32 {
+            self.labeled_arcs().iter().map(|edge| edge.2).sum()
+        }
     }
 
     #[macro_export]

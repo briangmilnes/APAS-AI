@@ -7,11 +7,7 @@ pub mod Exercise21_8 {
 
     /// Helper function to check divisibility
     pub fn is_divisible(n: N, i: N) -> B {
-        if n % i == 0 {
-            true
-        } else {
-            false
-        }
+        if n % i == 0 { true } else { false }
     }
 
     /// Exercise 21.8 / Algorithm 21.4 (Brute Force Primality Test)
@@ -30,10 +26,6 @@ pub mod Exercise21_8 {
         let all: ArraySeqStPerS<B> =
             <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(&|i| is_divisible(n, i + 1), k);
         let ones: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::filter(&all, &|x| *x);
-        if ones.length() == 1 {
-            true
-        } else {
-            false
-        }
+        if ones.length() == 1 { true } else { false }
     }
 }

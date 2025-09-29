@@ -51,15 +51,21 @@ pub mod BSTAVLStEph {
     }
 
     impl<T: StT + Ord> Default for BSTAVLStEph<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     impl<T: StT + Ord> BSTAVLStEph<T> {
         // Private helper methods only - no public delegation
 
-        fn height_link(link: &Link<T>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
+        fn height_link(link: &Link<T>) -> i32 {
+            link.as_ref().map_or(0, |n| n.height)
+        }
 
-        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
+        fn size_link(link: &Link<T>) -> N {
+            link.as_ref().map_or(0, |n| n.size)
+        }
 
         fn update(node: &mut Node<T>) {
             node.height = 1 + Self::height_link(&node.left).max(Self::height_link(&node.right));
@@ -191,16 +197,16 @@ pub mod BSTAVLStEph {
     }
 
     impl<T: StT + Ord> BSTAVLStEphTrait<T> for BSTAVLStEph<T> {
-        fn new() -> Self { BSTAVLStEph { root: None } }
+        fn new() -> Self {
+            BSTAVLStEph { root: None }
+        }
 
-        fn size(&self) -> N { Self::size_link(&self.root) }
+        fn size(&self) -> N {
+            Self::size_link(&self.root)
+        }
 
         fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
+            if self.size() == 0 { true } else { false }
         }
 
         fn height(&self) -> N {
@@ -217,13 +223,21 @@ pub mod BSTAVLStEph {
             Self::insert_link(&mut self.root, value);
         }
 
-        fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
+        fn find(&self, target: &T) -> Option<&T> {
+            Self::find_link(&self.root, target)
+        }
 
-        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
+        fn contains(&self, target: &T) -> B {
+            self.find(target).is_some()
+        }
 
-        fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
+        fn minimum(&self) -> Option<&T> {
+            Self::min_link(&self.root)
+        }
 
-        fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
+        fn maximum(&self) -> Option<&T> {
+            Self::max_link(&self.root)
+        }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());

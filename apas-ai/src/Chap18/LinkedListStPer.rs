@@ -54,7 +54,9 @@ pub mod LinkedListStPer {
     }
 
     impl<T: StT> LinkedListStPerS<T> {
-        pub fn empty() -> Self { LinkedListStPerS { head: None, len: 0 } }
+        pub fn empty() -> Self {
+            LinkedListStPerS { head: None, len: 0 }
+        }
 
         pub fn new(length: N, init_value: T) -> Self
         where
@@ -63,7 +65,9 @@ pub mod LinkedListStPer {
             LinkedListStPerS::from_vec(vec![init_value; length])
         }
 
-        pub fn singleton(item: T) -> Self { LinkedListStPerS::from_vec(vec![item]) }
+        pub fn singleton(item: T) -> Self {
+            LinkedListStPerS::from_vec(vec![item])
+        }
 
         pub fn from_vec(elts: Vec<T>) -> Self {
             let mut head: Option<Box<NodeP<T>>> = None;
@@ -75,7 +79,9 @@ pub mod LinkedListStPer {
             LinkedListStPerS { head, len }
         }
 
-        pub fn length(&self) -> N { self.len }
+        pub fn length(&self) -> N {
+            self.len
+        }
 
         pub fn nth(&self, index: N) -> &T {
             self.node_at(index)
@@ -194,10 +200,18 @@ pub mod LinkedListStPer {
             LinkedListStPerS::new(length, init_value)
         }
 
-        fn empty() -> LinkedListStPerS<T> { LinkedListStPerS::empty() }
-        fn singleton(item: T) -> LinkedListStPerS<T> { LinkedListStPerS::singleton(item) }
-        fn length(&self) -> N { LinkedListStPerS::length(self) }
-        fn nth(&self, index: N) -> &T { LinkedListStPerS::nth(self, index) }
+        fn empty() -> LinkedListStPerS<T> {
+            LinkedListStPerS::empty()
+        }
+        fn singleton(item: T) -> LinkedListStPerS<T> {
+            LinkedListStPerS::singleton(item)
+        }
+        fn length(&self) -> N {
+            LinkedListStPerS::length(self)
+        }
+        fn nth(&self, index: N) -> &T {
+            LinkedListStPerS::nth(self, index)
+        }
         fn subseq_copy(&self, start: N, length: N) -> LinkedListStPerS<T> {
             LinkedListStPerS::subseq_copy(self, start, length)
         }

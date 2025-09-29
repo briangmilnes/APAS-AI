@@ -21,7 +21,9 @@ pub mod Exercise12_2 {
         }
     }
 
-    pub fn fetch_add_cas(target: &AtomicUsize, delta: usize) -> usize { target.fetch_add_cas(delta) }
+    pub fn fetch_add_cas(target: &AtomicUsize, delta: usize) -> usize {
+        target.fetch_add_cas(delta)
+    }
 
     pub fn efficiency_note() -> &'static str {
         "Hardware fetch_add completes in one atomic operation; the CAS loop may repeat under contention, so it cannot outperform native fetch_add."

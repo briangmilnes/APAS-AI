@@ -1,13 +1,16 @@
 ## APAS Project Rules
 
 ### Assistant Vec Prohibition
-- You may write `Vec` code yourself; I may not introduce new `Vec` usage at call sites.
-- In sweeps, never add `Vec`/`vec![]`/`to_vec()`/`into_vec()` or equivalent conversions—stick to the provided sequence APIs (`tabulate`, `nth`, `length`, `set`, `iter`, literals).
-- Outside sweeps, I need explicit permission before adding any new `Vec` usage; default assumption is “no”.
-- Inside a type’s own module or impl, reuse existing `Vec` representations only when already established; do not broaden their footprint.
-- Core operations must be exposed as inherent methods on the public type (no private/free-function wrappers) so tests can exercise them directly, and whenever a trait mirrors the API there should be a single impl block providing it unless the chapter explicitly requires multiple.
-- Inherent conversion helpers (`from_vec`, `to_vec`) are allowed inside the defining module when they keep the `Vec` hidden from callers.
-- When existing call sites already use `Vec`, keep changes local and prefer constructors/macros over expanding that usage.
+- Callers must never gain new `Vec` usage—exports stay on arrays/sequences.
+- Inside a module, `Vec` may appear only in two cases:
+  - Temporary builders (`from_vec`, `to_vec`, `collect`, etc.) where the final representation is converted into the array-based structure before returning.
+  - Internal scratch space when the output length is unknown up front; once determined, data is copied/moved into the canonical array representation.
+- Do not expose raw `Vec` or return structures backed by `Vec`; all public APIs operate on APAS array types.
+- In sweeps, never add `Vec`/`vec![]`/`to_vec()`/`into_vec()` at call sites—use sequence APIs (`tabulate`, `nth`, `length`, `set`, `iter`, literals).
+- Core operations must remain inherent methods on the data structure; no free-function wrappers.
+- Existing caller-facing `Vec` usage must remain localized and not expand beyond its current footprint.
+- **Seq-First Rule**: When length is known, operate directly on the sequence without converting to `Vec`.
+- **Vec-to-Seq Rule**: When consuming a `Vec`, allocate the target array structure immediately (via `tabulate` or constructors) rather than manipulating the `Vec` in place.
 
 ### Element Shorthands and Delegation
 - Use the APAS shorthands to avoid repeated bounds: `StT` (`Eq + Clone + Display + Debug + Sized`) for single-threaded data, `MtT` (`Sized + Send + Sync`) for multi-threaded contexts.
@@ -41,6 +44,8 @@
 ### Persistent Mutation Ban
 - Modules whose names end in `Per` represent persistent data structures. They must not expose in-place mutators such as `set`/`update`; persistent APIs always return a new value instead of mutating the receiver.
 - `Per` implementations never expose slices or other borrowed views of private storage. Subsequence operations must allocate a fresh persistent value (e.g., `subseq_copy`) rather than returning `&[T]`.
+- Treat every `*Per` file as persistent by definition: data structures are immutable, no `set`/`update`/`insert_in_place`; methods must return new structures.
+- Treat every `*Eph` file as ephemeral: data structures may be mutated in place, and `set`/`update` are permitted when specified by the chapter API.
 
 ### Iteration vs. Recursion Hygiene
 - When code naturally descends a structure or mirrors the textbook recursion, opt for a compact recursive implementation (often as a nested function) instead of piling logic into a `loop { … }`.

@@ -1,0 +1,10 @@
+
+
+ Make a plan to implement this according to PrePlanChecklist.md.
+
+ After planning list all of the elements of the plan against the
+ PrePlanChecklist and modify any that are not fulfilled. Discuss
+ with the user.
+
+ Show it to the user and wait for an execute relentlessly to execute it.
+

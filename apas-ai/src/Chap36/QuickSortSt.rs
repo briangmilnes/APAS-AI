@@ -2,7 +2,7 @@
 //! Chapter 36 (Single-threaded): Quicksort with three pivot strategies over `ArraySeqStEph`.
 
 pub mod Chapter36St {
-    use rand::{rng, Rng};
+    use rand::{Rng, rng};
 
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
@@ -18,7 +18,9 @@ pub mod Chapter36St {
     }
 
     impl<T: StT + Ord> Chapter36StTrait<T> for ArraySeqStEphS<T> {
-        fn pivot_st_first(&self, lo: N, _hi: N) -> T { self.nth(lo).clone() }
+        fn pivot_st_first(&self, lo: N, _hi: N) -> T {
+            self.nth(lo).clone()
+        }
         fn pivot_st_median3(&self, lo: N, hi: N) -> T {
             let mid = lo + (hi - lo) / 2;
             let x0 = self.nth(lo).clone();

@@ -29,31 +29,52 @@ pub mod BSTPlainStEph {
 
     impl<T: StT + Ord> BSTPlainStEph<T> {
         // Private helper methods only - no public delegation
-
     }
 
     impl<T: StT + Ord> BSTPlainStEphTrait<T> for BSTPlainStEph<T> {
-        fn new() -> Self { BSTPlainStEph { root: BBTree::leaf() } }
+        fn new() -> Self {
+            BSTPlainStEph { root: BBTree::leaf() }
+        }
 
-        fn size(&self) -> N { self.root.size() }
+        fn size(&self) -> N {
+            self.root.size()
+        }
 
-        fn is_empty(&self) -> B { self.root.is_leaf() }
+        fn is_empty(&self) -> B {
+            self.root.is_leaf()
+        }
 
-        fn height(&self) -> N { self.root.height() }
+        fn height(&self) -> N {
+            self.root.height()
+        }
 
-        fn insert(&mut self, value: T) { insert_node(&mut self.root, value); }
+        fn insert(&mut self, value: T) {
+            insert_node(&mut self.root, value);
+        }
 
-        fn find(&self, target: &T) -> Option<&T> { find_node(&self.root, target) }
+        fn find(&self, target: &T) -> Option<&T> {
+            find_node(&self.root, target)
+        }
 
-        fn contains(&self, target: &T) -> B { contains_node(&self.root, target) }
+        fn contains(&self, target: &T) -> B {
+            contains_node(&self.root, target)
+        }
 
-        fn minimum(&self) -> Option<&T> { min_node(&self.root) }
+        fn minimum(&self) -> Option<&T> {
+            min_node(&self.root)
+        }
 
-        fn maximum(&self) -> Option<&T> { max_node(&self.root) }
+        fn maximum(&self) -> Option<&T> {
+            max_node(&self.root)
+        }
 
-        fn in_order(&self) -> ArraySeqStPerS<T> { self.root.in_order() }
+        fn in_order(&self) -> ArraySeqStPerS<T> {
+            self.root.in_order()
+        }
 
-        fn pre_order(&self) -> ArraySeqStPerS<T> { self.root.pre_order() }
+        fn pre_order(&self) -> ArraySeqStPerS<T> {
+            self.root.pre_order()
+        }
     }
 
     fn insert_node<T: StT + Ord>(node: &mut BBTree<T>, value: T) {

@@ -59,12 +59,15 @@ pub mod BSTPlainMtEph {
 
     impl<T: StTInMtT + Ord> BSTPlainMtEph<T> {
         // Private helper methods only - no public delegation
-
     }
 
-    fn height_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
+    fn height_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> i32 {
+        link.as_ref().map_or(0, |n| n.height)
+    }
 
-    fn size_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> N { link.as_ref().map_or(0, |n| n.size) }
+    fn size_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> N {
+        link.as_ref().map_or(0, |n| n.size)
+    }
 
     impl<T: StTInMtT + Ord> BSTPlainMtEphTrait<T> for BSTPlainMtEph<T> {
         fn new() -> Self {
@@ -129,11 +132,7 @@ pub mod BSTPlainMtEph {
         }
 
         fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() {
-                true
-            } else {
-                false
-            }
+            if self.find(target).is_some() { true } else { false }
         }
 
         fn size(&self) -> N {
@@ -142,11 +141,7 @@ pub mod BSTPlainMtEph {
         }
 
         fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
+            if self.size() == 0 { true } else { false }
         }
 
         fn height(&self) -> N {

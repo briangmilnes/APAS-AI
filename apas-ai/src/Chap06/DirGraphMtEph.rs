@@ -75,11 +75,21 @@ pub mod DirGraphMtEph {
                 A: SetLit![],
             }
         }
-        fn FromSets(V: Set<V>, A: Set<Edge<V>>) -> DirGraphMtEph<V> { DirGraphMtEph { V, A } }
-        fn vertices(&self) -> &Set<V> { &self.V }
-        fn arcs(&self) -> &Set<Edge<V>> { &self.A }
-        fn sizeV(&self) -> N { self.V.size() }
-        fn sizeA(&self) -> N { self.A.size() }
+        fn FromSets(V: Set<V>, A: Set<Edge<V>>) -> DirGraphMtEph<V> {
+            DirGraphMtEph { V, A }
+        }
+        fn vertices(&self) -> &Set<V> {
+            &self.V
+        }
+        fn arcs(&self) -> &Set<Edge<V>> {
+            &self.A
+        }
+        fn sizeV(&self) -> N {
+            self.V.size()
+        }
+        fn sizeA(&self) -> N {
+            self.A.size()
+        }
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Adjacent if there is an arc either way
@@ -90,7 +100,9 @@ pub mod DirGraphMtEph {
             }
         }
 
-        fn NG(&self, v: &V) -> Set<V> { self.NPlus(v).union(&self.NMinus(v)) }
+        fn NG(&self, v: &V) -> Set<V> {
+            self.NPlus(v).union(&self.NMinus(v))
+        }
 
         fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V> {
             let mut result: Set<V> = SetLit![];
@@ -140,16 +152,18 @@ pub mod DirGraphMtEph {
         }
 
         fn Incident(&self, e: &Edge<V>, v: &V) -> B {
-            if &e.0 == v || &e.1 == v {
-                true
-            } else {
-                false
-            }
+            if &e.0 == v || &e.1 == v { true } else { false }
         }
 
-        fn Degree(&self, v: &V) -> N { self.InDegree(v) + self.OutDegree(v) }
-        fn InDegree(&self, v: &V) -> N { self.NMinus(v).size() }
-        fn OutDegree(&self, v: &V) -> N { self.NPlus(v).size() }
+        fn Degree(&self, v: &V) -> N {
+            self.InDegree(v) + self.OutDegree(v)
+        }
+        fn InDegree(&self, v: &V) -> N {
+            self.NMinus(v).size()
+        }
+        fn OutDegree(&self, v: &V) -> N {
+            self.NPlus(v).size()
+        }
     }
 
     impl<V: StT + MtT + Hash> std::fmt::Debug for DirGraphMtEph<V> {
@@ -162,11 +176,15 @@ pub mod DirGraphMtEph {
     }
 
     impl<V: StT + MtT + Hash> std::fmt::Display for DirGraphMtEph<V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "V={} A={:?}", self.V, self.A) }
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "V={} A={:?}", self.V, self.A)
+        }
     }
 
     impl<V: StT + MtT + Hash> PartialEq for DirGraphMtEph<V> {
-        fn eq(&self, other: &Self) -> bool { self.V == other.V && self.A == other.A }
+        fn eq(&self, other: &Self) -> bool {
+            self.V == other.V && self.A == other.A
+        }
     }
     impl<V: StT + MtT + Hash> Eq for DirGraphMtEph<V> {}
 

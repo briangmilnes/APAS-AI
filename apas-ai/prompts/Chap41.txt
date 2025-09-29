@@ -1,11 +1,26 @@
- Build Chap41 sets.
+ Build Chap41Codex sets.
 
- Do it two ways: ArraySetStEph, ArraySetMtEph on ArraySeq{St,Mt}Eph.
- And again on    AVLTreeSet{St,Mt} on 
-    Chap37/AVLTreeSeqStEph.rs Chap37/AVLTreeSeqStPer.rs.
+ Do it two ways: ArraySet{St,Mt}Eph using ArraySetMtEph.rs should be called
+ArraySetEnumMtEph.rs and it representions an array of bools up to u - 1 in new. Initial
+values all false.  If it's boolean is false at i, i not in the set, if it's true i is in
+the set.  And only filter is parallel, fork a thread for each test (as if f was expensive)
+and each gets f(i) if it's boolean is true.
+
+
+ And again on AVLTreeSet{St,Mt} modeled on Chap37/AVLTreeSeqStEph.rs Chap37/AVLTreeSeqStPer.rs.
+
 
  And Example41_3 as below. 
 
+ Be sure not to put in the delegation anti-pattern or vecs except where
+ absolutely needed.
+
+ Write test code and benchmark code for both.
+
+ As you write each file, cargo build, cargo nextest just that file,
+ and cargo bench just that file.
+
+ Estimate the time, show me a to-do list and I will tell you when to execute.
 
 APAS:
 
@@ -252,3 +267,9 @@ and insert when possible.
 
 Implement an Example_41_3.
 
+Example 41.3. We can convert a sequence to a set by inserting the elements one by one as
+follows
+fromseq a = Seq.iterate Set.insert ∅ a.
+This implementation is work efficient but sequential. We can write a work efficient and
+parallel function as follows
+fromSeq a = Seq.reduce Set.union ∅ 〈 {x} : x ∈ a 〉

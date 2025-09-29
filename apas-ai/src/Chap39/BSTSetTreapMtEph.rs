@@ -51,19 +51,33 @@ pub mod BSTSetTreapMtEph {
             Self { tree }
         }
 
-        pub fn size(&self) -> N { self.tree.size() }
+        pub fn size(&self) -> N {
+            self.tree.size()
+        }
 
-        pub fn is_empty(&self) -> B { self.tree.is_empty() }
+        pub fn is_empty(&self) -> B {
+            self.tree.is_empty()
+        }
 
-        pub fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }
+        pub fn find(&self, value: &T) -> Option<T> {
+            self.tree.find(value)
+        }
 
-        pub fn contains(&self, value: &T) -> B { self.tree.contains(value) }
+        pub fn contains(&self, value: &T) -> B {
+            self.tree.contains(value)
+        }
 
-        pub fn minimum(&self) -> Option<T> { self.tree.minimum() }
+        pub fn minimum(&self) -> Option<T> {
+            self.tree.minimum()
+        }
 
-        pub fn maximum(&self) -> Option<T> { self.tree.maximum() }
+        pub fn maximum(&self) -> Option<T> {
+            self.tree.maximum()
+        }
 
-        pub fn insert(&mut self, value: T) { self.tree.insert(value); }
+        pub fn insert(&mut self, value: T) {
+            self.tree.insert(value);
+        }
 
         pub fn delete(&mut self, target: &T) {
             let mut values = self.values_vec();
@@ -175,11 +189,17 @@ pub mod BSTSetTreapMtEph {
                 .fold(base, |acc, value| op(acc, value.clone()))
         }
 
-        pub fn iter_in_order(&self) -> ArraySeqStPerS<T> { self.tree.in_order() }
+        pub fn iter_in_order(&self) -> ArraySeqStPerS<T> {
+            self.tree.in_order()
+        }
 
-        pub fn as_tree(&self) -> &BSTTreapMtEph<T> { &self.tree }
+        pub fn as_tree(&self) -> &BSTTreapMtEph<T> {
+            &self.tree
+        }
 
-        fn values_vec(&self) -> Vec<T> { self.tree.in_order().iter().cloned().collect() }
+        fn values_vec(&self) -> Vec<T> {
+            self.tree.in_order().iter().cloned().collect()
+        }
 
         fn rebuild_from_vec(values: Vec<T>) -> BSTTreapMtEph<T> {
             let tree = BSTTreapMtEph::new();
@@ -202,45 +222,85 @@ pub mod BSTSetTreapMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetTreapMtEphTrait<T> for BSTSetTreapMtEph<T> {
-        fn empty() -> Self { Self::empty() }
+        fn empty() -> Self {
+            Self::empty()
+        }
 
-        fn singleton(value: T) -> Self { Self::singleton(value) }
+        fn singleton(value: T) -> Self {
+            Self::singleton(value)
+        }
 
-        fn size(&self) -> N { self.tree.size() }
+        fn size(&self) -> N {
+            self.tree.size()
+        }
 
-        fn is_empty(&self) -> B { self.tree.is_empty() }
+        fn is_empty(&self) -> B {
+            self.tree.is_empty()
+        }
 
-        fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }
+        fn find(&self, value: &T) -> Option<T> {
+            self.tree.find(value)
+        }
 
-        fn contains(&self, value: &T) -> B { self.tree.contains(value) }
+        fn contains(&self, value: &T) -> B {
+            self.tree.contains(value)
+        }
 
-        fn minimum(&self) -> Option<T> { self.tree.minimum() }
+        fn minimum(&self) -> Option<T> {
+            self.tree.minimum()
+        }
 
-        fn maximum(&self) -> Option<T> { self.tree.maximum() }
+        fn maximum(&self) -> Option<T> {
+            self.tree.maximum()
+        }
 
-        fn insert(&mut self, value: T) { self.tree.insert(value); }
+        fn insert(&mut self, value: T) {
+            self.tree.insert(value);
+        }
 
-        fn delete(&mut self, target: &T) { BSTSetTreapMtEph::delete(self, target) }
+        fn delete(&mut self, target: &T) {
+            BSTSetTreapMtEph::delete(self, target)
+        }
 
-        fn union(&self, other: &Self) -> Self { BSTSetTreapMtEph::union(self, other) }
+        fn union(&self, other: &Self) -> Self {
+            BSTSetTreapMtEph::union(self, other)
+        }
 
-        fn intersection(&self, other: &Self) -> Self { BSTSetTreapMtEph::intersection(self, other) }
+        fn intersection(&self, other: &Self) -> Self {
+            BSTSetTreapMtEph::intersection(self, other)
+        }
 
-        fn difference(&self, other: &Self) -> Self { BSTSetTreapMtEph::difference(self, other) }
+        fn difference(&self, other: &Self) -> Self {
+            BSTSetTreapMtEph::difference(self, other)
+        }
 
-        fn split(&self, pivot: &T) -> (Self, B, Self) { BSTSetTreapMtEph::split(self, pivot) }
+        fn split(&self, pivot: &T) -> (Self, B, Self) {
+            BSTSetTreapMtEph::split(self, pivot)
+        }
 
-        fn join_pair(left: Self, right: Self) -> Self { BSTSetTreapMtEph::join_pair(left, right) }
+        fn join_pair(left: Self, right: Self) -> Self {
+            BSTSetTreapMtEph::join_pair(left, right)
+        }
 
-        fn join_m(left: Self, pivot: T, right: Self) -> Self { BSTSetTreapMtEph::join_m(left, pivot, right) }
+        fn join_m(left: Self, pivot: T, right: Self) -> Self {
+            BSTSetTreapMtEph::join_m(left, pivot, right)
+        }
 
-        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self { BSTSetTreapMtEph::filter(self, predicate) }
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self {
+            BSTSetTreapMtEph::filter(self, predicate)
+        }
 
-        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T { BSTSetTreapMtEph::reduce(self, op, base) }
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T {
+            BSTSetTreapMtEph::reduce(self, op, base)
+        }
 
-        fn iter_in_order(&self) -> ArraySeqStPerS<T> { self.tree.in_order() }
+        fn iter_in_order(&self) -> ArraySeqStPerS<T> {
+            self.tree.in_order()
+        }
 
-        fn as_tree(&self) -> &BSTTreapMtEph<T> { &self.tree }
+        fn as_tree(&self) -> &BSTTreapMtEph<T> {
+            &self.tree
+        }
     }
 
     #[macro_export]

@@ -20,7 +20,9 @@ pub mod BBTStEph {
     }
 
     impl<T: StT> BBNode<T> {
-        fn new(left: BBTree<T>, value: T, right: BBTree<T>) -> Self { BBNode { left, value, right } }
+        fn new(left: BBTree<T>, value: T, right: BBTree<T>) -> Self {
+            BBNode { left, value, right }
+        }
     }
 
     pub trait BBTStEphTrait<T: StT> {
@@ -34,7 +36,9 @@ pub mod BBTStEph {
     }
 
     impl<T: StT> BBTree<T> {
-        pub fn leaf() -> Self { BBTree::Leaf }
+        pub fn leaf() -> Self {
+            BBTree::Leaf
+        }
 
         pub fn node(left: BBTree<T>, value: T, right: BBTree<T>) -> Self {
             BBTree::Node(Box::new(BBNode::new(left, value, right)))
@@ -93,19 +97,33 @@ pub mod BBTStEph {
     }
 
     impl<T: StT> BBTStEphTrait<T> for BBTree<T> {
-        fn leaf() -> Self { BBTree::leaf() }
+        fn leaf() -> Self {
+            BBTree::leaf()
+        }
 
-        fn node(left: Self, value: T, right: Self) -> Self { BBTree::node(left, value, right) }
+        fn node(left: Self, value: T, right: Self) -> Self {
+            BBTree::node(left, value, right)
+        }
 
-        fn is_leaf(&self) -> B { BBTree::is_leaf(self) }
+        fn is_leaf(&self) -> B {
+            BBTree::is_leaf(self)
+        }
 
-        fn in_order(&self) -> ArraySeqStPerS<T> { BBTree::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> {
+            BBTree::in_order(self)
+        }
 
-        fn pre_order(&self) -> ArraySeqStPerS<T> { BBTree::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> {
+            BBTree::pre_order(self)
+        }
 
-        fn height(&self) -> N { BBTree::height(self) }
+        fn height(&self) -> N {
+            BBTree::height(self)
+        }
 
-        fn size(&self) -> N { BBTree::size(self) }
+        fn size(&self) -> N {
+            BBTree::size(self)
+        }
     }
 
     #[macro_export]

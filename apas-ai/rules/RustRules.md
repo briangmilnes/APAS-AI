@@ -19,6 +19,12 @@
 - **Pattern**: `let mut acc = init; for i in 0..n { acc = f(&acc, &data[i]); results.push(acc.clone()); }`
 - This avoids closure capture issues while maintaining functional semantics
 
+#### Variable naming discipline
+- **No "temp" variables**: Never use `temp_vec`, `temp_data`, `temp_result`, etc. Variable scope and data lifetime are clear from code context.
+- **No rock band/song names**: Never use variable names like `led_zeppelin`, `pink_floyd`, `stairway_to_heaven`, etc. Use descriptive names that relate to the code's purpose.
+- **Descriptive names**: Use meaningful names that describe the variable's purpose: `entries`, `result_vec`, `filtered_data`, `sorted_pairs`.
+- **Pattern**: `let entries = ...;` not `let temp_entries = ...;`
+
 #### Formatting discipline
 - Do not run `cargo fmt` or `rustfmt`; leave formatting passes to the user.
 - User formatting target: keep `rustfmt` max line width at 120 characters.
@@ -245,6 +251,7 @@ fn _MyMacro_type_checks() {
 - Do not create free functions that merely forward to trait or inherent methods (e.g., `fn select(a,b,i) → <Type as Trait>::method`).
 - If a method isn’t available on the receiver, add an extension trait implemented for the concrete type to expose `value.method(...)`.
 - Allowed: free functions only when they add real semantics (compose multiple types, add logic not tied to a single receiver, or break dependency cycles). Do not duplicate method names as free functions.
+- Do not add stub functions inside the same module that simply call another function/method in that module. Call sites should invoke the original API directly rather than indirection stubs.
 
 #### Type Conversions and Naming
 - Prefer traits over ad‑hoc functions:
@@ -276,6 +283,7 @@ fn _MyMacro_type_checks() {
   - `Debug`: assert it contains the type name or key structure elements, as appropriate.
 - Prefer `assert_eq!` on data values wherever possible.
 - Prefer `<MacroName>Lit![…]` for non‑empty literals; use `T::new()` for empty cases instead of `<MacroName>Lit![]`.
+- The only test we put in source code is for a macro with deadcode allowed to check it's typing. 
 
 #### Test via Public API Only
 - Write tests against exposed methods/traits/macros; never against private fields.

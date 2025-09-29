@@ -1,0 +1,3 @@
+- [ ] Identify whether the benchmark covers APAS code; if so, plan to run both `RustRulesChecklist` and `APASRulesChecklist`.
+- [ ] Execute the applicable checklist(s) before editing the benchmark to note any constraints (timing, module scope, Vec bans).
+- [ ] After changes, rerun the checklist(s) to verify compliance and document any unresolved items before reporting results.

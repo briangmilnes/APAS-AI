@@ -53,15 +53,21 @@ pub mod BSTAVLMtEph {
     }
 
     impl<T: StTInMtT + Ord> Default for BSTAVLMtEph<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     impl<T: StTInMtT + Ord> BSTAVLMtEph<T> {
         // Private helper methods only - no public delegation
 
-        fn height_link(link: &Link<T>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
+        fn height_link(link: &Link<T>) -> i32 {
+            link.as_ref().map_or(0, |n| n.height)
+        }
 
-        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
+        fn size_link(link: &Link<T>) -> N {
+            link.as_ref().map_or(0, |n| n.size)
+        }
 
         fn update(node: &mut Node<T>) {
             node.height = 1 + Self::height_link(&node.left).max(Self::height_link(&node.right));
@@ -209,7 +215,9 @@ pub mod BSTAVLMtEph {
             Self::find_link(&*guard, target).cloned()
         }
 
-        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
+        fn contains(&self, target: &T) -> B {
+            self.find(target).is_some()
+        }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
@@ -217,11 +225,7 @@ pub mod BSTAVLMtEph {
         }
 
         fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
+            if self.size() == 0 { true } else { false }
         }
 
         fn height(&self) -> N {

@@ -79,11 +79,15 @@ pub mod Exercise12_5 {
             Some(value)
         }
 
-        fn is_empty(&self) -> bool { self.head.load(Ordering::Acquire).is_null() }
+        fn is_empty(&self) -> bool {
+            self.head.load(Ordering::Acquire).is_null()
+        }
     }
 
     impl<T: StTInMtT> Default for ConcurrentStackMt<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     impl<T: StTInMtT> Drop for ConcurrentStackMt<T> {
