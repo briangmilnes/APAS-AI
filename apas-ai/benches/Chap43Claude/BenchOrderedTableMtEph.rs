@@ -11,7 +11,7 @@ fn bench_ordered_table_mt_eph_insert(c: &mut Criterion) {
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
             b.iter_batched(
-                || OrderedTableMtEph::new(),
+                || OrderedTableMtEph::empty(),
                 |mut table| {
                     for i in 0..size {
                         table.insert(black_box(i), black_box(format!("value_{}", i)), |_old, new| new.clone());
@@ -31,7 +31,7 @@ fn bench_ordered_table_mt_eph_lookup(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableMtEph::new();
+        let mut table = OrderedTableMtEph::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
@@ -56,7 +56,7 @@ fn bench_ordered_table_mt_eph_delete(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("delete", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut table = OrderedTableMtEph::new();
+                    let mut table = OrderedTableMtEph::empty();
                     for i in 0..size {
                         table.insert(i, format!("value_{}", i), |_old, new| new.clone());
                     }
@@ -84,7 +84,7 @@ fn bench_ordered_table_mt_eph_parallel_operations(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("parallel_filter", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut table = OrderedTableMtEph::new();
+                    let mut table = OrderedTableMtEph::empty();
                     for i in 0..size {
                         table.insert(i, i * 10, |_old, new| new.clone());
                     }
@@ -100,7 +100,7 @@ fn bench_ordered_table_mt_eph_parallel_operations(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("parallel_map", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut table = OrderedTableMtEph::new();
+                    let mut table = OrderedTableMtEph::empty();
                     for i in 0..size {
                         table.insert(i, i * 10, |_old, new| new.clone());
                     }
@@ -116,7 +116,7 @@ fn bench_ordered_table_mt_eph_parallel_operations(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("parallel_reduce", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut table = OrderedTableMtEph::new();
+                    let mut table = OrderedTableMtEph::empty();
                     for i in 0..size {
                         table.insert(i, i * 10, |_old, new| new.clone());
                     }
@@ -138,7 +138,7 @@ fn bench_ordered_table_mt_eph_first_last_key(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableMtEph::new();
+        let mut table = OrderedTableMtEph::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
@@ -164,7 +164,7 @@ fn bench_ordered_table_mt_eph_previous_next_key(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableMtEph::new();
+        let mut table = OrderedTableMtEph::empty();
         for i in 0..*size {
             table.insert(i * 2, format!("value_{}", i * 2), |_old, new| new.clone()); // Insert even numbers
         }
@@ -197,7 +197,7 @@ fn bench_ordered_table_mt_eph_split_join_key(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("split_key", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut table = OrderedTableMtEph::new();
+                    let mut table = OrderedTableMtEph::empty();
                     for i in 0..size {
                         table.insert(i, format!("value_{}", i), |_old, new| new.clone());
                     }
@@ -214,8 +214,8 @@ fn bench_ordered_table_mt_eph_split_join_key(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("join_key", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut left = OrderedTableMtEph::new();
-                    let mut right = OrderedTableMtEph::new();
+                    let mut left = OrderedTableMtEph::empty();
+                    let mut right = OrderedTableMtEph::empty();
                     let mid = size / 2;
                     
                     for i in 0..mid {
@@ -243,7 +243,7 @@ fn bench_ordered_table_mt_eph_get_key_range(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableMtEph::new();
+        let mut table = OrderedTableMtEph::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
@@ -265,7 +265,7 @@ fn bench_ordered_table_mt_eph_rank_select_key(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableMtEph::new();
+        let mut table = OrderedTableMtEph::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
@@ -298,7 +298,7 @@ fn bench_ordered_table_mt_eph_split_rank_key(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("split_rank_key", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut table = OrderedTableMtEph::new();
+                    let mut table = OrderedTableMtEph::empty();
                     for i in 0..size {
                         table.insert(i, format!("value_{}", i), |_old, new| new.clone());
                     }
@@ -321,7 +321,7 @@ fn bench_ordered_table_mt_eph_collect(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut table = OrderedTableMtEph::new();
+        let mut table = OrderedTableMtEph::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }

@@ -21,14 +21,13 @@ pub mod Example43_1 {
             "tina".to_string()
         ];
 
-        println!("Set A: {:?}", {
-            let seq = set_a.to_seq();
-            let mut elements = Vec::new();
-            for i in 0..seq.length() {
-                elements.push(seq.nth(i).clone());
-            }
-            elements
-        });
+        print!("Set A: [");
+        let seq = set_a.to_seq();
+        for i in 0..seq.length() {
+            if i > 0 { print!(", "); }
+            print!("\"{}\"", seq.nth(i));
+        }
+        println!("]");
 
         // first A → 'artie'
         match set_a.first() {
@@ -50,14 +49,13 @@ pub mod Example43_1 {
 
         // getRange A ('burt', 'mike') → {'burt', 'finn', 'mike'}
         let range_set = set_a.get_range(&"burt".to_string(), &"mike".to_string());
-        println!("getRange(A, 'burt', 'mike') = {:?}", {
-            let seq = range_set.to_seq();
-            let mut elements = Vec::new();
-            for i in 0..seq.length() {
-                elements.push(seq.nth(i).clone());
-            }
-            elements
-        });
+        print!("getRange(A, 'burt', 'mike') = [");
+        let seq = range_set.to_seq();
+        for i in 0..seq.length() {
+            if i > 0 { print!(", "); }
+            print!("\"{}\"", seq.nth(i));
+        }
+        println!("]");
 
         // rank(A, 'rachel') → 4
         let rachel_rank = set_a.rank(&"rachel".to_string());
@@ -76,22 +74,20 @@ pub mod Example43_1 {
         // splitRank(A, 3) → ({'artie', 'burt', 'finn'}, {'mike', 'rachel', 'sam', 'tina'})
         let (left_set, right_set) = set_a.split_rank(3);
         println!("splitRank(A, 3) = (");
-        println!("  left: {:?},", {
-            let seq = left_set.to_seq();
-            let mut elements = Vec::new();
-            for i in 0..seq.length() {
-                elements.push(seq.nth(i).clone());
-            }
-            elements
-        });
-        println!("  right: {:?}", {
-            let seq = right_set.to_seq();
-            let mut elements = Vec::new();
-            for i in 0..seq.length() {
-                elements.push(seq.nth(i).clone());
-            }
-            elements
-        });
+        print!("  left: [");
+        let seq = left_set.to_seq();
+        for i in 0..seq.length() {
+            if i > 0 { print!(", "); }
+            print!("\"{}\"", seq.nth(i));
+        }
+        println!("],");
+        print!("  right: [");
+        let seq = right_set.to_seq();
+        for i in 0..seq.length() {
+            if i > 0 { print!(", "); }
+            print!("\"{}\"", seq.nth(i));
+        }
+        println!("]");
         println!(")");
 
         // Additional demonstrations of other ordering operations
@@ -112,35 +108,32 @@ pub mod Example43_1 {
         // split(A, 'mike') → ({'artie', 'burt', 'finn'}, true, {'rachel', 'sam', 'tina'})
         let (left_split, found, right_split) = set_a.split(&"mike".to_string());
         println!("split(A, 'mike') = (");
-        println!("  left: {:?},", {
-            let seq = left_split.to_seq();
-            let mut elements = Vec::new();
-            for i in 0..seq.length() {
-                elements.push(seq.nth(i).clone());
-            }
-            elements
-        });
+        print!("  left: [");
+        let seq = left_split.to_seq();
+        for i in 0..seq.length() {
+            if i > 0 { print!(", "); }
+            print!("\"{}\"", seq.nth(i));
+        }
+        println!("],");
         println!("  found: {},", found);
-        println!("  right: {:?}", {
-            let seq = right_split.to_seq();
-            let mut elements = Vec::new();
-            for i in 0..seq.length() {
-                elements.push(seq.nth(i).clone());
-            }
-            elements
-        });
+        print!("  right: [");
+        let seq = right_split.to_seq();
+        for i in 0..seq.length() {
+            if i > 0 { print!(", "); }
+            print!("\"{}\"", seq.nth(i));
+        }
+        println!("]");
         println!(")");
 
         // Demonstrate join operation
         let joined_set = OrderedSetStPer::join(&left_split, &right_split);
-        println!("join(left, right) = {:?}", {
-            let seq = joined_set.to_seq();
-            let mut elements = Vec::new();
-            for i in 0..seq.length() {
-                elements.push(seq.nth(i).clone());
-            }
-            elements
-        });
+        print!("join(left, right) = [");
+        let seq = joined_set.to_seq();
+        for i in 0..seq.length() {
+            if i > 0 { print!(", "); }
+            print!("\"{}\"", seq.nth(i));
+        }
+        println!("]");
 
         println!("\n=== Example 43.1 Complete ===");
     }
@@ -152,14 +145,13 @@ pub mod Example43_1 {
         // Create an ordered set of integers
         let int_set: OrderedSetStPer<i32> = OrderedSetStPerLit![1, 3, 5, 7, 9, 11, 13];
 
-        println!("Integer Set: {:?}", {
-            let seq = int_set.to_seq();
-            let mut elements = Vec::new();
-            for i in 0..seq.length() {
-                elements.push(seq.nth(i).clone());
-            }
-            elements
-        });
+        print!("Integer Set: [");
+        let seq = int_set.to_seq();
+        for i in 0..seq.length() {
+            if i > 0 { print!(", "); }
+            print!("{}", seq.nth(i));
+        }
+        println!("]");
 
         // Demonstrate all ordering operations
         println!("first() = {:?}", int_set.first());
@@ -170,31 +162,28 @@ pub mod Example43_1 {
         println!("select(3) = {:?}", int_set.select(3));
         
         let range = int_set.get_range(&3, &9);
-        println!("getRange(3, 9) = {:?}", {
-            let seq = range.to_seq();
-            let mut elements = Vec::new();
-            for i in 0..seq.length() {
-                elements.push(seq.nth(i).clone());
-            }
-            elements
-        });
+        print!("getRange(3, 9) = [");
+        let seq = range.to_seq();
+        for i in 0..seq.length() {
+            if i > 0 { print!(", "); }
+            print!("{}", seq.nth(i));
+        }
+        println!("]");
 
         let (left, right) = int_set.split_rank(4);
-        println!("splitRank(4) = ({:?}, {:?})", {
-            let seq = left.to_seq();
-            let mut elements = Vec::new();
-            for i in 0..seq.length() {
-                elements.push(seq.nth(i).clone());
-            }
-            elements
-        }, {
-            let seq = right.to_seq();
-            let mut elements = Vec::new();
-            for i in 0..seq.length() {
-                elements.push(seq.nth(i).clone());
-            }
-            elements
-        });
+        print!("splitRank(4) = ([");
+        let seq = left.to_seq();
+        for i in 0..seq.length() {
+            if i > 0 { print!(", "); }
+            print!("{}", seq.nth(i));
+        }
+        print!("], [");
+        let seq = right.to_seq();
+        for i in 0..seq.length() {
+            if i > 0 { print!(", "); }
+            print!("{}", seq.nth(i));
+        }
+        println!("])");
 
         println!("=== Integer Example Complete ===");
     }

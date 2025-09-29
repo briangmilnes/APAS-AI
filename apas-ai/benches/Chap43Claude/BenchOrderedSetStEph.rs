@@ -10,7 +10,7 @@ fn bench_ordered_set_st_eph_insert(c: &mut Criterion) {
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
             b.iter_batched(
-                || OrderedSetStEph::new(),
+                || OrderedSetStEph::empty(),
                 |mut set| {
                     for i in 0..size {
                         set.insert(black_box(i));
@@ -30,7 +30,7 @@ fn bench_ordered_set_st_eph_contains(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut set = OrderedSetStEph::new();
+        let mut set = OrderedSetStEph::empty();
         for i in 0..*size {
             set.insert(i);
         }
@@ -55,7 +55,7 @@ fn bench_ordered_set_st_eph_delete(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("delete", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut set = OrderedSetStEph::new();
+                    let mut set = OrderedSetStEph::empty();
                     for i in 0..size {
                         set.insert(i);
                     }
@@ -80,7 +80,7 @@ fn bench_ordered_set_st_eph_first_last(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut set = OrderedSetStEph::new();
+        let mut set = OrderedSetStEph::empty();
         for i in 0..*size {
             set.insert(i);
         }
@@ -106,7 +106,7 @@ fn bench_ordered_set_st_eph_previous_next(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut set = OrderedSetStEph::new();
+        let mut set = OrderedSetStEph::empty();
         for i in 0..*size {
             set.insert(i * 2); // Insert even numbers
         }
@@ -139,7 +139,7 @@ fn bench_ordered_set_st_eph_split_join(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("split", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut set = OrderedSetStEph::new();
+                    let mut set = OrderedSetStEph::empty();
                     for i in 0..size {
                         set.insert(i);
                     }
@@ -156,8 +156,8 @@ fn bench_ordered_set_st_eph_split_join(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("join", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut left = OrderedSetStEph::new();
-                    let mut right = OrderedSetStEph::new();
+                    let mut left = OrderedSetStEph::empty();
+                    let mut right = OrderedSetStEph::empty();
                     let mid = size / 2;
                     
                     for i in 0..mid {
@@ -185,7 +185,7 @@ fn bench_ordered_set_st_eph_get_range(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut set = OrderedSetStEph::new();
+        let mut set = OrderedSetStEph::empty();
         for i in 0..*size {
             set.insert(i);
         }
@@ -207,7 +207,7 @@ fn bench_ordered_set_st_eph_rank_select(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut set = OrderedSetStEph::new();
+        let mut set = OrderedSetStEph::empty();
         for i in 0..*size {
             set.insert(i);
         }
@@ -240,7 +240,7 @@ fn bench_ordered_set_st_eph_split_rank(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("split_rank", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut set = OrderedSetStEph::new();
+                    let mut set = OrderedSetStEph::empty();
                     for i in 0..size {
                         set.insert(i);
                     }
@@ -266,8 +266,8 @@ fn bench_ordered_set_st_eph_set_operations(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("union", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut set1 = OrderedSetStEph::new();
-                    let mut set2 = OrderedSetStEph::new();
+                    let mut set1 = OrderedSetStEph::empty();
+                    let mut set2 = OrderedSetStEph::empty();
                     
                     for i in 0..size {
                         set1.insert(i);
@@ -286,8 +286,8 @@ fn bench_ordered_set_st_eph_set_operations(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("intersection", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut set1 = OrderedSetStEph::new();
-                    let mut set2 = OrderedSetStEph::new();
+                    let mut set1 = OrderedSetStEph::empty();
+                    let mut set2 = OrderedSetStEph::empty();
                     
                     for i in 0..size {
                         set1.insert(i);
@@ -306,8 +306,8 @@ fn bench_ordered_set_st_eph_set_operations(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("difference", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut set1 = OrderedSetStEph::new();
-                    let mut set2 = OrderedSetStEph::new();
+                    let mut set1 = OrderedSetStEph::empty();
+                    let mut set2 = OrderedSetStEph::empty();
                     
                     for i in 0..size {
                         set1.insert(i);
@@ -332,7 +332,7 @@ fn bench_ordered_set_st_eph_filter_map(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut set = OrderedSetStEph::new();
+        let mut set = OrderedSetStEph::empty();
         for i in 0..*size {
             set.insert(i);
         }

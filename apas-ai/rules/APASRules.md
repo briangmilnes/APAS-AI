@@ -11,6 +11,8 @@
 - Existing caller-facing `Vec` usage must remain localized and not expand beyond its current footprint.
 - **Seq-First Rule**: When length is known, operate directly on the sequence without converting to `Vec`.
 - **Vec-to-Seq Rule**: When consuming a `Vec`, allocate the target array structure immediately (via `tabulate` or constructors) rather than manipulating the `Vec` in place.
+- If a module does not define a sequence type but you need storage for one, 
+ use Chap19 sequences. 
 
 ### Element Shorthands and Delegation
 - Use the APAS shorthands to avoid repeated bounds: `StT` (`Eq + Clone + Display + Debug + Sized`) for single-threaded data, `MtT` (`Sized + Send + Sync`) for multi-threaded contexts.

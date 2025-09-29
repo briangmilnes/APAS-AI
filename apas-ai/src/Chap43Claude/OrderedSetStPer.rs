@@ -2,6 +2,7 @@
 //! Single-threaded persistent ordered set implementation extending AVLTreeSetStPer.
 
 pub mod OrderedSetStPer {
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Types::Types::*;
@@ -46,45 +47,45 @@ pub mod OrderedSetStPer {
     impl<T: StT + Ord> OrderedSetStPerTrait<T> for OrderedSetStPer<T> {
         // Base set operations - delegate to backing store
         
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn size(&self) -> N {
             self.base_set.size()
         }
 
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn empty() -> Self {
             OrderedSetStPer {
                 base_set: AVLTreeSetStPer::empty(),
             }
         }
 
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn singleton(x: T) -> Self {
             OrderedSetStPer {
                 base_set: AVLTreeSetStPer::singleton(x),
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn find(&self, x: &T) -> B {
             self.base_set.find(x)
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn insert(&self, x: T) -> Self {
             OrderedSetStPer {
                 base_set: self.base_set.insert(x),
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn delete(&self, x: &T) -> Self {
             OrderedSetStPer {
                 base_set: self.base_set.delete(x),
             }
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn filter<F>(&self, f: F) -> Self 
         where 
             F: Fn(&T) -> B 
@@ -94,33 +95,33 @@ pub mod OrderedSetStPer {
             }
         }
 
-        /// Work: O(m + n), Span: O(log(m + n))
+        /// Claude Work: O(m + n), Span: O(log(m + n))
         fn intersection(&self, other: &Self) -> Self {
             OrderedSetStPer {
                 base_set: self.base_set.intersection(&other.base_set),
             }
         }
 
-        /// Work: O(m + n), Span: O(log(m + n))
+        /// Claude Work: O(m + n), Span: O(log(m + n))
         fn union(&self, other: &Self) -> Self {
             OrderedSetStPer {
                 base_set: self.base_set.union(&other.base_set),
             }
         }
 
-        /// Work: O(m + n), Span: O(log(m + n))
+        /// Claude Work: O(m + n), Span: O(log(m + n))
         fn difference(&self, other: &Self) -> Self {
             OrderedSetStPer {
                 base_set: self.base_set.difference(&other.base_set),
             }
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn to_seq(&self) -> AVLTreeSeqStPerS<T> {
             self.base_set.to_seq()
         }
 
-        /// Work: O(n log n), Span: O(log² n)
+        /// Claude Work: O(n log n), Span: O(log² n)
         fn from_seq(seq: AVLTreeSeqStPerS<T>) -> Self {
             OrderedSetStPer {
                 base_set: AVLTreeSetStPer::from_seq(seq),
@@ -129,7 +130,7 @@ pub mod OrderedSetStPer {
 
         // Ordering operations (ADT 43.1)
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn first(&self) -> Option<T> {
             if self.size() == 0 {
                 None
@@ -139,7 +140,7 @@ pub mod OrderedSetStPer {
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn last(&self) -> Option<T> {
             let size = self.size();
             if size == 0 {
@@ -150,7 +151,7 @@ pub mod OrderedSetStPer {
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn previous(&self, k: &T) -> Option<T> {
             let seq = self.to_seq();
             let size = seq.length();
@@ -164,7 +165,7 @@ pub mod OrderedSetStPer {
             None
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn next(&self, k: &T) -> Option<T> {
             let seq = self.to_seq();
             let size = seq.length();
@@ -178,27 +179,21 @@ pub mod OrderedSetStPer {
             None
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn split(&self, k: &T) -> (Self, B, Self) {
             let seq = self.to_seq();
-            let size = seq.length();
-            let mut left_elements = Vec::with_capacity(size);
-            let mut right_elements = Vec::with_capacity(size);
-            let mut found = false;
-
-            for i in 0..size {
-                let elem = seq.nth(i);
-                if elem < k {
-                    left_elements.push(elem.clone());
-                } else if elem > k {
-                    right_elements.push(elem.clone());
-                } else {
-                    found = true;
-                }
-            }
-
-            let left_seq = AVLTreeSeqStPerS::from_vec(left_elements);
-            let right_seq = AVLTreeSeqStPerS::from_vec(right_elements);
+            
+            // Convert to ArraySeqStPerS for filtering operations
+            let array_seq = ArraySeqStPerS::tabulate(&|i| seq.nth(i).clone(), seq.length());
+            
+            // Use proper sequence filter operations
+            let left_array = ArraySeqStPerS::filter(&array_seq, &|elem| elem < k);
+            let right_array = ArraySeqStPerS::filter(&array_seq, &|elem| elem > k);
+            let found = ArraySeqStPerS::filter(&array_seq, &|elem| elem == k).length() > 0;
+            
+            // Convert back to AVLTreeSeqStPerS
+            let left_seq = AVLTreeSeqStPerS::from_vec(left_array.into_iter().collect());
+            let right_seq = AVLTreeSeqStPerS::from_vec(right_array.into_iter().collect());
 
             (
                 Self::from_seq(left_seq),
@@ -207,29 +202,27 @@ pub mod OrderedSetStPer {
             )
         }
 
-        /// Work: O(log(m + n)), Span: O(log(m + n))
+        /// Claude Work: O(log(m + n)), Span: O(log(m + n))
         fn join(left: &Self, right: &Self) -> Self {
             left.union(right)
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn get_range(&self, k1: &T, k2: &T) -> Self {
             let seq = self.to_seq();
-            let size = seq.length();
-            let mut range_elements = Vec::with_capacity(size);
-
-            for i in 0..size {
-                let elem = seq.nth(i);
-                if elem >= k1 && elem <= k2 {
-                    range_elements.push(elem.clone());
-                }
-            }
-
-            let range_seq = AVLTreeSeqStPerS::from_vec(range_elements);
+            
+            // Convert to ArraySeqStPerS for filtering operations
+            let array_seq = ArraySeqStPerS::tabulate(&|i| seq.nth(i).clone(), seq.length());
+            
+            // Use proper sequence filter operation
+            let range_array = ArraySeqStPerS::filter(&array_seq, &|elem| elem >= k1 && elem <= k2);
+            
+            // Convert back to AVLTreeSeqStPerS
+            let range_seq = AVLTreeSeqStPerS::from_vec(range_array.into_iter().collect());
             Self::from_seq(range_seq)
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn rank(&self, k: &T) -> N {
             let seq = self.to_seq();
             let size = seq.length();
@@ -246,7 +239,7 @@ pub mod OrderedSetStPer {
             count
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn select(&self, i: N) -> Option<T> {
             let seq = self.to_seq();
             if i >= seq.length() {
@@ -256,7 +249,7 @@ pub mod OrderedSetStPer {
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn split_rank(&self, i: N) -> (Self, Self) {
             let seq = self.to_seq();
             let size = seq.length();
@@ -265,18 +258,9 @@ pub mod OrderedSetStPer {
                 return (self.clone(), Self::empty());
             }
 
-            let mut left_elements = Vec::with_capacity(i);
-            let mut right_elements = Vec::with_capacity(size - i);
-
-            for j in 0..i {
-                left_elements.push(seq.nth(j).clone());
-            }
-            for j in i..size {
-                right_elements.push(seq.nth(j).clone());
-            }
-
-            let left_seq = AVLTreeSeqStPerS::from_vec(left_elements);
-            let right_seq = AVLTreeSeqStPerS::from_vec(right_elements);
+            // Use subseq_copy for known index ranges
+            let left_seq = seq.subseq_copy(0, i);
+            let right_seq = seq.subseq_copy(i, size - i);
 
             (Self::from_seq(left_seq), Self::from_seq(right_seq))
         }

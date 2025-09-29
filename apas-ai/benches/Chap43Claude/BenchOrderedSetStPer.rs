@@ -10,7 +10,7 @@ fn bench_ordered_set_st_per_insert(c: &mut Criterion) {
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
             b.iter(|| {
-                let mut set = OrderedSetStPer::new();
+                let mut set = OrderedSetStPer::empty();
                 for i in 0..size {
                     set = black_box(set.insert(black_box(i)));
                 }
@@ -27,7 +27,7 @@ fn bench_ordered_set_st_per_contains(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut set = OrderedSetStPer::new();
+        let mut set = OrderedSetStPer::empty();
         for i in 0..*size {
             set = set.insert(i);
         }
@@ -52,7 +52,7 @@ fn bench_ordered_set_st_per_delete(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("delete", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut set = OrderedSetStPer::new();
+                    let mut set = OrderedSetStPer::empty();
                     for i in 0..size {
                         set = set.insert(i);
                     }
@@ -77,7 +77,7 @@ fn bench_ordered_set_st_per_first_last(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut set = OrderedSetStPer::new();
+        let mut set = OrderedSetStPer::empty();
         for i in 0..*size {
             set = set.insert(i);
         }
@@ -103,7 +103,7 @@ fn bench_ordered_set_st_per_previous_next(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut set = OrderedSetStPer::new();
+        let mut set = OrderedSetStPer::empty();
         for i in 0..*size {
             set = set.insert(i * 2); // Insert even numbers
         }
@@ -136,7 +136,7 @@ fn bench_ordered_set_st_per_split_join(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("split", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut set = OrderedSetStPer::new();
+                    let mut set = OrderedSetStPer::empty();
                     for i in 0..size {
                         set = set.insert(i);
                     }
@@ -153,8 +153,8 @@ fn bench_ordered_set_st_per_split_join(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("join", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut left = OrderedSetStPer::new();
-                    let mut right = OrderedSetStPer::new();
+                    let mut left = OrderedSetStPer::empty();
+                    let mut right = OrderedSetStPer::empty();
                     let mid = size / 2;
                     
                     for i in 0..mid {
@@ -181,7 +181,7 @@ fn bench_ordered_set_st_per_get_range(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut set = OrderedSetStPer::new();
+        let mut set = OrderedSetStPer::empty();
         for i in 0..*size {
             set = set.insert(i);
         }
@@ -203,7 +203,7 @@ fn bench_ordered_set_st_per_rank_select(c: &mut Criterion) {
     group.measurement_time(Duration::from_millis(1000));
     
     for size in [100, 500, 1000].iter() {
-        let mut set = OrderedSetStPer::new();
+        let mut set = OrderedSetStPer::empty();
         for i in 0..*size {
             set = set.insert(i);
         }
@@ -236,7 +236,7 @@ fn bench_ordered_set_st_per_split_rank(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("split_rank", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut set = OrderedSetStPer::new();
+                    let mut set = OrderedSetStPer::empty();
                     for i in 0..size {
                         set = set.insert(i);
                     }
@@ -262,8 +262,8 @@ fn bench_ordered_set_st_per_set_operations(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("union", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut set1 = OrderedSetStPer::new();
-                    let mut set2 = OrderedSetStPer::new();
+                    let mut set1 = OrderedSetStPer::empty();
+                    let mut set2 = OrderedSetStPer::empty();
                     
                     for i in 0..size {
                         set1 = set1.insert(i);
@@ -281,8 +281,8 @@ fn bench_ordered_set_st_per_set_operations(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("intersection", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut set1 = OrderedSetStPer::new();
-                    let mut set2 = OrderedSetStPer::new();
+                    let mut set1 = OrderedSetStPer::empty();
+                    let mut set2 = OrderedSetStPer::empty();
                     
                     for i in 0..size {
                         set1 = set1.insert(i);
@@ -300,8 +300,8 @@ fn bench_ordered_set_st_per_set_operations(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("difference", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                    let mut set1 = OrderedSetStPer::new();
-                    let mut set2 = OrderedSetStPer::new();
+                    let mut set1 = OrderedSetStPer::empty();
+                    let mut set2 = OrderedSetStPer::empty();
                     
                     for i in 0..size {
                         set1 = set1.insert(i);

@@ -4,6 +4,7 @@
   - [ ] Core operations exposed as inherent methods (no free-function wrappers); mirror trait APIs in a single impl per type.
   - [ ] Conversions (`from_vec`/`to_vec`) stay internal and keep representation hidden.
   - [ ] Apply Seq-First (operate directly on sequences) and Vec-to-Seq rules when size is known.
+  - [ ] Use Chap19 sequences when a module doesn't define its own sequence type.
 - [ ] Element Shorthands and Delegation
   - [ ] Use `StT`/`MtT` bounds as defined (note: `StT` excludes `Copy`).
   - [ ] Prefer `Pair` from `crate::Types::Types` in public APIs.

@@ -1,6 +1,6 @@
 
  Build a plan for this, including test and benchmark
- using PrePlanChecklist.md. 
+ using PrePlanChecklist.md.
 
  Show it to me and estimate time.
 
@@ -60,6 +60,7 @@ As with Tramlaw, tables might also need to be unioned since they might come from
 ferent sources : e.g. the Tokyo stock exchange and the New York stock exchange. Qasdan
 wants to efficiently support queries that return the maximum price of a trade during any
 time range (t1, t2) .
+
 You tell them that they can use an ordered table with reduced values using max as the
 combining function f . The query will be exactly the same as with your consulting gig with
 Tramlaw, getRange followed by reduceVal , and it will similarly run in O(lg n) work.

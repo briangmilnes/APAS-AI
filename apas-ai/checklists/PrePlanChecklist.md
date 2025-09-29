@@ -7,18 +7,23 @@
 - [ ] For every `src` file, does the plan list which methods will be implemented and which existing methods will be delegated to?
 - [ ] If multiple `src` files are being added, are the tasks ordered bottom-up so incremental `cargo build` runs succeed after each file addition?
 - [ ] Is it clear which data structures to create and their types?
-- [ ] Do not use Vec for anything of known length, use a sequence type.
+- [ ] Do not use Vec for anything of known length, use a sequence type. 
 - [ ] Does the plan plan know which functions and methods in an Mt module are to be parallel?
 - [ ] Does the plan schedule running the RustRules and APAS checklists after each new `src` file is created or edited?
 - [ ] Does the plan schedule `cargo build` after each new `src` file, performed one at a time until the build is clean (no warnings/errors)?
 - [ ] Is it clear which test files will be created?
 - [ ] Does the plan schedule running the RustRules and APAS checklists after each new test file is created or edited?
+      It is crucial that these are run FILE BY FILE as it prevents you from injecting many defects.
+      There should be a to-do item for this PER FILE.
 - [ ] Are there uses of Vec that are of known length and should be a sequence type in the new files? Fix them.
+      It is crucial that these are run FILE BY FILE as it prevents you from injecting many Vec defects.
+      There should be a to-do item for this PER FILE.
 - [ ] Does the plan schedule `cargo nextest` (targeting the new test file) after each test file is added, run one at a time until clean?
+      There should be a to-do item for this PER FILE.
 - [ ] Is it clear which benchmark files will be created?
 - [ ] Does the plan schedule running the RustRules and APAS checklists after each new benchmark file is created or edited?
 - [ ] Does the plan schedule `cargo bench` (targeting the new benchmark file) after each benchmark is added, run one at a time until clean?
-- [ ] Does the plan document the current PSP step (process definition) and note that time/estimate tracking will be incorporated in future iterations?
+      There should be a to-do item for this PER FILE.
 - [ ] Does the plan include a full `cargo build` at the end of the work?
 - [ ] Does the plan include a full `cargo nextest` run at the end of the work?
 - [ ] Does the plan reserve a final step to summarize the changes and call out any outstanding issues?

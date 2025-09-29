@@ -12,3 +12,4 @@
 - [ ] Were all planned per-file checklists (e.g., PerSrc, PerTest, PerBenchmark) run after each file creation/update?
 - [ ] Run the AlgorithmicAnalysis checklist. Was it met? 
 - [ ] Did you pause? Why and how can you prevent this in future?
+- [ ] Make a plan to fix any defects found, one to-do for each file.

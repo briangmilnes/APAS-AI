@@ -2,6 +2,7 @@
 //! Single-threaded ephemeral ordered set implementation extending AVLTreeSetStEph.
 
 pub mod OrderedSetStEph {
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
@@ -47,83 +48,84 @@ pub mod OrderedSetStEph {
     impl<T: StT + Ord> OrderedSetStEphTrait<T> for OrderedSetStEph<T> {
         // Base set operations - delegate to backing store with ephemeral semantics
         
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn size(&self) -> N {
             self.base_set.size()
         }
 
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn empty() -> Self {
             OrderedSetStEph {
                 base_set: AVLTreeSetStEph::empty(),
             }
         }
 
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn singleton(x: T) -> Self {
             OrderedSetStEph {
                 base_set: AVLTreeSetStEph::singleton(x),
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn find(&self, x: &T) -> B {
             self.base_set.find(x)
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn insert(&mut self, x: T) {
             self.base_set.insert(x);
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn delete(&mut self, x: &T) {
             self.base_set.delete(x);
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn filter<F>(&mut self, f: F) 
         where 
             F: Fn(&T) -> B 
         {
-            self.base_set.filter(f);
+            let result = self.base_set.filter(f);
+            self.base_set = result;
         }
 
-        /// Work: O(m + n), Span: O(log(m + n))
+        /// Claude Work: O(m + n), Span: O(log(m + n))
         fn intersection(&mut self, other: &Self) {
             let result = self.base_set.intersection(&other.base_set);
             self.base_set = result;
         }
 
-        /// Work: O(m + n), Span: O(log(m + n))
+        /// Claude Work: O(m + n), Span: O(log(m + n))
         fn union(&mut self, other: &Self) {
             let result = self.base_set.union(&other.base_set);
             self.base_set = result;
         }
 
-        /// Work: O(m + n), Span: O(log(m + n))
+        /// Claude Work: O(m + n), Span: O(log(m + n))
         fn difference(&mut self, other: &Self) {
             let result = self.base_set.difference(&other.base_set);
             self.base_set = result;
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn to_seq(&self) -> AVLTreeSeqStPerS<T> {
             // Convert ephemeral sequence to persistent sequence
             let eph_seq = self.base_set.to_seq();
             let len = eph_seq.length();
-            let mut elements = Vec::with_capacity(len);
+            let mut elements = Vec::new();
             for i in 0..len {
                 elements.push(eph_seq.nth(i).clone());
             }
             AVLTreeSeqStPerS::from_vec(elements)
         }
 
-        /// Work: O(n log n), Span: O(log² n)
+        /// Claude Work: O(n log n), Span: O(log² n)
         fn from_seq(seq: AVLTreeSeqStPerS<T>) -> Self {
             // Convert persistent sequence to ephemeral sequence
             let len = seq.length();
-            let mut elements = Vec::with_capacity(len);
+            let mut elements = Vec::new();
             for i in 0..len {
                 elements.push(seq.nth(i).clone());
             }
@@ -135,7 +137,7 @@ pub mod OrderedSetStEph {
 
         // Ordering operations (ADT 43.1)
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn first(&self) -> Option<T> {
             if self.size() == 0 {
                 None
@@ -145,7 +147,7 @@ pub mod OrderedSetStEph {
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn last(&self) -> Option<T> {
             let size = self.size();
             if size == 0 {
@@ -156,7 +158,7 @@ pub mod OrderedSetStEph {
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn previous(&self, k: &T) -> Option<T> {
             let seq = self.to_seq();
             let size = seq.length();
@@ -170,7 +172,7 @@ pub mod OrderedSetStEph {
             None
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn next(&self, k: &T) -> Option<T> {
             let seq = self.to_seq();
             let size = seq.length();
@@ -184,27 +186,21 @@ pub mod OrderedSetStEph {
             None
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn split(&mut self, k: &T) -> (Self, B, Self) {
             let seq = self.to_seq();
-            let size = seq.length();
-            let mut left_elements = Vec::with_capacity(size);
-            let mut right_elements = Vec::with_capacity(size);
-            let mut found = false;
-
-            for i in 0..size {
-                let elem = seq.nth(i);
-                if elem < k {
-                    left_elements.push(elem.clone());
-                } else if elem > k {
-                    right_elements.push(elem.clone());
-                } else {
-                    found = true;
-                }
-            }
-
-            let left_seq = AVLTreeSeqStPerS::from_vec(left_elements);
-            let right_seq = AVLTreeSeqStPerS::from_vec(right_elements);
+            
+            // Convert to ArraySeqStPerS for filtering operations
+            let array_seq = ArraySeqStPerS::tabulate(&|i| seq.nth(i).clone(), seq.length());
+            
+            // Use proper sequence filter operations
+            let left_array = ArraySeqStPerS::filter(&array_seq, &|elem| elem < k);
+            let right_array = ArraySeqStPerS::filter(&array_seq, &|elem| elem > k);
+            let found = ArraySeqStPerS::filter(&array_seq, &|elem| elem == k).length() > 0;
+            
+            // Convert back to AVLTreeSeqStPerS
+            let left_seq = AVLTreeSeqStPerS::from_vec(left_array.into_iter().collect());
+            let right_seq = AVLTreeSeqStPerS::from_vec(right_array.into_iter().collect());
 
             // Clear current set (ephemeral behavior)
             *self = Self::empty();
@@ -216,29 +212,27 @@ pub mod OrderedSetStEph {
             )
         }
 
-        /// Work: O(log(m + n)), Span: O(log(m + n))
+        /// Claude Work: O(log(m + n)), Span: O(log(m + n))
         fn join(&mut self, other: Self) {
             self.union(&other);
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn get_range(&self, k1: &T, k2: &T) -> Self {
             let seq = self.to_seq();
-            let size = seq.length();
-            let mut range_elements = Vec::with_capacity(size);
-
-            for i in 0..size {
-                let elem = seq.nth(i);
-                if elem >= k1 && elem <= k2 {
-                    range_elements.push(elem.clone());
-                }
-            }
-
-            let range_seq = AVLTreeSeqStPerS::from_vec(range_elements);
+            
+            // Convert to ArraySeqStPerS for filtering operations
+            let array_seq = ArraySeqStPerS::tabulate(&|i| seq.nth(i).clone(), seq.length());
+            
+            // Use proper sequence filter operation
+            let range_array = ArraySeqStPerS::filter(&array_seq, &|elem| elem >= k1 && elem <= k2);
+            
+            // Convert back to AVLTreeSeqStPerS
+            let range_seq = AVLTreeSeqStPerS::from_vec(range_array.into_iter().collect());
             Self::from_seq(range_seq)
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn rank(&self, k: &T) -> N {
             let seq = self.to_seq();
             let size = seq.length();
@@ -255,7 +249,7 @@ pub mod OrderedSetStEph {
             count
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn select(&self, i: N) -> Option<T> {
             let seq = self.to_seq();
             if i >= seq.length() {
@@ -265,7 +259,7 @@ pub mod OrderedSetStEph {
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn split_rank(&mut self, i: N) -> (Self, Self) {
             let seq = self.to_seq();
             let size = seq.length();
@@ -276,8 +270,8 @@ pub mod OrderedSetStEph {
                 return (current, Self::empty());
             }
 
-            let mut left_elements = Vec::with_capacity(i);
-            let mut right_elements = Vec::with_capacity(size - i);
+            let mut left_elements = Vec::new();
+            let mut right_elements = Vec::new();
 
             for j in 0..i {
                 left_elements.push(seq.nth(j).clone());

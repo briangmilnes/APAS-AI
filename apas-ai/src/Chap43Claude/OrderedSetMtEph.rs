@@ -45,31 +45,31 @@ pub mod OrderedSetMtEph {
     }
 
     impl<T: StTInMtT + Ord + 'static> OrderedSetMtEphTrait<T> for OrderedSetMtEph<T> {
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn size(&self) -> N {
             self.elements.len()
         }
 
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn empty() -> Self {
             OrderedSetMtEph {
                 elements: Vec::new(),
             }
         }
 
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn singleton(x: T) -> Self {
             OrderedSetMtEph {
                 elements: vec![x],
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn find(&self, x: &T) -> B {
             self.elements.binary_search(x).is_ok()
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn insert(&mut self, x: T) {
             match self.elements.binary_search(&x) {
                 Ok(_) => {}, // Element already exists
@@ -79,14 +79,14 @@ pub mod OrderedSetMtEph {
             }
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn delete(&mut self, x: &T) {
             if let Ok(pos) = self.elements.binary_search(x) {
                 self.elements.remove(pos);
             }
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn filter<F>(&mut self, f: F) 
         where 
             F: Fn(&T) -> B + Send + Sync + 'static 
@@ -94,12 +94,12 @@ pub mod OrderedSetMtEph {
             self.elements.retain(|x| f(x));
         }
 
-        /// Work: O(m + n), Span: O(log(m + n))
+        /// Claude Work: O(m + n), Span: O(log(m + n))
         fn intersection(&mut self, other: &Self) {
             self.elements.retain(|elem| other.find(elem));
         }
 
-        /// Work: O(m + n), Span: O(log(m + n))
+        /// Claude Work: O(m + n), Span: O(log(m + n))
         fn union(&mut self, other: &Self) {
             // Simple sequential implementation for correctness
             for elem in &other.elements {
@@ -109,21 +109,21 @@ pub mod OrderedSetMtEph {
             }
         }
 
-        /// Work: O(m + n), Span: O(log(m + n))
+        /// Claude Work: O(m + n), Span: O(log(m + n))
         fn difference(&mut self, other: &Self) {
             // Simple sequential implementation for correctness
             self.elements.retain(|elem| !other.find(elem));
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn to_seq(&self) -> AVLTreeSeqStPerS<T> {
             AVLTreeSeqStPerS::from_vec(self.elements.clone())
         }
 
-        /// Work: O(n log n), Span: O(log² n)
+        /// Claude Work: O(n log n), Span: O(log² n)
         fn from_seq(seq: AVLTreeSeqStPerS<T>) -> Self {
             let len = seq.length();
-            let mut elements = Vec::with_capacity(len);
+            let mut elements = Vec::new();
             for i in 0..len {
                 elements.push(seq.nth(i).clone());
             }
@@ -134,17 +134,17 @@ pub mod OrderedSetMtEph {
 
         // Ordering operations (ADT 43.1)
 
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn first(&self) -> Option<T> {
             self.elements.first().cloned()
         }
 
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn last(&self) -> Option<T> {
             self.elements.last().cloned()
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn previous(&self, k: &T) -> Option<T> {
             match self.elements.binary_search(k) {
                 Ok(pos) => {
@@ -164,7 +164,7 @@ pub mod OrderedSetMtEph {
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn next(&self, k: &T) -> Option<T> {
             match self.elements.binary_search(k) {
                 Ok(pos) => {
@@ -184,7 +184,7 @@ pub mod OrderedSetMtEph {
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn split(&mut self, k: &T) -> (Self, B, Self) {
             let pos = match self.elements.binary_search(k) {
                 Ok(pos) => pos,
@@ -208,12 +208,12 @@ pub mod OrderedSetMtEph {
             )
         }
 
-        /// Work: O(log(m + n)), Span: O(log(m + n))
+        /// Claude Work: O(log(m + n)), Span: O(log(m + n))
         fn join(&mut self, other: Self) {
             self.union(&other);
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn get_range(&self, k1: &T, k2: &T) -> Self {
             let start_pos = match self.elements.binary_search(k1) {
                 Ok(pos) => pos,
@@ -228,7 +228,7 @@ pub mod OrderedSetMtEph {
             OrderedSetMtEph { elements: range_elements }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn rank(&self, k: &T) -> N {
             match self.elements.binary_search(k) {
                 Ok(pos) => pos,
@@ -236,12 +236,12 @@ pub mod OrderedSetMtEph {
             }
         }
 
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn select(&self, i: N) -> Option<T> {
             self.elements.get(i).cloned()
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn split_rank(&mut self, i: N) -> (Self, Self) {
             let right_elements: Vec<T> = self.elements.drain(i..).collect();
             let left_elements = std::mem::take(&mut self.elements);

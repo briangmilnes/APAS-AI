@@ -64,58 +64,58 @@ pub mod OrderedTableStEph {
     impl<K: StT + Ord, V: StT> OrderedTableStEphTrait<K, V> for OrderedTableStEph<K, V> {
         // Base table operations - delegate to backing store with ephemeral semantics
         
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn size(&self) -> N {
             self.base_table.size()
         }
 
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn empty() -> Self {
             OrderedTableStEph {
                 base_table: TableStEph::empty(),
             }
         }
 
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn singleton(k: K, v: V) -> Self {
             OrderedTableStEph {
                 base_table: TableStEph::singleton(k, v),
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn find(&self, k: &K) -> Option<V> {
             self.base_table.find(k)
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn lookup(&self, k: &K) -> Option<V> {
             self.find(k)
         }
 
-        /// Work: O(1), Span: O(1)
+        /// Claude Work: O(1), Span: O(1)
         fn is_empty(&self) -> B {
             self.size() == 0
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn insert<F>(&mut self, k: K, v: V, combine: F) where F: Fn(&V, &V) -> V {
             self.base_table.insert(k, v, combine);
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn delete(&mut self, k: &K) -> Option<V> {
             let old_value = self.find(k);
             self.base_table.delete(k);
             old_value
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn domain(&self) -> ArraySetStEph<K> {
             self.base_table.domain()
         }
 
-        /// Work: O(n log n), Span: O(log² n)
+        /// Claude Work: O(n log n), Span: O(log² n)
         fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self 
         where 
             F: Fn(&K) -> V 
@@ -125,7 +125,7 @@ pub mod OrderedTableStEph {
             }
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn map<F>(&self, f: F) -> Self
         where 
             F: Fn(&K, &V) -> V 
@@ -140,7 +140,7 @@ pub mod OrderedTableStEph {
             result
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn filter<F>(&self, f: F) -> Self
         where 
             F: Fn(&K, &V) -> B 
@@ -156,7 +156,7 @@ pub mod OrderedTableStEph {
             result
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn reduce<R, F>(&self, init: R, f: F) -> R 
         where 
             F: Fn(R, &K, &V) -> R 
@@ -170,7 +170,7 @@ pub mod OrderedTableStEph {
             result
         }
 
-        /// Work: O(m + n), Span: O(log(m + n))
+        /// Claude Work: O(m + n), Span: O(log(m + n))
         fn intersection<F>(&mut self, other: &Self, f: F) 
         where 
             F: Fn(&V, &V) -> V 
@@ -178,7 +178,7 @@ pub mod OrderedTableStEph {
             self.base_table.intersection(&other.base_table, f);
         }
 
-        /// Work: O(m + n), Span: O(log(m + n))
+        /// Claude Work: O(m + n), Span: O(log(m + n))
         fn union<F>(&mut self, other: &Self, f: F) 
         where 
             F: Fn(&V, &V) -> V 
@@ -186,27 +186,27 @@ pub mod OrderedTableStEph {
             self.base_table.union(&other.base_table, f);
         }
 
-        /// Work: O(m + n), Span: O(log(m + n))
+        /// Claude Work: O(m + n), Span: O(log(m + n))
         fn difference(&mut self, other: &Self) {
             self.base_table.difference(&other.base_table);
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn restrict(&mut self, keys: &ArraySetStEph<K>) {
             self.base_table.restrict(keys);
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn subtract(&mut self, keys: &ArraySetStEph<K>) {
             self.base_table.subtract(keys);
         }
 
-        /// Work: O(n), Span: O(log n)
+        /// Claude Work: O(n), Span: O(log n)
         fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>> {
             let array_seq = self.base_table.collect();
             // Convert ArraySeqStEphS to AVLTreeSeqStPerS
             let len = array_seq.length();
-            let mut elements = Vec::with_capacity(len);
+            let mut elements = Vec::new();
             for i in 0..len {
                 elements.push(array_seq.nth(i).clone());
             }
@@ -215,7 +215,7 @@ pub mod OrderedTableStEph {
 
         // Key ordering operations (ADT 43.1 adapted for tables)
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn first_key(&self) -> Option<K> {
             let entries = self.collect();
             if entries.length() == 0 {
@@ -225,7 +225,7 @@ pub mod OrderedTableStEph {
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn last_key(&self) -> Option<K> {
             let entries = self.collect();
             let size = entries.length();
@@ -236,7 +236,7 @@ pub mod OrderedTableStEph {
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn previous_key(&self, k: &K) -> Option<K> {
             let entries = self.collect();
             let size = entries.length();
@@ -250,7 +250,7 @@ pub mod OrderedTableStEph {
             None
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn next_key(&self, k: &K) -> Option<K> {
             let entries = self.collect();
             let size = entries.length();
@@ -264,12 +264,12 @@ pub mod OrderedTableStEph {
             None
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn split_key(&mut self, k: &K) -> (Self, Self) {
             let entries = self.collect();
             let size = entries.length();
-            let mut left_entries = Vec::with_capacity(size);
-            let mut right_entries = Vec::with_capacity(size);
+            let mut left_entries = Vec::new();
+            let mut right_entries = Vec::new();
             let mut _found_value: Option<V> = None;
 
             for i in 0..size {
@@ -294,16 +294,16 @@ pub mod OrderedTableStEph {
             )
         }
 
-        /// Work: O(log(m + n)), Span: O(log(m + n))
+        /// Claude Work: O(log(m + n)), Span: O(log(m + n))
         fn join_key(&mut self, other: Self) {
             self.union(&other, |v1, _v2| v1.clone());
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn get_key_range(&self, k1: &K, k2: &K) -> Self {
             let entries = self.collect();
             let size = entries.length();
-            let mut range_entries = Vec::with_capacity(size);
+            let mut range_entries = Vec::new();
 
             for i in 0..size {
                 let pair = entries.nth(i);
@@ -316,7 +316,7 @@ pub mod OrderedTableStEph {
             from_sorted_entries(range_seq)
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn rank_key(&self, k: &K) -> N {
             let entries = self.collect();
             let size = entries.length();
@@ -333,7 +333,7 @@ pub mod OrderedTableStEph {
             count
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn select_key(&self, i: N) -> Option<K> {
             let entries = self.collect();
             if i >= entries.length() {
@@ -343,7 +343,7 @@ pub mod OrderedTableStEph {
             }
         }
 
-        /// Work: O(log n), Span: O(log n)
+        /// Claude Work: O(log n), Span: O(log n)
         fn split_rank_key(&mut self, i: N) -> (Self, Self) {
             let entries = self.collect();
             let size = entries.length();
@@ -354,8 +354,8 @@ pub mod OrderedTableStEph {
                 return (current, Self::empty());
             }
 
-            let mut left_entries = Vec::with_capacity(i);
-            let mut right_entries = Vec::with_capacity(size - i);
+            let mut left_entries = Vec::new();
+            let mut right_entries = Vec::new();
 
             for j in 0..i {
                 left_entries.push(entries.nth(j).clone());
@@ -389,7 +389,7 @@ pub mod OrderedTableStEph {
     pub fn from_sorted_entries<K: StT + Ord, V: StT>(entries: AVLTreeSeqStPerS<Pair<K, V>>) -> OrderedTableStEph<K, V> {
         // Convert persistent sequence to Vec for TableStEph helper
         let len = entries.length();
-        let mut elements = Vec::with_capacity(len);
+        let mut elements = Vec::new();
         for i in 0..len {
             elements.push(entries.nth(i).clone());
         }
