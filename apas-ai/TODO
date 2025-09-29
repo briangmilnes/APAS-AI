@@ -1,13 +1,11 @@
 
- Add the Chap21 examples.
-
-  Trim down benchmarking, why are some taking 500% cpu that
- appear St?
- 
-  Search for and fix stub anti-patterns.
-  
+  Get rid of the Claudes.
+  Ordered to Ord.
   Use the rust tool to get real test coverage.
+  46-66.
 
+  Reviews
+  
 
 
  

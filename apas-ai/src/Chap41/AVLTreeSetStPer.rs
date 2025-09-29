@@ -5,7 +5,7 @@ pub mod AVLTreeSetStPer {
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Types::Types::*;
 
-    #[derive(PartialEq)]
+    #[derive(PartialEq, Eq, Debug)]
     pub struct AVLTreeSetStPer<T: StT + Ord> {
         elements: AVLTreeSeqStPerS<T>,
     }
@@ -187,6 +187,16 @@ pub mod AVLTreeSetStPer {
             AVLTreeSetStPer {
                 elements: self.elements.clone(),
             }
+        }
+    }
+
+    impl<T: StT + Ord> std::fmt::Display for AVLTreeSetStPer<T> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{{{}}}", 
+                   (0..self.size())
+                   .map(|i| format!("{}", self.elements.nth(i)))
+                   .collect::<Vec<_>>()
+                   .join(", "))
         }
     }
 

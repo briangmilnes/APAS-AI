@@ -1,0 +1,383 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Chapter 45: Heapsort Example - Algorithm 45.2 using all Priority Queue implementations
+
+pub mod HeapsortExample {
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Types::Types::*;
+    
+    use crate::Chap45::UnsortedListPQ::UnsortedListPQ::*;
+    use crate::Chap45::SortedListPQ::SortedListPQ::*;
+    use crate::Chap45::BalancedTreePQ::BalancedTreePQ::*;
+    use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
+    use crate::Chap45::LeftistHeapPQ::LeftistHeapPQ::*;
+
+    /// Algorithm 45.2: Heapsort implementation using priority queues
+    /// This is the generic heapsort algorithm from the textbook that works with any priority queue
+    pub struct Heapsort;
+
+    impl Heapsort {
+        /// Generic heapsort implementation (Algorithm 45.2)
+        /// Claude Work: Θ(n log n), Span: Θ(n log n) for efficient priority queues
+        /// 
+        /// sort S =
+        ///   let q0 = Sequence.iter PQ.insert PQ.empty S
+        ///   hsort q =
+        ///     case PQ.deleteMin q of
+        ///       ( , None) ⇒ 〈 〉
+        ///       | (q′, Some (v)) ⇒ Seq.append 〈 v 〉 (hsort q′)
+        ///   in hsort q0 end
+        pub fn heapsort_generic<T, PQ, Ops>(sequence: &[T], ops: &Ops) -> Vec<T>
+        where
+            T: StT + Ord,
+            PQ: Clone,
+            Ops: HeapsortOps<T, PQ>,
+        {
+            // Step 1: Insert all elements into priority queue
+            let mut pq = ops.empty();
+            for element in sequence {
+                pq = ops.insert(&pq, element.clone());
+            }
+            
+            // Step 2: Extract elements in sorted order
+            let mut result = Vec::new();
+            while !ops.is_empty(&pq) {
+                let (new_pq, min_element) = ops.delete_min(&pq);
+                if let Some(element) = min_element {
+                    result.push(element);
+                }
+                pq = new_pq;
+            }
+            
+            result
+        }
+
+        /// Heapsort using UnsortedListPQ
+        /// Claude Work: Θ(n²), Span: Θ(n²) - inefficient due to O(n) deleteMin
+        pub fn heapsort_unsorted_list<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
+            Self::heapsort_generic(sequence, &UnsortedListPQHeapsortOps)
+        }
+
+        /// Heapsort using SortedListPQ  
+        /// Claude Work: Θ(n²), Span: Θ(n²) - inefficient due to O(n) insert
+        pub fn heapsort_sorted_list<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
+            Self::heapsort_generic(sequence, &SortedListPQHeapsortOps)
+        }
+
+        /// Heapsort using BalancedTreePQ
+        /// Claude Work: Θ(n log n), Span: Θ(n log n) - optimal complexity
+        pub fn heapsort_balanced_tree<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
+            Self::heapsort_generic(sequence, &BalancedTreePQHeapsortOps)
+        }
+
+        /// Heapsort using BinaryHeapPQ
+        /// Claude Work: Θ(n log n), Span: Θ(n log n) - optimal complexity
+        pub fn heapsort_binary_heap<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
+            Self::heapsort_generic(sequence, &BinaryHeapPQHeapsortOps)
+        }
+
+        /// Heapsort using LeftistHeapPQ
+        /// Claude Work: Θ(n log n), Span: Θ(n log n) - optimal complexity with superior meld
+        pub fn heapsort_leftist_heap<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
+            Self::heapsort_generic(sequence, &LeftistHeapPQHeapsortOps)
+        }
+
+        /// Demonstrate all heapsort variants on the same input
+        pub fn compare_all_heapsorts<T: StT + Ord>(sequence: &[T]) -> HeapsortComparison<T> {
+            HeapsortComparison {
+                input: sequence.to_vec(),
+                unsorted_list_result: Self::heapsort_unsorted_list(sequence),
+                sorted_list_result: Self::heapsort_sorted_list(sequence),
+                balanced_tree_result: Self::heapsort_balanced_tree(sequence),
+                binary_heap_result: Self::heapsort_binary_heap(sequence),
+                leftist_heap_result: Self::heapsort_leftist_heap(sequence),
+            }
+        }
+    }
+
+    /// Results of comparing all heapsort implementations
+    #[derive(Debug, Clone, PartialEq)]
+    pub struct HeapsortComparison<T: StT + Ord> {
+        pub input: Vec<T>,
+        pub unsorted_list_result: Vec<T>,
+        pub sorted_list_result: Vec<T>,
+        pub balanced_tree_result: Vec<T>,
+        pub binary_heap_result: Vec<T>,
+        pub leftist_heap_result: Vec<T>,
+    }
+
+    impl<T: StT + Ord> HeapsortComparison<T> {
+        /// Verify that all implementations produce the same sorted result
+        pub fn all_results_match(&self) -> bool {
+            let expected = &self.binary_heap_result; // Use binary heap as reference
+            self.unsorted_list_result == *expected
+                && self.sorted_list_result == *expected
+                && self.balanced_tree_result == *expected
+                && self.leftist_heap_result == *expected
+        }
+
+        /// Check if all results are properly sorted
+        pub fn all_results_sorted(&self) -> bool {
+            fn is_sorted<T: Ord>(vec: &[T]) -> bool {
+                vec.windows(2).all(|w| w[0] <= w[1])
+            }
+
+            is_sorted(&self.unsorted_list_result)
+                && is_sorted(&self.sorted_list_result)
+                && is_sorted(&self.balanced_tree_result)
+                && is_sorted(&self.binary_heap_result)
+                && is_sorted(&self.leftist_heap_result)
+        }
+    }
+
+    /// Trait for heapsort operations - allows generic heapsort implementation
+    pub trait HeapsortOps<T: StT + Ord, PQ> {
+        fn empty(&self) -> PQ;
+        fn insert(&self, pq: &PQ, element: T) -> PQ;
+        fn delete_min(&self, pq: &PQ) -> (PQ, Option<T>);
+        fn is_empty(&self, pq: &PQ) -> bool;
+    }
+
+    /// Heapsort operations for UnsortedListPQ
+    pub struct UnsortedListPQHeapsortOps;
+
+    impl<T: StT + Ord> HeapsortOps<T, UnsortedListPQ<T>> for UnsortedListPQHeapsortOps {
+        fn empty(&self) -> UnsortedListPQ<T> {
+            UnsortedListPQ::empty()
+        }
+
+        fn insert(&self, pq: &UnsortedListPQ<T>, element: T) -> UnsortedListPQ<T> {
+            pq.insert(element)
+        }
+
+        fn delete_min(&self, pq: &UnsortedListPQ<T>) -> (UnsortedListPQ<T>, Option<T>) {
+            pq.delete_min()
+        }
+
+        fn is_empty(&self, pq: &UnsortedListPQ<T>) -> bool {
+            pq.is_empty()
+        }
+    }
+
+    /// Heapsort operations for SortedListPQ
+    pub struct SortedListPQHeapsortOps;
+
+    impl<T: StT + Ord> HeapsortOps<T, SortedListPQ<T>> for SortedListPQHeapsortOps {
+        fn empty(&self) -> SortedListPQ<T> {
+            SortedListPQ::empty()
+        }
+
+        fn insert(&self, pq: &SortedListPQ<T>, element: T) -> SortedListPQ<T> {
+            pq.insert(element)
+        }
+
+        fn delete_min(&self, pq: &SortedListPQ<T>) -> (SortedListPQ<T>, Option<T>) {
+            pq.delete_min()
+        }
+
+        fn is_empty(&self, pq: &SortedListPQ<T>) -> bool {
+            pq.is_empty()
+        }
+    }
+
+    /// Heapsort operations for BalancedTreePQ
+    pub struct BalancedTreePQHeapsortOps;
+
+    impl<T: StT + Ord> HeapsortOps<T, BalancedTreePQ<T>> for BalancedTreePQHeapsortOps {
+        fn empty(&self) -> BalancedTreePQ<T> {
+            BalancedTreePQ::empty()
+        }
+
+        fn insert(&self, pq: &BalancedTreePQ<T>, element: T) -> BalancedTreePQ<T> {
+            pq.insert(element)
+        }
+
+        fn delete_min(&self, pq: &BalancedTreePQ<T>) -> (BalancedTreePQ<T>, Option<T>) {
+            pq.delete_min()
+        }
+
+        fn is_empty(&self, pq: &BalancedTreePQ<T>) -> bool {
+            pq.is_empty()
+        }
+    }
+
+    /// Heapsort operations for BinaryHeapPQ
+    pub struct BinaryHeapPQHeapsortOps;
+
+    impl<T: StT + Ord> HeapsortOps<T, BinaryHeapPQ<T>> for BinaryHeapPQHeapsortOps {
+        fn empty(&self) -> BinaryHeapPQ<T> {
+            BinaryHeapPQ::empty()
+        }
+
+        fn insert(&self, pq: &BinaryHeapPQ<T>, element: T) -> BinaryHeapPQ<T> {
+            pq.insert(element)
+        }
+
+        fn delete_min(&self, pq: &BinaryHeapPQ<T>) -> (BinaryHeapPQ<T>, Option<T>) {
+            pq.delete_min()
+        }
+
+        fn is_empty(&self, pq: &BinaryHeapPQ<T>) -> bool {
+            pq.is_empty()
+        }
+    }
+
+    /// Heapsort operations for LeftistHeapPQ
+    pub struct LeftistHeapPQHeapsortOps;
+
+    impl<T: StT + Ord> HeapsortOps<T, LeftistHeapPQ<T>> for LeftistHeapPQHeapsortOps {
+        fn empty(&self) -> LeftistHeapPQ<T> {
+            LeftistHeapPQ::empty()
+        }
+
+        fn insert(&self, pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> {
+            pq.insert(element)
+        }
+
+        fn delete_min(&self, pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) {
+            pq.delete_min()
+        }
+
+        fn is_empty(&self, pq: &LeftistHeapPQ<T>) -> bool {
+            pq.is_empty()
+        }
+    }
+
+    /// Examples and demonstrations
+    pub struct HeapsortExamples;
+
+    impl HeapsortExamples {
+        /// Example from textbook - demonstrate heapsort on a small dataset
+        pub fn textbook_example() -> HeapsortComparison<i32> {
+            let input = vec![64, 34, 25, 12, 22, 11, 90];
+            Heapsort::compare_all_heapsorts(&input)
+        }
+
+        /// Demonstrate heapsort on reverse-sorted input (worst case for some algorithms)
+        pub fn reverse_sorted_example() -> HeapsortComparison<i32> {
+            let input = vec![10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+            Heapsort::compare_all_heapsorts(&input)
+        }
+
+        /// Demonstrate heapsort on already-sorted input
+        pub fn already_sorted_example() -> HeapsortComparison<i32> {
+            let input = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            Heapsort::compare_all_heapsorts(&input)
+        }
+
+        /// Demonstrate heapsort on input with duplicates
+        pub fn duplicates_example() -> HeapsortComparison<i32> {
+            let input = vec![5, 2, 8, 2, 9, 1, 5, 5];
+            Heapsort::compare_all_heapsorts(&input)
+        }
+
+        /// Demonstrate heapsort on single element
+        pub fn single_element_example() -> HeapsortComparison<i32> {
+            let input = vec![42];
+            Heapsort::compare_all_heapsorts(&input)
+        }
+
+        /// Demonstrate heapsort on empty input
+        pub fn empty_example() -> HeapsortComparison<i32> {
+            let input = vec![];
+            Heapsort::compare_all_heapsorts(&input)
+        }
+
+        /// Generate a large random-like sequence for performance testing
+        pub fn large_example(size: usize) -> Vec<i32> {
+            // Generate pseudo-random sequence for testing
+            let mut result = Vec::with_capacity(size);
+            let mut x = 1;
+            for _ in 0..size {
+                x = (x * 1103515245 + 12345) % (1 << 31); // Linear congruential generator
+                result.push((x % 1000) as i32);
+            }
+            result
+        }
+
+        /// Demonstrate the efficiency difference between implementations
+        pub fn efficiency_demonstration() -> Vec<(String, Vec<i32>)> {
+            let inputs = vec![
+                ("Small (7 elements)".to_string(), vec![64, 34, 25, 12, 22, 11, 90]),
+                ("Medium (20 elements)".to_string(), Self::large_example(20)),
+                ("Large (100 elements)".to_string(), Self::large_example(100)),
+            ];
+
+            inputs
+        }
+    }
+
+    /// Performance analysis utilities
+    pub struct HeapsortAnalysis;
+
+    impl HeapsortAnalysis {
+        /// Analyze the theoretical complexity of each heapsort variant
+        pub fn complexity_analysis() -> Vec<(String, String, String)> {
+            vec![
+                ("UnsortedListPQ".to_string(), "Θ(n²)".to_string(), "O(n) deleteMin dominates".to_string()),
+                ("SortedListPQ".to_string(), "Θ(n²)".to_string(), "O(n) insert dominates".to_string()),
+                ("BalancedTreePQ".to_string(), "Θ(n log n)".to_string(), "O(log n) insert and deleteMin".to_string()),
+                ("BinaryHeapPQ".to_string(), "Θ(n log n)".to_string(), "O(log n) insert and deleteMin".to_string()),
+                ("LeftistHeapPQ".to_string(), "Θ(n log n)".to_string(), "O(log n) insert and deleteMin + superior meld".to_string()),
+            ]
+        }
+
+        /// Verify that all heapsort implementations produce correct results
+        pub fn correctness_verification() -> bool {
+            let test_cases = vec![
+                HeapsortExamples::textbook_example(),
+                HeapsortExamples::reverse_sorted_example(),
+                HeapsortExamples::already_sorted_example(),
+                HeapsortExamples::duplicates_example(),
+                HeapsortExamples::single_element_example(),
+                HeapsortExamples::empty_example(),
+            ];
+
+            test_cases.iter().all(|comparison| {
+                comparison.all_results_match() && comparison.all_results_sorted()
+            })
+        }
+    }
+
+    /// Utility functions for working with sequences
+    pub struct SequenceUtils;
+
+    impl SequenceUtils {
+        /// Convert Vec to ArraySeqStPerS for use with APAS sequence types
+        pub fn vec_to_array_seq<T: StT>(vec: &[T]) -> ArraySeqStPerS<T> {
+            let mut result = ArraySeqStPerS::empty();
+            for element in vec {
+                let single_seq = ArraySeqStPerS::singleton(element.clone());
+                result = ArraySeqStPerS::append(&result, &single_seq);
+            }
+            result
+        }
+
+        /// Convert Vec to AVLTreeSeqStPerS for use with balanced tree operations
+        pub fn vec_to_avl_seq<T: StT>(vec: &[T]) -> AVLTreeSeqStPerS<T> {
+            AVLTreeSeqStPerS::from_vec(vec.to_vec())
+        }
+
+        /// Check if a sequence is sorted
+        pub fn is_sorted<T: Ord>(vec: &[T]) -> bool {
+            vec.windows(2).all(|w| w[0] <= w[1])
+        }
+
+        /// Generate test sequences of various patterns
+        pub fn generate_test_sequences(size: usize) -> Vec<(String, Vec<i32>)> {
+            vec![
+                ("Random".to_string(), HeapsortExamples::large_example(size)),
+                ("Sorted".to_string(), (1..=size as i32).collect()),
+                ("Reverse".to_string(), (1..=size as i32).rev().collect()),
+                ("AllSame".to_string(), vec![42; size]),
+                ("AlmostSorted".to_string(), {
+                    let mut seq: Vec<i32> = (1..=size as i32).collect();
+                    if size > 2 {
+                        seq.swap(0, size - 1); // Swap first and last
+                    }
+                    seq
+                }),
+            ]
+        }
+    }
+}

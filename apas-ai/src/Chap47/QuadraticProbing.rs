@@ -1,0 +1,79 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Chapter 47: Quadratic Probing Strategy
+
+pub mod QuadraticProbing {
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Types::Types::*;
+
+    /// Quadratic probing: h_i(x) = (h(x) + c1*i + c2*i^2) mod m
+    #[derive(Clone, Debug)]
+    pub struct QuadraticProbingStrategy<K, H> 
+    where
+        K: StT,
+        H: HashFunction<K> + Clone,
+    {
+        base_hash: H,
+        c1: N,
+        c2: N,
+        _phantom: std::marker::PhantomData<K>,
+    }
+
+    impl<K, H> QuadraticProbingStrategy<K, H>
+    where
+        K: StT,
+        H: HashFunction<K> + Clone,
+    {
+        pub fn new(hash_fn: H, c1: N, c2: N) -> Self {
+            QuadraticProbingStrategy {
+                base_hash: hash_fn,
+                c1,
+                c2,
+                _phantom: std::marker::PhantomData,
+            }
+        }
+        
+        /// Standard quadratic probing with c1=1, c2=1
+        pub fn standard(hash_fn: H) -> Self {
+            Self::new(hash_fn, 1, 1)
+        }
+    }
+
+    impl<K, H> ProbeSequence<K> for QuadraticProbingStrategy<K, H>
+    where
+        K: StT,
+        H: HashFunction<K> + Clone,
+    {
+        /// Claude Work: Θ(1), Span: Θ(1)
+        fn probe_hash(&self, key: &K, probe_index: N, table_size: N) -> N {
+            let base_hash = self.base_hash.hash(key, table_size);
+            let quadratic_offset = self.c1 * probe_index + self.c2 * probe_index * probe_index;
+            (base_hash + quadratic_offset) % table_size
+        }
+        
+        fn strategy_name(&self) -> String {
+            format!("QuadraticProbing({}, c1={}, c2={})", 
+                    self.base_hash.description(), self.c1, self.c2)
+        }
+    }
+
+    /// Type alias for quadratic probing hash table
+    pub type QuadraticProbingHashTable<K, V, H> = FlatHashTable<K, V, QuadraticProbingStrategy<K, H>>;
+
+    /// Factory functions
+    pub struct QuadraticProbingFactory;
+
+    impl QuadraticProbingFactory {
+        pub fn create_string_table<V: StT>(initial_size: N) -> QuadraticProbingHashTable<String, V, StringPositionHashFunction> {
+            let probe_strategy = QuadraticProbingStrategy::standard(StringPositionHashFunction);
+            FlatHashTable::create_table(probe_strategy, initial_size)
+        }
+        
+        pub fn create_integer_table<V: StT>(initial_size: N, seed: u64) -> QuadraticProbingHashTable<i32, V, UniversalIntegerHashFunction> {
+            let hash_family = UniversalIntegerHashFamily::new();
+            let hash_fn = hash_family.generate(seed);
+            let probe_strategy = QuadraticProbingStrategy::standard(hash_fn);
+            FlatHashTable::create_table(probe_strategy, initial_size)
+        }
+    }
+}

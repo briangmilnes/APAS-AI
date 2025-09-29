@@ -168,3 +168,28 @@ pub mod Chap43Claude {
     pub mod Example43_1;
 }
 
+pub mod Chap44 {
+    pub mod DocumentIndex;
+    pub mod Example44_1;
+}
+
+pub mod Chap45 {
+    pub mod UnsortedListPQ;
+    pub mod SortedListPQ;
+    pub mod BalancedTreePQ;
+    pub mod BinaryHeapPQ;
+    pub mod LeftistHeapPQ;
+    pub mod HeapsortExample;
+}
+
+pub mod Chap47 {
+    pub mod HashFunctionTraits;
+    pub mod NestedHashTable;
+    pub mod SeparateChaining;
+    pub mod FlatHashTable;
+    pub mod LinearProbing;
+    pub mod QuadraticProbing;
+    pub mod DoubleHashing;
+    pub mod HashExamples;
+}
+

@@ -7,7 +7,7 @@
 
  Wait for me to tell you when to fix, build and test.
 
- This goes in Chap43Claude, just add them 
+ This goes in Chap43.
 
 
 
