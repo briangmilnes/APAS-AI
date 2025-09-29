@@ -12,7 +12,7 @@ pub mod LabUnDirGraphMtEph {
     #[derive(Clone)]
     pub struct LabUnDirGraphMtEph<V, L>
     where
-        V: StT + MtT + Hash + Ord,
+        V: HashOrd + MtT,
         L: StTInMtT + Hash,
     {
         vertices: Set<V>,
@@ -21,7 +21,7 @@ pub mod LabUnDirGraphMtEph {
 
     pub trait LabUnDirGraphMtEphTrait<V, L>
     where
-        V: StT + MtT + Hash + Ord,
+        V: HashOrd + MtT,
         L: StTInMtT + Hash,
     {
         fn empty() -> Self;
@@ -39,7 +39,7 @@ pub mod LabUnDirGraphMtEph {
 
     impl<V, L> LabUnDirGraphMtEphTrait<V, L> for LabUnDirGraphMtEph<V, L>
     where
-        V: StT + MtT + Hash + Ord,
+        V: HashOrd + MtT,
         L: StTInMtT + Hash,
     {
         fn empty() -> Self {

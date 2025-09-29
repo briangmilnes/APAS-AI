@@ -75,7 +75,7 @@ pub mod Example41_3 {
         avl_reduce_span(seq, 0, seq.length())
     }
 
-    fn avl_mt_reduce_span<T: StTInMtT + Ord + 'static>(seq: &ArraySeqMt<T>, start: N, end: N) -> AVLTreeSetMtEph<T> {
+    fn avl_mt_reduce_span<T: MtKey>(seq: &ArraySeqMt<T>, start: N, end: N) -> AVLTreeSetMtEph<T> {
         if start >= end {
             return AVLTreeSetMtEph::empty();
         }
@@ -89,7 +89,7 @@ pub mod Example41_3 {
     }
 
     /// Parallel AVL set construction using scoped threads for the top split.
-    pub fn avl_mt_from_seq_reduce<T: StTInMtT + Ord + 'static>(seq: &ArraySeqMt<T>) -> AVLTreeSetMtEph<T> {
+    pub fn avl_mt_from_seq_reduce<T: MtKey>(seq: &ArraySeqMt<T>) -> AVLTreeSetMtEph<T> {
         if seq.length() <= 1 {
             return avl_mt_reduce_span(seq, 0, seq.length());
         }

@@ -6,6 +6,8 @@
  our representations for graphs, you may have to make
  novel ones.
 
+ How many are parallel?
+
  Show it to me and estimate time.
 
  I will tell you when to execute. 

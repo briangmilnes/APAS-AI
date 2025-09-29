@@ -8,13 +8,13 @@ pub mod BSTParaMtEph {
     use crate::Types::Types::*;
 
     #[derive(Clone)]
-    pub enum Exposed<T: StTInMtT + Ord> {
+    pub enum Exposed<T: MtKey> {
         Leaf,
         Node(ParamBST<T>, T, ParamBST<T>),
     }
 
     #[derive(Clone, Debug)]
-    struct NodeInner<T: StTInMtT + Ord> {
+    struct NodeInner<T: MtKey> {
         key: T,
         size: N,
         left: ParamBST<T>,
@@ -22,11 +22,11 @@ pub mod BSTParaMtEph {
     }
 
     #[derive(Debug, Clone)]
-    pub struct ParamBST<T: StTInMtT + Ord> {
+    pub struct ParamBST<T: MtKey> {
         root: Arc<RwLock<Option<Box<NodeInner<T>>>>>,
     }
 
-    pub trait ParamBSTTrait<T: StTInMtT + Ord + 'static>: Sized {
+    pub trait ParamBSTTrait<T: MtKey + 'static>: Sized {
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
         fn new() -> Self;
@@ -81,7 +81,7 @@ pub mod BSTParaMtEph {
         fn in_order(&self) -> ArraySeqStPerS<T>;
     }
 
-    impl<T: StTInMtT + Ord + 'static> ParamBST<T> {
+    impl<T: MtKey + 'static> ParamBST<T> {
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
         fn expose_internal(&self) -> Exposed<T> {
@@ -297,7 +297,7 @@ pub mod BSTParaMtEph {
         }
     }
 
-    impl<T: StTInMtT + Ord + 'static> ParamBSTTrait<T> for ParamBST<T> {
+    impl<T: MtKey + 'static> ParamBSTTrait<T> for ParamBST<T> {
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
         fn new() -> Self {

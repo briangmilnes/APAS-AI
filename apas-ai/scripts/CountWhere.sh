@@ -12,4 +12,4 @@ echo "benches wheres"
 grep where  benches/*/*.rs | wc -l
 
 echo "Total wheres"
-grep where src/*.rs src/*.rs tests/*.rs tests/*/*.rs  benches/*/*.rs | wc -l
+grep where src/*.rs src/*/*.rs tests/*.rs tests/*/*.rs benches/*/*.rs | wc -l

@@ -22,7 +22,7 @@
       There should be a to-do item for this PER FILE.
 - [ ] Is it clear which benchmark files will be created?
 - [ ] Does the plan schedule running the RustRules and APAS checklists after each new benchmark file is created or edited?
-- [ ] Does the plan schedule `cargo bench` (targeting the new benchmark file) after each benchmark is added, run one at a time until clean?
+- [ ] Does the plan schedule `cargo bench -bench <FILENAME> --no-run` (targeting the new benchmark file) after each benchmark is added, run one at a time until clean?
       There should be a to-do item for this PER FILE.
 - [ ] Does the plan include a full `cargo build` at the end of the work?
 - [ ] Does the plan include a full `cargo nextest` run at the end of the work?

@@ -12,39 +12,27 @@ pub mod TableMtEph {
 
     /// Multi-threaded ephemeral table backed by ArraySeqMtEph
     #[derive(Debug, Clone, PartialEq)]
-    pub struct TableMtEph<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static> {
+    pub struct TableMtEph<K: MtKey, V: MtVal> {
         entries: ArraySeqMtEphS<Pair<K, V>>,
     }
 
     pub type TableS<K, V> = TableMtEph<K, V>;
 
     /// Trait defining the Table ADT operations from Chapter 42
-    pub trait TableMtEphTrait<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static> {
+    pub trait TableMtEphTrait<K: MtKey, V: MtVal> {
         fn size(&self) -> N;
         fn empty() -> Self;
         fn singleton(key: K, value: V) -> Self;
         fn domain(&self) -> ArraySetStEph<K>;
-        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self
-        where
-            F: Fn(&K) -> V + Send + Sync + 'static;
-        fn map<F>(&mut self, f: F)
-        where
-            F: Fn(&V) -> V + Send + Sync + 'static;
-        fn filter<F>(&mut self, f: F)
-        where
-            F: Fn(&K, &V) -> B + Send + Sync + 'static;
-        fn intersection<F>(&mut self, other: &Self, combine: F)
-        where
-            F: Fn(&V, &V) -> V + Send + Sync + 'static;
-        fn union<F>(&mut self, other: &Self, combine: F)
-        where
-            F: Fn(&V, &V) -> V + Send + Sync + 'static;
+        fn tabulate<F: Fn(&K) -> V + Send + Sync + 'static>(f: F, keys: &ArraySetStEph<K>) -> Self;
+        fn map<F: Fn(&V) -> V + Send + Sync + 'static>(&mut self, f: F);
+        fn filter<F: Fn(&K, &V) -> B + Send + Sync + 'static>(&mut self, f: F);
+        fn intersection<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, combine: F);
+        fn union<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, combine: F);
         fn difference(&mut self, other: &Self);
         fn find(&self, key: &K) -> Option<V>;
         fn delete(&mut self, key: &K);
-        fn insert<F>(&mut self, key: K, value: V, combine: F)
-        where
-            F: Fn(&V, &V) -> V + Send + Sync + 'static;
+        fn insert<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, key: K, value: V, combine: F);
         fn restrict(&mut self, keys: &ArraySetStEph<K>);
         fn subtract(&mut self, keys: &ArraySetStEph<K>);
         
@@ -52,7 +40,7 @@ pub mod TableMtEph {
         fn collect(&self) -> ArraySeqMtEphS<Pair<K, V>>;
     }
 
-    impl<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static> TableMtEphTrait<K, V> for TableMtEph<K, V> {
+    impl<K: MtKey, V: MtVal> TableMtEphTrait<K, V> for TableMtEph<K, V> {
         /// Work: O(1), Span: O(1)
         fn size(&self) -> N {
             self.entries.length()

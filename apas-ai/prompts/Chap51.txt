@@ -3,6 +3,8 @@
 
  Show it to me and estimate time.
 
+ How many are parallel?
+
  I will tell you when to execute. 
 
  Wait for me to tell you when to fix, build and test.

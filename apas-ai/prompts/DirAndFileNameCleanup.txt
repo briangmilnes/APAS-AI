@@ -1,0 +1,44 @@
+
+Rename all Chap<DD>Claude directories Chap<DD>
+
+Shorten all Ordered* to Ord*.
+
+Shorten all Weighted* to Weigh*. 
+
+Be sure to update lib.rs and Cargo.toml and all the use's.
+
+Get the build, test and benches compiling.
+
+
+How many where clauses can be obviated?
+
+I see:
+
+scripts/CountWhere.sh
+src wheres
+314
+tests wheres
+1
+benches wheres
+0
+Total wheres
+23
+
+How many did you get rid of?
+
+How many fn name(...)s now fit with return type in 120 chars
+that you did not simplify? 
+
+ Make a plan according to checklist/PrePlanChecklist.md
+to simplify the wheres, down to the file.
+Show it to me in TO-DO box.
+
+
+
+Benches are still too long. 
+Minimize their inputs until we get no warnings.
+
+I still see F: Fn(&T) -> W + Send + Sync + Clone + 'static
+and lots of fn name(F...)
+where F: <something that should be a type abreviation>.
+

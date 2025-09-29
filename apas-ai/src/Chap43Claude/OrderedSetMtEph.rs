@@ -9,14 +9,14 @@ pub mod OrderedSetMtEph {
 
     /// Multi-threaded ephemeral ordered set with custom implementation
     #[derive(PartialEq)]
-    pub struct OrderedSetMtEph<T: StTInMtT + Ord + 'static> {
+    pub struct OrderedSetMtEph<T: MtKey> {
         elements: Vec<T>,
     }
 
     pub type OrderedSetMt<T> = OrderedSetMtEph<T>;
 
     /// Trait defining all ordered set operations (ADT 41.1 + ADT 43.1) with multi-threaded ephemeral semantics
-    pub trait OrderedSetMtEphTrait<T: StTInMtT + Ord + 'static> {
+    pub trait OrderedSetMtEphTrait<T: MtKey> {
         // Base set operations (ADT 41.1) - ephemeral semantics with parallelism
         fn size(&self) -> N;
         fn empty() -> Self;
@@ -24,7 +24,7 @@ pub mod OrderedSetMtEph {
         fn find(&self, x: &T) -> B;
         fn insert(&mut self, x: T);
         fn delete(&mut self, x: &T);
-        fn filter<F>(&mut self, f: F) where F: Fn(&T) -> B + Send + Sync + 'static;
+        fn filter<F: Pred<T>>(&mut self, f: F);
         fn intersection(&mut self, other: &Self);
         fn union(&mut self, other: &Self);
         fn difference(&mut self, other: &Self);
@@ -44,7 +44,7 @@ pub mod OrderedSetMtEph {
         fn split_rank(&mut self, i: N) -> (Self, Self) where Self: Sized;
     }
 
-    impl<T: StTInMtT + Ord + 'static> OrderedSetMtEphTrait<T> for OrderedSetMtEph<T> {
+    impl<T: MtKey> OrderedSetMtEphTrait<T> for OrderedSetMtEph<T> {
         /// Claude Work: O(1), Span: O(1)
         fn size(&self) -> N {
             self.elements.len()

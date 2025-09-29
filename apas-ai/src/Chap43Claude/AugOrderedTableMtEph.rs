@@ -15,10 +15,7 @@ pub mod AugOrderedTableMtEph {
     /// Multi-threaded ephemeral reducer-augmented ordered table
     /// Wraps OrderedTableMtEph and maintains cached reduction for O(1) reduceVal
     #[derive(PartialEq, Clone)]
-    pub struct AugOrderedTableMtEph<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static, F> 
-    where 
-        F: Fn(&V, &V) -> V + Clone + Send + Sync + 'static,
-    {
+    pub struct AugOrderedTableMtEph<K: MtKey, V: MtVal, F: MtReduceFn<V>> {
         base_table: OrderedTableMtEph<K, V>,
         reducer: F,
         identity: V,
@@ -29,10 +26,7 @@ pub mod AugOrderedTableMtEph {
 
     /// Trait defining all augmented ordered table operations (ADT 43.3) with multi-threaded ephemeral semantics
     /// Extends ordered table operations with efficient reduction and thread-safe operations
-    pub trait AugOrderedTableMtEphTrait<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static, F> 
-    where 
-        F: Fn(&V, &V) -> V + Clone + Send + Sync + 'static,
-    {
+    pub trait AugOrderedTableMtEphTrait<K: MtKey, V: MtVal, F: MtReduceFn<V>> {
         // Base table operations (ADT 42.1) - ephemeral semantics with parallelism
         fn size(&self) -> N;
         fn empty(reducer: F, identity: V) -> Self;
@@ -40,19 +34,18 @@ pub mod AugOrderedTableMtEph {
         fn find(&self, k: &K) -> Option<V>;
         fn lookup(&self, k: &K) -> Option<V>;
         fn is_empty(&self) -> B;
-        fn insert<G>(&mut self, k: K, v: V, combine: G) where G: Fn(&V, &V) -> V + Send + Sync + 'static;
+        fn insert<G: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, k: K, v: V, combine: G);
         fn delete(&mut self, k: &K) -> Option<V>;
         fn domain(&self) -> ArraySetStEph<K>;
-        fn tabulate<G>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self 
-        where G: Fn(&K) -> V + Send + Sync + 'static;
-        fn map<G>(&self, f: G) -> Self where G: Fn(&K, &V) -> V + Send + Sync + 'static;
-        fn filter<G>(&self, f: G) -> Self where G: Fn(&K, &V) -> B + Send + Sync + 'static;
-        fn intersection<G>(&mut self, other: &Self, f: G) where G: Fn(&V, &V) -> V + Send + Sync + 'static;
-        fn union<G>(&mut self, other: &Self, f: G) where G: Fn(&V, &V) -> V + Send + Sync + 'static;
+        fn tabulate<G: Fn(&K) -> V + Send + Sync + 'static>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self;
+        fn map<G: Fn(&K, &V) -> V + Send + Sync + 'static>(&self, f: G) -> Self;
+        fn filter<G: Fn(&K, &V) -> B + Send + Sync + 'static>(&self, f: G) -> Self;
+        fn intersection<G: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, f: G);
+        fn union<G: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, f: G);
         fn difference(&mut self, other: &Self);
         fn restrict(&mut self, keys: &ArraySetStEph<K>);
         fn subtract(&mut self, keys: &ArraySetStEph<K>);
-        fn reduce<R, G>(&self, init: R, f: G) -> R where G: Fn(R, &K, &V) -> R + Send + Sync + 'static, R: Send + Sync + 'static;
+        fn reduce<R: StTInMtT + 'static, G: Fn(R, &K, &V) -> R + Send + Sync + 'static>(&self, init: R, f: G) -> R;
         fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>>;
 
         // Key ordering operations (ADT 43.1 adapted for tables) - sequential (inherently sequential on trees)
@@ -81,10 +74,7 @@ pub mod AugOrderedTableMtEph {
         fn reduce_range_parallel(&self, k1: &K, k2: &K) -> V;
     }
 
-    impl<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static, F> AugOrderedTableMtEphTrait<K, V, F> for AugOrderedTableMtEph<K, V, F>
-    where 
-        F: Fn(&V, &V) -> V + Clone + Send + Sync + 'static,
-    {
+    impl<K: MtKey, V: MtVal, F: MtReduceFn<V>> AugOrderedTableMtEphTrait<K, V, F> for AugOrderedTableMtEph<K, V, F> {
         /// Claude Work: O(1), Span: O(1)
         fn size(&self) -> N {
             self.base_table.size()
@@ -126,7 +116,7 @@ pub mod AugOrderedTableMtEph {
         }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn insert<G>(&mut self, k: K, v: V, combine: G) where G: Fn(&V, &V) -> V + Send + Sync + 'static {
+        fn insert<G: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, k: K, v: V, combine: G) {
             let old_size = self.base_table.size();
             self.base_table.insert(k, v.clone(), combine);
             
@@ -152,8 +142,7 @@ pub mod AugOrderedTableMtEph {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn tabulate<G>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self 
-        where G: Fn(&K) -> V + Send + Sync + 'static
+        fn tabulate<G: Fn(&K) -> V + Send + Sync + 'static>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self
         {
             let base_table = OrderedTableMtEph::tabulate(f, keys);
             let cached_reduction = Self::calculate_reduction(&base_table, &reducer, &identity);
@@ -167,7 +156,7 @@ pub mod AugOrderedTableMtEph {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn map<G>(&self, f: G) -> Self where G: Fn(&K, &V) -> V + Send + Sync + 'static {
+        fn map<G: Fn(&K, &V) -> V + Send + Sync + 'static>(&self, f: G) -> Self {
             let new_base = self.base_table.map(f);
             let new_reduction = Self::calculate_reduction(&new_base, &self.reducer, &self.identity);
             
@@ -180,7 +169,7 @@ pub mod AugOrderedTableMtEph {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn filter<G>(&self, f: G) -> Self where G: Fn(&K, &V) -> B + Send + Sync + 'static {
+        fn filter<G: Fn(&K, &V) -> B + Send + Sync + 'static>(&self, f: G) -> Self {
             let new_base = self.base_table.filter(f);
             let new_reduction = Self::calculate_reduction(&new_base, &self.reducer, &self.identity);
             
@@ -193,13 +182,13 @@ pub mod AugOrderedTableMtEph {
         }
 
         /// Claude Work: O(n + m), Span: O(lg n + lg m)
-        fn intersection<G>(&mut self, other: &Self, f: G) where G: Fn(&V, &V) -> V + Send + Sync + 'static {
+        fn intersection<G: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, f: G) {
             self.base_table.intersection(&other.base_table, f);
             self.cached_reduction = self.recalculate_reduction();
         }
 
         /// Claude Work: O(n + m), Span: O(lg n + lg m)
-        fn union<G>(&mut self, other: &Self, f: G) where G: Fn(&V, &V) -> V + Send + Sync + 'static {
+        fn union<G: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, f: G) {
             self.base_table.union(&other.base_table, f);
             self.cached_reduction = self.recalculate_reduction();
         }
@@ -223,7 +212,7 @@ pub mod AugOrderedTableMtEph {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn reduce<R, G>(&self, init: R, f: G) -> R where G: Fn(R, &K, &V) -> R + Send + Sync + 'static, R: Send + Sync + 'static {
+        fn reduce<R: StTInMtT + 'static, G: Fn(R, &K, &V) -> R + Send + Sync + 'static>(&self, init: R, f: G) -> R {
             self.base_table.reduce(init, f)
         }
 
@@ -400,10 +389,7 @@ pub mod AugOrderedTableMtEph {
         }
     }
 
-    impl<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static, F> AugOrderedTableMtEph<K, V, F>
-    where 
-        F: Fn(&V, &V) -> V + Clone + Send + Sync + 'static,
-    {
+    impl<K: MtKey, V: MtVal, F: MtReduceFn<V>> AugOrderedTableMtEph<K, V, F> {
         /// Helper to recalculate reduction from current base table
         fn recalculate_reduction(&self) -> V {
             Self::calculate_reduction(&self.base_table, &self.reducer, &self.identity)
@@ -433,20 +419,14 @@ pub mod AugOrderedTableMtEph {
         }
     }
 
-    impl<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static, F> Display for AugOrderedTableMtEph<K, V, F>
-    where 
-        F: Fn(&V, &V) -> V + Clone + Send + Sync + 'static,
-    {
+    impl<K: MtKey, V: MtVal, F: MtReduceFn<V>> Display for AugOrderedTableMtEph<K, V, F> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "AugOrderedTableMtEph(size: {}, reduction: {})", 
                    self.size(), self.cached_reduction)
         }
     }
 
-    impl<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static, F> Debug for AugOrderedTableMtEph<K, V, F>
-    where 
-        F: Fn(&V, &V) -> V + Clone + Send + Sync + 'static,
-    {
+    impl<K: MtKey, V: MtVal, F: MtReduceFn<V>> Debug for AugOrderedTableMtEph<K, V, F> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             f.debug_struct("AugOrderedTableMtEph")
                 .field("size", &self.size())

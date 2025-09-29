@@ -48,21 +48,12 @@ pub mod ArraySeqMtEphSlice {
         fn subseq_copy(&self, start: N, length: N) -> Self;
         fn slice(&self, start: N, length: N) -> Self;
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> Self;
-        fn map<U: StT + Send + Sync + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
-            a: &Self,
-            f: F,
-        ) -> ArraySeqMtEphSliceS<U>
-        where
-            T: Send + 'static;
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &Self, pred: F) -> Self
-        where
-            T: Send + 'static;
+        fn map<U: StT + Send + Sync + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &Self, f: F) -> ArraySeqMtEphSliceS<U> where T: Send + 'static;
+        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &Self, pred: F) -> Self where T: Send + 'static;
         fn append(a: &Self, b: &Self) -> Self;
         fn append_select(a: &Self, b: &Self) -> Self;
         fn flatten(sequences: &[ArraySeqMtEphSliceS<T>]) -> Self;
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &Self, f: F, id: T) -> T
-        where
-            T: Send + 'static;
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &Self, f: F, id: T) -> T where T: Send + 'static;
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &Self, f: &F, id: T) -> (ArraySeqMtEphSliceS<T>, T);
         fn iterate<A: StT + Send, F: Fn(&A, &T) -> A + Send + Sync>(a: &Self, f: &F, seed: A) -> A;
         fn inject(a: &Self, updates: &[(N, T)]) -> Self;

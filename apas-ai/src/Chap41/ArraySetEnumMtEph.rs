@@ -25,9 +25,7 @@ pub mod ArraySetEnumMtEph {
         fn empty(u: N) -> Self;
         fn singleton(u: N, x: N) -> Self;
         fn from_seq(u: N, seq: ArraySeqMtEphS<N>) -> Self;
-        fn filter<F>(&self, f: F) -> Self
-        where
-            F: Fn(N) -> B + Send + Sync + Clone + 'static;
+        fn filter<F: PredVal<N> + Clone>(&self, f: F) -> Self;
         fn intersection(&self, other: &Self) -> Self;
         fn difference(&self, other: &Self) -> Self;
         fn union(&self, other: &Self) -> Self;
@@ -82,9 +80,7 @@ pub mod ArraySetEnumMtEph {
             ArraySetEnumMtEph { bits, universe_size: u }
         }
 
-        fn filter<F>(&self, f: F) -> Self
-        where
-            F: Fn(N) -> B + Send + Sync + Clone + 'static,
+        fn filter<F: PredVal<N> + Clone>(&self, f: F) -> Self
         {
             // Parallel filter: spawn thread per element (as if f is expensive)
             let f = Arc::new(f);

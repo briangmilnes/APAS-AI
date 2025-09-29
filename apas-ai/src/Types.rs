@@ -78,6 +78,16 @@ pub mod Types {
     pub trait MtReduceFn<V>: Fn(&V, &V) -> V + Clone + Send + Sync + 'static {}
     impl<T, V> MtReduceFn<V> for T where T: Fn(&V, &V) -> V + Clone + Send + Sync + 'static {}
 
+    // Pred: Multi-threaded predicate function (boolean function)
+    // Common pattern: Fn(&T) -> B + Send + Sync + 'static (appears 10+ times)
+    pub trait Pred<T>: Fn(&T) -> B + Send + Sync + 'static {}
+    impl<F, T> Pred<T> for F where F: Fn(&T) -> B + Send + Sync + 'static {}
+
+    // PredVal: Multi-threaded predicate function taking values by value
+    // Common pattern: Fn(T) -> B + Send + Sync + 'static (for Copy types like N)
+    pub trait PredVal<T>: Fn(T) -> B + Send + Sync + 'static {}
+    impl<F, T> PredVal<T> for F where F: Fn(T) -> B + Send + Sync + 'static {}
+
     // Note: StT + Send + Sync is already covered by existing StTInMtT trait
     // StTInMtT + 'static pattern can be expressed as StTInMtT + 'static inline
 

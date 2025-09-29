@@ -12,14 +12,14 @@ pub mod OrderedTableMtEph {
 
     /// Multi-threaded ephemeral ordered table backed by TableMtEph
     #[derive(PartialEq)]
-    pub struct OrderedTableMtEph<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static> {
+    pub struct OrderedTableMtEph<K: MtKey, V: MtVal> {
         base_table: TableMtEph<K, V>,
     }
 
     pub type OrderedTableMt<K, V> = OrderedTableMtEph<K, V>;
 
     /// Trait defining all ordered table operations (ADT 42.1 + ADT 43.1 for keys) with multi-threaded ephemeral semantics
-    pub trait OrderedTableMtEphTrait<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static> {
+    pub trait OrderedTableMtEphTrait<K: MtKey, V: MtVal> {
         // Base table operations (ADT 42.1) - ephemeral semantics with parallelism
         fn size(&self) -> N;
         fn empty() -> Self;
@@ -27,18 +27,18 @@ pub mod OrderedTableMtEph {
         fn find(&self, k: &K) -> Option<V>;
         fn lookup(&self, k: &K) -> Option<V>; // Alias for find
         fn is_empty(&self) -> B;
-        fn insert<F>(&mut self, k: K, v: V, combine: F) where F: Fn(&V, &V) -> V + Send + Sync + 'static;
+        fn insert<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, k: K, v: V, combine: F);
         fn delete(&mut self, k: &K) -> Option<V>;
         fn domain(&self) -> ArraySetStEph<K>;
-        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self where F: Fn(&K) -> V + Send + Sync + 'static;
-        fn map<F>(&self, f: F) -> Self where F: Fn(&K, &V) -> V + Send + Sync + 'static;
-        fn filter<F>(&self, f: F) -> Self where F: Fn(&K, &V) -> B + Send + Sync + 'static;
-        fn intersection<F>(&mut self, other: &Self, f: F) where F: Fn(&V, &V) -> V + Send + Sync + 'static;
-        fn union<F>(&mut self, other: &Self, f: F) where F: Fn(&V, &V) -> V + Send + Sync + 'static;
+        fn tabulate<F: Fn(&K) -> V + Send + Sync + 'static>(f: F, keys: &ArraySetStEph<K>) -> Self;
+        fn map<F: Fn(&K, &V) -> V + Send + Sync + 'static>(&self, f: F) -> Self;
+        fn filter<F: Fn(&K, &V) -> B + Send + Sync + 'static>(&self, f: F) -> Self;
+        fn intersection<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, f: F);
+        fn union<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, f: F);
         fn difference(&mut self, other: &Self);
         fn restrict(&mut self, keys: &ArraySetStEph<K>);
         fn subtract(&mut self, keys: &ArraySetStEph<K>);
-        fn reduce<R, F>(&self, init: R, f: F) -> R where F: Fn(R, &K, &V) -> R + Send + Sync + 'static, R: Send + Sync + 'static;
+        fn reduce<R: StTInMtT + 'static, F: Fn(R, &K, &V) -> R + Send + Sync + 'static>(&self, init: R, f: F) -> R;
         fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>>;
 
         // Key ordering operations (ADT 43.1 adapted for tables) - sequential (inherently sequential on trees)
@@ -54,7 +54,7 @@ pub mod OrderedTableMtEph {
         fn split_rank_key(&mut self, i: N) -> (Self, Self) where Self: Sized;
     }
 
-    impl<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static> OrderedTableMtEph<K, V> {
+    impl<K: MtKey, V: MtVal> OrderedTableMtEph<K, V> {
         /// APAS: Work Θ(1), Span Θ(1)
         pub fn new() -> Self {
             OrderedTableMtEph {
@@ -63,7 +63,7 @@ pub mod OrderedTableMtEph {
         }
     }
 
-    impl<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static> OrderedTableMtEphTrait<K, V> for OrderedTableMtEph<K, V> {
+    impl<K: MtKey, V: MtVal> OrderedTableMtEphTrait<K, V> for OrderedTableMtEph<K, V> {
         // Base table operations - delegate to backing store with ephemeral semantics and parallelism
         
         /// Claude Work: O(1), Span: O(1)
@@ -101,7 +101,7 @@ pub mod OrderedTableMtEph {
         }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn insert<F>(&mut self, k: K, v: V, combine: F) where F: Fn(&V, &V) -> V + Send + Sync + 'static {
+        fn insert<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, k: K, v: V, combine: F) {
             self.base_table.insert(k, v, combine);
         }
 
@@ -383,7 +383,7 @@ pub mod OrderedTableMtEph {
         }
     }
 
-    impl<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static> Clone for OrderedTableMtEph<K, V> {
+    impl<K: MtKey, V: MtVal> Clone for OrderedTableMtEph<K, V> {
         fn clone(&self) -> Self {
             OrderedTableMtEph {
                 base_table: self.base_table.clone(),

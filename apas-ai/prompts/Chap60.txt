@@ -1,0 +1,102 @@
+ Build a plan for this, including test and benchmark
+ using PrePlanChecklist.md. 
+
+ Identify all the algorithms specified here and implement
+ them for directed graphs.
+
+ Do any need an undirect graph representation?
+
+ You may have to allow negative weights if our graphs don't.
+ Do not try and represent anything with a negative infinity.
+
+ How many are parallel?
+
+ Show it to me and estimate time.
+
+ I will tell you when to execute. 
+
+ Wait for me to tell you when to fix, build and test.
+
+ This goes in Chap60.
+
+Chapter 60
+
+Introduction
+Overview. In earlier chapters, we have mostly covered techniques for solving problems
+on graphs that were developed in the context of sequential algorithms. Some of the algo-
+rithms we considered were parallel while others were not. For example, we saw that BFS
+has some parallelism since each level can be explored in parallel but there was no paral-
+lelism in DFS . There was no parallelism in Dijkstra’s algorithm , but there was plenty of
+parallelism in the Bellman-Ford algorithm and Johnson’s algorithm .
+In this part of the book, we cover the “graph contraction” technique. This technique
+was specifically designed to be used in parallel algorithms and allows obtaining poly-
+logarithmic span for certain graph problems. This chapter presents an overview of graph
+contraction. The following chapters present two specializations Edge Contraction and
+Star Contraction of graph contraction, and apply the technique to graph connectivity .
+1 Preliminaries
+Note. The material here and the followup chapters on graph contraction relies on the graph
+terminology introduced in the background chapter on graph theory .
+Definition 60.1 (Graph Partition). Given a graph G, a graph partition of G is a collection
+of graphs
+H0 = (V0, E0), . . . , Hk−1 = (Vk−1, Ek−1),
+such that {V0, . . . , Vk−1} is a set partition of V and H0, . . . , Hk−1 are vertex-induced sub-
+graphs of G with respect to V0, . . . , Vk−1.
+We refer to each subgraph Hi as a block or part of G.
+Definition 60.2 (Internal and Cut Edges). Given a partition H0 = (V0, E0), . . . , Hk−1 =
+452 CHAPTER 60. INTRODUCTION
+(Vk1 , Ek−1) of a graph G = (V, E), we define two kinds of edges: internal edges and cut
+edges.
+• We call an edge {v1, v2} an internal edge, if v1 ∈ Vi and v2 ∈ Vi. Note that {v1, v2} ∈
+Ei.
+• We call an edge {v1, v2} a cut edge, if v1 ∈ Vi and v2 ∈ Vj and i 6 = j.
+Exercise 60.1. One way to partition a graph is to make each connected component a block.
+What are the internal and cut edges in such a partition?
+Solution. There are no cut edges between the partitions. All edges of the graph are internal
+edges.
+Definition 60.3 (Partition Map). We sometimes describe a graph partition with a tuple
+consisting of
+1. a set of labels for the blocks, and
+2. a partition map that maps each vertex to the label of its block.
+The labels can be chosen arbitrarily but it is usually conceptually and computationally
+easier to use a vertex inside a block as a representative for that block.
+Example 60.1. The partition {{a, b, c} , {d} , {e, f}} of the vertices {a, b, c, d, e, f}, defines
+three blocks as the corresponding vertex-induced subgraphs .
+The edges {a, b}, {a, c}, and {e, f} are internal edges, and the edges {c, d}, {b, d}, {b, e}
+and {d, f} are cut edges.
+By labeling the blocks ’ abc ’, ’ d ’ and ’ ef ’, we can specify the graph partition with follow-
+ing partition map:
+( {abc, d, ef} , (60.1)
+{a 7 → abc, b 7 → abc, c 7 → abc, d 7 → d, e 7 → ef, f 7 → ef}). (60.2)
+
+Instead of assigning a fresh label to each block, we can choose a representative vertex. For
+example, by picking a, d, and e as representatives, we can represent the partition above
+using the following partition map
+( {a, d, e} , (60.3)
+{a 7 → a, b 7 → a, c 7 → a, d 7 → d, e 7 → e, f 7 → e}). (60.4)
+2 Graph Contraction
+Graph contraction is a contraction technique for computing properties of graphs in par-
+allel. As a contraction technique, it is used to solve a problem instance by reducing it to a
+smaller instance of the same problem.
+Graph contraction plays important role in parallel algorithm design, because divide-and-
+conquer can be difficult to apply to graph problems efficiently. Divide-and-conquer tech-
+niques usually require partitioning graphs into smaller graphs in a balanced fashion such
+that the number of cut edges is minimized. Because graphs can be highly irregular, they
+can be difficult to partition. In fact, graph partitioning problems are typically NP-hard.
+Quotient Graph. The key idea behind graph contraction is to contract the input graph
+to a smaller quotient graph, solve the problem on the quotient graph, and then use that
+solution to construct the solution for the input graph. We can specify this technique as an
+inductive algorithm-design technique as follows.
+Definition 60.4 (Graph-Contraction Technique). Graph contraction technique has a base
+case and an inductive case. Each application of the inductive step is called a round of
+graph contraction. In a graph contraction, rounds are repeated until the graph is small,
+e.g., the graph has no remaining edges.
+Base case: If the graph is small (e.g., it has no edges), then compute the desired result.
+Inductive case:
+• Contraction step: contract the graph into a smaller quotient graph.
+– Partition the graph into blocks.
+– Contract each block to a single super-vertex.
+– Drop internal edges.
+– Reroute cut edges to corresponding super-vertices.
+• Recursive step: Recursively solve the problem for the quotient graph.
+
+

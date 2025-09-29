@@ -48,7 +48,7 @@ pub mod BSTReducedStEph {
     #[derive(Debug, Clone)]
     pub struct SumOp<T>(PhantomData<T>);
 
-    impl<T: StT + std::ops::Add<Output = T> + Default + Copy> ReduceOp<T, T> for SumOp<T> {
+    impl<T: ArithmeticT> ReduceOp<T, T> for SumOp<T> {
         fn identity() -> T {
             T::default()
         }

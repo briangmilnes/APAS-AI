@@ -9,19 +9,17 @@ pub mod AVLTreeSetMtEph {
     use crate::Types::Types::*;
 
     #[derive(Clone, Default)]
-    pub struct AVLTreeSetMtEph<T: StTInMtT + Ord + 'static> {
+    pub struct AVLTreeSetMtEph<T: MtKey> {
         inner: Arc<Mutex<AVLTreeSetStEph<T>>>,
     }
 
-    pub trait AVLTreeSetMtEphTrait<T: StTInMtT + Ord + 'static> {
+    pub trait AVLTreeSetMtEphTrait<T: MtKey> {
         fn size(&self) -> N;
         fn to_seq(&self) -> ArraySeqMtEphS<T>;
         fn empty() -> Self;
         fn singleton(value: T) -> Self;
         fn from_seq(seq: &ArraySeqMtEphS<T>) -> Self;
-        fn filter<F>(&self, predicate: F) -> Self
-        where
-            F: Fn(&T) -> B + Send + Sync + 'static;
+        fn filter<F: Pred<T>>(&self, predicate: F) -> Self;
         fn intersection(&self, other: &Self) -> Self;
         fn difference(&self, other: &Self) -> Self;
         fn union(&self, other: &Self) -> Self;
@@ -30,7 +28,7 @@ pub mod AVLTreeSetMtEph {
         fn insert(&self, value: T);
     }
 
-    impl<T: StTInMtT + Ord + 'static> AVLTreeSetMtEph<T> {
+    impl<T: MtKey> AVLTreeSetMtEph<T> {
         fn from_inner(inner: AVLTreeSetStEph<T>) -> Self {
             AVLTreeSetMtEph {
                 inner: Arc::new(Mutex::new(inner)),
@@ -38,7 +36,7 @@ pub mod AVLTreeSetMtEph {
         }
     }
 
-    impl<T: StTInMtT + Ord + 'static> AVLTreeSetMtEphTrait<T> for AVLTreeSetMtEph<T> {
+    impl<T: MtKey> AVLTreeSetMtEphTrait<T> for AVLTreeSetMtEph<T> {
         fn size(&self) -> N {
             let guard = self.inner.lock().unwrap();
             guard.size()

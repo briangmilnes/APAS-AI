@@ -10,13 +10,13 @@ pub mod BSTParaTreapMtEph {
     use crate::Types::Types::*;
 
     #[derive(Clone)]
-    pub enum Exposed<T: StTInMtT + Ord> {
+    pub enum Exposed<T: MtKey> {
         Leaf,
         Node(ParamTreap<T>, T, ParamTreap<T>),
     }
 
     #[derive(Clone)]
-    struct NodeInner<T: StTInMtT + Ord> {
+    struct NodeInner<T: MtKey> {
         key: T,
         priority: i64,
         size: N,
@@ -25,11 +25,11 @@ pub mod BSTParaTreapMtEph {
     }
 
     #[derive(Clone)]
-    pub struct ParamTreap<T: StTInMtT + Ord> {
+    pub struct ParamTreap<T: MtKey> {
         root: Arc<RwLock<Option<Box<NodeInner<T>>>>>,
     }
 
-    fn priority_for<T: StTInMtT + Ord>(key: &T) -> i64 {
+    fn priority_for<T: MtKey>(key: &T) -> i64 {
         let mut hasher = std::collections::hash_map::DefaultHasher::new();
         let mut buf = String::new();
         let _ = write!(&mut buf, "{:?}", key);
@@ -37,17 +37,17 @@ pub mod BSTParaTreapMtEph {
         hasher.finish() as i64
     }
 
-    fn tree_priority<T: StTInMtT + Ord>(tree: &ParamTreap<T>) -> i64 {
+    fn tree_priority<T: MtKey>(tree: &ParamTreap<T>) -> i64 {
         let guard = tree.root.read().unwrap();
         guard.as_ref().map_or(i64::MIN, |node| node.priority)
     }
 
-    fn tree_size<T: StTInMtT + Ord>(tree: &ParamTreap<T>) -> N {
+    fn tree_size<T: MtKey>(tree: &ParamTreap<T>) -> N {
         let guard = tree.root.read().unwrap();
         guard.as_ref().map_or(0, |node| node.size)
     }
 
-    fn make_node<T: StTInMtT + Ord>(left: ParamTreap<T>, key: T, priority: i64, right: ParamTreap<T>) -> ParamTreap<T> {
+    fn make_node<T: MtKey>(left: ParamTreap<T>, key: T, priority: i64, right: ParamTreap<T>) -> ParamTreap<T> {
         let size = 1 + tree_size(&left) + tree_size(&right);
         ParamTreap {
             root: Arc::new(RwLock::new(Some(Box::new(NodeInner {
@@ -60,7 +60,7 @@ pub mod BSTParaTreapMtEph {
         }
     }
 
-    impl<T: StTInMtT + Ord + 'static> ParamTreap<T> {
+    impl<T: MtKey + 'static> ParamTreap<T> {
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
         fn expose_internal(&self) -> Exposed<T> {
@@ -288,7 +288,7 @@ pub mod BSTParaTreapMtEph {
         }
     }
 
-    pub trait ParamTreapTrait<T: StTInMtT + Ord + 'static>: Sized {
+    pub trait ParamTreapTrait<T: MtKey + 'static>: Sized {
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
         fn new() -> Self;
@@ -343,7 +343,7 @@ pub mod BSTParaTreapMtEph {
         fn in_order(&self) -> ArraySeqStPerS<T>;
     }
 
-    impl<T: StTInMtT + Ord + 'static> ParamTreapTrait<T> for ParamTreap<T> {
+    impl<T: MtKey + 'static> ParamTreapTrait<T> for ParamTreap<T> {
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
         fn new() -> Self {
@@ -442,10 +442,7 @@ pub mod BSTParaTreapMtEph {
 
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)
-        fn filter<F>(&self, predicate: F) -> Self
-        where
-            F: Fn(&T) -> bool + Send + Sync + 'static,
-        {
+        fn filter<F: Pred<T>>(&self, predicate: F) -> Self {
             ParamTreap::filter_parallel(self, predicate)
         }
 

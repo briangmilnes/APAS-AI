@@ -26,3 +26,7 @@
   - You need higher-ranked trait bounds/lifetimes making inline form unreadable.
 - For methods returning sequence types, put the element bound inline on the method generic: `fn map<U: StT + Clone>(...) -> Seq<U>` not `fn map<U>(...) -> Seq<U> where U: StT + Clone`.
 - For inherent/trait methods that repeat a single bound across many items in the same impl, hoist to the impl header per the hoisting rules above; otherwise keep inline.
+
+Make a plan to sweep the code base for these new abbreviations and where clause minimization, which means putting them in the fn or method arguments.
+The plan is down to the file and after each file modification do a cargo build (on src) a single test run on a test file and a single benchmark run on a benchmark file.
+Show me the plan

@@ -13,7 +13,7 @@ pub mod WeightedUnDirGraphMtEphFloat {
     pub type WeightedUnDirGraphMtEphFloat<V> = LabUnDirGraphMtEph<V, OrderedF64>;
 
     /// Convenience functions for weighted undirected graphs with floating-point weights (multi-threaded)
-    impl<V: StT + MtT + Hash + Ord> WeightedUnDirGraphMtEphFloat<V> {
+    impl<V: HashOrd + MtT> WeightedUnDirGraphMtEphFloat<V> {
         /// Create from vertices and weighted edges
         pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, OrderedFloat<f64>)>) -> Self {
             let labeled_edges = edges

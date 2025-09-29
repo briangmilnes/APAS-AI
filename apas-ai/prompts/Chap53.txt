@@ -6,6 +6,8 @@
  our representations for graphs, you may have to make
  novel ones.
 
+ How many are parallel?
+
  Implement the algorithms (of course) and the examples.
  Some of the examples require only a txt file explanation.
 

@@ -103,12 +103,7 @@ pub mod ArraySeqMtEph {
         fn empty() -> ArraySeqMtEphS<T>;
         fn singleton(item: T) -> ArraySeqMtEphS<T>;
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T>;
-        fn map<U: StT + Send + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
-            a: &ArraySeqMtEphS<T>,
-            f: F,
-        ) -> ArraySeqMtEphS<U>
-        where
-            T: Send + 'static;
+        fn map<U: StT + Send + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F) -> ArraySeqMtEphS<U> where T: Send + 'static;
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtEphS<T>;
         fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T>;
         fn filter<F: Fn(&T) -> B + Send + Sync>(a: &ArraySeqMtEphS<T>, pred: &F) -> ArraySeqMtEphS<T>;
@@ -119,9 +114,7 @@ pub mod ArraySeqMtEph {
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T>;
         fn collect(a: &ArraySeqMtEphS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtEphS<Pair<T, ArraySeqMtEphS<T>>>;
         fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
-        where
-            T: Send + 'static;
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T where T: Send + 'static;
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T);
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T>;
     }
