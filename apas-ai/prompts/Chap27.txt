@@ -1,4 +1,5 @@
  Which modules should we implement for Chap27?
+ Which lower number modules can you use?
  Discuss with the user.
 
  Build a plan for fixing this, including test and benchmark
