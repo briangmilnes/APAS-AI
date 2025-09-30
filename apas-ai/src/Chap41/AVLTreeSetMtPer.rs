@@ -9,6 +9,7 @@
 pub mod AVLTreeSetMtPer {
     use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
     use crate::Types::Types::*;
+    use crate::ParaPair;
     use std::fmt;
     use std::thread;
 
@@ -54,9 +55,55 @@ pub mod AVLTreeSetMtPer {
         }
 
         fn from_seq(seq: AVLTreeSeqMtPerS<T>) -> Self {
-            // Sort and deduplicate
+            const PARALLEL_THRESHOLD: N = 256;
             let mut vals = seq.values_in_order();
-            vals.sort();
+            let n = vals.len();
+            
+            // Parallel sort for large sequences
+            if n >= PARALLEL_THRESHOLD {
+                // Parallel merge sort using ParaPair!
+                fn parallel_sort<T: StTInMtT + Ord + 'static>(mut vals: Vec<T>) -> Vec<T> {
+                    let n = vals.len();
+                    if n <= 1 {
+                        return vals;
+                    }
+                    if n < 256 {
+                        vals.sort();
+                        return vals;
+                    }
+                    
+                    let mid = n / 2;
+                    let right_vals = vals.split_off(mid);
+                    let left_vals = vals;
+                    
+                    let Pair(left_sorted, right_sorted) = ParaPair!(
+                        move || parallel_sort(left_vals),
+                        move || parallel_sort(right_vals)
+                    );
+                    
+                    // Merge sorted halves
+                    let mut result = Vec::with_capacity(n);
+                    let mut i = 0;
+                    let mut j = 0;
+                    while i < left_sorted.len() && j < right_sorted.len() {
+                        if left_sorted[i] <= right_sorted[j] {
+                            result.push(left_sorted[i].clone());
+                            i += 1;
+                        } else {
+                            result.push(right_sorted[j].clone());
+                            j += 1;
+                        }
+                    }
+                    result.extend_from_slice(&left_sorted[i..]);
+                    result.extend_from_slice(&right_sorted[j..]);
+                    result
+                }
+                
+                vals = parallel_sort(vals);
+            } else {
+                vals.sort();
+            }
+            
             vals.dedup();
             AVLTreeSetMtPer {
                 elements: AVLTreeSeqMtPerS::from_vec(vals),
@@ -96,7 +143,7 @@ pub mod AVLTreeSetMtPer {
                 };
             }
             
-            // PARALLEL divide-and-conquer for large sets
+            // PARALLEL divide-and-conquer for large sets using ParaPair!
             let mid = n / 2;
             
             let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
@@ -108,9 +155,10 @@ pub mod AVLTreeSetMtPer {
             let f_left = f.clone();
             let f_right = f;
             
-            let handle = thread::spawn(move || left_set.filter(f_left));
-            let right_result = right_set.filter(f_right);
-            let left_result = handle.join().unwrap();
+            let Pair(left_result, right_result) = ParaPair!(
+                move || left_set.filter(f_left),
+                move || right_set.filter(f_right)
+            );
             
             left_result.union(&right_result)
         }
@@ -149,7 +197,7 @@ pub mod AVLTreeSetMtPer {
                 };
             }
             
-            // PARALLEL divide-and-conquer for large sets
+            // PARALLEL divide-and-conquer for large sets using ParaPair!
             let mid = n / 2;
             
             let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
@@ -157,11 +205,13 @@ pub mod AVLTreeSetMtPer {
             
             let left_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(left_vals));
             let right_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(right_vals));
-            let other_clone = other.clone();
+            let other_left = other.clone();
+            let other_right = other.clone();
             
-            let handle = thread::spawn(move || left_set.intersection(&other_clone));
-            let right_result = right_set.intersection(other);
-            let left_result = handle.join().unwrap();
+            let Pair(left_result, right_result) = ParaPair!(
+                move || left_set.intersection(&other_left),
+                move || right_set.intersection(&other_right)
+            );
             
             left_result.union(&right_result)
         }
@@ -201,7 +251,7 @@ pub mod AVLTreeSetMtPer {
                 };
             }
             
-            // PARALLEL divide-and-conquer for large sets
+            // PARALLEL divide-and-conquer for large sets using ParaPair!
             let mid = n / 2;
             
             let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
@@ -209,11 +259,13 @@ pub mod AVLTreeSetMtPer {
             
             let left_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(left_vals));
             let right_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(right_vals));
-            let other_clone = other.clone();
+            let other_left = other.clone();
+            let other_right = other.clone();
             
-            let handle = thread::spawn(move || left_set.union(&other_clone));
-            let right_result = right_set.union(other);
-            let left_result = handle.join().unwrap();
+            let Pair(left_result, right_result) = ParaPair!(
+                move || left_set.union(&other_left),
+                move || right_set.union(&other_right)
+            );
             
             left_result.union(&right_result)
         }
@@ -237,10 +289,19 @@ pub mod AVLTreeSetMtPer {
         }
 
         fn delete(&self, x: &T) -> Self {
-            let mut vals: Vec<T> = self.elements.values_in_order();
-            vals.retain(|v| v != x);
-            AVLTreeSetMtPer {
-                elements: AVLTreeSeqMtPerS::from_vec(vals),
+            const PARALLEL_THRESHOLD: N = 128;
+            let n = self.size();
+            
+            if n >= PARALLEL_THRESHOLD {
+                // Use parallel filter for large sets
+                let x_clone = x.clone();
+                self.filter(move |v| v != &x_clone)
+            } else {
+                let mut vals: Vec<T> = self.elements.values_in_order();
+                vals.retain(|v| v != x);
+                AVLTreeSetMtPer {
+                    elements: AVLTreeSeqMtPerS::from_vec(vals),
+                }
             }
         }
 
@@ -250,9 +311,16 @@ pub mod AVLTreeSetMtPer {
             }
             let mut vals = self.elements.values_in_order();
             vals.push(x);
-            vals.sort();
-            AVLTreeSetMtPer {
-                elements: AVLTreeSeqMtPerS::from_vec(vals),
+            
+            const PARALLEL_THRESHOLD: N = 256;
+            if vals.len() >= PARALLEL_THRESHOLD {
+                // Use parallel from_seq for large sets
+                Self::from_seq(AVLTreeSeqMtPerS::from_vec(vals))
+            } else {
+                vals.sort();
+                AVLTreeSetMtPer {
+                    elements: AVLTreeSeqMtPerS::from_vec(vals),
+                }
             }
         }
     }

@@ -143,13 +143,6 @@ pub mod Chap41 {
     pub mod Example41_3;
 }
 
-pub mod Chap41Codex {
-    pub mod AVLTreeSetMtEph;
-    pub mod AVLTreeSetStEph;
-    pub mod ArraySetEnumMtEph;
-    pub mod ArraySetEnumStEph;
-    pub mod Example41_3;
-}
 
 pub mod Chap42Claude {
     pub mod TableStPer;

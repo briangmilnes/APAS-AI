@@ -3,14 +3,20 @@
 - [ ] Were all required source files created?
 - [ ] Were all required test files created?
 - [ ] Were all required benchmark files created?
+- [ ] Are all copyright headers on line 1 with correct format?
+- [ ] Are there any stub files that need implementation or proper "pending implementation" documentation?
 - [ ] Were RustRulesChecklist and APASRulesChecklist executed at the points scheduled in the plan, and the results printed for the user?
-- [ ] Is cargo build clean (no errors, no warning).
-- [ ] Is cargo nextest run clean (no errors, no warning).
+- [ ] Is cargo build clean (no errors, no warnings)?
+- [ ] Is cargo nextest run clean (no errors, no warnings)?
 - [ ] Are there uses of Vec that are of known length and should be a sequence type? Fix them.
 - [ ] Did you benchmark just each new src file created?
 - [ ] Did the plan correctly implement parallelism (or call it) in each *Mt file?
+- [ ] For Mt implementations with divide-and-conquer, did you use ParaPair! macro for true binary parallelism?
+- [ ] Do all parallel operations have PARALLEL_THRESHOLD checks to avoid thread overhead on small inputs?
 - [ ] Were all planned per-file checklists (e.g., PerSrc, PerTest, PerBenchmark) run after each file creation/update?
-- [ ] Run the AlgorithmicAnalysis checklist. Was it met? 
+- [ ] Run the AlgorithmicAnalysis checklist. Was it met?
 - [ ] Did you pause? Why and how can you prevent this in future?
 - [ ] Make a plan to fix any defects found, one to-do for each file.
-- [ ] Run the full benchmark, fix any defects found.
+- [ ] Did the benchmarks compile with cargo bench --no-run? Fix any defects found.
+- [ ] Ask the user if they want to run the full benchmark suite.
+- [ ] Ask the user if they want you to commit changes to git.

@@ -688,6 +688,10 @@ name = "TestAVLTreeSetMtPer"
 path = "tests/Chap41/TestAVLTreeSetMtPer.rs"
 
 [[test]]
+name = "TestAVLTreeSetMtEph"
+path = "tests/Chap41/TestAVLTreeSetMtEph.rs"
+
+[[test]]
 name = "TestExample41_3"
 path = "tests/Chap41/TestExample41_3.rs"
 
@@ -736,22 +740,6 @@ name = "TestExample43_1"
 path = "tests/Chap43Claude/TestExample43_1.rs"
 
 [[test]]
-name = "TestChap41CodexArraySetEnumSt"
-path = "tests/Chap41Codex/TestChap41CodexArraySetEnumSt.rs"
-
-[[test]]
-name = "TestChap41CodexArraySetEnumMt"
-path = "tests/Chap41Codex/TestChap41CodexArraySetEnumMt.rs"
-
-[[test]]
-name = "TestChap41CodexAVLTreeSetSt"
-path = "tests/Chap41Codex/TestChap41CodexAVLTreeSetSt.rs"
-
-[[test]]
-name = "TestChap41CodexAVLTreeSetMt"
-path = "tests/Chap41Codex/TestChap41CodexAVLTreeSetMt.rs"
-
-[[test]]
 name = "TestAdvancedLinearProbing"
 path = "tests/Chap47/TestAdvancedLinearProbing.rs"
 
@@ -790,26 +778,6 @@ harness = false
 [[bench]]
 name = "BenchAVLTreeSetStPer"
 path = "benches/Chap41/BenchAVLTreeSetStPer.rs"
-harness = false
-
-[[bench]]
-name = "BenchChap41CodexArraySetEnumSt"
-path = "benches/Chap41Codex/BenchArraySetEnumStCodex.rs"
-harness = false
-
-[[bench]]
-name = "BenchChap41CodexArraySetEnumMt"
-path = "benches/Chap41Codex/BenchArraySetEnumMtCodex.rs"
-harness = false
-
-[[bench]]
-name = "BenchChap41CodexAVLTreeSetSt"
-path = "benches/Chap41Codex/BenchAVLTreeSetStCodex.rs"
-harness = false
-
-[[bench]]
-name = "BenchChap41CodexAVLTreeSetMt"
-path = "benches/Chap41Codex/BenchAVLTreeSetMtCodex.rs"
 harness = false
 
 [[bench]]
