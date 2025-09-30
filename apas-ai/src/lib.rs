@@ -238,7 +238,7 @@ pub mod Chap52 {
     pub mod EdgeSetGraphMtPer;
     pub mod EdgeSetGraphMtEph;
     pub mod AdjTableGraphStPer;
-    pub mod AdjTableGraphStEph;
+    // pub mod AdjTableGraphStEph; // Requires AVLTreeSetStEph: StT
     // pub mod AdjTableGraphMtPer;
     // pub mod AdjTableGraphMtEph;
     // pub mod AdjSeqGraphStPer;

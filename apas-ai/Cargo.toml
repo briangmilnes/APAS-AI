@@ -917,9 +917,30 @@ path = "tests/Chap51/TestTopDownDPMtEph.rs"
 name = "TestEdgeSetGraphStPer"
 path = "tests/Chap52/TestEdgeSetGraphStPer.rs"
 
+[[test]]
+name = "TestEdgeSetGraphStEph"
+path = "tests/Chap52/TestEdgeSetGraphStEph.rs"
+
+[[test]]
+name = "TestEdgeSetGraphMtPer"
+path = "tests/Chap52/TestEdgeSetGraphMtPer.rs"
+
+[[test]]
+name = "TestEdgeSetGraphMtEph"
+path = "tests/Chap52/TestEdgeSetGraphMtEph.rs"
+
+[[test]]
+name = "TestAdjTableGraphStPer"
+path = "tests/Chap52/TestAdjTableGraphStPer.rs"
+
 [[bench]]
 name = "BenchEdgeSetGraphStPer"
 path = "benches/Chap52/BenchEdgeSetGraphStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchAdjTableGraphStPer"
+path = "benches/Chap52/BenchAdjTableGraphStPer.rs"
 harness = false
 
 [[bench]]
