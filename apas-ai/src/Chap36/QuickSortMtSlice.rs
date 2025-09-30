@@ -9,15 +9,26 @@ pub mod Chapter36MtSlice {
     use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
     use crate::Types::Types::*;
 
-    const MIN_PAR_SLICE: N = 2;
+    // Unconditionally parallel - no thresholding per APAS rules
 
     pub trait Chapter36MtSliceTrait<T: StT + Ord + Send> {
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time pivot selection
         fn pivot_mt_first(&self, lo: N, hi: N) -> T;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time median-of-3
         fn pivot_mt_median3(&self, lo: N, hi: N) -> T;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time random selection
         fn pivot_mt_random(&self, lo: N, hi: N) -> T;
-
+        /// APAS: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst
+        /// claude-4-sonet: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst, Parallelism Θ(n/log n) expected - parallel divide-and-conquer with unconditional thread spawning (slice-based)
         fn quick_sort_mt_first(&self);
+        /// APAS: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst
+        /// claude-4-sonet: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst, Parallelism Θ(n/log n) expected - parallel divide-and-conquer with median-of-3 pivot (slice-based)
         fn quick_sort_mt_median3(&self);
+        /// APAS: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst
+        /// claude-4-sonet: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst, Parallelism Θ(n/log n) expected - parallel divide-and-conquer with random pivot (slice-based)
         fn quick_sort_mt_random(&self);
     }
 
@@ -72,15 +83,11 @@ pub mod Chapter36MtSlice {
                     }
                     let (left, mid_and_right) = data.split_at_mut(lt);
                     let (_, right) = mid_and_right.split_at_mut(gt - lt);
-                    if len >= MIN_PAR_SLICE {
-                        thread::scope(|scope| {
-                            scope.spawn(|| sort(left));
-                            sort(right);
-                        });
-                    } else {
-                        sort(left);
+                    // Unconditionally parallel - no thresholding
+                    thread::scope(|scope| {
+                        scope.spawn(|| sort(left));
                         sort(right);
-                    }
+                    });
                 }
                 sort(data);
             });
@@ -127,15 +134,11 @@ pub mod Chapter36MtSlice {
                     }
                     let (left, mid_and_right) = data.split_at_mut(lt);
                     let (_, right) = mid_and_right.split_at_mut(gt - lt);
-                    if len >= MIN_PAR_SLICE {
-                        thread::scope(|scope| {
-                            scope.spawn(|| sort(left));
-                            sort(right);
-                        });
-                    } else {
-                        sort(left);
+                    // Unconditionally parallel - no thresholding
+                    thread::scope(|scope| {
+                        scope.spawn(|| sort(left));
                         sort(right);
-                    }
+                    });
                 }
                 sort(data);
             });
@@ -171,15 +174,11 @@ pub mod Chapter36MtSlice {
                     }
                     let (left, mid_and_right) = data.split_at_mut(lt);
                     let (_, right) = mid_and_right.split_at_mut(gt - lt);
-                    if len >= MIN_PAR_SLICE {
-                        thread::scope(|scope| {
-                            scope.spawn(|| sort(left));
-                            sort(right);
-                        });
-                    } else {
-                        sort(left);
+                    // Unconditionally parallel - no thresholding
+                    thread::scope(|scope| {
+                        scope.spawn(|| sort(left));
                         sort(right);
-                    }
+                    });
                 }
                 sort(data);
             });

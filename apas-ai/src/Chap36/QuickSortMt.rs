@@ -9,8 +9,7 @@ pub mod Chapter36Mt {
     use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
 
-    // Spawning threads all the way down (always parallelize).
-    const MIN_PAR_SLICE: N = 2;
+    // Spawning threads all the way down (always parallelize - no thresholding per APAS rules).
 
     // SAFETY: Quicksort can run without explicit locks because each recursive call only
     // receives a disjoint slice of the working buffer. The `partition` step mutates the
@@ -24,12 +23,23 @@ pub mod Chapter36Mt {
     // locks or atomics in the sorting logic itself.
 
     pub trait Chapter36MtTrait<T: StT + Ord + Send> {
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time pivot selection
         fn pivot_mt_first(&self, lo: N, hi: N) -> T;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time median-of-3
         fn pivot_mt_median3(&self, lo: N, hi: N) -> T;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time random selection
         fn pivot_mt_random(&self, lo: N, hi: N) -> T;
-
+        /// APAS: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst
+        /// claude-4-sonet: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst, Parallelism Θ(n/log n) expected - parallel divide-and-conquer with unconditional thread spawning
         fn quick_sort_mt_first(&mut self);
+        /// APAS: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst
+        /// claude-4-sonet: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst, Parallelism Θ(n/log n) expected - parallel divide-and-conquer with median-of-3 pivot
         fn quick_sort_mt_median3(&mut self);
+        /// APAS: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst
+        /// claude-4-sonet: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst, Parallelism Θ(n/log n) expected - parallel divide-and-conquer with random pivot
         fn quick_sort_mt_random(&mut self);
     }
 
@@ -82,15 +92,11 @@ pub mod Chapter36Mt {
                 }
                 let (left, mid_and_right) = data.split_at_mut(lt);
                 let (_, right) = mid_and_right.split_at_mut(gt - lt);
-                if len >= MIN_PAR_SLICE {
-                    thread::scope(|scope| {
-                        scope.spawn(|| quick_sort(left));
-                        quick_sort(right);
-                    });
-                } else {
-                    quick_sort(left);
+                // Unconditionally parallel - no thresholding
+                thread::scope(|scope| {
+                    scope.spawn(|| quick_sort(left));
                     quick_sort(right);
-                }
+                });
             }
 
             let mut data = self.to_vec();
@@ -137,15 +143,11 @@ pub mod Chapter36Mt {
                 }
                 let (left, mid_and_right) = data.split_at_mut(lt);
                 let (_, right) = mid_and_right.split_at_mut(gt - lt);
-                if len >= MIN_PAR_SLICE {
-                    thread::scope(|scope| {
-                        scope.spawn(|| quick_sort(left));
-                        quick_sort(right);
-                    });
-                } else {
-                    quick_sort(left);
+                // Unconditionally parallel - no thresholding
+                thread::scope(|scope| {
+                    scope.spawn(|| quick_sort(left));
                     quick_sort(right);
-                }
+                });
             }
 
             let mut data = self.to_vec();
@@ -182,15 +184,11 @@ pub mod Chapter36Mt {
                 }
                 let (left, mid_and_right) = data.split_at_mut(lt);
                 let (_, right) = mid_and_right.split_at_mut(gt - lt);
-                if len >= MIN_PAR_SLICE {
-                    thread::scope(|scope| {
-                        scope.spawn(|| quick_sort(left));
-                        quick_sort(right);
-                    });
-                } else {
-                    quick_sort(left);
+                // Unconditionally parallel - no thresholding
+                thread::scope(|scope| {
+                    scope.spawn(|| quick_sort(left));
                     quick_sort(right);
-                }
+                });
             }
 
             let mut data = self.to_vec();

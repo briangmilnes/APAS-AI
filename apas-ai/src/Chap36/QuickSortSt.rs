@@ -8,12 +8,23 @@ pub mod Chapter36St {
     use crate::Types::Types::*;
 
     pub trait Chapter36StTrait<T: StT + Ord> {
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time pivot selection
         fn pivot_st_first(&self, lo: N, hi: N) -> T;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time median-of-3
         fn pivot_st_median3(&self, lo: N, hi: N) -> T;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time random selection
         fn pivot_st_random(&self, lo: N, hi: N) -> T;
-
+        /// APAS: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(n log n) expected, Θ(n²) worst
+        /// claude-4-sonet: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(n log n) expected, Θ(n²) worst, Parallelism Θ(1) - sequential divide-and-conquer
         fn quick_sort_st_first(&mut self);
+        /// APAS: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(n log n) expected, Θ(n²) worst
+        /// claude-4-sonet: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(n log n) expected, Θ(n²) worst, Parallelism Θ(1) - sequential divide-and-conquer with median-of-3 pivot
         fn quick_sort_st_median3(&mut self);
+        /// APAS: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(n log n) expected, Θ(n²) worst
+        /// claude-4-sonet: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(n log n) expected, Θ(n²) worst, Parallelism Θ(1) - sequential divide-and-conquer with random pivot
         fn quick_sort_st_random(&mut self);
     }
 
