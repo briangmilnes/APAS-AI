@@ -94,6 +94,13 @@ pub mod Chap26 {
     pub mod MergeSortSt;
 }
 
+pub mod Chap27 {
+    pub mod ReduceContractMtEph;
+    pub mod ReduceContractStEph;
+    pub mod ScanContractMtEph;
+    pub mod ScanContractStEph;
+}
+
 pub mod Chap36 {
     pub mod QuickSortMt;
     pub mod QuickSortMtSlice;

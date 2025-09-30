@@ -1092,6 +1092,23 @@ path = "tests/Chap26/TestDivConReduceSt.rs"
 name = "TestDivConReduceMt"
 path = "tests/Chap26/TestDivConReduceMt.rs"
 
+# Chapter 27 Tests
+[[test]]
+name = "TestReduceContractStEph"
+path = "tests/Chap27/TestReduceContractStEph.rs"
+
+[[test]]
+name = "TestScanContractStEph"
+path = "tests/Chap27/TestScanContractStEph.rs"
+
+[[test]]
+name = "TestReduceContractMtEph"
+path = "tests/Chap27/TestReduceContractMtEph.rs"
+
+[[test]]
+name = "TestScanContractMtEph"
+path = "tests/Chap27/TestScanContractMtEph.rs"
+
 # Chapter 26 Benchmarks
 [[bench]]
 name = "BenchMergeSortSt"
@@ -1111,4 +1128,25 @@ harness = false
 [[bench]]
 name = "BenchDivConReduceMt"
 path = "benches/Chap26/BenchDivConReduceMt.rs"
+harness = false
+
+# Chapter 27 Benchmarks
+[[bench]]
+name = "BenchReduceContractStEph"
+path = "benches/Chap27/BenchReduceContractStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchScanContractStEph"
+path = "benches/Chap27/BenchScanContractStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchReduceContractMtEph"
+path = "benches/Chap27/BenchReduceContractMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchScanContractMtEph"
+path = "benches/Chap27/BenchScanContractMtEph.rs"
 harness = false
