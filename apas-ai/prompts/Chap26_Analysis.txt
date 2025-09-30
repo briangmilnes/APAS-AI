@@ -1,0 +1,88 @@
+CHAPTER 26: DIVIDE AND CONQUER - IMPLEMENTATION ANALYSIS
+═════════════════════════════════════════════════════════
+
+ALGORITHMS IN CHAPTER:
+1. reduceDC - Reduce with divide-and-conquer
+2. Merge Sort - Classic divide-and-conquer sorting
+3. scanDC - Scan with divide-and-conquer  
+4. Euclidean TSP (eTSP) - Heuristic for traveling salesperson
+
+PROPOSED IMPLEMENTATIONS:
+══════════════════════════
+
+HIGH PRIORITY:
+--------------
+✓ MergeSort - The quintessential divide-and-conquer algorithm
+  - MergeSortSt.rs (sequential)
+  - MergeSortMt.rs (multi-threaded with ParaPair!)
+  - Core operation: merge(left, right) 
+  - Work: Θ(n log n), Span St: Θ(n log n), Span Mt: Θ(log² n)
+
+ALREADY IMPLEMENTED:
+-------------------
+✓ reduceDC - Already in Chap18 ArraySeq modules as reduce()
+  - Sequential versions in ArraySeqStPer, ArraySeqStEph
+  - Parallel versions in ArraySeqMtPer, ArraySeqMtEph
+  - Work: Θ(n), Span Mt: Θ(log n)
+
+✓ scanDC - Already in Chap18 ArraySeq modules as scan()
+  - Sequential versions in ArraySeqStPer, ArraySeqStEph
+  - Parallel versions in ArraySeqMtPer, ArraySeqMtEph
+  - Work: Θ(n), Span Mt: Θ(log n)
+
+LOWER PRIORITY:
+--------------
+? Euclidean TSP (eTSP) - Complex geometric algorithm
+  - Would need 2D point representations
+  - Requires distance calculations, edge swapping
+  - Good demonstration but not essential
+  - Could defer to later if time permits
+
+SEQUENTIAL VS MULTI-THREADED:
+══════════════════════════════
+
+SEQUENTIAL (St):
+- MergeSortSt - Traditional recursive merge sort
+- Work = Span = Θ(n log n), Parallelism Θ(1)
+
+MULTI-THREADED (Mt):
+- MergeSortMt - Parallel merge sort with ParaPair!
+- Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log n)
+- Parallel recursive calls on left and right halves
+- Parallel merge operation (Span Θ(log n))
+
+REUSABLE MODULES:
+═════════════════
+
+FROM CHAP18:
+- ArraySeqStPer, ArraySeqStEph - Sequential sequences
+- ArraySeqMtPer, ArraySeqMtEph - Multi-threaded sequences
+- Existing reduce/scan implementations
+- splitMid, append operations
+
+FROM CHAP19:
+- More sophisticated array sequence operations
+- Slice-based operations if needed
+
+FROM CHAP36:
+- Pattern for parallel sorting (already have QuickSort)
+- Thread spawning patterns with thread::scope
+
+FROM TYPES:
+- ParaPair! macro for symmetric parallelism
+- StT, MtT type constraints
+- Comparison operations (Ord trait)
+
+MERGE OPERATION:
+═══════════════
+Need to implement merge(left, right) for sorted sequences:
+- Sequential: Θ(n) work, Θ(n) span
+- Parallel: Θ(n) work, Θ(log n) span via binary search + parallel recursion
+
+RECOMMENDATION:
+══════════════
+Focus on MergeSort (St and Mt versions) as the core Chap26 implementation.
+This demonstrates divide-and-conquer clearly and complements QuickSort from Chap36.
+
+Skip eTSP initially (too complex, needs geometric infrastructure).
+Reference existing reduce/scan in Chap18 rather than reimplementing.

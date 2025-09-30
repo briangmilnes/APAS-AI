@@ -1,0 +1,110 @@
+CHAPTER 26: DIVIDE AND CONQUER - REVISED IMPLEMENTATION PLAN
+════════════════════════════════════════════════════════════
+
+MODULES TO IMPLEMENT:
+═══════════════════
+
+1. MergeSortSt.rs - Sequential merge sort
+   - Traditional recursive divide-and-conquer
+   - Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
+
+2. MergeSortMt.rs - Parallel merge sort  
+   - Parallel with ParaPair! for recursive calls
+   - Parallel merge operation
+   - Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log n)
+
+3. DivideConquerReduceSt.rs - Divide-and-conquer via reduce pattern
+   - Demonstrates the pattern from Section 5 of Chapter 26
+   - Shows how divide-and-conquer algorithms can be expressed using reduce
+   - Example implementations:
+     * Maximum element via reduce
+     * Sum via reduce  
+     * Product via reduce
+     * Other associative operations
+   - Generic pattern: reduce myCombine emptyVal (map base a)
+
+4. DivideConquerReduceMt.rs - Parallel version
+   - Same pattern but using parallel reduce from ArraySeqMtPer/MtEph
+   - Work same as St, Span Θ(log n), Parallelism Θ(n/log n)
+
+SEQUENTIAL VS MULTI-THREADED:
+═════════════════════════════
+
+SEQUENTIAL MODULES:
+- MergeSortSt.rs - Traditional recursive merge sort
+- DivideConquerReduceSt.rs - Reduce-based D&C examples
+
+MULTI-THREADED MODULES:
+- MergeSortMt.rs - Parallel merge sort with ParaPair!
+- DivideConquerReduceMt.rs - Parallel reduce-based D&C
+
+REUSABLE MODULES:
+════════════════
+
+FROM CHAP18:
+- ArraySeqStPer, ArraySeqStEph - Sequential sequences
+- ArraySeqMtPer, ArraySeqMtEph - Multi-threaded sequences
+- reduce() - Already implements divide-and-conquer reduction
+- scan() - Already implements divide-and-conquer scan
+- map(), splitMid(), append() operations
+
+FROM CHAP36:
+- Pattern for parallel sorting (QuickSort)
+- Thread spawning with thread::scope
+
+FROM TYPES:
+- ParaPair! macro for symmetric parallelism
+- StT, MtT type constraints
+- Ord, Clone traits
+
+IMPLEMENTATION DETAILS:
+══════════════════════
+
+MergeSort:
+----------
+- Base case: sequences of length 0 or 1
+- Divide: splitMid to divide sequence in half
+- Recur: parallel recursive calls on left and right
+- Combine: merge two sorted sequences
+
+Merge operation:
+- Sequential: Θ(n) work, Θ(n) span - simple two-pointer merge
+- Parallel: Θ(n) work, Θ(log n) span - binary search + parallel recursion
+
+DivideConquerReduce:
+-------------------
+- Show the pattern: divide-and-conquer as reduce
+- Implement several examples:
+  * Maximum element: reduce max MIN (map identity a)
+  * Sum: reduce (+) 0 (map identity a)
+  * Product: reduce (*) 1 (map identity a)
+  * Any: reduce (||) false (map pred a)
+  * All: reduce (&&) true (map pred a)
+
+- Demonstrate that this works for algorithms with:
+  * Simple splitMid divide (not complex partitioning like quicksort)
+  * Binary recursion (two-way split)
+  * Associative combine operation
+  * No additional information beyond recursive results
+
+EXCLUDED:
+════════
+- Euclidean TSP (eTSP) - Too complex, needs geometric infrastructure
+  (Could add later if desired)
+
+IMPLEMENTATION ORDER:
+═══════════════════
+
+1. MergeSortSt.rs - Core divide-and-conquer example
+2. MergeSortMt.rs - Parallel version 
+3. DivideConquerReduceSt.rs - Pattern demonstration
+4. DivideConquerReduceMt.rs - Parallel pattern
+
+ESTIMATED SCOPE:
+═══════════════
+- 4 source files (~200-300 lines each)
+- 4 test files
+- 4 benchmark files (with APAS timing rules)
+- All with comprehensive algorithmic analysis
+- Zero thresholding (unconditionally parallel for Mt)
+

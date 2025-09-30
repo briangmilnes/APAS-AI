@@ -87,6 +87,13 @@ pub mod Chap23 {
     pub mod PrimTreeSeqSt;
 }
 
+pub mod Chap26 {
+    pub mod DivConReduceMt;
+    pub mod DivConReduceSt;
+    pub mod MergeSortMt;
+    pub mod MergeSortSt;
+}
+
 pub mod Chap36 {
     pub mod QuickSortMt;
     pub mod QuickSortMtSlice;

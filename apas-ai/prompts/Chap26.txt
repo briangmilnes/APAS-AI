@@ -5,8 +5,6 @@
 
  I will tell you when to execute. 
 
- Wait for me to tell you when to fix, build and test.
-
 Chap 26 as below:
 
   Which modules should we implement from this chapter?

@@ -1074,3 +1074,41 @@ harness = false
 # path = "benches/BenchTopDownDP.rs"
 # harness = false
 
+
+# Chapter 26 Tests
+[[test]]
+name = "TestMergeSortSt"
+path = "tests/Chap26/TestMergeSortSt.rs"
+
+[[test]]
+name = "TestMergeSortMt"
+path = "tests/Chap26/TestMergeSortMt.rs"
+
+[[test]]
+name = "TestDivConReduceSt"
+path = "tests/Chap26/TestDivConReduceSt.rs"
+
+[[test]]
+name = "TestDivConReduceMt"
+path = "tests/Chap26/TestDivConReduceMt.rs"
+
+# Chapter 26 Benchmarks
+[[bench]]
+name = "BenchMergeSortSt"
+path = "benches/Chap26/BenchMergeSortSt.rs"
+harness = false
+
+[[bench]]
+name = "BenchMergeSortMt"
+path = "benches/Chap26/BenchMergeSortMt.rs"
+harness = false
+
+[[bench]]
+name = "BenchDivConReduceSt"
+path = "benches/Chap26/BenchDivConReduceSt.rs"
+harness = false
+
+[[bench]]
+name = "BenchDivConReduceMt"
+path = "benches/Chap26/BenchDivConReduceMt.rs"
+harness = false
