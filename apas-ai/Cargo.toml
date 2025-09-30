@@ -706,47 +706,47 @@ path = "tests/Chap41/TestExample41_3.rs"
 
 [[test]]
 name = "TestTableStPer"
-path = "tests/Chap42Claude/TestTableStPer.rs"
+path = "tests/Chap42/TestTableStPer.rs"
 
 [[test]]
 name = "TestTableStEph"
-path = "tests/Chap42Claude/TestTableStEph.rs"
+path = "tests/Chap42/TestTableStEph.rs"
 
 [[test]]
 name = "TestTableMtEph"
-path = "tests/Chap42Claude/TestTableMtEph.rs"
+path = "tests/Chap42/TestTableMtEph.rs"
 
 [[test]]
 name = "TestExample42_1"
-path = "tests/Chap42Claude/TestExample42_1.rs"
+path = "tests/Chap42/TestExample42_1.rs"
 
 [[test]]
 name = "TestOrderedSetStPer"
-path = "tests/Chap43Claude/TestOrderedSetStPer.rs"
+path = "tests/Chap43/TestOrderedSetStPer.rs"
 
 [[test]]
 name = "TestOrderedSetStEph"
-path = "tests/Chap43Claude/TestOrderedSetStEph.rs"
+path = "tests/Chap43/TestOrderedSetStEph.rs"
 
 [[test]]
 name = "TestOrderedSetMtEph"
-path = "tests/Chap43Claude/TestOrderedSetMtEph.rs"
+path = "tests/Chap43/TestOrderedSetMtEph.rs"
 
 [[test]]
 name = "TestOrderedTableStPer"
-path = "tests/Chap43Claude/TestOrderedTableStPer.rs"
+path = "tests/Chap43/TestOrderedTableStPer.rs"
 
 [[test]]
 name = "TestOrderedTableStEph"
-path = "tests/Chap43Claude/TestOrderedTableStEph.rs"
+path = "tests/Chap43/TestOrderedTableStEph.rs"
 
 [[test]]
 name = "TestOrderedTableMtEph"
-path = "tests/Chap43Claude/TestOrderedTableMtEph.rs"
+path = "tests/Chap43/TestOrderedTableMtEph.rs"
 
 [[test]]
 name = "TestExample43_1"
-path = "tests/Chap43Claude/TestExample43_1.rs"
+path = "tests/Chap43/TestExample43_1.rs"
 
 [[test]]
 name = "TestAdvancedLinearProbing"
@@ -791,62 +791,62 @@ harness = false
 
 [[bench]]
 name = "BenchTableStPer"
-path = "benches/Chap42Claude/BenchTableStPer.rs"
+path = "benches/Chap42/BenchTableStPer.rs"
 harness = false
 
 [[bench]]
 name = "BenchTableStEph"
-path = "benches/Chap42Claude/BenchTableStEph.rs"
+path = "benches/Chap42/BenchTableStEph.rs"
 harness = false
 
 [[bench]]
 name = "BenchTableMtEph"
-path = "benches/Chap42Claude/BenchTableMtEph.rs"
+path = "benches/Chap42/BenchTableMtEph.rs"
 harness = false
 
 # [[bench]]
 # name = "BenchOrderedSetStPer"
-# path = "benches/Chap43Claude/BenchOrderedSetStPer.rs"
+# path = "benches/Chap43/BenchOrderedSetStPer.rs"
 # harness = false
 
 [[bench]]
 name = "BenchOrderedSetStEph"
-path = "benches/Chap43Claude/BenchOrderedSetStEph.rs"
+path = "benches/Chap43/BenchOrderedSetStEph.rs"
 harness = false
 
 [[bench]]
 name = "BenchOrderedSetMtEph"
-path = "benches/Chap43Claude/BenchOrderedSetMtEph.rs"
+path = "benches/Chap43/BenchOrderedSetMtEph.rs"
 harness = false
 
 # [[bench]]
 # name = "BenchOrderedTableStPer"
-# path = "benches/Chap43Claude/BenchOrderedTableStPer.rs"
+# path = "benches/Chap43/BenchOrderedTableStPer.rs"
 # harness = false
 
 [[bench]]
 name = "BenchOrderedTableStEph"
-path = "benches/Chap43Claude/BenchOrderedTableStEph.rs"
+path = "benches/Chap43/BenchOrderedTableStEph.rs"
 harness = false
 
 [[bench]]
 name = "BenchOrderedTableMtEph"
-path = "benches/Chap43Claude/BenchOrderedTableMtEph.rs"
+path = "benches/Chap43/BenchOrderedTableMtEph.rs"
 harness = false
 
 [[bench]]
 name = "BenchAugOrderedTableStPer"
-path = "benches/Chap43Claude/BenchAugOrderedTableStPer.rs"
+path = "benches/Chap43/BenchAugOrderedTableStPer.rs"
 harness = false
 
 [[bench]]
 name = "BenchAugOrderedTableStEph"
-path = "benches/Chap43Claude/BenchAugOrderedTableStEph.rs"
+path = "benches/Chap43/BenchAugOrderedTableStEph.rs"
 harness = false
 
 [[bench]]
 name = "BenchAugOrderedTableMtEph"
-path = "benches/Chap43Claude/BenchAugOrderedTableMtEph.rs"
+path = "benches/Chap43/BenchAugOrderedTableMtEph.rs"
 harness = false
 
 [[bench]]

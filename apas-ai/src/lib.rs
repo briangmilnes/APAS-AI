@@ -150,14 +150,14 @@ pub mod Chap41 {
     pub mod Example41_3;
 }
 
-pub mod Chap42Claude {
+pub mod Chap42 {
     pub mod Example42_1;
     pub mod TableMtEph;
     pub mod TableStEph;
     pub mod TableStPer;
 }
 
-pub mod Chap43Claude {
+pub mod Chap43 {
     pub mod AugOrderedTableMtEph;
     pub mod AugOrderedTableStEph;
     pub mod AugOrderedTableStPer;

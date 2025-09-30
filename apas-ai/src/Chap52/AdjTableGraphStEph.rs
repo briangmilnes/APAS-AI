@@ -5,7 +5,7 @@ pub mod AdjTableGraphStEph {
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
-    use crate::Chap43Claude::OrderedTableStEph::OrderedTableStEph::*;
+    use crate::Chap43::OrderedTableStEph::OrderedTableStEph::*;
     use crate::Types::Types::*;
 
     #[derive(Clone)]
