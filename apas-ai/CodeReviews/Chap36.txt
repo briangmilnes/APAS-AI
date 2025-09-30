@@ -1,0 +1,5 @@
+Chap36/
+
+ const MIN_PAR_SLICE: N = 2; What's this?
+ Algorithmic analysis after that.
+
