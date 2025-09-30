@@ -41,16 +41,16 @@ pub mod UnDirGraphMtEph {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn Neighbor(&self, u: &V, v: &V) -> B;
         /// APAS: Work Θ(|E|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|) - parallel divide-and-conquer filter
+        /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|), Parallelism Θ(|E|/log |E|) - parallel divide-and-conquer filter
         fn NG(&self, v: &V) -> Set<V>;
         /// APAS: Work Θ(|u_set| × |E|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|u_set| × |E|), Span Θ(log |u_set| + log |E|) - parallel map-reduce
+        /// claude-4-sonet: Work Θ(|u_set| × |E|), Span Θ(log |u_set| + log |E|), Parallelism Θ((|u_set| × |E|)/(log |u_set| + log |E|)) - parallel map-reduce
         fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn Incident(&self, e: &Edge<V>, v: &V) -> B;
         /// APAS: Work Θ(|E|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|) - calls parallel NG
+        /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|), Parallelism Θ(|E|/log |E|) - calls parallel NG
         fn Degree(&self, v: &V) -> N;
     }
 

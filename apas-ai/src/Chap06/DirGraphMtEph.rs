@@ -41,34 +41,34 @@ pub mod DirGraphMtEph {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn Neighbor(&self, u: &V, v: &V) -> B;
         /// APAS: Work Θ(|A|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|) - parallel divide-and-conquer in NPlus+NMinus
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer in NPlus+NMinus
         fn NG(&self, v: &V) -> Set<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(log |u_set| + log |A|) - parallel map-reduce
+        /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(log |u_set| + log |A|), Parallelism Θ((|u_set| × |A|)/(log |u_set| + log |A|)) - parallel map-reduce
         fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|) - parallel divide-and-conquer filter
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
         fn NPlus(&self, v: &V) -> Set<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|) - parallel divide-and-conquer filter
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
         fn NMinus(&self, v: &V) -> Set<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(log |u_set| + log |A|) - parallel map-reduce
+        /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(log |u_set| + log |A|), Parallelism Θ((|u_set| × |A|)/(log |u_set| + log |A|)) - parallel map-reduce
         fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(log |u_set| + log |A|) - parallel map-reduce
+        /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(log |u_set| + log |A|), Parallelism Θ((|u_set| × |A|)/(log |u_set| + log |A|)) - parallel map-reduce
         fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn Incident(&self, e: &Edge<V>, v: &V) -> B;
         /// APAS: Work Θ(|A|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|) - calls parallel InDegree + OutDegree
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - calls parallel InDegree + OutDegree
         fn Degree(&self, v: &V) -> N;
         /// APAS: Work Θ(|A|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|) - calls parallel NMinus
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - calls parallel NMinus
         fn InDegree(&self, v: &V) -> N;
         /// APAS: Work Θ(|A|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|) - calls parallel NPlus
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - calls parallel NPlus
         fn OutDegree(&self, v: &V) -> N;
     }
 

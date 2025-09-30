@@ -1,4 +1,5 @@
 
 TODO
-  Check for parallelism in *Mt.
-  Needs algorithmic analysis. 
+  Check for parallelism in *Mt. -done
+  Needs algorithmic analysis.   -done
+  

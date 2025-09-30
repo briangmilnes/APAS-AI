@@ -18,16 +18,38 @@ pub mod LabDirGraphStEph {
 
     pub trait LabDirGraphStEphTrait<V: StT + Hash, L: StT + Hash>
     {
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn empty() -> Self;
+        /// APAS: Work Θ(|V| + |A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|V| + |A|), Span Θ(|V| + |A|), Parallelism Θ(1) - sequential
         fn from_vertices_and_labeled_arcs(vertices: Set<V>, labeled_arcs: Set<LabEdge<V, L>>) -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn vertices(&self) -> &Set<V>;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn labeled_arcs(&self) -> &Set<LabEdge<V, L>>;
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential map
         fn arcs(&self) -> Set<Edge<V>>;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn add_vertex(&mut self, v: V);
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn add_labeled_arc(&mut self, from: V, to: V, label: L);
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential search
         fn get_arc_label(&self, from: &V, to: &V) -> Option<&L>;
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential search
         fn has_arc(&self, from: &V, to: &V) -> bool;
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential filter
         fn out_neighbors(&self, v: &V) -> Set<V>;
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential filter
         fn in_neighbors(&self, v: &V) -> Set<V>;
     }
 
