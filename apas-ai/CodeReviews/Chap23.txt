@@ -3,4 +3,5 @@
  Change the file and data structures to
  BalBinTree.
 
+ Chap23 needs algorithmic analysis.
 

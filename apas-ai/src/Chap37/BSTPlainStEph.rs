@@ -3,12 +3,12 @@
 
 pub mod BSTPlainStEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap23::BBTStEph::BBTStEph::BBTree;
+    use crate::Chap23::BalBinTreeStEph::BalBinTreeStEph::BalBinTree;
     use crate::Types::Types::*;
 
     #[derive(Debug, Clone)]
     pub struct BSTPlainStEph<T: StT + Ord> {
-        root: BBTree<T>,
+        root: BalBinTree<T>,
     }
 
     pub type BSTree<T> = BSTPlainStEph<T>;
@@ -32,7 +32,11 @@ pub mod BSTPlainStEph {
     }
 
     impl<T: StT + Ord> BSTPlainStEphTrait<T> for BSTPlainStEph<T> {
-        fn new() -> Self { BSTPlainStEph { root: BBTree::leaf() } }
+        fn new() -> Self {
+            BSTPlainStEph {
+                root: BalBinTree::leaf(),
+            }
+        }
 
         fn size(&self) -> N { self.root.size() }
 
@@ -55,12 +59,12 @@ pub mod BSTPlainStEph {
         fn pre_order(&self) -> ArraySeqStPerS<T> { self.root.pre_order() }
     }
 
-    fn insert_node<T: StT + Ord>(node: &mut BBTree<T>, value: T) {
+    fn insert_node<T: StT + Ord>(node: &mut BalBinTree<T>, value: T) {
         match node {
-            | BBTree::Leaf => {
-                *node = BBTree::node(BBTree::leaf(), value, BBTree::leaf());
+            | BalBinTree::Leaf => {
+                *node = BalBinTree::node(BalBinTree::leaf(), value, BalBinTree::leaf());
             }
-            | BBTree::Node(inner) => {
+            | BalBinTree::Node(inner) => {
                 if value < inner.value {
                     insert_node(&mut inner.left, value);
                 } else if value > inner.value {
@@ -70,10 +74,10 @@ pub mod BSTPlainStEph {
         }
     }
 
-    fn contains_node<'a, T: StT + Ord>(node: &'a BBTree<T>, target: &T) -> B {
+    fn contains_node<'a, T: StT + Ord>(node: &'a BalBinTree<T>, target: &T) -> B {
         match node {
-            | BBTree::Leaf => false,
-            | BBTree::Node(inner) => {
+            | BalBinTree::Leaf => false,
+            | BalBinTree::Node(inner) => {
                 if target == &inner.value {
                     true
                 } else if target < &inner.value {
@@ -85,10 +89,10 @@ pub mod BSTPlainStEph {
         }
     }
 
-    fn find_node<'a, T: StT + Ord>(node: &'a BBTree<T>, target: &T) -> Option<&'a T> {
+    fn find_node<'a, T: StT + Ord>(node: &'a BalBinTree<T>, target: &T) -> Option<&'a T> {
         match node {
-            | BBTree::Leaf => None,
-            | BBTree::Node(inner) => {
+            | BalBinTree::Leaf => None,
+            | BalBinTree::Node(inner) => {
                 if target == &inner.value {
                     Some(&inner.value)
                 } else if target < &inner.value {
@@ -100,21 +104,21 @@ pub mod BSTPlainStEph {
         }
     }
 
-    fn min_node<'a, T: StT + Ord>(node: &'a BBTree<T>) -> Option<&'a T> {
+    fn min_node<'a, T: StT + Ord>(node: &'a BalBinTree<T>) -> Option<&'a T> {
         match node {
-            | BBTree::Leaf => None,
-            | BBTree::Node(inner) => match &inner.left {
-                | BBTree::Leaf => Some(&inner.value),
+            | BalBinTree::Leaf => None,
+            | BalBinTree::Node(inner) => match &inner.left {
+                | BalBinTree::Leaf => Some(&inner.value),
                 | _ => min_node(&inner.left),
             },
         }
     }
 
-    fn max_node<'a, T: StT + Ord>(node: &'a BBTree<T>) -> Option<&'a T> {
+    fn max_node<'a, T: StT + Ord>(node: &'a BalBinTree<T>) -> Option<&'a T> {
         match node {
-            | BBTree::Leaf => None,
-            | BBTree::Node(inner) => match &inner.right {
-                | BBTree::Leaf => Some(&inner.value),
+            | BalBinTree::Leaf => None,
+            | BalBinTree::Node(inner) => match &inner.right {
+                | BalBinTree::Leaf => Some(&inner.value),
                 | _ => max_node(&inner.right),
             },
         }

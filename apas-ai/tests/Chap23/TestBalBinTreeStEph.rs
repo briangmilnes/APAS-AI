@@ -1,15 +1,15 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqStPerSLit;
-use apas_ai::Chap23::BBTStEph::BBTStEph::*;
+use apas_ai::Chap23::BalBinTreeStEph::BalBinTreeStEph::*;
 use apas_ai::Chap37::BSTPlainStEph::BSTPlainStEph::*;
 use apas_ai::Types::Types::*;
 
 #[test]
 fn inorder_and_preorder_traversals_match_definitions() {
-    let tree = BBTree::node(
-        BBTree::node(BBTree::leaf(), 2, BBTree::leaf()),
+    let tree = BalBinTree::node(
+        BalBinTree::node(BalBinTree::leaf(), 2, BalBinTree::leaf()),
         4,
-        BBTree::node(BBTree::leaf(), 6, BBTree::leaf()),
+        BalBinTree::node(BalBinTree::leaf(), 6, BalBinTree::leaf()),
     );
     let inorder = tree.in_order();
     let preorder = tree.pre_order();
@@ -43,8 +43,8 @@ fn bst_insert_and_search_behavior() {
 }
 
 #[test]
-fn bbtree_empty_leaf_operations() {
-    let leaf = BBTree::<N>::leaf();
+fn balbintree_empty_leaf_operations() {
+    let leaf = BalBinTree::<N>::leaf();
     assert_eq!(leaf.size(), 0);
     assert_eq!(leaf.height(), 0);
     assert_eq!(leaf.in_order().length(), 0);
@@ -52,8 +52,8 @@ fn bbtree_empty_leaf_operations() {
 }
 
 #[test]
-fn bbtree_single_node_operations() {
-    let single = BBTree::node(BBTree::leaf(), 42, BBTree::leaf());
+fn balbintree_single_node_operations() {
+    let single = BalBinTree::node(BalBinTree::leaf(), 42, BalBinTree::leaf());
     assert_eq!(single.size(), 1);
     assert_eq!(single.height(), 1);
     assert_eq!(single.in_order(), ArraySeqStPerSLit![42]);
@@ -61,19 +61,19 @@ fn bbtree_single_node_operations() {
 }
 
 #[test]
-fn bbtree_complex_structure() {
+fn balbintree_complex_structure() {
     // Build a more complex tree: ((1,2,3),4,(5,6,7))
-    let left_subtree = BBTree::node(
-        BBTree::node(BBTree::leaf(), 1, BBTree::leaf()),
+    let left_subtree = BalBinTree::node(
+        BalBinTree::node(BalBinTree::leaf(), 1, BalBinTree::leaf()),
         2,
-        BBTree::node(BBTree::leaf(), 3, BBTree::leaf()),
+        BalBinTree::node(BalBinTree::leaf(), 3, BalBinTree::leaf()),
     );
-    let right_subtree = BBTree::node(
-        BBTree::node(BBTree::leaf(), 5, BBTree::leaf()),
+    let right_subtree = BalBinTree::node(
+        BalBinTree::node(BalBinTree::leaf(), 5, BalBinTree::leaf()),
         6,
-        BBTree::node(BBTree::leaf(), 7, BBTree::leaf()),
+        BalBinTree::node(BalBinTree::leaf(), 7, BalBinTree::leaf()),
     );
-    let tree = BBTree::node(left_subtree, 4, right_subtree);
+    let tree = BalBinTree::node(left_subtree, 4, right_subtree);
 
     assert_eq!(tree.size(), 7);
     assert_eq!(tree.height(), 3);
@@ -190,34 +190,42 @@ fn bstree_random_insertions() {
 }
 
 #[test]
-fn bbtree_height_calculation() {
+fn balbintree_height_calculation() {
     // Test height calculation for various tree structures
-    let leaf = BBTree::<N>::leaf();
+    let leaf = BalBinTree::<N>::leaf();
     assert_eq!(leaf.height(), 0);
 
-    let single = BBTree::node(BBTree::leaf(), 1, BBTree::leaf());
+    let single = BalBinTree::node(BalBinTree::leaf(), 1, BalBinTree::leaf());
     assert_eq!(single.height(), 1);
 
-    let left_heavy = BBTree::node(BBTree::node(BBTree::leaf(), 1, BBTree::leaf()), 2, BBTree::leaf());
+    let left_heavy = BalBinTree::node(
+        BalBinTree::node(BalBinTree::leaf(), 1, BalBinTree::leaf()),
+        2,
+        BalBinTree::leaf(),
+    );
     assert_eq!(left_heavy.height(), 2);
 
-    let right_heavy = BBTree::node(BBTree::leaf(), 1, BBTree::node(BBTree::leaf(), 2, BBTree::leaf()));
+    let right_heavy = BalBinTree::node(
+        BalBinTree::leaf(),
+        1,
+        BalBinTree::node(BalBinTree::leaf(), 2, BalBinTree::leaf()),
+    );
     assert_eq!(right_heavy.height(), 2);
 }
 
 #[test]
-fn bbtree_size_calculation() {
+fn balbintree_size_calculation() {
     // Test size calculation for various tree structures
-    let leaf = BBTree::<N>::leaf();
+    let leaf = BalBinTree::<N>::leaf();
     assert_eq!(leaf.size(), 0);
 
-    let single = BBTree::node(BBTree::leaf(), 1, BBTree::leaf());
+    let single = BalBinTree::node(BalBinTree::leaf(), 1, BalBinTree::leaf());
     assert_eq!(single.size(), 1);
 
-    let three_nodes = BBTree::node(
-        BBTree::node(BBTree::leaf(), 1, BBTree::leaf()),
+    let three_nodes = BalBinTree::node(
+        BalBinTree::node(BalBinTree::leaf(), 1, BalBinTree::leaf()),
         2,
-        BBTree::node(BBTree::leaf(), 3, BBTree::leaf()),
+        BalBinTree::node(BalBinTree::leaf(), 3, BalBinTree::leaf()),
     );
     assert_eq!(three_nodes.size(), 3);
 }
@@ -244,12 +252,20 @@ fn bstree_edge_case_searches() {
 }
 
 #[test]
-fn bbtree_traversal_consistency() {
+fn balbintree_traversal_consistency() {
     // Build a tree and verify traversal consistency
-    let tree = BBTree::node(
-        BBTree::node(BBTree::node(BBTree::leaf(), 1, BBTree::leaf()), 2, BBTree::leaf()),
+    let tree = BalBinTree::node(
+        BalBinTree::node(
+            BalBinTree::node(BalBinTree::leaf(), 1, BalBinTree::leaf()),
+            2,
+            BalBinTree::leaf(),
+        ),
         3,
-        BBTree::node(BBTree::leaf(), 4, BBTree::node(BBTree::leaf(), 5, BBTree::leaf())),
+        BalBinTree::node(
+            BalBinTree::leaf(),
+            4,
+            BalBinTree::node(BalBinTree::leaf(), 5, BalBinTree::leaf()),
+        ),
     );
 
     let inorder = tree.in_order();

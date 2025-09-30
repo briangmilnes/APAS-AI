@@ -83,7 +83,7 @@ pub mod Chap19 {
 }
 
 pub mod Chap23 {
-    pub mod BBTStEph;
+    pub mod BalBinTreeStEph;
     pub mod PrimTreeSeqSt;
 }
 

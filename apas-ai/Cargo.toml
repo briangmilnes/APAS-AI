@@ -257,8 +257,8 @@ path = "benches/Chap38/BenchBSTParaStEph.rs"
 harness = false
 
 [[bench]]
-name = "BenchBBTStEph"
-path = "benches/Chap23/BenchBBTStEph.rs"
+name = "BenchBalBinTreeStEph"
+path = "benches/Chap23/BenchBalBinTreeStEph.rs"
 harness = false
 
 [[bench]]
@@ -644,8 +644,8 @@ name = "TestExercise_21_9"
 path = "tests/Chap21/TestExercise_21_9.rs"
 
 [[test]]
-name = "TestBBTStEph"
-path = "tests/Chap23/TestBBTStEph.rs"
+name = "TestBalBinTreeStEph"
+path = "tests/Chap23/TestBalBinTreeStEph.rs"
 
 # Chapter 40: Augmenting Binary Search Trees
 
