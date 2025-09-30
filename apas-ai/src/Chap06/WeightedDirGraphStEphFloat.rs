@@ -43,6 +43,8 @@ pub mod WeightedDirGraphStEphFloat {
     /// Convenience functions for weighted directed graphs with floating-point weights
     impl<V: StT + Hash> WeightedDirGraphStEphFloat<V> {
         /// Create from vertices and weighted edges
+        /// APAS: Work Θ(|V| + |E|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
         pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, OrderedFloat<f64>)>) -> Self {
             let labeled_edges = edges
                 .iter()
@@ -58,16 +60,22 @@ pub mod WeightedDirGraphStEphFloat {
         }
 
         /// Add a weighted edge to the graph
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         pub fn add_weighted_edge(&mut self, from: V, to: V, weight: OrderedFloat<f64>) {
             self.add_labeled_arc(from, to, weight);
         }
 
         /// Get the weight of an edge, if it exists
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential search
         pub fn get_edge_weight(&self, from: &V, to: &V) -> Option<OrderedFloat<f64>> {
             self.get_arc_label(from, to).copied()
         }
 
         /// Get all weighted edges as (from, to, weight) tuples
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential map
         pub fn weighted_edges(&self) -> Set<(V, V, OrderedFloat<f64>)> {
             let mut edges = Set::empty();
             for labeled_edge in self.labeled_arcs().iter() {
@@ -77,6 +85,8 @@ pub mod WeightedDirGraphStEphFloat {
         }
 
         /// Get outgoing neighbors with weights
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential filter
         pub fn out_neighbors_weighted(&self, v: &V) -> Set<(V, OrderedFloat<f64>)> {
             let mut neighbors = Set::empty();
             for labeled_edge in self.labeled_arcs().iter() {
@@ -88,6 +98,8 @@ pub mod WeightedDirGraphStEphFloat {
         }
 
         /// Get incoming neighbors with weights
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential filter
         pub fn in_neighbors_weighted(&self, v: &V) -> Set<(V, OrderedFloat<f64>)> {
             let mut neighbors = Set::empty();
             for labeled_edge in self.labeled_arcs().iter() {
@@ -99,6 +111,8 @@ pub mod WeightedDirGraphStEphFloat {
         }
 
         /// Get the total weight of all edges
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential sum
         pub fn total_weight(&self) -> OrderedFloat<f64> {
             self.labeled_arcs()
                 .iter()
