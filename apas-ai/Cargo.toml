@@ -835,6 +835,21 @@ path = "benches/Chap43Claude/BenchOrderedTableMtEph.rs"
 harness = false
 
 [[bench]]
+name = "BenchAugOrderedTableStPer"
+path = "benches/Chap43Claude/BenchAugOrderedTableStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchAugOrderedTableStEph"
+path = "benches/Chap43Claude/BenchAugOrderedTableStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchAugOrderedTableMtEph"
+path = "benches/Chap43Claude/BenchAugOrderedTableMtEph.rs"
+harness = false
+
+[[bench]]
 name = "BenchHashTables"
 path = "benches/Chap47/BenchHashTables.rs"
 harness = false

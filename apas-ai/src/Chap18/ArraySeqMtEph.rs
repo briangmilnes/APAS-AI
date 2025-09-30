@@ -1,5 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 18 algorithms for `ArraySeqMtEph<T>` (ephemeral, MT).
+//!
+//! Note: Uses unconditional parallelism with ParaPair! for divide-and-conquer operations (map, reduce).
 
 pub mod ArraySeqMtEph {
     use std::collections::HashSet;
@@ -7,6 +9,7 @@ pub mod ArraySeqMtEph {
     use std::thread;
 
     use crate::Types::Types::*;
+    use crate::ParaPair;
 
     /// Fixed-length sequence backed by `Mutex<Box<[T]>>` (ephemeral/mutable MT variant).
     #[derive(Debug)]
@@ -177,27 +180,23 @@ pub mod ArraySeqMtEph {
             if n == 0 {
                 return ArraySeqMtEphS::from_vec(Vec::new());
             }
-            if n < 1000 {
-                // Sequential for small arrays
-                let mut values: Vec<U> = Vec::with_capacity(n);
-                for i in 0..n {
-                    values.push(f(&a.nth_cloned(i)));
-                }
-                ArraySeqMtEphS::from_vec(values)
-            } else {
-                // Parallel for large arrays
-                let mid = n / 2;
-                let left = a.subseq_copy(0, mid);
-                let right = a.subseq_copy(mid, n - mid);
-                let f_clone = f.clone();
-
-                let left_handle =
-                    thread::spawn(move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::map(&left, f_clone));
-                let right_result = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::map(&right, f);
-                let left_result = left_handle.join().unwrap();
-
-                <ArraySeqMtEphS<U> as ArraySeqMtEphTrait<U>>::append(&left_result, &right_result)
+            if n == 1 {
+                let val = f(&a.nth_cloned(0));
+                return ArraySeqMtEphS::from_vec(vec![val]);
             }
+            
+            // Unconditionally parallel using ParaPair!
+            let mid = n / 2;
+            let left = a.subseq_copy(0, mid);
+            let right = a.subseq_copy(mid, n - mid);
+            let f_clone = f.clone();
+
+            let Pair(left_result, right_result) = ParaPair!(
+                move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::map(&left, f_clone),
+                move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::map(&right, f)
+            );
+
+            <ArraySeqMtEphS<U> as ArraySeqMtEphTrait<U>>::append(&left_result, &right_result)
         }
 
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtEphS<T> {
@@ -311,32 +310,20 @@ pub mod ArraySeqMtEph {
             if a.length() == 1 {
                 return a.nth_cloned(0);
             }
-            if a.length() < 1000 {
-                // Sequential for small arrays
-                let mid = a.length() / 2;
-                let left = a.subseq_copy(0, mid);
-                let right = a.subseq_copy(mid, a.length() - mid);
-                let f_clone = f.clone();
-                let f_clone2 = f.clone();
-                let l = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&left, f_clone, id.clone());
-                let r = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&right, f_clone2, id);
-                f(&l, &r)
-            } else {
-                // Parallel for large arrays
-                let mid = a.length() / 2;
-                let left = a.subseq_copy(0, mid);
-                let right = a.subseq_copy(mid, a.length() - mid);
-                let f_clone = f.clone();
-                let f_clone2 = f.clone();
+            
+            // Unconditionally parallel using ParaPair!
+            let mid = a.length() / 2;
+            let left = a.subseq_copy(0, mid);
+            let right = a.subseq_copy(mid, a.length() - mid);
+            let f_clone = f.clone();
+            let f_clone2 = f.clone();
+            let id_clone = id.clone();
 
-                let id_clone = id.clone();
-                let left_handle = thread::spawn(move || {
-                    <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&left, f_clone, id_clone)
-                });
-                let r = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&right, f_clone2, id);
-                let l = left_handle.join().unwrap();
-                f(&l, &r)
-            }
+            let Pair(l, r) = ParaPair!(
+                move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&left, f_clone, id_clone),
+                move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&right, f_clone2, id)
+            );
+            f(&l, &r)
         }
 
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T) {

@@ -400,7 +400,7 @@ fn bench_multithreaded_macro_construction(c: &mut Criterion) {
     
     group.bench_function("macro_construction_multithreaded", |b| {
         b.iter(|| {
-            let table = AugOrderedTableMtEphLit![
+            let table: AugOrderedTableMtEph<i32, i32, _> = AugOrderedTableMtEphLit![
                 reducer: sum_reducer, identity: 0,
                 1 => 10, 2 => 20, 3 => 30, 4 => 40, 5 => 50
             ];

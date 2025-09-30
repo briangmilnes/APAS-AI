@@ -1,5 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Multi-threaded ephemeral reducer-augmented ordered table implementation.
+//!
+//! Note: reduce_range_parallel() uses unconditional parallelism with ParaPair! for range reductions.
 
 pub mod AugOrderedTableMtEph {
     use std::fmt::{Display, Debug, Formatter, Result};
@@ -11,6 +13,7 @@ pub mod AugOrderedTableMtEph {
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
+    use crate::ParaPair;
 
     /// Multi-threaded ephemeral reducer-augmented ordered table
     /// Wraps OrderedTableMtEph and maintains cached reduction for O(1) reduceVal
@@ -344,43 +347,29 @@ pub mod AugOrderedTableMtEph {
         }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        /// Parallel range reduction using spawn/join for large ranges
+        /// Parallel range reduction using ParaPair! for unconditional parallelism
         fn reduce_range_parallel(&self, k1: &K, k2: &K) -> V {
             let range_table = self.get_key_range(k1, k2);
             
-            // For small ranges, use sequential reduction
-            if range_table.size() < 1000 {
+            // Base cases
+            if range_table.size() == 0 {
+                return range_table.identity.clone();
+            }
+            if range_table.size() == 1 {
                 return range_table.reduce_val();
             }
             
-            // For large ranges, split and compute in parallel
+            // Unconditionally parallel split using ParaPair!
             let mid_rank = range_table.size() / 2;
             if let Some(mid_key) = range_table.select_key(mid_rank) {
                 let left_table = range_table.get_key_range(k1, &mid_key);
                 let right_table = range_table.get_key_range(&mid_key, k2);
-                
                 let reducer = range_table.reducer.clone();
-                let left_reduction = Arc::new(std::sync::Mutex::new(range_table.identity.clone()));
-                let right_reduction = Arc::new(std::sync::Mutex::new(range_table.identity.clone()));
                 
-                let left_reduction_clone = Arc::clone(&left_reduction);
-                let right_reduction_clone = Arc::clone(&right_reduction);
-                
-                let left_handle = thread::spawn(move || {
-                    let result = left_table.reduce_val();
-                    *left_reduction_clone.lock().unwrap() = result;
-                });
-                
-                let right_handle = thread::spawn(move || {
-                    let result = right_table.reduce_val();
-                    *right_reduction_clone.lock().unwrap() = result;
-                });
-                
-                left_handle.join().unwrap();
-                right_handle.join().unwrap();
-                
-                let left_val = left_reduction.lock().unwrap().clone();
-                let right_val = right_reduction.lock().unwrap().clone();
+                let Pair(left_val, right_val) = ParaPair!(
+                    move || left_table.reduce_val(),
+                    move || right_table.reduce_val()
+                );
                 
                 reducer(&left_val, &right_val)
             } else {
