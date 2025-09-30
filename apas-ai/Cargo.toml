@@ -23,6 +23,11 @@ dead_code = "allow"
 members = [ "." ]
 
 [[bench]]
+name = "BenchFibonacciMt"
+path = "benches/Chap11/BenchFibonacciMt.rs"
+harness = false
+
+[[bench]]
 name = "BenchArraySeqStEph"
 path = "benches/Chap19/BenchArraySeqStEph.rs"
 harness = false
@@ -347,6 +352,10 @@ path = "tests/Chap06/TestLabUnDirGraphMtEph.rs"
 [[test]]
 name = "TestUnDirGraphMtEph"
 path = "tests/Chap06/TestUnDirGraphMtEph.rs"
+
+[[test]]
+name = "TestFibonacciMt"
+path = "tests/Chap11/TestFibonacciMt.rs"
 
 [[test]]
 name = "TestWeightedDirGraphMtEphFloat"

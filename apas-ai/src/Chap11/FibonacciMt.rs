@@ -8,10 +8,21 @@ pub mod FibonacciMt {
     pub struct FibonacciMt;
 
     pub trait FibonacciMtTrait {
+        /// APAS: Work Θ(φⁿ), Span Θ(n)
+        /// claude-4-sonet: Work Θ(φⁿ), Span Θ(n), Parallelism Θ(φⁿ/n) - parallel binary recursion via ParaPair!
+        /// where φ = (1+√5)/2 ≈ 1.618 (golden ratio)
         fn fib(n: N) -> N;
     }
 
     impl FibonacciMt {
+        /// Parallel Fibonacci using ParaPair! for symmetric binary parallelism.
+        /// 
+        /// APAS: Work Θ(φⁿ), Span Θ(n)
+        /// claude-4-sonet: Work Θ(φⁿ), Span Θ(n), Parallelism Θ(φⁿ/n) - parallel binary recursion via ParaPair!
+        /// where φ = (1+√5)/2 ≈ 1.618 (golden ratio)
+        /// 
+        /// Note: Exponential work makes this impractical for large n. This demonstrates
+        /// parallel recursion patterns; real implementations use memoization or iteration.
         pub fn fib(n: N) -> N {
             if n <= 1 {
                 n
@@ -25,32 +36,6 @@ pub mod FibonacciMt {
     impl FibonacciMtTrait for FibonacciMt {
         fn fib(n: N) -> N {
             FibonacciMt::fib(n)
-        }
-    }
-
-    #[cfg(test)]
-    mod tests {
-        use super::{FibonacciMt, FibonacciMtTrait};
-        use crate::Types::Types::*;
-
-        #[test]
-        fn fib_base_cases() {
-            assert_eq!(FibonacciMt::fib(0), 0);
-            assert_eq!(FibonacciMt::fib(1), 1);
-        }
-
-        #[test]
-        fn fib_small_values() {
-            assert_eq!(FibonacciMt::fib(5), 5);
-            assert_eq!(FibonacciMt::fib(6), 8);
-            assert_eq!(FibonacciMt::fib(7), 13);
-        }
-
-        #[test]
-        fn trait_and_inherent_agree() {
-            for n in 0..=8 {
-                assert_eq!(FibonacciMt::fib(n), <FibonacciMt as FibonacciMtTrait>::fib(n));
-            }
         }
     }
 }
