@@ -5,3 +5,6 @@
  And create a tiny benchmark.
  Be sure to up thread stacks.
  Needs algorithmic analysis too.  
+
+ All done.
+ 

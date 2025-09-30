@@ -1,0 +1,16 @@
+
+ Chap 18 is still running sequentially in places:
+            if n < 1000 {
+                // Sequential for small arrays
+                let mut values: Vec<U> = Vec::with_capacity(n);
+                for i in 0..n {
+                    values.push(f(&a.nth_cloned(i)));
+                }
+                ArraySeqMtEphS::from_vec(values)
+            } else {
+                // Parallel for large arrays
+                let mid = n / 2;
+                let left = a.subseq_copy(0, mid);
+
+ Check that all *Mt files are truely parallel.
+
