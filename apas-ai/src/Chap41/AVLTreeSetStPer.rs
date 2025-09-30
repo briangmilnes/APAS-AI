@@ -28,7 +28,9 @@ pub mod AVLTreeSetStPer {
     }
 
     impl<T: StT + Ord> AVLTreeSetStPerTrait<T> for AVLTreeSetStPer<T> {
-        fn size(&self) -> N { self.elements.length() }
+        fn size(&self) -> N {
+            self.elements.length()
+        }
 
         fn to_seq(&self) -> AVLTreeSeqStPerS<T> {
             // Create a new sequence from the elements
@@ -170,7 +172,9 @@ pub mod AVLTreeSetStPer {
     }
 
     impl<T: StT + Ord> Default for AVLTreeSetStPer<T> {
-        fn default() -> Self { Self::empty() }
+        fn default() -> Self {
+            Self::empty()
+        }
     }
 
     impl<T: StT + Ord> Clone for AVLTreeSetStPer<T> {

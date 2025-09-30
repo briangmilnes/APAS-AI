@@ -67,7 +67,9 @@ pub mod AVLTreeSeqStEph {
                 next_key: 0,
             }
         }
-        pub fn new() -> Self { Self::new_root() }
+        pub fn new() -> Self {
+            Self::new_root()
+        }
         pub fn update(&mut self, (index, item): (N, T)) -> &mut AVLTreeSeqStEphS<T> {
             let _ = self.set(index, item);
             self
@@ -97,7 +99,9 @@ pub mod AVLTreeSeqStEph {
             }
             out
         }
-        pub fn iter<'a>(&'a self) -> AVLTreeSeqIterStEph<'a, T> { AVLTreeSeqIterStEph::new(&self.root) }
+        pub fn iter<'a>(&'a self) -> AVLTreeSeqIterStEph<'a, T> {
+            AVLTreeSeqIterStEph::new(&self.root)
+        }
         pub fn push_back(&mut self, value: T) {
             let len = self.length();
             let node = insert_at_link(self.root.take(), len, value, &mut self.next_key);
@@ -111,7 +115,9 @@ pub mod AVLTreeSeqStEph {
             }
             false
         }
-        pub fn insert_value(&mut self, value: T) { self.push_back(value); }
+        pub fn insert_value(&mut self, value: T) {
+            self.push_back(value);
+        }
         pub fn delete_value(&mut self, target: &T) -> bool {
             let len = self.length();
             let mut found_index: Option<N> = None;
@@ -138,13 +144,21 @@ pub mod AVLTreeSeqStEph {
     }
 
     impl<T: StT> AVLTreeSeqStEphTrait<T> for AVLTreeSeqStEphS<T> {
-        fn empty() -> Self { AVLTreeSeqStEphS::new_root() }
+        fn empty() -> Self {
+            AVLTreeSeqStEphS::new_root()
+        }
 
-        fn new() -> Self { AVLTreeSeqStEphS::new_root() }
+        fn new() -> Self {
+            AVLTreeSeqStEphS::new_root()
+        }
 
-        fn length(&self) -> N { size_link(&self.root) }
+        fn length(&self) -> N {
+            size_link(&self.root)
+        }
 
-        fn nth(&self, index: N) -> &T { nth_link(&self.root, index) }
+        fn nth(&self, index: N) -> &T {
+            nth_link(&self.root, index)
+        }
 
         fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
             set_link(&mut self.root, index, item)?;
@@ -157,9 +171,13 @@ pub mod AVLTreeSeqStEph {
             t
         }
 
-        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.length() == 0 { true } else { false }
+        }
 
-        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B {
+            if self.length() == 1 { true } else { false }
+        }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.length();
@@ -209,7 +227,9 @@ pub mod AVLTreeSeqStEph {
         }
     }
 
-    fn h<T: StT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |b| b.height) }
+    fn h<T: StT>(n: &Link<T>) -> N {
+        n.as_ref().map_or(0, |b| b.height)
+    }
 
     fn size_link<T: StT>(n: &Link<T>) -> N {
         if let Some(b) = n {

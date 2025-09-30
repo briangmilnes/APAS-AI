@@ -35,9 +35,13 @@ pub mod AdjTableGraphStEph {
             }
         }
 
-        fn from_table(table: OrderedTableStEph<V, AVLTreeSetStEph<V>>) -> Self { AdjTableGraphStEph { adj: table } }
+        fn from_table(table: OrderedTableStEph<V, AVLTreeSetStEph<V>>) -> Self {
+            AdjTableGraphStEph { adj: table }
+        }
 
-        fn num_vertices(&self) -> N { self.adj.size() }
+        fn num_vertices(&self) -> N {
+            self.adj.size()
+        }
 
         fn num_edges(&self) -> N {
             let domain = self.adj.domain();
@@ -79,9 +83,13 @@ pub mod AdjTableGraphStEph {
             }
         }
 
-        fn out_degree(&self, u: &V) -> N { self.out_neighbors(u).size() }
+        fn out_degree(&self, u: &V) -> N {
+            self.out_neighbors(u).size()
+        }
 
-        fn insert_vertex(&mut self, v: V) { self.adj.insert(v, AVLTreeSetStEph::empty(), |_, new| new.clone()); }
+        fn insert_vertex(&mut self, v: V) {
+            self.adj.insert(v, AVLTreeSetStEph::empty(), |_, new| new.clone());
+        }
 
         fn delete_vertex(&mut self, v: &V) {
             let v_clone = v.clone();

@@ -29,21 +29,29 @@ impl Probability {
     /// Get the inner f64 value
     /// Claude Work: O(1) - constant time access
     /// Claude Span: O(1) - constant time access
-    pub fn value(&self) -> f64 { self.0 }
+    pub fn value(&self) -> f64 {
+        self.0
+    }
 
     /// Create infinity value for fold operations
     /// Claude Work: O(1) - constant time construction
     /// Claude Span: O(1) - constant time construction
-    pub fn infinity() -> Self { Probability(f64::INFINITY) }
+    pub fn infinity() -> Self {
+        Probability(f64::INFINITY)
+    }
 
     /// Create zero probability
     /// Claude Work: O(1) - constant time construction
     /// Claude Span: O(1) - constant time construction
-    pub fn zero() -> Self { Probability(0.0) }
+    pub fn zero() -> Self {
+        Probability(0.0)
+    }
 }
 
 impl Default for Probability {
-    fn default() -> Self { Probability::zero() }
+    fn default() -> Self {
+        Probability::zero()
+    }
 }
 
 impl PartialEq for Probability {
@@ -56,7 +64,9 @@ impl PartialEq for Probability {
 impl Eq for Probability {}
 
 impl PartialOrd for Probability {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> { Some(self.cmp(other)) }
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 impl Ord for Probability {
@@ -80,48 +90,66 @@ impl Ord for Probability {
 }
 
 impl Hash for Probability {
-    fn hash<H: Hasher>(&self, state: &mut H) { self.0.to_bits().hash(state); }
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.0.to_bits().hash(state);
+    }
 }
 
 impl Debug for Probability {
-    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { write!(f, "Probability({})", self.0) }
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        write!(f, "Probability({})", self.0)
+    }
 }
 
 impl Display for Probability {
-    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { write!(f, "{}", self.0) }
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        write!(f, "{}", self.0)
+    }
 }
 
 impl From<f64> for Probability {
-    fn from(value: f64) -> Self { Probability(value) }
+    fn from(value: f64) -> Self {
+        Probability(value)
+    }
 }
 
 impl From<Probability> for f64 {
-    fn from(prob: Probability) -> Self { prob.0 }
+    fn from(prob: Probability) -> Self {
+        prob.0
+    }
 }
 
 // Arithmetic operations
 impl std::ops::Add for Probability {
     type Output = Self;
 
-    fn add(self, other: Self) -> Self { Probability(self.0 + other.0) }
+    fn add(self, other: Self) -> Self {
+        Probability(self.0 + other.0)
+    }
 }
 
 impl std::ops::Sub for Probability {
     type Output = Self;
 
-    fn sub(self, other: Self) -> Self { Probability(self.0 - other.0) }
+    fn sub(self, other: Self) -> Self {
+        Probability(self.0 - other.0)
+    }
 }
 
 impl std::ops::Mul for Probability {
     type Output = Self;
 
-    fn mul(self, other: Self) -> Self { Probability(self.0 * other.0) }
+    fn mul(self, other: Self) -> Self {
+        Probability(self.0 * other.0)
+    }
 }
 
 impl std::ops::Div for Probability {
     type Output = Self;
 
-    fn div(self, other: Self) -> Self { Probability(self.0 / other.0) }
+    fn div(self, other: Self) -> Self {
+        Probability(self.0 / other.0)
+    }
 }
 
 // APAS trait implementations are automatic due to blanket impl in Types.rs

@@ -52,7 +52,9 @@ pub mod OrderedSetStPer {
         // Base set operations - delegate to backing store
 
         /// Claude Work: O(1), Span: O(1)
-        fn size(&self) -> N { self.base_set.size() }
+        fn size(&self) -> N {
+            self.base_set.size()
+        }
 
         /// Claude Work: O(1), Span: O(1)
         fn empty() -> Self {
@@ -69,7 +71,9 @@ pub mod OrderedSetStPer {
         }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn find(&self, x: &T) -> B { self.base_set.find(x) }
+        fn find(&self, x: &T) -> B {
+            self.base_set.find(x)
+        }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn insert(&self, x: T) -> Self {
@@ -114,7 +118,9 @@ pub mod OrderedSetStPer {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn to_seq(&self) -> AVLTreeSeqStPerS<T> { self.base_set.to_seq() }
+        fn to_seq(&self) -> AVLTreeSeqStPerS<T> {
+            self.base_set.to_seq()
+        }
 
         /// Claude Work: O(n log n), Span: O(log² n)
         fn from_seq(seq: AVLTreeSeqStPerS<T>) -> Self {
@@ -194,7 +200,9 @@ pub mod OrderedSetStPer {
         }
 
         /// Claude Work: O(log(m + n)), Span: O(log(m + n))
-        fn join(left: &Self, right: &Self) -> Self { left.union(right) }
+        fn join(left: &Self, right: &Self) -> Self {
+            left.union(right)
+        }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn get_range(&self, k1: &T, k2: &T) -> Self {

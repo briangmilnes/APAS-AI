@@ -26,7 +26,9 @@ pub mod QuadraticProbing {
         }
 
         /// Standard quadratic probing with c1=1, c2=1
-        pub fn standard(hash_fn: H) -> Self { Self::new(hash_fn, 1, 1) }
+        pub fn standard(hash_fn: H) -> Self {
+            Self::new(hash_fn, 1, 1)
+        }
     }
 
     impl<K: StT, H: HashFunClone<K>> ProbeSequence<K> for QuadraticProbingStrategy<K, H> {

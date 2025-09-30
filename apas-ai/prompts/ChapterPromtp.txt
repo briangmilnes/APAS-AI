@@ -1,0 +1,13 @@
+ Which modules should we implement for Chap27?
+ Which lower number modules can you use?
+ How many modules are going to have parallelism and in which functions/methods?
+ Which algorithms, problems and exercises?
+ Discuss with the user.
+
+ Build a plan for fixing this, including test and benchmark
+ using PrePlanChecklist.md. 
+
+ Show it to me and estimate time.
+
+ This goes in
+ 

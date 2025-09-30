@@ -100,11 +100,15 @@ pub mod Exercise12_5 {
         ///
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - single atomic load
-        fn is_empty(&self) -> bool { self.head.load(Ordering::Acquire).is_null() }
+        fn is_empty(&self) -> bool {
+            self.head.load(Ordering::Acquire).is_null()
+        }
     }
 
     impl<T: StTInMtT> Default for ConcurrentStackMt<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     impl<T: StTInMtT> Drop for ConcurrentStackMt<T> {

@@ -25,7 +25,9 @@ pub mod BottomUpDPMtEph {
     impl BottomUpDPMtEphS {
         /// Claude Work: O(1) - constant time initialization
         /// Claude Span: O(1) - constant time initialization
-        pub fn new(s: ArraySeqMtEphS<char>, t: ArraySeqMtEphS<char>) -> Self { BottomUpDPMtEphS { seq_s: s, seq_t: t } }
+        pub fn new(s: ArraySeqMtEphS<char>, t: ArraySeqMtEphS<char>) -> Self {
+            BottomUpDPMtEphS { seq_s: s, seq_t: t }
+        }
 
         /// Compute minimum edit distance using parallel bottom-up diagonal pebbling
         /// Claude Work: O(|S|*|T|) where |S|=source length, |T|=target length
@@ -142,27 +144,37 @@ pub mod BottomUpDPMtEph {
         /// Get the length of sequence S
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn s_length(&self) -> usize { self.seq_s.length() }
+        pub fn s_length(&self) -> usize {
+            self.seq_s.length()
+        }
 
         /// Get the length of sequence T
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn t_length(&self) -> usize { self.seq_t.length() }
+        pub fn t_length(&self) -> usize {
+            self.seq_t.length()
+        }
 
         /// Check if sequences are empty
         /// Claude Work: O(1) - constant time check
         /// Claude Span: O(1) - constant time check
-        pub fn is_empty(&self) -> bool { self.seq_s.length() == 0usize && self.seq_t.length() == 0usize }
+        pub fn is_empty(&self) -> bool {
+            self.seq_s.length() == 0usize && self.seq_t.length() == 0usize
+        }
 
         /// Mutably update sequence S
         /// Claude Work: O(1) - constant time update
         /// Claude Span: O(1) - constant time update
-        pub fn set_s(&mut self, s: ArraySeqMtEphS<char>) { self.seq_s = s; }
+        pub fn set_s(&mut self, s: ArraySeqMtEphS<char>) {
+            self.seq_s = s;
+        }
 
         /// Mutably update sequence T
         /// Claude Work: O(1) - constant time update
         /// Claude Span: O(1) - constant time update
-        pub fn set_t(&mut self, t: ArraySeqMtEphS<char>) { self.seq_t = t; }
+        pub fn set_t(&mut self, t: ArraySeqMtEphS<char>) {
+            self.seq_t = t;
+        }
     }
 
     impl Default for BottomUpDPMtEphS {

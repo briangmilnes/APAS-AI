@@ -5,9 +5,9 @@
  Build a plan for fixing this, including test and benchmark
  using PrePlanChecklist.md. 
 
- Show it to me and estimate time.
+ How many modules are going to be parallel and in which functions/methods?
 
- How many are parallel?
+ Show it to me and estimate time.
 
  This goes in Chap27.
 

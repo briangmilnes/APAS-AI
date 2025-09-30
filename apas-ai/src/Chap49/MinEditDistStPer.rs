@@ -110,11 +110,17 @@ pub mod MinEditDistStPer {
             solver.min_edit_distance_rec(source_len, target_len)
         }
 
-        fn source(&self) -> &ArraySeqStPerS<T> { &self.source }
+        fn source(&self) -> &ArraySeqStPerS<T> {
+            &self.source
+        }
 
-        fn target(&self) -> &ArraySeqStPerS<T> { &self.target }
+        fn target(&self) -> &ArraySeqStPerS<T> {
+            &self.target
+        }
 
-        fn memo_size(&self) -> usize { self.memo.len() }
+        fn memo_size(&self) -> usize {
+            self.memo.len()
+        }
     }
 
     impl<T: StT> Display for MinEditDistStPerS<T> {

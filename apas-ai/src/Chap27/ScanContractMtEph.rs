@@ -46,16 +46,57 @@ pub mod ScanContractMtEph {
                 return ArraySeqMtEphS::singleton(id.clone());
             }
 
-            // Sequential scan (temporary non-contraction implementation)
-            // Note: Uses from_vec internally but is semantically correct
-            let mut result_vec = Vec::with_capacity(n);
-            let mut acc = id;
-            for i in 0..n {
-                result_vec.push(acc.clone());
-                let elem = a.nth_cloned(i);
-                acc = f(&acc, &elem);
+            // Contract: pair up elements and apply f in parallel
+            // b[i] = f(a[2i], a[2i+1])
+            let half = n / 2;
+            let a_arc = Arc::new(a.clone());
+            let f_contract = Arc::clone(&f);
+
+            let b = ArraySeqMtEphS::tabulate(
+                &|i| {
+                    let left = a_arc.nth_cloned(2 * i);
+                    let right = a_arc.nth_cloned(2 * i + 1);
+                    f_contract(&left, &right)
+                },
+                half,
+            );
+
+            // Solve: recursively scan b to get c (parallel)
+            let f_solve = Arc::clone(&f);
+            let c = Self::scan_contract_parallel(&b, f_solve, id);
+
+            // Expand: reconstruct result using parallel tabulation
+            // For even indices: result[2i] = c[i]
+            // For odd indices: result[2i+1] = f(c[i], a[2i])
+            let c_arc = Arc::new(c);
+            let a_arc2 = Arc::new(a.clone());
+            let f_expand = Arc::clone(&f);
+
+            let main_result = ArraySeqMtEphS::tabulate(
+                &|i| {
+                    if i % 2 == 0 {
+                        // Even index: use scan result from contracted sequence
+                        c_arc.nth_cloned(i / 2)
+                    } else {
+                        // Odd index: combine scan result with original element
+                        let scan_val = c_arc.nth_cloned(i / 2);
+                        let orig_val = a_arc2.nth_cloned(i - 1);
+                        f_expand(&scan_val, &orig_val)
+                    }
+                },
+                if n % 2 == 0 { n } else { n - 1 },
+            );
+
+            // Handle last element if odd length
+            if n % 2 == 1 {
+                // Last element: f(result[n-2], a[n-2])
+                let last_elem_of_main = main_result.nth_cloned(n - 2);
+                let last_val = f(&last_elem_of_main, &a.nth_cloned(n - 2));
+                let last_part = ArraySeqMtEphS::singleton(last_val);
+                ArraySeqMtEphS::append(&main_result, &last_part)
+            } else {
+                main_result
             }
-            ArraySeqMtEphS::from_vec(result_vec)
         }
     }
 }

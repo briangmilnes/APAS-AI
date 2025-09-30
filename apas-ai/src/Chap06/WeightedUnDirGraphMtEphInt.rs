@@ -38,12 +38,16 @@ pub mod WeightedUnDirGraphMtEphInt {
         /// Add a weighted edge to the graph (undirected)
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        pub fn add_weighted_edge(&mut self, v1: V, v2: V, weight: i32) { self.add_labeled_edge(v1, v2, weight); }
+        pub fn add_weighted_edge(&mut self, v1: V, v2: V, weight: i32) {
+            self.add_labeled_edge(v1, v2, weight);
+        }
 
         /// Get the weight of an edge, if it exists
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential search
-        pub fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<i32> { self.get_edge_label(v1, v2).copied() }
+        pub fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<i32> {
+            self.get_edge_label(v1, v2).copied()
+        }
 
         /// Get all weighted edges as (v1, v2, weight) tuples
         /// APAS: Work Θ(|E|), Span Θ(1)
@@ -116,10 +120,14 @@ pub mod WeightedUnDirGraphMtEphInt {
         /// Get the total weight of all edges
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential sum
-        pub fn total_weight(&self) -> i32 { self.labeled_edges().iter().map(|edge| edge.2).sum() }
+        pub fn total_weight(&self) -> i32 {
+            self.labeled_edges().iter().map(|edge| edge.2).sum()
+        }
 
         /// Get the degree of a vertex (number of incident edges)
-        pub fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
+        pub fn vertex_degree(&self, v: &V) -> usize {
+            self.neighbors(v).size()
+        }
     }
 
     #[macro_export]

@@ -23,7 +23,9 @@ pub mod GraphSearchMtPer {
 
     pub struct SelectAll;
     impl<V: StTInMtT + Ord + 'static> SelectionStrategy<V> for SelectAll {
-        fn select(&self, frontier: &AVLTreeSetMtPer<V>) -> (AVLTreeSetMtPer<V>, B) { (frontier.clone(), false) }
+        fn select(&self, frontier: &AVLTreeSetMtPer<V>) -> (AVLTreeSetMtPer<V>, B) {
+            (frontier.clone(), false)
+        }
     }
 
     pub struct SelectOne;

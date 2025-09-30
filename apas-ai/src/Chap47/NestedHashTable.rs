@@ -248,11 +248,17 @@ pub mod NestedHashTable {
         }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        pub fn load_and_size(&self) -> (N, N) { (self.num_elements, self.buckets.length()) }
+        pub fn load_and_size(&self) -> (N, N) {
+            (self.num_elements, self.buckets.length())
+        }
 
-        pub fn size(&self) -> N { self.num_elements }
+        pub fn size(&self) -> N {
+            self.num_elements
+        }
 
-        pub fn is_empty(&self) -> bool { self.num_elements == 0 }
+        pub fn is_empty(&self) -> bool {
+            self.num_elements == 0
+        }
 
         pub fn load_factor(&self) -> f64 {
             self.load_factor_manager

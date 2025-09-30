@@ -129,7 +129,9 @@ pub mod SubsetSumMtPer {
             self.subset_sum_rec(n, target)
         }
 
-        fn multiset(&self) -> &ArraySeqMtPerS<T> { &self.multiset }
+        fn multiset(&self) -> &ArraySeqMtPerS<T> {
+            &self.multiset
+        }
 
         fn memo_size(&self) -> usize {
             let memo_guard = self.memo.lock().unwrap();
@@ -138,7 +140,9 @@ pub mod SubsetSumMtPer {
     }
 
     impl<T: MtVal> PartialEq for SubsetSumMtPerS<T> {
-        fn eq(&self, other: &Self) -> bool { self.multiset == other.multiset }
+        fn eq(&self, other: &Self) -> bool {
+            self.multiset == other.multiset
+        }
     }
 
     impl<T: MtVal> Eq for SubsetSumMtPerS<T> {}

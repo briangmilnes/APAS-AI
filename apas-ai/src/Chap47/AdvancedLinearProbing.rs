@@ -214,7 +214,9 @@ pub mod AdvancedLinearProbing {
 
         /// Strategy name for debugging and analysis
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn strategy_name(&self) -> String { "AdvancedLinearProbing".to_string() }
+        fn strategy_name(&self) -> String {
+            "AdvancedLinearProbing".to_string()
+        }
     }
 
     impl<K: StT, H: HashFunClone<K>> Display for AdvancedLinearProbingStrategy<K, H> {

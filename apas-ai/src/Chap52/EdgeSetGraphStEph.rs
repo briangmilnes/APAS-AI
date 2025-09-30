@@ -40,15 +40,25 @@ pub mod EdgeSetGraphStEph {
             EdgeSetGraphStEph { vertices: v, edges: e }
         }
 
-        fn num_vertices(&self) -> N { self.vertices.size() }
+        fn num_vertices(&self) -> N {
+            self.vertices.size()
+        }
 
-        fn num_edges(&self) -> N { self.edges.size() }
+        fn num_edges(&self) -> N {
+            self.edges.size()
+        }
 
-        fn vertices(&self) -> &AVLTreeSetStEph<V> { &self.vertices }
+        fn vertices(&self) -> &AVLTreeSetStEph<V> {
+            &self.vertices
+        }
 
-        fn edges(&self) -> &AVLTreeSetStEph<Pair<V, V>> { &self.edges }
+        fn edges(&self) -> &AVLTreeSetStEph<Pair<V, V>> {
+            &self.edges
+        }
 
-        fn has_edge(&self, u: &V, v: &V) -> B { self.edges.find(&Pair(u.clone(), v.clone())) }
+        fn has_edge(&self, u: &V, v: &V) -> B {
+            self.edges.find(&Pair(u.clone(), v.clone()))
+        }
 
         fn out_neighbors(&self, u: &V) -> AVLTreeSetStEph<V> {
             let u_clone = u.clone();
@@ -62,9 +72,13 @@ pub mod EdgeSetGraphStEph {
             neighbors
         }
 
-        fn out_degree(&self, u: &V) -> N { self.out_neighbors(u).size() }
+        fn out_degree(&self, u: &V) -> N {
+            self.out_neighbors(u).size()
+        }
 
-        fn insert_vertex(&mut self, v: V) { self.vertices.insert(v); }
+        fn insert_vertex(&mut self, v: V) {
+            self.vertices.insert(v);
+        }
 
         fn delete_vertex(&mut self, v: &V) {
             let v_clone = v.clone();
@@ -92,6 +106,8 @@ pub mod EdgeSetGraphStEph {
             self.edges.insert(Pair(u, v));
         }
 
-        fn delete_edge(&mut self, u: &V, v: &V) { self.edges.delete(&Pair(u.clone(), v.clone())); }
+        fn delete_edge(&mut self, u: &V, v: &V) {
+            self.edges.delete(&Pair(u.clone(), v.clone()));
+        }
     }
 }

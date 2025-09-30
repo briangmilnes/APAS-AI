@@ -52,29 +52,43 @@ pub mod RelationStEph {
     }
 
     impl<A: StT + Hash, B: StT + Hash> Relation<A, B> {
-        pub fn FromVec(v: Vec<Pair<A, B>>) -> Relation<A, B> { Relation { pairs: Set::FromVec(v) } }
+        pub fn FromVec(v: Vec<Pair<A, B>>) -> Relation<A, B> {
+            Relation { pairs: Set::FromVec(v) }
+        }
     }
 
     impl<A: StT + Hash, B: StT + Hash> PartialEq for Relation<A, B> {
-        fn eq(&self, other: &Self) -> bool { self.pairs == other.pairs }
+        fn eq(&self, other: &Self) -> bool {
+            self.pairs == other.pairs
+        }
     }
 
     impl<A: StT + Hash, B: StT + Hash> Eq for Relation<A, B> {}
 
     impl<A: StT + Hash, B: StT + Hash> Debug for Relation<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Debug::fmt(&self.pairs, f) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            std::fmt::Debug::fmt(&self.pairs, f)
+        }
     }
 
     impl<A: StT + Hash, B: StT + Hash> Display for Relation<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Display::fmt(&self.pairs, f) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            std::fmt::Display::fmt(&self.pairs, f)
+        }
     }
 
     impl<X: StT + Hash, Y: StT + Hash> RelationStEphTrait<X, Y> for Relation<X, Y> {
-        fn empty() -> Relation<X, Y> { Relation { pairs: SetLit![] } }
+        fn empty() -> Relation<X, Y> {
+            Relation { pairs: SetLit![] }
+        }
 
-        fn FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y> { Relation { pairs } }
+        fn FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y> {
+            Relation { pairs }
+        }
 
-        fn size(&self) -> N { self.pairs.size() }
+        fn size(&self) -> N {
+            self.pairs.size()
+        }
 
         fn domain(&self) -> Set<X>
         where
@@ -110,7 +124,9 @@ pub mod RelationStEph {
             }
         }
 
-        fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.pairs.iter() }
+        fn iter(&self) -> Iter<'_, Pair<X, Y>> {
+            self.pairs.iter()
+        }
     }
 
     #[macro_export]

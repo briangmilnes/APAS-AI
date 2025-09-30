@@ -83,7 +83,9 @@ pub mod MathSeq {
     }
 
     impl<T: StT> PartialEq for MathSeqS<T> {
-        fn eq(&self, other: &Self) -> bool { self.data == other.data }
+        fn eq(&self, other: &Self) -> bool {
+            self.data == other.data
+        }
     }
 
     impl<T: StT> Eq for MathSeqS<T> {}
@@ -113,20 +115,30 @@ pub mod MathSeq {
     impl<T: StT> MathSeqS<T> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
+        pub fn iter(&self) -> std::slice::Iter<'_, T> {
+            self.data.iter()
+        }
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, T> { self.data.iter_mut() }
+        pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, T> {
+            self.data.iter_mut()
+        }
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn empty() -> Self { Self { data: Vec::new() } }
+        pub fn empty() -> Self {
+            Self { data: Vec::new() }
+        }
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn singleton(item: T) -> Self { Self { data: vec![item] } }
+        pub fn singleton(item: T) -> Self {
+            Self { data: vec![item] }
+        }
         /// APAS: Work Θ(|data|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|data|), Span Θ(1)
-        pub fn from_vec(data: Vec<T>) -> Self { Self { data } }
+        pub fn from_vec(data: Vec<T>) -> Self {
+            Self { data }
+        }
         /// APAS: Work Θ(length), Span Θ(1)
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
         pub fn with_len(length: N, init_value: T) -> Self {
@@ -139,19 +151,25 @@ pub mod MathSeq {
     impl<'a, T: StT> IntoIterator for &'a MathSeqS<T> {
         type Item = &'a T;
         type IntoIter = std::slice::Iter<'a, T>;
-        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
+        fn into_iter(self) -> Self::IntoIter {
+            self.data.iter()
+        }
     }
 
     impl<'a, T: StT> IntoIterator for &'a mut MathSeqS<T> {
         type Item = &'a mut T;
         type IntoIter = std::slice::IterMut<'a, T>;
-        fn into_iter(self) -> Self::IntoIter { self.data.iter_mut() }
+        fn into_iter(self) -> Self::IntoIter {
+            self.data.iter_mut()
+        }
     }
 
     impl<T: StT> IntoIterator for MathSeqS<T> {
         type Item = T;
         type IntoIter = std::vec::IntoIter<T>;
-        fn into_iter(self) -> Self::IntoIter { self.data.into_iter() }
+        fn into_iter(self) -> Self::IntoIter {
+            self.data.into_iter()
+        }
     }
 
     impl<T: StT + Hash> MathSeqTrait<T> for MathSeqS<T> {
@@ -170,13 +188,21 @@ pub mod MathSeq {
             }
         }
 
-        fn length(&self) -> N { self.data.len() }
+        fn length(&self) -> N {
+            self.data.len()
+        }
 
-        fn nth(&self, index: N) -> &T { &self.data[index] }
+        fn nth(&self, index: N) -> &T {
+            &self.data[index]
+        }
 
-        fn empty() -> Self { MathSeqS { data: Vec::new() } }
+        fn empty() -> Self {
+            MathSeqS { data: Vec::new() }
+        }
 
-        fn singleton(item: T) -> Self { MathSeqS { data: vec![item] } }
+        fn singleton(item: T) -> Self {
+            MathSeqS { data: vec![item] }
+        }
 
         fn subseq(&self, start: N, length: N) -> &[T] {
             let n = self.data.len();
@@ -202,13 +228,21 @@ pub mod MathSeq {
             self
         }
 
-        fn delete_last(&mut self) -> Option<T> { self.data.pop() }
+        fn delete_last(&mut self) -> Option<T> {
+            self.data.pop()
+        }
 
-        fn isEmpty(&self) -> B { if self.data.is_empty() { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.data.is_empty() { true } else { false }
+        }
 
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B {
+            if self.data.len() == 1 { true } else { false }
+        }
 
-        fn domain(&self) -> Vec<N> { (0..self.data.len()).collect() }
+        fn domain(&self) -> Vec<N> {
+            (0..self.data.len()).collect()
+        }
 
         fn range(&self) -> Vec<T> {
             let mut seen: HashSet<T> = HashSet::with_capacity(self.data.len());

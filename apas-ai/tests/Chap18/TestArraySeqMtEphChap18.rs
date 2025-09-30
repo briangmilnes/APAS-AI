@@ -7,13 +7,27 @@ pub mod Test28ArraySeqMtEphChap {
     use apas_ai::Types::Types::*;
 
     // Helper functions for common patterns
-    fn identity(i: N) -> N { i }
-    fn double(i: N) -> N { i * 2 }
-    fn add_one(i: N) -> N { i + 1 }
-    fn add_ten(i: N) -> N { i + 10 }
-    fn multiply_by_two(x: &N) -> N { x * 2 }
-    fn add_nums(x: &N, y: &N) -> N { x + y }
-    fn is_even_bool(x: &N) -> B { if x % 2 == 0 { true } else { false } }
+    fn identity(i: N) -> N {
+        i
+    }
+    fn double(i: N) -> N {
+        i * 2
+    }
+    fn add_one(i: N) -> N {
+        i + 1
+    }
+    fn add_ten(i: N) -> N {
+        i + 10
+    }
+    fn multiply_by_two(x: &N) -> N {
+        x * 2
+    }
+    fn add_nums(x: &N, y: &N) -> N {
+        x + y
+    }
+    fn is_even_bool(x: &N) -> B {
+        if x % 2 == 0 { true } else { false }
+    }
 
     #[test]
     fn test_new_and_set() {
