@@ -1,3 +1,6 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Benchmarks for Chap41Codex ArraySetEnumMtEph.
+
 use std::time::Duration;
 
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;

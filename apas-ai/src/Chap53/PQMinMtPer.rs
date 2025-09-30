@@ -1,17 +1,17 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-//! Chapter 53: Priority-First Search (PFS) - persistent, multi-threaded.
+//! Chapter 53: Min-Priority Queue Search - persistent, multi-threaded.
 //!
 //! Note: Parallel priority selection would require concurrent priority queues.
 //! This implementation uses thread-safe sets (AVLTreeSetMtPer) which support
 //! parallel set operations, but the priority selection itself remains sequential.
 
-pub mod PFSMtPer {
+pub mod PQMinMtPer {
     use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerTrait;
     use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
     use crate::Types::Types::*;
 
     #[derive(Clone, Debug)]
-    pub struct PFSResult<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> {
+    pub struct PQMinResult<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> {
         pub visited: AVLTreeSetMtPer<V>,
         pub priorities: AVLTreeSetMtPer<Pair<V, P>>,
         pub parent: Option<AVLTreeSetMtPer<Pair<V, V>>>,
@@ -49,44 +49,44 @@ pub mod PFSMtPer {
         }
     }
 
-    pub trait PFSMtPerTrait<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> {
+    pub trait PQMinMtPerTrait<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> {
         /// Priority-First Search using thread-safe persistent sets.
         /// Work: O((|V| + |E|) log |V|), Span: O(|V| log |V|) sequential rounds.
         /// Set operations (union, difference, filter) use parallel implementations.
-        fn pfs<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PFSResult<V, P>
+        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             PF: PriorityFn<V, P>;
 
-        fn pfs_multi<G, PF>(
+        fn pq_min_multi<G, PF>(
             graph: &G,
             sources: AVLTreeSetMtPer<V>,
             priority_fn: &PF,
-        ) -> PFSResult<V, P>
+        ) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             PF: PriorityFn<V, P>;
     }
 
-    pub struct PFSMtPer;
+    pub struct PQMinMtPer;
 
-    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> PFSMtPerTrait<V, P>
-        for PFSMtPer
+    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> PQMinMtPerTrait<V, P>
+        for PQMinMtPer
     {
-        fn pfs<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PFSResult<V, P>
+        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             PF: PriorityFn<V, P>,
         {
             let sources = AVLTreeSetMtPer::singleton(source);
-            Self::pfs_multi(graph, sources, priority_fn)
+            Self::pq_min_multi(graph, sources, priority_fn)
         }
 
-        fn pfs_multi<G, PF>(
+        fn pq_min_multi<G, PF>(
             graph: &G,
             sources: AVLTreeSetMtPer<V>,
             priority_fn: &PF,
-        ) -> PFSResult<V, P>
+        ) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             PF: PriorityFn<V, P>,
@@ -175,7 +175,7 @@ pub mod PFSMtPer {
                 initial_frontier,
             );
 
-            PFSResult {
+            PQMinResult {
                 visited,
                 priorities,
                 parent: None,

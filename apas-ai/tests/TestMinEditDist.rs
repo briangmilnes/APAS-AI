@@ -1,3 +1,6 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Tests for Minimum Edit Distance.
+
 use apas_ai::{
     Chap49::MinEditDistStPer::MinEditDistStPer::*,
     Chap49::MinEditDistStEph::MinEditDistStEph::*,

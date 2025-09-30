@@ -1,3 +1,6 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Benchmarks for Chap41Codex AVLTreeSetMtEph.
+
 use std::time::Duration;
 
 use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;

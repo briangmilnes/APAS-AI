@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chap41Codex Example 41.3: sequential iteration versus parallel union construction.
 
 pub mod Example41_3 {

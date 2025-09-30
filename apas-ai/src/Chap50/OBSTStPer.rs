@@ -1,3 +1,6 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Chapter 50: Optimal Binary Search Tree - persistent, single-threaded.
+
 use std::collections::HashMap;
 use std::fmt::{Debug, Display, Formatter, Result};
 

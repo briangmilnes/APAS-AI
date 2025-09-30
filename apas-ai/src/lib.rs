@@ -259,8 +259,9 @@ pub mod Chap53 {
     pub mod GraphSearchStPer;
     pub mod GraphSearchStEph;
     pub mod GraphSearchMtPer;
-    pub mod PQSStPer;
-    pub mod PQSStEph;
-    pub mod PQSMtPer;
+    pub mod PQMinStPer;
+    pub mod PQMinStEph;
+    pub mod PQMinMtPer;
+    pub mod PQMinMtEph;
 }
 

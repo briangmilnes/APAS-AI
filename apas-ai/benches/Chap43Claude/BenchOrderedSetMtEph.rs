@@ -1,3 +1,6 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Benchmarks for Chap43Claude OrderedSetMtEph.
+
 use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
 use apas_ai::Chap43Claude::OrderedSetMtEph::OrderedSetMtEph::*;
 use std::time::Duration;

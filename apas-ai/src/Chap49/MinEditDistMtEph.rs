@@ -1,3 +1,6 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Chapter 49: Minimum Edit Distance - ephemeral, multi-threaded.
+
 use std::collections::HashMap;
 use std::fmt::{Debug, Display, Formatter, Result};
 use std::sync::{Arc, Mutex};
@@ -5,6 +8,7 @@ use std::thread;
 
 use crate::{Chap18::ArraySeqMtEph::ArraySeqMtEph::*, Types::Types::*};
 use crate::ArraySeqMtEphSLit;
+
 
 pub mod MinEditDistMtEph {
     use super::*;

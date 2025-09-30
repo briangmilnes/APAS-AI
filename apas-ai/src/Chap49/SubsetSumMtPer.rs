@@ -1,9 +1,13 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Chapter 49: Subset Sum - persistent, multi-threaded.
+
 use std::collections::HashMap;
 use std::fmt::{Debug, Display, Formatter, Result};
 use std::sync::{Arc, Mutex};
 use std::thread;
 
 use crate::{Chap18::ArraySeqMtPer::ArraySeqMtPer::*, Types::Types::*};
+
 
 pub mod SubsetSumMtPer {
     use super::*;

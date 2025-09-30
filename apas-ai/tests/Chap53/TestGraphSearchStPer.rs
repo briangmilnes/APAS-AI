@@ -1,3 +1,6 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Tests for Chap53 GraphSearchStPer.
+
 use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;

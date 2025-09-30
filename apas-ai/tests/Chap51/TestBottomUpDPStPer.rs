@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for BottomUpDPStPer - Bottom-Up Dynamic Programming Single-Threaded Persistent
 
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;

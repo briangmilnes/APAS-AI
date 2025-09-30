@@ -1,4 +1,5 @@
-//! Top-Down Dynamic Programming - Persistent Single-Threaded Implementation
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Top-Down Dynamic Programming - Persistent Single-Threaded Implementation.
 //! 
 //! This module implements the top-down (memoization) approach to dynamic programming
 //! using HashMap for efficient subproblem caching.

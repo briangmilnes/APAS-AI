@@ -1,4 +1,7 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chap41Codex: multi-threaded ephemeral AVL tree set with coarse-grained synchronization.
+//!
+//! Note: Uses coarse-grained locking (single mutex), operations are sequential.
 
 pub mod AVLTreeSetMtEph {
     use std::sync::{Arc, Mutex};

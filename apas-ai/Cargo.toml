@@ -950,8 +950,12 @@ name = "TestGraphSearchStPer"
 path = "tests/Chap53/TestGraphSearchStPer.rs"
 
 [[test]]
-name = "TestPFSStPer"
-path = "tests/Chap53/TestPFSStPer.rs"
+name = "TestPQMinStPer"
+path = "tests/Chap53/TestPQMinStPer.rs"
+
+[[test]]
+name = "TestPQMinMtEph"
+path = "tests/Chap53/TestPQMinMtEph.rs"
 
 [[bench]]
 name = "BenchGraphSearchStPer"
@@ -959,8 +963,13 @@ path = "benches/Chap53/BenchGraphSearchStPer.rs"
 harness = false
 
 [[bench]]
-name = "BenchPFSStPer"
-path = "benches/Chap53/BenchPFSStPer.rs"
+name = "BenchPQMinStPer"
+path = "benches/Chap53/BenchPQMinStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchPQMinMtEph"
+path = "benches/Chap53/BenchPQMinMtEph.rs"
 harness = false
 
 [[bench]]

@@ -1,3 +1,6 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Tests for Subset Sum.
+
 use apas_ai::{
     Chap49::SubsetSumStPer::SubsetSumStPer::*,
     Chap49::SubsetSumStEph::SubsetSumStEph::*,

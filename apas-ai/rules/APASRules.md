@@ -96,3 +96,9 @@ results.
 - **APAS Type Abbreviations**: Apply `MtKey`, `MtVal`, `MtReduceFn`, `HashOrd`, `ArithmeticT` consistently
 - **Remove Redundant APAS Constraints**: Remove `where T: 'static` when T is already `MtVal` (which includes 'static)
 - **Target**: Minimize where clauses across APAS codebase using APAS type conventions
+
+### Documentation
+- Always put this copyright in on line 1: "//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'."
+- Always put in a few line summary of the module after that, if one sentence does the job great.
+- Always put this copyright in on line 1: "//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'."
+- If there are problems with the implementation, such as lacking parallelism, add a "//! Note: ..." line.

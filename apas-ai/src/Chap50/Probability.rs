@@ -1,6 +1,8 @@
-// Chapter 50: Probability wrapper type for OBST algorithms
-// This module provides a probability wrapper that implements Eq/Ord for f64 values
-// while maintaining compatibility with APAS MtVal trait requirements
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Chapter 50: Probability wrapper type for OBST algorithms.
+//!
+//! Note: Provides a probability wrapper that implements Eq/Ord for f64 values
+//! while maintaining compatibility with APAS MtVal trait requirements.
 
 use crate::Types::Types::*;
 use std::cmp::Ordering;

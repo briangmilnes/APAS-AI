@@ -1,13 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-//! Chapter 53: Priority-First Search (PFS) - ephemeral, single-threaded.
+//! Chapter 53: Min-Priority Queue Search - ephemeral, single-threaded.
 
-pub mod PFSStEph {
+pub mod PQMinStEph {
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
     use crate::Types::Types::*;
 
     #[derive(Clone, Debug)]
-    pub struct PFSResult<V: StT + Ord, P: StT + Ord> {
+    pub struct PQMinResult<V: StT + Ord, P: StT + Ord> {
         pub visited: AVLTreeSetStEph<V>,
         pub priorities: AVLTreeSetStEph<Pair<V, P>>,
         pub parent: Option<AVLTreeSetStEph<Pair<V, V>>>,
@@ -39,39 +39,39 @@ pub mod PFSStEph {
         }
     }
 
-    pub trait PFSStEphTrait<V: StT + Ord, P: StT + Ord> {
-        fn pfs<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PFSResult<V, P>
+    pub trait PQMinStEphTrait<V: StT + Ord, P: StT + Ord> {
+        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             PF: PriorityFn<V, P>;
 
-        fn pfs_multi<G, PF>(
+        fn pq_min_multi<G, PF>(
             graph: &G,
             sources: AVLTreeSetStEph<V>,
             priority_fn: &PF,
-        ) -> PFSResult<V, P>
+        ) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             PF: PriorityFn<V, P>;
     }
 
-    pub struct PFSStEph;
+    pub struct PQMinStEph;
 
-    impl<V: StT + Ord, P: StT + Ord> PFSStEphTrait<V, P> for PFSStEph {
-        fn pfs<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PFSResult<V, P>
+    impl<V: StT + Ord, P: StT + Ord> PQMinStEphTrait<V, P> for PQMinStEph {
+        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             PF: PriorityFn<V, P>,
         {
             let sources = AVLTreeSetStEph::singleton(source);
-            Self::pfs_multi(graph, sources, priority_fn)
+            Self::pq_min_multi(graph, sources, priority_fn)
         }
 
-        fn pfs_multi<G, PF>(
+        fn pq_min_multi<G, PF>(
             graph: &G,
             sources: AVLTreeSetStEph<V>,
             priority_fn: &PF,
-        ) -> PFSResult<V, P>
+        ) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             PF: PriorityFn<V, P>,
@@ -154,7 +154,7 @@ pub mod PFSStEph {
                 initial_frontier,
             );
 
-            PFSResult {
+            PQMinResult {
                 visited,
                 priorities,
                 parent: None,

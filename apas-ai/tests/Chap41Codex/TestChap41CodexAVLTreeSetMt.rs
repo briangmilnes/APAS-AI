@@ -1,4 +1,4 @@
-use std::sync::{Arc, atomic::{AtomicUsize, Ordering}};
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.\n//! Tests for Chap41Codex AVLTreeSetMtEph.\n\nuse std::sync::{Arc, atomic::{AtomicUsize, Ordering}};
 
 use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
 use apas_ai::Chap41Codex::AVLTreeSetMtEph::AVLTreeSetMtEph::{AVLTreeSetMtEph, AVLTreeSetMtEphTrait};

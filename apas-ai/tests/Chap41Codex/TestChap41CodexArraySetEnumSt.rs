@@ -1,4 +1,4 @@
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.\n//! Tests for Chap41Codex ArraySetEnumStEph.\n\nuse apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
 use apas_ai::Chap41Codex::ArraySetEnumStEph::ArraySetEnumStEph::{ArraySetEnumStEph, ArraySetEnumStEphTrait};
 
 #[test]

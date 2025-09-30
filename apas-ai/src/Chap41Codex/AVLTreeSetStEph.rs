@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chap41Codex: single-threaded ephemeral AVL tree set based on structural balancing.
 
 pub mod AVLTreeSetStEph {

@@ -1,6 +1,9 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Tests for Chap53 PQMinStPer.
+
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
-use apas_ai::Chap53::PFSStPer::PFSStPer::*;
+use apas_ai::Chap53::PQMinStPer::PQMinStPer::*;
 use apas_ai::Types::Types::*;
 
 // Simple priority function: vertex value itself as priority
@@ -34,16 +37,16 @@ fn test_graph_1() -> impl Fn(&N) -> AVLTreeSetStPer<N> {
 }
 
 #[test]
-fn test_pfs_empty_graph() {
+fn test_pq_min_empty_graph() {
     let graph = |_: &N| AVLTreeSetStPer::empty();
     let prio_fn = vertex_priority();
-    let result = PFSStPer::pfs(&graph, 1, &prio_fn);
+    let result = PQMinStPer::pq_min(&graph, 1, &prio_fn);
     assert_eq!(result.visited.size(), 1);
     assert!(result.visited.find(&1));
 }
 
 #[test]
-fn test_pfs_single_edge() {
+fn test_pq_min_single_edge() {
     let graph = |v: &N| {
         if *v == 1 {
             AVLTreeSetStPer::singleton(2)
@@ -52,17 +55,17 @@ fn test_pfs_single_edge() {
         }
     };
     let prio_fn = vertex_priority();
-    let result = PFSStPer::pfs(&graph, 1, &prio_fn);
+    let result = PQMinStPer::pq_min(&graph, 1, &prio_fn);
     assert_eq!(result.visited.size(), 2);
     assert!(result.visited.find(&1));
     assert!(result.visited.find(&2));
 }
 
 #[test]
-fn test_pfs_dag() {
+fn test_pq_min_dag() {
     let graph = test_graph_1();
     let prio_fn = vertex_priority();
-    let result = PFSStPer::pfs(&graph, 1, &prio_fn);
+    let result = PQMinStPer::pq_min(&graph, 1, &prio_fn);
     assert_eq!(result.visited.size(), 5);
     for i in 1..=5 {
         assert!(result.visited.find(&i));
@@ -70,7 +73,7 @@ fn test_pfs_dag() {
 }
 
 #[test]
-fn test_pfs_priority_order() {
+fn test_pq_min_priority_order() {
     // Graph: 1 -> {2, 3}, 2 -> {4}, 3 -> {5}
     // With vertex value as priority, lower values visited first
     let graph = |v: &N| match *v {
@@ -80,7 +83,7 @@ fn test_pfs_priority_order() {
         _ => AVLTreeSetStPer::empty(),
     };
     let prio_fn = vertex_priority();
-    let result = PFSStPer::pfs(&graph, 1, &prio_fn);
+    let result = PQMinStPer::pq_min(&graph, 1, &prio_fn);
     
     // All reachable vertices should be visited
     assert_eq!(result.visited.size(), 5);
@@ -90,11 +93,11 @@ fn test_pfs_priority_order() {
 }
 
 #[test]
-fn test_pfs_multi_source() {
+fn test_pq_min_multi_source() {
     let graph = test_graph_1();
     let sources = AVLTreeSetStPer::singleton(2).union(&AVLTreeSetStPer::singleton(5));
     let prio_fn = vertex_priority();
-    let result = PFSStPer::pfs_multi(&graph, sources, &prio_fn);
+    let result = PQMinStPer::pq_min_multi(&graph, sources, &prio_fn);
     
     assert_eq!(result.visited.size(), 3);
     assert!(result.visited.find(&2));
@@ -103,7 +106,7 @@ fn test_pfs_multi_source() {
 }
 
 #[test]
-fn test_pfs_linear_chain() {
+fn test_pq_min_linear_chain() {
     let graph = |v: &N| match *v {
         1 => AVLTreeSetStPer::singleton(2),
         2 => AVLTreeSetStPer::singleton(3),
@@ -111,7 +114,7 @@ fn test_pfs_linear_chain() {
         _ => AVLTreeSetStPer::empty(),
     };
     let prio_fn = vertex_priority();
-    let result = PFSStPer::pfs(&graph, 1, &prio_fn);
+    let result = PQMinStPer::pq_min(&graph, 1, &prio_fn);
     
     assert_eq!(result.visited.size(), 4);
     for i in 1..=4 {
@@ -120,7 +123,7 @@ fn test_pfs_linear_chain() {
 }
 
 #[test]
-fn test_pfs_cycle() {
+fn test_pq_min_cycle() {
     let graph = |v: &N| match *v {
         1 => AVLTreeSetStPer::singleton(2),
         2 => AVLTreeSetStPer::singleton(3),
@@ -128,7 +131,7 @@ fn test_pfs_cycle() {
         _ => AVLTreeSetStPer::empty(),
     };
     let prio_fn = vertex_priority();
-    let result = PFSStPer::pfs(&graph, 1, &prio_fn);
+    let result = PQMinStPer::pq_min(&graph, 1, &prio_fn);
     
     assert_eq!(result.visited.size(), 3);
     assert!(result.visited.find(&1));

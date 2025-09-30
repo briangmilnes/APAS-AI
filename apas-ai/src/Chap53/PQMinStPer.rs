@@ -1,17 +1,17 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-//! Chapter 53: Priority Queue Search (PQS) - persistent, single-threaded.
+//! Chapter 53: Min-Priority Queue Search - persistent, single-threaded.
 //!
 //! Implements Algorithm 53.7 - Priority Queue Search framework.
-//! PQS generalizes BFS/DFS by selecting frontier vertices based on priority.
+//! Selects minimum priority vertices first (lower priority = higher urgency).
 
-pub mod PQSStPer {
+pub mod PQMinStPer {
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     use crate::Types::Types::*;
 
     /// Result of PQS containing visited vertices and parent tree.
     #[derive(Clone, Debug)]
-    pub struct PQSResult<V: StT + Ord, P: StT + Ord> {
+    pub struct PQMinResult<V: StT + Ord, P: StT + Ord> {
         pub visited: AVLTreeSetStPer<V>,
         pub priorities: AVLTreeSetStPer<Pair<V, P>>, // (vertex, priority)
         pub parent: Option<AVLTreeSetStPer<Pair<V, V>>>, // (child, parent)
@@ -46,43 +46,43 @@ pub mod PQSStPer {
         }
     }
 
-    pub trait PQSStPerTrait<V: StT + Ord, P: StT + Ord> {
+    pub trait PQMinStPerTrait<V: StT + Ord, P: StT + Ord> {
         /// Priority Queue Search from a single source.
         /// Work: O((|V| + |E|) log |V|) with balanced tree priority queue.
         /// Span: O(|V| log |V|) sequential rounds.
-        fn pqs<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQSResult<V, P>
+        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>,
             PF: PriorityFn<V, P>;
 
         /// Priority Queue Search from multiple sources.
-        fn pqs_multi<G, PF>(
+        fn pq_min_multi<G, PF>(
             graph: &G,
             sources: AVLTreeSetStPer<V>,
             priority_fn: &PF,
-        ) -> PQSResult<V, P>
+        ) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>,
             PF: PriorityFn<V, P>;
     }
 
-    pub struct PQSStPer;
+    pub struct PQMinStPer;
 
-    impl<V: StT + Ord, P: StT + Ord> PQSStPerTrait<V, P> for PQSStPer {
-        fn pqs<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQSResult<V, P>
+    impl<V: StT + Ord, P: StT + Ord> PQMinStPerTrait<V, P> for PQMinStPer {
+        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>,
             PF: PriorityFn<V, P>,
         {
             let sources = AVLTreeSetStPer::singleton(source);
-            Self::pqs_multi(graph, sources, priority_fn)
+            Self::pq_min_multi(graph, sources, priority_fn)
         }
 
-        fn pqs_multi<G, PF>(
+        fn pq_min_multi<G, PF>(
             graph: &G,
             sources: AVLTreeSetStPer<V>,
             priority_fn: &PF,
-        ) -> PFSResult<V, P>
+        ) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>,
             PF: PriorityFn<V, P>,
@@ -174,7 +174,7 @@ pub mod PQSStPer {
                 initial_frontier,
             );
 
-            PQSResult {
+            PQMinResult {
                 visited,
                 priorities,
                 parent: None,

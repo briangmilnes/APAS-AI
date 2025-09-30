@@ -1,4 +1,5 @@
-//! Integration tests for lib.rs module structure and exports
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Integration tests for lib.rs module structure and exports.
 
 #[test]
 fn test_module_accessibility() {

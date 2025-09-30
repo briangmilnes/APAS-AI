@@ -1,3 +1,4 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for BottomUpDPMtPer - Bottom-Up Dynamic Programming Multi-Threaded Persistent
 
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
