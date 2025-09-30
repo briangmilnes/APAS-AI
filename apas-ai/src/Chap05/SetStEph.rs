@@ -61,18 +61,14 @@ pub mod SetStEph {
 
     impl<T: Eq + Hash> Eq for Set<T> {}
 
-    impl<T: Eq + Hash> std::fmt::Debug for Set<T>
-    where
-        T: std::fmt::Debug,
+    impl<T: Eq + Hash + std::fmt::Debug> std::fmt::Debug for Set<T>
     {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             f.debug_set().entries(self.data.iter()).finish()
         }
     }
 
-    impl<T: Eq + Hash> std::fmt::Display for Set<T>
-    where
-        T: std::fmt::Display,
+    impl<T: Eq + Hash + std::fmt::Display> std::fmt::Display for Set<T>
     {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             write!(f, "{{")?;
@@ -166,10 +162,9 @@ pub mod SetStEph {
             true
         }
 
-        pub fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>>
+        pub fn CartesianProduct<U: StT + Hash + Clone>(&self, other: &Set<U>) -> Set<Pair<T, U>>
         where
             T: Clone,
-            U: Clone,
         {
             let mut out: HashSet<Pair<T, U>> = HashSet::new();
             for a in self.data.iter() {
@@ -257,10 +252,9 @@ pub mod SetStEph {
             true
         }
 
-        fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>>
+        fn CartesianProduct<U: StT + Hash + Clone>(&self, other: &Set<U>) -> Set<Pair<T, U>>
         where
             T: Clone,
-            U: Clone,
         {
             let mut out: HashSet<Pair<T, U>> = HashSet::new();
             for a in self.data.iter() {

@@ -69,9 +69,7 @@ pub mod AVLTreeSetMtEph {
             Self::from_inner(set)
         }
 
-        fn filter<F>(&self, predicate: F) -> Self
-        where
-            F: Fn(&T) -> B + Send + Sync + 'static,
+        fn filter<F: Pred<T>>(&self, predicate: F) -> Self
         {
             let values = {
                 let guard = self.inner.lock().unwrap();

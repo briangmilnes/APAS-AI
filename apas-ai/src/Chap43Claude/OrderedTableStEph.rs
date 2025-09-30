@@ -25,15 +25,15 @@ pub mod OrderedTableStEph {
         fn find(&self, k: &K) -> Option<V>;
         fn lookup(&self, k: &K) -> Option<V>; // Alias for find
         fn is_empty(&self) -> B;
-        fn insert<F>(&mut self, k: K, v: V, combine: F) where F: Fn(&V, &V) -> V;
+        fn insert<F: Fn(&V, &V) -> V>(&mut self, k: K, v: V, combine: F);
         fn delete(&mut self, k: &K) -> Option<V>;
         fn domain(&self) -> ArraySetStEph<K>;
-        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self where F: Fn(&K) -> V;
-        fn map<F>(&self, f: F) -> Self where F: Fn(&K, &V) -> V;
-        fn filter<F>(&self, f: F) -> Self where F: Fn(&K, &V) -> B;
-        fn reduce<R, F>(&self, init: R, f: F) -> R where F: Fn(R, &K, &V) -> R;
-        fn intersection<F>(&mut self, other: &Self, f: F) where F: Fn(&V, &V) -> V;
-        fn union<F>(&mut self, other: &Self, f: F) where F: Fn(&V, &V) -> V;
+        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self;
+        fn map<F: Fn(&K, &V) -> V>(&self, f: F) -> Self;
+        fn filter<F: Fn(&K, &V) -> B>(&self, f: F) -> Self;
+        fn reduce<R, F: Fn(R, &K, &V) -> R>(&self, init: R, f: F) -> R;
+        fn intersection<F: Fn(&V, &V) -> V>(&mut self, other: &Self, f: F);
+        fn union<F: Fn(&V, &V) -> V>(&mut self, other: &Self, f: F);
         fn difference(&mut self, other: &Self);
         fn restrict(&mut self, keys: &ArraySetStEph<K>);
         fn subtract(&mut self, keys: &ArraySetStEph<K>);
@@ -99,7 +99,7 @@ pub mod OrderedTableStEph {
         }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn insert<F>(&mut self, k: K, v: V, combine: F) where F: Fn(&V, &V) -> V {
+        fn insert<F: Fn(&V, &V) -> V>(&mut self, k: K, v: V, combine: F) {
             self.base_table.insert(k, v, combine);
         }
 
@@ -116,9 +116,7 @@ pub mod OrderedTableStEph {
         }
 
         /// Claude Work: O(n log n), Span: O(log² n)
-        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self 
-        where 
-            F: Fn(&K) -> V 
+        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self 
         {
             OrderedTableStEph {
                 base_table: TableStEph::tabulate(f, keys),
@@ -126,9 +124,7 @@ pub mod OrderedTableStEph {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn map<F>(&self, f: F) -> Self
-        where 
-            F: Fn(&K, &V) -> V 
+        fn map<F: Fn(&K, &V) -> V>(&self, f: F) -> Self 
         {
             let mut result = OrderedTableStEph::empty();
             let entries = self.collect();
@@ -141,9 +137,7 @@ pub mod OrderedTableStEph {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn filter<F>(&self, f: F) -> Self
-        where 
-            F: Fn(&K, &V) -> B 
+        fn filter<F: Fn(&K, &V) -> B>(&self, f: F) -> Self 
         {
             let mut result = OrderedTableStEph::empty();
             let entries = self.collect();
@@ -157,9 +151,7 @@ pub mod OrderedTableStEph {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn reduce<R, F>(&self, init: R, f: F) -> R 
-        where 
-            F: Fn(R, &K, &V) -> R 
+        fn reduce<R, F: Fn(R, &K, &V) -> R>(&self, init: R, f: F) -> R 
         {
             let entries = self.collect();
             let mut result = init;
@@ -171,17 +163,13 @@ pub mod OrderedTableStEph {
         }
 
         /// Claude Work: O(m + n), Span: O(log(m + n))
-        fn intersection<F>(&mut self, other: &Self, f: F) 
-        where 
-            F: Fn(&V, &V) -> V 
+        fn intersection<F: Fn(&V, &V) -> V>(&mut self, other: &Self, f: F) 
         {
             self.base_table.intersection(&other.base_table, f);
         }
 
         /// Claude Work: O(m + n), Span: O(log(m + n))
-        fn union<F>(&mut self, other: &Self, f: F) 
-        where 
-            F: Fn(&V, &V) -> V 
+        fn union<F: Fn(&V, &V) -> V>(&mut self, other: &Self, f: F) 
         {
             self.base_table.union(&other.base_table, f);
         }

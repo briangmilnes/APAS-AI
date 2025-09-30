@@ -89,3 +89,10 @@
 ### Definsive interfaces
 - APAS follows a defensive programming style where bad arguments (like out-of-bounds indices or invalid parameters) most don't panic but instead produce empty sequences or sets or shorter
 results.
+
+### APAS Where Clause Simplification
+- **APAS Boolean Type**: Use `B` (not `bool`) in APAS code as defined in `Types.rs`
+- **Predicate Abbreviations**: Replace `F: Fn(&T) -> B` patterns with `F: Pred<T>` (includes Send + Sync + 'static)
+- **APAS Type Abbreviations**: Apply `MtKey`, `MtVal`, `MtReduceFn`, `HashOrd`, `ArithmeticT` consistently
+- **Remove Redundant APAS Constraints**: Remove `where T: 'static` when T is already `MtVal` (which includes 'static)
+- **Target**: Minimize where clauses across APAS codebase using APAS type conventions

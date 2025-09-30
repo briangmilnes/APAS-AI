@@ -26,11 +26,11 @@ pub mod OrderedTableStPer {
         fn insert(&self, k: K, v: V) -> Self;
         fn delete(&self, k: &K) -> Self;
         fn domain(&self) -> ArraySetStEph<K>;
-        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self where F: Fn(&K) -> V;
-        fn map<F>(&self, f: F) -> Self where F: Fn(&V) -> V;
-        fn filter<F>(&self, f: F) -> Self where F: Fn(&K, &V) -> B;
-        fn intersection<F>(&self, other: &Self, f: F) -> Self where F: Fn(&V, &V) -> V;
-        fn union<F>(&self, other: &Self, f: F) -> Self where F: Fn(&V, &V) -> V;
+        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self;
+        fn map<F: Fn(&V) -> V>(&self, f: F) -> Self;
+        fn filter<F: Fn(&K, &V) -> B>(&self, f: F) -> Self;
+        fn intersection<F: Fn(&V, &V) -> V>(&self, other: &Self, f: F) -> Self;
+        fn union<F: Fn(&V, &V) -> V>(&self, other: &Self, f: F) -> Self;
         fn difference(&self, other: &Self) -> Self;
         fn restrict(&self, keys: &ArraySetStEph<K>) -> Self;
         fn subtract(&self, keys: &ArraySetStEph<K>) -> Self;
@@ -96,9 +96,7 @@ pub mod OrderedTableStPer {
         }
 
         /// Claude Work: O(n log n), Span: O(log² n)
-        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self 
-        where 
-            F: Fn(&K) -> V 
+        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self 
         {
             OrderedTableStPer {
                 base_table: TableStPer::tabulate(f, keys),
@@ -106,9 +104,7 @@ pub mod OrderedTableStPer {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn map<F>(&self, f: F) -> Self 
-        where 
-            F: Fn(&V) -> V 
+        fn map<F: Fn(&V) -> V>(&self, f: F) -> Self 
         {
             OrderedTableStPer {
                 base_table: self.base_table.map(f),
@@ -116,9 +112,7 @@ pub mod OrderedTableStPer {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn filter<F>(&self, f: F) -> Self 
-        where 
-            F: Fn(&K, &V) -> B 
+        fn filter<F: Fn(&K, &V) -> B>(&self, f: F) -> Self 
         {
             OrderedTableStPer {
                 base_table: self.base_table.filter(f),
@@ -126,9 +120,7 @@ pub mod OrderedTableStPer {
         }
 
         /// Claude Work: O(m + n), Span: O(log(m + n))
-        fn intersection<F>(&self, other: &Self, f: F) -> Self 
-        where 
-            F: Fn(&V, &V) -> V 
+        fn intersection<F: Fn(&V, &V) -> V>(&self, other: &Self, f: F) -> Self 
         {
             OrderedTableStPer {
                 base_table: self.base_table.intersection(&other.base_table, f),
@@ -136,9 +128,7 @@ pub mod OrderedTableStPer {
         }
 
         /// Claude Work: O(m + n), Span: O(log(m + n))
-        fn union<F>(&self, other: &Self, f: F) -> Self 
-        where 
-            F: Fn(&V, &V) -> V 
+        fn union<F: Fn(&V, &V) -> V>(&self, other: &Self, f: F) -> Self 
         {
             OrderedTableStPer {
                 base_table: self.base_table.union(&other.base_table, f),

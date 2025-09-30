@@ -863,3 +863,162 @@ name = "BenchAdvancedProbing"
 path = "benches/Chap47/BenchAdvancedProbing.rs"
 harness = false
 
+# Chapter 49: Dynamic Programming - Subset Sum and Minimum Edit Distance
+[[test]]
+name = "TestSubsetSum"
+path = "tests/TestSubsetSum.rs"
+
+[[test]]
+name = "TestMinEditDist"
+path = "tests/TestMinEditDist.rs"
+
+[[test]]
+name = "TestOBST"
+path = "tests/TestOBST.rs"
+
+[[test]]
+name = "TestMatrixChain"
+path = "tests/TestMatrixChain.rs"
+
+[[test]]
+name = "TestBottomUpDPStPer"
+path = "tests/Chap51/TestBottomUpDPStPer.rs"
+
+[[test]]
+name = "TestBottomUpDPStEph"
+path = "tests/Chap51/TestBottomUpDPStEph.rs"
+
+[[test]]
+name = "TestBottomUpDPMtPer"
+path = "tests/Chap51/TestBottomUpDPMtPer.rs"
+
+[[test]]
+name = "TestBottomUpDPMtEph"
+path = "tests/Chap51/TestBottomUpDPMtEph.rs"
+
+[[test]]
+name = "TestTopDownDPStPer"
+path = "tests/Chap51/TestTopDownDPStPer.rs"
+
+[[test]]
+name = "TestTopDownDPStEph"
+path = "tests/Chap51/TestTopDownDPStEph.rs"
+
+[[test]]
+name = "TestTopDownDPMtPer"
+path = "tests/Chap51/TestTopDownDPMtPer.rs"
+
+[[test]]
+name = "TestTopDownDPMtEph"
+path = "tests/Chap51/TestTopDownDPMtEph.rs"
+
+# Chapter 52: Graph Representations
+[[test]]
+name = "TestEdgeSetGraphStPer"
+path = "tests/Chap52/TestEdgeSetGraphStPer.rs"
+
+[[bench]]
+name = "BenchEdgeSetGraphStPer"
+path = "benches/Chap52/BenchEdgeSetGraphStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchSubsetSum"
+path = "benches/BenchSubsetSum.rs"
+harness = false
+
+[[bench]]
+name = "BenchOBST"
+path = "benches/BenchOBST.rs"
+harness = false
+
+[[bench]]
+name = "BenchMatrixChain"
+path = "benches/BenchMatrixChain.rs"
+harness = false
+
+[[bench]]
+name = "BenchBottomUpDPStPer"
+path = "benches/Chap51/BenchBottomUpDPStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchBottomUpDPStEph"
+path = "benches/Chap51/BenchBottomUpDPStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBottomUpDPMtPer"
+path = "benches/Chap51/BenchBottomUpDPMtPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchBottomUpDPMtEph"
+path = "benches/Chap51/BenchBottomUpDPMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchTopDownDPStPer"
+path = "benches/Chap51/BenchTopDownDPStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchTopDownDPStEph"
+path = "benches/Chap51/BenchTopDownDPStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchTopDownDPMtPer"
+path = "benches/Chap51/BenchTopDownDPMtPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchTopDownDPMtEph"
+path = "benches/Chap51/BenchTopDownDPMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchMinEditDist"
+path = "benches/BenchMinEditDist.rs"
+harness = false
+
+# Chapter 50: Optimal Binary Search Trees and Matrix Chain Product (TEMPORARILY COMMENTED OUT)
+# Fundamental trait bound issues: KeyProb<T> needs T: MtT for Eq, but we use MtVal bounds
+# OrderedFloat<f64> doesn't satisfy MtT. ArraySeqMtEph/MtPer APIs incompatible. Requires rewrite.
+# [[test]]
+# name = "TestOBST"
+# path = "tests/TestOBST.rs"
+
+# [[test]]
+# name = "TestMatrixChain"
+# path = "tests/TestMatrixChain.rs"
+
+# [[bench]]
+# name = "BenchOBST"
+# path = "benches/BenchOBST.rs"
+# harness = false
+
+# [[bench]]
+# name = "BenchMatrixChain"
+# path = "benches/BenchMatrixChain.rs"
+# harness = false
+
+# Chapter 51: Implementing Dynamic Programming (TEMPORARILY COMMENTED OUT)
+# [[test]]
+# name = "TestBottomUpDP"
+# path = "tests/TestBottomUpDP.rs"
+
+# [[test]]
+# name = "TestTopDownDP"
+# path = "tests/TestTopDownDP.rs"
+
+# [[bench]]
+# name = "BenchBottomUpDP"
+# path = "benches/BenchBottomUpDP.rs"
+# harness = false
+
+# [[bench]]
+# name = "BenchTopDownDP"
+# path = "benches/BenchTopDownDP.rs"
+# harness = false
+

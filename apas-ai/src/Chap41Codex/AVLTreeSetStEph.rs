@@ -171,7 +171,7 @@ pub mod AVLTreeSetStEph {
         }
     }
 
-    fn filter_collect<T: StT + Ord, F: Fn(&T) -> B>(link: &Link<T>, predicate: &F, out: &mut AVLTreeSetStEph<T>) {
+    fn filter_collect<T: StT + Ord, F: Pred<T>>(link: &Link<T>, predicate: &F, out: &mut AVLTreeSetStEph<T>) {
         if let Some(node) = link {
             filter_collect(&node.left, predicate, out);
             if predicate(&node.value) {
@@ -221,9 +221,7 @@ pub mod AVLTreeSetStEph {
         fn empty() -> Self;
         fn singleton(value: T) -> Self;
         fn from_seq(seq: &ArraySeqStEphS<T>) -> Self;
-        fn filter<F>(&self, predicate: F) -> Self
-        where
-            F: Fn(&T) -> B;
+        fn filter<F: Pred<T>>(&self, predicate: F) -> Self;
         fn intersection(&self, other: &Self) -> Self;
         fn difference(&self, other: &Self) -> Self;
         fn union(&self, other: &Self) -> Self;
@@ -267,9 +265,7 @@ pub mod AVLTreeSetStEph {
             set
         }
 
-        fn filter<F>(&self, predicate: F) -> Self
-        where
-            F: Fn(&T) -> B,
+        fn filter<F: Pred<T>>(&self, predicate: F) -> Self
         {
             let mut result = Self::empty();
             filter_collect(&self.root, &predicate, &mut result);

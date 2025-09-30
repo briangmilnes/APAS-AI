@@ -10,19 +10,13 @@ pub mod LabDirGraphStEph {
     use crate::Types::Types::*;
 
     #[derive(Clone)]
-    pub struct LabDirGraphStEph<V, L>
-    where
-        V: StT + Hash,
-        L: StT + Hash,
+    pub struct LabDirGraphStEph<V: StT + Hash, L: StT + Hash>
     {
         vertices: Set<V>,
         labeled_arcs: Set<LabEdge<V, L>>,
     }
 
-    pub trait LabDirGraphStEphTrait<V, L>
-    where
-        V: StT + Hash,
-        L: StT + Hash,
+    pub trait LabDirGraphStEphTrait<V: StT + Hash, L: StT + Hash>
     {
         fn empty() -> Self;
         fn from_vertices_and_labeled_arcs(vertices: Set<V>, labeled_arcs: Set<LabEdge<V, L>>) -> Self;
@@ -37,10 +31,7 @@ pub mod LabDirGraphStEph {
         fn in_neighbors(&self, v: &V) -> Set<V>;
     }
 
-    impl<V, L> LabDirGraphStEphTrait<V, L> for LabDirGraphStEph<V, L>
-    where
-        V: StT + Hash,
-        L: StT + Hash,
+    impl<V: StT + Hash, L: StT + Hash> LabDirGraphStEphTrait<V, L> for LabDirGraphStEph<V, L>
     {
         fn empty() -> Self {
             LabDirGraphStEph {
@@ -118,20 +109,14 @@ pub mod LabDirGraphStEph {
         }
     }
 
-    impl<V, L> Display for LabDirGraphStEph<V, L>
-    where
-        V: StT + Hash,
-        L: Clone + Display + Debug + Eq + Hash,
+    impl<V: StT + Hash, L: Clone + Display + Debug + Eq + Hash> Display for LabDirGraphStEph<V, L>
     {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "LabDirGraph(V: {}, A: {})", self.vertices, self.labeled_arcs)
         }
     }
 
-    impl<V, L> Debug for LabDirGraphStEph<V, L>
-    where
-        V: StT + Hash,
-        L: Clone + Display + Debug + Eq + Hash,
+    impl<V: StT + Hash, L: Clone + Display + Debug + Eq + Hash> Debug for LabDirGraphStEph<V, L>
     {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(

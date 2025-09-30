@@ -30,29 +30,19 @@ pub mod TableStPer {
         fn domain(&self) -> ArraySetStEph<K>;
         
         /// APAS: Work Θ(|s| * W(f)), Span Θ(lg |s| + S(f))
-        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self
-        where
-            F: Fn(&K) -> V;
+        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self;
         
         /// APAS: Work Θ(|a| * W(f)), Span Θ(lg |a| + S(f))
-        fn map<F>(&self, f: F) -> Self
-        where
-            F: Fn(&V) -> V;
+        fn map<F: Fn(&V) -> V>(&self, f: F) -> Self;
         
         /// APAS: Work Θ(|a| * W(f)), Span Θ(lg |a| + S(f))
-        fn filter<F>(&self, f: F) -> Self
-        where
-            F: Fn(&K, &V) -> B;
+        fn filter<F: Fn(&K, &V) -> B>(&self, f: F) -> Self;
         
         /// APAS: Work Θ(m * lg(1 + n/m)), Span Θ(lg(n + m))
-        fn intersection<F>(&self, other: &Self, combine: F) -> Self
-        where
-            F: Fn(&V, &V) -> V;
+        fn intersection<F: Fn(&V, &V) -> V>(&self, other: &Self, combine: F) -> Self;
         
         /// APAS: Work Θ(m * lg(1 + n/m)), Span Θ(lg(n + m))
-        fn union<F>(&self, other: &Self, combine: F) -> Self
-        where
-            F: Fn(&V, &V) -> V;
+        fn union<F: Fn(&V, &V) -> V>(&self, other: &Self, combine: F) -> Self;
         
         /// APAS: Work Θ(m * lg(1 + n/m)), Span Θ(lg(n + m))
         fn difference(&self, other: &Self) -> Self;
@@ -64,9 +54,7 @@ pub mod TableStPer {
         fn delete(&self, key: &K) -> Self;
         
         /// APAS: Work Θ(lg |a|), Span Θ(lg |a|)
-        fn insert<F>(&self, key: K, value: V, combine: F) -> Self
-        where
-            F: Fn(&V, &V) -> V;
+        fn insert<F: Fn(&V, &V) -> V>(&self, key: K, value: V, combine: F) -> Self;
         
         /// APAS: Work Θ(m * lg(1 + n/m)), Span Θ(lg(n + m))
         fn restrict(&self, keys: &ArraySetStEph<K>) -> Self;
@@ -102,9 +90,7 @@ pub mod TableStPer {
             ArraySetStEph::from_seq(crate::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(keys))
         }
 
-        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self
-        where
-            F: Fn(&K) -> V,
+        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self
         {
             let key_seq = keys.to_seq();
             let entries = ArraySeqStPerS::tabulate(&|i| {
@@ -118,9 +104,7 @@ pub mod TableStPer {
             }
         }
 
-        fn map<F>(&self, f: F) -> Self
-        where
-            F: Fn(&V) -> V,
+        fn map<F: Fn(&V) -> V>(&self, f: F) -> Self
         {
             let entries = ArraySeqStPerS::tabulate(&|i| {
                 let Pair(key, value) = self.entries.nth(i);
@@ -133,17 +117,13 @@ pub mod TableStPer {
             }
         }
 
-        fn filter<F>(&self, f: F) -> Self
-        where
-            F: Fn(&K, &V) -> B,
+        fn filter<F: Fn(&K, &V) -> B>(&self, f: F) -> Self
         {
             let filtered = ArraySeqStPerS::filter(&self.entries, &|pair| f(&pair.0, &pair.1));
             TableStPer { entries: filtered }
         }
 
-        fn intersection<F>(&self, other: &Self, combine: F) -> Self
-        where
-            F: Fn(&V, &V) -> V,
+        fn intersection<F: Fn(&V, &V) -> V>(&self, other: &Self, combine: F) -> Self
         {
             let mut result_entries = Vec::new();
             let mut i = 0;
@@ -170,9 +150,7 @@ pub mod TableStPer {
             }
         }
 
-        fn union<F>(&self, other: &Self, combine: F) -> Self
-        where
-            F: Fn(&V, &V) -> V,
+        fn union<F: Fn(&V, &V) -> V>(&self, other: &Self, combine: F) -> Self
         {
             let intersection = self.intersection(other, &combine);
             let left_diff = self.difference(other);
@@ -262,9 +240,7 @@ pub mod TableStPer {
             TableStPer { entries: filtered }
         }
 
-        fn insert<F>(&self, key: K, value: V, combine: F) -> Self
-        where
-            F: Fn(&V, &V) -> V,
+        fn insert<F: Fn(&V, &V) -> V>(&self, key: K, value: V, combine: F) -> Self
         {
             if let Some(existing_value) = self.find(&key) {
                 // Key exists, combine values

@@ -5,6 +5,8 @@ Shorten all Ordered* to Ord*.
 
 Shorten all Weighted* to Weigh*. 
 
+Shorten all Function in file names and types/fn/methods to Fun.
+
 Be sure to update lib.rs and Cargo.toml and all the use's.
 
 Get the build, test and benches compiling.

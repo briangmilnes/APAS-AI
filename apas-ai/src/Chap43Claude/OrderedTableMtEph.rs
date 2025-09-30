@@ -392,7 +392,7 @@ pub mod OrderedTableMtEph {
     }
 
     /// Helper function for macro construction
-    pub fn from_sorted_entries<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static>(entries: AVLTreeSeqStPerS<Pair<K, V>>) -> OrderedTableMtEph<K, V> {
+    pub fn from_sorted_entries<K: MtKey, V: MtVal>(entries: AVLTreeSeqStPerS<Pair<K, V>>) -> OrderedTableMtEph<K, V> {
         // Convert persistent sequence to Vec for TableMtEph helper
         let len = entries.length();
         let mut elements = Vec::new();

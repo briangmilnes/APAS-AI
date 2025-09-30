@@ -7,7 +7,7 @@ pub mod Test44Chapter36MtSlice {
     use apas_ai::Chap36::QuickSortMtSlice::Chapter36MtSlice::Chapter36MtSliceTrait;
     use apas_ai::Types::Types::*;
 
-    fn to_vec<T: StT + Send + Sync>(a: &ArraySeqMtEphSliceS<T>) -> Vec<T> {
+    fn to_vec<T: StT + Send + Sync + 'static>(a: &ArraySeqMtEphSliceS<T>) -> Vec<T> {
         a.to_vec()
     }
 

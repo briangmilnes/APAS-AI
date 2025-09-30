@@ -454,9 +454,7 @@ pub mod AVLTreeSeq {
         }
     }
 
-    fn push_inorder<T: Copy + Debug>(link: &Link<T>, out: &mut Vec<T>)
-    where
-        T: Clone,
+    fn push_inorder<T: Copy + Debug + Clone>(link: &Link<T>, out: &mut Vec<T>)
     {
         if let Some(n) = link {
             push_inorder(&n.left, out);

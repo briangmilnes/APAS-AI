@@ -192,20 +192,14 @@ pub mod HashFunctionTraits {
 
     /// Hash function combiner for creating probe sequences
     /// Used in flat hash tables for open addressing
-    pub struct ProbeSequenceGenerator<K, H1, H2> 
-    where 
-        H1: HashFunction<K>,
-        H2: HashFunction<K>,
+    pub struct ProbeSequenceGenerator<K, H1: HashFunction<K>, H2: HashFunction<K>>
     {
         hash1: H1,
         hash2: H2,
         _phantom: std::marker::PhantomData<K>,
     }
 
-    impl<K, H1, H2> ProbeSequenceGenerator<K, H1, H2>
-    where 
-        H1: HashFunction<K>,
-        H2: HashFunction<K>,
+    impl<K, H1: HashFunction<K>, H2: HashFunction<K>> ProbeSequenceGenerator<K, H1, H2>
     {
         pub fn new(hash1: H1, hash2: H2) -> Self {
             ProbeSequenceGenerator {
@@ -390,9 +384,7 @@ pub mod HashFunctionTraits {
 
     impl HashFunctionTester {
         /// Test hash function distribution
-        pub fn test_distribution<K, H>(hash_fn: &H, keys: &[K], table_size: N) -> HashTableStats
-        where
-            H: HashFunction<K>,
+        pub fn test_distribution<K, H: HashFunction<K>>(hash_fn: &H, keys: &[K], table_size: N) -> HashTableStats
         {
             let mut bucket_counts = vec![0; table_size];
             let mut max_count = 0;
@@ -414,9 +406,7 @@ pub mod HashFunctionTraits {
         }
         
         /// Measure hash function performance
-        pub fn benchmark_hash_function<K, H>(hash_fn: &H, keys: &[K], table_size: N) -> std::time::Duration
-        where
-            H: HashFunction<K>,
+        pub fn benchmark_hash_function<K, H: HashFunction<K>>(hash_fn: &H, keys: &[K], table_size: N) -> std::time::Duration
         {
             let start = std::time::Instant::now();
             for key in keys {

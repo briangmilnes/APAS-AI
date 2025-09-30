@@ -307,4 +307,13 @@ fn _MyMacro_type_checks() {
 - Ensure traits are imported; add inherent constructors or small extension traits and impls if needed.
 - Keep UFCS inside impls/traits for disambiguation; minimize UFCS in callers (tests/benches should not need UFCS).
 
+#### Where Clause Simplification (MANDATORY)
+- **Inline Simple Bounds**: Replace `fn method<F>(...) where F: Fn(...);` with `fn method<F: Fn(...)>(...);`
+- **Apply Predicate Abbreviations**: Replace `F: Fn(&T) -> bool` patterns with predicate trait bounds
+- **Remove Redundant Constraints**: Remove `where T: 'static` when T is already constrained by traits that include 'static
+- **Inline Type Constraints**: Replace `fn method<T>(...) where T: Clone + Eq;` with `fn method<T: Clone + Eq>(...);`
+- **Apply Function Abbreviations**: Replace verbose function trait bounds with appropriate abbreviations
+- **Use Type Abbreviations**: Apply consistent type abbreviations to reduce repetitive bounds
+- **Target**: Minimize where clauses across codebase by inlining bounds and using abbreviations
+
 ---

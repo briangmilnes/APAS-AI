@@ -37,16 +37,15 @@ pub mod AugOrderedTableStEph {
         fn find(&self, k: &K) -> Option<V>;
         fn lookup(&self, k: &K) -> Option<V>;
         fn is_empty(&self) -> B;
-        fn insert<G>(&mut self, k: K, v: V, combine: G) where G: Fn(&V, &V) -> V;
+        fn insert<G: Fn(&V, &V) -> V>(&mut self, k: K, v: V, combine: G);
         fn delete(&mut self, k: &K) -> Option<V>;
         fn domain(&self) -> ArraySetStEph<K>;
-        fn tabulate<G>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self 
-        where G: Fn(&K) -> V;
-        fn map<G>(&self, f: G) -> Self where G: Fn(&K, &V) -> V;
-        fn filter<G>(&self, f: G) -> Self where G: Fn(&K, &V) -> B;
-        fn reduce<R, G>(&self, init: R, f: G) -> R where G: Fn(R, &K, &V) -> R;
-        fn intersection<G>(&mut self, other: &Self, f: G) where G: Fn(&V, &V) -> V;
-        fn union<G>(&mut self, other: &Self, f: G) where G: Fn(&V, &V) -> V;
+        fn tabulate<G: Fn(&K) -> V>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self;
+        fn map<G: Fn(&K, &V) -> V>(&self, f: G) -> Self;
+        fn filter<G: Fn(&K, &V) -> B>(&self, f: G) -> Self;
+        fn reduce<R, G: Fn(R, &K, &V) -> R>(&self, init: R, f: G) -> R;
+        fn intersection<G: Fn(&V, &V) -> V>(&mut self, other: &Self, f: G);
+        fn union<G: Fn(&V, &V) -> V>(&mut self, other: &Self, f: G);
         fn difference(&mut self, other: &Self);
         fn restrict(&mut self, keys: &ArraySetStEph<K>);
         fn subtract(&mut self, keys: &ArraySetStEph<K>);
@@ -119,7 +118,7 @@ pub mod AugOrderedTableStEph {
         }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn insert<G>(&mut self, k: K, v: V, combine: G) where G: Fn(&V, &V) -> V {
+        fn insert<G: Fn(&V, &V) -> V>(&mut self, k: K, v: V, combine: G) {
             let old_size = self.base_table.size();
             self.base_table.insert(k, v.clone(), combine);
             
@@ -145,8 +144,7 @@ pub mod AugOrderedTableStEph {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn tabulate<G>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self 
-        where G: Fn(&K) -> V 
+        fn tabulate<G: Fn(&K) -> V>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self 
         {
             let base_table = OrderedTableStEph::tabulate(f, keys);
             let cached_reduction = Self::calculate_reduction(&base_table, &reducer, &identity);
@@ -160,7 +158,7 @@ pub mod AugOrderedTableStEph {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn map<G>(&self, f: G) -> Self where G: Fn(&K, &V) -> V {
+        fn map<G: Fn(&K, &V) -> V>(&self, f: G) -> Self {
             let new_base = self.base_table.map(f);
             let new_reduction = Self::calculate_reduction(&new_base, &self.reducer, &self.identity);
             
@@ -173,7 +171,7 @@ pub mod AugOrderedTableStEph {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn filter<G>(&self, f: G) -> Self where G: Fn(&K, &V) -> B {
+        fn filter<G: Fn(&K, &V) -> B>(&self, f: G) -> Self {
             let new_base = self.base_table.filter(f);
             let new_reduction = Self::calculate_reduction(&new_base, &self.reducer, &self.identity);
             
@@ -186,18 +184,18 @@ pub mod AugOrderedTableStEph {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn reduce<R, G>(&self, init: R, f: G) -> R where G: Fn(R, &K, &V) -> R {
+        fn reduce<R, G: Fn(R, &K, &V) -> R>(&self, init: R, f: G) -> R {
             self.base_table.reduce(init, f)
         }
 
         /// Claude Work: O(n + m), Span: O(lg n + lg m)
-        fn intersection<G>(&mut self, other: &Self, f: G) where G: Fn(&V, &V) -> V {
+        fn intersection<G: Fn(&V, &V) -> V>(&mut self, other: &Self, f: G) {
             self.base_table.intersection(&other.base_table, f);
             self.cached_reduction = self.recalculate_reduction();
         }
 
         /// Claude Work: O(n + m), Span: O(lg n + lg m)
-        fn union<G>(&mut self, other: &Self, f: G) where G: Fn(&V, &V) -> V {
+        fn union<G: Fn(&V, &V) -> V>(&mut self, other: &Self, f: G) {
             self.base_table.union(&other.base_table, f);
             self.cached_reduction = self.recalculate_reduction();
         }

@@ -198,3 +198,56 @@ pub mod Chap47 {
     pub mod ProbeSequenceExamples;
 }
 
+pub mod Chap49 {
+    pub mod SubsetSumStPer;
+    pub mod SubsetSumStEph;
+    pub mod SubsetSumMtPer;
+    pub mod SubsetSumMtEph;
+    pub mod MinEditDistStPer;
+    pub mod MinEditDistStEph;
+    pub mod MinEditDistMtPer;
+    pub mod MinEditDistMtEph;
+}
+
+    pub mod Chap50 {
+        pub mod Probability;
+        pub mod OBSTStPer;
+        pub mod OBSTStEph;
+        pub mod OBSTMtPer;
+        pub mod OBSTMtEph;
+        pub mod MatrixChainStPer;
+        pub mod MatrixChainStEph;
+        pub mod MatrixChainMtPer;
+        pub mod MatrixChainMtEph;
+    }
+
+pub mod Chap51 {
+    pub mod BottomUpDPStPer;
+    pub mod BottomUpDPStEph;
+    pub mod BottomUpDPMtPer;
+    pub mod BottomUpDPMtEph;
+    pub mod TopDownDPStPer;
+    pub mod TopDownDPStEph;
+    pub mod TopDownDPMtPer;
+    pub mod TopDownDPMtEph;
+}
+
+pub mod Chap52 {
+    pub mod EdgeSetGraphStPer;
+    pub mod EdgeSetGraphStEph;
+    pub mod EdgeSetGraphMtPer;
+    pub mod EdgeSetGraphMtEph;
+    pub mod AdjTableGraphStPer;
+    pub mod AdjTableGraphStEph;
+    // pub mod AdjTableGraphMtPer;
+    // pub mod AdjTableGraphMtEph;
+    // pub mod AdjSeqGraphStPer;
+    // pub mod AdjSeqGraphStEph;
+    // pub mod AdjSeqGraphMtPer;
+    // pub mod AdjSeqGraphMtEph;
+    // pub mod AdjMatrixGraphStPer;
+    // pub mod AdjMatrixGraphStEph;
+    // pub mod AdjMatrixGraphMtPer;
+    // pub mod AdjMatrixGraphMtEph;
+}
+

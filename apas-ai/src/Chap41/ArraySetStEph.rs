@@ -18,9 +18,7 @@ pub mod ArraySetStEph {
         fn empty() -> Self;
         fn singleton(x: T) -> Self;
         fn from_seq(seq: ArraySeqStEphS<T>) -> Self;
-        fn filter<F>(&self, f: F) -> Self
-        where
-            F: Fn(&T) -> B;
+        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self;
         fn intersection(&self, other: &Self) -> Self;
         fn difference(&self, other: &Self) -> Self;
         fn union(&self, other: &Self) -> Self;
@@ -67,9 +65,7 @@ pub mod ArraySetStEph {
             result
         }
 
-        fn filter<F>(&self, f: F) -> Self
-        where
-            F: Fn(&T) -> B,
+        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self
         {
             let filtered = ArraySeqStEphS::filter(&self.elements, &f);
             ArraySetStEph { elements: filtered }

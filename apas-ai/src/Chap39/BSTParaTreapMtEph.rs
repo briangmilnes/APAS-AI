@@ -208,9 +208,7 @@ pub mod BSTParaTreapMtEph {
 
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)
-        fn filter_inner<F>(tree: &Self, predicate: &Arc<F>) -> Self
-        where
-            F: Fn(&T) -> bool + Send + Sync + 'static,
+        fn filter_inner<F: Pred<T>>(tree: &Self, predicate: &Arc<F>) -> Self
         {
             match tree.expose_with_priority() {
                 | None => ParamTreap::new(),
@@ -232,9 +230,7 @@ pub mod BSTParaTreapMtEph {
 
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)
-        fn filter_parallel<F>(tree: &Self, predicate: F) -> Self
-        where
-            F: Fn(&T) -> bool + Send + Sync + 'static,
+        fn filter_parallel<F: Pred<T>>(tree: &Self, predicate: F) -> Self
         {
             let predicate = Arc::new(predicate);
             ParamTreap::filter_inner(tree, &predicate)
@@ -330,9 +326,7 @@ pub mod BSTParaTreapMtEph {
         fn difference(&self, other: &Self) -> Self;
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)
-        fn filter<F>(&self, predicate: F) -> Self
-        where
-            F: Fn(&T) -> bool + Send + Sync + 'static;
+        fn filter<F: Pred<T>>(&self, predicate: F) -> Self;
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)
         fn reduce<F>(&self, op: F, base: T) -> T

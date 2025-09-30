@@ -133,7 +133,7 @@ pub mod ArraySeqMtEph {
         }
     }
 
-    impl<T: StT> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
+    impl<T: StT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
         fn new(length: N, init_value: T) -> ArraySeqMtEphS<T> {
             ArraySeqMtEphS::new(length, init_value)
         }

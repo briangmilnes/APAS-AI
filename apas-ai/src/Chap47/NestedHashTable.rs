@@ -11,21 +11,13 @@ pub mod NestedHashTable {
     /// Simplified Nested Hash Table using separate chaining
     /// Uses ArraySeqStPerS for both outer table and inner chains
     #[derive(Clone, Debug)]
-    pub struct NestedHashTable<K, V> 
-    where
-        K: StT,
-        V: StT,
-    {
+    pub struct NestedHashTable<K: StT, V: StT> {
         buckets: ArraySeqStPerS<ArraySeqStPerS<Pair<K, V>>>,
         num_elements: N,
         load_factor_manager: LoadFactorManager,
     }
 
-    impl<K, V> NestedHashTable<K, V>
-    where
-        K: StT,
-        V: StT,
-    {
+    impl<K: StT, V: StT> NestedHashTable<K, V> {
         /// Claude Work: Θ(m), Span: Θ(m)
         /// Create empty nested hash table with given initial size
         pub fn create_table(initial_size: N) -> Self {
@@ -302,11 +294,7 @@ pub mod NestedHashTable {
         }
     }
 
-    impl<K, V> Display for NestedHashTable<K, V>
-    where
-        K: StT + Display,
-        V: StT + Display,
-    {
+    impl<K: StT + Display, V: StT + Display> Display for NestedHashTable<K, V> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             writeln!(f, "NestedHashTable {{")?;
             writeln!(f, "  size: {}, load_factor: {:.3}", self.num_elements, self.load_factor())?;

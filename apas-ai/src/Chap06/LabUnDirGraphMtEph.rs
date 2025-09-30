@@ -10,19 +10,13 @@ pub mod LabUnDirGraphMtEph {
     use crate::Types::Types::*;
 
     #[derive(Clone)]
-    pub struct LabUnDirGraphMtEph<V, L>
-    where
-        V: HashOrd + MtT,
-        L: StTInMtT + Hash,
+    pub struct LabUnDirGraphMtEph<V: HashOrd + MtT, L: StTInMtT + Hash>
     {
         vertices: Set<V>,
         labeled_edges: Set<LabEdge<V, L>>,
     }
 
-    pub trait LabUnDirGraphMtEphTrait<V, L>
-    where
-        V: HashOrd + MtT,
-        L: StTInMtT + Hash,
+    pub trait LabUnDirGraphMtEphTrait<V: HashOrd + MtT, L: StTInMtT + Hash>
     {
         fn empty() -> Self;
         fn from_vertices_and_labeled_edges(vertices: Set<V>, labeled_edges: Set<LabEdge<V, L>>) -> Self;
@@ -37,10 +31,7 @@ pub mod LabUnDirGraphMtEph {
         fn normalize_edge(v1: V, v2: V) -> LabEdge<V, L>;
     }
 
-    impl<V, L> LabUnDirGraphMtEphTrait<V, L> for LabUnDirGraphMtEph<V, L>
-    where
-        V: HashOrd + MtT,
-        L: StTInMtT + Hash,
+    impl<V: HashOrd + MtT, L: StTInMtT + Hash> LabUnDirGraphMtEphTrait<V, L> for LabUnDirGraphMtEph<V, L>
     {
         fn empty() -> Self {
             LabUnDirGraphMtEph {
@@ -129,10 +120,7 @@ pub mod LabUnDirGraphMtEph {
     }
 
     // DirGraphStEph-compatible interface for labeled undirected graphs
-    impl<V, L> LabUnDirGraphMtEph<V, L>
-    where
-        V: StT + MtT + Hash + Ord,
-        L: StTInMtT + Hash,
+    impl<V: HashOrd + MtT, L: StTInMtT + Hash> LabUnDirGraphMtEph<V, L>
     {
         /// Arc count (alias for edge count in undirected graphs)
         pub fn sizeA(&self) -> N {
@@ -165,20 +153,14 @@ pub mod LabUnDirGraphMtEph {
         }
     }
 
-    impl<V, L> Display for LabUnDirGraphMtEph<V, L>
-    where
-        V: StT + MtT + Hash + Ord,
-        L: StTInMtT + Hash,
+    impl<V: HashOrd + MtT, L: StTInMtT + Hash> Display for LabUnDirGraphMtEph<V, L>
     {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "LabUnDirGraph(V: {}, E: {})", self.vertices, self.labeled_edges)
         }
     }
 
-    impl<V, L> Debug for LabUnDirGraphMtEph<V, L>
-    where
-        V: StT + MtT + Hash + Ord,
-        L: StTInMtT + Hash,
+    impl<V: HashOrd + MtT, L: StTInMtT + Hash> Debug for LabUnDirGraphMtEph<V, L>
     {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(

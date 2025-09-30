@@ -97,9 +97,7 @@ pub mod TableMtEph {
         }
 
         /// Work: O(n), Span: O(log n) - parallel tabulation
-        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self
-        where
-            F: Fn(&K) -> V + Send + Sync + 'static,
+        fn tabulate<F: Fn(&K) -> V + Send + Sync + 'static>(f: F, keys: &ArraySetStEph<K>) -> Self
         {
             let key_seq = keys.to_seq();
             let f = Arc::new(f);
@@ -154,9 +152,7 @@ pub mod TableMtEph {
         }
 
         /// Work: O(n), Span: O(log n) - parallel map
-        fn map<F>(&mut self, f: F)
-        where
-            F: Fn(&V) -> V + Send + Sync + 'static,
+        fn map<F: Fn(&V) -> V + Send + Sync + 'static>(&mut self, f: F)
         {
             let f = Arc::new(f);
             let len = self.entries.length();
@@ -205,9 +201,7 @@ pub mod TableMtEph {
         }
 
         /// Work: O(n), Span: O(log n) - parallel filter
-        fn filter<F>(&mut self, f: F)
-        where
-            F: Fn(&K, &V) -> B + Send + Sync + 'static,
+        fn filter<F: Fn(&K, &V) -> B + Send + Sync + 'static>(&mut self, f: F)
         {
             let f = Arc::new(f);
             let len = self.entries.length();
@@ -264,9 +258,7 @@ pub mod TableMtEph {
         }
 
         /// Work: O(n + m), Span: O(log(n + m)) - parallel intersection
-        fn intersection<F>(&mut self, other: &Self, combine: F)
-        where
-            F: Fn(&V, &V) -> V + Send + Sync,
+        fn intersection<F: Fn(&V, &V) -> V + Send + Sync>(&mut self, other: &Self, combine: F)
         {
             let combine = Arc::new(combine);
             let mut intersection_entries = Vec::new();
@@ -294,9 +286,7 @@ pub mod TableMtEph {
         }
 
         /// Work: O(n + m), Span: O(log(n + m)) - parallel union
-        fn union<F>(&mut self, other: &Self, combine: F)
-        where
-            F: Fn(&V, &V) -> V + Send + Sync,
+        fn union<F: Fn(&V, &V) -> V + Send + Sync>(&mut self, other: &Self, combine: F)
         {
             let combine = Arc::new(combine);
             let mut union_entries = Vec::new();
@@ -453,9 +443,7 @@ pub mod TableMtEph {
         }
 
         /// Work: O(n), Span: O(log n) - parallel insert with combine
-        fn insert<F>(&mut self, key: K, value: V, combine: F)
-        where
-            F: Fn(&V, &V) -> V + Send + Sync,
+        fn insert<F: Fn(&V, &V) -> V + Send + Sync>(&mut self, key: K, value: V, combine: F)
         {
             // Check if key already exists
             if let Some(existing_value) = self.find(&key) {
@@ -644,7 +632,7 @@ pub mod TableMtEph {
     }
 
     /// Helper function for creating tables from sorted entries
-    pub fn from_sorted_entries<K: StTInMtT + Ord + 'static, V: StTInMtT + 'static>(entries: Vec<Pair<K, V>>) -> TableMtEph<K, V> {
+    pub fn from_sorted_entries<K: MtKey, V: MtVal>(entries: Vec<Pair<K, V>>) -> TableMtEph<K, V> {
         TableMtEph {
             entries: ArraySeqMtEphS::from_vec(entries),
         }

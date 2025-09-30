@@ -38,12 +38,11 @@ pub mod AugOrderedTableStPer {
         fn insert(&self, k: K, v: V) -> Self;
         fn delete(&self, k: &K) -> Self;
         fn domain(&self) -> ArraySetStEph<K>;
-        fn tabulate<G>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self 
-        where G: Fn(&K) -> V;
-        fn map<G>(&self, f: G) -> Self where G: Fn(&V) -> V;
-        fn filter<G>(&self, f: G) -> Self where G: Fn(&K, &V) -> B;
-        fn intersection<G>(&self, other: &Self, f: G) -> Self where G: Fn(&V, &V) -> V;
-        fn union<G>(&self, other: &Self, f: G) -> Self where G: Fn(&V, &V) -> V;
+        fn tabulate<G: Fn(&K) -> V>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self;
+        fn map<G: Fn(&V) -> V>(&self, f: G) -> Self;
+        fn filter<G: Fn(&K, &V) -> B>(&self, f: G) -> Self;
+        fn intersection<G: Fn(&V, &V) -> V>(&self, other: &Self, f: G) -> Self;
+        fn union<G: Fn(&V, &V) -> V>(&self, other: &Self, f: G) -> Self;
         fn difference(&self, other: &Self) -> Self;
         fn restrict(&self, keys: &ArraySetStEph<K>) -> Self;
         fn subtract(&self, keys: &ArraySetStEph<K>) -> Self;
@@ -143,8 +142,7 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn tabulate<G>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self 
-        where G: Fn(&K) -> V 
+        fn tabulate<G: Fn(&K) -> V>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self 
         {
             let base_table = OrderedTableStPer::tabulate(f, keys);
             let cached_reduction = Self::calculate_reduction(&base_table, &reducer, &identity);
@@ -158,7 +156,7 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn map<G>(&self, f: G) -> Self where G: Fn(&V) -> V {
+        fn map<G: Fn(&V) -> V>(&self, f: G) -> Self {
             let new_base = self.base_table.map(f);
             let new_reduction = self.recalculate_reduction(&new_base);
             
@@ -171,7 +169,7 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn filter<G>(&self, f: G) -> Self where G: Fn(&K, &V) -> B {
+        fn filter<G: Fn(&K, &V) -> B>(&self, f: G) -> Self {
             let new_base = self.base_table.filter(f);
             let new_reduction = self.recalculate_reduction(&new_base);
             
@@ -184,7 +182,7 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(n + m), Span: O(lg n + lg m)
-        fn intersection<G>(&self, other: &Self, f: G) -> Self where G: Fn(&V, &V) -> V {
+        fn intersection<G: Fn(&V, &V) -> V>(&self, other: &Self, f: G) -> Self {
             let new_base = self.base_table.intersection(&other.base_table, f);
             let new_reduction = self.recalculate_reduction(&new_base);
             
@@ -197,7 +195,7 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(n + m), Span: O(lg n + lg m)
-        fn union<G>(&self, other: &Self, f: G) -> Self where G: Fn(&V, &V) -> V {
+        fn union<G: Fn(&V, &V) -> V>(&self, other: &Self, f: G) -> Self {
             let new_base = self.base_table.union(&other.base_table, f);
             let new_reduction = self.recalculate_reduction(&new_base);
             

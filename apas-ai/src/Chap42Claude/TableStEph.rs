@@ -21,27 +21,15 @@ pub mod TableStEph {
         fn empty() -> Self;
         fn singleton(key: K, value: V) -> Self;
         fn domain(&self) -> ArraySetStEph<K>;
-        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self
-        where
-            F: Fn(&K) -> V;
-        fn map<F>(&mut self, f: F)
-        where
-            F: Fn(&V) -> V;
-        fn filter<F>(&mut self, f: F)
-        where
-            F: Fn(&K, &V) -> B;
-        fn intersection<F>(&mut self, other: &Self, combine: F)
-        where
-            F: Fn(&V, &V) -> V;
-        fn union<F>(&mut self, other: &Self, combine: F)
-        where
-            F: Fn(&V, &V) -> V;
+        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self;
+        fn map<F: Fn(&V) -> V>(&mut self, f: F);
+        fn filter<F: Fn(&K, &V) -> B>(&mut self, f: F);
+        fn intersection<F: Fn(&V, &V) -> V>(&mut self, other: &Self, combine: F);
+        fn union<F: Fn(&V, &V) -> V>(&mut self, other: &Self, combine: F);
         fn difference(&mut self, other: &Self);
         fn find(&self, key: &K) -> Option<V>;
         fn delete(&mut self, key: &K);
-        fn insert<F>(&mut self, key: K, value: V, combine: F)
-        where
-            F: Fn(&V, &V) -> V;
+        fn insert<F: Fn(&V, &V) -> V>(&mut self, key: K, value: V, combine: F);
         fn restrict(&mut self, keys: &ArraySetStEph<K>);
         fn subtract(&mut self, keys: &ArraySetStEph<K>);
         
@@ -80,9 +68,7 @@ pub mod TableStEph {
         }
 
         /// Work: O(n), Span: O(n)
-        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self
-        where
-            F: Fn(&K) -> V,
+        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self
         {
             let key_seq = keys.to_seq();
             let mut entries = Vec::with_capacity(key_seq.length());
@@ -99,9 +85,7 @@ pub mod TableStEph {
         }
 
         /// Work: O(n), Span: O(n)
-        fn map<F>(&mut self, f: F)
-        where
-            F: Fn(&V) -> V,
+        fn map<F: Fn(&V) -> V>(&mut self, f: F)
         {
             let mapped_entries = ArraySeqStEphS::tabulate(&|i| {
                 let pair = self.entries.nth(i);
@@ -112,18 +96,14 @@ pub mod TableStEph {
         }
 
         /// Work: O(n), Span: O(n)
-        fn filter<F>(&mut self, f: F)
-        where
-            F: Fn(&K, &V) -> B,
+        fn filter<F: Fn(&K, &V) -> B>(&mut self, f: F)
         {
             let filtered = ArraySeqStEphS::filter(&self.entries, &|pair| f(&pair.0, &pair.1));
             self.entries = filtered;
         }
 
         /// Work: O(n + m), Span: O(n + m)
-        fn intersection<F>(&mut self, other: &Self, combine: F)
-        where
-            F: Fn(&V, &V) -> V,
+        fn intersection<F: Fn(&V, &V) -> V>(&mut self, other: &Self, combine: F)
         {
             let mut intersection_entries = Vec::new();
             let mut i = 0;
@@ -149,9 +129,7 @@ pub mod TableStEph {
         }
 
         /// Work: O(n + m), Span: O(n + m)
-        fn union<F>(&mut self, other: &Self, combine: F)
-        where
-            F: Fn(&V, &V) -> V,
+        fn union<F: Fn(&V, &V) -> V>(&mut self, other: &Self, combine: F)
         {
             let mut union_entries = Vec::new();
             let mut i = 0;
@@ -255,9 +233,7 @@ pub mod TableStEph {
         }
 
         /// Work: O(n), Span: O(n)
-        fn insert<F>(&mut self, key: K, value: V, combine: F)
-        where
-            F: Fn(&V, &V) -> V,
+        fn insert<F: Fn(&V, &V) -> V>(&mut self, key: K, value: V, combine: F)
         {
             // Check if key already exists
             if let Some(existing_value) = self.find(&key) {

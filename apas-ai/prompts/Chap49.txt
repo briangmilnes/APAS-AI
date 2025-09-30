@@ -1,5 +1,4 @@
- Build a plan for this, including test and benchmark
- using PrePlanChecklist.md. 
+ Build a plan for Chap49 below, including test and benchmark using PrePlanChecklist.md.
 
  How many are parallel?
 

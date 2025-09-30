@@ -10,19 +10,13 @@ pub mod LabUnDirGraphStEph {
     use crate::Types::Types::*;
 
     #[derive(Clone)]
-    pub struct LabUnDirGraphStEph<V, L>
-    where
-        V: StT + Hash + Ord,
-        L: StT + Hash,
+    pub struct LabUnDirGraphStEph<V: HashOrd, L: StT + Hash>
     {
         vertices: Set<V>,
         labeled_edges: Set<LabEdge<V, L>>,
     }
 
-    pub trait LabUnDirGraphStEphTrait<V, L>
-    where
-        V: StT + Hash + Ord,
-        L: StT + Hash,
+    pub trait LabUnDirGraphStEphTrait<V: HashOrd, L: StT + Hash>
     {
         fn empty() -> Self;
         fn from_vertices_and_labeled_edges(vertices: Set<V>, labeled_edges: Set<LabEdge<V, L>>) -> Self;
@@ -37,10 +31,7 @@ pub mod LabUnDirGraphStEph {
         fn normalize_edge(v1: V, v2: V) -> LabEdge<V, L>;
     }
 
-    impl<V, L> LabUnDirGraphStEphTrait<V, L> for LabUnDirGraphStEph<V, L>
-    where
-        V: StT + Hash + Ord,
-        L: StT + Hash,
+    impl<V: HashOrd, L: StT + Hash> LabUnDirGraphStEphTrait<V, L> for LabUnDirGraphStEph<V, L>
     {
         fn empty() -> Self {
             LabUnDirGraphStEph {
@@ -130,10 +121,7 @@ pub mod LabUnDirGraphStEph {
     }
 
     // DirGraphStEph-compatible interface for labeled undirected graphs
-    impl<V, L> LabUnDirGraphStEph<V, L>
-    where
-        V: StT + Hash + Ord,
-        L: StT + Hash,
+    impl<V: HashOrd, L: StT + Hash> LabUnDirGraphStEph<V, L>
     {
         /// Arc count (alias for edge count in undirected graphs)
         pub fn sizeA(&self) -> N {
@@ -166,20 +154,14 @@ pub mod LabUnDirGraphStEph {
         }
     }
 
-    impl<V, L> Display for LabUnDirGraphStEph<V, L>
-    where
-        V: StT + Hash + Ord,
-        L: StT + Hash,
+    impl<V: HashOrd, L: StT + Hash> Display for LabUnDirGraphStEph<V, L>
     {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "LabUnDirGraph(V: {}, E: {})", self.vertices, self.labeled_edges)
         }
     }
 
-    impl<V, L> Debug for LabUnDirGraphStEph<V, L>
-    where
-        V: StT + Hash + Ord,
-        L: StT + Hash,
+    impl<V: HashOrd, L: StT + Hash> Debug for LabUnDirGraphStEph<V, L>
     {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(

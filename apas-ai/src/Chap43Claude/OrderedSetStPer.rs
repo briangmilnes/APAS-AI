@@ -24,7 +24,7 @@ pub mod OrderedSetStPer {
         fn find(&self, x: &T) -> B;
         fn insert(&self, x: T) -> Self;
         fn delete(&self, x: &T) -> Self;
-        fn filter<F>(&self, f: F) -> Self where F: Fn(&T) -> B;
+        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self;
         fn intersection(&self, other: &Self) -> Self;
         fn union(&self, other: &Self) -> Self;
         fn difference(&self, other: &Self) -> Self;
@@ -86,9 +86,7 @@ pub mod OrderedSetStPer {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn filter<F>(&self, f: F) -> Self 
-        where 
-            F: Fn(&T) -> B 
+        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self 
         {
             OrderedSetStPer {
                 base_set: self.base_set.filter(f),

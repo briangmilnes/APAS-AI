@@ -87,9 +87,7 @@ pub mod OrderedSetMtEph {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn filter<F>(&mut self, f: F) 
-        where 
-            F: Fn(&T) -> B + Send + Sync + 'static 
+        fn filter<F: Fn(&T) -> B + Send + Sync + 'static>(&mut self, f: F) 
         {
             self.elements.retain(|x| f(x));
         }

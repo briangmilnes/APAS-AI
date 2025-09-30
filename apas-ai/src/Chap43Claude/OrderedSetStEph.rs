@@ -25,7 +25,7 @@ pub mod OrderedSetStEph {
         fn find(&self, x: &T) -> B;
         fn insert(&mut self, x: T);
         fn delete(&mut self, x: &T);
-        fn filter<F>(&mut self, f: F) where F: Fn(&T) -> B;
+        fn filter<F: Fn(&T) -> B>(&mut self, f: F);
         fn intersection(&mut self, other: &Self);
         fn union(&mut self, other: &Self);
         fn difference(&mut self, other: &Self);
@@ -83,9 +83,7 @@ pub mod OrderedSetStEph {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn filter<F>(&mut self, f: F) 
-        where 
-            F: Fn(&T) -> B 
+        fn filter<F: Fn(&T) -> B>(&mut self, f: F) 
         {
             let result = self.base_set.filter(f);
             self.base_set = result;

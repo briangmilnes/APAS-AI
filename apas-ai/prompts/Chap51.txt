@@ -1,9 +1,11 @@
- Build a plan for this, including test and benchmark
+ Build a plan for fixing this, including test and benchmark
  using PrePlanChecklist.md. 
 
  Show it to me and estimate time.
 
  How many are parallel?
+
+ You may use Vec here as needed. Our sequences are not rich enough.
 
  I will tell you when to execute. 
 

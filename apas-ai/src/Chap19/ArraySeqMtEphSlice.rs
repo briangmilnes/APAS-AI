@@ -48,19 +48,19 @@ pub mod ArraySeqMtEphSlice {
         fn subseq_copy(&self, start: N, length: N) -> Self;
         fn slice(&self, start: N, length: N) -> Self;
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> Self;
-        fn map<U: StT + Send + Sync + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &Self, f: F) -> ArraySeqMtEphSliceS<U> where T: Send + 'static;
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &Self, pred: F) -> Self where T: Send + 'static;
+        fn map<U: MtVal, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &Self, f: F) -> ArraySeqMtEphSliceS<U>;
+        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &Self, pred: F) -> Self;
         fn append(a: &Self, b: &Self) -> Self;
         fn append_select(a: &Self, b: &Self) -> Self;
         fn flatten(sequences: &[ArraySeqMtEphSliceS<T>]) -> Self;
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &Self, f: F, id: T) -> T where T: Send + 'static;
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &Self, f: F, id: T) -> T;
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &Self, f: &F, id: T) -> (ArraySeqMtEphSliceS<T>, T);
         fn iterate<A: StT + Send, F: Fn(&A, &T) -> A + Send + Sync>(a: &Self, f: &F, seed: A) -> A;
         fn inject(a: &Self, updates: &[(N, T)]) -> Self;
         fn ninject(a: &Self, updates: &[(N, T)]) -> Self;
     }
 
-    impl<T: StT + Send + Sync> ArraySeqMtEphSliceS<T> {
+    impl<T: StT + Send + Sync + 'static> ArraySeqMtEphSliceS<T> {
         /// Constructs a sequence from an owned boxed slice.
         pub fn from_box(data: Box<[T]>) -> Self {
             let len = data.len();
@@ -82,9 +82,7 @@ pub mod ArraySeqMtEphSlice {
         }
 
         /// Invokes the closure with a mutable slice under the single mutex.
-        pub fn with_exclusive<F, R>(&self, f: F) -> R
-        where
-            F: FnOnce(&mut [T]) -> R,
+        pub fn with_exclusive<F: FnOnce(&mut [T]) -> R, R>(&self, f: F) -> R
         {
             let mut guard = self.inner.data.lock().unwrap();
             let start = self.range.start;
@@ -110,7 +108,7 @@ pub mod ArraySeqMtEphSlice {
         }
     }
 
-    impl<T: StT + Send + Sync> ArraySeqMtEphSliceTrait<T> for ArraySeqMtEphSliceS<T> {
+    impl<T: StT + Send + Sync + 'static> ArraySeqMtEphSliceTrait<T> for ArraySeqMtEphSliceS<T> {
         fn new(length: N, init_value: T) -> Self {
             let data = repeat_vec(length, init_value);
             ArraySeqMtEphSliceS::from_vec(data)
@@ -184,12 +182,10 @@ pub mod ArraySeqMtEphSlice {
             ArraySeqMtEphSliceS::from_vec(values)
         }
 
-        fn map<U: StT + Send + Sync + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
+        fn map<U: MtVal, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
             a: &Self,
             f: F,
         ) -> ArraySeqMtEphSliceS<U>
-        where
-            T: Send + 'static,
         {
             // Algorithm 19.3 with parallelism: map f a = tabulate(lambda i.f(a[i]), |a|)
             if a.length() == 0 {
@@ -215,8 +211,6 @@ pub mod ArraySeqMtEphSlice {
         }
 
         fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &Self, pred: F) -> Self
-        where
-            T: Send + 'static,
         {
             // Algorithm 19.5 with parallelism: fork thread per element + serial compaction
             if a.length() == 0 {
@@ -294,8 +288,6 @@ pub mod ArraySeqMtEphSlice {
         }
 
         fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &Self, f: F, id: T) -> T
-        where
-            T: Send + 'static,
         {
             // Algorithm 19.9: divide-and-conquer parallel reduce
             if a.length() == 0 {
@@ -389,7 +381,7 @@ pub mod ArraySeqMtEphSlice {
         }
     }
 
-    impl<T: StT + Send + Sync> PartialEq for ArraySeqMtEphSliceS<T> {
+    impl<T: StT + Send + Sync + 'static> PartialEq for ArraySeqMtEphSliceS<T> {
         fn eq(&self, other: &Self) -> bool {
             if Arc::ptr_eq(&self.inner, &other.inner) && self.range == other.range {
                 return true;
@@ -403,7 +395,7 @@ pub mod ArraySeqMtEphSlice {
         }
     }
 
-    impl<T: StT + Send + Sync> Eq for ArraySeqMtEphSliceS<T> {}
+    impl<T: StT + Send + Sync + 'static> Eq for ArraySeqMtEphSliceS<T> {}
 
     impl<T: StT + Send + Sync> Debug for ArraySeqMtEphSliceS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

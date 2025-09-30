@@ -21,7 +21,7 @@ pub mod Chapter36MtSlice {
         fn quick_sort_mt_random(&self);
     }
 
-    impl<T: StT + Ord + Send + Sync> Chapter36MtSliceTrait<T> for ArraySeqMtEphSliceS<T> {
+    impl<T: StT + Ord + Send + Sync + 'static> Chapter36MtSliceTrait<T> for ArraySeqMtEphSliceS<T> {
         fn pivot_mt_first(&self, lo: N, _hi: N) -> T {
             self.nth_cloned(lo)
         }

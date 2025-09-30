@@ -18,9 +18,7 @@ pub mod AVLTreeSetStPer {
         fn empty() -> Self;
         fn singleton(x: T) -> Self;
         fn from_seq(seq: AVLTreeSeqStPerS<T>) -> Self;
-        fn filter<F>(&self, f: F) -> Self
-        where
-            F: Fn(&T) -> B;
+        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self;
         fn intersection(&self, other: &Self) -> Self;
         fn difference(&self, other: &Self) -> Self;
         fn union(&self, other: &Self) -> Self;
@@ -79,9 +77,7 @@ pub mod AVLTreeSetStPer {
             result
         }
 
-        fn filter<F>(&self, f: F) -> Self
-        where
-            F: Fn(&T) -> B,
+        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self
         {
             let mut result = Self::empty();
             for i in 0..self.elements.length() {
