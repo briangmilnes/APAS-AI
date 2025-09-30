@@ -12,7 +12,7 @@ pub mod ArraySeqMtEph {
 
     pub type ArraySeqMtEphS<T> = ArraySeqMtEphSChap18<T>;
 
-    pub trait ArraySeqMtEphTrait<T: MtVal> {
+    pub trait ArraySeqMtEphTrait<T: StTInMtT> {
         fn new(length: N, init_value: T) -> ArraySeqMtEphS<T>;
         fn empty() -> ArraySeqMtEphS<T>;
         fn singleton(item: T) -> ArraySeqMtEphS<T>;
@@ -36,7 +36,7 @@ pub mod ArraySeqMtEph {
         fn update(a: &ArraySeqMtEphS<T>, index: N, item: T) -> ArraySeqMtEphS<T>;
     }
 
-    impl<T: MtVal> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
+    impl<T: StTInMtT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
         fn new(length: N, init_value: T) -> ArraySeqMtEphS<T> {
             // Keep as primitive - delegates to tabulate
             <ArraySeqMtEphS<T> as ArraySeqMtEphTraitChap18<T>>::new(length, init_value)

@@ -33,7 +33,7 @@ pub mod Chapter36Mt {
         fn quick_sort_mt_random(&mut self);
     }
 
-    impl<T: StT + Ord + Send> Chapter36MtTrait<T> for ArraySeqMtEphS<T> {
+    impl<T: StT + Ord + Send + Sync> Chapter36MtTrait<T> for ArraySeqMtEphS<T> {
         fn pivot_mt_first(&self, lo: N, _hi: N) -> T {
             self.nth_cloned(lo)
         }

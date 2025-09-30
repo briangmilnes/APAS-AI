@@ -14,7 +14,7 @@ pub mod ArraySeqMtPer {
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18};
     use crate::Types::Types::*;
 
-    pub trait ArraySeqMtPerTrait<T: MtVal> {
+    pub trait ArraySeqMtPerTrait<T: StTInMtT> {
         // Chapter 18 wrappers
         fn new(length: N, init_value: T) -> ArraySeqMtPerS<T>;
         fn empty() -> ArraySeqMtPerS<T>;
@@ -24,7 +24,7 @@ pub mod ArraySeqMtPer {
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T>;
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
-        fn map<W: MtVal, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F) -> ArraySeqMtPerS<W>;
+        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F) -> ArraySeqMtPerS<W> where T: 'static;
         fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
         fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T>;
         fn update_single(a: &ArraySeqMtPerS<T>, index: N, item: T) -> ArraySeqMtPerS<T>;
@@ -35,7 +35,7 @@ pub mod ArraySeqMtPer {
             f: &F,
             x: A,
         ) -> (ArraySeqMtPerS<A>, A);
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T;
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T where T: 'static;
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T);
         fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T>;
         fn collect(a: &ArraySeqMtPerS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>>;
@@ -54,7 +54,7 @@ pub mod ArraySeqMtPer {
         fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtPerS<T>;
     }
 
-    impl<T: MtVal> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
+    impl<T: StTInMtT + 'static> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
         fn new(length: N, init_value: T) -> ArraySeqMtPerS<T> {
             // Keep as primitive - delegates to tabulate
             <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::new(length, init_value)

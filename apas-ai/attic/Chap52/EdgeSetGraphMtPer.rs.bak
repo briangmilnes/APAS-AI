@@ -1,0 +1,270 @@
+//! Edge Set Graph Representation - Persistent Multi-Threaded Implementation
+//!
+//! This module implements the edge-set representation with parallel map operations.
+//! Uses persistent data structures with thread-safe parallel traversal.
+
+pub mod EdgeSetGraphMtPer {
+
+use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
+use crate::Chap43Claude::OrderedTableStPer::OrderedTableStPer::*;
+use crate::Types::Types::*;
+use std::fmt::{Debug, Display};
+use std::sync::{Arc, Mutex};
+use std::thread;
+
+/// Persistent multi-threaded edge-set graph (struct product record type)
+pub struct EdgeSetGraphMtPerS<V: MtT + Ord + Clone + Debug + Display> {
+    /// Set of vertices
+    vertices: AVLTreeSetStPer<V>,
+    /// Set of directed edges (u, v)
+    edges: AVLTreeSetStPer<Pair<V, V>>,
+}
+
+impl<V: MtT + Ord + Clone + Debug + Display> EdgeSetGraphMtPerS<V> {
+    /// Claude Work: O(1) - constant time initialization
+    /// Claude Span: O(1) - constant time initialization
+    pub fn new() -> Self {
+        EdgeSetGraphMtPerS {
+            vertices: AVLTreeSetStPer::empty(),
+            edges: AVLTreeSetStPer::empty(),
+        }
+    }
+
+    /// Create graph from vertex and edge sequences
+    /// Claude Work: O(n lg n + m lg m) - building two sets
+    /// Claude Span: O(lg n + lg m) - sequential inserts
+    pub fn from_edges(vertices: AVLTreeSetStPer<V>, edges: AVLTreeSetStPer<Pair<V, V>>) -> Self {
+        EdgeSetGraphMtPerS { vertices, edges }
+    }
+
+    /// Insert an isolated vertex
+    /// Claude Work: O(lg n) - tree-based set insert
+    /// Claude Span: O(lg n) - tree-based set insert
+    pub fn insert_vertex(self, v: V) -> Self {
+        EdgeSetGraphMtPerS {
+            vertices: self.vertices.insert(v),
+            edges: self.edges,
+        }
+    }
+
+    /// Delete an isolated vertex
+    /// Claude Work: O(lg n) - tree-based set delete
+    /// Claude Span: O(lg n) - tree-based set delete
+    pub fn delete_vertex(self, v: V) -> Self {
+        EdgeSetGraphMtPerS {
+            vertices: self.vertices.delete(v),
+            edges: self.edges,
+        }
+    }
+
+    /// Insert a directed edge
+    /// Claude Work: O(lg n) - tree-based set insert
+    /// Claude Span: O(lg n) - tree-based set insert
+    pub fn insert_edge(self, u: V, v: V) -> Self {
+        EdgeSetGraphMtPerS {
+            vertices: self.vertices,
+            edges: self.edges.insert(Pair(u, v)),
+        }
+    }
+
+    /// Delete a directed edge
+    /// Claude Work: O(lg n) - tree-based set delete
+    /// Claude Span: O(lg n) - tree-based set delete
+    pub fn delete_edge(self, u: V, v: V) -> Self {
+        EdgeSetGraphMtPerS {
+            vertices: self.vertices,
+            edges: self.edges.delete(Pair(u, v)),
+        }
+    }
+
+    /// Check if edge (u, v) exists
+    /// Claude Work: O(lg n) - tree-based set find
+    /// Claude Span: O(lg n) - tree-based set find
+    pub fn has_edge(&self, u: &V, v: &V) -> bool {
+        self.edges.find(&*u, *v)
+    }
+
+    /// Get number of vertices
+    /// Claude Work: O(1) - constant time
+    /// Claude Span: O(1) - constant time
+    pub fn vertex_count(&self) -> usize {
+        self.vertices.size()
+    }
+
+    /// Get number of edges
+    /// Claude Work: O(1) - constant time
+    /// Claude Span: O(1) - constant time
+    pub fn edge_count(&self) -> usize {
+        self.edges.size()
+    }
+
+    /// Get out-degree of a vertex (parallel)
+    /// Claude Work: O(m) - scan all edges
+    /// Claude Span: O(lg m) - parallel reduction
+//     pub fn out_degree(&self, v: &V) -> usize {
+//         let edges_vec: Vec<Pair<V, V>> = self.edges.iter().cloned().collect();
+//         let chunk_size = (edges_vec.len() / 4).max(1);
+//         let v_clone = v.clone();
+//         
+//         let handles: Vec<_> = edges_vec
+//             .chunks(chunk_size)
+//             .map(|chunk| {
+//                 let chunk = chunk.to_vec();
+//                 let v_clone = v_clone.clone();
+//                 thread::spawn(move || {
+//                     chunk.iter().filter(|(u, _)| u == &v_clone).count()
+//                 })
+//             })
+//             .collect();
+//         
+//         handles.into_iter().map(|h| h.join().unwrap()).sum()
+//     }
+
+    /// Map a function over all vertices (parallel)
+    /// Claude Work: O(n) - assuming f is O(1)
+    /// Claude Span: O(lg n) - parallel tree traversal
+//     pub fn map_vertices_parallel<F, R>(&self, f: F) -> Vec<R>
+//     where
+//         F: Fn(&V) -> R + Send + Sync,
+//         R: Send,
+//     {
+//         let vertices_vec: Vec<V> = self.vertices.iter().cloned().collect();
+//         let chunk_size = (vertices_vec.len() / 4).max(1);
+//         let f = Arc::new(f);
+//         
+//         let handles: Vec<_> = vertices_vec
+//             .chunks(chunk_size)
+//             .map(|chunk| {
+//                 let chunk = chunk.to_vec();
+//                 let f = Arc::clone(&f);
+//                 thread::spawn(move || {
+//                     chunk.iter().map(|v| f(v)).collect::<Vec<_>>()
+//                 })
+//             })
+//             .collect();
+//         
+//         handles
+//             .into_iter()
+//             .flat_map(|h| h.join().unwrap())
+//             .collect()
+//     }
+
+    /// Map a function over all edges (parallel)
+    /// Claude Work: O(m) - assuming f is O(1)
+    /// Claude Span: O(lg m) - parallel tree traversal
+//     pub fn map_edges_parallel<F, R>(&self, f: F) -> Vec<R>
+//     where
+//         F: Fn(&(V, V)) -> R + Send + Sync,
+//         R: Send,
+//     {
+//         let edges_vec: Vec<Pair<V, V>> = self.edges.iter().cloned().collect();
+//         let chunk_size = (edges_vec.len() / 4).max(1);
+//         let f = Arc::new(f);
+//         
+//         let handles: Vec<_> = edges_vec
+//             .chunks(chunk_size)
+//             .map(|chunk| {
+//                 let chunk = chunk.to_vec();
+//                 let f = Arc::clone(&f);
+//                 thread::spawn(move || {
+//                     chunk.iter().map(|e| f(e)).collect::<Vec<_>>()
+//                 })
+//             })
+//             .collect();
+//         
+//         handles
+//             .into_iter()
+//             .flat_map(|h| h.join().unwrap())
+//             .collect()
+//     }
+
+    /// Check if graph is empty
+    /// Claude Work: O(1) - constant time check
+    /// Claude Span: O(1) - constant time check
+    pub fn is_empty(&self) -> bool {
+        self.vertices.size() == 0
+    }
+
+    /// Get reference to vertex set
+    pub fn vertices(&self) -> &AVLTreeSetStPer<V> {
+        &self.vertices
+    }
+
+    /// Get reference to edge set
+    pub fn edges(&self) -> &AVLTreeSetStPer<Pair<V, V>> {
+        &self.edges
+    }
+}
+
+impl<V: MtT + Ord + Clone + Debug + Display> Default for EdgeSetGraphMtPerS<V> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<V: MtT + Display> Display for EdgeSetGraphMtPerS<V> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "EdgeSetGraphMtPer(vertices={}, edges={})",
+            self.vertex_count(),
+            self.edge_count()
+        )
+    }
+}
+
+// /// Weighted edge-set graph with separate weight table (parallel)
+// pub struct WeightedEdgeSetGraphMtPerS<V: MtT + Ord + Clone + Debug + Display> {
+//     /// Base graph structure
+//     graph: EdgeSetGraphMtPerS<V>,
+//     /// Weight table mapping edges to weights
+//     weights: Arc<Mutex<OrderedTableStPer<Pair<V, V>, f64>>>,
+// }
+
+// impl<V: MtT + Ord + Clone + Debug + Display> WeightedEdgeSetGraphMtPerS<V> {
+//     /// Create new weighted graph
+//     /// Claude Work: O(1) - constant time initialization
+//     /// Claude Span: O(1) - constant time initialization
+//     pub fn new() -> Self {
+//         WeightedEdgeSetGraphMtPerS {
+//             graph: EdgeSetGraphMtPerS::new(),
+//             weights: Arc::new(Mutex::new(OrderedTableStPer::empty())),
+//         }
+//     }
+// 
+//     /// Insert weighted edge
+//     /// Claude Work: O(lg n) - insert edge + insert weight
+//     /// Claude Span: O(lg n) - sequential operations
+//     pub fn insert_weighted_edge(self, u: V, v: V, weight: f64) -> Self {
+//         let new_graph = self.graph.insert_edge(u, v);
+//         let mut weights_guard = self.weights.lock().unwrap();
+//         let new_weights = weights_guard.clone().insert((u, v), weight);
+//         drop(weights_guard);
+//         
+//         WeightedEdgeSetGraphMtPerS {
+//             graph: new_graph,
+//             weights: Arc::new(Mutex::new(new_weights)),
+//         }
+//     }
+// 
+//     /// Get edge weight
+//     /// Claude Work: O(lg n) - table lookup
+//     /// Claude Span: O(lg n) - table lookup
+//     pub fn get_weight(&self, u: &V, v: &V) -> Option<f64> {
+//         let weights_guard = self.weights.lock().unwrap();
+//         weights_guard.find(&Pair(u.clone(), v.clone())).copied()
+//     }
+// 
+//     /// Access underlying graph
+//     pub fn graph(&self) -> &EdgeSetGraphMtPerS<V> {
+//         &self.graph
+//     }
+// }
+
+// impl<V: MtT + Ord + Clone + Debug + Display> Default for WeightedEdgeSetGraphMtPerS<V> {
+//     fn default() -> Self {
+//         Self::new()
+//     }
+// }
+
+} // end mod EdgeSetGraphMtPer

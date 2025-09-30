@@ -1,0 +1,120 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Chapter 52: Adjacency Table Graph representation (persistent, multi-threaded with TRUE parallelism).
+//! G = (V, A:) where the graph is represented as a table mapping vertices to their out-neighbor sets.
+
+pub mod AdjTableGraphMtPer {
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
+    use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
+    use crate::Chap43Claude::OrderedTableMtPer::OrderedTableMtPer::*;
+    use crate::Types::Types::*;
+
+    #[derive(Clone)]
+    pub struct AdjTableGraphMtPer<V: StTInMtT + Ord + 'static> {
+        adj: OrderedTableMtPer<V, AVLTreeSetMtPer<V>>,
+    }
+
+    pub trait AdjTableGraphMtPerTrait<V: StTInMtT + Ord + 'static> {
+        fn empty() -> Self;
+        fn num_vertices(&self) -> N;
+        fn num_edges(&self) -> N;
+        fn has_edge(&self, u: &V, v: &V) -> B;
+        fn out_neighbors(&self, u: &V) -> AVLTreeSetMtPer<V>;
+        fn out_degree(&self, u: &V) -> N;
+        fn insert_vertex(&self, v: V) -> Self;
+        fn delete_vertex(&self, v: &V) -> Self;
+        fn insert_edge(&self, u: V, v: V) -> Self;
+        fn delete_edge(&self, u: &V, v: &V) -> Self;
+    }
+
+    impl<V: StTInMtT + Ord + 'static> AdjTableGraphMtPerTrait<V> for AdjTableGraphMtPer<V> {
+        fn empty() -> Self {
+            AdjTableGraphMtPer {
+                adj: OrderedTableMtPer::empty(),
+            }
+        }
+
+        fn num_vertices(&self) -> N {
+            self.adj.size()
+        }
+
+        fn num_edges(&self) -> N {
+            let domain = self.adj.domain();
+            let domain_seq = domain.to_seq();
+            let mut count = 0;
+            for i in 0..domain.size() {
+                let v = domain_seq.nth(i);
+                if let Some(neighbors) = self.adj.find(v) {
+                    count += neighbors.size();
+                }
+            }
+            count
+        }
+
+        fn has_edge(&self, u: &V, v: &V) -> B {
+            self.adj.find(u).map_or(false, |neighbors| neighbors.find(v))
+        }
+
+        fn out_neighbors(&self, u: &V) -> AVLTreeSetMtPer<V> {
+            self.adj.find(u).unwrap_or_else(|| AVLTreeSetMtPer::empty())
+        }
+
+        fn out_degree(&self, u: &V) -> N {
+            self.out_neighbors(u).size()
+        }
+
+        fn insert_vertex(&self, v: V) -> Self {
+            if self.adj.find(&v).is_some() {
+                return self.clone();
+            }
+            AdjTableGraphMtPer {
+                adj: self.adj.insert(v, AVLTreeSetMtPer::empty()),
+            }
+        }
+
+        fn delete_vertex(&self, v: &V) -> Self {
+            let new_adj = self.adj.delete(v);
+            let v_clone = v.clone();
+            // Remove v from all adjacency lists
+            let new_adj = new_adj.map(|neighbors| {
+                neighbors.delete(&v_clone)
+            });
+            AdjTableGraphMtPer {
+                adj: new_adj,
+            }
+        }
+
+        fn insert_edge(&self, u: V, v: V) -> Self {
+            let mut new_adj = self.adj.clone();
+            // Ensure both vertices exist
+            if new_adj.find(&u).is_none() {
+                new_adj = new_adj.insert(u.clone(), AVLTreeSetMtPer::empty());
+            }
+            if new_adj.find(&v).is_none() {
+                new_adj = new_adj.insert(v.clone(), AVLTreeSetMtPer::empty());
+            }
+            // Add v to u's adjacency list
+            let u_neighbors = new_adj.find(&u).unwrap_or_else(|| AVLTreeSetMtPer::empty());
+            let new_u_neighbors = u_neighbors.insert(v);
+            AdjTableGraphMtPer {
+                adj: new_adj.insert(u, new_u_neighbors),
+            }
+        }
+
+        fn delete_edge(&self, u: &V, v: &V) -> Self {
+            if let Some(u_neighbors) = self.adj.find(u) {
+                let new_u_neighbors = u_neighbors.delete(v);
+                AdjTableGraphMtPer {
+                    adj: self.adj.insert(u.clone(), new_u_neighbors),
+                }
+            } else {
+                self.clone()
+            }
+        }
+    }
+
+    impl<V: StTInMtT + Ord + 'static> Default for AdjTableGraphMtPer<V> {
+        fn default() -> Self {
+            Self::empty()
+        }
+    }
+}

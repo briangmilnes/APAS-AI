@@ -8,11 +8,11 @@ pub mod Test40Chapter36Mt {
     use apas_ai::Chap36::QuickSortMt::Chapter36Mt::Chapter36MtTrait;
     use apas_ai::Types::Types::*;
 
-    fn to_vec<T: StT>(a: &ArraySeqMtEphS<T>) -> Vec<T> {
+    fn to_vec<T: StTInMtT>(a: &ArraySeqMtEphS<T>) -> Vec<T> {
         (0..a.length()).map(|i| a.nth_cloned(i)).collect()
     }
 
-    fn is_sorted<T: StT + Ord>(values: &[T]) -> bool {
+    fn is_sorted<T: StTInMtT + Ord>(values: &[T]) -> bool {
         values.windows(2).all(|w| w[0] <= w[1])
     }
 

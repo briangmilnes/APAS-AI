@@ -97,6 +97,7 @@ pub mod Chap37 {
     pub mod AVLTreeSeq;
     pub mod AVLTreeSeqStEph;
     pub mod AVLTreeSeqStPer;
+    pub mod AVLTreeSeqMtPer;
     pub mod BSTAVLMtEph;
     pub mod BSTAVLStEph;
     pub mod BSTBBAlphaMtEph;
@@ -135,6 +136,8 @@ pub mod Chap40 {
 pub mod Chap41 {
     pub mod AVLTreeSetStEph;
     pub mod AVLTreeSetStPer;
+    pub mod AVLTreeSetMtPer;
+    pub mod AVLTreeSetMtEph;
     pub mod ArraySetEnumMtEph;
     pub mod ArraySetStEph;
     pub mod Example41_3;
@@ -160,6 +163,7 @@ pub mod Chap43Claude {
     pub mod OrderedSetStEph;
     pub mod OrderedSetMtEph;
     pub mod OrderedTableStPer;
+    pub mod OrderedTableMtPer;
     pub mod OrderedTableStEph;
     pub mod OrderedTableMtEph;
     pub mod AugOrderedTableStPer;
@@ -236,18 +240,27 @@ pub mod Chap52 {
     pub mod EdgeSetGraphStPer;
     pub mod EdgeSetGraphStEph;
     pub mod EdgeSetGraphMtPer;
-    pub mod EdgeSetGraphMtEph;
+    // pub mod EdgeSetGraphMtEph;
     pub mod AdjTableGraphStPer;
-    // pub mod AdjTableGraphStEph; // Requires AVLTreeSetStEph: StT
-    // pub mod AdjTableGraphMtPer;
+    pub mod AdjTableGraphStEph;
+    pub mod AdjTableGraphMtPer;
     // pub mod AdjTableGraphMtEph;
-    // pub mod AdjSeqGraphStPer;
-    // pub mod AdjSeqGraphStEph;
-    // pub mod AdjSeqGraphMtPer;
-    // pub mod AdjSeqGraphMtEph;
-    // pub mod AdjMatrixGraphStPer;
-    // pub mod AdjMatrixGraphStEph;
-    // pub mod AdjMatrixGraphMtPer;
-    // pub mod AdjMatrixGraphMtEph;
+    pub mod AdjSeqGraphStPer;
+    pub mod AdjSeqGraphStEph;
+    // pub mod AdjSeqGraphMtPer; // API mismatch - ArraySeqMtPerS lacks full interface
+    // pub mod AdjSeqGraphMtEph; // API mismatch - ArraySeqMtEphS lacks full interface
+    pub mod AdjMatrixGraphStPer;
+    pub mod AdjMatrixGraphStEph;
+    // pub mod AdjMatrixGraphMtPer; // API mismatch - ArraySeqMtPerS lacks full interface
+    // pub mod AdjMatrixGraphMtEph; // API mismatch - ArraySeqMtEphS lacks full interface
+}
+
+pub mod Chap53 {
+    pub mod GraphSearchStPer;
+    pub mod GraphSearchStEph;
+    pub mod GraphSearchMtPer;
+    pub mod PQSStPer;
+    pub mod PQSStEph;
+    pub mod PQSMtPer;
 }
 

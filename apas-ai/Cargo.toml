@@ -684,6 +684,10 @@ name = "TestAVLTreeSetStPer"
 path = "tests/Chap41/TestAVLTreeSetStPer.rs"
 
 [[test]]
+name = "TestAVLTreeSetMtPer"
+path = "tests/Chap41/TestAVLTreeSetMtPer.rs"
+
+[[test]]
 name = "TestExample41_3"
 path = "tests/Chap41/TestExample41_3.rs"
 
@@ -932,6 +936,32 @@ path = "tests/Chap52/TestEdgeSetGraphMtEph.rs"
 [[test]]
 name = "TestAdjTableGraphStPer"
 path = "tests/Chap52/TestAdjTableGraphStPer.rs"
+
+[[test]]
+name = "TestAdjTableGraphStEph"
+path = "tests/Chap52/TestAdjTableGraphStEph.rs"
+
+[[test]]
+name = "TestAdjTableGraphMtPer"
+path = "tests/Chap52/TestAdjTableGraphMtPer.rs"
+
+[[test]]
+name = "TestGraphSearchStPer"
+path = "tests/Chap53/TestGraphSearchStPer.rs"
+
+[[test]]
+name = "TestPFSStPer"
+path = "tests/Chap53/TestPFSStPer.rs"
+
+[[bench]]
+name = "BenchGraphSearchStPer"
+path = "benches/Chap53/BenchGraphSearchStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchPFSStPer"
+path = "benches/Chap53/BenchPFSStPer.rs"
+harness = false
 
 [[bench]]
 name = "BenchEdgeSetGraphStPer"

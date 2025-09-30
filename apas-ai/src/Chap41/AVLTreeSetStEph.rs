@@ -4,8 +4,9 @@
 pub mod AVLTreeSetStEph {
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
     use crate::Types::Types::*;
+    use std::fmt;
 
-    #[derive(PartialEq)]
+    #[derive(PartialEq, Eq)]
     pub struct AVLTreeSetStEph<T: StT + Ord> {
         elements: AVLTreeSeqStEphS<T>,
     }
@@ -173,6 +174,32 @@ pub mod AVLTreeSetStEph {
             AVLTreeSetStEph {
                 elements: self.elements.clone(),
             }
+        }
+    }
+
+    impl<T: StT + Ord> fmt::Debug for AVLTreeSetStEph<T> {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            write!(f, "{{")?;
+            for i in 0..self.elements.length() {
+                if i > 0 {
+                    write!(f, ", ")?;
+                }
+                write!(f, "{:?}", self.elements.nth(i))?;
+            }
+            write!(f, "}}")
+        }
+    }
+
+    impl<T: StT + Ord> fmt::Display for AVLTreeSetStEph<T> {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            write!(f, "{{")?;
+            for i in 0..self.elements.length() {
+                if i > 0 {
+                    write!(f, ", ")?;
+                }
+                write!(f, "{}", self.elements.nth(i))?;
+            }
+            write!(f, "}}")
         }
     }
 

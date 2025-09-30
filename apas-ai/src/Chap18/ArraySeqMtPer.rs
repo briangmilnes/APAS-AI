@@ -10,11 +10,11 @@ pub mod ArraySeqMtPer {
 
     /// Fixed-length sequence backed by `Box<[T]>` (persistent MT variant).
     #[derive(Debug)]
-    pub struct ArraySeqMtPerS<T: MtVal> {
+    pub struct ArraySeqMtPerS<T: StTInMtT> {
         data: Box<[T]>,
     }
 
-    impl<T: MtVal> ArraySeqMtPerS<T> {
+    impl<T: StTInMtT> ArraySeqMtPerS<T> {
         pub fn empty() -> Self {
             ArraySeqMtPerS {
                 data: Vec::new().into_boxed_slice(),
@@ -69,14 +69,14 @@ pub mod ArraySeqMtPer {
         }
     }
 
-    impl<T: MtVal> Clone for ArraySeqMtPerS<T> {
+    impl<T: StTInMtT> Clone for ArraySeqMtPerS<T> {
         fn clone(&self) -> Self {
             let values: Vec<T> = self.data.iter().cloned().collect();
             ArraySeqMtPerS::from_vec(values)
         }
     }
 
-    impl<T: MtVal> PartialEq for ArraySeqMtPerS<T> {
+    impl<T: StTInMtT> PartialEq for ArraySeqMtPerS<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.data.len() != other.data.len() {
                 return false;
@@ -90,9 +90,9 @@ pub mod ArraySeqMtPer {
         }
     }
 
-    impl<T: MtVal + Eq> Eq for ArraySeqMtPerS<T> {}
+    impl<T: StTInMtT + Eq> Eq for ArraySeqMtPerS<T> {}
 
-    impl<'a, T: MtVal> IntoIterator for &'a ArraySeqMtPerS<T> {
+    impl<'a, T: StTInMtT> IntoIterator for &'a ArraySeqMtPerS<T> {
         type Item = &'a T;
         type IntoIter = std::slice::Iter<'a, T>;
 
@@ -101,7 +101,7 @@ pub mod ArraySeqMtPer {
         }
     }
 
-    impl<T: MtVal> IntoIterator for ArraySeqMtPerS<T> {
+    impl<T: StTInMtT> IntoIterator for ArraySeqMtPerS<T> {
         type Item = T;
         type IntoIter = std::vec::IntoIter<T>;
 
@@ -110,7 +110,7 @@ pub mod ArraySeqMtPer {
         }
     }
 
-    impl<T: MtVal> std::fmt::Display for ArraySeqMtPerS<T> {
+    impl<T: StTInMtT> std::fmt::Display for ArraySeqMtPerS<T> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             write!(f, "ArraySeqMtPerS[")?;
             for (i, item) in self.data.iter().enumerate() {
@@ -123,7 +123,7 @@ pub mod ArraySeqMtPer {
         }
     }
 
-    pub trait ArraySeqMtPerTrait<T: MtVal> {
+    pub trait ArraySeqMtPerTrait<T: StTInMtT> {
         fn new(length: N, init_value: T) -> ArraySeqMtPerS<T>;
         fn empty() -> ArraySeqMtPerS<T>;
         fn singleton(item: T) -> ArraySeqMtPerS<T>;
@@ -132,7 +132,7 @@ pub mod ArraySeqMtPer {
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T>;
         fn set(&self, index: N, item: T) -> Result<ArraySeqMtPerS<T>, &'static str>;
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
-        fn map<W: MtVal, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F) -> ArraySeqMtPerS<W>;
+        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F) -> ArraySeqMtPerS<W> where T: 'static;
         fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
         fn filter<F: Fn(&T) -> B + Send + Sync>(a: &ArraySeqMtPerS<T>, pred: &F) -> ArraySeqMtPerS<T>;
         fn update(a: &ArraySeqMtPerS<T>, item_at: Pair<N, T>) -> ArraySeqMtPerS<T>;
@@ -143,7 +143,7 @@ pub mod ArraySeqMtPer {
             f: &F,
             x: A,
         ) -> (ArraySeqMtPerS<A>, A);
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T;
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T where T: 'static;
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T);
         fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T>;
         fn collect(a: &ArraySeqMtPerS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>>;
@@ -152,7 +152,7 @@ pub mod ArraySeqMtPer {
         fn isSingleton(&self) -> B;
     }
 
-    impl<T: MtVal> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
+    impl<T: StTInMtT> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
         fn new(length: N, init_value: T) -> ArraySeqMtPerS<T> {
             ArraySeqMtPerS::new(length, init_value)
         }

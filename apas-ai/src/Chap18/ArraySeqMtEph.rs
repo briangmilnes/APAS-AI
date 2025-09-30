@@ -10,11 +10,11 @@ pub mod ArraySeqMtEph {
 
     /// Fixed-length sequence backed by `Mutex<Box<[T]>>` (ephemeral/mutable MT variant).
     #[derive(Debug)]
-    pub struct ArraySeqMtEphS<T: StT> {
+    pub struct ArraySeqMtEphS<T: StTInMtT> {
         data: Mutex<Box<[T]>>,
     }
 
-    impl<T: StT> ArraySeqMtEphS<T> {
+    impl<T: StTInMtT> ArraySeqMtEphS<T> {
         pub fn empty() -> Self {
             ArraySeqMtEphS {
                 data: Mutex::new(Vec::new().into_boxed_slice()),
@@ -81,21 +81,21 @@ pub mod ArraySeqMtEph {
         }
     }
 
-    impl<T: StT> Clone for ArraySeqMtEphS<T> {
+    impl<T: StTInMtT> Clone for ArraySeqMtEphS<T> {
         fn clone(&self) -> Self {
             ArraySeqMtEphS::from_vec(self.to_vec())
         }
     }
 
-    impl<T: StT> PartialEq for ArraySeqMtEphS<T> {
+    impl<T: StTInMtT> PartialEq for ArraySeqMtEphS<T> {
         fn eq(&self, other: &Self) -> bool {
             self.to_vec() == other.to_vec()
         }
     }
 
-    impl<T: StT> Eq for ArraySeqMtEphS<T> {}
+    impl<T: StTInMtT> Eq for ArraySeqMtEphS<T> {}
 
-    pub trait ArraySeqMtEphTrait<T: StT> {
+    pub trait ArraySeqMtEphTrait<T: StTInMtT> {
         fn new(length: N, init_value: T) -> ArraySeqMtEphS<T>;
         fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqMtEphS<T>, &'static str>;
         fn length(&self) -> N;
@@ -103,7 +103,7 @@ pub mod ArraySeqMtEph {
         fn empty() -> ArraySeqMtEphS<T>;
         fn singleton(item: T) -> ArraySeqMtEphS<T>;
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T>;
-        fn map<U: StT + Send + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F) -> ArraySeqMtEphS<U> where T: Send + 'static;
+        fn map<U: StTInMtT + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F) -> ArraySeqMtEphS<U> where T: Send + 'static;
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtEphS<T>;
         fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T>;
         fn filter<F: Fn(&T) -> B + Send + Sync>(a: &ArraySeqMtEphS<T>, pred: &F) -> ArraySeqMtEphS<T>;
@@ -119,7 +119,7 @@ pub mod ArraySeqMtEph {
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T>;
     }
 
-    impl<T: StT> std::fmt::Display for ArraySeqMtEphS<T> {
+    impl<T: StTInMtT> std::fmt::Display for ArraySeqMtEphS<T> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             write!(f, "ArraySeqMtEphS[")?;
             let guard = self.data.lock().unwrap();
@@ -133,7 +133,7 @@ pub mod ArraySeqMtEph {
         }
     }
 
-    impl<T: StT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
+    impl<T: StTInMtT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
         fn new(length: N, init_value: T) -> ArraySeqMtEphS<T> {
             ArraySeqMtEphS::new(length, init_value)
         }
@@ -166,7 +166,7 @@ pub mod ArraySeqMtEph {
             ArraySeqMtEphS::from_vec(values)
         }
 
-        fn map<U: StT + Send + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
+        fn map<U: StTInMtT + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
             a: &ArraySeqMtEphS<T>,
             f: F,
         ) -> ArraySeqMtEphS<U>
