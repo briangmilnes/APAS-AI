@@ -1,5 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6 Weighted Directed Graph (ephemeral) with floating-point weights - Multi-threaded version.
+//!
+//! Note: NOW uses true parallelism via ParaPair! for weighted neighbor operations.
+//! Weighted arc filtering (out_neighbors_weighted, in_neighbors_weighted) is parallel.
 
 pub mod WeightedDirGraphMtEphFloat {
     use std::fmt::{Debug, Display, Formatter, Result};
@@ -8,12 +11,13 @@ pub mod WeightedDirGraphMtEphFloat {
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
     use crate::Types::Types::*;
+    use crate::ParaPair;
 
     /// Weighted directed graph with floating-point weights (multi-threaded, type alias)
     pub type WeightedDirGraphMtEphFloat<V> = LabDirGraphMtEph<V, OrderedF64>;
 
     /// Convenience functions for weighted directed graphs with floating-point weights (multi-threaded)
-    impl<V: StT + MtT + Hash> WeightedDirGraphMtEphFloat<V> {
+    impl<V: StT + MtT + Hash + 'static> WeightedDirGraphMtEphFloat<V> {
         /// Create from vertices and weighted edges
         pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, OrderedFloat<f64>)>) -> Self {
             let labeled_edges = edges
@@ -50,24 +54,108 @@ pub mod WeightedDirGraphMtEphFloat {
 
         /// Get outgoing neighbors with weights
         pub fn out_neighbors_weighted(&self, v: &V) -> Set<(V, OrderedFloat<f64>)> {
-            let mut neighbors = Set::empty();
-            for labeled_edge in self.labeled_arcs().iter() {
-                if labeled_edge.0 == *v {
-                    neighbors.insert((labeled_edge.1.clone_mt(), labeled_edge.2));
+            // PARALLEL: filter weighted arcs using divide-and-conquer
+            let arcs: Vec<LabEdge<V, OrderedF64>> = self.labeled_arcs().iter().cloned().collect();
+            let n = arcs.len();
+            
+            if n <= 8 {
+                let mut neighbors = Set::empty();
+                for labeled_edge in arcs {
+                    if labeled_edge.0 == *v {
+                        neighbors.insert((labeled_edge.1.clone_mt(), labeled_edge.2));
+                    }
                 }
+                return neighbors;
             }
-            neighbors
+            
+            // Parallel divide-and-conquer
+            fn parallel_out<V: StT + MtT + Hash + 'static>(
+                arcs: Vec<LabEdge<V, OrderedF64>>,
+                v: V
+            ) -> Set<(V, OrderedFloat<f64>)> {
+                let n = arcs.len();
+                if n == 0 {
+                    return Set::empty();
+                }
+                if n == 1 {
+                    return if arcs[0].0 == v {
+                        let mut s = Set::empty();
+                        s.insert((arcs[0].1.clone_mt(), arcs[0].2));
+                        s
+                    } else {
+                        Set::empty()
+                    };
+                }
+                
+                let mid = n / 2;
+                let mut right_arcs = arcs;
+                let left_arcs = right_arcs.split_off(mid);
+                
+                let v_left = v.clone_mt();
+                let v_right = v;
+                
+                let Pair(left_result, right_result) = ParaPair!(
+                    move || parallel_out(left_arcs, v_left),
+                    move || parallel_out(right_arcs, v_right)
+                );
+                
+                left_result.union(&right_result)
+            }
+            
+            parallel_out(arcs, v.clone_mt())
         }
 
         /// Get incoming neighbors with weights
         pub fn in_neighbors_weighted(&self, v: &V) -> Set<(V, OrderedFloat<f64>)> {
-            let mut neighbors = Set::empty();
-            for labeled_edge in self.labeled_arcs().iter() {
-                if labeled_edge.1 == *v {
-                    neighbors.insert((labeled_edge.0.clone_mt(), labeled_edge.2));
+            // PARALLEL: filter weighted arcs using divide-and-conquer
+            let arcs: Vec<LabEdge<V, OrderedF64>> = self.labeled_arcs().iter().cloned().collect();
+            let n = arcs.len();
+            
+            if n <= 8 {
+                let mut neighbors = Set::empty();
+                for labeled_edge in arcs {
+                    if labeled_edge.1 == *v {
+                        neighbors.insert((labeled_edge.0.clone_mt(), labeled_edge.2));
+                    }
                 }
+                return neighbors;
             }
-            neighbors
+            
+            // Parallel divide-and-conquer
+            fn parallel_in<V: StT + MtT + Hash + 'static>(
+                arcs: Vec<LabEdge<V, OrderedF64>>,
+                v: V
+            ) -> Set<(V, OrderedFloat<f64>)> {
+                let n = arcs.len();
+                if n == 0 {
+                    return Set::empty();
+                }
+                if n == 1 {
+                    return if arcs[0].1 == v {
+                        let mut s = Set::empty();
+                        s.insert((arcs[0].0.clone_mt(), arcs[0].2));
+                        s
+                    } else {
+                        Set::empty()
+                    };
+                }
+                
+                let mid = n / 2;
+                let mut right_arcs = arcs;
+                let left_arcs = right_arcs.split_off(mid);
+                
+                let v_left = v.clone_mt();
+                let v_right = v;
+                
+                let Pair(left_result, right_result) = ParaPair!(
+                    move || parallel_in(left_arcs, v_left),
+                    move || parallel_in(right_arcs, v_right)
+                );
+                
+                left_result.union(&right_result)
+            }
+            
+            parallel_in(arcs, v.clone_mt())
         }
 
         /// Get the total weight of all edges

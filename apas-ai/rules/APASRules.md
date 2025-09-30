@@ -38,6 +38,7 @@
 ### Parallel Spawn/Join Model
 - Implement multi-threaded chapter algorithms using `std::thread::spawn` for recursive branches and `join` to synchronize completion.
 - Avoid alternative thread-pool abstractions (e.g., rayon) so the parallel structure mirrors the textbook and remains amenable to Verus proofs.
+- **No Thresholding**: Do not use `PARALLEL_THRESHOLD` or similar input-size checks to decide whether to parallelize. APAS parallel algorithms should always use their parallel structure regardless of input size. The textbook's parallel algorithms are unconditionally parallel.
 
 ### MT Module Discipline
 - Any module whose filename contains `Mt` MUST deliver actual multi-threaded semantics: structure definitions must rely on `MtT` elements and internal synchronization (`Send + Sync`) rather than single-threaded `StT` shortcuts.
@@ -80,6 +81,7 @@
 
 ### Parallel Pair Semantics
 - Whenever an APAS example uses the `||` parallel pair notation, implement the corresponding Rust code with the project's Parallel Pair abstraction (not ad-hoc thread joins).
+- Be sure to up the threads stacks as APAS uses lots of recursion.
 
 ### Exercise Benchmark Policy
 - **Do not create benchmarks for exercises unless explicitly requested**. Exercises are learning-focused implementations that don't require performance measurement.

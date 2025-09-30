@@ -9,8 +9,6 @@ pub mod PQMinMtEph {
     use crate::Chap41::AVLTreeSetMtEph::AVLTreeSetMtEph::*;
     use crate::Types::Types::*;
 
-    const PARALLEL_THRESHOLD: N = 128;
-
     /// Result of min-priority queue search containing visited vertices and optional parent tree.
     #[derive(Clone, Debug)]
     pub struct PQMinResult<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> {

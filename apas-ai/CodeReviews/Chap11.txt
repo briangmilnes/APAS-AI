@@ -1,0 +1,7 @@
+
+ Chap11 needs a small bit of work.
+ 
+ There are tests in Fibonnachi that need to be moved to test.
+ And create a tiny benchmark.
+ Be sure to up thread stacks.
+ Needs algorithmic analysis too.  

@@ -1,0 +1,10 @@
+
+Chap 12
+
+ Why do we have manually drop in exercises? Can't the affine type system do this?
+ Make a plan to fix this according to PrePlanChecklist.
+ Show it to me.
+
+ Run algorithmic analysis on the files.
+
+

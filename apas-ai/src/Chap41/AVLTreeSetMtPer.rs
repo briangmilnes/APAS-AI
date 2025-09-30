@@ -55,82 +55,55 @@ pub mod AVLTreeSetMtPer {
         }
 
         fn from_seq(seq: AVLTreeSeqMtPerS<T>) -> Self {
-            const PARALLEL_THRESHOLD: N = 256;
             let mut vals = seq.values_in_order();
-            let n = vals.len();
             
-            // Parallel sort for large sequences
-            if n >= PARALLEL_THRESHOLD {
-                // Parallel merge sort using ParaPair!
-                fn parallel_sort<T: StTInMtT + Ord + 'static>(mut vals: Vec<T>) -> Vec<T> {
-                    let n = vals.len();
-                    if n <= 1 {
-                        return vals;
-                    }
-                    if n < 256 {
-                        vals.sort();
-                        return vals;
-                    }
-                    
-                    let mid = n / 2;
-                    let right_vals = vals.split_off(mid);
-                    let left_vals = vals;
-                    
-                    let Pair(left_sorted, right_sorted) = ParaPair!(
-                        move || parallel_sort(left_vals),
-                        move || parallel_sort(right_vals)
-                    );
-                    
-                    // Merge sorted halves
-                    let mut result = Vec::with_capacity(n);
-                    let mut i = 0;
-                    let mut j = 0;
-                    while i < left_sorted.len() && j < right_sorted.len() {
-                        if left_sorted[i] <= right_sorted[j] {
-                            result.push(left_sorted[i].clone());
-                            i += 1;
-                        } else {
-                            result.push(right_sorted[j].clone());
-                            j += 1;
-                        }
-                    }
-                    result.extend_from_slice(&left_sorted[i..]);
-                    result.extend_from_slice(&right_sorted[j..]);
-                    result
+            // Unconditionally parallel merge sort using ParaPair!
+            fn parallel_sort<T: StTInMtT + Ord + 'static>(mut vals: Vec<T>) -> Vec<T> {
+                let n = vals.len();
+                if n <= 1 {
+                    return vals;
                 }
                 
-                vals = parallel_sort(vals);
-            } else {
-                vals.sort();
+                let mid = n / 2;
+                let right_vals = vals.split_off(mid);
+                let left_vals = vals;
+                
+                let Pair(left_sorted, right_sorted) = ParaPair!(
+                    move || parallel_sort(left_vals),
+                    move || parallel_sort(right_vals)
+                );
+                
+                // Merge sorted halves
+                let mut result = Vec::with_capacity(n);
+                let mut i = 0;
+                let mut j = 0;
+                while i < left_sorted.len() && j < right_sorted.len() {
+                    if left_sorted[i] <= right_sorted[j] {
+                        result.push(left_sorted[i].clone());
+                        i += 1;
+                    } else {
+                        result.push(right_sorted[j].clone());
+                        j += 1;
+                    }
+                }
+                result.extend_from_slice(&left_sorted[i..]);
+                result.extend_from_slice(&right_sorted[j..]);
+                result
             }
             
+            vals = parallel_sort(vals);
             vals.dedup();
             AVLTreeSetMtPer {
                 elements: AVLTreeSeqMtPerS::from_vec(vals),
             }
         }
 
-        // PARALLEL: filter using divide-and-conquer
+        // PARALLEL: filter using divide-and-conquer (unconditionally parallel)
         // Work: Θ(n), Span: Θ(log n)
         fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(&self, f: F) -> Self {
-            const PARALLEL_THRESHOLD: N = 128;
             let n = self.size();
             
-            if n == 0 {
-                return Self::empty();
-            }
-            
-            if n == 1 {
-                let elem = self.elements.nth(0);
-                return if f(elem) {
-                    Self::singleton(elem.clone())
-                } else {
-                    Self::empty()
-                };
-            }
-            
-            // Sequential for small sets
-            if n < PARALLEL_THRESHOLD {
+            if n <= 8 {
                 let mut vals = Vec::new();
                 for i in 0..n {
                     let elem = self.elements.nth(i);
@@ -143,7 +116,7 @@ pub mod AVLTreeSetMtPer {
                 };
             }
             
-            // PARALLEL divide-and-conquer for large sets using ParaPair!
+            // Unconditionally parallel divide-and-conquer using ParaPair!
             let mid = n / 2;
             
             let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
@@ -163,10 +136,9 @@ pub mod AVLTreeSetMtPer {
             left_result.union(&right_result)
         }
 
-        // PARALLEL: intersection using divide-and-conquer
+        // PARALLEL: intersection using divide-and-conquer (unconditionally parallel)
         // Work: Θ(n+m), Span: Θ(log(n+m))
         fn intersection(&self, other: &Self) -> Self {
-            const PARALLEL_THRESHOLD: N = 128;
             let n = self.size();
             let m = other.size();
             
@@ -174,17 +146,7 @@ pub mod AVLTreeSetMtPer {
                 return Self::empty();
             }
             
-            if n == 1 {
-                let elem = self.elements.nth(0);
-                return if other.find(elem) {
-                    Self::singleton(elem.clone())
-                } else {
-                    Self::empty()
-                };
-            }
-            
-            // Sequential for small sets
-            if n < PARALLEL_THRESHOLD {
+            if n <= 8 {
                 let mut vals = Vec::new();
                 for i in 0..n {
                     let elem = self.elements.nth(i);
@@ -197,7 +159,7 @@ pub mod AVLTreeSetMtPer {
                 };
             }
             
-            // PARALLEL divide-and-conquer for large sets using ParaPair!
+            // Unconditionally parallel divide-and-conquer using ParaPair!
             let mid = n / 2;
             
             let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
@@ -221,10 +183,9 @@ pub mod AVLTreeSetMtPer {
             self.filter(move |x| !other_clone.find(x))
         }
 
-        // PARALLEL: union using divide-and-conquer
+        // PARALLEL: union using divide-and-conquer (unconditionally parallel)
         // Work: Θ(n+m), Span: Θ(log(n+m))
         fn union(&self, other: &Self) -> Self {
-            const PARALLEL_THRESHOLD: N = 128;
             let n = self.size();
             let m = other.size();
             
@@ -235,13 +196,7 @@ pub mod AVLTreeSetMtPer {
                 return self.clone();
             }
             
-            if n == 1 {
-                let elem = self.elements.nth(0);
-                return other.insert(elem.clone());
-            }
-            
-            // Sequential for small sets
-            if n < PARALLEL_THRESHOLD && m < PARALLEL_THRESHOLD {
+            if n <= 8 {
                 let mut vals = self.elements.values_in_order();
                 vals.extend(other.elements.values_in_order());
                 vals.sort();
@@ -251,7 +206,7 @@ pub mod AVLTreeSetMtPer {
                 };
             }
             
-            // PARALLEL divide-and-conquer for large sets using ParaPair!
+            // Unconditionally parallel divide-and-conquer using ParaPair!
             let mid = n / 2;
             
             let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
@@ -289,20 +244,9 @@ pub mod AVLTreeSetMtPer {
         }
 
         fn delete(&self, x: &T) -> Self {
-            const PARALLEL_THRESHOLD: N = 128;
-            let n = self.size();
-            
-            if n >= PARALLEL_THRESHOLD {
-                // Use parallel filter for large sets
-                let x_clone = x.clone();
-                self.filter(move |v| v != &x_clone)
-            } else {
-                let mut vals: Vec<T> = self.elements.values_in_order();
-                vals.retain(|v| v != x);
-                AVLTreeSetMtPer {
-                    elements: AVLTreeSeqMtPerS::from_vec(vals),
-                }
-            }
+            // Unconditionally use parallel filter
+            let x_clone = x.clone();
+            self.filter(move |v| v != &x_clone)
         }
 
         fn insert(&self, x: T) -> Self {
@@ -312,16 +256,8 @@ pub mod AVLTreeSetMtPer {
             let mut vals = self.elements.values_in_order();
             vals.push(x);
             
-            const PARALLEL_THRESHOLD: N = 256;
-            if vals.len() >= PARALLEL_THRESHOLD {
-                // Use parallel from_seq for large sets
-                Self::from_seq(AVLTreeSeqMtPerS::from_vec(vals))
-            } else {
-                vals.sort();
-                AVLTreeSetMtPer {
-                    elements: AVLTreeSeqMtPerS::from_vec(vals),
-                }
-            }
+            // Unconditionally use parallel from_seq
+            Self::from_seq(AVLTreeSeqMtPerS::from_vec(vals))
         }
     }
 

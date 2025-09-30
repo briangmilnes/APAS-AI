@@ -294,8 +294,14 @@ pub mod Types {
     #[macro_export]
     macro_rules! ParaPair {
         ( $left:expr, $right:expr ) => {{
-            let left_handle = std::thread::spawn($left);
-            let right_handle = std::thread::spawn($right);
+            let left_handle = std::thread::Builder::new()
+                .stack_size(32 * 1024 * 1024) // 32MB stack for unconditional parallelism
+                .spawn($left)
+                .expect("failed to spawn left thread");
+            let right_handle = std::thread::Builder::new()
+                .stack_size(32 * 1024 * 1024) // 32MB stack for unconditional parallelism
+                .spawn($right)
+                .expect("failed to spawn right thread");
             let left_result = left_handle.join().expect("left ParaPair task panicked");
             let right_result = right_handle.join().expect("right ParaPair task panicked");
             $crate::Types::Types::Pair(left_result, right_result)

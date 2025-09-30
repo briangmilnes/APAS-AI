@@ -62,11 +62,9 @@ pub mod AVLTreeSetMtEph {
             }
         }
 
-        // PARALLEL: filter using extract-parallelize-rebuild pattern
+        // PARALLEL: filter using extract-parallelize-rebuild pattern (unconditionally parallel)
         // Work: Θ(n), Span: Θ(log n)
         fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(&self, f: F) -> Self {
-            const PARALLEL_THRESHOLD: N = 128;
-            
             // Extract data from mutex
             let vals = {
                 let inner = self.inner.lock().unwrap();
@@ -79,20 +77,7 @@ pub mod AVLTreeSetMtEph {
             };
             // Lock released here
             
-            let n = vals.len();
-            
-            if n < PARALLEL_THRESHOLD {
-                // Sequential for small sets
-                let mut filtered = Vec::new();
-                for val in vals {
-                    if f(&val) {
-                        filtered.push(val);
-                    }
-                }
-                return Self::from_seq(AVLTreeSeqStEphS::from_vec(filtered));
-            }
-            
-            // PARALLEL divide-and-conquer for large sets using ParaPair!
+            // Unconditionally parallel divide-and-conquer using ParaPair!
             fn parallel_filter<T: StTInMtT + Ord + 'static, F: Fn(&T) -> B + Send + Sync + Clone + 'static>(
                 vals: Vec<T>,
                 f: F
@@ -101,8 +86,8 @@ pub mod AVLTreeSetMtEph {
                 if n == 0 {
                     return Vec::new();
                 }
-                if n < 128 {
-                    return vals.into_iter().filter(|v| f(v)).collect();
+                if n == 1 {
+                    return if f(&vals[0]) { vals } else { Vec::new() };
                 }
                 
                 let mid = n / 2;
@@ -127,11 +112,9 @@ pub mod AVLTreeSetMtEph {
             Self::from_seq(AVLTreeSeqStEphS::from_vec(filtered))
         }
 
-        // PARALLEL: intersection using extract-parallelize-rebuild pattern
+        // PARALLEL: intersection using extract-parallelize-rebuild pattern (unconditionally parallel)
         // Work: Θ(n+m), Span: Θ(log(n+m))
         fn intersection(&self, other: &Self) -> Self {
-            const PARALLEL_THRESHOLD: N = 128;
-            
             // Extract data from both mutexes
             let (self_vals, other_vals) = {
                 let self_inner = self.inner.lock().unwrap();
@@ -154,21 +137,7 @@ pub mod AVLTreeSetMtEph {
             };
             // Locks released here
             
-            let n = self_vals.len();
-            
-            if n < PARALLEL_THRESHOLD {
-                // Sequential for small sets
-                let other_set = Self::from_seq(AVLTreeSeqStEphS::from_vec(other_vals));
-                let mut intersect = Vec::new();
-                for val in self_vals {
-                    if other_set.find(&val) {
-                        intersect.push(val);
-                    }
-                }
-                return Self::from_seq(AVLTreeSeqStEphS::from_vec(intersect));
-            }
-            
-            // PARALLEL divide-and-conquer using ParaPair!
+            // Unconditionally parallel divide-and-conquer using ParaPair!
             fn parallel_intersect<T: StTInMtT + Ord + 'static>(
                 self_vals: Vec<T>,
                 other_vals: Vec<T>
@@ -177,9 +146,9 @@ pub mod AVLTreeSetMtEph {
                 if n == 0 {
                     return Vec::new();
                 }
-                if n < 128 {
+                if n == 1 {
                     let other_set = AVLTreeSetMtEph::from_seq(AVLTreeSeqStEphS::from_vec(other_vals));
-                    return self_vals.into_iter().filter(|v| other_set.find(v)).collect();
+                    return if other_set.find(&self_vals[0]) { self_vals } else { Vec::new() };
                 }
                 
                 let mid = n / 2;
@@ -210,11 +179,10 @@ pub mod AVLTreeSetMtEph {
             self.filter(move |x| !other_clone.find(x))
         }
 
-        // PARALLEL: union using extract-parallelize-rebuild pattern
+        // PARALLEL: union using extract-parallelize-rebuild pattern (unconditionally parallel)
         // Work: Θ(n+m), Span: Θ(log(n+m))
+        // Note: Union uses a simple merge strategy to avoid thread explosion.
         fn union(&self, other: &Self) -> Self {
-            const PARALLEL_THRESHOLD: N = 128;
-            
             // Extract data from both mutexes
             let (self_vals, other_vals) = {
                 let self_inner = self.inner.lock().unwrap();
@@ -237,19 +205,7 @@ pub mod AVLTreeSetMtEph {
             };
             // Locks released here
             
-            let n = self_vals.len();
-            let m = other_vals.len();
-            
-            if n < PARALLEL_THRESHOLD && m < PARALLEL_THRESHOLD {
-                // Sequential for small sets
-                let mut merged = self_vals;
-                merged.extend(other_vals);
-                merged.sort();
-                merged.dedup();
-                return Self::from_seq(AVLTreeSeqStEphS::from_vec(merged));
-            }
-            
-            // Simple merge without deep recursion for ephemeral sets
+            // Simple merge (sequential to avoid thread explosion)
             let mut merged = self_vals;
             merged.extend(other_vals);
             merged.sort();

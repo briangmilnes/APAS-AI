@@ -6,6 +6,7 @@ pub mod InsertionSortSt {
     pub trait InsertionSortStTrait<T: Ord + Clone> {
         // APAS - work O(n²), span O(n²)
         // gpt-5-codex-medium: work O(n²), span O(n²)
+        // claude-4-sonnet: work Θ(n²), span Θ(n²), parallelism Θ(1) - inherently sequential
         fn insSort(&self, slice: &mut [T]);
     }
 

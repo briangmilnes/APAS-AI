@@ -44,3 +44,6 @@ I still see F: Fn(&T) -> W + Send + Sync + Clone + 'static
 and lots of fn name(F...)
 where F: <something that should be a type abreviation>.
 
+
+Make a plan according to PrePlanChecklist to find and rename the Claude directories to get
+rid of the Claude in Chap*Claude.

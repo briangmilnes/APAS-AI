@@ -1,5 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6 Weighted Undirected Graph (ephemeral) with floating-point weights - Multi-threaded version.
+//!
+//! Note: NOW uses true parallelism via ParaPair! for weighted neighbor operations.
+//! Weighted edge filtering (neighbors_weighted) is parallel.
 
 pub mod WeightedUnDirGraphMtEphFloat {
     use std::fmt::{Debug, Display, Formatter, Result};
@@ -8,12 +11,13 @@ pub mod WeightedUnDirGraphMtEphFloat {
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
     use crate::Types::Types::*;
+    use crate::ParaPair;
 
     /// Weighted undirected graph with floating-point weights (multi-threaded, type alias)
     pub type WeightedUnDirGraphMtEphFloat<V> = LabUnDirGraphMtEph<V, OrderedF64>;
 
     /// Convenience functions for weighted undirected graphs with floating-point weights (multi-threaded)
-    impl<V: HashOrd + MtT> WeightedUnDirGraphMtEphFloat<V> {
+    impl<V: HashOrd + MtT + 'static> WeightedUnDirGraphMtEphFloat<V> {
         /// Create from vertices and weighted edges
         pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, OrderedFloat<f64>)>) -> Self {
             let labeled_edges = edges
@@ -50,15 +54,60 @@ pub mod WeightedUnDirGraphMtEphFloat {
 
         /// Get neighbors with weights
         pub fn neighbors_weighted(&self, v: &V) -> Set<(V, OrderedFloat<f64>)> {
-            let mut neighbors = Set::empty();
-            for labeled_edge in self.labeled_edges().iter() {
-                if labeled_edge.0 == *v {
-                    neighbors.insert((labeled_edge.1.clone_mt(), labeled_edge.2));
-                } else if labeled_edge.1 == *v {
-                    neighbors.insert((labeled_edge.0.clone_mt(), labeled_edge.2));
+            // PARALLEL: filter weighted edges using divide-and-conquer
+            let edges: Vec<LabEdge<V, OrderedF64>> = self.labeled_edges().iter().cloned().collect();
+            let n = edges.len();
+            
+            if n <= 8 {
+                let mut neighbors = Set::empty();
+                for labeled_edge in edges {
+                    if labeled_edge.0 == *v {
+                        neighbors.insert((labeled_edge.1.clone_mt(), labeled_edge.2));
+                    } else if labeled_edge.1 == *v {
+                        neighbors.insert((labeled_edge.0.clone_mt(), labeled_edge.2));
+                    }
                 }
+                return neighbors;
             }
-            neighbors
+            
+            // Parallel divide-and-conquer
+            fn parallel_neighbors<V: HashOrd + MtT + 'static>(
+                edges: Vec<LabEdge<V, OrderedF64>>,
+                v: V
+            ) -> Set<(V, OrderedFloat<f64>)> {
+                let n = edges.len();
+                if n == 0 {
+                    return Set::empty();
+                }
+                if n == 1 {
+                    if edges[0].0 == v {
+                        let mut s = Set::empty();
+                        s.insert((edges[0].1.clone_mt(), edges[0].2));
+                        return s;
+                    } else if edges[0].1 == v {
+                        let mut s = Set::empty();
+                        s.insert((edges[0].0.clone_mt(), edges[0].2));
+                        return s;
+                    }
+                    return Set::empty();
+                }
+                
+                let mid = n / 2;
+                let mut right_edges = edges;
+                let left_edges = right_edges.split_off(mid);
+                
+                let v_left = v.clone_mt();
+                let v_right = v;
+                
+                let Pair(left_result, right_result) = ParaPair!(
+                    move || parallel_neighbors(left_edges, v_left),
+                    move || parallel_neighbors(right_edges, v_right)
+                );
+                
+                left_result.union(&right_result)
+            }
+            
+            parallel_neighbors(edges, v.clone_mt())
         }
 
         /// Get the total weight of all edges

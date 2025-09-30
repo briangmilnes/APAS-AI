@@ -1,5 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6.1 Undirected Graph (ephemeral) using Set for vertices and edges - Multi-threaded version.
+//!
+//! Note: NOW uses true parallelism via ParaPair! for neighbor/degree operations.
+//! Edge filtering (NG) and vertex map-reduce (NGOfVertices) are parallel.
 
 pub mod UnDirGraphMtEph {
     use std::hash::Hash;
@@ -7,14 +10,15 @@ pub mod UnDirGraphMtEph {
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
+    use crate::ParaPair;
 
     #[derive(Clone)]
-    pub struct UnDirGraphMtEph<V: StT + MtT + Hash> {
+    pub struct UnDirGraphMtEph<V: StT + MtT + Hash + 'static> {
         V: Set<V>,
         E: Set<Edge<V>>,
     }
 
-    pub trait UnDirGraphMtEphTrait<V: StT + MtT + Hash> {
+    pub trait UnDirGraphMtEphTrait<V: StT + MtT + Hash + 'static> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> UnDirGraphMtEph<V>;
@@ -37,20 +41,20 @@ pub mod UnDirGraphMtEph {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn Neighbor(&self, u: &V, v: &V) -> B;
         /// APAS: Work Θ(|E|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|E|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|) - parallel divide-and-conquer filter
         fn NG(&self, v: &V) -> Set<V>;
         /// APAS: Work Θ(|u_set| × |E|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|u_set| × |E|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|u_set| × |E|), Span Θ(log |u_set| + log |E|) - parallel map-reduce
         fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn Incident(&self, e: &Edge<V>, v: &V) -> B;
         /// APAS: Work Θ(|E|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|E|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|) - calls parallel NG
         fn Degree(&self, v: &V) -> N;
     }
 
-    impl<V: StT + MtT + Hash> UnDirGraphMtEphTrait<V> for UnDirGraphMtEph<V> {
+    impl<V: StT + MtT + Hash + 'static> UnDirGraphMtEphTrait<V> for UnDirGraphMtEph<V> {
         fn empty() -> UnDirGraphMtEph<V> {
             UnDirGraphMtEph {
                 V: SetLit![],
@@ -85,24 +89,106 @@ pub mod UnDirGraphMtEph {
         }
 
         fn NG(&self, v: &V) -> Set<V> {
-            let mut ng: Set<V> = SetLit![];
-            for Edge(a, b) in self.E.iter().cloned() {
-                if a == *v {
-                    let _ = ng.insert(b.clone_mt());
-                } else if b == *v {
-                    let _ = ng.insert(a.clone_mt());
+            // PARALLEL: filter edges using divide-and-conquer
+            let edges: Vec<Edge<V>> = self.E.iter().cloned().collect();
+            let n = edges.len();
+            
+            if n <= 8 {
+                let mut ng: Set<V> = SetLit![];
+                for Edge(a, b) in edges {
+                    if a == *v {
+                        let _ = ng.insert(b.clone_mt());
+                    } else if b == *v {
+                        let _ = ng.insert(a.clone_mt());
+                    }
                 }
+                return ng;
             }
-            ng
+            
+            // Parallel divide-and-conquer
+            fn parallel_ng<V: StT + MtT + Hash + 'static>(
+                edges: Vec<Edge<V>>,
+                v: V
+            ) -> Set<V> {
+                let n = edges.len();
+                if n == 0 {
+                    return SetLit![];
+                }
+                if n == 1 {
+                    let Edge(a, b) = &edges[0];
+                    if a == &v {
+                        let mut s = SetLit![];
+                        s.insert(b.clone_mt());
+                        return s;
+                    } else if b == &v {
+                        let mut s = SetLit![];
+                        s.insert(a.clone_mt());
+                        return s;
+                    }
+                    return SetLit![];
+                }
+                
+                let mid = n / 2;
+                let mut right_edges = edges;
+                let left_edges = right_edges.split_off(mid);
+                
+                let v_left = v.clone_mt();
+                let v_right = v;
+                
+                let Pair(left_result, right_result) = ParaPair!(
+                    move || parallel_ng(left_edges, v_left),
+                    move || parallel_ng(right_edges, v_right)
+                );
+                
+                left_result.union(&right_result)
+            }
+            
+            parallel_ng(edges, v.clone_mt())
         }
 
         fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V> {
-            let mut result: Set<V> = SetLit![];
-            for u in u_set.iter() {
-                let ng_u = self.NG(u);
-                result = result.union(&ng_u);
+            // PARALLEL: map-reduce over vertices using divide-and-conquer
+            let vertices: Vec<V> = u_set.iter().cloned().collect();
+            let n = vertices.len();
+            
+            if n <= 8 {
+                let mut result: Set<V> = SetLit![];
+                for u in vertices {
+                    let ng_u = self.NG(&u);
+                    result = result.union(&ng_u);
+                }
+                return result;
             }
-            result
+            
+            // Parallel map-reduce
+            fn parallel_ng_of_vertices<V: StT + MtT + Hash + 'static>(
+                vertices: Vec<V>,
+                graph: UnDirGraphMtEph<V>
+            ) -> Set<V> {
+                let n = vertices.len();
+                if n == 0 {
+                    return SetLit![];
+                }
+                if n == 1 {
+                    return graph.NG(&vertices[0]);
+                }
+                
+                let mid = n / 2;
+                let mut right_verts = vertices;
+                let left_verts = right_verts.split_off(mid);
+                
+                let graph_left = graph.clone();
+                let graph_right = graph;
+                
+                let Pair(left_result, right_result) = ParaPair!(
+                    move || parallel_ng_of_vertices(left_verts, graph_left),
+                    move || parallel_ng_of_vertices(right_verts, graph_right)
+                );
+                
+                left_result.union(&right_result)
+            }
+            
+            parallel_ng_of_vertices(vertices, self.clone())
         }
 
         fn Incident(&self, e: &Edge<V>, v: &V) -> B {
@@ -157,7 +243,7 @@ pub mod UnDirGraphMtEph {
         }
     }
 
-    impl<V: StT + MtT + Hash> std::fmt::Debug for UnDirGraphMtEph<V> {
+    impl<V: StT + MtT + Hash + 'static> std::fmt::Debug for UnDirGraphMtEph<V> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             f.debug_struct("UnDirGraphMtEph")
                 .field("V", &self.V)
@@ -166,18 +252,18 @@ pub mod UnDirGraphMtEph {
         }
     }
 
-    impl<V: StT + MtT + Hash> std::fmt::Display for UnDirGraphMtEph<V> {
+    impl<V: StT + MtT + Hash + 'static> std::fmt::Display for UnDirGraphMtEph<V> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             write!(f, "V={} E={:?}", self.V, self.E)
         }
     }
 
-    impl<V: StT + MtT + Hash> PartialEq for UnDirGraphMtEph<V> {
+    impl<V: StT + MtT + Hash + 'static> PartialEq for UnDirGraphMtEph<V> {
         fn eq(&self, other: &Self) -> bool {
             self.V == other.V && self.E == other.E
         }
     }
-    impl<V: StT + MtT + Hash> Eq for UnDirGraphMtEph<V> {}
+    impl<V: StT + MtT + Hash + 'static> Eq for UnDirGraphMtEph<V> {}
 
     #[macro_export]
     macro_rules! UnDirGraphMtEphLit {

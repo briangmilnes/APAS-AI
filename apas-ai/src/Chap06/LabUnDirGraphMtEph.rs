@@ -1,5 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6 Labeled Undirected Graph (ephemeral) using Set for vertices and labeled edges - Multi-threaded version.
+//!
+//! Note: NOW uses true parallelism via ParaPair! for neighbor operations.
+//! Labeled edge filtering (neighbors) is parallel.
 
 pub mod LabUnDirGraphMtEph {
     use std::fmt::{Debug, Display, Formatter, Result};
@@ -8,15 +11,16 @@ pub mod LabUnDirGraphMtEph {
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
+    use crate::ParaPair;
 
     #[derive(Clone)]
-    pub struct LabUnDirGraphMtEph<V: HashOrd + MtT, L: StTInMtT + Hash>
+    pub struct LabUnDirGraphMtEph<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static>
     {
         vertices: Set<V>,
         labeled_edges: Set<LabEdge<V, L>>,
     }
 
-    pub trait LabUnDirGraphMtEphTrait<V: HashOrd + MtT, L: StTInMtT + Hash>
+    pub trait LabUnDirGraphMtEphTrait<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static>
     {
         fn empty() -> Self;
         fn from_vertices_and_labeled_edges(vertices: Set<V>, labeled_edges: Set<LabEdge<V, L>>) -> Self;
@@ -31,7 +35,7 @@ pub mod LabUnDirGraphMtEph {
         fn normalize_edge(v1: V, v2: V) -> LabEdge<V, L>;
     }
 
-    impl<V: HashOrd + MtT, L: StTInMtT + Hash> LabUnDirGraphMtEphTrait<V, L> for LabUnDirGraphMtEph<V, L>
+    impl<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static> LabUnDirGraphMtEphTrait<V, L> for LabUnDirGraphMtEph<V, L>
     {
         fn empty() -> Self {
             LabUnDirGraphMtEph {
@@ -100,15 +104,60 @@ pub mod LabUnDirGraphMtEph {
         }
 
         fn neighbors(&self, v: &V) -> Set<V> {
-            let mut neighbors = Set::empty();
-            for labeled_edge in self.labeled_edges.iter() {
-                if labeled_edge.0 == *v {
-                    neighbors.insert(labeled_edge.1.clone_mt());
-                } else if labeled_edge.1 == *v {
-                    neighbors.insert(labeled_edge.0.clone_mt());
+            // PARALLEL: filter labeled edges using divide-and-conquer
+            let edges: Vec<LabEdge<V, L>> = self.labeled_edges.iter().cloned().collect();
+            let n = edges.len();
+            
+            if n <= 8 {
+                let mut neighbors = Set::empty();
+                for labeled_edge in edges {
+                    if labeled_edge.0 == *v {
+                        neighbors.insert(labeled_edge.1.clone_mt());
+                    } else if labeled_edge.1 == *v {
+                        neighbors.insert(labeled_edge.0.clone_mt());
+                    }
                 }
+                return neighbors;
             }
-            neighbors
+            
+            // Parallel divide-and-conquer
+            fn parallel_neighbors<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static>(
+                edges: Vec<LabEdge<V, L>>,
+                v: V
+            ) -> Set<V> {
+                let n = edges.len();
+                if n == 0 {
+                    return Set::empty();
+                }
+                if n == 1 {
+                    if edges[0].0 == v {
+                        let mut s = Set::empty();
+                        s.insert(edges[0].1.clone_mt());
+                        return s;
+                    } else if edges[0].1 == v {
+                        let mut s = Set::empty();
+                        s.insert(edges[0].0.clone_mt());
+                        return s;
+                    }
+                    return Set::empty();
+                }
+                
+                let mid = n / 2;
+                let mut right_edges = edges;
+                let left_edges = right_edges.split_off(mid);
+                
+                let v_left = v.clone_mt();
+                let v_right = v;
+                
+                let Pair(left_result, right_result) = ParaPair!(
+                    move || parallel_neighbors(left_edges, v_left),
+                    move || parallel_neighbors(right_edges, v_right)
+                );
+                
+                left_result.union(&right_result)
+            }
+            
+            parallel_neighbors(edges, v.clone_mt())
         }
 
         fn normalize_edge(_v1: V, _v2: V) -> LabEdge<V, L> {

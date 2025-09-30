@@ -1,5 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 6 Labeled Directed Graph (ephemeral) using Set for vertices and labeled arcs - Multi-threaded version.
+//!
+//! Note: NOW uses true parallelism via ParaPair! for neighbor operations.
+//! Labeled arc filtering (out_neighbors, in_neighbors) are parallel.
 
 pub mod LabDirGraphMtEph {
     use std::fmt::{Debug, Display, Formatter, Result};
@@ -8,15 +11,16 @@ pub mod LabDirGraphMtEph {
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
+    use crate::ParaPair;
 
     #[derive(Clone)]
-    pub struct LabDirGraphMtEph<V: StT + MtT + Hash, L: StTInMtT + Hash>
+    pub struct LabDirGraphMtEph<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static>
     {
         vertices: Set<V>,
         labeled_arcs: Set<LabEdge<V, L>>,
     }
 
-    pub trait LabDirGraphMtEphTrait<V: StT + MtT + Hash, L: StTInMtT + Hash>
+    pub trait LabDirGraphMtEphTrait<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static>
     {
         fn empty() -> Self;
         fn from_vertices_and_labeled_arcs(vertices: Set<V>, labeled_arcs: Set<LabEdge<V, L>>) -> Self;
@@ -31,7 +35,7 @@ pub mod LabDirGraphMtEph {
         fn in_neighbors(&self, v: &V) -> Set<V>;
     }
 
-    impl<V: StT + MtT + Hash, L: StTInMtT + Hash> LabDirGraphMtEphTrait<V, L> for LabDirGraphMtEph<V, L>
+    impl<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> LabDirGraphMtEphTrait<V, L> for LabDirGraphMtEph<V, L>
     {
         fn empty() -> Self {
             LabDirGraphMtEph {
@@ -89,23 +93,107 @@ pub mod LabDirGraphMtEph {
         }
 
         fn out_neighbors(&self, v: &V) -> Set<V> {
-            let mut neighbors = Set::empty();
-            for labeled_arc in self.labeled_arcs.iter() {
-                if labeled_arc.0 == *v {
-                    neighbors.insert(labeled_arc.1.clone_mt());
+            // PARALLEL: filter labeled arcs using divide-and-conquer
+            let arcs: Vec<LabEdge<V, L>> = self.labeled_arcs.iter().cloned().collect();
+            let n = arcs.len();
+            
+            if n <= 8 {
+                let mut neighbors = Set::empty();
+                for labeled_arc in arcs {
+                    if labeled_arc.0 == *v {
+                        neighbors.insert(labeled_arc.1.clone_mt());
+                    }
                 }
+                return neighbors;
             }
-            neighbors
+            
+            // Parallel divide-and-conquer
+            fn parallel_out<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static>(
+                arcs: Vec<LabEdge<V, L>>,
+                v: V
+            ) -> Set<V> {
+                let n = arcs.len();
+                if n == 0 {
+                    return Set::empty();
+                }
+                if n == 1 {
+                    return if arcs[0].0 == v {
+                        let mut s = Set::empty();
+                        s.insert(arcs[0].1.clone_mt());
+                        s
+                    } else {
+                        Set::empty()
+                    };
+                }
+                
+                let mid = n / 2;
+                let mut right_arcs = arcs;
+                let left_arcs = right_arcs.split_off(mid);
+                
+                let v_left = v.clone_mt();
+                let v_right = v;
+                
+                let Pair(left_result, right_result) = ParaPair!(
+                    move || parallel_out(left_arcs, v_left),
+                    move || parallel_out(right_arcs, v_right)
+                );
+                
+                left_result.union(&right_result)
+            }
+            
+            parallel_out(arcs, v.clone_mt())
         }
 
         fn in_neighbors(&self, v: &V) -> Set<V> {
-            let mut neighbors = Set::empty();
-            for labeled_arc in self.labeled_arcs.iter() {
-                if labeled_arc.1 == *v {
-                    neighbors.insert(labeled_arc.0.clone_mt());
+            // PARALLEL: filter labeled arcs using divide-and-conquer
+            let arcs: Vec<LabEdge<V, L>> = self.labeled_arcs.iter().cloned().collect();
+            let n = arcs.len();
+            
+            if n <= 8 {
+                let mut neighbors = Set::empty();
+                for labeled_arc in arcs {
+                    if labeled_arc.1 == *v {
+                        neighbors.insert(labeled_arc.0.clone_mt());
+                    }
                 }
+                return neighbors;
             }
-            neighbors
+            
+            // Parallel divide-and-conquer
+            fn parallel_in<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static>(
+                arcs: Vec<LabEdge<V, L>>,
+                v: V
+            ) -> Set<V> {
+                let n = arcs.len();
+                if n == 0 {
+                    return Set::empty();
+                }
+                if n == 1 {
+                    return if arcs[0].1 == v {
+                        let mut s = Set::empty();
+                        s.insert(arcs[0].0.clone_mt());
+                        s
+                    } else {
+                        Set::empty()
+                    };
+                }
+                
+                let mid = n / 2;
+                let mut right_arcs = arcs;
+                let left_arcs = right_arcs.split_off(mid);
+                
+                let v_left = v.clone_mt();
+                let v_right = v;
+                
+                let Pair(left_result, right_result) = ParaPair!(
+                    move || parallel_in(left_arcs, v_left),
+                    move || parallel_in(right_arcs, v_right)
+                );
+                
+                left_result.union(&right_result)
+            }
+            
+            parallel_in(arcs, v.clone_mt())
         }
     }
 
