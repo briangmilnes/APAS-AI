@@ -2,6 +2,7 @@
 //! Benchmarks for single-threaded ephemeral reducer-augmented ordered table implementation.
 
 use apas_ai::AugOrderedTableStEphLit;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::AugOrderedTableStEph::AugOrderedTableStEph::*;
 use apas_ai::Types::Types::*;
@@ -337,7 +338,7 @@ fn bench_ephemeral_macro_construction(c: &mut Criterion) {
 
     group.bench_function("macro_construction_ephemeral", |b| {
         b.iter(|| {
-            let table = AugOrderedTableStEphLit![
+            let table: AugOrderedTableStEph<i32, i32, _> = AugOrderedTableStEphLit![
                 reducer: sum_reducer, identity: 0,
                 1 => 10, 2 => 20, 3 => 30, 4 => 40, 5 => 50
             ];

@@ -2,6 +2,7 @@
  Which lower number modules can you use?
  How many modules are going to have parallelism and in which functions/methods?
  Which algorithms, problems and exercises?
+ Which exercises are text proofs?
  Discuss with the user.
 
  Build a plan for fixing this, including test and benchmark

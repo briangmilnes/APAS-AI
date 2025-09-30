@@ -1,6 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Parallel scan using contraction technique (Chapter 27, Algorithm 27.3).
-//! Note: Unconditionally parallel - no thresholding per APAS rules.
 
 pub mod ScanContractMtEph {
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};

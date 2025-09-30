@@ -2,6 +2,7 @@
 //! Benchmarks for single-threaded persistent reducer-augmented ordered table implementation.
 
 use apas_ai::AugOrderedTableStPerLit;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::AugOrderedTableStPer::AugOrderedTableStPer::*;
 use apas_ai::Chap43::OrderedTableStPer::OrderedTableStPer::*;
@@ -124,13 +125,14 @@ fn bench_insert_performance(c: &mut Criterion) {
             BenchmarkId::new("insert_with_reduction_update", initial_size),
             initial_size,
             |b, _| {
-                let mut local_table = table.clone();
-                let mut counter = *initial_size + 1;
-                b.iter(|| {
-                    local_table = local_table.insert(counter, counter * 10);
-                    counter += 1;
-                    black_box(&local_table)
-                })
+                b.iter_batched(
+                    || (table.clone(), *initial_size + 1),
+                    |(local_table, counter)| {
+                        let new_table = local_table.insert(counter, counter * 10);
+                        black_box(new_table)
+                    },
+                    criterion::BatchSize::SmallInput,
+                )
             },
         );
     }
@@ -209,7 +211,7 @@ fn bench_macro_construction(c: &mut Criterion) {
 
     group.bench_function("macro_construction_small", |b| {
         b.iter(|| {
-            let table = AugOrderedTableStPerLit![
+            let table: AugOrderedTableStPer<i32, i32, _> = AugOrderedTableStPerLit![
                 reducer: sum_reducer, identity: 0,
                 1 => 10, 2 => 20, 3 => 30, 4 => 40, 5 => 50
             ];

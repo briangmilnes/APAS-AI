@@ -1,6 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Parallel reduce using contraction technique (Chapter 27, Algorithm 27.2).
-//! Note: Unconditionally parallel - no thresholding per APAS rules.
 
 pub mod ReduceContractMtEph {
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
