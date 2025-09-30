@@ -5,10 +5,18 @@ pub mod Exercise12_2 {
     use std::sync::atomic::{AtomicUsize, Ordering};
 
     pub trait FetchAddCasTrait {
+        /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
+        /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n concurrent operations, Span Θ(1) - CAS retry loop
         fn fetch_add_cas(&self, delta: usize) -> usize;
     }
 
     impl FetchAddCasTrait for AtomicUsize {
+        /// Implement fetch_add using compare-and-swap retry loop.
+        /// 
+        /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
+        /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n concurrent operations, Span Θ(1), Parallelism Θ(1) - CAS retry loop
+        /// 
+        /// Note: Hardware fetch_add is single atomic op; CAS loop may retry under contention, so cannot outperform native.
         fn fetch_add_cas(&self, delta: usize) -> usize {
             let mut current = self.load(Ordering::Relaxed);
             loop {
@@ -21,6 +29,10 @@ pub mod Exercise12_2 {
         }
     }
 
+    /// Convenience function wrapping the trait method.
+    /// 
+    /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
+    /// claude-4-sonet: Work Θ(1) expected, Θ(n) worst case, Span Θ(1), Parallelism Θ(1)
     pub fn fetch_add_cas(target: &AtomicUsize, delta: usize) -> usize {
         target.fetch_add_cas(delta)
     }
