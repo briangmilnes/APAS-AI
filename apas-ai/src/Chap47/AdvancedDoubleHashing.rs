@@ -3,8 +3,8 @@
 //! Definition 47.9: Double hashing with h_i(k) = (h1(k) + i * h2(k)) mod m
 
 pub mod AdvancedDoubleHashing {
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     use crate::Types::Types::*;
     use std::fmt::{Debug, Display};
 
@@ -39,19 +39,11 @@ pub mod AdvancedDoubleHashing {
     impl RelativePrimeValidator {
         /// Compute greatest common divisor using Euclidean algorithm
         /// Claude Work: O(log min(a,b)), Span: O(log min(a,b))
-        pub fn gcd(a: N, b: N) -> N {
-            if b == 0 {
-                a
-            } else {
-                Self::gcd(b, a % b)
-            }
-        }
+        pub fn gcd(a: N, b: N) -> N { if b == 0 { a } else { Self::gcd(b, a % b) } }
 
         /// Check if two numbers are relatively prime (gcd = 1)
         /// Claude Work: O(log min(a,b)), Span: O(log min(a,b))
-        pub fn are_relatively_prime(a: N, b: N) -> B {
-            Self::gcd(a, b) == 1
-        }
+        pub fn are_relatively_prime(a: N, b: N) -> B { Self::gcd(a, b) == 1 }
 
         /// Validate that h2(k) and table_size are relatively prime
         /// This ensures the probe sequence visits all table positions
@@ -60,19 +52,23 @@ pub mod AdvancedDoubleHashing {
             if h2_value == 0 {
                 return (false, "h2(k) cannot be zero".to_string());
             }
-            
+
             if table_size == 0 {
                 return (false, "Table size cannot be zero".to_string());
             }
-            
+
             let is_valid = Self::are_relatively_prime(h2_value, table_size);
             let message = if is_valid {
                 format!("h2(k)={} and table_size={} are relatively prime", h2_value, table_size)
             } else {
-                format!("h2(k)={} and table_size={} are NOT relatively prime (gcd={})", 
-                       h2_value, table_size, Self::gcd(h2_value, table_size))
+                format!(
+                    "h2(k)={} and table_size={} are NOT relatively prime (gcd={})",
+                    h2_value,
+                    table_size,
+                    Self::gcd(h2_value, table_size)
+                )
             };
-            
+
             (is_valid, message)
         }
 
@@ -91,14 +87,14 @@ pub mod AdvancedDoubleHashing {
         pub fn generate_valid_h2_values(table_size: N, max_count: N) -> Vec<N> {
             let mut valid_values = Vec::new();
             let mut candidate = 1;
-            
+
             while valid_values.len() < max_count as usize && candidate < table_size {
                 if Self::are_relatively_prime(candidate, table_size) {
                     valid_values.push(candidate);
                 }
                 candidate += 1;
             }
-            
+
             valid_values
         }
     }
@@ -144,40 +140,44 @@ pub mod AdvancedDoubleHashing {
 
             let h1_value = self.hash1.hash(key, table_size);
             let h2_value = self.hash2.hash(key, table_size);
-            
+
             // Ensure h2_value is not zero (would cause infinite loop)
             let h2_value = if h2_value == 0 { 1 } else { h2_value };
-            
+
             // Validate relative primality
             let (relative_prime_validation, _) = RelativePrimeValidator::validate_double_hashing(h2_value, table_size);
-            
+
             // Calculate probe sequence period
             let probe_sequence_period = RelativePrimeValidator::probe_sequence_period(h2_value, table_size);
-            
+
             // Generate probe sequence to analyze uniqueness
             let mut probe_positions = std::collections::HashSet::new();
             let mut current_pos = h1_value;
             let mut probe_count = 0;
-            
+
             // Generate probe sequence until we revisit a position or reach table_size
             while probe_positions.insert(current_pos) && probe_count < table_size {
                 probe_count += 1;
                 current_pos = (current_pos + h2_value) % table_size;
             }
-            
+
             let unique_probe_positions = probe_positions.len();
-            
+
             // Measure hash function independence (simplified heuristic)
             let independence_score = if h1_value != h2_value {
-                let diff = if h1_value > h2_value { h1_value - h2_value } else { h2_value - h1_value };
+                let diff = if h1_value > h2_value {
+                    h1_value - h2_value
+                } else {
+                    h2_value - h1_value
+                };
                 (diff as f64) / (table_size as f64)
             } else {
                 0.0 // Same hash values indicate poor independence
             };
-            
+
             // Collision avoidance score based on probe sequence coverage
             let collision_avoidance_score = (unique_probe_positions as f64) / (table_size as f64);
-            
+
             DoubleHashingMetrics {
                 probe_sequence_length: probe_count,
                 unique_probe_positions,
@@ -194,10 +194,10 @@ pub mod AdvancedDoubleHashing {
             if !self.prime_validation_enabled {
                 return (true, "Validation disabled".to_string());
             }
-            
+
             let h2_value = self.hash2.hash(key, table_size);
             let h2_value = if h2_value == 0 { 1 } else { h2_value };
-            
+
             RelativePrimeValidator::validate_double_hashing(h2_value, table_size)
         }
 
@@ -208,7 +208,7 @@ pub mod AdvancedDoubleHashing {
             if load_factor >= 1.0 {
                 return f64::INFINITY;
             }
-            
+
             if is_successful {
                 // Successful search: approximately (1/α) * ln(1/(1-α))
                 if load_factor > 0.0 {
@@ -225,10 +225,10 @@ pub mod AdvancedDoubleHashing {
         /// Check if double hashing configuration is optimal
         /// Claude Work: Θ(1), Span: Θ(1)
         pub fn is_configuration_optimal(&self, metrics: &DoubleHashingMetrics, table_size: N) -> B {
-            metrics.relative_prime_validation && 
-            metrics.probe_sequence_period == table_size &&
-            metrics.hash_function_independence > 0.1 &&
-            metrics.collision_avoidance_score > 0.8
+            metrics.relative_prime_validation
+                && metrics.probe_sequence_period == table_size
+                && metrics.hash_function_independence > 0.1
+                && metrics.collision_avoidance_score > 0.8
         }
 
         /// Get hash function values for debugging
@@ -245,15 +245,15 @@ pub mod AdvancedDoubleHashing {
             let h1_value = self.hash1.hash(key, table_size);
             let h2_value = self.hash2.hash(key, table_size);
             let h2_value = if h2_value == 0 { 1 } else { h2_value };
-            
+
             let mut sequence = Vec::new();
             let mut current_pos = h1_value;
-            
+
             for _ in 0..max_probes {
                 sequence.push(current_pos);
                 current_pos = (current_pos + h2_value) % table_size;
             }
-            
+
             sequence
         }
     }
@@ -271,15 +271,16 @@ pub mod AdvancedDoubleHashing {
 
         /// Strategy name for debugging and analysis
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn strategy_name(&self) -> String {
-            "AdvancedDoubleHashing".to_string()
-        }
+        fn strategy_name(&self) -> String { "AdvancedDoubleHashing".to_string() }
     }
 
     impl<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> Display for AdvancedDoubleHashingStrategy<K, H1, H2> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "AdvancedDoubleHashing(clustering_enabled={}, prime_validation={})", 
-                   self.clustering_enabled, self.prime_validation_enabled)
+            write!(
+                f,
+                "AdvancedDoubleHashing(clustering_enabled={}, prime_validation={})",
+                self.clustering_enabled, self.prime_validation_enabled
+            )
         }
     }
 
@@ -289,7 +290,11 @@ pub mod AdvancedDoubleHashing {
             writeln!(f, "  Probe sequence length: {}", self.probe_sequence_length)?;
             writeln!(f, "  Unique probe positions: {}", self.unique_probe_positions)?;
             writeln!(f, "  Probe sequence period: {}", self.probe_sequence_period)?;
-            writeln!(f, "  Hash function independence: {:.3}", self.hash_function_independence)?;
+            writeln!(
+                f,
+                "  Hash function independence: {:.3}",
+                self.hash_function_independence
+            )?;
             writeln!(f, "  Relative prime validation: {}", self.relative_prime_validation)?;
             write!(f, "  Collision avoidance score: {:.3}", self.collision_avoidance_score)
         }
@@ -301,22 +306,22 @@ pub mod AdvancedDoubleHashing {
     pub fn example_double_hashing_analysis() -> (DoubleHashingMetrics, f64, f64, (B, String)) {
         let hash1 = DefaultHashFunction;
         let hash2 = DefaultHashFunction; // In practice, would use different hash functions
-        let strategy: AdvancedDoubleHashingStrategy<String, DefaultHashFunction, DefaultHashFunction> = 
+        let strategy: AdvancedDoubleHashingStrategy<String, DefaultHashFunction, DefaultHashFunction> =
             AdvancedDoubleHashingStrategy::new(hash1, hash2);
-        
+
         let test_key = "example_key".to_string();
         let table_size = 13; // Prime table size
-        
+
         // Analyze double hashing quality
         let metrics = strategy.analyze_double_hashing_quality(&test_key, table_size);
-        
+
         // Estimate probe counts for 50% load factor
         let successful_probes = strategy.estimate_probe_count(0.5, true);
         let unsuccessful_probes = strategy.estimate_probe_count(0.5, false);
-        
+
         // Validate configuration
         let validation = strategy.validate_configuration(&test_key, table_size);
-        
+
         (metrics, successful_probes, unsuccessful_probes, validation)
     }
 
@@ -325,21 +330,21 @@ pub mod AdvancedDoubleHashing {
     pub fn example_probe_sequence_analysis() -> (Vec<N>, DoubleHashingMetrics, Vec<N>) {
         let hash1 = DefaultHashFunction;
         let hash2 = DefaultHashFunction;
-        let strategy: AdvancedDoubleHashingStrategy<String, DefaultHashFunction, DefaultHashFunction> = 
+        let strategy: AdvancedDoubleHashingStrategy<String, DefaultHashFunction, DefaultHashFunction> =
             AdvancedDoubleHashingStrategy::new(hash1, hash2);
-        
+
         let test_key = "probe_test".to_string();
         let table_size = 11; // Prime table size
-        
+
         // Generate probe sequence
         let probe_sequence = strategy.generate_probe_sequence(&test_key, table_size, 15);
-        
+
         // Analyze quality
         let metrics = strategy.analyze_double_hashing_quality(&test_key, table_size);
-        
+
         // Generate valid h2 values for comparison
         let valid_h2_values = RelativePrimeValidator::generate_valid_h2_values(table_size, 5);
-        
+
         (probe_sequence, metrics, valid_h2_values)
     }
 }

@@ -125,9 +125,7 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn join_m(left: Self, key: T, right: Self) -> Self {
-            ParamBST::join_mid(Exposed::Node(left, key, right))
-        }
+        fn join_m(left: Self, key: T, right: Self) -> Self { ParamBST::join_mid(Exposed::Node(left, key, right)) }
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)
@@ -213,8 +211,7 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)
-        fn filter_inner<F: Fn(&T) -> bool + Send + Sync + 'static>(tree: &Self, predicate: &Arc<F>) -> Self
-        {
+        fn filter_inner<F: Fn(&T) -> bool + Send + Sync + 'static>(tree: &Self, predicate: &Arc<F>) -> Self {
             match tree.expose_internal() {
                 | Exposed::Leaf => ParamBST::new(),
                 | Exposed::Node(left, key, right) => {
@@ -235,16 +232,14 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)
-        fn filter_parallel<F: Fn(&T) -> bool + Send + Sync + 'static>(tree: &Self, predicate: F) -> Self
-        {
+        fn filter_parallel<F: Fn(&T) -> bool + Send + Sync + 'static>(tree: &Self, predicate: F) -> Self {
             let predicate = Arc::new(predicate);
             ParamBST::filter_inner(tree, &predicate)
         }
 
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)
-        fn reduce_inner<F: Fn(T, T) -> T + Send + Sync + 'static>(tree: &Self, op: &Arc<F>, identity: T) -> T
-        {
+        fn reduce_inner<F: Fn(T, T) -> T + Send + Sync + 'static>(tree: &Self, op: &Arc<F>, identity: T) -> T {
             match tree.expose_internal() {
                 | Exposed::Leaf => identity,
                 | Exposed::Node(left, key, right) => {
@@ -265,8 +260,7 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)
-        fn reduce_parallel<F: Fn(T, T) -> T + Send + Sync + 'static>(tree: &Self, op: F, base: T) -> T
-        {
+        fn reduce_parallel<F: Fn(T, T) -> T + Send + Sync + 'static>(tree: &Self, op: F, base: T) -> T {
             let op = Arc::new(op);
             ParamBST::reduce_inner(tree, &op, base)
         }
@@ -296,15 +290,11 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn expose(&self) -> Exposed<T> {
-            self.expose_internal()
-        }
+        fn expose(&self) -> Exposed<T> { self.expose_internal() }
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn join_mid(exposed: Exposed<T>) -> Self {
-            ParamBST::join_mid(exposed)
-        }
+        fn join_mid(exposed: Exposed<T>) -> Self { ParamBST::join_mid(exposed) }
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
@@ -315,9 +305,7 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn is_empty(&self) -> B {
-            if self.size() == 0 { true } else { false }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)
@@ -354,45 +342,33 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)
-        fn split(&self, key: &T) -> (Self, B, Self) {
-            ParamBST::split_inner(self, key)
-        }
+        fn split(&self, key: &T) -> (Self, B, Self) { ParamBST::split_inner(self, key) }
 
         // APAS - work O(lg (|t_1| + |t_2|)), span O(lg (|t_1| + |t_2|))
         // gpt-5-codex-medium: work O(lg (|t_1| + |t_2|)), span O(lg (|t_1| + |t_2|))
-        fn join_pair(&self, other: Self) -> Self {
-            ParamBST::join_pair_inner(self.clone(), other)
-        }
+        fn join_pair(&self, other: Self) -> Self { ParamBST::join_pair_inner(self.clone(), other) }
 
         // APAS - work O(m · lg (n / m)), span O(lg n)
         // gpt-5-codex-medium: work O(m · lg (n / m)), span O(lg n)
-        fn union(&self, other: &Self) -> Self {
-            ParamBST::union_inner(self, other)
-        }
+        fn union(&self, other: &Self) -> Self { ParamBST::union_inner(self, other) }
 
         // APAS - work O(m · lg (n / m)), span O(lg n)
         // gpt-5-codex-medium: work O(m · lg (n / m)), span O(lg n)
-        fn intersect(&self, other: &Self) -> Self {
-            ParamBST::intersect_inner(self, other)
-        }
+        fn intersect(&self, other: &Self) -> Self { ParamBST::intersect_inner(self, other) }
 
         // APAS - work O(m · lg (n / m)), span O(lg n)
         // gpt-5-codex-medium: work O(m · lg (n / m)), span O(lg n)
-        fn difference(&self, other: &Self) -> Self {
-            ParamBST::difference_inner(self, other)
-        }
+        fn difference(&self, other: &Self) -> Self { ParamBST::difference_inner(self, other) }
 
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)
-        fn filter<F: Fn(&T) -> bool + Send + Sync + 'static>(&self, predicate: F) -> Self
-        {
+        fn filter<F: Fn(&T) -> bool + Send + Sync + 'static>(&self, predicate: F) -> Self {
             ParamBST::filter_parallel(self, predicate)
         }
 
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)
-        fn reduce<F: Fn(T, T) -> T + Send + Sync + 'static>(&self, op: F, base: T) -> T
-        {
+        fn reduce<F: Fn(T, T) -> T + Send + Sync + 'static>(&self, op: F, base: T) -> T {
             ParamBST::reduce_parallel(self, op, base)
         }
 

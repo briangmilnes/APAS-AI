@@ -3,8 +3,8 @@
 //! G = (V, A:) where the graph is represented as a table mapping vertices to their out-neighbor sets.
 
 pub mod AdjTableGraphMtPer {
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
     use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
     use crate::Chap43Claude::OrderedTableMtPer::OrderedTableMtPer::*;
     use crate::Types::Types::*;
 
@@ -33,9 +33,7 @@ pub mod AdjTableGraphMtPer {
             }
         }
 
-        fn num_vertices(&self) -> N {
-            self.adj.size()
-        }
+        fn num_vertices(&self) -> N { self.adj.size() }
 
         fn num_edges(&self) -> N {
             let domain = self.adj.domain();
@@ -50,17 +48,13 @@ pub mod AdjTableGraphMtPer {
             count
         }
 
-        fn has_edge(&self, u: &V, v: &V) -> B {
-            self.adj.find(u).map_or(false, |neighbors| neighbors.find(v))
-        }
+        fn has_edge(&self, u: &V, v: &V) -> B { self.adj.find(u).map_or(false, |neighbors| neighbors.find(v)) }
 
         fn out_neighbors(&self, u: &V) -> AVLTreeSetMtPer<V> {
             self.adj.find(u).unwrap_or_else(|| AVLTreeSetMtPer::empty())
         }
 
-        fn out_degree(&self, u: &V) -> N {
-            self.out_neighbors(u).size()
-        }
+        fn out_degree(&self, u: &V) -> N { self.out_neighbors(u).size() }
 
         fn insert_vertex(&self, v: V) -> Self {
             if self.adj.find(&v).is_some() {
@@ -75,12 +69,8 @@ pub mod AdjTableGraphMtPer {
             let new_adj = self.adj.delete(v);
             let v_clone = v.clone();
             // Remove v from all adjacency lists
-            let new_adj = new_adj.map(|neighbors| {
-                neighbors.delete(&v_clone)
-            });
-            AdjTableGraphMtPer {
-                adj: new_adj,
-            }
+            let new_adj = new_adj.map(|neighbors| neighbors.delete(&v_clone));
+            AdjTableGraphMtPer { adj: new_adj }
         }
 
         fn insert_edge(&self, u: V, v: V) -> Self {
@@ -113,8 +103,6 @@ pub mod AdjTableGraphMtPer {
     }
 
     impl<V: StTInMtT + Ord + 'static> Default for AdjTableGraphMtPer<V> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 }

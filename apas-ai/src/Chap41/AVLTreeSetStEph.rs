@@ -29,9 +29,7 @@ pub mod AVLTreeSetStEph {
     }
 
     impl<T: StT + Ord> AVLTreeSetStEphTrait<T> for AVLTreeSetStEph<T> {
-        fn size(&self) -> N {
-            self.elements.length()
-        }
+        fn size(&self) -> N { self.elements.length() }
 
         fn to_seq(&self) -> AVLTreeSeqStEphS<T> {
             // Create a new sequence from the elements
@@ -78,8 +76,7 @@ pub mod AVLTreeSetStEph {
             result
         }
 
-        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self
-        {
+        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self {
             let mut result = Self::empty();
             for i in 0..self.elements.length() {
                 let elem = self.elements.nth(i);
@@ -164,9 +161,7 @@ pub mod AVLTreeSetStEph {
     }
 
     impl<T: StT + Ord> Default for AVLTreeSetStEph<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StT + Ord> Clone for AVLTreeSetStEph<T> {

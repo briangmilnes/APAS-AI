@@ -59,7 +59,7 @@ fn test_med_bottom_up_single_char_different() {
     let s = ArraySeqStPerS::tabulate(&|_| 'a', 1);
     let t = ArraySeqStPerS::tabulate(&|_| 'b', 1);
     let dp = BottomUpDPStPerS::new(s, t);
-    assert_eq!(dp.med_bottom_up(), 2);  // Algorithm uses delete+insert, not substitute
+    assert_eq!(dp.med_bottom_up(), 2); // Algorithm uses delete+insert, not substitute
 }
 
 #[test]
@@ -117,11 +117,11 @@ fn test_partial_eq_true() {
     let s1 = ArraySeqStPerS::tabulate(&|i| ['a', 'b'][i], 2);
     let t1 = ArraySeqStPerS::tabulate(&|i| ['c', 'd'][i], 2);
     let dp1 = BottomUpDPStPerS::new(s1.clone(), t1.clone());
-    
+
     let s2 = ArraySeqStPerS::tabulate(&|i| ['a', 'b'][i], 2);
     let t2 = ArraySeqStPerS::tabulate(&|i| ['c', 'd'][i], 2);
     let dp2 = BottomUpDPStPerS::new(s2, t2);
-    
+
     assert_eq!(dp1, dp2);
 }
 
@@ -130,10 +130,10 @@ fn test_partial_eq_false() {
     let s1 = ArraySeqStPerS::tabulate(&|i| ['a', 'b'][i], 2);
     let t1 = ArraySeqStPerS::tabulate(&|i| ['c', 'd'][i], 2);
     let dp1 = BottomUpDPStPerS::new(s1, t1);
-    
+
     let s2 = ArraySeqStPerS::tabulate(&|i| ['x', 'y'][i], 2);
     let t2 = ArraySeqStPerS::tabulate(&|i| ['c', 'd'][i], 2);
     let dp2 = BottomUpDPStPerS::new(s2, t2);
-    
+
     assert_ne!(dp1, dp2);
 }

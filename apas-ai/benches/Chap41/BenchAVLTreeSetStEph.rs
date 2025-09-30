@@ -24,7 +24,7 @@ fn bench_avl_tree_set_basic(c: &mut Criterion) {
 
     // Only test size 3 to keep it ultra-fast
     let size = 3;
-    
+
     // Build benchmark
     group.bench_function("build", |b| {
         b.iter(|| black_box(build_avl_tree_set(size)));

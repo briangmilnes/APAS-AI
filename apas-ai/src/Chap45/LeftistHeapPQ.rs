@@ -2,8 +2,8 @@
 //! Chapter 45: Priority Queue implementation using Leftist Heap (Data Structure 45.3)
 
 pub mod LeftistHeapPQ {
-    use std::fmt::{Display, Debug, Formatter, Result};
-    
+    use std::fmt::{Debug, Display, Formatter, Result};
+
     use crate::Types::Types::*;
 
     /// Leftist Heap Node - implements Data Structure 45.3 from textbook
@@ -31,30 +31,32 @@ pub mod LeftistHeapPQ {
     pub trait LeftistHeapPQTrait<T: StT + Ord> {
         /// Claude Work: Θ(1), Span: Θ(1)
         fn empty() -> Self;
-        
+
         /// Claude Work: Θ(1), Span: Θ(1)
         fn singleton(element: T) -> Self;
-        
+
         /// Claude Work: Θ(1), Span: Θ(1)
         /// Returns the minimum element (root of heap), or None if empty
         fn find_min(&self) -> Option<&T>;
-        
+
         /// Claude Work: Θ(log n), Span: Θ(log n)
         /// Inserts element by creating singleton and melding
         fn insert(&self, element: T) -> Self;
-        
+
         /// Claude Work: Θ(log n), Span: Θ(log n)
         /// Removes root and melds left and right subtrees
-        fn delete_min(&self) -> (Self, Option<T>) where Self: Sized;
-        
+        fn delete_min(&self) -> (Self, Option<T>)
+        where
+            Self: Sized;
+
         /// Claude Work: Θ(log m + log n), Span: Θ(log m + log n)
         /// ⭐ KEY ADVANTAGE: Efficient meld following right spines
         fn meld(&self, other: &Self) -> Self;
-        
+
         /// Claude Work: Θ(n), Span: Θ(n)
         /// Creates heap from sequence using reduce with meld
         fn from_seq(seq: &[T]) -> Self;
-        
+
         /// Helper methods
         fn size(&self) -> N;
         fn is_empty(&self) -> bool;
@@ -64,8 +66,8 @@ pub mod LeftistHeapPQ {
         /// Get the rank (distance to nearest leaf) of a node
         fn rank(&self) -> N {
             match self {
-                LeftistHeapNode::Leaf => 0,
-                LeftistHeapNode::Node { rank, .. } => *rank,
+                | LeftistHeapNode::Leaf => 0,
+                | LeftistHeapNode::Node { rank, .. } => *rank,
             }
         }
 
@@ -73,16 +75,16 @@ pub mod LeftistHeapPQ {
         fn make_node(key: T, left: LeftistHeapNode<T>, right: LeftistHeapNode<T>) -> Self {
             let left_rank = left.rank();
             let right_rank = right.rank();
-            
+
             // Ensure leftist property: left subtree has >= rank than right subtree
             let (final_left, final_right) = if left_rank >= right_rank {
                 (left, right)
             } else {
                 (right, left)
             };
-            
+
             let node_rank = final_right.rank() + 1;
-            
+
             LeftistHeapNode::Node {
                 key,
                 left: Box::new(final_left),
@@ -95,25 +97,47 @@ pub mod LeftistHeapPQ {
         /// This is the key innovation that makes meld O(log n)!
         fn meld_nodes(a: LeftistHeapNode<T>, b: LeftistHeapNode<T>) -> LeftistHeapNode<T> {
             match (a, b) {
-                (LeftistHeapNode::Leaf, other) => other,
-                (other, LeftistHeapNode::Leaf) => other,
-                (
-                    LeftistHeapNode::Node { key: ka, left: la, right: ra, .. },
-                    LeftistHeapNode::Node { key: kb, left: lb, right: rb, .. }
+                | (LeftistHeapNode::Leaf, other) => other,
+                | (other, LeftistHeapNode::Leaf) => other,
+                | (
+                    LeftistHeapNode::Node {
+                        key: ka,
+                        left: la,
+                        right: ra,
+                        ..
+                    },
+                    LeftistHeapNode::Node {
+                        key: kb,
+                        left: lb,
+                        right: rb,
+                        ..
+                    },
                 ) => {
                     if ka <= kb {
                         // ka is smaller, so it becomes the root
                         // Meld ra (right subtree of a) with entire b
-                        let melded_right = Self::meld_nodes(*ra, LeftistHeapNode::Node { 
-                            key: kb, left: lb, right: rb, rank: 0 // rank will be recalculated
-                        });
+                        let melded_right = Self::meld_nodes(
+                            *ra,
+                            LeftistHeapNode::Node {
+                                key: kb,
+                                left: lb,
+                                right: rb,
+                                rank: 0, // rank will be recalculated
+                            },
+                        );
                         Self::make_node(ka, *la, melded_right)
                     } else {
                         // kb is smaller, so it becomes the root
                         // Meld entire a with rb (right subtree of b)
-                        let melded_right = Self::meld_nodes(LeftistHeapNode::Node { 
-                            key: ka, left: la, right: ra, rank: 0 // rank will be recalculated
-                        }, *rb);
+                        let melded_right = Self::meld_nodes(
+                            LeftistHeapNode::Node {
+                                key: ka,
+                                left: la,
+                                right: ra,
+                                rank: 0, // rank will be recalculated
+                            },
+                            *rb,
+                        );
                         Self::make_node(kb, *lb, melded_right)
                     }
                 }
@@ -123,28 +147,24 @@ pub mod LeftistHeapPQ {
         /// Count total number of nodes in the heap
         fn size(&self) -> N {
             match self {
-                LeftistHeapNode::Leaf => 0,
-                LeftistHeapNode::Node { left, right, .. } => {
-                    1 + left.size() + right.size()
-                }
+                | LeftistHeapNode::Leaf => 0,
+                | LeftistHeapNode::Node { left, right, .. } => 1 + left.size() + right.size(),
             }
         }
 
         /// Get height of the heap
         fn height(&self) -> N {
             match self {
-                LeftistHeapNode::Leaf => 0,
-                LeftistHeapNode::Node { left, right, .. } => {
-                    1 + left.height().max(right.height())
-                }
+                | LeftistHeapNode::Leaf => 0,
+                | LeftistHeapNode::Node { left, right, .. } => 1 + left.height().max(right.height()),
             }
         }
 
         /// Check if leftist property is maintained
         fn is_leftist(&self) -> bool {
             match self {
-                LeftistHeapNode::Leaf => true,
-                LeftistHeapNode::Node { left, right, .. } => {
+                | LeftistHeapNode::Leaf => true,
+                | LeftistHeapNode::Node { left, right, .. } => {
                     left.rank() >= right.rank() && left.is_leftist() && right.is_leftist()
                 }
             }
@@ -153,15 +173,15 @@ pub mod LeftistHeapPQ {
         /// Check if heap property is maintained
         fn is_heap(&self) -> bool {
             match self {
-                LeftistHeapNode::Leaf => true,
-                LeftistHeapNode::Node { key, left, right, .. } => {
+                | LeftistHeapNode::Leaf => true,
+                | LeftistHeapNode::Node { key, left, right, .. } => {
                     let left_ok = match left.as_ref() {
-                        LeftistHeapNode::Leaf => true,
-                        LeftistHeapNode::Node { key: left_key, .. } => key <= left_key,
+                        | LeftistHeapNode::Leaf => true,
+                        | LeftistHeapNode::Node { key: left_key, .. } => key <= left_key,
                     };
                     let right_ok = match right.as_ref() {
-                        LeftistHeapNode::Leaf => true,
-                        LeftistHeapNode::Node { key: right_key, .. } => key <= right_key,
+                        | LeftistHeapNode::Leaf => true,
+                        | LeftistHeapNode::Node { key: right_key, .. } => key <= right_key,
                     };
                     left_ok && right_ok && left.is_heap() && right.is_heap()
                 }
@@ -171,8 +191,8 @@ pub mod LeftistHeapPQ {
         /// Convert to vector for testing (in-order traversal)
         fn to_vec(&self) -> Vec<T> {
             match self {
-                LeftistHeapNode::Leaf => Vec::new(),
-                LeftistHeapNode::Node { key, left, right, .. } => {
+                | LeftistHeapNode::Leaf => Vec::new(),
+                | LeftistHeapNode::Node { key, left, right, .. } => {
                     let mut result = left.to_vec();
                     result.push(key.clone());
                     result.extend(right.to_vec());
@@ -206,8 +226,8 @@ pub mod LeftistHeapPQ {
         /// Minimum is always at the root
         fn find_min(&self) -> Option<&T> {
             match &self.root {
-                LeftistHeapNode::Leaf => None,
-                LeftistHeapNode::Node { key, .. } => Some(key),
+                | LeftistHeapNode::Leaf => None,
+                | LeftistHeapNode::Node { key, .. } => Some(key),
             }
         }
 
@@ -222,16 +242,11 @@ pub mod LeftistHeapPQ {
         /// Remove root and meld left and right subtrees
         fn delete_min(&self) -> (Self, Option<T>) {
             match &self.root {
-                LeftistHeapNode::Leaf => (self.clone(), None),
-                LeftistHeapNode::Node { key, left, right, .. } => {
+                | LeftistHeapNode::Leaf => (self.clone(), None),
+                | LeftistHeapNode::Node { key, left, right, .. } => {
                     let min_element = key.clone();
-                    let melded_root = LeftistHeapNode::meld_nodes(
-                        left.as_ref().clone(),
-                        right.as_ref().clone()
-                    );
-                    let new_heap = LeftistHeapPQ {
-                        root: melded_root,
-                    };
+                    let melded_root = LeftistHeapNode::meld_nodes(left.as_ref().clone(), right.as_ref().clone());
+                    let new_heap = LeftistHeapPQ { root: melded_root };
                     (new_heap, Some(min_element))
                 }
             }
@@ -252,16 +267,14 @@ pub mod LeftistHeapPQ {
             if seq.is_empty() {
                 return Self::empty();
             }
-            
+
             // Create singletons for each element
-            let mut heaps: Vec<Self> = seq.iter()
-                .map(|x| Self::singleton(x.clone()))
-                .collect();
-            
+            let mut heaps: Vec<Self> = seq.iter().map(|x| Self::singleton(x.clone())).collect();
+
             // Reduce using meld operations (can be done in parallel)
             while heaps.len() > 1 {
                 let mut next_level = Vec::new();
-                
+
                 // Pair up heaps and meld them
                 for chunk in heaps.chunks(2) {
                     if chunk.len() == 2 {
@@ -270,50 +283,38 @@ pub mod LeftistHeapPQ {
                         next_level.push(chunk[0].clone());
                     }
                 }
-                
+
                 heaps = next_level;
             }
-            
+
             heaps.into_iter().next().unwrap_or_else(Self::empty)
         }
 
         /// Claude Work: Θ(n), Span: Θ(n)
-        fn size(&self) -> N {
-            self.root.size()
-        }
+        fn size(&self) -> N { self.root.size() }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn is_empty(&self) -> bool {
-            matches!(self.root, LeftistHeapNode::Leaf)
-        }
+        fn is_empty(&self) -> bool { matches!(self.root, LeftistHeapNode::Leaf) }
     }
 
     impl<T: StT + Ord> LeftistHeapPQ<T> {
         /// Create an empty priority queue
-        pub fn new() -> Self {
-            Self::empty()
-        }
+        pub fn new() -> Self { Self::empty() }
 
         /// Get the number of elements
-        pub fn len(&self) -> N {
-            self.size()
-        }
+        pub fn len(&self) -> N { self.size() }
 
         /// Check if the priority queue is empty
-        pub fn is_empty(&self) -> bool {
-            LeftistHeapPQTrait::is_empty(self)
-        }
+        pub fn is_empty(&self) -> bool { LeftistHeapPQTrait::is_empty(self) }
 
         /// Peek at the minimum element without removing it
-        pub fn peek(&self) -> Option<&T> {
-            self.find_min()
-        }
+        pub fn peek(&self) -> Option<&T> { self.find_min() }
 
         /// Extract all elements in sorted order
         pub fn extract_all_sorted(&self) -> Vec<T> {
             let mut result = Vec::new();
             let mut current_heap = self.clone();
-            
+
             while !current_heap.is_empty() {
                 let (new_heap, min_element) = current_heap.delete_min();
                 if let Some(element) = min_element {
@@ -321,46 +322,34 @@ pub mod LeftistHeapPQ {
                 }
                 current_heap = new_heap;
             }
-            
+
             result
         }
 
         /// Get the height of the heap (for analysis)
-        pub fn height(&self) -> N {
-            self.root.height()
-        }
+        pub fn height(&self) -> N { self.root.height() }
 
         /// Get the rank of the root (for analysis)
-        pub fn root_rank(&self) -> N {
-            self.root.rank()
-        }
+        pub fn root_rank(&self) -> N { self.root.rank() }
 
         /// Check if leftist property is maintained (for testing)
-        pub fn is_valid_leftist_heap(&self) -> bool {
-            self.root.is_leftist() && self.root.is_heap()
-        }
+        pub fn is_valid_leftist_heap(&self) -> bool { self.root.is_leftist() && self.root.is_heap() }
 
         /// Create priority queue from vector (for testing)
-        pub fn from_vec(vec: Vec<T>) -> Self {
-            Self::from_seq(&vec)
-        }
+        pub fn from_vec(vec: Vec<T>) -> Self { Self::from_seq(&vec) }
 
         /// Convert to vector (for testing)
-        pub fn to_vec(&self) -> Vec<T> {
-            self.root.to_vec()
-        }
+        pub fn to_vec(&self) -> Vec<T> { self.root.to_vec() }
 
         /// Get elements in sorted order as vector (for testing)
-        pub fn to_sorted_vec(&self) -> Vec<T> {
-            self.extract_all_sorted()
-        }
+        pub fn to_sorted_vec(&self) -> Vec<T> { self.extract_all_sorted() }
 
         /// Advanced meld operations for specific use cases
         pub fn meld_multiple(heaps: &[Self]) -> Self {
             if heaps.is_empty() {
                 return Self::empty();
             }
-            
+
             let mut result = heaps[0].clone();
             for heap in &heaps[1..] {
                 result = result.meld(heap);
@@ -372,7 +361,7 @@ pub mod LeftistHeapPQ {
         pub fn split(&self, value: &T) -> (Self, Self) {
             let mut less_than = Self::empty();
             let mut equal_or_greater = Self::empty();
-            
+
             let all_elements = self.to_vec();
             for element in all_elements {
                 if element < *value {
@@ -381,23 +370,21 @@ pub mod LeftistHeapPQ {
                     equal_or_greater = equal_or_greater.insert(element);
                 }
             }
-            
+
             (less_than, equal_or_greater)
         }
     }
 
     impl<T: StT + Ord> Default for LeftistHeapPQ<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StT + Ord> Display for LeftistHeapPQ<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             fn format_node<T: StT + Ord>(node: &LeftistHeapNode<T>, f: &mut Formatter<'_>, depth: usize) -> Result {
                 match node {
-                    LeftistHeapNode::Leaf => Ok(()),
-                    LeftistHeapNode::Node { key, left, right, rank } => {
+                    | LeftistHeapNode::Leaf => Ok(()),
+                    | LeftistHeapNode::Node { key, left, right, rank } => {
                         let indent = "  ".repeat(depth);
                         writeln!(f, "{}{}(rank:{})", indent, key, rank)?;
                         format_node(left, f, depth + 1)?;
@@ -406,7 +393,7 @@ pub mod LeftistHeapPQ {
                     }
                 }
             }
-            
+
             writeln!(f, "LeftistHeapPQ:")?;
             format_node(&self.root, f, 0)
         }
@@ -435,29 +422,19 @@ pub mod LeftistHeapPQ {
 
     impl LeftistHeapPQOps {
         /// Create empty priority queue
-        pub fn empty<T: StT + Ord>() -> LeftistHeapPQ<T> {
-            LeftistHeapPQ::empty()
-        }
+        pub fn empty<T: StT + Ord>() -> LeftistHeapPQ<T> { LeftistHeapPQ::empty() }
 
         /// Insert element into priority queue
-        pub fn insert<T: StT + Ord>(pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> {
-            pq.insert(element)
-        }
+        pub fn insert<T: StT + Ord>(pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> { pq.insert(element) }
 
         /// Delete minimum element from priority queue
-        pub fn delete_min<T: StT + Ord>(pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
+        pub fn delete_min<T: StT + Ord>(pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) { pq.delete_min() }
 
         /// Meld two priority queues (THE STAR OPERATION!)
-        pub fn meld<T: StT + Ord>(pq1: &LeftistHeapPQ<T>, pq2: &LeftistHeapPQ<T>) -> LeftistHeapPQ<T> {
-            pq1.meld(pq2)
-        }
+        pub fn meld<T: StT + Ord>(pq1: &LeftistHeapPQ<T>, pq2: &LeftistHeapPQ<T>) -> LeftistHeapPQ<T> { pq1.meld(pq2) }
 
         /// Create priority queue from sequence
-        pub fn from_seq<T: StT + Ord>(seq: &[T]) -> LeftistHeapPQ<T> {
-            LeftistHeapPQ::from_seq(seq)
-        }
+        pub fn from_seq<T: StT + Ord>(seq: &[T]) -> LeftistHeapPQ<T> { LeftistHeapPQ::from_seq(seq) }
     }
 
     /// Demonstration of leftist heap advantages
@@ -468,14 +445,11 @@ pub mod LeftistHeapPQ {
         /// This would be much slower with other priority queue implementations!
         pub fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T> {
             // Convert each sorted sequence to a leftist heap
-            let heaps: Vec<LeftistHeapPQ<T>> = sequences
-                .into_iter()
-                .map(|seq| LeftistHeapPQ::from_seq(&seq))
-                .collect();
-            
+            let heaps: Vec<LeftistHeapPQ<T>> = sequences.into_iter().map(|seq| LeftistHeapPQ::from_seq(&seq)).collect();
+
             // Meld all heaps together efficiently
             let merged_heap = LeftistHeapPQ::meld_multiple(&heaps);
-            
+
             // Extract all elements in sorted order
             merged_heap.extract_all_sorted()
         }

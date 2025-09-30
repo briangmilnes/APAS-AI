@@ -34,7 +34,7 @@ pub mod Exercise12_1 {
         }
 
         /// Acquire lock by taking a ticket and waiting for our turn.
-        /// 
+        ///
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
         /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n waiting threads, Span Θ(1) - sequential ticket acquisition
         pub fn lock(&self) {
@@ -45,15 +45,13 @@ pub mod Exercise12_1 {
         }
 
         /// Release lock by advancing turn counter.
-        /// 
+        ///
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - atomic increment releases next thread
-        pub fn unlock(&self) {
-            self.turn.fetch_add(1, Ordering::Release);
-        }
+        pub fn unlock(&self) { self.turn.fetch_add(1, Ordering::Release); }
 
         /// Execute action while holding the lock.
-        /// 
+        ///
         /// APAS: Work Θ(W_action), Span Θ(S_action)
         /// claude-4-sonet: Work Θ(W_action + 1), Span Θ(S_action + 1), Parallelism Θ(W_action/S_action) - dominated by action complexity
         pub fn with_lock<T>(&self, action: impl FnOnce() -> T) -> T {
@@ -65,27 +63,19 @@ pub mod Exercise12_1 {
     }
 
     impl SpinLockTrait for SpinLock {
-        fn new() -> Self {
-            SpinLock::new()
-        }
+        fn new() -> Self { SpinLock::new() }
 
-        fn lock(&self) {
-            SpinLock::lock(self)
-        }
+        fn lock(&self) { SpinLock::lock(self) }
 
-        fn unlock(&self) {
-            SpinLock::unlock(self)
-        }
+        fn unlock(&self) { SpinLock::unlock(self) }
     }
 
     impl Default for SpinLock {
-        fn default() -> Self {
-            SpinLock::new()
-        }
+        fn default() -> Self { SpinLock::new() }
     }
 
     /// Parallel counter increment using spin-lock for mutual exclusion.
-    /// 
+    ///
     /// APAS: Work Θ(t × i), Span Θ(i)
     /// claude-4-sonet: Work Θ(t × i) where t=threads, i=iterations, Span Θ(i) assuming bounded contention, Parallelism Θ(t) - linear speedup under low contention
     pub fn parallel_increment(iterations: N) -> usize {

@@ -10,8 +10,8 @@ pub mod WeightedDirGraphMtEphFloat {
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
-    use crate::Types::Types::*;
     use crate::ParaPair;
+    use crate::Types::Types::*;
 
     /// Weighted directed graph with floating-point weights (multi-threaded, type alias)
     pub type WeightedDirGraphMtEphFloat<V> = LabDirGraphMtEph<V, OrderedF64>;
@@ -67,7 +67,7 @@ pub mod WeightedDirGraphMtEphFloat {
             // PARALLEL: filter weighted arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, OrderedF64>> = self.labeled_arcs().iter().cloned().collect();
             let n = arcs.len();
-            
+
             if n <= 8 {
                 let mut neighbors = Set::empty();
                 for labeled_edge in arcs {
@@ -77,11 +77,11 @@ pub mod WeightedDirGraphMtEphFloat {
                 }
                 return neighbors;
             }
-            
+
             // Parallel divide-and-conquer
             fn parallel_out<V: StT + MtT + Hash + 'static>(
                 arcs: Vec<LabEdge<V, OrderedF64>>,
-                v: V
+                v: V,
             ) -> Set<(V, OrderedFloat<f64>)> {
                 let n = arcs.len();
                 if n == 0 {
@@ -96,22 +96,22 @@ pub mod WeightedDirGraphMtEphFloat {
                         Set::empty()
                     };
                 }
-                
+
                 let mid = n / 2;
                 let mut right_arcs = arcs;
                 let left_arcs = right_arcs.split_off(mid);
-                
+
                 let v_left = v.clone_mt();
                 let v_right = v;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_out(left_arcs, v_left),
-                    move || parallel_out(right_arcs, v_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_out(left_arcs, v_left), move || parallel_out(
+                        right_arcs, v_right
+                    ));
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_out(arcs, v.clone_mt())
         }
 
@@ -122,7 +122,7 @@ pub mod WeightedDirGraphMtEphFloat {
             // PARALLEL: filter weighted arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, OrderedF64>> = self.labeled_arcs().iter().cloned().collect();
             let n = arcs.len();
-            
+
             if n <= 8 {
                 let mut neighbors = Set::empty();
                 for labeled_edge in arcs {
@@ -132,11 +132,11 @@ pub mod WeightedDirGraphMtEphFloat {
                 }
                 return neighbors;
             }
-            
+
             // Parallel divide-and-conquer
             fn parallel_in<V: StT + MtT + Hash + 'static>(
                 arcs: Vec<LabEdge<V, OrderedF64>>,
-                v: V
+                v: V,
             ) -> Set<(V, OrderedFloat<f64>)> {
                 let n = arcs.len();
                 if n == 0 {
@@ -151,22 +151,22 @@ pub mod WeightedDirGraphMtEphFloat {
                         Set::empty()
                     };
                 }
-                
+
                 let mid = n / 2;
                 let mut right_arcs = arcs;
                 let left_arcs = right_arcs.split_off(mid);
-                
+
                 let v_left = v.clone_mt();
                 let v_right = v;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_in(left_arcs, v_left),
-                    move || parallel_in(right_arcs, v_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_in(left_arcs, v_left), move || parallel_in(
+                        right_arcs, v_right
+                    ));
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_in(arcs, v.clone_mt())
         }
 

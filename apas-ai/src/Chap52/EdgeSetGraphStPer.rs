@@ -38,32 +38,19 @@ pub mod EdgeSetGraphStPer {
         }
 
         fn from_vertices_and_edges(v: AVLTreeSetStPer<V>, e: AVLTreeSetStPer<Pair<V, V>>) -> Self {
-            EdgeSetGraphStPer {
-                vertices: v,
-                edges: e,
-            }
+            EdgeSetGraphStPer { vertices: v, edges: e }
         }
 
-        fn num_vertices(&self) -> N {
-            self.vertices.size()
-        }
+        fn num_vertices(&self) -> N { self.vertices.size() }
 
-        fn num_edges(&self) -> N {
-            self.edges.size()
-        }
+        fn num_edges(&self) -> N { self.edges.size() }
 
-        fn vertices(&self) -> &AVLTreeSetStPer<V> {
-            &self.vertices
-        }
+        fn vertices(&self) -> &AVLTreeSetStPer<V> { &self.vertices }
 
-        fn edges(&self) -> &AVLTreeSetStPer<Pair<V, V>> {
-            &self.edges
-        }
+        fn edges(&self) -> &AVLTreeSetStPer<Pair<V, V>> { &self.edges }
 
         // Work: Θ(log |E|), Span: Θ(log |E|)
-        fn has_edge(&self, u: &V, v: &V) -> B {
-            self.edges.find(&Pair(u.clone(), v.clone()))
-        }
+        fn has_edge(&self, u: &V, v: &V) -> B { self.edges.find(&Pair(u.clone(), v.clone())) }
 
         // Work: Θ(|E|), Span: Θ(log |E|) - filter over all edges
         fn out_neighbors(&self, u: &V) -> AVLTreeSetStPer<V> {
@@ -79,9 +66,7 @@ pub mod EdgeSetGraphStPer {
         }
 
         // Work: Θ(|E|), Span: Θ(log |E|)
-        fn out_degree(&self, u: &V) -> N {
-            self.out_neighbors(u).size()
-        }
+        fn out_degree(&self, u: &V) -> N { self.out_neighbors(u).size() }
 
         // Work: Θ(log |V|), Span: Θ(log |V|)
         fn insert_vertex(&self, v: V) -> Self {

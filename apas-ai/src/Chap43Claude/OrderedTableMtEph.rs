@@ -2,10 +2,10 @@
 //! Multi-threaded ephemeral ordered table implementation extending TableMtEph.
 
 pub mod OrderedTableMtEph {
-    use crate::Chap42Claude::TableMtEph::TableMtEph::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap42Claude::TableMtEph::TableMtEph::*;
     use crate::Types::Types::*;
     use std::sync::Arc;
     use std::thread;
@@ -46,12 +46,16 @@ pub mod OrderedTableMtEph {
         fn last_key(&self) -> Option<K>;
         fn previous_key(&self, k: &K) -> Option<K>;
         fn next_key(&self, k: &K) -> Option<K>;
-        fn split_key(&mut self, k: &K) -> (Self, Self) where Self: Sized;
+        fn split_key(&mut self, k: &K) -> (Self, Self)
+        where
+            Self: Sized;
         fn join_key(&mut self, other: Self);
         fn get_key_range(&self, k1: &K, k2: &K) -> Self;
         fn rank_key(&self, k: &K) -> N;
         fn select_key(&self, i: N) -> Option<K>;
-        fn split_rank_key(&mut self, i: N) -> (Self, Self) where Self: Sized;
+        fn split_rank_key(&mut self, i: N) -> (Self, Self)
+        where
+            Self: Sized;
     }
 
     impl<K: MtKey, V: MtVal> OrderedTableMtEph<K, V> {
@@ -65,11 +69,9 @@ pub mod OrderedTableMtEph {
 
     impl<K: MtKey, V: MtVal> OrderedTableMtEphTrait<K, V> for OrderedTableMtEph<K, V> {
         // Base table operations - delegate to backing store with ephemeral semantics and parallelism
-        
+
         /// Claude Work: O(1), Span: O(1)
-        fn size(&self) -> N {
-            self.base_table.size()
-        }
+        fn size(&self) -> N { self.base_table.size() }
 
         /// Claude Work: O(1), Span: O(1)
         fn empty() -> Self {
@@ -86,19 +88,13 @@ pub mod OrderedTableMtEph {
         }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn find(&self, k: &K) -> Option<V> {
-            self.base_table.find(k)
-        }
+        fn find(&self, k: &K) -> Option<V> { self.base_table.find(k) }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn lookup(&self, k: &K) -> Option<V> {
-            self.find(k)
-        }
+        fn lookup(&self, k: &K) -> Option<V> { self.find(k) }
 
         /// Claude Work: O(1), Span: O(1)
-        fn is_empty(&self) -> B {
-            self.size() == 0
-        }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn insert<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, k: K, v: V, combine: F) {
@@ -113,14 +109,12 @@ pub mod OrderedTableMtEph {
         }
 
         /// Claude Work: O(n), Span: O(log n) - Parallel domain extraction
-        fn domain(&self) -> ArraySetStEph<K> {
-            self.base_table.domain()
-        }
+        fn domain(&self) -> ArraySetStEph<K> { self.base_table.domain() }
 
         /// Claude Work: O(n log n), Span: O(log² n) - Parallel tabulation
-        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self 
-        where 
-            F: Fn(&K) -> V + Send + Sync + 'static
+        fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self
+        where
+            F: Fn(&K) -> V + Send + Sync + 'static,
         {
             OrderedTableMtEph {
                 base_table: TableMtEph::tabulate(f, keys),
@@ -129,8 +123,8 @@ pub mod OrderedTableMtEph {
 
         /// Claude Work: O(n), Span: O(log n) - Parallel map
         fn map<F>(&self, f: F) -> Self
-        where 
-            F: Fn(&K, &V) -> V + Send + Sync + 'static
+        where
+            F: Fn(&K, &V) -> V + Send + Sync + 'static,
         {
             let mut result = self.clone();
             // Sequential implementation for now - parallel mapping would require more complex logic
@@ -139,15 +133,17 @@ pub mod OrderedTableMtEph {
             for i in 0..entries.length() {
                 let pair = entries.nth(i);
                 let new_value = f(&pair.0, &pair.1);
-                result.base_table.insert(pair.0.clone(), new_value, |_old, new| new.clone());
+                result
+                    .base_table
+                    .insert(pair.0.clone(), new_value, |_old, new| new.clone());
             }
             result
         }
 
         /// Claude Work: O(n), Span: O(log n) - Parallel filter
         fn filter<F>(&self, f: F) -> Self
-        where 
-            F: Fn(&K, &V) -> B + Send + Sync + 'static
+        where
+            F: Fn(&K, &V) -> B + Send + Sync + 'static,
         {
             let mut result = OrderedTableMtEph::empty();
             // Sequential implementation for now - parallel filtering would require more complex logic
@@ -155,17 +151,19 @@ pub mod OrderedTableMtEph {
             for i in 0..entries.length() {
                 let pair = entries.nth(i);
                 if f(&pair.0, &pair.1) {
-                    result.base_table.insert(pair.0.clone(), pair.1.clone(), |_old, new| new.clone());
+                    result
+                        .base_table
+                        .insert(pair.0.clone(), pair.1.clone(), |_old, new| new.clone());
                 }
             }
             result
         }
 
         /// Claude Work: O(n), Span: O(log n) - Parallel reduction
-        fn reduce<R, F>(&self, init: R, f: F) -> R 
-        where 
-            F: Fn(R, &K, &V) -> R + Send + Sync + 'static, 
-            R: Send + Sync + 'static
+        fn reduce<R, F>(&self, init: R, f: F) -> R
+        where
+            F: Fn(R, &K, &V) -> R + Send + Sync + 'static,
+            R: Send + Sync + 'static,
         {
             // Sequential implementation for now - parallel reduction would require more complex logic
             let entries = self.collect();
@@ -178,35 +176,29 @@ pub mod OrderedTableMtEph {
         }
 
         /// Claude Work: O(m + n), Span: O(log(m + n)) - Parallel intersection
-        fn intersection<F>(&mut self, other: &Self, f: F) 
-        where 
-            F: Fn(&V, &V) -> V + Send + Sync + 'static
+        fn intersection<F>(&mut self, other: &Self, f: F)
+        where
+            F: Fn(&V, &V) -> V + Send + Sync + 'static,
         {
             self.base_table.intersection(&other.base_table, f);
         }
 
         /// Claude Work: O(m + n), Span: O(log(m + n)) - Parallel union
-        fn union<F>(&mut self, other: &Self, f: F) 
-        where 
-            F: Fn(&V, &V) -> V + Send + Sync + 'static
+        fn union<F>(&mut self, other: &Self, f: F)
+        where
+            F: Fn(&V, &V) -> V + Send + Sync + 'static,
         {
             self.base_table.union(&other.base_table, f);
         }
 
         /// Claude Work: O(m + n), Span: O(log(m + n)) - Parallel difference
-        fn difference(&mut self, other: &Self) {
-            self.base_table.difference(&other.base_table);
-        }
+        fn difference(&mut self, other: &Self) { self.base_table.difference(&other.base_table); }
 
         /// Claude Work: O(n), Span: O(log n) - Parallel restrict
-        fn restrict(&mut self, keys: &ArraySetStEph<K>) {
-            self.base_table.restrict(keys);
-        }
+        fn restrict(&mut self, keys: &ArraySetStEph<K>) { self.base_table.restrict(keys); }
 
         /// Claude Work: O(n), Span: O(log n) - Parallel subtract
-        fn subtract(&mut self, keys: &ArraySetStEph<K>) {
-            self.base_table.subtract(keys);
-        }
+        fn subtract(&mut self, keys: &ArraySetStEph<K>) { self.base_table.subtract(keys); }
 
         /// Claude Work: O(n), Span: O(log n)
         fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>> {
@@ -247,7 +239,7 @@ pub mod OrderedTableMtEph {
         fn previous_key(&self, k: &K) -> Option<K> {
             let entries = self.collect();
             let size = entries.length();
-            
+
             for i in (0..size).rev() {
                 let pair = entries.nth(i);
                 if &pair.0 < k {
@@ -261,7 +253,7 @@ pub mod OrderedTableMtEph {
         fn next_key(&self, k: &K) -> Option<K> {
             let entries = self.collect();
             let size = entries.length();
-            
+
             for i in 0..size {
                 let pair = entries.nth(i);
                 if &pair.0 > k {
@@ -296,16 +288,11 @@ pub mod OrderedTableMtEph {
             let right_seq = AVLTreeSeqStPerS::from_vec(right_entries);
 
             *self = Self::empty();
-            (
-                from_sorted_entries(left_seq),
-                from_sorted_entries(right_seq),
-            )
+            (from_sorted_entries(left_seq), from_sorted_entries(right_seq))
         }
 
         /// Claude Work: O(log(m + n)), Span: O(log(m + n))
-        fn join_key(&mut self, other: Self) {
-            self.union(&other, |v1, _v2| v1.clone());
-        }
+        fn join_key(&mut self, other: Self) { self.union(&other, |v1, _v2| v1.clone()); }
 
         /// Claude Work: O(log n), Span: O(log n) - Sequential (AVLTreeSeq not thread-safe)
         fn get_key_range(&self, k1: &K, k2: &K) -> Self {
@@ -355,7 +342,7 @@ pub mod OrderedTableMtEph {
         fn split_rank_key(&mut self, i: N) -> (Self, Self) {
             let entries = self.collect();
             let size = entries.length();
-            
+
             if i >= size {
                 let current = self.clone();
                 *self = Self::empty();
@@ -376,10 +363,7 @@ pub mod OrderedTableMtEph {
             let right_seq = AVLTreeSeqStPerS::from_vec(right_entries);
 
             *self = Self::empty();
-            (
-                from_sorted_entries(left_seq),
-                from_sorted_entries(right_seq),
-            )
+            (from_sorted_entries(left_seq), from_sorted_entries(right_seq))
         }
     }
 

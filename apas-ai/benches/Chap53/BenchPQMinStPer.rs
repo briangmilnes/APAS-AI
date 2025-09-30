@@ -4,12 +4,10 @@
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::Chap53::PQMinStPer::PQMinStPer::*;
 use apas_ai::Types::Types::*;
-use criterion::{criterion_group, criterion_main, BatchSize, Criterion};
+use criterion::{BatchSize, Criterion, criterion_group, criterion_main};
 use std::time::Duration;
 
-fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> {
-    ClosurePriority::new(|v: &N| *v)
-}
+fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> { ClosurePriority::new(|v: &N| *v) }
 
 fn build_complete_graph(n: N) -> impl Fn(&N) -> AVLTreeSetStPer<N> {
     move |v: &N| {
@@ -60,8 +58,7 @@ fn bench_pq_min_st_per(c: &mut Criterion) {
             || {
                 let graph = |v: &N| {
                     if *v < 50 {
-                        AVLTreeSetStPer::singleton(v + 1)
-                            .union(&AVLTreeSetStPer::singleton(v + 2))
+                        AVLTreeSetStPer::singleton(v + 1).union(&AVLTreeSetStPer::singleton(v + 2))
                     } else {
                         AVLTreeSetStPer::empty()
                     }

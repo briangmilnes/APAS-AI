@@ -4,7 +4,7 @@
 use apas_ai::Chap41::AVLTreeSetMtEph::AVLTreeSetMtEph::*;
 use apas_ai::Chap53::PQMinMtEph::PQMinMtEph::*;
 use apas_ai::Types::Types::*;
-use criterion::{criterion_group, criterion_main, BatchSize, Criterion};
+use criterion::{BatchSize, Criterion, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N + Send + Sync + 'static> {
@@ -60,8 +60,7 @@ fn bench_pq_min_mt_eph(c: &mut Criterion) {
             || {
                 let graph = |v: &N| {
                     if *v < 50 {
-                        AVLTreeSetMtEph::singleton(v + 1)
-                            .union(&AVLTreeSetMtEph::singleton(v + 2))
+                        AVLTreeSetMtEph::singleton(v + 1).union(&AVLTreeSetMtEph::singleton(v + 2))
                     } else {
                         AVLTreeSetMtEph::empty()
                     }

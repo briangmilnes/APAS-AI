@@ -1,10 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chapter 42 single-threaded ephemeral table implementation.
 
-use apas_ai::Chap42Claude::TableStEph::TableStEph::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
-use apas_ai::Types::Types::*;
+use apas_ai::Chap42Claude::TableStEph::TableStEph::*;
 use apas_ai::TableStEphLit;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_table_empty() {
@@ -228,11 +228,11 @@ fn test_table_ephemeral_semantics() {
     original.insert(2, "two".to_string(), |_old, new| new.clone());
 
     let original_size = original.size();
-    
+
     // Ephemeral operations modify the original
     original.insert(3, "three".to_string(), |_old, new| new.clone());
     assert_eq!(original.size(), original_size + 1);
-    
+
     original.delete(&1);
     assert_eq!(original.size(), original_size);
     assert_eq!(original.find(&1), None);
@@ -255,22 +255,22 @@ fn test_table_steph_lit_macro() {
 #[test]
 fn test_table_large_operations() {
     let mut table = TableStEph::empty();
-    
+
     // Insert many elements
     for i in 0..100 {
         table.insert(i, format!("value_{}", i), |_old, new| new.clone());
     }
     assert_eq!(table.size(), 100);
-    
+
     // Test find on large table
     for i in 0..100 {
         assert_eq!(table.find(&i), Some(format!("value_{}", i)));
     }
-    
+
     // Filter to even numbers
     table.filter(|k, _v| *k % 2 == 0);
     assert_eq!(table.size(), 50);
-    
+
     for i in 0..100 {
         if i % 2 == 0 {
             assert_eq!(table.find(&i), Some(format!("value_{}", i)));

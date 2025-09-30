@@ -18,9 +18,7 @@ pub mod Chapter36St {
     }
 
     impl<T: StT + Ord> Chapter36StTrait<T> for ArraySeqStEphS<T> {
-        fn pivot_st_first(&self, lo: N, _hi: N) -> T {
-            self.nth(lo).clone()
-        }
+        fn pivot_st_first(&self, lo: N, _hi: N) -> T { self.nth(lo).clone() }
         fn pivot_st_median3(&self, lo: N, hi: N) -> T {
             let mid = lo + (hi - lo) / 2;
             let x0 = self.nth(lo).clone();

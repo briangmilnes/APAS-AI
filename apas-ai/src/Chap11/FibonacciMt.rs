@@ -16,11 +16,11 @@ pub mod FibonacciMt {
 
     impl FibonacciMt {
         /// Parallel Fibonacci using ParaPair! for symmetric binary parallelism.
-        /// 
+        ///
         /// APAS: Work Θ(φⁿ), Span Θ(n)
         /// claude-4-sonet: Work Θ(φⁿ), Span Θ(n), Parallelism Θ(φⁿ/n) - parallel binary recursion via ParaPair!
         /// where φ = (1+√5)/2 ≈ 1.618 (golden ratio)
-        /// 
+        ///
         /// Note: Exponential work makes this impractical for large n. This demonstrates
         /// parallel recursion patterns; real implementations use memoization or iteration.
         pub fn fib(n: N) -> N {
@@ -34,8 +34,6 @@ pub mod FibonacciMt {
     }
 
     impl FibonacciMtTrait for FibonacciMt {
-        fn fib(n: N) -> N {
-            FibonacciMt::fib(n)
-        }
+        fn fib(n: N) -> N { FibonacciMt::fib(n) }
     }
 }

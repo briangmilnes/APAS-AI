@@ -3,9 +3,9 @@
 
 pub mod OrderedSetStEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
     use crate::Types::Types::*;
 
     /// Single-threaded ephemeral ordered set backed by AVLTreeSetStEph
@@ -37,21 +37,23 @@ pub mod OrderedSetStEph {
         fn last(&self) -> Option<T>;
         fn previous(&self, k: &T) -> Option<T>;
         fn next(&self, k: &T) -> Option<T>;
-        fn split(&mut self, k: &T) -> (Self, B, Self) where Self: Sized;
+        fn split(&mut self, k: &T) -> (Self, B, Self)
+        where
+            Self: Sized;
         fn join(&mut self, other: Self);
         fn get_range(&self, k1: &T, k2: &T) -> Self;
         fn rank(&self, k: &T) -> N;
         fn select(&self, i: N) -> Option<T>;
-        fn split_rank(&mut self, i: N) -> (Self, Self) where Self: Sized;
+        fn split_rank(&mut self, i: N) -> (Self, Self)
+        where
+            Self: Sized;
     }
 
     impl<T: StT + Ord> OrderedSetStEphTrait<T> for OrderedSetStEph<T> {
         // Base set operations - delegate to backing store with ephemeral semantics
-        
+
         /// Claude Work: O(1), Span: O(1)
-        fn size(&self) -> N {
-            self.base_set.size()
-        }
+        fn size(&self) -> N { self.base_set.size() }
 
         /// Claude Work: O(1), Span: O(1)
         fn empty() -> Self {
@@ -68,23 +70,16 @@ pub mod OrderedSetStEph {
         }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn find(&self, x: &T) -> B {
-            self.base_set.find(x)
-        }
+        fn find(&self, x: &T) -> B { self.base_set.find(x) }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn insert(&mut self, x: T) {
-            self.base_set.insert(x);
-        }
+        fn insert(&mut self, x: T) { self.base_set.insert(x); }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn delete(&mut self, x: &T) {
-            self.base_set.delete(x);
-        }
+        fn delete(&mut self, x: &T) { self.base_set.delete(x); }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn filter<F: Fn(&T) -> B>(&mut self, f: F) 
-        {
+        fn filter<F: Fn(&T) -> B>(&mut self, f: F) {
             let result = self.base_set.filter(f);
             self.base_set = result;
         }
@@ -160,7 +155,7 @@ pub mod OrderedSetStEph {
         fn previous(&self, k: &T) -> Option<T> {
             let seq = self.to_seq();
             let size = seq.length();
-            
+
             for i in (0..size).rev() {
                 let elem = seq.nth(i);
                 if elem < k {
@@ -174,7 +169,7 @@ pub mod OrderedSetStEph {
         fn next(&self, k: &T) -> Option<T> {
             let seq = self.to_seq();
             let size = seq.length();
-            
+
             for i in 0..size {
                 let elem = seq.nth(i);
                 if elem > k {
@@ -187,15 +182,15 @@ pub mod OrderedSetStEph {
         /// Claude Work: O(log n), Span: O(log n)
         fn split(&mut self, k: &T) -> (Self, B, Self) {
             let seq = self.to_seq();
-            
+
             // Convert to ArraySeqStPerS for filtering operations
             let array_seq = ArraySeqStPerS::tabulate(&|i| seq.nth(i).clone(), seq.length());
-            
+
             // Use proper sequence filter operations
             let left_array = ArraySeqStPerS::filter(&array_seq, &|elem| elem < k);
             let right_array = ArraySeqStPerS::filter(&array_seq, &|elem| elem > k);
             let found = ArraySeqStPerS::filter(&array_seq, &|elem| elem == k).length() > 0;
-            
+
             // Convert back to AVLTreeSeqStPerS
             let left_seq = AVLTreeSeqStPerS::from_vec(left_array.into_iter().collect());
             let right_seq = AVLTreeSeqStPerS::from_vec(right_array.into_iter().collect());
@@ -203,28 +198,22 @@ pub mod OrderedSetStEph {
             // Clear current set (ephemeral behavior)
             *self = Self::empty();
 
-            (
-                Self::from_seq(left_seq),
-                found,
-                Self::from_seq(right_seq),
-            )
+            (Self::from_seq(left_seq), found, Self::from_seq(right_seq))
         }
 
         /// Claude Work: O(log(m + n)), Span: O(log(m + n))
-        fn join(&mut self, other: Self) {
-            self.union(&other);
-        }
+        fn join(&mut self, other: Self) { self.union(&other); }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn get_range(&self, k1: &T, k2: &T) -> Self {
             let seq = self.to_seq();
-            
+
             // Convert to ArraySeqStPerS for filtering operations
             let array_seq = ArraySeqStPerS::tabulate(&|i| seq.nth(i).clone(), seq.length());
-            
+
             // Use proper sequence filter operation
             let range_array = ArraySeqStPerS::filter(&array_seq, &|elem| elem >= k1 && elem <= k2);
-            
+
             // Convert back to AVLTreeSeqStPerS
             let range_seq = AVLTreeSeqStPerS::from_vec(range_array.into_iter().collect());
             Self::from_seq(range_seq)
@@ -261,7 +250,7 @@ pub mod OrderedSetStEph {
         fn split_rank(&mut self, i: N) -> (Self, Self) {
             let seq = self.to_seq();
             let size = seq.length();
-            
+
             if i >= size {
                 let current = self.clone();
                 *self = Self::empty();

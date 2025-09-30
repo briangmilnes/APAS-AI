@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Multi-threaded persistent set implementation using AVLTreeSeqMtPer (Arc-based).
-//! 
+//!
 //! Work/Span Analysis:
 //! - union: Work Θ(n+m), Span Θ(log(n+m)) via PARALLEL divide-and-conquer
 //! - intersection: Work Θ(n+m), Span Θ(log(n+m)) via PARALLEL divide-and-conquer
@@ -8,8 +8,8 @@
 
 pub mod AVLTreeSetMtPer {
     use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
-    use crate::Types::Types::*;
     use crate::ParaPair;
+    use crate::Types::Types::*;
     use std::fmt;
     use std::thread;
 
@@ -34,13 +34,9 @@ pub mod AVLTreeSetMtPer {
     }
 
     impl<T: StTInMtT + Ord + 'static> AVLTreeSetMtPerTrait<T> for AVLTreeSetMtPer<T> {
-        fn size(&self) -> N {
-            self.elements.length()
-        }
+        fn size(&self) -> N { self.elements.length() }
 
-        fn to_seq(&self) -> AVLTreeSeqMtPerS<T> {
-            self.elements.clone()
-        }
+        fn to_seq(&self) -> AVLTreeSeqMtPerS<T> { self.elements.clone() }
 
         fn empty() -> Self {
             AVLTreeSetMtPer {
@@ -56,23 +52,21 @@ pub mod AVLTreeSetMtPer {
 
         fn from_seq(seq: AVLTreeSeqMtPerS<T>) -> Self {
             let mut vals = seq.values_in_order();
-            
+
             // Unconditionally parallel merge sort using ParaPair!
             fn parallel_sort<T: StTInMtT + Ord + 'static>(mut vals: Vec<T>) -> Vec<T> {
                 let n = vals.len();
                 if n <= 1 {
                     return vals;
                 }
-                
+
                 let mid = n / 2;
                 let right_vals = vals.split_off(mid);
                 let left_vals = vals;
-                
-                let Pair(left_sorted, right_sorted) = ParaPair!(
-                    move || parallel_sort(left_vals),
-                    move || parallel_sort(right_vals)
-                );
-                
+
+                let Pair(left_sorted, right_sorted) =
+                    ParaPair!(move || parallel_sort(left_vals), move || parallel_sort(right_vals));
+
                 // Merge sorted halves
                 let mut result = Vec::with_capacity(n);
                 let mut i = 0;
@@ -90,7 +84,7 @@ pub mod AVLTreeSetMtPer {
                 result.extend_from_slice(&right_sorted[j..]);
                 result
             }
-            
+
             vals = parallel_sort(vals);
             vals.dedup();
             AVLTreeSetMtPer {
@@ -102,7 +96,7 @@ pub mod AVLTreeSetMtPer {
         // Work: Θ(n), Span: Θ(log n)
         fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(&self, f: F) -> Self {
             let n = self.size();
-            
+
             if n <= 8 {
                 let mut vals = Vec::new();
                 for i in 0..n {
@@ -115,24 +109,22 @@ pub mod AVLTreeSetMtPer {
                     elements: AVLTreeSeqMtPerS::from_vec(vals),
                 };
             }
-            
+
             // Unconditionally parallel divide-and-conquer using ParaPair!
             let mid = n / 2;
-            
+
             let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
             let right_vals: Vec<T> = (mid..n).map(|i| self.elements.nth(i).clone()).collect();
-            
+
             let left_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(left_vals));
             let right_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(right_vals));
-            
+
             let f_left = f.clone();
             let f_right = f;
-            
-            let Pair(left_result, right_result) = ParaPair!(
-                move || left_set.filter(f_left),
-                move || right_set.filter(f_right)
-            );
-            
+
+            let Pair(left_result, right_result) =
+                ParaPair!(move || left_set.filter(f_left), move || right_set.filter(f_right));
+
             left_result.union(&right_result)
         }
 
@@ -141,11 +133,11 @@ pub mod AVLTreeSetMtPer {
         fn intersection(&self, other: &Self) -> Self {
             let n = self.size();
             let m = other.size();
-            
+
             if n == 0 || m == 0 {
                 return Self::empty();
             }
-            
+
             if n <= 8 {
                 let mut vals = Vec::new();
                 for i in 0..n {
@@ -158,23 +150,22 @@ pub mod AVLTreeSetMtPer {
                     elements: AVLTreeSeqMtPerS::from_vec(vals),
                 };
             }
-            
+
             // Unconditionally parallel divide-and-conquer using ParaPair!
             let mid = n / 2;
-            
+
             let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
             let right_vals: Vec<T> = (mid..n).map(|i| self.elements.nth(i).clone()).collect();
-            
+
             let left_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(left_vals));
             let right_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(right_vals));
             let other_left = other.clone();
             let other_right = other.clone();
-            
-            let Pair(left_result, right_result) = ParaPair!(
-                move || left_set.intersection(&other_left),
-                move || right_set.intersection(&other_right)
-            );
-            
+
+            let Pair(left_result, right_result) =
+                ParaPair!(move || left_set.intersection(&other_left), move || right_set
+                    .intersection(&other_right));
+
             left_result.union(&right_result)
         }
 
@@ -188,14 +179,14 @@ pub mod AVLTreeSetMtPer {
         fn union(&self, other: &Self) -> Self {
             let n = self.size();
             let m = other.size();
-            
+
             if n == 0 {
                 return other.clone();
             }
             if m == 0 {
                 return self.clone();
             }
-            
+
             if n <= 8 {
                 let mut vals = self.elements.values_in_order();
                 vals.extend(other.elements.values_in_order());
@@ -205,23 +196,21 @@ pub mod AVLTreeSetMtPer {
                     elements: AVLTreeSeqMtPerS::from_vec(vals),
                 };
             }
-            
+
             // Unconditionally parallel divide-and-conquer using ParaPair!
             let mid = n / 2;
-            
+
             let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
             let right_vals: Vec<T> = (mid..n).map(|i| self.elements.nth(i).clone()).collect();
-            
+
             let left_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(left_vals));
             let right_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(right_vals));
             let other_left = other.clone();
             let other_right = other.clone();
-            
-            let Pair(left_result, right_result) = ParaPair!(
-                move || left_set.union(&other_left),
-                move || right_set.union(&other_right)
-            );
-            
+
+            let Pair(left_result, right_result) = ParaPair!(move || left_set.union(&other_left), move || right_set
+                .union(&other_right));
+
             left_result.union(&right_result)
         }
 
@@ -230,14 +219,14 @@ pub mod AVLTreeSetMtPer {
             let n = self.size();
             let mut left = 0;
             let mut right = n;
-            
+
             while left < right {
                 let mid = (left + right) / 2;
                 let elem = self.elements.nth(mid);
                 match elem.cmp(x) {
-                    std::cmp::Ordering::Less => left = mid + 1,
-                    std::cmp::Ordering::Equal => return true,
-                    std::cmp::Ordering::Greater => right = mid,
+                    | std::cmp::Ordering::Less => left = mid + 1,
+                    | std::cmp::Ordering::Equal => return true,
+                    | std::cmp::Ordering::Greater => right = mid,
                 }
             }
             false
@@ -255,16 +244,14 @@ pub mod AVLTreeSetMtPer {
             }
             let mut vals = self.elements.values_in_order();
             vals.push(x);
-            
+
             // Unconditionally use parallel from_seq
             Self::from_seq(AVLTreeSeqMtPerS::from_vec(vals))
         }
     }
 
     impl<T: StTInMtT + Ord + 'static> Default for AVLTreeSetMtPer<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StTInMtT + Ord + 'static> Clone for AVLTreeSetMtPer<T> {

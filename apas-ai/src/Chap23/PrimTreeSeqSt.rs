@@ -26,34 +26,22 @@ pub mod PrimTreeSeqSt {
 
     impl<T: StT> PrimTreeSeqStS<T> {
         /// Creates an empty sequence.
-        pub fn empty() -> Self {
-            Self { data: Vec::new() }
-        }
+        pub fn empty() -> Self { Self { data: Vec::new() } }
 
         /// Builds a sequence containing a single element.
-        pub fn singleton(value: T) -> Self {
-            Self { data: vec![value] }
-        }
+        pub fn singleton(value: T) -> Self { Self { data: vec![value] } }
 
         /// Constructs a sequence from the provided vector without additional copying.
-        pub fn from_vec(vec: Vec<T>) -> Self {
-            Self { data: vec }
-        }
+        pub fn from_vec(vec: Vec<T>) -> Self { Self { data: vec } }
 
         /// Converts this sequence into its backing vector.
-        pub fn into_vec(self) -> Vec<T> {
-            self.data
-        }
+        pub fn into_vec(self) -> Vec<T> { self.data }
 
         /// Provides a shared view of the underlying elements.
-        pub fn as_slice(&self) -> &[T] {
-            &self.data
-        }
+        pub fn as_slice(&self) -> &[T] { &self.data }
 
         /// Returns the number of elements in the sequence.
-        pub fn length(&self) -> N {
-            self.data.len()
-        }
+        pub fn length(&self) -> N { self.data.len() }
 
         /// Exposes the internal structure as `Zero`, `One`, or `Two` parts.
         pub fn expose(&self) -> PrimTreeSeqStTree<T> {

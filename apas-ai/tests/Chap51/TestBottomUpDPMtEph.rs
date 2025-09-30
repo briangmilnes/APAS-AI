@@ -92,10 +92,10 @@ fn test_partial_eq() {
     let s1 = ArraySeqMtEphS::from_vec(vec!['a', 'b']);
     let t1 = ArraySeqMtEphS::from_vec(vec!['c', 'd']);
     let dp1 = BottomUpDPMtEphS::new(s1, t1);
-    
+
     let s2 = ArraySeqMtEphS::from_vec(vec!['a', 'b']);
     let t2 = ArraySeqMtEphS::from_vec(vec!['c', 'd']);
     let dp2 = BottomUpDPMtEphS::new(s2, t2);
-    
+
     assert_eq!(dp1, dp2);
 }

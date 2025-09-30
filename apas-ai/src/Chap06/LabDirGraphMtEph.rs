@@ -9,19 +9,17 @@ pub mod LabDirGraphMtEph {
     use std::hash::Hash;
 
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::ParaPair;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use crate::ParaPair;
 
     #[derive(Clone)]
-    pub struct LabDirGraphMtEph<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static>
-    {
+    pub struct LabDirGraphMtEph<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> {
         vertices: Set<V>,
         labeled_arcs: Set<LabEdge<V, L>>,
     }
 
-    pub trait LabDirGraphMtEphTrait<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static>
-    {
+    pub trait LabDirGraphMtEphTrait<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn empty() -> Self;
@@ -57,7 +55,8 @@ pub mod LabDirGraphMtEph {
         fn in_neighbors(&self, v: &V) -> Set<V>;
     }
 
-    impl<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> LabDirGraphMtEphTrait<V, L> for LabDirGraphMtEph<V, L>
+    impl<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> LabDirGraphMtEphTrait<V, L>
+        for LabDirGraphMtEph<V, L>
     {
         fn empty() -> Self {
             LabDirGraphMtEph {
@@ -70,13 +69,9 @@ pub mod LabDirGraphMtEph {
             LabDirGraphMtEph { vertices, labeled_arcs }
         }
 
-        fn vertices(&self) -> &Set<V> {
-            &self.vertices
-        }
+        fn vertices(&self) -> &Set<V> { &self.vertices }
 
-        fn labeled_arcs(&self) -> &Set<LabEdge<V, L>> {
-            &self.labeled_arcs
-        }
+        fn labeled_arcs(&self) -> &Set<LabEdge<V, L>> { &self.labeled_arcs }
 
         fn arcs(&self) -> Set<Edge<V>> {
             let mut arcs = Set::empty();
@@ -86,9 +81,7 @@ pub mod LabDirGraphMtEph {
             arcs
         }
 
-        fn add_vertex(&mut self, v: V) {
-            self.vertices.insert(v);
-        }
+        fn add_vertex(&mut self, v: V) { self.vertices.insert(v); }
 
         fn add_labeled_arc(&mut self, from: V, to: V, label: L) {
             self.vertices.insert(from.clone_mt());
@@ -118,7 +111,7 @@ pub mod LabDirGraphMtEph {
             // PARALLEL: filter labeled arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, L>> = self.labeled_arcs.iter().cloned().collect();
             let n = arcs.len();
-            
+
             if n <= 8 {
                 let mut neighbors = Set::empty();
                 for labeled_arc in arcs {
@@ -128,11 +121,11 @@ pub mod LabDirGraphMtEph {
                 }
                 return neighbors;
             }
-            
+
             // Parallel divide-and-conquer
             fn parallel_out<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static>(
                 arcs: Vec<LabEdge<V, L>>,
-                v: V
+                v: V,
             ) -> Set<V> {
                 let n = arcs.len();
                 if n == 0 {
@@ -147,22 +140,22 @@ pub mod LabDirGraphMtEph {
                         Set::empty()
                     };
                 }
-                
+
                 let mid = n / 2;
                 let mut right_arcs = arcs;
                 let left_arcs = right_arcs.split_off(mid);
-                
+
                 let v_left = v.clone_mt();
                 let v_right = v;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_out(left_arcs, v_left),
-                    move || parallel_out(right_arcs, v_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_out(left_arcs, v_left), move || parallel_out(
+                        right_arcs, v_right
+                    ));
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_out(arcs, v.clone_mt())
         }
 
@@ -170,7 +163,7 @@ pub mod LabDirGraphMtEph {
             // PARALLEL: filter labeled arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, L>> = self.labeled_arcs.iter().cloned().collect();
             let n = arcs.len();
-            
+
             if n <= 8 {
                 let mut neighbors = Set::empty();
                 for labeled_arc in arcs {
@@ -180,11 +173,11 @@ pub mod LabDirGraphMtEph {
                 }
                 return neighbors;
             }
-            
+
             // Parallel divide-and-conquer
             fn parallel_in<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static>(
                 arcs: Vec<LabEdge<V, L>>,
-                v: V
+                v: V,
             ) -> Set<V> {
                 let n = arcs.len();
                 if n == 0 {
@@ -199,35 +192,33 @@ pub mod LabDirGraphMtEph {
                         Set::empty()
                     };
                 }
-                
+
                 let mid = n / 2;
                 let mut right_arcs = arcs;
                 let left_arcs = right_arcs.split_off(mid);
-                
+
                 let v_left = v.clone_mt();
                 let v_right = v;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_in(left_arcs, v_left),
-                    move || parallel_in(right_arcs, v_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_in(left_arcs, v_left), move || parallel_in(
+                        right_arcs, v_right
+                    ));
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_in(arcs, v.clone_mt())
         }
     }
 
-    impl<V: StT + MtT + Hash, L: StTInMtT + Hash> Display for LabDirGraphMtEph<V, L>
-    {
+    impl<V: StT + MtT + Hash, L: StTInMtT + Hash> Display for LabDirGraphMtEph<V, L> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "LabDirGraph(V: {}, A: {})", self.vertices, self.labeled_arcs)
         }
     }
 
-    impl<V: StT + MtT + Hash, L: StTInMtT + Hash> Debug for LabDirGraphMtEph<V, L>
-    {
+    impl<V: StT + MtT + Hash, L: StTInMtT + Hash> Debug for LabDirGraphMtEph<V, L> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(
                 f,

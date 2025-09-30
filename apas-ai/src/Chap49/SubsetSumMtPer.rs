@@ -8,7 +8,6 @@ use std::thread;
 
 use crate::{Chap18::ArraySeqMtPer::ArraySeqMtPer::*, Types::Types::*};
 
-
 pub mod SubsetSumMtPer {
     use super::*;
 
@@ -25,20 +24,20 @@ pub mod SubsetSumMtPer {
         fn new() -> Self
         where
             T: Default;
-        
+
         /// Create from multiset
         fn from_multiset(multiset: ArraySeqMtPerS<T>) -> Self;
-        
+
         /// Solve subset sum problem with parallel dynamic programming
         /// Claude Work: O(k*|S|) where k=target, |S|=multiset size
         /// Claude Span: O(|S|) with parallelism O(k)
         fn subset_sum(&self, target: i32) -> bool
         where
             T: Into<i32> + Copy + Send + Sync + 'static;
-            
+
         /// Get the multiset
         fn multiset(&self) -> &ArraySeqMtPerS<T>;
-        
+
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
@@ -60,9 +59,9 @@ pub mod SubsetSumMtPer {
             }
 
             let result = match (i, j) {
-                (_, 0) => true,  // Base case: target sum is 0
-                (0, _) => false, // Base case: no elements left, target > 0
-                (i, j) => {
+                | (_, 0) => true,  // Base case: target sum is 0
+                | (0, _) => false, // Base case: no elements left, target > 0
+                | (i, j) => {
                     let element_value: i32 = self.multiset.nth(i - 1).clone().into();
                     if element_value > j {
                         // Element too large, skip it
@@ -71,18 +70,14 @@ pub mod SubsetSumMtPer {
                         // Parallel evaluation of both branches
                         let self_clone1 = self.clone();
                         let self_clone2 = self.clone();
-                        
-                        let handle1 = thread::spawn(move || {
-                            self_clone1.subset_sum_rec(i - 1, j - element_value)
-                        });
-                        
-                        let handle2 = thread::spawn(move || {
-                            self_clone2.subset_sum_rec(i - 1, j)
-                        });
-                        
+
+                        let handle1 = thread::spawn(move || self_clone1.subset_sum_rec(i - 1, j - element_value));
+
+                        let handle2 = thread::spawn(move || self_clone2.subset_sum_rec(i - 1, j));
+
                         let result1 = handle1.join().unwrap();
                         let result2 = handle2.join().unwrap();
-                        
+
                         result1 || result2
                     }
                 }
@@ -93,7 +88,7 @@ pub mod SubsetSumMtPer {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.insert((i, j), result);
             }
-            
+
             result
         }
     }
@@ -123,20 +118,18 @@ pub mod SubsetSumMtPer {
             if target < 0 {
                 return false;
             }
-            
+
             // Clear memo for fresh computation
             {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.clear();
             }
-            
+
             let n = self.multiset.length();
             self.subset_sum_rec(n, target)
         }
 
-        fn multiset(&self) -> &ArraySeqMtPerS<T> {
-            &self.multiset
-        }
+        fn multiset(&self) -> &ArraySeqMtPerS<T> { &self.multiset }
 
         fn memo_size(&self) -> usize {
             let memo_guard = self.memo.lock().unwrap();
@@ -145,9 +138,7 @@ pub mod SubsetSumMtPer {
     }
 
     impl<T: MtVal> PartialEq for SubsetSumMtPerS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            self.multiset == other.multiset
-        }
+        fn eq(&self, other: &Self) -> bool { self.multiset == other.multiset }
     }
 
     impl<T: MtVal> Eq for SubsetSumMtPerS<T> {}
@@ -158,8 +149,11 @@ pub mod SubsetSumMtPer {
                 let memo_guard = self.memo.lock().unwrap();
                 memo_guard.len()
             };
-            write!(f, "SubsetSumMtPer(multiset: {}, memo_entries: {})", 
-                   self.multiset, memo_size)
+            write!(
+                f,
+                "SubsetSumMtPer(multiset: {}, memo_entries: {})",
+                self.multiset, memo_size
+            )
         }
     }
 
@@ -182,4 +176,3 @@ macro_rules! SubsetSumMtPerLit {
         $crate::Chap49::SubsetSumMtPer::SubsetSumMtPer::SubsetSumMtPerS::new()
     };
 }
-

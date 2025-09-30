@@ -26,9 +26,7 @@ pub mod Types {
     pub struct Pair<K, V>(pub K, pub V);
 
     impl<K: Display, V: Display> Display for Pair<K, V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "({} -> {})", self.0, self.1)
-        }
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "({} -> {})", self.0, self.1) }
     }
 
     // Type bounds shorthands
@@ -58,7 +56,7 @@ pub mod Types {
     pub trait MtKey: StTInMtT + Ord + 'static {}
     impl<T> MtKey for T where T: StTInMtT + Ord + 'static {}
 
-    // MtVal: Multi-threaded value type with static lifetime  
+    // MtVal: Multi-threaded value type with static lifetime
     // Common pattern: StTInMtT + 'static (appears 15+ times)
     pub trait MtVal: StTInMtT + 'static {}
     impl<T> MtVal for T where T: StTInMtT + 'static {}
@@ -107,122 +105,76 @@ pub mod Types {
             let inner = self.lock().unwrap().clone();
             std::sync::Mutex::new(inner)
         }
-        fn new_mt(inner: Self::Inner) -> Self {
-            std::sync::Mutex::new(inner)
-        }
+        fn new_mt(inner: Self::Inner) -> Self { std::sync::Mutex::new(inner) }
     }
 
     impl<A: StT + Send + Sync, B: StT + Send + Sync> MtT for Pair<A, B> {
         type Inner = Pair<A, B>;
-        fn clone_mt(&self) -> Self {
-            self.clone()
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { self.clone() }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     // Ad-hoc implementations for specific primitive types to avoid conflicts
     impl MtT for usize {
         type Inner = usize;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for isize {
         type Inner = isize;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for i32 {
         type Inner = i32;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for u32 {
         type Inner = u32;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for i64 {
         type Inner = i64;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for u64 {
         type Inner = u64;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for bool {
         type Inner = bool;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     impl MtT for char {
         type Inner = char;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     // Special case: ad-hoc implementation for String
     impl MtT for String {
         type Inner = String;
-        fn clone_mt(&self) -> Self {
-            self.clone()
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { self.clone() }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     // String slice implementation
     impl<'a> MtT for &'a str {
         type Inner = &'a str;
-        fn clone_mt(&self) -> Self {
-            *self
-        }
-        fn new_mt(inner: Self::Inner) -> Self {
-            inner
-        }
+        fn clone_mt(&self) -> Self { *self }
+        fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 
     // Note: bool already has MtT implementation above (line ~112)
@@ -233,21 +185,15 @@ pub mod Types {
     pub struct Edge<V: StT>(pub V, pub V);
 
     impl<V: StT> std::fmt::Display for Edge<V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "({}, {})", self.0, self.1)
-        }
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "({}, {})", self.0, self.1) }
     }
 
     impl<V: StT> From<(V, V)> for Edge<V> {
-        fn from(t: (V, V)) -> Self {
-            Edge(t.0, t.1)
-        }
+        fn from(t: (V, V)) -> Self { Edge(t.0, t.1) }
     }
 
     impl<V: StT> From<Edge<V>> for (V, V) {
-        fn from(e: Edge<V>) -> (V, V) {
-            (e.0, e.1)
-        }
+        fn from(e: Edge<V>) -> (V, V) { (e.0, e.1) }
     }
 
     /// Labeled Edge wrapper to enable edges with labels.
@@ -261,15 +207,11 @@ pub mod Types {
     }
 
     impl<V: StT, L: StT + Hash> From<(V, V, L)> for LabEdge<V, L> {
-        fn from(t: (V, V, L)) -> Self {
-            LabEdge(t.0, t.1, t.2)
-        }
+        fn from(t: (V, V, L)) -> Self { LabEdge(t.0, t.1, t.2) }
     }
 
     impl<V: StT, L: StT + Hash> From<LabEdge<V, L>> for (V, V, L) {
-        fn from(e: LabEdge<V, L>) -> (V, V, L) {
-            (e.0, e.1, e.2)
-        }
+        fn from(e: LabEdge<V, L>) -> (V, V, L) { (e.0, e.1, e.2) }
     }
 
     // Import OrderedFloat from the ordered-float crate
@@ -280,15 +222,11 @@ pub mod Types {
     pub type OrderedF64 = OrderedFloat<f64>;
 
     impl<A, B> From<(A, B)> for Pair<A, B> {
-        fn from(t: (A, B)) -> Self {
-            Pair(t.0, t.1)
-        }
+        fn from(t: (A, B)) -> Self { Pair(t.0, t.1) }
     }
 
     impl<A, B> From<Pair<A, B>> for (A, B) {
-        fn from(p: Pair<A, B>) -> Self {
-            (p.0, p.1)
-        }
+        fn from(p: Pair<A, B>) -> Self { (p.0, p.1) }
     }
 
     #[macro_export]

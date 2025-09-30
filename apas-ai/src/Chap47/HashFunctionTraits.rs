@@ -2,10 +2,10 @@
 //! Chapter 47: Hash Function Traits and Utilities
 
 pub mod HashFunctionTraits {
-    use std::fmt::{Display, Debug};
-    use std::hash::{Hash, Hasher};
     use std::collections::hash_map::DefaultHasher;
-    
+    use std::fmt::{Debug, Display};
+    use std::hash::{Hash, Hasher};
+
     use crate::Types::Types::*;
 
     /// Trait for hash functions that map keys to hash codes
@@ -14,7 +14,7 @@ pub mod HashFunctionTraits {
         /// Claude Work: Θ(|key|), Span: Θ(|key|)
         /// Maps a key to a hash code in range [0, table_size)
         fn hash(&self, key: &K, table_size: N) -> N;
-        
+
         /// Get a description of this hash function
         fn description(&self) -> String;
     }
@@ -31,10 +31,10 @@ pub mod HashFunctionTraits {
     /// Provides theoretical guarantees for collision analysis
     pub trait UniversalHashFamily<K> {
         type HashFn: HashFunction<K>;
-        
+
         /// Generate a random hash function from the universal family
         fn generate(&self, seed: u64) -> Self::HashFn;
-        
+
         /// Get the family description
         fn family_description(&self) -> String;
     }
@@ -49,10 +49,8 @@ pub mod HashFunctionTraits {
             key.hash(&mut hasher);
             (hasher.finish() as N) % table_size
         }
-        
-        fn description(&self) -> String {
-            "DefaultHashFunction (Rust built-in)".to_string()
-        }
+
+        fn description(&self) -> String { "DefaultHashFunction (Rust built-in)".to_string() }
     }
 
     /// String hash function from Example 47.1 in textbook
@@ -75,10 +73,8 @@ pub mod HashFunctionTraits {
             }
             sum % table_size
         }
-        
-        fn description(&self) -> String {
-            "StringPositionHashFunction (Example 47.1)".to_string()
-        }
+
+        fn description(&self) -> String { "StringPositionHashFunction (Example 47.1)".to_string() }
     }
 
     /// Polynomial rolling hash function for strings
@@ -89,9 +85,7 @@ pub mod HashFunctionTraits {
     }
 
     impl PolynomialHashFunction {
-        pub fn new(base: N) -> Self {
-            PolynomialHashFunction { base }
-        }
+        pub fn new(base: N) -> Self { PolynomialHashFunction { base } }
     }
 
     impl HashFunction<String> for PolynomialHashFunction {
@@ -99,18 +93,16 @@ pub mod HashFunctionTraits {
         fn hash(&self, key: &String, table_size: N) -> N {
             let mut hash_value = 0;
             let mut power = 1;
-            
+
             for ch in key.chars() {
                 hash_value = (hash_value + (ch as N) * power) % table_size;
                 power = (power * self.base) % table_size;
             }
-            
+
             hash_value
         }
-        
-        fn description(&self) -> String {
-            format!("PolynomialHashFunction (base={})", self.base)
-        }
+
+        fn description(&self) -> String { format!("PolynomialHashFunction (base={})", self.base) }
     }
 
     /// Universal hash function for integers
@@ -137,9 +129,12 @@ pub mod HashFunctionTraits {
             let hash_value = ((self.a * x + self.b) % self.p) as N;
             hash_value % table_size
         }
-        
+
         fn description(&self) -> String {
-            format!("UniversalIntegerHashFunction (a={}, b={}, p={})", self.a, self.b, self.p)
+            format!(
+                "UniversalIntegerHashFunction (a={}, b={}, p={})",
+                self.a, self.b, self.p
+            )
         }
     }
 
@@ -148,9 +143,7 @@ pub mod HashFunctionTraits {
     pub struct DefaultKeyEquality;
 
     impl<K: PartialEq> KeyEquality<K> for DefaultKeyEquality {
-        fn eq(&self, a: &K, b: &K) -> bool {
-            a == b
-        }
+        fn eq(&self, a: &K, b: &K) -> bool { a == b }
     }
 
     /// Case-insensitive string equality
@@ -158,9 +151,7 @@ pub mod HashFunctionTraits {
     pub struct CaseInsensitiveStringEquality;
 
     impl KeyEquality<String> for CaseInsensitiveStringEquality {
-        fn eq(&self, a: &String, b: &String) -> bool {
-            a.to_lowercase() == b.to_lowercase()
-        }
+        fn eq(&self, a: &String, b: &String) -> bool { a.to_lowercase() == b.to_lowercase() }
     }
 
     /// Universal hash family for integers
@@ -177,30 +168,26 @@ pub mod HashFunctionTraits {
 
     impl UniversalHashFamily<i32> for UniversalIntegerHashFamily {
         type HashFn = UniversalIntegerHashFunction;
-        
+
         fn generate(&self, seed: u64) -> Self::HashFn {
             // Use seed to generate pseudo-random a and b
             let a = (seed * 1103515245 + 12345) % (self.p - 1) + 1; // Ensure a != 0
             let b = (a * 1103515245 + 12345) % self.p;
             UniversalIntegerHashFunction::new(a, b)
         }
-        
-        fn family_description(&self) -> String {
-            format!("UniversalIntegerHashFamily (p={})", self.p)
-        }
+
+        fn family_description(&self) -> String { format!("UniversalIntegerHashFamily (p={})", self.p) }
     }
 
     /// Hash function combiner for creating probe sequences
     /// Used in flat hash tables for open addressing
-    pub struct ProbeSequenceGenerator<K, H1: HashFunction<K>, H2: HashFunction<K>>
-    {
+    pub struct ProbeSequenceGenerator<K, H1: HashFunction<K>, H2: HashFunction<K>> {
         hash1: H1,
         hash2: H2,
         _phantom: std::marker::PhantomData<K>,
     }
 
-    impl<K, H1: HashFunction<K>, H2: HashFunction<K>> ProbeSequenceGenerator<K, H1, H2>
-    {
+    impl<K, H1: HashFunction<K>, H2: HashFunction<K>> ProbeSequenceGenerator<K, H1, H2> {
         pub fn new(hash1: H1, hash2: H2) -> Self {
             ProbeSequenceGenerator {
                 hash1,
@@ -208,7 +195,7 @@ pub mod HashFunctionTraits {
                 _phantom: std::marker::PhantomData,
             }
         }
-        
+
         /// Generate the i-th hash value in the probe sequence
         /// For double hashing: h_i(x) = (h1(x) + i * h2(x)) mod m
         pub fn probe_hash(&self, key: &K, probe_index: N, table_size: N) -> N {
@@ -233,7 +220,7 @@ pub mod HashFunctionTraits {
                 min_load_factor: min_load,
             }
         }
-        
+
         /// Calculate current load factor
         pub fn load_factor(&self, num_elements: N, table_size: N) -> f64 {
             if table_size == 0 {
@@ -242,27 +229,23 @@ pub mod HashFunctionTraits {
                 num_elements as f64 / table_size as f64
             }
         }
-        
+
         /// Check if table should be resized up
         pub fn should_grow(&self, num_elements: N, table_size: N) -> bool {
             self.load_factor(num_elements, table_size) > self.max_load_factor
         }
-        
+
         /// Check if table should be resized down
         pub fn should_shrink(&self, num_elements: N, table_size: N) -> bool {
             table_size > 8 && // Don't shrink below minimum size
             self.load_factor(num_elements, table_size) < self.min_load_factor
         }
-        
+
         /// Calculate new table size for growth
-        pub fn grow_size(&self, current_size: N) -> N {
-            current_size * 2
-        }
-        
+        pub fn grow_size(&self, current_size: N) -> N { current_size * 2 }
+
         /// Calculate new table size for shrinkage
-        pub fn shrink_size(&self, current_size: N) -> N {
-            (current_size / 2).max(8)
-        }
+        pub fn shrink_size(&self, current_size: N) -> N { (current_size / 2).max(8) }
     }
 
     /// Hash table statistics for analysis
@@ -278,7 +261,11 @@ pub mod HashFunctionTraits {
 
     impl HashTableStats {
         pub fn new(num_elements: N, table_size: N) -> Self {
-            let load_factor = if table_size == 0 { 0.0 } else { num_elements as f64 / table_size as f64 };
+            let load_factor = if table_size == 0 {
+                0.0
+            } else {
+                num_elements as f64 / table_size as f64
+            };
             HashTableStats {
                 num_elements,
                 table_size,
@@ -288,7 +275,7 @@ pub mod HashFunctionTraits {
                 avg_chain_length: 0.0,
             }
         }
-        
+
         pub fn with_collision_stats(mut self, collisions: N, max_chain: N, avg_chain: f64) -> Self {
             self.num_collisions = collisions;
             self.max_chain_length = max_chain;
@@ -299,9 +286,16 @@ pub mod HashFunctionTraits {
 
     impl Display for HashTableStats {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "HashTableStats {{ elements: {}, size: {}, load_factor: {:.3}, collisions: {}, max_chain: {}, avg_chain: {:.2} }}", 
-                   self.num_elements, self.table_size, self.load_factor, 
-                   self.num_collisions, self.max_chain_length, self.avg_chain_length)
+            write!(
+                f,
+                "HashTableStats {{ elements: {}, size: {}, load_factor: {:.3}, collisions: {}, max_chain: {}, avg_chain: {:.2} }}",
+                self.num_elements,
+                self.table_size,
+                self.load_factor,
+                self.num_collisions,
+                self.max_chain_length,
+                self.avg_chain_length
+            )
         }
     }
 
@@ -311,21 +305,29 @@ pub mod HashFunctionTraits {
     impl HashTableUtils {
         /// Find next prime number >= n (for table sizing)
         pub fn next_prime(n: N) -> N {
-            if n <= 2 { return 2; }
+            if n <= 2 {
+                return 2;
+            }
             let mut candidate = if n % 2 == 0 { n + 1 } else { n };
-            
+
             while !Self::is_prime(candidate) {
                 candidate += 2;
             }
             candidate
         }
-        
+
         /// Check if number is prime
         pub fn is_prime(n: N) -> bool {
-            if n < 2 { return false; }
-            if n == 2 { return true; }
-            if n % 2 == 0 { return false; }
-            
+            if n < 2 {
+                return false;
+            }
+            if n == 2 {
+                return true;
+            }
+            if n % 2 == 0 {
+                return false;
+            }
+
             let sqrt_n = (n as f64).sqrt() as N;
             for i in (3..=sqrt_n).step_by(2) {
                 if n % i == 0 {
@@ -334,14 +336,16 @@ pub mod HashFunctionTraits {
             }
             true
         }
-        
+
         /// Generate good table sizes (powers of 2 or primes)
         pub fn good_table_size(desired_size: N, use_prime: bool) -> N {
             if use_prime {
                 Self::next_prime(desired_size)
             } else {
                 // Next power of 2
-                if desired_size <= 1 { return 2; }
+                if desired_size <= 1 {
+                    return 2;
+                }
                 let mut size = 1;
                 while size < desired_size {
                     size *= 2;
@@ -357,24 +361,22 @@ pub mod HashFunctionTraits {
         ($name:ident, $key_type:ty, $hash_expr:expr, $desc:expr) => {
             #[derive(Clone, Debug)]
             pub struct $name;
-            
+
             impl HashFunction<$key_type> for $name {
                 fn hash(&self, key: &$key_type, table_size: N) -> N {
                     let hash_value = $hash_expr(key);
                     hash_value % table_size
                 }
-                
-                fn description(&self) -> String {
-                    $desc.to_string()
-                }
+
+                fn description(&self) -> String { $desc.to_string() }
             }
         };
     }
 
     // Example usage of the macro
     impl_hash_function!(
-        SimpleIntegerHash, 
-        i32, 
+        SimpleIntegerHash,
+        i32,
         |key: &i32| (*key as N).wrapping_mul(2654435761), // Knuth's multiplicative hash
         "SimpleIntegerHash (Knuth multiplicative)"
     );
@@ -384,12 +386,11 @@ pub mod HashFunctionTraits {
 
     impl HashFunctionTester {
         /// Test hash function distribution
-        pub fn test_distribution<K, H: HashFunction<K>>(hash_fn: &H, keys: &[K], table_size: N) -> HashTableStats
-        {
+        pub fn test_distribution<K, H: HashFunction<K>>(hash_fn: &H, keys: &[K], table_size: N) -> HashTableStats {
             let mut bucket_counts = vec![0; table_size];
             let mut max_count = 0;
             let mut total_collisions = 0;
-            
+
             for key in keys {
                 let hash_value = hash_fn.hash(key, table_size);
                 bucket_counts[hash_value] += 1;
@@ -398,16 +399,18 @@ pub mod HashFunctionTraits {
                 }
                 max_count = max_count.max(bucket_counts[hash_value]);
             }
-            
+
             let avg_count = keys.len() as f64 / table_size as f64;
-            
-            HashTableStats::new(keys.len(), table_size)
-                .with_collision_stats(total_collisions, max_count, avg_count)
+
+            HashTableStats::new(keys.len(), table_size).with_collision_stats(total_collisions, max_count, avg_count)
         }
-        
+
         /// Measure hash function performance
-        pub fn benchmark_hash_function<K, H: HashFunction<K>>(hash_fn: &H, keys: &[K], table_size: N) -> std::time::Duration
-        {
+        pub fn benchmark_hash_function<K, H: HashFunction<K>>(
+            hash_fn: &H,
+            keys: &[K],
+            table_size: N,
+        ) -> std::time::Duration {
             let start = std::time::Instant::now();
             for key in keys {
                 let _ = hash_fn.hash(key, table_size);

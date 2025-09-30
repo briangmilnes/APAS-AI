@@ -121,10 +121,10 @@ fn test_partial_eq() {
     let s1 = ArraySeqMtPerS::from_vec(vec!['a', 'b']);
     let t1 = ArraySeqMtPerS::from_vec(vec!['c', 'd']);
     let dp1 = TopDownDPMtPerS::new(s1, t1);
-    
+
     let s2 = ArraySeqMtPerS::from_vec(vec!['a', 'b']);
     let t2 = ArraySeqMtPerS::from_vec(vec!['c', 'd']);
     let dp2 = TopDownDPMtPerS::new(s2, t2);
-    
+
     assert_eq!(dp1, dp2);
 }

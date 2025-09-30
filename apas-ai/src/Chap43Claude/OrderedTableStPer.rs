@@ -2,10 +2,10 @@
 //! Single-threaded persistent ordered table implementation extending TableStPer.
 
 pub mod OrderedTableStPer {
-    use crate::Chap42Claude::TableStPer::TableStPer::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap42Claude::TableStPer::TableStPer::*;
     use crate::Types::Types::*;
 
     /// Single-threaded persistent ordered table backed by TableStPer
@@ -41,21 +41,23 @@ pub mod OrderedTableStPer {
         fn last_key(&self) -> Option<K>;
         fn previous_key(&self, k: &K) -> Option<K>;
         fn next_key(&self, k: &K) -> Option<K>;
-        fn split_key(&self, k: &K) -> (Self, Option<V>, Self) where Self: Sized;
+        fn split_key(&self, k: &K) -> (Self, Option<V>, Self)
+        where
+            Self: Sized;
         fn join_key(left: &Self, right: &Self) -> Self;
         fn get_key_range(&self, k1: &K, k2: &K) -> Self;
         fn rank_key(&self, k: &K) -> N;
         fn select_key(&self, i: N) -> Option<K>;
-        fn split_rank_key(&self, i: N) -> (Self, Self) where Self: Sized;
+        fn split_rank_key(&self, i: N) -> (Self, Self)
+        where
+            Self: Sized;
     }
 
     impl<K: StT + Ord, V: StT> OrderedTableStPerTrait<K, V> for OrderedTableStPer<K, V> {
         // Base table operations - delegate to backing store
-        
+
         /// Claude Work: O(1), Span: O(1)
-        fn size(&self) -> N {
-            self.base_table.size()
-        }
+        fn size(&self) -> N { self.base_table.size() }
 
         /// Claude Work: O(1), Span: O(1)
         fn empty() -> Self {
@@ -72,9 +74,7 @@ pub mod OrderedTableStPer {
         }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn find(&self, k: &K) -> Option<V> {
-            self.base_table.find(k)
-        }
+        fn find(&self, k: &K) -> Option<V> { self.base_table.find(k) }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn insert(&self, k: K, v: V) -> Self {
@@ -91,45 +91,38 @@ pub mod OrderedTableStPer {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn domain(&self) -> ArraySetStEph<K> {
-            self.base_table.domain()
-        }
+        fn domain(&self) -> ArraySetStEph<K> { self.base_table.domain() }
 
         /// Claude Work: O(n log n), Span: O(log² n)
-        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self 
-        {
+        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self {
             OrderedTableStPer {
                 base_table: TableStPer::tabulate(f, keys),
             }
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn map<F: Fn(&V) -> V>(&self, f: F) -> Self 
-        {
+        fn map<F: Fn(&V) -> V>(&self, f: F) -> Self {
             OrderedTableStPer {
                 base_table: self.base_table.map(f),
             }
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn filter<F: Fn(&K, &V) -> B>(&self, f: F) -> Self 
-        {
+        fn filter<F: Fn(&K, &V) -> B>(&self, f: F) -> Self {
             OrderedTableStPer {
                 base_table: self.base_table.filter(f),
             }
         }
 
         /// Claude Work: O(m + n), Span: O(log(m + n))
-        fn intersection<F: Fn(&V, &V) -> V>(&self, other: &Self, f: F) -> Self 
-        {
+        fn intersection<F: Fn(&V, &V) -> V>(&self, other: &Self, f: F) -> Self {
             OrderedTableStPer {
                 base_table: self.base_table.intersection(&other.base_table, f),
             }
         }
 
         /// Claude Work: O(m + n), Span: O(log(m + n))
-        fn union<F: Fn(&V, &V) -> V>(&self, other: &Self, f: F) -> Self 
-        {
+        fn union<F: Fn(&V, &V) -> V>(&self, other: &Self, f: F) -> Self {
             OrderedTableStPer {
                 base_table: self.base_table.union(&other.base_table, f),
             }
@@ -195,7 +188,7 @@ pub mod OrderedTableStPer {
         fn previous_key(&self, k: &K) -> Option<K> {
             let entries = self.collect();
             let size = entries.length();
-            
+
             for i in (0..size).rev() {
                 let pair = entries.nth(i);
                 if &pair.0 < k {
@@ -209,7 +202,7 @@ pub mod OrderedTableStPer {
         fn next_key(&self, k: &K) -> Option<K> {
             let entries = self.collect();
             let size = entries.length();
-            
+
             for i in 0..size {
                 let pair = entries.nth(i);
                 if &pair.0 > k {
@@ -249,9 +242,7 @@ pub mod OrderedTableStPer {
         }
 
         /// Claude Work: O(log(m + n)), Span: O(log(m + n))
-        fn join_key(left: &Self, right: &Self) -> Self {
-            left.union(right, |v1, _v2| v1.clone())
-        }
+        fn join_key(left: &Self, right: &Self) -> Self { left.union(right, |v1, _v2| v1.clone()) }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn get_key_range(&self, k1: &K, k2: &K) -> Self {
@@ -301,7 +292,7 @@ pub mod OrderedTableStPer {
         fn split_rank_key(&self, i: N) -> (Self, Self) {
             let entries = self.collect();
             let size = entries.length();
-            
+
             if i >= size {
                 return (self.clone(), Self::empty());
             }
@@ -319,10 +310,7 @@ pub mod OrderedTableStPer {
             let left_seq = AVLTreeSeqStPerS::from_vec(left_entries);
             let right_seq = AVLTreeSeqStPerS::from_vec(right_entries);
 
-            (
-                from_sorted_entries(left_seq),
-                from_sorted_entries(right_seq),
-            )
+            (from_sorted_entries(left_seq), from_sorted_entries(right_seq))
         }
     }
 

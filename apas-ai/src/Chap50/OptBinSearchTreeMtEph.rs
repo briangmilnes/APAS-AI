@@ -28,35 +28,35 @@ pub mod OptBinSearchTreeMtEph {
     pub trait OBSTMtEphTrait<T: MtVal> {
         /// Create new optimal BST solver
         fn new() -> Self;
-        
+
         /// Create from keys and probabilities
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self;
-        
+
         /// Create from key-probability pairs
         fn from_key_probs(key_probs: Vec<KeyProb<T>>) -> Self;
-        
+
         /// Compute optimal BST cost using parallel dynamic programming
         /// Claude Work: O(n³) where n=number of keys
         /// Claude Span: O(n log n) with parallel reduction
         fn optimal_cost(&mut self) -> Probability
         where
             T: Send + Sync + 'static;
-            
+
         /// Get a copy of the keys with probabilities (thread-safe)
         fn keys(&self) -> Vec<KeyProb<T>>;
-        
+
         /// Set key-probability pair at index
         fn set_key_prob(&mut self, index: usize, key_prob: KeyProb<T>);
-        
+
         /// Update probability for key at index
         fn update_prob(&mut self, index: usize, prob: Probability);
-        
+
         /// Get number of keys
         fn num_keys(&self) -> usize;
-        
+
         /// Clear memoization table
         fn clear_memo(&mut self);
-        
+
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
@@ -72,25 +72,21 @@ pub mod OptBinSearchTreeMtEph {
             if costs.len() == 1 {
                 return costs[0];
             }
-            
+
             let mid = costs.len() / 2;
             let left_costs = costs[..mid].to_vec();
             let right_costs = costs[mid..].to_vec();
-            
+
             let self_clone1 = self.clone();
             let self_clone2 = self.clone();
-            
-            let handle1 = thread::spawn(move || {
-                self_clone1.parallel_min_reduction(left_costs)
-            });
-            
-            let handle2 = thread::spawn(move || {
-                self_clone2.parallel_min_reduction(right_costs)
-            });
-            
+
+            let handle1 = thread::spawn(move || self_clone1.parallel_min_reduction(left_costs));
+
+            let handle2 = thread::spawn(move || self_clone2.parallel_min_reduction(right_costs));
+
             let left_min = handle1.join().unwrap();
             let right_min = handle2.join().unwrap();
-            
+
             std::cmp::min(left_min, right_min)
         }
 
@@ -115,10 +111,11 @@ pub mod OptBinSearchTreeMtEph {
                 // Sum probabilities for this subsequence (thread-safe access)
                 let prob_sum: Probability = {
                     let keys_guard = self.keys.lock().unwrap();
-                    (0..l).map(|k| keys_guard[i + k].prob)
+                    (0..l)
+                        .map(|k| keys_guard[i + k].prob)
                         .fold(Probability::zero(), |acc, p| acc + p)
                 };
-                
+
                 // Compute costs for each possible root in parallel
                 let costs: Vec<Probability> = (0..l)
                     .map(|k| {
@@ -127,10 +124,10 @@ pub mod OptBinSearchTreeMtEph {
                         left_cost + right_cost
                     })
                     .collect();
-                
+
                 // Use parallel reduction to find minimum
                 let min_cost = self.parallel_min_reduction(costs);
-                
+
                 prob_sum + min_cost
             };
 
@@ -139,7 +136,7 @@ pub mod OptBinSearchTreeMtEph {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.insert((i, l), result);
             }
-            
+
             result
         }
     }
@@ -153,10 +150,12 @@ pub mod OptBinSearchTreeMtEph {
         }
 
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self {
-            let key_probs: Vec<KeyProb<T>> = keys.into_iter().zip(probs.into_iter())
+            let key_probs: Vec<KeyProb<T>> = keys
+                .into_iter()
+                .zip(probs.into_iter())
                 .map(|(key, prob)| KeyProb { key, prob })
                 .collect();
-            
+
             Self {
                 keys: Arc::new(Mutex::new(key_probs)),
                 memo: Arc::new(Mutex::new(HashMap::new())),
@@ -178,17 +177,17 @@ pub mod OptBinSearchTreeMtEph {
                 let keys_guard = self.keys.lock().unwrap();
                 keys_guard.len()
             };
-            
+
             if keys_len == 0 {
                 return Probability::zero();
             }
-            
+
             // Clear memo for fresh computation
             {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.clear();
             }
-            
+
             self.obst_rec(0, keys_len)
         }
 
@@ -254,8 +253,7 @@ pub mod OptBinSearchTreeMtEph {
                 let keys_guard = self.keys.lock().unwrap();
                 keys_guard.len()
             };
-            write!(f, "OBSTMtEph(keys: {}, memo_entries: {})", 
-                   keys_len, memo_size)
+            write!(f, "OBSTMtEph(keys: {}, memo_entries: {})", keys_len, memo_size)
         }
     }
 
@@ -266,8 +264,8 @@ pub mod OptBinSearchTreeMtEph {
         fn into_iter(self) -> Self::IntoIter {
             // Extract Vec from Arc<Mutex<Vec>> - this consumes the Arc
             match Arc::try_unwrap(self.keys) {
-                Ok(mutex) => mutex.into_inner().unwrap().into_iter(),
-                Err(arc) => {
+                | Ok(mutex) => mutex.into_inner().unwrap().into_iter(),
+                | Err(arc) => {
                     let keys_guard = arc.lock().unwrap();
                     keys_guard.clone().into_iter()
                 }
@@ -304,9 +302,7 @@ pub mod OptBinSearchTreeMtEph {
     impl<T: MtVal> Eq for KeyProb<T> {}
 
     impl<T: MtVal + Display> Display for KeyProb<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "({}: {:.3})", self.key, self.prob)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "({}: {:.3})", self.key, self.prob) }
     }
 
     #[allow(dead_code)]

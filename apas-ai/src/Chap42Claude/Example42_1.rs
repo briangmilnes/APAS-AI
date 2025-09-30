@@ -2,12 +2,12 @@
 //! Chapter 42 Example 42.1 demonstrating table operations.
 
 pub mod Example42_1 {
-    use crate::Chap42Claude::TableStPer::TableStPer::*;
-    use crate::Chap42Claude::TableStEph::TableStEph::*;
-    use crate::Chap42Claude::TableMtEph::TableMtEph::*;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap42Claude::TableMtEph::TableMtEph::*;
+    use crate::Chap42Claude::TableStEph::TableStEph::*;
+    use crate::Chap42Claude::TableStPer::TableStPer::*;
     use crate::Types::Types::*;
-    use crate::{TableStPerLit, TableStEphLit, TableMtEphLit};
+    use crate::{TableMtEphLit, TableStEphLit, TableStPerLit};
 
     /// Example 42.1: Basic table operations demonstration
     pub fn example_42_1() {
@@ -31,8 +31,11 @@ pub mod Example42_1 {
         // Demonstrate insert operation (persistent vs ephemeral)
         println!("\n--- Insert Operations ---");
         let table_per_new = table_per.insert(4, "Dave".to_string(), |_old, new| new.clone());
-        println!("After persistent insert - original size: {}, new size: {}", 
-                 table_per.size(), table_per_new.size());
+        println!(
+            "After persistent insert - original size: {}, new size: {}",
+            table_per.size(),
+            table_per_new.size()
+        );
 
         table_eph.insert(4, "Dave".to_string(), |_old, new| new.clone());
         println!("After ephemeral insert - table size: {}", table_eph.size());
@@ -45,7 +48,7 @@ pub mod Example42_1 {
         let domain_per = table_per_new.domain();
         let domain_eph = table_eph.domain();
         let domain_mt = table_mt.domain();
-        
+
         println!("Persistent table domain size: {}", domain_per.size());
         println!("Ephemeral table domain size: {}", domain_eph.size());
         println!("Multi-threaded table domain size: {}", domain_mt.size());
@@ -53,25 +56,43 @@ pub mod Example42_1 {
         // Demonstrate map operation
         println!("\n--- Map Operations ---");
         let table_per_mapped = table_per_new.map(|name| name.to_uppercase());
-        println!("Persistent table after map (original unchanged): {:?}", table_per_new.find(&1));
-        println!("Persistent table after map (new table): {:?}", table_per_mapped.find(&1));
+        println!(
+            "Persistent table after map (original unchanged): {:?}",
+            table_per_new.find(&1)
+        );
+        println!(
+            "Persistent table after map (new table): {:?}",
+            table_per_mapped.find(&1)
+        );
 
         table_eph.map(|name| name.to_uppercase());
-        println!("Ephemeral table after map (modified in place): {:?}", table_eph.find(&1));
+        println!(
+            "Ephemeral table after map (modified in place): {:?}",
+            table_eph.find(&1)
+        );
 
         table_mt.map(|name| name.to_uppercase());
-        println!("Multi-threaded table after map (modified in place): {:?}", table_mt.find(&1));
+        println!(
+            "Multi-threaded table after map (modified in place): {:?}",
+            table_mt.find(&1)
+        );
 
         // Demonstrate filter operation
         println!("\n--- Filter Operations ---");
         let table_per_filtered = table_per_new.filter(|k, _v| *k <= 2);
-        println!("Persistent table after filter (keys <= 2): size = {}", table_per_filtered.size());
+        println!(
+            "Persistent table after filter (keys <= 2): size = {}",
+            table_per_filtered.size()
+        );
 
         table_eph.filter(|k, _v| *k <= 2);
         println!("Ephemeral table after filter (keys <= 2): size = {}", table_eph.size());
 
         table_mt.filter(|k, _v| *k <= 2);
-        println!("Multi-threaded table after filter (keys <= 2): size = {}", table_mt.size());
+        println!(
+            "Multi-threaded table after filter (keys <= 2): size = {}",
+            table_mt.size()
+        );
 
         // Demonstrate tabulate operation
         println!("\n--- Tabulate Operations ---");
@@ -98,8 +119,11 @@ pub mod Example42_1 {
         let union = table1.union(&table2, |v1, v2| format!("{}+{}", v1, v2));
         let difference = table1.difference(&table2);
 
-        println!("Table1 ∩ Table2: size = {}, key 2 -> {:?}", 
-                 intersection.size(), intersection.find(&2));
+        println!(
+            "Table1 ∩ Table2: size = {}, key 2 -> {:?}",
+            intersection.size(),
+            intersection.find(&2)
+        );
         println!("Table1 ∪ Table2: size = {}", union.size());
         println!("Table1 - Table2: size = {}", difference.size());
 
@@ -109,7 +133,7 @@ pub mod Example42_1 {
     /// Demonstrate performance characteristics of different table implementations
     pub fn performance_comparison() {
         println!("\n=== Performance Comparison ===");
-        
+
         let size = 1000;
         println!("Building tables with {} entries...", size);
 
@@ -142,7 +166,7 @@ pub mod Example42_1 {
 
         // Test map operation performance
         println!("\nMap operation performance:");
-        
+
         let start = std::time::Instant::now();
         let _mapped_per = table_per.map(|s| s.to_uppercase());
         let per_map_time = start.elapsed();

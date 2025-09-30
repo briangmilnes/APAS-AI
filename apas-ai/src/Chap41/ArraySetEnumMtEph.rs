@@ -57,9 +57,7 @@ pub mod ArraySetEnumMtEph {
             ArraySeqMtEphS::from_vec(result)
         }
 
-        fn empty(u: N) -> Self {
-            Self::new(u)
-        }
+        fn empty(u: N) -> Self { Self::new(u) }
 
         fn singleton(u: N, x: N) -> Self {
             let mut bits = bitbox![0; u];
@@ -80,8 +78,7 @@ pub mod ArraySetEnumMtEph {
             ArraySetEnumMtEph { bits, universe_size: u }
         }
 
-        fn filter<F: PredVal<N> + Clone>(&self, f: F) -> Self
-        {
+        fn filter<F: PredVal<N> + Clone>(&self, f: F) -> Self {
             // Parallel filter: spawn thread per element (as if f is expensive)
             let f = Arc::new(f);
             let mut new_bits = bitbox![0; self.universe_size];
@@ -140,9 +137,7 @@ pub mod ArraySetEnumMtEph {
             }
         }
 
-        fn find(&self, x: N) -> B {
-            if x < self.universe_size { self.bits[x] } else { false }
-        }
+        fn find(&self, x: N) -> B { if x < self.universe_size { self.bits[x] } else { false } }
 
         fn delete(&mut self, x: N) {
             if x < self.universe_size {

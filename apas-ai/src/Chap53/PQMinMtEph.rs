@@ -47,9 +47,7 @@ pub mod PQMinMtEph {
     impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P + Send + Sync + 'static>
         PriorityFn<V, P> for ClosurePriority<V, P, F>
     {
-        fn priority(&self, v: &V) -> P {
-            (self.f)(v)
-        }
+        fn priority(&self, v: &V) -> P { (self.f)(v) }
     }
 
     pub trait PQMinMtEphTrait<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> {
@@ -62,11 +60,7 @@ pub mod PQMinMtEph {
             PF: PriorityFn<V, P>;
 
         /// Min-Priority Queue Search from multiple sources.
-        fn pq_min_multi<G, PF>(
-            graph: G,
-            sources: AVLTreeSetMtEph<V>,
-            priority_fn: PF,
-        ) -> PQMinResult<V, P>
+        fn pq_min_multi<G, PF>(graph: G, sources: AVLTreeSetMtEph<V>, priority_fn: PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtEph<V> + Send + Sync + 'static,
             PF: PriorityFn<V, P>;
@@ -74,9 +68,7 @@ pub mod PQMinMtEph {
 
     pub struct PQMinMtEph;
 
-    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> PQMinMtEphTrait<V, P>
-        for PQMinMtEph
-    {
+    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> PQMinMtEphTrait<V, P> for PQMinMtEph {
         fn pq_min<G, PF>(graph: G, source: V, priority_fn: PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtEph<V> + Send + Sync + 'static,
@@ -86,11 +78,7 @@ pub mod PQMinMtEph {
             Self::pq_min_multi(graph, sources, priority_fn)
         }
 
-        fn pq_min_multi<G, PF>(
-            graph: G,
-            sources: AVLTreeSetMtEph<V>,
-            priority_fn: PF,
-        ) -> PQMinResult<V, P>
+        fn pq_min_multi<G, PF>(graph: G, sources: AVLTreeSetMtEph<V>, priority_fn: PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtEph<V> + Send + Sync + 'static,
             PF: PriorityFn<V, P>,
@@ -137,10 +125,7 @@ pub mod PQMinMtEph {
                     let neighbor = neighbors_seq.nth(i);
                     if !visited.find(neighbor) {
                         let neighbor_p = priority_fn.priority(neighbor);
-                        let neighbor_entry = Pair(
-                            Pair(neighbor_p.clone(), neighbor.clone()),
-                            neighbor.clone(),
-                        );
+                        let neighbor_entry = Pair(Pair(neighbor_p.clone(), neighbor.clone()), neighbor.clone());
                         frontier.insert(neighbor_entry);
                     }
                 }

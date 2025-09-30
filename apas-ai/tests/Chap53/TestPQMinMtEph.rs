@@ -12,12 +12,12 @@ fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N + Send + Sync + '
 
 fn test_graph_1() -> impl Fn(&N) -> AVLTreeSetMtEph<N> + Send + Sync + 'static {
     |v: &N| match *v {
-        1 => AVLTreeSetMtEph::singleton(2).union(&AVLTreeSetMtEph::singleton(3)),
-        2 => AVLTreeSetMtEph::singleton(4),
-        3 => AVLTreeSetMtEph::singleton(4).union(&AVLTreeSetMtEph::singleton(5)),
-        4 => AVLTreeSetMtEph::empty(),
-        5 => AVLTreeSetMtEph::empty(),
-        _ => AVLTreeSetMtEph::empty(),
+        | 1 => AVLTreeSetMtEph::singleton(2).union(&AVLTreeSetMtEph::singleton(3)),
+        | 2 => AVLTreeSetMtEph::singleton(4),
+        | 3 => AVLTreeSetMtEph::singleton(4).union(&AVLTreeSetMtEph::singleton(5)),
+        | 4 => AVLTreeSetMtEph::empty(),
+        | 5 => AVLTreeSetMtEph::empty(),
+        | _ => AVLTreeSetMtEph::empty(),
     }
 }
 
@@ -60,14 +60,14 @@ fn test_pq_min_dag() {
 #[test]
 fn test_pq_min_priority_order() {
     let graph = |v: &N| match *v {
-        1 => AVLTreeSetMtEph::singleton(2).union(&AVLTreeSetMtEph::singleton(3)),
-        2 => AVLTreeSetMtEph::singleton(4),
-        3 => AVLTreeSetMtEph::singleton(5),
-        _ => AVLTreeSetMtEph::empty(),
+        | 1 => AVLTreeSetMtEph::singleton(2).union(&AVLTreeSetMtEph::singleton(3)),
+        | 2 => AVLTreeSetMtEph::singleton(4),
+        | 3 => AVLTreeSetMtEph::singleton(5),
+        | _ => AVLTreeSetMtEph::empty(),
     };
     let prio_fn = vertex_priority();
     let result = PQMinMtEph::pq_min(graph, 1, prio_fn);
-    
+
     assert_eq!(result.visited.size(), 5);
     assert_eq!(result.priorities.size(), 5);
 }
@@ -78,7 +78,7 @@ fn test_pq_min_multi_source() {
     let sources = AVLTreeSetMtEph::singleton(2).union(&AVLTreeSetMtEph::singleton(5));
     let prio_fn = vertex_priority();
     let result = PQMinMtEph::pq_min_multi(graph, sources, prio_fn);
-    
+
     assert_eq!(result.visited.size(), 3);
     assert!(result.visited.find(&2));
     assert!(result.visited.find(&4));
@@ -88,14 +88,14 @@ fn test_pq_min_multi_source() {
 #[test]
 fn test_pq_min_linear_chain() {
     let graph = |v: &N| match *v {
-        1 => AVLTreeSetMtEph::singleton(2),
-        2 => AVLTreeSetMtEph::singleton(3),
-        3 => AVLTreeSetMtEph::singleton(4),
-        _ => AVLTreeSetMtEph::empty(),
+        | 1 => AVLTreeSetMtEph::singleton(2),
+        | 2 => AVLTreeSetMtEph::singleton(3),
+        | 3 => AVLTreeSetMtEph::singleton(4),
+        | _ => AVLTreeSetMtEph::empty(),
     };
     let prio_fn = vertex_priority();
     let result = PQMinMtEph::pq_min(graph, 1, prio_fn);
-    
+
     assert_eq!(result.visited.size(), 4);
     for i in 1..=4 {
         assert!(result.visited.find(&i));
@@ -105,14 +105,14 @@ fn test_pq_min_linear_chain() {
 #[test]
 fn test_pq_min_cycle() {
     let graph = |v: &N| match *v {
-        1 => AVLTreeSetMtEph::singleton(2),
-        2 => AVLTreeSetMtEph::singleton(3),
-        3 => AVLTreeSetMtEph::singleton(1),
-        _ => AVLTreeSetMtEph::empty(),
+        | 1 => AVLTreeSetMtEph::singleton(2),
+        | 2 => AVLTreeSetMtEph::singleton(3),
+        | 3 => AVLTreeSetMtEph::singleton(1),
+        | _ => AVLTreeSetMtEph::empty(),
     };
     let prio_fn = vertex_priority();
     let result = PQMinMtEph::pq_min(graph, 1, prio_fn);
-    
+
     assert_eq!(result.visited.size(), 3);
     assert!(result.visited.find(&1));
     assert!(result.visited.find(&2));

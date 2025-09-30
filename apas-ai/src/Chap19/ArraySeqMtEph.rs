@@ -21,7 +21,10 @@ pub mod ArraySeqMtEph {
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtEphS<T>;
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T>;
-        fn map<U: MtVal, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F) -> ArraySeqMtEphS<U>;
+        fn map<U: MtVal, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
+            a: &ArraySeqMtEphS<T>,
+            f: F,
+        ) -> ArraySeqMtEphS<U>;
         fn select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>, index: N) -> Option<T>;
         fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T>;
         fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T>;
@@ -55,13 +58,9 @@ pub mod ArraySeqMtEph {
             <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(&|_| item.clone(), 1)
         }
 
-        fn length(&self) -> N {
-            ArraySeqMtEphTraitChap18::length(self)
-        }
+        fn length(&self) -> N { ArraySeqMtEphTraitChap18::length(self) }
 
-        fn nth_cloned(&self, index: N) -> T {
-            ArraySeqMtEphTraitChap18::nth_cloned(self, index)
-        }
+        fn nth_cloned(&self, index: N) -> T { ArraySeqMtEphTraitChap18::nth_cloned(self, index) }
 
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtEphS<T> {
             // Keep as primitive - subseq is one of the 7 APAS primitives
@@ -83,8 +82,7 @@ pub mod ArraySeqMtEph {
         fn map<U: MtVal, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
             a: &ArraySeqMtEphS<T>,
             f: F,
-        ) -> ArraySeqMtEphS<U>
-        {
+        ) -> ArraySeqMtEphS<U> {
             // Algorithm 19.3: map f a = tabulate(lambda i.f(a[i]), |a|)
             // Sequential implementation to maintain APAS algorithmic fidelity with closures
             // Can't use tabulate with closure capture, implement directly
@@ -147,8 +145,7 @@ pub mod ArraySeqMtEph {
             }
         }
 
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, pred: F) -> ArraySeqMtEphS<T>
-        {
+        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, pred: F) -> ArraySeqMtEphS<T> {
             // Algorithm 19.5 with parallelism: fork thread per element + serial compaction
             if a.length() == 0 {
                 return <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::empty();
@@ -213,8 +210,7 @@ pub mod ArraySeqMtEph {
             acc
         }
 
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
-        {
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T {
             // Algorithm 19.9 with parallelism: always parallel divide-and-conquer
             if a.length() == 0 {
                 id

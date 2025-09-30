@@ -21,21 +21,11 @@ pub mod ArraySeqStPer {
                 data: elts.into_boxed_slice(),
             }
         }
-        pub fn new(length: N, init_value: T) -> Self {
-            Self::from_vec(vec![init_value; length])
-        }
-        pub fn empty() -> Self {
-            Self::from_vec(Vec::new())
-        }
-        pub fn singleton(item: T) -> Self {
-            Self::from_vec(vec![item])
-        }
-        pub fn length(&self) -> N {
-            self.data.len()
-        }
-        pub fn nth(&self, index: N) -> &T {
-            &self.data[index]
-        }
+        pub fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
+        pub fn empty() -> Self { Self::from_vec(Vec::new()) }
+        pub fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
+        pub fn length(&self) -> N { self.data.len() }
+        pub fn nth(&self, index: N) -> &T { &self.data[index] }
         pub fn subseq_copy(&self, start: N, length: N) -> Self {
             let total = self.data.len();
             let begin = start.min(total);
@@ -45,41 +35,31 @@ pub mod ArraySeqStPer {
         }
 
         /// Iterator over references to elements
-        pub fn iter(&self) -> std::slice::Iter<'_, T> {
-            self.data.iter()
-        }
+        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
     }
 
     impl<T: StT> PartialEq for ArraySeqStPerS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            self.data[..] == other.data[..]
-        }
+        fn eq(&self, other: &Self) -> bool { self.data[..] == other.data[..] }
     }
 
     impl<T: StT> Eq for ArraySeqStPerS<T> {}
 
     impl<T: StT> Debug for ArraySeqStPerS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-            f.debug_list().entries(self.data.iter()).finish()
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { f.debug_list().entries(self.data.iter()).finish() }
     }
 
     impl<'a, T: StT> IntoIterator for &'a ArraySeqStPerS<T> {
         type Item = &'a T;
         type IntoIter = std::slice::Iter<'a, T>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
 
     impl<T: StT> IntoIterator for ArraySeqStPerS<T> {
         type Item = T;
         type IntoIter = std::vec::IntoIter<T>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.into_vec().into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
     }
 
     impl<T: StT> Display for ArraySeqStPerS<T> {
@@ -96,46 +76,73 @@ pub mod ArraySeqStPer {
     }
 
     pub trait ArraySeqStPerTrait<T: StT> {
+        /// APAS: Work Θ(n), Span Θ(1)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
         fn new(length: N, init_value: T) -> ArraySeqStPerS<T>;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn length(&self) -> N;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn nth(&self, index: N) -> &T;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn empty() -> ArraySeqStPerS<T>;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn singleton(item: T) -> ArraySeqStPerS<T>;
+        /// APAS: Work Θ(n), Span Θ(1)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
         fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStPerS<T>;
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
         fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStPerS<T>, f: &F) -> ArraySeqStPerS<U>;
+        /// APAS: Work Θ(len), Span Θ(1)
+        /// claude-4-sonet: Work Θ(len), Span Θ(len), Parallelism Θ(1) - sequential copy
         fn subseq_copy(a: &ArraySeqStPerS<T>, start: N, length: N) -> ArraySeqStPerS<T>;
+        /// APAS: Work Θ(|a|+|b|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|+|b|), Span Θ(|a|+|b|), Parallelism Θ(1) - sequential
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T>;
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
         fn filter<F: Fn(&T) -> B>(a: &ArraySeqStPerS<T>, pred: &F) -> ArraySeqStPerS<T>;
+        /// APAS: Work Θ(Σ|a[i]|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(Σ|a[i]|), Span Θ(Σ|a[i]|), Parallelism Θ(1) - sequential
         fn flatten(a: &ArraySeqStPerS<ArraySeqStPerS<T>>) -> ArraySeqStPerS<T>;
+        /// APAS: Work Θ(|a|+|updates|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|+|updates|), Span Θ(|a|+|updates|), Parallelism Θ(1) - sequential with HashSet
         fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T>;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn isEmpty(&self) -> B;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn isSingleton(&self) -> B;
+        /// APAS: Work Θ(|pairs|²), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|pairs|²), Span Θ(|pairs|²), Parallelism Θ(1) - sequential with linear search
         fn collect<K: StT, V: StT>(
             a: &ArraySeqStPerS<Pair<K, V>>,
             cmp: fn(&K, &K) -> O,
         ) -> ArraySeqStPerS<Pair<K, ArraySeqStPerS<V>>>;
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
         fn iterate<A, F: Fn(&A, &T) -> A>(a: &ArraySeqStPerS<T>, f: &F, seed: A) -> A;
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential reduction
         fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> T;
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
         fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T);
+        /// claude-4-sonet: Work Θ(|a|+|updates|), Span Θ(|a|+|updates|), Parallelism Θ(1) - sequential, overwrites on conflict
         fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT> ArraySeqStPerTrait<T> for ArraySeqStPerS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqStPerS<T> {
-            ArraySeqStPerS::new(length, init_value)
-        }
-        fn length(&self) -> N {
-            ArraySeqStPerS::length(self)
-        }
-        fn nth(&self, index: N) -> &T {
-            ArraySeqStPerS::nth(self, index)
-        }
-        fn empty() -> ArraySeqStPerS<T> {
-            ArraySeqStPerS::empty()
-        }
-        fn singleton(item: T) -> ArraySeqStPerS<T> {
-            ArraySeqStPerS::singleton(item)
-        }
+        fn new(length: N, init_value: T) -> ArraySeqStPerS<T> { ArraySeqStPerS::new(length, init_value) }
+        fn length(&self) -> N { ArraySeqStPerS::length(self) }
+        fn nth(&self, index: N) -> &T { ArraySeqStPerS::nth(self, index) }
+        fn empty() -> ArraySeqStPerS<T> { ArraySeqStPerS::empty() }
+        fn singleton(item: T) -> ArraySeqStPerS<T> { ArraySeqStPerS::singleton(item) }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(length);
@@ -153,9 +160,7 @@ pub mod ArraySeqStPer {
             ArraySeqStPerS::from_vec(values)
         }
 
-        fn subseq_copy(a: &ArraySeqStPerS<T>, start: N, length: N) -> ArraySeqStPerS<T> {
-            a.subseq_copy(start, length)
-        }
+        fn subseq_copy(a: &ArraySeqStPerS<T>, start: N, length: N) -> ArraySeqStPerS<T> { a.subseq_copy(start, length) }
 
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
@@ -211,13 +216,9 @@ pub mod ArraySeqStPer {
             result
         }
 
-        fn isEmpty(&self) -> B {
-            if self.data.is_empty() { true } else { false }
-        }
+        fn isEmpty(&self) -> B { if self.data.is_empty() { true } else { false } }
 
-        fn isSingleton(&self) -> B {
-            if self.data.len() == 1 { true } else { false }
-        }
+        fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
 
         fn collect<K: StT, V: StT>(
             a: &ArraySeqStPerS<Pair<K, V>>,

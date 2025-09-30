@@ -1,10 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chapter 42 multi-threaded ephemeral table implementation.
 
-use apas_ai::Chap42Claude::TableMtEph::TableMtEph::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
-use apas_ai::Types::Types::*;
+use apas_ai::Chap42Claude::TableMtEph::TableMtEph::*;
 use apas_ai::TableMtEphLit;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_table_empty() {
@@ -228,11 +228,11 @@ fn test_table_ephemeral_semantics() {
     original.insert(2, "two".to_string(), |_old, new| new.clone());
 
     let original_size = original.size();
-    
+
     // Ephemeral operations modify the original
     original.insert(3, "three".to_string(), |_old, new| new.clone());
     assert_eq!(original.size(), original_size + 1);
-    
+
     original.delete(&1);
     assert_eq!(original.size(), original_size);
     assert_eq!(original.find(&1), None);
@@ -255,23 +255,23 @@ fn test_table_mteph_lit_macro() {
 #[test]
 fn test_table_parallel_operations() {
     let mut table = TableMtEph::empty();
-    
+
     // Insert many elements to test parallel operations
     for i in 0..50 {
         table.insert(i, format!("value_{}", i), |_old, new| new.clone());
     }
     assert_eq!(table.size(), 50);
-    
+
     // Test parallel map
     table.map(|s| s.to_uppercase());
     for i in 0..50 {
         assert_eq!(table.find(&i), Some(format!("VALUE_{}", i)));
     }
-    
+
     // Test parallel filter
     table.filter(|k, _v| *k % 2 == 0);
     assert_eq!(table.size(), 25);
-    
+
     for i in 0..50 {
         if i % 2 == 0 {
             assert_eq!(table.find(&i), Some(format!("VALUE_{}", i)));
@@ -289,12 +289,15 @@ fn test_table_parallel_tabulate() {
     }
 
     // Test parallel tabulation with expensive function
-    let table = TableMtEph::tabulate(|k| {
-        // Simulate some computation
-        std::thread::sleep(std::time::Duration::from_millis(1));
-        k * k * k
-    }, &keys);
-    
+    let table = TableMtEph::tabulate(
+        |k| {
+            // Simulate some computation
+            std::thread::sleep(std::time::Duration::from_millis(1));
+            k * k * k
+        },
+        &keys,
+    );
+
     assert_eq!(table.size(), 20);
     for i in 0..20 {
         assert_eq!(table.find(&i), Some(i * i * i));

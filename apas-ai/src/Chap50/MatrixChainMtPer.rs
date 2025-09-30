@@ -27,24 +27,24 @@ pub mod MatrixChainMtPer {
     pub trait MatrixChainMtPerTrait {
         /// Create new matrix chain solver
         fn new() -> Self;
-        
+
         /// Create from matrix dimensions
         fn from_dimensions(dimensions: Vec<MatrixDim>) -> Self;
-        
+
         /// Create from dimension pairs (rows, cols)
         fn from_dim_pairs(dim_pairs: Vec<Pair<usize, usize>>) -> Self;
-        
+
         /// Compute optimal matrix chain multiplication cost using parallel dynamic programming
         /// Claude Work: O(n³) where n=number of matrices
         /// Claude Span: O(n log n) with parallel reduction
         fn optimal_cost(&self) -> usize;
-        
+
         /// Get the matrix dimensions
         fn dimensions(&self) -> &Arc<Vec<MatrixDim>>;
-        
+
         /// Get number of matrices
         fn num_matrices(&self) -> usize;
-        
+
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
@@ -69,25 +69,21 @@ pub mod MatrixChainMtPer {
             if costs.len() == 1 {
                 return costs[0];
             }
-            
+
             let mid = costs.len() / 2;
             let left_costs = costs[..mid].to_vec();
             let right_costs = costs[mid..].to_vec();
-            
+
             let self_clone1 = self.clone();
             let self_clone2 = self.clone();
-            
-            let handle1 = thread::spawn(move || {
-                self_clone1.parallel_min_reduction(left_costs)
-            });
-            
-            let handle2 = thread::spawn(move || {
-                self_clone2.parallel_min_reduction(right_costs)
-            });
-            
+
+            let handle1 = thread::spawn(move || self_clone1.parallel_min_reduction(left_costs));
+
+            let handle2 = thread::spawn(move || self_clone2.parallel_min_reduction(right_costs));
+
             let left_min = handle1.join().unwrap();
             let right_min = handle2.join().unwrap();
-            
+
             left_min.min(right_min)
         }
 
@@ -115,7 +111,7 @@ pub mod MatrixChainMtPer {
                         left_cost + right_cost + split_cost
                     })
                     .collect();
-                
+
                 // Use parallel reduction to find minimum
                 self.parallel_min_reduction(costs)
             };
@@ -125,7 +121,7 @@ pub mod MatrixChainMtPer {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.insert((i, j), result);
             }
-            
+
             result
         }
     }
@@ -146,13 +142,14 @@ pub mod MatrixChainMtPer {
         }
 
         fn from_dim_pairs(dim_pairs: Vec<Pair<usize, usize>>) -> Self {
-            let dimensions: Vec<MatrixDim> = dim_pairs.into_iter()
+            let dimensions: Vec<MatrixDim> = dim_pairs
+                .into_iter()
                 .map(|pair| MatrixDim {
                     rows: pair.0,
                     cols: pair.1,
                 })
                 .collect();
-            
+
             Self {
                 dimensions: Arc::new(dimensions),
                 memo: Arc::new(Mutex::new(HashMap::new())),
@@ -163,24 +160,20 @@ pub mod MatrixChainMtPer {
             if self.dimensions.len() <= 1 {
                 return 0;
             }
-            
+
             // Clear memo for fresh computation
             {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.clear();
             }
-            
+
             let n = self.dimensions.len();
             self.matrix_chain_rec(0, n - 1)
         }
 
-        fn dimensions(&self) -> &Arc<Vec<MatrixDim>> {
-            &self.dimensions
-        }
+        fn dimensions(&self) -> &Arc<Vec<MatrixDim>> { &self.dimensions }
 
-        fn num_matrices(&self) -> usize {
-            self.dimensions.len()
-        }
+        fn num_matrices(&self) -> usize { self.dimensions.len() }
 
         fn memo_size(&self) -> usize {
             let memo_guard = self.memo.lock().unwrap();
@@ -189,9 +182,7 @@ pub mod MatrixChainMtPer {
     }
 
     impl PartialEq for MatrixChainMtPerS {
-        fn eq(&self, other: &Self) -> bool {
-            self.dimensions == other.dimensions
-        }
+        fn eq(&self, other: &Self) -> bool { self.dimensions == other.dimensions }
     }
 
     impl Eq for MatrixChainMtPerS {}
@@ -202,8 +193,12 @@ pub mod MatrixChainMtPer {
                 let memo_guard = self.memo.lock().unwrap();
                 memo_guard.len()
             };
-            write!(f, "MatrixChainMtPer(matrices: {}, memo_entries: {})", 
-                   self.dimensions.len(), memo_size)
+            write!(
+                f,
+                "MatrixChainMtPer(matrices: {}, memo_entries: {})",
+                self.dimensions.len(),
+                memo_size
+            )
         }
     }
 
@@ -214,8 +209,8 @@ pub mod MatrixChainMtPer {
         fn into_iter(self) -> Self::IntoIter {
             // Extract Vec from Arc - this consumes the Arc
             match Arc::try_unwrap(self.dimensions) {
-                Ok(vec) => vec.into_iter(),
-                Err(arc) => (*arc).clone().into_iter(),
+                | Ok(vec) => vec.into_iter(),
+                | Err(arc) => (*arc).clone().into_iter(),
             }
         }
     }
@@ -224,23 +219,16 @@ pub mod MatrixChainMtPer {
         type Item = MatrixDim;
         type IntoIter = std::iter::Cloned<std::slice::Iter<'a, MatrixDim>>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.dimensions.iter().cloned()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.dimensions.iter().cloned() }
     }
 
     impl Display for MatrixDim {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "{}×{}", self.rows, self.cols)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "{}×{}", self.rows, self.cols) }
     }
 
     #[allow(dead_code)]
     fn _MatrixChainMtPerLit_type_checks() {
-        let dims = vec![
-            MatrixDim { rows: 2, cols: 10 },
-            MatrixDim { rows: 10, cols: 2 }
-        ];
+        let dims = vec![MatrixDim { rows: 2, cols: 10 }, MatrixDim { rows: 10, cols: 2 }];
         let _: MatrixChainMtPerS = MatrixChainMtPerS::from_dimensions(dims);
     }
 }

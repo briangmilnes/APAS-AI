@@ -21,18 +21,12 @@ pub mod PQMinMtPer {
         fn priority(&self, v: &V) -> P;
     }
 
-    pub struct ClosurePriority<
-        V: StTInMtT + Ord + 'static,
-        P: StTInMtT + Ord + 'static,
-        F: Fn(&V) -> P,
-    > {
+    pub struct ClosurePriority<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> {
         f: F,
         _phantom: std::marker::PhantomData<(V, P)>,
     }
 
-    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P>
-        ClosurePriority<V, P, F>
-    {
+    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
         pub fn new(f: F) -> Self {
             Self {
                 f,
@@ -41,12 +35,10 @@ pub mod PQMinMtPer {
         }
     }
 
-    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P>
-        PriorityFn<V, P> for ClosurePriority<V, P, F>
+    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> PriorityFn<V, P>
+        for ClosurePriority<V, P, F>
     {
-        fn priority(&self, v: &V) -> P {
-            (self.f)(v)
-        }
+        fn priority(&self, v: &V) -> P { (self.f)(v) }
     }
 
     pub trait PQMinMtPerTrait<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> {
@@ -58,11 +50,7 @@ pub mod PQMinMtPer {
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             PF: PriorityFn<V, P>;
 
-        fn pq_min_multi<G, PF>(
-            graph: &G,
-            sources: AVLTreeSetMtPer<V>,
-            priority_fn: &PF,
-        ) -> PQMinResult<V, P>
+        fn pq_min_multi<G, PF>(graph: &G, sources: AVLTreeSetMtPer<V>, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             PF: PriorityFn<V, P>;
@@ -70,9 +58,7 @@ pub mod PQMinMtPer {
 
     pub struct PQMinMtPer;
 
-    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> PQMinMtPerTrait<V, P>
-        for PQMinMtPer
-    {
+    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> PQMinMtPerTrait<V, P> for PQMinMtPer {
         fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
@@ -82,11 +68,7 @@ pub mod PQMinMtPer {
             Self::pq_min_multi(graph, sources, priority_fn)
         }
 
-        fn pq_min_multi<G, PF>(
-            graph: &G,
-            sources: AVLTreeSetMtPer<V>,
-            priority_fn: &PF,
-        ) -> PQMinResult<V, P>
+        fn pq_min_multi<G, PF>(graph: &G, sources: AVLTreeSetMtPer<V>, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             PF: PriorityFn<V, P>,
@@ -118,12 +100,10 @@ pub mod PQMinMtPer {
                     let p = priority_fn.priority(&v);
                     let entry = Pair(Pair(p.clone(), v.clone()), v.clone());
                     // Parallel difference operation
-                    let frontier_new =
-                        frontier.difference(&AVLTreeSetMtPer::singleton(entry));
+                    let frontier_new = frontier.difference(&AVLTreeSetMtPer::singleton(entry));
 
                     // Parallel union operation
-                    let visited_new =
-                        visited.union(&AVLTreeSetMtPer::singleton(v.clone()));
+                    let visited_new = visited.union(&AVLTreeSetMtPer::singleton(v.clone()));
 
                     let neighbors = graph(&v);
                     let mut frontier_updated = frontier_new;
@@ -133,13 +113,9 @@ pub mod PQMinMtPer {
                         let neighbor = neighbors_seq.nth(i);
                         if !visited_new.find(neighbor) {
                             let neighbor_p = priority_fn.priority(neighbor);
-                            let neighbor_entry = Pair(
-                                Pair(neighbor_p.clone(), neighbor.clone()),
-                                neighbor.clone(),
-                            );
+                            let neighbor_entry = Pair(Pair(neighbor_p.clone(), neighbor.clone()), neighbor.clone());
                             // Parallel union for each new frontier element
-                            frontier_updated = frontier_updated
-                                .union(&AVLTreeSetMtPer::singleton(neighbor_entry));
+                            frontier_updated = frontier_updated.union(&AVLTreeSetMtPer::singleton(neighbor_entry));
                         }
                     }
 
@@ -151,8 +127,7 @@ pub mod PQMinMtPer {
                         let v = visited_seq.nth(i);
                         let p = priority_fn.priority(v);
                         // Parallel union for priority set construction
-                        priorities = priorities
-                            .union(&AVLTreeSetMtPer::singleton(Pair(v.clone(), p)));
+                        priorities = priorities.union(&AVLTreeSetMtPer::singleton(Pair(v.clone(), p)));
                     }
                     (visited, priorities)
                 }
@@ -164,16 +139,10 @@ pub mod PQMinMtPer {
                 let v = sources_seq.nth(i);
                 let p = priority_fn.priority(v);
                 let entry = Pair(Pair(p.clone(), v.clone()), v.clone());
-                initial_frontier =
-                    initial_frontier.union(&AVLTreeSetMtPer::singleton(entry));
+                initial_frontier = initial_frontier.union(&AVLTreeSetMtPer::singleton(entry));
             }
 
-            let (visited, priorities) = explore(
-                graph,
-                priority_fn,
-                AVLTreeSetMtPer::empty(),
-                initial_frontier,
-            );
+            let (visited, priorities) = explore(graph, priority_fn, AVLTreeSetMtPer::empty(), initial_frontier);
 
             PQMinResult {
                 visited,

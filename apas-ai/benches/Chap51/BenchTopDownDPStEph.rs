@@ -2,7 +2,7 @@
 //! Benchmark for TopDownDPStEph
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap51::TopDownDPStEph::TopDownDPStEph::*;
-use criterion::{criterion_group, criterion_main, Criterion, BenchmarkId};
+use criterion::{BenchmarkId, Criterion, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_med(c: &mut Criterion) {
@@ -13,7 +13,10 @@ fn bench_med(c: &mut Criterion) {
     let s = ArraySeqStEphS::tabulate(&|i| ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'][i], 10);
     let t = ArraySeqStEphS::tabulate(&|i| ['x', 'b', 'y', 'd', 'z', 'f', 'w', 'h', 'v', 'j'][i], 10);
     group.bench_function(BenchmarkId::new("med_memoized", "small"), |b| {
-        b.iter(|| { let mut dp = TopDownDPStEphS::new(s.clone(), t.clone()); dp.med_memoized() });
+        b.iter(|| {
+            let mut dp = TopDownDPStEphS::new(s.clone(), t.clone());
+            dp.med_memoized()
+        });
     });
     group.finish();
 }

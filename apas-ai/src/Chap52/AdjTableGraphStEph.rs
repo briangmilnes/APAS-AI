@@ -3,8 +3,8 @@
 
 pub mod AdjTableGraphStEph {
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
     use crate::Chap43Claude::OrderedTableStEph::OrderedTableStEph::*;
     use crate::Types::Types::*;
 
@@ -35,13 +35,9 @@ pub mod AdjTableGraphStEph {
             }
         }
 
-        fn from_table(table: OrderedTableStEph<V, AVLTreeSetStEph<V>>) -> Self {
-            AdjTableGraphStEph { adj: table }
-        }
+        fn from_table(table: OrderedTableStEph<V, AVLTreeSetStEph<V>>) -> Self { AdjTableGraphStEph { adj: table } }
 
-        fn num_vertices(&self) -> N {
-            self.adj.size()
-        }
+        fn num_vertices(&self) -> N { self.adj.size() }
 
         fn num_edges(&self) -> N {
             let domain = self.adj.domain();
@@ -71,25 +67,21 @@ pub mod AdjTableGraphStEph {
 
         fn has_edge(&self, u: &V, v: &V) -> B {
             match self.adj.find(u) {
-                Some(neighbors) => neighbors.find(v),
-                None => false,
+                | Some(neighbors) => neighbors.find(v),
+                | None => false,
             }
         }
 
         fn out_neighbors(&self, u: &V) -> AVLTreeSetStEph<V> {
             match self.adj.find(u) {
-                Some(neighbors) => neighbors.clone(),
-                None => AVLTreeSetStEph::empty(),
+                | Some(neighbors) => neighbors.clone(),
+                | None => AVLTreeSetStEph::empty(),
             }
         }
 
-        fn out_degree(&self, u: &V) -> N {
-            self.out_neighbors(u).size()
-        }
+        fn out_degree(&self, u: &V) -> N { self.out_neighbors(u).size() }
 
-        fn insert_vertex(&mut self, v: V) {
-            self.adj.insert(v, AVLTreeSetStEph::empty(), |_, new| new.clone());
-        }
+        fn insert_vertex(&mut self, v: V) { self.adj.insert(v, AVLTreeSetStEph::empty(), |_, new| new.clone()); }
 
         fn delete_vertex(&mut self, v: &V) {
             let v_clone = v.clone();
@@ -97,7 +89,7 @@ pub mod AdjTableGraphStEph {
             let domain = self.adj.domain();
             let seq = domain.to_seq();
             let vertices: Vec<V> = (0..seq.length()).map(|i| seq.nth(i).clone()).collect();
-            
+
             self.adj.delete(&v_clone);
             // Remove v from all neighbor sets
             for u in vertices {
@@ -111,12 +103,12 @@ pub mod AdjTableGraphStEph {
 
         fn insert_edge(&mut self, u: V, v: V) {
             let neighbors = match self.adj.find(&u) {
-                Some(ns) => {
+                | Some(ns) => {
                     let mut ns = ns.clone();
                     ns.insert(v.clone());
                     ns
                 }
-                None => AVLTreeSetStEph::singleton(v.clone()),
+                | None => AVLTreeSetStEph::singleton(v.clone()),
             };
             self.adj.insert(u, neighbors, |_, new| new.clone());
             // Ensure v is in vertex set

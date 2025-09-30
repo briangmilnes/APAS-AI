@@ -8,9 +8,9 @@ pub mod UnDirGraphMtEph {
     use std::hash::Hash;
 
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::ParaPair;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use crate::ParaPair;
 
     #[derive(Clone)]
     pub struct UnDirGraphMtEph<V: StT + MtT + Hash + 'static> {
@@ -61,21 +61,11 @@ pub mod UnDirGraphMtEph {
                 E: SetLit![],
             }
         }
-        fn FromSets(V: Set<V>, E: Set<Edge<V>>) -> UnDirGraphMtEph<V> {
-            UnDirGraphMtEph { V, E }
-        }
-        fn vertices(&self) -> &Set<V> {
-            &self.V
-        }
-        fn edges(&self) -> &Set<Edge<V>> {
-            &self.E
-        }
-        fn sizeV(&self) -> N {
-            self.V.size()
-        }
-        fn sizeE(&self) -> N {
-            self.E.size()
-        }
+        fn FromSets(V: Set<V>, E: Set<Edge<V>>) -> UnDirGraphMtEph<V> { UnDirGraphMtEph { V, E } }
+        fn vertices(&self) -> &Set<V> { &self.V }
+        fn edges(&self) -> &Set<Edge<V>> { &self.E }
+        fn sizeV(&self) -> N { self.V.size() }
+        fn sizeE(&self) -> N { self.E.size() }
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Treat edges as unordered: {u,v}
@@ -92,7 +82,7 @@ pub mod UnDirGraphMtEph {
             // PARALLEL: filter edges using divide-and-conquer
             let edges: Vec<Edge<V>> = self.E.iter().cloned().collect();
             let n = edges.len();
-            
+
             if n <= 8 {
                 let mut ng: Set<V> = SetLit![];
                 for Edge(a, b) in edges {
@@ -104,12 +94,9 @@ pub mod UnDirGraphMtEph {
                 }
                 return ng;
             }
-            
+
             // Parallel divide-and-conquer
-            fn parallel_ng<V: StT + MtT + Hash + 'static>(
-                edges: Vec<Edge<V>>,
-                v: V
-            ) -> Set<V> {
+            fn parallel_ng<V: StT + MtT + Hash + 'static>(edges: Vec<Edge<V>>, v: V) -> Set<V> {
                 let n = edges.len();
                 if n == 0 {
                     return SetLit![];
@@ -127,22 +114,23 @@ pub mod UnDirGraphMtEph {
                     }
                     return SetLit![];
                 }
-                
+
                 let mid = n / 2;
                 let mut right_edges = edges;
                 let left_edges = right_edges.split_off(mid);
-                
+
                 let v_left = v.clone_mt();
                 let v_right = v;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_ng(left_edges, v_left),
-                    move || parallel_ng(right_edges, v_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_ng(left_edges, v_left), move || parallel_ng(
+                        right_edges,
+                        v_right
+                    ));
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_ng(edges, v.clone_mt())
         }
 
@@ -150,7 +138,7 @@ pub mod UnDirGraphMtEph {
             // PARALLEL: map-reduce over vertices using divide-and-conquer
             let vertices: Vec<V> = u_set.iter().cloned().collect();
             let n = vertices.len();
-            
+
             if n <= 8 {
                 let mut result: Set<V> = SetLit![];
                 for u in vertices {
@@ -159,11 +147,11 @@ pub mod UnDirGraphMtEph {
                 }
                 return result;
             }
-            
+
             // Parallel map-reduce
             fn parallel_ng_of_vertices<V: StT + MtT + Hash + 'static>(
                 vertices: Vec<V>,
-                graph: UnDirGraphMtEph<V>
+                graph: UnDirGraphMtEph<V>,
             ) -> Set<V> {
                 let n = vertices.len();
                 if n == 0 {
@@ -172,75 +160,55 @@ pub mod UnDirGraphMtEph {
                 if n == 1 {
                     return graph.NG(&vertices[0]);
                 }
-                
+
                 let mid = n / 2;
                 let mut right_verts = vertices;
                 let left_verts = right_verts.split_off(mid);
-                
+
                 let graph_left = graph.clone();
                 let graph_right = graph;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_ng_of_vertices(left_verts, graph_left),
-                    move || parallel_ng_of_vertices(right_verts, graph_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_ng_of_vertices(left_verts, graph_left), move || {
+                        parallel_ng_of_vertices(right_verts, graph_right)
+                    });
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_ng_of_vertices(vertices, self.clone())
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B {
-            if &e.0 == v || &e.1 == v { true } else { false }
-        }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { true } else { false } }
 
-        fn Degree(&self, v: &V) -> N {
-            self.NG(v).size()
-        }
+        fn Degree(&self, v: &V) -> N { self.NG(v).size() }
     }
 
     // DirGraphStEph-compatible interface for undirected graphs
     impl<V: StT + MtT + Hash> UnDirGraphMtEph<V> {
         /// Arc count (alias for edge count in undirected graphs)
-        pub fn sizeA(&self) -> N {
-            self.sizeE()
-        }
+        pub fn sizeA(&self) -> N { self.sizeE() }
 
         /// Arcs (alias for edges in undirected graphs)
-        pub fn arcs(&self) -> &Set<Edge<V>> {
-            self.edges()
-        }
+        pub fn arcs(&self) -> &Set<Edge<V>> { self.edges() }
 
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NPlus(&self, v: &V) -> Set<V> {
-            self.NG(v)
-        }
+        pub fn NPlus(&self, v: &V) -> Set<V> { self.NG(v) }
 
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NMinus(&self, v: &V) -> Set<V> {
-            self.NG(v)
-        }
+        pub fn NMinus(&self, v: &V) -> Set<V> { self.NG(v) }
 
         /// Neighbors of vertex set
-        pub fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V> {
-            self.NGOfVertices(u_set)
-        }
+        pub fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V> { self.NGOfVertices(u_set) }
 
         /// Neighbors of vertex set
-        pub fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V> {
-            self.NGOfVertices(u_set)
-        }
+        pub fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V> { self.NGOfVertices(u_set) }
 
         /// Degree (in undirected graphs, in-degree equals total degree)
-        pub fn InDegree(&self, v: &V) -> N {
-            self.Degree(v)
-        }
+        pub fn InDegree(&self, v: &V) -> N { self.Degree(v) }
 
         /// Degree (in undirected graphs, out-degree equals total degree)
-        pub fn OutDegree(&self, v: &V) -> N {
-            self.Degree(v)
-        }
+        pub fn OutDegree(&self, v: &V) -> N { self.Degree(v) }
     }
 
     impl<V: StT + MtT + Hash + 'static> std::fmt::Debug for UnDirGraphMtEph<V> {
@@ -253,15 +221,11 @@ pub mod UnDirGraphMtEph {
     }
 
     impl<V: StT + MtT + Hash + 'static> std::fmt::Display for UnDirGraphMtEph<V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "V={} E={:?}", self.V, self.E)
-        }
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "V={} E={:?}", self.V, self.E) }
     }
 
     impl<V: StT + MtT + Hash + 'static> PartialEq for UnDirGraphMtEph<V> {
-        fn eq(&self, other: &Self) -> bool {
-            self.V == other.V && self.E == other.E
-        }
+        fn eq(&self, other: &Self) -> bool { self.V == other.V && self.E == other.E }
     }
     impl<V: StT + MtT + Hash + 'static> Eq for UnDirGraphMtEph<V> {}
 

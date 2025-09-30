@@ -19,9 +19,7 @@ pub mod ArraySeqMtEphSlice {
     }
 
     impl<T: StT + Send + Sync> Inner<T> {
-        fn new(data: Box<[T]>) -> Self {
-            Inner { data: Mutex::new(data) }
-        }
+        fn new(data: Box<[T]>) -> Self { Inner { data: Mutex::new(data) } }
 
         fn len(&self) -> N {
             let guard = self.data.lock().unwrap();
@@ -71,9 +69,7 @@ pub mod ArraySeqMtEphSlice {
         }
 
         /// Constructs a sequence from a Vec without exposing it to callers.
-        pub fn from_vec(data: Vec<T>) -> Self {
-            Self::from_box(data.into_boxed_slice())
-        }
+        pub fn from_vec(data: Vec<T>) -> Self { Self::from_box(data.into_boxed_slice()) }
 
         /// Materializes the current slice into a Vec for diagnostics or copies.
         pub fn to_vec(&self) -> Vec<T> {
@@ -82,8 +78,7 @@ pub mod ArraySeqMtEphSlice {
         }
 
         /// Invokes the closure with a mutable slice under the single mutex.
-        pub fn with_exclusive<F: FnOnce(&mut [T]) -> R, R>(&self, f: F) -> R
-        {
+        pub fn with_exclusive<F: FnOnce(&mut [T]) -> R, R>(&self, f: F) -> R {
             let mut guard = self.inner.data.lock().unwrap();
             let start = self.range.start;
             let end = self.range.end;
@@ -91,13 +86,9 @@ pub mod ArraySeqMtEphSlice {
         }
 
         /// Set method for ephemeral sequences (alias for update)
-        pub fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
-            self.update(index, item)
-        }
+        pub fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> { self.update(index, item) }
 
-        fn len(&self) -> N {
-            self.range.end - self.range.start
-        }
+        fn len(&self) -> N { self.range.end - self.range.start }
 
         fn clamp_subrange(&self, start: N, length: N) -> Range<N> {
             let local_len = self.len();
@@ -114,9 +105,7 @@ pub mod ArraySeqMtEphSlice {
             ArraySeqMtEphSliceS::from_vec(data)
         }
 
-        fn length(&self) -> N {
-            self.len()
-        }
+        fn length(&self) -> N { self.len() }
 
         fn nth_cloned(&self, index: N) -> T {
             let guard = self.inner.data.lock().unwrap();
@@ -151,13 +140,9 @@ pub mod ArraySeqMtEphSlice {
             Self { inner, range: 0..1 }
         }
 
-        fn isEmpty(&self) -> B {
-            if self.len() == 0 { true } else { false }
-        }
+        fn isEmpty(&self) -> B { if self.len() == 0 { true } else { false } }
 
-        fn isSingleton(&self) -> B {
-            if self.len() == 1 { true } else { false }
-        }
+        fn isSingleton(&self) -> B { if self.len() == 1 { true } else { false } }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let sub = self.clamp_subrange(start, length);
@@ -182,11 +167,7 @@ pub mod ArraySeqMtEphSlice {
             ArraySeqMtEphSliceS::from_vec(values)
         }
 
-        fn map<U: MtVal, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
-            a: &Self,
-            f: F,
-        ) -> ArraySeqMtEphSliceS<U>
-        {
+        fn map<U: MtVal, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &Self, f: F) -> ArraySeqMtEphSliceS<U> {
             // Algorithm 19.3 with parallelism: map f a = tabulate(lambda i.f(a[i]), |a|)
             if a.length() == 0 {
                 return ArraySeqMtEphSliceS::<U>::from_vec(Vec::new());
@@ -210,8 +191,7 @@ pub mod ArraySeqMtEphSlice {
             ArraySeqMtEphSliceS::<U>::from_vec(results)
         }
 
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &Self, pred: F) -> Self
-        {
+        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &Self, pred: F) -> Self {
             // Algorithm 19.5 with parallelism: fork thread per element + serial compaction
             if a.length() == 0 {
                 return <Self as ArraySeqMtEphSliceTrait<T>>::empty();
@@ -287,8 +267,7 @@ pub mod ArraySeqMtEphSlice {
             ArraySeqMtEphSliceS::from_vec(result)
         }
 
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &Self, f: F, id: T) -> T
-        {
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &Self, f: F, id: T) -> T {
             // Algorithm 19.9: divide-and-conquer parallel reduce
             if a.length() == 0 {
                 return id;

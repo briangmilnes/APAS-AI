@@ -4,8 +4,8 @@
 use std::collections::HashMap;
 use std::fmt::{Debug, Display, Formatter, Result};
 
-use crate::{Chap18::ArraySeqStPer::ArraySeqStPer::*, Types::Types::*};
 use crate::ArraySeqStPerS;
+use crate::{Chap18::ArraySeqStPer::ArraySeqStPer::*, Types::Types::*};
 
 pub mod SubsetSumStPer {
     use super::*;
@@ -23,20 +23,20 @@ pub mod SubsetSumStPer {
         fn new() -> Self
         where
             T: Default;
-        
+
         /// Create from multiset
         fn from_multiset(multiset: ArraySeqStPerS<T>) -> Self;
-        
+
         /// Solve subset sum problem
         /// Claude Work: O(k*|S|) where k=target, |S|=multiset size
-        /// Claude Span: O(|S|) 
+        /// Claude Span: O(|S|)
         fn subset_sum(&self, target: i32) -> bool
         where
             T: Into<i32> + Copy;
-            
+
         /// Get the multiset
         fn multiset(&self) -> &ArraySeqStPerS<T>;
-        
+
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
@@ -55,17 +55,16 @@ pub mod SubsetSumStPer {
             }
 
             let result = match (i, j) {
-                (_, 0) => true,  // Base case: target sum is 0
-                (0, _) => false, // Base case: no elements left, target > 0
-                (i, j) => {
+                | (_, 0) => true,  // Base case: target sum is 0
+                | (0, _) => false, // Base case: no elements left, target > 0
+                | (i, j) => {
                     let element_value: i32 = (*self.multiset.nth(i - 1)).into();
                     if element_value > j {
                         // Element too large, skip it
                         self.subset_sum_rec(i - 1, j)
                     } else {
                         // Try both including and excluding the element
-                        self.subset_sum_rec(i - 1, j - element_value) || 
-                        self.subset_sum_rec(i - 1, j)
+                        self.subset_sum_rec(i - 1, j - element_value) || self.subset_sum_rec(i - 1, j)
                     }
                 }
             };
@@ -101,28 +100,28 @@ pub mod SubsetSumStPer {
             if target < 0 {
                 return false;
             }
-            
+
             // Create mutable copy for memoization
             let mut solver = self.clone();
             solver.memo.clear(); // Fresh memo for each query
-            
+
             let n = solver.multiset.length();
             solver.subset_sum_rec(n, target)
         }
 
-        fn multiset(&self) -> &ArraySeqStPerS<T> {
-            &self.multiset
-        }
+        fn multiset(&self) -> &ArraySeqStPerS<T> { &self.multiset }
 
-        fn memo_size(&self) -> usize {
-            self.memo.len()
-        }
+        fn memo_size(&self) -> usize { self.memo.len() }
     }
 
     impl<T: StT> Display for SubsetSumStPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "SubsetSumStPer(multiset: {}, memo_entries: {})", 
-                   self.multiset, self.memo.len())
+            write!(
+                f,
+                "SubsetSumStPer(multiset: {}, memo_entries: {})",
+                self.multiset,
+                self.memo.len()
+            )
         }
     }
 
@@ -130,18 +129,14 @@ pub mod SubsetSumStPer {
         type Item = T;
         type IntoIter = <ArraySeqStPerS<T> as IntoIterator>::IntoIter;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.multiset.into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.multiset.into_iter() }
     }
 
     impl<T: StT> IntoIterator for &SubsetSumStPerS<T> {
         type Item = T;
         type IntoIter = <ArraySeqStPerS<T> as IntoIterator>::IntoIter;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.multiset.clone().into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.multiset.clone().into_iter() }
     }
 
     #[allow(dead_code)]
@@ -161,4 +156,3 @@ macro_rules! SubsetSumStPerLit {
         $crate::Chap49::SubsetSumStPer::SubsetSumStPer::SubsetSumStPerS::new()
     };
 }
-

@@ -28,26 +28,26 @@ pub mod OptBinSearchTreeMtPer {
     pub trait OBSTMtPerTrait<T: MtVal> {
         /// Create new optimal BST solver
         fn new() -> Self;
-        
+
         /// Create from keys and probabilities
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self;
-        
+
         /// Create from key-probability pairs
         fn from_key_probs(key_probs: Vec<KeyProb<T>>) -> Self;
-        
+
         /// Compute optimal BST cost using parallel dynamic programming
         /// Claude Work: O(n³) where n=number of keys
         /// Claude Span: O(n log n) with parallel reduction
         fn optimal_cost(&self) -> Probability
         where
             T: Send + Sync + 'static;
-            
+
         /// Get the keys with probabilities
         fn keys(&self) -> &Arc<Vec<KeyProb<T>>>;
-        
+
         /// Get number of keys
         fn num_keys(&self) -> usize;
-        
+
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
@@ -63,25 +63,21 @@ pub mod OptBinSearchTreeMtPer {
             if costs.len() == 1 {
                 return costs[0];
             }
-            
+
             let mid = costs.len() / 2;
             let left_costs = costs[..mid].to_vec();
             let right_costs = costs[mid..].to_vec();
-            
+
             let self_clone1 = self.clone();
             let self_clone2 = self.clone();
-            
-            let handle1 = thread::spawn(move || {
-                self_clone1.parallel_min_reduction(left_costs)
-            });
-            
-            let handle2 = thread::spawn(move || {
-                self_clone2.parallel_min_reduction(right_costs)
-            });
-            
+
+            let handle1 = thread::spawn(move || self_clone1.parallel_min_reduction(left_costs));
+
+            let handle2 = thread::spawn(move || self_clone2.parallel_min_reduction(right_costs));
+
             let left_min = handle1.join().unwrap();
             let right_min = handle2.join().unwrap();
-            
+
             std::cmp::min(left_min, right_min)
         }
 
@@ -107,7 +103,7 @@ pub mod OptBinSearchTreeMtPer {
                 let prob_sum: Probability = (0..l)
                     .map(|k| self.keys[i + k].prob)
                     .fold(Probability::zero(), |acc, p| acc + p);
-                
+
                 // Compute costs for each possible root in parallel
                 let costs: Vec<Probability> = (0..l)
                     .map(|k| {
@@ -116,10 +112,10 @@ pub mod OptBinSearchTreeMtPer {
                         left_cost + right_cost
                     })
                     .collect();
-                
+
                 // Use parallel reduction to find minimum
                 let min_cost = self.parallel_min_reduction(costs);
-                
+
                 prob_sum + min_cost
             };
 
@@ -128,7 +124,7 @@ pub mod OptBinSearchTreeMtPer {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.insert((i, l), result);
             }
-            
+
             result
         }
     }
@@ -142,10 +138,12 @@ pub mod OptBinSearchTreeMtPer {
         }
 
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self {
-            let key_probs: Vec<KeyProb<T>> = keys.into_iter().zip(probs.into_iter())
+            let key_probs: Vec<KeyProb<T>> = keys
+                .into_iter()
+                .zip(probs.into_iter())
                 .map(|(key, prob)| KeyProb { key, prob })
                 .collect();
-            
+
             Self {
                 keys: Arc::new(key_probs),
                 memo: Arc::new(Mutex::new(HashMap::new())),
@@ -166,24 +164,20 @@ pub mod OptBinSearchTreeMtPer {
             if self.keys.is_empty() {
                 return Probability::zero();
             }
-            
+
             // Clear memo for fresh computation
             {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.clear();
             }
-            
+
             let n = self.keys.len();
             self.obst_rec(0, n)
         }
 
-        fn keys(&self) -> &Arc<Vec<KeyProb<T>>> {
-            &self.keys
-        }
+        fn keys(&self) -> &Arc<Vec<KeyProb<T>>> { &self.keys }
 
-        fn num_keys(&self) -> usize {
-            self.keys.len()
-        }
+        fn num_keys(&self) -> usize { self.keys.len() }
 
         fn memo_size(&self) -> usize {
             let memo_guard = self.memo.lock().unwrap();
@@ -192,9 +186,7 @@ pub mod OptBinSearchTreeMtPer {
     }
 
     impl<T: MtVal> PartialEq for OBSTMtPerS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            self.keys == other.keys
-        }
+        fn eq(&self, other: &Self) -> bool { self.keys == other.keys }
     }
 
     impl<T: MtVal> Eq for OBSTMtPerS<T> {}
@@ -205,8 +197,7 @@ pub mod OptBinSearchTreeMtPer {
                 let memo_guard = self.memo.lock().unwrap();
                 memo_guard.len()
             };
-            write!(f, "OBSTMtPer(keys: {}, memo_entries: {})", 
-                   self.keys.len(), memo_size)
+            write!(f, "OBSTMtPer(keys: {}, memo_entries: {})", self.keys.len(), memo_size)
         }
     }
 
@@ -217,8 +208,8 @@ pub mod OptBinSearchTreeMtPer {
         fn into_iter(self) -> Self::IntoIter {
             // Extract Vec from Arc - this consumes the Arc
             match Arc::try_unwrap(self.keys) {
-                Ok(vec) => vec.into_iter(),
-                Err(arc) => (*arc).clone().into_iter(),
+                | Ok(vec) => vec.into_iter(),
+                | Err(arc) => (*arc).clone().into_iter(),
             }
         }
     }
@@ -227,9 +218,7 @@ pub mod OptBinSearchTreeMtPer {
         type Item = KeyProb<T>;
         type IntoIter = std::iter::Cloned<std::slice::Iter<'a, KeyProb<T>>>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.keys.iter().cloned()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.keys.iter().cloned() }
     }
 
     impl<T: MtVal + PartialEq> PartialEq for KeyProb<T> {
@@ -241,9 +230,7 @@ pub mod OptBinSearchTreeMtPer {
     impl<T: MtVal> Eq for KeyProb<T> {}
 
     impl<T: MtVal + Display> Display for KeyProb<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "({}: {:.3})", self.key, self.prob)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "({}: {:.3})", self.key, self.prob) }
     }
 
     #[allow(dead_code)]

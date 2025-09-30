@@ -36,14 +36,10 @@ pub mod AdjSeqGraphStPer {
             }
         }
 
-        fn from_seq(adj: ArraySeqStPerS<ArraySeqStPerS<N>>) -> Self {
-            AdjSeqGraphStPer { adj }
-        }
+        fn from_seq(adj: ArraySeqStPerS<ArraySeqStPerS<N>>) -> Self { AdjSeqGraphStPer { adj } }
 
         // Work: Θ(1), Span: Θ(1)
-        fn num_vertices(&self) -> N {
-            self.adj.length()
-        }
+        fn num_vertices(&self) -> N { self.adj.length() }
 
         // Work: Θ(n), Span: Θ(n) - sum all neighbor list lengths
         fn num_edges(&self) -> N {
@@ -70,14 +66,10 @@ pub mod AdjSeqGraphStPer {
         }
 
         // Work: Θ(1), Span: Θ(1) - direct access
-        fn out_neighbors(&self, u: N) -> &ArraySeqStPerS<N> {
-            self.adj.nth(u)
-        }
+        fn out_neighbors(&self, u: N) -> &ArraySeqStPerS<N> { self.adj.nth(u) }
 
         // Work: Θ(1), Span: Θ(1)
-        fn out_degree(&self, u: N) -> N {
-            self.adj.nth(u).length()
-        }
+        fn out_degree(&self, u: N) -> N { self.adj.nth(u).length() }
 
         // Work: Θ(n), Span: Θ(n) - must copy entire sequence to update
         fn insert_edge(&self, u: N, v: N) -> Self {
@@ -98,7 +90,7 @@ pub mod AdjSeqGraphStPer {
             }
             new_neighbors_vec.push(v);
             let new_neighbors = ArraySeqStPerS::from_vec(new_neighbors_vec);
-            
+
             // Update adjacency list
             let mut new_adj_vec = Vec::with_capacity(self.adj.length());
             for i in 0..self.adj.length() {
@@ -127,7 +119,7 @@ pub mod AdjSeqGraphStPer {
                 }
             }
             let new_neighbors = ArraySeqStPerS::from_vec(new_neighbors_vec);
-            
+
             let mut new_adj_vec = Vec::with_capacity(self.adj.length());
             for i in 0..self.adj.length() {
                 if i == u {

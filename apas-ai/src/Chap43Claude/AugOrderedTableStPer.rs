@@ -2,18 +2,18 @@
 //! Single-threaded persistent reducer-augmented ordered table implementation.
 
 pub mod AugOrderedTableStPer {
-    use std::fmt::{Display, Debug, Formatter, Result};
-    
-    use crate::Chap43Claude::OrderedTableStPer::OrderedTableStPer::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use std::fmt::{Debug, Display, Formatter, Result};
+
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap43Claude::OrderedTableStPer::OrderedTableStPer::*;
     use crate::Types::Types::*;
 
     /// Single-threaded persistent reducer-augmented ordered table
     /// Wraps OrderedTableStPer and maintains cached reduction for O(1) reduceVal
     #[derive(PartialEq, Clone)]
-    pub struct AugOrderedTableStPer<K: StT + Ord, V: StT, F> 
-    where 
+    pub struct AugOrderedTableStPer<K: StT + Ord, V: StT, F>
+    where
         F: Fn(&V, &V) -> V + Clone,
     {
         base_table: OrderedTableStPer<K, V>,
@@ -26,8 +26,8 @@ pub mod AugOrderedTableStPer {
 
     /// Trait defining all augmented ordered table operations (ADT 43.3)
     /// Extends ordered table operations with efficient reduction
-    pub trait AugOrderedTableStPerTrait<K: StT + Ord, V: StT, F> 
-    where 
+    pub trait AugOrderedTableStPerTrait<K: StT + Ord, V: StT, F>
+    where
         F: Fn(&V, &V) -> V + Clone,
     {
         // Base table operations (ADT 42.1) - delegated to OrderedTableStPer
@@ -53,31 +53,33 @@ pub mod AugOrderedTableStPer {
         fn last_key(&self) -> Option<K>;
         fn previous_key(&self, k: &K) -> Option<K>;
         fn next_key(&self, k: &K) -> Option<K>;
-        fn split_key(&self, k: &K) -> (Self, Option<V>, Self) where Self: Sized;
+        fn split_key(&self, k: &K) -> (Self, Option<V>, Self)
+        where
+            Self: Sized;
         fn join_key(left: &Self, right: &Self) -> Self;
         fn get_key_range(&self, k1: &K, k2: &K) -> Self;
         fn rank_key(&self, k: &K) -> N;
         fn select_key(&self, i: N) -> Option<K>;
-        fn split_rank_key(&self, i: N) -> (Self, Self) where Self: Sized;
+        fn split_rank_key(&self, i: N) -> (Self, Self)
+        where
+            Self: Sized;
 
         // Augmented operations (ADT 43.3) - the key innovation
         /// Claude Work: O(1), Span: O(1)
         /// Returns the cached reduction of all values using the reducer function
         fn reduce_val(&self) -> V;
-        
+
         /// Claude Work: O(lg n), Span: O(lg n)  
         /// Efficient range reduction: getRange followed by reduceVal
         fn reduce_range(&self, k1: &K, k2: &K) -> V;
     }
 
     impl<K: StT + Ord, V: StT, F> AugOrderedTableStPerTrait<K, V, F> for AugOrderedTableStPer<K, V, F>
-    where 
+    where
         F: Fn(&V, &V) -> V + Clone,
     {
         /// Claude Work: O(1), Span: O(1)
-        fn size(&self) -> N {
-            self.base_table.size()
-        }
+        fn size(&self) -> N { self.base_table.size() }
 
         /// Claude Work: O(1), Span: O(1)
         fn empty(reducer: F, identity: V) -> Self {
@@ -100,9 +102,7 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn find(&self, k: &K) -> Option<V> {
-            self.base_table.find(k)
-        }
+        fn find(&self, k: &K) -> Option<V> { self.base_table.find(k) }
 
         /// Claude Work: O(lg n), Span: O(lg n)
         fn insert(&self, k: K, v: V) -> Self {
@@ -112,7 +112,7 @@ pub mod AugOrderedTableStPer {
             } else {
                 (self.reducer)(&self.cached_reduction, &v)
             };
-            
+
             Self {
                 base_table: new_base,
                 cached_reduction: new_reduction,
@@ -127,7 +127,7 @@ pub mod AugOrderedTableStPer {
             // For simplicity, recalculate reduction from scratch
             // In practice, would maintain augmented tree structure
             let new_reduction = self.recalculate_reduction(&new_base);
-            
+
             Self {
                 base_table: new_base,
                 cached_reduction: new_reduction,
@@ -137,16 +137,13 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn domain(&self) -> ArraySetStEph<K> {
-            self.base_table.domain()
-        }
+        fn domain(&self) -> ArraySetStEph<K> { self.base_table.domain() }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn tabulate<G: Fn(&K) -> V>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self 
-        {
+        fn tabulate<G: Fn(&K) -> V>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self {
             let base_table = OrderedTableStPer::tabulate(f, keys);
             let cached_reduction = Self::calculate_reduction(&base_table, &reducer, &identity);
-            
+
             Self {
                 base_table,
                 cached_reduction,
@@ -159,7 +156,7 @@ pub mod AugOrderedTableStPer {
         fn map<G: Fn(&V) -> V>(&self, f: G) -> Self {
             let new_base = self.base_table.map(f);
             let new_reduction = self.recalculate_reduction(&new_base);
-            
+
             Self {
                 base_table: new_base,
                 cached_reduction: new_reduction,
@@ -172,7 +169,7 @@ pub mod AugOrderedTableStPer {
         fn filter<G: Fn(&K, &V) -> B>(&self, f: G) -> Self {
             let new_base = self.base_table.filter(f);
             let new_reduction = self.recalculate_reduction(&new_base);
-            
+
             Self {
                 base_table: new_base,
                 cached_reduction: new_reduction,
@@ -185,7 +182,7 @@ pub mod AugOrderedTableStPer {
         fn intersection<G: Fn(&V, &V) -> V>(&self, other: &Self, f: G) -> Self {
             let new_base = self.base_table.intersection(&other.base_table, f);
             let new_reduction = self.recalculate_reduction(&new_base);
-            
+
             Self {
                 base_table: new_base,
                 cached_reduction: new_reduction,
@@ -198,7 +195,7 @@ pub mod AugOrderedTableStPer {
         fn union<G: Fn(&V, &V) -> V>(&self, other: &Self, f: G) -> Self {
             let new_base = self.base_table.union(&other.base_table, f);
             let new_reduction = self.recalculate_reduction(&new_base);
-            
+
             Self {
                 base_table: new_base,
                 cached_reduction: new_reduction,
@@ -211,7 +208,7 @@ pub mod AugOrderedTableStPer {
         fn difference(&self, other: &Self) -> Self {
             let new_base = self.base_table.difference(&other.base_table);
             let new_reduction = self.recalculate_reduction(&new_base);
-            
+
             Self {
                 base_table: new_base,
                 cached_reduction: new_reduction,
@@ -224,7 +221,7 @@ pub mod AugOrderedTableStPer {
         fn restrict(&self, keys: &ArraySetStEph<K>) -> Self {
             let new_base = self.base_table.restrict(keys);
             let new_reduction = self.recalculate_reduction(&new_base);
-            
+
             Self {
                 base_table: new_base,
                 cached_reduction: new_reduction,
@@ -237,7 +234,7 @@ pub mod AugOrderedTableStPer {
         fn subtract(&self, keys: &ArraySetStEph<K>) -> Self {
             let new_base = self.base_table.subtract(keys);
             let new_reduction = self.recalculate_reduction(&new_base);
-            
+
             Self {
                 base_table: new_base,
                 cached_reduction: new_reduction,
@@ -247,51 +244,41 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>> {
-            self.base_table.collect()
-        }
+        fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>> { self.base_table.collect() }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn first_key(&self) -> Option<K> {
-            self.base_table.first_key()
-        }
+        fn first_key(&self) -> Option<K> { self.base_table.first_key() }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn last_key(&self) -> Option<K> {
-            self.base_table.last_key()
-        }
+        fn last_key(&self) -> Option<K> { self.base_table.last_key() }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn previous_key(&self, k: &K) -> Option<K> {
-            self.base_table.previous_key(k)
-        }
+        fn previous_key(&self, k: &K) -> Option<K> { self.base_table.previous_key(k) }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn next_key(&self, k: &K) -> Option<K> {
-            self.base_table.next_key(k)
-        }
+        fn next_key(&self, k: &K) -> Option<K> { self.base_table.next_key(k) }
 
         /// Claude Work: O(lg n), Span: O(lg n)
         fn split_key(&self, k: &K) -> (Self, Option<V>, Self) {
             let (left_base, middle, right_base) = self.base_table.split_key(k);
-            
+
             let left_reduction = self.recalculate_reduction(&left_base);
             let right_reduction = self.recalculate_reduction(&right_base);
-            
+
             let left = Self {
                 base_table: left_base,
                 cached_reduction: left_reduction,
                 reducer: self.reducer.clone(),
                 identity: self.identity.clone(),
             };
-            
+
             let right = Self {
                 base_table: right_base,
                 cached_reduction: right_reduction,
                 reducer: self.reducer.clone(),
                 identity: self.identity.clone(),
             };
-            
+
             (left, middle, right)
         }
 
@@ -305,7 +292,7 @@ pub mod AugOrderedTableStPer {
             } else {
                 (left.reducer)(&left.cached_reduction, &right.cached_reduction)
             };
-            
+
             Self {
                 base_table: new_base,
                 cached_reduction: new_reduction,
@@ -318,7 +305,7 @@ pub mod AugOrderedTableStPer {
         fn get_key_range(&self, k1: &K, k2: &K) -> Self {
             let new_base = self.base_table.get_key_range(k1, k2);
             let new_reduction = self.recalculate_reduction(&new_base);
-            
+
             Self {
                 base_table: new_base,
                 cached_reduction: new_reduction,
@@ -328,44 +315,38 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn rank_key(&self, k: &K) -> N {
-            self.base_table.rank_key(k)
-        }
+        fn rank_key(&self, k: &K) -> N { self.base_table.rank_key(k) }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn select_key(&self, i: N) -> Option<K> {
-            self.base_table.select_key(i)
-        }
+        fn select_key(&self, i: N) -> Option<K> { self.base_table.select_key(i) }
 
         /// Claude Work: O(lg n), Span: O(lg n)
         fn split_rank_key(&self, i: N) -> (Self, Self) {
             let (left_base, right_base) = self.base_table.split_rank_key(i);
-            
+
             let left_reduction = self.recalculate_reduction(&left_base);
             let right_reduction = self.recalculate_reduction(&right_base);
-            
+
             let left = Self {
                 base_table: left_base,
                 cached_reduction: left_reduction,
                 reducer: self.reducer.clone(),
                 identity: self.identity.clone(),
             };
-            
+
             let right = Self {
                 base_table: right_base,
                 cached_reduction: right_reduction,
                 reducer: self.reducer.clone(),
                 identity: self.identity.clone(),
             };
-            
+
             (left, right)
         }
 
         /// Claude Work: O(1), Span: O(1)
         /// The key innovation: O(1) reduction using cached value
-        fn reduce_val(&self) -> V {
-            self.cached_reduction.clone()
-        }
+        fn reduce_val(&self) -> V { self.cached_reduction.clone() }
 
         /// Claude Work: O(lg n), Span: O(lg n)
         /// Efficient range reduction for TRAMLAW/QADSAN scenarios
@@ -376,7 +357,7 @@ pub mod AugOrderedTableStPer {
     }
 
     impl<K: StT + Ord, V: StT, F> AugOrderedTableStPer<K, V, F>
-    where 
+    where
         F: Fn(&V, &V) -> V + Clone,
     {
         /// Helper to recalculate reduction from base table
@@ -389,11 +370,11 @@ pub mod AugOrderedTableStPer {
             if base.size() == 0 {
                 return identity.clone();
             }
-            
+
             let pairs = base.collect();
             let mut result = identity.clone();
             let mut first = true;
-            
+
             for i in 0..pairs.length() {
                 let pair = pairs.nth(i);
                 if first {
@@ -403,23 +384,27 @@ pub mod AugOrderedTableStPer {
                     result = reducer(&result, &pair.1);
                 }
             }
-            
+
             result
         }
     }
 
     impl<K: StT + Ord, V: StT, F> Display for AugOrderedTableStPer<K, V, F>
-    where 
+    where
         F: Fn(&V, &V) -> V + Clone,
     {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "AugOrderedTableStPer(size: {}, reduction: {})", 
-                   self.size(), self.cached_reduction)
+            write!(
+                f,
+                "AugOrderedTableStPer(size: {}, reduction: {})",
+                self.size(),
+                self.cached_reduction
+            )
         }
     }
 
     impl<K: StT + Ord, V: StT, F> Debug for AugOrderedTableStPer<K, V, F>
-    where 
+    where
         F: Fn(&V, &V) -> V + Clone,
     {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
@@ -449,7 +434,7 @@ pub mod AugOrderedTableStPer {
     fn _AugOrderedTableStPerLit_type_checks() {
         let sum_reducer = |a: &i32, b: &i32| a + b;
         let _: AugOrderedTableStPer<i32, i32, _> = AugOrderedTableStPerLit![
-            reducer: sum_reducer, identity: 0, 
+            reducer: sum_reducer, identity: 0,
             1 => 10, 2 => 20
         ];
         let _: AugOrderedTableStPer<i32, i32, _> = AugOrderedTableStPerLit![

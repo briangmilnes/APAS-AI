@@ -53,9 +53,7 @@ pub mod BSTKeyValueStEph {
     }
 
     impl<K: StT + Ord, V: StT> Default for BSTreeKeyValue<K, V> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     impl<K: StT + Ord, V: StT> BSTKeyValueStEph<K, V> {
@@ -167,17 +165,11 @@ pub mod BSTKeyValueStEph {
     }
 
     impl<K: StT + Ord, V: StT> BSTKeyValueStEphTrait<K, V> for BSTKeyValueStEph<K, V> {
-        fn new() -> Self {
-            BSTKeyValueStEph { root: None, size: 0 }
-        }
+        fn new() -> Self { BSTKeyValueStEph { root: None, size: 0 } }
 
-        fn size(&self) -> N {
-            self.size
-        }
+        fn size(&self) -> N { self.size }
 
-        fn is_empty(&self) -> B {
-            self.size == 0
-        }
+        fn is_empty(&self) -> B { self.size == 0 }
 
         fn height(&self) -> N {
             fn height_rec<K: StT + Ord, V: StT>(link: &Link<K, V>) -> N {
@@ -197,17 +189,11 @@ pub mod BSTKeyValueStEph {
             }
         }
 
-        fn find(&self, key: &K) -> Option<&V> {
-            Self::find_link(&self.root, key)
-        }
+        fn find(&self, key: &K) -> Option<&V> { Self::find_link(&self.root, key) }
 
-        fn contains(&self, key: &K) -> B {
-            self.find(key).is_some()
-        }
+        fn contains(&self, key: &K) -> B { self.find(key).is_some() }
 
-        fn get(&self, key: &K) -> Option<&V> {
-            self.find(key)
-        }
+        fn get(&self, key: &K) -> Option<&V> { self.find(key) }
 
         fn keys(&self) -> ArraySeqStPerS<K> {
             let mut out = Vec::with_capacity(self.size);
@@ -221,13 +207,9 @@ pub mod BSTKeyValueStEph {
             ArraySeqStPerS::from_vec(out)
         }
 
-        fn minimum_key(&self) -> Option<&K> {
-            Self::min_key_link(&self.root)
-        }
+        fn minimum_key(&self) -> Option<&K> { Self::min_key_link(&self.root) }
 
-        fn maximum_key(&self) -> Option<&K> {
-            Self::max_key_link(&self.root)
-        }
+        fn maximum_key(&self) -> Option<&K> { Self::max_key_link(&self.root) }
     }
 
     #[macro_export]

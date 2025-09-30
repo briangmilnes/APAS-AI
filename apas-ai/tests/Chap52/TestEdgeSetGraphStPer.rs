@@ -3,8 +3,8 @@
 
 #[cfg(test)]
 mod tests_edge_set_graph_st_per {
-    use apas_ai::Chap52::EdgeSetGraphStPer::EdgeSetGraphStPer::*;
     use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
+    use apas_ai::Chap52::EdgeSetGraphStPer::EdgeSetGraphStPer::*;
     use apas_ai::Types::Types::*;
 
     #[test]

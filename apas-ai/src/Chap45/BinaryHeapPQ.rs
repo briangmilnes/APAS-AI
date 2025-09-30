@@ -2,8 +2,8 @@
 //! Chapter 45: Priority Queue implementation using Binary Heap
 
 pub mod BinaryHeapPQ {
-    use std::fmt::{Display, Debug, Formatter, Result};
-    
+    use std::fmt::{Debug, Display, Formatter, Result};
+
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
@@ -20,30 +20,32 @@ pub mod BinaryHeapPQ {
     pub trait BinaryHeapPQTrait<T: StT + Ord> {
         /// Claude Work: Θ(1), Span: Θ(1)
         fn empty() -> Self;
-        
+
         /// Claude Work: Θ(1), Span: Θ(1)
         fn singleton(element: T) -> Self;
-        
+
         /// Claude Work: Θ(1), Span: Θ(1)
         /// Returns the minimum element (root of min-heap), or None if empty
         fn find_min(&self) -> Option<&T>;
-        
+
         /// Claude Work: Θ(log n), Span: Θ(log n)
         /// Inserts element and bubbles up to maintain heap property
         fn insert(&self, element: T) -> Self;
-        
+
         /// Claude Work: Θ(log n), Span: Θ(log n)
         /// Removes root (minimum) and bubbles down to maintain heap property
-        fn delete_min(&self) -> (Self, Option<T>) where Self: Sized;
-        
+        fn delete_min(&self) -> (Self, Option<T>)
+        where
+            Self: Sized;
+
         /// Claude Work: Θ(m + n), Span: Θ(m + n)
         /// Melds two heaps by concatenating and re-heapifying
         fn meld(&self, other: &Self) -> Self;
-        
+
         /// Claude Work: Θ(n), Span: Θ(n)
         /// Creates heap from sequence using bottom-up heapify
         fn from_seq(seq: &ArraySeqStPerS<T>) -> Self;
-        
+
         /// Helper methods
         fn size(&self) -> N;
         fn is_empty(&self) -> bool;
@@ -53,32 +55,26 @@ pub mod BinaryHeapPQ {
     impl<T: StT + Ord> BinaryHeapPQ<T> {
         /// Helper functions for heap navigation
         /// left child of node at index i
-        fn left_child(i: N) -> N {
-            2 * i + 1
-        }
+        fn left_child(i: N) -> N { 2 * i + 1 }
 
         /// right child of node at index i
-        fn right_child(i: N) -> N {
-            2 * i + 2
-        }
+        fn right_child(i: N) -> N { 2 * i + 2 }
 
         /// parent of node at index i
-        fn parent(i: N) -> N {
-            if i == 0 { 0 } else { (i - 1) / 2 }
-        }
+        fn parent(i: N) -> N { if i == 0 { 0 } else { (i - 1) / 2 } }
 
         /// Check if heap property is satisfied
         fn is_heap(&self) -> bool {
             for i in 0..self.elements.length() {
                 let left = Self::left_child(i);
                 let right = Self::right_child(i);
-                
+
                 if left < self.elements.length() {
                     if self.elements.nth(i) > self.elements.nth(left) {
                         return false;
                     }
                 }
-                
+
                 if right < self.elements.length() {
                     if self.elements.nth(i) > self.elements.nth(right) {
                         return false;
@@ -91,58 +87,58 @@ pub mod BinaryHeapPQ {
         /// Bubble up element at index i to maintain heap property
         fn bubble_up(&self, mut i: N) -> ArraySeqStPerS<T> {
             let mut result = self.elements.clone();
-            
+
             while i > 0 {
                 let parent_idx = Self::parent(i);
                 let current = result.nth(i);
                 let parent = result.nth(parent_idx);
-                
+
                 if current >= parent {
                     break;
                 }
-                
+
                 // Swap current with parent
                 result = self.swap_elements(&result, i, parent_idx);
                 i = parent_idx;
             }
-            
+
             result
         }
 
         /// Bubble down element at index i to maintain heap property
         fn bubble_down(&self, mut i: N, heap: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
             let mut result = heap.clone();
-            
+
             loop {
                 let left = Self::left_child(i);
                 let right = Self::right_child(i);
                 let mut smallest = i;
-                
+
                 // Find smallest among current, left child, right child
                 if left < result.length() && result.nth(left) < result.nth(smallest) {
                     smallest = left;
                 }
-                
+
                 if right < result.length() && result.nth(right) < result.nth(smallest) {
                     smallest = right;
                 }
-                
+
                 if smallest == i {
                     break; // Heap property satisfied
                 }
-                
+
                 // Swap current with smallest child
                 result = self.swap_elements(&result, i, smallest);
                 i = smallest;
             }
-            
+
             result
         }
 
         /// Swap elements at indices i and j
         fn swap_elements(&self, seq: &ArraySeqStPerS<T>, i: N, j: N) -> ArraySeqStPerS<T> {
             let mut result = ArraySeqStPerS::empty();
-            
+
             for k in 0..seq.length() {
                 let element = if k == i {
                     seq.nth(j).clone()
@@ -151,11 +147,11 @@ pub mod BinaryHeapPQ {
                 } else {
                     seq.nth(k).clone()
                 };
-                
+
                 let single_seq = ArraySeqStPerS::singleton(element);
                 result = ArraySeqStPerS::append(&result, &single_seq);
             }
-            
+
             result
         }
 
@@ -164,20 +160,16 @@ pub mod BinaryHeapPQ {
             if seq.length() <= 1 {
                 return seq.clone();
             }
-            
+
             let mut result = seq.clone();
-            
+
             // Start from last non-leaf node and bubble down
-            let last_non_leaf = if seq.length() >= 2 {
-                (seq.length() - 2) / 2
-            } else {
-                0
-            };
-            
+            let last_non_leaf = if seq.length() >= 2 { (seq.length() - 2) / 2 } else { 0 };
+
             for i in (0..=last_non_leaf).rev() {
                 result = self.bubble_down(i, &result);
             }
-            
+
             result
         }
     }
@@ -213,14 +205,12 @@ pub mod BinaryHeapPQ {
             // Add element at the end
             let single_seq = ArraySeqStPerS::singleton(element);
             let new_elements = ArraySeqStPerS::append(&self.elements, &single_seq);
-            
+
             // Bubble up from the last position
             let last_index = new_elements.length() - 1;
             let heapified = self.bubble_up(last_index);
-            
-            BinaryHeapPQ {
-                elements: heapified,
-            }
+
+            BinaryHeapPQ { elements: heapified }
         }
 
         /// Claude Work: Θ(log n), Span: Θ(log n)
@@ -229,15 +219,15 @@ pub mod BinaryHeapPQ {
             if self.elements.length() == 0 {
                 return (self.clone(), None);
             }
-            
+
             if self.elements.length() == 1 {
                 let min_element = self.elements.nth(0).clone();
                 return (Self::empty(), Some(min_element));
             }
-            
+
             let min_element = self.elements.nth(0).clone();
             let last_element = self.elements.nth(self.elements.length() - 1).clone();
-            
+
             // Create new sequence with last element at root and without the last element
             let mut new_elements = ArraySeqStPerS::singleton(last_element);
             for i in 1..(self.elements.length() - 1) {
@@ -245,14 +235,12 @@ pub mod BinaryHeapPQ {
                 let single_seq = ArraySeqStPerS::singleton(elem.clone());
                 new_elements = ArraySeqStPerS::append(&new_elements, &single_seq);
             }
-            
+
             // Bubble down from root
             let heapified = self.bubble_down(0, &new_elements);
-            
-            let new_pq = BinaryHeapPQ {
-                elements: heapified,
-            };
-            
+
+            let new_pq = BinaryHeapPQ { elements: heapified };
+
             (new_pq, Some(min_element))
         }
 
@@ -261,10 +249,8 @@ pub mod BinaryHeapPQ {
         fn meld(&self, other: &Self) -> Self {
             let merged = ArraySeqStPerS::append(&self.elements, &other.elements);
             let heapified = self.heapify(&merged);
-            
-            BinaryHeapPQ {
-                elements: heapified,
-            }
+
+            BinaryHeapPQ { elements: heapified }
         }
 
         /// Claude Work: Θ(n), Span: Θ(n)
@@ -272,48 +258,32 @@ pub mod BinaryHeapPQ {
         fn from_seq(seq: &ArraySeqStPerS<T>) -> Self {
             let heap = Self::empty();
             let heapified = heap.heapify(seq);
-            
-            BinaryHeapPQ {
-                elements: heapified,
-            }
+
+            BinaryHeapPQ { elements: heapified }
         }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn size(&self) -> N {
-            self.elements.length()
-        }
+        fn size(&self) -> N { self.elements.length() }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn is_empty(&self) -> bool {
-            self.elements.length() == 0
-        }
+        fn is_empty(&self) -> bool { self.elements.length() == 0 }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn to_seq(&self) -> ArraySeqStPerS<T> {
-            self.elements.clone()
-        }
+        fn to_seq(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
     }
 
     impl<T: StT + Ord> BinaryHeapPQ<T> {
         /// Create an empty priority queue
-        pub fn new() -> Self {
-            Self::empty()
-        }
+        pub fn new() -> Self { Self::empty() }
 
         /// Get the number of elements
-        pub fn len(&self) -> N {
-            self.size()
-        }
+        pub fn len(&self) -> N { self.size() }
 
         /// Check if the priority queue is empty
-        pub fn is_empty(&self) -> bool {
-            BinaryHeapPQTrait::is_empty(self)
-        }
+        pub fn is_empty(&self) -> bool { BinaryHeapPQTrait::is_empty(self) }
 
         /// Peek at the minimum element without removing it
-        pub fn peek(&self) -> Option<&T> {
-            self.find_min()
-        }
+        pub fn peek(&self) -> Option<&T> { self.find_min() }
 
         /// Insert multiple elements from a sequence
         pub fn insert_all(&self, elements: &ArraySeqStPerS<T>) -> Self {
@@ -329,7 +299,7 @@ pub mod BinaryHeapPQ {
         pub fn extract_all_sorted(&self) -> ArraySeqStPerS<T> {
             let mut result = ArraySeqStPerS::empty();
             let mut current_heap = self.clone();
-            
+
             while !current_heap.is_empty() {
                 let (new_heap, min_element) = current_heap.delete_min();
                 if let Some(element) = min_element {
@@ -338,14 +308,12 @@ pub mod BinaryHeapPQ {
                 }
                 current_heap = new_heap;
             }
-            
+
             result
         }
 
         /// Check if the heap property is maintained (for testing)
-        pub fn is_valid_heap(&self) -> bool {
-            self.is_heap()
-        }
+        pub fn is_valid_heap(&self) -> bool { self.is_heap() }
 
         /// Get the height of the heap (for testing)
         pub fn height(&self) -> N {
@@ -361,7 +329,7 @@ pub mod BinaryHeapPQ {
             let mut result = ArraySeqStPerS::empty();
             let start_idx = (1 << level) - 1; // 2^level - 1
             let end_idx = ((1 << (level + 1)) - 1).min(self.elements.length()); // 2^(level+1) - 1
-            
+
             for i in start_idx..end_idx {
                 if i < self.elements.length() {
                     let elem = self.elements.nth(i);
@@ -369,15 +337,13 @@ pub mod BinaryHeapPQ {
                     result = ArraySeqStPerS::append(&result, &single_seq);
                 }
             }
-            
+
             result
         }
     }
 
     impl<T: StT + Ord> Default for BinaryHeapPQ<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StT + Ord> Display for BinaryHeapPQ<T> {
@@ -451,28 +417,18 @@ pub mod BinaryHeapPQ {
 
     impl BinaryHeapPQOps {
         /// Create empty priority queue
-        pub fn empty<T: StT + Ord>() -> BinaryHeapPQ<T> {
-            BinaryHeapPQ::empty()
-        }
+        pub fn empty<T: StT + Ord>() -> BinaryHeapPQ<T> { BinaryHeapPQ::empty() }
 
         /// Insert element into priority queue
-        pub fn insert<T: StT + Ord>(pq: &BinaryHeapPQ<T>, element: T) -> BinaryHeapPQ<T> {
-            pq.insert(element)
-        }
+        pub fn insert<T: StT + Ord>(pq: &BinaryHeapPQ<T>, element: T) -> BinaryHeapPQ<T> { pq.insert(element) }
 
         /// Delete minimum element from priority queue
-        pub fn delete_min<T: StT + Ord>(pq: &BinaryHeapPQ<T>) -> (BinaryHeapPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
+        pub fn delete_min<T: StT + Ord>(pq: &BinaryHeapPQ<T>) -> (BinaryHeapPQ<T>, Option<T>) { pq.delete_min() }
 
         /// Meld two priority queues
-        pub fn meld<T: StT + Ord>(pq1: &BinaryHeapPQ<T>, pq2: &BinaryHeapPQ<T>) -> BinaryHeapPQ<T> {
-            pq1.meld(pq2)
-        }
+        pub fn meld<T: StT + Ord>(pq1: &BinaryHeapPQ<T>, pq2: &BinaryHeapPQ<T>) -> BinaryHeapPQ<T> { pq1.meld(pq2) }
 
         /// Create priority queue from sequence
-        pub fn from_seq<T: StT + Ord>(seq: &ArraySeqStPerS<T>) -> BinaryHeapPQ<T> {
-            BinaryHeapPQ::from_seq(seq)
-        }
+        pub fn from_seq<T: StT + Ord>(seq: &ArraySeqStPerS<T>) -> BinaryHeapPQ<T> { BinaryHeapPQ::from_seq(seq) }
     }
 }

@@ -36,44 +36,36 @@ pub mod OrderedSetMtEph {
         fn last(&self) -> Option<T>;
         fn previous(&self, k: &T) -> Option<T>;
         fn next(&self, k: &T) -> Option<T>;
-        fn split(&mut self, k: &T) -> (Self, B, Self) where Self: Sized;
+        fn split(&mut self, k: &T) -> (Self, B, Self)
+        where
+            Self: Sized;
         fn join(&mut self, other: Self);
         fn get_range(&self, k1: &T, k2: &T) -> Self;
         fn rank(&self, k: &T) -> N;
         fn select(&self, i: N) -> Option<T>;
-        fn split_rank(&mut self, i: N) -> (Self, Self) where Self: Sized;
+        fn split_rank(&mut self, i: N) -> (Self, Self)
+        where
+            Self: Sized;
     }
 
     impl<T: MtKey> OrderedSetMtEphTrait<T> for OrderedSetMtEph<T> {
         /// Claude Work: O(1), Span: O(1)
-        fn size(&self) -> N {
-            self.elements.len()
-        }
+        fn size(&self) -> N { self.elements.len() }
 
         /// Claude Work: O(1), Span: O(1)
-        fn empty() -> Self {
-            OrderedSetMtEph {
-                elements: Vec::new(),
-            }
-        }
+        fn empty() -> Self { OrderedSetMtEph { elements: Vec::new() } }
 
         /// Claude Work: O(1), Span: O(1)
-        fn singleton(x: T) -> Self {
-            OrderedSetMtEph {
-                elements: vec![x],
-            }
-        }
+        fn singleton(x: T) -> Self { OrderedSetMtEph { elements: vec![x] } }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn find(&self, x: &T) -> B {
-            self.elements.binary_search(x).is_ok()
-        }
+        fn find(&self, x: &T) -> B { self.elements.binary_search(x).is_ok() }
 
         /// Claude Work: O(n), Span: O(log n)
         fn insert(&mut self, x: T) {
             match self.elements.binary_search(&x) {
-                Ok(_) => {}, // Element already exists
-                Err(pos) => {
+                | Ok(_) => {} // Element already exists
+                | Err(pos) => {
                     self.elements.insert(pos, x);
                 }
             }
@@ -87,15 +79,10 @@ pub mod OrderedSetMtEph {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn filter<F: Fn(&T) -> B + Send + Sync + 'static>(&mut self, f: F) 
-        {
-            self.elements.retain(|x| f(x));
-        }
+        fn filter<F: Fn(&T) -> B + Send + Sync + 'static>(&mut self, f: F) { self.elements.retain(|x| f(x)); }
 
         /// Claude Work: O(m + n), Span: O(log(m + n))
-        fn intersection(&mut self, other: &Self) {
-            self.elements.retain(|elem| other.find(elem));
-        }
+        fn intersection(&mut self, other: &Self) { self.elements.retain(|elem| other.find(elem)); }
 
         /// Claude Work: O(m + n), Span: O(log(m + n))
         fn union(&mut self, other: &Self) {
@@ -114,9 +101,7 @@ pub mod OrderedSetMtEph {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn to_seq(&self) -> AVLTreeSeqStPerS<T> {
-            AVLTreeSeqStPerS::from_vec(self.elements.clone())
-        }
+        fn to_seq(&self) -> AVLTreeSeqStPerS<T> { AVLTreeSeqStPerS::from_vec(self.elements.clone()) }
 
         /// Claude Work: O(n log n), Span: O(log² n)
         fn from_seq(seq: AVLTreeSeqStPerS<T>) -> Self {
@@ -133,26 +118,22 @@ pub mod OrderedSetMtEph {
         // Ordering operations (ADT 43.1)
 
         /// Claude Work: O(1), Span: O(1)
-        fn first(&self) -> Option<T> {
-            self.elements.first().cloned()
-        }
+        fn first(&self) -> Option<T> { self.elements.first().cloned() }
 
         /// Claude Work: O(1), Span: O(1)
-        fn last(&self) -> Option<T> {
-            self.elements.last().cloned()
-        }
+        fn last(&self) -> Option<T> { self.elements.last().cloned() }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn previous(&self, k: &T) -> Option<T> {
             match self.elements.binary_search(k) {
-                Ok(pos) => {
+                | Ok(pos) => {
                     if pos > 0 {
                         Some(self.elements[pos - 1].clone())
                     } else {
                         None
                     }
                 }
-                Err(pos) => {
+                | Err(pos) => {
                     if pos > 0 {
                         Some(self.elements[pos - 1].clone())
                     } else {
@@ -165,14 +146,14 @@ pub mod OrderedSetMtEph {
         /// Claude Work: O(log n), Span: O(log n)
         fn next(&self, k: &T) -> Option<T> {
             match self.elements.binary_search(k) {
-                Ok(pos) => {
+                | Ok(pos) => {
                     if pos + 1 < self.elements.len() {
                         Some(self.elements[pos + 1].clone())
                     } else {
                         None
                     }
                 }
-                Err(pos) => {
+                | Err(pos) => {
                     if pos < self.elements.len() {
                         Some(self.elements[pos].clone())
                     } else {
@@ -185,8 +166,8 @@ pub mod OrderedSetMtEph {
         /// Claude Work: O(log n), Span: O(log n)
         fn split(&mut self, k: &T) -> (Self, B, Self) {
             let pos = match self.elements.binary_search(k) {
-                Ok(pos) => pos,
-                Err(pos) => pos,
+                | Ok(pos) => pos,
+                | Err(pos) => pos,
             };
 
             let found = self.elements.get(pos) == Some(k);
@@ -200,44 +181,46 @@ pub mod OrderedSetMtEph {
 
             *self = Self::empty();
             (
-                OrderedSetMtEph { elements: left_elements },
+                OrderedSetMtEph {
+                    elements: left_elements,
+                },
                 found,
-                OrderedSetMtEph { elements: right_elements_filtered },
+                OrderedSetMtEph {
+                    elements: right_elements_filtered,
+                },
             )
         }
 
         /// Claude Work: O(log(m + n)), Span: O(log(m + n))
-        fn join(&mut self, other: Self) {
-            self.union(&other);
-        }
+        fn join(&mut self, other: Self) { self.union(&other); }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn get_range(&self, k1: &T, k2: &T) -> Self {
             let start_pos = match self.elements.binary_search(k1) {
-                Ok(pos) => pos,
-                Err(pos) => pos,
+                | Ok(pos) => pos,
+                | Err(pos) => pos,
             };
             let end_pos = match self.elements.binary_search(k2) {
-                Ok(pos) => pos + 1,
-                Err(pos) => pos,
+                | Ok(pos) => pos + 1,
+                | Err(pos) => pos,
             };
 
             let range_elements = self.elements[start_pos..end_pos].to_vec();
-            OrderedSetMtEph { elements: range_elements }
+            OrderedSetMtEph {
+                elements: range_elements,
+            }
         }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn rank(&self, k: &T) -> N {
             match self.elements.binary_search(k) {
-                Ok(pos) => pos,
-                Err(pos) => pos,
+                | Ok(pos) => pos,
+                | Err(pos) => pos,
             }
         }
 
         /// Claude Work: O(1), Span: O(1)
-        fn select(&self, i: N) -> Option<T> {
-            self.elements.get(i).cloned()
-        }
+        fn select(&self, i: N) -> Option<T> { self.elements.get(i).cloned() }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn split_rank(&mut self, i: N) -> (Self, Self) {
@@ -246,8 +229,12 @@ pub mod OrderedSetMtEph {
 
             *self = Self::empty();
             (
-                OrderedSetMtEph { elements: left_elements },
-                OrderedSetMtEph { elements: right_elements },
+                OrderedSetMtEph {
+                    elements: left_elements,
+                },
+                OrderedSetMtEph {
+                    elements: right_elements,
+                },
             )
         }
     }

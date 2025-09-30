@@ -33,7 +33,7 @@ pub mod Exercise12_5 {
 
     impl<T: StTInMtT> ConcurrentStackMt<T> {
         /// Raw pop operation returning node pointer (private helper).
-        /// 
+        ///
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
         /// claude-4-sonet: Work Θ(1) expected, Θ(n) worst case, Span Θ(1) - CAS retry loop
         fn raw_pop(&self) -> Option<*mut Node<T>> {
@@ -62,7 +62,7 @@ pub mod Exercise12_5 {
         }
 
         /// Push value onto stack using lock-free CAS.
-        /// 
+        ///
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
         /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n concurrent pushes, Span Θ(1), Parallelism Θ(1) - CAS retry loop
         fn push(&self, value: T) {
@@ -86,7 +86,7 @@ pub mod Exercise12_5 {
         }
 
         /// Pop value from stack using lock-free CAS.
-        /// 
+        ///
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
         /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n concurrent pops, Span Θ(1), Parallelism Θ(1) - CAS retry loop
         fn pop(&self) -> Option<T> {
@@ -97,18 +97,14 @@ pub mod Exercise12_5 {
         }
 
         /// Check if stack is empty.
-        /// 
+        ///
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - single atomic load
-        fn is_empty(&self) -> bool {
-            self.head.load(Ordering::Acquire).is_null()
-        }
+        fn is_empty(&self) -> bool { self.head.load(Ordering::Acquire).is_null() }
     }
 
     impl<T: StTInMtT> Default for ConcurrentStackMt<T> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     impl<T: StTInMtT> Drop for ConcurrentStackMt<T> {
@@ -126,7 +122,7 @@ pub mod Exercise12_5 {
 
     impl<T: StTInMtT> ConcurrentStackMt<T> {
         /// Pop every element into a Vec for testing/teardown convenience.
-        /// 
+        ///
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) where n=stack size - sequential drain, one pop at a time
         pub fn drain(&self) -> Vec<T> {

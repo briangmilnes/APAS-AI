@@ -44,9 +44,7 @@ pub mod AdjMatrixGraphStPer {
         }
 
         // Work: Θ(1), Span: Θ(1)
-        fn num_vertices(&self) -> N {
-            self.n
-        }
+        fn num_vertices(&self) -> N { self.n }
 
         // Work: Θ(n²), Span: Θ(n²) - count all true entries
         fn num_edges(&self) -> N {
@@ -115,7 +113,7 @@ pub mod AdjMatrixGraphStPer {
                 }
             }
             let new_row = ArraySeqStPerS::from_vec(new_row_vec);
-            
+
             let mut new_matrix_vec = Vec::with_capacity(self.n);
             for i in 0..self.n {
                 if i == u {

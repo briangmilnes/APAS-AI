@@ -60,21 +60,15 @@ pub mod MappingStEph {
     }
 
     impl<A: StT + Hash, B: StT + Hash> PartialEq for Mapping<A, B> {
-        fn eq(&self, other: &Self) -> bool {
-            self.rel == other.rel
-        }
+        fn eq(&self, other: &Self) -> bool { self.rel == other.rel }
     }
     impl<A: StT + Hash, B: StT + Hash> Eq for Mapping<A, B> {}
 
     impl<A: StT + Hash, B: StT + Hash> Debug for Mapping<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            Debug::fmt(&self.rel, f)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { Debug::fmt(&self.rel, f) }
     }
     impl<A: StT + Hash, B: StT + Hash> Display for Mapping<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            Display::fmt(&self.rel, f)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { Display::fmt(&self.rel, f) }
     }
 
     impl<X: StT + Hash, Y: StT + Hash> MappingStEphTrait<X, Y> for Mapping<X, Y> {
@@ -98,25 +92,15 @@ pub mod MappingStEph {
             }
         }
 
-        fn size(&self) -> N {
-            self.rel.size()
-        }
+        fn size(&self) -> N { self.rel.size() }
 
-        fn domain(&self) -> Set<X> {
-            self.rel.domain()
-        }
+        fn domain(&self) -> Set<X> { self.rel.domain() }
 
-        fn range(&self) -> Set<Y> {
-            self.rel.range()
-        }
+        fn range(&self) -> Set<Y> { self.rel.range() }
 
-        fn mem(&self, a: &X, b: &Y) -> B {
-            self.rel.mem(a, b)
-        }
+        fn mem(&self, a: &X, b: &Y) -> B { self.rel.mem(a, b) }
 
-        fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>> {
-            self.rel.iter()
-        }
+        fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>> { self.rel.iter() }
     }
 
     #[macro_export]

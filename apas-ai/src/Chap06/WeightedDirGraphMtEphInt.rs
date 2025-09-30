@@ -10,8 +10,8 @@ pub mod WeightedDirGraphMtEphInt {
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
-    use crate::Types::Types::*;
     use crate::ParaPair;
+    use crate::Types::Types::*;
 
     /// Weighted directed graph with integer weights (multi-threaded, type alias)
     pub type WeightedDirGraphMtEphInt<V> = LabDirGraphMtEph<V, i32>;
@@ -38,16 +38,12 @@ pub mod WeightedDirGraphMtEphInt {
         /// Add a weighted edge to the graph
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        pub fn add_weighted_edge(&mut self, from: V, to: V, weight: i32) {
-            self.add_labeled_arc(from, to, weight);
-        }
+        pub fn add_weighted_edge(&mut self, from: V, to: V, weight: i32) { self.add_labeled_arc(from, to, weight); }
 
         /// Get the weight of an edge, if it exists
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential search
-        pub fn get_edge_weight(&self, from: &V, to: &V) -> Option<i32> {
-            self.get_arc_label(from, to).copied()
-        }
+        pub fn get_edge_weight(&self, from: &V, to: &V) -> Option<i32> { self.get_arc_label(from, to).copied() }
 
         /// Get all weighted edges as (from, to, weight) tuples
         /// APAS: Work Θ(|A|), Span Θ(1)
@@ -67,7 +63,7 @@ pub mod WeightedDirGraphMtEphInt {
             // PARALLEL: filter weighted arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, i32>> = self.labeled_arcs().iter().cloned().collect();
             let n = arcs.len();
-            
+
             if n <= 8 {
                 let mut neighbors = Set::empty();
                 for labeled_edge in arcs {
@@ -77,12 +73,9 @@ pub mod WeightedDirGraphMtEphInt {
                 }
                 return neighbors;
             }
-            
+
             // Parallel divide-and-conquer
-            fn parallel_out<V: StT + MtT + Hash + 'static>(
-                arcs: Vec<LabEdge<V, i32>>,
-                v: V
-            ) -> Set<(V, i32)> {
+            fn parallel_out<V: StT + MtT + Hash + 'static>(arcs: Vec<LabEdge<V, i32>>, v: V) -> Set<(V, i32)> {
                 let n = arcs.len();
                 if n == 0 {
                     return Set::empty();
@@ -96,22 +89,22 @@ pub mod WeightedDirGraphMtEphInt {
                         Set::empty()
                     };
                 }
-                
+
                 let mid = n / 2;
                 let mut right_arcs = arcs;
                 let left_arcs = right_arcs.split_off(mid);
-                
+
                 let v_left = v.clone_mt();
                 let v_right = v;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_out(left_arcs, v_left),
-                    move || parallel_out(right_arcs, v_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_out(left_arcs, v_left), move || parallel_out(
+                        right_arcs, v_right
+                    ));
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_out(arcs, v.clone_mt())
         }
 
@@ -122,7 +115,7 @@ pub mod WeightedDirGraphMtEphInt {
             // PARALLEL: filter weighted arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, i32>> = self.labeled_arcs().iter().cloned().collect();
             let n = arcs.len();
-            
+
             if n <= 8 {
                 let mut neighbors = Set::empty();
                 for labeled_edge in arcs {
@@ -132,12 +125,9 @@ pub mod WeightedDirGraphMtEphInt {
                 }
                 return neighbors;
             }
-            
+
             // Parallel divide-and-conquer
-            fn parallel_in<V: StT + MtT + Hash + 'static>(
-                arcs: Vec<LabEdge<V, i32>>,
-                v: V
-            ) -> Set<(V, i32)> {
+            fn parallel_in<V: StT + MtT + Hash + 'static>(arcs: Vec<LabEdge<V, i32>>, v: V) -> Set<(V, i32)> {
                 let n = arcs.len();
                 if n == 0 {
                     return Set::empty();
@@ -151,31 +141,29 @@ pub mod WeightedDirGraphMtEphInt {
                         Set::empty()
                     };
                 }
-                
+
                 let mid = n / 2;
                 let mut right_arcs = arcs;
                 let left_arcs = right_arcs.split_off(mid);
-                
+
                 let v_left = v.clone_mt();
                 let v_right = v;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_in(left_arcs, v_left),
-                    move || parallel_in(right_arcs, v_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_in(left_arcs, v_left), move || parallel_in(
+                        right_arcs, v_right
+                    ));
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_in(arcs, v.clone_mt())
         }
 
         /// Get the total weight of all edges
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential sum
-        pub fn total_weight(&self) -> i32 {
-            self.labeled_arcs().iter().map(|edge| edge.2).sum()
-        }
+        pub fn total_weight(&self) -> i32 { self.labeled_arcs().iter().map(|edge| edge.2).sum() }
     }
 
     #[macro_export]

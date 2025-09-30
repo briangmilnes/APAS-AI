@@ -24,16 +24,14 @@ pub mod GraphSearchStPer {
 
     /// Select all vertices in frontier (breadth-first style).
     pub struct SelectAll;
-    
+
     impl<V: StT + Ord> SelectionStrategy<V> for SelectAll {
-        fn select(&self, frontier: &AVLTreeSetStPer<V>) -> (AVLTreeSetStPer<V>, B) {
-            (frontier.clone(), false)
-        }
+        fn select(&self, frontier: &AVLTreeSetStPer<V>) -> (AVLTreeSetStPer<V>, B) { (frontier.clone(), false) }
     }
 
     /// Select single arbitrary vertex (depth-first style).
     pub struct SelectOne;
-    
+
     impl<V: StT + Ord> SelectionStrategy<V> for SelectOne {
         fn select(&self, frontier: &AVLTreeSetStPer<V>) -> (AVLTreeSetStPer<V>, B) {
             if frontier.size() == 0 {
@@ -56,11 +54,7 @@ pub mod GraphSearchStPer {
 
         /// Multi-source graph search (Exercise 53.3).
         /// Work: O(|V| + |E|), Span: O(|V|) (sequential rounds).
-        fn graph_search_multi<G, S>(
-            graph: &G,
-            sources: AVLTreeSetStPer<V>,
-            strategy: &S,
-        ) -> SearchResult<V>
+        fn graph_search_multi<G, S>(graph: &G, sources: AVLTreeSetStPer<V>, strategy: &S) -> SearchResult<V>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>,
             S: SelectionStrategy<V>;
@@ -84,11 +78,7 @@ pub mod GraphSearchStPer {
             Self::graph_search_multi(graph, sources, strategy)
         }
 
-        fn graph_search_multi<G, S>(
-            graph: &G,
-            sources: AVLTreeSetStPer<V>,
-            strategy: &S,
-        ) -> SearchResult<V>
+        fn graph_search_multi<G, S>(graph: &G, sources: AVLTreeSetStPer<V>, strategy: &S) -> SearchResult<V>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>,
             S: SelectionStrategy<V>,
@@ -136,10 +126,7 @@ pub mod GraphSearchStPer {
             // Line 13: explore {} {s}
             let visited = explore(graph, strategy, AVLTreeSetStPer::empty(), sources);
 
-            SearchResult {
-                visited,
-                parent: None,
-            }
+            SearchResult { visited, parent: None }
         }
 
         fn reachable<G>(graph: &G, source: V) -> AVLTreeSetStPer<V>

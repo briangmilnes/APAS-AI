@@ -1,10 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Matrix Chain Multiplication using Vec-based implementations.
 
+use apas_ai::Chap50::MatrixChainStEph::MatrixChainStEph::{
+    MatrixChainStEphS, MatrixChainStEphTrait, MatrixDim as MatrixChainStEphMatrixDim,
+};
 use apas_ai::Chap50::MatrixChainStPer::MatrixChainStPer::{MatrixChainStPerS, MatrixChainStPerTrait, MatrixDim};
-use apas_ai::Chap50::MatrixChainStEph::MatrixChainStEph::{MatrixChainStEphS, MatrixChainStEphTrait, MatrixDim as MatrixChainStEphMatrixDim};
-use apas_ai::Types::Types::*;
 use apas_ai::MatrixChainStPerLit;
+use apas_ai::Types::Types::*;
 
 mod matrix_chain_tests {
     use super::*;
@@ -26,10 +28,7 @@ mod matrix_chain_tests {
 
     #[test]
     fn test_matrix_chain_st_per_two_matrices() {
-        let dimensions = vec![
-            MatrixDim { rows: 10, cols: 20 },
-            MatrixDim { rows: 20, cols: 30 }
-        ];
+        let dimensions = vec![MatrixDim { rows: 10, cols: 20 }, MatrixDim { rows: 20, cols: 30 }];
         let chain = MatrixChainStPerS::from_dimensions(dimensions);
         assert_eq!(chain.num_matrices(), 2);
         // Cost should be 10 * 20 * 30 = 6000
@@ -41,7 +40,7 @@ mod matrix_chain_tests {
         let dimensions = vec![
             MatrixDim { rows: 10, cols: 20 },
             MatrixDim { rows: 20, cols: 30 },
-            MatrixDim { rows: 30, cols: 40 }
+            MatrixDim { rows: 30, cols: 40 },
         ];
         let chain = MatrixChainStPerS::from_dimensions(dimensions);
         assert_eq!(chain.num_matrices(), 3);
@@ -54,11 +53,7 @@ mod matrix_chain_tests {
 
     #[test]
     fn test_matrix_chain_st_per_from_dim_pairs() {
-        let dim_pairs = vec![
-            Pair(10, 20),
-            Pair(20, 30),
-            Pair(30, 40)
-        ];
+        let dim_pairs = vec![Pair(10, 20), Pair(20, 30), Pair(30, 40)];
         let chain = MatrixChainStPerS::from_dim_pairs(dim_pairs);
         assert_eq!(chain.num_matrices(), 3);
         assert_eq!(chain.optimal_cost(), 18000);
@@ -66,12 +61,9 @@ mod matrix_chain_tests {
 
     #[test]
     fn test_matrix_chain_st_per_iteration() {
-        let dimensions = vec![
-            MatrixDim { rows: 5, cols: 10 },
-            MatrixDim { rows: 10, cols: 15 }
-        ];
+        let dimensions = vec![MatrixDim { rows: 5, cols: 10 }, MatrixDim { rows: 10, cols: 15 }];
         let chain = MatrixChainStPerS::from_dimensions(dimensions);
-        
+
         let collected: Vec<MatrixDim> = chain.into_iter().collect();
         assert_eq!(collected.len(), 2);
         assert_eq!(collected[0].rows, 5);
@@ -99,15 +91,15 @@ mod matrix_chain_tests {
     fn test_matrix_chain_st_eph_mutation() {
         let dimensions = vec![
             MatrixChainStEphMatrixDim { rows: 10, cols: 20 },
-            MatrixChainStEphMatrixDim { rows: 20, cols: 30 }
+            MatrixChainStEphMatrixDim { rows: 20, cols: 30 },
         ];
         let mut chain = MatrixChainStEphS::from_dimensions(dimensions);
-        
+
         // Test mutation
         chain.set_dimension(0, MatrixChainStEphMatrixDim { rows: 15, cols: 25 });
         assert_eq!(chain.dimensions()[0].rows, 15);
         assert_eq!(chain.dimensions()[0].cols, 25);
-        
+
         // Test mutable access
         {
             let dims_mut = chain.dimensions_mut();
@@ -121,10 +113,10 @@ mod matrix_chain_tests {
     fn test_matrix_chain_st_eph_iteration() {
         let dimensions = vec![
             MatrixChainStEphMatrixDim { rows: 5, cols: 10 },
-            MatrixChainStEphMatrixDim { rows: 10, cols: 15 }
+            MatrixChainStEphMatrixDim { rows: 10, cols: 15 },
         ];
         let chain = MatrixChainStEphS::from_dimensions(dimensions);
-        
+
         let collected: Vec<MatrixChainStEphMatrixDim> = chain.into_iter().collect();
         assert_eq!(collected.len(), 2);
         assert_eq!(collected[0].rows, 5);
@@ -158,11 +150,11 @@ mod matrix_chain_tests {
             MatrixDim { rows: 40, cols: 20 },
             MatrixDim { rows: 20, cols: 30 },
             MatrixDim { rows: 30, cols: 10 },
-            MatrixDim { rows: 10, cols: 30 }
+            MatrixDim { rows: 10, cols: 30 },
         ];
         let chain = MatrixChainStPerS::from_dimensions(dimensions);
         assert_eq!(chain.num_matrices(), 4);
-        
+
         // The optimal cost should be computed by dynamic programming
         let cost = chain.optimal_cost();
         assert!(cost > 0);
@@ -174,10 +166,10 @@ mod matrix_chain_tests {
         let dimensions = vec![
             MatrixDim { rows: 2, cols: 3 },
             MatrixDim { rows: 3, cols: 4 },
-            MatrixDim { rows: 4, cols: 5 }
+            MatrixDim { rows: 4, cols: 5 },
         ];
         let chain = MatrixChainStPerS::from_dimensions(dimensions);
-        
+
         // Test the multiply_cost function indirectly through optimal_cost
         let cost = chain.optimal_cost();
         // For 3 matrices, we should get the minimum of two possible parenthesizations

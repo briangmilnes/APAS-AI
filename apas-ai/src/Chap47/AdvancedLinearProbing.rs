@@ -3,8 +3,8 @@
 //! Definition 47.7: Linear probing with h_i(k) = (h(k) + i) mod m
 
 pub mod AdvancedLinearProbing {
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     use crate::Types::Types::*;
     use std::fmt::{Debug, Display};
 
@@ -52,7 +52,9 @@ pub mod AdvancedLinearProbing {
         /// Analyze primary clustering in a hash table
         /// Claude Work: Θ(m), Span: Θ(m) where m is table size
         pub fn analyze_primary_clustering<V: StT>(&self, table: &FlatHashTable<K, V, Self>) -> PrimaryClusteringMetrics
-        where Self: ProbeSequence<K> + Clone {
+        where
+            Self: ProbeSequence<K> + Clone,
+        {
             if !self.clustering_enabled {
                 return PrimaryClusteringMetrics {
                     total_clusters: 0,
@@ -81,7 +83,7 @@ pub mod AdvancedLinearProbing {
             // Scan table to identify clusters
             for i in 0..size {
                 let is_occupied = self.is_position_occupied(table, i);
-                
+
                 if is_occupied {
                     if !in_cluster {
                         in_cluster = true;
@@ -97,7 +99,7 @@ pub mod AdvancedLinearProbing {
                     }
                 }
             }
-            
+
             // Handle wrap-around cluster
             if in_cluster {
                 clusters.push(current_cluster_size);
@@ -109,7 +111,9 @@ pub mod AdvancedLinearProbing {
         /// Check if a position in the table is occupied
         /// Claude Work: Θ(1), Span: Θ(1)
         fn is_position_occupied<V: StT>(&self, table: &FlatHashTable<K, V, Self>, position: N) -> B
-        where Self: ProbeSequence<K> + Clone {
+        where
+            Self: ProbeSequence<K> + Clone,
+        {
             // This is a simplified check - in practice would need access to table internals
             // For now, assume we can check occupancy through table statistics
             let (load, size) = table.load_and_size();
@@ -150,9 +154,7 @@ pub mod AdvancedLinearProbing {
             // Probe variance: variance in cluster sizes
             let variance = if total_clusters > 1 {
                 let mean = avg_cluster_size;
-                let sum_squared_diff: f64 = clusters.iter()
-                    .map(|&size| (size as f64 - mean).powi(2))
-                    .sum();
+                let sum_squared_diff: f64 = clusters.iter().map(|&size| (size as f64 - mean).powi(2)).sum();
                 sum_squared_diff / (total_clusters - 1) as f64
             } else {
                 0.0
@@ -174,7 +176,7 @@ pub mod AdvancedLinearProbing {
             if load_factor >= 1.0 {
                 return f64::INFINITY;
             }
-            
+
             // Expected probes for unsuccessful search: 1/(1-α)
             1.0 / (1.0 - load_factor)
         }
@@ -185,7 +187,7 @@ pub mod AdvancedLinearProbing {
             if load_factor >= 1.0 {
                 return f64::INFINITY;
             }
-            
+
             // Expected probes for successful search: (1/α) * ln(1/(1-α))
             if load_factor > 0.0 {
                 (1.0 / load_factor) * (1.0 / (1.0 - load_factor)).ln()
@@ -212,14 +214,16 @@ pub mod AdvancedLinearProbing {
 
         /// Strategy name for debugging and analysis
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn strategy_name(&self) -> String {
-            "AdvancedLinearProbing".to_string()
-        }
+        fn strategy_name(&self) -> String { "AdvancedLinearProbing".to_string() }
     }
 
     impl<K: StT, H: HashFunClone<K>> Display for AdvancedLinearProbingStrategy<K, H> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "AdvancedLinearProbing(clustering_enabled: {})", self.clustering_enabled)
+            write!(
+                f,
+                "AdvancedLinearProbing(clustering_enabled: {})",
+                self.clustering_enabled
+            )
         }
     }
 
@@ -239,18 +243,20 @@ pub mod AdvancedLinearProbing {
     /// Claude Work: Θ(m), Span: Θ(m)
     pub fn example_primary_clustering_analysis() -> (PrimaryClusteringMetrics, f64, f64) {
         let hash_fn = DefaultHashFunction;
-        let strategy: AdvancedLinearProbingStrategy<String, DefaultHashFunction> = AdvancedLinearProbingStrategy::new(hash_fn);
-        
+        let strategy: AdvancedLinearProbingStrategy<String, DefaultHashFunction> =
+            AdvancedLinearProbingStrategy::new(hash_fn);
+
         // Create a table with 50% load factor (α = 1/2)
-        let table: FlatHashTable<String, String, AdvancedLinearProbingStrategy<String, DefaultHashFunction>> = FlatHashTable::create_table(strategy.clone(), 16);
-        
+        let table: FlatHashTable<String, String, AdvancedLinearProbingStrategy<String, DefaultHashFunction>> =
+            FlatHashTable::create_table(strategy.clone(), 16);
+
         // Analyze clustering
         let metrics = strategy.analyze_primary_clustering(&table);
-        
+
         // Estimate probe counts
         let unsuccessful_probes = strategy.estimate_unsuccessful_probe_count(0.5);
         let successful_probes = strategy.estimate_successful_probe_count(0.5);
-        
+
         (metrics, unsuccessful_probes, successful_probes)
     }
 }

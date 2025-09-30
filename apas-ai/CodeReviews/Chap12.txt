@@ -9,3 +9,5 @@ Chap 12
  Run algorithmic analysis on the files.
 
 
+ DONE
+ 

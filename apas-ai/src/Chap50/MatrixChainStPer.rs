@@ -27,24 +27,24 @@ pub mod MatrixChainStPer {
     pub trait MatrixChainStPerTrait {
         /// Create new matrix chain solver
         fn new() -> Self;
-        
+
         /// Create from matrix dimensions
         fn from_dimensions(dimensions: Vec<MatrixDim>) -> Self;
-        
+
         /// Create from dimension pairs (rows, cols)
         fn from_dim_pairs(dim_pairs: Vec<Pair<usize, usize>>) -> Self;
-        
+
         /// Compute optimal matrix chain multiplication cost using dynamic programming
         /// Claude Work: O(n³) where n=number of matrices
         /// Claude Span: O(n²)
         fn optimal_cost(&self) -> usize;
-        
+
         /// Get the matrix dimensions
         fn dimensions(&self) -> &Vec<MatrixDim>;
-        
+
         /// Get number of matrices
         fn num_matrices(&self) -> usize;
-        
+
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
@@ -105,13 +105,14 @@ pub mod MatrixChainStPer {
         }
 
         fn from_dim_pairs(dim_pairs: Vec<Pair<usize, usize>>) -> Self {
-            let dimensions = dim_pairs.into_iter()
+            let dimensions = dim_pairs
+                .into_iter()
                 .map(|pair| MatrixDim {
                     rows: pair.0,
                     cols: pair.1,
                 })
                 .collect();
-            
+
             Self {
                 dimensions,
                 memo: HashMap::new(),
@@ -122,32 +123,30 @@ pub mod MatrixChainStPer {
             if self.dimensions.len() <= 1 {
                 return 0;
             }
-            
+
             // Create mutable copy for memoization
             let mut solver = self.clone();
             solver.memo.clear(); // Fresh memo for each query
-            
+
             let n = solver.dimensions.len();
             solver.matrix_chain_rec(0, n - 1)
         }
 
-        fn dimensions(&self) -> &Vec<MatrixDim> {
-            &self.dimensions
-        }
+        fn dimensions(&self) -> &Vec<MatrixDim> { &self.dimensions }
 
-        fn num_matrices(&self) -> usize {
-            self.dimensions.len()
-        }
+        fn num_matrices(&self) -> usize { self.dimensions.len() }
 
-        fn memo_size(&self) -> usize {
-            self.memo.len()
-        }
+        fn memo_size(&self) -> usize { self.memo.len() }
     }
 
     impl Display for MatrixChainStPerS {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "MatrixChainStPer(matrices: {}, memo_entries: {})", 
-                   self.dimensions.len(), self.memo.len())
+            write!(
+                f,
+                "MatrixChainStPer(matrices: {}, memo_entries: {})",
+                self.dimensions.len(),
+                self.memo.len()
+            )
         }
     }
 
@@ -155,32 +154,23 @@ pub mod MatrixChainStPer {
         type Item = MatrixDim;
         type IntoIter = std::vec::IntoIter<MatrixDim>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.dimensions.into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.dimensions.into_iter() }
     }
 
     impl<'a> IntoIterator for &'a MatrixChainStPerS {
         type Item = MatrixDim;
         type IntoIter = std::iter::Cloned<std::slice::Iter<'a, MatrixDim>>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.dimensions.iter().cloned()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.dimensions.iter().cloned() }
     }
 
     impl Display for MatrixDim {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "{}×{}", self.rows, self.cols)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "{}×{}", self.rows, self.cols) }
     }
 
     #[allow(dead_code)]
     fn _MatrixChainStPerLit_type_checks() {
-        let dims = vec![
-            MatrixDim { rows: 2, cols: 10 },
-            MatrixDim { rows: 10, cols: 2 }
-        ];
+        let dims = vec![MatrixDim { rows: 2, cols: 10 }, MatrixDim { rows: 10, cols: 2 }];
         let _: MatrixChainStPerS = MatrixChainStPerS::from_dimensions(dims);
     }
 }

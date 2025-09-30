@@ -99,9 +99,7 @@ fn test_array_set_enum_mt_filter() {
     let set = ArraySetEnumMtEphLit![10; 1, 2, 3, 4, 5, 6];
 
     // Create a function that meets the Clone + 'static requirements
-    fn is_even(x: usize) -> bool {
-        x % 2 == 0
-    }
+    fn is_even(x: usize) -> bool { x % 2 == 0 }
     let filtered = set.filter(is_even);
 
     assert_eq!(filtered.size(), 3);

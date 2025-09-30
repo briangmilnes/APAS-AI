@@ -10,14 +10,12 @@ pub mod LabDirGraphStEph {
     use crate::Types::Types::*;
 
     #[derive(Clone)]
-    pub struct LabDirGraphStEph<V: StT + Hash, L: StT + Hash>
-    {
+    pub struct LabDirGraphStEph<V: StT + Hash, L: StT + Hash> {
         vertices: Set<V>,
         labeled_arcs: Set<LabEdge<V, L>>,
     }
 
-    pub trait LabDirGraphStEphTrait<V: StT + Hash, L: StT + Hash>
-    {
+    pub trait LabDirGraphStEphTrait<V: StT + Hash, L: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn empty() -> Self;
@@ -53,8 +51,7 @@ pub mod LabDirGraphStEph {
         fn in_neighbors(&self, v: &V) -> Set<V>;
     }
 
-    impl<V: StT + Hash, L: StT + Hash> LabDirGraphStEphTrait<V, L> for LabDirGraphStEph<V, L>
-    {
+    impl<V: StT + Hash, L: StT + Hash> LabDirGraphStEphTrait<V, L> for LabDirGraphStEph<V, L> {
         fn empty() -> Self {
             LabDirGraphStEph {
                 vertices: Set::empty(),
@@ -66,13 +63,9 @@ pub mod LabDirGraphStEph {
             LabDirGraphStEph { vertices, labeled_arcs }
         }
 
-        fn vertices(&self) -> &Set<V> {
-            &self.vertices
-        }
+        fn vertices(&self) -> &Set<V> { &self.vertices }
 
-        fn labeled_arcs(&self) -> &Set<LabEdge<V, L>> {
-            &self.labeled_arcs
-        }
+        fn labeled_arcs(&self) -> &Set<LabEdge<V, L>> { &self.labeled_arcs }
 
         fn arcs(&self) -> Set<Edge<V>> {
             let mut arcs = Set::empty();
@@ -82,9 +75,7 @@ pub mod LabDirGraphStEph {
             arcs
         }
 
-        fn add_vertex(&mut self, v: V) {
-            self.vertices.insert(v);
-        }
+        fn add_vertex(&mut self, v: V) { self.vertices.insert(v); }
 
         fn add_labeled_arc(&mut self, from: V, to: V, label: L) {
             self.vertices.insert(from.clone());
@@ -131,15 +122,13 @@ pub mod LabDirGraphStEph {
         }
     }
 
-    impl<V: StT + Hash, L: Clone + Display + Debug + Eq + Hash> Display for LabDirGraphStEph<V, L>
-    {
+    impl<V: StT + Hash, L: Clone + Display + Debug + Eq + Hash> Display for LabDirGraphStEph<V, L> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "LabDirGraph(V: {}, A: {})", self.vertices, self.labeled_arcs)
         }
     }
 
-    impl<V: StT + Hash, L: Clone + Display + Debug + Eq + Hash> Debug for LabDirGraphStEph<V, L>
-    {
+    impl<V: StT + Hash, L: Clone + Display + Debug + Eq + Hash> Debug for LabDirGraphStEph<V, L> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(
                 f,

@@ -28,9 +28,7 @@ pub mod AVLTreeSetStPer {
     }
 
     impl<T: StT + Ord> AVLTreeSetStPerTrait<T> for AVLTreeSetStPer<T> {
-        fn size(&self) -> N {
-            self.elements.length()
-        }
+        fn size(&self) -> N { self.elements.length() }
 
         fn to_seq(&self) -> AVLTreeSeqStPerS<T> {
             // Create a new sequence from the elements
@@ -77,8 +75,7 @@ pub mod AVLTreeSetStPer {
             result
         }
 
-        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self
-        {
+        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self {
             let mut result = Self::empty();
             for i in 0..self.elements.length() {
                 let elem = self.elements.nth(i);
@@ -173,9 +170,7 @@ pub mod AVLTreeSetStPer {
     }
 
     impl<T: StT + Ord> Default for AVLTreeSetStPer<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StT + Ord> Clone for AVLTreeSetStPer<T> {
@@ -188,11 +183,14 @@ pub mod AVLTreeSetStPer {
 
     impl<T: StT + Ord> std::fmt::Display for AVLTreeSetStPer<T> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "{{{}}}", 
-                   (0..self.size())
-                   .map(|i| format!("{}", self.elements.nth(i)))
-                   .collect::<Vec<_>>()
-                   .join(", "))
+            write!(
+                f,
+                "{{{}}}",
+                (0..self.size())
+                    .map(|i| format!("{}", self.elements.nth(i)))
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            )
         }
     }
 

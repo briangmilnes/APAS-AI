@@ -27,33 +27,33 @@ pub mod MatrixChainMtEph {
     pub trait MatrixChainMtEphTrait {
         /// Create new matrix chain solver
         fn new() -> Self;
-        
+
         /// Create from matrix dimensions
         fn from_dimensions(dimensions: Vec<MatrixDim>) -> Self;
-        
+
         /// Create from dimension pairs (rows, cols)
         fn from_dim_pairs(dim_pairs: Vec<Pair<usize, usize>>) -> Self;
-        
+
         /// Compute optimal matrix chain multiplication cost using parallel dynamic programming
         /// Claude Work: O(n³) where n=number of matrices
         /// Claude Span: O(n log n) with parallel reduction
         fn optimal_cost(&mut self) -> usize;
-        
+
         /// Get a copy of the matrix dimensions (thread-safe)
         fn dimensions(&self) -> Vec<MatrixDim>;
-        
+
         /// Set matrix dimension at index
         fn set_dimension(&mut self, index: usize, dim: MatrixDim);
-        
+
         /// Update matrix dimensions
         fn update_dimension(&mut self, index: usize, rows: usize, cols: usize);
-        
+
         /// Get number of matrices
         fn num_matrices(&self) -> usize;
-        
+
         /// Clear memoization table
         fn clear_memo(&mut self);
-        
+
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
@@ -79,25 +79,21 @@ pub mod MatrixChainMtEph {
             if costs.len() == 1 {
                 return costs[0];
             }
-            
+
             let mid = costs.len() / 2;
             let left_costs = costs[..mid].to_vec();
             let right_costs = costs[mid..].to_vec();
-            
+
             let self_clone1 = self.clone();
             let self_clone2 = self.clone();
-            
-            let handle1 = thread::spawn(move || {
-                self_clone1.parallel_min_reduction(left_costs)
-            });
-            
-            let handle2 = thread::spawn(move || {
-                self_clone2.parallel_min_reduction(right_costs)
-            });
-            
+
+            let handle1 = thread::spawn(move || self_clone1.parallel_min_reduction(left_costs));
+
+            let handle2 = thread::spawn(move || self_clone2.parallel_min_reduction(right_costs));
+
             let left_min = handle1.join().unwrap();
             let right_min = handle2.join().unwrap();
-            
+
             left_min.min(right_min)
         }
 
@@ -125,7 +121,7 @@ pub mod MatrixChainMtEph {
                         left_cost + right_cost + split_cost
                     })
                     .collect();
-                
+
                 // Use parallel reduction to find minimum
                 self.parallel_min_reduction(costs)
             };
@@ -135,7 +131,7 @@ pub mod MatrixChainMtEph {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.insert((i, j), result);
             }
-            
+
             result
         }
     }
@@ -156,13 +152,14 @@ pub mod MatrixChainMtEph {
         }
 
         fn from_dim_pairs(dim_pairs: Vec<Pair<usize, usize>>) -> Self {
-            let dimensions: Vec<MatrixDim> = dim_pairs.into_iter()
+            let dimensions: Vec<MatrixDim> = dim_pairs
+                .into_iter()
                 .map(|pair| MatrixDim {
                     rows: pair.0,
                     cols: pair.1,
                 })
                 .collect();
-            
+
             Self {
                 dimensions: Arc::new(Mutex::new(dimensions)),
                 memo: Arc::new(Mutex::new(HashMap::new())),
@@ -174,17 +171,17 @@ pub mod MatrixChainMtEph {
                 let dimensions_guard = self.dimensions.lock().unwrap();
                 dimensions_guard.len()
             };
-            
+
             if dimensions_len <= 1 {
                 return 0;
             }
-            
+
             // Clear memo for fresh computation
             {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.clear();
             }
-            
+
             self.matrix_chain_rec(0, dimensions_len - 1)
         }
 
@@ -251,8 +248,11 @@ pub mod MatrixChainMtEph {
                 let dimensions_guard = self.dimensions.lock().unwrap();
                 dimensions_guard.len()
             };
-            write!(f, "MatrixChainMtEph(matrices: {}, memo_entries: {})", 
-                   dimensions_len, memo_size)
+            write!(
+                f,
+                "MatrixChainMtEph(matrices: {}, memo_entries: {})",
+                dimensions_len, memo_size
+            )
         }
     }
 
@@ -263,8 +263,8 @@ pub mod MatrixChainMtEph {
         fn into_iter(self) -> Self::IntoIter {
             // Extract Vec from Arc<Mutex<Vec>> - this consumes the Arc
             match Arc::try_unwrap(self.dimensions) {
-                Ok(mutex) => mutex.into_inner().unwrap().into_iter(),
-                Err(arc) => {
+                | Ok(mutex) => mutex.into_inner().unwrap().into_iter(),
+                | Err(arc) => {
                     let dimensions_guard = arc.lock().unwrap();
                     dimensions_guard.clone().into_iter()
                 }
@@ -293,17 +293,12 @@ pub mod MatrixChainMtEph {
     }
 
     impl Display for MatrixDim {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "{}×{}", self.rows, self.cols)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "{}×{}", self.rows, self.cols) }
     }
 
     #[allow(dead_code)]
     fn _MatrixChainMtEphLit_type_checks() {
-        let dims = vec![
-            MatrixDim { rows: 2, cols: 10 },
-            MatrixDim { rows: 10, cols: 2 }
-        ];
+        let dims = vec![MatrixDim { rows: 2, cols: 10 }, MatrixDim { rows: 10, cols: 2 }];
         let _: MatrixChainMtEphS = MatrixChainMtEphS::from_dimensions(dims);
     }
 }

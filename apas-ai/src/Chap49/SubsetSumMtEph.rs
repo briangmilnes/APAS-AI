@@ -6,9 +6,8 @@ use std::fmt::{Debug, Display, Formatter, Result};
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-use crate::{Chap18::ArraySeqMtEph::ArraySeqMtEph::*, Types::Types::*};
 use crate::ArraySeqMtEphSLit;
-
+use crate::{Chap18::ArraySeqMtEph::ArraySeqMtEph::*, Types::Types::*};
 
 pub mod SubsetSumMtEph {
     use super::*;
@@ -26,29 +25,29 @@ pub mod SubsetSumMtEph {
         fn new() -> Self
         where
             T: Default;
-        
+
         /// Create from multiset
         fn from_multiset(multiset: ArraySeqMtEphS<T>) -> Self;
-        
+
         /// Solve subset sum problem with parallel dynamic programming
         /// Claude Work: O(k*|S|) where k=target, |S|=multiset size
         /// Claude Span: O(|S|) with parallelism O(k)
         fn subset_sum(&mut self, target: i32) -> bool
         where
             T: Into<i32> + Copy + Send + Sync + 'static;
-            
+
         /// Get the multiset
         fn multiset(&self) -> &ArraySeqMtEphS<T>;
-        
+
         /// Get mutable multiset (ephemeral allows mutation)
         fn multiset_mut(&mut self) -> &mut ArraySeqMtEphS<T>;
-        
+
         /// Set element at index (ephemeral mutation)
         fn set(&mut self, index: usize, value: T);
-        
+
         /// Clear memoization table
         fn clear_memo(&mut self);
-        
+
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
@@ -70,9 +69,9 @@ pub mod SubsetSumMtEph {
             }
 
             let result = match (i, j) {
-                (_, 0) => true,  // Base case: target sum is 0
-                (0, _) => false, // Base case: no elements left, target > 0
-                (i, j) => {
+                | (_, 0) => true,  // Base case: target sum is 0
+                | (0, _) => false, // Base case: no elements left, target > 0
+                | (i, j) => {
                     let element_value: i32 = self.multiset.nth_cloned(i - 1).into();
                     if element_value > j {
                         // Element too large, skip it
@@ -81,18 +80,14 @@ pub mod SubsetSumMtEph {
                         // Parallel evaluation of both branches
                         let self_clone1 = self.clone();
                         let self_clone2 = self.clone();
-                        
-                        let handle1 = thread::spawn(move || {
-                            self_clone1.subset_sum_rec(i - 1, j - element_value)
-                        });
-                        
-                        let handle2 = thread::spawn(move || {
-                            self_clone2.subset_sum_rec(i - 1, j)
-                        });
-                        
+
+                        let handle1 = thread::spawn(move || self_clone1.subset_sum_rec(i - 1, j - element_value));
+
+                        let handle2 = thread::spawn(move || self_clone2.subset_sum_rec(i - 1, j));
+
                         let result1 = handle1.join().unwrap();
                         let result2 = handle2.join().unwrap();
-                        
+
                         result1 || result2
                     }
                 }
@@ -103,7 +98,7 @@ pub mod SubsetSumMtEph {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.insert((i, j), result);
             }
-            
+
             result
         }
     }
@@ -133,24 +128,20 @@ pub mod SubsetSumMtEph {
             if target < 0 {
                 return false;
             }
-            
+
             // Clear memo for fresh computation
             {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.clear();
             }
-            
+
             let n = self.multiset.length();
             self.subset_sum_rec(n, target)
         }
 
-        fn multiset(&self) -> &ArraySeqMtEphS<T> {
-            &self.multiset
-        }
+        fn multiset(&self) -> &ArraySeqMtEphS<T> { &self.multiset }
 
-        fn multiset_mut(&mut self) -> &mut ArraySeqMtEphS<T> {
-            &mut self.multiset
-        }
+        fn multiset_mut(&mut self) -> &mut ArraySeqMtEphS<T> { &mut self.multiset }
 
         fn set(&mut self, index: usize, value: T) {
             let _ = self.multiset.set(index, value);
@@ -171,9 +162,7 @@ pub mod SubsetSumMtEph {
     }
 
     impl<T: MtVal> PartialEq for SubsetSumMtEphS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            self.multiset == other.multiset
-        }
+        fn eq(&self, other: &Self) -> bool { self.multiset == other.multiset }
     }
 
     impl<T: MtVal> Eq for SubsetSumMtEphS<T> {}
@@ -184,8 +173,11 @@ pub mod SubsetSumMtEph {
                 let memo_guard = self.memo.lock().unwrap();
                 memo_guard.len()
             };
-            write!(f, "SubsetSumMtEph(multiset: {}, memo_entries: {})", 
-                   self.multiset, memo_size)
+            write!(
+                f,
+                "SubsetSumMtEph(multiset: {}, memo_entries: {})",
+                self.multiset, memo_size
+            )
         }
     }
 
@@ -208,4 +200,3 @@ macro_rules! SubsetSumMtEphLit {
         $crate::Chap49::SubsetSumMtEph::SubsetSumMtEph::SubsetSumMtEphS::new()
     };
 }
-

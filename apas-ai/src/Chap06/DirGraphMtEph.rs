@@ -8,9 +8,9 @@ pub mod DirGraphMtEph {
     use std::hash::Hash;
 
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::ParaPair;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use crate::ParaPair;
 
     #[derive(Clone)]
     pub struct DirGraphMtEph<V: StT + MtT + Hash + 'static> {
@@ -79,21 +79,11 @@ pub mod DirGraphMtEph {
                 A: SetLit![],
             }
         }
-        fn FromSets(V: Set<V>, A: Set<Edge<V>>) -> DirGraphMtEph<V> {
-            DirGraphMtEph { V, A }
-        }
-        fn vertices(&self) -> &Set<V> {
-            &self.V
-        }
-        fn arcs(&self) -> &Set<Edge<V>> {
-            &self.A
-        }
-        fn sizeV(&self) -> N {
-            self.V.size()
-        }
-        fn sizeA(&self) -> N {
-            self.A.size()
-        }
+        fn FromSets(V: Set<V>, A: Set<Edge<V>>) -> DirGraphMtEph<V> { DirGraphMtEph { V, A } }
+        fn vertices(&self) -> &Set<V> { &self.V }
+        fn arcs(&self) -> &Set<Edge<V>> { &self.A }
+        fn sizeV(&self) -> N { self.V.size() }
+        fn sizeA(&self) -> N { self.A.size() }
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Adjacent if there is an arc either way
@@ -104,15 +94,13 @@ pub mod DirGraphMtEph {
             }
         }
 
-        fn NG(&self, v: &V) -> Set<V> {
-            self.NPlus(v).union(&self.NMinus(v))
-        }
+        fn NG(&self, v: &V) -> Set<V> { self.NPlus(v).union(&self.NMinus(v)) }
 
         fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V> {
             // PARALLEL: map-reduce over vertices using divide-and-conquer
             let vertices: Vec<V> = u_set.iter().cloned().collect();
             let n = vertices.len();
-            
+
             if n <= 8 {
                 let mut result: Set<V> = SetLit![];
                 for u in vertices {
@@ -121,11 +109,11 @@ pub mod DirGraphMtEph {
                 }
                 return result;
             }
-            
+
             // Parallel map-reduce
             fn parallel_ng_of_vertices<V: StT + MtT + Hash + 'static>(
                 vertices: Vec<V>,
-                graph: DirGraphMtEph<V>
+                graph: DirGraphMtEph<V>,
             ) -> Set<V> {
                 let n = vertices.len();
                 if n == 0 {
@@ -134,22 +122,22 @@ pub mod DirGraphMtEph {
                 if n == 1 {
                     return graph.NG(&vertices[0]);
                 }
-                
+
                 let mid = n / 2;
                 let mut right_verts = vertices;
                 let left_verts = right_verts.split_off(mid);
-                
+
                 let graph_left = graph.clone();
                 let graph_right = graph;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_ng_of_vertices(left_verts, graph_left),
-                    move || parallel_ng_of_vertices(right_verts, graph_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_ng_of_vertices(left_verts, graph_left), move || {
+                        parallel_ng_of_vertices(right_verts, graph_right)
+                    });
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_ng_of_vertices(vertices, self.clone())
         }
 
@@ -157,7 +145,7 @@ pub mod DirGraphMtEph {
             // PARALLEL: filter arcs using divide-and-conquer
             let arcs: Vec<Edge<V>> = self.A.iter().cloned().collect();
             let n = arcs.len();
-            
+
             if n <= 8 {
                 let mut out: Set<V> = SetLit![];
                 for Edge(x, y) in arcs {
@@ -167,12 +155,9 @@ pub mod DirGraphMtEph {
                 }
                 return out;
             }
-            
+
             // Parallel divide-and-conquer
-            fn parallel_nplus<V: StT + MtT + Hash + 'static>(
-                arcs: Vec<Edge<V>>,
-                v: V
-            ) -> Set<V> {
+            fn parallel_nplus<V: StT + MtT + Hash + 'static>(arcs: Vec<Edge<V>>, v: V) -> Set<V> {
                 let n = arcs.len();
                 if n == 0 {
                     return SetLit![];
@@ -187,22 +172,22 @@ pub mod DirGraphMtEph {
                         SetLit![]
                     };
                 }
-                
+
                 let mid = n / 2;
                 let mut right_arcs = arcs;
                 let left_arcs = right_arcs.split_off(mid);
-                
+
                 let v_left = v.clone_mt();
                 let v_right = v;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_nplus(left_arcs, v_left),
-                    move || parallel_nplus(right_arcs, v_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_nplus(left_arcs, v_left), move || parallel_nplus(
+                        right_arcs, v_right
+                    ));
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_nplus(arcs, v.clone_mt())
         }
 
@@ -210,7 +195,7 @@ pub mod DirGraphMtEph {
             // PARALLEL: filter arcs using divide-and-conquer
             let arcs: Vec<Edge<V>> = self.A.iter().cloned().collect();
             let n = arcs.len();
-            
+
             if n <= 8 {
                 let mut inn: Set<V> = SetLit![];
                 for Edge(x, y) in arcs {
@@ -220,12 +205,9 @@ pub mod DirGraphMtEph {
                 }
                 return inn;
             }
-            
+
             // Parallel divide-and-conquer
-            fn parallel_nminus<V: StT + MtT + Hash + 'static>(
-                arcs: Vec<Edge<V>>,
-                v: V
-            ) -> Set<V> {
+            fn parallel_nminus<V: StT + MtT + Hash + 'static>(arcs: Vec<Edge<V>>, v: V) -> Set<V> {
                 let n = arcs.len();
                 if n == 0 {
                     return SetLit![];
@@ -240,22 +222,22 @@ pub mod DirGraphMtEph {
                         SetLit![]
                     };
                 }
-                
+
                 let mid = n / 2;
                 let mut right_arcs = arcs;
                 let left_arcs = right_arcs.split_off(mid);
-                
+
                 let v_left = v.clone_mt();
                 let v_right = v;
-                
+
                 let Pair(left_result, right_result) = ParaPair!(
                     move || parallel_nminus(left_arcs, v_left),
                     move || parallel_nminus(right_arcs, v_right)
                 );
-                
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_nminus(arcs, v.clone_mt())
         }
 
@@ -263,7 +245,7 @@ pub mod DirGraphMtEph {
             // PARALLEL: map-reduce over vertices using divide-and-conquer
             let vertices: Vec<V> = u_set.iter().cloned().collect();
             let n = vertices.len();
-            
+
             if n <= 8 {
                 let mut result: Set<V> = SetLit![];
                 for u in vertices {
@@ -272,11 +254,11 @@ pub mod DirGraphMtEph {
                 }
                 return result;
             }
-            
+
             // Parallel map-reduce
             fn parallel_nplus_of_vertices<V: StT + MtT + Hash + 'static>(
                 vertices: Vec<V>,
-                graph: DirGraphMtEph<V>
+                graph: DirGraphMtEph<V>,
             ) -> Set<V> {
                 let n = vertices.len();
                 if n == 0 {
@@ -285,22 +267,22 @@ pub mod DirGraphMtEph {
                 if n == 1 {
                     return graph.NPlus(&vertices[0]);
                 }
-                
+
                 let mid = n / 2;
                 let mut right_verts = vertices;
                 let left_verts = right_verts.split_off(mid);
-                
+
                 let graph_left = graph.clone();
                 let graph_right = graph;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_nplus_of_vertices(left_verts, graph_left),
-                    move || parallel_nplus_of_vertices(right_verts, graph_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_nplus_of_vertices(left_verts, graph_left), move || {
+                        parallel_nplus_of_vertices(right_verts, graph_right)
+                    });
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_nplus_of_vertices(vertices, self.clone())
         }
 
@@ -308,7 +290,7 @@ pub mod DirGraphMtEph {
             // PARALLEL: map-reduce over vertices using divide-and-conquer
             let vertices: Vec<V> = u_set.iter().cloned().collect();
             let n = vertices.len();
-            
+
             if n <= 8 {
                 let mut result: Set<V> = SetLit![];
                 for u in vertices {
@@ -317,11 +299,11 @@ pub mod DirGraphMtEph {
                 }
                 return result;
             }
-            
+
             // Parallel map-reduce
             fn parallel_nminus_of_vertices<V: StT + MtT + Hash + 'static>(
                 vertices: Vec<V>,
-                graph: DirGraphMtEph<V>
+                graph: DirGraphMtEph<V>,
             ) -> Set<V> {
                 let n = vertices.len();
                 if n == 0 {
@@ -330,38 +312,30 @@ pub mod DirGraphMtEph {
                 if n == 1 {
                     return graph.NMinus(&vertices[0]);
                 }
-                
+
                 let mid = n / 2;
                 let mut right_verts = vertices;
                 let left_verts = right_verts.split_off(mid);
-                
+
                 let graph_left = graph.clone();
                 let graph_right = graph;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_nminus_of_vertices(left_verts, graph_left),
-                    move || parallel_nminus_of_vertices(right_verts, graph_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_nminus_of_vertices(left_verts, graph_left), move || {
+                        parallel_nminus_of_vertices(right_verts, graph_right)
+                    });
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_nminus_of_vertices(vertices, self.clone())
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B {
-            if &e.0 == v || &e.1 == v { true } else { false }
-        }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { true } else { false } }
 
-        fn Degree(&self, v: &V) -> N {
-            self.InDegree(v) + self.OutDegree(v)
-        }
-        fn InDegree(&self, v: &V) -> N {
-            self.NMinus(v).size()
-        }
-        fn OutDegree(&self, v: &V) -> N {
-            self.NPlus(v).size()
-        }
+        fn Degree(&self, v: &V) -> N { self.InDegree(v) + self.OutDegree(v) }
+        fn InDegree(&self, v: &V) -> N { self.NMinus(v).size() }
+        fn OutDegree(&self, v: &V) -> N { self.NPlus(v).size() }
     }
 
     impl<V: StT + MtT + Hash + 'static> std::fmt::Debug for DirGraphMtEph<V> {
@@ -374,15 +348,11 @@ pub mod DirGraphMtEph {
     }
 
     impl<V: StT + MtT + Hash + 'static> std::fmt::Display for DirGraphMtEph<V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "V={} A={:?}", self.V, self.A)
-        }
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "V={} A={:?}", self.V, self.A) }
     }
 
     impl<V: StT + MtT + Hash + 'static> PartialEq for DirGraphMtEph<V> {
-        fn eq(&self, other: &Self) -> bool {
-            self.V == other.V && self.A == other.A
-        }
+        fn eq(&self, other: &Self) -> bool { self.V == other.V && self.A == other.A }
     }
     impl<V: StT + MtT + Hash + 'static> Eq for DirGraphMtEph<V> {}
 

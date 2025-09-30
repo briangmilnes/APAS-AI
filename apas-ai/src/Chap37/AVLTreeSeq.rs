@@ -88,9 +88,7 @@ pub mod AVLTreeSeq {
                 next_key: 0,
             }
         }
-        pub fn new() -> Self {
-            Self::new_root()
-        }
+        pub fn new() -> Self { Self::new_root() }
 
         pub fn update(&mut self, (index, item): (N, T)) -> &mut AVLTreeS<T> {
             let _ = <AVLTreeS<T> as AVLTreeSeq<T>>::set(self, index, item);
@@ -129,9 +127,7 @@ pub mod AVLTreeSeq {
             out
         }
 
-        pub fn iter<'a>(&'a self) -> AVLTreeSeqIter<'a, T> {
-            AVLTreeSeqIter::new(&self.root)
-        }
+        pub fn iter<'a>(&'a self) -> AVLTreeSeqIter<'a, T> { AVLTreeSeqIter::new(&self.root) }
 
         pub fn push_back(&mut self, value: T) {
             let len = self.length();
@@ -152,9 +148,7 @@ pub mod AVLTreeSeq {
             false
         }
 
-        pub fn insert_value(&mut self, value: T) {
-            self.push_back(value);
-        }
+        pub fn insert_value(&mut self, value: T) { self.push_back(value); }
 
         pub fn delete_value(&mut self, target: &T) -> bool
         where
@@ -184,9 +178,7 @@ pub mod AVLTreeSeq {
             }
         }
 
-        pub fn is_tree_empty(&self) -> bool {
-            self.length() == 0
-        }
+        pub fn is_tree_empty(&self) -> bool { self.length() == 0 }
 
         pub fn values_in_order(&self) -> Vec<T>
         where
@@ -200,24 +192,16 @@ pub mod AVLTreeSeq {
 
     impl<T: Copy + Debug> AVLTreeSeq<T> for AVLTreeS<T> {
         /// APAS: Work Θ(1), Span Θ(1).
-        fn empty() -> AVLTreeS<T> {
-            AVLTreeS::new_root()
-        }
+        fn empty() -> AVLTreeS<T> { AVLTreeS::new_root() }
 
         /// APAS: Work Θ(1), Span Θ(1).
-        fn new() -> AVLTreeS<T> {
-            AVLTreeS::new_root()
-        }
+        fn new() -> AVLTreeS<T> { AVLTreeS::new_root() }
 
         /// APAS: Work Θ(1), Span Θ(1).
-        fn length(&self) -> N {
-            size_link(&self.root)
-        }
+        fn length(&self) -> N { size_link(&self.root) }
 
         /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
-        fn nth(&self, index: N) -> &T {
-            nth_link(&self.root, index)
-        }
+        fn nth(&self, index: N) -> &T { nth_link(&self.root, index) }
 
         /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
         fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeS<T>, &'static str> {
@@ -233,13 +217,9 @@ pub mod AVLTreeSeq {
         }
 
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isEmpty(&self) -> B {
-            if self.length() == 0 { true } else { false }
-        }
+        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isSingleton(&self) -> B {
-            if self.length() == 1 { true } else { false }
-        }
+        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
 
         /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
         fn subseq_copy(&self, start: N, length: N) -> AVLTreeS<T>
@@ -336,9 +316,7 @@ pub mod AVLTreeSeq {
 
     // ---- Internal helpers ----
 
-    fn h<T: Copy + Debug>(n: &Link<T>) -> N {
-        n.as_ref().map_or(0, |b| b.height)
-    }
+    fn h<T: Copy + Debug>(n: &Link<T>) -> N { n.as_ref().map_or(0, |b| b.height) }
     fn size_link<T: Copy + Debug>(n: &Link<T>) -> N {
         if let Some(b) = n {
             1 + b.left_size + b.right_size
@@ -454,8 +432,7 @@ pub mod AVLTreeSeq {
         }
     }
 
-    fn push_inorder<T: Copy + Debug + Clone>(link: &Link<T>, out: &mut Vec<T>)
-    {
+    fn push_inorder<T: Copy + Debug + Clone>(link: &Link<T>, out: &mut Vec<T>) {
         if let Some(n) = link {
             push_inorder(&n.left, out);
             out.push(n.value);

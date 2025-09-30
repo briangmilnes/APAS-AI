@@ -28,4 +28,3 @@ fn trait_and_inherent_agree() {
         assert_eq!(FibonacciMt::fib(n), <FibonacciMt as FibonacciMtTrait>::fib(n));
     }
 }
-

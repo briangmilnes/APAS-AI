@@ -2,29 +2,35 @@
 //! Chapter 47: Hash Table Examples from Textbook
 
 pub mod HashExamples {
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Chap47::SeparateChaining::SeparateChaining::*;
-    use crate::Chap47::LinearProbing::LinearProbing::*;
     use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::LinearProbing::LinearProbing::*;
+    use crate::Chap47::SeparateChaining::SeparateChaining::*;
     use crate::Types::Types::*;
 
     /// Example 47.1: String hash function demonstration
-    pub fn example_47_1_hash_function() -> StringPositionHashFunction {
-        StringPositionHashFunction
-    }
+    pub fn example_47_1_hash_function() -> StringPositionHashFunction { StringPositionHashFunction }
 
     /// Example 47.1: Demonstrate hash function on sample strings
     pub fn example_47_1_demonstration() -> Vec<(String, N)> {
         let hash_fn = example_47_1_hash_function();
         let table_size = 5;
-        
+
         let test_strings = vec![
-            "aa".to_string(), "bb".to_string(), "cc".to_string(), 
-            "dd".to_string(), "ee".to_string(), "ff".to_string(),
-            "gg".to_string(), "hh".to_string(), "ii".to_string(), "jj".to_string()
+            "aa".to_string(),
+            "bb".to_string(),
+            "cc".to_string(),
+            "dd".to_string(),
+            "ee".to_string(),
+            "ff".to_string(),
+            "gg".to_string(),
+            "hh".to_string(),
+            "ii".to_string(),
+            "jj".to_string(),
         ];
-        
-        test_strings.into_iter()
+
+        test_strings
+            .into_iter()
             .map(|s| {
                 let hash_value = hash_fn.hash(&s, table_size);
                 (s, hash_value)
@@ -33,28 +39,32 @@ pub mod HashExamples {
     }
 
     /// Example 47.2: Separate chaining demonstration
-    pub fn example_47_2_separate_chaining() -> StringSeparateChaining<String> {
-        create_example_47_2_table()
-    }
+    pub fn example_47_2_separate_chaining() -> StringSeparateChaining<String> { create_example_47_2_table() }
 
     /// Example 47.4: Flat table probe sequence demonstration
     pub fn example_47_4_probe_sequence() -> Vec<(String, Vec<N>)> {
         let hash_fn = StringPositionHashFunction;
         let table_size = 8;
-        
+
         // Simulate probe sequences for keys from example
-        let keys = vec!["B".to_string(), "D".to_string(), "E".to_string(), "A".to_string(), "F".to_string()];
-        
+        let keys = vec![
+            "B".to_string(),
+            "D".to_string(),
+            "E".to_string(),
+            "A".to_string(),
+            "F".to_string(),
+        ];
+
         keys.into_iter()
             .map(|key| {
                 let mut probe_sequence = Vec::new();
                 let linear_probe = LinearProbingStrategy::new(hash_fn.clone());
-                
+
                 for i in 0..table_size {
                     let hash_pos = linear_probe.probe_hash(&key, i, table_size);
                     probe_sequence.push(hash_pos);
                 }
-                
+
                 (key, probe_sequence)
             })
             .collect()
@@ -63,33 +73,33 @@ pub mod HashExamples {
     /// Example 47.5: Deleted entry handling demonstration
     pub fn example_47_5_deleted_entries() -> LinearProbingHashTable<String, String, StringPositionHashFunction> {
         let mut table = LinearProbingFactory::create_string_table(8);
-        
+
         // Insert initial entries
         table = table.insert("B".to_string(), "B_value".to_string());
         table = table.insert("D".to_string(), "D_value".to_string());
         table = table.insert("E".to_string(), "E_value".to_string());
         table = table.insert("A".to_string(), "A_value".to_string());
         table = table.insert("F".to_string(), "F_value".to_string());
-        
+
         // Delete an entry to create a "Dead" slot
         let (table_after_delete, _) = table.delete(&"E".to_string());
-        
+
         table_after_delete
     }
 
     /// Example 47.6: Insertion with collision handling
     pub fn example_47_6_collision_handling() -> LinearProbingHashTable<String, String, StringPositionHashFunction> {
         let mut table = LinearProbingFactory::create_string_table(8);
-        
+
         // Insert entries that will cause collisions
         table = table.insert("B".to_string(), "B_value".to_string());
         table = table.insert("E".to_string(), "E_value".to_string());
         table = table.insert("A".to_string(), "A_value".to_string());
         table = table.insert("F".to_string(), "F_value".to_string());
-        
+
         // Insert D which will probe through occupied slots
         table = table.insert("D".to_string(), "D_value".to_string());
-        
+
         table
     }
 
@@ -116,7 +126,8 @@ Cost Analysis:
 - Resize operation costs O(n) to rehash all elements
 
 This implementation is demonstrated in our NestedHashTable module.
-        "#.to_string()
+        "#
+        .to_string()
     }
 
     /// Exercise 47.2: Table size reduction analysis
@@ -152,7 +163,8 @@ Implementation:
 - Example: grow at α > 0.75, shrink at α < 0.25
 
 This is implemented in our LoadFactorManager.
-        "#.to_string()
+        "#
+        .to_string()
     }
 
     /// Exercise 47.3: Resize operation implementation and cost analysis
@@ -187,7 +199,8 @@ Implementation Details:
 - Use appropriate load factor thresholds
 
 This is fully implemented in our SeparateChaining module.
-        "#.to_string()
+        "#
+        .to_string()
     }
 
     /// Exercise 47.6: Higher-order function implementation
@@ -227,7 +240,8 @@ Usage:
 - delete: operation returns Some(position) on matching Live
 
 This unifies the probe logic while allowing different behaviors.
-        "#.to_string()
+        "#
+        .to_string()
     }
 
     /// Exercise 47.7: Complete flat hash table implementation
@@ -264,15 +278,16 @@ Additional operations for the parametric flat hash table:
 
 All these features are implemented in our FlatHashTable module
 with support for different probing strategies.
-        "#.to_string()
+        "#
+        .to_string()
     }
 
     /// Comprehensive demonstration of all examples
     pub fn run_all_examples() -> String {
         let mut output = String::new();
-        
+
         output.push_str("=== Chapter 47 Hash Table Examples ===\n\n");
-        
+
         // Example 47.1
         output.push_str("Example 47.1 - Hash Function:\n");
         let hash_demo = example_47_1_demonstration();
@@ -280,13 +295,13 @@ with support for different probing strategies.
             output.push_str(&format!("  hash('{}') = {}\n", key, hash_val));
         }
         output.push_str("\n");
-        
+
         // Example 47.2
         output.push_str("Example 47.2 - Separate Chaining:\n");
         let sep_chain = example_47_2_separate_chaining();
         let stats = sep_chain.statistics();
         output.push_str(&format!("  {}\n\n", stats));
-        
+
         // Example 47.4
         output.push_str("Example 47.4 - Probe Sequences:\n");
         let probe_demo = example_47_4_probe_sequence();
@@ -294,12 +309,12 @@ with support for different probing strategies.
             output.push_str(&format!("  '{}': {:?}\n", key, sequence));
         }
         output.push_str("\n");
-        
+
         // Exercises
         output.push_str("Exercise Solutions:\n");
         output.push_str(&exercise_47_1_nested_implementation());
         output.push_str(&exercise_47_2_size_reduction());
-        
+
         output
     }
 }

@@ -93,12 +93,12 @@ fn test_clear_memo() {
     let s = ArraySeqStPerS::new(0, ' ');
     let t = ArraySeqStPerS::new(0, ' ');
     let dp = TopDownDPStPerS::new(s, t);
-    
+
     let mut memo = HashMap::new();
     memo.insert((1, 1), 42);
     let dp_with_memo = dp.with_memo_table(memo);
     assert_eq!(dp_with_memo.memo_size(), 1);
-    
+
     let dp_cleared = dp_with_memo.clear_memo();
     assert_eq!(dp_cleared.memo_size(), 0);
 }
@@ -128,10 +128,10 @@ fn test_partial_eq() {
     let s1 = ArraySeqStPerS::tabulate(&|i| ['a', 'b'][i], 2);
     let t1 = ArraySeqStPerS::tabulate(&|i| ['c', 'd'][i], 2);
     let dp1 = TopDownDPStPerS::new(s1, t1);
-    
+
     let s2 = ArraySeqStPerS::tabulate(&|i| ['a', 'b'][i], 2);
     let t2 = ArraySeqStPerS::tabulate(&|i| ['c', 'd'][i], 2);
     let dp2 = TopDownDPStPerS::new(s2, t2);
-    
+
     assert_eq!(dp1, dp2);
 }

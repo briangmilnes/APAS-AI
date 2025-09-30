@@ -83,9 +83,7 @@ pub mod BSTParaStEph {
             }
         }
 
-        fn join_m(left: Self, key: T, right: Self) -> Self {
-            ParamBST::join_mid(Exposed::Node(left, key, right))
-        }
+        fn join_m(left: Self, key: T, right: Self) -> Self { ParamBST::join_mid(Exposed::Node(left, key, right)) }
 
         fn min_key(tree: &Self) -> Option<T> {
             match tree.expose_internal() {
@@ -139,21 +137,13 @@ pub mod BSTParaStEph {
             }
         }
 
-        fn expose(&self) -> Exposed<T> {
-            self.expose_internal()
-        }
+        fn expose(&self) -> Exposed<T> { self.expose_internal() }
 
-        fn join_mid(exposed: Exposed<T>) -> Self {
-            ParamBST::join_mid(exposed)
-        }
+        fn join_mid(exposed: Exposed<T>) -> Self { ParamBST::join_mid(exposed) }
 
-        fn size(&self) -> N {
-            self.root.borrow().as_ref().map_or(0, |node| node.size)
-        }
+        fn size(&self) -> N { self.root.borrow().as_ref().map_or(0, |node| node.size) }
 
-        fn is_empty(&self) -> B {
-            if self.size() == 0 { true } else { false }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         fn insert(&self, key: T) {
             let (left, _, right) = ParamBST::split_inner(self, &key);
@@ -180,17 +170,11 @@ pub mod BSTParaStEph {
             }
         }
 
-        fn split(&self, key: &T) -> (Self, B, Self) {
-            ParamBST::split_inner(self, key)
-        }
+        fn split(&self, key: &T) -> (Self, B, Self) { ParamBST::split_inner(self, key) }
 
-        fn join_pair(&self, other: Self) -> Self {
-            ParamBST::join_pair_inner(self.clone(), other)
-        }
+        fn join_pair(&self, other: Self) -> Self { ParamBST::join_pair_inner(self.clone(), other) }
 
-        fn union(&self, other: &Self) -> Self {
-            ParamBST::union_inner(self, other)
-        }
+        fn union(&self, other: &Self) -> Self { ParamBST::union_inner(self, other) }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());

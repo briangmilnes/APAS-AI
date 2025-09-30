@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Multi-threaded ephemeral set implementation using AVLTreeSetStEph as backing store.
-//! 
+//!
 //! Work/Span Analysis (with extract-parallelize-rebuild pattern):
 //! - union: Work Θ(n+m), Span Θ(log(n+m)) via PARALLEL divide-and-conquer
 //! - intersection: Work Θ(n+m), Span Θ(log(n+m)) via PARALLEL divide-and-conquer
@@ -9,8 +9,8 @@
 pub mod AVLTreeSetMtEph {
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
-    use crate::Types::Types::*;
     use crate::ParaPair;
+    use crate::Types::Types::*;
     use std::fmt;
     use std::sync::{Arc, Mutex};
 
@@ -76,11 +76,11 @@ pub mod AVLTreeSetMtEph {
                 vals
             };
             // Lock released here
-            
+
             // Unconditionally parallel divide-and-conquer using ParaPair!
             fn parallel_filter<T: StTInMtT + Ord + 'static, F: Fn(&T) -> B + Send + Sync + Clone + 'static>(
                 vals: Vec<T>,
-                f: F
+                f: F,
             ) -> Vec<T> {
                 let n = vals.len();
                 if n == 0 {
@@ -89,25 +89,25 @@ pub mod AVLTreeSetMtEph {
                 if n == 1 {
                     return if f(&vals[0]) { vals } else { Vec::new() };
                 }
-                
+
                 let mid = n / 2;
                 let mut right_vals = vals;
                 let left_vals = right_vals.split_off(mid);
                 let right_vals_final = right_vals;
-                
+
                 let f_left = f.clone();
                 let f_right = f;
-                
+
                 let Pair(left_filtered, right_filtered) = ParaPair!(
                     move || parallel_filter(left_vals, f_left),
                     move || parallel_filter(right_vals_final, f_right)
                 );
-                
+
                 let mut result = left_filtered;
                 result.extend(right_filtered);
                 result
             }
-            
+
             let filtered = parallel_filter(vals, f);
             Self::from_seq(AVLTreeSeqStEphS::from_vec(filtered))
         }
@@ -119,56 +119,57 @@ pub mod AVLTreeSetMtEph {
             let (self_vals, other_vals) = {
                 let self_inner = self.inner.lock().unwrap();
                 let other_inner = other.inner.lock().unwrap();
-                
+
                 let self_seq = self_inner.to_seq();
                 let other_seq = other_inner.to_seq();
-                
+
                 let mut sv = Vec::with_capacity(self_seq.length());
                 for i in 0..self_seq.length() {
                     sv.push(self_seq.nth(i).clone());
                 }
-                
+
                 let mut ov = Vec::with_capacity(other_seq.length());
                 for i in 0..other_seq.length() {
                     ov.push(other_seq.nth(i).clone());
                 }
-                
+
                 (sv, ov)
             };
             // Locks released here
-            
+
             // Unconditionally parallel divide-and-conquer using ParaPair!
-            fn parallel_intersect<T: StTInMtT + Ord + 'static>(
-                self_vals: Vec<T>,
-                other_vals: Vec<T>
-            ) -> Vec<T> {
+            fn parallel_intersect<T: StTInMtT + Ord + 'static>(self_vals: Vec<T>, other_vals: Vec<T>) -> Vec<T> {
                 let n = self_vals.len();
                 if n == 0 {
                     return Vec::new();
                 }
                 if n == 1 {
                     let other_set = AVLTreeSetMtEph::from_seq(AVLTreeSeqStEphS::from_vec(other_vals));
-                    return if other_set.find(&self_vals[0]) { self_vals } else { Vec::new() };
+                    return if other_set.find(&self_vals[0]) {
+                        self_vals
+                    } else {
+                        Vec::new()
+                    };
                 }
-                
+
                 let mid = n / 2;
                 let mut right_self = self_vals;
                 let left_self = right_self.split_off(mid);
                 let right_self_final = right_self;
-                
+
                 let other_left = other_vals.clone();
                 let other_right = other_vals;
-                
-                let Pair(left_intersect, right_intersect) = ParaPair!(
-                    move || parallel_intersect(left_self, other_left),
-                    move || parallel_intersect(right_self_final, other_right)
-                );
-                
+
+                let Pair(left_intersect, right_intersect) =
+                    ParaPair!(move || parallel_intersect(left_self, other_left), move || {
+                        parallel_intersect(right_self_final, other_right)
+                    });
+
                 let mut result = left_intersect;
                 result.extend(right_intersect);
                 result
             }
-            
+
             let intersect = parallel_intersect(self_vals, other_vals);
             Self::from_seq(AVLTreeSeqStEphS::from_vec(intersect))
         }
@@ -187,30 +188,30 @@ pub mod AVLTreeSetMtEph {
             let (self_vals, other_vals) = {
                 let self_inner = self.inner.lock().unwrap();
                 let other_inner = other.inner.lock().unwrap();
-                
+
                 let self_seq = self_inner.to_seq();
                 let other_seq = other_inner.to_seq();
-                
+
                 let mut sv = Vec::with_capacity(self_seq.length());
                 for i in 0..self_seq.length() {
                     sv.push(self_seq.nth(i).clone());
                 }
-                
+
                 let mut ov = Vec::with_capacity(other_seq.length());
                 for i in 0..other_seq.length() {
                     ov.push(other_seq.nth(i).clone());
                 }
-                
+
                 (sv, ov)
             };
             // Locks released here
-            
+
             // Simple merge (sequential to avoid thread explosion)
             let mut merged = self_vals;
             merged.extend(other_vals);
             merged.sort();
             merged.dedup();
-            
+
             Self::from_seq(AVLTreeSeqStEphS::from_vec(merged))
         }
 
@@ -231,9 +232,7 @@ pub mod AVLTreeSetMtEph {
     }
 
     impl<T: StTInMtT + Ord + 'static> Default for AVLTreeSetMtEph<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StTInMtT + Ord + 'static> Clone for AVLTreeSetMtEph<T> {

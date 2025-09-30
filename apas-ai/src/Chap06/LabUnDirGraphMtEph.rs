@@ -9,19 +9,17 @@ pub mod LabUnDirGraphMtEph {
     use std::hash::Hash;
 
     use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::ParaPair;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use crate::ParaPair;
 
     #[derive(Clone)]
-    pub struct LabUnDirGraphMtEph<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static>
-    {
+    pub struct LabUnDirGraphMtEph<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static> {
         vertices: Set<V>,
         labeled_edges: Set<LabEdge<V, L>>,
     }
 
-    pub trait LabUnDirGraphMtEphTrait<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static>
-    {
+    pub trait LabUnDirGraphMtEphTrait<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn empty() -> Self;
@@ -57,7 +55,8 @@ pub mod LabUnDirGraphMtEph {
         fn normalize_edge(v1: V, v2: V) -> LabEdge<V, L>;
     }
 
-    impl<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static> LabUnDirGraphMtEphTrait<V, L> for LabUnDirGraphMtEph<V, L>
+    impl<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static> LabUnDirGraphMtEphTrait<V, L>
+        for LabUnDirGraphMtEph<V, L>
     {
         fn empty() -> Self {
             LabUnDirGraphMtEph {
@@ -73,13 +72,9 @@ pub mod LabUnDirGraphMtEph {
             }
         }
 
-        fn vertices(&self) -> &Set<V> {
-            &self.vertices
-        }
+        fn vertices(&self) -> &Set<V> { &self.vertices }
 
-        fn labeled_edges(&self) -> &Set<LabEdge<V, L>> {
-            &self.labeled_edges
-        }
+        fn labeled_edges(&self) -> &Set<LabEdge<V, L>> { &self.labeled_edges }
 
         fn edges(&self) -> Set<Edge<V>> {
             let mut edges = Set::empty();
@@ -89,9 +84,7 @@ pub mod LabUnDirGraphMtEph {
             edges
         }
 
-        fn add_vertex(&mut self, v: V) {
-            self.vertices.insert(v);
-        }
+        fn add_vertex(&mut self, v: V) { self.vertices.insert(v); }
 
         fn add_labeled_edge(&mut self, v1: V, v2: V, label: L) {
             self.vertices.insert(v1.clone_mt());
@@ -129,7 +122,7 @@ pub mod LabUnDirGraphMtEph {
             // PARALLEL: filter labeled edges using divide-and-conquer
             let edges: Vec<LabEdge<V, L>> = self.labeled_edges.iter().cloned().collect();
             let n = edges.len();
-            
+
             if n <= 8 {
                 let mut neighbors = Set::empty();
                 for labeled_edge in edges {
@@ -141,11 +134,11 @@ pub mod LabUnDirGraphMtEph {
                 }
                 return neighbors;
             }
-            
+
             // Parallel divide-and-conquer
             fn parallel_neighbors<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static>(
                 edges: Vec<LabEdge<V, L>>,
-                v: V
+                v: V,
             ) -> Set<V> {
                 let n = edges.len();
                 if n == 0 {
@@ -163,22 +156,22 @@ pub mod LabUnDirGraphMtEph {
                     }
                     return Set::empty();
                 }
-                
+
                 let mid = n / 2;
                 let mut right_edges = edges;
                 let left_edges = right_edges.split_off(mid);
-                
+
                 let v_left = v.clone_mt();
                 let v_right = v;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_neighbors(left_edges, v_left),
-                    move || parallel_neighbors(right_edges, v_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_neighbors(left_edges, v_left), move || {
+                        parallel_neighbors(right_edges, v_right)
+                    });
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_neighbors(edges, v.clone_mt())
         }
 
@@ -191,48 +184,33 @@ pub mod LabUnDirGraphMtEph {
     }
 
     // DirGraphStEph-compatible interface for labeled undirected graphs
-    impl<V: HashOrd + MtT, L: StTInMtT + Hash> LabUnDirGraphMtEph<V, L>
-    {
+    impl<V: HashOrd + MtT, L: StTInMtT + Hash> LabUnDirGraphMtEph<V, L> {
         /// Arc count (alias for edge count in undirected graphs)
-        pub fn sizeA(&self) -> N {
-            self.labeled_edges().size()
-        }
+        pub fn sizeA(&self) -> N { self.labeled_edges().size() }
 
         /// Arcs (alias for edges in undirected graphs)
-        pub fn arcs(&self) -> Set<LabEdge<V, L>> {
-            self.labeled_edges().clone()
-        }
+        pub fn arcs(&self) -> Set<LabEdge<V, L>> { self.labeled_edges().clone() }
 
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NPlus(&self, v: &V) -> Set<V> {
-            self.neighbors(v)
-        }
+        pub fn NPlus(&self, v: &V) -> Set<V> { self.neighbors(v) }
 
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NMinus(&self, v: &V) -> Set<V> {
-            self.neighbors(v)
-        }
+        pub fn NMinus(&self, v: &V) -> Set<V> { self.neighbors(v) }
 
         /// Degree (in undirected graphs, in-degree equals total degree)
-        pub fn InDegree(&self, v: &V) -> N {
-            self.neighbors(v).size()
-        }
+        pub fn InDegree(&self, v: &V) -> N { self.neighbors(v).size() }
 
         /// Degree (in undirected graphs, out-degree equals total degree)
-        pub fn OutDegree(&self, v: &V) -> N {
-            self.neighbors(v).size()
-        }
+        pub fn OutDegree(&self, v: &V) -> N { self.neighbors(v).size() }
     }
 
-    impl<V: HashOrd + MtT, L: StTInMtT + Hash> Display for LabUnDirGraphMtEph<V, L>
-    {
+    impl<V: HashOrd + MtT, L: StTInMtT + Hash> Display for LabUnDirGraphMtEph<V, L> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "LabUnDirGraph(V: {}, E: {})", self.vertices, self.labeled_edges)
         }
     }
 
-    impl<V: HashOrd + MtT, L: StTInMtT + Hash> Debug for LabUnDirGraphMtEph<V, L>
-    {
+    impl<V: HashOrd + MtT, L: StTInMtT + Hash> Debug for LabUnDirGraphMtEph<V, L> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(
                 f,

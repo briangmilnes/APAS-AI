@@ -13,7 +13,7 @@ pub mod PQMinStPer {
     #[derive(Clone, Debug)]
     pub struct PQMinResult<V: StT + Ord, P: StT + Ord> {
         pub visited: AVLTreeSetStPer<V>,
-        pub priorities: AVLTreeSetStPer<Pair<V, P>>, // (vertex, priority)
+        pub priorities: AVLTreeSetStPer<Pair<V, P>>,     // (vertex, priority)
         pub parent: Option<AVLTreeSetStPer<Pair<V, V>>>, // (child, parent)
     }
 
@@ -38,12 +38,8 @@ pub mod PQMinStPer {
         }
     }
 
-    impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> PriorityFn<V, P>
-        for ClosurePriority<V, P, F>
-    {
-        fn priority(&self, v: &V) -> P {
-            (self.f)(v)
-        }
+    impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> PriorityFn<V, P> for ClosurePriority<V, P, F> {
+        fn priority(&self, v: &V) -> P { (self.f)(v) }
     }
 
     pub trait PQMinStPerTrait<V: StT + Ord, P: StT + Ord> {
@@ -56,11 +52,7 @@ pub mod PQMinStPer {
             PF: PriorityFn<V, P>;
 
         /// Priority Queue Search from multiple sources.
-        fn pq_min_multi<G, PF>(
-            graph: &G,
-            sources: AVLTreeSetStPer<V>,
-            priority_fn: &PF,
-        ) -> PQMinResult<V, P>
+        fn pq_min_multi<G, PF>(graph: &G, sources: AVLTreeSetStPer<V>, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>,
             PF: PriorityFn<V, P>;
@@ -78,11 +70,7 @@ pub mod PQMinStPer {
             Self::pq_min_multi(graph, sources, priority_fn)
         }
 
-        fn pq_min_multi<G, PF>(
-            graph: &G,
-            sources: AVLTreeSetStPer<V>,
-            priority_fn: &PF,
-        ) -> PQMinResult<V, P>
+        fn pq_min_multi<G, PF>(graph: &G, sources: AVLTreeSetStPer<V>, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>,
             PF: PriorityFn<V, P>,
@@ -132,12 +120,8 @@ pub mod PQMinStPer {
                         let neighbor = neighbors_seq.nth(i);
                         if !visited_new.find(neighbor) {
                             let neighbor_p = priority_fn.priority(neighbor);
-                            let neighbor_entry = Pair(
-                                Pair(neighbor_p.clone(), neighbor.clone()),
-                                neighbor.clone(),
-                            );
-                            frontier_updated = frontier_updated
-                                .union(&AVLTreeSetStPer::singleton(neighbor_entry));
+                            let neighbor_entry = Pair(Pair(neighbor_p.clone(), neighbor.clone()), neighbor.clone());
+                            frontier_updated = frontier_updated.union(&AVLTreeSetStPer::singleton(neighbor_entry));
                         }
                     }
 
@@ -149,8 +133,7 @@ pub mod PQMinStPer {
                     for i in 0..visited_seq.length() {
                         let v = visited_seq.nth(i);
                         let p = priority_fn.priority(v);
-                        priorities =
-                            priorities.union(&AVLTreeSetStPer::singleton(Pair(v.clone(), p)));
+                        priorities = priorities.union(&AVLTreeSetStPer::singleton(Pair(v.clone(), p)));
                     }
                     (visited, priorities)
                 }
@@ -163,16 +146,10 @@ pub mod PQMinStPer {
                 let v = sources_seq.nth(i);
                 let p = priority_fn.priority(v);
                 let entry = Pair(Pair(p.clone(), v.clone()), v.clone());
-                initial_frontier =
-                    initial_frontier.union(&AVLTreeSetStPer::singleton(entry));
+                initial_frontier = initial_frontier.union(&AVLTreeSetStPer::singleton(entry));
             }
 
-            let (visited, priorities) = explore(
-                graph,
-                priority_fn,
-                AVLTreeSetStPer::empty(),
-                initial_frontier,
-            );
+            let (visited, priorities) = explore(graph, priority_fn, AVLTreeSetStPer::empty(), initial_frontier);
 
             PQMinResult {
                 visited,

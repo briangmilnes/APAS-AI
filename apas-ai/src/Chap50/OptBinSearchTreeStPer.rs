@@ -4,11 +4,7 @@
 use std::collections::HashMap;
 use std::fmt::{Debug, Display, Formatter, Result};
 
-use crate::{
-    Chap50::Probability::Probability,
-    Types::Types::*,
-    prob,
-};
+use crate::{Chap50::Probability::Probability, Types::Types::*, prob};
 
 pub mod OptBinSearchTreeStPer {
     use super::*;
@@ -31,24 +27,24 @@ pub mod OptBinSearchTreeStPer {
     pub trait OBSTStPerTrait<T: StT> {
         /// Create new optimal BST solver
         fn new() -> Self;
-        
+
         /// Create from keys and probabilities
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self;
-        
+
         /// Create from key-probability pairs
         fn from_key_probs(key_probs: Vec<KeyProb<T>>) -> Self;
-        
+
         /// Compute optimal BST cost using dynamic programming
         /// Claude Work: O(n³) where n=number of keys
         /// Claude Span: O(n²)
         fn optimal_cost(&self) -> Probability;
-        
+
         /// Get the keys with probabilities
         fn keys(&self) -> &Vec<KeyProb<T>>;
-        
+
         /// Get number of keys
         fn num_keys(&self) -> usize;
-        
+
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
@@ -70,7 +66,7 @@ pub mod OptBinSearchTreeStPer {
                 let prob_sum: Probability = (0..l)
                     .map(|k| self.keys[i + k].prob)
                     .fold(Probability::zero(), |acc, p| acc + p);
-                
+
                 // Try each key as root and find minimum cost
                 let min_cost = (0..l)
                     .map(|k| {
@@ -79,7 +75,7 @@ pub mod OptBinSearchTreeStPer {
                         left_cost + right_cost
                     })
                     .fold(Probability::infinity(), std::cmp::min);
-                
+
                 prob_sum + min_cost
             };
 
@@ -98,10 +94,12 @@ pub mod OptBinSearchTreeStPer {
         }
 
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self {
-            let key_probs = keys.into_iter().zip(probs.into_iter())
+            let key_probs = keys
+                .into_iter()
+                .zip(probs.into_iter())
                 .map(|(key, prob)| KeyProb { key, prob })
                 .collect();
-            
+
             Self {
                 keys: key_probs,
                 memo: HashMap::new(),
@@ -119,32 +117,30 @@ pub mod OptBinSearchTreeStPer {
             if self.keys.is_empty() {
                 return Probability::zero();
             }
-            
+
             // Create mutable copy for memoization
             let mut solver = self.clone();
             solver.memo.clear(); // Fresh memo for each query
-            
+
             let n = solver.keys.len();
             solver.obst_rec(0, n)
         }
 
-        fn keys(&self) -> &Vec<KeyProb<T>> {
-            &self.keys
-        }
+        fn keys(&self) -> &Vec<KeyProb<T>> { &self.keys }
 
-        fn num_keys(&self) -> usize {
-            self.keys.len()
-        }
+        fn num_keys(&self) -> usize { self.keys.len() }
 
-        fn memo_size(&self) -> usize {
-            self.memo.len()
-        }
+        fn memo_size(&self) -> usize { self.memo.len() }
     }
 
     impl<T: StT> Display for OBSTStPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "OBSTStPer(keys: {}, memo_entries: {})", 
-                   self.keys.len(), self.memo.len())
+            write!(
+                f,
+                "OBSTStPer(keys: {}, memo_entries: {})",
+                self.keys.len(),
+                self.memo.len()
+            )
         }
     }
 
@@ -152,24 +148,18 @@ pub mod OptBinSearchTreeStPer {
         type Item = KeyProb<T>;
         type IntoIter = std::vec::IntoIter<KeyProb<T>>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.keys.into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.keys.into_iter() }
     }
 
     impl<'a, T: StT> IntoIterator for &'a OBSTStPerS<T> {
         type Item = KeyProb<T>;
         type IntoIter = std::iter::Cloned<std::slice::Iter<'a, KeyProb<T>>>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.keys.iter().cloned()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.keys.iter().cloned() }
     }
 
     impl<T: StT> Display for KeyProb<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "({}: {:.3})", self.key, self.prob)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "({}: {:.3})", self.key, self.prob) }
     }
 
     impl<T: StT> Eq for KeyProb<T> {}

@@ -10,8 +10,8 @@ pub mod WeightedUnDirGraphMtEphFloat {
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
-    use crate::Types::Types::*;
     use crate::ParaPair;
+    use crate::Types::Types::*;
 
     /// Weighted undirected graph with floating-point weights (multi-threaded, type alias)
     pub type WeightedUnDirGraphMtEphFloat<V> = LabUnDirGraphMtEph<V, OrderedF64>;
@@ -67,7 +67,7 @@ pub mod WeightedUnDirGraphMtEphFloat {
             // PARALLEL: filter weighted edges using divide-and-conquer
             let edges: Vec<LabEdge<V, OrderedF64>> = self.labeled_edges().iter().cloned().collect();
             let n = edges.len();
-            
+
             if n <= 8 {
                 let mut neighbors = Set::empty();
                 for labeled_edge in edges {
@@ -79,11 +79,11 @@ pub mod WeightedUnDirGraphMtEphFloat {
                 }
                 return neighbors;
             }
-            
+
             // Parallel divide-and-conquer
             fn parallel_neighbors<V: HashOrd + MtT + 'static>(
                 edges: Vec<LabEdge<V, OrderedF64>>,
-                v: V
+                v: V,
             ) -> Set<(V, OrderedFloat<f64>)> {
                 let n = edges.len();
                 if n == 0 {
@@ -101,22 +101,22 @@ pub mod WeightedUnDirGraphMtEphFloat {
                     }
                     return Set::empty();
                 }
-                
+
                 let mid = n / 2;
                 let mut right_edges = edges;
                 let left_edges = right_edges.split_off(mid);
-                
+
                 let v_left = v.clone_mt();
                 let v_right = v;
-                
-                let Pair(left_result, right_result) = ParaPair!(
-                    move || parallel_neighbors(left_edges, v_left),
-                    move || parallel_neighbors(right_edges, v_right)
-                );
-                
+
+                let Pair(left_result, right_result) =
+                    ParaPair!(move || parallel_neighbors(left_edges, v_left), move || {
+                        parallel_neighbors(right_edges, v_right)
+                    });
+
                 left_result.union(&right_result)
             }
-            
+
             parallel_neighbors(edges, v.clone_mt())
         }
 
@@ -131,9 +131,7 @@ pub mod WeightedUnDirGraphMtEphFloat {
         }
 
         /// Get the degree of a vertex (number of incident edges)
-        pub fn vertex_degree(&self, v: &V) -> usize {
-            self.neighbors(v).size()
-        }
+        pub fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
     }
 
     #[macro_export]

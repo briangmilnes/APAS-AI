@@ -95,9 +95,9 @@ pub mod Chap36 {
 
 pub mod Chap37 {
     pub mod AVLTreeSeq;
+    pub mod AVLTreeSeqMtPer;
     pub mod AVLTreeSeqStEph;
     pub mod AVLTreeSeqStPer;
-    pub mod AVLTreeSeqMtPer;
     pub mod BSTAVLMtEph;
     pub mod BSTAVLStEph;
     pub mod BSTBBAlphaMtEph;
@@ -134,35 +134,34 @@ pub mod Chap40 {
 }
 
 pub mod Chap41 {
+    pub mod AVLTreeSetMtEph;
+    pub mod AVLTreeSetMtPer;
     pub mod AVLTreeSetStEph;
     pub mod AVLTreeSetStPer;
-    pub mod AVLTreeSetMtPer;
-    pub mod AVLTreeSetMtEph;
     pub mod ArraySetEnumMtEph;
     pub mod ArraySetStEph;
     pub mod Example41_3;
 }
 
-
 pub mod Chap42Claude {
-    pub mod TableStPer;
-    pub mod TableStEph;
-    pub mod TableMtEph;
     pub mod Example42_1;
+    pub mod TableMtEph;
+    pub mod TableStEph;
+    pub mod TableStPer;
 }
 
 pub mod Chap43Claude {
-    pub mod OrderedSetStPer;
-    pub mod OrderedSetStEph;
+    pub mod AugOrderedTableMtEph;
+    pub mod AugOrderedTableStEph;
+    pub mod AugOrderedTableStPer;
+    pub mod Example43_1;
     pub mod OrderedSetMtEph;
-    pub mod OrderedTableStPer;
+    pub mod OrderedSetStEph;
+    pub mod OrderedSetStPer;
+    pub mod OrderedTableMtEph;
     pub mod OrderedTableMtPer;
     pub mod OrderedTableStEph;
-    pub mod OrderedTableMtEph;
-    pub mod AugOrderedTableStPer;
-    pub mod AugOrderedTableStEph;
-    pub mod AugOrderedTableMtEph;
-    pub mod Example43_1;
+    pub mod OrderedTableStPer;
 }
 
 pub mod Chap44 {
@@ -171,90 +170,89 @@ pub mod Chap44 {
 }
 
 pub mod Chap45 {
-    pub mod UnsortedListPQ;
-    pub mod SortedListPQ;
     pub mod BalancedTreePQ;
     pub mod BinaryHeapPQ;
-    pub mod LeftistHeapPQ;
     pub mod HeapsortExample;
+    pub mod LeftistHeapPQ;
+    pub mod SortedListPQ;
+    pub mod UnsortedListPQ;
 }
 
 pub mod Chap47 {
-    pub mod HashFunctionTraits;
-    pub mod NestedHashTable;
-    pub mod SeparateChaining;
-    pub mod FlatHashTable;
-    pub mod LinearProbing;
-    pub mod QuadraticProbing;
-    pub mod DoubleHashing;
-    pub mod HashExamples;
+    pub mod AdvancedDoubleHashing;
     pub mod AdvancedLinearProbing;
     pub mod AdvancedQuadraticProbing;
-    pub mod AdvancedDoubleHashing;
     pub mod ClusteringAnalysis;
+    pub mod DoubleHashing;
+    pub mod FlatHashTable;
+    pub mod HashExamples;
+    pub mod HashFunctionTraits;
+    pub mod LinearProbing;
+    pub mod NestedHashTable;
     pub mod ProbeSequenceExamples;
+    pub mod QuadraticProbing;
+    pub mod SeparateChaining;
 }
 
 pub mod Chap49 {
-    pub mod SubsetSumStPer;
-    pub mod SubsetSumStEph;
-    pub mod SubsetSumMtPer;
-    pub mod SubsetSumMtEph;
-    pub mod MinEditDistStPer;
-    pub mod MinEditDistStEph;
-    pub mod MinEditDistMtPer;
     pub mod MinEditDistMtEph;
+    pub mod MinEditDistMtPer;
+    pub mod MinEditDistStEph;
+    pub mod MinEditDistStPer;
+    pub mod SubsetSumMtEph;
+    pub mod SubsetSumMtPer;
+    pub mod SubsetSumStEph;
+    pub mod SubsetSumStPer;
 }
 
-    pub mod Chap50 {
-        pub mod Probability;
-        pub mod OptBinSearchTreeStPer;
-        pub mod OptBinSearchTreeStEph;
-        pub mod OptBinSearchTreeMtPer;
-        pub mod OptBinSearchTreeMtEph;
-        pub mod MatrixChainStPer;
-        pub mod MatrixChainStEph;
-        pub mod MatrixChainMtPer;
-        pub mod MatrixChainMtEph;
-    }
+pub mod Chap50 {
+    pub mod MatrixChainMtEph;
+    pub mod MatrixChainMtPer;
+    pub mod MatrixChainStEph;
+    pub mod MatrixChainStPer;
+    pub mod OptBinSearchTreeMtEph;
+    pub mod OptBinSearchTreeMtPer;
+    pub mod OptBinSearchTreeStEph;
+    pub mod OptBinSearchTreeStPer;
+    pub mod Probability;
+}
 
 pub mod Chap51 {
-    pub mod BottomUpDPStPer;
-    pub mod BottomUpDPStEph;
-    pub mod BottomUpDPMtPer;
     pub mod BottomUpDPMtEph;
-    pub mod TopDownDPStPer;
-    pub mod TopDownDPStEph;
-    pub mod TopDownDPMtPer;
+    pub mod BottomUpDPMtPer;
+    pub mod BottomUpDPStEph;
+    pub mod BottomUpDPStPer;
     pub mod TopDownDPMtEph;
+    pub mod TopDownDPMtPer;
+    pub mod TopDownDPStEph;
+    pub mod TopDownDPStPer;
 }
 
 pub mod Chap52 {
-    pub mod EdgeSetGraphStPer;
-    pub mod EdgeSetGraphStEph;
     pub mod EdgeSetGraphMtPer;
+    pub mod EdgeSetGraphStEph;
+    pub mod EdgeSetGraphStPer;
     // pub mod EdgeSetGraphMtEph;
-    pub mod AdjTableGraphStPer;
-    pub mod AdjTableGraphStEph;
     pub mod AdjTableGraphMtPer;
+    pub mod AdjTableGraphStEph;
+    pub mod AdjTableGraphStPer;
     // pub mod AdjTableGraphMtEph;
-    pub mod AdjSeqGraphStPer;
     pub mod AdjSeqGraphStEph;
+    pub mod AdjSeqGraphStPer;
     // pub mod AdjSeqGraphMtPer; // API mismatch - ArraySeqMtPerS lacks full interface
     // pub mod AdjSeqGraphMtEph; // API mismatch - ArraySeqMtEphS lacks full interface
-    pub mod AdjMatrixGraphStPer;
     pub mod AdjMatrixGraphStEph;
+    pub mod AdjMatrixGraphStPer;
     // pub mod AdjMatrixGraphMtPer; // API mismatch - ArraySeqMtPerS lacks full interface
     // pub mod AdjMatrixGraphMtEph; // API mismatch - ArraySeqMtEphS lacks full interface
 }
 
 pub mod Chap53 {
-    pub mod GraphSearchStPer;
-    pub mod GraphSearchStEph;
     pub mod GraphSearchMtPer;
-    pub mod PQMinStPer;
-    pub mod PQMinStEph;
-    pub mod PQMinMtPer;
+    pub mod GraphSearchStEph;
+    pub mod GraphSearchStPer;
     pub mod PQMinMtEph;
+    pub mod PQMinMtPer;
+    pub mod PQMinStEph;
+    pub mod PQMinStPer;
 }
-

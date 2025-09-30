@@ -27,36 +27,36 @@ pub mod MatrixChainStEph {
     pub trait MatrixChainStEphTrait {
         /// Create new matrix chain solver
         fn new() -> Self;
-        
+
         /// Create from matrix dimensions
         fn from_dimensions(dimensions: Vec<MatrixDim>) -> Self;
-        
+
         /// Create from dimension pairs (rows, cols)
         fn from_dim_pairs(dim_pairs: Vec<Pair<usize, usize>>) -> Self;
-        
+
         /// Compute optimal matrix chain multiplication cost using dynamic programming
         /// Claude Work: O(n³) where n=number of matrices
         /// Claude Span: O(n²)
         fn optimal_cost(&mut self) -> usize;
-        
+
         /// Get the matrix dimensions
         fn dimensions(&self) -> &Vec<MatrixDim>;
-        
+
         /// Get mutable dimensions (ephemeral allows mutation)
         fn dimensions_mut(&mut self) -> &mut Vec<MatrixDim>;
-        
+
         /// Set matrix dimension at index
         fn set_dimension(&mut self, index: usize, dim: MatrixDim);
-        
+
         /// Update matrix dimensions
         fn update_dimension(&mut self, index: usize, rows: usize, cols: usize);
-        
+
         /// Get number of matrices
         fn num_matrices(&self) -> usize;
-        
+
         /// Clear memoization table
         fn clear_memo(&mut self);
-        
+
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
@@ -117,13 +117,14 @@ pub mod MatrixChainStEph {
         }
 
         fn from_dim_pairs(dim_pairs: Vec<Pair<usize, usize>>) -> Self {
-            let dimensions = dim_pairs.into_iter()
+            let dimensions = dim_pairs
+                .into_iter()
                 .map(|pair| MatrixDim {
                     rows: pair.0,
                     cols: pair.1,
                 })
                 .collect();
-            
+
             Self {
                 dimensions,
                 memo: HashMap::new(),
@@ -134,21 +135,17 @@ pub mod MatrixChainStEph {
             if self.dimensions.len() <= 1 {
                 return 0;
             }
-            
+
             // Clear memo for fresh computation
             self.memo.clear();
-            
+
             let n = self.dimensions.len();
             self.matrix_chain_rec(0, n - 1)
         }
 
-        fn dimensions(&self) -> &Vec<MatrixDim> {
-            &self.dimensions
-        }
+        fn dimensions(&self) -> &Vec<MatrixDim> { &self.dimensions }
 
-        fn dimensions_mut(&mut self) -> &mut Vec<MatrixDim> {
-            &mut self.dimensions
-        }
+        fn dimensions_mut(&mut self) -> &mut Vec<MatrixDim> { &mut self.dimensions }
 
         fn set_dimension(&mut self, index: usize, dim: MatrixDim) {
             if index < self.dimensions.len() {
@@ -167,23 +164,21 @@ pub mod MatrixChainStEph {
             self.memo.clear();
         }
 
-        fn num_matrices(&self) -> usize {
-            self.dimensions.len()
-        }
+        fn num_matrices(&self) -> usize { self.dimensions.len() }
 
-        fn clear_memo(&mut self) {
-            self.memo.clear();
-        }
+        fn clear_memo(&mut self) { self.memo.clear(); }
 
-        fn memo_size(&self) -> usize {
-            self.memo.len()
-        }
+        fn memo_size(&self) -> usize { self.memo.len() }
     }
 
     impl Display for MatrixChainStEphS {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "MatrixChainStEph(matrices: {}, memo_entries: {})", 
-                   self.dimensions.len(), self.memo.len())
+            write!(
+                f,
+                "MatrixChainStEph(matrices: {}, memo_entries: {})",
+                self.dimensions.len(),
+                self.memo.len()
+            )
         }
     }
 
@@ -191,41 +186,30 @@ pub mod MatrixChainStEph {
         type Item = MatrixDim;
         type IntoIter = std::vec::IntoIter<MatrixDim>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.dimensions.into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.dimensions.into_iter() }
     }
 
     impl<'a> IntoIterator for &'a MatrixChainStEphS {
         type Item = MatrixDim;
         type IntoIter = std::iter::Cloned<std::slice::Iter<'a, MatrixDim>>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.dimensions.iter().cloned()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.dimensions.iter().cloned() }
     }
 
     impl<'a> IntoIterator for &'a mut MatrixChainStEphS {
         type Item = MatrixDim;
         type IntoIter = std::iter::Cloned<std::slice::Iter<'a, MatrixDim>>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.dimensions.iter().cloned()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.dimensions.iter().cloned() }
     }
 
     impl Display for MatrixDim {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "{}×{}", self.rows, self.cols)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "{}×{}", self.rows, self.cols) }
     }
 
     #[allow(dead_code)]
     fn _MatrixChainStEphLit_type_checks() {
-        let dims = vec![
-            MatrixDim { rows: 2, cols: 10 },
-            MatrixDim { rows: 10, cols: 2 }
-        ];
+        let dims = vec![MatrixDim { rows: 2, cols: 10 }, MatrixDim { rows: 10, cols: 2 }];
         let _: MatrixChainStEphS = MatrixChainStEphS::from_dimensions(dims);
     }
 }

@@ -4,9 +4,8 @@
 use std::collections::HashMap;
 use std::fmt::{Debug, Display, Formatter, Result};
 
-use crate::{Chap18::ArraySeqStPer::ArraySeqStPer::*, Types::Types::*};
 use crate::ArraySeqStPerS;
-
+use crate::{Chap18::ArraySeqStPer::ArraySeqStPer::*, Types::Types::*};
 
 pub mod MinEditDistStPer {
     use super::*;
@@ -25,21 +24,21 @@ pub mod MinEditDistStPer {
         fn new() -> Self
         where
             T: Default;
-        
+
         /// Create from source and target sequences
         fn from_sequences(source: ArraySeqStPerS<T>, target: ArraySeqStPerS<T>) -> Self;
-        
+
         /// Compute minimum edit distance between sequences
         /// Claude Work: O(|S|*|T|) where |S|=source length, |T|=target length
         /// Claude Span: O(|S|+|T|)
         fn min_edit_distance(&self) -> usize;
-        
+
         /// Get the source sequence
         fn source(&self) -> &ArraySeqStPerS<T>;
-        
+
         /// Get the target sequence
         fn target(&self) -> &ArraySeqStPerS<T>;
-        
+
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
@@ -55,12 +54,12 @@ pub mod MinEditDistStPer {
             }
 
             let result = match (i, j) {
-                (i, 0) => i,  // Base case: need i deletions
-                (0, j) => j,  // Base case: need j insertions
-                (i, j) => {
+                | (i, 0) => i, // Base case: need i deletions
+                | (0, j) => j, // Base case: need j insertions
+                | (i, j) => {
                     let source_char = self.source.nth(i - 1);
                     let target_char = self.target.nth(j - 1);
-                    
+
                     if source_char == target_char {
                         // Characters match, no edit needed
                         self.min_edit_distance_rec(i - 1, j - 1)
@@ -68,7 +67,7 @@ pub mod MinEditDistStPer {
                         // Characters don't match, try both operations
                         let delete_cost = self.min_edit_distance_rec(i - 1, j);
                         let insert_cost = self.min_edit_distance_rec(i, j - 1);
-                        
+
                         1 + std::cmp::min(delete_cost, insert_cost)
                     }
                 }
@@ -104,30 +103,29 @@ pub mod MinEditDistStPer {
             // Create mutable copy for memoization
             let mut solver = self.clone();
             solver.memo.clear(); // Fresh memo for each query
-            
+
             let source_len = solver.source.length();
             let target_len = solver.target.length();
-            
+
             solver.min_edit_distance_rec(source_len, target_len)
         }
 
-        fn source(&self) -> &ArraySeqStPerS<T> {
-            &self.source
-        }
+        fn source(&self) -> &ArraySeqStPerS<T> { &self.source }
 
-        fn target(&self) -> &ArraySeqStPerS<T> {
-            &self.target
-        }
+        fn target(&self) -> &ArraySeqStPerS<T> { &self.target }
 
-        fn memo_size(&self) -> usize {
-            self.memo.len()
-        }
+        fn memo_size(&self) -> usize { self.memo.len() }
     }
 
     impl<T: StT> Display for MinEditDistStPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "MinEditDistStPer(source: {}, target: {}, memo_entries: {})", 
-                   self.source, self.target, self.memo.len())
+            write!(
+                f,
+                "MinEditDistStPer(source: {}, target: {}, memo_entries: {})",
+                self.source,
+                self.target,
+                self.memo.len()
+            )
         }
     }
 
@@ -136,13 +134,16 @@ pub mod MinEditDistStPer {
         type IntoIter = std::iter::Map<
             std::iter::Zip<
                 <ArraySeqStPerS<T> as IntoIterator>::IntoIter,
-                <ArraySeqStPerS<T> as IntoIterator>::IntoIter
+                <ArraySeqStPerS<T> as IntoIterator>::IntoIter,
             >,
-            fn((T, T)) -> Pair<T, T>
+            fn((T, T)) -> Pair<T, T>,
         >;
 
         fn into_iter(self) -> Self::IntoIter {
-            self.source.into_iter().zip(self.target.into_iter()).map(|(a, b)| Pair(a, b))
+            self.source
+                .into_iter()
+                .zip(self.target.into_iter())
+                .map(|(a, b)| Pair(a, b))
         }
     }
 
@@ -151,13 +152,17 @@ pub mod MinEditDistStPer {
         type IntoIter = std::iter::Map<
             std::iter::Zip<
                 <ArraySeqStPerS<T> as IntoIterator>::IntoIter,
-                <ArraySeqStPerS<T> as IntoIterator>::IntoIter
+                <ArraySeqStPerS<T> as IntoIterator>::IntoIter,
             >,
-            fn((T, T)) -> Pair<T, T>
+            fn((T, T)) -> Pair<T, T>,
         >;
 
         fn into_iter(self) -> Self::IntoIter {
-            self.source.clone().into_iter().zip(self.target.clone().into_iter()).map(|(a, b)| Pair(a, b))
+            self.source
+                .clone()
+                .into_iter()
+                .zip(self.target.clone().into_iter())
+                .map(|(a, b)| Pair(a, b))
         }
     }
 
@@ -181,4 +186,3 @@ macro_rules! MinEditDistStPerLit {
         $crate::Chap49::MinEditDistStPer::MinEditDistStPer::MinEditDistStPerS::new()
     };
 }
-

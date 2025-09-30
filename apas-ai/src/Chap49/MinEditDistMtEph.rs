@@ -6,9 +6,8 @@ use std::fmt::{Debug, Display, Formatter, Result};
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-use crate::{Chap18::ArraySeqMtEph::ArraySeqMtEph::*, Types::Types::*};
 use crate::ArraySeqMtEphSLit;
-
+use crate::{Chap18::ArraySeqMtEph::ArraySeqMtEph::*, Types::Types::*};
 
 pub mod MinEditDistMtEph {
     use super::*;
@@ -27,38 +26,38 @@ pub mod MinEditDistMtEph {
         fn new() -> Self
         where
             T: Default;
-        
+
         /// Create from source and target sequences
         fn from_sequences(source: ArraySeqMtEphS<T>, target: ArraySeqMtEphS<T>) -> Self;
-        
+
         /// Compute minimum edit distance with parallel dynamic programming
         /// Claude Work: O(|S|*|T|) where |S|=source length, |T|=target length
         /// Claude Span: O(|S|+|T|) with parallelism O(min(|S|,|T|))
         fn min_edit_distance(&mut self) -> usize
         where
             T: Send + Sync + 'static;
-            
+
         /// Get the source sequence
         fn source(&self) -> &ArraySeqMtEphS<T>;
-        
+
         /// Get the target sequence
         fn target(&self) -> &ArraySeqMtEphS<T>;
-        
+
         /// Get mutable source sequence (ephemeral allows mutation)
         fn source_mut(&mut self) -> &mut ArraySeqMtEphS<T>;
-        
+
         /// Get mutable target sequence (ephemeral allows mutation)
         fn target_mut(&mut self) -> &mut ArraySeqMtEphS<T>;
-        
+
         /// Set element in source sequence
         fn set_source(&mut self, index: usize, value: T);
-        
+
         /// Set element in target sequence
         fn set_target(&mut self, index: usize, value: T);
-        
+
         /// Clear memoization table
         fn clear_memo(&mut self);
-        
+
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
@@ -80,12 +79,12 @@ pub mod MinEditDistMtEph {
             }
 
             let result = match (i, j) {
-                (i, 0) => i,  // Base case: need i deletions
-                (0, j) => j,  // Base case: need j insertions
-                (i, j) => {
+                | (i, 0) => i, // Base case: need i deletions
+                | (0, j) => j, // Base case: need j insertions
+                | (i, j) => {
                     let source_char = self.source.nth_cloned(i - 1);
                     let target_char = self.target.nth_cloned(j - 1);
-                    
+
                     if source_char == target_char {
                         // Characters match, no edit needed
                         self.min_edit_distance_rec(i - 1, j - 1)
@@ -93,18 +92,14 @@ pub mod MinEditDistMtEph {
                         // Parallel evaluation of both operations
                         let self_clone1 = self.clone();
                         let self_clone2 = self.clone();
-                        
-                        let handle1 = thread::spawn(move || {
-                            self_clone1.min_edit_distance_rec(i - 1, j)
-                        });
-                        
-                        let handle2 = thread::spawn(move || {
-                            self_clone2.min_edit_distance_rec(i, j - 1)
-                        });
-                        
+
+                        let handle1 = thread::spawn(move || self_clone1.min_edit_distance_rec(i - 1, j));
+
+                        let handle2 = thread::spawn(move || self_clone2.min_edit_distance_rec(i, j - 1));
+
                         let delete_cost = handle1.join().unwrap();
                         let insert_cost = handle2.join().unwrap();
-                        
+
                         1 + std::cmp::min(delete_cost, insert_cost)
                     }
                 }
@@ -115,7 +110,7 @@ pub mod MinEditDistMtEph {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.insert((i, j), result);
             }
-            
+
             result
         }
     }
@@ -149,28 +144,20 @@ pub mod MinEditDistMtEph {
                 let mut memo_guard = self.memo.lock().unwrap();
                 memo_guard.clear();
             }
-            
+
             let source_len = self.source.length();
             let target_len = self.target.length();
-            
+
             self.min_edit_distance_rec(source_len, target_len)
         }
 
-        fn source(&self) -> &ArraySeqMtEphS<T> {
-            &self.source
-        }
+        fn source(&self) -> &ArraySeqMtEphS<T> { &self.source }
 
-        fn target(&self) -> &ArraySeqMtEphS<T> {
-            &self.target
-        }
+        fn target(&self) -> &ArraySeqMtEphS<T> { &self.target }
 
-        fn source_mut(&mut self) -> &mut ArraySeqMtEphS<T> {
-            &mut self.source
-        }
+        fn source_mut(&mut self) -> &mut ArraySeqMtEphS<T> { &mut self.source }
 
-        fn target_mut(&mut self) -> &mut ArraySeqMtEphS<T> {
-            &mut self.target
-        }
+        fn target_mut(&mut self) -> &mut ArraySeqMtEphS<T> { &mut self.target }
 
         fn set_source(&mut self, index: usize, value: T) {
             let _ = self.source.set(index, value);
@@ -198,9 +185,7 @@ pub mod MinEditDistMtEph {
     }
 
     impl<T: MtVal> PartialEq for MinEditDistMtEphS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            self.source == other.source && self.target == other.target
-        }
+        fn eq(&self, other: &Self) -> bool { self.source == other.source && self.target == other.target }
     }
 
     impl<T: MtVal> Eq for MinEditDistMtEphS<T> {}
@@ -211,8 +196,11 @@ pub mod MinEditDistMtEph {
                 let memo_guard = self.memo.lock().unwrap();
                 memo_guard.len()
             };
-            write!(f, "MinEditDistMtEph(source: {}, target: {}, memo_entries: {})", 
-                   self.source, self.target, memo_size)
+            write!(
+                f,
+                "MinEditDistMtEph(source: {}, target: {}, memo_entries: {})",
+                self.source, self.target, memo_size
+            )
         }
     }
 
@@ -238,4 +226,3 @@ macro_rules! MinEditDistMtEphLit {
         $crate::Chap49::MinEditDistMtEph::MinEditDistMtEph::MinEditDistMtEphS::new()
     };
 }
-

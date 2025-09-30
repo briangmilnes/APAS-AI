@@ -120,10 +120,10 @@ fn test_partial_eq() {
     let s1 = ArraySeqStEphS::tabulate(&|i| ['a', 'b'][i], 2);
     let t1 = ArraySeqStEphS::tabulate(&|i| ['c', 'd'][i], 2);
     let dp1 = TopDownDPStEphS::new(s1, t1);
-    
+
     let s2 = ArraySeqStEphS::tabulate(&|i| ['a', 'b'][i], 2);
     let t2 = ArraySeqStEphS::tabulate(&|i| ['c', 'd'][i], 2);
     let dp2 = TopDownDPStEphS::new(s2, t2);
-    
+
     assert_eq!(dp1, dp2);
 }

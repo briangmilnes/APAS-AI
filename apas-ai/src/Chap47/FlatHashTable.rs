@@ -2,8 +2,8 @@
 //! Chapter 47: Flat Hash Table - Data Structure 47.6 Parametric Implementation
 
 pub mod FlatHashTable {
-    use std::fmt::{Display, Debug};
-    
+    use std::fmt::{Debug, Display};
+
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     use crate::Types::Types::*;
@@ -19,9 +19,9 @@ pub mod FlatHashTable {
     impl<K: StT, V: StT> Display for Entry<K, V> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match self {
-                Entry::Empty => write!(f, "Empty"),
-                Entry::Dead => write!(f, "Dead"),
-                Entry::Live(key, value) => write!(f, "Live({}, {})", key, value),
+                | Entry::Empty => write!(f, "Empty"),
+                | Entry::Dead => write!(f, "Dead"),
+                | Entry::Live(key, value) => write!(f, "Live({}, {})", key, value),
             }
         }
     }
@@ -30,7 +30,7 @@ pub mod FlatHashTable {
     pub trait ProbeSequence<K: StT> {
         /// Generate i-th hash value in probe sequence
         fn probe_hash(&self, key: &K, probe_index: N, table_size: N) -> N;
-        
+
         /// Get description of probing strategy
         fn strategy_name(&self) -> String;
     }
@@ -50,13 +50,13 @@ pub mod FlatHashTable {
         pub fn create_table(probe_seq: P, initial_size: N) -> Self {
             let size = initial_size.max(8);
             let mut table = ArraySeqStPerS::empty();
-            
+
             for _ in 0..size {
                 let empty_entry = Entry::Empty;
                 let single_seq = ArraySeqStPerS::singleton(empty_entry);
                 table = ArraySeqStPerS::append(&table, &single_seq);
             }
-            
+
             FlatHashTable {
                 table,
                 probe_sequence: probe_seq,
@@ -71,24 +71,24 @@ pub mod FlatHashTable {
         pub fn insert(&self, key: K, value: V) -> Self {
             let table_size = self.table.length();
             let mut probe_index = 0;
-            
+
             // Find insertion position
             let mut insertion_pos = None;
             while probe_index < table_size {
                 let hash_pos = self.probe_sequence.probe_hash(&key, probe_index, table_size);
                 let entry = self.table.nth(hash_pos);
-                
+
                 match entry {
-                    Entry::Empty => {
+                    | Entry::Empty => {
                         insertion_pos = Some(hash_pos);
                         break;
-                    },
-                    Entry::Dead => {
+                    }
+                    | Entry::Dead => {
                         if insertion_pos.is_none() {
                             insertion_pos = Some(hash_pos);
                         }
-                    },
-                    Entry::Live(existing_key, _) => {
+                    }
+                    | Entry::Live(existing_key, _) => {
                         if existing_key == &key {
                             insertion_pos = Some(hash_pos);
                             break;
@@ -97,13 +97,13 @@ pub mod FlatHashTable {
                 }
                 probe_index += 1;
             }
-            
+
             let pos = insertion_pos.expect("Table should have space for insertion");
-            
+
             // Check if key already exists
             let key_existed = matches!(self.table.nth(pos), Entry::Live(existing_key, _) if existing_key == &key);
             let was_dead = matches!(self.table.nth(pos), Entry::Dead);
-            
+
             // Create new table with updated entry
             let mut new_table = ArraySeqStPerS::empty();
             for i in 0..table_size {
@@ -115,19 +115,19 @@ pub mod FlatHashTable {
                 let single_seq = ArraySeqStPerS::singleton(entry_to_use);
                 new_table = ArraySeqStPerS::append(&new_table, &single_seq);
             }
-            
+
             let new_num_elements = if key_existed {
                 self.num_elements
             } else {
                 self.num_elements + 1
             };
-            
+
             let new_num_deleted = if was_dead {
                 self.num_deleted - 1
             } else {
                 self.num_deleted
             };
-            
+
             let mut result = FlatHashTable {
                 table: new_table,
                 probe_sequence: self.probe_sequence.clone(),
@@ -135,14 +135,14 @@ pub mod FlatHashTable {
                 num_deleted: new_num_deleted,
                 load_factor_manager: self.load_factor_manager.clone(),
             };
-            
+
             // Check resize
             let total_occupied = result.num_elements + result.num_deleted;
             if result.load_factor_manager.should_grow(total_occupied, table_size) {
                 let new_size = result.load_factor_manager.grow_size(table_size);
                 result = result.resize(new_size);
             }
-            
+
             result
         }
 
@@ -151,17 +151,17 @@ pub mod FlatHashTable {
         pub fn lookup(&self, key: &K) -> Option<&V> {
             let table_size = self.table.length();
             let mut probe_index = 0;
-            
+
             while probe_index < table_size {
                 let hash_pos = self.probe_sequence.probe_hash(key, probe_index, table_size);
                 let entry = self.table.nth(hash_pos);
-                
+
                 match entry {
-                    Entry::Empty => return None,
-                    Entry::Dead => {
+                    | Entry::Empty => return None,
+                    | Entry::Dead => {
                         // Continue probing
-                    },
-                    Entry::Live(existing_key, value) => {
+                    }
+                    | Entry::Live(existing_key, value) => {
                         if existing_key == key {
                             return Some(value);
                         }
@@ -169,7 +169,7 @@ pub mod FlatHashTable {
                 }
                 probe_index += 1;
             }
-            
+
             None
         }
 
@@ -178,18 +178,18 @@ pub mod FlatHashTable {
         pub fn delete(&self, key: &K) -> (Self, bool) {
             let table_size = self.table.length();
             let mut probe_index = 0;
-            
+
             // Find key position
             while probe_index < table_size {
                 let hash_pos = self.probe_sequence.probe_hash(key, probe_index, table_size);
                 let entry = self.table.nth(hash_pos);
-                
+
                 match entry {
-                    Entry::Empty => return (self.clone(), false),
-                    Entry::Dead => {
+                    | Entry::Empty => return (self.clone(), false),
+                    | Entry::Dead => {
                         // Continue probing
-                    },
-                    Entry::Live(existing_key, _) => {
+                    }
+                    | Entry::Live(existing_key, _) => {
                         if existing_key == key {
                             // Mark as dead
                             let mut new_table = ArraySeqStPerS::empty();
@@ -202,7 +202,7 @@ pub mod FlatHashTable {
                                 let single_seq = ArraySeqStPerS::singleton(entry_to_use);
                                 new_table = ArraySeqStPerS::append(&new_table, &single_seq);
                             }
-                            
+
                             let mut result = FlatHashTable {
                                 table: new_table,
                                 probe_sequence: self.probe_sequence.clone(),
@@ -210,31 +210,31 @@ pub mod FlatHashTable {
                                 num_deleted: self.num_deleted + 1,
                                 load_factor_manager: self.load_factor_manager.clone(),
                             };
-                            
+
                             // Check resize down
-                            if result.load_factor_manager.should_shrink(result.num_elements, table_size) {
+                            if result
+                                .load_factor_manager
+                                .should_shrink(result.num_elements, table_size)
+                            {
                                 let new_size = result.load_factor_manager.shrink_size(table_size);
                                 result = result.resize(new_size);
                             }
-                            
+
                             return (result, true);
                         }
                     }
                 }
                 probe_index += 1;
             }
-            
+
             (self.clone(), false)
         }
 
         /// Claude Work: Θ(n), Span: Θ(n)
         pub fn resize(&self, new_size: N) -> Self {
             let actual_new_size = new_size.max(8);
-            let mut new_table = Self::create_table(
-                self.probe_sequence.clone(),
-                actual_new_size
-            );
-            
+            let mut new_table = Self::create_table(self.probe_sequence.clone(), actual_new_size);
+
             // Rehash all live entries
             for i in 0..self.table.length() {
                 let entry = self.table.nth(i);
@@ -242,30 +242,30 @@ pub mod FlatHashTable {
                     new_table = new_table.insert_without_resize(key.clone(), value.clone());
                 }
             }
-            
+
             new_table
         }
 
         fn insert_without_resize(&self, key: K, value: V) -> Self {
             let table_size = self.table.length();
             let mut probe_index = 0;
-            
+
             let mut insertion_pos = None;
             while probe_index < table_size {
                 let hash_pos = self.probe_sequence.probe_hash(&key, probe_index, table_size);
                 let entry = self.table.nth(hash_pos);
-                
+
                 match entry {
-                    Entry::Empty => {
+                    | Entry::Empty => {
                         insertion_pos = Some(hash_pos);
                         break;
-                    },
-                    Entry::Dead => {
+                    }
+                    | Entry::Dead => {
                         if insertion_pos.is_none() {
                             insertion_pos = Some(hash_pos);
                         }
-                    },
-                    Entry::Live(existing_key, _) => {
+                    }
+                    | Entry::Live(existing_key, _) => {
                         if existing_key == &key {
                             insertion_pos = Some(hash_pos);
                             break;
@@ -274,11 +274,11 @@ pub mod FlatHashTable {
                 }
                 probe_index += 1;
             }
-            
+
             let pos = insertion_pos.expect("Table should have space");
             let key_existed = matches!(self.table.nth(pos), Entry::Live(existing_key, _) if existing_key == &key);
             let was_dead = matches!(self.table.nth(pos), Entry::Dead);
-            
+
             let mut new_table = ArraySeqStPerS::empty();
             for i in 0..table_size {
                 let entry_to_use = if i == pos {
@@ -289,19 +289,19 @@ pub mod FlatHashTable {
                 let single_seq = ArraySeqStPerS::singleton(entry_to_use);
                 new_table = ArraySeqStPerS::append(&new_table, &single_seq);
             }
-            
+
             let new_num_elements = if key_existed {
                 self.num_elements
             } else {
                 self.num_elements + 1
             };
-            
+
             let new_num_deleted = if was_dead {
                 self.num_deleted - 1
             } else {
                 self.num_deleted
             };
-            
+
             FlatHashTable {
                 table: new_table,
                 probe_sequence: self.probe_sequence.clone(),
@@ -311,13 +311,10 @@ pub mod FlatHashTable {
             }
         }
 
-        pub fn load_and_size(&self) -> (N, N) {
-            (self.num_elements, self.table.length())
-        }
+        pub fn load_and_size(&self) -> (N, N) { (self.num_elements, self.table.length()) }
 
         pub fn statistics(&self) -> HashTableStats {
-            HashTableStats::new(self.num_elements, self.table.length())
-                .with_collision_stats(self.num_deleted, 0, 0.0) // Simplified for flat tables
+            HashTableStats::new(self.num_elements, self.table.length()).with_collision_stats(self.num_deleted, 0, 0.0) // Simplified for flat tables
         }
 
         pub fn probe_statistics(&self) -> (N, N, f64) {
@@ -330,18 +327,23 @@ pub mod FlatHashTable {
     impl<K: StT + Display, V: StT + Display, P: ProbeSequence<K> + Clone> Display for FlatHashTable<K, V, P> {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             writeln!(f, "FlatHashTable ({}) {{", self.probe_sequence.strategy_name())?;
-            writeln!(f, "  elements: {}, size: {}, deleted: {}", 
-                     self.num_elements, self.table.length(), self.num_deleted)?;
-            
+            writeln!(
+                f,
+                "  elements: {}, size: {}, deleted: {}",
+                self.num_elements,
+                self.table.length(),
+                self.num_deleted
+            )?;
+
             for i in 0..self.table.length() {
                 let entry = self.table.nth(i);
                 match entry {
-                    Entry::Empty => writeln!(f, "  [{}]: Empty", i)?,
-                    Entry::Dead => writeln!(f, "  [{}]: Dead", i)?,
-                    Entry::Live(key, value) => writeln!(f, "  [{}]: {} → {}", i, key, value)?,
+                    | Entry::Empty => writeln!(f, "  [{}]: Empty", i)?,
+                    | Entry::Dead => writeln!(f, "  [{}]: Dead", i)?,
+                    | Entry::Live(key, value) => writeln!(f, "  [{}]: {} → {}", i, key, value)?,
                 }
             }
-            
+
             write!(f, "}}")
         }
     }

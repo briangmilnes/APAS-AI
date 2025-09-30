@@ -12,5 +12,5 @@
                 let mid = n / 2;
                 let left = a.subseq_copy(0, mid);
 
- Check that all *Mt files are truely parallel.
-
+ Check that all *Mt files are truely parallel in Chap18.
+ Chap18 needs algorithmic analysis on all files after this.

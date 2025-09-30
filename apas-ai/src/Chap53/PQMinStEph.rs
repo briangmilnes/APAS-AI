@@ -31,12 +31,8 @@ pub mod PQMinStEph {
         }
     }
 
-    impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> PriorityFn<V, P>
-        for ClosurePriority<V, P, F>
-    {
-        fn priority(&self, v: &V) -> P {
-            (self.f)(v)
-        }
+    impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> PriorityFn<V, P> for ClosurePriority<V, P, F> {
+        fn priority(&self, v: &V) -> P { (self.f)(v) }
     }
 
     pub trait PQMinStEphTrait<V: StT + Ord, P: StT + Ord> {
@@ -45,11 +41,7 @@ pub mod PQMinStEph {
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             PF: PriorityFn<V, P>;
 
-        fn pq_min_multi<G, PF>(
-            graph: &G,
-            sources: AVLTreeSetStEph<V>,
-            priority_fn: &PF,
-        ) -> PQMinResult<V, P>
+        fn pq_min_multi<G, PF>(graph: &G, sources: AVLTreeSetStEph<V>, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             PF: PriorityFn<V, P>;
@@ -67,11 +59,7 @@ pub mod PQMinStEph {
             Self::pq_min_multi(graph, sources, priority_fn)
         }
 
-        fn pq_min_multi<G, PF>(
-            graph: &G,
-            sources: AVLTreeSetStEph<V>,
-            priority_fn: &PF,
-        ) -> PQMinResult<V, P>
+        fn pq_min_multi<G, PF>(graph: &G, sources: AVLTreeSetStEph<V>, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             PF: PriorityFn<V, P>,
@@ -114,12 +102,8 @@ pub mod PQMinStEph {
                         let neighbor = neighbors_seq.nth(i);
                         if !visited_new.find(neighbor) {
                             let neighbor_p = priority_fn.priority(neighbor);
-                            let neighbor_entry = Pair(
-                                Pair(neighbor_p.clone(), neighbor.clone()),
-                                neighbor.clone(),
-                            );
-                            frontier_updated = frontier_updated
-                                .union(&AVLTreeSetStEph::singleton(neighbor_entry));
+                            let neighbor_entry = Pair(Pair(neighbor_p.clone(), neighbor.clone()), neighbor.clone());
+                            frontier_updated = frontier_updated.union(&AVLTreeSetStEph::singleton(neighbor_entry));
                         }
                     }
 
@@ -130,8 +114,7 @@ pub mod PQMinStEph {
                     for i in 0..visited_seq.length() {
                         let v = visited_seq.nth(i);
                         let p = priority_fn.priority(v);
-                        priorities =
-                            priorities.union(&AVLTreeSetStEph::singleton(Pair(v.clone(), p)));
+                        priorities = priorities.union(&AVLTreeSetStEph::singleton(Pair(v.clone(), p)));
                     }
                     (visited, priorities)
                 }
@@ -143,16 +126,10 @@ pub mod PQMinStEph {
                 let v = sources_seq.nth(i);
                 let p = priority_fn.priority(v);
                 let entry = Pair(Pair(p.clone(), v.clone()), v.clone());
-                initial_frontier =
-                    initial_frontier.union(&AVLTreeSetStEph::singleton(entry));
+                initial_frontier = initial_frontier.union(&AVLTreeSetStEph::singleton(entry));
             }
 
-            let (visited, priorities) = explore(
-                graph,
-                priority_fn,
-                AVLTreeSetStEph::empty(),
-                initial_frontier,
-            );
+            let (visited, priorities) = explore(graph, priority_fn, AVLTreeSetStEph::empty(), initial_frontier);
 
             PQMinResult {
                 visited,

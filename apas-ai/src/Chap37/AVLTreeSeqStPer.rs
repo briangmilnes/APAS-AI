@@ -18,12 +18,8 @@ pub mod AVLTreeSeqStPer {
         right: Link<T>,
     }
 
-    fn height<T: StT>(n: &Link<T>) -> N {
-        n.as_ref().map_or(0, |r| r.height)
-    }
-    fn size<T: StT>(n: &Link<T>) -> N {
-        n.as_ref().map_or(0, |r| r.size)
-    }
+    fn height<T: StT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |r| r.height) }
+    fn size<T: StT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |r| r.size) }
 
     fn mk<T: StT>(value: T, left: Link<T>, right: Link<T>) -> Rc<Node<T>> {
         let hl = height(&left);
@@ -167,18 +163,10 @@ pub mod AVLTreeSeqStPer {
     }
 
     impl<T: StT> AVLTreeSeqStPerTrait<T> for AVLTreeSeqStPerS<T> {
-        fn empty() -> Self {
-            AVLTreeSeqStPerS { root: None }
-        }
-        fn new() -> Self {
-            Self::empty()
-        }
-        fn length(&self) -> N {
-            size(&self.root)
-        }
-        fn nth(&self, index: N) -> &T {
-            nth_ref(&self.root, index)
-        }
+        fn empty() -> Self { AVLTreeSeqStPerS { root: None } }
+        fn new() -> Self { Self::empty() }
+        fn length(&self) -> N { size(&self.root) }
+        fn nth(&self, index: N) -> &T { nth_ref(&self.root, index) }
         fn set(&self, index: N, item: T) -> Result<Self, &'static str> {
             Ok(AVLTreeSeqStPerS {
                 root: set_rec(&self.root, index, item)?,
@@ -189,12 +177,8 @@ pub mod AVLTreeSeqStPer {
                 root: Some(mk(item, None, None)),
             }
         }
-        fn isEmpty(&self) -> B {
-            if self.length() == 0 { true } else { false }
-        }
-        fn isSingleton(&self) -> B {
-            if self.length() == 1 { true } else { false }
-        }
+        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
+        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.length();
             let s = start.min(n);

@@ -24,7 +24,12 @@ pub mod ArraySeqMtPer {
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T>;
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
-        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F) -> ArraySeqMtPerS<W> where T: 'static;
+        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(
+            a: &ArraySeqMtPerS<T>,
+            f: F,
+        ) -> ArraySeqMtPerS<W>
+        where
+            T: 'static;
         fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
         fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T>;
         fn update_single(a: &ArraySeqMtPerS<T>, index: N, item: T) -> ArraySeqMtPerS<T>;
@@ -35,7 +40,9 @@ pub mod ArraySeqMtPer {
             f: &F,
             x: A,
         ) -> (ArraySeqMtPerS<A>, A);
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T where T: 'static;
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T
+        where
+            T: 'static;
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T);
         fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T>;
         fn collect(a: &ArraySeqMtPerS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>>;
@@ -73,13 +80,9 @@ pub mod ArraySeqMtPer {
             <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::tabulate(&|_| item.clone(), 1)
         }
 
-        fn length(&self) -> N {
-            ArraySeqMtPerTraitChap18::length(self)
-        }
+        fn length(&self) -> N { ArraySeqMtPerTraitChap18::length(self) }
 
-        fn nth(&self, index: N) -> &T {
-            ArraySeqMtPerTraitChap18::nth(self, index)
-        }
+        fn nth(&self, index: N) -> &T { ArraySeqMtPerTraitChap18::nth(self, index) }
 
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T> {
             <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::subseq_copy(self, start, length)
@@ -98,8 +101,7 @@ pub mod ArraySeqMtPer {
         fn map<W: MtVal, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(
             a: &ArraySeqMtPerS<T>,
             f: F,
-        ) -> ArraySeqMtPerS<W>
-        {
+        ) -> ArraySeqMtPerS<W> {
             // Algorithm 19.3 with parallelism: map f a = tabulate(lambda i.f(a[i]), |a|)
             if a.length() <= 1 {
                 // Implement directly since we can't capture with &F
@@ -129,8 +131,7 @@ pub mod ArraySeqMtPer {
             <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::flatten(&sequences)
         }
 
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T>
-        {
+        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T> {
             // Algorithm 19.5 with parallelism: fork thread per element + serial compaction
             if a.length() == 0 {
                 return <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::empty();
@@ -198,8 +199,7 @@ pub mod ArraySeqMtPer {
             (ArraySeqMtPerS::from_vec(result_vec), acc)
         }
 
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T
-        {
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T {
             // Algorithm 19.9 with parallelism: always parallel divide-and-conquer
             if a.length() == 0 {
                 id

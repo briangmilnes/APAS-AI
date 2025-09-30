@@ -5,12 +5,12 @@ pub mod HeapsortExample {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Types::Types::*;
-    
-    use crate::Chap45::UnsortedListPQ::UnsortedListPQ::*;
-    use crate::Chap45::SortedListPQ::SortedListPQ::*;
+
     use crate::Chap45::BalancedTreePQ::BalancedTreePQ::*;
     use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
     use crate::Chap45::LeftistHeapPQ::LeftistHeapPQ::*;
+    use crate::Chap45::SortedListPQ::SortedListPQ::*;
+    use crate::Chap45::UnsortedListPQ::UnsortedListPQ::*;
 
     /// Algorithm 45.2: Heapsort implementation using priority queues
     /// This is the generic heapsort algorithm from the textbook that works with any priority queue
@@ -19,7 +19,7 @@ pub mod HeapsortExample {
     impl Heapsort {
         /// Generic heapsort implementation (Algorithm 45.2)
         /// Claude Work: Θ(n log n), Span: Θ(n log n) for efficient priority queues
-        /// 
+        ///
         /// sort S =
         ///   let q0 = Sequence.iter PQ.insert PQ.empty S
         ///   hsort q =
@@ -38,7 +38,7 @@ pub mod HeapsortExample {
             for element in sequence {
                 pq = ops.insert(&pq, element.clone());
             }
-            
+
             // Step 2: Extract elements in sorted order
             let mut result = Vec::new();
             while !ops.is_empty(&pq) {
@@ -48,7 +48,7 @@ pub mod HeapsortExample {
                 }
                 pq = new_pq;
             }
-            
+
             result
         }
 
@@ -118,9 +118,7 @@ pub mod HeapsortExample {
 
         /// Check if all results are properly sorted
         pub fn all_results_sorted(&self) -> bool {
-            fn is_sorted<T: Ord>(vec: &[T]) -> bool {
-                vec.windows(2).all(|w| w[0] <= w[1])
-            }
+            fn is_sorted<T: Ord>(vec: &[T]) -> bool { vec.windows(2).all(|w| w[0] <= w[1]) }
 
             is_sorted(&self.unsorted_list_result)
                 && is_sorted(&self.sorted_list_result)
@@ -142,105 +140,65 @@ pub mod HeapsortExample {
     pub struct UnsortedListPQHeapsortOps;
 
     impl<T: StT + Ord> HeapsortOps<T, UnsortedListPQ<T>> for UnsortedListPQHeapsortOps {
-        fn empty(&self) -> UnsortedListPQ<T> {
-            UnsortedListPQ::empty()
-        }
+        fn empty(&self) -> UnsortedListPQ<T> { UnsortedListPQ::empty() }
 
-        fn insert(&self, pq: &UnsortedListPQ<T>, element: T) -> UnsortedListPQ<T> {
-            pq.insert(element)
-        }
+        fn insert(&self, pq: &UnsortedListPQ<T>, element: T) -> UnsortedListPQ<T> { pq.insert(element) }
 
-        fn delete_min(&self, pq: &UnsortedListPQ<T>) -> (UnsortedListPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
+        fn delete_min(&self, pq: &UnsortedListPQ<T>) -> (UnsortedListPQ<T>, Option<T>) { pq.delete_min() }
 
-        fn is_empty(&self, pq: &UnsortedListPQ<T>) -> bool {
-            pq.is_empty()
-        }
+        fn is_empty(&self, pq: &UnsortedListPQ<T>) -> bool { pq.is_empty() }
     }
 
     /// Heapsort operations for SortedListPQ
     pub struct SortedListPQHeapsortOps;
 
     impl<T: StT + Ord> HeapsortOps<T, SortedListPQ<T>> for SortedListPQHeapsortOps {
-        fn empty(&self) -> SortedListPQ<T> {
-            SortedListPQ::empty()
-        }
+        fn empty(&self) -> SortedListPQ<T> { SortedListPQ::empty() }
 
-        fn insert(&self, pq: &SortedListPQ<T>, element: T) -> SortedListPQ<T> {
-            pq.insert(element)
-        }
+        fn insert(&self, pq: &SortedListPQ<T>, element: T) -> SortedListPQ<T> { pq.insert(element) }
 
-        fn delete_min(&self, pq: &SortedListPQ<T>) -> (SortedListPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
+        fn delete_min(&self, pq: &SortedListPQ<T>) -> (SortedListPQ<T>, Option<T>) { pq.delete_min() }
 
-        fn is_empty(&self, pq: &SortedListPQ<T>) -> bool {
-            pq.is_empty()
-        }
+        fn is_empty(&self, pq: &SortedListPQ<T>) -> bool { pq.is_empty() }
     }
 
     /// Heapsort operations for BalancedTreePQ
     pub struct BalancedTreePQHeapsortOps;
 
     impl<T: StT + Ord> HeapsortOps<T, BalancedTreePQ<T>> for BalancedTreePQHeapsortOps {
-        fn empty(&self) -> BalancedTreePQ<T> {
-            BalancedTreePQ::empty()
-        }
+        fn empty(&self) -> BalancedTreePQ<T> { BalancedTreePQ::empty() }
 
-        fn insert(&self, pq: &BalancedTreePQ<T>, element: T) -> BalancedTreePQ<T> {
-            pq.insert(element)
-        }
+        fn insert(&self, pq: &BalancedTreePQ<T>, element: T) -> BalancedTreePQ<T> { pq.insert(element) }
 
-        fn delete_min(&self, pq: &BalancedTreePQ<T>) -> (BalancedTreePQ<T>, Option<T>) {
-            pq.delete_min()
-        }
+        fn delete_min(&self, pq: &BalancedTreePQ<T>) -> (BalancedTreePQ<T>, Option<T>) { pq.delete_min() }
 
-        fn is_empty(&self, pq: &BalancedTreePQ<T>) -> bool {
-            pq.is_empty()
-        }
+        fn is_empty(&self, pq: &BalancedTreePQ<T>) -> bool { pq.is_empty() }
     }
 
     /// Heapsort operations for BinaryHeapPQ
     pub struct BinaryHeapPQHeapsortOps;
 
     impl<T: StT + Ord> HeapsortOps<T, BinaryHeapPQ<T>> for BinaryHeapPQHeapsortOps {
-        fn empty(&self) -> BinaryHeapPQ<T> {
-            BinaryHeapPQ::empty()
-        }
+        fn empty(&self) -> BinaryHeapPQ<T> { BinaryHeapPQ::empty() }
 
-        fn insert(&self, pq: &BinaryHeapPQ<T>, element: T) -> BinaryHeapPQ<T> {
-            pq.insert(element)
-        }
+        fn insert(&self, pq: &BinaryHeapPQ<T>, element: T) -> BinaryHeapPQ<T> { pq.insert(element) }
 
-        fn delete_min(&self, pq: &BinaryHeapPQ<T>) -> (BinaryHeapPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
+        fn delete_min(&self, pq: &BinaryHeapPQ<T>) -> (BinaryHeapPQ<T>, Option<T>) { pq.delete_min() }
 
-        fn is_empty(&self, pq: &BinaryHeapPQ<T>) -> bool {
-            pq.is_empty()
-        }
+        fn is_empty(&self, pq: &BinaryHeapPQ<T>) -> bool { pq.is_empty() }
     }
 
     /// Heapsort operations for LeftistHeapPQ
     pub struct LeftistHeapPQHeapsortOps;
 
     impl<T: StT + Ord> HeapsortOps<T, LeftistHeapPQ<T>> for LeftistHeapPQHeapsortOps {
-        fn empty(&self) -> LeftistHeapPQ<T> {
-            LeftistHeapPQ::empty()
-        }
+        fn empty(&self) -> LeftistHeapPQ<T> { LeftistHeapPQ::empty() }
 
-        fn insert(&self, pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> {
-            pq.insert(element)
-        }
+        fn insert(&self, pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> { pq.insert(element) }
 
-        fn delete_min(&self, pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
+        fn delete_min(&self, pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) { pq.delete_min() }
 
-        fn is_empty(&self, pq: &LeftistHeapPQ<T>) -> bool {
-            pq.is_empty()
-        }
+        fn is_empty(&self, pq: &LeftistHeapPQ<T>) -> bool { pq.is_empty() }
     }
 
     /// Examples and demonstrations
@@ -314,11 +272,31 @@ pub mod HeapsortExample {
         /// Analyze the theoretical complexity of each heapsort variant
         pub fn complexity_analysis() -> Vec<(String, String, String)> {
             vec![
-                ("UnsortedListPQ".to_string(), "Θ(n²)".to_string(), "O(n) deleteMin dominates".to_string()),
-                ("SortedListPQ".to_string(), "Θ(n²)".to_string(), "O(n) insert dominates".to_string()),
-                ("BalancedTreePQ".to_string(), "Θ(n log n)".to_string(), "O(log n) insert and deleteMin".to_string()),
-                ("BinaryHeapPQ".to_string(), "Θ(n log n)".to_string(), "O(log n) insert and deleteMin".to_string()),
-                ("LeftistHeapPQ".to_string(), "Θ(n log n)".to_string(), "O(log n) insert and deleteMin + superior meld".to_string()),
+                (
+                    "UnsortedListPQ".to_string(),
+                    "Θ(n²)".to_string(),
+                    "O(n) deleteMin dominates".to_string(),
+                ),
+                (
+                    "SortedListPQ".to_string(),
+                    "Θ(n²)".to_string(),
+                    "O(n) insert dominates".to_string(),
+                ),
+                (
+                    "BalancedTreePQ".to_string(),
+                    "Θ(n log n)".to_string(),
+                    "O(log n) insert and deleteMin".to_string(),
+                ),
+                (
+                    "BinaryHeapPQ".to_string(),
+                    "Θ(n log n)".to_string(),
+                    "O(log n) insert and deleteMin".to_string(),
+                ),
+                (
+                    "LeftistHeapPQ".to_string(),
+                    "Θ(n log n)".to_string(),
+                    "O(log n) insert and deleteMin + superior meld".to_string(),
+                ),
             ]
         }
 
@@ -333,9 +311,9 @@ pub mod HeapsortExample {
                 HeapsortExamples::empty_example(),
             ];
 
-            test_cases.iter().all(|comparison| {
-                comparison.all_results_match() && comparison.all_results_sorted()
-            })
+            test_cases
+                .iter()
+                .all(|comparison| comparison.all_results_match() && comparison.all_results_sorted())
         }
     }
 
@@ -354,14 +332,10 @@ pub mod HeapsortExample {
         }
 
         /// Convert Vec to AVLTreeSeqStPerS for use with balanced tree operations
-        pub fn vec_to_avl_seq<T: StT>(vec: &[T]) -> AVLTreeSeqStPerS<T> {
-            AVLTreeSeqStPerS::from_vec(vec.to_vec())
-        }
+        pub fn vec_to_avl_seq<T: StT>(vec: &[T]) -> AVLTreeSeqStPerS<T> { AVLTreeSeqStPerS::from_vec(vec.to_vec()) }
 
         /// Check if a sequence is sorted
-        pub fn is_sorted<T: Ord>(vec: &[T]) -> bool {
-            vec.windows(2).all(|w| w[0] <= w[1])
-        }
+        pub fn is_sorted<T: Ord>(vec: &[T]) -> bool { vec.windows(2).all(|w| w[0] <= w[1]) }
 
         /// Generate test sequences of various patterns
         pub fn generate_test_sequences(size: usize) -> Vec<(String, Vec<i32>)> {

@@ -1,10 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chapter 42 multi-threaded ephemeral table implementation.
 
-use apas_ai::Chap42Claude::TableMtEph::TableMtEph::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
+use apas_ai::Chap42Claude::TableMtEph::TableMtEph::*;
 use apas_ai::Types::Types::*;
-use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
+use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 
 fn build_table(size: usize) -> TableMtEph<i32, String> {
     let mut table = TableMtEph::empty();
@@ -246,11 +246,14 @@ fn bench_table_parallel_semantics(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("parallel_tabulate", size), size, |b, &size| {
             let keys = build_set(size);
             b.iter(|| {
-                black_box(TableMtEph::tabulate(|k| {
-                    // Simulate expensive computation
-                    std::thread::sleep(std::time::Duration::from_nanos(100));
-                    k * k * k
-                }, &keys))
+                black_box(TableMtEph::tabulate(
+                    |k| {
+                        // Simulate expensive computation
+                        std::thread::sleep(std::time::Duration::from_nanos(100));
+                        k * k * k
+                    },
+                    &keys,
+                ))
             });
         });
 

@@ -32,16 +32,14 @@ pub mod TableStEph {
         fn insert<F: Fn(&V, &V) -> V>(&mut self, key: K, value: V, combine: F);
         fn restrict(&mut self, keys: &ArraySetStEph<K>);
         fn subtract(&mut self, keys: &ArraySetStEph<K>);
-        
+
         /// APAS: Work Θ(|a|), Span Θ(lg |a|)
         fn collect(&self) -> ArraySeqStEphS<Pair<K, V>>;
     }
 
     impl<K: StT + Ord, V: StT> TableStEphTrait<K, V> for TableStEph<K, V> {
         /// Work: O(1), Span: O(1)
-        fn size(&self) -> N {
-            self.entries.length()
-        }
+        fn size(&self) -> N { self.entries.length() }
 
         /// Work: O(1), Span: O(1)
         fn empty() -> Self {
@@ -68,8 +66,7 @@ pub mod TableStEph {
         }
 
         /// Work: O(n), Span: O(n)
-        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self
-        {
+        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self {
             let key_seq = keys.to_seq();
             let mut entries = Vec::with_capacity(key_seq.length());
             for i in 0..key_seq.length() {
@@ -85,26 +82,26 @@ pub mod TableStEph {
         }
 
         /// Work: O(n), Span: O(n)
-        fn map<F: Fn(&V) -> V>(&mut self, f: F)
-        {
-            let mapped_entries = ArraySeqStEphS::tabulate(&|i| {
-                let pair = self.entries.nth(i);
-                let new_value = f(&pair.1);
-                Pair(pair.0.clone(), new_value)
-            }, self.entries.length());
+        fn map<F: Fn(&V) -> V>(&mut self, f: F) {
+            let mapped_entries = ArraySeqStEphS::tabulate(
+                &|i| {
+                    let pair = self.entries.nth(i);
+                    let new_value = f(&pair.1);
+                    Pair(pair.0.clone(), new_value)
+                },
+                self.entries.length(),
+            );
             self.entries = mapped_entries;
         }
 
         /// Work: O(n), Span: O(n)
-        fn filter<F: Fn(&K, &V) -> B>(&mut self, f: F)
-        {
+        fn filter<F: Fn(&K, &V) -> B>(&mut self, f: F) {
             let filtered = ArraySeqStEphS::filter(&self.entries, &|pair| f(&pair.0, &pair.1));
             self.entries = filtered;
         }
 
         /// Work: O(n + m), Span: O(n + m)
-        fn intersection<F: Fn(&V, &V) -> V>(&mut self, other: &Self, combine: F)
-        {
+        fn intersection<F: Fn(&V, &V) -> V>(&mut self, other: &Self, combine: F) {
             let mut intersection_entries = Vec::new();
             let mut i = 0;
             let mut j = 0;
@@ -114,9 +111,9 @@ pub mod TableStEph {
                 let pair2 = other.entries.nth(j);
 
                 match pair1.0.cmp(&pair2.0) {
-                    Ordering::Less => i += 1,
-                    Ordering::Greater => j += 1,
-                    Ordering::Equal => {
+                    | Ordering::Less => i += 1,
+                    | Ordering::Greater => j += 1,
+                    | Ordering::Equal => {
                         let combined_value = combine(&pair1.1, &pair2.1);
                         intersection_entries.push(Pair(pair1.0.clone(), combined_value));
                         i += 1;
@@ -129,8 +126,7 @@ pub mod TableStEph {
         }
 
         /// Work: O(n + m), Span: O(n + m)
-        fn union<F: Fn(&V, &V) -> V>(&mut self, other: &Self, combine: F)
-        {
+        fn union<F: Fn(&V, &V) -> V>(&mut self, other: &Self, combine: F) {
             let mut union_entries = Vec::new();
             let mut i = 0;
             let mut j = 0;
@@ -140,15 +136,15 @@ pub mod TableStEph {
                 let pair2 = other.entries.nth(j);
 
                 match pair1.0.cmp(&pair2.0) {
-                    Ordering::Less => {
+                    | Ordering::Less => {
                         union_entries.push(pair1.clone());
                         i += 1;
                     }
-                    Ordering::Greater => {
+                    | Ordering::Greater => {
                         union_entries.push(pair2.clone());
                         j += 1;
                     }
-                    Ordering::Equal => {
+                    | Ordering::Equal => {
                         let combined_value = combine(&pair1.1, &pair2.1);
                         union_entries.push(Pair(pair1.0.clone(), combined_value));
                         i += 1;
@@ -183,14 +179,14 @@ pub mod TableStEph {
                 let pair2 = other.entries.nth(j);
 
                 match pair1.0.cmp(&pair2.0) {
-                    Ordering::Less => {
+                    | Ordering::Less => {
                         difference_entries.push(pair1.clone());
                         i += 1;
                     }
-                    Ordering::Greater => {
+                    | Ordering::Greater => {
                         j += 1;
                     }
-                    Ordering::Equal => {
+                    | Ordering::Equal => {
                         i += 1;
                         j += 1;
                     }
@@ -217,9 +213,9 @@ pub mod TableStEph {
                 let pair = self.entries.nth(mid);
 
                 match key.cmp(&pair.0) {
-                    Ordering::Less => right = mid,
-                    Ordering::Greater => left = mid + 1,
-                    Ordering::Equal => return Some(pair.1.clone()),
+                    | Ordering::Less => right = mid,
+                    | Ordering::Greater => left = mid + 1,
+                    | Ordering::Equal => return Some(pair.1.clone()),
                 }
             }
 
@@ -233,8 +229,7 @@ pub mod TableStEph {
         }
 
         /// Work: O(n), Span: O(n)
-        fn insert<F: Fn(&V, &V) -> V>(&mut self, key: K, value: V, combine: F)
-        {
+        fn insert<F: Fn(&V, &V) -> V>(&mut self, key: K, value: V, combine: F) {
             // Check if key already exists
             if let Some(existing_value) = self.find(&key) {
                 // Key exists, combine values and replace
@@ -270,10 +265,8 @@ pub mod TableStEph {
             let filtered = ArraySeqStEphS::filter(&self.entries, &|pair| !keys.find(&pair.0));
             self.entries = filtered;
         }
-        
-        fn collect(&self) -> ArraySeqStEphS<Pair<K, V>> {
-            self.entries.clone()
-        }
+
+        fn collect(&self) -> ArraySeqStEphS<Pair<K, V>> { self.entries.clone() }
     }
 
     /// Helper function for creating tables from sorted entries

@@ -1,10 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chapter 42 single-threaded persistent table implementation.
 
-use apas_ai::Chap42Claude::TableStPer::TableStPer::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
+use apas_ai::Chap42Claude::TableStPer::TableStPer::*;
 use apas_ai::Types::Types::*;
-use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
+use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 
 fn build_table(size: usize) -> TableStPer<i32, String> {
     let mut table = TableStPer::empty();

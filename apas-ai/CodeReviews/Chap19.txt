@@ -1,0 +1,9 @@
+
+ Chap19
+
+ Are all operations that can be parallel in Mts parallel?
+ Remember thread/spawn is preferred to ParaPair if there
+ are possibilities for threads.
+ After fixing that, it needs algorithmic analysis.
+
+

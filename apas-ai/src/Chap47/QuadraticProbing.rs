@@ -2,8 +2,8 @@
 //! Chapter 47: Quadratic Probing Strategy
 
 pub mod QuadraticProbing {
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     use crate::Types::Types::*;
 
     /// Quadratic probing: h_i(x) = (h(x) + c1*i + c2*i^2) mod m
@@ -24,11 +24,9 @@ pub mod QuadraticProbing {
                 _phantom: std::marker::PhantomData,
             }
         }
-        
+
         /// Standard quadratic probing with c1=1, c2=1
-        pub fn standard(hash_fn: H) -> Self {
-            Self::new(hash_fn, 1, 1)
-        }
+        pub fn standard(hash_fn: H) -> Self { Self::new(hash_fn, 1, 1) }
     }
 
     impl<K: StT, H: HashFunClone<K>> ProbeSequence<K> for QuadraticProbingStrategy<K, H> {
@@ -38,10 +36,14 @@ pub mod QuadraticProbing {
             let quadratic_offset = self.c1 * probe_index + self.c2 * probe_index * probe_index;
             (base_hash + quadratic_offset) % table_size
         }
-        
+
         fn strategy_name(&self) -> String {
-            format!("QuadraticProbing({}, c1={}, c2={})", 
-                    self.base_hash.description(), self.c1, self.c2)
+            format!(
+                "QuadraticProbing({}, c1={}, c2={})",
+                self.base_hash.description(),
+                self.c1,
+                self.c2
+            )
         }
     }
 
@@ -52,12 +54,17 @@ pub mod QuadraticProbing {
     pub struct QuadraticProbingFactory;
 
     impl QuadraticProbingFactory {
-        pub fn create_string_table<V: StT>(initial_size: N) -> QuadraticProbingHashTable<String, V, StringPositionHashFunction> {
+        pub fn create_string_table<V: StT>(
+            initial_size: N,
+        ) -> QuadraticProbingHashTable<String, V, StringPositionHashFunction> {
             let probe_strategy = QuadraticProbingStrategy::standard(StringPositionHashFunction);
             FlatHashTable::create_table(probe_strategy, initial_size)
         }
-        
-        pub fn create_integer_table<V: StT>(initial_size: N, seed: u64) -> QuadraticProbingHashTable<i32, V, UniversalIntegerHashFunction> {
+
+        pub fn create_integer_table<V: StT>(
+            initial_size: N,
+            seed: u64,
+        ) -> QuadraticProbingHashTable<i32, V, UniversalIntegerHashFunction> {
             let hash_family = UniversalIntegerHashFamily::new();
             let hash_fn = hash_family.generate(seed);
             let probe_strategy = QuadraticProbingStrategy::standard(hash_fn);

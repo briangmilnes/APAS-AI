@@ -20,7 +20,7 @@ mod tests_edge_set_graph_mt_per {
         let g = g.insert_vertex(1);
         assert_eq!(g.num_vertices(), 1);
         assert_eq!(g.num_edges(), 0);
-        
+
         let g = g.insert_vertex(2);
         assert_eq!(g.num_vertices(), 2);
     }
@@ -31,7 +31,7 @@ mod tests_edge_set_graph_mt_per {
         let g = g.insert_vertex(1);
         let g = g.insert_vertex(2);
         let g = g.insert_edge(1, 2);
-        
+
         assert_eq!(g.num_edges(), 1);
         assert!(g.has_edge(&1, &2));
         assert!(!g.has_edge(&2, &1));
@@ -43,7 +43,7 @@ mod tests_edge_set_graph_mt_per {
         let g = g.insert_vertex(1);
         let g = g.insert_vertex(2);
         let g = g.insert_edge(1, 2);
-        
+
         let g = g.delete_vertex(&1);
         assert_eq!(g.num_vertices(), 1);
         assert_eq!(g.num_edges(), 0);
@@ -55,7 +55,7 @@ mod tests_edge_set_graph_mt_per {
         let g = g.insert_vertex(1);
         let g = g.insert_vertex(2);
         let g = g.insert_edge(1, 2);
-        
+
         let g = g.delete_edge(&1, &2);
         assert_eq!(g.num_edges(), 0);
         assert!(!g.has_edge(&1, &2));
@@ -69,7 +69,7 @@ mod tests_edge_set_graph_mt_per {
         let g = g.insert_vertex(3);
         let g = g.insert_edge(1, 2);
         let g = g.insert_edge(1, 3);
-        
+
         let neighbors = g.out_neighbors(&1);
         assert_eq!(neighbors.size(), 2);
         assert!(neighbors.find(&2));
@@ -84,7 +84,7 @@ mod tests_edge_set_graph_mt_per {
         let g = g.insert_vertex(3);
         let g = g.insert_edge(1, 2);
         let g = g.insert_edge(1, 3);
-        
+
         assert_eq!(g.out_degree(&1), 2);
         assert_eq!(g.out_degree(&2), 0);
     }

@@ -10,12 +10,12 @@ use apas_ai::Types::Types::*;
 // Build test graph as adjacency function
 fn test_graph_1() -> impl Fn(&N) -> AVLTreeSetStPer<N> {
     |v: &N| match *v {
-        1 => AVLTreeSetStPer::singleton(2).union(&AVLTreeSetStPer::singleton(3)),
-        2 => AVLTreeSetStPer::singleton(4),
-        3 => AVLTreeSetStPer::singleton(4).union(&AVLTreeSetStPer::singleton(5)),
-        4 => AVLTreeSetStPer::empty(),
-        5 => AVLTreeSetStPer::empty(),
-        _ => AVLTreeSetStPer::empty(),
+        | 1 => AVLTreeSetStPer::singleton(2).union(&AVLTreeSetStPer::singleton(3)),
+        | 2 => AVLTreeSetStPer::singleton(4),
+        | 3 => AVLTreeSetStPer::singleton(4).union(&AVLTreeSetStPer::singleton(5)),
+        | 4 => AVLTreeSetStPer::empty(),
+        | 5 => AVLTreeSetStPer::empty(),
+        | _ => AVLTreeSetStPer::empty(),
     }
 }
 
@@ -45,10 +45,10 @@ fn test_single_edge() {
 #[test]
 fn test_linear_chain() {
     let graph = |v: &N| match *v {
-        1 => AVLTreeSetStPer::singleton(2),
-        2 => AVLTreeSetStPer::singleton(3),
-        3 => AVLTreeSetStPer::singleton(4),
-        _ => AVLTreeSetStPer::empty(),
+        | 1 => AVLTreeSetStPer::singleton(2),
+        | 2 => AVLTreeSetStPer::singleton(3),
+        | 3 => AVLTreeSetStPer::singleton(4),
+        | _ => AVLTreeSetStPer::empty(),
     };
     let result = GraphSearchStPer::graph_search(&graph, 1, &SelectAll);
     assert_eq!(result.visited.size(), 4);
@@ -70,10 +70,10 @@ fn test_dag() {
 #[test]
 fn test_cycle() {
     let graph = |v: &N| match *v {
-        1 => AVLTreeSetStPer::singleton(2),
-        2 => AVLTreeSetStPer::singleton(3),
-        3 => AVLTreeSetStPer::singleton(1),
-        _ => AVLTreeSetStPer::empty(),
+        | 1 => AVLTreeSetStPer::singleton(2),
+        | 2 => AVLTreeSetStPer::singleton(3),
+        | 3 => AVLTreeSetStPer::singleton(1),
+        | _ => AVLTreeSetStPer::empty(),
     };
     let result = GraphSearchStPer::graph_search(&graph, 1, &SelectAll);
     assert_eq!(result.visited.size(), 3);
@@ -85,10 +85,10 @@ fn test_cycle() {
 #[test]
 fn test_disconnected_component() {
     let graph = |v: &N| match *v {
-        1 => AVLTreeSetStPer::singleton(2),
-        2 => AVLTreeSetStPer::empty(),
-        3 => AVLTreeSetStPer::singleton(4),
-        _ => AVLTreeSetStPer::empty(),
+        | 1 => AVLTreeSetStPer::singleton(2),
+        | 2 => AVLTreeSetStPer::empty(),
+        | 3 => AVLTreeSetStPer::singleton(4),
+        | _ => AVLTreeSetStPer::empty(),
     };
     let result = GraphSearchStPer::graph_search(&graph, 1, &SelectAll);
     assert_eq!(result.visited.size(), 2);

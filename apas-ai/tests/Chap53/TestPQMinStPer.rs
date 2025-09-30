@@ -7,9 +7,7 @@ use apas_ai::Chap53::PQMinStPer::PQMinStPer::*;
 use apas_ai::Types::Types::*;
 
 // Simple priority function: vertex value itself as priority
-fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> {
-    ClosurePriority::new(|v: &N| *v)
-}
+fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> { ClosurePriority::new(|v: &N| *v) }
 
 // Distance-based priority (for simulating shortest path)
 fn distance_priority(distances: AVLTreeSetStPer<Pair<N, N>>) -> impl PriorityFn<N, N> {
@@ -27,12 +25,12 @@ fn distance_priority(distances: AVLTreeSetStPer<Pair<N, N>>) -> impl PriorityFn<
 
 fn test_graph_1() -> impl Fn(&N) -> AVLTreeSetStPer<N> {
     |v: &N| match *v {
-        1 => AVLTreeSetStPer::singleton(2).union(&AVLTreeSetStPer::singleton(3)),
-        2 => AVLTreeSetStPer::singleton(4),
-        3 => AVLTreeSetStPer::singleton(4).union(&AVLTreeSetStPer::singleton(5)),
-        4 => AVLTreeSetStPer::empty(),
-        5 => AVLTreeSetStPer::empty(),
-        _ => AVLTreeSetStPer::empty(),
+        | 1 => AVLTreeSetStPer::singleton(2).union(&AVLTreeSetStPer::singleton(3)),
+        | 2 => AVLTreeSetStPer::singleton(4),
+        | 3 => AVLTreeSetStPer::singleton(4).union(&AVLTreeSetStPer::singleton(5)),
+        | 4 => AVLTreeSetStPer::empty(),
+        | 5 => AVLTreeSetStPer::empty(),
+        | _ => AVLTreeSetStPer::empty(),
     }
 }
 
@@ -77,17 +75,17 @@ fn test_pq_min_priority_order() {
     // Graph: 1 -> {2, 3}, 2 -> {4}, 3 -> {5}
     // With vertex value as priority, lower values visited first
     let graph = |v: &N| match *v {
-        1 => AVLTreeSetStPer::singleton(2).union(&AVLTreeSetStPer::singleton(3)),
-        2 => AVLTreeSetStPer::singleton(4),
-        3 => AVLTreeSetStPer::singleton(5),
-        _ => AVLTreeSetStPer::empty(),
+        | 1 => AVLTreeSetStPer::singleton(2).union(&AVLTreeSetStPer::singleton(3)),
+        | 2 => AVLTreeSetStPer::singleton(4),
+        | 3 => AVLTreeSetStPer::singleton(5),
+        | _ => AVLTreeSetStPer::empty(),
     };
     let prio_fn = vertex_priority();
     let result = PQMinStPer::pq_min(&graph, 1, &prio_fn);
-    
+
     // All reachable vertices should be visited
     assert_eq!(result.visited.size(), 5);
-    
+
     // Check priorities were recorded
     assert_eq!(result.priorities.size(), 5);
 }
@@ -98,7 +96,7 @@ fn test_pq_min_multi_source() {
     let sources = AVLTreeSetStPer::singleton(2).union(&AVLTreeSetStPer::singleton(5));
     let prio_fn = vertex_priority();
     let result = PQMinStPer::pq_min_multi(&graph, sources, &prio_fn);
-    
+
     assert_eq!(result.visited.size(), 3);
     assert!(result.visited.find(&2));
     assert!(result.visited.find(&4));
@@ -108,14 +106,14 @@ fn test_pq_min_multi_source() {
 #[test]
 fn test_pq_min_linear_chain() {
     let graph = |v: &N| match *v {
-        1 => AVLTreeSetStPer::singleton(2),
-        2 => AVLTreeSetStPer::singleton(3),
-        3 => AVLTreeSetStPer::singleton(4),
-        _ => AVLTreeSetStPer::empty(),
+        | 1 => AVLTreeSetStPer::singleton(2),
+        | 2 => AVLTreeSetStPer::singleton(3),
+        | 3 => AVLTreeSetStPer::singleton(4),
+        | _ => AVLTreeSetStPer::empty(),
     };
     let prio_fn = vertex_priority();
     let result = PQMinStPer::pq_min(&graph, 1, &prio_fn);
-    
+
     assert_eq!(result.visited.size(), 4);
     for i in 1..=4 {
         assert!(result.visited.find(&i));
@@ -125,14 +123,14 @@ fn test_pq_min_linear_chain() {
 #[test]
 fn test_pq_min_cycle() {
     let graph = |v: &N| match *v {
-        1 => AVLTreeSetStPer::singleton(2),
-        2 => AVLTreeSetStPer::singleton(3),
-        3 => AVLTreeSetStPer::singleton(1),
-        _ => AVLTreeSetStPer::empty(),
+        | 1 => AVLTreeSetStPer::singleton(2),
+        | 2 => AVLTreeSetStPer::singleton(3),
+        | 3 => AVLTreeSetStPer::singleton(1),
+        | _ => AVLTreeSetStPer::empty(),
     };
     let prio_fn = vertex_priority();
     let result = PQMinStPer::pq_min(&graph, 1, &prio_fn);
-    
+
     assert_eq!(result.visited.size(), 3);
     assert!(result.visited.find(&1));
     assert!(result.visited.find(&2));

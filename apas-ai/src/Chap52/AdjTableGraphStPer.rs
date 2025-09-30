@@ -3,8 +3,8 @@
 //! G = (V × V set) table - maps vertices to sets of their out-neighbors.
 
 pub mod AdjTableGraphStPer {
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     use crate::Chap43Claude::OrderedTableStPer::OrderedTableStPer::*;
     use crate::Types::Types::*;
 
@@ -35,14 +35,10 @@ pub mod AdjTableGraphStPer {
             }
         }
 
-        fn from_table(table: OrderedTableStPer<V, AVLTreeSetStPer<V>>) -> Self {
-            AdjTableGraphStPer { adj: table }
-        }
+        fn from_table(table: OrderedTableStPer<V, AVLTreeSetStPer<V>>) -> Self { AdjTableGraphStPer { adj: table } }
 
         // Work: Θ(1), Span: Θ(1) - table size
-        fn num_vertices(&self) -> N {
-            self.adj.size()
-        }
+        fn num_vertices(&self) -> N { self.adj.size() }
 
         // Work: Θ(n), Span: Θ(log n) - sum all neighbor set sizes
         fn num_edges(&self) -> N {
@@ -71,23 +67,21 @@ pub mod AdjTableGraphStPer {
         // Work: Θ(log n), Span: Θ(log n) - table lookup + set membership
         fn has_edge(&self, u: &V, v: &V) -> B {
             match self.adj.find(u) {
-                Some(neighbors) => neighbors.find(v),
-                None => false,
+                | Some(neighbors) => neighbors.find(v),
+                | None => false,
             }
         }
 
         // Work: Θ(log n), Span: Θ(log n) - table lookup
         fn out_neighbors(&self, u: &V) -> AVLTreeSetStPer<V> {
             match self.adj.find(u) {
-                Some(neighbors) => neighbors.clone(),
-                None => AVLTreeSetStPer::empty(),
+                | Some(neighbors) => neighbors.clone(),
+                | None => AVLTreeSetStPer::empty(),
             }
         }
 
         // Work: Θ(log n), Span: Θ(log n) - lookup + size
-        fn out_degree(&self, u: &V) -> N {
-            self.out_neighbors(u).size()
-        }
+        fn out_degree(&self, u: &V) -> N { self.out_neighbors(u).size() }
 
         // Work: Θ(log n), Span: Θ(log n) - insert empty neighbor set
         fn insert_vertex(&self, v: V) -> Self {
@@ -116,8 +110,8 @@ pub mod AdjTableGraphStPer {
         // Work: Θ(log n), Span: Θ(log n) - update neighbor set
         fn insert_edge(&self, u: V, v: V) -> Self {
             let neighbors = match self.adj.find(&u) {
-                Some(ns) => ns.insert(v.clone()),
-                None => AVLTreeSetStPer::singleton(v.clone()),
+                | Some(ns) => ns.insert(v.clone()),
+                | None => AVLTreeSetStPer::singleton(v.clone()),
             };
             let new_adj = self.adj.insert(u, neighbors);
             // Ensure v is in vertex set
@@ -132,12 +126,12 @@ pub mod AdjTableGraphStPer {
         // Work: Θ(log n), Span: Θ(log n)
         fn delete_edge(&self, u: &V, v: &V) -> Self {
             match self.adj.find(u) {
-                Some(neighbors) => {
+                | Some(neighbors) => {
                     let new_neighbors = neighbors.delete(v);
                     let new_adj = self.adj.insert(u.clone(), new_neighbors);
                     AdjTableGraphStPer { adj: new_adj }
                 }
-                None => self.clone(),
+                | None => self.clone(),
             }
         }
     }

@@ -10,14 +10,12 @@ pub mod LabUnDirGraphStEph {
     use crate::Types::Types::*;
 
     #[derive(Clone)]
-    pub struct LabUnDirGraphStEph<V: HashOrd, L: StT + Hash>
-    {
+    pub struct LabUnDirGraphStEph<V: HashOrd, L: StT + Hash> {
         vertices: Set<V>,
         labeled_edges: Set<LabEdge<V, L>>,
     }
 
-    pub trait LabUnDirGraphStEphTrait<V: HashOrd, L: StT + Hash>
-    {
+    pub trait LabUnDirGraphStEphTrait<V: HashOrd, L: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn empty() -> Self;
@@ -53,8 +51,7 @@ pub mod LabUnDirGraphStEph {
         fn normalize_edge(v1: V, v2: V) -> LabEdge<V, L>;
     }
 
-    impl<V: HashOrd, L: StT + Hash> LabUnDirGraphStEphTrait<V, L> for LabUnDirGraphStEph<V, L>
-    {
+    impl<V: HashOrd, L: StT + Hash> LabUnDirGraphStEphTrait<V, L> for LabUnDirGraphStEph<V, L> {
         fn empty() -> Self {
             LabUnDirGraphStEph {
                 vertices: Set::empty(),
@@ -69,13 +66,9 @@ pub mod LabUnDirGraphStEph {
             }
         }
 
-        fn vertices(&self) -> &Set<V> {
-            &self.vertices
-        }
+        fn vertices(&self) -> &Set<V> { &self.vertices }
 
-        fn labeled_edges(&self) -> &Set<LabEdge<V, L>> {
-            &self.labeled_edges
-        }
+        fn labeled_edges(&self) -> &Set<LabEdge<V, L>> { &self.labeled_edges }
 
         fn edges(&self) -> Set<Edge<V>> {
             let mut edges = Set::empty();
@@ -85,9 +78,7 @@ pub mod LabUnDirGraphStEph {
             edges
         }
 
-        fn add_vertex(&mut self, v: V) {
-            self.vertices.insert(v);
-        }
+        fn add_vertex(&mut self, v: V) { self.vertices.insert(v); }
 
         fn add_labeled_edge(&mut self, v1: V, v2: V, label: L) {
             self.vertices.insert(v1.clone());
@@ -143,48 +134,33 @@ pub mod LabUnDirGraphStEph {
     }
 
     // DirGraphStEph-compatible interface for labeled undirected graphs
-    impl<V: HashOrd, L: StT + Hash> LabUnDirGraphStEph<V, L>
-    {
+    impl<V: HashOrd, L: StT + Hash> LabUnDirGraphStEph<V, L> {
         /// Arc count (alias for edge count in undirected graphs)
-        pub fn sizeA(&self) -> N {
-            self.labeled_edges().size()
-        }
+        pub fn sizeA(&self) -> N { self.labeled_edges().size() }
 
         /// Arcs (alias for edges in undirected graphs)
-        pub fn arcs(&self) -> Set<LabEdge<V, L>> {
-            self.labeled_edges().clone()
-        }
+        pub fn arcs(&self) -> Set<LabEdge<V, L>> { self.labeled_edges().clone() }
 
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NPlus(&self, v: &V) -> Set<V> {
-            self.neighbors(v)
-        }
+        pub fn NPlus(&self, v: &V) -> Set<V> { self.neighbors(v) }
 
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NMinus(&self, v: &V) -> Set<V> {
-            self.neighbors(v)
-        }
+        pub fn NMinus(&self, v: &V) -> Set<V> { self.neighbors(v) }
 
         /// Degree (in undirected graphs, in-degree equals total degree)
-        pub fn InDegree(&self, v: &V) -> N {
-            self.neighbors(v).size()
-        }
+        pub fn InDegree(&self, v: &V) -> N { self.neighbors(v).size() }
 
         /// Degree (in undirected graphs, out-degree equals total degree)
-        pub fn OutDegree(&self, v: &V) -> N {
-            self.neighbors(v).size()
-        }
+        pub fn OutDegree(&self, v: &V) -> N { self.neighbors(v).size() }
     }
 
-    impl<V: HashOrd, L: StT + Hash> Display for LabUnDirGraphStEph<V, L>
-    {
+    impl<V: HashOrd, L: StT + Hash> Display for LabUnDirGraphStEph<V, L> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "LabUnDirGraph(V: {}, E: {})", self.vertices, self.labeled_edges)
         }
     }
 
-    impl<V: HashOrd, L: StT + Hash> Debug for LabUnDirGraphStEph<V, L>
-    {
+    impl<V: HashOrd, L: StT + Hash> Debug for LabUnDirGraphStEph<V, L> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(
                 f,

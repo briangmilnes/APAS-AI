@@ -2,13 +2,10 @@
 //! Tests for Minimum Edit Distance.
 
 use apas_ai::{
-    Chap49::MinEditDistStPer::MinEditDistStPer::*,
-    Chap49::MinEditDistStEph::MinEditDistStEph::*,
-    Chap49::MinEditDistMtPer::MinEditDistMtPer::*,
-    Chap49::MinEditDistMtEph::MinEditDistMtEph::*,
-    ArraySeqStPerS, ArraySeqStEphS, ArraySeqMtEphSLit,
-    MinEditDistStPerLit, MinEditDistStEphLit, MinEditDistMtPerLit, MinEditDistMtEphLit,
-    Types::Types::Pair,
+    ArraySeqMtEphSLit, ArraySeqStEphS, ArraySeqStPerS, Chap49::MinEditDistMtEph::MinEditDistMtEph::*,
+    Chap49::MinEditDistMtPer::MinEditDistMtPer::*, Chap49::MinEditDistStEph::MinEditDistStEph::*,
+    Chap49::MinEditDistStPer::MinEditDistStPer::*, MinEditDistMtEphLit, MinEditDistMtPerLit, MinEditDistStEphLit,
+    MinEditDistStPerLit, Types::Types::Pair,
 };
 
 #[cfg(test)]
@@ -24,7 +21,7 @@ mod tests {
             source: ['A', 'B', 'C', 'A', 'D', 'A'],
             target: ['A', 'B', 'A', 'D', 'C']
         );
-        
+
         assert_eq!(solver.min_edit_distance(), 3);
     }
 
@@ -36,21 +33,21 @@ mod tests {
             target: ['A', 'B', 'C']
         );
         assert_eq!(solver1.min_edit_distance(), 0);
-        
+
         // Empty to non-empty (all insertions)
         let solver2 = MinEditDistStPerLit!(
             source: [],
             target: ['A', 'B', 'C']
         );
         assert_eq!(solver2.min_edit_distance(), 3);
-        
+
         // Non-empty to empty (all deletions)
         let solver3 = MinEditDistStPerLit!(
             source: ['A', 'B', 'C'],
             target: []
         );
         assert_eq!(solver3.min_edit_distance(), 3);
-        
+
         // Both empty
         let solver4: MinEditDistStPerS<char> = MinEditDistStPerLit!(
             source: [],
@@ -67,14 +64,14 @@ mod tests {
             target: ['A', 'X', 'B']
         );
         assert_eq!(solver1.min_edit_distance(), 1);
-        
+
         // Single deletion
         let solver2 = MinEditDistStPerLit!(
             source: ['A', 'X', 'B'],
             target: ['A', 'B']
         );
         assert_eq!(solver2.min_edit_distance(), 1);
-        
+
         // Single substitution (delete + insert)
         let solver3 = MinEditDistStPerLit!(
             source: ['A', 'X', 'B'],
@@ -89,9 +86,9 @@ mod tests {
             source: ['A', 'B', 'C'],
             target: ['A', 'B', 'D']
         );
-        
+
         assert_eq!(solver.min_edit_distance(), 2); // Delete C, Insert D
-        
+
         // Test ephemeral mutation
         solver.set_target(2, 'C'); // Change target back to ['A', 'B', 'C']
         assert_eq!(solver.min_edit_distance(), 0); // Now identical
@@ -103,7 +100,7 @@ mod tests {
             source: ['A', 'B', 'C', 'A', 'D', 'A'],
             target: ['A', 'B', 'A', 'D', 'C']
         );
-        
+
         assert_eq!(solver.min_edit_distance(), 3);
     }
 
@@ -113,9 +110,9 @@ mod tests {
             source: ['A', 'B', 'C'],
             target: ['A', 'B', 'D']
         );
-        
+
         assert_eq!(solver.min_edit_distance(), 2);
-        
+
         // Test ephemeral mutation
         solver.set_source(2, 'D'); // Change source to ['A', 'B', 'D']
         assert_eq!(solver.min_edit_distance(), 0); // Now identical
@@ -128,7 +125,7 @@ mod tests {
             source: ['k', 'i', 't', 't', 'e', 'n'],
             target: ['s', 'i', 't', 't', 'i', 'n', 'g']
         );
-        
+
         // kitten -> sitting: substitute k->s, substitute e->i, insert g
         let distance = solver.min_edit_distance();
         assert!(distance <= 5); // Upper bound check (exact value depends on algorithm choices)
@@ -142,14 +139,14 @@ mod tests {
             target: ['B']
         );
         assert_eq!(solver1.min_edit_distance(), 2); // Delete A, Insert B
-        
+
         // One character vs empty
         let solver2 = MinEditDistStPerLit!(
             source: ['A'],
             target: []
         );
         assert_eq!(solver2.min_edit_distance(), 1); // Delete A
-        
+
         // Empty vs one character
         let solver3 = MinEditDistStPerLit!(
             source: [],
@@ -164,7 +161,7 @@ mod tests {
             source: ['A', 'B'],
             target: ['C', 'D']
         );
-        
+
         let display_str = format!("{}", solver);
         assert!(display_str.contains("MinEditDistStPer"));
         assert!(display_str.contains("source"));
@@ -178,7 +175,7 @@ mod tests {
             source: ['A', 'B'],
             target: ['C', 'D']
         );
-        
+
         let pairs: Vec<Pair<char, char>> = solver.into_iter().collect();
         assert_eq!(pairs.len(), 2);
         assert_eq!(pairs[0], Pair('A', 'C'));
@@ -191,7 +188,7 @@ mod tests {
             source: ['A', 'B', 'C'],
             target: ['X', 'Y']
         );
-        
+
         assert_eq!(solver.source().length(), 3);
         assert_eq!(solver.target().length(), 2);
         assert_eq!(solver.memo_size(), 0); // No computation done yet
@@ -203,23 +200,23 @@ mod tests {
             source: ['A', 'B'],
             target: ['A', 'C']
         );
-        
+
         // Initial state
         assert_eq!(solver.min_edit_distance(), 2); // Delete B, Insert C
-        
+
         // Mutate source
         solver.set_source(1, 'C'); // Change B to C
         assert_eq!(solver.min_edit_distance(), 0); // Now identical
-        
+
         // Mutate target
         solver.set_target(1, 'D'); // Change C to D
         assert_eq!(solver.min_edit_distance(), 2); // Delete C, Insert D
-        
+
         // Test mutable accessors
         let _ = solver.source_mut().set(0, 'X');
         let _ = solver.target_mut().set(0, 'Y');
         assert_eq!(solver.min_edit_distance(), 4); // X->Y, C->D
-        
+
         // Clear memo
         solver.clear_memo();
         assert_eq!(solver.memo_size(), 0);
@@ -229,28 +226,24 @@ mod tests {
     fn test_min_edit_distance_mt_thread_safety() {
         use std::sync::Arc;
         use std::thread;
-        
+
         let solver = Arc::new(MinEditDistMtPerLit!(
             source: ['A', 'B', 'C'],
             target: ['X', 'Y', 'Z']
         ));
-        
+
         let mut handles = vec![];
-        
+
         // Spawn multiple threads computing the same distance
         for _ in 0..5 {
             let solver_clone = Arc::clone(&solver);
-            let handle = thread::spawn(move || {
-                solver_clone.min_edit_distance()
-            });
+            let handle = thread::spawn(move || solver_clone.min_edit_distance());
             handles.push(handle);
         }
-        
+
         // Collect results
-        let results: Vec<usize> = handles.into_iter()
-            .map(|h| h.join().unwrap())
-            .collect();
-        
+        let results: Vec<usize> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+
         // All results should be the same
         assert!(results.iter().all(|&x| x == results[0]));
         assert_eq!(results[0], 6); // Delete A,B,C and Insert X,Y,Z
@@ -262,11 +255,11 @@ mod tests {
             source: ['A', 'B', 'C'],
             target: ['A', 'X', 'C']
         );
-        
+
         // First call should populate memo
         let result1 = solver.min_edit_distance();
         assert_eq!(result1, 2); // Delete B, Insert X
-        
+
         // Second call should use memoized results
         let result2 = solver.min_edit_distance();
         assert_eq!(result2, 2);
@@ -286,7 +279,7 @@ mod tests {
             source: ['A', 'B'],
             target: ['C', 'E']
         );
-        
+
         assert_eq!(solver1, solver2);
         assert_ne!(solver1, solver3);
     }
@@ -294,12 +287,12 @@ mod tests {
     #[test]
     fn test_min_edit_distance_longer_sequences() {
         // Test with longer sequences to verify dynamic programming efficiency
-        
+
         let solver = MinEditDistStPerLit!(
             source: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
             target: ['A', 'X', 'C', 'Y', 'E', 'Z', 'G', 'W']
         );
-        
+
         let distance = solver.min_edit_distance();
         // Should be efficient due to memoization
         assert!(distance > 0);
@@ -313,9 +306,8 @@ mod tests {
             source: [1, 2, 3, 4],
             target: [1, 5, 3, 6]
         );
-        
+
         let distance = solver.min_edit_distance();
         assert_eq!(distance, 4); // Delete 2,4 and Insert 5,6
     }
 }
-

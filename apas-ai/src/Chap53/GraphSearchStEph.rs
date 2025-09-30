@@ -18,9 +18,7 @@ pub mod GraphSearchStEph {
 
     pub struct SelectAll;
     impl<V: StT + Ord> SelectionStrategy<V> for SelectAll {
-        fn select(&self, frontier: &AVLTreeSetStEph<V>) -> (AVLTreeSetStEph<V>, B) {
-            (frontier.clone(), false)
-        }
+        fn select(&self, frontier: &AVLTreeSetStEph<V>) -> (AVLTreeSetStEph<V>, B) { (frontier.clone(), false) }
     }
 
     pub struct SelectOne;
@@ -42,11 +40,7 @@ pub mod GraphSearchStEph {
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             S: SelectionStrategy<V>;
 
-        fn graph_search_multi<G, S>(
-            graph: &G,
-            sources: AVLTreeSetStEph<V>,
-            strategy: &S,
-        ) -> SearchResult<V>
+        fn graph_search_multi<G, S>(graph: &G, sources: AVLTreeSetStEph<V>, strategy: &S) -> SearchResult<V>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             S: SelectionStrategy<V>;
@@ -68,11 +62,7 @@ pub mod GraphSearchStEph {
             Self::graph_search_multi(graph, sources, strategy)
         }
 
-        fn graph_search_multi<G, S>(
-            graph: &G,
-            sources: AVLTreeSetStEph<V>,
-            strategy: &S,
-        ) -> SearchResult<V>
+        fn graph_search_multi<G, S>(graph: &G, sources: AVLTreeSetStEph<V>, strategy: &S) -> SearchResult<V>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             S: SelectionStrategy<V>,
@@ -109,10 +99,7 @@ pub mod GraphSearchStEph {
 
             let visited = explore(graph, strategy, AVLTreeSetStEph::empty(), sources);
 
-            SearchResult {
-                visited,
-                parent: None,
-            }
+            SearchResult { visited, parent: None }
         }
 
         fn reachable<G>(graph: &G, source: V) -> AVLTreeSetStEph<V>
