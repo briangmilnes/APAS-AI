@@ -1109,6 +1109,39 @@ path = "tests/Chap27/TestReduceContractMtEph.rs"
 name = "TestScanContractMtEph"
 path = "tests/Chap27/TestScanContractMtEph.rs"
 
+# Chapter 28 Tests
+[[test]]
+name = "TestMaxContigSubSumBruteStEph"
+path = "tests/Chap28/TestMaxContigSubSumBruteStEph.rs"
+
+[[test]]
+name = "TestMaxContigSubSumReducedStEph"
+path = "tests/Chap28/TestMaxContigSubSumReducedStEph.rs"
+
+[[test]]
+name = "TestMaxContigSubSumOptStEph"
+path = "tests/Chap28/TestMaxContigSubSumOptStEph.rs"
+
+[[test]]
+name = "TestMaxContigSubSumOptMtEph"
+path = "tests/Chap28/TestMaxContigSubSumOptMtEph.rs"
+
+[[test]]
+name = "TestMaxContigSubSumDivConStEph"
+path = "tests/Chap28/TestMaxContigSubSumDivConStEph.rs"
+
+[[test]]
+name = "TestMaxContigSubSumDivConMtEph"
+path = "tests/Chap28/TestMaxContigSubSumDivConMtEph.rs"
+
+[[test]]
+name = "TestMaxContigSubSumDivConOptStEph"
+path = "tests/Chap28/TestMaxContigSubSumDivConOptStEph.rs"
+
+[[test]]
+name = "TestMaxContigSubSumDivConOptMtEph"
+path = "tests/Chap28/TestMaxContigSubSumDivConOptMtEph.rs"
+
 # Chapter 26 Benchmarks
 [[bench]]
 name = "BenchMergeSortSt"

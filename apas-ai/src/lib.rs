@@ -101,6 +101,17 @@ pub mod Chap27 {
     pub mod ScanContractStEph;
 }
 
+pub mod Chap28 {
+    pub mod MaxContigSubSumBruteStEph;
+    pub mod MaxContigSubSumDivConMtEph;
+    pub mod MaxContigSubSumDivConOptMtEph;
+    pub mod MaxContigSubSumDivConOptStEph;
+    pub mod MaxContigSubSumDivConStEph;
+    pub mod MaxContigSubSumOptMtEph;
+    pub mod MaxContigSubSumOptStEph;
+    pub mod MaxContigSubSumReducedStEph;
+}
+
 pub mod Chap36 {
     pub mod QuickSortMt;
     pub mod QuickSortMtSlice;
