@@ -3,8 +3,8 @@
 
 use apas_ai::{
     Chap50::{
-        OBSTStPer::OBSTStPer::{OBSTStPerS, OBSTStPerTrait, KeyProb as OBSTStPerKeyProb},
-        OBSTStEph::OBSTStEph::{OBSTStEphS, OBSTStEphTrait, KeyProb as OBSTStEphKeyProb},
+        OptBinSearchTreeStPer::OptBinSearchTreeStPer::{OBSTStPerS, OBSTStPerTrait, KeyProb as OBSTStPerKeyProb},
+        OptBinSearchTreeStEph::OptBinSearchTreeStEph::{OBSTStEphS, OBSTStEphTrait, KeyProb as OBSTStEphKeyProb},
         Probability::Probability,
     },
     prob, OBSTStPerLit,

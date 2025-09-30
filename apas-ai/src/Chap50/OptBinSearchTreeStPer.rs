@@ -10,7 +10,7 @@ use crate::{
     prob,
 };
 
-pub mod OBSTStPer {
+pub mod OptBinSearchTreeStPer {
     use super::*;
 
     /// Key-probability pair for optimal BST
@@ -185,12 +185,12 @@ pub mod OBSTStPer {
 #[macro_export]
 macro_rules! OBSTStPerLit {
     (keys: [$($k:expr),* $(,)?], probs: [$($p:expr),* $(,)?]) => {
-        $crate::Chap50::OBSTStPer::OBSTStPer::OBSTStPerS::from_keys_probs(
+        $crate::Chap50::OptBinSearchTreeStPer::OptBinSearchTreeStPer::OBSTStPerS::from_keys_probs(
             vec![$($k),*],
             vec![$(prob!($p)),*]
         )
     };
     () => {
-        $crate::Chap50::OBSTStPer::OBSTStPer::OBSTStPerS::new()
+        $crate::Chap50::OptBinSearchTreeStPer::OptBinSearchTreeStPer::OBSTStPerS::new()
     };
 }

@@ -877,8 +877,8 @@ name = "TestMinEditDist"
 path = "tests/TestMinEditDist.rs"
 
 [[test]]
-name = "TestOBST"
-path = "tests/TestOBST.rs"
+name = "TestOptBinSearchTree"
+path = "tests/TestOptBinSearchTree.rs"
 
 [[test]]
 name = "TestMatrixChain"
@@ -988,8 +988,8 @@ path = "benches/BenchSubsetSum.rs"
 harness = false
 
 [[bench]]
-name = "BenchOBST"
-path = "benches/BenchOBST.rs"
+name = "BenchOptBinSearchTree"
+path = "benches/BenchOptBinSearchTree.rs"
 harness = false
 
 [[bench]]

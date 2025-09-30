@@ -1,4 +1,7 @@
-//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.\n//! Tests for Chap43Claude OrderedTableMtEph.\n\nuse apas_ai::Chap43Claude::OrderedTableMtEph::OrderedTableMtEph::*;
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Tests for Chap43Claude OrderedTableMtEph.
+
+use apas_ai::Chap43Claude::OrderedTableMtEph::OrderedTableMtEph::*;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::{AVLTreeSeqStPerTrait, AVLTreeSeqStPerS};
 use apas_ai::Types::Types::*;
 use std::sync::Arc;

@@ -10,7 +10,7 @@ use crate::{
     prob,
 };
 
-pub mod OBSTStEph {
+pub mod OptBinSearchTreeStEph {
     use super::*;
 
     /// Key-probability pair for optimal BST

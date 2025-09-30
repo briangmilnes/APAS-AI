@@ -215,10 +215,10 @@ pub mod Chap49 {
 
     pub mod Chap50 {
         pub mod Probability;
-        pub mod OBSTStPer;
-        pub mod OBSTStEph;
-        pub mod OBSTMtPer;
-        pub mod OBSTMtEph;
+        pub mod OptBinSearchTreeStPer;
+        pub mod OptBinSearchTreeStEph;
+        pub mod OptBinSearchTreeMtPer;
+        pub mod OptBinSearchTreeMtEph;
         pub mod MatrixChainStPer;
         pub mod MatrixChainStEph;
         pub mod MatrixChainMtPer;

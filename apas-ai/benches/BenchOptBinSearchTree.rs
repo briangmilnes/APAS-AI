@@ -4,8 +4,8 @@
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use apas_ai::{
     Chap50::{
-        OBSTStPer::OBSTStPer::*,
-        OBSTStEph::OBSTStEph::*,
+        OptBinSearchTreeStPer::OptBinSearchTreeStPer::*,
+        OptBinSearchTreeStEph::OptBinSearchTreeStEph::*,
         Probability::Probability,
     },
     prob,

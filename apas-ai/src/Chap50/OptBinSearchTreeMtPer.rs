@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-//! Multi-threaded ephemeral optimal binary search tree implementation using Vec and Arc<Mutex<Vec>> for mutable thread safety.
+//! Multi-threaded persistent optimal binary search tree implementation using Vec and Arc for thread safety.
 
-pub mod OBSTMtEph {
+pub mod OptBinSearchTreeMtPer {
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::sync::{Arc, Mutex};
@@ -17,15 +17,15 @@ pub mod OBSTMtEph {
         pub prob: Probability,
     }
 
-    /// Ephemeral multi-threaded optimal binary search tree solver using parallel dynamic programming
+    /// Persistent multi-threaded optimal binary search tree solver using parallel dynamic programming
     #[derive(Clone, Debug)]
-    pub struct OBSTMtEphS<T: MtVal> {
-        keys: Arc<Mutex<Vec<KeyProb<T>>>>,
+    pub struct OBSTMtPerS<T: MtVal> {
+        keys: Arc<Vec<KeyProb<T>>>,
         memo: Arc<Mutex<HashMap<(usize, usize), Probability>>>,
     }
 
     /// Trait for parallel optimal BST operations
-    pub trait OBSTMtEphTrait<T: MtVal> {
+    pub trait OBSTMtPerTrait<T: MtVal> {
         /// Create new optimal BST solver
         fn new() -> Self;
         
@@ -38,30 +38,21 @@ pub mod OBSTMtEph {
         /// Compute optimal BST cost using parallel dynamic programming
         /// Claude Work: O(n³) where n=number of keys
         /// Claude Span: O(n log n) with parallel reduction
-        fn optimal_cost(&mut self) -> Probability
+        fn optimal_cost(&self) -> Probability
         where
             T: Send + Sync + 'static;
             
-        /// Get a copy of the keys with probabilities (thread-safe)
-        fn keys(&self) -> Vec<KeyProb<T>>;
-        
-        /// Set key-probability pair at index
-        fn set_key_prob(&mut self, index: usize, key_prob: KeyProb<T>);
-        
-        /// Update probability for key at index
-        fn update_prob(&mut self, index: usize, prob: Probability);
+        /// Get the keys with probabilities
+        fn keys(&self) -> &Arc<Vec<KeyProb<T>>>;
         
         /// Get number of keys
         fn num_keys(&self) -> usize;
-        
-        /// Clear memoization table
-        fn clear_memo(&mut self);
         
         /// Get memoization table size
         fn memo_size(&self) -> usize;
     }
 
-    impl<T: MtVal> OBSTMtEphS<T> {
+    impl<T: MtVal> OBSTMtPerS<T> {
         /// Parallel reduction to find minimum cost among root choices
         /// Claude Work: O(n) - n comparisons
         /// Claude Span: O(log n) - parallel reduction tree
@@ -112,12 +103,10 @@ pub mod OBSTMtEph {
             let result = if l == 0 {
                 Probability::zero() // Base case: empty subsequence
             } else {
-                // Sum probabilities for this subsequence (thread-safe access)
-                let prob_sum: Probability = {
-                    let keys_guard = self.keys.lock().unwrap();
-                    (0..l).map(|k| keys_guard[i + k].prob)
-                        .fold(Probability::zero(), |acc, p| acc + p)
-                };
+                // Sum probabilities for this subsequence
+                let prob_sum: Probability = (0..l)
+                    .map(|k| self.keys[i + k].prob)
+                    .fold(Probability::zero(), |acc, p| acc + p);
                 
                 // Compute costs for each possible root in parallel
                 let costs: Vec<Probability> = (0..l)
@@ -144,10 +133,10 @@ pub mod OBSTMtEph {
         }
     }
 
-    impl<T: MtVal> OBSTMtEphTrait<T> for OBSTMtEphS<T> {
+    impl<T: MtVal> OBSTMtPerTrait<T> for OBSTMtPerS<T> {
         fn new() -> Self {
             Self {
-                keys: Arc::new(Mutex::new(Vec::new())),
+                keys: Arc::new(Vec::new()),
                 memo: Arc::new(Mutex::new(HashMap::new())),
             }
         }
@@ -158,28 +147,23 @@ pub mod OBSTMtEph {
                 .collect();
             
             Self {
-                keys: Arc::new(Mutex::new(key_probs)),
+                keys: Arc::new(key_probs),
                 memo: Arc::new(Mutex::new(HashMap::new())),
             }
         }
 
         fn from_key_probs(key_probs: Vec<KeyProb<T>>) -> Self {
             Self {
-                keys: Arc::new(Mutex::new(key_probs)),
+                keys: Arc::new(key_probs),
                 memo: Arc::new(Mutex::new(HashMap::new())),
             }
         }
 
-        fn optimal_cost(&mut self) -> Probability
+        fn optimal_cost(&self) -> Probability
         where
             T: Send + Sync + 'static,
         {
-            let keys_len = {
-                let keys_guard = self.keys.lock().unwrap();
-                keys_guard.len()
-            };
-            
-            if keys_len == 0 {
+            if self.keys.is_empty() {
                 return Probability::zero();
             }
             
@@ -189,42 +173,16 @@ pub mod OBSTMtEph {
                 memo_guard.clear();
             }
             
-            self.obst_rec(0, keys_len)
+            let n = self.keys.len();
+            self.obst_rec(0, n)
         }
 
-        fn keys(&self) -> Vec<KeyProb<T>> {
-            let keys_guard = self.keys.lock().unwrap();
-            keys_guard.clone()
-        }
-
-        fn set_key_prob(&mut self, index: usize, key_prob: KeyProb<T>) {
-            {
-                let mut keys_guard = self.keys.lock().unwrap();
-                keys_guard[index] = key_prob;
-            }
-            // Clear memo since keys changed
-            let mut memo_guard = self.memo.lock().unwrap();
-            memo_guard.clear();
-        }
-
-        fn update_prob(&mut self, index: usize, prob: Probability) {
-            {
-                let mut keys_guard = self.keys.lock().unwrap();
-                keys_guard[index].prob = prob;
-            }
-            // Clear memo since probabilities changed
-            let mut memo_guard = self.memo.lock().unwrap();
-            memo_guard.clear();
+        fn keys(&self) -> &Arc<Vec<KeyProb<T>>> {
+            &self.keys
         }
 
         fn num_keys(&self) -> usize {
-            let keys_guard = self.keys.lock().unwrap();
-            keys_guard.len()
-        }
-
-        fn clear_memo(&mut self) {
-            let mut memo_guard = self.memo.lock().unwrap();
-            memo_guard.clear();
+            self.keys.len()
         }
 
         fn memo_size(&self) -> usize {
@@ -233,65 +191,44 @@ pub mod OBSTMtEph {
         }
     }
 
-    impl<T: MtVal> PartialEq for OBSTMtEphS<T> {
+    impl<T: MtVal> PartialEq for OBSTMtPerS<T> {
         fn eq(&self, other: &Self) -> bool {
-            // Compare the contents of the Arc<Mutex<Vec>>
-            let self_keys = self.keys.lock().unwrap();
-            let other_keys = other.keys.lock().unwrap();
-            *self_keys == *other_keys
+            self.keys == other.keys
         }
     }
 
-    impl<T: MtVal> Eq for OBSTMtEphS<T> {}
+    impl<T: MtVal> Eq for OBSTMtPerS<T> {}
 
-    impl<T: MtVal> Display for OBSTMtEphS<T> {
+    impl<T: MtVal> Display for OBSTMtPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             let memo_size = {
                 let memo_guard = self.memo.lock().unwrap();
                 memo_guard.len()
             };
-            let keys_len = {
-                let keys_guard = self.keys.lock().unwrap();
-                keys_guard.len()
-            };
-            write!(f, "OBSTMtEph(keys: {}, memo_entries: {})", 
-                   keys_len, memo_size)
+            write!(f, "OBSTMtPer(keys: {}, memo_entries: {})", 
+                   self.keys.len(), memo_size)
         }
     }
 
-    impl<T: MtVal> IntoIterator for OBSTMtEphS<T> {
+    impl<T: MtVal> IntoIterator for OBSTMtPerS<T> {
         type Item = KeyProb<T>;
         type IntoIter = std::vec::IntoIter<KeyProb<T>>;
 
         fn into_iter(self) -> Self::IntoIter {
-            // Extract Vec from Arc<Mutex<Vec>> - this consumes the Arc
+            // Extract Vec from Arc - this consumes the Arc
             match Arc::try_unwrap(self.keys) {
-                Ok(mutex) => mutex.into_inner().unwrap().into_iter(),
-                Err(arc) => {
-                    let keys_guard = arc.lock().unwrap();
-                    keys_guard.clone().into_iter()
-                }
+                Ok(vec) => vec.into_iter(),
+                Err(arc) => (*arc).clone().into_iter(),
             }
         }
     }
 
-    impl<'a, T: MtVal> IntoIterator for &'a OBSTMtEphS<T> {
+    impl<'a, T: MtVal> IntoIterator for &'a OBSTMtPerS<T> {
         type Item = KeyProb<T>;
-        type IntoIter = std::vec::IntoIter<KeyProb<T>>;
+        type IntoIter = std::iter::Cloned<std::slice::Iter<'a, KeyProb<T>>>;
 
         fn into_iter(self) -> Self::IntoIter {
-            let keys_guard = self.keys.lock().unwrap();
-            keys_guard.clone().into_iter()
-        }
-    }
-
-    impl<'a, T: MtVal> IntoIterator for &'a mut OBSTMtEphS<T> {
-        type Item = KeyProb<T>;
-        type IntoIter = std::vec::IntoIter<KeyProb<T>>;
-
-        fn into_iter(self) -> Self::IntoIter {
-            let keys_guard = self.keys.lock().unwrap();
-            keys_guard.clone().into_iter()
+            self.keys.iter().cloned()
         }
     }
 
@@ -310,22 +247,22 @@ pub mod OBSTMtEph {
     }
 
     #[allow(dead_code)]
-    fn _OBSTMtEphLit_type_checks() {
+    fn _OBSTMtPerLit_type_checks() {
         let keys = vec!['k', '1', 'k', '2'];
         let probs = vec![Probability::new(0.125), Probability::new(0.5)];
-        let _: OBSTMtEphS<char> = OBSTMtEphS::from_keys_probs(keys, probs);
+        let _: OBSTMtPerS<char> = OBSTMtPerS::from_keys_probs(keys, probs);
     }
 }
 
 #[macro_export]
-macro_rules! OBSTMtEphLit {
+macro_rules! OBSTMtPerLit {
     (keys: [$($k:expr),* $(,)?], probs: [$($p:expr),* $(,)?]) => {
-        $crate::Chap50::OBSTMtEph::OBSTMtEph::OBSTMtEphS::from_keys_probs(
+        $crate::Chap50::OBSTMtPer::OBSTMtPer::OBSTMtPerS::from_keys_probs(
             vec![$($k),*],
             vec![$($crate::Chap50::Probability::Probability::new($p)),*]
         )
     };
     () => {
-        $crate::Chap50::OBSTMtEph::OBSTMtEph::OBSTMtEphS::new()
+        $crate::Chap50::OBSTMtPer::OBSTMtPer::OBSTMtPerS::new()
     };
 }
