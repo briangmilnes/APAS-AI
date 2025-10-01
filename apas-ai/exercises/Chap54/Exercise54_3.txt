@@ -1,0 +1,58 @@
+Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+
+Exercise 54.3: Prove queue-based BFS implementation is correct
+
+The queue-based implementation uses a standard FIFO queue instead of a priority queue,
+exploiting the fact that distances increase monotonically.
+
+Claim: If vertices are added to a FIFO queue in order of their distances, then popping
+from the front always gives a vertex with minimum distance among those in the queue.
+
+Proof of Queue-Based Implementation:
+
+**Key Observation**: In BFS, when we visit a vertex u at distance d, all its neighbors
+have distance d+1. Since we process vertices in non-decreasing distance order, we never
+add a vertex with distance < d to the frontier after processing a vertex at distance d.
+
+**Invariant**: The queue maintains the property that distances are non-decreasing from
+front to back. Formally, if vertices v₁, v₂, ..., vₖ are in the queue (front to back),
+then distance(v₁) ≤ distance(v₂) ≤ ... ≤ distance(vₖ).
+
+**Proof of Invariant**:
+
+1. **Initialization**: Queue starts with source s at distance 0. Invariant holds trivially.
+
+2. **Inductive Step**: Assume invariant holds. When we pop vertex u at distance d from
+   front of queue:
+   
+   - All remaining vertices in queue have distance ≥ d (by invariant)
+   - We add u's unvisited neighbors to the back of queue with distance d+1
+   - All neighbors have distance d+1 ≥ d
+   - Since the queue had distances ≥ d, and we're adding distances = d+1 to the back,
+     the invariant is preserved
+
+3. **Layer Processing**: Within a single distance layer (all vertices at distance d):
+   - They are all added to queue before any vertex at distance d+1 is added
+   - They are all processed before any vertex at distance d+1 is processed
+   - This ensures the "layered" property of BFS
+
+**Correctness of FIFO vs Priority Queue**:
+
+The priority queue in the generic description selects the vertex with minimum distance.
+The FIFO queue achieves the same result because:
+
+- By the invariant, the front of queue always has minimum distance
+- pop_front() is equivalent to selecting vertex with minimum distance
+- push_back() maintains the non-decreasing distance property
+
+**Complexity**:
+
+- Priority queue operations: O(log |F|) per operation
+- FIFO queue operations: O(1) per operation
+- Both achieve O(|V| + |E|) total work, but queue-based is faster in practice
+
+Conclusion: The queue-based implementation is correct because the non-decreasing
+distance invariant guarantees that the front of the queue always contains a vertex
+with minimum distance, making it functionally equivalent to using a priority queue
+while being more efficient (constant-time operations instead of logarithmic).
+

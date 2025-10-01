@@ -1159,6 +1159,44 @@ path = "tests/Chap35/TestOrderStatSelectStEph.rs"
 name = "TestOrderStatSelectMtEph"
 path = "tests/Chap35/TestOrderStatSelectMtEph.rs"
 
+# Chapter 54 Tests
+[[test]]
+name = "TestBFSStEph"
+path = "tests/Chap54/TestBFSStEph.rs"
+
+[[test]]
+name = "TestBFSMtEph"
+path = "tests/Chap54/TestBFSMtEph.rs"
+
+[[test]]
+name = "TestBFSStPer"
+path = "tests/Chap54/TestBFSStPer.rs"
+
+[[test]]
+name = "TestBFSMtPer"
+path = "tests/Chap54/TestBFSMtPer.rs"
+
+# Chapter 54 Benchmarks
+[[bench]]
+name = "BenchBFSStEph"
+path = "benches/Chap54/BenchBFSStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBFSMtEph"
+path = "benches/Chap54/BenchBFSMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBFSStPer"
+path = "benches/Chap54/BenchBFSStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchBFSMtPer"
+path = "benches/Chap54/BenchBFSMtPer.rs"
+harness = false
+
 # Chapter 35 Benchmarks
 [[bench]]
 name = "BenchOrderStatSelectStPer"

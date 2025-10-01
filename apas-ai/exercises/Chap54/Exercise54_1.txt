@@ -1,0 +1,43 @@
+Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+
+Exercise 54.1: Prove frontier computation in BFS is consistent with generic graph search
+
+In the generic graph search algorithm (Chapter 53), the frontier update is defined as:
+
+    F' = (F \ {u}) ∪ {v : v ∈ N+(u), v ∉ X, v ∉ F}
+
+In BFS (Algorithm 54.3), the frontier is represented as a set of (vertex, distance) pairs,
+and the update is:
+
+    F' = (F \ {(u, j)}) ∪ {(v, j+1) : v ∈ N+(u), v ∉ X, (v,_) ∉ F}
+
+Proof of Consistency:
+
+1. **Frontier Structure**: In BFS, each frontier element is a pair (vertex, distance). The
+   generic graph search uses just vertices. We can project BFS's frontier to the generic
+   form by taking the first component of each pair: π₁(F_BFS) = F_generic.
+
+2. **Removal Step**: Both algorithms remove the selected vertex u from the frontier.
+   - Generic: F \ {u}
+   - BFS: F \ {(u, j)}
+   These are consistent because removing (u, j) from F_BFS corresponds to removing u from
+   π₁(F_BFS).
+
+3. **Addition Step**: Both algorithms add unvisited, non-frontier neighbors.
+   - Generic: {v : v ∈ N+(u), v ∉ X, v ∉ F}
+   - BFS: {(v, j+1) : v ∈ N+(u), v ∉ X, (v,_) ∉ F}
+
+   The condition "(v,_) ∉ F" means "no pair with first component v is in F", which is
+   exactly equivalent to "v ∉ π₁(F_BFS)" or "v ∉ F_generic".
+
+   The distance j+1 is metadata that BFS maintains for each vertex but doesn't affect
+   the set membership logic.
+
+4. **Invariant Preservation**: BFS maintains the invariant that each vertex appears at
+   most once in the frontier (with a unique distance). This is stronger than the generic
+   graph search requirement but consistent with it.
+
+Conclusion: The BFS frontier update is a refinement of the generic graph search frontier
+update, where each frontier vertex is augmented with its distance from the source. The
+set membership logic is identical when we project away the distance metadata.
+

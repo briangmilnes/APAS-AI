@@ -1,0 +1,63 @@
+Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+
+Exercise 54.2: Prove BFS is correct (visits all reachable vertices in distance order)
+
+Theorem: Sequential BFS (Algorithm 54.3) visits all vertices reachable from source s in
+non-decreasing order of their distances from s.
+
+Proof by Strong Induction on the number of rounds:
+
+**Invariants** (after round i):
+1. All vertices at distance ≤ i from s are in X (visited set)
+2. All vertices at distance i+1 from s are in F (frontier) or X
+3. No vertex at distance > i+1 from s is in X or F
+4. Each vertex in F has the correct distance label
+
+**Base Case** (Round 0):
+- X = {}, F = {(s, 0)}
+- s has distance 0, all other reachable vertices have distance > 0
+- Invariants trivially hold
+
+**Inductive Step** (Round i → Round i+1):
+
+Assume invariants hold after round i. In round i+1:
+
+1. The algorithm selects (u, j) where j is minimum among all pairs in F.
+   By Invariant 3, all vertices in F have distance ≤ i+1.
+   By Invariant 1, all vertices with distance < i+1 are already in X.
+   Therefore, u must have distance exactly i+1, and j = i+1.
+
+2. u is added to X and removed from F.
+
+3. For each neighbor v ∈ N+(u):
+   - If v ∈ X: v was visited in an earlier round, so δ(s,v) ≤ i+1
+   - If (v,_) ∈ F: v is already in frontier with some distance
+   - Otherwise: v must have distance i+2 (since shortest path is through u)
+     → Add (v, i+2) to F
+
+4. **Verify Invariant 1**: All vertices at distance ≤ i+1 are now in X
+   - Vertices at distance ≤ i were in X by inductive hypothesis
+   - Vertex u at distance i+1 was just added to X
+   
+5. **Verify Invariant 2**: All vertices at distance i+2 are in F or X
+   - Any vertex v at distance i+2 must be reachable via shortest path of length i+2
+   - The second-to-last vertex on this path has distance i+1
+   - Either this vertex is u (just processed), or it will be processed in a future round
+   - When processed, v will be added to F
+   
+6. **Verify Invariant 3**: No vertex at distance > i+2 is in X or F
+   - Vertices in X have distance ≤ i+1 by construction
+   - Vertices added to F have distance i+2 (neighbors of u at distance i+1)
+   - No vertex at distance > i+2 can be added yet
+
+7. **Verify Invariant 4**: Distance labels are correct
+   - When v is added to F with distance d, it's added as a neighbor of vertex at distance d-1
+   - By induction, that vertex has correct distance label
+   - Therefore v has distance label d = (d-1) + 1 = δ(s,v)
+
+**Termination**: Algorithm terminates when F = ∅. By the invariants, all reachable
+vertices have been visited in order of increasing distance.
+
+Conclusion: BFS correctly visits all reachable vertices from s in non-decreasing order
+of their distances from s.
+
