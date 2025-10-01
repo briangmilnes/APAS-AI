@@ -87,11 +87,14 @@ as in the dart game for calculating expected work and expected span . We conclud
 the expected work is O(n) and expected span is O(lg2 n).
 
 4 Exercises
+
 Exercise 35.1. When bounding the expected work , we have used the fact that the input
 size decreases at least one in each round and bounded the total number of recursive calls
 by n. Redo the analysis, without using this fact.
+
 Exercise 35.2. In establishing the expected span, we upper bounded the expected span
 by O(n lg n). Another way is to bound the expected span by expected work. Redo the
 expected span analysis by using expected span instead of work.
+
 Exercise 35.3. Prove that the pivot tree has O(lg n) height, and is therefore balanced, with
 high probability.

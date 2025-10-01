@@ -1142,6 +1142,47 @@ path = "tests/Chap28/TestMaxContigSubSumDivConOptStEph.rs"
 name = "TestMaxContigSubSumDivConOptMtEph"
 path = "tests/Chap28/TestMaxContigSubSumDivConOptMtEph.rs"
 
+# Chapter 28 Benchmarks
+[[bench]]
+name = "BenchMaxContigSubSumBruteStEph"
+path = "benches/Chap28/BenchMaxContigSubSumBruteStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchMaxContigSubSumReducedStEph"
+path = "benches/Chap28/BenchMaxContigSubSumReducedStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchMaxContigSubSumOptStEph"
+path = "benches/Chap28/BenchMaxContigSubSumOptStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchMaxContigSubSumOptMtEph"
+path = "benches/Chap28/BenchMaxContigSubSumOptMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchMaxContigSubSumDivConStEph"
+path = "benches/Chap28/BenchMaxContigSubSumDivConStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchMaxContigSubSumDivConMtEph"
+path = "benches/Chap28/BenchMaxContigSubSumDivConMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchMaxContigSubSumDivConOptStEph"
+path = "benches/Chap28/BenchMaxContigSubSumDivConOptStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchMaxContigSubSumDivConOptMtEph"
+path = "benches/Chap28/BenchMaxContigSubSumDivConOptMtEph.rs"
+harness = false
+
 # Chapter 26 Benchmarks
 [[bench]]
 name = "BenchMergeSortSt"
