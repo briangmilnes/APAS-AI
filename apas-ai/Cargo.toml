@@ -1414,3 +1414,24 @@ harness = false
 name = "BenchSCCStPer"
 path = "benches/Chap55/BenchSCCStPer.rs"
 harness = false
+
+# Chapter 56 Benchmarks
+[[bench]]
+name = "BenchPathWeightUtilsStEph"
+path = "benches/Chap56/BenchPathWeightUtilsStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchPathWeightUtilsStPer"
+path = "benches/Chap56/BenchPathWeightUtilsStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchSSSPResultStEphInt"
+path = "benches/Chap56/BenchSSSPResultStEphInt.rs"
+harness = false
+
+[[bench]]
+name = "BenchSSSPResultStEphFloat"
+path = "benches/Chap56/BenchSSSPResultStEphFloat.rs"
+harness = false

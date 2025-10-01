@@ -2,4 +2,9 @@ Chap47
 
  There is a mod.rs with tests in it.
  Fix that.
- 
+
+ pub fn create_example_47_2_table() -> StringSeparateChaining<String> {
+
+ should be in an Example47_2. 
+
+ Scan all the files in Chap47 for examples embedded in other source code.
