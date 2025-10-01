@@ -139,9 +139,13 @@ pub mod SubsetSumMtEph {
             self.subset_sum_rec(n, target)
         }
 
-        fn multiset(&self) -> &ArraySeqMtEphS<T> { &self.multiset }
+        fn multiset(&self) -> &ArraySeqMtEphS<T> {
+            &self.multiset
+        }
 
-        fn multiset_mut(&mut self) -> &mut ArraySeqMtEphS<T> { &mut self.multiset }
+        fn multiset_mut(&mut self) -> &mut ArraySeqMtEphS<T> {
+            &mut self.multiset
+        }
 
         fn set(&mut self, index: usize, value: T) {
             let _ = self.multiset.set(index, value);
@@ -162,7 +166,9 @@ pub mod SubsetSumMtEph {
     }
 
     impl<T: MtVal> PartialEq for SubsetSumMtEphS<T> {
-        fn eq(&self, other: &Self) -> bool { self.multiset == other.multiset }
+        fn eq(&self, other: &Self) -> bool {
+            self.multiset == other.multiset
+        }
     }
 
     impl<T: MtVal> Eq for SubsetSumMtEphS<T> {}

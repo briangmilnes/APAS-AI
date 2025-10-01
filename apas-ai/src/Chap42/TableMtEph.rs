@@ -42,7 +42,9 @@ pub mod TableMtEph {
 
     impl<K: MtKey, V: MtVal> TableMtEphTrait<K, V> for TableMtEph<K, V> {
         /// Work: O(1), Span: O(1)
-        fn size(&self) -> N { self.entries.length() }
+        fn size(&self) -> N {
+            self.entries.length()
+        }
 
         /// Work: O(1), Span: O(1)
         fn empty() -> Self {
@@ -639,7 +641,9 @@ pub mod TableMtEph {
             self.entries = ArraySeqMtEphS::from_vec(filtered_entries);
         }
 
-        fn collect(&self) -> ArraySeqMtEphS<Pair<K, V>> { self.entries.clone() }
+        fn collect(&self) -> ArraySeqMtEphS<Pair<K, V>> {
+            self.entries.clone()
+        }
     }
 
     /// Helper function for creating tables from sorted entries

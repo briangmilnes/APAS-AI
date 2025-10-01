@@ -142,19 +142,27 @@ pub mod DocumentIndex {
 
         /// Claude Work: O(m log(1 + n/m)), Span: O(log n + log m)
         /// Algorithm 44.3: queryAnd - set intersection
-        fn query_and(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet { docs_a.intersection(docs_b) }
+        fn query_and(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet {
+            docs_a.intersection(docs_b)
+        }
 
         /// Claude Work: O(m log(1 + n/m)), Span: O(log n + log m)
         /// Algorithm 44.3: queryOr - set union
-        fn query_or(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet { docs_a.union(docs_b) }
+        fn query_or(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet {
+            docs_a.union(docs_b)
+        }
 
         /// Claude Work: O(m log(1 + n/m)), Span: O(log n + log m)
         /// Algorithm 44.3: queryAndNot - set difference
-        fn query_and_not(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet { docs_a.difference(docs_b) }
+        fn query_and_not(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet {
+            docs_a.difference(docs_b)
+        }
 
         /// Claude Work: O(1), Span: O(1)
         /// Algorithm 44.3: size function
-        fn size(docs: &DocumentSet) -> N { docs.size() }
+        fn size(docs: &DocumentSet) -> N {
+            docs.size()
+        }
 
         /// Claude Work: O(n), Span: O(log n)
         /// Algorithm 44.3: toSeq function
@@ -195,7 +203,9 @@ pub mod DocumentIndex {
         }
 
         /// Get the total number of unique words in the index
-        pub fn word_count(&self) -> N { self.word_to_docs.size() }
+        pub fn word_count(&self) -> N {
+            self.word_to_docs.size()
+        }
     }
 
     /// Tokenization function: splits content into words
@@ -285,9 +295,13 @@ pub mod DocumentIndex {
     }
 
     impl<'a> QueryBuilder<'a> {
-        pub fn new(index: &'a DocumentIndex) -> Self { QueryBuilder { index } }
+        pub fn new(index: &'a DocumentIndex) -> Self {
+            QueryBuilder { index }
+        }
 
-        pub fn find(&self, word: &Word) -> DocumentSet { self.index.find(word) }
+        pub fn find(&self, word: &Word) -> DocumentSet {
+            self.index.find(word)
+        }
 
         pub fn and(&self, docs_a: DocumentSet, docs_b: DocumentSet) -> DocumentSet {
             DocumentIndex::query_and(&docs_a, &docs_b)

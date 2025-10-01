@@ -1,0 +1,4 @@
+Exercise 55.5: Design cycle finding algorithm for undirected graphs
+
+For undirected graphs, represent each edge {u,v} as two directed edges.
+Modify cycle detection to track parent vertex to avoid false positives from bidirectional edges...

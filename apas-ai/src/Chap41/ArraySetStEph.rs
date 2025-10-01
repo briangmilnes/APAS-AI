@@ -28,9 +28,13 @@ pub mod ArraySetStEph {
     }
 
     impl<T: StT + Ord> ArraySetStEphTrait<T> for ArraySetStEph<T> {
-        fn size(&self) -> N { self.elements.length() }
+        fn size(&self) -> N {
+            self.elements.length()
+        }
 
-        fn to_seq(&self) -> ArraySeqStEphS<T> { self.elements.clone() }
+        fn to_seq(&self) -> ArraySeqStEphS<T> {
+            self.elements.clone()
+        }
 
         fn empty() -> Self {
             ArraySetStEph {
@@ -130,7 +134,9 @@ pub mod ArraySetStEph {
     }
 
     impl<T: StT + Ord> Default for ArraySetStEph<T> {
-        fn default() -> Self { Self::empty() }
+        fn default() -> Self {
+            Self::empty()
+        }
     }
 
     #[macro_export]

@@ -1,0 +1,5 @@
+Exercise 55.8: Work/span analysis of SCC algorithm
+
+SCC performs two DFS passes plus graph transpose.
+Total work: O(|V| + |E|) for each DFS pass + O(|V| + |E|) for transpose = O(|V| + |E|)
+Span: O(|V| + |E|) since DFS is inherently sequential...

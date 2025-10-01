@@ -33,7 +33,9 @@ pub mod Chapter36MtSlice {
     }
 
     impl<T: StT + Ord + Send + Sync + 'static> Chapter36MtSliceTrait<T> for ArraySeqMtEphSliceS<T> {
-        fn pivot_mt_first(&self, lo: N, _hi: N) -> T { self.nth_cloned(lo) }
+        fn pivot_mt_first(&self, lo: N, _hi: N) -> T {
+            self.nth_cloned(lo)
+        }
 
         fn pivot_mt_median3(&self, lo: N, hi: N) -> T {
             let mid = lo + (hi - lo) / 2;

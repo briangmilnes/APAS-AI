@@ -32,7 +32,9 @@ pub mod PQMinStEph {
     }
 
     impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> PriorityFn<V, P> for ClosurePriority<V, P, F> {
-        fn priority(&self, v: &V) -> P { (self.f)(v) }
+        fn priority(&self, v: &V) -> P {
+            (self.f)(v)
+        }
     }
 
     pub trait PQMinStEphTrait<V: StT + Ord, P: StT + Ord> {

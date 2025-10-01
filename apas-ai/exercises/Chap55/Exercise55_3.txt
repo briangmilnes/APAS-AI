@@ -1,0 +1,8 @@
+Exercise 55.3: Prove DFS Numbers Lemma
+
+The DFS Numbers Lemma states that for all non-tree edges (u,v) in E\T:
+- (u,v) is a cross edge if TV(u) > TV(v) and TF(u) > TF(v)
+- (u,v) is a forward edge if TV(u) < TV(v) and TF(u) > TF(v)  
+- (u,v) is a back edge if TV(u) > TV(v) and TF(u) < TF(v)
+
+Proof: Consider the three cases based on when vertices are visited...

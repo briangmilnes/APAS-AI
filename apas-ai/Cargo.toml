@@ -1300,3 +1300,77 @@ harness = false
 name = "BenchScanContractMtEph"
 path = "benches/Chap27/BenchScanContractMtEph.rs"
 harness = false
+
+# Chapter 55 Tests
+[[test]]
+name = "TestDFSStEph"
+path = "tests/Chap55/TestDFSStEph.rs"
+
+[[test]]
+name = "TestDFSStPer"
+path = "tests/Chap55/TestDFSStPer.rs"
+
+[[test]]
+name = "TestCycleDetectStEph"
+path = "tests/Chap55/TestCycleDetectStEph.rs"
+
+[[test]]
+name = "TestCycleDetectStPer"
+path = "tests/Chap55/TestCycleDetectStPer.rs"
+
+[[test]]
+name = "TestTopoSortStEph"
+path = "tests/Chap55/TestTopoSortStEph.rs"
+
+[[test]]
+name = "TestTopoSortStPer"
+path = "tests/Chap55/TestTopoSortStPer.rs"
+
+[[test]]
+name = "TestSCCStEph"
+path = "tests/Chap55/TestSCCStEph.rs"
+
+[[test]]
+name = "TestSCCStPer"
+path = "tests/Chap55/TestSCCStPer.rs"
+
+# Chapter 55 Benchmarks
+[[bench]]
+name = "BenchDFSStEph"
+path = "benches/Chap55/BenchDFSStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchDFSStPer"
+path = "benches/Chap55/BenchDFSStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchCycleDetectStEph"
+path = "benches/Chap55/BenchCycleDetectStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchCycleDetectStPer"
+path = "benches/Chap55/BenchCycleDetectStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchTopoSortStEph"
+path = "benches/Chap55/BenchTopoSortStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchTopoSortStPer"
+path = "benches/Chap55/BenchTopoSortStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchSCCStEph"
+path = "benches/Chap55/BenchSCCStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchSCCStPer"
+path = "benches/Chap55/BenchSCCStPer.rs"
+harness = false

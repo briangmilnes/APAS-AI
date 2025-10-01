@@ -57,7 +57,9 @@ pub mod OrderedTableStPer {
         // Base table operations - delegate to backing store
 
         /// Claude Work: O(1), Span: O(1)
-        fn size(&self) -> N { self.base_table.size() }
+        fn size(&self) -> N {
+            self.base_table.size()
+        }
 
         /// Claude Work: O(1), Span: O(1)
         fn empty() -> Self {
@@ -74,7 +76,9 @@ pub mod OrderedTableStPer {
         }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn find(&self, k: &K) -> Option<V> { self.base_table.find(k) }
+        fn find(&self, k: &K) -> Option<V> {
+            self.base_table.find(k)
+        }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn insert(&self, k: K, v: V) -> Self {
@@ -91,7 +95,9 @@ pub mod OrderedTableStPer {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn domain(&self) -> ArraySetStEph<K> { self.base_table.domain() }
+        fn domain(&self) -> ArraySetStEph<K> {
+            self.base_table.domain()
+        }
 
         /// Claude Work: O(n log n), Span: O(log² n)
         fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self {
@@ -242,7 +248,9 @@ pub mod OrderedTableStPer {
         }
 
         /// Claude Work: O(log(m + n)), Span: O(log(m + n))
-        fn join_key(left: &Self, right: &Self) -> Self { left.union(right, |v1, _v2| v1.clone()) }
+        fn join_key(left: &Self, right: &Self) -> Self {
+            left.union(right, |v1, _v2| v1.clone())
+        }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn get_key_range(&self, k1: &K, k2: &K) -> Self {

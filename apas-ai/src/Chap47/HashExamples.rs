@@ -9,7 +9,9 @@ pub mod HashExamples {
     use crate::Types::Types::*;
 
     /// Example 47.1: String hash function demonstration
-    pub fn example_47_1_hash_function() -> StringPositionHashFunction { StringPositionHashFunction }
+    pub fn example_47_1_hash_function() -> StringPositionHashFunction {
+        StringPositionHashFunction
+    }
 
     /// Example 47.1: Demonstrate hash function on sample strings
     pub fn example_47_1_demonstration() -> Vec<(String, N)> {
@@ -39,7 +41,9 @@ pub mod HashExamples {
     }
 
     /// Example 47.2: Separate chaining demonstration
-    pub fn example_47_2_separate_chaining() -> StringSeparateChaining<String> { create_example_47_2_table() }
+    pub fn example_47_2_separate_chaining() -> StringSeparateChaining<String> {
+        create_example_47_2_table()
+    }
 
     /// Example 47.4: Flat table probe sequence demonstration
     pub fn example_47_4_probe_sequence() -> Vec<(String, Vec<N>)> {

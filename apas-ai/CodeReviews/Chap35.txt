@@ -1,0 +1,12 @@
+Chap35
+
+Why is this the comment?
+//! Work: O(n) expected, Span: O(lg² n) expected.
+
+Is it APAS or you?
+Why aren't both there in the trait and impl.
+
+Is this bad comment form used elsewhere?
+
+
+

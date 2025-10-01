@@ -69,9 +69,13 @@ pub mod LabDirGraphMtEph {
             LabDirGraphMtEph { vertices, labeled_arcs }
         }
 
-        fn vertices(&self) -> &Set<V> { &self.vertices }
+        fn vertices(&self) -> &Set<V> {
+            &self.vertices
+        }
 
-        fn labeled_arcs(&self) -> &Set<LabEdge<V, L>> { &self.labeled_arcs }
+        fn labeled_arcs(&self) -> &Set<LabEdge<V, L>> {
+            &self.labeled_arcs
+        }
 
         fn arcs(&self) -> Set<Edge<V>> {
             let mut arcs = Set::empty();
@@ -81,7 +85,9 @@ pub mod LabDirGraphMtEph {
             arcs
         }
 
-        fn add_vertex(&mut self, v: V) { self.vertices.insert(v); }
+        fn add_vertex(&mut self, v: V) {
+            self.vertices.insert(v);
+        }
 
         fn add_labeled_arc(&mut self, from: V, to: V, label: L) {
             self.vertices.insert(from.clone_mt());

@@ -101,7 +101,9 @@ pub mod AdvancedQuadraticProbing {
 
         /// Compute greatest common divisor
         /// Claude Work: O(log min(a,b)), Span: O(log min(a,b))
-        fn gcd(a: N, b: N) -> N { if b == 0 { a } else { Self::gcd(b, a % b) } }
+        fn gcd(a: N, b: N) -> N {
+            if b == 0 { a } else { Self::gcd(b, a % b) }
+        }
     }
 
     impl<K: StT, H: HashFunClone<K>> AdvancedQuadraticProbingStrategy<K, H> {
@@ -284,7 +286,9 @@ pub mod AdvancedQuadraticProbing {
 
         /// Get coefficients for debugging
         /// Claude Work: Θ(1), Span: Θ(1)
-        pub fn get_coefficients(&self) -> (N, N) { (self.c1, self.c2) }
+        pub fn get_coefficients(&self) -> (N, N) {
+            (self.c1, self.c2)
+        }
     }
 
     impl<K: StT, H: HashFunClone<K>> ProbeSequence<K> for AdvancedQuadraticProbingStrategy<K, H> {
@@ -298,7 +302,9 @@ pub mod AdvancedQuadraticProbing {
 
         /// Strategy name for debugging and analysis
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn strategy_name(&self) -> String { format!("AdvancedQuadraticProbing(c1={}, c2={})", self.c1, self.c2) }
+        fn strategy_name(&self) -> String {
+            format!("AdvancedQuadraticProbing(c1={}, c2={})", self.c1, self.c2)
+        }
     }
 
     impl<K: StT, H: HashFunClone<K>> Display for AdvancedQuadraticProbingStrategy<K, H> {

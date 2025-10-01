@@ -6,7 +6,9 @@ pub mod Exercise21_7 {
     use crate::Types::Types::*;
 
     /// Check if a number is even
-    pub fn is_even(x: &N) -> B { if *x % 2 == 0 { true } else { false } }
+    pub fn is_even(x: &N) -> B {
+        if *x % 2 == 0 { true } else { false }
+    }
 
     /// Check if a character is a vowel (case-insensitive)
     pub fn is_vowel(c: &char) -> B {

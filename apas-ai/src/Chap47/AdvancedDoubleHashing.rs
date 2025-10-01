@@ -39,11 +39,15 @@ pub mod AdvancedDoubleHashing {
     impl RelativePrimeValidator {
         /// Compute greatest common divisor using Euclidean algorithm
         /// Claude Work: O(log min(a,b)), Span: O(log min(a,b))
-        pub fn gcd(a: N, b: N) -> N { if b == 0 { a } else { Self::gcd(b, a % b) } }
+        pub fn gcd(a: N, b: N) -> N {
+            if b == 0 { a } else { Self::gcd(b, a % b) }
+        }
 
         /// Check if two numbers are relatively prime (gcd = 1)
         /// Claude Work: O(log min(a,b)), Span: O(log min(a,b))
-        pub fn are_relatively_prime(a: N, b: N) -> B { Self::gcd(a, b) == 1 }
+        pub fn are_relatively_prime(a: N, b: N) -> B {
+            Self::gcd(a, b) == 1
+        }
 
         /// Validate that h2(k) and table_size are relatively prime
         /// This ensures the probe sequence visits all table positions
@@ -271,7 +275,9 @@ pub mod AdvancedDoubleHashing {
 
         /// Strategy name for debugging and analysis
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn strategy_name(&self) -> String { "AdvancedDoubleHashing".to_string() }
+        fn strategy_name(&self) -> String {
+            "AdvancedDoubleHashing".to_string()
+        }
     }
 
     impl<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> Display for AdvancedDoubleHashingStrategy<K, H1, H2> {

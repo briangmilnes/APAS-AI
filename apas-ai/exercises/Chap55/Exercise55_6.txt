@@ -1,0 +1,4 @@
+Exercise 55.6: Prove topological sort work/span bounds O(|V| + |E|)
+
+The topological sort performs DFS which visits each vertex once and traverses each edge once.
+With efficient representations (array sequences), all operations are O(1) per vertex/edge...

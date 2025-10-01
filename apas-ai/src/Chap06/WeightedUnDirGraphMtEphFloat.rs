@@ -131,7 +131,9 @@ pub mod WeightedUnDirGraphMtEphFloat {
         }
 
         /// Get the degree of a vertex (number of incident edges)
-        pub fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
+        pub fn vertex_degree(&self, v: &V) -> usize {
+            self.neighbors(v).size()
+        }
     }
 
     #[macro_export]

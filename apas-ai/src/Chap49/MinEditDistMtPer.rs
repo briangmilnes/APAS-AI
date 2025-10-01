@@ -135,9 +135,13 @@ pub mod MinEditDistMtPer {
             self.min_edit_distance_rec(source_len, target_len)
         }
 
-        fn source(&self) -> &ArraySeqMtPerS<T> { &self.source }
+        fn source(&self) -> &ArraySeqMtPerS<T> {
+            &self.source
+        }
 
-        fn target(&self) -> &ArraySeqMtPerS<T> { &self.target }
+        fn target(&self) -> &ArraySeqMtPerS<T> {
+            &self.target
+        }
 
         fn memo_size(&self) -> usize {
             let memo_guard = self.memo.lock().unwrap();
@@ -146,7 +150,9 @@ pub mod MinEditDistMtPer {
     }
 
     impl<T: MtVal> PartialEq for MinEditDistMtPerS<T> {
-        fn eq(&self, other: &Self) -> bool { self.source == other.source && self.target == other.target }
+        fn eq(&self, other: &Self) -> bool {
+            self.source == other.source && self.target == other.target
+        }
     }
 
     impl<T: MtVal> Eq for MinEditDistMtPerS<T> {}

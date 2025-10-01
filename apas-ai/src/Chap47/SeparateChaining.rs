@@ -250,7 +250,9 @@ pub mod SeparateChaining {
             }
         }
 
-        pub fn load_and_size(&self) -> (N, N) { (self.num_elements, self.buckets.length()) }
+        pub fn load_and_size(&self) -> (N, N) {
+            (self.num_elements, self.buckets.length())
+        }
 
         pub fn statistics(&self) -> HashTableStats {
             let mut total_collisions = 0;

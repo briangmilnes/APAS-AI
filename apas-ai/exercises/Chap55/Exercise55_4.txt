@@ -1,0 +1,4 @@
+Exercise 55.4: Restate DFS Numbers Lemma using exploration intervals
+
+Define exploration interval [TV(v), TF(v)] for each vertex v.
+The DFS Numbers Lemma can be restated as overlapping interval relationships...

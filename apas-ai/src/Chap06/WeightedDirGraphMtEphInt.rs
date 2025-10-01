@@ -38,12 +38,16 @@ pub mod WeightedDirGraphMtEphInt {
         /// Add a weighted edge to the graph
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        pub fn add_weighted_edge(&mut self, from: V, to: V, weight: i32) { self.add_labeled_arc(from, to, weight); }
+        pub fn add_weighted_edge(&mut self, from: V, to: V, weight: i32) {
+            self.add_labeled_arc(from, to, weight);
+        }
 
         /// Get the weight of an edge, if it exists
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential search
-        pub fn get_edge_weight(&self, from: &V, to: &V) -> Option<i32> { self.get_arc_label(from, to).copied() }
+        pub fn get_edge_weight(&self, from: &V, to: &V) -> Option<i32> {
+            self.get_arc_label(from, to).copied()
+        }
 
         /// Get all weighted edges as (from, to, weight) tuples
         /// APAS: Work Θ(|A|), Span Θ(1)
@@ -163,7 +167,9 @@ pub mod WeightedDirGraphMtEphInt {
         /// Get the total weight of all edges
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential sum
-        pub fn total_weight(&self) -> i32 { self.labeled_arcs().iter().map(|edge| edge.2).sum() }
+        pub fn total_weight(&self) -> i32 {
+            self.labeled_arcs().iter().map(|edge| edge.2).sum()
+        }
     }
 
     #[macro_export]
