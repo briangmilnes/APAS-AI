@@ -82,58 +82,42 @@ pub mod TopDownDPStEph {
         /// Get current memoization table size
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn memo_size(&self) -> usize {
-            self.memo_table.len()
-        }
+        pub fn memo_size(&self) -> usize { self.memo_table.len() }
 
         /// Check if subproblem is memoized
         /// Claude Work: O(1) - constant time lookup
         /// Claude Span: O(1) - constant time lookup
-        pub fn is_memoized(&self, i: usize, j: usize) -> bool {
-            self.memo_table.contains_key(&(i, j))
-        }
+        pub fn is_memoized(&self, i: usize, j: usize) -> bool { self.memo_table.contains_key(&(i, j)) }
 
         /// Get memoized result if available
         /// Claude Work: O(1) - constant time lookup
         /// Claude Span: O(1) - constant time lookup
-        pub fn get_memoized(&self, i: usize, j: usize) -> Option<usize> {
-            self.memo_table.get(&(i, j)).copied()
-        }
+        pub fn get_memoized(&self, i: usize, j: usize) -> Option<usize> { self.memo_table.get(&(i, j)).copied() }
 
         /// Insert memoized result
         /// Claude Work: O(1) - constant time insertion
         /// Claude Span: O(1) - constant time insertion
-        pub fn insert_memo(&mut self, i: usize, j: usize, value: usize) {
-            self.memo_table.insert((i, j), value);
-        }
+        pub fn insert_memo(&mut self, i: usize, j: usize, value: usize) { self.memo_table.insert((i, j), value); }
 
         /// Get the length of sequence S
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn s_length(&self) -> usize {
-            self.seq_s.length()
-        }
+        pub fn s_length(&self) -> usize { self.seq_s.length() }
 
         /// Get the length of sequence T
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn t_length(&self) -> usize {
-            self.seq_t.length()
-        }
+        pub fn t_length(&self) -> usize { self.seq_t.length() }
 
         /// Check if sequences are empty
         /// Claude Work: O(1) - constant time check
         /// Claude Span: O(1) - constant time check
-        pub fn is_empty(&self) -> bool {
-            self.seq_s.length() == 0usize && self.seq_t.length() == 0usize
-        }
+        pub fn is_empty(&self) -> bool { self.seq_s.length() == 0usize && self.seq_t.length() == 0usize }
 
         /// Clear memoization table
         /// Claude Work: O(1) - constant time clear
         /// Claude Span: O(1) - constant time clear
-        pub fn clear_memo(&mut self) {
-            self.memo_table.clear();
-        }
+        pub fn clear_memo(&mut self) { self.memo_table.clear(); }
 
         /// Mutably update sequence S
         /// Claude Work: O(1) - constant time update

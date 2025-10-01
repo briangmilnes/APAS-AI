@@ -29,9 +29,7 @@ pub mod LinearProbing {
             (base_hash + probe_index) % table_size
         }
 
-        fn strategy_name(&self) -> String {
-            format!("LinearProbing({})", self.base_hash.description())
-        }
+        fn strategy_name(&self) -> String { format!("LinearProbing({})", self.base_hash.description()) }
     }
 
     /// Type alias for linear probing hash table

@@ -1,0 +1,18 @@
+
+ Make a plan to PrePlanChecklist to do the following:
+
+ Run the benchmarks one by one to check these criteria:
+
+ Are all of the benchmarks running with 300ms warmup?
+ Are all of the benchmarks running with 1s total time?
+ Do all of them have their input sizes adjusted to that
+  they can complete in about 1s?
+ Do they all run without warnings?
+
+ Then run a final full benchmark and check the criteria.
+
+ Note that cargo bench is now forking too many rustc and
+ should be run -j 10. This has been added to the
+ ExecutionStyle rules.
+ 
+ 

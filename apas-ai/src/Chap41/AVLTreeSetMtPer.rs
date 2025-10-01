@@ -34,13 +34,9 @@ pub mod AVLTreeSetMtPer {
     }
 
     impl<T: StTInMtT + Ord + 'static> AVLTreeSetMtPerTrait<T> for AVLTreeSetMtPer<T> {
-        fn size(&self) -> N {
-            self.elements.length()
-        }
+        fn size(&self) -> N { self.elements.length() }
 
-        fn to_seq(&self) -> AVLTreeSeqMtPerS<T> {
-            self.elements.clone()
-        }
+        fn to_seq(&self) -> AVLTreeSeqMtPerS<T> { self.elements.clone() }
 
         fn empty() -> Self {
             AVLTreeSetMtPer {
@@ -255,9 +251,7 @@ pub mod AVLTreeSetMtPer {
     }
 
     impl<T: StTInMtT + Ord + 'static> Default for AVLTreeSetMtPer<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StTInMtT + Ord + 'static> Clone for AVLTreeSetMtPer<T> {

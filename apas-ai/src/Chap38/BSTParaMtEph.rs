@@ -125,9 +125,7 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn join_m(left: Self, key: T, right: Self) -> Self {
-            ParamBST::join_mid(Exposed::Node(left, key, right))
-        }
+        fn join_m(left: Self, key: T, right: Self) -> Self { ParamBST::join_mid(Exposed::Node(left, key, right)) }
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)
@@ -292,15 +290,11 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn expose(&self) -> Exposed<T> {
-            self.expose_internal()
-        }
+        fn expose(&self) -> Exposed<T> { self.expose_internal() }
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn join_mid(exposed: Exposed<T>) -> Self {
-            ParamBST::join_mid(exposed)
-        }
+        fn join_mid(exposed: Exposed<T>) -> Self { ParamBST::join_mid(exposed) }
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
@@ -311,9 +305,7 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn is_empty(&self) -> B {
-            if self.size() == 0 { true } else { false }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)
@@ -350,33 +342,23 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)
-        fn split(&self, key: &T) -> (Self, B, Self) {
-            ParamBST::split_inner(self, key)
-        }
+        fn split(&self, key: &T) -> (Self, B, Self) { ParamBST::split_inner(self, key) }
 
         // APAS - work O(lg (|t_1| + |t_2|)), span O(lg (|t_1| + |t_2|))
         // gpt-5-codex-medium: work O(lg (|t_1| + |t_2|)), span O(lg (|t_1| + |t_2|))
-        fn join_pair(&self, other: Self) -> Self {
-            ParamBST::join_pair_inner(self.clone(), other)
-        }
+        fn join_pair(&self, other: Self) -> Self { ParamBST::join_pair_inner(self.clone(), other) }
 
         // APAS - work O(m · lg (n / m)), span O(lg n)
         // gpt-5-codex-medium: work O(m · lg (n / m)), span O(lg n)
-        fn union(&self, other: &Self) -> Self {
-            ParamBST::union_inner(self, other)
-        }
+        fn union(&self, other: &Self) -> Self { ParamBST::union_inner(self, other) }
 
         // APAS - work O(m · lg (n / m)), span O(lg n)
         // gpt-5-codex-medium: work O(m · lg (n / m)), span O(lg n)
-        fn intersect(&self, other: &Self) -> Self {
-            ParamBST::intersect_inner(self, other)
-        }
+        fn intersect(&self, other: &Self) -> Self { ParamBST::intersect_inner(self, other) }
 
         // APAS - work O(m · lg (n / m)), span O(lg n)
         // gpt-5-codex-medium: work O(m · lg (n / m)), span O(lg n)
-        fn difference(&self, other: &Self) -> Self {
-            ParamBST::difference_inner(self, other)
-        }
+        fn difference(&self, other: &Self) -> Self { ParamBST::difference_inner(self, other) }
 
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)

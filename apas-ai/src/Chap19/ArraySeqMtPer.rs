@@ -80,13 +80,9 @@ pub mod ArraySeqMtPer {
             <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::tabulate(&|_| item.clone(), 1)
         }
 
-        fn length(&self) -> N {
-            ArraySeqMtPerTraitChap18::length(self)
-        }
+        fn length(&self) -> N { ArraySeqMtPerTraitChap18::length(self) }
 
-        fn nth(&self, index: N) -> &T {
-            ArraySeqMtPerTraitChap18::nth(self, index)
-        }
+        fn nth(&self, index: N) -> &T { ArraySeqMtPerTraitChap18::nth(self, index) }
 
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T> {
             <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::subseq_copy(self, start, length)

@@ -75,9 +75,7 @@ impl SSSPResultStEphInt {
     }
 
     /// Checks if vertex v is reachable from source.
-    pub fn is_reachable(&self, v: usize) -> bool {
-        self.get_distance(v) != UNREACHABLE
-    }
+    pub fn is_reachable(&self, v: usize) -> bool { self.get_distance(v) != UNREACHABLE }
 
     /// Extracts the shortest path from source to vertex v by following predecessors.
     /// Returns None if v is unreachable, otherwise returns the path as a sequence.

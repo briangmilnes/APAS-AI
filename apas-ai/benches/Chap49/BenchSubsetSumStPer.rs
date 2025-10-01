@@ -1,9 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for SubsetSumStPer
 
+use apas_ai::{Chap49::SubsetSumStPer::SubsetSumStPer::*, SubsetSumStPerLit};
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
-use apas_ai::{Chap49::SubsetSumStPer::SubsetSumStPer::*, SubsetSumStPerLit};
 
 fn bench_subset_sum_st_per(c: &mut Criterion) {
     let mut group = c.benchmark_group("subset_sum_st_per");
@@ -26,5 +26,3 @@ fn bench_subset_sum_st_per(c: &mut Criterion) {
 
 criterion_group!(benches, bench_subset_sum_st_per);
 criterion_main!(benches);
-
-

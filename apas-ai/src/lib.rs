@@ -332,3 +332,10 @@ pub mod Chap58 {
     pub mod BellmanFordStEphFloat;
     pub mod BellmanFordStEphInt;
 }
+
+pub mod Chap59 {
+    pub mod JohnsonMtEphFloat;
+    pub mod JohnsonMtEphInt;
+    pub mod JohnsonStEphFloat;
+    pub mod JohnsonStEphInt;
+}

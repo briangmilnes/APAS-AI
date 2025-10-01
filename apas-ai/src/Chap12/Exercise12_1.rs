@@ -48,9 +48,7 @@ pub mod Exercise12_1 {
         ///
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - atomic increment releases next thread
-        pub fn unlock(&self) {
-            self.turn.fetch_add(1, Ordering::Release);
-        }
+        pub fn unlock(&self) { self.turn.fetch_add(1, Ordering::Release); }
 
         /// Execute action while holding the lock.
         ///
@@ -65,23 +63,15 @@ pub mod Exercise12_1 {
     }
 
     impl SpinLockTrait for SpinLock {
-        fn new() -> Self {
-            SpinLock::new()
-        }
+        fn new() -> Self { SpinLock::new() }
 
-        fn lock(&self) {
-            SpinLock::lock(self)
-        }
+        fn lock(&self) { SpinLock::lock(self) }
 
-        fn unlock(&self) {
-            SpinLock::unlock(self)
-        }
+        fn unlock(&self) { SpinLock::unlock(self) }
     }
 
     impl Default for SpinLock {
-        fn default() -> Self {
-            SpinLock::new()
-        }
+        fn default() -> Self { SpinLock::new() }
     }
 
     /// Parallel counter increment using spin-lock for mutual exclusion.

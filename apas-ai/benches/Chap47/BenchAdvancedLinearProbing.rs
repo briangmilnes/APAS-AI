@@ -33,5 +33,3 @@ fn bench_linear_probing_insert(c: &mut Criterion) {
 
 criterion_group!(benches, bench_linear_probing_insert);
 criterion_main!(benches);
-
-

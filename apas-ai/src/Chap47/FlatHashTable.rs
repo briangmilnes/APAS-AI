@@ -311,9 +311,7 @@ pub mod FlatHashTable {
             }
         }
 
-        pub fn load_and_size(&self) -> (N, N) {
-            (self.num_elements, self.table.length())
-        }
+        pub fn load_and_size(&self) -> (N, N) { (self.num_elements, self.table.length()) }
 
         pub fn statistics(&self) -> HashTableStats {
             HashTableStats::new(self.num_elements, self.table.length()).with_collision_stats(self.num_deleted, 0, 0.0) // Simplified for flat tables

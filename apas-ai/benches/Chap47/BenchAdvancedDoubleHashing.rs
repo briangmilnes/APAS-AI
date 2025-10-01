@@ -34,5 +34,3 @@ fn bench_double_hashing_insert(c: &mut Criterion) {
 
 criterion_group!(benches, bench_double_hashing_insert);
 criterion_main!(benches);
-
-

@@ -135,24 +135,16 @@ pub mod UnsortedListPQ {
 
         /// Claude Work: Θ(n), Span: Θ(n)
         /// Create priority queue from existing sequence
-        fn from_seq(seq: &ArraySeqStPerS<T>) -> Self {
-            UnsortedListPQ { elements: seq.clone() }
-        }
+        fn from_seq(seq: &ArraySeqStPerS<T>) -> Self { UnsortedListPQ { elements: seq.clone() } }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn size(&self) -> N {
-            self.elements.length()
-        }
+        fn size(&self) -> N { self.elements.length() }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn is_empty(&self) -> bool {
-            self.elements.length() == 0
-        }
+        fn is_empty(&self) -> bool { self.elements.length() == 0 }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn to_seq(&self) -> ArraySeqStPerS<T> {
-            self.elements.clone()
-        }
+        fn to_seq(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
     }
 
     impl<T: StT + Ord> UnsortedListPQ<T> {
@@ -185,9 +177,7 @@ pub mod UnsortedListPQ {
     }
 
     impl<T: StT + Ord> Default for UnsortedListPQ<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StT + Ord> Display for UnsortedListPQ<T> {

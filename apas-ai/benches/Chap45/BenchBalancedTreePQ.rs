@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for BalancedTreePQ implementation
 
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 use apas_ai::Chap45::BalancedTreePQ::BalancedTreePQ::*;
@@ -10,10 +10,10 @@ fn bench_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("BalancedTreePQ Insert");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
-    
+
     for size in [10, 50, 100].iter() {
         let data: Vec<i32> = (0..*size).rev().collect();
-        
+
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, _| {
             b.iter(|| {
                 let mut pq = BalancedTreePQ::empty();
@@ -24,7 +24,7 @@ fn bench_insert(c: &mut Criterion) {
             })
         });
     }
-    
+
     group.finish();
 }
 
@@ -32,11 +32,11 @@ fn bench_delete_min(c: &mut Criterion) {
     let mut group = c.benchmark_group("BalancedTreePQ DeleteMin");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
-    
+
     for size in [10, 50, 100].iter() {
         let data: Vec<i32> = (0..*size).collect();
         let pq = BalancedTreePQ::from_vec(data.clone());
-        
+
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, _| {
             b.iter(|| {
                 let mut pq_copy = pq.clone();
@@ -48,7 +48,7 @@ fn bench_delete_min(c: &mut Criterion) {
             })
         });
     }
-    
+
     group.finish();
 }
 
@@ -56,20 +56,18 @@ fn bench_meld(c: &mut Criterion) {
     let mut group = c.benchmark_group("BalancedTreePQ Meld");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
-    
+
     for size in [10, 50, 100].iter() {
         let data1: Vec<i32> = (0..*size).collect();
         let data2: Vec<i32> = (*size..(2 * size)).collect();
-        
+
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, _| {
             let pq1 = BalancedTreePQ::from_vec(data1.clone());
             let pq2 = BalancedTreePQ::from_vec(data2.clone());
-            b.iter(|| {
-                black_box(pq1.meld(&pq2))
-            })
+            b.iter(|| black_box(pq1.meld(&pq2)))
         });
     }
-    
+
     group.finish();
 }
 
@@ -77,18 +75,16 @@ fn bench_find_min(c: &mut Criterion) {
     let mut group = c.benchmark_group("BalancedTreePQ FindMin");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
-    
+
     for size in [100, 500].iter() {
         let data: Vec<i32> = (0..*size).collect();
         let pq = BalancedTreePQ::from_vec(data.clone());
-        
+
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, _| {
-            b.iter(|| {
-                black_box(pq.find_min())
-            })
+            b.iter(|| black_box(pq.find_min()))
         });
     }
-    
+
     group.finish();
 }
 
@@ -96,17 +92,15 @@ fn bench_construction(c: &mut Criterion) {
     let mut group = c.benchmark_group("BalancedTreePQ Construction");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
-    
+
     for size in [50, 100].iter() {
         let data: Vec<i32> = (0..*size).collect();
-        
+
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, _| {
-            b.iter(|| {
-                black_box(BalancedTreePQ::from_vec(data.clone()))
-            })
+            b.iter(|| black_box(BalancedTreePQ::from_vec(data.clone())))
         });
     }
-    
+
     group.finish();
 }
 
@@ -120,5 +114,3 @@ criterion_group!(
 );
 
 criterion_main!(benches);
-
-

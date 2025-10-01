@@ -1,0 +1,11 @@
+
+Chap59 
+
+ Why is there a mod.rs?
+ What do the rules say about that?
+
+ You put Rayon in, what do the APAS rules say about that?
+ Replace with fork/join.
+ 
+
+

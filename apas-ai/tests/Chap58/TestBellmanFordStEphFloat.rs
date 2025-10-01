@@ -14,10 +14,7 @@ mod tests {
     fn test_basic_path() {
         // Simple path s -> a -> b
         let vertices = SetLit![0, 1, 2];
-        let edges = SetLit![
-            (0, 1, OrderedF64::from(1.5)),
-            (1, 2, OrderedF64::from(2.5))
-        ];
+        let edges = SetLit![(0, 1, OrderedF64::from(1.5)), (1, 2, OrderedF64::from(2.5))];
 
         let graph = WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges);
         let result = bellman_ford(&graph, 0).unwrap();
@@ -85,9 +82,7 @@ mod tests {
     fn test_unreachable() {
         // Test with unreachable vertex
         let vertices = SetLit![0, 1, 2];
-        let edges = SetLit![
-            (0, 1, OrderedF64::from(1.0))
-        ];
+        let edges = SetLit![(0, 1, OrderedF64::from(1.0))];
 
         let graph = WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges);
         let result = bellman_ford(&graph, 0).unwrap();

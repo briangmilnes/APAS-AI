@@ -20,14 +20,14 @@ mod tests {
             (0, 1, 3),  // s -> a (3)
             (1, 2, -2)  // a -> b (-2)
         ];
-    
+
         let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
         let result = bellman_ford(&graph, 0).unwrap();
-    
+
         assert_eq!(result.get_distance(0), 0);
         assert_eq!(result.get_distance(1), 3);
         assert_eq!(result.get_distance(2), 1); // s -> a -> b = 3 + (-2) = 1
-    
+
         // Check path reconstruction
         let path_to_b = result.extract_path(2).unwrap();
         assert_eq!(path_to_b.length(), 3); // s -> a -> b
@@ -35,7 +35,7 @@ mod tests {
         assert_eq!(*path_to_b.nth(1), 1); // a
         assert_eq!(*path_to_b.nth(2), 2); // b
     }
-    
+
     #[test]
     fn test_example_58_3_k_hop_distances() {
         // Example 58.3: Graph demonstrating k-hop distance computation
@@ -50,43 +50,43 @@ mod tests {
             (2, 3, -6), // b -> c (-6)
             (3, 2, 7)   // c -> b (7) - increased to avoid negative cycle
         ];
-    
+
         let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
         let result = bellman_ford(&graph, 0).unwrap();
-    
+
         assert_eq!(result.get_distance(0), 0);
-        assert_eq!(result.get_distance(1), 1);  // s -> a
-        assert_eq!(result.get_distance(2), 4);  // s -> a -> b
+        assert_eq!(result.get_distance(1), 1); // s -> a
+        assert_eq!(result.get_distance(2), 4); // s -> a -> b
         assert_eq!(result.get_distance(3), -2); // s -> a -> b -> c = 1 + 3 + (-6) = -2
     }
-    
+
     #[test]
     fn test_example_58_4_algorithm_steps() {
         // Example 58.4: Multiple rounds of distance updates
         let vertices = SetLit![0, 1, 2, 3, 4]; // s=0, a=1, b=2, c=3, d=4
         let edges = SetLit![
-            (0, 1, 6),   // s -> a
-            (0, 3, 7),   // s -> c
-            (1, 2, 5),   // a -> b
-            (1, 3, 8),   // a -> c
-            (1, 4, -4),  // a -> d
-            (2, 1, -2),  // b -> a
-            (3, 2, -3),  // c -> b
-            (3, 4, 9),   // c -> d
-            (4, 0, 2),   // d -> s
-            (4, 2, 7)    // d -> b
+            (0, 1, 6),  // s -> a
+            (0, 3, 7),  // s -> c
+            (1, 2, 5),  // a -> b
+            (1, 3, 8),  // a -> c
+            (1, 4, -4), // a -> d
+            (2, 1, -2), // b -> a
+            (3, 2, -3), // c -> b
+            (3, 4, 9),  // c -> d
+            (4, 0, 2),  // d -> s
+            (4, 2, 7)   // d -> b
         ];
-    
+
         let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
         let result = bellman_ford(&graph, 0).unwrap();
-    
+
         assert_eq!(result.get_distance(0), 0);
-        assert_eq!(result.get_distance(1), 2);  // s -> c -> b -> a = 7 + (-3) + (-2) = 2
-        assert_eq!(result.get_distance(2), 4);  // s -> c -> b = 7 + (-3) = 4
-        assert_eq!(result.get_distance(3), 7);  // s -> c
+        assert_eq!(result.get_distance(1), 2); // s -> c -> b -> a = 7 + (-3) + (-2) = 2
+        assert_eq!(result.get_distance(2), 4); // s -> c -> b = 7 + (-3) = 4
+        assert_eq!(result.get_distance(3), 7); // s -> c
         assert_eq!(result.get_distance(4), -2); // s -> c -> b -> a -> d = 2 + (-4) = -2
     }
-    
+
     #[test]
     fn test_negative_cycle_detection() {
         // Graph with a negative-weight cycle
@@ -98,22 +98,22 @@ mod tests {
             (2, 3, -4), // b -> c
             (3, 1, 0)   // c -> a (completes negative cycle: 2 + (-4) + 0 = -2)
         ];
-    
+
         let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
         let result = bellman_ford(&graph, 0);
-    
+
         assert!(result.is_err());
         let err_msg = result.err().unwrap();
         assert!(err_msg.contains("Negative-weight cycle"));
     }
-    
+
     #[test]
     fn test_currency_exchange_example_58_1() {
         // Example 58.1: Currency exchange reduction to shortest paths
         // Using logarithm trick: w(u,v) = -lg(rate(u,v))
         // For simplicity, we use integers representing -100*lg(rate)
         // Euro=0, USD=1, GBP=2, CNY=3, JPY=4
-    
+
         // Example rates (scaled and negated):
         // EUR->USD: 1.2  => -lg(1.2) ≈ -0.079 => -8
         // USD->CNY: 6.5  => -lg(6.5) ≈ -0.813 => -81
@@ -127,13 +127,13 @@ mod tests {
             (0, 2, -11),  // EUR -> GBP
             (2, 4, -150)  // GBP -> JPY (direct, but less efficient)
         ];
-    
+
         let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
         let result = bellman_ford(&graph, 0).unwrap();
-    
+
         // Best path from EUR to JPY should be through USD and CNY
         assert_eq!(result.get_distance(4), -209); // -8 + (-81) + (-120) = -209
-    
+
         // Verify path is EUR -> USD -> CNY -> JPY
         let path = result.extract_path(4).unwrap();
         assert_eq!(path.length(), 4);
@@ -142,7 +142,7 @@ mod tests {
         assert_eq!(*path.nth(2), 3); // CNY
         assert_eq!(*path.nth(3), 4); // JPY
     }
-    
+
     #[test]
     fn test_unreachable_vertices() {
         // Graph with some unreachable vertices
@@ -152,51 +152,51 @@ mod tests {
             (1, 2, 3)  // a -> b
                        // c is unreachable
         ];
-    
+
         let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
         let result = bellman_ford(&graph, 0).unwrap();
-    
+
         assert_eq!(result.get_distance(0), 0);
         assert_eq!(result.get_distance(1), 5);
         assert_eq!(result.get_distance(2), 8);
         assert_eq!(result.get_distance(3), i64::MAX); // Unreachable
     }
-    
+
     #[test]
     fn test_single_vertex() {
         // Trivial graph with only source
         let vertices = SetLit![0];
         let edges = SetLit![];
-    
+
         let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
         let result = bellman_ford(&graph, 0).unwrap();
-    
+
         assert_eq!(result.get_distance(0), 0);
     }
-    
+
     #[test]
     fn test_convergence_early_termination() {
         // Simple path graph that should converge before |V| rounds
         let vertices = SetLit![0, 1, 2];
         let edges = SetLit![(0, 1, 2), (1, 2, 3)];
-    
+
         let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
         let result = bellman_ford(&graph, 0).unwrap();
-    
+
         assert_eq!(result.get_distance(0), 0);
         assert_eq!(result.get_distance(1), 2);
         assert_eq!(result.get_distance(2), 5);
     }
-    
+
     #[test]
     fn test_zero_weight_edges() {
         // Graph with zero-weight edges
         let vertices = SetLit![0, 1, 2];
         let edges = SetLit![(0, 1, 0), (1, 2, 0)];
-    
+
         let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
         let result = bellman_ford(&graph, 0).unwrap();
-    
+
         assert_eq!(result.get_distance(0), 0);
         assert_eq!(result.get_distance(1), 0);
         assert_eq!(result.get_distance(2), 0);
@@ -216,4 +216,3 @@ mod tests {
         assert_eq!(result.get_distance(2), -3);
     }
 }
-

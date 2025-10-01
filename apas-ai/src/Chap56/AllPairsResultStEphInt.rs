@@ -85,9 +85,7 @@ impl AllPairsResultStEphInt {
     }
 
     /// Checks if vertex v is reachable from vertex u.
-    pub fn is_reachable(&self, u: usize, v: usize) -> bool {
-        self.get_distance(u, v) != UNREACHABLE
-    }
+    pub fn is_reachable(&self, u: usize, v: usize) -> bool { self.get_distance(u, v) != UNREACHABLE }
 
     /// Extracts the shortest path from u to v by following predecessors.
     /// Returns None if v is unreachable from u, otherwise returns the path as a sequence.

@@ -67,9 +67,7 @@ pub mod TableStPer {
     }
 
     impl<K: StT + Ord, V: StT> TableStPerTrait<K, V> for TableStPer<K, V> {
-        fn size(&self) -> N {
-            self.entries.length()
-        }
+        fn size(&self) -> N { self.entries.length() }
 
         fn empty() -> Self {
             TableStPer {
@@ -309,9 +307,7 @@ pub mod TableStPer {
             TableStPer { entries: filtered }
         }
 
-        fn collect(&self) -> ArraySeqStPerS<Pair<K, V>> {
-            self.entries.clone()
-        }
+        fn collect(&self) -> ArraySeqStPerS<Pair<K, V>> { self.entries.clone() }
     }
 
     /// Helper function for creating tables from sorted entries

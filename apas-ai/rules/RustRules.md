@@ -69,6 +69,8 @@ Result guidance
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result { /* … */ }
     }
     ```
+- We do not use mod.rs style. Just put the modules correctly in lib.rs.
+
 
 #### Specialized import rules
 - Inside `src/` (library code):

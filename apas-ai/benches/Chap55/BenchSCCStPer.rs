@@ -3,9 +3,7 @@
 
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 
-fn bench_placeholder(c: &mut Criterion) {
-    c.bench_function("placeholder", |b| b.iter(|| black_box(1 + 1)));
-}
+fn bench_placeholder(c: &mut Criterion) { c.bench_function("placeholder", |b| b.iter(|| black_box(1 + 1))); }
 
 criterion_group! {
     name = benches;

@@ -189,3 +189,11 @@
 - **Wait for confirmation**: Do not proceed with sweep until user confirms they have committed or explicitly says to proceed
 - **Rationale**: Sweeps can cause massive regressions if uncommitted fixes are lost during the process
 - **SEV1 violation**: Starting a sweep without this reminder and confirmation is a critical workflow error
+
+#### Reordering or changing the task list
+- **CRITICAL**: Do not stop and ask to reorder a task list that the user has OK'd.
+- In a sweep if you have a faster way to do the job you may propose it to the user.
+
+#### Tool parallelism
+- Run cargo bench -j 10, too many rustcs are being forked.
+

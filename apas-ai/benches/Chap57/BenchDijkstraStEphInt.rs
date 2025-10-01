@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Dijkstra's Algorithm with integer weights
 
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 use apas_ai::Chap05::SetStEph::SetStEph;
@@ -14,7 +14,7 @@ fn create_sparse_graph(n: usize) -> WeightedDirGraphStEphInt<usize> {
     for v in 0..n {
         vertices.insert(v);
     }
-    
+
     let mut edges = SetLit![];
     for i in 0..n {
         let j = (i + 1) % n;
@@ -23,7 +23,7 @@ fn create_sparse_graph(n: usize) -> WeightedDirGraphStEphInt<usize> {
             edges.insert((i, i + 2, 2));
         }
     }
-    
+
     WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges)
 }
 
@@ -32,7 +32,7 @@ fn create_dense_graph(n: usize) -> WeightedDirGraphStEphInt<usize> {
     for v in 0..n {
         vertices.insert(v);
     }
-    
+
     let mut edges = SetLit![];
     for i in 0..n {
         for j in 0..n {
@@ -41,7 +41,7 @@ fn create_dense_graph(n: usize) -> WeightedDirGraphStEphInt<usize> {
             }
         }
     }
-    
+
     WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges)
 }
 
@@ -49,17 +49,15 @@ fn bench_sparse_graphs(c: &mut Criterion) {
     let mut group = c.benchmark_group("Dijkstra Int Sparse");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
-    
+
     for size in [10, 20, 30].iter() {
         let graph = create_sparse_graph(*size);
-        
+
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, _| {
-            b.iter(|| {
-                black_box(dijkstra(&graph, 0))
-            })
+            b.iter(|| black_box(dijkstra(&graph, 0)))
         });
     }
-    
+
     group.finish();
 }
 
@@ -67,21 +65,18 @@ fn bench_dense_graphs(c: &mut Criterion) {
     let mut group = c.benchmark_group("Dijkstra Int Dense");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
-    
+
     for size in [10, 20, 30].iter() {
         let graph = create_dense_graph(*size);
-        
+
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, _| {
-            b.iter(|| {
-                black_box(dijkstra(&graph, 0))
-            })
+            b.iter(|| black_box(dijkstra(&graph, 0)))
         });
     }
-    
+
     group.finish();
 }
 
 criterion_group!(benches, bench_sparse_graphs, bench_dense_graphs);
 
 criterion_main!(benches);
-

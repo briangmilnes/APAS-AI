@@ -1500,6 +1500,22 @@ path = "tests/Chap58/TestBellmanFordStEphInt.rs"
 name = "TestBellmanFordStEphFloat"
 path = "tests/Chap58/TestBellmanFordStEphFloat.rs"
 
+[[test]]
+name = "TestJohnsonStEphInt"
+path = "tests/Chap59/TestJohnsonStEphInt.rs"
+
+[[test]]
+name = "TestJohnsonStEphFloat"
+path = "tests/Chap59/TestJohnsonStEphFloat.rs"
+
+[[test]]
+name = "TestJohnsonMtEphInt"
+path = "tests/Chap59/TestJohnsonMtEphInt.rs"
+
+[[test]]
+name = "TestJohnsonMtEphFloat"
+path = "tests/Chap59/TestJohnsonMtEphFloat.rs"
+
 # Chapter 55 Benchmarks
 [[bench]]
 name = "BenchDFSStEph"
@@ -1585,4 +1601,24 @@ harness = false
 [[bench]]
 name = "BenchBellmanFordStEphFloat"
 path = "benches/Chap58/BenchBellmanFordStEphFloat.rs"
+harness = false
+
+[[bench]]
+name = "BenchJohnsonStEphInt"
+path = "benches/Chap59/BenchJohnsonStEphInt.rs"
+harness = false
+
+[[bench]]
+name = "BenchJohnsonStEphFloat"
+path = "benches/Chap59/BenchJohnsonStEphFloat.rs"
+harness = false
+
+[[bench]]
+name = "BenchJohnsonMtEphInt"
+path = "benches/Chap59/BenchJohnsonMtEphInt.rs"
+harness = false
+
+[[bench]]
+name = "BenchJohnsonMtEphFloat"
+path = "benches/Chap59/BenchJohnsonMtEphFloat.rs"
 harness = false

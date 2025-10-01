@@ -169,4 +169,3 @@ mod tests {
         assert_eq!(result.get_distance(9), 7); // via shortcut 0->5, then 5->6->7->8->9
     }
 }
-

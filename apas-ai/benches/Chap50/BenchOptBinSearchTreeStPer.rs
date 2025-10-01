@@ -27,5 +27,3 @@ fn bench_obst_st_per_small(c: &mut Criterion) {
 
 criterion_group!(benches, bench_obst_st_per_small);
 criterion_main!(benches);
-
-

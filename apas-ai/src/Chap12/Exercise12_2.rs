@@ -33,9 +33,7 @@ pub mod Exercise12_2 {
     ///
     /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
     /// claude-4-sonet: Work Θ(1) expected, Θ(n) worst case, Span Θ(1), Parallelism Θ(1)
-    pub fn fetch_add_cas(target: &AtomicUsize, delta: usize) -> usize {
-        target.fetch_add_cas(delta)
-    }
+    pub fn fetch_add_cas(target: &AtomicUsize, delta: usize) -> usize { target.fetch_add_cas(delta) }
 
     pub fn efficiency_note() -> &'static str {
         "Hardware fetch_add completes in one atomic operation; the CAS loop may repeat under contention, so it cannot outperform native fetch_add."

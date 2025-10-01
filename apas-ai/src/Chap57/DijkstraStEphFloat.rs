@@ -27,9 +27,7 @@ pub mod DijkstraStEphFloat {
     }
 
     impl PQEntry {
-        fn new(dist: OrderedF64, vertex: usize) -> Self {
-            PQEntry { dist, vertex }
-        }
+        fn new(dist: OrderedF64, vertex: usize) -> Self { PQEntry { dist, vertex } }
     }
 
     impl Ord for PQEntry {
@@ -40,15 +38,11 @@ pub mod DijkstraStEphFloat {
     }
 
     impl PartialOrd for PQEntry {
-        fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-            Some(self.cmp(other))
-        }
+        fn partial_cmp(&self, other: &Self) -> Option<Ordering> { Some(self.cmp(other)) }
     }
 
     impl Display for PQEntry {
-        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-            write!(f, "({}, {})", self.dist, self.vertex)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { write!(f, "({}, {})", self.dist, self.vertex) }
     }
 
     /// Runs Dijkstra's algorithm on a weighted directed graph
@@ -65,10 +59,7 @@ pub mod DijkstraStEphFloat {
     ///
     /// # Returns
     /// SSSPResultStEphFloat with distances and predecessors
-    pub fn dijkstra(
-        graph: &WeightedDirGraphStEphFloat<usize>,
-        source: usize,
-    ) -> SSSPResultStEphFloat {
+    pub fn dijkstra(graph: &WeightedDirGraphStEphFloat<usize>, source: usize) -> SSSPResultStEphFloat {
         let n = graph.vertices().size();
 
         // Initialize result with all distances = infinity except source = 0
@@ -79,8 +70,7 @@ pub mod DijkstraStEphFloat {
 
         // Priority queue Q: stores PQEntry(distance, vertex)
         // BinaryHeapPQ is a min-heap
-        let mut pq: BinaryHeapPQ<PQEntry> =
-            BinaryHeapPQ::singleton(PQEntry::new(OrderedF64::from(0.0), source));
+        let mut pq: BinaryHeapPQ<PQEntry> = BinaryHeapPQ::singleton(PQEntry::new(OrderedF64::from(0.0), source));
 
         // Main loop: deleteMin until queue is empty
         while !pq.is_empty() {
@@ -127,4 +117,3 @@ pub mod DijkstraStEphFloat {
         result
     }
 }
-

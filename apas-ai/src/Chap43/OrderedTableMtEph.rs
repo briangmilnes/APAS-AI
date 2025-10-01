@@ -62,9 +62,7 @@ pub mod OrderedTableMtEph {
         // Base table operations - delegate to backing store with ephemeral semantics and parallelism
 
         /// Claude Work: O(1), Span: O(1)
-        fn size(&self) -> N {
-            self.base_table.size()
-        }
+        fn size(&self) -> N { self.base_table.size() }
 
         /// Claude Work: O(1), Span: O(1)
         fn empty() -> Self {
@@ -81,19 +79,13 @@ pub mod OrderedTableMtEph {
         }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn find(&self, k: &K) -> Option<V> {
-            self.base_table.find(k)
-        }
+        fn find(&self, k: &K) -> Option<V> { self.base_table.find(k) }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn lookup(&self, k: &K) -> Option<V> {
-            self.find(k)
-        }
+        fn lookup(&self, k: &K) -> Option<V> { self.find(k) }
 
         /// Claude Work: O(1), Span: O(1)
-        fn is_empty(&self) -> B {
-            self.size() == 0
-        }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn insert<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, k: K, v: V, combine: F) {
@@ -108,9 +100,7 @@ pub mod OrderedTableMtEph {
         }
 
         /// Claude Work: O(n), Span: O(log n) - Parallel domain extraction
-        fn domain(&self) -> ArraySetStEph<K> {
-            self.base_table.domain()
-        }
+        fn domain(&self) -> ArraySetStEph<K> { self.base_table.domain() }
 
         /// Claude Work: O(n log n), Span: O(log² n) - Parallel tabulation
         fn tabulate<F>(f: F, keys: &ArraySetStEph<K>) -> Self
@@ -193,19 +183,13 @@ pub mod OrderedTableMtEph {
         }
 
         /// Claude Work: O(m + n), Span: O(log(m + n)) - Parallel difference
-        fn difference(&mut self, other: &Self) {
-            self.base_table.difference(&other.base_table);
-        }
+        fn difference(&mut self, other: &Self) { self.base_table.difference(&other.base_table); }
 
         /// Claude Work: O(n), Span: O(log n) - Parallel restrict
-        fn restrict(&mut self, keys: &ArraySetStEph<K>) {
-            self.base_table.restrict(keys);
-        }
+        fn restrict(&mut self, keys: &ArraySetStEph<K>) { self.base_table.restrict(keys); }
 
         /// Claude Work: O(n), Span: O(log n) - Parallel subtract
-        fn subtract(&mut self, keys: &ArraySetStEph<K>) {
-            self.base_table.subtract(keys);
-        }
+        fn subtract(&mut self, keys: &ArraySetStEph<K>) { self.base_table.subtract(keys); }
 
         /// Claude Work: O(n), Span: O(log n)
         fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>> {
@@ -299,9 +283,7 @@ pub mod OrderedTableMtEph {
         }
 
         /// Claude Work: O(log(m + n)), Span: O(log(m + n))
-        fn join_key(&mut self, other: Self) {
-            self.union(&other, |v1, _v2| v1.clone());
-        }
+        fn join_key(&mut self, other: Self) { self.union(&other, |v1, _v2| v1.clone()); }
 
         /// Claude Work: O(log n), Span: O(log n) - Sequential (AVLTreeSeq not thread-safe)
         fn get_key_range(&self, k1: &K, k2: &K) -> Self {

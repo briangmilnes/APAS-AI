@@ -55,19 +55,13 @@ pub mod BinaryHeapPQ {
     impl<T: StT + Ord> BinaryHeapPQ<T> {
         /// Helper functions for heap navigation
         /// left child of node at index i
-        fn left_child(i: N) -> N {
-            2 * i + 1
-        }
+        fn left_child(i: N) -> N { 2 * i + 1 }
 
         /// right child of node at index i
-        fn right_child(i: N) -> N {
-            2 * i + 2
-        }
+        fn right_child(i: N) -> N { 2 * i + 2 }
 
         /// parent of node at index i
-        fn parent(i: N) -> N {
-            if i == 0 { 0 } else { (i - 1) / 2 }
-        }
+        fn parent(i: N) -> N { if i == 0 { 0 } else { (i - 1) / 2 } }
 
         /// Check if heap property is satisfied
         fn is_heap(&self) -> bool {
@@ -270,19 +264,13 @@ pub mod BinaryHeapPQ {
         }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn size(&self) -> N {
-            self.elements.length()
-        }
+        fn size(&self) -> N { self.elements.length() }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn is_empty(&self) -> bool {
-            self.elements.length() == 0
-        }
+        fn is_empty(&self) -> bool { self.elements.length() == 0 }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn to_seq(&self) -> ArraySeqStPerS<T> {
-            self.elements.clone()
-        }
+        fn to_seq(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
     }
 
     impl<T: StT + Ord> BinaryHeapPQ<T> {
@@ -314,9 +302,7 @@ pub mod BinaryHeapPQ {
         }
 
         /// Check if the heap property is maintained (for testing)
-        pub fn is_valid_heap(&self) -> bool {
-            self.is_heap()
-        }
+        pub fn is_valid_heap(&self) -> bool { self.is_heap() }
 
         /// Get the height of the heap (for testing)
         pub fn height(&self) -> N {
@@ -346,9 +332,7 @@ pub mod BinaryHeapPQ {
     }
 
     impl<T: StT + Ord> Default for BinaryHeapPQ<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StT + Ord> Display for BinaryHeapPQ<T> {

@@ -66,17 +66,13 @@ pub mod BellmanFordStEphFloat {
 
             // For each vertex, compute minimum distance through in-neighbors (Line 5)
             for v in 0..n {
-                let current_dist = *distances
-                    .get(&v)
-                    .unwrap_or(&OrderedF64::from(f64::INFINITY));
+                let current_dist = *distances.get(&v).unwrap_or(&OrderedF64::from(f64::INFINITY));
                 let mut min_dist = current_dist;
 
                 // Compute Din(v) = min over u in N⁻(v) of (d[u] + w(u,v))
                 let in_neighbors = graph.in_neighbors_weighted(&v);
                 for (u, weight) in in_neighbors.iter() {
-                    let u_dist = *distances
-                        .get(u)
-                        .unwrap_or(&OrderedF64::from(f64::INFINITY));
+                    let u_dist = *distances.get(u).unwrap_or(&OrderedF64::from(f64::INFINITY));
                     if u_dist.0 != f64::INFINITY {
                         let new_dist = OrderedF64::from(u_dist.0 + weight.0);
                         if new_dist < min_dist {
@@ -100,9 +96,7 @@ pub mod BellmanFordStEphFloat {
                 // No changes, converged - build result
                 let mut result = SSSPResultStEphFloat::new(n, source);
                 for v in 0..n {
-                    let dist = *distances
-                        .get(&v)
-                        .unwrap_or(&OrderedF64::from(f64::INFINITY));
+                    let dist = *distances.get(&v).unwrap_or(&OrderedF64::from(f64::INFINITY));
                     result.set_distance(v, dist);
                 }
 
@@ -136,9 +130,7 @@ pub mod BellmanFordStEphFloat {
                 continue;
             }
 
-            let v_dist = *distances
-                .get(&v)
-                .unwrap_or(&OrderedF64::from(f64::INFINITY));
+            let v_dist = *distances.get(&v).unwrap_or(&OrderedF64::from(f64::INFINITY));
             if v_dist.0 == f64::INFINITY {
                 continue; // Unreachable
             }
@@ -146,9 +138,7 @@ pub mod BellmanFordStEphFloat {
             // Find which in-neighbor u gave us the shortest path
             let in_neighbors = graph.in_neighbors_weighted(&v);
             for (u, weight) in in_neighbors.iter() {
-                let u_dist = *distances
-                    .get(u)
-                    .unwrap_or(&OrderedF64::from(f64::INFINITY));
+                let u_dist = *distances.get(u).unwrap_or(&OrderedF64::from(f64::INFINITY));
                 if u_dist.0 != f64::INFINITY {
                     let path_dist = OrderedF64::from(u_dist.0 + weight.0);
                     if path_dist == v_dist {
@@ -160,5 +150,3 @@ pub mod BellmanFordStEphFloat {
         }
     }
 }
-
-

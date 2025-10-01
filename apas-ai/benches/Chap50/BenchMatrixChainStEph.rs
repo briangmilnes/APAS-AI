@@ -33,5 +33,3 @@ fn bench_matrix_chain_st_eph_optimal_cost(c: &mut Criterion) {
 
 criterion_group!(benches, bench_matrix_chain_st_eph_optimal_cost);
 criterion_main!(benches);
-
-

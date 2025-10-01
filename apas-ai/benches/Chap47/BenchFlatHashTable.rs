@@ -36,5 +36,3 @@ fn bench_flat_hash_table_operations(c: &mut Criterion) {
 
 criterion_group!(benches, bench_flat_hash_table_operations);
 criterion_main!(benches);
-
-

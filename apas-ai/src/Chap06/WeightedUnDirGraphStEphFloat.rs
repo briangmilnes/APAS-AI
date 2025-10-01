@@ -110,9 +110,7 @@ pub mod WeightedUnDirGraphStEphFloat {
         }
 
         /// Get the degree of a vertex (number of incident edges)
-        pub fn vertex_degree(&self, v: &V) -> usize {
-            self.neighbors(v).size()
-        }
+        pub fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
 
         /// Check if the graph is connected (all vertices reachable from any vertex)
         pub fn is_connected(&self) -> bool {

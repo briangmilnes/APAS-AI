@@ -40,10 +40,7 @@ pub mod BellmanFordStEphInt {
     ///      - Update d'[v] = min(d[v], Din(v))
     ///    - If no distances changed, return (converged)
     /// 3. If |V| rounds completed without convergence, negative cycle exists
-    pub fn bellman_ford(
-        graph: &WeightedDirGraphStEphInt<usize>,
-        source: usize,
-    ) -> Result<SSSPResultStEphInt, String> {
+    pub fn bellman_ford(graph: &WeightedDirGraphStEphInt<usize>, source: usize) -> Result<SSSPResultStEphInt, String> {
         let n = graph.vertices().size();
 
         // Initialize distances: source = 0, others = infinity
@@ -144,5 +141,3 @@ pub mod BellmanFordStEphInt {
         }
     }
 }
-
-

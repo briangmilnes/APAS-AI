@@ -58,13 +58,9 @@ pub mod ArraySeqMtEph {
             <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(&|_| item.clone(), 1)
         }
 
-        fn length(&self) -> N {
-            ArraySeqMtEphTraitChap18::length(self)
-        }
+        fn length(&self) -> N { ArraySeqMtEphTraitChap18::length(self) }
 
-        fn nth_cloned(&self, index: N) -> T {
-            ArraySeqMtEphTraitChap18::nth_cloned(self, index)
-        }
+        fn nth_cloned(&self, index: N) -> T { ArraySeqMtEphTraitChap18::nth_cloned(self, index) }
 
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtEphS<T> {
             // Keep as primitive - subseq is one of the 7 APAS primitives

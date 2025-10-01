@@ -1,9 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for SubsetSumMtEph
 
+use apas_ai::{Chap49::SubsetSumMtEph::SubsetSumMtEph::*, SubsetSumMtEphLit};
 use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
-use apas_ai::{Chap49::SubsetSumMtEph::SubsetSumMtEph::*, SubsetSumMtEphLit};
 
 fn bench_subset_sum_mt_eph(c: &mut Criterion) {
     let mut group = c.benchmark_group("subset_sum_mt_eph");
@@ -26,5 +26,3 @@ fn bench_subset_sum_mt_eph(c: &mut Criterion) {
 
 criterion_group!(benches, bench_subset_sum_mt_eph);
 criterion_main!(benches);
-
-

@@ -116,13 +116,9 @@ pub mod SubsetSumStEph {
             self.subset_sum_rec(n, target)
         }
 
-        fn multiset(&self) -> &ArraySeqStEphS<T> {
-            &self.multiset
-        }
+        fn multiset(&self) -> &ArraySeqStEphS<T> { &self.multiset }
 
-        fn multiset_mut(&mut self) -> &mut ArraySeqStEphS<T> {
-            &mut self.multiset
-        }
+        fn multiset_mut(&mut self) -> &mut ArraySeqStEphS<T> { &mut self.multiset }
 
         fn set(&mut self, index: usize, value: T) {
             let _ = self.multiset.set(index, value);
@@ -130,13 +126,9 @@ pub mod SubsetSumStEph {
             self.memo.clear();
         }
 
-        fn clear_memo(&mut self) {
-            self.memo.clear();
-        }
+        fn clear_memo(&mut self) { self.memo.clear(); }
 
-        fn memo_size(&self) -> usize {
-            self.memo.len()
-        }
+        fn memo_size(&self) -> usize { self.memo.len() }
     }
 
     impl<T: StT> Display for SubsetSumStEphS<T> {
@@ -154,27 +146,21 @@ pub mod SubsetSumStEph {
         type Item = T;
         type IntoIter = <ArraySeqStEphS<T> as IntoIterator>::IntoIter;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.multiset.into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.multiset.into_iter() }
     }
 
     impl<T: StT> IntoIterator for &SubsetSumStEphS<T> {
         type Item = T;
         type IntoIter = <ArraySeqStEphS<T> as IntoIterator>::IntoIter;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.multiset.clone().into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.multiset.clone().into_iter() }
     }
 
     impl<T: StT> IntoIterator for &mut SubsetSumStEphS<T> {
         type Item = T;
         type IntoIter = <ArraySeqStEphS<T> as IntoIterator>::IntoIter;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.multiset.clone().into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.multiset.clone().into_iter() }
     }
 
     #[allow(dead_code)]

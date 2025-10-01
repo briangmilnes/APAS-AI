@@ -25,9 +25,7 @@ pub mod BottomUpDPMtPer {
     impl BottomUpDPMtPerS {
         /// Claude Work: O(1) - constant time initialization
         /// Claude Span: O(1) - constant time initialization
-        pub fn new(s: ArraySeqMtPerS<char>, t: ArraySeqMtPerS<char>) -> Self {
-            BottomUpDPMtPerS { seq_s: s, seq_t: t }
-        }
+        pub fn new(s: ArraySeqMtPerS<char>, t: ArraySeqMtPerS<char>) -> Self { BottomUpDPMtPerS { seq_s: s, seq_t: t } }
 
         /// Compute minimum edit distance using parallel bottom-up diagonal pebbling
         /// Claude Work: O(|S|*|T|) where |S|=source length, |T|=target length
@@ -143,23 +141,17 @@ pub mod BottomUpDPMtPer {
         /// Get the length of sequence S
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn s_length(&self) -> usize {
-            self.seq_s.length()
-        }
+        pub fn s_length(&self) -> usize { self.seq_s.length() }
 
         /// Get the length of sequence T
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn t_length(&self) -> usize {
-            self.seq_t.length()
-        }
+        pub fn t_length(&self) -> usize { self.seq_t.length() }
 
         /// Check if sequences are empty
         /// Claude Work: O(1) - constant time check
         /// Claude Span: O(1) - constant time check
-        pub fn is_empty(&self) -> bool {
-            self.seq_s.length() == 0usize && self.seq_t.length() == 0usize
-        }
+        pub fn is_empty(&self) -> bool { self.seq_s.length() == 0usize && self.seq_t.length() == 0usize }
     }
 
     impl Default for BottomUpDPMtPerS {
