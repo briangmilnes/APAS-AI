@@ -50,11 +50,12 @@ pub mod LeftistHeapPQ {
             Self: Sized;
 
         /// Claude Work: Θ(log m + log n), Span: Θ(log m + log n)
-        /// ⭐ KEY ADVANTAGE: Efficient meld following right spines
+        /// KEY ADVANTAGE: Efficient meld following right spines
         fn meld(&self, other: &Self) -> Self;
 
         /// Claude Work: Θ(n), Span: Θ(n)
         /// Creates heap from sequence using reduce with meld
+
         fn from_seq(seq: &[T]) -> Self;
 
         /// Helper methods

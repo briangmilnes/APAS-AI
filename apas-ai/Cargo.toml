@@ -1334,6 +1334,46 @@ path = "tests/Chap55/TestSCCStEph.rs"
 name = "TestSCCStPer"
 path = "tests/Chap55/TestSCCStPer.rs"
 
+[[test]]
+name = "TestPathWeightUtilsStEph"
+path = "tests/Chap56/TestPathWeightUtilsStEph.rs"
+
+[[test]]
+name = "TestPathWeightUtilsStPer"
+path = "tests/Chap56/TestPathWeightUtilsStPer.rs"
+
+[[test]]
+name = "TestSSSPResultStEphInt"
+path = "tests/Chap56/TestSSSPResultStEphInt.rs"
+
+[[test]]
+name = "TestSSSPResultStEphFloat"
+path = "tests/Chap56/TestSSSPResultStEphFloat.rs"
+
+[[test]]
+name = "TestSSSPResultStPerInt"
+path = "tests/Chap56/TestSSSPResultStPerInt.rs"
+
+[[test]]
+name = "TestSSSPResultStPerFloat"
+path = "tests/Chap56/TestSSSPResultStPerFloat.rs"
+
+[[test]]
+name = "TestAllPairsResultStEphInt"
+path = "tests/Chap56/TestAllPairsResultStEphInt.rs"
+
+[[test]]
+name = "TestAllPairsResultStEphFloat"
+path = "tests/Chap56/TestAllPairsResultStEphFloat.rs"
+
+[[test]]
+name = "TestAllPairsResultStPerInt"
+path = "tests/Chap56/TestAllPairsResultStPerInt.rs"
+
+[[test]]
+name = "TestAllPairsResultStPerFloat"
+path = "tests/Chap56/TestAllPairsResultStPerFloat.rs"
+
 # Chapter 55 Benchmarks
 [[bench]]
 name = "BenchDFSStEph"

@@ -1,0 +1,5 @@
+
+Chap45
+
+ This has the bad anti-pattern of stubs in the pub fn just calling
+internal functions. Fix this.

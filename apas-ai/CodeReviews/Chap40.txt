@@ -1,2 +1,6 @@
 
- 
+  Why is this an option?
+    type Link<K, V> = Option<Box<Node<K, V>>>;
+
+  Analyze algorithmic complexity.
+  

@@ -1,21 +1,16 @@
- Build a plan for this, including test and benchmark
- using PrePlanChecklist.md. 
-
- Identify all the algorithms specified here and implement
- them for directed graphs. You may be able to use some of
- our representations for graphs, you may have to make
- novel ones. Definitely make a separate stack module.
-
- You may have to allow negative weights if our graphs don't.
- Do not try and represent anything with a negative infinity.
-
- How many are parallel?
+ Which modules should we implement for Chap27?
+ Which lower number modules can you use?
+ How many modules are going to have parallelism and in which functions/methods?
+ Which algorithms, problems and exercises?
+ Which exercises are text proofs?
+ Discuss with the user.
 
  Show it to me and estimate time.
 
- I will tell you when to execute. 
-
- Wait for me to tell you when to fix, build and test.
+ This goes in Chap56.
+ 
+ You may have to allow negative weights if our graphs don't.
+ Do not try and represent anything with a negative infinity.
 
  This goes in Chap56.
 

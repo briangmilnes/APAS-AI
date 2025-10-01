@@ -306,3 +306,18 @@ pub mod Chap55 {
     pub mod TopoSortStEph;
     pub mod TopoSortStPer;
 }
+
+pub mod Chap56 {
+    pub mod AllPairsResultStEphFloat;
+    pub mod AllPairsResultStEphInt;
+    pub mod AllPairsResultStPerFloat;
+    pub mod AllPairsResultStPerInt;
+    pub mod Example56_1;
+    pub mod Example56_3;
+    pub mod PathWeightUtilsStEph;
+    pub mod PathWeightUtilsStPer;
+    pub mod SSSPResultStEphFloat;
+    pub mod SSSPResultStEphInt;
+    pub mod SSSPResultStPerFloat;
+    pub mod SSSPResultStPerInt;
+}
