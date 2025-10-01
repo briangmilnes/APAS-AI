@@ -367,3 +367,7 @@ pub mod Chap65 {
     pub mod PrimStEph;
     pub mod UnionFindStEph;
 }
+pub mod Chap66 {
+    pub mod BoruvkaMtEph;
+    pub mod BoruvkaStEph;
+}

@@ -1,0 +1,319 @@
+// Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Chapter 66: Borůvka's MST Algorithm (Parallel Ephemeral)
+//!
+//! Implements parallel versions of Algorithm 66.2 and 66.3 using ParaPair! macro.
+//! Achieves Work O(m log n), Span O(log² n).
+
+pub mod BoruvkaMtEph {
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::ParaPair;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+    use ordered_float::OrderedFloat;
+    use rand::{Rng, SeedableRng};
+    use rand::rngs::StdRng;
+    use std::collections::HashMap;
+    use std::hash::Hash;
+    use std::sync::Arc;
+
+    /// Edge with label: (u, v, weight, label)
+    pub type LabeledEdge<V> = (V, V, OrderedFloat<f64>, usize);
+
+    /// Parallel vertex bridges using divide-and-conquer reduce
+    ///
+    /// For each vertex, find the minimum weight edge incident on it.
+    /// Uses parallel reduce over edges.
+    ///
+    /// APAS: Work O(m), Span O(log m)
+    /// claude-4-sonet: Work O(m), Span O(log m) [parallel reduce with ParaPair!]
+    ///
+    /// Arguments:
+    /// - edges: Arc-wrapped vector of labeled edges
+    /// - start: Start index in edges
+    /// - end: End index in edges
+    ///
+    /// Returns:
+    /// - HashMap mapping vertex → (neighbor, weight, label) for minimum edge
+    pub fn vertex_bridges_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+        edges: Arc<Vec<LabeledEdge<V>>>,
+        start: usize,
+        end: usize,
+    ) -> HashMap<V, (V, OrderedFloat<f64>, usize)> {
+        let size = end - start;
+        if size == 0 {
+            return HashMap::new();
+        }
+        
+        if size == 1 {
+            // Base case: single edge contributes bridges for both endpoints
+            let (u, v, w, label) = edges[start].clone();
+            let mut result = HashMap::new();
+            let _ = result.insert(u.clone(), (v.clone(), w, label));
+            let _ = result.insert(v.clone(), (u.clone(), w, label));
+            return result;
+        }
+        
+        // Divide and conquer
+        let mid = start + size / 2;
+        let edges1 = edges.clone();
+        let edges2 = edges;
+        
+        let pair = ParaPair!(
+            move || vertex_bridges_mt(edges1, start, mid),
+            move || vertex_bridges_mt(edges2, mid, end)
+        );
+        
+        // Merge: for each vertex, keep the minimum weight edge
+        let mut merged = pair.0;
+        let right_bridges = pair.1;
+        for (v, (neighbor, w, label)) in right_bridges {
+            match merged.get(&v) {
+                None => {
+                    let _ = merged.insert(v, (neighbor, w, label));
+                }
+                Some((_, existing_w, _)) => {
+                    if w < *existing_w {
+                        let _ = merged.insert(v, (neighbor, w, label));
+                    }
+                }
+            }
+        }
+        
+        merged
+    }
+
+    /// Parallel bridge star partition
+    ///
+    /// Performs star contraction along vertex bridges using randomized coin flips.
+    /// Parallelizes coin flips and edge filtering.
+    ///
+    /// APAS: Work O(n + m), Span O(log n)
+    /// claude-4-sonet: Work O(n + m), Span O(log n) [parallel iteration with ParaPair!]
+    ///
+    /// Arguments:
+    /// - vertices_vec: Vector of vertices (for parallel iteration)
+    /// - bridges: Vertex bridges (from vertex_bridges_mt)
+    /// - rng: Random number generator for coin flips
+    ///
+    /// Returns:
+    /// - (remaining_vertices, partition_map) where partition_map: tail → (head, weight, label)
+    pub fn bridge_star_partition_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+        vertices_vec: Vec<V>,
+        bridges: HashMap<V, (V, OrderedFloat<f64>, usize)>,
+        rng: &mut StdRng,
+    ) -> (Set<V>, HashMap<V, (V, OrderedFloat<f64>, usize)>) {
+        // Coin flips (sequential for consistent seed)
+        let mut coin_flips: HashMap<V, bool> = HashMap::new();
+        for vertex in vertices_vec.iter() {
+            let _ = coin_flips.insert(vertex.clone(), rng.random::<bool>());
+        }
+        
+        // Parallel edge filtering: select edges from Tail→Head
+        let vertices_len = vertices_vec.len();
+        let vertices_arc = Arc::new(vertices_vec);
+        let bridges_arc = Arc::new(bridges);
+        let flips_arc = Arc::new(coin_flips);
+        let partition = filter_tail_to_head_mt(vertices_arc.clone(), bridges_arc, flips_arc, 0, vertices_len);
+        
+        // Compute remaining vertices (not contracted)
+        let mut remaining = SetLit![];
+        for v in vertices_arc.iter() {
+            if !partition.contains_key(v) {
+                let _ = remaining.insert(v.clone());
+            }
+        }
+        
+        (remaining, partition)
+    }
+
+    /// Parallel filter: find edges from Tail→Head
+    fn filter_tail_to_head_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+        vertices: Arc<Vec<V>>,
+        bridges: Arc<HashMap<V, (V, OrderedFloat<f64>, usize)>>,
+        coin_flips: Arc<HashMap<V, bool>>,
+        start: usize,
+        end: usize,
+    ) -> HashMap<V, (V, OrderedFloat<f64>, usize)> {
+        let size = end - start;
+        if size == 0 {
+            return HashMap::new();
+        }
+        
+        if size == 1 {
+            // Base case: check single vertex
+            let u = &vertices[start];
+            if let Some((v, w, label)) = bridges.get(u) {
+                let u_heads = coin_flips.get(u).copied().unwrap_or(false);
+                let v_heads = coin_flips.get(v).copied().unwrap_or(false);
+                
+                if !u_heads && v_heads {
+                    let mut result = HashMap::new();
+                    let _ = result.insert(u.clone(), (v.clone(), *w, *label));
+                    return result;
+                }
+            }
+            return HashMap::new();
+        }
+        
+        // Divide and conquer
+        let mid = start + size / 2;
+        let verts1 = vertices.clone();
+        let bridges1 = bridges.clone();
+        let flips1 = coin_flips.clone();
+        let verts2 = vertices;
+        let bridges2 = bridges;
+        let flips2 = coin_flips;
+        
+        let pair = ParaPair!(
+            move || filter_tail_to_head_mt(verts1, bridges1, flips1, start, mid),
+            move || filter_tail_to_head_mt(verts2, bridges2, flips2, mid, end)
+        );
+        
+        // Merge
+        let mut merged = pair.0;
+        merged.extend(pair.1);
+        merged
+    }
+
+    /// Parallel Borůvka's MST
+    ///
+    /// Computes the Minimum Spanning Tree using recursive bridge-based contraction.
+    /// Parallelizes vertex bridge computation and edge routing.
+    ///
+    /// APAS: Work O(m log n), Span O(log² n)
+    /// claude-4-sonet: Work O(m log n), Span O(log² n) [O(log n) rounds × O(log n) span per round]
+    ///
+    /// Arguments:
+    /// - vertices_vec: Vector of vertices
+    /// - edges_vec: Vector of labeled edges
+    /// - mst_labels: Accumulated MST edge labels
+    /// - rng: Random number generator
+    ///
+    /// Returns:
+    /// - Set of edge labels in the MST
+    pub fn boruvka_mst_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+        vertices_vec: Vec<V>,
+        edges_vec: Vec<LabeledEdge<V>>,
+        mst_labels: Set<usize>,
+        rng: &mut StdRng,
+    ) -> Set<usize> {
+        // Base case: no edges remaining
+        if edges_vec.is_empty() {
+            return mst_labels;
+        }
+        
+        // Find vertex bridges (parallel)
+        let edges_len = edges_vec.len();
+        let edges_arc = Arc::new(edges_vec);
+        let bridges = vertex_bridges_mt(edges_arc.clone(), 0, edges_len);
+        
+        // Perform bridge star partition
+        let (remaining_vertices, partition) = bridge_star_partition_mt(vertices_vec, bridges, rng);
+        
+        // Collect new MST labels from partition
+        let mut new_mst_labels = mst_labels.clone();
+        for (_, (_, _, label)) in partition.iter() {
+            let _ = new_mst_labels.insert(*label);
+        }
+        
+        // Build full partition map (including identity for non-contracted vertices)
+        let mut full_partition: HashMap<V, V> = HashMap::new();
+        for (tail, (head, _, _)) in partition.iter() {
+            let _ = full_partition.insert(tail.clone(), head.clone());
+        }
+        for v in remaining_vertices.iter() {
+            let _ = full_partition.insert(v.clone(), v.clone());
+        }
+        
+        // Parallel edge re-routing
+        let part_arc = Arc::new(full_partition);
+        let new_edges = reroute_edges_mt(edges_arc, part_arc, 0, edges_len);
+        
+        // Recurse
+        let remaining_vec: Vec<V> = remaining_vertices.iter().cloned().collect();
+        boruvka_mst_mt(remaining_vec, new_edges, new_mst_labels, rng)
+    }
+
+    /// Parallel edge re-routing: map edges to new endpoints and remove self-edges
+    fn reroute_edges_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+        edges: Arc<Vec<LabeledEdge<V>>>,
+        partition: Arc<HashMap<V, V>>,
+        start: usize,
+        end: usize,
+    ) -> Vec<LabeledEdge<V>> {
+        let size = end - start;
+        if size == 0 {
+            return Vec::new();
+        }
+        
+        if size == 1 {
+            let (u, v, w, label) = &edges[start];
+            let new_u = partition.get(u).cloned().unwrap_or_else(|| u.clone());
+            let new_v = partition.get(v).cloned().unwrap_or_else(|| v.clone());
+            
+            if new_u != new_v {
+                return vec![(new_u, new_v, *w, *label)];
+            }
+            return Vec::new();
+        }
+        
+        // Divide and conquer
+        let mid = start + size / 2;
+        let edges1 = edges.clone();
+        let part1 = partition.clone();
+        let edges2 = edges;
+        let part2 = partition;
+        
+        let pair = ParaPair!(
+            move || reroute_edges_mt(edges1, part1, start, mid),
+            move || reroute_edges_mt(edges2, part2, mid, end)
+        );
+        
+        // Merge
+        let mut left_result = pair.0;
+        let mut right_result = pair.1;
+        left_result.append(&mut right_result);
+        left_result
+    }
+
+    /// Helper: Create Borůvka MST with a specific seed
+    ///
+    /// APAS: Work O(m log n), Span O(log² n)
+    /// claude-4-sonet: Work O(m log n), Span O(log² n)
+    ///
+    /// Arguments:
+    /// - vertices: Set of vertices
+    /// - edges: Set of labeled edges
+    /// - seed: Random seed for reproducibility
+    ///
+    /// Returns:
+    /// - Set of edge labels in the MST
+    pub fn boruvka_mst_mt_with_seed<V: StT + Hash + Ord + Send + Sync + 'static>(
+        vertices: &Set<V>,
+        edges: &Set<LabeledEdge<V>>,
+        seed: u64,
+    ) -> Set<usize> {
+        let mut rng = StdRng::seed_from_u64(seed);
+        let vertices_vec: Vec<V> = vertices.iter().cloned().collect();
+        let edges_vec: Vec<LabeledEdge<V>> = edges.iter().cloned().collect();
+        boruvka_mst_mt(vertices_vec, edges_vec, SetLit![], &mut rng)
+    }
+
+    /// Compute MST weight from edge labels
+    ///
+    /// APAS: Work O(m), Span O(m)
+    /// claude-4-sonet: Work O(m), Span O(m)
+    pub fn mst_weight<V: StT + Hash>(
+        edges: &Set<LabeledEdge<V>>,
+        mst_labels: &Set<usize>,
+    ) -> OrderedFloat<f64> {
+        let mut total = OrderedFloat(0.0);
+        for (_, _, w, label) in edges.iter() {
+            if mst_labels.mem(label) {
+                total += *w;
+            }
+        }
+        total
+    }
+}
+

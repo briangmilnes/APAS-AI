@@ -1528,6 +1528,14 @@ path = "tests/Chap65/TestPrimStEph.rs"
 name = "TestKruskalStEph"
 path = "tests/Chap65/TestKruskalStEph.rs"
 
+[[test]]
+name = "TestBoruvkaStEph"
+path = "tests/Chap66/TestBoruvkaStEph.rs"
+
+[[test]]
+name = "TestBoruvkaMtEph"
+path = "tests/Chap66/TestBoruvkaMtEph.rs"
+
 # Chapter 55 Benchmarks
 [[bench]]
 name = "BenchDFSStEph"
@@ -1718,4 +1726,14 @@ harness = false
 [[bench]]
 name = "BenchKruskalStEph"
 path = "benches/Chap65/BenchKruskalStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBoruvkaStEph"
+path = "benches/Chap66/BenchBoruvkaStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchBoruvkaMtEph"
+path = "benches/Chap66/BenchBoruvkaMtEph.rs"
 harness = false
