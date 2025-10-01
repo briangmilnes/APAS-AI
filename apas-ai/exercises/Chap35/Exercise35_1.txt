@@ -1,0 +1,34 @@
+Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+
+Exercise 35.1: Work Analysis Without Bounding Recursive Calls by n
+
+The original analysis upper-bounded the total number of recursive calls by n, arguing 
+that since the instance size decreases by at least 1 each round, we can have at most n 
+rounds. We now redo the analysis without using this fact, relying instead on the 
+geometric decrease property.
+
+Analysis:
+
+1. At each recursive call (dart throw), the pivot has rank in [n/4, 3n/4] with 
+   probability p = 1/2. When this happens, the next instance size is at most 3n/4, 
+   giving a contraction ratio r = 3/4.
+
+2. The expected instance size after i rounds is bounded by n(1 - p + pr)^i = n(0.875)^i, 
+   where (1 - p + pr) = (1 - 1/2 + 1/2 * 3/4) = 0.875.
+
+3. The work at round i is O(n_i) where n_i is the instance size at that round. 
+   Expected work at round i is therefore O(n * 0.875^i).
+
+4. Total expected work is:
+   W = Σ_{i=0}^∞ O(n * 0.875^i)
+     = O(n) * Σ_{i=0}^∞ 0.875^i
+     = O(n) * 1/(1 - 0.875)
+     = O(n) * 1/0.125
+     = O(n) * 8
+     = O(n)
+
+5. The geometric series converges because 0.875 < 1, giving us O(n) expected work 
+   without needing to bound the number of recursive calls by n.
+
+Conclusion: Expected work is O(n), derived purely from the geometric contraction property.
+

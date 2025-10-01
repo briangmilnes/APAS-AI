@@ -1,0 +1,44 @@
+Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+
+Exercise 35.3: Pivot Tree Has O(lg n) Height With High Probability
+
+The pivot tree represents all possible recursive calls from the selection algorithm, 
+where each node represents a subproblem and edges represent recursive calls. We prove 
+the tree has O(lg n) height with high probability.
+
+Proof:
+
+1. Setup: Define a "good" pivot as one with rank in [n/4, 3n/4]. The probability of 
+   selecting a good pivot is p = 1/2.
+
+2. Height along any path: Consider any root-to-leaf path in the pivot tree. Along this 
+   path, each recursive call either:
+   - Uses a good pivot (probability 1/2), reducing size to at most 3n/4
+   - Uses a bad pivot (probability 1/2), reducing size by at least 1
+
+3. Dart game model: Model the path as a sequence of dart throws where:
+   - Success (good pivot) occurs with probability p = 1/2
+   - Each success reduces the problem size by factor r = 3/4
+   - Cost of each throw is 1 (one level of recursion)
+
+4. Expected number of throws to reduce size from n to 1:
+   After k successful throws, size is n * (3/4)^k ≤ 1, so k ≥ lg_{4/3}(n).
+   
+   Expected number of throws to get k successes with p = 1/2 is 2k.
+   
+   Therefore, expected path length is O(lg n).
+
+5. High probability bound: By Chernoff bounds, the probability that we need more than 
+   c * lg n throws (for appropriate constant c) to achieve lg_{4/3}(n) successes is at 
+   most 1/n^d for any constant d.
+
+6. Union bound over all paths: Since there are at most n leaves in the pivot tree (one 
+   per element), and each leaf path has height > c * lg n with probability at most 1/n^2, 
+   the probability that ANY path exceeds c * lg n is at most n * (1/n^2) = 1/n.
+
+7. Therefore, with probability at least 1 - 1/n, all paths have length O(lg n).
+
+Conclusion: The pivot tree is balanced with O(lg n) height with high probability 
+(1 - 1/n), meaning all recursive paths terminate quickly, ensuring both work and span 
+bounds hold with high probability.
+

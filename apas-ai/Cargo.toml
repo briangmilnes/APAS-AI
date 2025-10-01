@@ -1142,6 +1142,44 @@ path = "tests/Chap28/TestMaxContigSubSumDivConOptStEph.rs"
 name = "TestMaxContigSubSumDivConOptMtEph"
 path = "tests/Chap28/TestMaxContigSubSumDivConOptMtEph.rs"
 
+# Chapter 35 Tests
+[[test]]
+name = "TestOrderStatSelectStPer"
+path = "tests/Chap35/TestOrderStatSelectStPer.rs"
+
+[[test]]
+name = "TestOrderStatSelectMtPer"
+path = "tests/Chap35/TestOrderStatSelectMtPer.rs"
+
+[[test]]
+name = "TestOrderStatSelectStEph"
+path = "tests/Chap35/TestOrderStatSelectStEph.rs"
+
+[[test]]
+name = "TestOrderStatSelectMtEph"
+path = "tests/Chap35/TestOrderStatSelectMtEph.rs"
+
+# Chapter 35 Benchmarks
+[[bench]]
+name = "BenchOrderStatSelectStPer"
+path = "benches/Chap35/BenchOrderStatSelectStPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchOrderStatSelectMtPer"
+path = "benches/Chap35/BenchOrderStatSelectMtPer.rs"
+harness = false
+
+[[bench]]
+name = "BenchOrderStatSelectStEph"
+path = "benches/Chap35/BenchOrderStatSelectStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchOrderStatSelectMtEph"
+path = "benches/Chap35/BenchOrderStatSelectMtEph.rs"
+harness = false
+
 # Chapter 28 Benchmarks
 [[bench]]
 name = "BenchMaxContigSubSumBruteStEph"

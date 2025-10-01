@@ -112,6 +112,13 @@ pub mod Chap28 {
     pub mod MaxContigSubSumReducedStEph;
 }
 
+pub mod Chap35 {
+    pub mod OrderStatSelectMtEph;
+    pub mod OrderStatSelectMtPer;
+    pub mod OrderStatSelectStEph;
+    pub mod OrderStatSelectStPer;
+}
+
 pub mod Chap36 {
     pub mod QuickSortMt;
     pub mod QuickSortMtSlice;

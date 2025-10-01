@@ -1,0 +1,41 @@
+Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+
+Exercise 35.2: Span Analysis Using Expected Span Instead of Work
+
+The original analysis upper-bounded the expected span by O(n lg n), using the work bound.
+We now redo the analysis using expected span directly at each level.
+
+Analysis:
+
+1. Each recursive call has span O(lg n_i) where n_i is the size at level i, due to the 
+   parallel operations (partition has O(lg n_i) span with parallel primitives).
+
+2. The expected instance size after i rounds is n * 0.875^i, where 0.875 = 1 - p + pr.
+
+3. Expected span at level i is:
+   S_i = O(lg(n * 0.875^i))
+       = O(lg n + lg(0.875^i))
+       = O(lg n + i * lg(0.875))
+       = O(lg n - i * 0.193)  [since lg(0.875) ≈ -0.193]
+       = O(lg n)
+
+4. With high probability (1 - 1/n), the algorithm terminates within O(lg n) recursive 
+   calls (by the dart game analysis).
+
+5. Total expected span is:
+   S = Σ_{i=0}^{O(lg n)} O(lg n)
+     = O(lg n) * O(lg n)
+     = O(lg² n)
+
+Alternative Tighter Analysis:
+
+The span at level i is O(lg(n * 0.875^i)) = O(lg n - 0.193i). For large i, this 
+decreases, so we can bound the total span more carefully:
+
+   S = Σ_{i=0}^{O(lg n)} O(lg n - 0.193i)
+
+This is still O(lg² n) but shows the span contributions decrease geometrically.
+
+Conclusion: Expected span is O(lg² n) with high probability, derived directly from 
+expected span at each level rather than from work bounds.
+

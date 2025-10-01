@@ -1,0 +1,72 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+
+use apas_ai::ArraySeqMtEphSLit;
+use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
+use apas_ai::Chap35::OrderStatSelectMtEph::OrderStatSelectMtEph::OrderStatSelectMtEphTrait;
+
+#[test]
+fn test_empty() {
+    let a: ArraySeqMtEphS<i32> = ArraySeqMtEphSLit![];
+    assert_eq!(a.select(0), None);
+}
+
+#[test]
+fn test_single() {
+    let a = ArraySeqMtEphSLit![42];
+    assert_eq!(a.select(0), Some(42));
+    assert_eq!(a.select(1), None);
+}
+
+#[test]
+fn test_small() {
+    let a = ArraySeqMtEphSLit![3, 1, 4, 1, 5, 9, 2, 6];
+    let sorted = ArraySeqMtEphSLit![1, 1, 2, 3, 4, 5, 6, 9];
+
+    for k in 0..sorted.length() {
+        assert_eq!(a.select(k), Some(sorted.nth_cloned(k)), "Failed at k={}", k);
+    }
+}
+
+#[test]
+fn test_already_sorted() {
+    let a = ArraySeqMtEphSLit![1, 2, 3, 4, 5];
+    for k in 0..5 {
+        assert_eq!(a.select(k), Some(k as i32 + 1));
+    }
+}
+
+#[test]
+fn test_reverse_sorted() {
+    let a = ArraySeqMtEphSLit![5, 4, 3, 2, 1];
+    for k in 0..5 {
+        assert_eq!(a.select(k), Some(k as i32 + 1));
+    }
+}
+
+#[test]
+fn test_duplicates() {
+    let a = ArraySeqMtEphSLit![3, 3, 3, 3, 3];
+    for k in 0..5 {
+        assert_eq!(a.select(k), Some(3));
+    }
+}
+
+#[test]
+fn test_negative() {
+    let a = ArraySeqMtEphSLit![-5, -2, -8, -1, -9];
+    let sorted = ArraySeqMtEphSLit![-9, -8, -5, -2, -1];
+
+    for k in 0..sorted.length() {
+        assert_eq!(a.select(k), Some(sorted.nth_cloned(k)));
+    }
+}
+
+#[test]
+fn test_mixed() {
+    let a = ArraySeqMtEphSLit![-3, 7, -1, 0, 4, -5, 2];
+    let sorted = ArraySeqMtEphSLit![-5, -3, -1, 0, 2, 4, 7];
+
+    for k in 0..sorted.length() {
+        assert_eq!(a.select(k), Some(sorted.nth_cloned(k)));
+    }
+}
