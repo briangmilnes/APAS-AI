@@ -1836,8 +1836,6 @@ pub mod DoubleHashing {DoubleHashing4,133
         pub fn create_string_table<V: StT>(create_string_table55,1893
         pub fn create_integer_table<V: StT>(create_integer_table64,2358
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47/#NestedHashTable.rs#,0
-
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47/NestedHashTable.rs,2066
 pub mod NestedHashTable {NestedHashTable4,174
     pub struct NestedHashTable<K: StT, V: StT> {NestedHashTable14,566
@@ -3848,61 +3846,61 @@ pub mod LeftistHeapPQ {LeftistHeapPQ4,180
         fn find_min(&self) -> Option<&T>;find_min40,1519
         fn insert(&self, element: T) -> Self;insert44,1676
         fn delete_min(&self) -> (Self, Option<T>)delete_min48,1834
-        fn meld(&self, other: &Self) -> Self;meld54,2061
-        fn from_seq(seq: &[T]) -> Self;from_seq58,2214
-        fn size(&self) -> N;size61,2282
-        fn is_empty(&self) -> bool;is_empty62,2311
-    impl<T: StT + Ord> LeftistHeapNode<T> {LeftistHeapNode65,2354
-        fn rank(&self) -> N {rank67,2460
-        fn make_node(key: T, left: LeftistHeapNode<T>, right: LeftistHeapNode<T>) -> Self {make_node75,2718
-        fn meld_nodes(a: LeftistHeapNode<T>, b: LeftistHeapNode<T>) -> LeftistHeapNode<T> {meld_nodes98,3559
-        fn size(&self) -> N {size148,5607
-        fn height(&self) -> N {height156,5863
-        fn is_leftist(&self) -> bool {is_leftist164,6145
-        fn is_heap(&self) -> bool {is_heap174,6506
-        fn to_vec(&self) -> Vec<T> {to_vec192,7325
-    impl<T: StT + Ord> LeftistHeapPQTrait<T> for LeftistHeapPQ<T> {LeftistHeapPQ205,7737
-        fn empty() -> Self {empty207,7849
-        fn singleton(element: T) -> Self {singleton214,8020
-        fn find_min(&self) -> Option<&T> {find_min227,8449
-        fn insert(&self, element: T) -> Self {insert236,8772
-        fn delete_min(&self) -> (Self, Option<T>) {delete_min243,9027
-        fn meld(&self, other: &Self) -> Self {meld258,9816
-        fn from_seq(seq: &[T]) -> Self {from_seq266,10116
-        fn size(&self) -> N {size294,11049
-        fn is_empty(&self) -> bool {is_empty299,11163
-    impl<T: StT + Ord> LeftistHeapPQ<T> {LeftistHeapPQ304,11272
-        pub fn new() -> Self {new306,11357
-        pub fn len(&self) -> N {len311,11464
-        pub fn is_empty(&self) -> bool {is_empty316,11581
-        pub fn peek(&self) -> Option<&T> {peek321,11740
-        pub fn extract_all_sorted(&self) -> Vec<T> {extract_all_sorted326,11871
-        pub fn height(&self) -> N {height342,12386
-        pub fn root_rank(&self) -> N {root_rank347,12516
-        pub fn is_valid_leftist_heap(&self) -> bool {is_valid_leftist_heap352,12661
-        pub fn from_vec(vec: Vec<T>) -> Self {from_vec357,12844
-        pub fn to_vec(&self) -> Vec<T> {to_vec362,12979
-        pub fn to_sorted_vec(&self) -> Vec<T> {to_sorted_vec367,13127
-        pub fn meld_multiple(heaps: &[Self]) -> Self {meld_multiple372,13284
-        pub fn split(&self, value: &T) -> (Self, Self) {split385,13679
-    impl<T: StT + Ord> Default for LeftistHeapPQ<T> {LeftistHeapPQ402,14213
-        fn default() -> Self {default403,14267
-    impl<T: StT + Ord> Display for LeftistHeapPQ<T> {LeftistHeapPQ408,14341
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {fmt409,14395
-            fn format_node<T: StT + Ord>(node: &LeftistHeapNode<T>, f: &mut Formatter<'_>, depthformat_node410,14452
-    macro_rules! LeftistHeapPQLit {LeftistHeapPQLit430,15241
-    fn _leftist_heap_pq_lit_type_checks() {_leftist_heap_pq_lit_type_checks441,15598
-    pub struct LeftistHeapPQOps;LeftistHeapPQOps447,15845
-    impl LeftistHeapPQOps {LeftistHeapPQOps449,15879
-        pub fn empty<T: StT + Ord>() -> LeftistHeapPQ<T> {empty451,15947
-        pub fn insert<T: StT + Ord>(pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> {insert456,16099
-        pub fn delete_min<T: StT + Ord>(pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) delete_min461,16289
-        pub fn meld<T: StT + Ord>(pq1: &LeftistHeapPQ<T>, pq2: &LeftistHeapPQ<T>) -> LeftistHeapmeld466,16485
-        pub fn from_seq<T: StT + Ord>(seq: &[T]) -> LeftistHeapPQ<T> {from_seq471,16674
-    pub struct LeftistHeapDemo;LeftistHeapDemo477,16852
-    impl LeftistHeapDemo {LeftistHeapDemo479,16885
-        pub fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T> {efficient_multi_way_merge482,17055
-        pub fn parallel_heap_construction<T: StT + Ord>(elements: Vec<T>) -> LeftistHeapPQ<T> {parallel_heap_construction494,17609
+        fn meld(&self, other: &Self) -> Self;meld54,2057
+        fn from_seq(seq: &[T]) -> Self;from_seq59,2211
+        fn size(&self) -> N;size62,2279
+        fn is_empty(&self) -> bool;is_empty63,2308
+    impl<T: StT + Ord> LeftistHeapNode<T> {LeftistHeapNode66,2351
+        fn rank(&self) -> N {rank68,2457
+        fn make_node(key: T, left: LeftistHeapNode<T>, right: LeftistHeapNode<T>) -> Self {make_node76,2715
+        fn meld_nodes(a: LeftistHeapNode<T>, b: LeftistHeapNode<T>) -> LeftistHeapNode<T> {meld_nodes99,3556
+        fn size(&self) -> N {size149,5604
+        fn height(&self) -> N {height157,5860
+        fn is_leftist(&self) -> bool {is_leftist165,6142
+        fn is_heap(&self) -> bool {is_heap175,6503
+        fn to_vec(&self) -> Vec<T> {to_vec193,7322
+    impl<T: StT + Ord> LeftistHeapPQTrait<T> for LeftistHeapPQ<T> {LeftistHeapPQ206,7734
+        fn empty() -> Self {empty208,7846
+        fn singleton(element: T) -> Self {singleton215,8017
+        fn find_min(&self) -> Option<&T> {find_min228,8446
+        fn insert(&self, element: T) -> Self {insert237,8769
+        fn delete_min(&self) -> (Self, Option<T>) {delete_min244,9024
+        fn meld(&self, other: &Self) -> Self {meld259,9813
+        fn from_seq(seq: &[T]) -> Self {from_seq267,10113
+        fn size(&self) -> N {size295,11046
+        fn is_empty(&self) -> bool {is_empty300,11160
+    impl<T: StT + Ord> LeftistHeapPQ<T> {LeftistHeapPQ305,11269
+        pub fn new() -> Self {new307,11354
+        pub fn len(&self) -> N {len312,11461
+        pub fn is_empty(&self) -> bool {is_empty317,11578
+        pub fn peek(&self) -> Option<&T> {peek322,11737
+        pub fn extract_all_sorted(&self) -> Vec<T> {extract_all_sorted327,11868
+        pub fn height(&self) -> N {height343,12383
+        pub fn root_rank(&self) -> N {root_rank348,12513
+        pub fn is_valid_leftist_heap(&self) -> bool {is_valid_leftist_heap353,12658
+        pub fn from_vec(vec: Vec<T>) -> Self {from_vec358,12841
+        pub fn to_vec(&self) -> Vec<T> {to_vec363,12976
+        pub fn to_sorted_vec(&self) -> Vec<T> {to_sorted_vec368,13124
+        pub fn meld_multiple(heaps: &[Self]) -> Self {meld_multiple373,13281
+        pub fn split(&self, value: &T) -> (Self, Self) {split386,13676
+    impl<T: StT + Ord> Default for LeftistHeapPQ<T> {LeftistHeapPQ403,14210
+        fn default() -> Self {default404,14264
+    impl<T: StT + Ord> Display for LeftistHeapPQ<T> {LeftistHeapPQ409,14338
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {fmt410,14392
+            fn format_node<T: StT + Ord>(node: &LeftistHeapNode<T>, f: &mut Formatter<'_>, depthformat_node411,14449
+    macro_rules! LeftistHeapPQLit {LeftistHeapPQLit431,15238
+    fn _leftist_heap_pq_lit_type_checks() {_leftist_heap_pq_lit_type_checks442,15595
+    pub struct LeftistHeapPQOps;LeftistHeapPQOps448,15842
+    impl LeftistHeapPQOps {LeftistHeapPQOps450,15876
+        pub fn empty<T: StT + Ord>() -> LeftistHeapPQ<T> {empty452,15944
+        pub fn insert<T: StT + Ord>(pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> {insert457,16096
+        pub fn delete_min<T: StT + Ord>(pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) delete_min462,16286
+        pub fn meld<T: StT + Ord>(pq1: &LeftistHeapPQ<T>, pq2: &LeftistHeapPQ<T>) -> LeftistHeapmeld467,16482
+        pub fn from_seq<T: StT + Ord>(seq: &[T]) -> LeftistHeapPQ<T> {from_seq472,16671
+    pub struct LeftistHeapDemo;LeftistHeapDemo478,16849
+    impl LeftistHeapDemo {LeftistHeapDemo480,16882
+        pub fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T> {efficient_multi_way_merge483,17052
+        pub fn parallel_heap_construction<T: StT + Ord>(elements: Vec<T>) -> LeftistHeapPQ<T> {parallel_heap_construction495,17606
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/HeapsortExample.rs,6362
 pub mod HeapsortExample {HeapsortExample4,184
@@ -4733,114 +4731,138 @@ pub mod BalBinTreeStEph {BalBinTreeStEph4,148
     macro_rules! BalBinNodeLit {BalBinNodeLit144,5144
     fn _BalBinNodeLit_type_checks() {_BalBinNodeLit_type_checks151,5396
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStPerFloat.rs,598
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStPerFloat.rs,864
 pub struct SSSPResultStPerFloat {SSSPResultStPerFloat24,1044
     pub distances: ArraySeqStPerS<OrderedF64>,distances26,1169
     pub predecessors: ArraySeqStPerS<usize>,predecessors28,1310
     pub source: usize,source30,1378
 impl SSSPResultStPerFloat {SSSPResultStPerFloat33,1404
     pub fn new(n: usize, source: usize) -> Self {new36,1604
-    pub fn get_distance(&self, v: usize) -> OrderedF64 {get_distance46,2013
-    pub fn is_reachable(&self, v: usize) -> bool {is_reachable54,2256
-    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path60,2529
+    pub fn get_distance(&self, v: usize) -> OrderedF64 {get_distance47,2019
+    pub fn set_distance(self, v: usize, dist: OrderedF64) -> Self {set_distance55,2283
+    pub fn get_predecessor(&self, v: usize) -> Option<usize> {get_predecessor67,2705
+    pub fn set_predecessor(self, v: usize, pred: usize) -> Self {set_predecessor76,3040
+    pub fn is_reachable(&self, v: usize) -> bool {is_reachable88,3438
+    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path94,3707
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStEphInt.rs,574
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStEphInt.rs,827
 pub struct SSSPResultStEphInt {SSSPResultStEphInt22,881
     pub distances: ArraySeqStEphS<i64>,distances24,985
     pub predecessors: ArraySeqStEphS<usize>,predecessors26,1119
     pub source: usize,source28,1187
 impl SSSPResultStEphInt {SSSPResultStEphInt31,1213
     pub fn new(n: usize, source: usize) -> Self {new34,1411
-    pub fn get_distance(&self, v: usize) -> i64 {get_distance43,1795
-    pub fn is_reachable(&self, v: usize) -> bool {is_reachable51,2024
-    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path57,2300
+    pub fn get_distance(&self, v: usize) -> i64 {get_distance47,1836
+    pub fn set_distance(&mut self, v: usize, dist: i64) {set_distance55,2059
+    pub fn get_predecessor(&self, v: usize) -> Option<usize> {get_predecessor62,2294
+    pub fn set_predecessor(&mut self, v: usize, pred: usize) {set_predecessor71,2628
+    pub fn is_reachable(&self, v: usize) -> bool {is_reachable78,2849
+    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path84,3121
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStEphFloat.rs,598
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStEphFloat.rs,858
 pub struct SSSPResultStEphFloat {SSSPResultStEphFloat25,1069
     pub distances: ArraySeqStEphS<OrderedF64>,distances27,1194
     pub predecessors: ArraySeqStEphS<usize>,predecessors29,1335
     pub source: usize,source31,1403
 impl SSSPResultStEphFloat {SSSPResultStEphFloat34,1429
     pub fn new(n: usize, source: usize) -> Self {new37,1629
-    pub fn get_distance(&self, v: usize) -> OrderedF64 {get_distance46,2031
-    pub fn is_reachable(&self, v: usize) -> bool {is_reachable54,2267
-    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path60,2540
+    pub fn get_distance(&self, v: usize) -> OrderedF64 {get_distance50,2072
+    pub fn set_distance(&mut self, v: usize, dist: OrderedF64) {set_distance58,2302
+    pub fn get_predecessor(&self, v: usize) -> Option<usize> {get_predecessor65,2544
+    pub fn set_predecessor(&mut self, v: usize, pred: usize) {set_predecessor74,2878
+    pub fn is_reachable(&self, v: usize) -> bool {is_reachable81,3099
+    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path87,3368
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/Example56_3.rs,147
 pub fn example_negative_cycle() {example_negative_cycle15,644
-pub fn example_undefined_shortest_path() {example_undefined_shortest_path46,1887
+pub fn example_undefined_shortest_path() {example_undefined_shortest_path46,1867
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStEph.rs,256
-pub fn path_weight_int(path_weight_int23,1008
-pub fn path_weight_float(path_weight_float46,1624
-pub fn validate_subpath_property_int(validate_subpath_property_int71,2470
-pub fn validate_subpath_property_float(validate_subpath_property_float99,3237
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStEph.rs,329
+pub fn path_weight_int(path: &ArraySeqStPerS<usize>, weights: &ArraySeqStEphS<ArraySeqStEphS<i64path_weight_int23,1008
+pub fn path_weight_float(path_weight_float43,1609
+pub fn validate_subpath_property_int(validate_subpath_property_int68,2451
+pub fn validate_subpath_property_float(validate_subpath_property_float96,3211
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStPerInt.rs,627
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStPerInt.rs,916
 pub struct AllPairsResultStPerInt {AllPairsResultStPerInt21,855
     pub distances: ArraySeqStPerS<ArraySeqStPerS<i64>>,distances23,969
     pub predecessors: ArraySeqStPerS<ArraySeqStPerS<usize>>,predecessors25,1129
     pub n: usize,n27,1218
 impl AllPairsResultStPerInt {AllPairsResultStPerInt30,1239
     pub fn new(n: usize) -> Self {new33,1448
-    pub fn get_distance(&self, u: usize, v: usize) -> i64 {get_distance44,1900
-    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable52,2153
-    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path58,2437
+    pub fn get_distance(&self, u: usize, v: usize) -> i64 {get_distance47,1929
+    pub fn set_distance(self, u: usize, v: usize, dist: i64) -> Self {set_distance55,2203
+    pub fn get_predecessor(&self, u: usize, v: usize) -> Option<usize> {get_predecessor68,2702
+    pub fn set_predecessor(self, u: usize, v: usize, pred: usize) -> Self {set_predecessor77,3077
+    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable90,3566
+    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path96,3846
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStPerInt.rs,574
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStPerInt.rs,833
 pub struct SSSPResultStPerInt {SSSPResultStPerInt21,856
     pub distances: ArraySeqStPerS<i64>,distances23,960
     pub predecessors: ArraySeqStPerS<usize>,predecessors25,1094
     pub source: usize,source27,1162
 impl SSSPResultStPerInt {SSSPResultStPerInt30,1188
     pub fn new(n: usize, source: usize) -> Self {new33,1386
-    pub fn get_distance(&self, v: usize) -> i64 {get_distance40,1742
-    pub fn is_reachable(&self, v: usize) -> bool {is_reachable48,1978
-    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path54,2254
+    pub fn get_distance(&self, v: usize) -> i64 {get_distance44,1783
+    pub fn set_distance(self, v: usize, dist: i64) -> Self {set_distance52,2040
+    pub fn get_predecessor(&self, v: usize) -> Option<usize> {get_predecessor64,2453
+    pub fn set_predecessor(self, v: usize, pred: usize) -> Self {set_predecessor73,2788
+    pub fn is_reachable(&self, v: usize) -> bool {is_reachable85,3184
+    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path91,3456
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/Example56_1.rs,206
 pub fn example_path_weight_int() {example_path_weight_int14,583
-pub fn example_path_weight_float() {example_path_weight_float30,1256
-pub fn example_negative_weights() {example_negative_weights66,2410
+pub fn example_path_weight_float() {example_path_weight_float30,1248
+pub fn example_negative_weights() {example_negative_weights66,2398
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStPer.rs,255
-pub fn path_weight_int(path_weight_int22,955
-pub fn path_weight_float(path_weight_float45,1568
-pub fn validate_subpath_property_int(validate_subpath_property_int70,2411
-pub fn validate_subpath_property_float(validate_subpath_property_float98,3178
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStPer.rs,328
+pub fn path_weight_int(path: &ArraySeqStPerS<usize>, weights: &ArraySeqStPerS<ArraySeqStPerS<i64path_weight_int22,955
+pub fn path_weight_float(path_weight_float42,1563
+pub fn validate_subpath_property_int(validate_subpath_property_int67,2412
+pub fn validate_subpath_property_float(validate_subpath_property_float95,3193
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStEphInt.rs,627
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStEphInt.rs,910
 pub struct AllPairsResultStEphInt {AllPairsResultStEphInt22,880
     pub distances: ArraySeqStEphS<ArraySeqStEphS<i64>>,distances24,994
     pub predecessors: ArraySeqStEphS<ArraySeqStEphS<usize>>,predecessors26,1154
     pub n: usize,n28,1243
 impl AllPairsResultStEphInt {AllPairsResultStEphInt31,1264
     pub fn new(n: usize) -> Self {new34,1473
-    pub fn get_distance(&self, u: usize, v: usize) -> i64 {get_distance49,2070
-    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable57,2316
-    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path63,2600
+    pub fn get_distance(&self, u: usize, v: usize) -> i64 {get_distance53,2103
+    pub fn set_distance(&mut self, u: usize, v: usize, dist: i64) {set_distance61,2343
+    pub fn get_predecessor(&self, u: usize, v: usize) -> Option<usize> {get_predecessor70,2666
+    pub fn set_predecessor(&mut self, u: usize, v: usize, pred: usize) {set_predecessor79,3007
+    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable88,3323
+    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path94,3603
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStPerFloat.rs,651
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStPerFloat.rs,947
 pub struct AllPairsResultStPerFloat {AllPairsResultStPerFloat24,1043
     pub distances: ArraySeqStPerS<ArraySeqStPerS<OrderedF64>>,distances26,1159
     pub predecessors: ArraySeqStPerS<ArraySeqStPerS<usize>>,predecessors28,1326
     pub n: usize,n30,1415
 impl AllPairsResultStPerFloat {AllPairsResultStPerFloat33,1436
     pub fn new(n: usize) -> Self {new36,1649
-    pub fn get_distance(&self, u: usize, v: usize) -> OrderedF64 {get_distance52,2210
-    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable60,2470
-    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path66,2751
+    pub fn get_distance(&self, u: usize, v: usize) -> OrderedF64 {get_distance50,2148
+    pub fn set_distance(self, u: usize, v: usize, dist: OrderedF64) -> Self {set_distance58,2429
+    pub fn get_predecessor(&self, u: usize, v: usize) -> Option<usize> {get_predecessor71,2937
+    pub fn set_predecessor(self, u: usize, v: usize, pred: usize) -> Self {set_predecessor80,3312
+    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable93,3803
+    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path99,4080
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStEphFloat.rs,651
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStEphFloat.rs,941
 pub struct AllPairsResultStEphFloat {AllPairsResultStEphFloat25,1068
     pub distances: ArraySeqStEphS<ArraySeqStEphS<OrderedF64>>,distances27,1184
     pub predecessors: ArraySeqStEphS<ArraySeqStEphS<usize>>,predecessors29,1351
     pub n: usize,n31,1440
 impl AllPairsResultStEphFloat {AllPairsResultStEphFloat34,1461
     pub fn new(n: usize) -> Self {new37,1674
-    pub fn get_distance(&self, u: usize, v: usize) -> OrderedF64 {get_distance52,2289
-    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable60,2542
-    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path66,2823
+    pub fn get_distance(&self, u: usize, v: usize) -> OrderedF64 {get_distance56,2322
+    pub fn set_distance(&mut self, u: usize, v: usize, dist: OrderedF64) {set_distance64,2569
+    pub fn get_predecessor(&self, u: usize, v: usize) -> Option<usize> {get_predecessor73,2899
+    pub fn set_predecessor(&mut self, u: usize, v: usize, pred: usize) {set_predecessor82,3240
+    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable91,3556
+    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path97,3833
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap43/OrderedSetStPer.rs,3396
 pub mod OrderedSetStPer {OrderedSetStPer4,178
@@ -12463,61 +12485,61 @@ pub mod LeftistHeapPQ {LeftistHeapPQ4,180
         fn find_min(&self) -> Option<&T>;find_min40,1519
         fn insert(&self, element: T) -> Self;insert44,1676
         fn delete_min(&self) -> (Self, Option<T>)delete_min48,1834
-        fn meld(&self, other: &Self) -> Self;meld54,2061
-        fn from_seq(seq: &[T]) -> Self;from_seq58,2214
-        fn size(&self) -> N;size61,2282
-        fn is_empty(&self) -> bool;is_empty62,2311
-    impl<T: StT + Ord> LeftistHeapNode<T> {LeftistHeapNode65,2354
-        fn rank(&self) -> N {rank67,2460
-        fn make_node(key: T, left: LeftistHeapNode<T>, right: LeftistHeapNode<T>) -> Self {make_node75,2718
-        fn meld_nodes(a: LeftistHeapNode<T>, b: LeftistHeapNode<T>) -> LeftistHeapNode<T> {meld_nodes98,3559
-        fn size(&self) -> N {size148,5607
-        fn height(&self) -> N {height156,5863
-        fn is_leftist(&self) -> bool {is_leftist164,6145
-        fn is_heap(&self) -> bool {is_heap174,6506
-        fn to_vec(&self) -> Vec<T> {to_vec192,7325
-    impl<T: StT + Ord> LeftistHeapPQTrait<T> for LeftistHeapPQ<T> {LeftistHeapPQ205,7737
-        fn empty() -> Self {empty207,7849
-        fn singleton(element: T) -> Self {singleton214,8020
-        fn find_min(&self) -> Option<&T> {find_min227,8449
-        fn insert(&self, element: T) -> Self {insert236,8772
-        fn delete_min(&self) -> (Self, Option<T>) {delete_min243,9027
-        fn meld(&self, other: &Self) -> Self {meld258,9816
-        fn from_seq(seq: &[T]) -> Self {from_seq266,10116
-        fn size(&self) -> N {size294,11049
-        fn is_empty(&self) -> bool {is_empty299,11163
-    impl<T: StT + Ord> LeftistHeapPQ<T> {LeftistHeapPQ304,11272
-        pub fn new() -> Self {new306,11357
-        pub fn len(&self) -> N {len311,11464
-        pub fn is_empty(&self) -> bool {is_empty316,11581
-        pub fn peek(&self) -> Option<&T> {peek321,11740
-        pub fn extract_all_sorted(&self) -> Vec<T> {extract_all_sorted326,11871
-        pub fn height(&self) -> N {height342,12386
-        pub fn root_rank(&self) -> N {root_rank347,12516
-        pub fn is_valid_leftist_heap(&self) -> bool {is_valid_leftist_heap352,12661
-        pub fn from_vec(vec: Vec<T>) -> Self {from_vec357,12844
-        pub fn to_vec(&self) -> Vec<T> {to_vec362,12979
-        pub fn to_sorted_vec(&self) -> Vec<T> {to_sorted_vec367,13127
-        pub fn meld_multiple(heaps: &[Self]) -> Self {meld_multiple372,13284
-        pub fn split(&self, value: &T) -> (Self, Self) {split385,13679
-    impl<T: StT + Ord> Default for LeftistHeapPQ<T> {LeftistHeapPQ402,14213
-        fn default() -> Self {default403,14267
-    impl<T: StT + Ord> Display for LeftistHeapPQ<T> {LeftistHeapPQ408,14341
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {fmt409,14395
-            fn format_node<T: StT + Ord>(node: &LeftistHeapNode<T>, f: &mut Formatter<'_>, depthformat_node410,14452
-    macro_rules! LeftistHeapPQLit {LeftistHeapPQLit430,15241
-    fn _leftist_heap_pq_lit_type_checks() {_leftist_heap_pq_lit_type_checks441,15598
-    pub struct LeftistHeapPQOps;LeftistHeapPQOps447,15845
-    impl LeftistHeapPQOps {LeftistHeapPQOps449,15879
-        pub fn empty<T: StT + Ord>() -> LeftistHeapPQ<T> {empty451,15947
-        pub fn insert<T: StT + Ord>(pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> {insert456,16099
-        pub fn delete_min<T: StT + Ord>(pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) delete_min461,16289
-        pub fn meld<T: StT + Ord>(pq1: &LeftistHeapPQ<T>, pq2: &LeftistHeapPQ<T>) -> LeftistHeapmeld466,16485
-        pub fn from_seq<T: StT + Ord>(seq: &[T]) -> LeftistHeapPQ<T> {from_seq471,16674
-    pub struct LeftistHeapDemo;LeftistHeapDemo477,16852
-    impl LeftistHeapDemo {LeftistHeapDemo479,16885
-        pub fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T> {efficient_multi_way_merge482,17055
-        pub fn parallel_heap_construction<T: StT + Ord>(elements: Vec<T>) -> LeftistHeapPQ<T> {parallel_heap_construction494,17609
+        fn meld(&self, other: &Self) -> Self;meld54,2057
+        fn from_seq(seq: &[T]) -> Self;from_seq59,2211
+        fn size(&self) -> N;size62,2279
+        fn is_empty(&self) -> bool;is_empty63,2308
+    impl<T: StT + Ord> LeftistHeapNode<T> {LeftistHeapNode66,2351
+        fn rank(&self) -> N {rank68,2457
+        fn make_node(key: T, left: LeftistHeapNode<T>, right: LeftistHeapNode<T>) -> Self {make_node76,2715
+        fn meld_nodes(a: LeftistHeapNode<T>, b: LeftistHeapNode<T>) -> LeftistHeapNode<T> {meld_nodes99,3556
+        fn size(&self) -> N {size149,5604
+        fn height(&self) -> N {height157,5860
+        fn is_leftist(&self) -> bool {is_leftist165,6142
+        fn is_heap(&self) -> bool {is_heap175,6503
+        fn to_vec(&self) -> Vec<T> {to_vec193,7322
+    impl<T: StT + Ord> LeftistHeapPQTrait<T> for LeftistHeapPQ<T> {LeftistHeapPQ206,7734
+        fn empty() -> Self {empty208,7846
+        fn singleton(element: T) -> Self {singleton215,8017
+        fn find_min(&self) -> Option<&T> {find_min228,8446
+        fn insert(&self, element: T) -> Self {insert237,8769
+        fn delete_min(&self) -> (Self, Option<T>) {delete_min244,9024
+        fn meld(&self, other: &Self) -> Self {meld259,9813
+        fn from_seq(seq: &[T]) -> Self {from_seq267,10113
+        fn size(&self) -> N {size295,11046
+        fn is_empty(&self) -> bool {is_empty300,11160
+    impl<T: StT + Ord> LeftistHeapPQ<T> {LeftistHeapPQ305,11269
+        pub fn new() -> Self {new307,11354
+        pub fn len(&self) -> N {len312,11461
+        pub fn is_empty(&self) -> bool {is_empty317,11578
+        pub fn peek(&self) -> Option<&T> {peek322,11737
+        pub fn extract_all_sorted(&self) -> Vec<T> {extract_all_sorted327,11868
+        pub fn height(&self) -> N {height343,12383
+        pub fn root_rank(&self) -> N {root_rank348,12513
+        pub fn is_valid_leftist_heap(&self) -> bool {is_valid_leftist_heap353,12658
+        pub fn from_vec(vec: Vec<T>) -> Self {from_vec358,12841
+        pub fn to_vec(&self) -> Vec<T> {to_vec363,12976
+        pub fn to_sorted_vec(&self) -> Vec<T> {to_sorted_vec368,13124
+        pub fn meld_multiple(heaps: &[Self]) -> Self {meld_multiple373,13281
+        pub fn split(&self, value: &T) -> (Self, Self) {split386,13676
+    impl<T: StT + Ord> Default for LeftistHeapPQ<T> {LeftistHeapPQ403,14210
+        fn default() -> Self {default404,14264
+    impl<T: StT + Ord> Display for LeftistHeapPQ<T> {LeftistHeapPQ409,14338
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {fmt410,14392
+            fn format_node<T: StT + Ord>(node: &LeftistHeapNode<T>, f: &mut Formatter<'_>, depthformat_node411,14449
+    macro_rules! LeftistHeapPQLit {LeftistHeapPQLit431,15238
+    fn _leftist_heap_pq_lit_type_checks() {_leftist_heap_pq_lit_type_checks442,15595
+    pub struct LeftistHeapPQOps;LeftistHeapPQOps448,15842
+    impl LeftistHeapPQOps {LeftistHeapPQOps450,15876
+        pub fn empty<T: StT + Ord>() -> LeftistHeapPQ<T> {empty452,15944
+        pub fn insert<T: StT + Ord>(pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> {insert457,16096
+        pub fn delete_min<T: StT + Ord>(pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) delete_min462,16286
+        pub fn meld<T: StT + Ord>(pq1: &LeftistHeapPQ<T>, pq2: &LeftistHeapPQ<T>) -> LeftistHeapmeld467,16482
+        pub fn from_seq<T: StT + Ord>(seq: &[T]) -> LeftistHeapPQ<T> {from_seq472,16671
+    pub struct LeftistHeapDemo;LeftistHeapDemo478,16849
+    impl LeftistHeapDemo {LeftistHeapDemo480,16882
+        pub fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T> {efficient_multi_way_merge483,17052
+        pub fn parallel_heap_construction<T: StT + Ord>(elements: Vec<T>) -> LeftistHeapPQ<T> {parallel_heap_construction495,17606
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/HeapsortExample.rs,6362
 pub mod HeapsortExample {HeapsortExample4,184
@@ -12812,8 +12834,6 @@ pub mod DoubleHashing {DoubleHashing4,133
     impl DoubleHashingFactory {DoubleHashingFactory54,1861
         pub fn create_string_table<V: StT>(create_string_table55,1893
         pub fn create_integer_table<V: StT>(create_integer_table64,2358
-
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47/#NestedHashTable.rs#,0
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47/NestedHashTable.rs,2066
 pub mod NestedHashTable {NestedHashTable4,174
@@ -14777,114 +14797,138 @@ pub mod SCCStPer {SCCStPer6,295
     fn transpose_graph(graph: &ArraySeqStPerS<ArraySeqStPerS<N>>) -> ArraySeqStPerS<ArraySeqStPetranspose_graph76,2901
     fn dfs_reach(dfs_reach91,3411
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStPerFloat.rs,598
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStPerFloat.rs,864
 pub struct SSSPResultStPerFloat {SSSPResultStPerFloat24,1044
     pub distances: ArraySeqStPerS<OrderedF64>,distances26,1169
     pub predecessors: ArraySeqStPerS<usize>,predecessors28,1310
     pub source: usize,source30,1378
 impl SSSPResultStPerFloat {SSSPResultStPerFloat33,1404
     pub fn new(n: usize, source: usize) -> Self {new36,1604
-    pub fn get_distance(&self, v: usize) -> OrderedF64 {get_distance46,2013
-    pub fn is_reachable(&self, v: usize) -> bool {is_reachable54,2256
-    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path60,2529
+    pub fn get_distance(&self, v: usize) -> OrderedF64 {get_distance47,2019
+    pub fn set_distance(self, v: usize, dist: OrderedF64) -> Self {set_distance55,2283
+    pub fn get_predecessor(&self, v: usize) -> Option<usize> {get_predecessor67,2705
+    pub fn set_predecessor(self, v: usize, pred: usize) -> Self {set_predecessor76,3040
+    pub fn is_reachable(&self, v: usize) -> bool {is_reachable88,3438
+    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path94,3707
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStEphInt.rs,574
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStEphInt.rs,827
 pub struct SSSPResultStEphInt {SSSPResultStEphInt22,881
     pub distances: ArraySeqStEphS<i64>,distances24,985
     pub predecessors: ArraySeqStEphS<usize>,predecessors26,1119
     pub source: usize,source28,1187
 impl SSSPResultStEphInt {SSSPResultStEphInt31,1213
     pub fn new(n: usize, source: usize) -> Self {new34,1411
-    pub fn get_distance(&self, v: usize) -> i64 {get_distance43,1795
-    pub fn is_reachable(&self, v: usize) -> bool {is_reachable51,2024
-    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path57,2300
+    pub fn get_distance(&self, v: usize) -> i64 {get_distance47,1836
+    pub fn set_distance(&mut self, v: usize, dist: i64) {set_distance55,2059
+    pub fn get_predecessor(&self, v: usize) -> Option<usize> {get_predecessor62,2294
+    pub fn set_predecessor(&mut self, v: usize, pred: usize) {set_predecessor71,2628
+    pub fn is_reachable(&self, v: usize) -> bool {is_reachable78,2849
+    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path84,3121
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStEphFloat.rs,598
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStEphFloat.rs,858
 pub struct SSSPResultStEphFloat {SSSPResultStEphFloat25,1069
     pub distances: ArraySeqStEphS<OrderedF64>,distances27,1194
     pub predecessors: ArraySeqStEphS<usize>,predecessors29,1335
     pub source: usize,source31,1403
 impl SSSPResultStEphFloat {SSSPResultStEphFloat34,1429
     pub fn new(n: usize, source: usize) -> Self {new37,1629
-    pub fn get_distance(&self, v: usize) -> OrderedF64 {get_distance46,2031
-    pub fn is_reachable(&self, v: usize) -> bool {is_reachable54,2267
-    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path60,2540
+    pub fn get_distance(&self, v: usize) -> OrderedF64 {get_distance50,2072
+    pub fn set_distance(&mut self, v: usize, dist: OrderedF64) {set_distance58,2302
+    pub fn get_predecessor(&self, v: usize) -> Option<usize> {get_predecessor65,2544
+    pub fn set_predecessor(&mut self, v: usize, pred: usize) {set_predecessor74,2878
+    pub fn is_reachable(&self, v: usize) -> bool {is_reachable81,3099
+    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path87,3368
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/Example56_3.rs,147
 pub fn example_negative_cycle() {example_negative_cycle15,644
-pub fn example_undefined_shortest_path() {example_undefined_shortest_path46,1887
+pub fn example_undefined_shortest_path() {example_undefined_shortest_path46,1867
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStEph.rs,256
-pub fn path_weight_int(path_weight_int23,1008
-pub fn path_weight_float(path_weight_float46,1624
-pub fn validate_subpath_property_int(validate_subpath_property_int71,2470
-pub fn validate_subpath_property_float(validate_subpath_property_float99,3237
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStEph.rs,329
+pub fn path_weight_int(path: &ArraySeqStPerS<usize>, weights: &ArraySeqStEphS<ArraySeqStEphS<i64path_weight_int23,1008
+pub fn path_weight_float(path_weight_float43,1609
+pub fn validate_subpath_property_int(validate_subpath_property_int68,2451
+pub fn validate_subpath_property_float(validate_subpath_property_float96,3211
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStPerInt.rs,627
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStPerInt.rs,916
 pub struct AllPairsResultStPerInt {AllPairsResultStPerInt21,855
     pub distances: ArraySeqStPerS<ArraySeqStPerS<i64>>,distances23,969
     pub predecessors: ArraySeqStPerS<ArraySeqStPerS<usize>>,predecessors25,1129
     pub n: usize,n27,1218
 impl AllPairsResultStPerInt {AllPairsResultStPerInt30,1239
     pub fn new(n: usize) -> Self {new33,1448
-    pub fn get_distance(&self, u: usize, v: usize) -> i64 {get_distance44,1900
-    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable52,2153
-    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path58,2437
+    pub fn get_distance(&self, u: usize, v: usize) -> i64 {get_distance47,1929
+    pub fn set_distance(self, u: usize, v: usize, dist: i64) -> Self {set_distance55,2203
+    pub fn get_predecessor(&self, u: usize, v: usize) -> Option<usize> {get_predecessor68,2702
+    pub fn set_predecessor(self, u: usize, v: usize, pred: usize) -> Self {set_predecessor77,3077
+    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable90,3566
+    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path96,3846
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStPerInt.rs,574
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/SSSPResultStPerInt.rs,833
 pub struct SSSPResultStPerInt {SSSPResultStPerInt21,856
     pub distances: ArraySeqStPerS<i64>,distances23,960
     pub predecessors: ArraySeqStPerS<usize>,predecessors25,1094
     pub source: usize,source27,1162
 impl SSSPResultStPerInt {SSSPResultStPerInt30,1188
     pub fn new(n: usize, source: usize) -> Self {new33,1386
-    pub fn get_distance(&self, v: usize) -> i64 {get_distance40,1742
-    pub fn is_reachable(&self, v: usize) -> bool {is_reachable48,1978
-    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path54,2254
+    pub fn get_distance(&self, v: usize) -> i64 {get_distance44,1783
+    pub fn set_distance(self, v: usize, dist: i64) -> Self {set_distance52,2040
+    pub fn get_predecessor(&self, v: usize) -> Option<usize> {get_predecessor64,2453
+    pub fn set_predecessor(self, v: usize, pred: usize) -> Self {set_predecessor73,2788
+    pub fn is_reachable(&self, v: usize) -> bool {is_reachable85,3184
+    pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path91,3456
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/Example56_1.rs,206
 pub fn example_path_weight_int() {example_path_weight_int14,583
-pub fn example_path_weight_float() {example_path_weight_float30,1256
-pub fn example_negative_weights() {example_negative_weights66,2410
+pub fn example_path_weight_float() {example_path_weight_float30,1248
+pub fn example_negative_weights() {example_negative_weights66,2398
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStPer.rs,255
-pub fn path_weight_int(path_weight_int22,955
-pub fn path_weight_float(path_weight_float45,1568
-pub fn validate_subpath_property_int(validate_subpath_property_int70,2411
-pub fn validate_subpath_property_float(validate_subpath_property_float98,3178
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStPer.rs,328
+pub fn path_weight_int(path: &ArraySeqStPerS<usize>, weights: &ArraySeqStPerS<ArraySeqStPerS<i64path_weight_int22,955
+pub fn path_weight_float(path_weight_float42,1563
+pub fn validate_subpath_property_int(validate_subpath_property_int67,2412
+pub fn validate_subpath_property_float(validate_subpath_property_float95,3193
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStEphInt.rs,627
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStEphInt.rs,910
 pub struct AllPairsResultStEphInt {AllPairsResultStEphInt22,880
     pub distances: ArraySeqStEphS<ArraySeqStEphS<i64>>,distances24,994
     pub predecessors: ArraySeqStEphS<ArraySeqStEphS<usize>>,predecessors26,1154
     pub n: usize,n28,1243
 impl AllPairsResultStEphInt {AllPairsResultStEphInt31,1264
     pub fn new(n: usize) -> Self {new34,1473
-    pub fn get_distance(&self, u: usize, v: usize) -> i64 {get_distance49,2070
-    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable57,2316
-    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path63,2600
+    pub fn get_distance(&self, u: usize, v: usize) -> i64 {get_distance53,2103
+    pub fn set_distance(&mut self, u: usize, v: usize, dist: i64) {set_distance61,2343
+    pub fn get_predecessor(&self, u: usize, v: usize) -> Option<usize> {get_predecessor70,2666
+    pub fn set_predecessor(&mut self, u: usize, v: usize, pred: usize) {set_predecessor79,3007
+    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable88,3323
+    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path94,3603
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStPerFloat.rs,651
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStPerFloat.rs,947
 pub struct AllPairsResultStPerFloat {AllPairsResultStPerFloat24,1043
     pub distances: ArraySeqStPerS<ArraySeqStPerS<OrderedF64>>,distances26,1159
     pub predecessors: ArraySeqStPerS<ArraySeqStPerS<usize>>,predecessors28,1326
     pub n: usize,n30,1415
 impl AllPairsResultStPerFloat {AllPairsResultStPerFloat33,1436
     pub fn new(n: usize) -> Self {new36,1649
-    pub fn get_distance(&self, u: usize, v: usize) -> OrderedF64 {get_distance52,2210
-    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable60,2470
-    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path66,2751
+    pub fn get_distance(&self, u: usize, v: usize) -> OrderedF64 {get_distance50,2148
+    pub fn set_distance(self, u: usize, v: usize, dist: OrderedF64) -> Self {set_distance58,2429
+    pub fn get_predecessor(&self, u: usize, v: usize) -> Option<usize> {get_predecessor71,2937
+    pub fn set_predecessor(self, u: usize, v: usize, pred: usize) -> Self {set_predecessor80,3312
+    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable93,3803
+    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path99,4080
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStEphFloat.rs,651
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/AllPairsResultStEphFloat.rs,941
 pub struct AllPairsResultStEphFloat {AllPairsResultStEphFloat25,1068
     pub distances: ArraySeqStEphS<ArraySeqStEphS<OrderedF64>>,distances27,1184
     pub predecessors: ArraySeqStEphS<ArraySeqStEphS<usize>>,predecessors29,1351
     pub n: usize,n31,1440
 impl AllPairsResultStEphFloat {AllPairsResultStEphFloat34,1461
     pub fn new(n: usize) -> Self {new37,1674
-    pub fn get_distance(&self, u: usize, v: usize) -> OrderedF64 {get_distance52,2289
-    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable60,2542
-    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path66,2823
+    pub fn get_distance(&self, u: usize, v: usize) -> OrderedF64 {get_distance56,2322
+    pub fn set_distance(&mut self, u: usize, v: usize, dist: OrderedF64) {set_distance64,2569
+    pub fn get_predecessor(&self, u: usize, v: usize) -> Option<usize> {get_predecessor73,2899
+    pub fn set_predecessor(&mut self, u: usize, v: usize, pred: usize) {set_predecessor82,3240
+    pub fn is_reachable(&self, u: usize, v: usize) -> bool {is_reachable91,3556
+    pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {extract_path97,3833
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap55/TestTopoSortStEph.rs,99
 mod TestTopoSortStEph {TestTopoSortStEph5,161
@@ -16507,6 +16551,86 @@ pub mod TestPrimTreeSeqSt {TestPrimTreeSeqSt2,92
     fn test_equality_comparison() {test_equality_comparison182,6183
     fn test_tree_enum_equality() {test_tree_enum_equality192,6483
     fn test_large_sequence_expose_join() {test_large_sequence_expose_join211,7164
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestAllPairsResultStPerFloat.rs,354
+mod TestAllPairsResultStPerFloat {TestAllPairsResultStPerFloat6,122
+    fn test_new() {test_new11,284
+    fn test_set_distance() {test_set_distance20,609
+    fn test_set_predecessor() {test_set_predecessor29,980
+    fn test_extract_path() {test_extract_path38,1312
+    fn test_extract_path_unreachable() {test_extract_path_unreachable53,1933
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestSSSPResultStPerFloat.rs,346
+mod TestSSSPResultStPerFloat {TestSSSPResultStPerFloat6,118
+    fn test_new() {test_new11,268
+    fn test_set_distance() {test_set_distance20,580
+    fn test_set_predecessor() {test_set_predecessor29,938
+    fn test_extract_path() {test_extract_path38,1257
+    fn test_extract_path_unreachable() {test_extract_path_unreachable53,1856
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestSSSPResultStPerInt.rs,342
+mod TestSSSPResultStPerInt {TestSSSPResultStPerInt6,116
+    fn test_new() {test_new10,223
+    fn test_set_distance() {test_set_distance19,498
+    fn test_set_predecessor() {test_set_predecessor28,790
+    fn test_extract_path() {test_extract_path37,1107
+    fn test_extract_path_unreachable() {test_extract_path_unreachable52,1656
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestAllPairsResultStEphInt.rs,350
+mod TestAllPairsResultStEphInt {TestAllPairsResultStEphInt6,120
+    fn test_new() {test_new10,239
+    fn test_set_distance() {test_set_distance19,527
+    fn test_set_predecessor() {test_set_predecessor28,810
+    fn test_extract_path() {test_extract_path37,1118
+    fn test_extract_path_unreachable() {test_extract_path_unreachable55,1702
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestPathWeightUtilsStPer.rs,439
+mod TestPathWeightUtilsStPer {TestPathWeightUtilsStPer6,118
+    fn test_path_weight_int_simple() {test_path_weight_int_simple15,477
+    fn test_path_weight_int_negative() {test_path_weight_int_negative26,910
+    fn test_path_weight_float_simple() {test_path_weight_float_simple37,1346
+    fn test_validate_subpath_int() {test_validate_subpath_int52,2018
+    fn test_validate_subpath_float() {test_validate_subpath_float64,2528
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestPathWeightUtilsStEph.rs,439
+mod TestPathWeightUtilsStEph {TestPathWeightUtilsStEph6,118
+    fn test_path_weight_int_simple() {test_path_weight_int_simple16,548
+    fn test_path_weight_int_negative() {test_path_weight_int_negative27,981
+    fn test_path_weight_float_simple() {test_path_weight_float_simple38,1417
+    fn test_validate_subpath_int() {test_validate_subpath_int53,2089
+    fn test_validate_subpath_float() {test_validate_subpath_float65,2599
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestSSSPResultStEphInt.rs,342
+mod TestSSSPResultStEphInt {TestSSSPResultStEphInt6,116
+    fn test_new() {test_new10,223
+    fn test_set_distance() {test_set_distance19,498
+    fn test_set_predecessor() {test_set_predecessor28,768
+    fn test_extract_path() {test_extract_path37,1063
+    fn test_extract_path_unreachable() {test_extract_path_unreachable55,1625
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestAllPairsResultStPerInt.rs,350
+mod TestAllPairsResultStPerInt {TestAllPairsResultStPerInt6,120
+    fn test_new() {test_new10,239
+    fn test_set_distance() {test_set_distance19,527
+    fn test_set_predecessor() {test_set_predecessor28,832
+    fn test_extract_path() {test_extract_path37,1162
+    fn test_extract_path_unreachable() {test_extract_path_unreachable52,1733
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestSSSPResultStEphFloat.rs,346
+mod TestSSSPResultStEphFloat {TestSSSPResultStEphFloat6,118
+    fn test_new() {test_new11,268
+    fn test_set_distance() {test_set_distance20,580
+    fn test_set_predecessor() {test_set_predecessor29,916
+    fn test_extract_path() {test_extract_path38,1213
+    fn test_extract_path_unreachable() {test_extract_path_unreachable56,1825
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestAllPairsResultStEphFloat.rs,354
+mod TestAllPairsResultStEphFloat {TestAllPairsResultStEphFloat6,122
+    fn test_new() {test_new11,284
+    fn test_set_distance() {test_set_distance20,609
+    fn test_set_predecessor() {test_set_predecessor29,958
+    fn test_extract_path() {test_extract_path38,1268
+    fn test_extract_path_unreachable() {test_extract_path_unreachable56,1902
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/TestLibIntegration.rs,276
 fn test_module_accessibility() {test_module_accessibility5,164
@@ -19645,6 +19769,86 @@ mod TestCycleDetectStPer {TestCycleDetectStPer5,161
 mod TestTopoSortStPer {TestTopoSortStPer5,161
     fn test_placeholder() {test_placeholder7,197
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestAllPairsResultStPerFloat.rs,354
+mod TestAllPairsResultStPerFloat {TestAllPairsResultStPerFloat6,122
+    fn test_new() {test_new11,284
+    fn test_set_distance() {test_set_distance20,609
+    fn test_set_predecessor() {test_set_predecessor29,980
+    fn test_extract_path() {test_extract_path38,1312
+    fn test_extract_path_unreachable() {test_extract_path_unreachable53,1933
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestSSSPResultStPerFloat.rs,346
+mod TestSSSPResultStPerFloat {TestSSSPResultStPerFloat6,118
+    fn test_new() {test_new11,268
+    fn test_set_distance() {test_set_distance20,580
+    fn test_set_predecessor() {test_set_predecessor29,938
+    fn test_extract_path() {test_extract_path38,1257
+    fn test_extract_path_unreachable() {test_extract_path_unreachable53,1856
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestSSSPResultStPerInt.rs,342
+mod TestSSSPResultStPerInt {TestSSSPResultStPerInt6,116
+    fn test_new() {test_new10,223
+    fn test_set_distance() {test_set_distance19,498
+    fn test_set_predecessor() {test_set_predecessor28,790
+    fn test_extract_path() {test_extract_path37,1107
+    fn test_extract_path_unreachable() {test_extract_path_unreachable52,1656
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestAllPairsResultStEphInt.rs,350
+mod TestAllPairsResultStEphInt {TestAllPairsResultStEphInt6,120
+    fn test_new() {test_new10,239
+    fn test_set_distance() {test_set_distance19,527
+    fn test_set_predecessor() {test_set_predecessor28,810
+    fn test_extract_path() {test_extract_path37,1118
+    fn test_extract_path_unreachable() {test_extract_path_unreachable55,1702
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestPathWeightUtilsStPer.rs,439
+mod TestPathWeightUtilsStPer {TestPathWeightUtilsStPer6,118
+    fn test_path_weight_int_simple() {test_path_weight_int_simple15,477
+    fn test_path_weight_int_negative() {test_path_weight_int_negative26,910
+    fn test_path_weight_float_simple() {test_path_weight_float_simple37,1346
+    fn test_validate_subpath_int() {test_validate_subpath_int52,2018
+    fn test_validate_subpath_float() {test_validate_subpath_float64,2528
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestPathWeightUtilsStEph.rs,439
+mod TestPathWeightUtilsStEph {TestPathWeightUtilsStEph6,118
+    fn test_path_weight_int_simple() {test_path_weight_int_simple16,548
+    fn test_path_weight_int_negative() {test_path_weight_int_negative27,981
+    fn test_path_weight_float_simple() {test_path_weight_float_simple38,1417
+    fn test_validate_subpath_int() {test_validate_subpath_int53,2089
+    fn test_validate_subpath_float() {test_validate_subpath_float65,2599
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestSSSPResultStEphInt.rs,342
+mod TestSSSPResultStEphInt {TestSSSPResultStEphInt6,116
+    fn test_new() {test_new10,223
+    fn test_set_distance() {test_set_distance19,498
+    fn test_set_predecessor() {test_set_predecessor28,768
+    fn test_extract_path() {test_extract_path37,1063
+    fn test_extract_path_unreachable() {test_extract_path_unreachable55,1625
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestAllPairsResultStPerInt.rs,350
+mod TestAllPairsResultStPerInt {TestAllPairsResultStPerInt6,120
+    fn test_new() {test_new10,239
+    fn test_set_distance() {test_set_distance19,527
+    fn test_set_predecessor() {test_set_predecessor28,832
+    fn test_extract_path() {test_extract_path37,1162
+    fn test_extract_path_unreachable() {test_extract_path_unreachable52,1733
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestSSSPResultStEphFloat.rs,346
+mod TestSSSPResultStEphFloat {TestSSSPResultStEphFloat6,118
+    fn test_new() {test_new11,268
+    fn test_set_distance() {test_set_distance20,580
+    fn test_set_predecessor() {test_set_predecessor29,916
+    fn test_extract_path() {test_extract_path38,1213
+    fn test_extract_path_unreachable() {test_extract_path_unreachable56,1825
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap56/TestAllPairsResultStEphFloat.rs,354
+mod TestAllPairsResultStEphFloat {TestAllPairsResultStEphFloat6,122
+    fn test_new() {test_new11,284
+    fn test_set_distance() {test_set_distance20,609
+    fn test_set_predecessor() {test_set_predecessor29,958
+    fn test_extract_path() {test_extract_path38,1268
+    fn test_extract_path_unreachable() {test_extract_path_unreachable56,1902
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap55/BenchDFSStEph.rs,66
 fn bench_placeholder(c: &mut Criterion) {bench_placeholder6,211
 
@@ -20060,6 +20264,30 @@ fn bench_balbintree_st_eph(c: &mut Criterion) {bench_balbintree_st_eph7,291
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap23/BenchPrimTreeSeqSt.rs,76
 fn bench_prim_tree_seq_st(c: &mut Criterion) {bench_prim_tree_seq_st7,287
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap56/BenchSSSPResultStEphInt.rs,264
+fn bench_new(c: &mut Criterion) {bench_new8,237
+fn bench_set_distance(c: &mut Criterion) {bench_set_distance18,493
+fn bench_set_predecessor(c: &mut Criterion) {bench_set_predecessor34,914
+fn bench_extract_path(c: &mut Criterion) {bench_extract_path50,1341
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap56/BenchPathWeightUtilsStPer.rs,331
+fn bench_path_weight_int(c: &mut Criterion) {bench_path_weight_int12,430
+fn bench_path_weight_float(c: &mut Criterion) {bench_path_weight_float35,1120
+fn bench_validate_subpath_int(c: &mut Criterion) {bench_validate_subpath_int58,1851
+fn bench_validate_subpath_float(c: &mut Criterion) {bench_validate_subpath_float90,2828
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap56/BenchPathWeightUtilsStEph.rs,331
+fn bench_path_weight_int(c: &mut Criterion) {bench_path_weight_int13,497
+fn bench_path_weight_float(c: &mut Criterion) {bench_path_weight_float36,1187
+fn bench_validate_subpath_int(c: &mut Criterion) {bench_validate_subpath_int59,1918
+fn bench_validate_subpath_float(c: &mut Criterion) {bench_validate_subpath_float91,2895
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap56/BenchSSSPResultStEphFloat.rs,264
+fn bench_new(c: &mut Criterion) {bench_new9,276
+fn bench_set_distance(c: &mut Criterion) {bench_set_distance19,534
+fn bench_set_predecessor(c: &mut Criterion) {bench_set_predecessor35,971
+fn bench_extract_path(c: &mut Criterion) {bench_extract_path51,1400
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap43/BenchOrderedTableStPer.rs,1359
 fn bench_ordered_table_st_per_insert(c: &mut Criterion) {bench_ordered_table_st_per_insert10,473
@@ -21036,3 +21264,27 @@ fn bench_placeholder(c: &mut Criterion) {bench_placeholder6,211
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap55/BenchTopoSortStPer.rs,66
 fn bench_placeholder(c: &mut Criterion) {bench_placeholder6,211
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap56/BenchSSSPResultStEphInt.rs,264
+fn bench_new(c: &mut Criterion) {bench_new8,237
+fn bench_set_distance(c: &mut Criterion) {bench_set_distance18,493
+fn bench_set_predecessor(c: &mut Criterion) {bench_set_predecessor34,914
+fn bench_extract_path(c: &mut Criterion) {bench_extract_path50,1341
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap56/BenchPathWeightUtilsStPer.rs,331
+fn bench_path_weight_int(c: &mut Criterion) {bench_path_weight_int12,430
+fn bench_path_weight_float(c: &mut Criterion) {bench_path_weight_float35,1120
+fn bench_validate_subpath_int(c: &mut Criterion) {bench_validate_subpath_int58,1851
+fn bench_validate_subpath_float(c: &mut Criterion) {bench_validate_subpath_float90,2828
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap56/BenchPathWeightUtilsStEph.rs,331
+fn bench_path_weight_int(c: &mut Criterion) {bench_path_weight_int13,497
+fn bench_path_weight_float(c: &mut Criterion) {bench_path_weight_float36,1187
+fn bench_validate_subpath_int(c: &mut Criterion) {bench_validate_subpath_int59,1918
+fn bench_validate_subpath_float(c: &mut Criterion) {bench_validate_subpath_float91,2895
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap56/BenchSSSPResultStEphFloat.rs,264
+fn bench_new(c: &mut Criterion) {bench_new9,276
+fn bench_set_distance(c: &mut Criterion) {bench_set_distance19,534
+fn bench_set_predecessor(c: &mut Criterion) {bench_set_predecessor35,971
+fn bench_extract_path(c: &mut Criterion) {bench_extract_path51,1400

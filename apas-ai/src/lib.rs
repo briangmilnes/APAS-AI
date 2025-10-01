@@ -321,3 +321,9 @@ pub mod Chap56 {
     pub mod SSSPResultStPerFloat;
     pub mod SSSPResultStPerInt;
 }
+
+pub mod Chap57 {
+    pub mod DijkstraStEphFloat;
+    pub mod DijkstraStEphInt;
+    pub mod StackStEph;
+}

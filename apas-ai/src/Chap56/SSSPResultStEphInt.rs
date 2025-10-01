@@ -54,7 +54,7 @@ impl SSSPResultStEphInt {
     /// Sets the distance from source to vertex v.
     pub fn set_distance(&mut self, v: usize, dist: i64) {
         if v < self.distances.length() {
-            self.distances.set(v, dist);
+            let _ = self.distances.set(v, dist);
         }
     }
 
@@ -70,7 +70,7 @@ impl SSSPResultStEphInt {
     /// Sets the predecessor of vertex v in the shortest path from source.
     pub fn set_predecessor(&mut self, v: usize, pred: usize) {
         if v < self.predecessors.length() {
-            self.predecessors.set(v, pred);
+            let _ = self.predecessors.set(v, pred);
         }
     }
 

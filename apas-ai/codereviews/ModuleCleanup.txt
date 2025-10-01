@@ -1,0 +1,7 @@
+
+  Sweep all the src, tests and benches files for
+  missing modules in files and
+  use's outside of the modules.
+
+  don't // comment the end of modules, jejune.
+

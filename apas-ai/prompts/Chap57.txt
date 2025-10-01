@@ -220,6 +220,7 @@ might give some improvement in practice.
 Another variant decreases the priority of the neighbors instead of adding duplicates to the
 priority queue. This requires a more powerful priority queue that supports a decreaseKey
 function.
+
 3 Cost Analysis of Dijkstra’s Algorithm
 Data Structures. To analyze the work and span of priority-queue based implementation
 of Dijkstra’s algorithm shown above, let’s first consider the priority queue ADT’s that we
@@ -244,6 +245,7 @@ Since the algorithm is sequential, the span is the same as the work.
 Decrease Key Operation. We can improve the work of the algorithm by using a priority
 queues that supports a decreaseKey operation. This leads to O(m + n log n) work across all
 priority queue operations.
+
 Exercise 57.1. Give a version of Dijkstra’s algorithm that uses the decreaseKey operation.
 Remark. For enumerated graphs the cost of the tree tables could be improved by using
 adjacency sequences for the graph, and ephemeral or single-threaded sequences for the

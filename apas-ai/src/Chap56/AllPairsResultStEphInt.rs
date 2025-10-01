@@ -61,8 +61,8 @@ impl AllPairsResultStEphInt {
     pub fn set_distance(&mut self, u: usize, v: usize, dist: i64) {
         if u < self.n && v < self.n {
             let mut row = self.distances.nth(u).clone();
-            row.set(v, dist);
-            self.distances.set(u, row);
+            let _ = row.set(v, dist);
+            let _ = self.distances.set(u, row);
         }
     }
 
@@ -79,8 +79,8 @@ impl AllPairsResultStEphInt {
     pub fn set_predecessor(&mut self, u: usize, v: usize, pred: usize) {
         if u < self.n && v < self.n {
             let mut row = self.predecessors.nth(u).clone();
-            row.set(v, pred);
-            self.predecessors.set(u, row);
+            let _ = row.set(v, pred);
+            let _ = self.predecessors.set(u, row);
         }
     }
 

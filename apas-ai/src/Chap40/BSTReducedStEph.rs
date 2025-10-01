@@ -64,8 +64,6 @@ pub mod BSTReducedStEph {
     #[derive(Debug, Clone)]
     pub struct MaxOp<T>(PhantomData<T>);
 
-    // MaxOp removed due to Option<T> not implementing Display
-
     /// Example: Count reduction (counts number of elements)
     #[derive(Debug, Clone)]
     pub struct CountOp<T>(PhantomData<T>);
@@ -356,7 +354,6 @@ pub mod BSTReducedStEph {
 
     // Type aliases for common reductions
     pub type BSTSumStEph<K, V> = BSTReducedStEph<K, V, V, SumOp<V>>;
-    // BSTMaxStEph removed due to Option<V> not implementing Display
     pub type BSTCountStEph<K, V> = BSTReducedStEph<K, V, N, CountOp<V>>;
 
     #[macro_export]

@@ -1,0 +1,172 @@
+//! Copyright © 2025 APAS-VERUS. All rights reserved.
+//!
+//! Tests for DijkstraStEphInt
+
+#[cfg(test)]
+mod tests {
+    use apas_ai::Chap05::SetStEph::SetStEph::*;
+    use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt;
+    use apas_ai::Chap57::DijkstraStEphInt::DijkstraStEphInt::dijkstra;
+
+    #[test]
+    fn test_example_57_1() {
+        // Example 57.1 from textbook: Graph where BFS fails but Dijkstra succeeds
+        // s -> a (weight 1), s -> b (weight 2), a -> b (weight 1)
+        // Shortest path to b is s -> a -> b (weight 2), not s -> b (weight 2)
+        // Actually both have same weight, but example shows BFS might visit b first
+
+        let mut vertices = Set::empty();
+        for v in 0..3 {
+            vertices.insert(v);
+        }
+
+        let mut edges = Set::empty();
+        edges.insert((0, 1, 1)); // s=0 -> a=1 weight 1
+        edges.insert((0, 2, 3)); // s=0 -> b=2 weight 3
+        edges.insert((1, 2, 1)); // a=1 -> b=2 weight 1
+
+        let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
+        let result = dijkstra(&graph, 0);
+
+        assert_eq!(result.get_distance(0), 0); // source
+        assert_eq!(result.get_distance(1), 1); // a
+        assert_eq!(result.get_distance(2), 2); // b via a
+    }
+
+    #[test]
+    fn test_example_57_3() {
+        // Example 57.3 from textbook
+        // Graph: s=0, a=1, b=2, c=3, d=4, e=5
+        // s -> a (1), s -> b (5)
+        // a -> b (2), a -> c (12)
+        // b -> c (2), b -> d (3)
+        // c -> d (1)
+        // d (no outgoing)
+        // e (isolated vertex)
+
+        let mut vertices = Set::empty();
+        for v in 0..6 {
+            vertices.insert(v);
+        }
+
+        let mut edges = Set::empty();
+        edges.insert((0, 1, 1)); // s -> a
+        edges.insert((0, 2, 5)); // s -> b
+        edges.insert((1, 2, 2)); // a -> b
+        edges.insert((1, 3, 12)); // a -> c
+        edges.insert((2, 3, 2)); // b -> c
+        edges.insert((2, 4, 3)); // b -> d
+        edges.insert((3, 4, 1)); // c -> d
+
+        let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
+        let result = dijkstra(&graph, 0);
+
+        assert_eq!(result.get_distance(0), 0);
+        assert_eq!(result.get_distance(1), 1);
+        assert_eq!(result.get_distance(2), 3); // via a
+        assert_eq!(result.get_distance(3), 5); // via a->b->c
+        assert_eq!(result.get_distance(4), 6); // via a->b->c->d or a->b->d
+        assert_eq!(result.get_distance(5), i64::MAX); // unreachable
+    }
+
+    #[test]
+    fn test_single_vertex() {
+        let mut vertices = Set::empty();
+        vertices.insert(0);
+
+        let edges = Set::empty();
+        let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
+        let result = dijkstra(&graph, 0);
+
+        assert_eq!(result.get_distance(0), 0);
+    }
+
+    #[test]
+    fn test_unreachable_vertices() {
+        let mut vertices = Set::empty();
+        for v in 0..3 {
+            vertices.insert(v);
+        }
+
+        let mut edges = Set::empty();
+        edges.insert((0, 1, 1)); // s -> a
+        // vertex 2 is unreachable
+
+        let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
+        let result = dijkstra(&graph, 0);
+
+        assert_eq!(result.get_distance(0), 0);
+        assert_eq!(result.get_distance(1), 1);
+        assert_eq!(result.get_distance(2), i64::MAX);
+        assert!(!result.is_reachable(2));
+    }
+
+    #[test]
+    fn test_path_extraction() {
+        let mut vertices = Set::empty();
+        for v in 0..4 {
+            vertices.insert(v);
+        }
+
+        let mut edges = Set::empty();
+        edges.insert((0, 1, 1));
+        edges.insert((1, 2, 2));
+        edges.insert((2, 3, 3));
+
+        let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
+        let result = dijkstra(&graph, 0);
+
+        let path = result.extract_path(3);
+        assert_eq!(path.length(), 4);
+        assert_eq!(*path.nth(0), 0);
+        assert_eq!(*path.nth(1), 1);
+        assert_eq!(*path.nth(2), 2);
+        assert_eq!(*path.nth(3), 3);
+    }
+
+    #[test]
+    fn test_multiple_paths_same_weight() {
+        // Multiple paths with same total weight
+        let mut vertices = Set::empty();
+        for v in 0..4 {
+            vertices.insert(v);
+        }
+
+        let mut edges = Set::empty();
+        edges.insert((0, 1, 5));
+        edges.insert((0, 2, 3));
+        edges.insert((2, 1, 2));
+        edges.insert((1, 3, 1));
+
+        let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
+        let result = dijkstra(&graph, 0);
+
+        assert_eq!(result.get_distance(1), 5); // Both paths have weight 5
+        assert_eq!(result.get_distance(3), 6);
+    }
+
+    #[test]
+    fn test_larger_graph() {
+        // Larger test graph
+        let mut vertices = Set::empty();
+        for v in 0..10 {
+            vertices.insert(v);
+        }
+
+        let mut edges = Set::empty();
+        for i in 0..9 {
+            edges.insert((i, i + 1, 1));
+        }
+        // Add some shortcuts
+        edges.insert((0, 5, 3));
+        edges.insert((2, 7, 4));
+
+        let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
+        let result = dijkstra(&graph, 0);
+
+        assert_eq!(result.get_distance(0), 0);
+        assert_eq!(result.get_distance(5), 3); // via shortcut
+        assert_eq!(result.get_distance(9), 9);
+    }
+}
+

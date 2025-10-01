@@ -1435,3 +1435,8 @@ harness = false
 name = "BenchSSSPResultStEphFloat"
 path = "benches/Chap56/BenchSSSPResultStEphFloat.rs"
 harness = false
+
+[[bench]]
+name = "BenchStackStEph"
+path = "benches/Chap57/BenchStackStEph.rs"
+harness = false
