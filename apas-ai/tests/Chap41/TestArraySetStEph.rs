@@ -119,16 +119,10 @@ fn test_array_set_macro() {
 }
 
 #[test]
-fn test_example_41_1_cases() {
-    example_41_1_array_set();
-}
+fn test_example_41_1_cases() { example_41_1_array_set(); }
 
 #[test]
-fn test_example_41_3_demonstration() {
-    example_41_3_from_seq_demonstration();
-}
+fn test_example_41_3_demonstration() { example_41_3_from_seq_demonstration(); }
 
 #[test]
-fn test_additional_operations() {
-    additional_set_operations();
-}
+fn test_additional_operations() { additional_set_operations(); }

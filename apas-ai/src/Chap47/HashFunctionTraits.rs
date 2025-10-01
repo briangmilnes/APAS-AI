@@ -50,9 +50,7 @@ pub mod HashFunctionTraits {
             (hasher.finish() as N) % table_size
         }
 
-        fn description(&self) -> String {
-            "DefaultHashFunction (Rust built-in)".to_string()
-        }
+        fn description(&self) -> String { "DefaultHashFunction (Rust built-in)".to_string() }
     }
 
     /// String hash function from Example 47.1 in textbook
@@ -76,9 +74,7 @@ pub mod HashFunctionTraits {
             sum % table_size
         }
 
-        fn description(&self) -> String {
-            "StringPositionHashFunction (Example 47.1)".to_string()
-        }
+        fn description(&self) -> String { "StringPositionHashFunction (Example 47.1)".to_string() }
     }
 
     /// Polynomial rolling hash function for strings
@@ -89,9 +85,7 @@ pub mod HashFunctionTraits {
     }
 
     impl PolynomialHashFunction {
-        pub fn new(base: N) -> Self {
-            PolynomialHashFunction { base }
-        }
+        pub fn new(base: N) -> Self { PolynomialHashFunction { base } }
     }
 
     impl HashFunction<String> for PolynomialHashFunction {
@@ -108,9 +102,7 @@ pub mod HashFunctionTraits {
             hash_value
         }
 
-        fn description(&self) -> String {
-            format!("PolynomialHashFunction (base={})", self.base)
-        }
+        fn description(&self) -> String { format!("PolynomialHashFunction (base={})", self.base) }
     }
 
     /// Universal hash function for integers
@@ -151,9 +143,7 @@ pub mod HashFunctionTraits {
     pub struct DefaultKeyEquality;
 
     impl<K: PartialEq> KeyEquality<K> for DefaultKeyEquality {
-        fn eq(&self, a: &K, b: &K) -> bool {
-            a == b
-        }
+        fn eq(&self, a: &K, b: &K) -> bool { a == b }
     }
 
     /// Case-insensitive string equality
@@ -161,9 +151,7 @@ pub mod HashFunctionTraits {
     pub struct CaseInsensitiveStringEquality;
 
     impl KeyEquality<String> for CaseInsensitiveStringEquality {
-        fn eq(&self, a: &String, b: &String) -> bool {
-            a.to_lowercase() == b.to_lowercase()
-        }
+        fn eq(&self, a: &String, b: &String) -> bool { a.to_lowercase() == b.to_lowercase() }
     }
 
     /// Universal hash family for integers
@@ -188,9 +176,7 @@ pub mod HashFunctionTraits {
             UniversalIntegerHashFunction::new(a, b)
         }
 
-        fn family_description(&self) -> String {
-            format!("UniversalIntegerHashFamily (p={})", self.p)
-        }
+        fn family_description(&self) -> String { format!("UniversalIntegerHashFamily (p={})", self.p) }
     }
 
     /// Hash function combiner for creating probe sequences
@@ -256,14 +242,10 @@ pub mod HashFunctionTraits {
         }
 
         /// Calculate new table size for growth
-        pub fn grow_size(&self, current_size: N) -> N {
-            current_size * 2
-        }
+        pub fn grow_size(&self, current_size: N) -> N { current_size * 2 }
 
         /// Calculate new table size for shrinkage
-        pub fn shrink_size(&self, current_size: N) -> N {
-            (current_size / 2).max(8)
-        }
+        pub fn shrink_size(&self, current_size: N) -> N { (current_size / 2).max(8) }
     }
 
     /// Hash table statistics for analysis
@@ -386,9 +368,7 @@ pub mod HashFunctionTraits {
                     hash_value % table_size
                 }
 
-                fn description(&self) -> String {
-                    $desc.to_string()
-                }
+                fn description(&self) -> String { $desc.to_string() }
             }
         };
     }

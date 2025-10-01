@@ -5,9 +5,7 @@ use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPe
 use apas_ai::*;
 use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 
-fn gen_sequence(n: usize) -> ArraySeqMtPerS<usize> {
-    ArraySeqMtPerS::new(n, 0)
-}
+fn gen_sequence(n: usize) -> ArraySeqMtPerS<usize> { ArraySeqMtPerS::new(n, 0) }
 
 fn bench_chapter26_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chapter26Mt");

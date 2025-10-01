@@ -20,9 +20,7 @@ pub mod BalBinTreeStEph {
     }
 
     impl<T: StT> BalBinNode<T> {
-        fn new(left: BalBinTree<T>, value: T, right: BalBinTree<T>) -> Self {
-            BalBinNode { left, value, right }
-        }
+        fn new(left: BalBinTree<T>, value: T, right: BalBinTree<T>) -> Self { BalBinNode { left, value, right } }
     }
 
     pub trait BalBinTreeStEphTrait<T: StT> {
@@ -50,9 +48,7 @@ pub mod BalBinTreeStEph {
     }
 
     impl<T: StT> BalBinTree<T> {
-        pub fn leaf() -> Self {
-            BalBinTree::Leaf
-        }
+        pub fn leaf() -> Self { BalBinTree::Leaf }
 
         pub fn node(left: BalBinTree<T>, value: T, right: BalBinTree<T>) -> Self {
             BalBinTree::Node(Box::new(BalBinNode::new(left, value, right)))
@@ -111,33 +107,19 @@ pub mod BalBinTreeStEph {
     }
 
     impl<T: StT> BalBinTreeStEphTrait<T> for BalBinTree<T> {
-        fn leaf() -> Self {
-            BalBinTree::leaf()
-        }
+        fn leaf() -> Self { BalBinTree::leaf() }
 
-        fn node(left: Self, value: T, right: Self) -> Self {
-            BalBinTree::node(left, value, right)
-        }
+        fn node(left: Self, value: T, right: Self) -> Self { BalBinTree::node(left, value, right) }
 
-        fn is_leaf(&self) -> B {
-            BalBinTree::is_leaf(self)
-        }
+        fn is_leaf(&self) -> B { BalBinTree::is_leaf(self) }
 
-        fn in_order(&self) -> ArraySeqStPerS<T> {
-            BalBinTree::in_order(self)
-        }
+        fn in_order(&self) -> ArraySeqStPerS<T> { BalBinTree::in_order(self) }
 
-        fn pre_order(&self) -> ArraySeqStPerS<T> {
-            BalBinTree::pre_order(self)
-        }
+        fn pre_order(&self) -> ArraySeqStPerS<T> { BalBinTree::pre_order(self) }
 
-        fn height(&self) -> N {
-            BalBinTree::height(self)
-        }
+        fn height(&self) -> N { BalBinTree::height(self) }
 
-        fn size(&self) -> N {
-            BalBinTree::size(self)
-        }
+        fn size(&self) -> N { BalBinTree::size(self) }
     }
 
     #[macro_export]

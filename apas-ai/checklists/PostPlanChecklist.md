@@ -20,3 +20,5 @@
 - [ ] Did the benchmarks compile with cargo bench --no-run? Fix any defects found.
 - [ ] Ask the user if they want to run the full benchmark suite.
 - [ ] Ask the user if they want you to commit changes to git.
+- [ ] cargo +nightly fmt
+

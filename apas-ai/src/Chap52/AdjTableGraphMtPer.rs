@@ -33,9 +33,7 @@ pub mod AdjTableGraphMtPer {
             }
         }
 
-        fn num_vertices(&self) -> N {
-            self.adj.size()
-        }
+        fn num_vertices(&self) -> N { self.adj.size() }
 
         fn num_edges(&self) -> N {
             let domain = self.adj.domain();
@@ -50,17 +48,13 @@ pub mod AdjTableGraphMtPer {
             count
         }
 
-        fn has_edge(&self, u: &V, v: &V) -> B {
-            self.adj.find(u).map_or(false, |neighbors| neighbors.find(v))
-        }
+        fn has_edge(&self, u: &V, v: &V) -> B { self.adj.find(u).map_or(false, |neighbors| neighbors.find(v)) }
 
         fn out_neighbors(&self, u: &V) -> AVLTreeSetMtPer<V> {
             self.adj.find(u).unwrap_or_else(|| AVLTreeSetMtPer::empty())
         }
 
-        fn out_degree(&self, u: &V) -> N {
-            self.out_neighbors(u).size()
-        }
+        fn out_degree(&self, u: &V) -> N { self.out_neighbors(u).size() }
 
         fn insert_vertex(&self, v: V) -> Self {
             if self.adj.find(&v).is_some() {
@@ -109,8 +103,6 @@ pub mod AdjTableGraphMtPer {
     }
 
     impl<V: StTInMtT + Ord + 'static> Default for AdjTableGraphMtPer<V> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 }

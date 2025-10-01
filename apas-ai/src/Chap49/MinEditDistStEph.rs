@@ -124,21 +124,13 @@ pub mod MinEditDistStEph {
             self.min_edit_distance_rec(source_len, target_len)
         }
 
-        fn source(&self) -> &ArraySeqStEphS<T> {
-            &self.source
-        }
+        fn source(&self) -> &ArraySeqStEphS<T> { &self.source }
 
-        fn target(&self) -> &ArraySeqStEphS<T> {
-            &self.target
-        }
+        fn target(&self) -> &ArraySeqStEphS<T> { &self.target }
 
-        fn source_mut(&mut self) -> &mut ArraySeqStEphS<T> {
-            &mut self.source
-        }
+        fn source_mut(&mut self) -> &mut ArraySeqStEphS<T> { &mut self.source }
 
-        fn target_mut(&mut self) -> &mut ArraySeqStEphS<T> {
-            &mut self.target
-        }
+        fn target_mut(&mut self) -> &mut ArraySeqStEphS<T> { &mut self.target }
 
         fn set_source(&mut self, index: usize, value: T) {
             let _ = self.source.set(index, value);
@@ -152,13 +144,9 @@ pub mod MinEditDistStEph {
             self.memo.clear();
         }
 
-        fn clear_memo(&mut self) {
-            self.memo.clear();
-        }
+        fn clear_memo(&mut self) { self.memo.clear(); }
 
-        fn memo_size(&self) -> usize {
-            self.memo.len()
-        }
+        fn memo_size(&self) -> usize { self.memo.len() }
     }
 
     impl<T: StT> Display for MinEditDistStEphS<T> {

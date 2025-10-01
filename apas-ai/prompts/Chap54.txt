@@ -160,6 +160,3 @@ Because creating the initial sequence keeping track of visited vertices requires
 the total work of sequential BFS is O (|V | + |E|).
 
 Exercise 54.3. Prove that the queue based implementation of sequential BFS is correct (text).
-
-
-

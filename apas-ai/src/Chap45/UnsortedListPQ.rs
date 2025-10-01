@@ -135,46 +135,30 @@ pub mod UnsortedListPQ {
 
         /// Claude Work: Θ(n), Span: Θ(n)
         /// Create priority queue from existing sequence
-        fn from_seq(seq: &ArraySeqStPerS<T>) -> Self {
-            UnsortedListPQ { elements: seq.clone() }
-        }
+        fn from_seq(seq: &ArraySeqStPerS<T>) -> Self { UnsortedListPQ { elements: seq.clone() } }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn size(&self) -> N {
-            self.elements.length()
-        }
+        fn size(&self) -> N { self.elements.length() }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn is_empty(&self) -> bool {
-            self.elements.length() == 0
-        }
+        fn is_empty(&self) -> bool { self.elements.length() == 0 }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn to_seq(&self) -> ArraySeqStPerS<T> {
-            self.elements.clone()
-        }
+        fn to_seq(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
     }
 
     impl<T: StT + Ord> UnsortedListPQ<T> {
         /// Create an empty priority queue
-        pub fn new() -> Self {
-            Self::empty()
-        }
+        pub fn new() -> Self { Self::empty() }
 
         /// Get the number of elements
-        pub fn len(&self) -> N {
-            self.size()
-        }
+        pub fn len(&self) -> N { self.size() }
 
         /// Check if the priority queue is empty
-        pub fn is_empty(&self) -> bool {
-            UnsortedListPQTrait::is_empty(self)
-        }
+        pub fn is_empty(&self) -> bool { UnsortedListPQTrait::is_empty(self) }
 
         /// Peek at the minimum element without removing it
-        pub fn peek(&self) -> Option<&T> {
-            self.find_min()
-        }
+        pub fn peek(&self) -> Option<&T> { self.find_min() }
 
         /// Insert multiple elements from an iterator
         pub fn insert_all(&self, elements: &ArraySeqStPerS<T>) -> Self {
@@ -205,9 +189,7 @@ pub mod UnsortedListPQ {
     }
 
     impl<T: StT + Ord> Default for UnsortedListPQ<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StT + Ord> Display for UnsortedListPQ<T> {
@@ -280,19 +262,13 @@ pub mod UnsortedListPQ {
 
     impl UnsortedListPQOps {
         /// Create empty priority queue
-        pub fn empty<T: StT + Ord>() -> UnsortedListPQ<T> {
-            UnsortedListPQ::empty()
-        }
+        pub fn empty<T: StT + Ord>() -> UnsortedListPQ<T> { UnsortedListPQ::empty() }
 
         /// Insert element into priority queue
-        pub fn insert<T: StT + Ord>(pq: &UnsortedListPQ<T>, element: T) -> UnsortedListPQ<T> {
-            pq.insert(element)
-        }
+        pub fn insert<T: StT + Ord>(pq: &UnsortedListPQ<T>, element: T) -> UnsortedListPQ<T> { pq.insert(element) }
 
         /// Delete minimum element from priority queue
-        pub fn delete_min<T: StT + Ord>(pq: &UnsortedListPQ<T>) -> (UnsortedListPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
+        pub fn delete_min<T: StT + Ord>(pq: &UnsortedListPQ<T>) -> (UnsortedListPQ<T>, Option<T>) { pq.delete_min() }
 
         /// Meld two priority queues
         pub fn meld<T: StT + Ord>(pq1: &UnsortedListPQ<T>, pq2: &UnsortedListPQ<T>) -> UnsortedListPQ<T> {
@@ -300,8 +276,6 @@ pub mod UnsortedListPQ {
         }
 
         /// Create priority queue from sequence
-        pub fn from_seq<T: StT + Ord>(seq: &ArraySeqStPerS<T>) -> UnsortedListPQ<T> {
-            UnsortedListPQ::from_seq(seq)
-        }
+        pub fn from_seq<T: StT + Ord>(seq: &ArraySeqStPerS<T>) -> UnsortedListPQ<T> { UnsortedListPQ::from_seq(seq) }
     }
 }

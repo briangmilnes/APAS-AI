@@ -35,14 +35,10 @@ pub mod AdjTableGraphStPer {
             }
         }
 
-        fn from_table(table: OrderedTableStPer<V, AVLTreeSetStPer<V>>) -> Self {
-            AdjTableGraphStPer { adj: table }
-        }
+        fn from_table(table: OrderedTableStPer<V, AVLTreeSetStPer<V>>) -> Self { AdjTableGraphStPer { adj: table } }
 
         // Work: Θ(1), Span: Θ(1) - table size
-        fn num_vertices(&self) -> N {
-            self.adj.size()
-        }
+        fn num_vertices(&self) -> N { self.adj.size() }
 
         // Work: Θ(n), Span: Θ(log n) - sum all neighbor set sizes
         fn num_edges(&self) -> N {
@@ -85,9 +81,7 @@ pub mod AdjTableGraphStPer {
         }
 
         // Work: Θ(log n), Span: Θ(log n) - lookup + size
-        fn out_degree(&self, u: &V) -> N {
-            self.out_neighbors(u).size()
-        }
+        fn out_degree(&self, u: &V) -> N { self.out_neighbors(u).size() }
 
         // Work: Θ(log n), Span: Θ(log n) - insert empty neighbor set
         fn insert_vertex(&self, v: V) -> Self {

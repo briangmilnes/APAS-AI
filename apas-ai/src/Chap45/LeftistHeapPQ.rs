@@ -291,36 +291,24 @@ pub mod LeftistHeapPQ {
         }
 
         /// Claude Work: Θ(n), Span: Θ(n)
-        fn size(&self) -> N {
-            self.root.size()
-        }
+        fn size(&self) -> N { self.root.size() }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn is_empty(&self) -> bool {
-            matches!(self.root, LeftistHeapNode::Leaf)
-        }
+        fn is_empty(&self) -> bool { matches!(self.root, LeftistHeapNode::Leaf) }
     }
 
     impl<T: StT + Ord> LeftistHeapPQ<T> {
         /// Create an empty priority queue
-        pub fn new() -> Self {
-            Self::empty()
-        }
+        pub fn new() -> Self { Self::empty() }
 
         /// Get the number of elements
-        pub fn len(&self) -> N {
-            self.size()
-        }
+        pub fn len(&self) -> N { self.size() }
 
         /// Check if the priority queue is empty
-        pub fn is_empty(&self) -> bool {
-            LeftistHeapPQTrait::is_empty(self)
-        }
+        pub fn is_empty(&self) -> bool { LeftistHeapPQTrait::is_empty(self) }
 
         /// Peek at the minimum element without removing it
-        pub fn peek(&self) -> Option<&T> {
-            self.find_min()
-        }
+        pub fn peek(&self) -> Option<&T> { self.find_min() }
 
         /// Extract all elements in sorted order
         pub fn extract_all_sorted(&self) -> Vec<T> {
@@ -339,34 +327,22 @@ pub mod LeftistHeapPQ {
         }
 
         /// Get the height of the heap (for analysis)
-        pub fn height(&self) -> N {
-            self.root.height()
-        }
+        pub fn height(&self) -> N { self.root.height() }
 
         /// Get the rank of the root (for analysis)
-        pub fn root_rank(&self) -> N {
-            self.root.rank()
-        }
+        pub fn root_rank(&self) -> N { self.root.rank() }
 
         /// Check if leftist property is maintained (for testing)
-        pub fn is_valid_leftist_heap(&self) -> bool {
-            self.root.is_leftist() && self.root.is_heap()
-        }
+        pub fn is_valid_leftist_heap(&self) -> bool { self.root.is_leftist() && self.root.is_heap() }
 
         /// Create priority queue from vector (for testing)
-        pub fn from_vec(vec: Vec<T>) -> Self {
-            Self::from_seq(&vec)
-        }
+        pub fn from_vec(vec: Vec<T>) -> Self { Self::from_seq(&vec) }
 
         /// Convert to vector (for testing)
-        pub fn to_vec(&self) -> Vec<T> {
-            self.root.to_vec()
-        }
+        pub fn to_vec(&self) -> Vec<T> { self.root.to_vec() }
 
         /// Get elements in sorted order as vector (for testing)
-        pub fn to_sorted_vec(&self) -> Vec<T> {
-            self.extract_all_sorted()
-        }
+        pub fn to_sorted_vec(&self) -> Vec<T> { self.extract_all_sorted() }
 
         /// Advanced meld operations for specific use cases
         pub fn meld_multiple(heaps: &[Self]) -> Self {
@@ -400,9 +376,7 @@ pub mod LeftistHeapPQ {
     }
 
     impl<T: StT + Ord> Default for LeftistHeapPQ<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StT + Ord> Display for LeftistHeapPQ<T> {
@@ -448,29 +422,19 @@ pub mod LeftistHeapPQ {
 
     impl LeftistHeapPQOps {
         /// Create empty priority queue
-        pub fn empty<T: StT + Ord>() -> LeftistHeapPQ<T> {
-            LeftistHeapPQ::empty()
-        }
+        pub fn empty<T: StT + Ord>() -> LeftistHeapPQ<T> { LeftistHeapPQ::empty() }
 
         /// Insert element into priority queue
-        pub fn insert<T: StT + Ord>(pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> {
-            pq.insert(element)
-        }
+        pub fn insert<T: StT + Ord>(pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> { pq.insert(element) }
 
         /// Delete minimum element from priority queue
-        pub fn delete_min<T: StT + Ord>(pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
+        pub fn delete_min<T: StT + Ord>(pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) { pq.delete_min() }
 
         /// Meld two priority queues (THE STAR OPERATION!)
-        pub fn meld<T: StT + Ord>(pq1: &LeftistHeapPQ<T>, pq2: &LeftistHeapPQ<T>) -> LeftistHeapPQ<T> {
-            pq1.meld(pq2)
-        }
+        pub fn meld<T: StT + Ord>(pq1: &LeftistHeapPQ<T>, pq2: &LeftistHeapPQ<T>) -> LeftistHeapPQ<T> { pq1.meld(pq2) }
 
         /// Create priority queue from sequence
-        pub fn from_seq<T: StT + Ord>(seq: &[T]) -> LeftistHeapPQ<T> {
-            LeftistHeapPQ::from_seq(seq)
-        }
+        pub fn from_seq<T: StT + Ord>(seq: &[T]) -> LeftistHeapPQ<T> { LeftistHeapPQ::from_seq(seq) }
     }
 
     /// Demonstration of leftist heap advantages

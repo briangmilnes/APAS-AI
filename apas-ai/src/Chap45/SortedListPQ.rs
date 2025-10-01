@@ -189,41 +189,27 @@ pub mod SortedListPQ {
         }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn size(&self) -> N {
-            self.elements.length()
-        }
+        fn size(&self) -> N { self.elements.length() }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn is_empty(&self) -> bool {
-            self.elements.length() == 0
-        }
+        fn is_empty(&self) -> bool { self.elements.length() == 0 }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn to_seq(&self) -> ArraySeqStPerS<T> {
-            self.elements.clone()
-        }
+        fn to_seq(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
     }
 
     impl<T: StT + Ord> SortedListPQ<T> {
         /// Create an empty priority queue
-        pub fn new() -> Self {
-            Self::empty()
-        }
+        pub fn new() -> Self { Self::empty() }
 
         /// Get the number of elements
-        pub fn len(&self) -> N {
-            self.size()
-        }
+        pub fn len(&self) -> N { self.size() }
 
         /// Check if the priority queue is empty
-        pub fn is_empty(&self) -> bool {
-            SortedListPQTrait::is_empty(self)
-        }
+        pub fn is_empty(&self) -> bool { SortedListPQTrait::is_empty(self) }
 
         /// Peek at the minimum element without removing it
-        pub fn peek(&self) -> Option<&T> {
-            self.find_min()
-        }
+        pub fn peek(&self) -> Option<&T> { self.find_min() }
 
         /// Insert multiple elements from a sequence
         pub fn insert_all(&self, elements: &ArraySeqStPerS<T>) -> Self {
@@ -236,9 +222,7 @@ pub mod SortedListPQ {
         }
 
         /// Extract all elements in sorted order (already sorted)
-        pub fn extract_all_sorted(&self) -> ArraySeqStPerS<T> {
-            self.elements.clone()
-        }
+        pub fn extract_all_sorted(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
 
         /// Get the maximum element (last in sorted list)
         pub fn find_max(&self) -> Option<&T> {
@@ -272,9 +256,7 @@ pub mod SortedListPQ {
     }
 
     impl<T: StT + Ord> Default for SortedListPQ<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StT + Ord> Display for SortedListPQ<T> {
@@ -355,28 +337,18 @@ pub mod SortedListPQ {
 
     impl SortedListPQOps {
         /// Create empty priority queue
-        pub fn empty<T: StT + Ord>() -> SortedListPQ<T> {
-            SortedListPQ::empty()
-        }
+        pub fn empty<T: StT + Ord>() -> SortedListPQ<T> { SortedListPQ::empty() }
 
         /// Insert element into priority queue
-        pub fn insert<T: StT + Ord>(pq: &SortedListPQ<T>, element: T) -> SortedListPQ<T> {
-            pq.insert(element)
-        }
+        pub fn insert<T: StT + Ord>(pq: &SortedListPQ<T>, element: T) -> SortedListPQ<T> { pq.insert(element) }
 
         /// Delete minimum element from priority queue
-        pub fn delete_min<T: StT + Ord>(pq: &SortedListPQ<T>) -> (SortedListPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
+        pub fn delete_min<T: StT + Ord>(pq: &SortedListPQ<T>) -> (SortedListPQ<T>, Option<T>) { pq.delete_min() }
 
         /// Meld two priority queues
-        pub fn meld<T: StT + Ord>(pq1: &SortedListPQ<T>, pq2: &SortedListPQ<T>) -> SortedListPQ<T> {
-            pq1.meld(pq2)
-        }
+        pub fn meld<T: StT + Ord>(pq1: &SortedListPQ<T>, pq2: &SortedListPQ<T>) -> SortedListPQ<T> { pq1.meld(pq2) }
 
         /// Create priority queue from sequence
-        pub fn from_seq<T: StT + Ord>(seq: &ArraySeqStPerS<T>) -> SortedListPQ<T> {
-            SortedListPQ::from_seq(seq)
-        }
+        pub fn from_seq<T: StT + Ord>(seq: &ArraySeqStPerS<T>) -> SortedListPQ<T> { SortedListPQ::from_seq(seq) }
     }
 }

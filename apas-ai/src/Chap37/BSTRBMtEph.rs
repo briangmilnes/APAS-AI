@@ -59,25 +59,17 @@ pub mod BSTRBMtEph {
     }
 
     impl<T: StTInMtT + Ord> Default for BSTRBMtEph<T> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     impl<T: StTInMtT + Ord> BSTRBMtEph<T> {
         // Private helper methods only - no public delegation
 
-        fn is_red(link: &Link<T>) -> bool {
-            matches!(link, Some(node) if node.color == Color::Red)
-        }
+        fn is_red(link: &Link<T>) -> bool { matches!(link, Some(node) if node.color == Color::Red) }
 
-        fn size_link(link: &Link<T>) -> N {
-            link.as_ref().map_or(0, |n| n.size)
-        }
+        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
-        fn update(node: &mut Node<T>) {
-            node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right);
-        }
+        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right); }
 
         fn rotate_left(link: &mut Link<T>) {
             if let Some(mut h) = link.take() {
@@ -262,18 +254,14 @@ pub mod BSTRBMtEph {
             Self::find_link(&*guard, target).cloned()
         }
 
-        fn contains(&self, target: &T) -> B {
-            self.find(target).is_some()
-        }
+        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             Self::size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B {
-            if self.size() == 0 { true } else { false }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         fn height(&self) -> N {
             fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {

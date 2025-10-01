@@ -7,9 +7,7 @@ use apas_ai::Types::Types::*;
 use criterion::{BatchSize, Criterion, criterion_group, criterion_main};
 use std::time::Duration;
 
-fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> {
-    ClosurePriority::new(|v: &N| *v)
-}
+fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> { ClosurePriority::new(|v: &N| *v) }
 
 fn build_complete_graph(n: N) -> impl Fn(&N) -> AVLTreeSetStPer<N> {
     move |v: &N| {

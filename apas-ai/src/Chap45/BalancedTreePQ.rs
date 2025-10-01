@@ -169,41 +169,27 @@ pub mod BalancedTreePQ {
         }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn size(&self) -> N {
-            self.elements.length()
-        }
+        fn size(&self) -> N { self.elements.length() }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn is_empty(&self) -> bool {
-            self.elements.length() == 0
-        }
+        fn is_empty(&self) -> bool { self.elements.length() == 0 }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn to_seq(&self) -> AVLTreeSeqStPerS<T> {
-            self.elements.clone()
-        }
+        fn to_seq(&self) -> AVLTreeSeqStPerS<T> { self.elements.clone() }
     }
 
     impl<T: StT + Ord> BalancedTreePQ<T> {
         /// Create an empty priority queue
-        pub fn new() -> Self {
-            Self::empty()
-        }
+        pub fn new() -> Self { Self::empty() }
 
         /// Get the number of elements
-        pub fn len(&self) -> N {
-            self.size()
-        }
+        pub fn len(&self) -> N { self.size() }
 
         /// Check if the priority queue is empty
-        pub fn is_empty(&self) -> bool {
-            BalancedTreePQTrait::is_empty(self)
-        }
+        pub fn is_empty(&self) -> bool { BalancedTreePQTrait::is_empty(self) }
 
         /// Peek at the minimum element without removing it
-        pub fn peek(&self) -> Option<&T> {
-            self.find_min()
-        }
+        pub fn peek(&self) -> Option<&T> { self.find_min() }
 
         /// Get the maximum element (rightmost in balanced tree)
         pub fn find_max(&self) -> Option<&T> {
@@ -245,9 +231,7 @@ pub mod BalancedTreePQ {
         }
 
         /// Extract all elements in sorted order (already sorted)
-        pub fn extract_all_sorted(&self) -> AVLTreeSeqStPerS<T> {
-            self.elements.clone()
-        }
+        pub fn extract_all_sorted(&self) -> AVLTreeSeqStPerS<T> { self.elements.clone() }
 
         /// Check if element exists in the priority queue
         pub fn contains(&self, element: &T) -> bool {
@@ -303,9 +287,7 @@ pub mod BalancedTreePQ {
     }
 
     impl<T: StT + Ord> Default for BalancedTreePQ<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StT + Ord> Display for BalancedTreePQ<T> {
@@ -397,19 +379,13 @@ pub mod BalancedTreePQ {
 
     impl BalancedTreePQOps {
         /// Create empty priority queue
-        pub fn empty<T: StT + Ord>() -> BalancedTreePQ<T> {
-            BalancedTreePQ::empty()
-        }
+        pub fn empty<T: StT + Ord>() -> BalancedTreePQ<T> { BalancedTreePQ::empty() }
 
         /// Insert element into priority queue
-        pub fn insert<T: StT + Ord>(pq: &BalancedTreePQ<T>, element: T) -> BalancedTreePQ<T> {
-            pq.insert(element)
-        }
+        pub fn insert<T: StT + Ord>(pq: &BalancedTreePQ<T>, element: T) -> BalancedTreePQ<T> { pq.insert(element) }
 
         /// Delete minimum element from priority queue
-        pub fn delete_min<T: StT + Ord>(pq: &BalancedTreePQ<T>) -> (BalancedTreePQ<T>, Option<T>) {
-            pq.delete_min()
-        }
+        pub fn delete_min<T: StT + Ord>(pq: &BalancedTreePQ<T>) -> (BalancedTreePQ<T>, Option<T>) { pq.delete_min() }
 
         /// Meld two priority queues
         pub fn meld<T: StT + Ord>(pq1: &BalancedTreePQ<T>, pq2: &BalancedTreePQ<T>) -> BalancedTreePQ<T> {
@@ -417,9 +393,7 @@ pub mod BalancedTreePQ {
         }
 
         /// Create priority queue from sequence
-        pub fn from_seq<T: StT + Ord>(seq: &AVLTreeSeqStPerS<T>) -> BalancedTreePQ<T> {
-            BalancedTreePQ::from_seq(seq)
-        }
+        pub fn from_seq<T: StT + Ord>(seq: &AVLTreeSeqStPerS<T>) -> BalancedTreePQ<T> { BalancedTreePQ::from_seq(seq) }
     }
 
     /// Advanced operations for balanced tree priority queue
@@ -447,9 +421,7 @@ pub mod BalancedTreePQ {
         }
 
         /// Join two priority queues where all elements in left <= all elements in right
-        pub fn join(left: &Self, right: &Self) -> Self {
-            left.meld(right)
-        }
+        pub fn join(left: &Self, right: &Self) -> Self { left.meld(right) }
 
         /// Filter elements based on a predicate
         pub fn filter<F>(&self, predicate: F) -> Self

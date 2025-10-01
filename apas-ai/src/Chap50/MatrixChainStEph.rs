@@ -143,13 +143,9 @@ pub mod MatrixChainStEph {
             self.matrix_chain_rec(0, n - 1)
         }
 
-        fn dimensions(&self) -> &Vec<MatrixDim> {
-            &self.dimensions
-        }
+        fn dimensions(&self) -> &Vec<MatrixDim> { &self.dimensions }
 
-        fn dimensions_mut(&mut self) -> &mut Vec<MatrixDim> {
-            &mut self.dimensions
-        }
+        fn dimensions_mut(&mut self) -> &mut Vec<MatrixDim> { &mut self.dimensions }
 
         fn set_dimension(&mut self, index: usize, dim: MatrixDim) {
             if index < self.dimensions.len() {
@@ -168,17 +164,11 @@ pub mod MatrixChainStEph {
             self.memo.clear();
         }
 
-        fn num_matrices(&self) -> usize {
-            self.dimensions.len()
-        }
+        fn num_matrices(&self) -> usize { self.dimensions.len() }
 
-        fn clear_memo(&mut self) {
-            self.memo.clear();
-        }
+        fn clear_memo(&mut self) { self.memo.clear(); }
 
-        fn memo_size(&self) -> usize {
-            self.memo.len()
-        }
+        fn memo_size(&self) -> usize { self.memo.len() }
     }
 
     impl Display for MatrixChainStEphS {
@@ -196,33 +186,25 @@ pub mod MatrixChainStEph {
         type Item = MatrixDim;
         type IntoIter = std::vec::IntoIter<MatrixDim>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.dimensions.into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.dimensions.into_iter() }
     }
 
     impl<'a> IntoIterator for &'a MatrixChainStEphS {
         type Item = MatrixDim;
         type IntoIter = std::iter::Cloned<std::slice::Iter<'a, MatrixDim>>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.dimensions.iter().cloned()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.dimensions.iter().cloned() }
     }
 
     impl<'a> IntoIterator for &'a mut MatrixChainStEphS {
         type Item = MatrixDim;
         type IntoIter = std::iter::Cloned<std::slice::Iter<'a, MatrixDim>>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.dimensions.iter().cloned()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.dimensions.iter().cloned() }
     }
 
     impl Display for MatrixDim {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "{}×{}", self.rows, self.cols)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "{}×{}", self.rows, self.cols) }
     }
 
     #[allow(dead_code)]

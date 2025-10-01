@@ -53,24 +53,16 @@ pub mod Example44_1 {
         }
 
         /// Example query: searching for 'fun' should return {"jack", "mary", "peter"}
-        pub fn search_fun(&self) -> DocumentSet {
-            (self.fw)(&"fun".to_string())
-        }
+        pub fn search_fun(&self) -> DocumentSet { (self.fw)(&"fun".to_string()) }
 
         /// Example query: searching for 'club' should return {"mary"}
-        pub fn search_club(&self) -> DocumentSet {
-            (self.fw)(&"club".to_string())
-        }
+        pub fn search_club(&self) -> DocumentSet { (self.fw)(&"club".to_string()) }
 
         /// Example query: searching for 'food' should return {"nick", "peter"}
-        pub fn search_food(&self) -> DocumentSet {
-            (self.fw)(&"food".to_string())
-        }
+        pub fn search_food(&self) -> DocumentSet { (self.fw)(&"food".to_string()) }
 
         /// Example query: searching for 'chess' should return {"jack"}
-        pub fn search_chess(&self) -> DocumentSet {
-            (self.fw)(&"chess".to_string())
-        }
+        pub fn search_chess(&self) -> DocumentSet { (self.fw)(&"chess".to_string()) }
 
         /// Complex query from textbook:
         /// toSeq (queryAnd ((fw 'fun'), queryOr ((fw 'food'), (fw 'chess'))))
@@ -116,14 +108,10 @@ pub mod Example44_1 {
         }
 
         /// Get all unique words in the tweet collection
-        pub fn get_all_words(&self) -> ArraySeqStPerS<Word> {
-            self.index.get_all_words()
-        }
+        pub fn get_all_words(&self) -> ArraySeqStPerS<Word> { self.index.get_all_words() }
 
         /// Get word count statistics
-        pub fn get_word_count(&self) -> N {
-            self.index.word_count()
-        }
+        pub fn get_word_count(&self) -> N { self.index.word_count() }
 
         /// Demonstrate query builder pattern
         pub fn query_builder_example(&self) -> DocumentSet {

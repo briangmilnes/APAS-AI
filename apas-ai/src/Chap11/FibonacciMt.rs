@@ -34,8 +34,6 @@ pub mod FibonacciMt {
     }
 
     impl FibonacciMtTrait for FibonacciMt {
-        fn fib(n: N) -> N {
-            FibonacciMt::fib(n)
-        }
+        fn fib(n: N) -> N { FibonacciMt::fib(n) }
     }
 }

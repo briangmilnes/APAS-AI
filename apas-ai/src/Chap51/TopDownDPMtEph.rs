@@ -186,23 +186,17 @@ pub mod TopDownDPMtEph {
         /// Get the length of sequence S
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn s_length(&self) -> usize {
-            self.seq_s.length()
-        }
+        pub fn s_length(&self) -> usize { self.seq_s.length() }
 
         /// Get the length of sequence T
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn t_length(&self) -> usize {
-            self.seq_t.length()
-        }
+        pub fn t_length(&self) -> usize { self.seq_t.length() }
 
         /// Check if sequences are empty
         /// Claude Work: O(1) - constant time check
         /// Claude Span: O(1) - constant time check
-        pub fn is_empty(&self) -> bool {
-            self.seq_s.length() == 0usize && self.seq_t.length() == 0usize
-        }
+        pub fn is_empty(&self) -> bool { self.seq_s.length() == 0usize && self.seq_t.length() == 0usize }
 
         /// Clear memoization table
         /// Claude Work: O(1) - constant time clear

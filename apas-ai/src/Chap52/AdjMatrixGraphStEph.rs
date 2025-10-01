@@ -41,9 +41,7 @@ pub mod AdjMatrixGraphStEph {
             AdjMatrixGraphStEph { matrix, n }
         }
 
-        fn num_vertices(&self) -> N {
-            self.n
-        }
+        fn num_vertices(&self) -> N { self.n }
 
         fn num_edges(&self) -> N {
             let mut count = 0;
