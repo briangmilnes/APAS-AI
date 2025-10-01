@@ -1,5 +1,5 @@
 Chap 61
- Which modules should we implement for Chap27?
+ Which modules should we implement for Chap61.
  Which lower number modules can you use?
  How many modules are going to have parallelism and in which functions/methods?
  Which algorithms, problems and exercises?

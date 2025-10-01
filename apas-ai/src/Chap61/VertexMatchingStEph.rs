@@ -1,0 +1,115 @@
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Chapter 61: Vertex Matching - Sequential Ephemeral Implementation
+//!
+//! Implements:
+//! - Algorithm 61.3: Greedy Vertex Matching (sequential)
+//! - Baseline sequential version of parallel matching algorithm
+
+pub mod VertexMatchingStEph {
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+    use std::hash::Hash;
+
+    /// Algorithm 61.3: Greedy Vertex Matching
+    ///
+    /// Iterates over edges sequentially, adding each edge to the matching
+    /// if neither endpoint is already matched.
+    ///
+    /// APAS: Work Θ(|E|), Span Θ(|E|)
+    /// Claude: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - inherently sequential
+    ///
+    /// Arguments:
+    /// - graph: The undirected graph
+    ///
+    /// Returns:
+    /// - A set of edges forming a vertex matching (no two edges share an endpoint)
+    pub fn greedy_matching<V: StT + Hash>(graph: &UnDirGraphStEph<V>) -> Set<Edge<V>> {
+        let mut matching: Set<Edge<V>> = SetLit![];
+        let mut matched_vertices: Set<V> = SetLit![];
+
+        // Iterate over all edges
+        for edge in graph.edges().iter() {
+            let Edge(u, v) = edge;
+            
+            // Add edge if neither endpoint is already matched
+            if !matched_vertices.mem(u) && !matched_vertices.mem(v) {
+                let _ = matching.insert(edge.clone());
+                let _ = matched_vertices.insert(u.clone());
+                let _ = matched_vertices.insert(v.clone());
+            }
+        }
+
+        matching
+    }
+
+    /// Baseline Sequential Version of Parallel Matching
+    ///
+    /// Simulates the parallel matching algorithm (Algorithm 61.4) sequentially
+    /// by flipping a coin for each edge and selecting edges where:
+    /// - The coin is heads (probability 1/2)
+    /// - All adjacent edges are tails
+    ///
+    /// APAS: Work Θ(|E| × avg_degree), Span Θ(|E| × avg_degree)
+    /// Claude: Work Θ(|E| × avg_degree), Span Θ(|E| × avg_degree), Parallelism Θ(1) - sequential baseline
+    ///
+    /// Arguments:
+    /// - graph: The undirected graph
+    /// - seed: Random seed for reproducibility
+    ///
+    /// Returns:
+    /// - A set of edges forming a vertex matching
+    pub fn parallel_matching_st<V: StT + Hash>(
+        graph: &UnDirGraphStEph<V>,
+        seed: u64,
+    ) -> Set<Edge<V>> {
+        use rand::rngs::StdRng;
+        use rand::{Rng, SeedableRng};
+
+        let mut rng = StdRng::seed_from_u64(seed);
+        let mut matching: Set<Edge<V>> = SetLit![];
+
+        // Create a map from edges to their coin flips (heads = true, tails = false)
+        let mut edge_coins: std::collections::HashMap<Edge<V>, bool> =
+            std::collections::HashMap::new();
+        
+        for edge in graph.edges().iter() {
+            edge_coins.insert(edge.clone(), rng.random::<bool>());
+        }
+
+        // Select edges where coin is heads and all adjacent edges are tails
+        for edge in graph.edges().iter() {
+            let Edge(u, v) = edge;
+            
+            // Check if this edge flipped heads
+            if !edge_coins.get(edge).copied().unwrap_or(false) {
+                continue;
+            }
+
+            // Check if all edges incident on u and v flipped tails (except this one)
+            let mut all_adjacent_tails = true;
+            
+            for adj_edge in graph.edges().iter() {
+                if adj_edge == edge {
+                    continue; // Skip the current edge
+                }
+                
+                // Check if adjacent edge is incident on u or v
+                if graph.Incident(adj_edge, u) || graph.Incident(adj_edge, v) {
+                    if edge_coins.get(adj_edge).copied().unwrap_or(false) {
+                        all_adjacent_tails = false;
+                        break;
+                    }
+                }
+            }
+
+            if all_adjacent_tails {
+                let _ = matching.insert(edge.clone());
+            }
+        }
+
+        matching
+    }
+}
+

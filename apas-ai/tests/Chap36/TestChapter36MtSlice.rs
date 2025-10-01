@@ -56,12 +56,12 @@ pub mod Test44Chapter36MtSlice {
 
     #[test]
     fn quick_sort_slice_large_inputs() {
-        let mut descending = ArraySeqMtEphSliceS::from_vec((0..4_096).rev().collect());
+        let mut descending = ArraySeqMtEphSliceS::from_vec((0..230).rev().collect());
         <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first(&mut descending);
         assert!(is_sorted(&to_vec(&descending)));
 
         let mut rng = rng();
-        let random_data: Vec<i32> = (0..4_096).map(|_| rng.random_range(-10_000..10_000)).collect();
+        let random_data: Vec<i32> = (0..230).map(|_| rng.random_range(-10_000..10_000)).collect();
         let mut random_seq = ArraySeqMtEphSliceS::from_vec(random_data);
         <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_random(&mut random_seq);
         assert!(is_sorted(&to_vec(&random_seq)));

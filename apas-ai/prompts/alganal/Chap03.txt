@@ -1,0 +1,21 @@
+Chap03
+
+
+Example 2.9. The parallel mergeSort function described in is work efficient since it does
+O(n log n) work, which optimal time for comparison based sorting
+
+Cost Specification 3.5 (Priority Queue: Basic). The work and span of a priority queue
+operations are as follows.
+• empty: O(1), O(1).
+• insert: O(log n), O(log n).
+• removeMin: O(log n), O(log n).
+
+
+Example 3.2 (Cost of Insertion Sort). Considering insertion sort example, suppose that we
+are given a cost specification for insert: for a sequence of length n the cost of insert
+should be O(n) work and O(log n) span. We can then determine the overall asymptotic
+cost of sort using our composition rules described in Section (Work, Span, and Parallel
+4. IMPLEMENTATION 11
+Time) . Since the code uses insert sequentially and since there are n inserts, the algorithm
+insSort has n × O(n) = O(n2) work and n × O(log n) = O(n log n) span
+

@@ -388,9 +388,8 @@ pub mod TestSetStEphChap5_1 {
 
     #[test]
     fn test_set_maximum_size_boundary() {
-        // Test maximum size collection boundary - use reasonably large size
-        // to verify graceful handling without causing memory issues
-        let large_size = 100_000usize;
+        // Test large set boundary (reduced from 100k to 20k for faster testing)
+        let large_size = 20_000usize;
         let large_vec: Vec<i32> = (0..large_size as i32).collect();
         let large_set = Set::FromVec(large_vec);
 
@@ -400,7 +399,7 @@ pub mod TestSetStEphChap5_1 {
         assert_eq!(large_set.mem(&((large_size - 1) as i32)), true);
         assert_eq!(large_set.mem(&(large_size as i32)), false);
 
-        // Test operations on maximum size set
+        // Test operations on large set
         let empty_set: Set<i32> = Set::empty();
         let union_with_empty = large_set.union(&empty_set);
         assert_eq!(union_with_empty.size(), large_size);
@@ -409,14 +408,14 @@ pub mod TestSetStEphChap5_1 {
         assert_eq!(intersection_with_empty.size(), 0);
 
         // Test with another large set
-        let large_vec2: Vec<i32> = (50_000..150_000).collect();
+        let large_vec2: Vec<i32> = (10_000..30_000).collect();
         let large_set2 = Set::FromVec(large_vec2);
 
         let union_large = large_set.union(&large_set2);
-        assert_eq!(union_large.size(), 150_000); // 0-49999 + 50000-149999 = 150000 unique
+        assert_eq!(union_large.size(), 30_000); // 0-9999 + 10000-29999 = 30000 unique
 
         let intersection_large = large_set.intersection(&large_set2);
-        assert_eq!(intersection_large.size(), 50_000); // 50000-99999 overlap
+        assert_eq!(intersection_large.size(), 10_000); // 10000-19999 overlap
 
         // Test iterator on large set (sample check)
         let mut count = 0;

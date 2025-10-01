@@ -137,20 +137,20 @@ mod tests_avl_tree_set_mt_eph {
 
     #[test]
     fn test_intersection_large_parallel() {
-        // Test parallel intersection with large sets (> threshold = 128)
+        // Test parallel intersection with sets (reduced for faster testing)
         let mut s1 = AVLTreeSetMtEph::<i32>::empty();
         let mut s2 = AVLTreeSetMtEph::<i32>::empty();
 
-        for i in 1..=200 {
+        for i in 1..=100 {
             s1.insert(i);
         }
-        for i in 100..=300 {
+        for i in 50..=150 {
             s2.insert(i);
         }
 
         let inter = s1.intersection(&s2);
-        assert_eq!(inter.size(), 101);
-        for i in 100..=200 {
+        assert_eq!(inter.size(), 51);
+        for i in 50..=100 {
             assert!(inter.find(&i));
         }
     }

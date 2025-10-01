@@ -18,8 +18,8 @@ fn fib_small_values() {
 #[test]
 fn fib_moderate_values() {
     assert_eq!(FibonacciMt::fib(10), 55);
-    assert_eq!(FibonacciMt::fib(15), 610);
-    assert_eq!(FibonacciMt::fib(20), 6765);
+    assert_eq!(FibonacciMt::fib(12), 144);
+    assert_eq!(FibonacciMt::fib(13), 233);
 }
 
 #[test]

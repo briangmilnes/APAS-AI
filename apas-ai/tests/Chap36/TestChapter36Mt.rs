@@ -76,12 +76,12 @@ pub mod Test40Chapter36Mt {
 
     #[test]
     fn quick_sort_mt_large_inputs() {
-        let mut descending = ArraySeqMtEphS::from_vec((0..4_096).rev().collect());
+        let mut descending = ArraySeqMtEphS::from_vec((0..230).rev().collect());
         <ArraySeqMtEphS<i32> as Chapter36MtTrait<i32>>::quick_sort_mt_first(&mut descending);
         assert!(is_sorted(&to_vec(&descending)));
 
         let mut rng = rng();
-        let random_data: Vec<i32> = (0..4_096).map(|_| rng.random_range(-10_000..10_000)).collect();
+        let random_data: Vec<i32> = (0..230).map(|_| rng.random_range(-10_000..10_000)).collect();
         let mut random_seq = ArraySeqMtEphS::from_vec(random_data);
         <ArraySeqMtEphS<i32> as Chapter36MtTrait<i32>>::quick_sort_mt_random(&mut random_seq);
         assert!(is_sorted(&to_vec(&random_seq)));

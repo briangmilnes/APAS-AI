@@ -1,0 +1,139 @@
+Chap04
+
+Algorithm 4.11 (Finding Overlap). Consider two strings s and t in that order. To find the
+overlap between s and t as defined before , we can use the brute force-technique: consider
+each suffix of s and check if it is a prefix of t and select the longest such match.
+The work of this algorithm is O(|s|·|t|), i.e., proportional to the product of the lengths of the
+strings since for each suffix of s we compare one to one to each character of the prefix ot t.
+The comparisons across all suffixes and all characters within a suffix can be done in parallel
+in constant span. We however need to check that all characters match within a suffix, and
+then find the longest suffix for which this is true. These can both be done with what is called
+a reduce operation, which “sums” across a sequence of elements using a binary associative
+operator (in our case logical-and, and maximum). If implemented using a tree sum, a
+reduce has span that is logarithmic in the input length. Reduce will be covered extensively
+in later chapters. The total span is thus O(lg |s| + lg |t|) ⊆ O(lg (|s| + |t|) + lg (|s| + |t|)) =
+O(lg (|s| + |t|))
+
+Algorithm 4.13 (Finding the Shortest Permutation (Improved)). We can improve our algo-
+rithm for finding the shortest permutation by using a technique known as staging. Notice
+20 CHAPTER 4. GENOME SEQUENCING (AN EXAMPLE)
+that our algorithm repeatedly computes the overlap between the same snippets, because
+the permutations all belong to the same set of snippets. Since we only remove the overlap
+between successive snippets in a permutation, there are only O(n2) pairs to consider. We
+can thus stage work of the algorithm more carefully:
+• First, compute the overlaps between each pair of snippets and store them in a dictio-
+nary for quick lookup.
+• Second, try all permutations and compute the shortest superstring by removing over-
+laps as defined by the dictionary.
+Note. Staging technique is inherently sequential: it creates a sequential dependency be-
+tween the different stages of work that must be done. If, however, the number of stages is
+small (in our example, we have two), then this is harmless.
+Cost Analysis. Let’s analyze the work and the span of our staged algorithm. For the
+analysis, let W1 and S1 be the work and span for the first phase of the algorithm, i.e., for
+calculating all pairs of overlaps in our set of input snippets s = {s1, . . . , sn}. Let m =∑
+x∈S |x|. Using our algorithm, overlap(x, y) for finding the maximum overlap between
+two strings x and y, we have
+W1 ≤ ∑n
+i=1
+∑n
+j=1 W (overlap(si, sj )))
+= ∑n
+i=1
+∑n
+j=1 O(|si||sj |)
+≤ ∑n
+i=1
+∑n
+j=1(c1 + c2|si||sj |)
+= c1n2 + c2
+∑n
+i=1
+∑n
+j=1(|si||sj |)
+= c1n2 + c2
+∑n
+i=1
+(
+|si| ∑n
+j=1 |sj |)
+
+
+= c1n2 + c2
+∑n
+i=1(|si|m)
+= c1n2 + c2m ∑n
+i=1 |si|
+= c1n2 + c2m2
+∈ O(m2) since m ≥ n.
+Since all pairs can be considered in parallel, we have for span
+S1 ≤ maxn
+i=1 maxn
+j=1 S(overlap(si, sj )))
+S1 ≤ maxn
+i=1 maxn
+j=1 O(lg (|si| + |sj |))
+∈ O(lg m).
+We therefore conclude that the first stage of the algorithm requires O(m2) work and O(lg m)
+span.
+Moving onto the second stage, we want to compute the shortest superstring for each per-
+mutation. Given a permutation, we know that all we have to do is remove the overlaps.
+Since there are n overlaps to be considered and summed, this requires O(n) work, assum-
+ing that we can lookup the overlaps in constant time. Since we can lookup the overlaps in
+parallel, the span is constant for finding the overlaps and O(lg n) for summing them, again
+
+using a reduce. Therefore the cost for handling each permutation is O(n) work and O(lg n)
+span.
+Unfortunately, there are n! permutations to consider. In fact this is another form of brute-
+force in which we try all possible permutations instead of all possible superstrings. Even
+though we have designed reasonably efficient algorithms for computing the overlaps and
+the shortest superstring for each permutation, there are too many permutations for this
+algorithm to be efficient. For n = 10 strings the algorithm is probably feasible, which
+is better than our previous brute-force algorithm, which did not even work for n = 2.
+However for n = 100, we’ll need to consider 100! ≈ 10158 permutations, which is still more
+than the number of atoms in the universe. Thus, the algorithm is still not feasible if the
+number of snippets is more than a couple dozen.
+Remark. The technique of staging used above is a key technique in algorithm design and
+engineering. The basic idea is to identify a computation that is repeated many times and
+pre-compute it, storing it in a data structure for fast retrieval. Later instances of that com-
+putation can then be recalled via lookup instead of re-computing every time it is needed.
+
+
+Cost Analysis for greedy approximate SS.
+
+From the analysis of our brute-force algorithm, we know that we can
+find the overlaps between the strings in O(m2) work and O(lg m) span. Thus T can be
+computed in O(m2) work and O(lg m) span. Finding the maximum with argmax can be
+computed by a simple reduce operation. Because m > n, the cost of computing T domi-
+nates. Therefore, excluding the recursive call, each call to greedyApproxSS costs is O(m2)
+work and O(lg m) span.
+Observe now that each call to greedyApproxSS reduces the number of snippets: S′ contains
+one fewer element than S, so there are at most n calls to greedyApproxSS . These calls are
+sequential because one call must complete before the next call can take place. Hence, the
+total cost for the algorithm is O(nm2) work and O(n lg m) span. The algorithm therefore
+has parallelism (work over span) of O(nm2/(n lg m)) = O(m2/ lg m) and is therefore highly
+parallel. There are ways to make the algorithm more efficient, but leave that as an exercise
+to the reader.
+Approximation Quality. Since the greedyApproxSS algorithm does only polynomial work,
+and since the TSP problem is NP hard, we cannot expect it to give an exact answer on all
+inputs—that would imply P = NP, which is unlikely. Although greedyApproxSS does not
+return the shortest superstring, it returns a good approximation of the shortest superstring.
+In particular, it is known that it returns a string that is within a factor of 3.5 of the shortest;
+it is conjectured that the algorithm returns a string that is within a factor of 2. In practice,
+the greedy algorithm typically performs better than the bounds suggest. The algorithm
+also generalizes to other similar problems. Algorithms such as greedyApproxSS that solve
+an NP-hard problem to within a constant factor of optimal, are called constant-factor
+approximation algorithms.
+
+Cost Analysis. From the analysis of our brute-force algorithm, we know that we can
+find the overlaps between the strings in O(m2) work and O(lg m) span. Thus T can be
+computed in O(m2) work and O(lg m) span. Finding the maximum with argmax can be
+computed by a simple reduce operation. Because m > n, the cost of computing T domi-
+nates. Therefore, excluding the recursive call, each call to greedyApproxSS costs is O(m2)
+work and O(lg m) span.
+Observe now that each call to greedyApproxSS reduces the number of snippets: S′ contains
+one fewer element than S, so there are at most n calls to greedyApproxSS . These calls are
+sequential because one call must complete before the next call can take place. Hence, the
+total cost for the algorithm is O(nm2) work and O(n lg m) span. The algorithm therefore
+has parallelism (work over span) of O(nm2/(n lg m)) = O(m2/ lg m) and is therefore highly
+parallel. There are ways to make the algorithm more efficient, but leave that as an exercise
+to the reader.

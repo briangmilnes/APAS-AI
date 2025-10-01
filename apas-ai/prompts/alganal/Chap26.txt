@@ -1,0 +1,92 @@
+Chap26
+ 
+
+Analysis of Divide-and-Conquer Algorithms. Consider an algorithm that divides a prob-
+lem instance of size n into k > 1 independent subinstances of sizes n1, n2, . . . nk, recursively
+solves the instances, and combine the solutions to construct the solution to the original in-
+stance.
+We can write the work of such an algorithm using the recurrence then
+W (n) = Wdivide(n) +
+k∑
+i=1
+W (ni) + Wcombine(n) + 1.
+The work recurrence simply adds up the work across all phases of the algorithm (divide,
+recur, and combine).
+To analyze the span, note that after the instance is divided into subinstance, the subin-
+stances can be solved in parallel (because they are independent), and the results can be
+combined. The span can thus be written as the recurrence:
+S(n) = Sdivide(n) + k
+max
+i=1 S(ni) + Scombine(n) + 1.
+Note. The work and span recurrences for a divide-and-conquer algorithm usually follow
+the recursive structure of the algorithm, but is a function of size of the arguments instead
+of the actual values.
+Example 26.2 (Maximal Element). We can find the maximal element in a sequence using
+divide and conquer as follows. If the sequence has only one element, we return that el-
+ement, otherwise, we divide the sequence into two equal halves and recursively and in
+parallel compute the maximal element in each half. We then return the maximal of the
+results from the two recursive calls. For a sequence of length n, we can write the work and
+span for this algorithm as recurrences as follows:
+W (n) =
+{ Θ(1) if n ≤ 1
+2W (n/2) + Θ(1) otherwise
+S(n) =
+{ Θ(1) if n ≤ 1
+S(n/2) + Θ(1) otherwise.
+This recurrences yield
+W (n) = Θ(n) and
+S(n) = Θ(lg n).
+Algorithm 26.2 (Reduce with Divide and Conquer). The reduce primitive performs a com-
+putation that involves applying an associative binary operation op to the elements of a se-
+quence to obtain (reduce the sequence to) a final value. For example, reducing the sequence
+〈 0, 1, 2, 3, 4 〉 with the + operation gives us 0 + 1 + 2 + 3 + 4 = 10. If the operation requires
+constant work (and thus span), then the work and span of a reduction is Θ(n) and Θ(lg n)
+respectively.
+
+
+Correctness and Cost of MergeSort.
+
+To prove correctness we first note that the base case is correct.
+Then by induction we note that l′ and r′ are sorted versions of l and r. Because l and r
+together contain exactly the same elements as a, we conclude that merge (l′, r′) returns a
+sorted version of a.
+For the work and span analysis, we assume that merging can be done in Θ(n) work and
+Θ(lg n) span, where n is the sum of the lengths of the two sequences. We can thus write the
+work and span for this sorting algorithm as
+W (n) =
+{ Θ(1) if n ≤ 1
+2W (n/2) + Θ(n) otherwise
+S(n) =
+{ Θ(1) if n ≤ 1
+S(n/2) + Θ(lg n) otherwise.
+The recurrences solve to
+W (n) = Θ(n lg n)
+S(n) = Θ(lg2 n).
+Remark (Quick Sort). Another divide-and-conquer algorithm for sorting is the quick-sort
+algorithm. Like merge sort, quick sort requires Θ(n log n) work, which is optimal for
+the comparison sorting problem, but only “in expectation” over random decisions that
+it makes during its execution. While merge sort has a trivial divide step and interesting
+combine step, quick sort has an interesting divide step but trivial combine step. We will
+study quick sort in greater detail
+
+
+Cost Analysis of Scan with Divide and Conquer.
+
+ We consider the work and span for the algorithm. Note that the combine
+step requires a map to add b′ to each element of c, and then an append. Both these take
+O(n) work and O(1) span, where n = |a|. This leads to the following recurrences for the
+whole algorithm:
+W (n) = 2W (n/2) + O(n) ∈ O(n log n)
+S(n) = S(n/2) + O(1) ∈ O(log n).
+Although this is much better than O(n2) work, we can do better by using another design
+technique called contraction
+
+Cost Analysis or eTSP.
+ Let’s analyze the cost of this algorithm in terms of work and span. We
+have
+W (n) = 2W (n/2) + O(n2)
+S(n) = S(n/2) + O(log n)
+We have already seen the recurrence S(n) = S(n/2) + O(log n), which solves to O(log2 n).
+Here we’ll focus on solving the work recurrence.
+To solve the recurrence, we apply a theorem proven earlier , and obtain
+W (n) = O(n2).

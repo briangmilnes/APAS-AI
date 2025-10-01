@@ -39,6 +39,10 @@ pub mod ArraySeqStEph {
         fn isEmpty(a: &ArraySeqStEphS<T>) -> bool;
         fn isSingleton(a: &ArraySeqStEphS<T>) -> bool;
         fn update(a: &ArraySeqStEphS<T>, index: N, item: T) -> ArraySeqStEphS<T>;
+        /// Inject updates into base sequence. Updates is a vector of (index, value) pairs.
+        /// If multiple updates target the same index, the last update wins.
+        /// APAS: Work Θ(|base| + |updates|), Span Θ(|base| + |updates|)
+        fn inject(base: &ArraySeqStEphS<T>, updates: &[(N, T)]) -> ArraySeqStEphS<T>;
     }
 
     impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {
@@ -207,6 +211,19 @@ pub mod ArraySeqStEph {
                 &|j| if j == index { item.clone() } else { a.nth(j).clone() },
                 a.length(),
             )
+        }
+
+        fn inject(base: &ArraySeqStEphS<T>, updates: &[(N, T)]) -> ArraySeqStEphS<T> {
+            // Used in Algorithm 62.3 (Star Partition)
+            // Create a mutable copy of the base sequence
+            let mut result = base.clone();
+            // Apply each update
+            for (index, value) in updates.iter() {
+                if *index < result.length() {
+                    let _ = result.set(*index, value.clone());
+                }
+            }
+            result
         }
     }
 

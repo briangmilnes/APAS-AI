@@ -1,0 +1,420 @@
+Chap20
+
+Operation Work Span
+length a 1 1
+nth a i 1 1
+singleton x 1 1
+empty 1 1
+isSingleton x 1 1
+isEmpty x 1 1
+tabulate f n 1 +
+n∑
+i=0
+W (f (i)) 1 + n
+max
+i=0 S (f (i))
+map f a 1 + ∑
+x∈a
+W (f (x)) 1 + max
+x∈a S (f (x))
+filter f a 1 + ∑
+x∈a
+W (f (x)) lg|a| + max
+x∈a S (f (x))
+subseq a (i, j) 1 1
+append a b 1 + |a| + |b| 1
+flatten a 1 + |a| + ∑
+x∈a |x| 1 + lg|a|
+update a (i, x) 1 + |a| 1
+inject a b 1 + |a| + |b| lg(degree(b))
+ninject a b 1 + |a| + |b| 1
+collect f a 1 + W (f ) · |a| lg|a| 1 + S (f ) · lg2|a|
+iterate f x a 1 + ∑
+f (y,z)∈T (−)
+W (f (y, z)) 1 + ∑
+f (y,z)∈T (−)
+S (f (y, z))
+reduce f x a 1 + ∑
+f (y,z)∈T (−)
+W (f (y, z)) lg|a| · max
+f (y,z)∈T (−) S (f (y, z))
+scan f x a |a| lg|a
+
+Example 20.3 (Tabulate and map with array costs). As an example of tabulate and map
+W (〈 i2 : 0 ≤ i < n 〉) = O
+(
+1 + ∑n−1
+0=1 O (1)
+)
+= O (n)
+S (〈 i2 : 0 ≤ i < n 〉) = O (1 + maxn−1
+i=0 O (1)) = O (1)
+2. ARRAY SEQUENCES 135
+because the work and span for i2 is O (1).
+Filter. The work for the function filter is equal to the sum of the work of applying f at
+each position, as well as an additional unit cost, for the function call itself.
+Because it is possible to apply the function f in parallel—there are no dependencies among
+the different positions, the span is the maximum of the span of applying f at each posi-
+tion, plus a logarithmic term for performing compaction, i.e., packing the chosen elements
+contiguously into the result array.
+Example 20.4 (Filter). As an example of filter , we have
+W (〈 x : x ∈ a | x < 27 〉) = O
+(
+1 + ∑|a|−1
+i=0 O (1)
+)
+= O (|a|)
+S (〈 x : x ∈ a | x < 27 〉) = O
+(
+lg |a| + max|a|−1
+i=0 O (1)
+)
+= O(lg |a|).
+The operation append requires work proportional to the length of the sequences given as
+input, can be implemented in constant span.
+The operation flatten generalizes append , requiring work proportional to the total length
+of the sequences flattened, and can be implemented in parallel in logarithmic span in the
+number of sequences flattened
+
+Update and Inject. The operations update and inject both require work proportional to
+the length of the sequences they are given as input. It might seem surprising that update
+takes work proportional to the size of the input sequence a, since updating a single element
+should require constant work. The reason is that the interface is purely functional so that
+the input sequence needs to be copied–we are not allowed to update the old copy.
+The function update and non-deterministic inject ninject can be implemented in constant
+span, but deterministic inject required resolving conflicts more carefully and requires O (lg(degree(b)))
+span where the degree of the update sequence b is the maximum number of updates tar-
+geting the same position in the sequence being updated.
+In the last section of this chapter, we describe single-threaded array sequences that allows
+updating under a sequence in constant work, but under certain restrictions.
+Collect. The primary cost in implementing collect is a sorting step that sorts the sequence
+based on the keys. The work and span of collect is therefore determined by the work and
+span of (comparison) sorting with the specified comparison function f .
+
+Cost Specification 20.3 (Cost for iterate). Consider evaluation of iterate f v a and let
+T (iterate f v a) denote the set of calls (trace) to f (·, ·) performed along with the arguments.
+The work and span are as follows.
+W (iterate f x a) = O
+(
+1 + ∑
+f (y,z)∈T (iterate f x a) W (f (y, z))
+)
+S (iterate f x a) = O
+(
+1 + ∑
+f (y,z)∈T (iterate f x a) S (f (y, z))
+)
+Example 20.6 (Sorting by Iteration). As an interesting example, consider the function mergeOne a x
+for merging a sequence a with the singleton sequence 〈 x 〉 by using an assumed compari-
+son function. The function performs O(n) work in O(lg n) span, where n is the total number
+of elements in the output sequence. We can use the mergeOne function to sort a sequence
+via iteration as follows
+iterSort a = iterate mergeOne 〈 〉 a.
+For example, on input a = 〈 2, 1, 0 〉, iterSort first merges 〈 〉 and 〈 2 〉, then merges the result
+〈 2 〉 with 〈 1 〉, then merges the resulting sequence 〈 1, 2 〉 with 〈 0 〉 to obtain the final result
+〈 0, 1, 2 〉.
+The trace for iterSort with an input sequence of length n consists of a set of calls to mergeOne,
+where the first argument is a sequence of sizes varying from 1 to n − 1, while its right ar-
+gument is always a singleton sequence. For example, the final mergeOne merges the first
+(n − 1) elements with the last element, the second to last mergeOne merges the first (n − 2)
+elements with the second to last element, and so on. Therefore, the total work for an input
+sequence a of length n is
+W (iterSort a) ≤
+n−1∑
+i=1
+c · (1 + i) = O(n2).
+Using the trace, we can also analyze the span of iterSort. Since we iterate adding in each
+element after the previous, there is no parallelism between merges, but there is parallelism
+within a mergeOne, whose span is is logarithmic. We can calculate the total span as
+S (iterSort a) ≤
+n−1∑
+i=1
+c · lg (1 + i) = O(n lg n).
+
+Since average parallelism, W (n) /S (n) = O(n/ lg n), we see that the algorithm has a rea-
+sonable amount of parallelism. Unfortunately, it does much too much work.
+
+
+Cost of reduce. Recall that with reduce, we noted that the result of the computation is not
+affected by the order in which the associative function is applied and in fact is the same
+as that of performing the same computation with iterate. The cost of reduce, however,
+depends on the order in which the operations are performed.
+Example 20.7 (Cost of reduce append). Consider appending the following code
+reduce append ’ ’ 〈 ’ abc ’, ’ d ’, ’ e ’, ’ f ’ 〉 .
+Suppose performing append operations in left-to-right order and count their work using
+the array-sequence specification. The total work is 19, because the following append oper-
+ations are performed
+1. append ’ abc ’’ d ’ (work 5),
+2. append ’ abcd ’’ e ’ (work 6), and
+3. append ’ abcde ’’ f ’ (work 7).
+Consider now performing the append operations from right to left order. We obtain a total
+cost of 15, because the following append operations are performed
+1. append ’ e ’ ’ f ’ (work 3),
+2. append ’ d ’ ’ ef ’, (work 4) and
+3. append ’ abc ’ ’ def ’ (work 7).
+Specification of reduce. To specify the cost of reduce, we consider its trace based on its
+specification, as given in Section 10 reproduced below for convenience.
+reduce f id a =
+
+
+
+id if |a| = 0
+a[0] if |a| = 1
+f
+(
+reduce f id (a[0 · · · b |a|
+2 c − 1]),
+reduce f id (a[b |a|
+2 c · · · |a| − 1]
+)
+otherwise.
+
+Cost Specification 20.4 (Cost of reduce). Consider evaluation of reduce f x a and let T (reduce f x a)
+denote the set of calls to f (·, ·) performed along with the arguments. The work and span
+are defined as
+W (reduce f x a) = O
+
+1 + ∑
+f (y,z)∈T (reduce f x a)
+W (f (y, z))
+
+ , and
+S (reduce f x a) = O
+(
+lg |a| · max
+f (y,z)∈T (reduce f x a) S (f (y, z))
+)
+.
+Work and Span of reduce. The work bound is simply the total work performed, which
+we obtain by summing across all combine functions, plus one for the reduce. The span
+bound is more interesting. The lg |a| term expresses the fact that the recursion tree in
+the specification of reduce is at most O(lg |a|) deep. Since each node in the recursion
+tree has span at most maxf (y,z) S (f (y, z)), any root-to-leaf path, has at most O(lg |a| ·
+maxf (a,b) S (f (a, b))) span.
+Cost of scan. As in iterate and reduce the cost specification of scan depends on the in-
+termediate results. But the dependency is more complex than can be represented by our
+ADT specification. For scan, we will stop at giving a cost specification by assuming that
+the function that we are scanning with performs O (1) work and span.
+Cost Specification 20.5 (Cost for scan). Consider the expression scan f x a, where f (·, ·)
+always requires O (1) work and span. The work and span of the expression are defined as
+W (scan f x a) = O(|a|), and
+S (scan f x a) = O(lg |a|).
+
+Cost Specification 20.6 (Tree Sequences). We specify the tree-sequence costs as follows.
+The notation T (−) refer to the trace of the corresponding operation. The specification for
+scan assumes that f has constant work and span.
+Operation Work Span
+length a 1 1
+singleton x 1 1
+isSingleton x 1 1
+isEmpty x 1 1
+nth a i lg|a| lg|a|
+tabulate f n 1 +
+n∑
+i=0
+W (f (i)) 1 + lg n + n
+max
+i=0 S (f (i))
+map f a 1 + ∑
+x∈a
+W (f (x)) 1 + lg|a| + max
+x∈a S (f (x))
+filter f a 1 + ∑
+x∈a
+W (f (x)) 1 + lg|a| + max
+x∈a S (f (x))
+subseq(a, i, j) 1 + lg(|a|) 1 + lg(|a|)
+append a b 1 + | lg(|a|/|b|)| 1 + | lg(|a|/|b|)|
+flatten a 1 + |a| lg (∑
+x∈a |x|) 1 + lg(|a| + ∑
+x∈a |x|)
+inject a b 1 + (|a| + |b|) lg|a| 1 + lg(|a| + |b|)
+ninject a b 1 + (|a| + |b|) lg|a| 1 + lg(|a| + |b|)
+collect f a 1 + W (f ) · |a| lg|a| 1 + S (f ) · lg2|a|
+iterate f x a 1 + ∑
+f (y,z)∈T (−)
+W (f (y, z)) 1 + ∑
+f (y,z)∈T (−)
+S (f (y, z))
+reduce f x a 1 + ∑
+f (y,z)∈T (−)
+W (f (y, z)) lg|a| · max
+f (y,z)∈T (−) S (f (y, z))
+scan f x a |a| lg|a|
+
+Cost Specification 20.7 (List Sequences). We specify the list-sequence costs as follows. The
+notation T (−) refer to the trace of the corresponding operation. The specification for scan
+assumes that f has constant work and span.
+Operation Work Span
+length a 1 1
+singleton x 1 1
+isSingleton x 1 1
+isEmpty x 1 1
+nth a i i i
+tabulate f n 1 +
+n∑
+i=0
+W (f (i)) 1 +
+n∑
+i=0
+S (f (i))
+map f a 1 + ∑
+x∈a
+W (f (x)) 1 + ∑
+x∈a
+S (f (x))
+filter f a 1 + ∑
+x∈a
+W (p(x)) 1 + ∑
+x∈a
+S (p(x))
+subseq a (i, j) 1 + i 1 + i
+append a b 1 + |a| 1 + |a|
+flatten a 1 + |a| + ∑
+x∈a |x| 1 + |a| + ∑
+x∈a |x|
+update a (i, x) 1 + |a| 1 + |a|
+inject a b 1 + |a| + |b| 1 + |a| + |b|
+ninject a b 1 + |a| + |b| 1 + |a| + |b|
+collect f a 1 + W (f ) · |a| lg |a| 1 + S (f ) · |a| lg |a|
+iterate f x a 1 + ∑
+f (y,z)∈T (−)
+W (f (y, z)) 1 + ∑
+f (y,z)∈T (−)
+S (f (y, z))
+reduce f x a 1 + ∑
+f (y,z)∈T (−)
+W (f (y, z)) 1 + ∑
+f (y,z)∈T (−)
+S (f (y, z))
+scan f a |a| |a|
+
+Cost of Brute Force Primality Test. Let’s calculate the work and span of this algorithm
+based on the array sequence cost specification. The algorithm constructs a sequence of
+length b√n c and then filters it. Since the work for computing i mod n and checking that a
+value is zero x = 0 is constant, based on the array-sequence costs, we can write work as
+WisPrime (n) = O
+
+
+1 +
+b√n c∑
+i=1
+O (1)
+
+
+ = O (√n) .
+Similarly we can write span as:
+SisPrime (n) = O
+(
+lg √n + b√n c
+max
+i=1 O (1)
+)
+= O (lg n) .
+The lg √n additive terms come from the cost specification for filter .
+Since parallelism is the ratio of work to span, it is
+O
+( √n
+lg √n
+)
+.
+This is not an abundant amount of parallelism but adequate especially, because work is
+small.
+
+Algorithm 21.5 (Brute Force Solution to the Primes Problem). Now that we can test for
+primality of a number, we can solve the primes problem by testing the numbers up to n.
+We can write the code for such a brute-force algorithm as follows.
+primesBF n =
+let
+all = 〈 i : 1 < i < n 〉
+primes = 〈 x : x ∈ all | isPrime(x) 〉
+in
+primes
+end
+Let’s analyze work and span, again using array sequences. Constructing the sequence all
+using tabulate requires linear work. Filtering through all requires work that is the sum of
+the work of the calls to isPrime; thus we have
+WprimesBF (n) = O
+(n−1∑
+i=2
+1 + WisPrime (i)
+)
+= O
+(n−1∑
+i=2
+1 + √i
+)
+= O
+(
+n3/2)
+.
+Similarly, the span is dominated by the maximum of the span of calls to isPrime and a
+logarithmic additive term.
+SprimesBF (n) = = O
+(
+lg n + n
+max
+i=2 SisPrime (i)
+)
+= O
+(
+lg n + n
+max
+i=2 lg i
+)
+= O (lg n)
+The parallelism is hence
+WprimesBF (n)
+SprimesBF (n) = n3/2
+lg n .
+This is plenty of parallelism but comes at the expense of a large amount of work.
+We can improve the work for the algorithm, because the algorithm does a lot of redundant
+work by repeatedly checking with the divisors. To test whether a number m is prime, the
+algorithm checks its divisors, it then checks essentially the same divisors for multiples of
+
+m, such as 2m, 3m, . . ., which largely overlap, because if a number divides m, it also divides
+its multiples.
+We eliminate this redundancy by more actively eliminating numbers that are composites,
+i.e., not primes. The basic idea is to create a collection of composite numbers up to n and
+use this as a sieve. Generating such a sieve is easy: we just have to include for any number
+i ≤ √n, its multiples of up to n
+i . Having generated the sieve, what remains is to run the
+numbers up to n through the sieve. To do this in parallel, we can use use inject or in
+fact (non-deterministic) ninject, because all updates into the same position injects the same
+value.
+
+Cost of the Sieve Algorithm. For the analysis, we shall consider the phases of the algo-
+rithm and show that the work and span are functions of the total number of composites
+which we denote by m.
+• Generating each composite takes constant work and because it is just a multiplication.
+The work for generating the sequence of composites is linear in the total number of
+composites, m. The span is O(lg n) because of the flatten. Constructing the sieve
+requires linear work in its length, which is m, and constant span.
+• The work of ninject is also proportional to the length of sieve, m, and its span is
+constant.
+• The work for computing primes, using tabulate and filter is proportional to n, and
+the span is O(lg n).
+Therefore the total work is proportional to the number composites m, which is larger than
+n, and the total span is O(lg (n + m)). To calculate m, we can add up the number of multi-
+ples each i from 2 to b√nc have, i.e.,
+m =
+b√n c∑
+i=2
+⌈ n
+i
+⌉
+≤ (n + 1)
+b√n c∑
+i=2
+1
+i
+≤ (n + 1)H(⌊√n ⌋)
+≤ (n + 2) ln n1/2
+= n + 2
+2 ln n.
+Here H(n) is the nth harmonic number, which is known to be bounded below by ln n and
+above by ln n + 1. We therefore have
+WprimeSieve (n) = O(n lg n), and
+SprimeSieve (n) = O(lg n)
+
+

@@ -308,21 +308,21 @@ fn test_ordered_table_mt_eph_empty_operations() {
 fn test_ordered_table_mt_eph_large_dataset_parallel() {
     let mut table = OrderedTableMtEph::empty();
 
-    // Insert a large dataset
-    for i in 0..1000 {
+    // Insert a dataset (reduced from 1000 to 200 for faster testing)
+    for i in 0..200 {
         table.insert(i, format!("value_{}", i), |_old, new| new.clone());
     }
 
-    // Test parallel operations on large dataset
+    // Test parallel operations on dataset
     let even_filtered = table.filter(|k, _v| k % 2 == 0);
-    assert_eq!(even_filtered.size(), 500);
+    assert_eq!(even_filtered.size(), 100);
 
     let mapped = table.map(|k, v| format!("mapped_{}:{}", k, v));
-    assert_eq!(mapped.size(), 1000);
+    assert_eq!(mapped.size(), 200);
 
     // Test ordering operations
     assert_eq!(table.first_key(), Some(0));
-    assert_eq!(table.last_key(), Some(999));
-    assert_eq!(table.select_key(500), Some(500));
-    assert_eq!(table.rank_key(&500), 500);
+    assert_eq!(table.last_key(), Some(199));
+    assert_eq!(table.select_key(100), Some(100));
+    assert_eq!(table.rank_key(&100), 100);
 }

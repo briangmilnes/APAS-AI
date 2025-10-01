@@ -1,0 +1,128 @@
+// Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Chapter 65: Union-Find Tests (Sequential)
+
+#[cfg(test)]
+mod tests {
+    use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
+    use apas_ai::Types::Types::*;
+
+    #[test]
+    fn test_union_find_basic() {
+        let mut uf: UnionFind<N> = UnionFind::new();
+        
+        // Insert vertices
+        uf.insert(0);
+        uf.insert(1);
+        uf.insert(2);
+        uf.insert(3);
+        
+        // Initially each in own set
+        assert!(!uf.equals(&0, &1));
+        assert!(!uf.equals(&0, &2));
+        assert!(!uf.equals(&1, &2));
+        assert_eq!(uf.num_sets(), 4);
+        
+        // Union 0 and 1
+        uf.union(&0, &1);
+        assert!(uf.equals(&0, &1));
+        assert!(!uf.equals(&0, &2));
+        assert_eq!(uf.num_sets(), 3);
+        
+        // Union 2 and 3
+        uf.union(&2, &3);
+        assert!(uf.equals(&2, &3));
+        assert!(!uf.equals(&0, &2));
+        assert_eq!(uf.num_sets(), 2);
+        
+        // Union 1 and 2 (connects all)
+        uf.union(&1, &2);
+        assert!(uf.equals(&0, &1));
+        assert!(uf.equals(&0, &2));
+        assert!(uf.equals(&0, &3));
+        assert!(uf.equals(&1, &2));
+        assert!(uf.equals(&1, &3));
+        assert!(uf.equals(&2, &3));
+        assert_eq!(uf.num_sets(), 1);
+    }
+
+    #[test]
+    fn test_union_find_path_compression() {
+        let mut uf: UnionFind<N> = UnionFind::new();
+        
+        // Create a long chain: 0-1-2-3-4
+        for i in 0..5 {
+            uf.insert(i);
+        }
+        
+        uf.union(&0, &1);
+        uf.union(&1, &2);
+        uf.union(&2, &3);
+        uf.union(&3, &4);
+        
+        // All should be in same set
+        assert!(uf.equals(&0, &4));
+        assert_eq!(uf.num_sets(), 1);
+        
+        // Path compression should have flattened the tree
+        let root = uf.find(&4);
+        assert!(uf.equals(&0, &root));
+    }
+
+    #[test]
+    fn test_union_find_empty() {
+        let mut uf: UnionFind<N> = UnionFind::new();
+        assert_eq!(uf.num_sets(), 0);
+    }
+
+    #[test]
+    fn test_union_find_single() {
+        let mut uf: UnionFind<N> = UnionFind::new();
+        uf.insert(42);
+        assert_eq!(uf.num_sets(), 1);
+        assert!(uf.equals(&42, &42));
+    }
+
+    #[test]
+    fn test_union_find_duplicate_insert() {
+        let mut uf: UnionFind<N> = UnionFind::new();
+        uf.insert(1);
+        uf.insert(1);
+        uf.insert(2);
+        
+        assert_eq!(uf.num_sets(), 2);
+        uf.union(&1, &2);
+        assert_eq!(uf.num_sets(), 1);
+    }
+
+    #[test]
+    fn test_union_find_string_vertices() {
+        let mut uf: UnionFind<String> = UnionFind::new();
+        
+        uf.insert("A".to_string());
+        uf.insert("B".to_string());
+        uf.insert("C".to_string());
+        
+        assert_eq!(uf.num_sets(), 3);
+        
+        uf.union(&"A".to_string(), &"B".to_string());
+        assert!(uf.equals(&"A".to_string(), &"B".to_string()));
+        assert!(!uf.equals(&"A".to_string(), &"C".to_string()));
+        assert_eq!(uf.num_sets(), 2);
+    }
+
+    #[test]
+    fn test_union_find_already_unioned() {
+        let mut uf: UnionFind<N> = UnionFind::new();
+        
+        uf.insert(1);
+        uf.insert(2);
+        
+        uf.union(&1, &2);
+        assert_eq!(uf.num_sets(), 1);
+        
+        // Union again (no-op)
+        uf.union(&1, &2);
+        assert_eq!(uf.num_sets(), 1);
+    }
+}
+

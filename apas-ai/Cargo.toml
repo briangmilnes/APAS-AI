@@ -1516,6 +1516,18 @@ path = "tests/Chap59/TestJohnsonMtEphInt.rs"
 name = "TestJohnsonMtEphFloat"
 path = "tests/Chap59/TestJohnsonMtEphFloat.rs"
 
+[[test]]
+name = "TestUnionFindStEph"
+path = "tests/Chap65/TestUnionFindStEph.rs"
+
+[[test]]
+name = "TestPrimStEph"
+path = "tests/Chap65/TestPrimStEph.rs"
+
+[[test]]
+name = "TestKruskalStEph"
+path = "tests/Chap65/TestKruskalStEph.rs"
+
 # Chapter 55 Benchmarks
 [[bench]]
 name = "BenchDFSStEph"
@@ -1621,4 +1633,89 @@ harness = false
 [[bench]]
 name = "BenchJohnsonMtEphFloat"
 path = "benches/Chap59/BenchJohnsonMtEphFloat.rs"
+harness = false
+
+[[bench]]
+name = "BenchVertexMatchingStEph"
+path = "benches/Chap61/BenchVertexMatchingStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchVertexMatchingMtEph"
+path = "benches/Chap61/BenchVertexMatchingMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchEdgeContractionStEph"
+path = "benches/Chap61/BenchEdgeContractionStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchEdgeContractionMtEph"
+path = "benches/Chap61/BenchEdgeContractionMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchStarPartitionStEph"
+path = "benches/Chap62/BenchStarPartitionStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchStarPartitionMtEph"
+path = "benches/Chap62/BenchStarPartitionMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchStarContractionStEph"
+path = "benches/Chap62/BenchStarContractionStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchStarContractionMtEph"
+path = "benches/Chap62/BenchStarContractionMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchConnectivityStEph"
+path = "benches/Chap63/BenchConnectivityStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchConnectivityMtEph"
+path = "benches/Chap63/BenchConnectivityMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchSpanTreeStEph"
+path = "benches/Chap64/BenchSpanTreeStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchSpanTreeMtEph"
+path = "benches/Chap64/BenchSpanTreeMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchTSPApproxStEph"
+path = "benches/Chap64/BenchTSPApproxStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchTSPApproxMtEph"
+path = "benches/Chap64/BenchTSPApproxMtEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchUnionFindStEph"
+path = "benches/Chap65/BenchUnionFindStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchPrimStEph"
+path = "benches/Chap65/BenchPrimStEph.rs"
+harness = false
+
+[[bench]]
+name = "BenchKruskalStEph"
+path = "benches/Chap65/BenchKruskalStEph.rs"
 harness = false

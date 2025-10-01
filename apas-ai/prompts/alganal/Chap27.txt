@@ -1,0 +1,49 @@
+Chap27
+
+ 
+Example 27.1 (Maximal Element with Contraction). We can find the maximal element in a sequence a using
+contraction as follows. If the sequence has only one element, we return that element, oth-
+erwise, we can map the sequence a into a sequence b which is half the length by comparing
+the elements of a at consecutive even-odd positions and writing the larger into b. We then
+find the largest in b and return this as the result.
+For example, we map the sequence 〈 1, 2, 4, 3, 6, 5 〉 to 〈 2, 4, 6 〉. The largest element of this
+sequence, 6 is then the largest element in the input sequence.
+For a sequence of length n, we can write the work and span for this algorithm as recur-
+rences as follows
+W (n) =
+{ Θ(1) if n ≤ 1
+W (n/2) + Θ(n) otherwise
+S(n) =
+{ Θ(1) if n ≤ 1
+S(n/2) + Θ(1) otherwise.
+Using the techniques discussed at the end of this chapter, we can solve the recurrences to
+obtain W (n) = Θ(n) and S(n) = Θ(lg n)
+
+Cost of Reduce with Contraction. Assuming that the function being reduced over per-
+forms constant work, parallel tabulate in the contraction step requires linear work, we can
+thus write the work of this algorithm as
+W (n) = W (n/2) + n.
+3. SCAN WITH CONTRACTION 179
+This recurrence solves to O(n).
+Assuming that the function being reduced over performs constant span, parallel tabulate
+in the contraction step requires constant span; we can thus write the work of this algorithm
+as
+S(n) = S(n/2) + 1.
+This recurrence solves to O(log n)
+
+Cost of Scan with Contraction. Let’s assume for simplicity that the function being ap-
+plied has constant work and constant span. We can write out the work and span for the
+algorithm as a recursive relation as
+W (n) = W (n/2) + n, and
+S(n) = S(n/2) + 1,
+because 1) the contraction step which tabulates the smaller instance of the problem per-
+forms linear work in constant span, and 2) the expansion step that constructs the output
+by tabulating based on the result of the recursive call also performs linear work in constant
+span.
+These recursive relations should look familiar. They are the same as those that we ended
+up with when we analyzed the work and span of our contraction-based implementation of
+reduce and yield
+W (n) = O(n)
+S(n) = O(log n).
+
+

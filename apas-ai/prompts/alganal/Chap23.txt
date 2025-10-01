@@ -1,0 +1,15 @@
+Chap23
+
+Cost Specification 23.2 (Primitive Tree Sequences). We specify the primitive tree sequence
+2. PARAMETRIC IMPLEMENTATION OF TREE SEQUENCES 157
+costs as follows.
+Operation Work and Span
+length a 1
+expose a 1
+join(Zero) or join(One(x)) 1
+join(Two(L, R)) 1 + |r(L) − r(R)|
+Hence the cost of joining two trees is proportional the absolute value of the difference of
+their ranks.
+Note that there is no parallelism in these operations. Parallelism will be used in building
+the sequence functions from them.
+

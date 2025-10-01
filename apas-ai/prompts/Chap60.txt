@@ -15,6 +15,10 @@
 
  Build only the Eph versions.
 
+ As this was done out of order, Chap61 and Chap62 might
+ need to be restructured, perhaps some code from them in here,
+ and Chap61 and Chap62 to use these? Explore this.
+
  Show it to me and estimate time.
 
  I will tell you when to execute. 

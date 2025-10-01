@@ -339,3 +339,31 @@ pub mod Chap59 {
     pub mod JohnsonStEphFloat;
     pub mod JohnsonStEphInt;
 }
+
+pub mod Chap61 {
+    pub mod EdgeContractionMtEph;
+    pub mod EdgeContractionStEph;
+    pub mod VertexMatchingMtEph;
+    pub mod VertexMatchingStEph;
+}
+pub mod Chap62 {
+    pub mod StarContractionMtEph;
+    pub mod StarContractionStEph;
+    pub mod StarPartitionMtEph;
+    pub mod StarPartitionStEph;
+}
+pub mod Chap63 {
+    pub mod ConnectivityMtEph;
+    pub mod ConnectivityStEph;
+}
+pub mod Chap64 {
+    pub mod SpanTreeMtEph;
+    pub mod SpanTreeStEph;
+    pub mod TSPApproxMtEph;
+    pub mod TSPApproxStEph;
+}
+pub mod Chap65 {
+    pub mod KruskalStEph;
+    pub mod PrimStEph;
+    pub mod UnionFindStEph;
+}

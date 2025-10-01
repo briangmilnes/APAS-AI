@@ -1,0 +1,38 @@
+Chap14
+
+Common Cases. By convention, and in common use, we use the following names:
+linear : O(n)
+sublinear : o(n)
+quadratic : O(n2)
+polynomial : O(nk), for any constant k.
+superpolynomial : ω(nk), for any constant k.
+logarithmic : O(lg n)
+polylogarithmic : O(lgk n), for any constant k.
+exponential : O(an), for any constant a > 1.
+
+
+Definition 14.2 (O, Ω, Θ, o, ω Notation). Consider the set of all numeric functions F , and
+f ∈ F . We define the following sets:
+Name Definition Intuitively
+big-O : O(f ) = {g ∈ F such that f dominates g} ≤ f
+big-Omega : Ω(f ) = {g ∈ F such that g dominates f } ≥ f
+big-Theta : Θ(f ) = O(f ) ∩ Ω(f ) = f
+little-o : o(f ) = O(f ) \ Ω(f ) < f
+little-omega : ω(f ) = Ω(f ) \ O(f ) > f
+
+Common Cases. By convention, and in common use, we use the following names:
+linear : O(n)
+sublinear : o(n)
+quadratic : O(n2)
+polynomial : O(nk), for any constant k.
+superpolynomial : ω(nk), for any constant k.
+logarithmic : O(lg n)
+polylogarithmic : O(lgk n), for any constant k.
+exponential : O(an), for any constant a > 1.
+
+Subsets. We can use big-O (Ω, Θ) on both the left and right-hand sides of an equation. In
+this case we are indicating that one set of functions is a subset of the other. For example,
+consider Θ(n) ⊂ O(n2). This equation indicates that the set of functions on the left-hand
+side is contained in the set on the right hand side. Again, sometimes “=” is used instead
+of “⊂”.
+
