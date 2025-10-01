@@ -2,7 +2,7 @@
 use apas_ai::Chap18::LinkedListStPer::LinkedListStPer::*;
 use apas_ai::LinkedListStPerSLit;
 use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;
@@ -16,7 +16,7 @@ fn bench_sll_persistent_ops(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("new_then_updates", n), &n, |b, &len| {
         b.iter(|| {
             let s: LinkedListStPerS<N> = LinkedListStPerSLit![0; len]; // *Per: from_vec pattern
-            // Focus on operations that exist in the API
+                                                                       // Focus on operations that exist in the API
             black_box(<LinkedListStPerS<N> as LinkedListStPerTrait<N>>::length(&s))
         })
     });

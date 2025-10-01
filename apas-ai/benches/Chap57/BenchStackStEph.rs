@@ -3,7 +3,7 @@
 //! Benchmarks for StackStEph
 
 use apas_ai::Chap57::StackStEph::StackStEph::StackStEph;
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
 fn bench_push(c: &mut Criterion) {
     let sizes = [100, 500, 1000];

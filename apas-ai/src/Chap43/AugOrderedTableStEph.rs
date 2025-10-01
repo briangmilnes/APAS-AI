@@ -7,6 +7,7 @@ pub mod AugOrderedTableStEph {
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     use crate::Chap43::OrderedTableStEph::OrderedTableStEph::*;
+    use crate::OrderedTableStEphLit;
     use crate::Types::Types::*;
 
     /// Single-threaded ephemeral reducer-augmented ordered table

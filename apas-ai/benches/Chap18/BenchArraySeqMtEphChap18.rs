@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
 fn bench_tabulate_map_mteph_ch18(c: &mut Criterion) {
@@ -9,7 +9,7 @@ fn bench_tabulate_map_mteph_ch18(c: &mut Criterion) {
     group.sample_size(10);
     group.warm_up_time(Duration::from_secs(1));
     group.measurement_time(Duration::from_secs(1));
-    
+
     // Test different sizes (all use unconditional parallelism with ParaPair!)
     for &n in &[1_000, 10_000] {
         group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
@@ -28,7 +28,7 @@ fn bench_reduce_parallel_mteph_ch18(c: &mut Criterion) {
     group.sample_size(10);
     group.warm_up_time(Duration::from_secs(1));
     group.measurement_time(Duration::from_secs(1));
-    
+
     // Test different sizes (all use unconditional parallelism with ParaPair!)
     for &n in &[1_000, 10_000] {
         group.bench_with_input(BenchmarkId::new("reduce_sum", n), &n, |b, &len| {
@@ -47,12 +47,13 @@ fn bench_filter_mteph_ch18(c: &mut Criterion) {
     group.sample_size(10);
     group.warm_up_time(Duration::from_secs(1));
     group.measurement_time(Duration::from_secs(1));
-    
+
     let n: N = 10_000;
     group.bench_with_input(BenchmarkId::new("filter_evens", n), &n, |b, &len| {
         let s: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(|i| i, len);
         b.iter(|| {
-            let evens = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::filter(&s, |x| if x % 2 == 0 { true } else { false });
+            let evens =
+                <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::filter(&s, |x| if x % 2 == 0 { true } else { false });
             black_box(evens.length())
         })
     });
@@ -64,7 +65,7 @@ fn bench_scan_mteph_ch18(c: &mut Criterion) {
     group.sample_size(10);
     group.warm_up_time(Duration::from_secs(1));
     group.measurement_time(Duration::from_secs(1));
-    
+
     let n: N = 5_000;
     group.bench_with_input(BenchmarkId::new("scan_sum", n), &n, |b, &len| {
         let s: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(|i| i + 1, len);
@@ -77,7 +78,7 @@ fn bench_scan_mteph_ch18(c: &mut Criterion) {
 }
 
 criterion_group!(
-    benches, 
+    benches,
     bench_tabulate_map_mteph_ch18,
     bench_reduce_parallel_mteph_ch18,
     bench_filter_mteph_ch18,

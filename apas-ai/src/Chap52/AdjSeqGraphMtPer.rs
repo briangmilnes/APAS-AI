@@ -19,7 +19,9 @@ pub mod AdjSeqGraphMtPer {
         fn has_edge(&self, u: N, v: N) -> B;
         fn out_neighbors(&self, u: N) -> ArraySeqMtPerS<N>;
         fn out_degree(&self, u: N) -> N;
-        fn map_vertices<F: Fn(N) -> N + Send + Sync + Clone + 'static>(&self, f: F) -> Self where N: 'static;
+        fn map_vertices<F: Fn(N) -> N + Send + Sync + Clone + 'static>(&self, f: F) -> Self
+        where
+            N: 'static;
     }
 
     impl AdjSeqGraphMtPerTrait for AdjSeqGraphMtPer {
@@ -34,9 +36,7 @@ pub mod AdjSeqGraphMtPer {
             }
         }
 
-        fn num_vertices(&self) -> N {
-            self.adj.length()
-        }
+        fn num_vertices(&self) -> N { self.adj.length() }
 
         // Work: Θ(n), Span: Θ(n) - sum all neighbor list lengths
         fn num_edges(&self) -> N {
@@ -61,16 +61,15 @@ pub mod AdjSeqGraphMtPer {
             false
         }
 
-        fn out_neighbors(&self, u: N) -> ArraySeqMtPerS<N> {
-            self.adj.nth(u).clone()
-        }
+        fn out_neighbors(&self, u: N) -> ArraySeqMtPerS<N> { self.adj.nth(u).clone() }
 
-        fn out_degree(&self, u: N) -> N {
-            self.adj.nth(u).length()
-        }
+        fn out_degree(&self, u: N) -> N { self.adj.nth(u).length() }
 
         // Work: Θ(n+m), Span: Θ(n) - map over all vertices
-        fn map_vertices<F: Fn(N) -> N + Send + Sync + Clone + 'static>(&self, f: F) -> Self where N: 'static {
+        fn map_vertices<F: Fn(N) -> N + Send + Sync + Clone + 'static>(&self, f: F) -> Self
+        where
+            N: 'static,
+        {
             let n = self.adj.length();
             let mut new_rows = Vec::with_capacity(n);
             for i in 0..n {

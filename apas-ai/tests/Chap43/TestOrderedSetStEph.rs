@@ -2,6 +2,7 @@
 //! Comprehensive tests for OrderedSetStEph - ephemeral ordered set implementation.
 
 use apas_ai::Chap43::OrderedSetStEph::OrderedSetStEph::*;
+use apas_ai::OrderedSetStEphLit;
 use apas_ai::Types::Types::*;
 
 #[test]

@@ -392,6 +392,4 @@ pub mod OrderedTableMtEph {
             $crate::Chap43::OrderedTableMtEph::OrderedTableMtEph::from_sorted_entries(seq)
         }};
     }
-
-    pub use OrderedTableMtEphLit;
 }

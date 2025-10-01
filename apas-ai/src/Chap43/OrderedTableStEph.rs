@@ -363,6 +363,4 @@ pub mod OrderedTableStEph {
             $crate::Chap43::OrderedTableStEph::OrderedTableStEph::from_sorted_entries(seq)
         }};
     }
-
-    pub use OrderedTableStEphLit;
 }

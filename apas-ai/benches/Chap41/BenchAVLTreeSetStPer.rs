@@ -6,7 +6,7 @@ use std::time::Duration;
 use apas_ai::AVLTreeSetStPerLit;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
-use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
 
 fn build_avl_tree_set_per(len: usize) -> AVLTreeSetStPer<i32> {
     let mut set = AVLTreeSetStPer::empty();

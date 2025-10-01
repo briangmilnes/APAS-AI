@@ -74,12 +74,20 @@ pub mod TestArraySeqStPerChap {
     fn test_filter_even() {
         let numbers = ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         let evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&numbers, &|&x| {
-            if x % 2 == 0 { true } else { false }
+            if x % 2 == 0 {
+                true
+            } else {
+                false
+            }
         });
         assert_eq!(evens, ArraySeqStPerSLit![2, 4, 6, 8, 10]);
         let odds_only = ArraySeqStPerSLit![1, 3, 5, 7];
         let no_evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&odds_only, &|&x| {
-            if x % 2 == 0 { true } else { false }
+            if x % 2 == 0 {
+                true
+            } else {
+                false
+            }
         });
         assert_eq!(no_evens.length(), 0);
     }
@@ -441,7 +449,11 @@ pub mod TestArraySeqStPerChap {
         assert_eq!(mapped_zero.length(), 0);
 
         let filtered_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&zero_start, &|x| {
-            if *x > 0 { true } else { false }
+            if *x > 0 {
+                true
+            } else {
+                false
+            }
         });
         assert_eq!(filtered_zero.length(), 0);
 
@@ -561,7 +573,11 @@ pub mod TestArraySeqStPerChap {
 
         // Test filter operation on large sequence (sample)
         let filtered_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&large_seq, &|x| {
-            if *x % 1000 == 0 { true } else { false }
+            if *x % 1000 == 0 {
+                true
+            } else {
+                false
+            }
         });
         assert_eq!(filtered_large.length(), 50); // 0, 1000, 2000, ..., 49000
         assert_eq!(*filtered_large.nth(0), 0);

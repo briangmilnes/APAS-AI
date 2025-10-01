@@ -1,0 +1,12 @@
+
+This fixes ReExports:
+
+We do not reexport things at the end of modules.
+Such as 
+    pub use TableStPerLit;
+
+Which rule was violated adding these?
+
+Make a plan using PrePlanChecklist to fix these.
+Show this to the user in todos.
+

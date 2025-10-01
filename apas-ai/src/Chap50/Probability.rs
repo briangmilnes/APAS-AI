@@ -4,135 +4,137 @@
 //! Note: Provides a probability wrapper that implements Eq/Ord for f64 values
 //! while maintaining compatibility with APAS MtVal trait requirements.
 
-use crate::Types::Types::*;
-use std::cmp::Ordering;
-use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
-use std::hash::{Hash, Hasher};
+pub mod Probability {
+    use crate::Types::Types::*;
+    use std::cmp::Ordering;
+    use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
+    use std::hash::{Hash, Hasher};
 
-/// Probability wrapper for f64 values that implements Eq and Ord
-/// This solves the fundamental issue where OrderedFloat<f64> doesn't implement MtVal
-/// Claude Work: O(1) - all operations are constant time
-/// Claude Span: O(1) - all operations are constant time
-#[derive(Clone, Copy)]
-pub struct Probability(pub f64);
+    /// Probability wrapper for f64 values that implements Eq and Ord
+    /// This solves the fundamental issue where OrderedFloat<f64> doesn't implement MtVal
+    /// Claude Work: O(1) - all operations are constant time
+    /// Claude Span: O(1) - all operations are constant time
+    #[derive(Clone, Copy)]
+    pub struct Probability(pub f64);
 
-impl Probability {
-    /// Create a new probability value
-    /// Claude Work: O(1) - constant time construction
-    /// Claude Span: O(1) - constant time construction
-    pub fn new(value: f64) -> Self {
-        debug_assert!(value >= 0.0, "Probability must be non-negative");
-        // Allow values > 1.0 for costs in dynamic programming
-        Probability(value)
+    impl Probability {
+        /// Create a new probability value
+        /// Claude Work: O(1) - constant time construction
+        /// Claude Span: O(1) - constant time construction
+        pub fn new(value: f64) -> Self {
+            debug_assert!(value >= 0.0, "Probability must be non-negative");
+            // Allow values > 1.0 for costs in dynamic programming
+            Probability(value)
+        }
+
+        /// Get the inner f64 value
+        /// Claude Work: O(1) - constant time access
+        /// Claude Span: O(1) - constant time access
+        pub fn value(&self) -> f64 { self.0 }
+
+        /// Create infinity value for fold operations
+        /// Claude Work: O(1) - constant time construction
+        /// Claude Span: O(1) - constant time construction
+        pub fn infinity() -> Self { Probability(f64::INFINITY) }
+
+        /// Create zero probability
+        /// Claude Work: O(1) - constant time construction
+        /// Claude Span: O(1) - constant time construction
+        pub fn zero() -> Self { Probability(0.0) }
     }
 
-    /// Get the inner f64 value
-    /// Claude Work: O(1) - constant time access
-    /// Claude Span: O(1) - constant time access
-    pub fn value(&self) -> f64 { self.0 }
-
-    /// Create infinity value for fold operations
-    /// Claude Work: O(1) - constant time construction
-    /// Claude Span: O(1) - constant time construction
-    pub fn infinity() -> Self { Probability(f64::INFINITY) }
-
-    /// Create zero probability
-    /// Claude Work: O(1) - constant time construction
-    /// Claude Span: O(1) - constant time construction
-    pub fn zero() -> Self { Probability(0.0) }
-}
-
-impl Default for Probability {
-    fn default() -> Self { Probability::zero() }
-}
-
-impl PartialEq for Probability {
-    fn eq(&self, other: &Self) -> bool {
-        // Use bit-level comparison for exact equality
-        self.0.to_bits() == other.0.to_bits()
+    impl Default for Probability {
+        fn default() -> Self { Probability::zero() }
     }
-}
 
-impl Eq for Probability {}
+    impl PartialEq for Probability {
+        fn eq(&self, other: &Self) -> bool {
+            // Use bit-level comparison for exact equality
+            self.0.to_bits() == other.0.to_bits()
+        }
+    }
 
-impl PartialOrd for Probability {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> { Some(self.cmp(other)) }
-}
+    impl Eq for Probability {}
 
-impl Ord for Probability {
-    fn cmp(&self, other: &Self) -> Ordering {
-        // Handle NaN and infinity cases properly
-        match (self.0.is_nan(), other.0.is_nan()) {
-            | (true, true) => Ordering::Equal,
-            | (true, false) => Ordering::Greater, // NaN > everything
-            | (false, true) => Ordering::Less,    // everything < NaN
-            | (false, false) => {
-                if self.0 < other.0 {
-                    Ordering::Less
-                } else if self.0 > other.0 {
-                    Ordering::Greater
-                } else {
-                    Ordering::Equal
+    impl PartialOrd for Probability {
+        fn partial_cmp(&self, other: &Self) -> Option<Ordering> { Some(self.cmp(other)) }
+    }
+
+    impl Ord for Probability {
+        fn cmp(&self, other: &Self) -> Ordering {
+            // Handle NaN and infinity cases properly
+            match (self.0.is_nan(), other.0.is_nan()) {
+                | (true, true) => Ordering::Equal,
+                | (true, false) => Ordering::Greater, // NaN > everything
+                | (false, true) => Ordering::Less,    // everything < NaN
+                | (false, false) => {
+                    if self.0 < other.0 {
+                        Ordering::Less
+                    } else if self.0 > other.0 {
+                        Ordering::Greater
+                    } else {
+                        Ordering::Equal
+                    }
                 }
             }
         }
     }
-}
 
-impl Hash for Probability {
-    fn hash<H: Hasher>(&self, state: &mut H) { self.0.to_bits().hash(state); }
-}
+    impl Hash for Probability {
+        fn hash<H: Hasher>(&self, state: &mut H) { self.0.to_bits().hash(state); }
+    }
 
-impl Debug for Probability {
-    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { write!(f, "Probability({})", self.0) }
-}
+    impl Debug for Probability {
+        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { write!(f, "Probability({})", self.0) }
+    }
 
-impl Display for Probability {
-    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { write!(f, "{}", self.0) }
-}
+    impl Display for Probability {
+        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { write!(f, "{}", self.0) }
+    }
 
-impl From<f64> for Probability {
-    fn from(value: f64) -> Self { Probability(value) }
-}
+    impl From<f64> for Probability {
+        fn from(value: f64) -> Self { Probability(value) }
+    }
 
-impl From<Probability> for f64 {
-    fn from(prob: Probability) -> Self { prob.0 }
-}
+    impl From<Probability> for f64 {
+        fn from(prob: Probability) -> Self { prob.0 }
+    }
 
-// Arithmetic operations
-impl std::ops::Add for Probability {
-    type Output = Self;
+    // Arithmetic operations
+    impl std::ops::Add for Probability {
+        type Output = Self;
 
-    fn add(self, other: Self) -> Self { Probability(self.0 + other.0) }
-}
+        fn add(self, other: Self) -> Self { Probability(self.0 + other.0) }
+    }
 
-impl std::ops::Sub for Probability {
-    type Output = Self;
+    impl std::ops::Sub for Probability {
+        type Output = Self;
 
-    fn sub(self, other: Self) -> Self { Probability(self.0 - other.0) }
-}
+        fn sub(self, other: Self) -> Self { Probability(self.0 - other.0) }
+    }
 
-impl std::ops::Mul for Probability {
-    type Output = Self;
+    impl std::ops::Mul for Probability {
+        type Output = Self;
 
-    fn mul(self, other: Self) -> Self { Probability(self.0 * other.0) }
-}
+        fn mul(self, other: Self) -> Self { Probability(self.0 * other.0) }
+    }
 
-impl std::ops::Div for Probability {
-    type Output = Self;
+    impl std::ops::Div for Probability {
+        type Output = Self;
 
-    fn div(self, other: Self) -> Self { Probability(self.0 / other.0) }
-}
+        fn div(self, other: Self) -> Self { Probability(self.0 / other.0) }
+    }
 
-// APAS trait implementations are automatic due to blanket impl in Types.rs
-// Probability implements Eq + Clone + Display + Debug + Sized, so it gets StT automatically
-// Probability implements StT + Send + Sync, so it gets StTInMtT automatically
-// Probability implements StTInMtT + 'static, so it gets MtVal automatically
+    // APAS trait implementations are automatic due to blanket impl in Types.rs
+    // Probability implements Eq + Clone + Display + Debug + Sized, so it gets StT automatically
+    // Probability implements StT + Send + Sync, so it gets StTInMtT automatically
+    // Probability implements StTInMtT + 'static, so it gets MtVal automatically
 
-// Convenience macro for creating probability literals
-#[macro_export]
-macro_rules! prob {
-    ($value:expr) => {
-        $crate::Chap50::Probability::Probability::new($value)
-    };
+    // Convenience macro for creating probability literals
+    #[macro_export]
+    macro_rules! prob {
+        ($value:expr) => {
+            $crate::Chap50::Probability::Probability::Probability::new($value)
+        };
+    }
 }

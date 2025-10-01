@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 pub mod Test44Chapter36MtSlice {
-    use rand::{Rng, rng};
+    use rand::{rng, Rng};
 
     use apas_ai::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
     use apas_ai::Chap36::QuickSortMtSlice::Chapter36MtSlice::Chapter36MtSliceTrait;
@@ -173,7 +173,7 @@ pub mod Test44Chapter36MtSlice {
         // Test with larger range
         let seq = mk_seq(&[5, 1, 9, 3, 7, 2, 8]);
         let median_large = seq.pivot_mt_median3(1, 6); // Range [1, 9, 3, 7, 2]
-        // Should pick median of first, middle, last: [1, 3, 2] -> median is 2
+                                                       // Should pick median of first, middle, last: [1, 3, 2] -> median is 2
         assert_eq!(median_large, 2);
     }
 

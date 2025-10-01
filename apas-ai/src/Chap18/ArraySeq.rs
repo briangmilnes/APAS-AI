@@ -130,9 +130,21 @@ pub mod ArraySeq {
 
         fn singleton(item: T) -> ArraySeqS<T> { ArraySeqS::from_vec(vec![item]) }
 
-        fn isEmpty(&self) -> B { if self.data.is_empty() { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.data.is_empty() {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B {
+            if self.data.len() == 1 {
+                true
+            } else {
+                false
+            }
+        }
 
         /// Definition 18.2 (subseq view). Return a slice for the subsequence starting at `start`
         /// and of length `length` without copying or allocation (zero‑copy view). <br/>

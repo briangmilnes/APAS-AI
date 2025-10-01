@@ -27,7 +27,11 @@ pub mod TestAVLTreeSeqStEph {
                 Some(*a.nth(i))
             } else {
                 let off = i - a.length();
-                if off < b.length() { Some(*b.nth(off)) } else { None }
+                if off < b.length() {
+                    Some(*b.nth(off))
+                } else {
+                    None
+                }
             }
         };
         assert_eq!(select(&a, &b, 0), Some(0));

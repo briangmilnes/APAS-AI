@@ -42,7 +42,11 @@ pub mod Algorithm21_6 {
                     break;
                 }
             }
-            if is_composite { false } else { true }
+            if is_composite {
+                false
+            } else {
+                true
+            }
         });
         filtered
     }

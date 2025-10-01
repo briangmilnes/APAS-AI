@@ -2,7 +2,7 @@ use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
 use apas_ai::Chap59::JohnsonMtEphInt::JohnsonMtEphInt::johnson_apsp;
 use apas_ai::SetLit;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
 fn generate_sparse_graph_negative(n: usize) -> WeightedDirGraphMtEphInt<usize> {

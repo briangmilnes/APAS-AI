@@ -178,6 +178,7 @@ pub mod TestBSTReducedStEph {
 
         // Test range query with string keys
         assert_eq!(bst.range_reduce(&"apple".to_string(), &"cherry".to_string()), 6); // All elements
-        assert_eq!(bst.range_reduce(&"apple".to_string(), &"banana".to_string()), 3); // apple + banana: 1+2
+        assert_eq!(bst.range_reduce(&"apple".to_string(), &"banana".to_string()), 3);
+        // apple + banana: 1+2
     }
 }

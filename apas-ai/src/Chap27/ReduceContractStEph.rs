@@ -48,7 +48,11 @@ pub mod ReduceContractStEph {
             let result = Self::reduce_contract(&b, f, id);
 
             // If odd length, combine result with last element
-            if n % 2 == 1 { f(&result, a.nth(n - 1)) } else { result }
+            if n % 2 == 1 {
+                f(&result, a.nth(n - 1))
+            } else {
+                result
+            }
         }
     }
 }

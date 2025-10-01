@@ -5,7 +5,7 @@ use std::time::Duration;
 
 use apas_ai::BSTSetSplayMtEphLit;
 use apas_ai::Chap37::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMt as SplaySet;
-use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
 
 trait BenchSet: Sized {
     fn empty() -> Self;

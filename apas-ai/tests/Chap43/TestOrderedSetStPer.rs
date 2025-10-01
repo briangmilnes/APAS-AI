@@ -2,6 +2,7 @@
 //! Comprehensive tests for OrderedSetStPer - persistent ordered set implementation.
 
 use apas_ai::Chap43::OrderedSetStPer::OrderedSetStPer::*;
+use apas_ai::OrderedSetStPerLit;
 use apas_ai::Types::Types::*;
 
 #[test]

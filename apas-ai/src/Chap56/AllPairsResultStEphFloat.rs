@@ -75,7 +75,11 @@ impl AllPairsResultStEphFloat {
             return None;
         }
         let pred = *self.predecessors.nth(u).nth(v);
-        if pred == NO_PREDECESSOR { None } else { Some(pred) }
+        if pred == NO_PREDECESSOR {
+            None
+        } else {
+            Some(pred)
+        }
     }
 
     /// Sets the predecessor of vertex v in the shortest path from u.

@@ -4,7 +4,7 @@
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::Chap53::GraphSearchStPer::GraphSearchStPer::*;
 use apas_ai::Types::Types::*;
-use criterion::{BatchSize, Criterion, criterion_group, criterion_main};
+use criterion::{criterion_group, criterion_main, BatchSize, Criterion};
 use std::time::Duration;
 
 fn build_complete_graph(n: N) -> impl Fn(&N) -> AVLTreeSetStPer<N> {

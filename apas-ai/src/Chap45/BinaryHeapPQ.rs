@@ -61,7 +61,13 @@ pub mod BinaryHeapPQ {
         fn right_child(i: N) -> N { 2 * i + 2 }
 
         /// parent of node at index i
-        fn parent(i: N) -> N { if i == 0 { 0 } else { (i - 1) / 2 } }
+        fn parent(i: N) -> N {
+            if i == 0 {
+                0
+            } else {
+                (i - 1) / 2
+            }
+        }
 
         /// Check if heap property is satisfied
         fn is_heap(&self) -> bool {

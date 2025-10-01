@@ -193,14 +193,26 @@ pub mod BSTBBAlphaMtEph {
             Self::find_link(&*guard, target).cloned()
         }
 
-        fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
+        fn contains(&self, target: &T) -> B {
+            if self.find(target).is_some() {
+                true
+            } else {
+                false
+            }
+        }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             Self::size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        fn is_empty(&self) -> B {
+            if self.size() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
         fn height(&self) -> N {
             fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {

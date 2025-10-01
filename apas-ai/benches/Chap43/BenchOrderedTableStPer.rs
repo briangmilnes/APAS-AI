@@ -1,23 +1,25 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for OrderedTableStPer.
 
-use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
-use apas_ai::Chap43::OrderedTableStPer::OrderedTableStPer::{OrderedTableStPer, OrderedTableStPerTrait};
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::{AVLTreeSeqStPerS, AVLTreeSeqStPerTrait};
+use apas_ai::Chap43::OrderedTableStPer::OrderedTableStPer::{OrderedTableStPer, OrderedTableStPerTrait};
 use apas_ai::Types::Types::*;
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
 fn bench_ordered_table_st_per_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStPer_insert");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
-    
+
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
             b.iter(|| {
                 let mut table: OrderedTableStPer<i32, String> = OrderedTableStPerTrait::empty();
                 for i in 0..size {
-                    table = black_box(table.insert(black_box(i), black_box(format!("value_{}", i)), |_old, new| new.clone()));
+                    table = black_box(
+                        table.insert(black_box(i), black_box(format!("value_{}", i)), |_old, new| new.clone()),
+                    );
                 }
                 black_box(table)
             });
@@ -30,13 +32,13 @@ fn bench_ordered_table_st_per_lookup(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStPer_lookup");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
-    
+
     for size in [100, 500, 1000].iter() {
         let mut table: OrderedTableStPer<i32, String> = OrderedTableStPerTrait::empty();
         for i in 0..*size {
             table = table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
-        
+
         group.bench_with_input(BenchmarkId::new("lookup", size), size, |b, &size| {
             b.iter(|| {
                 for i in 0..size {
@@ -52,7 +54,7 @@ fn bench_ordered_table_st_per_delete(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStPer_delete");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
-    
+
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("delete", size), size, |b, &size| {
             b.iter_batched(
@@ -80,23 +82,19 @@ fn bench_ordered_table_st_per_first_last_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStPer_first_last_key");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
-    
+
     for size in [100, 500, 1000].iter() {
         let mut table: OrderedTableStPer<i32, String> = OrderedTableStPerTrait::empty();
         for i in 0..*size {
             table = table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
-        
+
         group.bench_with_input(BenchmarkId::new("first_key", size), size, |b, _size| {
-            b.iter(|| {
-                black_box(table.first_key())
-            });
+            b.iter(|| black_box(table.first_key()));
         });
-        
+
         group.bench_with_input(BenchmarkId::new("last_key", size), size, |b, _size| {
-            b.iter(|| {
-                black_box(table.last_key())
-            });
+            b.iter(|| black_box(table.last_key()));
         });
     }
     group.finish();
@@ -106,13 +104,14 @@ fn bench_ordered_table_st_per_previous_next_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStPer_previous_next_key");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
-    
+
     for size in [100, 500, 1000].iter() {
         let mut table: OrderedTableStPer<i32, String> = OrderedTableStPerTrait::empty();
         for i in 0..*size {
-            table = table.insert(i * 2, format!("value_{}", i * 2), |_old, new| new.clone()); // Insert even numbers
+            table = table.insert(i * 2, format!("value_{}", i * 2), |_old, new| new.clone());
+            // Insert even numbers
         }
-        
+
         group.bench_with_input(BenchmarkId::new("previous_key", size), size, |b, &size| {
             b.iter(|| {
                 for i in 0..size {
@@ -120,7 +119,7 @@ fn bench_ordered_table_st_per_previous_next_key(c: &mut Criterion) {
                 }
             });
         });
-        
+
         group.bench_with_input(BenchmarkId::new("next_key", size), size, |b, &size| {
             b.iter(|| {
                 for i in 0..size {
@@ -136,7 +135,7 @@ fn bench_ordered_table_st_per_split_join_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStPer_split_join_key");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
-    
+
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("split_key", size), size, |b, &size| {
             b.iter_batched(
@@ -154,14 +153,14 @@ fn bench_ordered_table_st_per_split_join_key(c: &mut Criterion) {
                 criterion::BatchSize::SmallInput,
             );
         });
-        
+
         group.bench_with_input(BenchmarkId::new("join_key", size), size, |b, &size| {
             b.iter_batched(
                 || {
-                     let mut left = OrderedTableStPerTrait::empty();
+                    let mut left = OrderedTableStPerTrait::empty();
                     let mut right = OrderedTableStPerTrait::empty();
                     let mid = size / 2;
-                    
+
                     for i in 0..mid {
                         left = left.insert(i, format!("value_{}", i), |_old, new| new.clone());
                     }
@@ -170,9 +169,7 @@ fn bench_ordered_table_st_per_split_join_key(c: &mut Criterion) {
                     }
                     (left, right)
                 },
-                |(left, right)| {
-                    black_box(left.join_key(right))
-                },
+                |(left, right)| black_box(left.join_key(right)),
                 criterion::BatchSize::SmallInput,
             );
         });
@@ -184,13 +181,13 @@ fn bench_ordered_table_st_per_get_key_range(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStPer_get_key_range");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
-    
+
     for size in [100, 500, 1000].iter() {
         let mut table: OrderedTableStPer<i32, String> = OrderedTableStPerTrait::empty();
         for i in 0..*size {
             table = table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
-        
+
         group.bench_with_input(BenchmarkId::new("get_key_range", size), size, |b, &size| {
             b.iter(|| {
                 let start = size / 4;
@@ -206,13 +203,13 @@ fn bench_ordered_table_st_per_rank_select_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStPer_rank_select_key");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
-    
+
     for size in [100, 500, 1000].iter() {
         let mut table: OrderedTableStPer<i32, String> = OrderedTableStPerTrait::empty();
         for i in 0..*size {
             table = table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
-        
+
         group.bench_with_input(BenchmarkId::new("rank_key", size), size, |b, &size| {
             b.iter(|| {
                 for i in 0..size {
@@ -220,7 +217,7 @@ fn bench_ordered_table_st_per_rank_select_key(c: &mut Criterion) {
                 }
             });
         });
-        
+
         group.bench_with_input(BenchmarkId::new("select_key", size), size, |b, &size| {
             b.iter(|| {
                 for i in 0..size {
@@ -236,7 +233,7 @@ fn bench_ordered_table_st_per_split_rank_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStPer_split_rank_key");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
-    
+
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("split_rank_key", size), size, |b, &size| {
             b.iter_batched(
@@ -262,29 +259,23 @@ fn bench_ordered_table_st_per_table_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStPer_table_operations");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
-    
+
     for size in [100, 500, 1000].iter() {
         let mut table: OrderedTableStPer<i32, String> = OrderedTableStPerTrait::empty();
         for i in 0..*size {
             table = table.insert(i, i * 10, |_old, new| new.clone());
         }
-        
+
         group.bench_with_input(BenchmarkId::new("filter", size), size, |b, _size| {
-            b.iter(|| {
-                black_box(table.filter(|k, _v| k % 2 == 0))
-            });
+            b.iter(|| black_box(table.filter(|k, _v| k % 2 == 0)));
         });
-        
+
         group.bench_with_input(BenchmarkId::new("map", size), size, |b, _size| {
-            b.iter(|| {
-                black_box(table.map(|k, v| format!("{}:{}", k, v)))
-            });
+            b.iter(|| black_box(table.map(|k, v| format!("{}:{}", k, v))));
         });
-        
+
         group.bench_with_input(BenchmarkId::new("reduce", size), size, |b, _size| {
-            b.iter(|| {
-                black_box(table.reduce(0, |acc, _k, v| acc + v))
-            });
+            b.iter(|| black_box(table.reduce(0, |acc, _k, v| acc + v)));
         });
     }
     group.finish();
@@ -294,17 +285,15 @@ fn bench_ordered_table_st_per_collect(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStPer_collect");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
-    
+
     for size in [100, 500, 1000].iter() {
         let mut table: OrderedTableStPer<i32, String> = OrderedTableStPerTrait::empty();
         for i in 0..*size {
             table = table.insert(i, format!("value_{}", i), |_old, new| new.clone());
         }
-        
+
         group.bench_with_input(BenchmarkId::new("collect", size), size, |b, _size| {
-            b.iter(|| {
-                black_box(table.collect())
-            });
+            b.iter(|| black_box(table.collect()));
         });
     }
     group.finish();
@@ -314,17 +303,13 @@ fn bench_ordered_table_st_per_from_sorted_entries(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStPer_from_sorted_entries");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
-    
+
     for size in [100, 500, 1000].iter() {
-        let entries_vec: Vec<Pair<i32, String>> = (0..*size)
-            .map(|i| Pair(i, format!("value_{}", i)))
-            .collect();
+        let entries_vec: Vec<Pair<i32, String>> = (0..*size).map(|i| Pair(i, format!("value_{}", i))).collect();
         let entries = AVLTreeSeqStPerTrait::from_vec(entries_vec);
-        
+
         group.bench_with_input(BenchmarkId::new("from_sorted_entries", size), &entries, |b, entries| {
-            b.iter(|| {
-                black_box(OrderedTableStPer::from_sorted_entries(entries.clone()))
-            });
+            b.iter(|| black_box(OrderedTableStPer::from_sorted_entries(entries.clone())));
         });
     }
     group.finish();

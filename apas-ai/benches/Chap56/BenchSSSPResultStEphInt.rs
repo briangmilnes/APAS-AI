@@ -3,7 +3,7 @@
 //! Benchmarks for SSSPResultStEphInt.
 
 use apas_ai::Chap56::SSSPResultStEphInt::SSSPResultStEphInt;
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
 fn bench_new(c: &mut Criterion) {
     let sizes = vec![100, 500, 1000];

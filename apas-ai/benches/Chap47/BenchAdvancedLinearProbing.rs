@@ -4,7 +4,7 @@
 use apas_ai::Chap47::AdvancedLinearProbing::AdvancedLinearProbing::AdvancedLinearProbingStrategy;
 use apas_ai::Chap47::FlatHashTable::FlatHashTable::FlatHashTable;
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::DefaultHashFunction;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 
 fn bench_linear_probing_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("linear_probing_insert");

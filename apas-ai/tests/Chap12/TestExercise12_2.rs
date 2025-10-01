@@ -1,11 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 pub mod TestExercise12_2 {
-    use std::sync::Arc;
     use std::sync::atomic::{AtomicUsize, Ordering};
+    use std::sync::Arc;
     use std::thread;
 
-    use apas_ai::Chap12::Exercise12_2::Exercise12_2::{FetchAddCasTrait, fetch_add_cas};
+    use apas_ai::Chap12::Exercise12_2::Exercise12_2::{fetch_add_cas, FetchAddCasTrait};
 
     #[test]
     fn fetch_add_cas_returns_previous_value() {

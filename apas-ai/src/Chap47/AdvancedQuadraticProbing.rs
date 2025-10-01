@@ -101,7 +101,13 @@ pub mod AdvancedQuadraticProbing {
 
         /// Compute greatest common divisor
         /// Claude Work: O(log min(a,b)), Span: O(log min(a,b))
-        fn gcd(a: N, b: N) -> N { if b == 0 { a } else { Self::gcd(b, a % b) } }
+        fn gcd(a: N, b: N) -> N {
+            if b == 0 {
+                a
+            } else {
+                Self::gcd(b, a % b)
+            }
+        }
     }
 
     impl<K: StT, H: HashFunClone<K>> AdvancedQuadraticProbingStrategy<K, H> {

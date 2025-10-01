@@ -279,6 +279,4 @@ pub mod OrderedSetStPer {
             $crate::Chap43::OrderedSetStPer::OrderedSetStPer::from_sorted_elements(vec![$($elem),+])
         };
     }
-
-    pub use OrderedSetStPerLit;
 }

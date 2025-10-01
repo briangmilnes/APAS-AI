@@ -82,7 +82,11 @@ pub mod BottomUpDPMtPer {
             let positions: Vec<(usize, usize)> = (start..=end)
                 .filter_map(|i| {
                     let j = k - i;
-                    if j > 0 && j <= t_len { Some((i, j)) } else { None }
+                    if j > 0 && j <= t_len {
+                        Some((i, j))
+                    } else {
+                        None
+                    }
                 })
                 .collect();
 

@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 pub mod Test40Chapter36Mt {
-    use rand::{Rng, rng};
+    use rand::{rng, Rng};
 
     use apas_ai::ArraySeqMtEphSLit;
     use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;

@@ -347,6 +347,4 @@ pub mod OrderedTableStPer {
             $crate::Chap43::OrderedTableStPer::OrderedTableStPer::from_sorted_entries(seq)
         }};
     }
-
-    pub use OrderedTableStPerLit;
 }

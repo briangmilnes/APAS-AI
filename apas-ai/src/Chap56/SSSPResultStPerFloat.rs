@@ -69,7 +69,11 @@ impl SSSPResultStPerFloat {
             return None;
         }
         let pred = self.predecessors.nth(v).clone();
-        if pred == NO_PREDECESSOR { None } else { Some(pred) }
+        if pred == NO_PREDECESSOR {
+            None
+        } else {
+            Some(pred)
+        }
     }
 
     /// Sets the predecessor of vertex v, returning a new structure.

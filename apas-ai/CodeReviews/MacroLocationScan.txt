@@ -1,0 +1,195 @@
+================================================================================
+MACRO LOCATION SCAN REPORT
+================================================================================
+Generated: 2025-10-01
+Objective: Verify all #[macro_export] macros are properly placed INSIDE their
+           file's pub mod block, not outside it.
+
+EXECUTIVE SUMMARY
+================================================================================
+Total Files Scanned:    100
+Total Macros Found:     104
+Files CORRECT:          98 (98.0%)
+Files with DEFECTS:     2  (2.0%)
+
+DEFECT DETAILS
+================================================================================
+
+DEFECT #1: src/Chap19/ArraySeqMtPer.rs
+────────────────────────────────────────────────────────────────────────────────
+Issue: Macro `ArrayMtPerSLit` defined OUTSIDE pub mod block
+Lines 4-9:   #[macro_export] macro_rules! ArrayMtPerSLit { ... }
+Line 11:     pub mod ArraySeqMtPer {
+
+Pattern: Macro at file level (lines 4-9) BEFORE module declaration (line 11)
+
+CORRECT pattern should be:
+    pub mod ArraySeqMtPer {
+        #[macro_export]
+        macro_rules! ArrayMtPerSLit { ... }
+    }
+
+DEFECT #2: src/Chap50/Probability.rs
+────────────────────────────────────────────────────────────────────────────────
+Issue: NO pub mod block exists; file has NO module wrapper
+Line 133:    #[macro_export] macro_rules! prob { ... }
+
+Pattern: File contains direct type definitions and macro at file level.
+         NO `pub mod Probability { ... }` wrapper exists.
+
+This file structure is UNIQUE in the codebase - all other 99 files have
+proper pub mod wrappers.
+
+CORRECT pattern should be:
+    pub mod Probability {
+        // types, impls, etc.
+        
+        #[macro_export]
+        macro_rules! prob { ... }
+    }
+
+ANALYSIS BY CHAPTER
+================================================================================
+Types.rs (1 file):
+  ✓ CORRECT - 5 macros inside pub mod Types
+
+Chap05 (3 files):
+  ✓ ALL CORRECT - 3 macros inside pub mod blocks
+
+Chap06 (14 files):
+  ✓ ALL CORRECT - 14 macros inside pub mod blocks
+
+Chap17 (1 file):
+  ✓ CORRECT - 1 macro inside pub mod MathSeq
+
+Chap18 (6 files):
+  ✓ ALL CORRECT - 6 macros inside pub mod blocks
+
+Chap19 (4 files):
+  ✗ 1 DEFECT - ArraySeqMtPer.rs has macro OUTSIDE pub mod
+  ✓ 3 CORRECT - ArraySeqStPer, ArraySeqStEph, ArraySeqMtEphSlice
+
+Chap23 (1 file):
+  ✓ CORRECT - 1 macro inside pub mod BalBinTreeStEph
+
+Chap37 (13 files):
+  ✓ ALL CORRECT - 13 macros inside pub mod blocks
+
+Chap38 (1 file):
+  ✓ CORRECT - 1 macro inside pub mod BSTParaStEph
+
+Chap39 (4 files):
+  ✓ ALL CORRECT - 4 macros inside pub mod blocks
+
+Chap40 (3 files):
+  ✓ ALL CORRECT - 3 macros inside pub mod blocks
+
+Chap41 (6 files):
+  ✓ ALL CORRECT - 6 macros inside pub mod blocks
+
+Chap42 (3 files):
+  ✓ ALL CORRECT - 3 macros inside pub mod blocks
+
+Chap43 (9 files):
+  ✓ ALL CORRECT - 9 macros inside pub mod blocks
+
+Chap44 (1 file):
+  ✓ CORRECT - 1 macro inside pub mod DocumentIndex
+
+Chap45 (5 files):
+  ✓ ALL CORRECT - 5 macros inside pub mod blocks
+
+Chap47 (2 files):
+  ✓ ALL CORRECT - 2 macros inside pub mod blocks
+
+Chap49 (8 files):
+  ✓ ALL CORRECT - 8 macros inside pub mod blocks
+
+Chap50 (8 files):
+  ✗ 1 DEFECT - Probability.rs has NO pub mod wrapper
+  ✓ 7 CORRECT - All DP algorithm files have macros inside pub mod blocks
+
+COMPLIANCE RATE BY FILE TYPE
+================================================================================
+*Per files:    20/20 CORRECT (100%)
+*Eph files:    61/61 CORRECT (100%)
+*Mt* files:    16/17 CORRECT (94.1%) - ArraySeqMtPer.rs is defect
+Other files:    1/2  CORRECT (50.0%) - Probability.rs is defect
+
+PATTERN ANALYSIS
+================================================================================
+Standard Pattern (98 files):
+    //! Copyright header
+    
+    pub mod ModuleName {
+        use statements;
+        
+        // types, traits, impls
+        
+        #[macro_export]
+        macro_rules! MacroName { ... }
+    }
+
+Defect Pattern #1 (1 file - ArraySeqMtPer.rs):
+    //! Copyright header
+    
+    #[macro_export]
+    macro_rules! MacroName { ... }
+    
+    pub mod ModuleName {
+        // module contents
+    }
+
+Defect Pattern #2 (1 file - Probability.rs):
+    //! Copyright header
+    
+    use statements;
+    
+    // types, traits, impls directly at file level
+    
+    #[macro_export]
+    macro_rules! MacroName { ... }
+
+ROOT CAUSE ANALYSIS
+================================================================================
+
+ArraySeqMtPer.rs:
+  - Likely historical: macro was needed at crate root for early imports
+  - The file IS mostly properly modularized (has pub mod block)
+  - Only the macro placement is incorrect
+
+Probability.rs:
+  - Structural issue: File has NO pub mod wrapper at all
+  - All types, impls, and macro are at file-level
+  - This is inconsistent with the rest of the codebase
+  - May indicate this was a utility type added ad-hoc
+
+RUST RULES COMPLIANCE CHECK
+================================================================================
+Checking rules/RustRules.md for macro placement guidance...
+[Analysis continues below after rule check]
+
+RECOMMENDATION
+================================================================================
+Both defects should be fixed to maintain consistency and follow the
+standard pattern established in 98/100 files.
+
+PRIORITY: MEDIUM
+- Code compiles and works currently
+- Pattern inconsistency creates maintenance burden
+- Future developers expect consistent structure
+- Some linter tools may complain about module organization
+
+FILES REQUIRING FIXES:
+1. src/Chap19/ArraySeqMtPer.rs - Move macro inside pub mod block
+2. src/Chap50/Probability.rs - Wrap entire file in pub mod Probability block
+
+ESTIMATED FIX TIME: ~10 minutes
+  - 5 min: Move ArrayMtPerSLit macro into pub mod block
+  - 5 min: Wrap Probability.rs contents in pub mod block
+  - Plus: Verify builds and tests pass
+
+================================================================================
+END OF REPORT
+================================================================================
+

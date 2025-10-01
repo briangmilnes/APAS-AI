@@ -661,6 +661,4 @@ pub mod TableMtEph {
             $crate::Chap42::TableMtEph::TableMtEph::from_sorted_entries(entries)
         }};
     }
-
-    pub use TableMtEphLit;
 }

@@ -33,9 +33,7 @@ pub mod AdjSeqGraphMtEph {
             }
         }
 
-        fn num_vertices(&self) -> N {
-            self.adj.length()
-        }
+        fn num_vertices(&self) -> N { self.adj.length() }
 
         fn num_edges(&self) -> N {
             let n = self.adj.length();
@@ -59,13 +57,9 @@ pub mod AdjSeqGraphMtEph {
             false
         }
 
-        fn out_neighbors(&self, u: N) -> ArraySeqMtEphS<N> {
-            self.adj.nth(u).clone()
-        }
+        fn out_neighbors(&self, u: N) -> ArraySeqMtEphS<N> { self.adj.nth(u).clone() }
 
-        fn out_degree(&self, u: N) -> N {
-            self.adj.nth(u).length()
-        }
+        fn out_degree(&self, u: N) -> N { self.adj.nth(u).length() }
 
         fn set_edge(&self, u: N, v: N, exists: B) {
             if u >= self.adj.length() || v >= self.adj.length() {

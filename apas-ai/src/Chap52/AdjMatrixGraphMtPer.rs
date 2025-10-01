@@ -20,7 +20,9 @@ pub mod AdjMatrixGraphMtPer {
         fn has_edge(&self, u: N, v: N) -> B;
         fn out_neighbors(&self, u: N) -> ArraySeqMtPerS<N>;
         fn out_degree(&self, u: N) -> N;
-        fn complement(&self) -> Self where bool: 'static;
+        fn complement(&self) -> Self
+        where
+            bool: 'static;
     }
 
     impl AdjMatrixGraphMtPerTrait for AdjMatrixGraphMtPer {
@@ -36,9 +38,7 @@ pub mod AdjMatrixGraphMtPer {
             }
         }
 
-        fn num_vertices(&self) -> N {
-            self.n
-        }
+        fn num_vertices(&self) -> N { self.n }
 
         fn num_edges(&self) -> N {
             let mut count = 0;
@@ -89,7 +89,10 @@ pub mod AdjMatrixGraphMtPer {
         }
 
         // Work: Θ(n²), Span: Θ(n²) sequential - Exercise 52.6
-        fn complement(&self) -> Self where bool: 'static {
+        fn complement(&self) -> Self
+        where
+            bool: 'static,
+        {
             let n = self.n;
             let mut new_matrix_vec = Vec::with_capacity(n);
             for i in 0..n {

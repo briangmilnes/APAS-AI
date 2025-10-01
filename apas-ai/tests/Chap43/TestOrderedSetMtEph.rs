@@ -2,6 +2,7 @@
 //! Comprehensive tests for OrderedSetMtEph - multi-threaded ephemeral ordered set implementation.
 
 use apas_ai::Chap43::OrderedSetMtEph::OrderedSetMtEph::*;
+use apas_ai::OrderedSetMtEphLit;
 use apas_ai::Types::Types::*;
 use std::sync::Arc;
 use std::thread;

@@ -2,7 +2,7 @@
 //! Benchmarks for SubsetSumMtPer
 
 use apas_ai::{Chap49::SubsetSumMtPer::SubsetSumMtPer::*, SubsetSumMtPerLit};
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use std::time::Duration;
 
 fn bench_subset_sum_mt_per(c: &mut Criterion) {

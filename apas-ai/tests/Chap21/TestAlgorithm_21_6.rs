@@ -46,7 +46,11 @@ pub mod Test31Algorithm_21_6 {
         let candidates: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i, n);
         let filtered_idx: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&candidates, &|i| {
             if *i >= 2 && *i < n {
-                if *is_prime.nth(*i) == true { true } else { false }
+                if *is_prime.nth(*i) == true {
+                    true
+                } else {
+                    false
+                }
             } else {
                 false
             }

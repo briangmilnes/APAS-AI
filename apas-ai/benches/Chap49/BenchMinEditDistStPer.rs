@@ -2,7 +2,7 @@
 //! Benchmarks for MinEditDistStPer
 
 use apas_ai::{Chap49::MinEditDistStPer::MinEditDistStPer::*, MinEditDistStPerLit};
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use std::time::Duration;
 
 fn bench_min_edit_distance_st_per(c: &mut Criterion) {

@@ -288,6 +288,4 @@ pub mod TableStEph {
             $crate::Chap42::TableStEph::TableStEph::from_sorted_entries(entries)
         }};
     }
-
-    pub use TableStEphLit;
 }

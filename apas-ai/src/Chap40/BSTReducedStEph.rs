@@ -4,7 +4,7 @@
 pub mod BSTReducedStEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
-    use rand::{Rng, rng};
+    use rand::{rng, Rng};
     use std::marker::PhantomData;
 
     type Link<K, V, R> = Option<Box<Node<K, V, R>>>;

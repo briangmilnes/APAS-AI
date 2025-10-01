@@ -3,7 +3,7 @@
 
 use apas_ai::Chap50::MatrixChainStPer::MatrixChainStPer::{MatrixChainStPerS, MatrixChainStPerTrait, MatrixDim};
 use apas_ai::MatrixChainStPerLit;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 
 fn create_random_dimensions(n: usize) -> Vec<MatrixDim> {
     (0..n)

@@ -301,6 +301,4 @@ pub mod OrderedSetStEph {
             $crate::Chap43::OrderedSetStEph::OrderedSetStEph::from_sorted_elements(vec![$($elem),+])
         };
     }
-
-    pub use OrderedSetStEphLit;
 }

@@ -70,7 +70,11 @@ impl AllPairsResultStPerInt {
             return None;
         }
         let pred = self.predecessors.nth(u).nth(v).clone();
-        if pred == NO_PREDECESSOR { None } else { Some(pred) }
+        if pred == NO_PREDECESSOR {
+            None
+        } else {
+            Some(pred)
+        }
     }
 
     /// Sets the predecessor of vertex v in the shortest path from u, returning a new structure.

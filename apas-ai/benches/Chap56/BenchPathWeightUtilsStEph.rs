@@ -7,7 +7,7 @@ use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
 use apas_ai::Chap56::PathWeightUtilsStEph::{
     path_weight_float, path_weight_int, validate_subpath_property_float, validate_subpath_property_int,
 };
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use ordered_float::OrderedFloat;
 
 fn bench_path_weight_int(c: &mut Criterion) {

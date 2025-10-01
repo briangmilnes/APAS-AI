@@ -329,6 +329,4 @@ pub mod TableStPer {
             $crate::Chap42::TableStPer::TableStPer::from_sorted_entries(entries)
         }};
     }
-
-    pub use TableStPerLit;
 }

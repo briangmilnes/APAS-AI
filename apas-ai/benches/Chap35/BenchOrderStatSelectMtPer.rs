@@ -2,7 +2,7 @@
 
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
 use apas_ai::Chap35::OrderStatSelectMtPer::OrderStatSelectMtPer::OrderStatSelectMtPerTrait;
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use std::time::Duration;
 
 pub fn bench_select_mt_per(c: &mut Criterion) {

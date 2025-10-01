@@ -216,7 +216,13 @@ pub mod BSTAVLMtEph {
             Self::size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        fn is_empty(&self) -> B {
+            if self.size() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
         fn height(&self) -> N {
             let guard = self.root.read().unwrap();

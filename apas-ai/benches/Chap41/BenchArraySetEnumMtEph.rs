@@ -6,7 +6,7 @@ use std::time::Duration;
 use apas_ai::ArraySetEnumMtEphLit;
 use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
 use apas_ai::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::*;
-use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
 
 fn build_array_set_enum_mt(universe_size: usize, fill_ratio: f64) -> ArraySetEnumMtEph {
     let mut set = ArraySetEnumMtEph::empty(universe_size);

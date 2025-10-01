@@ -137,7 +137,13 @@ pub mod ArraySetEnumMtEph {
             }
         }
 
-        fn find(&self, x: N) -> B { if x < self.universe_size { self.bits[x] } else { false } }
+        fn find(&self, x: N) -> B {
+            if x < self.universe_size {
+                self.bits[x]
+            } else {
+                false
+            }
+        }
 
         fn delete(&mut self, x: N) {
             if x < self.universe_size {

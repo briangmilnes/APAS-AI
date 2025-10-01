@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use apas_ai::Chap37::BSTParaStEph::BSTParaStEph::ParamBST;
 use apas_ai::{ParamBSTLit, *};
-use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
 
 fn build_tree(len: usize) -> ParamBST<i32> {
     let tree = ParamBSTLit![]; // BST StEph: empty constructor

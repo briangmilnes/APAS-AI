@@ -4,7 +4,7 @@
 pub mod BSTSizeStEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
-    use rand::{Rng, rng};
+    use rand::{rng, Rng};
 
     type Link<T> = Option<Box<Node<T>>>;
 

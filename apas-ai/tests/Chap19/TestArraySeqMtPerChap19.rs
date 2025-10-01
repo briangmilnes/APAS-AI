@@ -806,7 +806,7 @@ pub mod Test26ArraySeqMtPer {
                     // Verify all values are within expected ranges
                     for &val in &snapshot {
                         if val < 1 || val > 300 { // Original values 1-5, or thread values 0-299
-                            // This might happen due to concurrent writes, which is acceptable
+                             // This might happen due to concurrent writes, which is acceptable
                         }
                     }
 

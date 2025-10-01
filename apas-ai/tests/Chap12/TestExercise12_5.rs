@@ -2,7 +2,7 @@
 
 pub mod TestExercise12_5 {
     use std::collections::HashSet;
-    use std::sync::{Arc, mpsc};
+    use std::sync::{mpsc, Arc};
     use std::thread;
 
     use apas_ai::Chap12::Exercise12_5::Exercise12_5::{ConcurrentStackMt, ConcurrentStackMtTrait};

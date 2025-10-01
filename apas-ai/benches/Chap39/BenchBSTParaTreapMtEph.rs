@@ -2,7 +2,7 @@
 use std::time::Duration;
 
 use apas_ai::Chap39::BSTParaTreapMtEph::BSTParaTreapMtEph::*;
-use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
 
 fn build_tree(len: usize) -> ParamTreap<i32> {
     let tree = ParamTreap::new();

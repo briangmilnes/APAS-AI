@@ -2,10 +2,10 @@
 //! Benchmarks for OptBinSearchTreeStPer
 
 use apas_ai::{
-    Chap50::{OptBinSearchTreeStPer::OptBinSearchTreeStPer::*, Probability::Probability},
     prob,
+    Chap50::{OptBinSearchTreeStPer::OptBinSearchTreeStPer::*, Probability::Probability},
 };
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 
 fn bench_obst_st_per_small(c: &mut Criterion) {
     let mut group = c.benchmark_group("OBST_StPer_Small");

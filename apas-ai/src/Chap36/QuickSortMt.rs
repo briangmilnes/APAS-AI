@@ -4,7 +4,7 @@
 pub mod Chapter36Mt {
     use std::thread;
 
-    use rand::{Rng, rng};
+    use rand::{rng, Rng};
 
     use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;

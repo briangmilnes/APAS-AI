@@ -5,9 +5,9 @@ pub mod OptBinSearchTreeStEph {
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Chap50::Probability::Probability;
-    use crate::Types::Types::*;
     use crate::prob;
+    use crate::Chap50::Probability::Probability::Probability;
+    use crate::Types::Types::*;
 
     /// Key-probability pair for optimal BST
     #[derive(Clone, Debug, PartialEq)]

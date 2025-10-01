@@ -4,6 +4,7 @@
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::OrderedTableStPer::OrderedTableStPer::*;
+use apas_ai::OrderedTableStPerLit;
 use apas_ai::Types::Types::*;
 
 #[test]

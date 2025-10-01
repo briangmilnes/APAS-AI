@@ -1,0 +1,6 @@
+
+ Make a plan to PrePlanChecklist to scan for
+ macros that are NOT in the module of each file.
+
+ Show it to me in todos.
+ 

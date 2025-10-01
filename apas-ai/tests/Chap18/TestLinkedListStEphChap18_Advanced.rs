@@ -61,7 +61,11 @@ pub mod TestLinkedListStEph {
     fn test_filter_ch18() {
         let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
         let b = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&a, &|x: &N| {
-            if *x % 2 == 0 { true } else { false }
+            if *x % 2 == 0 {
+                true
+            } else {
+                false
+            }
         });
         expect_list(&b, &[2, 4]);
     }

@@ -276,9 +276,21 @@ pub mod ArraySeqMtEph {
             out
         }
 
-        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.length() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B {
+            if self.length() == 1 {
+                true
+            } else {
+                false
+            }
+        }
 
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {
             let mut values: Vec<T> = Vec::new();

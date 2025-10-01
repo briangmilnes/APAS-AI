@@ -1,13 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 19 algorithms for ArraySeqMtPer, just the one multi-threaded update of code that Umut and Guy snuck into this chapter.
 
-#[macro_export]
-macro_rules! ArrayMtPerSLit {
-    () => { $crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(Vec::new()) };
-    ($x:expr; $n:expr) => { $crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(vec![$x; $n]) };
-    ($($x:expr),* $(,)?) => { $crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(vec![$($x),*]) };
-}
-
 pub mod ArraySeqMtPer {
     use std::sync::Mutex;
 
@@ -286,7 +279,11 @@ pub mod ArraySeqMtPer {
             }
             let offset = i - len_a;
             let len_b = b.length();
-            if offset < len_b { Some(b.nth(offset)) } else { None }
+            if offset < len_b {
+                Some(b.nth(offset))
+            } else {
+                None
+            }
         }
 
         fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtPerS<T> {
@@ -297,6 +294,13 @@ pub mod ArraySeqMtPer {
                 <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::empty()
             }
         }
+    }
+
+    #[macro_export]
+    macro_rules! ArrayMtPerSLit {
+        () => { $crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(Vec::new()) };
+        ($x:expr; $n:expr) => { $crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(vec![$x; $n]) };
+        ($($x:expr),* $(,)?) => { $crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(vec![$($x),*]) };
     }
 
     #[macro_export]

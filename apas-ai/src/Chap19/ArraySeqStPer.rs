@@ -93,7 +93,11 @@ pub mod ArraySeqStPer {
             }
             let offset = i - len_a;
             let len_b = b.length();
-            if offset < len_b { Some(b.nth(offset)) } else { None }
+            if offset < len_b {
+                Some(b.nth(offset))
+            } else {
+                None
+            }
         }
 
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {

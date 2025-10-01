@@ -76,16 +76,15 @@ pub mod TestArraySeqStPer {
     fn test_filter_even() {
         let numbers = ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         let evens =
-            <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(
-                &numbers,
-                |&x| {
-                    if x % 2 == 0 { true } else { false }
-                },
-            );
+            <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&numbers, |&x| if x % 2 == 0 { true } else { false });
         assert_eq!(evens, ArraySeqStPerSLit![2, 4, 6, 8, 10]);
         let odds_only = ArraySeqStPerSLit![1, 3, 5, 7];
         let no_evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&a, &|&x| {
-            if x % 2 == 0 { true } else { false }
+            if x % 2 == 0 {
+                true
+            } else {
+                false
+            }
         });
         assert_eq!(no_evens.length(), 0);
     }

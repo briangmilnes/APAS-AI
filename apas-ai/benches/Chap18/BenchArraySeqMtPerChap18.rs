@@ -1,8 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
 // Helper functions for benchmarks
@@ -30,7 +30,7 @@ fn bench_reduce_parallel_mtper_ch18(c: &mut Criterion) {
     group.sample_size(30);
     group.warm_up_time(Duration::from_millis(800));
     group.measurement_time(Duration::from_secs(6));
-    
+
     for &n in &[1_000, 5_000, 10_000] {
         group.bench_with_input(BenchmarkId::new("reduce_sum", n), &n, |b, &len| {
             let s: ArraySeqMtPerS<N> = <ArraySeqMtPerS<N> as ArraySeqMtPerChap18Trait<N>>::tabulate(identity, len);

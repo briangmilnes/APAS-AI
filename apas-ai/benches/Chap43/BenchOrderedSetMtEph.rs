@@ -2,7 +2,7 @@
 //! Benchmarks for Chap43 OrderedSetMtEph.
 
 use apas_ai::Chap43::OrderedSetMtEph::OrderedSetMtEph::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
 fn bench_ordered_set_mt_eph_insert(c: &mut Criterion) {

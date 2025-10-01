@@ -90,7 +90,7 @@ mod tests {
 
         let mut edges = Set::empty();
         edges.insert((0, 1, 1)); // s -> a
-        // vertex 2 is unreachable
+                                 // vertex 2 is unreachable
 
         let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
         let result = dijkstra(&graph, 0);

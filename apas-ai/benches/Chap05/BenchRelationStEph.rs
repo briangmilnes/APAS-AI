@@ -3,7 +3,7 @@ use apas_ai::Chap05::RelationStEph::RelationStEph::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Types::Types::*;
 use apas_ai::{PairLit, SetLit};
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
 fn bench_relation_operations(c: &mut Criterion) {

@@ -216,9 +216,21 @@ pub mod ArraySeqStPer {
             result
         }
 
-        fn isEmpty(&self) -> B { if self.data.is_empty() { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.data.is_empty() {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B {
+            if self.data.len() == 1 {
+                true
+            } else {
+                false
+            }
+        }
 
         fn collect<K: StT, V: StT>(
             a: &ArraySeqStPerS<Pair<K, V>>,

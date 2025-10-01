@@ -1,5 +1,14 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 59: Johnson's Algorithm - Single-threaded Ephemeral Integer Weights
+//!
+//! Implements Algorithm 59.1 from the textbook.
+//! All-Pairs Shortest Paths for graphs with negative weights (but no negative cycles).
+//!
+//! **Algorithmic Analysis:**
+//! - Johnson APSP: Work O(mn log n), Span O(mn log n) where n = |V|, m = |E|
+//! - Phase 1 (Bellman-Ford): Work O(nm), Span O(nm)
+//! - Phase 2 (Reweighting): Work O(m), Span O(m)
+//! - Phase 3 (n Dijkstras): Work O(n * m log n) = O(mn log n), Span O(mn log n) sequential
 
 pub mod JohnsonStEphInt {
     use crate::Chap05::SetStEph::SetStEph::*;
@@ -17,8 +26,18 @@ pub mod JohnsonStEphInt {
     /// 1. Bellman-Ford to compute potentials and eliminate negative weights
     /// 2. Dijkstra from each vertex on reweighted graph
     ///
-    /// APAS: Work O(mn log n), Span O(m log n)
-    /// Parallelism: Θ(n) in Phase 2 (but sequential in this St version)
+    /// **APAS Analysis:** Work O(mn log n), Span O(m log n)
+    /// **Claude Analysis:**
+    /// - Phase 1: Bellman-Ford on G' (n+1 vertices, m+n edges): Work O((n+1)(m+n)) = O(nm), Span O(nm)
+    /// - Phase 2: Reweight m edges: Work O(m), Span O(m)
+    /// - Phase 3: n sequential Dijkstra runs: Work O(n * m log n) = O(mn log n), Span O(mn log n)
+    /// - Total: Work O(mn log n), Span O(mn log n)
+    ///
+    /// # Arguments
+    /// * `graph` - Weighted directed graph with integer weights (can be negative, no negative cycles)
+    ///
+    /// # Returns
+    /// `AllPairsResultStEphInt` containing n×n distance matrix and predecessor matrix
     pub fn johnson_apsp(graph: &WeightedDirGraphStEphInt<usize>) -> AllPairsResultStEphInt {
         let n = graph.vertices().size();
 

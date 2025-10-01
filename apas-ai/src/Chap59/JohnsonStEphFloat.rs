@@ -1,5 +1,14 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 59: Johnson's Algorithm - Single-threaded Ephemeral Float Weights
+//!
+//! Implements Algorithm 59.1 from the textbook.
+//! All-Pairs Shortest Paths for graphs with negative weights (but no negative cycles).
+//!
+//! **Algorithmic Analysis:**
+//! - Johnson APSP: Work O(mn log n), Span O(mn log n) where n = |V|, m = |E|
+//! - Phase 1 (Bellman-Ford): Work O(nm), Span O(nm)
+//! - Phase 2 (Reweighting): Work O(m), Span O(m)
+//! - Phase 3 (n Dijkstras): Work O(n * m log n) = O(mn log n), Span O(mn log n) sequential
 
 pub mod JohnsonStEphFloat {
     use crate::Chap05::SetStEph::SetStEph::*;
@@ -13,6 +22,23 @@ pub mod JohnsonStEphFloat {
     use ordered_float::OrderedFloat;
 
     /// Algorithm 59.1: Johnson's All-Pairs Shortest Paths (Float version)
+    ///
+    /// Solves APSP problem with negative float weights allowed using:
+    /// 1. Bellman-Ford to compute potentials and eliminate negative weights
+    /// 2. Dijkstra from each vertex on reweighted graph
+    ///
+    /// **APAS Analysis:** Work O(mn log n), Span O(m log n)
+    /// **Claude Analysis:**
+    /// - Phase 1: Bellman-Ford on G' (n+1 vertices, m+n edges): Work O((n+1)(m+n)) = O(nm), Span O(nm)
+    /// - Phase 2: Reweight m edges: Work O(m), Span O(m)
+    /// - Phase 3: n sequential Dijkstra runs: Work O(n * m log n) = O(mn log n), Span O(mn log n)
+    /// - Total: Work O(mn log n), Span O(mn log n)
+    ///
+    /// # Arguments
+    /// * `graph` - Weighted directed graph with float weights (can be negative, no negative cycles)
+    ///
+    /// # Returns
+    /// `AllPairsResultStEphFloat` containing n×n distance matrix and predecessor matrix
     pub fn johnson_apsp(graph: &WeightedDirGraphStEphFloat<usize>) -> AllPairsResultStEphFloat {
         let n = graph.vertices().size();
         let (graph_with_dummy, dummy_idx) = add_dummy_source(graph, n);

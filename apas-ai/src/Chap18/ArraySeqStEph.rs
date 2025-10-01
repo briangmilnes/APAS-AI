@@ -246,9 +246,21 @@ pub mod ArraySeqStEph {
             ArraySeqStEphS::inject(self, updates)
         }
 
-        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.length() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B {
+            if self.length() == 1 {
+                true
+            } else {
+                false
+            }
+        }
 
         fn collect<K: StT, V: StT>(
             pairs: &ArraySeqStEphS<Pair<K, V>>,

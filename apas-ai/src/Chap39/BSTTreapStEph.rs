@@ -5,7 +5,7 @@ pub mod BSTTreapStEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
-    use rand::{Rng, rng};
+    use rand::{rng, Rng};
 
     type Link<T> = Option<Box<Node<T>>>;
 
@@ -172,7 +172,13 @@ pub mod BSTTreapStEph {
 
         fn size(&self) -> N { Self::size_link(&self.root) }
 
-        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        fn is_empty(&self) -> B {
+            if self.size() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
         fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {

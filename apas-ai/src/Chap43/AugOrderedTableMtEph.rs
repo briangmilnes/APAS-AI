@@ -12,6 +12,7 @@ pub mod AugOrderedTableMtEph {
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     use crate::Chap43::OrderedTableMtEph::OrderedTableMtEph::*;
+    use crate::OrderedTableMtEphLit;
     use crate::ParaPair;
     use crate::Types::Types::*;
 

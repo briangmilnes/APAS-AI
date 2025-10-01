@@ -5,7 +5,7 @@ use std::time::Duration;
 
 use apas_ai::BSTSetAVLMtEphLit;
 use apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt as AVLSet;
-use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
 
 trait BenchSet: Sized {
     fn empty() -> Self;

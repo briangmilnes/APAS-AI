@@ -3,7 +3,7 @@
 //! Benchmarks for SSSPResultStEphFloat.
 
 use apas_ai::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat;
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use ordered_float::OrderedFloat;
 
 fn bench_new(c: &mut Criterion) {

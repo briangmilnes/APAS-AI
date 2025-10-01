@@ -2,7 +2,7 @@
 
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
 use apas_ai::Chap54::BFSMtPer::BFSMtPer;
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use std::time::Duration;
 
 fn create_dag(n: usize) -> ArraySeqMtPerS<ArraySeqMtPerS<usize>> {

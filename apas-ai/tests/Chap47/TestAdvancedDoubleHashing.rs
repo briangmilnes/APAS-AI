@@ -11,8 +11,8 @@
 //! Span: O(1) per operation test
 
 use apas_ai::Chap47::AdvancedDoubleHashing::AdvancedDoubleHashing::{
-    AdvancedDoubleHashingStrategy, DoubleHashingMetrics, RelativePrimeValidator, example_double_hashing_analysis,
-    example_probe_sequence_analysis,
+    example_double_hashing_analysis, example_probe_sequence_analysis, AdvancedDoubleHashingStrategy,
+    DoubleHashingMetrics, RelativePrimeValidator,
 };
 use apas_ai::Chap47::FlatHashTable::FlatHashTable::{Entry, FlatHashTable, ProbeSequence};
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::DefaultHashFunction;

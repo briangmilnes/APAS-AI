@@ -3,7 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
 use apas_ai::Chap26::DivConReduceMt::DivConReduceMt::DivConReduceMtTrait;
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use std::time::Duration;
 
 fn bench_divcon_reduce_mt(c: &mut Criterion) {

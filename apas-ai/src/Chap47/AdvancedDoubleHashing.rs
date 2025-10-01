@@ -39,7 +39,13 @@ pub mod AdvancedDoubleHashing {
     impl RelativePrimeValidator {
         /// Compute greatest common divisor using Euclidean algorithm
         /// Claude Work: O(log min(a,b)), Span: O(log min(a,b))
-        pub fn gcd(a: N, b: N) -> N { if b == 0 { a } else { Self::gcd(b, a % b) } }
+        pub fn gcd(a: N, b: N) -> N {
+            if b == 0 {
+                a
+            } else {
+                Self::gcd(b, a % b)
+            }
+        }
 
         /// Check if two numbers are relatively prime (gcd = 1)
         /// Claude Work: O(log min(a,b)), Span: O(log min(a,b))

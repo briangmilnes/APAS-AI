@@ -4,7 +4,7 @@
 pub mod Chapter36MtSlice {
     use std::thread;
 
-    use rand::{Rng, rng};
+    use rand::{rng, Rng};
 
     use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
     use crate::Types::Types::*;

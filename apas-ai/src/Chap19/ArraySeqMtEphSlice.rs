@@ -140,9 +140,21 @@ pub mod ArraySeqMtEphSlice {
             Self { inner, range: 0..1 }
         }
 
-        fn isEmpty(&self) -> B { if self.len() == 0 { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.len() == 0 {
+                true
+            } else {
+                false
+            }
+        }
 
-        fn isSingleton(&self) -> B { if self.len() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B {
+            if self.len() == 1 {
+                true
+            } else {
+                false
+            }
+        }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let sub = self.clamp_subrange(start, length);

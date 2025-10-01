@@ -6,6 +6,21 @@ Chap59
 
  You put Rayon in, what do the APAS rules say about that?
  Replace with fork/join.
- 
 
+ The uses look wildly too big:
+
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::LabDirGraphMtEphTrait;
+    use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
+    use crate::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
+    use crate::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap56::AllPairsResultStEphInt::AllPairsResultStEphInt;
+    use crate::Chap57::DijkstraStEphInt::DijkstraStEphInt::dijkstra;
+    use crate::Chap58::BellmanFordStEphInt::BellmanFordStEphInt::bellman_ford;
+    use crate::Types::Types::*;
+
+ Which are actually needed?
+ 
+ The files have APAS work/span but not your deductions on work/span. Please add these.
 

@@ -43,7 +43,7 @@ pub mod Test23MappingStEphChap5_5 {
 
         // Mapping should convert relation to function (one value per key)
         assert!(m.size() <= 2); // At most 2 keys (1 and 2)
-        // Either "one" or "uno" for key 1, depending on implementation
+                                // Either "one" or "uno" for key 1, depending on implementation
         assert!(m.mem(&1, &"one") == true || m.mem(&1, &"uno") == true);
         assert_eq!(m.mem(&2, &"two"), true);
     }

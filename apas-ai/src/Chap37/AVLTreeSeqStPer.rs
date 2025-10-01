@@ -177,8 +177,20 @@ pub mod AVLTreeSeqStPer {
                 root: Some(mk(item, None, None)),
             }
         }
-        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
-        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
+        fn isEmpty(&self) -> B {
+            if self.length() == 0 {
+                true
+            } else {
+                false
+            }
+        }
+        fn isSingleton(&self) -> B {
+            if self.length() == 1 {
+                true
+            } else {
+                false
+            }
+        }
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.length();
             let s = start.min(n);

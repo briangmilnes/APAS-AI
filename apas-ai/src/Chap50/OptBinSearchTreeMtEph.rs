@@ -7,7 +7,7 @@ pub mod OptBinSearchTreeMtEph {
     use std::sync::{Arc, Mutex};
     use std::thread;
 
-    use crate::Chap50::Probability::Probability;
+    use crate::Chap50::Probability::Probability::Probability;
     use crate::Types::Types::*;
 
     /// Key-probability pair for optimal BST

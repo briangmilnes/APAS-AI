@@ -4,6 +4,7 @@
 pub mod Example43_1 {
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
     use crate::Chap43::OrderedSetStPer::OrderedSetStPer::*;
+    use crate::OrderedSetStPerLit;
     use crate::Types::Types::*;
 
     /// Demonstrates Example 43.1 from the textbook with lexicographic ordering

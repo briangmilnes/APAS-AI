@@ -13,7 +13,13 @@ pub mod Test27ArraySeqMtPerChap {
     fn add_100(i: N) -> N { i + 100 }
     fn const_42(_i: N) -> N { 42 }
     fn format_item(i: N) -> String { format!("item_{}", i) }
-    fn is_even_bool(i: N) -> B { if i % 2 == 0 { true } else { false } }
+    fn is_even_bool(i: N) -> B {
+        if i % 2 == 0 {
+            true
+        } else {
+            false
+        }
+    }
 
     // Helper function for set equality comparison
     fn assert_set_eq<T: PartialEq + std::fmt::Debug>(actual: &[T], expected: &[T]) {

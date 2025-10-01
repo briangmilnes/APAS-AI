@@ -55,7 +55,11 @@ pub mod TestLinkedListStEph {
         expect_list(&one, &[1]);
         let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
         let even = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&a, &|x: &N| {
-            if *x % 2 == 0 { true } else { false }
+            if *x % 2 == 0 {
+                true
+            } else {
+                false
+            }
         });
         expect_list(&even, &[2, 4]);
         let sum = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::reduce(&a, &|x, y| x + y, 0);
