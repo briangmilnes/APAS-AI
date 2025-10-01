@@ -1,10 +1,10 @@
 
- Review all source files for 
+ Review all source files for :
 
 - Do not add stub functions inside the same module that simply call another function/method in that module. Call sites should invoke the original API directly rather than indirection stubs.
 
  Identify and list the modules that use this pattern.
  
- Build a plan for fixing this.
+ Build a plan for fixing this matching PrePlanChecklist.
 
  Show it to me and estimate time.

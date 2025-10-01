@@ -1,0 +1,10 @@
+
+ Scan all of the benches/Chap*/ directories.
+ Each file there should correspond to a single source file module.
+ Identify those that are benching multiple modules and split
+ them.
+
+ Run the split benchmarks and check that they are warming up 300ms and
+ running < 1s each.
+ Adjust the input size if need be to meet this small timings.
+ 

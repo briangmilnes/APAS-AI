@@ -1,0 +1,10 @@
+
+ Scan the src code base and see that every src module has
+ a test and benchmark file.
+
+ Some benchmarks may have been incorrectly created in a
+ single file for multiple source files. If you find this,
+ split them into the correct benchmark files that
+ match the src modules.
+ 
+ 

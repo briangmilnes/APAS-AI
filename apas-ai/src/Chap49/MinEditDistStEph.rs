@@ -1,14 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 49: Minimum Edit Distance - ephemeral, single-threaded.
 
-use std::collections::HashMap;
-use std::fmt::{Debug, Display, Formatter, Result};
-
-use crate::ArraySeqStEphS;
-use crate::{Chap18::ArraySeqStEph::ArraySeqStEph::*, Types::Types::*};
-
 pub mod MinEditDistStEph {
-    use super::*;
+    use std::collections::HashMap;
+    use std::fmt::{Debug, Display, Formatter, Result};
+
+    use crate::ArraySeqStEphS;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Types::Types::*;
 
     /// Ephemeral single-threaded minimum edit distance solver using dynamic programming
     #[derive(Clone, Debug, PartialEq, Eq)]

@@ -9,14 +9,14 @@ use std::thread;
 
 #[test]
 fn test_ordered_table_mt_eph_new() {
-    let table = OrderedTableMtEph::<i32, String>::new();
+    let table = OrderedTableMtEph::<i32, String>::empty();
     assert_eq!(table.size(), 0);
     assert!(table.is_empty());
 }
 
 #[test]
 fn test_ordered_table_mt_eph_insert_and_lookup() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(2, "two".to_string(), |_old, new| new.clone());
 
@@ -28,7 +28,7 @@ fn test_ordered_table_mt_eph_insert_and_lookup() {
 
 #[test]
 fn test_ordered_table_mt_eph_delete() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(2, "two".to_string(), |_old, new| new.clone());
 
@@ -41,7 +41,7 @@ fn test_ordered_table_mt_eph_delete() {
 
 #[test]
 fn test_ordered_table_mt_eph_parallel_operations() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
 
     // Insert test data
     for i in 0..100 {
@@ -63,7 +63,7 @@ fn test_ordered_table_mt_eph_parallel_operations() {
 
 #[test]
 fn test_ordered_table_mt_eph_first_key() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     assert_eq!(table.first_key(), None);
 
     table.insert(3, "three".to_string(), |_old, new| new.clone());
@@ -75,7 +75,7 @@ fn test_ordered_table_mt_eph_first_key() {
 
 #[test]
 fn test_ordered_table_mt_eph_last_key() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     assert_eq!(table.last_key(), None);
 
     table.insert(3, "three".to_string(), |_old, new| new.clone());
@@ -87,7 +87,7 @@ fn test_ordered_table_mt_eph_last_key() {
 
 #[test]
 fn test_ordered_table_mt_eph_previous_key() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(3, "three".to_string(), |_old, new| new.clone());
     table.insert(5, "five".to_string(), |_old, new| new.clone());
@@ -100,7 +100,7 @@ fn test_ordered_table_mt_eph_previous_key() {
 
 #[test]
 fn test_ordered_table_mt_eph_next_key() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(3, "three".to_string(), |_old, new| new.clone());
     table.insert(5, "five".to_string(), |_old, new| new.clone());
@@ -113,7 +113,7 @@ fn test_ordered_table_mt_eph_next_key() {
 
 #[test]
 fn test_ordered_table_mt_eph_split_key() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(2, "two".to_string(), |_old, new| new.clone());
     table.insert(3, "three".to_string(), |_old, new| new.clone());
@@ -136,11 +136,11 @@ fn test_ordered_table_mt_eph_split_key() {
 
 #[test]
 fn test_ordered_table_mt_eph_join_key() {
-    let mut left = OrderedTableMtEph::new();
+    let mut left = OrderedTableMtEph::empty();
     left.insert(1, "one".to_string(), |_old, new| new.clone());
     left.insert(2, "two".to_string(), |_old, new| new.clone());
 
-    let mut right = OrderedTableMtEph::new();
+    let mut right = OrderedTableMtEph::empty();
     right.insert(3, "three".to_string(), |_old, new| new.clone());
     right.insert(4, "four".to_string(), |_old, new| new.clone());
 
@@ -157,7 +157,7 @@ fn test_ordered_table_mt_eph_join_key() {
 
 #[test]
 fn test_ordered_table_mt_eph_get_key_range() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(2, "two".to_string(), |_old, new| new.clone());
     table.insert(3, "three".to_string(), |_old, new| new.clone());
@@ -176,7 +176,7 @@ fn test_ordered_table_mt_eph_get_key_range() {
 
 #[test]
 fn test_ordered_table_mt_eph_rank_key() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     table.insert(10, "ten".to_string(), |_old, new| new.clone());
     table.insert(20, "twenty".to_string(), |_old, new| new.clone());
     table.insert(30, "thirty".to_string(), |_old, new| new.clone());
@@ -189,7 +189,7 @@ fn test_ordered_table_mt_eph_rank_key() {
 
 #[test]
 fn test_ordered_table_mt_eph_select_key() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     table.insert(10, "ten".to_string(), |_old, new| new.clone());
     table.insert(20, "twenty".to_string(), |_old, new| new.clone());
     table.insert(30, "thirty".to_string(), |_old, new| new.clone());
@@ -202,7 +202,7 @@ fn test_ordered_table_mt_eph_select_key() {
 
 #[test]
 fn test_ordered_table_mt_eph_split_rank_key() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(2, "two".to_string(), |_old, new| new.clone());
     table.insert(3, "three".to_string(), |_old, new| new.clone());
@@ -223,7 +223,7 @@ fn test_ordered_table_mt_eph_split_rank_key() {
 
 #[test]
 fn test_ordered_table_mt_eph_ephemeral_semantics() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
 
     let original_size = table.size();
@@ -239,7 +239,7 @@ fn test_ordered_table_mt_eph_ephemeral_semantics() {
 
 #[test]
 fn test_ordered_table_mt_eph_thread_safety() {
-    let table = Arc::new(OrderedTableMtEph::<i32, String>::new());
+    let table = Arc::new(OrderedTableMtEph::<i32, String>::empty());
     let mut handles = vec![];
 
     // Test concurrent reads
@@ -261,7 +261,7 @@ fn test_ordered_table_mt_eph_thread_safety() {
 
 #[test]
 fn test_ordered_table_mt_eph_collect() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(2, "two".to_string(), |_old, new| new.clone());
 
@@ -288,7 +288,7 @@ fn test_ordered_table_mt_eph_from_sorted_entries() {
 
 #[test]
 fn test_ordered_table_mt_eph_empty_operations() {
-    let mut table = OrderedTableMtEph::<i32, String>::new();
+    let mut table = OrderedTableMtEph::<i32, String>::empty();
 
     assert_eq!(table.first_key(), None);
     assert_eq!(table.last_key(), None);
@@ -306,7 +306,7 @@ fn test_ordered_table_mt_eph_empty_operations() {
 
 #[test]
 fn test_ordered_table_mt_eph_large_dataset_parallel() {
-    let mut table = OrderedTableMtEph::new();
+    let mut table = OrderedTableMtEph::empty();
 
     // Insert a large dataset
     for i in 0..1000 {

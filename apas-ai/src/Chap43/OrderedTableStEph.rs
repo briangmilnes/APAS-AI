@@ -56,15 +56,6 @@ pub mod OrderedTableStEph {
             Self: Sized;
     }
 
-    impl<K: StT + Ord, V: StT> OrderedTableStEph<K, V> {
-        /// APAS: Work Θ(1), Span Θ(1)
-        pub fn new() -> Self {
-            OrderedTableStEph {
-                base_table: TableStEph::empty(),
-            }
-        }
-    }
-
     impl<K: StT + Ord, V: StT> OrderedTableStEphTrait<K, V> for OrderedTableStEph<K, V> {
         // Base table operations - delegate to backing store with ephemeral semantics
 

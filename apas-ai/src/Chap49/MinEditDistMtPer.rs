@@ -1,15 +1,14 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 49: Minimum Edit Distance - persistent, multi-threaded.
 
-use std::collections::HashMap;
-use std::fmt::{Debug, Display, Formatter, Result};
-use std::sync::{Arc, Mutex};
-use std::thread;
-
-use crate::{Chap18::ArraySeqMtPer::ArraySeqMtPer::*, Types::Types::*};
-
 pub mod MinEditDistMtPer {
-    use super::*;
+    use std::collections::HashMap;
+    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::sync::{Arc, Mutex};
+    use std::thread;
+
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
+    use crate::Types::Types::*;
 
     /// Persistent multi-threaded minimum edit distance solver using parallel dynamic programming
     #[derive(Clone, Debug)]

@@ -17,69 +17,94 @@ pub mod HeapsortExample {
     pub struct Heapsort;
 
     impl Heapsort {
-        /// Generic heapsort implementation (Algorithm 45.2)
-        /// Claude Work: Θ(n log n), Span: Θ(n log n) for efficient priority queues
-        ///
-        /// sort S =
-        ///   let q0 = Sequence.iter PQ.insert PQ.empty S
-        ///   hsort q =
-        ///     case PQ.deleteMin q of
-        ///       ( , None) ⇒ 〈 〉
-        ///       | (q′, Some (v)) ⇒ Seq.append 〈 v 〉 (hsort q′)
-        ///   in hsort q0 end
-        pub fn heapsort_generic<T, PQ, Ops>(sequence: &[T], ops: &Ops) -> Vec<T>
-        where
-            T: StT + Ord,
-            PQ: Clone,
-            Ops: HeapsortOps<T, PQ>,
-        {
-            // Step 1: Insert all elements into priority queue
-            let mut pq = ops.empty();
+        /// Heapsort using UnsortedListPQ
+        /// Claude Work: Θ(n²), Span: Θ(n²) - inefficient due to O(n) deleteMin
+        pub fn heapsort_unsorted_list<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
+            let mut pq = UnsortedListPQ::empty();
             for element in sequence {
-                pq = ops.insert(&pq, element.clone());
+                pq = pq.insert(element.clone());
             }
-
-            // Step 2: Extract elements in sorted order
             let mut result = Vec::new();
-            while !ops.is_empty(&pq) {
-                let (new_pq, min_element) = ops.delete_min(&pq);
+            while !pq.is_empty() {
+                let (new_pq, min_element) = pq.delete_min();
                 if let Some(element) = min_element {
                     result.push(element);
                 }
                 pq = new_pq;
             }
-
             result
-        }
-
-        /// Heapsort using UnsortedListPQ
-        /// Claude Work: Θ(n²), Span: Θ(n²) - inefficient due to O(n) deleteMin
-        pub fn heapsort_unsorted_list<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
-            Self::heapsort_generic(sequence, &UnsortedListPQHeapsortOps)
         }
 
         /// Heapsort using SortedListPQ  
         /// Claude Work: Θ(n²), Span: Θ(n²) - inefficient due to O(n) insert
         pub fn heapsort_sorted_list<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
-            Self::heapsort_generic(sequence, &SortedListPQHeapsortOps)
+            let mut pq = SortedListPQ::empty();
+            for element in sequence {
+                pq = pq.insert(element.clone());
+            }
+            let mut result = Vec::new();
+            while !pq.is_empty() {
+                let (new_pq, min_element) = pq.delete_min();
+                if let Some(element) = min_element {
+                    result.push(element);
+                }
+                pq = new_pq;
+            }
+            result
         }
 
         /// Heapsort using BalancedTreePQ
         /// Claude Work: Θ(n log n), Span: Θ(n log n) - optimal complexity
         pub fn heapsort_balanced_tree<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
-            Self::heapsort_generic(sequence, &BalancedTreePQHeapsortOps)
+            let mut pq = BalancedTreePQ::empty();
+            for element in sequence {
+                pq = pq.insert(element.clone());
+            }
+            let mut result = Vec::new();
+            while !pq.is_empty() {
+                let (new_pq, min_element) = pq.delete_min();
+                if let Some(element) = min_element {
+                    result.push(element);
+                }
+                pq = new_pq;
+            }
+            result
         }
 
         /// Heapsort using BinaryHeapPQ
         /// Claude Work: Θ(n log n), Span: Θ(n log n) - optimal complexity
         pub fn heapsort_binary_heap<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
-            Self::heapsort_generic(sequence, &BinaryHeapPQHeapsortOps)
+            let mut pq = BinaryHeapPQ::empty();
+            for element in sequence {
+                pq = pq.insert(element.clone());
+            }
+            let mut result = Vec::new();
+            while !pq.is_empty() {
+                let (new_pq, min_element) = pq.delete_min();
+                if let Some(element) = min_element {
+                    result.push(element);
+                }
+                pq = new_pq;
+            }
+            result
         }
 
         /// Heapsort using LeftistHeapPQ
         /// Claude Work: Θ(n log n), Span: Θ(n log n) - optimal complexity with superior meld
         pub fn heapsort_leftist_heap<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
-            Self::heapsort_generic(sequence, &LeftistHeapPQHeapsortOps)
+            let mut pq = LeftistHeapPQ::empty();
+            for element in sequence {
+                pq = pq.insert(element.clone());
+            }
+            let mut result = Vec::new();
+            while !pq.is_empty() {
+                let (new_pq, min_element) = pq.delete_min();
+                if let Some(element) = min_element {
+                    result.push(element);
+                }
+                pq = new_pq;
+            }
+            result
         }
 
         /// Demonstrate all heapsort variants on the same input
@@ -127,119 +152,6 @@ pub mod HeapsortExample {
                 && is_sorted(&self.balanced_tree_result)
                 && is_sorted(&self.binary_heap_result)
                 && is_sorted(&self.leftist_heap_result)
-        }
-    }
-
-    /// Trait for heapsort operations - allows generic heapsort implementation
-    pub trait HeapsortOps<T: StT + Ord, PQ> {
-        fn empty(&self) -> PQ;
-        fn insert(&self, pq: &PQ, element: T) -> PQ;
-        fn delete_min(&self, pq: &PQ) -> (PQ, Option<T>);
-        fn is_empty(&self, pq: &PQ) -> bool;
-    }
-
-    /// Heapsort operations for UnsortedListPQ
-    pub struct UnsortedListPQHeapsortOps;
-
-    impl<T: StT + Ord> HeapsortOps<T, UnsortedListPQ<T>> for UnsortedListPQHeapsortOps {
-        fn empty(&self) -> UnsortedListPQ<T> {
-            UnsortedListPQ::empty()
-        }
-
-        fn insert(&self, pq: &UnsortedListPQ<T>, element: T) -> UnsortedListPQ<T> {
-            pq.insert(element)
-        }
-
-        fn delete_min(&self, pq: &UnsortedListPQ<T>) -> (UnsortedListPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
-
-        fn is_empty(&self, pq: &UnsortedListPQ<T>) -> bool {
-            pq.is_empty()
-        }
-    }
-
-    /// Heapsort operations for SortedListPQ
-    pub struct SortedListPQHeapsortOps;
-
-    impl<T: StT + Ord> HeapsortOps<T, SortedListPQ<T>> for SortedListPQHeapsortOps {
-        fn empty(&self) -> SortedListPQ<T> {
-            SortedListPQ::empty()
-        }
-
-        fn insert(&self, pq: &SortedListPQ<T>, element: T) -> SortedListPQ<T> {
-            pq.insert(element)
-        }
-
-        fn delete_min(&self, pq: &SortedListPQ<T>) -> (SortedListPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
-
-        fn is_empty(&self, pq: &SortedListPQ<T>) -> bool {
-            pq.is_empty()
-        }
-    }
-
-    /// Heapsort operations for BalancedTreePQ
-    pub struct BalancedTreePQHeapsortOps;
-
-    impl<T: StT + Ord> HeapsortOps<T, BalancedTreePQ<T>> for BalancedTreePQHeapsortOps {
-        fn empty(&self) -> BalancedTreePQ<T> {
-            BalancedTreePQ::empty()
-        }
-
-        fn insert(&self, pq: &BalancedTreePQ<T>, element: T) -> BalancedTreePQ<T> {
-            pq.insert(element)
-        }
-
-        fn delete_min(&self, pq: &BalancedTreePQ<T>) -> (BalancedTreePQ<T>, Option<T>) {
-            pq.delete_min()
-        }
-
-        fn is_empty(&self, pq: &BalancedTreePQ<T>) -> bool {
-            pq.is_empty()
-        }
-    }
-
-    /// Heapsort operations for BinaryHeapPQ
-    pub struct BinaryHeapPQHeapsortOps;
-
-    impl<T: StT + Ord> HeapsortOps<T, BinaryHeapPQ<T>> for BinaryHeapPQHeapsortOps {
-        fn empty(&self) -> BinaryHeapPQ<T> {
-            BinaryHeapPQ::empty()
-        }
-
-        fn insert(&self, pq: &BinaryHeapPQ<T>, element: T) -> BinaryHeapPQ<T> {
-            pq.insert(element)
-        }
-
-        fn delete_min(&self, pq: &BinaryHeapPQ<T>) -> (BinaryHeapPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
-
-        fn is_empty(&self, pq: &BinaryHeapPQ<T>) -> bool {
-            pq.is_empty()
-        }
-    }
-
-    /// Heapsort operations for LeftistHeapPQ
-    pub struct LeftistHeapPQHeapsortOps;
-
-    impl<T: StT + Ord> HeapsortOps<T, LeftistHeapPQ<T>> for LeftistHeapPQHeapsortOps {
-        fn empty(&self) -> LeftistHeapPQ<T> {
-            LeftistHeapPQ::empty()
-        }
-
-        fn insert(&self, pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> {
-            pq.insert(element)
-        }
-
-        fn delete_min(&self, pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
-
-        fn is_empty(&self, pq: &LeftistHeapPQ<T>) -> bool {
-            pq.is_empty()
         }
     }
 

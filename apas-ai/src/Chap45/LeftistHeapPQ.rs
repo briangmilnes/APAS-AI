@@ -303,26 +303,6 @@ pub mod LeftistHeapPQ {
     }
 
     impl<T: StT + Ord> LeftistHeapPQ<T> {
-        /// Create an empty priority queue
-        pub fn new() -> Self {
-            Self::empty()
-        }
-
-        /// Get the number of elements
-        pub fn len(&self) -> N {
-            self.size()
-        }
-
-        /// Check if the priority queue is empty
-        pub fn is_empty(&self) -> bool {
-            LeftistHeapPQTrait::is_empty(self)
-        }
-
-        /// Peek at the minimum element without removing it
-        pub fn peek(&self) -> Option<&T> {
-            self.find_min()
-        }
-
         /// Extract all elements in sorted order
         pub fn extract_all_sorted(&self) -> Vec<T> {
             let mut result = Vec::new();
@@ -442,36 +422,6 @@ pub mod LeftistHeapPQ {
     fn _leftist_heap_pq_lit_type_checks() {
         let _: LeftistHeapPQ<i32> = LeftistHeapPQLit![];
         let _: LeftistHeapPQ<i32> = LeftistHeapPQLit![1, 2, 3];
-    }
-
-    /// Priority queue operations for use in heapsort and other algorithms
-    pub struct LeftistHeapPQOps;
-
-    impl LeftistHeapPQOps {
-        /// Create empty priority queue
-        pub fn empty<T: StT + Ord>() -> LeftistHeapPQ<T> {
-            LeftistHeapPQ::empty()
-        }
-
-        /// Insert element into priority queue
-        pub fn insert<T: StT + Ord>(pq: &LeftistHeapPQ<T>, element: T) -> LeftistHeapPQ<T> {
-            pq.insert(element)
-        }
-
-        /// Delete minimum element from priority queue
-        pub fn delete_min<T: StT + Ord>(pq: &LeftistHeapPQ<T>) -> (LeftistHeapPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
-
-        /// Meld two priority queues (THE STAR OPERATION!)
-        pub fn meld<T: StT + Ord>(pq1: &LeftistHeapPQ<T>, pq2: &LeftistHeapPQ<T>) -> LeftistHeapPQ<T> {
-            pq1.meld(pq2)
-        }
-
-        /// Create priority queue from sequence
-        pub fn from_seq<T: StT + Ord>(seq: &[T]) -> LeftistHeapPQ<T> {
-            LeftistHeapPQ::from_seq(seq)
-        }
     }
 
     /// Demonstration of leftist heap advantages

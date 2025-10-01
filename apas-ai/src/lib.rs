@@ -327,3 +327,8 @@ pub mod Chap57 {
     pub mod DijkstraStEphInt;
     pub mod StackStEph;
 }
+
+pub mod Chap58 {
+    pub mod BellmanFordStEphFloat;
+    pub mod BellmanFordStEphInt;
+}

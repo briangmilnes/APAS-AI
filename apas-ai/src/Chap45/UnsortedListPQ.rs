@@ -156,26 +156,6 @@ pub mod UnsortedListPQ {
     }
 
     impl<T: StT + Ord> UnsortedListPQ<T> {
-        /// Create an empty priority queue
-        pub fn new() -> Self {
-            Self::empty()
-        }
-
-        /// Get the number of elements
-        pub fn len(&self) -> N {
-            self.size()
-        }
-
-        /// Check if the priority queue is empty
-        pub fn is_empty(&self) -> bool {
-            UnsortedListPQTrait::is_empty(self)
-        }
-
-        /// Peek at the minimum element without removing it
-        pub fn peek(&self) -> Option<&T> {
-            self.find_min()
-        }
-
         /// Insert multiple elements from an iterator
         pub fn insert_all(&self, elements: &ArraySeqStPerS<T>) -> Self {
             let mut result = self.clone();
@@ -272,36 +252,6 @@ pub mod UnsortedListPQ {
                 result.push(sorted_seq.nth(i).clone());
             }
             result
-        }
-    }
-
-    /// Priority queue operations for use in heapsort and other algorithms
-    pub struct UnsortedListPQOps;
-
-    impl UnsortedListPQOps {
-        /// Create empty priority queue
-        pub fn empty<T: StT + Ord>() -> UnsortedListPQ<T> {
-            UnsortedListPQ::empty()
-        }
-
-        /// Insert element into priority queue
-        pub fn insert<T: StT + Ord>(pq: &UnsortedListPQ<T>, element: T) -> UnsortedListPQ<T> {
-            pq.insert(element)
-        }
-
-        /// Delete minimum element from priority queue
-        pub fn delete_min<T: StT + Ord>(pq: &UnsortedListPQ<T>) -> (UnsortedListPQ<T>, Option<T>) {
-            pq.delete_min()
-        }
-
-        /// Meld two priority queues
-        pub fn meld<T: StT + Ord>(pq1: &UnsortedListPQ<T>, pq2: &UnsortedListPQ<T>) -> UnsortedListPQ<T> {
-            pq1.meld(pq2)
-        }
-
-        /// Create priority queue from sequence
-        pub fn from_seq<T: StT + Ord>(seq: &ArraySeqStPerS<T>) -> UnsortedListPQ<T> {
-            UnsortedListPQ::from_seq(seq)
         }
     }
 }

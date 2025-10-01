@@ -58,15 +58,6 @@ pub mod OrderedTableMtEph {
             Self: Sized;
     }
 
-    impl<K: MtKey, V: MtVal> OrderedTableMtEph<K, V> {
-        /// APAS: Work Θ(1), Span Θ(1)
-        pub fn new() -> Self {
-            OrderedTableMtEph {
-                base_table: TableMtEph::empty(),
-            }
-        }
-    }
-
     impl<K: MtKey, V: MtVal> OrderedTableMtEphTrait<K, V> for OrderedTableMtEph<K, V> {
         // Base table operations - delegate to backing store with ephemeral semantics and parallelism
 

@@ -116,7 +116,7 @@ mod tests {
         let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
         let result = dijkstra(&graph, 0);
 
-        let path = result.extract_path(3);
+        let path = result.extract_path(3).unwrap();
         assert_eq!(path.length(), 4);
         assert_eq!(*path.nth(0), 0);
         assert_eq!(*path.nth(1), 1);
@@ -165,8 +165,8 @@ mod tests {
         let result = dijkstra(&graph, 0);
 
         assert_eq!(result.get_distance(0), 0);
-        assert_eq!(result.get_distance(5), 3); // via shortcut
-        assert_eq!(result.get_distance(9), 9);
+        assert_eq!(result.get_distance(5), 3); // via shortcut 0->5
+        assert_eq!(result.get_distance(9), 7); // via shortcut 0->5, then 5->6->7->8->9
     }
 }
 

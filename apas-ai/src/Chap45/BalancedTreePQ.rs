@@ -185,26 +185,6 @@ pub mod BalancedTreePQ {
     }
 
     impl<T: StT + Ord> BalancedTreePQ<T> {
-        /// Create an empty priority queue
-        pub fn new() -> Self {
-            Self::empty()
-        }
-
-        /// Get the number of elements
-        pub fn len(&self) -> N {
-            self.size()
-        }
-
-        /// Check if the priority queue is empty
-        pub fn is_empty(&self) -> bool {
-            BalancedTreePQTrait::is_empty(self)
-        }
-
-        /// Peek at the minimum element without removing it
-        pub fn peek(&self) -> Option<&T> {
-            self.find_min()
-        }
-
         /// Get the maximum element (rightmost in balanced tree)
         pub fn find_max(&self) -> Option<&T> {
             if self.elements.length() == 0 {
@@ -389,36 +369,6 @@ pub mod BalancedTreePQ {
             } else {
                 ((self.elements.length() as f64).log2().ceil() as N).max(1)
             }
-        }
-    }
-
-    /// Priority queue operations for use in heapsort and other algorithms
-    pub struct BalancedTreePQOps;
-
-    impl BalancedTreePQOps {
-        /// Create empty priority queue
-        pub fn empty<T: StT + Ord>() -> BalancedTreePQ<T> {
-            BalancedTreePQ::empty()
-        }
-
-        /// Insert element into priority queue
-        pub fn insert<T: StT + Ord>(pq: &BalancedTreePQ<T>, element: T) -> BalancedTreePQ<T> {
-            pq.insert(element)
-        }
-
-        /// Delete minimum element from priority queue
-        pub fn delete_min<T: StT + Ord>(pq: &BalancedTreePQ<T>) -> (BalancedTreePQ<T>, Option<T>) {
-            pq.delete_min()
-        }
-
-        /// Meld two priority queues
-        pub fn meld<T: StT + Ord>(pq1: &BalancedTreePQ<T>, pq2: &BalancedTreePQ<T>) -> BalancedTreePQ<T> {
-            pq1.meld(pq2)
-        }
-
-        /// Create priority queue from sequence
-        pub fn from_seq<T: StT + Ord>(seq: &AVLTreeSeqStPerS<T>) -> BalancedTreePQ<T> {
-            BalancedTreePQ::from_seq(seq)
         }
     }
 
