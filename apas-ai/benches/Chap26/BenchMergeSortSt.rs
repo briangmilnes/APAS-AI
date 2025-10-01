@@ -8,8 +8,8 @@ use std::time::Duration;
 
 fn bench_merge_sort_st(c: &mut Criterion) {
     let mut group = c.benchmark_group("merge_sort_st");
-    group.warm_up_time(Duration::from_millis(1000));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     group.bench_function("sort_100", |b| {

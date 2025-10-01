@@ -5,6 +5,7 @@ use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap42::TableStPer::TableStPer::*;
 use apas_ai::Types::Types::*;
 use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
+use std::time::Duration;
 
 fn build_table(size: usize) -> TableStPer<i32, String> {
     let mut table = TableStPer::empty();
@@ -24,6 +25,8 @@ fn build_set(size: usize) -> ArraySetStEph<i32> {
 
 fn bench_table_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("TableStPer Operations");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
@@ -90,6 +93,8 @@ fn bench_table_operations(c: &mut Criterion) {
 
 fn bench_table_bulk_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("TableStPer Bulk Operations");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
@@ -141,6 +146,8 @@ fn bench_table_bulk_operations(c: &mut Criterion) {
 
 fn bench_table_construction(c: &mut Criterion) {
     let mut group = c.benchmark_group("TableStPer Construction");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
@@ -167,6 +174,8 @@ fn bench_table_construction(c: &mut Criterion) {
 
 fn bench_table_persistence(c: &mut Criterion) {
     let mut group = c.benchmark_group("TableStPer Persistence");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 

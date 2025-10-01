@@ -18,10 +18,10 @@ fn build_tree(len: usize) -> BSTree<i32> {
 fn bench_bsteph(c: &mut Criterion) {
     let mut group = c.benchmark_group("BSTPlainMtEph");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_millis(200));
-    group.measurement_time(Duration::from_millis(800));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
-    for &n in &[1_024usize, 2_048] {
+    for &n in &[512usize, 1_024] {
         group.bench_with_input(BenchmarkId::new("build", n), &n, |b, &len| {
             b.iter(|| black_box(build_tree(len)));
         });

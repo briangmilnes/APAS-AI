@@ -4,9 +4,10 @@
 //! Work: O(|V| + |E|), Span: O(|V| + |E|).
 
 pub mod CycleDetectStEph {
+
+    use crate::Types::Types::*;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::{AVLTreeSetStEph, AVLTreeSetStEphTrait};
-    use crate::Types::Types::*;
 
     /// Detects if a directed graph contains a cycle.
     /// Returns true if a cycle exists, false otherwise.

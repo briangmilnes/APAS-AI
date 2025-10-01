@@ -7,6 +7,7 @@ use apas_ai::Chap44::Example44_1::Example44_1::*;
 use apas_ai::DocumentCollectionLit;
 use apas_ai::Types::Types::*;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use std::time::Duration;
 
 /// Create a document collection of specified size for benchmarking
 fn create_benchmark_documents(size: usize) -> DocumentCollection {
@@ -47,6 +48,8 @@ fn brute_force_search(docs: &DocumentCollection, word: &str) -> Vec<String> {
 /// Benchmark makeIndex operation (Algorithm 44.2)
 fn bench_make_index(c: &mut Criterion) {
     let mut group = c.benchmark_group("makeIndex");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 50, 100, 500].iter() {
         let docs = create_benchmark_documents(*size);
@@ -65,6 +68,8 @@ fn bench_make_index(c: &mut Criterion) {
 /// Benchmark find operation
 fn bench_find_operation(c: &mut Criterion) {
     let mut group = c.benchmark_group("find");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 50, 100, 500].iter() {
         let docs = create_benchmark_documents(*size);
@@ -114,6 +119,8 @@ fn bench_query_operations(c: &mut Criterion) {
 /// Benchmark indexed search vs brute force search
 fn bench_indexed_vs_brute_force(c: &mut Criterion) {
     let mut group = c.benchmark_group("search_comparison");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 50, 100, 500].iter() {
         let docs = create_benchmark_documents(*size);
@@ -175,6 +182,8 @@ fn bench_tweet_examples(c: &mut Criterion) {
 /// Benchmark tokenization performance
 fn bench_tokenization(c: &mut Criterion) {
     let mut group = c.benchmark_group("tokenization");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let short_text = "hello world programming";
     let medium_text = "I had fun in dance club today and it was amazing";
@@ -266,6 +275,8 @@ fn bench_complex_queries(c: &mut Criterion) {
 /// Benchmark scalability with varying document sizes
 fn bench_scalability(c: &mut Criterion) {
     let mut group = c.benchmark_group("scalability");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     // Test with different document collection sizes
     for size in [100, 500, 1000, 2000].iter() {

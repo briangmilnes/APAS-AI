@@ -5,6 +5,7 @@ use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap42::TableStEph::TableStEph::*;
 use apas_ai::Types::Types::*;
 use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
+use std::time::Duration;
 
 fn build_table(size: usize) -> TableStEph<i32, String> {
     let mut table = TableStEph::empty();
@@ -24,6 +25,8 @@ fn build_set(size: usize) -> ArraySetStEph<i32> {
 
 fn bench_table_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("TableStEph Operations");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
@@ -104,6 +107,8 @@ fn bench_table_operations(c: &mut Criterion) {
 
 fn bench_table_bulk_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("TableStEph Bulk Operations");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
@@ -180,6 +185,8 @@ fn bench_table_bulk_operations(c: &mut Criterion) {
 
 fn bench_table_construction(c: &mut Criterion) {
     let mut group = c.benchmark_group("TableStEph Construction");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
@@ -206,6 +213,8 @@ fn bench_table_construction(c: &mut Criterion) {
 
 fn bench_table_ephemeral_semantics(c: &mut Criterion) {
     let mut group = c.benchmark_group("TableStEph Ephemeral Semantics");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 

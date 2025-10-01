@@ -3,9 +3,10 @@
 //! G = (V, E) where V is a set of vertices and E ⊆ V × V is a set of edges.
 
 pub mod EdgeSetGraphStPer {
+
+    use crate::Types::Types::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
-    use crate::Types::Types::*;
 
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct EdgeSetGraphStPer<V: StT + Ord> {

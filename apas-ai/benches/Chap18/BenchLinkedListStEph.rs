@@ -8,7 +8,7 @@ use std::time::Duration;
 fn bench_ll_eph(c: &mut Criterion) {
     let mut group = c.benchmark_group("LinkedListEph_ops");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_secs(1));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
     let n: N = 5_000;
     group.bench_with_input(BenchmarkId::new("new_then_set", n), &n, |b, &len| {

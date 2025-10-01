@@ -1,0 +1,141 @@
+════════════════════════════════════════════════════════════════════════════════
+SLOW BENCHMARK FIXES - COMPLETE REPORT
+════════════════════════════════════════════════════════════════════════════════
+
+OBJECTIVE: Fix all benchmarks exceeding 1.6s total time (300ms warmup + 1s measurement)
+
+SUMMARY:
+  Total files modified: 12
+  Total benchmarks fixed: 30+
+  All reductions verified to be under 1.6s threshold
+
+FILES MODIFIED:
+════════════════════════════════════════════════════════════════════════════════
+
+1. Chap12/BenchExercise12_1.rs
+   - Change: 100 → 25 (4x reduction)
+   - Benchmark: Spinlock contention
+   - Reason: Was taking > minutes (killed by user)
+   - New timing: ~1.3s total
+
+2. Chap12/BenchExercise12_2.rs
+   - Change: 1000 → 250 (4x reduction)
+   - Benchmark: Fetch/add CAS contention
+   - Reason: Was taking > minutes (killed by user)
+   - New timing: ~1.3s total
+
+3. Chap12/BenchExercise12_5.rs
+   - Change: 1000 → 250 (4x reduction)
+   - Benchmark: Concurrent stack
+   - Reason: Was taking > minutes (killed by user)
+   - New timing: ~1.3s total
+
+4. Chap19/BenchArraySeqMtPer.rs
+   - Change: 10000 → 3000 (3.3x reduction)
+   - Benchmark: tabulate_then_map/10000
+   - Original: 3.30s
+   - New timing: ~1.3s total
+
+5. Chap19/BenchArraySeqMtPer18.rs
+   - Change: 10000 → 2500 (4x reduction)
+   - Benchmark: tabulate_then_map/10000
+   - Original: 3.70s
+   - New timing: ~1.3s total
+
+6. Chap26/BenchDivConReduceMt.rs ⚠️ CRITICAL
+   - Changes:
+     * sum_parallel_10000: 10000 → 600 (16.7x reduction)
+     * max_parallel_10000: 10000 → 600 (16.7x reduction)
+   - Original: 22.4s and 25.5s
+   - New timing: ~1.6s total
+
+7. Chap36/BenchChapter36Mt.rs
+   - Change: 8192 → 5000 (1.6x reduction)
+   - Benchmarks: random/first/median3 quicksort variants
+   - Original: 1.9-2.1s
+   - New timing: <1.6s total
+
+8. Chap37/BenchBSTPlainMtEph.rs
+   - Change: [1024, 2048] → [512, 1024] (halved)
+   - Benchmarks: build/search/traversal
+   - Original: 1.5-2.1s
+   - New timing: <1.6s total
+
+9. Chap39/BenchBSTParaTreapMtEph.rs
+   - Change: [512, 1024] → [300, 512]
+   - Benchmarks: build/split/union/intersect/difference/filter/reduce
+   - Original: 2.0-2.1s at size 512
+   - New timing: <1.6s total
+
+10. Chap41/BenchArraySetEnumMtEph.rs ⚠️ CRITICAL
+    - Changes:
+      * [1000, 5000, 10000, 20000] → [600, 400, 700, 800]
+      * [1000, 5000, 10000] → [600, 400, 700]
+    - Benchmarks: filter_simple/filter_half operations
+    - Original: 1.7s (1000), 6.9-7.6s (5000), 13.7-14.3s (10000)
+    - New timing: <1.6s total for all sizes
+
+11. Chap43/BenchAugOrderedTableMtEph.rs
+    - Changes:
+      * split_key_multithreaded: 1000 → 600, split point 500 → 300
+      * join_key_multithreaded: 1000 → 600, split point 500 → 300
+      * Large dataset: 5000 → 2000
+    - Original: 2.5s for split/join operations
+    - New timing: <1.6s total
+
+12. Chap43/BenchAugOrderedTableStEph.rs
+    - Changes:
+      * union_operation: 500 → 300, overlap ranges adjusted
+      * intersection_operation: 500 → 300, overlap ranges adjusted
+      * Large dataset: 5000 → 2000
+    - Original: 1.9-2.1s for union/intersection
+    - New timing: <1.6s total
+
+METHODOLOGY:
+════════════════════════════════════════════════════════════════════════════════
+1. Identified slow benchmarks from full benchmark run analysis
+2. Calculated required reduction ratios (target ~1.3s total = 300ms + 1s)
+3. Applied reductions proportionally to achieve target
+4. Tested each benchmark individually after modification
+5. Adjusted further if still exceeding threshold
+
+VERIFICATION:
+════════════════════════════════════════════════════════════════════════════════
+All modified benchmarks tested individually with:
+  cargo bench -j 10 --bench <BENCHMARK_NAME> [-- <pattern>]
+
+All passed verification with total time < 1.6s (300ms warmup + measurement ≤ 1s)
+
+NOTES:
+════════════════════════════════════════════════════════════════════════════════
+- Exercise12 benchmarks were originally killed after running for minutes
+- Chap26 and Chap41 had the most dramatic reductions (10-17x)
+- All other benchmarks required 1.3-4x reductions
+- Input size reductions do NOT affect algorithm correctness, only runtime
+- Benchmark measurements remain representative of algorithm performance
+
+DATE: October 1, 2025
+TIME: ~30 minutes total execution time
+TODOS: 30 created, 30 completed
+
+════════════════════════════════════════════════════════════════════════════════
+END OF REPORT
+════════════════════════════════════════════════════════════════════════════════
+
+════════════════════════════════════════════════════════════════════════════════
+ADDITIONAL FIX - October 1, 2025
+════════════════════════════════════════════════════════════════════════════════
+
+13. Chap40/BenchBSTReducedStEph.rs
+    - Change: [1024, 2048] → [256, 512] (4x reduction)
+    - Benchmarks: build_sum, reduced_value_sum, range_reduce_sum, build_count,
+                  reduced_value_count, range_reduce_count, find_sum, keys_values_sum
+    - Reason: Taking too long (killed by user during full suite run)
+    - New timing: 13-73 µs per benchmark (~1.3s total)
+
+UPDATED TOTALS:
+  Total files modified: 13 (was 12)
+  Total benchmarks fixed: 38+ (was 30+)
+  All now under 1.6s threshold
+
+════════════════════════════════════════════════════════════════════════════════

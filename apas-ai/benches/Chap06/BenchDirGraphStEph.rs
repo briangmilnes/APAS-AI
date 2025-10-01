@@ -9,8 +9,8 @@ use std::time::Duration;
 fn bench_dirgraph_build(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchDirGraphStEphChap6_1");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_millis(100));
-    group.measurement_time(Duration::from_millis(1000));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let n: N = 1_000;
     group.bench_with_input(BenchmarkId::new("build_vertices_arcs", n), &n, |b, &len| {

@@ -1,0 +1,12 @@
+Chap58
+
+ //! **Algorithmic Analysis:**
+//! - Bellman-Ford: Work O(nm), Span O(n lg n) where n = |V|, m = |E|
+
+ You're not signing it APAS or Claude-4.5... and its not on the
+ method in a single line.
+
+ Has it been parallelized?
+
+//! - Parallelizable: Lines 5-6 parallelize over vertices
+

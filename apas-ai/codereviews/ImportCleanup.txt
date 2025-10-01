@@ -1,0 +1,22 @@
+
+Our imports should have:
+1) A blank line after the pub mod
+2) All rust library imports.
+3) A blank line.
+4) Our imports with Types first.
+
+
+It should look like this:
+pub mod <MODULE> {
+
+    use std::cmp::{max, min};
+    use std::fmt::{Debug, Display};
+    use std::sync::{Arc, Mutex};
+    use std::thread;
+
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
+... 
+
+Make a plan according to PrePlanChecklist to fix this.
+Show it to the user.

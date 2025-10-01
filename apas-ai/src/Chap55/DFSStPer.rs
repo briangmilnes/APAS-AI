@@ -4,9 +4,10 @@
 //! Work: O(|V| + |E|), Span: O(|V| + |E|).
 
 pub mod DFSStPer {
+
+    use crate::Types::Types::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::{AVLTreeSetStPer, AVLTreeSetStPerTrait};
-    use crate::Types::Types::*;
 
     /// Performs DFS from source vertex s on adjacency list graph G.
     /// Returns the set of all vertices reachable from s.

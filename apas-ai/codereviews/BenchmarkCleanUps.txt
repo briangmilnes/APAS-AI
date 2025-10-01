@@ -15,4 +15,14 @@
  should be run -j 10. This has been added to the
  ExecutionStyle rules.
  
- 
+ Make a plan according to PrePlanChecklist to fix
+ every slow benchmark (say over 1.6 s total) that
+ you have discovered.
+
+ Run each benchmark individually after adjusting it.
+
+ Remember that exercise that was killed and fix it too.
+
+ Show it to the user in todos.
+
+

@@ -6,10 +6,11 @@
 
 pub mod TopDownDPStEph {
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Types::Types::*;
     use std::collections::HashMap;
     use std::fmt::{Debug, Display};
+
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 
     /// Ephemeral single-threaded top-down DP structure (struct product record type)
     #[derive(Clone, Debug, PartialEq, Eq)]

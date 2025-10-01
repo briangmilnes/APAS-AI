@@ -6,12 +6,13 @@
 
 pub mod TopDownDPMtPer {
 
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
-    use crate::Types::Types::*;
     use std::collections::HashMap;
     use std::fmt::{Debug, Display};
     use std::sync::{Arc, Mutex};
     use std::thread;
+
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 
     /// Persistent multi-threaded top-down DP structure (struct product record type)
     #[derive(Clone, Debug)]

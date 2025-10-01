@@ -4,9 +4,11 @@
 //! Work: O(|V| + |E|), Span: O(|V| + |E|).
 
 pub mod DFSStEph {
+
+    use crate::Types::Types::*;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::{AVLTreeSetStEph, AVLTreeSetStEphTrait};
-    use crate::Types::Types::*;
+
 
     /// Performs DFS from source vertex s on adjacency list graph G.
     /// Returns the set of all vertices reachable from s.

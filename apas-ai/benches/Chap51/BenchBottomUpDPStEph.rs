@@ -7,8 +7,8 @@ use std::time::Duration;
 
 fn bench_med(c: &mut Criterion) {
     let mut group = c.benchmark_group("BottomUpDPStEph_MED");
-    group.warm_up_time(Duration::from_millis(500));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
     let s = ArraySeqStEphS::tabulate(&|i| ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'][i], 10);
     let t = ArraySeqStEphS::tabulate(&|i| ['x', 'b', 'y', 'd', 'z', 'f', 'w', 'h', 'v', 'j'][i], 10);

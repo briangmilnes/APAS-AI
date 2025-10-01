@@ -8,8 +8,8 @@ use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criteri
 
 fn bench_edge_set_graph_build(c: &mut Criterion) {
     let mut group = c.benchmark_group("EdgeSetGraphStPer_build");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     for size in [10, 20].iter() {

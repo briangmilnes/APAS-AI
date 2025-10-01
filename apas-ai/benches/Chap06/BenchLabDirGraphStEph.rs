@@ -4,9 +4,12 @@ use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
 use apas_ai::Types::Types::*;
 use apas_ai::{LabDirGraphStEphLit, SetLit};
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use std::time::Duration;
 
 fn bench_labelled_dir_graph_creation(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabDirGraphStEph_Creation");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("empty", size), size, |b, _| {
@@ -34,6 +37,8 @@ fn bench_labelled_dir_graph_creation(c: &mut Criterion) {
 
 fn bench_labelled_dir_graph_add_vertex(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabDirGraphStEph_AddVertex");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("add_vertex", size), size, |b, &size| {
@@ -52,6 +57,8 @@ fn bench_labelled_dir_graph_add_vertex(c: &mut Criterion) {
 
 fn bench_labelled_dir_graph_add_labeled_arc(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabDirGraphStEph_AddLabeledArc");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("add_labeled_arc", size), size, |b, &size| {
@@ -70,6 +77,8 @@ fn bench_labelled_dir_graph_add_labeled_arc(c: &mut Criterion) {
 
 fn bench_labelled_dir_graph_has_arc(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabDirGraphStEph_HasArc");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("has_arc", size), size, |b, &size| {
@@ -94,6 +103,8 @@ fn bench_labelled_dir_graph_has_arc(c: &mut Criterion) {
 
 fn bench_labelled_dir_graph_get_arc_label(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabDirGraphStEph_GetArcLabel");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("get_arc_label", size), size, |b, &size| {
@@ -120,6 +131,8 @@ fn bench_labelled_dir_graph_get_arc_label(c: &mut Criterion) {
 
 fn bench_labelled_dir_graph_out_neighbors(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabDirGraphStEph_OutNeighbors");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("out_neighbors", size), size, |b, &size| {
@@ -147,6 +160,8 @@ fn bench_labelled_dir_graph_out_neighbors(c: &mut Criterion) {
 
 fn bench_labelled_dir_graph_in_neighbors(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabDirGraphStEph_InNeighbors");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("in_neighbors", size), size, |b, &size| {
@@ -174,6 +189,8 @@ fn bench_labelled_dir_graph_in_neighbors(c: &mut Criterion) {
 
 fn bench_labelled_dir_graph_arcs(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabDirGraphStEph_Arcs");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("arcs", size), size, |b, &size| {
@@ -192,6 +209,8 @@ fn bench_labelled_dir_graph_arcs(c: &mut Criterion) {
 
 fn bench_labelled_dir_graph_macro(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabDirGraphStEph_Macro");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     group.bench_function("macro_empty", |b| {
         b.iter(|| {

@@ -1,0 +1,6 @@
+Chap53
+
+  you need alg anal is in this.
+
+  Why are we using closures for priorities?
+

@@ -8,8 +8,8 @@ use std::time::Duration;
 
 fn bench_divcon_reduce_st(c: &mut Criterion) {
     let mut group = c.benchmark_group("divcon_reduce_st");
-    group.warm_up_time(Duration::from_millis(1000));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     group.bench_function("sum_10000", |b| {

@@ -26,10 +26,10 @@ fn build_count_tree(len: usize) -> BSTCountStEph<i32, String> {
 fn bench_bst_reduced(c: &mut Criterion) {
     let mut group = c.benchmark_group("BSTReducedStEph");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_millis(200));
-    group.measurement_time(Duration::from_millis(800));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
-    for &n in &[1_024usize, 2_048] {
+    for &n in &[256usize, 512] {
         // Sum reduction benchmarks
         group.bench_with_input(BenchmarkId::new("build_sum", n), &n, |b, &len| {
             b.iter(|| black_box(build_sum_tree(len)));

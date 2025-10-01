@@ -12,7 +12,7 @@ fn add_one(x: &N) -> N { x + 1 }
 fn bench_tabulate_map_mtper_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtPerChap18");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_secs(1));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
     let n: N = 10_000;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
@@ -28,8 +28,8 @@ fn bench_tabulate_map_mtper_ch18(c: &mut Criterion) {
 fn bench_reduce_parallel_mtper_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtPerReduce");
     group.sample_size(30);
-    group.warm_up_time(Duration::from_millis(800));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for &n in &[1_000, 5_000, 10_000] {
         group.bench_with_input(BenchmarkId::new("reduce_sum", n), &n, |b, &len| {

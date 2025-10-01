@@ -7,8 +7,8 @@ use std::time::Duration;
 
 pub fn bench_optimal_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap28::MaxContigSubSumOptMtEph");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     let a1000: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 1000);

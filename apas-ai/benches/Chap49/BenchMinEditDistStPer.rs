@@ -7,8 +7,8 @@ use std::time::Duration;
 
 fn bench_min_edit_distance_st_per(c: &mut Criterion) {
     let mut group = c.benchmark_group("min_edit_distance_st_per");
-    group.warm_up_time(Duration::from_millis(500));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     let example_solver = MinEditDistStPerLit!(

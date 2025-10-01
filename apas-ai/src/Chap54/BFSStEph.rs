@@ -4,9 +4,10 @@
 //! Work: O(|V| + |E|), Span: O(|V| + |E|).
 
 pub mod BFSStEph {
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
-    use crate::Types::Types::*;
     use std::collections::VecDeque;
+
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
 
     const UNREACHABLE: N = N::MAX;
 

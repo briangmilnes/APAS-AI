@@ -2,8 +2,9 @@
 //! Chapter 52: Adjacency Matrix Graph (ephemeral, single-threaded).
 
 pub mod AdjMatrixGraphStEph {
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+
     use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 
     #[derive(Clone)]
     pub struct AdjMatrixGraphStEph {

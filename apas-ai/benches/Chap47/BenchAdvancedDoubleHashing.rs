@@ -5,9 +5,12 @@ use apas_ai::Chap47::AdvancedDoubleHashing::AdvancedDoubleHashing::AdvancedDoubl
 use apas_ai::Chap47::FlatHashTable::FlatHashTable::FlatHashTable;
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::DefaultHashFunction;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use std::time::Duration;
 
 fn bench_double_hashing_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("double_hashing_insert");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.warm_up_time(std::time::Duration::from_secs(1));
     group.measurement_time(std::time::Duration::from_secs(6));
     group.sample_size(30);

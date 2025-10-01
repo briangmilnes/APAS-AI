@@ -9,10 +9,10 @@ use std::time::Duration;
 fn bench_exercise12_1(c: &mut Criterion) {
     let mut group = c.benchmark_group("Exercise12_1");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_millis(100));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    let n: N = 100;
+    let n: N = 25;
     group.bench_with_input(BenchmarkId::new("spinlock_contention", n), &n, |b, &len| {
         b.iter(|| {
             let lock = Arc::new(SpinLock::new());

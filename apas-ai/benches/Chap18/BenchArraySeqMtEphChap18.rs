@@ -7,7 +7,7 @@ use std::time::Duration;
 fn bench_tabulate_map_mteph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtEphChap18");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_secs(1));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
     // Test different sizes (all use unconditional parallelism with ParaPair!)
@@ -26,7 +26,7 @@ fn bench_tabulate_map_mteph_ch18(c: &mut Criterion) {
 fn bench_reduce_parallel_mteph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtEphReduce");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_secs(1));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
     // Test different sizes (all use unconditional parallelism with ParaPair!)
@@ -45,7 +45,7 @@ fn bench_reduce_parallel_mteph_ch18(c: &mut Criterion) {
 fn bench_filter_mteph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtEphFilter");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_secs(1));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
     let n: N = 10_000;
@@ -63,7 +63,7 @@ fn bench_filter_mteph_ch18(c: &mut Criterion) {
 fn bench_scan_mteph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtEphScan");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_secs(1));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
     let n: N = 5_000;

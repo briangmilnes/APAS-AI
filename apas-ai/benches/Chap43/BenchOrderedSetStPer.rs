@@ -8,7 +8,7 @@ use std::time::Duration;
 fn bench_ordered_set_st_per_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetStPer_insert");
     group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_millis(1000));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
@@ -27,7 +27,7 @@ fn bench_ordered_set_st_per_insert(c: &mut Criterion) {
 fn bench_ordered_set_st_per_contains(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetStPer_contains");
     group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_millis(1000));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [100, 500, 1000].iter() {
         let mut set = <OrderedSetStPer<i32>>::empty();
@@ -49,7 +49,7 @@ fn bench_ordered_set_st_per_contains(c: &mut Criterion) {
 fn bench_ordered_set_st_per_delete(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetStPer_delete");
     group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_millis(1000));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("delete", size), size, |b, &size| {
@@ -77,7 +77,7 @@ fn bench_ordered_set_st_per_delete(c: &mut Criterion) {
 fn bench_ordered_set_st_per_first_last(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetStPer_first_last");
     group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_millis(1000));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [100, 500, 1000].iter() {
         let mut set = <OrderedSetStPer<i32>>::empty();
@@ -99,7 +99,7 @@ fn bench_ordered_set_st_per_first_last(c: &mut Criterion) {
 fn bench_ordered_set_st_per_previous_next(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetStPer_previous_next");
     group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_millis(1000));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [100, 500, 1000].iter() {
         let mut set = <OrderedSetStPer<i32>>::empty();
@@ -129,7 +129,7 @@ fn bench_ordered_set_st_per_previous_next(c: &mut Criterion) {
 fn bench_ordered_set_st_per_split_join(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetStPer_split_join");
     group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_millis(1000));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("split", size), size, |b, &size| {
@@ -175,7 +175,7 @@ fn bench_ordered_set_st_per_split_join(c: &mut Criterion) {
 fn bench_ordered_set_st_per_get_range(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetStPer_get_range");
     group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_millis(1000));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [100, 500, 1000].iter() {
         let mut set = <OrderedSetStPer<i32>>::empty();
@@ -197,7 +197,7 @@ fn bench_ordered_set_st_per_get_range(c: &mut Criterion) {
 fn bench_ordered_set_st_per_rank_select(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetStPer_rank_select");
     group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_millis(1000));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [100, 500, 1000].iter() {
         let mut set = <OrderedSetStPer<i32>>::empty();
@@ -227,7 +227,7 @@ fn bench_ordered_set_st_per_rank_select(c: &mut Criterion) {
 fn bench_ordered_set_st_per_split_rank(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetStPer_split_rank");
     group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_millis(1000));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("split_rank", size), size, |b, &size| {
@@ -253,7 +253,7 @@ fn bench_ordered_set_st_per_split_rank(c: &mut Criterion) {
 fn bench_ordered_set_st_per_set_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetStPer_set_operations");
     group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_millis(1000));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("union", size), size, |b, &size| {

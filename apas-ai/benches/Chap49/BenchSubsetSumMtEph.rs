@@ -7,8 +7,8 @@ use std::time::Duration;
 
 fn bench_subset_sum_mt_eph(c: &mut Criterion) {
     let mut group = c.benchmark_group("subset_sum_mt_eph");
-    group.warm_up_time(Duration::from_millis(500));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     group.bench_function("small_parallel_with_mutation", |b| {

@@ -10,8 +10,8 @@ use std::time::Duration;
 fn bench_mapping_build(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchMappingEphChap5_5");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_millis(100));
-    group.measurement_time(Duration::from_millis(1000));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let n: N = 50_000;
     group.bench_with_input(BenchmarkId::new("from_relation_overwrite_dups", n), &n, |b, &len| {

@@ -1,0 +1,9 @@
+Chap55
+
+ You need algor analysis on these.
+
+ Why are you imporing multiple versions of data structures?
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeSeqStEphS, AVLTreeSeqStEphTrait};
+    use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::{AVLTreeSetStEph, AVLTreeSetStEphTrait};

@@ -33,8 +33,8 @@ fn build_chain_graph(n: N) -> impl Fn(&N) -> AVLTreeSetStPer<N> {
 
 fn bench_pq_min_st_per(c: &mut Criterion) {
     let mut group = c.benchmark_group("PQMinStPer");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     group.bench_function("complete_graph_n=15", |b| {

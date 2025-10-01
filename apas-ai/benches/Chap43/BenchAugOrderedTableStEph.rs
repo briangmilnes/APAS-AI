@@ -7,9 +7,12 @@ use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::AugOrderedTableStEph::AugOrderedTableStEph::*;
 use apas_ai::Types::Types::*;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use std::time::Duration;
 
 fn bench_ephemeral_reduce_val_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_reduce_val");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -44,6 +47,8 @@ fn bench_ephemeral_reduce_val_performance(c: &mut Criterion) {
 
 fn bench_qadsan_stock_scenario(c: &mut Criterion) {
     let mut group = c.benchmark_group("qadsan_stock_analysis");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
     let mut stock_table = AugOrderedTableStEph::empty(max_reducer, 0);
@@ -86,6 +91,8 @@ fn bench_qadsan_stock_scenario(c: &mut Criterion) {
 
 fn bench_ephemeral_insert_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_insert_operations");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -118,6 +125,8 @@ fn bench_ephemeral_insert_performance(c: &mut Criterion) {
 
 fn bench_ephemeral_delete_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_delete_operations");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -149,6 +158,8 @@ fn bench_ephemeral_delete_performance(c: &mut Criterion) {
 
 fn bench_different_reducers_ephemeral(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_reducer_types");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let size = 1000;
 
@@ -190,6 +201,8 @@ fn bench_different_reducers_ephemeral(c: &mut Criterion) {
 
 fn bench_ephemeral_mutable_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_mutable_operations");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -199,10 +212,10 @@ fn bench_ephemeral_mutable_operations(c: &mut Criterion) {
                 let mut table1 = AugOrderedTableStEph::empty(sum_reducer, 0);
                 let mut table2 = AugOrderedTableStEph::empty(sum_reducer, 0);
 
-                for i in 1..=500 {
+                for i in 1..=300 {
                     table1.insert(i, i * 10, |_old, new| *new);
                 }
-                for i in 400..=900 {
+                for i in 240..=540 {
                     table2.insert(i, i * 5, |_old, new| *new);
                 }
                 (table1, table2)
@@ -221,10 +234,10 @@ fn bench_ephemeral_mutable_operations(c: &mut Criterion) {
                 let mut table1 = AugOrderedTableStEph::empty(sum_reducer, 0);
                 let mut table2 = AugOrderedTableStEph::empty(sum_reducer, 0);
 
-                for i in 1..=500 {
+                for i in 1..=300 {
                     table1.insert(i, i * 10, |_old, new| *new);
                 }
-                for i in 250..=750 {
+                for i in 150..=450 {
                     table2.insert(i, i * 5, |_old, new| *new);
                 }
                 (table1, table2)
@@ -243,10 +256,10 @@ fn bench_ephemeral_mutable_operations(c: &mut Criterion) {
                 let mut table1 = AugOrderedTableStEph::empty(sum_reducer, 0);
                 let mut table2 = AugOrderedTableStEph::empty(sum_reducer, 0);
 
-                for i in 1..=500 {
+                for i in 1..=300 {
                     table1.insert(i, i * 10, |_old, new| *new);
                 }
-                for i in 200..=300 {
+                for i in 120..=180 {
                     table2.insert(i, i * 5, |_old, new| *new);
                 }
                 (table1, table2)
@@ -264,6 +277,8 @@ fn bench_ephemeral_mutable_operations(c: &mut Criterion) {
 
 fn bench_ephemeral_split_join(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_split_join");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -271,13 +286,13 @@ fn bench_ephemeral_split_join(c: &mut Criterion) {
         b.iter_batched(
             || {
                 let mut table = AugOrderedTableStEph::empty(sum_reducer, 0);
-                for i in 1..=1000 {
+                for i in 1..=600 {
                     table.insert(i, i * 10, |_old, new| *new);
                 }
                 table
             },
             |mut table| {
-                let (left, right) = table.split_key(&500);
+                let (left, right) = table.split_key(&300);
                 black_box((left.reduce_val(), right.reduce_val()))
             },
             criterion::BatchSize::SmallInput,
@@ -288,10 +303,10 @@ fn bench_ephemeral_split_join(c: &mut Criterion) {
         b.iter_batched(
             || {
                 let mut table = AugOrderedTableStEph::empty(sum_reducer, 0);
-                for i in 1..=1000 {
+                for i in 1..=600 {
                     table.insert(i, i * 10, |_old, new| *new);
                 }
-                table.split_key(&500)
+                table.split_key(&300)
             },
             |(mut left, right)| {
                 left.join_key(right);
@@ -306,12 +321,14 @@ fn bench_ephemeral_split_join(c: &mut Criterion) {
 
 fn bench_ephemeral_range_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_range_operations");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableStEph::empty(sum_reducer, 0);
 
     // Create large dataset
-    for i in 1..=5000 {
+    for i in 1..=2000 {
         table.insert(i, i * 2, |_old, new| *new);
     }
 
@@ -333,6 +350,8 @@ fn bench_ephemeral_range_operations(c: &mut Criterion) {
 
 fn bench_ephemeral_macro_construction(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_construction");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -363,6 +382,8 @@ fn bench_ephemeral_macro_construction(c: &mut Criterion) {
 
 fn bench_ephemeral_update_patterns(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_update_patterns");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 

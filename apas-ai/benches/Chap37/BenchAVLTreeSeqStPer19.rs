@@ -10,7 +10,7 @@ use std::time::Duration;
 
 fn bench_build_and_read_persistent(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchAVLTreeSeqPer");
-    group.warm_up_time(Duration::from_secs(1));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
     let n: N = 1_000;
 

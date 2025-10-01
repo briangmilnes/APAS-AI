@@ -6,10 +6,11 @@
 
 pub mod BottomUpDPStPer {
 
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
     use std::cmp::{max, min};
     use std::fmt::{Debug, Display};
+
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 
     /// Persistent single-threaded bottom-up DP structure (struct product record type)
     #[derive(Clone, Debug, PartialEq, Eq)]

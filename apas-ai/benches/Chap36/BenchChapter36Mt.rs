@@ -18,10 +18,10 @@ fn gen_data(n: usize) -> apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeq
 fn bench_quicksort_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chapter36Mt");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_millis(100));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    for &n in &[256usize, 2_048, 8_192] {
+    for &n in &[256usize, 2_048, 5_000] {
         group.bench_with_input(BenchmarkId::new("first", n), &n, |b, &len| {
             b.iter_batched(
                 || gen_data(len),

@@ -5,9 +5,10 @@
 //! Selects minimum priority vertices first (lower priority = higher urgency).
 
 pub mod PQMinStPer {
+
+    use crate::Types::Types::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
-    use crate::Types::Types::*;
 
     /// Result of PQS containing visited vertices and parent tree.
     #[derive(Clone, Debug)]

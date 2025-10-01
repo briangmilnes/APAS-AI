@@ -9,8 +9,8 @@ use std::time::Duration;
 
 fn bench_flat_hash_table_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("flat_hash_table_operations");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     let probe_strategy = LinearProbingStrategy::new(DefaultHashFunction);

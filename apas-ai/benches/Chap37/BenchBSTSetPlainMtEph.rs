@@ -40,7 +40,7 @@ fn build_single<S: BenchSet>(len: usize) -> S {
 fn bench_set_variants<S: BenchSet>(c: &mut Criterion, label: &str) {
     let mut group = c.benchmark_group(label);
     group.sample_size(10);
-    group.warm_up_time(Duration::from_millis(100));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
     for &len in &[128usize, 256] {

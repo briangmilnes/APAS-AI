@@ -8,9 +8,12 @@ use apas_ai::Chap43::AugOrderedTableStPer::AugOrderedTableStPer::*;
 use apas_ai::Chap43::OrderedTableStPer::OrderedTableStPer::*;
 use apas_ai::Types::Types::*;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use std::time::Duration;
 
 fn bench_reduce_val_vs_naive(c: &mut Criterion) {
     let mut group = c.benchmark_group("reduce_val_comparison");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -45,6 +48,8 @@ fn bench_reduce_val_vs_naive(c: &mut Criterion) {
 
 fn bench_range_reduction_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("range_reduction");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableStPer::empty(sum_reducer, 0);
@@ -70,6 +75,8 @@ fn bench_range_reduction_performance(c: &mut Criterion) {
 
 fn bench_tramlaw_scenario(c: &mut Criterion) {
     let mut group = c.benchmark_group("tramlaw_sales_analysis");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut sales_table = AugOrderedTableStPer::empty(sum_reducer, 0);
@@ -110,6 +117,8 @@ fn bench_tramlaw_scenario(c: &mut Criterion) {
 
 fn bench_insert_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("insert_operations");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -142,6 +151,8 @@ fn bench_insert_performance(c: &mut Criterion) {
 
 fn bench_different_reducers(c: &mut Criterion) {
     let mut group = c.benchmark_group("reducer_types");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let size = 1000;
 
@@ -177,6 +188,8 @@ fn bench_different_reducers(c: &mut Criterion) {
 
 fn bench_split_join_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("split_join_operations");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableStPer::empty(sum_reducer, 0);
@@ -206,6 +219,8 @@ fn bench_split_join_operations(c: &mut Criterion) {
 
 fn bench_macro_construction(c: &mut Criterion) {
     let mut group = c.benchmark_group("construction_methods");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -236,6 +251,8 @@ fn bench_macro_construction(c: &mut Criterion) {
 
 fn bench_memory_usage_patterns(c: &mut Criterion) {
     let mut group = c.benchmark_group("memory_patterns");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 

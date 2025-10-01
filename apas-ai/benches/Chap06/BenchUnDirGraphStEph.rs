@@ -9,7 +9,7 @@ use std::time::Duration;
 fn bench_undirgraph_build(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchUnDirGraphEphChap6_1");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_secs(1));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
     let n: N = 50_000;

@@ -11,6 +11,10 @@
 
  How many are parallel?
 
+ Do we need any single threaded implementations?
+
+ Build only the Eph versions.
+
  Show it to me and estimate time.
 
  I will tell you when to execute. 

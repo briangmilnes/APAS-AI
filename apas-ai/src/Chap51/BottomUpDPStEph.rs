@@ -5,11 +5,11 @@
 //! diagonal pebbling strategy with in-place mutations for efficiency.
 
 pub mod BottomUpDPStEph {
-
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Types::Types::*;
     use std::cmp::{max, min};
     use std::fmt::{Debug, Display};
+
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 
     /// Ephemeral single-threaded bottom-up DP structure (struct product record type)
     #[derive(Clone, Debug, PartialEq, Eq)]

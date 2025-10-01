@@ -7,8 +7,8 @@ use std::time::Duration;
 
 fn bench_med(c: &mut Criterion) {
     let mut group = c.benchmark_group("BottomUpDPMtPer_MED");
-    group.warm_up_time(Duration::from_millis(500));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
     let s = ArraySeqMtPerS::from_vec(vec!['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']);
     let t = ArraySeqMtPerS::from_vec(vec!['x', 'b', 'y', 'd', 'z', 'f', 'w', 'h', 'v', 'j']);

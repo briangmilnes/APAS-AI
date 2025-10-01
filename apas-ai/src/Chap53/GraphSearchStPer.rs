@@ -4,9 +4,10 @@
 //! Implements Algorithm 53.4 - Generic Graph Search with pluggable frontier selection.
 
 pub mod GraphSearchStPer {
+
+    use crate::Types::Types::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
-    use crate::Types::Types::*;
 
     /// Result of a graph search containing visited vertices and optional parent tree.
     #[derive(Clone, Debug)]

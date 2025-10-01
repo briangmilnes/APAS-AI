@@ -7,7 +7,7 @@ use std::time::Duration;
 fn bench_balbintree_st_eph(c: &mut Criterion) {
     let mut group = c.benchmark_group("BalBinTreeStEph");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_millis(100));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
     let n: N = 1_000;

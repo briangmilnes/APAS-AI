@@ -9,10 +9,10 @@ use std::time::Duration;
 fn bench_exercise12_5(c: &mut Criterion) {
     let mut group = c.benchmark_group("Exercise12_5");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_millis(100));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    let n: N = 1_000;
+    let n: N = 250;
     group.bench_with_input(BenchmarkId::new("concurrent_stack", n), &n, |b, &len| {
         b.iter(|| {
             let stack = Arc::new(ConcurrentStackMt::new());

@@ -1,0 +1,212 @@
+====================================================================================================
+BENCHMARK TIMING AUDIT REPORT - PHASE 1: STATIC ANALYSIS
+====================================================================================================
+
+AUDIT CRITERIA:
+  - Warm-up time:     300ms (warm_up_time(Duration::from_millis(300)))
+  - Measurement time: 1s    (measurement_time(Duration::from_secs(1)))
+
+SUMMARY: 172 files scanned
+  CORRECT:   16 files (9.3%)
+  DEFECTS:  156 files (90.7%)
+
+BY CHAPTER:
+----------------------------------------------------------------------------------------------------
+✗ Chap03     | Total:   1 | Correct:   0 | Defects:   1
+✗ Chap05     | Total:   3 | Correct:   0 | Defects:   3
+✗ Chap06     | Total:  12 | Correct:   0 | Defects:  12
+✗ Chap11     | Total:   1 | Correct:   0 | Defects:   1
+✗ Chap12     | Total:   3 | Correct:   0 | Defects:   3
+✗ Chap17     | Total:   1 | Correct:   0 | Defects:   1
+✗ Chap18     | Total:  10 | Correct:   0 | Defects:  10
+✗ Chap19     | Total:   6 | Correct:   0 | Defects:   6
+✗ Chap23     | Total:   2 | Correct:   0 | Defects:   2
+✗ Chap26     | Total:   5 | Correct:   0 | Defects:   5
+✗ Chap27     | Total:   4 | Correct:   0 | Defects:   4
+✗ Chap28     | Total:   8 | Correct:   0 | Defects:   8
+✗ Chap35     | Total:   4 | Correct:   0 | Defects:   4
+✗ Chap36     | Total:   2 | Correct:   0 | Defects:   2
+✗ Chap37     | Total:  23 | Correct:   1 | Defects:  22
+✗ Chap38     | Total:   1 | Correct:   0 | Defects:   1
+✗ Chap39     | Total:   4 | Correct:   0 | Defects:   4
+✗ Chap40     | Total:   3 | Correct:   0 | Defects:   3
+✗ Chap41     | Total:   4 | Correct:   1 | Defects:   3
+✗ Chap42     | Total:   3 | Correct:   0 | Defects:   3
+✗ Chap43     | Total:   9 | Correct:   0 | Defects:   9
+✗ Chap44     | Total:   1 | Correct:   0 | Defects:   1
+✓ Chap45     | Total:   6 | Correct:   6 | Defects:   0
+✗ Chap47     | Total:   6 | Correct:   0 | Defects:   6
+✗ Chap49     | Total:   8 | Correct:   0 | Defects:   8
+✗ Chap50     | Total:   4 | Correct:   0 | Defects:   4
+✗ Chap51     | Total:   8 | Correct:   0 | Defects:   8
+✗ Chap52     | Total:   2 | Correct:   0 | Defects:   2
+✗ Chap53     | Total:   3 | Correct:   0 | Defects:   3
+✗ Chap54     | Total:   4 | Correct:   0 | Defects:   4
+✗ Chap55     | Total:   8 | Correct:   0 | Defects:   8
+✗ Chap56     | Total:   4 | Correct:   0 | Defects:   4
+✗ Chap57     | Total:   3 | Correct:   2 | Defects:   1
+✓ Chap58     | Total:   2 | Correct:   2 | Defects:   0
+✓ Chap59     | Total:   4 | Correct:   4 | Defects:   0
+
+DEFECTS BY FILE:
+----------------------------------------------------------------------------------------------------
+benches/Chap03/BenchInsertionSortSt.rs                            | warmup: 100mill      | measure: 1000mill    
+benches/Chap05/BenchMappingStEph.rs                               | warmup: 100mill      | measure: 1000mill    
+benches/Chap05/BenchRelationStEph.rs                              | warmup: 100mill      | measure: 1secs       
+benches/Chap05/BenchSetStEph.rs                                   | warmup: 100mill      | measure: 1secs       
+benches/Chap06/BenchDirGraphStEph.rs                              | warmup: 100mill      | measure: 1000mill    
+benches/Chap06/BenchLabDirGraphStEph.rs                           | warmup: MISSING      | measure: MISSING     
+benches/Chap06/BenchLabUnDirGraphStEph.rs                         | warmup: MISSING      | measure: MISSING     
+benches/Chap06/BenchUnDirGraphStEph.rs                            | warmup: 1secs        | measure: 1secs       
+benches/Chap06/BenchWeightedDirGraphMtEphFloat.rs                 | warmup: 100mill      | measure: 1secs       
+benches/Chap06/BenchWeightedDirGraphMtEphInt.rs                   | warmup: 100mill      | measure: 1secs       
+benches/Chap06/BenchWeightedDirGraphStEphFloat.rs                 | warmup: 100mill      | measure: 1secs       
+benches/Chap06/BenchWeightedDirGraphStEphInt.rs                   | warmup: 100mill      | measure: 1secs       
+benches/Chap06/BenchWeightedUnDirGraphMtEphFloat.rs               | warmup: 100mill      | measure: 1secs       
+benches/Chap06/BenchWeightedUnDirGraphMtEphInt.rs                 | warmup: 100mill      | measure: 1secs       
+benches/Chap06/BenchWeightedUnDirGraphStEphFloat.rs               | warmup: 100mill      | measure: 1secs       
+benches/Chap06/BenchWeightedUnDirGraphStEphInt.rs                 | warmup: 100mill      | measure: 1secs       
+benches/Chap11/BenchFibonacciMt.rs                                | warmup: 800mill      | measure: 6secs       
+benches/Chap12/BenchExercise12_1.rs                               | warmup: 100mill      | measure: 1secs       
+benches/Chap12/BenchExercise12_2.rs                               | warmup: 100mill      | measure: 1secs       
+benches/Chap12/BenchExercise12_5.rs                               | warmup: 100mill      | measure: 1secs       
+benches/Chap17/BenchMathSeq.rs                                    | warmup: 100mill      | measure: 1secs       
+benches/Chap18/BenchArraySeq.rs                                   | warmup: 100mill      | measure: 1secs       
+benches/Chap18/BenchArraySeqMtEph.rs                              | warmup: 100mill      | measure: 1secs       
+benches/Chap18/BenchArraySeqMtEphChap18.rs                        | warmup: 1secs        | measure: 1secs       
+benches/Chap18/BenchArraySeqMtPerChap18.rs                        | warmup: 1secs        | measure: 1secs       
+benches/Chap18/BenchArraySeqStEphChap18.rs                        | warmup: 100mill      | measure: 1secs       
+benches/Chap18/BenchArraySeqStPerChap18.rs                        | warmup: 1secs        | measure: 1secs       
+benches/Chap18/BenchLinkedListStEph.rs                            | warmup: 1secs        | measure: 1secs       
+benches/Chap18/BenchLinkedListStEph19.rs                          | warmup: 1secs        | measure: 1secs       
+benches/Chap18/BenchLinkedListStPer.rs                            | warmup: 1secs        | measure: 1secs       
+benches/Chap18/BenchLinkedListStPer19.rs                          | warmup: 1secs        | measure: 1secs       
+benches/Chap19/BenchArraySeqMtPer.rs                              | warmup: 1secs        | measure: 1secs       
+benches/Chap19/BenchArraySeqMtPer18.rs                            | warmup: 1secs        | measure: 1secs       
+benches/Chap19/BenchArraySeqStEph.rs                              | warmup: 1secs        | measure: 1secs       
+benches/Chap19/BenchArraySeqStEph18.rs                            | warmup: 1secs        | measure: 1secs       
+benches/Chap19/BenchArraySeqStPer.rs                              | warmup: 1secs        | measure: 1secs       
+benches/Chap19/BenchArraySeqStPer18.rs                            | warmup: 1secs        | measure: 1secs       
+benches/Chap23/BenchBalBinTreeStEph.rs                            | warmup: 100mill      | measure: 1secs       
+benches/Chap23/BenchPrimTreeSeqSt.rs                              | warmup: 100mill      | measure: 1secs       
+benches/Chap26/BenchChapter26Mt.rs                                | warmup: 1secs        | measure: 1secs       
+benches/Chap26/BenchDivConReduceMt.rs                             | warmup: 1000mill     | measure: 6secs       
+benches/Chap26/BenchDivConReduceSt.rs                             | warmup: 1000mill     | measure: 6secs       
+benches/Chap26/BenchMergeSortMt.rs                                | warmup: 1000mill     | measure: 6secs       
+benches/Chap26/BenchMergeSortSt.rs                                | warmup: 1000mill     | measure: 6secs       
+benches/Chap27/BenchReduceContractMtEph.rs                        | warmup: 1000mill     | measure: 6secs       
+benches/Chap27/BenchReduceContractStEph.rs                        | warmup: 1000mill     | measure: 6secs       
+benches/Chap27/BenchScanContractMtEph.rs                          | warmup: 1000mill     | measure: 6secs       
+benches/Chap27/BenchScanContractStEph.rs                          | warmup: 1000mill     | measure: 6secs       
+benches/Chap28/BenchMaxContigSubSumBruteStEph.rs                  | warmup: 1secs        | measure: 6secs       
+benches/Chap28/BenchMaxContigSubSumDivConMtEph.rs                 | warmup: 1secs        | measure: 6secs       
+benches/Chap28/BenchMaxContigSubSumDivConOptMtEph.rs              | warmup: 1secs        | measure: 6secs       
+benches/Chap28/BenchMaxContigSubSumDivConOptStEph.rs              | warmup: 1secs        | measure: 6secs       
+benches/Chap28/BenchMaxContigSubSumDivConStEph.rs                 | warmup: 1secs        | measure: 6secs       
+benches/Chap28/BenchMaxContigSubSumOptMtEph.rs                    | warmup: 1secs        | measure: 6secs       
+benches/Chap28/BenchMaxContigSubSumOptStEph.rs                    | warmup: 1secs        | measure: 6secs       
+benches/Chap28/BenchMaxContigSubSumReducedStEph.rs                | warmup: 1secs        | measure: 6secs       
+benches/Chap35/BenchOrderStatSelectMtEph.rs                       | warmup: 1secs        | measure: 6secs       
+benches/Chap35/BenchOrderStatSelectMtPer.rs                       | warmup: 1secs        | measure: 6secs       
+benches/Chap35/BenchOrderStatSelectStEph.rs                       | warmup: 1secs        | measure: 6secs       
+benches/Chap35/BenchOrderStatSelectStPer.rs                       | warmup: 1secs        | measure: 6secs       
+benches/Chap36/BenchChapter36Mt.rs                                | warmup: 100mill      | measure: 1secs       
+benches/Chap36/BenchChapter36St.rs                                | warmup: 100mill      | measure: 1secs       
+benches/Chap37/BenchAVLTreeSeqStEph.rs                            | warmup: 1secs        | measure: 1secs       
+benches/Chap37/BenchAVLTreeSeqStEph18.rs                          | warmup: 1secs        | measure: 1secs       
+benches/Chap37/BenchAVLTreeSeqStEph19.rs                          | warmup: 1secs        | measure: 1secs       
+benches/Chap37/BenchAVLTreeSeqStPer.rs                            | warmup: 1secs        | measure: 1secs       
+benches/Chap37/BenchAVLTreeSeqStPer18.rs                          | warmup: 1secs        | measure: 1secs       
+benches/Chap37/BenchAVLTreeSeqStPer19.rs                          | warmup: 1secs        | measure: 1secs       
+benches/Chap37/BenchBSTAVLMtEph.rs                                | warmup: 200mill      | measure: 800mill     
+benches/Chap37/BenchBSTAVLStEph.rs                                | warmup: 100mill      | measure: 1secs       
+benches/Chap37/BenchBSTBBAlphaMtEph.rs                            | warmup: 200mill      | measure: 800mill     
+benches/Chap37/BenchBSTBBAlphaStEph.rs                            | warmup: 200mill      | measure: 800mill     
+benches/Chap37/BenchBSTParaMtEph.rs                               | warmup: 100mill      | measure: 800mill     
+benches/Chap37/BenchBSTParaStEph.rs                               | warmup: 100mill      | measure: 800mill     
+benches/Chap37/BenchBSTPlainMtEph.rs                              | warmup: 200mill      | measure: 800mill     
+benches/Chap37/BenchBSTPlainStEph.rs                              | warmup: 200mill      | measure: 800mill     
+benches/Chap37/BenchBSTRBMtEph.rs                                 | warmup: 200mill      | measure: 800mill     
+benches/Chap37/BenchBSTRBStEph.rs                                 | warmup: 200mill      | measure: 800mill     
+benches/Chap37/BenchBSTSetAVLMtEph.rs                             | warmup: 100mill      | measure: 1secs       
+benches/Chap37/BenchBSTSetBBAlphaMtEph.rs                         | warmup: 100mill      | measure: 1secs       
+benches/Chap37/BenchBSTSetPlainMtEph.rs                           | warmup: 100mill      | measure: 1secs       
+benches/Chap37/BenchBSTSetRBMtEph.rs                              | warmup: 100mill      | measure: 1secs       
+benches/Chap37/BenchBSTSetSplayMtEph.rs                           | warmup: 100mill      | measure: 1secs       
+benches/Chap37/BenchBSTSplayStEph.rs                              | warmup: 200mill      | measure: 800mill     
+benches/Chap38/BenchBSTParaStEph.rs                               | warmup: 100mill      | measure: 1secs       
+benches/Chap39/BenchBSTParaTreapMtEph.rs                          | warmup: 100mill      | measure: 800mill     
+benches/Chap39/BenchBSTSetTreapMtEph.rs                           | warmup: 100mill      | measure: 1secs       
+benches/Chap39/BenchBSTTreapMtEph.rs                              | warmup: 200mill      | measure: 800mill     
+benches/Chap39/BenchBSTTreapStEph.rs                              | warmup: 200mill      | measure: 800mill     
+benches/Chap40/BenchBSTKeyValueStEph.rs                           | warmup: 200mill      | measure: 800mill     
+benches/Chap40/BenchBSTReducedStEph.rs                            | warmup: 200mill      | measure: 800mill     
+benches/Chap40/BenchBSTSizeStEph.rs                               | warmup: 200mill      | measure: 800mill     
+benches/Chap41/BenchAVLTreeSetStEph.rs                            | warmup: 1secs        | measure: 6secs       
+benches/Chap41/BenchAVLTreeSetStPer.rs                            | warmup: 1secs        | measure: 6secs       
+benches/Chap41/BenchArraySetStEph.rs                              | warmup: 1secs        | measure: 6secs       
+benches/Chap42/BenchTableMtEph.rs                                 | warmup: MISSING      | measure: MISSING     
+benches/Chap42/BenchTableStEph.rs                                 | warmup: MISSING      | measure: MISSING     
+benches/Chap42/BenchTableStPer.rs                                 | warmup: MISSING      | measure: MISSING     
+benches/Chap43/BenchAugOrderedTableMtEph.rs                       | warmup: MISSING      | measure: MISSING     
+benches/Chap43/BenchAugOrderedTableStEph.rs                       | warmup: MISSING      | measure: MISSING     
+benches/Chap43/BenchAugOrderedTableStPer.rs                       | warmup: MISSING      | measure: MISSING     
+benches/Chap43/BenchOrderedSetMtEph.rs                            | warmup: 300mill      | measure: 1000mill    
+benches/Chap43/BenchOrderedSetStEph.rs                            | warmup: 300mill      | measure: 1000mill    
+benches/Chap43/BenchOrderedSetStPer.rs                            | warmup: 300mill      | measure: 1000mill    
+benches/Chap43/BenchOrderedTableMtEph.rs                          | warmup: 300mill      | measure: 1000mill    
+benches/Chap43/BenchOrderedTableStEph.rs                          | warmup: 300mill      | measure: 1000mill    
+benches/Chap43/BenchOrderedTableStPer.rs                          | warmup: 300mill      | measure: 1000mill    
+benches/Chap44/BenchDocumentIndex.rs                              | warmup: MISSING      | measure: MISSING     
+benches/Chap47/BenchAdvancedDoubleHashing.rs                      | warmup: MISSING      | measure: MISSING     
+benches/Chap47/BenchAdvancedLinearProbing.rs                      | warmup: MISSING      | measure: MISSING     
+benches/Chap47/BenchAdvancedQuadraticProbing.rs                   | warmup: MISSING      | measure: MISSING     
+benches/Chap47/BenchFlatHashTable.rs                              | warmup: 1secs        | measure: 6secs       
+benches/Chap47/BenchLinearProbing.rs                              | warmup: 1secs        | measure: 6secs       
+benches/Chap47/BenchSeparateChaining.rs                           | warmup: 1secs        | measure: 6secs       
+benches/Chap49/BenchMinEditDistMtEph.rs                           | warmup: 500mill      | measure: 6secs       
+benches/Chap49/BenchMinEditDistMtPer.rs                           | warmup: 500mill      | measure: 6secs       
+benches/Chap49/BenchMinEditDistStEph.rs                           | warmup: 500mill      | measure: 6secs       
+benches/Chap49/BenchMinEditDistStPer.rs                           | warmup: 500mill      | measure: 6secs       
+benches/Chap49/BenchSubsetSumMtEph.rs                             | warmup: 500mill      | measure: 6secs       
+benches/Chap49/BenchSubsetSumMtPer.rs                             | warmup: 500mill      | measure: 6secs       
+benches/Chap49/BenchSubsetSumStEph.rs                             | warmup: 500mill      | measure: 6secs       
+benches/Chap49/BenchSubsetSumStPer.rs                             | warmup: 500mill      | measure: 6secs       
+benches/Chap50/BenchMatrixChainStEph.rs                           | warmup: MISSING      | measure: MISSING     
+benches/Chap50/BenchMatrixChainStPer.rs                           | warmup: MISSING      | measure: MISSING     
+benches/Chap50/BenchOptBinSearchTreeStEph.rs                      | warmup: MISSING      | measure: MISSING     
+benches/Chap50/BenchOptBinSearchTreeStPer.rs                      | warmup: MISSING      | measure: MISSING     
+benches/Chap51/BenchBottomUpDPMtEph.rs                            | warmup: 500mill      | measure: 6secs       
+benches/Chap51/BenchBottomUpDPMtPer.rs                            | warmup: 500mill      | measure: 6secs       
+benches/Chap51/BenchBottomUpDPStEph.rs                            | warmup: 500mill      | measure: 6secs       
+benches/Chap51/BenchBottomUpDPStPer.rs                            | warmup: 500mill      | measure: 6secs       
+benches/Chap51/BenchTopDownDPMtEph.rs                             | warmup: 500mill      | measure: 6secs       
+benches/Chap51/BenchTopDownDPMtPer.rs                             | warmup: 500mill      | measure: 6secs       
+benches/Chap51/BenchTopDownDPStEph.rs                             | warmup: 500mill      | measure: 6secs       
+benches/Chap51/BenchTopDownDPStPer.rs                             | warmup: 500mill      | measure: 6secs       
+benches/Chap52/BenchAdjTableGraphStPer.rs                         | warmup: 1secs        | measure: 6secs       
+benches/Chap52/BenchEdgeSetGraphStPer.rs                          | warmup: 1secs        | measure: 6secs       
+benches/Chap53/BenchGraphSearchStPer.rs                           | warmup: 1secs        | measure: 6secs       
+benches/Chap53/BenchPQMinMtEph.rs                                 | warmup: 1secs        | measure: 6secs       
+benches/Chap53/BenchPQMinStPer.rs                                 | warmup: 1secs        | measure: 6secs       
+benches/Chap54/BenchBFSMtEph.rs                                   | warmup: 1secs        | measure: 6secs       
+benches/Chap54/BenchBFSMtPer.rs                                   | warmup: 1secs        | measure: 6secs       
+benches/Chap54/BenchBFSStEph.rs                                   | warmup: 1secs        | measure: 6secs       
+benches/Chap54/BenchBFSStPer.rs                                   | warmup: 1secs        | measure: 6secs       
+benches/Chap55/BenchCycleDetectStEph.rs                           | warmup: MISSING      | measure: MISSING     
+benches/Chap55/BenchCycleDetectStPer.rs                           | warmup: MISSING      | measure: MISSING     
+benches/Chap55/BenchDFSStEph.rs                                   | warmup: MISSING      | measure: MISSING     
+benches/Chap55/BenchDFSStPer.rs                                   | warmup: MISSING      | measure: MISSING     
+benches/Chap55/BenchSCCStEph.rs                                   | warmup: MISSING      | measure: MISSING     
+benches/Chap55/BenchSCCStPer.rs                                   | warmup: MISSING      | measure: MISSING     
+benches/Chap55/BenchTopoSortStEph.rs                              | warmup: MISSING      | measure: MISSING     
+benches/Chap55/BenchTopoSortStPer.rs                              | warmup: MISSING      | measure: MISSING     
+benches/Chap56/BenchPathWeightUtilsStEph.rs                       | warmup: MISSING      | measure: MISSING     
+benches/Chap56/BenchPathWeightUtilsStPer.rs                       | warmup: MISSING      | measure: MISSING     
+benches/Chap56/BenchSSSPResultStEphFloat.rs                       | warmup: MISSING      | measure: MISSING     
+benches/Chap56/BenchSSSPResultStEphInt.rs                         | warmup: MISSING      | measure: MISSING     
+benches/Chap57/BenchStackStEph.rs                                 | warmup: MISSING      | measure: MISSING     
+
+====================================================================================================
+END OF REPORT
+====================================================================================================

@@ -4,10 +4,11 @@
 //! Work: O(|V| + |E|), Span: O(|V| + |E|).
 
 pub mod SCCStEph {
+
+    use crate::Types::Types::*;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeSeqStEphS, AVLTreeSeqStEphTrait};
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::{AVLTreeSetStEph, AVLTreeSetStEphTrait};
-    use crate::Types::Types::*;
 
     /// Finds strongly connected components in a directed graph.
     /// Returns sequence of components, each component is a set of vertices.

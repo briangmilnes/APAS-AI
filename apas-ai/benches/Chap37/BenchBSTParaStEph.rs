@@ -16,8 +16,8 @@ fn build_tree(len: usize) -> ParamBST<i32> {
 fn bench_para_bst(c: &mut Criterion) {
     let mut group = c.benchmark_group("BSTParaStEph");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_millis(100));
-    group.measurement_time(Duration::from_millis(800));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for &n in &[512usize, 1024] {
         group.bench_with_input(BenchmarkId::new("build", n), &n, |b, &len| {

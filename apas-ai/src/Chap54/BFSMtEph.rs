@@ -4,10 +4,11 @@
 //! Work: O(|V| + |E|), Span: O(d·lg n) where d is diameter.
 
 pub mod BFSMtEph {
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
-    use crate::ParaPair;
-    use crate::Types::Types::*;
     use std::collections::VecDeque;
+
+    use crate::Types::Types::*;
+    use crate::ParaPair;
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
 
     const UNREACHABLE: N = N::MAX;
 

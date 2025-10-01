@@ -8,9 +8,12 @@ use apas_ai::Types::Types::*;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::sync::{Arc, Mutex};
 use std::thread;
+use std::time::Duration;
 
 fn bench_multithreaded_reduce_val_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_reduce_val");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -41,6 +44,8 @@ fn bench_multithreaded_reduce_val_performance(c: &mut Criterion) {
 
 fn bench_concurrent_access_patterns(c: &mut Criterion) {
     let mut group = c.benchmark_group("concurrent_access");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableMtEph::empty(sum_reducer, 0);
@@ -89,6 +94,8 @@ fn bench_concurrent_access_patterns(c: &mut Criterion) {
 
 fn bench_qadsan_multithreaded_scenario(c: &mut Criterion) {
     let mut group = c.benchmark_group("qadsan_multithreaded_stock");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
 
@@ -159,6 +166,8 @@ fn bench_qadsan_multithreaded_scenario(c: &mut Criterion) {
 
 fn bench_multithreaded_insert_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_insert");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -209,12 +218,14 @@ fn bench_multithreaded_insert_performance(c: &mut Criterion) {
 
 fn bench_parallel_vs_sequential_range_reduction(c: &mut Criterion) {
     let mut group = c.benchmark_group("parallel_vs_sequential_range");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableMtEph::empty(sum_reducer, 0);
 
     // Create large dataset to benefit from parallelism
-    for i in 1..=5000 {
+    for i in 1..=2000 {
         table.insert(i, i * 2, |_old, new| *new);
     }
 
@@ -245,6 +256,8 @@ fn bench_parallel_vs_sequential_range_reduction(c: &mut Criterion) {
 
 fn bench_different_reducers_multithreaded(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_reducer_types");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let size = 1000;
 
@@ -286,6 +299,8 @@ fn bench_different_reducers_multithreaded(c: &mut Criterion) {
 
 fn bench_multithreaded_mutable_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_mutable_operations");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -338,6 +353,8 @@ fn bench_multithreaded_mutable_operations(c: &mut Criterion) {
 
 fn bench_multithreaded_split_join(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_split_join");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -345,13 +362,13 @@ fn bench_multithreaded_split_join(c: &mut Criterion) {
         b.iter_batched(
             || {
                 let mut table = AugOrderedTableMtEph::empty(sum_reducer, 0);
-                for i in 1..=1000 {
+                for i in 1..=600 {
                     table.insert(i, i * 10, |_old, new| *new);
                 }
                 table
             },
             |mut table| {
-                let (left, right) = table.split_key(&500);
+                let (left, right) = table.split_key(&300);
                 black_box((left.reduce_val(), right.reduce_val()))
             },
             criterion::BatchSize::SmallInput,
@@ -362,10 +379,10 @@ fn bench_multithreaded_split_join(c: &mut Criterion) {
         b.iter_batched(
             || {
                 let mut table = AugOrderedTableMtEph::empty(sum_reducer, 0);
-                for i in 1..=1000 {
+                for i in 1..=600 {
                     table.insert(i, i * 10, |_old, new| *new);
                 }
-                table.split_key(&500)
+                table.split_key(&300)
             },
             |(mut left, right)| {
                 left.join_key(right);
@@ -380,6 +397,8 @@ fn bench_multithreaded_split_join(c: &mut Criterion) {
 
 fn bench_multithreaded_macro_construction(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_construction");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -410,6 +429,8 @@ fn bench_multithreaded_macro_construction(c: &mut Criterion) {
 
 fn bench_thread_safety_overhead(c: &mut Criterion) {
     let mut group = c.benchmark_group("thread_safety_overhead");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 

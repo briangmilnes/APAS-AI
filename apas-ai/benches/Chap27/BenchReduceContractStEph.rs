@@ -30,8 +30,8 @@ fn bench_reduce_contract_10000(c: &mut Criterion) {
 criterion_group! {
     name = benches;
     config = Criterion::default()
-        .warm_up_time(Duration::from_millis(1000))
-        .measurement_time(Duration::from_secs(6))
+        .warm_up_time(Duration::from_millis(300))
+        .measurement_time(Duration::from_secs(1))
         .sample_size(30);
     targets = bench_reduce_contract_100, bench_reduce_contract_1000, bench_reduce_contract_10000
 }

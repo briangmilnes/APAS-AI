@@ -5,9 +5,10 @@
 //! Uses AVLTreeSetMtPer with Arc-based backing for PARALLEL operations.
 
 pub mod EdgeSetGraphMtPer {
+
+    use crate::Types::Types::*;
     use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerTrait;
     use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
-    use crate::Types::Types::*;
 
     #[derive(Clone)]
     pub struct EdgeSetGraphMtPer<V: StTInMtT + Ord + 'static> {

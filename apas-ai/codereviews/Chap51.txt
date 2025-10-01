@@ -1,0 +1,16 @@
+
+Chap51
+
+ You're not commenting to specification on your algor analysis.
+
+    /// Claude Work: O(1) - constant time initialization
+    /// Claude Span: O(1) - constant time initialization
+
+ This should be one line and saying constant time initialization (or other such comments)
+ inline is very jejune. The O(1) tells us that.
+ 
+ Make a plan according to PrePlanChecklist to sweep the src files and fix these.
+ Try and do it from a script for speed.
+
+ I have checked in.
+ 

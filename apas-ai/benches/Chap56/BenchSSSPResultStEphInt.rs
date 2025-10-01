@@ -4,6 +4,7 @@
 
 use apas_ai::Chap56::SSSPResultStEphInt::SSSPResultStEphInt;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use std::time::Duration;
 
 fn bench_new(c: &mut Criterion) {
     let sizes = vec![100, 500, 1000];
@@ -65,7 +66,7 @@ fn bench_extract_path(c: &mut Criterion) {
 
 criterion_group! {
     name = benches;
-    config = Criterion::default().warm_up_time(std::time::Duration::from_secs(1)).measurement_time(std::time::Duration::from_secs(6)).sample_size(30);
+    config = Criterion::default().warm_up_time(std::time::Duration::from_millis(300)).measurement_time(std::time::Duration::from_secs(1)).sample_size(30);
     targets = bench_new, bench_set_distance, bench_set_predecessor, bench_extract_path
 }
 criterion_main!(benches);

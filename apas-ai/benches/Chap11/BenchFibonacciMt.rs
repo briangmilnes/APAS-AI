@@ -7,8 +7,8 @@ use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criteri
 fn bench_fibonacci_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("FibonacciMt");
     group.sample_size(30);
-    group.warm_up_time(Duration::from_millis(800));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for &n in &[20usize, 24, 28] {
         group.bench_with_input(BenchmarkId::from_parameter(n), &n, |b, &input| {

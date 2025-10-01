@@ -2,11 +2,13 @@
 //! Chapter 52: Adjacency Table Graph representation (ephemeral, single-threaded).
 
 pub mod AdjTableGraphStEph {
+
+    use crate::Types::Types::*;
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
     use crate::Chap43::OrderedTableStEph::OrderedTableStEph::*;
-    use crate::Types::Types::*;
+
 
     #[derive(Clone)]
     pub struct AdjTableGraphStEph<V: StT + Ord> {

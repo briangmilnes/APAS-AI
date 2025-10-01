@@ -1,0 +1,18 @@
+Chap57
+
+We do not comment alg anal like this in stack.
+Put it in the right form with your AI model name on it.
+
+//! **Algorithmic Analysis:**
+//! - `new`: Work O(1), Span O(1)
+//! - `push`: Work O(1) amortized, Span O(1) amortized
+//! - `pop`: Work O(1) amortized, Span O(1) amortized
+//! - `peek`: Work O(1), Span O(1)
+//! - `is_empty`: Work O(1), Span O(1)
+//! - `size`: Work O(1), Span O(1)
+
+And again.
+//! **Algorithmic Analysis:**
+//! - Dijkstra: Work O(m log n), Span O(m log n) where m = |E|, n = |V|
+
+Check them all in this dir and get them up to standard.

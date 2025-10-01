@@ -4,9 +4,10 @@
 //! Work: O(|V| + |E|), Span: O(|V| + |E|).
 
 pub mod BFSStPer {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    use crate::Types::Types::*;
     use std::collections::VecDeque;
+
+    use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
 
     const UNREACHABLE: N = N::MAX;
 

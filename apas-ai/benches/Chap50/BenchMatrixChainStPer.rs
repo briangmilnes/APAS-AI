@@ -4,6 +4,7 @@
 use apas_ai::Chap50::MatrixChainStPer::MatrixChainStPer::{MatrixChainStPerS, MatrixChainStPerTrait, MatrixDim};
 use apas_ai::MatrixChainStPerLit;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use std::time::Duration;
 
 fn create_random_dimensions(n: usize) -> Vec<MatrixDim> {
     (0..n)
@@ -17,6 +18,8 @@ fn create_random_dimensions(n: usize) -> Vec<MatrixDim> {
 
 fn bench_matrix_chain_st_per_optimal_cost(c: &mut Criterion) {
     let mut group = c.benchmark_group("MatrixChainStPer_optimal_cost");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [5, 10, 15, 20].iter() {
         let dimensions = create_random_dimensions(*size);

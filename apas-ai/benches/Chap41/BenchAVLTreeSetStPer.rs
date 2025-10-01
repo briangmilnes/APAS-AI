@@ -18,8 +18,8 @@ fn build_avl_tree_set_per(len: usize) -> AVLTreeSetStPer<i32> {
 
 fn bench_avl_tree_set_per_build(c: &mut Criterion) {
     let mut group = c.benchmark_group("AVLTreeSetStPer_build");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     for size in [10, 20].iter() {
@@ -32,8 +32,8 @@ fn bench_avl_tree_set_per_build(c: &mut Criterion) {
 
 fn bench_avl_tree_set_per_find(c: &mut Criterion) {
     let mut group = c.benchmark_group("AVLTreeSetStPer_find");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     for size in [10, 20].iter() {
@@ -57,8 +57,8 @@ fn bench_avl_tree_set_per_find(c: &mut Criterion) {
 
 fn bench_avl_tree_set_per_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("AVLTreeSetStPer_insert");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     for size in [10, 20].iter() {
@@ -89,8 +89,8 @@ fn bench_avl_tree_set_per_insert(c: &mut Criterion) {
 
 fn bench_avl_tree_set_per_delete(c: &mut Criterion) {
     let mut group = c.benchmark_group("AVLTreeSetStPer_delete");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     for size in [10, 20].iter() {
@@ -121,8 +121,8 @@ fn bench_avl_tree_set_per_delete(c: &mut Criterion) {
 
 fn bench_avl_tree_set_per_bulk_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("AVLTreeSetStPer_bulk");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     for size in [10, 20].iter() {
@@ -146,8 +146,8 @@ fn bench_avl_tree_set_per_bulk_operations(c: &mut Criterion) {
 
 fn bench_avl_tree_set_per_from_seq(c: &mut Criterion) {
     let mut group = c.benchmark_group("AVLTreeSetStPer_from_seq");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     for size in [10, 20].iter() {
@@ -176,8 +176,8 @@ fn bench_avl_tree_set_per_from_seq(c: &mut Criterion) {
 
 fn bench_avl_tree_set_per_filter(c: &mut Criterion) {
     let mut group = c.benchmark_group("AVLTreeSetStPer_filter");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     for size in [10, 20].iter() {

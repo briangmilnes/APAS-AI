@@ -3,8 +3,9 @@
 //! G = (int seq) seq - for enumerable vertex sets V = {0, 1, ..., n-1}.
 
 pub mod AdjSeqGraphStPer {
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+
     use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct AdjSeqGraphStPer {

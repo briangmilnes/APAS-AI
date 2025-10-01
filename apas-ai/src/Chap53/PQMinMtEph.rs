@@ -5,9 +5,10 @@
 //! Priority selection is sequential, but set operations benefit from thread-safe structures.
 
 pub mod PQMinMtEph {
+
+    use crate::Types::Types::*;
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
     use crate::Chap41::AVLTreeSetMtEph::AVLTreeSetMtEph::*;
-    use crate::Types::Types::*;
 
     /// Result of min-priority queue search containing visited vertices and optional parent tree.
     #[derive(Clone, Debug)]

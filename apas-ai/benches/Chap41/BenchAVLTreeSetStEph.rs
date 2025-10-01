@@ -18,8 +18,8 @@ fn build_avl_tree_set(len: usize) -> AVLTreeSetStEph<i32> {
 
 fn bench_avl_tree_set_basic(c: &mut Criterion) {
     let mut group = c.benchmark_group("AVLTreeSetStEph_basic");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     // Only test size 3 to keep it ultra-fast

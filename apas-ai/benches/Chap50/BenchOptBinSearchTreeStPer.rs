@@ -3,12 +3,15 @@
 
 use apas_ai::{
     prob,
-    Chap50::{OptBinSearchTreeStPer::OptBinSearchTreeStPer::*, Probability::Probability},
+    Chap50::{OptBinSearchTreeStPer::OptBinSearchTreeStPer::*, Probability::Probability::Probability},
 };
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use std::time::Duration;
 
 fn bench_obst_st_per_small(c: &mut Criterion) {
     let mut group = c.benchmark_group("OBST_StPer_Small");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.warm_up_time(std::time::Duration::from_millis(500));
     group.measurement_time(std::time::Duration::from_secs(3));
     group.sample_size(20);

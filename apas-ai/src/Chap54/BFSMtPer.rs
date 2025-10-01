@@ -4,10 +4,11 @@
 //! Work: O(|V| + |E|), Span: O(d·lg n) where d is diameter.
 
 pub mod BFSMtPer {
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
-    use crate::ParaPair;
-    use crate::Types::Types::*;
     use std::collections::VecDeque;
+
+    use crate::Types::Types::*;
+    use crate::ParaPair;
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
 
     const UNREACHABLE: N = N::MAX;
 

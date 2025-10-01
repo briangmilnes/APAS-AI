@@ -8,7 +8,7 @@ use std::time::Duration;
 
 fn bench_relation_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("RelationStEph");
-    group.warm_up_time(Duration::from_millis(100));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
     let n: N = 1_000;

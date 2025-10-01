@@ -3,9 +3,10 @@
 //! PARALLEL operations via ArraySeqMtPer.
 
 pub mod AdjSeqGraphMtPer {
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
-    use crate::Types::Types::*;
     use std::sync::Arc;
+
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 
     #[derive(Clone)]
     pub struct AdjSeqGraphMtPer {

@@ -18,7 +18,7 @@ fn gen_data(n: usize) -> ArraySeqStEphS<i32> {
 fn bench_quicksort_st(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chapter36St");
     group.sample_size(20);
-    group.warm_up_time(Duration::from_millis(100));
+    group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
     for &n in &[128usize, 2_048, 16_384] {

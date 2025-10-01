@@ -4,6 +4,7 @@
 
 use apas_ai::Chap57::StackStEph::StackStEph::StackStEph;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use std::time::Duration;
 
 fn bench_push(c: &mut Criterion) {
     let sizes = [100, 500, 1000];
@@ -81,8 +82,8 @@ fn bench_peek(c: &mut Criterion) {
 criterion_group! {
     name = benches;
     config = Criterion::default()
-        .warm_up_time(std::time::Duration::from_secs(1))
-        .measurement_time(std::time::Duration::from_secs(6))
+        .warm_up_time(std::time::Duration::from_millis(300))
+        .measurement_time(std::time::Duration::from_secs(1))
         .sample_size(30);
     targets = bench_push, bench_pop, bench_push_pop_mixed, bench_peek
 }

@@ -5,6 +5,7 @@ use apas_ai::Chap50::MatrixChainStEph::MatrixChainStEph::{
     MatrixChainStEphS, MatrixChainStEphTrait, MatrixDim as MatrixChainStEphMatrixDim,
 };
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use std::time::Duration;
 
 fn create_random_dimensions_eph(n: usize) -> Vec<MatrixChainStEphMatrixDim> {
     (0..n)
@@ -18,6 +19,8 @@ fn create_random_dimensions_eph(n: usize) -> Vec<MatrixChainStEphMatrixDim> {
 
 fn bench_matrix_chain_st_eph_optimal_cost(c: &mut Criterion) {
     let mut group = c.benchmark_group("MatrixChainStEph_optimal_cost");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [5, 10, 15, 20].iter() {
         let dimensions = create_random_dimensions_eph(*size);

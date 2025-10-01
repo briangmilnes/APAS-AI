@@ -4,9 +4,12 @@ use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
 use apas_ai::Types::Types::*;
 use apas_ai::{LabUnDirGraphStEphLit, SetLit};
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use std::time::Duration;
 
 fn bench_labelled_undir_graph_creation(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabUnDirGraphStEph_Creation");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("empty", size), size, |b, _| {
@@ -34,6 +37,8 @@ fn bench_labelled_undir_graph_creation(c: &mut Criterion) {
 
 fn bench_labelled_undir_graph_add_vertex(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabUnDirGraphStEph_AddVertex");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("add_vertex", size), size, |b, &size| {
@@ -52,6 +57,8 @@ fn bench_labelled_undir_graph_add_vertex(c: &mut Criterion) {
 
 fn bench_labelled_undir_graph_add_labeled_edge(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabUnDirGraphStEph_AddLabeledEdge");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("add_labeled_edge", size), size, |b, &size| {
@@ -70,6 +77,8 @@ fn bench_labelled_undir_graph_add_labeled_edge(c: &mut Criterion) {
 
 fn bench_labelled_undir_graph_has_edge(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabUnDirGraphStEph_HasEdge");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("has_edge", size), size, |b, &size| {
@@ -94,6 +103,8 @@ fn bench_labelled_undir_graph_has_edge(c: &mut Criterion) {
 
 fn bench_labelled_undir_graph_get_edge_label(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabUnDirGraphStEph_GetEdgeLabel");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("get_edge_label", size), size, |b, &size| {
@@ -120,6 +131,8 @@ fn bench_labelled_undir_graph_get_edge_label(c: &mut Criterion) {
 
 fn bench_labelled_undir_graph_neighbors(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabUnDirGraphStEph_Neighbors");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("neighbors", size), size, |b, &size| {
@@ -150,6 +163,8 @@ fn bench_labelled_undir_graph_neighbors(c: &mut Criterion) {
 
 fn bench_labelled_undir_graph_edges(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabUnDirGraphStEph_Edges");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("edges", size), size, |b, &size| {
@@ -168,6 +183,8 @@ fn bench_labelled_undir_graph_edges(c: &mut Criterion) {
 
 fn bench_labelled_undir_graph_macro(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabUnDirGraphStEph_Macro");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     group.bench_function("macro_empty", |b| {
         b.iter(|| {
@@ -190,6 +207,8 @@ fn bench_labelled_undir_graph_macro(c: &mut Criterion) {
 
 fn bench_labelled_undir_graph_edge_normalization(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabUnDirGraphStEph_EdgeNormalization");
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for size in [10, 100, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("add_edges_both_directions", size), size, |b, &size| {

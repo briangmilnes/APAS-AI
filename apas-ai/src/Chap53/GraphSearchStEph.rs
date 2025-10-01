@@ -2,9 +2,10 @@
 //! Chapter 53: Generic Graph Search (ephemeral, single-threaded).
 
 pub mod GraphSearchStEph {
+
+    use crate::Types::Types::*;
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
-    use crate::Types::Types::*;
 
     #[derive(Clone, Debug)]
     pub struct SearchResult<V: StT + Ord> {

@@ -19,22 +19,31 @@ Chap43 - run
 Chap44 - ok
 Chap45 - run
 Chap47 - run
-AntiPatternStubs - run
 Chap49 - run
 Chap50 - run
-Chap51 - Review
-Chap52 - Review
-Chap53 - Review
-Chap54 - Review
-Chap55 - Review
-Chap56 - Review
-Chap57 - Review
-Chap58 - Review
-Chap59 - Review
+Chap51 - run
+Chap52 - run
+Chap53 - run
+Chap54 - run
+Chap55 - run
+Chap56 - run
+Chap57 - run
+Chap58 - run
+Chap59 - run
+Chap60 - Review
+Chap61 - Review
+Chap62 - Review
+Chap63 - Review
+Chap64 - Review
+Chap65 - Review
+Chap66 - Review
 
+
+AntiPatternStubs - done
 CheckForTestsAndBenchmarks.txt - done
 ModuleCleanup.txt - done
-BenchmarkCleanUp.txt -
 ExportScan.txt -  done
-MacrosInModules.txt - 
-
+MacrosInModules.txt - done
+BenchmarkCleanUp.txt - in process
+ImportCleanup.txt - 
+MultipleImports.txt -

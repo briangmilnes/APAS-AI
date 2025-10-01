@@ -7,8 +7,8 @@ use std::time::Duration;
 
 pub fn bench_select_mt_per(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap35::OrderStatSelectMtPer");
-    group.warm_up_time(Duration::from_secs(1));
-    group.measurement_time(Duration::from_secs(6));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
     let a100: ArraySeqMtPerS<i32> = ArraySeqMtPerS::tabulate(&|i| ((i * 7) % 100) as i32, 100);

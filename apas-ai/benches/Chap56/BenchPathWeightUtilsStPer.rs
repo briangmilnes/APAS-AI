@@ -8,6 +8,7 @@ use apas_ai::Chap56::PathWeightUtilsStPer::{
 };
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use ordered_float::OrderedFloat;
+use std::time::Duration;
 
 fn bench_path_weight_int(c: &mut Criterion) {
     let sizes = vec![10, 50, 100];
@@ -121,7 +122,7 @@ fn bench_validate_subpath_float(c: &mut Criterion) {
 
 criterion_group! {
     name = benches;
-    config = Criterion::default().warm_up_time(std::time::Duration::from_secs(1)).measurement_time(std::time::Duration::from_secs(6)).sample_size(30);
+    config = Criterion::default().warm_up_time(std::time::Duration::from_millis(300)).measurement_time(std::time::Duration::from_secs(1)).sample_size(30);
     targets = bench_path_weight_int, bench_path_weight_float, bench_validate_subpath_int, bench_validate_subpath_float
 }
 criterion_main!(benches);

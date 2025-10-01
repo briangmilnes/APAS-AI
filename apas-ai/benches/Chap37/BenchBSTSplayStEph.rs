@@ -16,8 +16,8 @@ fn build_tree(len: usize) -> BSTreeSplay<i32> {
 fn bench_bsteph_splay(c: &mut Criterion) {
     let mut group = c.benchmark_group("BSTSplayStEph");
     group.sample_size(10);
-    group.warm_up_time(Duration::from_millis(200));
-    group.measurement_time(Duration::from_millis(800));
+    group.warm_up_time(Duration::from_millis(300));
+    group.measurement_time(Duration::from_secs(1));
 
     for &n in &[1_024usize, 2_048] {
         group.bench_with_input(BenchmarkId::new("build", n), &n, |b, &len| {
