@@ -4,7 +4,7 @@
 
 #[cfg(test)]
 mod TestSSSPResultStEphInt {
-    use apas_ai::Chap56::SSSPResultStEphInt::SSSPResultStEphInt;
+    use apas_ai::Chap56::SSSPResultStEphInt::SSSPResultStEphInt::SSSPResultStEphInt;
 
     #[test]
     fn test_new() {

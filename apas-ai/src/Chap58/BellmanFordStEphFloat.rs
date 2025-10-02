@@ -14,7 +14,7 @@ pub mod BellmanFordStEphFloat {
 
     use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
     use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat;
-    use crate::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat;
+    use crate::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
     use crate::Types::Types::*;
 
     /// Runs Bellman-Ford algorithm on a weighted directed graph

@@ -4,7 +4,7 @@
 
 #[cfg(test)]
 mod TestAllPairsResultStEphInt {
-    use apas_ai::Chap56::AllPairsResultStEphInt::AllPairsResultStEphInt;
+    use apas_ai::Chap56::AllPairsResultStEphInt::AllPairsResultStEphInt::AllPairsResultStEphInt;
 
     #[test]
     fn test_new() {

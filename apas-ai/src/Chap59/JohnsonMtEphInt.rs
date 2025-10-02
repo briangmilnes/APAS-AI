@@ -20,7 +20,7 @@ pub mod JohnsonMtEphInt {
     use crate::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
     use crate::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Chap56::AllPairsResultStEphInt::AllPairsResultStEphInt;
+    use crate::Chap56::AllPairsResultStEphInt::AllPairsResultStEphInt::AllPairsResultStEphInt;
     use crate::Chap57::DijkstraStEphInt::DijkstraStEphInt::dijkstra;
     use crate::Chap58::BellmanFordStEphInt::BellmanFordStEphInt::bellman_ford;
     use crate::Types::Types::*;

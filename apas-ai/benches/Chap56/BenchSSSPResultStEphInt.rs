@@ -2,7 +2,7 @@
 //!
 //! Benchmarks for SSSPResultStEphInt.
 
-use apas_ai::Chap56::SSSPResultStEphInt::SSSPResultStEphInt;
+use apas_ai::Chap56::SSSPResultStEphInt::SSSPResultStEphInt::SSSPResultStEphInt;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use std::time::Duration;
 

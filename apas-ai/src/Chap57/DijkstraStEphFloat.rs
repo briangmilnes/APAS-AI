@@ -15,7 +15,7 @@ pub mod DijkstraStEphFloat {
     use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
     use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat;
     use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::{BinaryHeapPQ, BinaryHeapPQTrait};
-    use crate::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat;
+    use crate::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
     use crate::Types::Types::*;
 
     /// Priority queue entry: (distance, vertex)

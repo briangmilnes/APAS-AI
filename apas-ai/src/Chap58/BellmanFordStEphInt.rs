@@ -14,7 +14,7 @@ pub mod BellmanFordStEphInt {
 
     use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
     use crate::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt;
-    use crate::Chap56::SSSPResultStEphInt::SSSPResultStEphInt;
+    use crate::Chap56::SSSPResultStEphInt::SSSPResultStEphInt::SSSPResultStEphInt;
     use crate::Types::Types::*;
 
     /// Runs Bellman-Ford algorithm on a weighted directed graph
