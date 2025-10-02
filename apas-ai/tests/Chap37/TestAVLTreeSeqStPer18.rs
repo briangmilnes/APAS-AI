@@ -2,6 +2,7 @@
 //! Tests for AVLTreeSeq Chapter 18 algorithms.
 
 pub mod TestAVLTreeSeqStPer {
+
     use apas_ai::AVLTreeSeqStPerLit;
     use apas_ai::ArraySeqStPerS;
     use apas_ai::ArraySeqStPerSLit;

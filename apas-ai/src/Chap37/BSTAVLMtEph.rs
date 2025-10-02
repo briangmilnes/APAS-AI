@@ -3,11 +3,12 @@
 
 pub mod BSTAVLMtEph {
 
-use std::sync::{Arc, RwLock};
+    use std::sync::{Arc, RwLock};
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Debug, Clone)]
@@ -225,13 +226,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
             Self::size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         fn height(&self) -> N {
             let guard = self.root.read().unwrap();

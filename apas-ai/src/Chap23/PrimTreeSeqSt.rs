@@ -9,7 +9,8 @@
 
 pub mod PrimTreeSeqSt {
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub enum PrimTreeSeqStTree<T: StT> {
         Zero,

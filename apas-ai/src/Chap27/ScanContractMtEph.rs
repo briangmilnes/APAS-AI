@@ -3,12 +3,12 @@
 
 pub mod ScanContractMtEph {
 
-use std::sync::Arc;
-use std::thread;
+    use std::sync::Arc;
+    use std::thread;
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
-use crate::ParaPair;
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
+    use crate::ParaPair;
+    use crate::Types::Types::*;
 
     pub trait ScanContractMtEphTrait<T: StT + Send + Sync> {
         /// Scan a sequence using parallel contraction: contract→solve→expand.

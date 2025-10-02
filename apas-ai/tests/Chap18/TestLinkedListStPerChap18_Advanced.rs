@@ -1,5 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestLinkedListStPer {
+
     use apas_ai::Chap18::LinkedListStPer::LinkedListStPer::*;
     use apas_ai::LinkedListStPerSLit;
     use apas_ai::Types::Types::*;
@@ -23,11 +24,7 @@ pub mod TestLinkedListStPer {
     fn test_filter() {
         let a = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::tabulate(&|i| i + 1, 5);
         let c = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(&a, &|x: &N| {
-            if *x % 2 == 1 {
-                true
-            } else {
-                false
-            }
+            if *x % 2 == 1 { true } else { false }
         });
         assert_eq!(c, LinkedListStPerSLit![1, 3, 5]);
     }

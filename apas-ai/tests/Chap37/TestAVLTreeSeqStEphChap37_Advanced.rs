@@ -2,6 +2,7 @@
 //! Tests for AVLTreeSeq Eph Chap19-style operations using available Eph APIs.
 
 pub mod TestAVLTreeSeqStEph {
+
     use apas_ai::AVLTreeSeqStEphLit;
     use apas_ai::ArraySeqStEphSLit;
     use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
@@ -27,11 +28,7 @@ pub mod TestAVLTreeSeqStEph {
                 Some(*a.nth(i))
             } else {
                 let off = i - a.length();
-                if off < b.length() {
-                    Some(*b.nth(off))
-                } else {
-                    None
-                }
+                if off < b.length() { Some(*b.nth(off)) } else { None }
             }
         };
         assert_eq!(select(&a, &b, 0), Some(0));

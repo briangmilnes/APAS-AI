@@ -3,10 +3,11 @@
 
 pub mod OrderedSetStPer {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq)]
     pub struct OrderedSetStPer<T: StT + Ord> {
         base_set: AVLTreeSetStPer<T>,

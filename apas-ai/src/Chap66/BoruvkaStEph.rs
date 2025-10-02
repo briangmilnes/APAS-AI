@@ -6,32 +6,36 @@
 
 pub mod BoruvkaStEph {
 
-use std::collections::HashMap;
-use std::hash::Hash;
+    use std::collections::HashMap;
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::SetLit;
-use ordered_float::OrderedFloat;
-use rand::rngs::StdRng;
-use rand::{Rng, SeedableRng};
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+    use ordered_float::OrderedFloat;
+    use rand::rngs::StdRng;
+    use rand::{Rng, SeedableRng};
+
     pub trait BoruvkaStEphTrait {
         /// Find vertex bridges for Borůvka's algorithm
         /// APAS: Work O(|E|), Span O(|E|)
         fn vertex_bridges<V: StT + Hash + Ord>(edges: &Set<LabeledEdge<V>>) -> Set<(V, LabeledEdge<V>)>;
-        
+
         /// Bridge-based star partition
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
-        fn bridge_star_partition<V: StT + Hash + Ord>(vertices: &Set<V>, bridges: &Set<(V, LabeledEdge<V>)>) -> Set<Set<V>>;
-        
+        fn bridge_star_partition<V: StT + Hash + Ord>(
+            vertices: &Set<V>,
+            bridges: &Set<(V, LabeledEdge<V>)>,
+        ) -> Set<Set<V>>;
+
         /// Borůvka's MST algorithm
         /// APAS: Work O(m log n), Span O(m log n)
         fn boruvka_mst<V: StT + Hash + Ord>(edges: &Set<LabeledEdge<V>>) -> Set<LabeledEdge<V>>;
-        
+
         /// Borůvka's MST with random seed
         /// APAS: Work O(m log n), Span O(m log n)
         fn boruvka_mst_with_seed<V: StT + Hash + Ord>(edges: &Set<LabeledEdge<V>>, seed: u64) -> Set<LabeledEdge<V>>;
-        
+
         /// Compute total weight of MST
         /// APAS: Work O(m), Span O(1)
         fn mst_weight<V: StT + Hash>(mst: &Set<LabeledEdge<V>>) -> OrderedFloat<f64>;
@@ -58,35 +62,35 @@ use rand::{Rng, SeedableRng};
         edges: &Set<LabeledEdge<V>>,
     ) -> HashMap<V, (V, OrderedFloat<f64>, usize)> {
         let mut bridges: HashMap<V, (V, OrderedFloat<f64>, usize)> = HashMap::new();
-        
+
         for edge in edges.iter() {
             let (u, v, w, label) = edge.clone();
-            
+
             // Update bridge for u
             match bridges.get(&u) {
-                None => {
+                | None => {
                     let _ = bridges.insert(u.clone(), (v.clone(), w, label));
                 }
-                Some((_, existing_w, _)) => {
+                | Some((_, existing_w, _)) => {
                     if w < *existing_w {
                         let _ = bridges.insert(u.clone(), (v.clone(), w, label));
                     }
                 }
             }
-            
+
             // Update bridge for v
             match bridges.get(&v) {
-                None => {
+                | None => {
                     let _ = bridges.insert(v.clone(), (u.clone(), w, label));
                 }
-                Some((_, existing_w, _)) => {
+                | Some((_, existing_w, _)) => {
                     if w < *existing_w {
                         let _ = bridges.insert(v.clone(), (u.clone(), w, label));
                     }
                 }
             }
         }
-        
+
         bridges
     }
 
@@ -116,19 +120,19 @@ use rand::{Rng, SeedableRng};
             let is_heads = rng.random::<bool>();
             let _ = flips.insert(v.clone(), is_heads);
         }
-        
+
         // Select edges from Tail→Head (Tail=false, Head=true)
         let mut partition: HashMap<V, (V, OrderedFloat<f64>, usize)> = HashMap::new();
         for (u, (v, w, label)) in bridges.iter() {
             let u_heads = flips.get(u).copied().unwrap_or(false);
             let v_heads = flips.get(v).copied().unwrap_or(false);
-            
+
             // Contract if u is Tail and v is Head
             if !u_heads && v_heads {
                 let _ = partition.insert(u.clone(), (v.clone(), *w, *label));
             }
         }
-        
+
         // Remaining vertices = all vertices minus contracted tails
         let mut remaining = SetLit![];
         for v in vertices.iter() {
@@ -136,7 +140,7 @@ use rand::{Rng, SeedableRng};
                 let _ = remaining.insert(v.clone());
             }
         }
-        
+
         (remaining, partition)
     }
 
@@ -166,19 +170,19 @@ use rand::{Rng, SeedableRng};
         if edges.size() == 0 {
             return mst_labels;
         }
-        
+
         // Find vertex bridges
         let bridges = vertex_bridges(edges);
-        
+
         // Perform bridge star partition
         let (remaining_vertices, partition) = bridge_star_partition(vertices, &bridges, rng);
-        
+
         // Collect new MST labels from partition
         let mut new_mst_labels = mst_labels.clone();
         for (_, (_, _, label)) in partition.iter() {
             let _ = new_mst_labels.insert(*label);
         }
-        
+
         // Build full partition map (including identity for non-contracted vertices)
         let mut full_partition: HashMap<V, V> = HashMap::new();
         for (tail, (head, _, _)) in partition.iter() {
@@ -187,19 +191,19 @@ use rand::{Rng, SeedableRng};
         for v in remaining_vertices.iter() {
             let _ = full_partition.insert(v.clone(), v.clone());
         }
-        
+
         // Re-route edges to new endpoints, removing self-edges
         let mut new_edges = SetLit![];
         for (u, v, w, label) in edges.iter() {
             let new_u = full_partition.get(u).cloned().unwrap_or_else(|| u.clone());
             let new_v = full_partition.get(v).cloned().unwrap_or_else(|| v.clone());
-            
+
             // Skip self-edges
             if new_u != new_v {
                 let _ = new_edges.insert((new_u, new_v, *w, *label));
             }
         }
-        
+
         // Recurse
         boruvka_mst(&remaining_vertices, &new_edges, new_mst_labels, rng)
     }
@@ -229,10 +233,7 @@ use rand::{Rng, SeedableRng};
     ///
     /// APAS: Work O(m), Span O(m)
     /// claude-4-sonet: Work O(m), Span O(m)
-    pub fn mst_weight<V: StT + Hash>(
-        edges: &Set<LabeledEdge<V>>,
-        mst_labels: &Set<usize>,
-    ) -> OrderedFloat<f64> {
+    pub fn mst_weight<V: StT + Hash>(edges: &Set<LabeledEdge<V>>, mst_labels: &Set<usize>) -> OrderedFloat<f64> {
         let mut total = OrderedFloat(0.0);
         for (_, _, w, label) in edges.iter() {
             if mst_labels.mem(label) {
@@ -242,4 +243,3 @@ use rand::{Rng, SeedableRng};
         total
     }
 }
-

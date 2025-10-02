@@ -5,9 +5,10 @@
 
 pub mod TopoSortStEph {
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
-use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeSeqStEphS, AVLTreeSeqStEphTrait};
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeSeqStEphS, AVLTreeSeqStEphTrait};
+    use crate::Types::Types::*;
+
     pub trait TopoSortStEphTrait {
         /// Computes topological sort of a DAG
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)

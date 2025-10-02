@@ -4,7 +4,7 @@
 use apas_ai::Chap50::MatrixChainStEph::MatrixChainStEph::{
     MatrixChainStEphS, MatrixChainStEphTrait, MatrixDim as MatrixChainStEphMatrixDim,
 };
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn create_random_dimensions_eph(n: usize) -> Vec<MatrixChainStEphMatrixDim> {

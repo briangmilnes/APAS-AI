@@ -3,10 +3,11 @@
 
 pub mod ArraySeqStEph {
 
-use std::collections::HashSet;
-use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
+    use std::collections::HashSet;
+    use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone)]
     pub struct ArraySeqStEphS<T: StT> {
         data: Box<[T]>,
@@ -246,21 +247,9 @@ use crate::Types::Types::*;
             ArraySeqStEphS::inject(self, updates)
         }
 
-        fn isEmpty(&self) -> B {
-            if self.length() == 0 {
-                true
-            } else {
-                false
-            }
-        }
+        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
 
-        fn isSingleton(&self) -> B {
-            if self.length() == 1 {
-                true
-            } else {
-                false
-            }
-        }
+        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
 
         fn collect<K: StT, V: StT>(
             pairs: &ArraySeqStEphS<Pair<K, V>>,

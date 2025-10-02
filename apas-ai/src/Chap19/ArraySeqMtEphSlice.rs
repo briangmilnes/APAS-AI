@@ -8,11 +8,12 @@
 
 pub mod ArraySeqMtEphSlice {
 
-use std::fmt::{Debug, Display, Formatter};
-use std::ops::Range;
-use std::sync::{Arc, Mutex};
+    use std::fmt::{Debug, Display, Formatter};
+    use std::ops::Range;
+    use std::sync::{Arc, Mutex};
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
+
     #[derive(Debug)]
     struct Inner<T: StT + Send + Sync> {
         data: Mutex<Box<[T]>>,
@@ -153,21 +154,9 @@ use crate::Types::Types::*;
             Self { inner, range: 0..1 }
         }
 
-        fn isEmpty(&self) -> B {
-            if self.len() == 0 {
-                true
-            } else {
-                false
-            }
-        }
+        fn isEmpty(&self) -> B { if self.len() == 0 { true } else { false } }
 
-        fn isSingleton(&self) -> B {
-            if self.len() == 1 {
-                true
-            } else {
-                false
-            }
-        }
+        fn isSingleton(&self) -> B { if self.len() == 1 { true } else { false } }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let sub = self.clamp_subrange(start, length);

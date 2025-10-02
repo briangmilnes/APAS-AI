@@ -3,8 +3,9 @@
 
 pub mod AVLTreeSetStPer {
 
-use crate::Types::Types::*;
-use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq, Eq, Debug)]
     pub struct AVLTreeSetStPer<T: StT + Ord> {
         elements: AVLTreeSeqStPerS<T>,

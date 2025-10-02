@@ -8,9 +8,10 @@
 
 pub mod GraphSearchMtPer {
 
-use crate::Types::Types::*;
-use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerTrait;
-use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
+    use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerTrait;
+    use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug)]
     pub struct SearchResult<V: StTInMtT + Ord + 'static> {
         pub visited: AVLTreeSetMtPer<V>,

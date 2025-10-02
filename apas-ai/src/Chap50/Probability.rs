@@ -6,11 +6,12 @@
 
 pub mod Probability {
 
-use std::cmp::Ordering;
-use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
-use std::hash::{Hash, Hasher};
+    use std::cmp::Ordering;
+    use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
+    use std::hash::{Hash, Hasher};
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Copy)]
     pub struct Probability(pub f64);
 

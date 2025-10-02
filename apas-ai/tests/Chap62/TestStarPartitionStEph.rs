@@ -4,11 +4,8 @@
 #[cfg(test)]
 mod tests {
     use apas_ai::{
-        Chap05::SetStEph::SetStEph::*,
-        Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
-        Chap62::StarPartitionStEph::StarPartitionStEph::*,
-        SetLit,
-        Types::Types::*,
+        Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
+        Chap62::StarPartitionStEph::StarPartitionStEph::*, SetLit, Types::Types::*,
     };
     use std::collections::HashMap;
 
@@ -116,7 +113,7 @@ mod tests {
         let vertices = SetLit![0];
         let edges = SetLit![];
         let graph = <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(vertices, edges);
-        
+
         let (centers, partition_map) = sequential_star_partition(&graph);
 
         // Single isolated vertex should be its own center
@@ -125,4 +122,3 @@ mod tests {
         assert_eq!(partition_map.get(&0), Some(&0));
     }
 }
-

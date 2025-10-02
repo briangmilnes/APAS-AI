@@ -3,11 +3,12 @@
 
 pub mod Chapter36MtSlice {
 
-use std::thread;
+    use std::thread;
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
-use rand::{rng, Rng};
+    use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
+    use crate::Types::Types::*;
+    use rand::{Rng, rng};
+
     pub trait Chapter36MtSliceTrait<T: StT + Ord + Send> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time pivot selection

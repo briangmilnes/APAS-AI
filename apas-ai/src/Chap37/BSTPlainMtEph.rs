@@ -3,10 +3,11 @@
 
 pub mod BSTPlainMtEph {
 
-use std::sync::{Arc, RwLock};
+    use std::sync::{Arc, RwLock};
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     type Link<T> = Arc<RwLock<Option<Node<T>>>>;
 
     #[derive(Clone, Debug)]
@@ -130,26 +131,14 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
             find_rec(&self.root, target)
         }
 
-        fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() {
-                true
-            } else {
-                false
-            }
-        }
+        fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             guard.as_ref().map_or(0, |node| node.size)
         }
 
-        fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         fn height(&self) -> N {
             let guard = self.root.read().unwrap();

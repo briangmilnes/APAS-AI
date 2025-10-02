@@ -6,12 +6,13 @@
 
 pub mod ArraySetEnumMtEph {
 
-use std::sync::Arc;
-use std::thread;
+    use std::sync::Arc;
+    use std::thread;
 
-use crate::Types::Types::*;
-use bitvec::prelude::*;
-use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
+    use crate::Types::Types::*;
+    use bitvec::prelude::*;
+
     #[derive(PartialEq, Clone)]
     pub struct ArraySetEnumMtEph {
         bits: BitBox,     // 1 bit per element
@@ -150,13 +151,7 @@ use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
             }
         }
 
-        fn find(&self, x: N) -> B {
-            if x < self.universe_size {
-                self.bits[x]
-            } else {
-                false
-            }
-        }
+        fn find(&self, x: N) -> B { if x < self.universe_size { self.bits[x] } else { false } }
 
         fn delete(&mut self, x: N) {
             if x < self.universe_size {

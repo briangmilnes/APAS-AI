@@ -3,7 +3,7 @@ use apas_ai::ArraySeqStPerChap18::ArraySeqStPerChap18::*;
 use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Types::Types::*;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_tabulate_map_per_ch18(c: &mut Criterion) {

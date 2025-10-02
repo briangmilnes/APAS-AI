@@ -3,11 +3,12 @@
 
 pub mod OrderedSetMtEph {
 
-use std::sync::Arc;
-use std::thread;
+    use std::sync::Arc;
+    use std::thread;
 
-use crate::Types::Types::*;
-use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq)]
     pub struct OrderedSetMtEph<T: MtKey> {
         elements: Vec<T>,

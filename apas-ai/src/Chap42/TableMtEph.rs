@@ -3,14 +3,15 @@
 
 pub mod TableMtEph {
 
-use std::cmp::Ordering;
-use std::sync::Arc;
-use std::thread;
+    use std::cmp::Ordering;
+    use std::sync::Arc;
+    use std::thread;
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
-use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
-use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Types::Types::*;
+
     #[derive(Debug, Clone, PartialEq)]
     pub struct TableMtEph<K: MtKey, V: MtVal> {
         entries: ArraySeqMtEphS<Pair<K, V>>,

@@ -5,12 +5,13 @@
 
 pub mod ArraySeqMtPer {
 
-use std::collections::HashSet;
-use std::sync::Arc;
-use std::thread;
+    use std::collections::HashSet;
+    use std::sync::Arc;
+    use std::thread;
 
-use crate::Types::Types::*;
-use crate::ParaPair;
+    use crate::ParaPair;
+    use crate::Types::Types::*;
+
     #[derive(Debug)]
     pub struct ArraySeqMtPerS<T: StTInMtT> {
         data: Box<[T]>,
@@ -51,21 +52,9 @@ use crate::ParaPair;
             ArraySeqMtPerS::from_vec(values)
         }
 
-        pub fn is_empty(&self) -> B {
-            if self.data.is_empty() {
-                true
-            } else {
-                false
-            }
-        }
+        pub fn is_empty(&self) -> B { if self.data.is_empty() { true } else { false } }
 
-        pub fn is_singleton(&self) -> B {
-            if self.data.len() == 1 {
-                true
-            } else {
-                false
-            }
-        }
+        pub fn is_singleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
 
         /// Iterator over references to elements
         pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }

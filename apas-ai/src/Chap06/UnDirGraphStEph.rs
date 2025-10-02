@@ -3,12 +3,13 @@
 
 pub mod UnDirGraphStEph {
 
-use std::fmt::{Debug, Display, Formatter, Result};
-use std::hash::Hash;
+    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     #[derive(Clone)]
     pub struct UnDirGraphStEph<V: StT + Hash> {
         V: Set<V>,
@@ -94,13 +95,7 @@ use crate::SetLit;
             result
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B {
-            if &e.0 == v || &e.1 == v {
-                true
-            } else {
-                false
-            }
-        }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { true } else { false } }
 
         fn Degree(&self, v: &V) -> N { self.NG(v).size() }
     }

@@ -3,26 +3,21 @@
 
 pub mod Exercise21_8 {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     pub trait Exercise21_8Trait {
         /// Helper function to check divisibility
         /// APAS: Work Θ(1), Span Θ(1)
         fn is_divisible(n: N, i: N) -> B;
-        
+
         /// Exercise 21.8 / Algorithm 21.4 (Brute Force Primality Test)
         /// APAS: Work Θ(√n), Span Θ(lg n)
         fn is_prime(n: N) -> B;
     }
 
     /// Helper function to check divisibility
-    pub fn is_divisible(n: N, i: N) -> B {
-        if n % i == 0 {
-            true
-        } else {
-            false
-        }
-    }
+    pub fn is_divisible(n: N, i: N) -> B { if n % i == 0 { true } else { false } }
 
     /// Exercise 21.8 / Algorithm 21.4 (Brute Force Primality Test)
     /// isPrime n = |{ x in 1..=floor(sqrt(n)) : n mod i == 0 }| == 1
@@ -40,10 +35,6 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
         let all: ArraySeqStPerS<B> =
             <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(&|i| is_divisible(n, i + 1), k);
         let ones: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::filter(&all, &|x| *x);
-        if ones.length() == 1 {
-            true
-        } else {
-            false
-        }
+        if ones.length() == 1 { true } else { false }
     }
 }

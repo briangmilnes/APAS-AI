@@ -1,5 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestLinkedListStEph {
+
     use apas_ai::Chap18::LinkedListStEph::LinkedListStEph::*;
     use apas_ai::LinkedListStEphSLit;
     use apas_ai::Types::Types::*;
@@ -55,11 +56,7 @@ pub mod TestLinkedListStEph {
         expect_list(&one, &[1]);
         let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
         let even = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&a, &|x: &N| {
-            if *x % 2 == 0 {
-                true
-            } else {
-                false
-            }
+            if *x % 2 == 0 { true } else { false }
         });
         expect_list(&even, &[2, 4]);
         let sum = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::reduce(&a, &|x, y| x + y, 0);

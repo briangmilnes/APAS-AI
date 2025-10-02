@@ -14,7 +14,8 @@
 
 pub mod StackStEph {
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
+
     #[derive(Debug, Clone)]
     pub struct StackStEph<T: StT> {
         /// Backing storage using Vec for efficient push/pop

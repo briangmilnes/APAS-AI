@@ -7,11 +7,12 @@
 
 pub mod OrderedTableMtPer {
 
-use std::sync::Arc;
+    use std::sync::Arc;
 
-use crate::Types::Types::*;
-use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-use crate::Chap43::OrderedTableStPer::OrderedTableStPer::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap43::OrderedTableStPer::OrderedTableStPer::*;
+    use crate::Types::Types::*;
+
     pub struct OrderedTableMtPer<K: StTInMtT + Ord, V: StTInMtT> {
         inner: Arc<OrderedTableStPer<K, V>>,
     }

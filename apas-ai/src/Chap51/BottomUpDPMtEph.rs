@@ -6,13 +6,14 @@
 
 pub mod BottomUpDPMtEph {
 
-use std::cmp::{max, min};
-use std::fmt::{Debug, Display};
-use std::sync::{Arc, Mutex};
-use std::thread;
+    use std::cmp::{max, min};
+    use std::fmt::{Debug, Display};
+    use std::sync::{Arc, Mutex};
+    use std::thread;
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct BottomUpDPMtEphS {
         /// Input sequence S
@@ -77,11 +78,7 @@ use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
             let positions: Vec<(usize, usize)> = (start..=end)
                 .filter_map(|i| {
                     let j = k - i;
-                    if j > 0 && j <= t_len {
-                        Some((i, j))
-                    } else {
-                        None
-                    }
+                    if j > 0 && j <= t_len { Some((i, j)) } else { None }
                 })
                 .collect();
 

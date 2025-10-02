@@ -4,7 +4,7 @@
 use apas_ai::Chap47::AdvancedQuadraticProbing::AdvancedQuadraticProbing::AdvancedQuadraticProbingStrategy;
 use apas_ai::Chap47::FlatHashTable::FlatHashTable::FlatHashTable;
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::DefaultHashFunction;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_quadratic_probing_insert(c: &mut Criterion) {

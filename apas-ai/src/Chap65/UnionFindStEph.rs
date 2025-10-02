@@ -6,10 +6,11 @@
 
 pub mod UnionFindStEph {
 
-use std::collections::HashMap;
-use std::hash::Hash;
+    use std::collections::HashMap;
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
+
     pub struct UnionFind<V: StT + Hash> {
         parent: HashMap<V, V>,
         rank: HashMap<V, usize>,
@@ -57,7 +58,7 @@ use crate::Types::Types::*;
         /// - The representative of v's set
         pub fn find(&mut self, v: &V) -> V {
             let parent_v = self.parent.get(v).unwrap().clone();
-            
+
             if parent_v == *v {
                 // v is the root
                 v.clone()
@@ -83,14 +84,14 @@ use crate::Types::Types::*;
         pub fn union(&mut self, u: &V, v: &V) {
             let root_u = self.find(u);
             let root_v = self.find(v);
-            
+
             if root_u == root_v {
                 return; // Already in same set
             }
-            
+
             let rank_u = *self.rank.get(&root_u).unwrap_or(&0);
             let rank_v = *self.rank.get(&root_v).unwrap_or(&0);
-            
+
             if rank_u < rank_v {
                 // Attach u's tree under v's tree
                 let _ = self.parent.insert(root_u, root_v);
@@ -115,9 +116,7 @@ use crate::Types::Types::*;
         ///
         /// Returns:
         /// - true if u and v are in the same set
-        pub fn equals(&mut self, u: &V, v: &V) -> B {
-            self.find(u) == self.find(v)
-        }
+        pub fn equals(&mut self, u: &V, v: &V) -> B { self.find(u) == self.find(v) }
 
         /// Get the number of distinct sets
         ///
@@ -138,9 +137,6 @@ use crate::Types::Types::*;
     }
 
     impl<V: StT + Hash> Default for UnionFind<V> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 }
-

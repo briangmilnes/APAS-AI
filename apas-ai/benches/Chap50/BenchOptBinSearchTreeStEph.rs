@@ -2,10 +2,10 @@
 //! Benchmarks for OptBinSearchTreeStEph
 
 use apas_ai::{
-    prob,
     Chap50::{OptBinSearchTreeStEph::OptBinSearchTreeStEph::*, Probability::Probability::Probability},
+    prob,
 };
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_obst_st_eph_small(c: &mut Criterion) {

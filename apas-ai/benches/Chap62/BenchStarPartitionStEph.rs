@@ -2,13 +2,10 @@
 //! Benchmarks for Chapter 62 Star Partition (Sequential Ephemeral)
 
 use apas_ai::{
-    Chap05::SetStEph::SetStEph::*,
-    Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
-    Chap62::StarPartitionStEph::StarPartitionStEph::*,
-    SetLit,
-    Types::Types::*,
+    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
+    Chap62::StarPartitionStEph::StarPartitionStEph::*, SetLit, Types::Types::*,
 };
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 // Helper to create a cycle graph
@@ -77,4 +74,3 @@ criterion_group!(
     bench_sequential_star_partition_dense
 );
 criterion_main!(benches);
-

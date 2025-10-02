@@ -6,11 +6,12 @@
 
 pub mod TopDownDPStPer {
 
-use std::collections::HashMap;
-use std::fmt::{Debug, Display};
+    use std::collections::HashMap;
+    use std::fmt::{Debug, Display};
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct TopDownDPStPerS {
         /// Input sequence S

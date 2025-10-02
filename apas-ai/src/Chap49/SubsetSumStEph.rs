@@ -3,12 +3,13 @@
 
 pub mod SubsetSumStEph {
 
-use std::collections::HashMap;
-use std::fmt::{Debug, Display, Formatter, Result};
+    use std::collections::HashMap;
+    use std::fmt::{Debug, Display, Formatter, Result};
 
-use crate::Types::Types::*;
-use crate::ArraySeqStEphS;
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::ArraySeqStEphS;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct SubsetSumStEphS<T: StT> {
         multiset: ArraySeqStEphS<T>,

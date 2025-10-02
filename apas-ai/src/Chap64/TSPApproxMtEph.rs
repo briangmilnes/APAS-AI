@@ -6,30 +6,40 @@
 
 pub mod TSPApproxMtEph {
 
-use std::collections::{HashMap, HashSet};
-use std::hash::Hash;
+    use std::collections::{HashMap, HashSet};
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
-use crate::SetLit;
-use ordered_float::OrderedFloat;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+    use ordered_float::OrderedFloat;
+
     pub trait TSPApproxMtEphTrait {
         /// Parallel Euler tour of a tree
         /// APAS: Work O(|V|), Span O(|V|)
-        fn euler_tour_mt<V: StT + MtT + Hash + Ord + 'static>(tree: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>, start: V) -> std::vec::Vec<V>;
-        
+        fn euler_tour_mt<V: StT + MtT + Hash + Ord + 'static>(
+            tree: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>,
+            start: V,
+        ) -> std::vec::Vec<V>;
+
         /// Parallel shortcut Euler tour
         /// APAS: Work O(|V|), Span O(lg |V|)
         fn shortcut_tour_mt<V: StT + MtT + Hash + Ord>(euler_tour: &[V]) -> std::vec::Vec<V>;
-        
+
         /// Parallel tour weight computation
         /// APAS: Work O(|V|), Span O(lg |V|)
-        fn tour_weight_mt<V: StT + MtT + Hash + Ord>(tour: &[V], distances: &HashMap<(V, V), OrderedFloat<f64>>) -> OrderedFloat<f64>;
-        
+        fn tour_weight_mt<V: StT + MtT + Hash + Ord>(
+            tour: &[V],
+            distances: &HashMap<(V, V), OrderedFloat<f64>>,
+        ) -> OrderedFloat<f64>;
+
         /// Parallel 2-approximation algorithm for metric TSP
         /// APAS: Work O(|V|² log |V|), Span O(|V| log |V|)
-        fn approx_metric_tsp_mt<V: StT + MtT + Hash + Ord + 'static>(distances: &HashMap<(V, V), OrderedFloat<f64>>, vertices: &Set<V>) -> std::vec::Vec<V>;
+        fn approx_metric_tsp_mt<V: StT + MtT + Hash + Ord + 'static>(
+            distances: &HashMap<(V, V), OrderedFloat<f64>>,
+            vertices: &Set<V>,
+        ) -> std::vec::Vec<V>;
     }
 
     /// Euler Tour of a Tree (Parallel version, but DFS remains sequential)
@@ -51,9 +61,9 @@ use ordered_float::OrderedFloat;
     ) -> std::vec::Vec<V> {
         let mut tour = std::vec::Vec::new();
         let mut visited_edges: HashSet<(V, V)> = HashSet::new();
-        
+
         euler_tour_dfs(graph, start, None, tree_edges, &mut tour, &mut visited_edges);
-        
+
         tour
     }
 
@@ -67,7 +77,7 @@ use ordered_float::OrderedFloat;
         visited_edges: &mut HashSet<(V, V)>,
     ) {
         tour.push(current.clone());
-        
+
         let neighbors = get_neighbors(graph, current);
         for neighbor in neighbors.iter() {
             if let Some(p) = parent {
@@ -75,17 +85,17 @@ use ordered_float::OrderedFloat;
                     continue;
                 }
             }
-            
+
             let edge_key = if current < neighbor {
                 (current.clone(), neighbor.clone())
             } else {
                 (neighbor.clone(), current.clone())
             };
-            
+
             if visited_edges.contains(&edge_key) {
                 continue;
             }
-            
+
             let mut edge_found = false;
             for edge in tree_edges.iter() {
                 let LabEdge(u, v, _) = edge;
@@ -94,7 +104,7 @@ use ordered_float::OrderedFloat;
                     break;
                 }
             }
-            
+
             if edge_found {
                 visited_edges.insert(edge_key);
                 euler_tour_dfs(graph, neighbor, Some(current), tree_edges, tour, visited_edges);
@@ -109,27 +119,25 @@ use ordered_float::OrderedFloat;
     /// claude-4-sonet: Work O(n), Span O(n)
     ///
     /// Note: Could be parallelized with filter operation, but overhead likely not worth it
-    pub fn shortcut_tour_mt<V: StT + MtT + Hash + Ord>(
-        euler_tour: &[V],
-    ) -> std::vec::Vec<V> {
+    pub fn shortcut_tour_mt<V: StT + MtT + Hash + Ord>(euler_tour: &[V]) -> std::vec::Vec<V> {
         if euler_tour.is_empty() {
             return std::vec::Vec::new();
         }
-        
+
         let mut shortcut = std::vec::Vec::new();
         let mut visited: HashSet<V> = HashSet::new();
-        
+
         for vertex in euler_tour.iter() {
             if !visited.contains(vertex) {
                 shortcut.push(vertex.clone());
                 let _ = visited.insert(vertex.clone());
             }
         }
-        
+
         if let Some(start) = shortcut.first() {
             shortcut.push(start.clone());
         }
-        
+
         shortcut
     }
 
@@ -142,24 +150,21 @@ use ordered_float::OrderedFloat;
         tour: &[V],
     ) -> OrderedFloat<f64> {
         let mut total = OrderedFloat(0.0);
-        
+
         for i in 0..tour.len() - 1 {
             let u = &tour[i];
             let v = &tour[i + 1];
-            
+
             if let Some(weight) = get_edge_weight(graph, u, v) {
                 total += weight;
             }
         }
-        
+
         total
     }
 
     /// Helper to get neighbors of a vertex
-    fn get_neighbors<V: StT + MtT + Hash + Ord>(
-        graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>,
-        v: &V,
-    ) -> Set<V> {
+    fn get_neighbors<V: StT + MtT + Hash + Ord>(graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>, v: &V) -> Set<V> {
         let mut neighbors = SetLit![];
         for edge in graph.labeled_edges().iter() {
             let LabEdge(a, b, _) = edge;
@@ -207,8 +212,7 @@ use ordered_float::OrderedFloat;
         let euler = euler_tour_mt(graph, start, spanning_tree);
         let tour = shortcut_tour_mt(&euler);
         let weight = tour_weight_mt(graph, &tour);
-        
+
         (tour, weight)
     }
 }
-

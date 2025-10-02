@@ -7,9 +7,10 @@
 
 pub mod PQMinMtPer {
 
-use crate::Types::Types::*;
-use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerTrait;
-use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
+    use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerTrait;
+    use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug)]
     pub struct PQMinResult<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> {
         pub visited: AVLTreeSetMtPer<V>,

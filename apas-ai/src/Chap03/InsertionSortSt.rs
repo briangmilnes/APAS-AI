@@ -3,12 +3,11 @@
 
 pub mod InsertionSortSt {
 
-
     pub trait InsertionSortStTrait<T: Ord + Clone> {
         /// APAS: Work O(n²), Span O(n log n)
         /// claude-4-sonet: Work Θ(n²), Span Θ(n²), Parallelism Θ(1)
         /// BUG: claude-4-sonet's span analysis differs from APAS (APAS assumes O(log n) span insert operation)
-        /// 
+        ///
         /// APAS is underspecified with:
         /// Example 3.2 (Cost of Insertion Sort). Considering insertion sort example, suppose that we
         /// are given a cost specification for insert: for a sequence of length n the cost of insert

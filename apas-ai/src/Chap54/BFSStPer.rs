@@ -5,10 +5,11 @@
 
 pub mod BFSStPer {
 
-use std::collections::VecDeque;
+    use std::collections::VecDeque;
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Types::Types::*;
+
     pub trait BFSStPerTrait {
         /// Performs BFS from source vertex s on adjacency list graph G
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)

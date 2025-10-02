@@ -14,10 +14,11 @@
 
 pub mod AllPairsResultStPerInt {
 
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+
     const UNREACHABLE: i64 = i64::MAX;
     const NO_PREDECESSOR: usize = usize::MAX;
-    
+
     /// Result structure for all-pairs shortest paths with integer weights (persistent).
     pub struct AllPairsResultStPerInt {
         /// Distance matrix: distances.nth(u).nth(v) is the distance from u to v.
@@ -27,7 +28,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
         /// Number of vertices.
         pub n: usize,
     }
-    
+
     impl AllPairsResultStPerInt {
         /// Creates a new all-pairs result structure initialized for n vertices.
         /// All distances are set to UNREACHABLE except diagonal (0), all predecessors to NO_PREDECESSOR.
@@ -43,7 +44,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
                 n,
             }
         }
-    
+
         /// Returns the distance from vertex u to vertex v.
         pub fn get_distance(&self, u: usize, v: usize) -> i64 {
             if u >= self.n || v >= self.n {
@@ -51,7 +52,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
             }
             self.distances.nth(u).nth(v).clone()
         }
-    
+
         /// Sets the distance from vertex u to vertex v, returning a new structure.
         pub fn set_distance(self, u: usize, v: usize, dist: i64) -> Self {
             if u >= self.n || v >= self.n {
@@ -64,20 +65,16 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
                 n: self.n,
             }
         }
-    
+
         /// Returns the predecessor of vertex v in the shortest path from u.
         pub fn get_predecessor(&self, u: usize, v: usize) -> Option<usize> {
             if u >= self.n || v >= self.n {
                 return None;
             }
             let pred = self.predecessors.nth(u).nth(v).clone();
-            if pred == NO_PREDECESSOR {
-                None
-            } else {
-                Some(pred)
-            }
+            if pred == NO_PREDECESSOR { None } else { Some(pred) }
         }
-    
+
         /// Sets the predecessor of vertex v in the shortest path from u, returning a new structure.
         pub fn set_predecessor(self, u: usize, v: usize, pred: usize) -> Self {
             if u >= self.n || v >= self.n {
@@ -90,10 +87,10 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
                 n: self.n,
             }
         }
-    
+
         /// Checks if vertex v is reachable from vertex u.
         pub fn is_reachable(&self, u: usize, v: usize) -> bool { self.get_distance(u, v) != UNREACHABLE }
-    
+
         /// Extracts the shortest path from u to v by following predecessors.
         /// Returns None if v is unreachable from u, otherwise returns the path as a sequence.
         pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {
@@ -103,11 +100,11 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
             if !self.is_reachable(u, v) {
                 return None;
             }
-    
+
             let mut path = Vec::new();
             let mut current = v;
             path.push(current);
-    
+
             while current != u {
                 let pred = *self.predecessors.nth(u).nth(current);
                 if pred == NO_PREDECESSOR {
@@ -116,7 +113,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
                 path.push(pred);
                 current = pred;
             }
-    
+
             path.reverse();
             Some(ArraySeqStPerS::from_vec(path))
         }

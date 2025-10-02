@@ -4,7 +4,7 @@
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::{AVLTreeSeqStPerS, AVLTreeSeqStPerTrait};
 use apas_ai::Chap43::OrderedTableStPer::OrderedTableStPer::{OrderedTableStPer, OrderedTableStPerTrait};
 use apas_ai::Types::Types::*;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_ordered_table_st_per_insert(c: &mut Criterion) {

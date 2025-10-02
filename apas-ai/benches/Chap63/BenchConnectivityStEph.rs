@@ -2,13 +2,10 @@
 //! Benchmarks for Chapter 63 Graph Connectivity (Sequential Ephemeral)
 
 use apas_ai::{
-    Chap05::SetStEph::SetStEph::*,
-    Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
-    Chap63::ConnectivityStEph::ConnectivityStEph::*,
-    SetLit,
-    Types::Types::*,
+    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
+    Chap63::ConnectivityStEph::ConnectivityStEph::*, SetLit, Types::Types::*,
 };
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {
@@ -26,7 +23,7 @@ fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {
 fn create_multi_component_graph(n_components: N, component_size: N) -> UnDirGraphStEph<N> {
     let mut vertices = SetLit![];
     let mut edges = SetLit![];
-    
+
     for comp in 0..n_components {
         let base = comp * component_size;
         for i in 0..component_size {
@@ -46,9 +43,7 @@ fn bench_count_components_single(c: &mut Criterion) {
 
     for &n in &[10, 15, 20] {
         let graph = create_cycle_graph(n);
-        group.bench_function(format!("n={}", n), |b| {
-            b.iter(|| count_components(black_box(&graph)))
-        });
+        group.bench_function(format!("n={}", n), |b| b.iter(|| count_components(black_box(&graph))));
     }
     group.finish();
 }
@@ -88,4 +83,3 @@ criterion_group!(
     bench_connected_components
 );
 criterion_main!(benches);
-

@@ -6,7 +6,7 @@ use apas_ai::Chap44::DocumentIndex::DocumentIndex::*;
 use apas_ai::Chap44::Example44_1::Example44_1::*;
 use apas_ai::DocumentCollectionLit;
 use apas_ai::Types::Types::*;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 /// Create a document collection of specified size for benchmarking

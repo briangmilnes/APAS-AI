@@ -3,10 +3,11 @@
 
 pub mod Exercise12_5 {
 
-use std::ptr::null_mut;
-use std::sync::atomic::{AtomicPtr, Ordering};
+    use std::ptr::null_mut;
+    use std::sync::atomic::{AtomicPtr, Ordering};
 
-use crate::Types::Types::StTInMtT;
+    use crate::Types::Types::StTInMtT;
+
     struct Node<T: StTInMtT> {
         value: T,
         next: *mut Node<T>,

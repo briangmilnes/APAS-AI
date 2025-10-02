@@ -3,11 +3,12 @@
 
 pub mod OrderedTableStEph {
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-use crate::Chap42::TableStEph::TableStEph::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap42::TableStEph::TableStEph::*;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq)]
     pub struct OrderedTableStEph<K: StT + Ord, V: StT> {
         base_table: TableStEph<K, V>,

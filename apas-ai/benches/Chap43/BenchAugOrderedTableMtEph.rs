@@ -5,7 +5,7 @@ use apas_ai::AugOrderedTableMtEphLit;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::AugOrderedTableMtEph::AugOrderedTableMtEph::*;
 use apas_ai::Types::Types::*;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;

@@ -5,9 +5,10 @@
 
 pub mod OrderStatSelectMtPer {
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
-use rand::Rng;
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
+    use crate::Types::Types::*;
+    use rand::Rng;
+
     pub trait OrderStatSelectMtPerTrait<T: StTInMtT + Ord> {
         /// claude-4-sonet: Work Θ(n) expected, Θ(n²) worst case; Span Θ(log² n) expected (with parallel filter), Parallelism Θ(n/log² n) expected
         fn select(&self, k: N) -> Option<T>;

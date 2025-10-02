@@ -4,7 +4,7 @@ use apas_ai::Chap05::RelationStEph::RelationStEph::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Types::Types::*;
 use apas_ai::{PairLit, SetLit};
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_mapping_build(c: &mut Criterion) {

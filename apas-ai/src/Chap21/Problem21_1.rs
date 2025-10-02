@@ -3,8 +3,9 @@
 
 pub mod Problem21_1 {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     pub trait Problem21_1Trait {
         /// Problem 21.1 (Points in 2D) - Imperative approach using nested loops
         /// APAS: Work Θ(n²), Span Θ(n²)

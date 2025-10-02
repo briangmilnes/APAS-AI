@@ -7,13 +7,14 @@
 
 pub mod StarPartitionStEph {
 
-use std::collections::HashMap;
-use std::hash::Hash;
+    use std::collections::HashMap;
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     pub trait StarPartitionStEphTrait {
         /// Sequential star partition using greedy selection
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
@@ -36,9 +37,7 @@ use crate::SetLit;
     ///
     /// Returns:
     /// - (centers, partition_map): Set of center vertices and mapping from each vertex to its center
-    pub fn sequential_star_partition<V: StT + Hash + Ord>(
-        graph: &UnDirGraphStEph<V>,
-    ) -> (Set<V>, HashMap<V, V>) {
+    pub fn sequential_star_partition<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> (Set<V>, HashMap<V, V>) {
         let mut partition_map: HashMap<V, V> = HashMap::new();
         let mut centers: Set<V> = SetLit![];
         let mut processed: Set<V> = SetLit![];
@@ -68,4 +67,3 @@ use crate::SetLit;
         (centers, partition_map)
     }
 }
-

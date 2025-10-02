@@ -3,10 +3,11 @@
 
 pub mod SortedListPQ {
 
-use std::fmt::{Debug, Display, Formatter, Result};
+    use std::fmt::{Debug, Display, Formatter, Result};
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq, Clone, Debug)]
     pub struct SortedListPQ<T: StT + Ord> {
         elements: ArraySeqStPerS<T>,

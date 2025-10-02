@@ -7,12 +7,13 @@
 
 pub mod MathSeq {
 
-use std::collections::hash_map::Entry;
-use std::collections::{HashMap, HashSet};
-use std::fmt::{Debug, Display, Formatter};
-use std::hash::Hash;
+    use std::collections::hash_map::Entry;
+    use std::collections::{HashMap, HashSet};
+    use std::fmt::{Debug, Display, Formatter};
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone)]
     pub struct MathSeqS<T: StT> {
         data: Vec<T>,
@@ -203,21 +204,9 @@ use crate::Types::Types::*;
 
         fn delete_last(&mut self) -> Option<T> { self.data.pop() }
 
-        fn isEmpty(&self) -> B {
-            if self.data.is_empty() {
-                true
-            } else {
-                false
-            }
-        }
+        fn isEmpty(&self) -> B { if self.data.is_empty() { true } else { false } }
 
-        fn isSingleton(&self) -> B {
-            if self.data.len() == 1 {
-                true
-            } else {
-                false
-            }
-        }
+        fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
 
         fn domain(&self) -> Vec<N> { (0..self.data.len()).collect() }
 

@@ -2,13 +2,10 @@
 //! Benchmarks for Chapter 64 Spanning Tree via Star Contraction (Parallel)
 
 use apas_ai::{
-    Chap05::SetStEph::SetStEph::*,
-    Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
-    Chap64::SpanTreeMtEph::SpanTreeMtEph::*,
-    SetLit,
-    Types::Types::*,
+    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
+    Chap64::SpanTreeMtEph::SpanTreeMtEph::*, SetLit, Types::Types::*,
 };
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {
@@ -39,4 +36,3 @@ fn bench_spanning_tree_mt_cycle(c: &mut Criterion) {
 
 criterion_group!(benches, bench_spanning_tree_mt_cycle);
 criterion_main!(benches);
-

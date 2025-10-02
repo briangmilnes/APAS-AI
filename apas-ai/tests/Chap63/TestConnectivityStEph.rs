@@ -4,11 +4,8 @@
 #[cfg(test)]
 mod tests {
     use apas_ai::{
-        Chap05::SetStEph::SetStEph::*,
-        Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
-        Chap63::ConnectivityStEph::ConnectivityStEph::*,
-        SetLit,
-        Types::Types::*,
+        Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
+        Chap63::ConnectivityStEph::ConnectivityStEph::*, SetLit, Types::Types::*,
     };
 
     // Helper to create a simple connected graph
@@ -70,10 +67,10 @@ mod tests {
     fn test_connected_components_single() {
         let graph = create_connected_graph();
         let (reps, comp_map) = connected_components(&graph);
-        
+
         // Should have exactly 1 representative
         assert_eq!(reps.size(), 1);
-        
+
         // All vertices should map to the same component
         let first_comp = comp_map.get(&0).unwrap();
         for i in 1..6 {
@@ -85,22 +82,22 @@ mod tests {
     fn test_connected_components_multiple() {
         let graph = create_multi_component_graph();
         let (reps, comp_map) = connected_components(&graph);
-        
+
         // Should have exactly 3 representatives
         assert_eq!(reps.size(), 3);
-        
+
         // Vertices in same component should map to same representative
         let comp0 = comp_map.get(&0).unwrap();
         assert_eq!(comp_map.get(&1).unwrap(), comp0);
         assert_eq!(comp_map.get(&2).unwrap(), comp0);
-        
+
         let comp3 = comp_map.get(&3).unwrap();
         assert_eq!(comp_map.get(&4).unwrap(), comp3);
-        
+
         let comp5 = comp_map.get(&5).unwrap();
         assert_eq!(comp_map.get(&6).unwrap(), comp5);
         assert_eq!(comp_map.get(&7).unwrap(), comp5);
-        
+
         // Components should be different
         assert_ne!(comp0, comp3);
         assert_ne!(comp0, comp5);
@@ -112,7 +109,7 @@ mod tests {
         let graph = create_multi_component_graph();
         let count = count_components_hof(&graph);
         assert_eq!(count, 3);
-        
+
         // Should match direct implementation
         let count_direct = count_components(&graph);
         assert_eq!(count, count_direct);
@@ -123,15 +120,15 @@ mod tests {
         let graph = create_multi_component_graph();
         let (reps_hof, comp_map_hof) = connected_components_hof(&graph);
         let (reps_direct, comp_map_direct) = connected_components(&graph);
-        
+
         // Should have same number of components
         assert_eq!(reps_hof.size(), reps_direct.size());
         assert_eq!(reps_hof.size(), 3);
-        
+
         // Should produce equivalent component maps
         // (representatives may differ, but vertices in same component should match)
         for i in 0..8 {
-            for j in (i+1)..8 {
+            for j in (i + 1)..8 {
                 let same_comp_hof = comp_map_hof.get(&i) == comp_map_hof.get(&j);
                 let same_comp_direct = comp_map_direct.get(&i) == comp_map_direct.get(&j);
                 assert_eq!(same_comp_hof, same_comp_direct);
@@ -139,4 +136,3 @@ mod tests {
         }
     }
 }
-

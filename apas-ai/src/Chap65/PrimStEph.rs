@@ -6,22 +6,26 @@
 
 pub mod PrimStEph {
 
-use std::cmp::Ordering;
-use std::collections::HashMap;
-use std::fmt::{Display, Formatter, Result as FmtResult};
-use std::hash::Hash;
+    use std::cmp::Ordering;
+    use std::collections::HashMap;
+    use std::fmt::{Display, Formatter, Result as FmtResult};
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
-use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
-use crate::SetLit;
-use ordered_float::OrderedFloat;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
+    use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+    use ordered_float::OrderedFloat;
+
     pub trait PrimStEphTrait {
         /// Prim's MST algorithm
         /// APAS: Work O(m log n), Span O(m log n) where m = |E|, n = |V|
-        fn prim_mst<V: StT + Hash + Ord + Display>(graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>, start: V) -> Set<LabEdge<V, OrderedFloat<f64>>>;
-        
+        fn prim_mst<V: StT + Hash + Ord + Display>(
+            graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
+            start: V,
+        ) -> Set<LabEdge<V, OrderedFloat<f64>>>;
+
         /// Compute total weight of MST
         /// APAS: Work O(m), Span O(1)
         fn mst_weight<V: StT + Hash>(mst: &Set<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64>;
@@ -37,26 +41,24 @@ use ordered_float::OrderedFloat;
 
     impl<V: StT + Hash + Ord> PQEntry<V> {
         fn new(priority: OrderedFloat<f64>, vertex: V, parent: Option<V>) -> Self {
-            PQEntry { priority, vertex, parent }
+            PQEntry {
+                priority,
+                vertex,
+                parent,
+            }
         }
     }
 
     impl<V: StT + Hash + Ord> Ord for PQEntry<V> {
-        fn cmp(&self, other: &Self) -> Ordering {
-            self.priority.cmp(&other.priority)
-        }
+        fn cmp(&self, other: &Self) -> Ordering { self.priority.cmp(&other.priority) }
     }
 
     impl<V: StT + Hash + Ord> PartialOrd for PQEntry<V> {
-        fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-            Some(self.cmp(other))
-        }
+        fn partial_cmp(&self, other: &Self) -> Option<Ordering> { Some(self.cmp(other)) }
     }
 
     impl<V: StT + Hash + Ord + Display> Display for PQEntry<V> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-            write!(f, "({}, {})", self.priority, self.vertex)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { write!(f, "({}, {})", self.priority, self.vertex) }
     }
 
     /// Algorithm 65.1: Prim's MST Algorithm
@@ -81,29 +83,29 @@ use ordered_float::OrderedFloat;
     ) -> Set<LabEdge<V, OrderedFloat<f64>>> {
         let mut mst_edges = SetLit![];
         let mut visited: std::collections::HashSet<V> = std::collections::HashSet::new();
-        
+
         // Priority queue
         let mut pq = BinaryHeapPQ::<PQEntry<V>>::singleton(PQEntry::new(OrderedFloat(0.0), start.clone(), None));
-        
+
         while !pq.is_empty() {
             // Extract minimum priority vertex
             let (new_pq, entry_opt) = pq.delete_min();
             pq = new_pq;
-            
+
             let entry = match entry_opt {
-                Some(e) => e,
-                None => break,
+                | Some(e) => e,
+                | None => break,
             };
-            
+
             let u = entry.vertex;
             let parent_u = entry.parent;
-            
+
             if visited.contains(&u) {
                 continue;
             }
-            
+
             let _ = visited.insert(u.clone());
-            
+
             // Add edge to MST (except for start vertex)
             if let Some(parent_v) = parent_u {
                 if let Some(weight) = get_edge_weight(graph, &parent_v, &u) {
@@ -115,7 +117,7 @@ use ordered_float::OrderedFloat;
                     let _ = mst_edges.insert(edge);
                 }
             }
-            
+
             // Update priorities of neighbors
             let neighbors = get_neighbors(graph, &u);
             for v in neighbors.iter() {
@@ -126,15 +128,12 @@ use ordered_float::OrderedFloat;
                 }
             }
         }
-        
+
         mst_edges
     }
 
     /// Helper: Get neighbors of a vertex
-    fn get_neighbors<V: StT + Hash + Ord>(
-        graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
-        v: &V,
-    ) -> Set<V> {
+    fn get_neighbors<V: StT + Hash + Ord>(graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>, v: &V) -> Set<V> {
         let mut neighbors = SetLit![];
         for edge in graph.labeled_edges().iter() {
             let LabEdge(a, b, _) = edge;
@@ -166,9 +165,7 @@ use ordered_float::OrderedFloat;
     ///
     /// APAS: Work O(|MST|), Span O(|MST|)
     /// claude-4-sonet: Work O(|MST|), Span O(|MST|)
-    pub fn mst_weight<V: StT + Hash>(
-        mst_edges: &Set<LabEdge<V, OrderedFloat<f64>>>,
-    ) -> OrderedFloat<f64> {
+    pub fn mst_weight<V: StT + Hash>(mst_edges: &Set<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64> {
         let mut total = OrderedFloat(0.0);
         for edge in mst_edges.iter() {
             let LabEdge(_u, _v, w) = edge;
@@ -177,4 +174,3 @@ use ordered_float::OrderedFloat;
         total
     }
 }
-

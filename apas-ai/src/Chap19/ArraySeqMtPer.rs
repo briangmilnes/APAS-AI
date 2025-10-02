@@ -3,10 +3,11 @@
 
 pub mod ArraySeqMtPer {
 
-use std::sync::Mutex;
+    use std::sync::Mutex;
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18};
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18};
+    use crate::Types::Types::*;
+
     pub trait ArraySeqMtPerTrait<T: StTInMtT> {
         // Chapter 18 wrappers
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
@@ -300,11 +301,7 @@ use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerT
             }
             let offset = i - len_a;
             let len_b = b.length();
-            if offset < len_b {
-                Some(b.nth(offset))
-            } else {
-                None
-            }
+            if offset < len_b { Some(b.nth(offset)) } else { None }
         }
 
         fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtPerS<T> {

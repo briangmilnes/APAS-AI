@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerS as Seq, ArraySeqStPerTrait};
-use apas_ai::Types::Types::{ArraySeqSetEq, Pair, B};
+use apas_ai::Types::Types::{ArraySeqSetEq, B, Pair};
 
 #[test]
 fn arrayseq_stper_macro_empty() {
@@ -68,11 +68,7 @@ fn arrayseq_stper_operations() {
 
     let a = ArraySeqStPerSLit![1, 2, 3, 4, 5];
     let filtered = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::filter(&a, &|value| {
-        if *value % 2 == 0 {
-            true
-        } else {
-            false
-        }
+        if *value % 2 == 0 { true } else { false }
     });
     assert_eq!(
         <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&filtered),

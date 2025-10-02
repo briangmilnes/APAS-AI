@@ -3,11 +3,11 @@
 
 pub mod ArraySeqStPer {
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
-use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{
+    use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{
         ArraySeqStPerS as ArraySeqStPerSChap18, ArraySeqStPerTrait as ArraySeqStPerTraitChap18,
     };
+    use crate::Types::Types::*;
 
     pub type ArraySeqStPerS<T> = ArraySeqStPerSChap18<T>;
 
@@ -116,11 +116,7 @@ use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{
             }
             let offset = i - len_a;
             let len_b = b.length();
-            if offset < len_b {
-                Some(b.nth(offset))
-            } else {
-                None
-            }
+            if offset < len_b { Some(b.nth(offset)) } else { None }
         }
 
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {

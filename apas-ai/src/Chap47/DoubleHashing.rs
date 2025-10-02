@@ -3,9 +3,10 @@
 
 pub mod DoubleHashing {
 
-use crate::Types::Types::*;
-use crate::Chap47::FlatHashTable::FlatHashTable::*;
-use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug)]
     pub struct DoubleHashingStrategy<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> {
         hash1: H1,

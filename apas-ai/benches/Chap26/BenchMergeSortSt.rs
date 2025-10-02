@@ -3,7 +3,7 @@
 
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
 use apas_ai::Chap26::MergeSortSt::MergeSortSt::MergeSortStTrait;
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_merge_sort_st(c: &mut Criterion) {

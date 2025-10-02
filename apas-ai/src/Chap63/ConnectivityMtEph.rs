@@ -9,31 +9,32 @@
 
 pub mod ConnectivityMtEph {
 
-use std::collections::HashMap;
-use std::hash::Hash;
-use std::sync::Arc;
+    use std::collections::HashMap;
+    use std::hash::Hash;
+    use std::sync::Arc;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use crate::Chap62::StarContractionMtEph::StarContractionMtEph::star_contract_mt;
-use crate::Chap62::StarPartitionMtEph::StarPartitionMtEph::parallel_star_partition;
-use crate::ParaPair;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap62::StarContractionMtEph::StarContractionMtEph::star_contract_mt;
+    use crate::Chap62::StarPartitionMtEph::StarPartitionMtEph::parallel_star_partition;
+    use crate::ParaPair;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     pub trait ConnectivityMtEphTrait {
         /// Count connected components using parallel star contraction
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
         fn count_components_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> N;
-        
+
         /// Find connected components using parallel star contraction
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
         fn connected_components_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> Set<Set<V>>;
-        
+
         /// Count components using higher-order function approach
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
         fn count_components_hof<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> N;
-        
+
         /// Find components using higher-order function approach
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
         fn connected_components_hof<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> Set<Set<V>>;
@@ -52,10 +53,7 @@ use crate::SetLit;
     ///
     /// Returns:
     /// - The number of connected components
-    pub fn count_components_mt<V: StT + MtT + Hash + Ord + 'static>(
-        graph: &UnDirGraphMtEph<V>,
-        seed: u64,
-    ) -> N {
+    pub fn count_components_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>, seed: u64) -> N {
         // Base case: no edges, each vertex is own component
         if graph.sizeE() == 0 {
             return graph.sizeV();
@@ -66,8 +64,7 @@ use crate::SetLit;
 
         // Build quotient graph in parallel
         let quotient_edges = build_quotient_edges_parallel(graph, &partition_map);
-        let quotient_graph =
-            <UnDirGraphMtEph<V> as UnDirGraphMtEphTrait<V>>::FromSets(centers, quotient_edges);
+        let quotient_graph = <UnDirGraphMtEph<V> as UnDirGraphMtEphTrait<V>>::FromSets(centers, quotient_edges);
 
         // Recursively count components in quotient graph
         count_components_mt(&quotient_graph, seed + 1)
@@ -105,12 +102,10 @@ use crate::SetLit;
 
         // Build quotient graph in parallel
         let quotient_edges = build_quotient_edges_parallel(graph, &partition_map);
-        let quotient_graph =
-            <UnDirGraphMtEph<V> as UnDirGraphMtEphTrait<V>>::FromSets(centers, quotient_edges);
+        let quotient_graph = <UnDirGraphMtEph<V> as UnDirGraphMtEphTrait<V>>::FromSets(centers, quotient_edges);
 
         // Recursively compute components in quotient graph
-        let (representatives, component_map_quotient) =
-            connected_components_mt(&quotient_graph, seed + 1);
+        let (representatives, component_map_quotient) = connected_components_mt(&quotient_graph, seed + 1);
 
         // Compose maps in parallel
         let component_map = compose_maps_parallel(&partition_map, &component_map_quotient);
@@ -176,10 +171,9 @@ use crate::SetLit;
         let edges2 = edges.clone();
         let map2 = partition_map;
 
-        let pair = ParaPair!(
-            move || route_edges_parallel(&edges1, map1, start, mid),
-            move || route_edges_parallel(&edges2, map2, mid, end)
-        );
+        let pair = ParaPair!(move || route_edges_parallel(&edges1, map1, start, mid), move || {
+            route_edges_parallel(&edges2, map2, mid, end)
+        });
 
         // Union the two sets
         let mut result = pair.0;
@@ -212,16 +206,12 @@ use crate::SetLit;
     ///
     /// APAS: Work O((n+m) lg n), Span O(lg² n)
     /// claude-4-sonet: Work O((n+m) lg n), Span O(lg² n), Parallelism Θ((n+m)/lg² n)
-    pub fn count_components_hof<V: StT + MtT + Hash + Ord + 'static>(
-        graph: &UnDirGraphMtEph<V>,
-        seed: u64,
-    ) -> N {
+    pub fn count_components_hof<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>, seed: u64) -> N {
         // Base: when no edges, return number of vertices
         let base = |vertices: &Set<V>| vertices.size();
 
         // Expand: just return the recursive result
-        let expand =
-            |_v: &Set<V>, _e: &Set<Edge<V>>, _centers: &Set<V>, _part: &HashMap<V, V>, r: N| r;
+        let expand = |_v: &Set<V>, _e: &Set<Edge<V>>, _centers: &Set<V>, _part: &HashMap<V, V>, r: N| r;
 
         star_contract_mt(graph, seed, &base, &expand)
     }
@@ -260,4 +250,3 @@ use crate::SetLit;
         star_contract_mt(graph, seed, &base, &expand)
     }
 }
-

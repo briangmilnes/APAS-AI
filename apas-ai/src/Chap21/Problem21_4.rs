@@ -3,16 +3,23 @@
 
 pub mod Problem21_4 {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     pub trait Problem21_4Trait {
         /// Problem 21.4 (Cartesian Product) - Imperative approach using explicit loops
         /// APAS: Work Θ(|a|·|b|), Span Θ(|a|·|b|)
-        fn cartesian_loops(a: &ArraySeqStPerS<N>, b: &ArraySeqStPerS<&'static str>) -> ArraySeqStPerS<Pair<N, &'static str>>;
-        
+        fn cartesian_loops(
+            a: &ArraySeqStPerS<N>,
+            b: &ArraySeqStPerS<&'static str>,
+        ) -> ArraySeqStPerS<Pair<N, &'static str>>;
+
         /// Cartesian product using functional approach with tabulate + flatten
         /// APAS: Work Θ(|a|·|b|), Span Θ(lg |a|)
-        fn cartesian_functional(a: &ArraySeqStPerS<N>, b: &ArraySeqStPerS<&'static str>) -> ArraySeqStPerS<Pair<N, &'static str>>;
+        fn cartesian_functional(
+            a: &ArraySeqStPerS<N>,
+            b: &ArraySeqStPerS<&'static str>,
+        ) -> ArraySeqStPerS<Pair<N, &'static str>>;
     }
 
     /// Problem 21.4 (Cartesian Product) - Imperative approach using explicit loops.

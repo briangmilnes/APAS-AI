@@ -3,13 +3,14 @@
 
 pub mod RelationStEph {
 
-use std::collections::hash_set::Iter;
-use std::fmt::{Debug, Display, Formatter, Result};
-use std::hash::Hash;
+    use std::collections::hash_set::Iter;
+    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     #[derive(Clone)]
     pub struct Relation<A, B> {
         pairs: Set<Pair<A, B>>,

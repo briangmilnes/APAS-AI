@@ -2,7 +2,7 @@
 use std::time::Duration;
 
 use apas_ai::Chap03::InsertionSortSt::InsertionSortSt::InsertionSortStTrait;
-use criterion::{criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
+use criterion::{BatchSize, BenchmarkId, Criterion, criterion_group, criterion_main};
 
 fn build_vec(len: usize) -> Vec<i32> { (0..len as i32).rev().collect() }
 

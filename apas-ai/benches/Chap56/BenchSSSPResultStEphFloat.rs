@@ -3,7 +3,7 @@
 //! Benchmarks for SSSPResultStEphFloat.
 
 use apas_ai::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use ordered_float::OrderedFloat;
 use std::time::Duration;
 

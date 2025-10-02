@@ -15,10 +15,11 @@
 
 pub mod AllPairsResultStEphFloat {
 
-use crate::Types::Types::OrderedF64;
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
-use ordered_float::OrderedFloat;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Types::Types::OrderedF64;
+    use ordered_float::OrderedFloat;
+
     const UNREACHABLE: OrderedF64 = OrderedFloat(f64::INFINITY);
     const NO_PREDECESSOR: usize = usize::MAX;
 
@@ -76,11 +77,7 @@ use ordered_float::OrderedFloat;
                 return None;
             }
             let pred = *self.predecessors.nth(u).nth(v);
-            if pred == NO_PREDECESSOR {
-                None
-            } else {
-                Some(pred)
-            }
+            if pred == NO_PREDECESSOR { None } else { Some(pred) }
         }
 
         /// Sets the predecessor of vertex v in the shortest path from u.

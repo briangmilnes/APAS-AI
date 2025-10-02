@@ -6,26 +6,32 @@
 
 pub mod KruskalStEph {
 
-use std::hash::Hash;
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
-use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
-use crate::SetLit;
-use ordered_float::OrderedFloat;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
+    use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+    use ordered_float::OrderedFloat;
+
     pub trait KruskalStEphTrait {
         /// Kruskal's MST algorithm
         /// APAS: Work O(m log m), Span O(m log m) where m = |E|
-        fn kruskal_mst<V: StT + Hash + Ord>(graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>) -> Set<LabEdge<V, OrderedFloat<f64>>>;
-        
+        fn kruskal_mst<V: StT + Hash + Ord>(
+            graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
+        ) -> Set<LabEdge<V, OrderedFloat<f64>>>;
+
         /// Compute total weight of MST
         /// APAS: Work O(m), Span O(1)
         fn mst_weight<V: StT + Hash>(mst: &Set<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64>;
-        
+
         /// Verify MST has correct size
         /// APAS: Work O(1), Span O(1)
-        fn verify_mst_size<V: StT + Hash + Ord>(graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>, mst: &Set<LabEdge<V, OrderedFloat<f64>>>) -> B;
+        fn verify_mst_size<V: StT + Hash + Ord>(
+            graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
+            mst: &Set<LabEdge<V, OrderedFloat<f64>>>,
+        ) -> B;
     }
 
     /// Algorithm 65.2: Kruskal's MST Algorithm
@@ -51,26 +57,25 @@ use ordered_float::OrderedFloat;
         graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
     ) -> Set<LabEdge<V, OrderedFloat<f64>>> {
         let mut mst_edges = SetLit![];
-        
+
         // Initialize Union-Find with all vertices
         let mut uf = UnionFind::new();
         for vertex in graph.vertices().iter() {
             uf.insert(vertex.clone());
         }
-        
+
         // Sort edges by weight
-        let mut edges_vec: Vec<LabEdge<V, OrderedFloat<f64>>> = 
-            graph.labeled_edges().iter().cloned().collect();
+        let mut edges_vec: Vec<LabEdge<V, OrderedFloat<f64>>> = graph.labeled_edges().iter().cloned().collect();
         edges_vec.sort_by(|e1, e2| {
             let LabEdge(_u1, _v1, w1) = e1;
             let LabEdge(_u2, _v2, w2) = e2;
             w1.cmp(w2)
         });
-        
+
         // Greedily add edges that don't form cycles
         for edge in edges_vec.iter() {
             let LabEdge(u, v, _w) = edge;
-            
+
             // Check if u and v are in different components
             if !uf.equals(u, v) {
                 // Add edge to MST
@@ -80,7 +85,7 @@ use ordered_float::OrderedFloat;
             }
             // Else: skip edge (would form cycle)
         }
-        
+
         mst_edges
     }
 
@@ -88,9 +93,7 @@ use ordered_float::OrderedFloat;
     ///
     /// APAS: Work O(|MST|), Span O(|MST|)
     /// claude-4-sonet: Work O(|MST|), Span O(|MST|)
-    pub fn mst_weight<V: StT + Hash>(
-        mst_edges: &Set<LabEdge<V, OrderedFloat<f64>>>,
-    ) -> OrderedFloat<f64> {
+    pub fn mst_weight<V: StT + Hash>(mst_edges: &Set<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64> {
         let mut total = OrderedFloat(0.0);
         for edge in mst_edges.iter() {
             let LabEdge(_u, _v, w) = edge;
@@ -102,12 +105,8 @@ use ordered_float::OrderedFloat;
     /// Verify MST has correct number of edges
     ///
     /// A valid MST of n vertices should have n-1 edges.
-    pub fn verify_mst_size<V: StT + Hash + Ord>(
-        n_vertices: N,
-        mst_edges: &Set<LabEdge<V, OrderedFloat<f64>>>,
-    ) -> B {
+    pub fn verify_mst_size<V: StT + Hash + Ord>(n_vertices: N, mst_edges: &Set<LabEdge<V, OrderedFloat<f64>>>) -> B {
         let expected_edges = if n_vertices > 0 { n_vertices - 1 } else { 0 };
         mst_edges.size() == expected_edges
     }
 }
-

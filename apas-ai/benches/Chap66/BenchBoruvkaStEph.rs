@@ -3,7 +3,7 @@
 
 use apas_ai::Chap66::BoruvkaStEph::BoruvkaStEph::*;
 use apas_ai::SetLit;
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use ordered_float::OrderedFloat;
 use std::time::Duration;
 
@@ -16,7 +16,7 @@ fn bench_boruvka_complete(c: &mut Criterion) {
         let vertices: Vec<usize> = (0..n).collect();
         let mut edges = SetLit![];
         let mut label = 0;
-        
+
         // Complete graph with random-ish weights
         for i in 0..n {
             for j in (i + 1)..n {
@@ -25,12 +25,12 @@ fn bench_boruvka_complete(c: &mut Criterion) {
                 label += 1;
             }
         }
-        
+
         let mut vertices_set = SetLit![];
         for v in vertices.iter() {
             let _ = vertices_set.insert(*v);
         }
-        
+
         group.bench_function(format!("n{}", n), |b| {
             b.iter(|| {
                 let mst = boruvka_mst_with_seed(black_box(&vertices_set), black_box(&edges), 42);
@@ -38,7 +38,7 @@ fn bench_boruvka_complete(c: &mut Criterion) {
             });
         });
     }
-    
+
     group.finish();
 }
 
@@ -51,7 +51,7 @@ fn bench_boruvka_sparse(c: &mut Criterion) {
         let vertices: Vec<usize> = (0..n).collect();
         let mut edges = SetLit![];
         let mut label = 0;
-        
+
         // Sparse graph: ~2 edges per vertex
         for i in 0..n {
             let j = (i + 1) % n;
@@ -63,12 +63,12 @@ fn bench_boruvka_sparse(c: &mut Criterion) {
             let _ = edges.insert((i, k, w2, label));
             label += 1;
         }
-        
+
         let mut vertices_set = SetLit![];
         for v in vertices.iter() {
             let _ = vertices_set.insert(*v);
         }
-        
+
         group.bench_function(format!("n{}", n), |b| {
             b.iter(|| {
                 let mst = boruvka_mst_with_seed(black_box(&vertices_set), black_box(&edges), 42);
@@ -76,7 +76,7 @@ fn bench_boruvka_sparse(c: &mut Criterion) {
             });
         });
     }
-    
+
     group.finish();
 }
 
@@ -88,18 +88,18 @@ fn bench_boruvka_path(c: &mut Criterion) {
     for n in [20, 25, 30] {
         let vertices: Vec<usize> = (0..n).collect();
         let mut edges = SetLit![];
-        
+
         // Path graph
         for i in 0..(n - 1) {
             let weight = OrderedFloat((i % 10 + 1) as f64);
             let _ = edges.insert((i, i + 1, weight, i));
         }
-        
+
         let mut vertices_set = SetLit![];
         for v in vertices.iter() {
             let _ = vertices_set.insert(*v);
         }
-        
+
         group.bench_function(format!("n{}", n), |b| {
             b.iter(|| {
                 let mst = boruvka_mst_with_seed(black_box(&vertices_set), black_box(&edges), 42);
@@ -107,7 +107,7 @@ fn bench_boruvka_path(c: &mut Criterion) {
             });
         });
     }
-    
+
     group.finish();
 }
 
@@ -119,18 +119,18 @@ fn bench_boruvka_star(c: &mut Criterion) {
     for n in [20, 30, 40] {
         let vertices: Vec<usize> = (0..n).collect();
         let mut edges = SetLit![];
-        
+
         // Star graph: center 0 connected to all others
         for i in 1..n {
             let weight = OrderedFloat((i % 10 + 1) as f64);
             let _ = edges.insert((0, i, weight, i - 1));
         }
-        
+
         let mut vertices_set = SetLit![];
         for v in vertices.iter() {
             let _ = vertices_set.insert(*v);
         }
-        
+
         group.bench_function(format!("n{}", n), |b| {
             b.iter(|| {
                 let mst = boruvka_mst_with_seed(black_box(&vertices_set), black_box(&edges), 42);
@@ -138,7 +138,7 @@ fn bench_boruvka_star(c: &mut Criterion) {
             });
         });
     }
-    
+
     group.finish();
 }
 
@@ -151,7 +151,7 @@ fn bench_mst_weight_st(c: &mut Criterion) {
     let vertices: Vec<usize> = (0..n).collect();
     let mut edges = SetLit![];
     let mut label = 0;
-    
+
     // Complete graph
     for i in 0..n {
         for j in (i + 1)..n {
@@ -160,20 +160,20 @@ fn bench_mst_weight_st(c: &mut Criterion) {
             label += 1;
         }
     }
-    
+
     let mut vertices_set = SetLit![];
     for v in vertices.iter() {
         let _ = vertices_set.insert(*v);
     }
     let mst_labels = boruvka_mst_with_seed(&vertices_set, &edges, 42);
-    
+
     group.bench_function("n15", |b| {
         b.iter(|| {
             let w = mst_weight(black_box(&edges), black_box(&mst_labels));
             black_box(w)
         });
     });
-    
+
     group.finish();
 }
 
@@ -186,4 +186,3 @@ criterion_group!(
     bench_mst_weight_st
 );
 criterion_main!(benches);
-

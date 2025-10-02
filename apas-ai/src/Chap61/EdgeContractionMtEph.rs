@@ -6,24 +6,31 @@
 
 pub mod EdgeContractionMtEph {
 
-use std::hash::Hash;
-use std::sync::Arc;
+    use std::hash::Hash;
+    use std::sync::Arc;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use crate::Chap61::VertexMatchingMtEph::VertexMatchingMtEph::parallel_matching_mt;
-use crate::ParaPair;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap61::VertexMatchingMtEph::VertexMatchingMtEph::parallel_matching_mt;
+    use crate::ParaPair;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     pub trait EdgeContractionMtEphTrait {
         /// Parallel edge contraction algorithm
         /// APAS: Work O(|E|), Span O(lg |V|)
-        fn edge_contract_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>, matching: &Set<Edge<V>>) -> UnDirGraphMtEph<V>;
-        
+        fn edge_contract_mt<V: StT + MtT + Hash + Ord + 'static>(
+            graph: &UnDirGraphMtEph<V>,
+            matching: &Set<Edge<V>>,
+        ) -> UnDirGraphMtEph<V>;
+
         /// Single round of parallel edge contraction
         /// APAS: Work O(|V| + |E|), Span O(lg |V|)
-        fn contract_round_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>, seed: u64) -> UnDirGraphMtEph<V>;
+        fn contract_round_mt<V: StT + MtT + Hash + Ord + 'static>(
+            graph: &UnDirGraphMtEph<V>,
+            seed: u64,
+        ) -> UnDirGraphMtEph<V>;
     }
 
     /// Algorithm 61.6: Parallel Edge Contraction
@@ -33,7 +40,7 @@ use crate::SetLit;
     /// Unmatched vertices form singleton blocks.
     ///
     /// APAS: Work Θ(|V| + |E|), Span Θ(log |V| + log |E|)
-    /// Claude: Work Θ(|V| + |E|), Span Θ(log |V| + log |E|), 
+    /// Claude: Work Θ(|V| + |E|), Span Θ(log |V| + log |E|),
     ///         Parallelism Θ(|V| + |E|) / log(|V| + |E|)
     ///
     /// Phase 1: Build vertex-to-block mapping - Θ(|V|) parallelism
@@ -51,10 +58,10 @@ use crate::SetLit;
         matching: &Set<Edge<V>>,
     ) -> UnDirGraphMtEph<V> {
         use std::sync::{Arc, Mutex};
-        
+
         // Create a mapping from original vertices to their block representatives
         let vertex_to_block = Arc::new(Mutex::new(std::collections::HashMap::new()));
-        
+
         // Phase 1: Assign block representatives for matched edges (sequential for now)
         {
             let mut map = vertex_to_block.lock().unwrap();
@@ -63,7 +70,7 @@ use crate::SetLit;
                 map.insert(u.clone(), u.clone());
                 map.insert(v.clone(), u.clone());
             }
-            
+
             // For unmatched vertices, they are their own representatives
             for vertex in graph.vertices().iter() {
                 if !map.contains_key(vertex) {
@@ -71,24 +78,24 @@ use crate::SetLit;
                 }
             }
         }
-        
+
         let vertex_to_block = Arc::try_unwrap(vertex_to_block).unwrap().into_inner().unwrap();
-        
+
         // Phase 2: Build new vertex set (representatives)
         let mut new_vertices: Set<V> = SetLit![];
         for representative in vertex_to_block.values() {
             let _ = new_vertices.insert(representative.clone());
         }
-        
+
         // Phase 3: Build new edge set in parallel
         let edges_vec: std::vec::Vec<Edge<V>> = graph.edges().iter().cloned().collect();
         let edges_seq = ArraySeqStEphS::from_vec(edges_vec);
         let n_edges = edges_seq.length();
         let edges_arc = Arc::new(edges_seq);
         let vertex_map_arc = Arc::new(vertex_to_block);
-        
+
         let new_edges_set = build_edges_parallel(edges_arc, vertex_map_arc, 0, n_edges);
-        
+
         <UnDirGraphMtEph<V> as UnDirGraphMtEphTrait<V>>::FromSets(new_vertices, new_edges_set)
     }
 
@@ -102,18 +109,18 @@ use crate::SetLit;
         end: usize,
     ) -> Set<Edge<V>> {
         let size = end - start;
-        
+
         if size == 0 {
             return SetLit![];
         }
-        
+
         if size == 1 {
             // Base case: process single edge
             let edge = edges.nth(start as N);
             let Edge(u, v) = edge;
             let block_u = vertex_map.get(u).unwrap().clone();
             let block_v = vertex_map.get(v).unwrap().clone();
-            
+
             if block_u != block_v {
                 let new_edge = if block_u < block_v {
                     Edge(block_u, block_v)
@@ -127,20 +134,19 @@ use crate::SetLit;
                 return SetLit![];
             }
         }
-        
+
         // Recursive case: divide and conquer
         let mid = start + size / 2;
-        
+
         let edges1 = edges.clone();
         let map1 = vertex_map.clone();
         let edges2 = edges;
         let map2 = vertex_map;
-        
-        let pair = ParaPair!(
-            move || build_edges_parallel(edges1, map1, start, mid),
-            move || build_edges_parallel(edges2, map2, mid, end)
-        );
-        
+
+        let pair = ParaPair!(move || build_edges_parallel(edges1, map1, start, mid), move || {
+            build_edges_parallel(edges2, map2, mid, end)
+        });
+
         // Combine results (union of sets)
         let mut result = pair.0;
         for edge in pair.1.iter() {
@@ -169,4 +175,3 @@ use crate::SetLit;
         edge_contract_mt(graph, &matching)
     }
 }
-

@@ -2,14 +2,13 @@
 /// Problem 21.3 (Points in 3D) using ArraySeqPer — imperative triple loop.
 
 pub mod Test36Problem_21_3 {
+
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Chap21::Problem21_3::Problem21_3::*;
     use apas_ai::PairLit;
     use apas_ai::Types::Types::*;
 
-    /// Generate points (x, y, z) with 0 ≤ x ≤ n−1, 1 ≤ y ≤ n, 2 ≤ z ≤ n+1 in x-major, then y, then z order.
-    /// gpt-5-hard: Work: Θ(n^3), Span: Θ(n^3)
     fn points3d_loops(n: N) -> ArraySeqStPerS<Pair<N, Pair<N, N>>> {
         if n == 0 {
             return ArraySeqStPerSLit![];

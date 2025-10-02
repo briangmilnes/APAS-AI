@@ -5,9 +5,10 @@
 
 pub mod OrderStatSelectStEph {
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
-use rand::Rng;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Types::Types::*;
+    use rand::Rng;
+
     pub trait OrderStatSelectStEphTrait<T: StT + Ord> {
         /// claude-4-sonet: Work Θ(n) expected, Θ(n²) worst case; Span Θ(n) (sequential), Parallelism Θ(1)
         fn select(&self, k: N) -> Option<T>;

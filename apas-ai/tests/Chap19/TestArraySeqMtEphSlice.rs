@@ -1,9 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestArraySeqMtEphSlice {
-    use apas_ai::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
-    use apas_ai::Types::Types::*;
+
     use std::sync::{Arc, Barrier};
     use std::thread;
+
+    use apas_ai::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
+    use apas_ai::Types::Types::*;
 
     #[test]
     fn test_arrayseqmtephslice_empty() {

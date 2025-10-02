@@ -2,6 +2,7 @@
 /// Algorithm 21.1 (2D Points) using ArraySeqPer: points2D via tabulate + flatten.
 
 pub mod Test29Algorithm_21_1 {
+
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Chap21::Algorithm21_1::Algorithm21_1::*;

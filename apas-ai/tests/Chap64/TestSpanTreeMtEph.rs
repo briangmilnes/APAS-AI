@@ -4,11 +4,8 @@
 #[cfg(test)]
 mod tests {
     use apas_ai::{
-        Chap05::SetStEph::SetStEph::*,
-        Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
-        Chap64::SpanTreeMtEph::SpanTreeMtEph::*,
-        SetLit,
-        Types::Types::*,
+        Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
+        Chap64::SpanTreeMtEph::SpanTreeMtEph::*, SetLit, Types::Types::*,
     };
 
     fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {
@@ -27,7 +24,7 @@ mod tests {
     fn test_spanning_tree_mt_cycle() {
         let graph = create_cycle_graph(6);
         let tree = spanning_tree_star_contraction_mt(&graph, 123);
-        
+
         assert_eq!(tree.size(), 5);
         assert!(verify_spanning_tree(&graph, &tree));
     }
@@ -36,7 +33,7 @@ mod tests {
     fn test_spanning_tree_mt_larger() {
         let graph = create_cycle_graph(10);
         let tree = spanning_tree_star_contraction_mt(&graph, 456);
-        
+
         assert_eq!(tree.size(), 9);
         assert!(verify_spanning_tree(&graph, &tree));
     }
@@ -47,8 +44,7 @@ mod tests {
         let edges = SetLit![];
         let graph = <UnDirGraphMtEph<N> as UnDirGraphMtEphTrait<N>>::FromSets(vertices, edges);
         let tree = spanning_tree_star_contraction_mt(&graph, 789);
-        
+
         assert_eq!(tree.size(), 0);
     }
 }
-

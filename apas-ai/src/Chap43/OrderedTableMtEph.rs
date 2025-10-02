@@ -3,14 +3,15 @@
 
 pub mod OrderedTableMtEph {
 
-use std::sync::Arc;
-use std::thread;
+    use std::sync::Arc;
+    use std::thread;
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
-use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-use crate::Chap42::TableMtEph::TableMtEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap42::TableMtEph::TableMtEph::*;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq)]
     pub struct OrderedTableMtEph<K: MtKey, V: MtVal> {
         base_table: TableMtEph<K, V>,

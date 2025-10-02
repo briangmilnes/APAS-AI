@@ -3,12 +3,13 @@
 
 pub mod BSTParaTreapMtEph {
 
-use std::fmt::Write;
-use std::hash::{Hash, Hasher};
-use std::sync::{Arc, RwLock};
+    use std::fmt::Write;
+    use std::hash::{Hash, Hasher};
+    use std::sync::{Arc, RwLock};
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone)]
     pub enum Exposed<T: MtKey> {
         Leaf,
@@ -358,13 +359,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)

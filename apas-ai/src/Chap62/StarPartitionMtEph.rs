@@ -6,15 +6,16 @@
 
 pub mod StarPartitionMtEph {
 
-use std::collections::HashMap;
-use std::hash::Hash;
+    use std::collections::HashMap;
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use crate::SetLit;
-use rand::{rngs::StdRng, Rng, SeedableRng};
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+    use rand::{Rng, SeedableRng, rngs::StdRng};
+
     pub trait StarPartitionMtEphTrait {
         /// Parallel star partition using randomized coin flips
         /// APAS: Work O(|V| + |E|), Span O(lg |V|)
@@ -47,7 +48,7 @@ use rand::{rngs::StdRng, Rng, SeedableRng};
         // Create vertex to index mapping for inject operation
         let vertices_vec: std::vec::Vec<V> = graph.vertices().iter().cloned().collect();
         let n = vertices_vec.len() as N;
-        
+
         let mut vertex_to_index: HashMap<V, N> = HashMap::new();
         for (i, v) in vertices_vec.iter().enumerate() {
             let _ = vertex_to_index.insert(v.clone(), i as N);
@@ -81,10 +82,7 @@ use rand::{rngs::StdRng, Rng, SeedableRng};
         }
 
         // Phase 3: Build base sequence V' where each index maps to itself
-        let base_seq = <ArraySeqStEphS<V> as ArraySeqStEphTrait<V>>::tabulate(
-            &|i| vertices_vec[i as usize].clone(),
-            n,
-        );
+        let base_seq = <ArraySeqStEphS<V> as ArraySeqStEphTrait<V>>::tabulate(&|i| vertices_vec[i as usize].clone(), n);
 
         // Phase 4: Apply inject to get partition map P
         let p_seq = <ArraySeqStEphS<V> as ArraySeqStEphTrait<V>>::inject(&base_seq, &th_edges);
@@ -96,7 +94,7 @@ use rand::{rngs::StdRng, Rng, SeedableRng};
         for (i, vertex) in vertices_vec.iter().enumerate() {
             let center = p_seq.nth(i as N).clone();
             let _ = partition_map.insert(vertex.clone(), center.clone());
-            
+
             // A vertex is a center if it maps to itself
             if *vertex == center {
                 let _ = centers.insert(vertex.clone());
@@ -106,4 +104,3 @@ use rand::{rngs::StdRng, Rng, SeedableRng};
         (centers, partition_map)
     }
 }
-

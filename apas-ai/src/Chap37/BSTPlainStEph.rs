@@ -3,9 +3,10 @@
 
 pub mod BSTPlainStEph {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use crate::Chap23::BalBinTreeStEph::BalBinTreeStEph::BalBinTree;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap23::BalBinTreeStEph::BalBinTreeStEph::BalBinTree;
+    use crate::Types::Types::*;
+
     #[derive(Debug, Clone)]
     pub struct BSTPlainStEph<T: StT + Ord> {
         root: BalBinTree<T>,

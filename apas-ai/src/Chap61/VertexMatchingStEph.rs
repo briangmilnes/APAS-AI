@@ -7,17 +7,18 @@
 
 pub mod VertexMatchingStEph {
 
-use std::hash::Hash;
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     pub trait VertexMatchingStEphTrait {
         /// Greedy vertex matching algorithm
         /// APAS: Work Θ(|E|), Span Θ(|E|)
         fn greedy_matching<V: StT + Hash>(graph: &UnDirGraphStEph<V>) -> Set<Edge<V>>;
-        
+
         /// Sequential version of parallel matching
         /// APAS: Work Θ(|E|), Span Θ(|E|)
         fn parallel_matching_st<V: StT + Hash>(graph: &UnDirGraphStEph<V>) -> Set<Edge<V>>;
@@ -43,7 +44,7 @@ use crate::SetLit;
         // Iterate over all edges
         for edge in graph.edges().iter() {
             let Edge(u, v) = edge;
-            
+
             // Add edge if neither endpoint is already matched
             if !matched_vertices.mem(u) && !matched_vertices.mem(v) {
                 let _ = matching.insert(edge.clone());
@@ -71,10 +72,7 @@ use crate::SetLit;
     ///
     /// Returns:
     /// - A set of edges forming a vertex matching
-    pub fn parallel_matching_st<V: StT + Hash>(
-        graph: &UnDirGraphStEph<V>,
-        seed: u64,
-    ) -> Set<Edge<V>> {
+    pub fn parallel_matching_st<V: StT + Hash>(graph: &UnDirGraphStEph<V>, seed: u64) -> Set<Edge<V>> {
         use rand::rngs::StdRng;
         use rand::{Rng, SeedableRng};
 
@@ -82,9 +80,8 @@ use crate::SetLit;
         let mut matching: Set<Edge<V>> = SetLit![];
 
         // Create a map from edges to their coin flips (heads = true, tails = false)
-        let mut edge_coins: std::collections::HashMap<Edge<V>, bool> =
-            std::collections::HashMap::new();
-        
+        let mut edge_coins: std::collections::HashMap<Edge<V>, bool> = std::collections::HashMap::new();
+
         for edge in graph.edges().iter() {
             edge_coins.insert(edge.clone(), rng.random::<bool>());
         }
@@ -92,7 +89,7 @@ use crate::SetLit;
         // Select edges where coin is heads and all adjacent edges are tails
         for edge in graph.edges().iter() {
             let Edge(u, v) = edge;
-            
+
             // Check if this edge flipped heads
             if !edge_coins.get(edge).copied().unwrap_or(false) {
                 continue;
@@ -100,12 +97,12 @@ use crate::SetLit;
 
             // Check if all edges incident on u and v flipped tails (except this one)
             let mut all_adjacent_tails = true;
-            
+
             for adj_edge in graph.edges().iter() {
                 if adj_edge == edge {
                     continue; // Skip the current edge
                 }
-                
+
                 // Check if adjacent edge is incident on u or v
                 if graph.Incident(adj_edge, u) || graph.Incident(adj_edge, v) {
                     if edge_coins.get(adj_edge).copied().unwrap_or(false) {
@@ -123,4 +120,3 @@ use crate::SetLit;
         matching
     }
 }
-

@@ -3,30 +3,25 @@
 
 pub mod Exercise21_7 {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     pub trait Exercise21_7Trait {
         /// Check if a number is even
         /// APAS: Work Θ(1), Span Θ(1)
         fn is_even(x: &N) -> B;
-        
+
         /// Check if a character is a vowel (case-insensitive)
         /// APAS: Work Θ(1), Span Θ(1)
         fn is_vowel(c: &char) -> B;
-        
+
         /// Exercise 21.7: Comprehension with conditionals
         /// APAS: Work Θ(|a|·|b|), Span Θ(lg |a|)
         fn pair_even_with_vowels(a: &ArraySeqStPerS<N>, b: &ArraySeqStPerS<char>) -> ArraySeqStPerS<Pair<N, char>>;
     }
 
     /// Check if a number is even
-    pub fn is_even(x: &N) -> B {
-        if *x % 2 == 0 {
-            true
-        } else {
-            false
-        }
-    }
+    pub fn is_even(x: &N) -> B { if *x % 2 == 0 { true } else { false } }
 
     /// Check if a character is a vowel (case-insensitive)
     pub fn is_vowel(c: &char) -> B {

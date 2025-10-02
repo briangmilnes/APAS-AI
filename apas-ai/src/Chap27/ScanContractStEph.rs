@@ -3,8 +3,9 @@
 
 pub mod ScanContractStEph {
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Types::Types::*;
+
     pub trait ScanContractStEphTrait<T: StT> {
         /// Scan a sequence using contraction: contract→solve→expand.
         /// APAS: Work Θ(n), Span Θ(n)

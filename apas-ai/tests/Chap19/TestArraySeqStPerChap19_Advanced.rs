@@ -1,9 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestArraySeqPer {
+
+    use std::sync::Mutex;
+
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
-    use std::sync::Mutex;
 
     #[test]
     fn test_map_and_select_and_append() {

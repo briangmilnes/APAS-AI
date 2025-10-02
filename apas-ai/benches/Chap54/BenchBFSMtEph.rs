@@ -2,7 +2,7 @@
 
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
 use apas_ai::Chap54::BFSMtEph::BFSMtEph;
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn create_dag(n: usize) -> ArraySeqMtEphS<ArraySeqMtEphS<usize>> {

@@ -3,11 +3,11 @@
 
 pub mod ArraySeqStEph {
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{
+    use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{
         ArraySeqStEphS as ArraySeqStEphSChap18, ArraySeqStEphTrait as ArraySeqStEphTraitChap18,
     };
+    use crate::Types::Types::*;
 
     pub type ArraySeqStEphS<T> = ArraySeqStEphSChap18<T>;
 

@@ -5,19 +5,20 @@
 
 pub mod SpanTreeStEph {
 
-use std::collections::HashMap;
-use std::hash::Hash;
+    use std::collections::HashMap;
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
-use crate::Chap62::StarContractionStEph::StarContractionStEph::star_contract;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+    use crate::Chap62::StarContractionStEph::StarContractionStEph::star_contract;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     pub trait SpanTreeStEphTrait {
         /// Sequential spanning tree via star contraction
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
         fn spanning_tree_star_contraction<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<Edge<V>>;
-        
+
         /// Verify spanning tree properties
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
         fn verify_spanning_tree<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>, tree: &Set<Edge<V>>) -> B;
@@ -44,9 +45,7 @@ use crate::SetLit;
     ///
     /// Returns:
     /// - Set of edges forming a spanning tree
-    pub fn spanning_tree_star_contraction<V: StT + Hash + Ord>(
-        graph: &UnDirGraphStEph<V>,
-    ) -> Set<Edge<V>> {
+    pub fn spanning_tree_star_contraction<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<Edge<V>> {
         // Base: no edges means no spanning tree edges (isolated vertices)
         let base = |_vertices: &Set<V>| SetLit![];
 
@@ -58,7 +57,7 @@ use crate::SetLit;
                       quotient_edges: Set<Edge<V>>| {
             // Collect edges from partition map (vertex → center edges)
             let mut spanning_edges = SetLit![];
-            
+
             for (vertex, center) in partition_map.iter() {
                 // Add edge if vertex is not its own center (avoid self-loops)
                 if vertex != center {
@@ -71,13 +70,13 @@ use crate::SetLit;
                     let _ = spanning_edges.insert(edge);
                 }
             }
-            
+
             // Map quotient edges back to original graph
             // Quotient edges are between centers, which are valid in original graph
             for edge in quotient_edges.iter() {
                 let _ = spanning_edges.insert(edge.clone());
             }
-            
+
             spanning_edges
         };
 
@@ -92,26 +91,22 @@ use crate::SetLit;
     /// 3. All edges are from original graph
     ///
     /// Returns true if valid spanning tree
-    pub fn verify_spanning_tree<V: StT + Hash + Ord>(
-        graph: &UnDirGraphStEph<V>,
-        tree_edges: &Set<Edge<V>>,
-    ) -> B {
+    pub fn verify_spanning_tree<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>, tree_edges: &Set<Edge<V>>) -> B {
         let n = graph.sizeV();
         let expected_edges = if n > 0 { n - 1 } else { 0 };
-        
+
         // Check edge count
         if tree_edges.size() != expected_edges {
             return false;
         }
-        
+
         // Check all edges are from original graph
         for edge in tree_edges.iter() {
             if !graph.edges().mem(edge) {
                 return false;
             }
         }
-        
+
         true
     }
 }
-

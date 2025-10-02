@@ -2,14 +2,13 @@
 /// Problem 21.4 (Cartesian Product) tests.
 
 pub mod Test37Problem_21_4 {
+
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Chap21::Problem21_4::Problem21_4::*;
     use apas_ai::PairLit;
     use apas_ai::Types::Types::*;
 
-    /// Cartesian product by explicit loops (x-major then y).
-    /// gpt-5-hard: Work: Θ(|a|·|b|), Span: Θ(|a|·|b|)
     fn cartesian_loops(
         a: &ArraySeqStPerS<N>,
         b: &ArraySeqStPerS<&'static str>,

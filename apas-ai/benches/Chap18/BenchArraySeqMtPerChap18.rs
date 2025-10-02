@@ -2,7 +2,7 @@
 use apas_ai::ArraySeqMtPerChap18::ArraySeqMtPerChap18::*;
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Types::Types::*;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 // Helper functions for benchmarks

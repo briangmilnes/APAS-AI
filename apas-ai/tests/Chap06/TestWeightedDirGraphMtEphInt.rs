@@ -1,12 +1,14 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestWeightedDirGraphMtEphInt {
+
+    use std::sync::{Arc, Barrier};
+    use std::thread;
+
     use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::LabDirGraphMtEphTrait;
     use apas_ai::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*;
-    use std::sync::{Arc, Barrier};
-    use std::thread;
 
     #[test]
     fn test_weighteddirgraphmtephint_empty() {

@@ -3,11 +3,12 @@
 
 pub mod AVLTreeSeqMtPer {
 
-use std::fmt::Debug;
-use std::sync::Arc;
+    use std::fmt::Debug;
+    use std::sync::Arc;
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     type Link<T> = Option<Arc<Node<T>>>;
 
     struct Node<T: StTInMtT> {

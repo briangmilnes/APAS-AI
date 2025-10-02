@@ -53,7 +53,7 @@ def fix_imports_in_file(file_path):
     # Find end of imports
     for i in range(import_start_idx, len(lines)):
         line = lines[i].strip()
-        if line == '' or line.startswith('use ') or line.startswith('//'):
+        if line == '' or line.startswith('use ') or line.startswith('pub use ') or line.startswith('//'):
             import_end_idx = i + 1
         else:
             break
@@ -62,7 +62,10 @@ def fix_imports_in_file(file_path):
     import_lines = []
     for i in range(import_start_idx, import_end_idx):
         line = lines[i].strip()
-        if line.startswith('use '):
+        if line.startswith('use ') or line.startswith('pub use '):
+            # Normalize pub use to use
+            if line.startswith('pub use '):
+                line = line.replace('pub use ', 'use ', 1)
             import_lines.append(line)
     
     if not import_lines:
@@ -116,8 +119,9 @@ def fix_imports_in_file(file_path):
     if crate_imports:
         new_import_lines.extend(crate_imports)
     
-    # Add blank line after all imports
-    new_import_lines.append('')
+    # Add blank line after all imports (only if there are imports)
+    if import_lines:
+        new_import_lines.append('')
     
     # Reconstruct file
     new_lines = (
@@ -138,17 +142,27 @@ def fix_imports_in_file(file_path):
 def find_rust_files():
     """Find all Rust source files with pub mod declarations."""
     rust_files = []
-    for root, dirs, files in os.walk('src'):
-        for file in files:
-            if file.endswith('.rs'):
-                file_path = os.path.join(root, file)
-                try:
-                    with open(file_path, 'r') as f:
-                        content = f.read()
-                        if re.search(r'^pub mod \w+ \{', content, re.MULTILINE):
-                            rust_files.append(file_path)
-                except Exception as e:
-                    print(f"Error reading {file_path}: {e}")
+    # Handle both running from project root and from scripts directory
+    search_paths = []
+    if os.path.exists('src'):
+        search_paths.extend(['src', 'tests', 'benches'])
+    else:
+        search_paths.extend(['../src', '../tests', '../benches'])
+    
+    for search_path in search_paths:
+        if not os.path.exists(search_path):
+            continue
+        for root, dirs, files in os.walk(search_path):
+            for file in files:
+                if file.endswith('.rs'):
+                    file_path = os.path.join(root, file)
+                    try:
+                        with open(file_path, 'r') as f:
+                            content = f.read()
+                            if re.search(r'^pub mod \w+ \{', content, re.MULTILINE):
+                                rust_files.append(file_path)
+                    except Exception as e:
+                        print(f"Error reading {file_path}: {e}")
     return rust_files
 
 def main():
@@ -159,23 +173,29 @@ def main():
     
     processed = 0
     errors = 0
+    batch_size = 20
     
-    for file_path in rust_files:
+    for i, file_path in enumerate(rust_files):
         try:
             changed, message = fix_imports_in_file(file_path)
             if changed:
                 print(f"✓ {file_path}: {message}")
                 processed += 1
-                
-                # Compile after each file to ensure no breakage
-                result = subprocess.run(['cargo', 'build', '--quiet'], 
-                                      capture_output=True, text=True)
-                if result.returncode != 0:
-                    print(f"✗ Compilation failed after {file_path}")
-                    print(result.stderr)
-                    return 1
             else:
                 print(f"- {file_path}: {message}")
+            
+            # Compile after every batch_size files
+            if (i + 1) % batch_size == 0 or i == len(rust_files) - 1:
+                if processed > 0:
+                    print(f"\nCompiling after processing {min(i + 1, len(rust_files))} files...")
+                    result = subprocess.run(['cargo', 'build', '--quiet'], 
+                                          capture_output=True, text=True)
+                    if result.returncode != 0:
+                        print(f"✗ Compilation failed after batch ending at {file_path}")
+                        print(result.stderr)
+                        return 1
+                    else:
+                        print(f"✓ Compilation successful after batch {(i // batch_size) + 1}")
         except Exception as e:
             print(f"✗ Error processing {file_path}: {e}")
             errors += 1

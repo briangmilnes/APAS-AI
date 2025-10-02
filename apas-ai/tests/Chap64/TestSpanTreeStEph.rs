@@ -4,11 +4,8 @@
 #[cfg(test)]
 mod tests {
     use apas_ai::{
-        Chap05::SetStEph::SetStEph::*,
-        Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
-        Chap64::SpanTreeStEph::SpanTreeStEph::*,
-        SetLit,
-        Types::Types::*,
+        Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
+        Chap64::SpanTreeStEph::SpanTreeStEph::*, SetLit, Types::Types::*,
     };
 
     fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {
@@ -43,7 +40,7 @@ mod tests {
     fn test_spanning_tree_cycle() {
         let graph = create_cycle_graph(6);
         let tree = spanning_tree_star_contraction(&graph);
-        
+
         assert_eq!(tree.size(), 5);
         assert!(verify_spanning_tree(&graph, &tree));
     }
@@ -52,7 +49,7 @@ mod tests {
     fn test_spanning_tree_connected() {
         let graph = create_connected_graph();
         let tree = spanning_tree_star_contraction(&graph);
-        
+
         assert_eq!(tree.size(), 5);
         assert!(verify_spanning_tree(&graph, &tree));
     }
@@ -63,7 +60,7 @@ mod tests {
         let edges = SetLit![];
         let graph = <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(vertices, edges);
         let tree = spanning_tree_star_contraction(&graph);
-        
+
         assert_eq!(tree.size(), 0);
     }
 
@@ -73,7 +70,7 @@ mod tests {
         let edges = SetLit![];
         let graph = <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(vertices, edges);
         let tree = spanning_tree_star_contraction(&graph);
-        
+
         assert_eq!(tree.size(), 0);
         assert!(verify_spanning_tree(&graph, &tree));
     }
@@ -82,12 +79,11 @@ mod tests {
     fn test_verify_spanning_tree() {
         let graph = create_cycle_graph(5);
         let tree = spanning_tree_star_contraction(&graph);
-        
+
         assert!(verify_spanning_tree(&graph, &tree));
-        
+
         let mut bad_tree = tree.clone();
         let _ = bad_tree.insert(Edge(100, 200));
         assert!(!verify_spanning_tree(&graph, &bad_tree));
     }
 }
-

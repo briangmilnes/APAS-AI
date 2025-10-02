@@ -4,7 +4,7 @@
 use apas_ai::Chap47::FlatHashTable::FlatHashTable::*;
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::*;
 use apas_ai::Chap47::LinearProbing::LinearProbing::*;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_linear_probing_insert(c: &mut Criterion) {

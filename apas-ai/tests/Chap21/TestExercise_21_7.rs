@@ -2,6 +2,7 @@
 /// Exercise 21.7 (Comprehension with Conditionals): even elements of a paired with vowels of b.
 
 pub mod Test33Exercise_21_7 {
+
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Chap21::Exercise21_7::Exercise21_7::*;

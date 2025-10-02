@@ -7,8 +7,9 @@
 
 pub mod MaxContigSubSumDivConOptStEph {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Types::Types::*;
+
     fn max_with_neginf(a: Option<i32>, b: Option<i32>) -> Option<i32> {
         match (a, b) {
             | (None, None) => None,

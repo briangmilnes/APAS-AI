@@ -4,11 +4,12 @@
 
 pub mod AdvancedQuadraticProbing {
 
-use std::fmt::{Debug, Display};
+    use std::fmt::{Debug, Display};
 
-use crate::Types::Types::*;
-use crate::Chap47::FlatHashTable::FlatHashTable::*;
-use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug)]
     pub struct AdvancedQuadraticProbingStrategy<K: StT, H: HashFunClone<K>> {
         base_hash: H,
@@ -100,13 +101,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
 
         /// Compute greatest common divisor
         /// Claude Work: O(log min(a,b)), Span: O(log min(a,b))
-        fn gcd(a: N, b: N) -> N {
-            if b == 0 {
-                a
-            } else {
-                Self::gcd(b, a % b)
-            }
-        }
+        fn gcd(a: N, b: N) -> N { if b == 0 { a } else { Self::gcd(b, a % b) } }
     }
 
     impl<K: StT, H: HashFunClone<K>> AdvancedQuadraticProbingStrategy<K, H> {

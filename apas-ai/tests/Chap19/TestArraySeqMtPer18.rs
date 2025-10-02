@@ -2,6 +2,7 @@
 //! Tests for ArraySeqMtPer multithreaded algorithms.
 
 pub mod Test27ArraySeqMtPer {
+
     use apas_ai::ArraySeqMtPer;
     use apas_ai::ArraySeqMtPer::ArraySeqMtPer::*;
     use apas_ai::ArraySeqMtPer::ArraySeqMtPer::*;

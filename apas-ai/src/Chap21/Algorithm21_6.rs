@@ -3,8 +3,9 @@
 
 pub mod Algorithm21_6 {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     pub trait Algorithm21_6Trait {
         /// Algorithm 21.6 (Prime Sieve) using ArraySeqPer - simplified version
         /// APAS: Work Θ(n lg n), Span Θ(lg n)
@@ -48,11 +49,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
                     break;
                 }
             }
-            if is_composite {
-                false
-            } else {
-                true
-            }
+            if is_composite { false } else { true }
         });
         filtered
     }

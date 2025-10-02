@@ -3,20 +3,21 @@
 
 pub mod Example41_3 {
 
-use crate::Types::Types::*;
-use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
-use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
-use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-use crate::{AVLTreeSeqStEphLit, AVLTreeSetStEphLit, ArraySeqStEphSLit, ArraySetStEphLit};
+    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+    use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Types::Types::*;
+    use crate::{AVLTreeSeqStEphLit, AVLTreeSetStEphLit, ArraySeqStEphSLit, ArraySetStEphLit};
+
     pub trait Example41_3Trait {
         /// Example 41.1 cases using ArraySetStEph
         /// APAS: Work Θ(n log n), Span Θ(log n)
         fn example_41_1_array_set();
-        
+
         /// Example 41.1 cases using AVLTreeSetStEph
         /// APAS: Work Θ(n log n), Span Θ(log n)
         fn example_41_1_avl_set();
-        
+
         /// Demonstrate set operations with different implementations
         /// APAS: Work Θ(n log n), Span Θ(log n)
         fn demonstrate_set_operations();

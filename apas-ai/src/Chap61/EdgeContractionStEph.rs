@@ -7,19 +7,23 @@
 
 pub mod EdgeContractionStEph {
 
-use std::hash::Hash;
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
-use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use crate::Chap61::VertexMatchingStEph::VertexMatchingStEph::greedy_matching;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap61::VertexMatchingStEph::VertexMatchingStEph::greedy_matching;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     pub trait EdgeContractionStEphTrait {
         /// Sequential edge contraction algorithm
         /// APAS: Work O(|E|), Span O(|E|)
-        fn edge_contract<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>, matching: &Set<Edge<V>>) -> UnDirGraphStEph<Set<V>>;
-        
+        fn edge_contract<V: StT + Hash + Ord>(
+            graph: &UnDirGraphStEph<V>,
+            matching: &Set<Edge<V>>,
+        ) -> UnDirGraphStEph<Set<V>>;
+
         /// Single round of sequential edge contraction
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
         fn contract_round<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> UnDirGraphStEph<V>;
@@ -46,7 +50,7 @@ use crate::SetLit;
     ) -> UnDirGraphStEph<V> {
         // Create a mapping from original vertices to their block representatives
         let mut vertex_to_block: std::collections::HashMap<V, V> = std::collections::HashMap::new();
-        
+
         // For each edge in the matching, assign both endpoints to the same representative
         for edge in matching.iter() {
             let Edge(u, v) = edge;
@@ -54,30 +58,30 @@ use crate::SetLit;
             vertex_to_block.insert(u.clone(), u.clone());
             vertex_to_block.insert(v.clone(), u.clone());
         }
-        
+
         // For unmatched vertices, they are their own representatives
         for vertex in graph.vertices().iter() {
             if !vertex_to_block.contains_key(vertex) {
                 vertex_to_block.insert(vertex.clone(), vertex.clone());
             }
         }
-        
+
         // Build the new contracted graph
         let mut new_vertices: Set<V> = SetLit![];
         let mut new_edges: Set<Edge<V>> = SetLit![];
-        
+
         // Add all block representatives as vertices
         for representative in vertex_to_block.values() {
             let _ = new_vertices.insert(representative.clone());
         }
-        
+
         // For each edge in the original graph, add a new edge between block representatives
         // (unless both endpoints are in the same block)
         for edge in graph.edges().iter() {
             let Edge(u, v) = edge;
             let block_u = vertex_to_block.get(u).unwrap().clone();
             let block_v = vertex_to_block.get(v).unwrap().clone();
-            
+
             // Only add edge if endpoints are in different blocks (no self-loops)
             if block_u != block_v {
                 let new_edge = if block_u < block_v {
@@ -88,7 +92,7 @@ use crate::SetLit;
                 let _ = new_edges.insert(new_edge);
             }
         }
-        
+
         <UnDirGraphStEph<V> as UnDirGraphStEphTrait<V>>::FromSets(new_vertices, new_edges)
     }
 
@@ -108,4 +112,3 @@ use crate::SetLit;
         edge_contract(graph, &matching)
     }
 }
-

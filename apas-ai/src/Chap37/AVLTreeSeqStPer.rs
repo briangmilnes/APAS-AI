@@ -3,11 +3,12 @@
 
 pub mod AVLTreeSeqStPer {
 
-use std::fmt::Debug;
-use std::rc::Rc;
+    use std::fmt::Debug;
+    use std::rc::Rc;
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     type Link<T> = Option<Rc<Node<T>>>;
 
     struct Node<T: StT> {
@@ -178,20 +179,8 @@ use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
                 root: Some(mk(item, None, None)),
             }
         }
-        fn isEmpty(&self) -> B {
-            if self.length() == 0 {
-                true
-            } else {
-                false
-            }
-        }
-        fn isSingleton(&self) -> B {
-            if self.length() == 1 {
-                true
-            } else {
-                false
-            }
-        }
+        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
+        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.length();
             let s = start.min(n);

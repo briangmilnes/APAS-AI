@@ -3,7 +3,7 @@
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
 use apas_ai::Chap28::MaxContigSubSumReducedStEph::MaxContigSubSumReducedStEph::MaxContigSubSumReducedTrait;
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 pub fn bench_reduced(c: &mut Criterion) {

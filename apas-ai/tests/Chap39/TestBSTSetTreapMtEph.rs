@@ -1,10 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 pub mod TestBSTSetTreapMtEph {
-    use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::*;
-    use apas_ai::Types::Types::*;
+
     use std::sync::{Arc, Barrier};
     use std::thread;
+
+    use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::*;
+    use apas_ai::Types::Types::*;
 
     fn make_set(values: &[i32]) -> BSTSetTreapMt<i32> {
         let mut set = BSTSetTreapMt::empty();

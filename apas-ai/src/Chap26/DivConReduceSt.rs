@@ -3,8 +3,9 @@
 
 pub mod DivConReduceSt {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Types::Types::*;
+
     pub trait DivConReduceStTrait {
         /// Find maximum element via reduce.
         /// Pattern: reduce max MIN identity

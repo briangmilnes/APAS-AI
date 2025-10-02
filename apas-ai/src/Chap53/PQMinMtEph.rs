@@ -6,9 +6,10 @@
 
 pub mod PQMinMtEph {
 
-use crate::Types::Types::*;
-use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
-use crate::Chap41::AVLTreeSetMtEph::AVLTreeSetMtEph::*;
+    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+    use crate::Chap41::AVLTreeSetMtEph::AVLTreeSetMtEph::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug)]
     pub struct PQMinResult<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> {
         pub visited: AVLTreeSetMtEph<V>,

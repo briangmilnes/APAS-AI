@@ -3,11 +3,12 @@
 
 pub mod TableStPer {
 
-use std::cmp::Ordering;
+    use std::cmp::Ordering;
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Types::Types::*;
+
     #[derive(Debug, Clone, PartialEq)]
     pub struct TableStPer<K: StT + Ord, V: StT> {
         entries: ArraySeqStPerS<Pair<K, V>>,

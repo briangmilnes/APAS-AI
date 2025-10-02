@@ -2,13 +2,10 @@
 //! Benchmarks for Chapter 63 Graph Connectivity (Multi-threaded Ephemeral)
 
 use apas_ai::{
-    Chap05::SetStEph::SetStEph::*,
-    Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
-    Chap63::ConnectivityMtEph::ConnectivityMtEph::*,
-    SetLit,
-    Types::Types::*,
+    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
+    Chap63::ConnectivityMtEph::ConnectivityMtEph::*, SetLit, Types::Types::*,
 };
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {
@@ -26,7 +23,7 @@ fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {
 fn create_multi_component_graph(n_components: N, component_size: N) -> UnDirGraphMtEph<N> {
     let mut vertices = SetLit![];
     let mut edges = SetLit![];
-    
+
     for comp in 0..n_components {
         let base = comp * component_size;
         for i in 0..component_size {
@@ -88,4 +85,3 @@ criterion_group!(
     bench_connected_components_mt
 );
 criterion_main!(benches);
-

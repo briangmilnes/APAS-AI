@@ -5,9 +5,10 @@
 
 pub mod CycleDetectStEph {
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
-use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::{AVLTreeSetStEph, AVLTreeSetStEphTrait};
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::{AVLTreeSetStEph, AVLTreeSetStEphTrait};
+    use crate::Types::Types::*;
+
     pub trait CycleDetectStEphTrait {
         /// Detects if a directed graph contains a cycle
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)

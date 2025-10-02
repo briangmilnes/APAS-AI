@@ -3,10 +3,11 @@
 
 pub mod BalancedTreePQ {
 
-use std::fmt::{Debug, Display, Formatter, Result};
+    use std::fmt::{Debug, Display, Formatter, Result};
 
-use crate::Types::Types::*;
-use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq, Clone, Debug)]
     pub struct BalancedTreePQ<T: StT + Ord> {
         elements: AVLTreeSeqStPerS<T>,

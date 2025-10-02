@@ -6,7 +6,7 @@ use std::time::Duration;
 use apas_ai::ArraySetStEphLit;
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
-use criterion::{black_box, criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion};
+use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 
 fn build_array_set(len: usize) -> ArraySetStEph<i32> {
     let mut set = ArraySetStEph::empty();

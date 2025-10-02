@@ -3,17 +3,18 @@
 
 pub mod Example42_1 {
 
-use crate::Types::Types::*;
-use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-use crate::Chap42::TableMtEph::TableMtEph::*;
-use crate::Chap42::TableStEph::TableStEph::*;
-use crate::Chap42::TableStPer::TableStPer::*;
-use crate::{TableMtEphLit, TableStEphLit, TableStPerLit};
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap42::TableMtEph::TableMtEph::*;
+    use crate::Chap42::TableStEph::TableStEph::*;
+    use crate::Chap42::TableStPer::TableStPer::*;
+    use crate::Types::Types::*;
+    use crate::{TableMtEphLit, TableStEphLit, TableStPerLit};
+
     pub trait Example42_1Trait {
         /// Example 42.1: Basic table operations demonstration
         /// APAS: Work Θ(n log n), Span Θ(log n)
         fn example_42_1();
-        
+
         /// Demonstrate table operations with different implementations
         /// APAS: Work Θ(n log n), Span Θ(log n)
         fn demonstrate_table_operations();

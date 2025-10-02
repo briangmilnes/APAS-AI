@@ -3,12 +3,13 @@
 
 pub mod SubsetSumStPer {
 
-use std::collections::HashMap;
-use std::fmt::{Debug, Display, Formatter, Result};
+    use std::collections::HashMap;
+    use std::fmt::{Debug, Display, Formatter, Result};
 
-use crate::Types::Types::*;
-use crate::ArraySeqStPerS;
-use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::ArraySeqStPerS;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct SubsetSumStPerS<T: StT> {
         multiset: ArraySeqStPerS<T>,

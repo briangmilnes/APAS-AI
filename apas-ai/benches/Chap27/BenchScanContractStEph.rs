@@ -3,7 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
 use apas_ai::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_scan_contract_100(c: &mut Criterion) {

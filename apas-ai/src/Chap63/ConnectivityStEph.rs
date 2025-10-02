@@ -9,28 +9,29 @@
 
 pub mod ConnectivityStEph {
 
-use std::collections::HashMap;
-use std::hash::Hash;
+    use std::collections::HashMap;
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
-use crate::Chap62::StarContractionStEph::StarContractionStEph::star_contract;
-use crate::Chap62::StarPartitionStEph::StarPartitionStEph::sequential_star_partition;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+    use crate::Chap62::StarContractionStEph::StarContractionStEph::star_contract;
+    use crate::Chap62::StarPartitionStEph::StarPartitionStEph::sequential_star_partition;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     pub trait ConnectivityStEphTrait {
         /// Count connected components using star contraction
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
         fn count_components<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> N;
-        
+
         /// Find connected components using star contraction
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
         fn connected_components<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<Set<V>>;
-        
+
         /// Count components using higher-order function approach
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
         fn count_components_hof<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> N;
-        
+
         /// Find components using higher-order function approach
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
         fn connected_components_hof<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<Set<V>>;
@@ -61,8 +62,7 @@ use crate::SetLit;
 
         // Build quotient graph by routing edges through partition map
         let quotient_edges = build_quotient_edges(graph, &partition_map);
-        let quotient_graph =
-            <UnDirGraphStEph<V> as UnDirGraphStEphTrait<V>>::FromSets(centers, quotient_edges);
+        let quotient_graph = <UnDirGraphStEph<V> as UnDirGraphStEphTrait<V>>::FromSets(centers, quotient_edges);
 
         // Recursively count components in quotient graph
         count_components(&quotient_graph)
@@ -82,9 +82,7 @@ use crate::SetLit;
     /// Returns:
     /// - (representatives, component_map): Set of component representatives and
     ///   mapping from each vertex to its component representative
-    pub fn connected_components<V: StT + Hash + Ord>(
-        graph: &UnDirGraphStEph<V>,
-    ) -> (Set<V>, HashMap<V, V>) {
+    pub fn connected_components<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> (Set<V>, HashMap<V, V>) {
         // Base case: no edges, each vertex maps to itself
         if graph.sizeE() == 0 {
             let mut component_map = HashMap::new();
@@ -99,8 +97,7 @@ use crate::SetLit;
 
         // Build quotient graph
         let quotient_edges = build_quotient_edges(graph, &partition_map);
-        let quotient_graph =
-            <UnDirGraphStEph<V> as UnDirGraphStEphTrait<V>>::FromSets(centers, quotient_edges);
+        let quotient_graph = <UnDirGraphStEph<V> as UnDirGraphStEphTrait<V>>::FromSets(centers, quotient_edges);
 
         // Recursively compute components in quotient graph
         let (representatives, component_map_quotient) = connected_components(&quotient_graph);
@@ -156,8 +153,7 @@ use crate::SetLit;
         let base = |vertices: &Set<V>| vertices.size();
 
         // Expand: just return the recursive result (no expansion needed for counting)
-        let expand =
-            |_v: &Set<V>, _e: &Set<Edge<V>>, _centers: &Set<V>, _part: &HashMap<V, V>, r: N| r;
+        let expand = |_v: &Set<V>, _e: &Set<Edge<V>>, _centers: &Set<V>, _part: &HashMap<V, V>, r: N| r;
 
         star_contract(graph, &base, &expand)
     }
@@ -168,9 +164,7 @@ use crate::SetLit;
     ///
     /// APAS: Work O((n+m) lg n), Span O((n+m) lg n)
     /// claude-4-sonet: Work O((n+m) lg n), Span O((n+m) lg n)
-    pub fn connected_components_hof<V: StT + Hash + Ord>(
-        graph: &UnDirGraphStEph<V>,
-    ) -> (Set<V>, HashMap<V, V>) {
+    pub fn connected_components_hof<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> (Set<V>, HashMap<V, V>) {
         // Base: when no edges, each vertex maps to itself
         let base = |vertices: &Set<V>| {
             let mut map = HashMap::new();
@@ -197,4 +191,3 @@ use crate::SetLit;
         star_contract(graph, &base, &expand)
     }
 }
-

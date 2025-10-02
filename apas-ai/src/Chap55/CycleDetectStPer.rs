@@ -5,9 +5,10 @@
 
 pub mod CycleDetectStPer {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::{AVLTreeSetStPer, AVLTreeSetStPerTrait};
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::{AVLTreeSetStPer, AVLTreeSetStPerTrait};
+    use crate::Types::Types::*;
+
     pub trait CycleDetectStPerTrait {
         /// Detects if a directed graph contains a cycle
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)

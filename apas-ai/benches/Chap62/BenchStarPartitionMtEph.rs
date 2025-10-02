@@ -2,13 +2,10 @@
 //! Benchmarks for Chapter 62 Star Partition (Multi-threaded Ephemeral)
 
 use apas_ai::{
-    Chap05::SetStEph::SetStEph::*,
-    Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
-    Chap62::StarPartitionMtEph::StarPartitionMtEph::*,
-    SetLit,
-    Types::Types::*,
+    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
+    Chap62::StarPartitionMtEph::StarPartitionMtEph::*, SetLit, Types::Types::*,
 };
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {
@@ -73,4 +70,3 @@ criterion_group!(
     bench_parallel_star_partition_dense
 );
 criterion_main!(benches);
-

@@ -3,8 +3,9 @@
 
 pub mod ReduceContractStEph {
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Types::Types::*;
+
     pub trait ReduceContractStEphTrait<T: StT> {
         /// Reduce a sequence using contraction: contract→solve→expand.
         /// APAS: Work Θ(n), Span Θ(n)
@@ -40,11 +41,7 @@ use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphT
             let result = Self::reduce_contract(&b, f, id);
 
             // If odd length, combine result with last element
-            if n % 2 == 1 {
-                f(&result, a.nth(n - 1))
-            } else {
-                result
-            }
+            if n % 2 == 1 { f(&result, a.nth(n - 1)) } else { result }
         }
     }
 }

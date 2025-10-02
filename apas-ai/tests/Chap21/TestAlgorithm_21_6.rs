@@ -2,15 +2,13 @@
 //! Algorithm 21.6 (Prime Sieve) using ArraySeqPer and ninject.
 
 pub mod Test31Algorithm_21_6 {
+
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Chap21::Algorithm21_6::Algorithm21_6::*;
     use apas_ai::PairLit;
     use apas_ai::Types::Types::*;
 
-    /// Construct primes using a sieve: generate composites cs, create sieve pairs (x,false), ninject, then filter indices.
-    /// gpt-5-hard: Work: Θ(n lg n), Span: Θ(lg n)
-    /// APAS: Work: Θ(n lg n), Span: Θ(lg n)
     fn prime_sieve(n: N) -> ArraySeqStPerS<N> {
         if n <= 2 {
             return ArraySeqStPerSLit![];
@@ -46,11 +44,7 @@ pub mod Test31Algorithm_21_6 {
         let candidates: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i, n);
         let filtered_idx: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&candidates, &|i| {
             if *i >= 2 && *i < n {
-                if *is_prime.nth(*i) == true {
-                    true
-                } else {
-                    false
-                }
+                if *is_prime.nth(*i) == true { true } else { false }
             } else {
                 false
             }

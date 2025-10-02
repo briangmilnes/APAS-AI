@@ -3,11 +3,12 @@
 
 pub mod TableStEph {
 
-use std::cmp::Ordering;
+    use std::cmp::Ordering;
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Types::Types::*;
+
     #[derive(Debug, Clone, PartialEq)]
     pub struct TableStEph<K: StT + Ord, V: StT> {
         entries: ArraySeqStEphS<Pair<K, V>>,

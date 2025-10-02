@@ -14,11 +14,12 @@
 
 pub mod AllPairsResultStEphInt {
 
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+
     const UNREACHABLE: i64 = i64::MAX;
     const NO_PREDECESSOR: usize = usize::MAX;
-    
+
     /// Result structure for all-pairs shortest paths with integer weights.
     pub struct AllPairsResultStEphInt {
         /// Distance matrix: distances.nth(u).nth(v) is the distance from u to v.
@@ -28,7 +29,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
         /// Number of vertices.
         pub n: usize,
     }
-    
+
     impl AllPairsResultStEphInt {
         /// Creates a new all-pairs result structure initialized for n vertices.
         /// All distances are set to UNREACHABLE except diagonal (0), all predecessors to NO_PREDECESSOR.
@@ -40,7 +41,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
                 dist_matrix.push(ArraySeqStEphS::from_vec(row));
             }
             let distances = ArraySeqStEphS::from_vec(dist_matrix);
-    
+
             let pred_matrix = vec![ArraySeqStEphS::new(n, NO_PREDECESSOR); n];
             let predecessors = ArraySeqStEphS::from_vec(pred_matrix);
             AllPairsResultStEphInt {
@@ -49,7 +50,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
                 n,
             }
         }
-    
+
         /// Returns the distance from vertex u to vertex v.
         pub fn get_distance(&self, u: usize, v: usize) -> i64 {
             if u >= self.n || v >= self.n {
@@ -57,7 +58,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
             }
             *self.distances.nth(u).nth(v)
         }
-    
+
         /// Sets the distance from vertex u to vertex v.
         pub fn set_distance(&mut self, u: usize, v: usize, dist: i64) {
             if u < self.n && v < self.n {
@@ -66,20 +67,16 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
                 let _ = self.distances.set(u, row);
             }
         }
-    
+
         /// Returns the predecessor of vertex v in the shortest path from u.
         pub fn get_predecessor(&self, u: usize, v: usize) -> Option<usize> {
             if u >= self.n || v >= self.n {
                 return None;
             }
             let pred = *self.predecessors.nth(u).nth(v);
-            if pred == NO_PREDECESSOR {
-                None
-            } else {
-                Some(pred)
-            }
+            if pred == NO_PREDECESSOR { None } else { Some(pred) }
         }
-    
+
         /// Sets the predecessor of vertex v in the shortest path from u.
         pub fn set_predecessor(&mut self, u: usize, v: usize, pred: usize) {
             if u < self.n && v < self.n {
@@ -88,10 +85,10 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
                 let _ = self.predecessors.set(u, row);
             }
         }
-    
+
         /// Checks if vertex v is reachable from vertex u.
         pub fn is_reachable(&self, u: usize, v: usize) -> bool { self.get_distance(u, v) != UNREACHABLE }
-    
+
         /// Extracts the shortest path from u to v by following predecessors.
         /// Returns None if v is unreachable from u, otherwise returns the path as a sequence.
         pub fn extract_path(&self, u: usize, v: usize) -> Option<ArraySeqStPerS<usize>> {
@@ -101,11 +98,11 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
             if !self.is_reachable(u, v) {
                 return None;
             }
-    
+
             let mut path = Vec::new();
             let mut current = v;
             path.push(current);
-    
+
             while current != u {
                 let pred = *self.predecessors.nth(u).nth(current);
                 if pred == NO_PREDECESSOR {
@@ -114,7 +111,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
                 path.push(pred);
                 current = pred;
             }
-    
+
             path.reverse();
             Some(ArraySeqStPerS::from_vec(path))
         }

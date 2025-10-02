@@ -1,6 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 pub mod TestArraySeqStEphChap {
+
     use apas_ai::ArraySeqStEphSLit;
     use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use apas_ai::Types::Types::*; // macro import
@@ -74,20 +75,12 @@ pub mod TestArraySeqStEphChap {
     fn test_filter_even() {
         let numbers = ArraySeqStEphSLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&numbers, &|&x| {
-            if x % 2 == 0 {
-                true
-            } else {
-                false
-            }
+            if x % 2 == 0 { true } else { false }
         });
         assert_eq!(evens, ArraySeqStEphSLit![2, 4, 6, 8, 10]);
         let odds_only = ArraySeqStEphSLit![1, 3, 5, 7];
         let no_evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&odds_only, &|&x| {
-            if x % 2 == 0 {
-                true
-            } else {
-                false
-            }
+            if x % 2 == 0 { true } else { false }
         });
         assert_eq!(no_evens.length(), 0);
     }

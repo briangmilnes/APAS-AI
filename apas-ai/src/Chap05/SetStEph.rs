@@ -3,11 +3,12 @@
 
 pub mod SetStEph {
 
-use std::collections::HashSet;
-use std::fmt::{Debug, Display};
-use std::hash::{Hash, Hasher};
+    use std::collections::HashSet;
+    use std::fmt::{Debug, Display};
+    use std::hash::{Hash, Hasher};
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone)]
     pub struct Set<T> {
         data: HashSet<T>,
@@ -109,13 +110,7 @@ use crate::Types::Types::*;
 
         pub fn size(&self) -> N { self.data.len() }
 
-        pub fn mem(&self, x: &T) -> B {
-            if self.data.contains(x) {
-                true
-            } else {
-                false
-            }
-        }
+        pub fn mem(&self, x: &T) -> B { if self.data.contains(x) { true } else { false } }
 
         pub fn union(&self, other: &Set<T>) -> Set<T>
         where
@@ -197,13 +192,7 @@ use crate::Types::Types::*;
 
         fn size(&self) -> N { self.data.len() }
 
-        fn mem(&self, x: &T) -> B {
-            if self.data.contains(x) {
-                true
-            } else {
-                false
-            }
-        }
+        fn mem(&self, x: &T) -> B { if self.data.contains(x) { true } else { false } }
 
         fn union(&self, other: &Set<T>) -> Set<T>
         where

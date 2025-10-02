@@ -5,17 +5,18 @@
 
 pub mod AugOrderedTableMtEph {
 
-use std::fmt::{Debug, Display, Formatter, Result};
-use std::sync::Arc;
-use std::thread;
+    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::sync::Arc;
+    use std::thread;
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
-use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-use crate::Chap43::OrderedTableMtEph::OrderedTableMtEph::*;
-use crate::OrderedTableMtEphLit;
-use crate::ParaPair;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap43::OrderedTableMtEph::OrderedTableMtEph::*;
+    use crate::OrderedTableMtEphLit;
+    use crate::ParaPair;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq, Clone)]
     pub struct AugOrderedTableMtEph<K: MtKey, V: MtVal, F: MtReduceFn<V>> {
         base_table: OrderedTableMtEph<K, V>,

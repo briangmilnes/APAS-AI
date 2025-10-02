@@ -3,11 +3,12 @@
 
 pub mod BSTReducedStEph {
 
-use std::marker::PhantomData;
+    use std::marker::PhantomData;
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use rand::{rng, Rng};
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+    use rand::{Rng, rng};
+
     type Link<K, V, R> = Option<Box<Node<K, V, R>>>;
 
     #[derive(Clone, Debug)]

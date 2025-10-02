@@ -14,10 +14,11 @@
 
 pub mod SSSPResultStPerInt {
 
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+
     const UNREACHABLE: i64 = i64::MAX;
     const NO_PREDECESSOR: usize = usize::MAX;
-    
+
     /// Result structure for single-source shortest paths with integer weights (persistent).
     pub struct SSSPResultStPerInt {
         /// Distance from source to each vertex (i64::MAX for unreachable).
@@ -27,7 +28,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
         /// Source vertex.
         pub source: usize,
     }
-    
+
     impl SSSPResultStPerInt {
         /// Creates a new SSSP result structure initialized for n vertices from given source.
         /// All distances are set to UNREACHABLE, all predecessors to NO_PREDECESSOR.
@@ -40,7 +41,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
                 source,
             }
         }
-    
+
         /// Returns the distance from source to vertex v.
         pub fn get_distance(&self, v: usize) -> i64 {
             if v >= self.distances.length() {
@@ -48,7 +49,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
             }
             self.distances.nth(v).clone()
         }
-    
+
         /// Sets the distance from source to vertex v, returning a new structure.
         pub fn set_distance(self, v: usize, dist: i64) -> Self {
             if v >= self.distances.length() {
@@ -60,20 +61,16 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
                 source: self.source,
             }
         }
-    
+
         /// Returns the predecessor of vertex v in the shortest path from source.
         pub fn get_predecessor(&self, v: usize) -> Option<usize> {
             if v >= self.predecessors.length() {
                 return None;
             }
             let pred = self.predecessors.nth(v).clone();
-            if pred == NO_PREDECESSOR {
-                None
-            } else {
-                Some(pred)
-            }
+            if pred == NO_PREDECESSOR { None } else { Some(pred) }
         }
-    
+
         /// Sets the predecessor of vertex v, returning a new structure.
         pub fn set_predecessor(self, v: usize, pred: usize) -> Self {
             if v >= self.predecessors.length() {
@@ -85,21 +82,21 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
                 source: self.source,
             }
         }
-    
+
         /// Checks if vertex v is reachable from source.
         pub fn is_reachable(&self, v: usize) -> bool { self.get_distance(v) != UNREACHABLE }
-    
+
         /// Extracts the shortest path from source to vertex v by following predecessors.
         /// Returns None if v is unreachable, otherwise returns the path as a sequence.
         pub fn extract_path(&self, v: usize) -> Option<ArraySeqStPerS<usize>> {
             if !self.is_reachable(v) {
                 return None;
             }
-    
+
             let mut path = Vec::new();
             let mut current = v;
             path.push(current);
-    
+
             while current != self.source {
                 let pred = *self.predecessors.nth(current);
                 if pred == NO_PREDECESSOR {
@@ -108,7 +105,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerT
                 path.push(pred);
                 current = pred;
             }
-    
+
             path.reverse();
             Some(ArraySeqStPerS::from_vec(path))
         }

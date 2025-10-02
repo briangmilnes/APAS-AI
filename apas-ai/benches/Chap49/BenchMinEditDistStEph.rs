@@ -2,7 +2,7 @@
 //! Benchmarks for MinEditDistStEph
 
 use apas_ai::{Chap49::MinEditDistStEph::MinEditDistStEph::*, MinEditDistStEphLit};
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn bench_min_edit_distance_st_eph(c: &mut Criterion) {

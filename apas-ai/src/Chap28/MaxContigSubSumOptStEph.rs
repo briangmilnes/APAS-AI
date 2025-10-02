@@ -3,9 +3,10 @@
 
 pub mod MaxContigSubSumOptStEph {
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
-use crate::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
+    use crate::Types::Types::*;
+
     pub trait MaxContigSubSumOptTrait {
         /// Compute maximum contiguous subsequence sum using optimal scan-based algorithm.
         /// Returns None for empty sequence (representing -∞).

@@ -3,10 +3,11 @@
 
 pub mod AVLTreeSeqStEph {
 
-use std::fmt::Debug;
+    use std::fmt::Debug;
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Types::Types::*;
+
     type Link<T> = Option<Box<AVLTreeNode<T>>>;
 
     #[derive(Clone)]
@@ -158,21 +159,9 @@ use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
             t
         }
 
-        fn isEmpty(&self) -> B {
-            if self.length() == 0 {
-                true
-            } else {
-                false
-            }
-        }
+        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
 
-        fn isSingleton(&self) -> B {
-            if self.length() == 1 {
-                true
-            } else {
-                false
-            }
-        }
+        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.length();

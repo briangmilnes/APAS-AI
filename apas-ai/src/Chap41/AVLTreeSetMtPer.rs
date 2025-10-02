@@ -8,12 +8,13 @@
 
 pub mod AVLTreeSetMtPer {
 
-use std::fmt;
-use std::thread;
+    use std::fmt;
+    use std::thread;
 
-use crate::Types::Types::*;
-use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
-use crate::ParaPair;
+    use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
+    use crate::ParaPair;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq, Eq)]
     pub struct AVLTreeSetMtPer<T: StTInMtT + Ord + 'static> {
         elements: AVLTreeSeqMtPerS<T>,

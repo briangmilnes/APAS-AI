@@ -4,11 +4,8 @@
 #[cfg(test)]
 mod tests {
     use apas_ai::{
-        Chap05::SetStEph::SetStEph::*,
-        Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
-        Chap62::StarPartitionMtEph::StarPartitionMtEph::*,
-        SetLit,
-        Types::Types::*,
+        Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
+        Chap62::StarPartitionMtEph::StarPartitionMtEph::*, SetLit, Types::Types::*,
     };
 
     // Helper to create a cycle graph
@@ -49,7 +46,7 @@ mod tests {
 
         // Verify partition map covers all vertices
         assert_eq!(partition_map.len(), 8);
-        
+
         // Verify every vertex maps to a center
         for v in 0..8 {
             let center = partition_map.get(&v).unwrap();
@@ -79,11 +76,11 @@ mod tests {
     #[test]
     fn test_determinism() {
         let graph = create_cycle_graph(6);
-        
+
         // Same seed should give same result
         let (centers1, map1) = parallel_star_partition(&graph, 789);
         let (centers2, map2) = parallel_star_partition(&graph, 789);
-        
+
         assert_eq!(centers1.size(), centers2.size());
         for v in 0..6 {
             assert_eq!(map1.get(&v), map2.get(&v));
@@ -110,4 +107,3 @@ mod tests {
         }
     }
 }
-

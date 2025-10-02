@@ -3,14 +3,15 @@
 
 pub mod MappingStEph {
 
-use std::collections::HashMap;
-use std::fmt::{Debug, Display, Formatter, Result};
-use std::hash::Hash;
+    use std::collections::HashMap;
+    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::RelationStEph::RelationStEph::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::SetLit;
+    use crate::Chap05::RelationStEph::RelationStEph::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     #[derive(Clone)]
     pub struct Mapping<A, B> {
         rel: Relation<A, B>,

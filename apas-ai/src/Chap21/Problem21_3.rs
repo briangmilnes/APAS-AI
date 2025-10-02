@@ -3,8 +3,9 @@
 
 pub mod Problem21_3 {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     pub trait Problem21_3Trait {
         /// Problem 21.3 (Points in 3D) using ArraySeqPer — imperative triple loop
         /// APAS: Work Θ(n³), Span Θ(n³)

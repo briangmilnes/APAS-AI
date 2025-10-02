@@ -6,14 +6,15 @@
 
 pub mod StarContractionStEph {
 
-use std::collections::HashMap;
-use std::hash::Hash;
+    use std::collections::HashMap;
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
-use crate::Chap62::StarPartitionStEph::StarPartitionStEph::sequential_star_partition;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+    use crate::Chap62::StarPartitionStEph::StarPartitionStEph::sequential_star_partition;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     pub trait StarContractionStEphTrait {
         /// Sequential star contraction higher-order function
         /// APAS: Work O((n + m) lg n), Span O((n + m) lg n)
@@ -22,7 +23,7 @@ use crate::SetLit;
             V: StT + Hash + Ord,
             F: Fn(&Set<V>) -> R,
             G: Fn(&Set<V>, &R) -> R;
-        
+
         /// Contract graph to just vertices (no edges)
         /// APAS: Work O((n + m) lg n), Span O((n + m) lg n)
         fn contract_to_vertices<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<V>;
@@ -44,11 +45,7 @@ use crate::SetLit;
     ///
     /// Returns:
     /// - Result of type R as computed by base and expand functions
-    pub fn star_contract<V, R, F, G>(
-        graph: &UnDirGraphStEph<V>,
-        base: &F,
-        expand: &G,
-    ) -> R
+    pub fn star_contract<V, R, F, G>(graph: &UnDirGraphStEph<V>, base: &F, expand: &G) -> R
     where
         V: StT + Hash + Ord,
         F: Fn(&Set<V>) -> R,
@@ -88,7 +85,7 @@ use crate::SetLit;
 
         for edge in graph.edges().iter() {
             let Edge(u, v) = edge;
-            
+
             // Map endpoints to their centers
             let u_center = partition_map.get(u).unwrap_or(u);
             let v_center = partition_map.get(v).unwrap_or(v);
@@ -114,9 +111,7 @@ use crate::SetLit;
     ///
     /// APAS: Work O((n + m) lg n), Span O((n + m) lg n)
     /// claude-4-sonet: Work O((n + m) lg n), Span O((n + m) lg n)
-    pub fn contract_to_vertices<V: StT + Hash + Ord>(
-        graph: &UnDirGraphStEph<V>,
-    ) -> Set<V> {
+    pub fn contract_to_vertices<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<V> {
         star_contract(
             graph,
             &|vertices| vertices.clone(),
@@ -124,4 +119,3 @@ use crate::SetLit;
         )
     }
 }
-

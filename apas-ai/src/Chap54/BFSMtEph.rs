@@ -5,11 +5,12 @@
 
 pub mod BFSMtEph {
 
-use std::collections::VecDeque;
+    use std::collections::VecDeque;
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
-use crate::ParaPair;
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
+    use crate::ParaPair;
+    use crate::Types::Types::*;
+
     pub trait BFSMtEphTrait {
         /// Performs parallel BFS from source vertex s on adjacency list graph G
         /// APAS: Work O(|V| + |E|), Span O(d·lg n) where d is diameter

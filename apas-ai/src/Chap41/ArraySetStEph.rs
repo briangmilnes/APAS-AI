@@ -3,8 +3,8 @@
 
 pub mod ArraySetStEph {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Types::Types::*;
 
     #[derive(Debug, Clone, PartialEq)]
     pub struct ArraySetStEph<T: StT + Ord> {

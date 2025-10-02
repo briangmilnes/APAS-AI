@@ -4,8 +4,9 @@
 
 pub mod FibonacciMt {
 
-use crate::Types::Types::*;
-use crate::ParaPair;
+    use crate::ParaPair;
+    use crate::Types::Types::*;
+
     pub struct FibonacciMt;
 
     pub trait FibonacciMtTrait {

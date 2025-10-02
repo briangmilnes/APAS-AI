@@ -3,8 +3,9 @@
 
 pub mod MergeSortSt {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Types::Types::*;
+
     pub trait MergeSortStTrait<T: StT + Ord> {
         /// Merge two sorted sequences into one sorted sequence.
         /// APAS: Work Θ(n), Span Θ(n)

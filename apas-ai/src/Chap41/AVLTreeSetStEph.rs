@@ -3,10 +3,11 @@
 
 pub mod AVLTreeSetStEph {
 
-use std::fmt;
+    use std::fmt;
 
-use crate::Types::Types::*;
-use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
+    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq, Eq)]
     pub struct AVLTreeSetStEph<T: StT + Ord> {
         elements: AVLTreeSeqStEphS<T>,

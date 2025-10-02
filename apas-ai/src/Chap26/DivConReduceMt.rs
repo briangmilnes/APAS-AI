@@ -4,8 +4,9 @@
 
 pub mod DivConReduceMt {
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
+    use crate::Types::Types::*;
+
     pub trait DivConReduceMtTrait {
         /// Find maximum element via parallel reduce.
         /// Pattern: reduce max MIN identity (parallel)

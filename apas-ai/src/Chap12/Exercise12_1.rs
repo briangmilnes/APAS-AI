@@ -3,12 +3,13 @@
 
 pub mod Exercise12_1 {
 
-use std::hint::spin_loop;
-use std::sync::Arc;
-use std::sync::atomic::{AtomicUsize, Ordering};
-use std::thread;
+    use std::hint::spin_loop;
+    use std::sync::Arc;
+    use std::sync::atomic::{AtomicUsize, Ordering};
+    use std::thread;
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
+
     #[derive(Debug)]
     pub struct SpinLock {
         ticket: AtomicUsize,

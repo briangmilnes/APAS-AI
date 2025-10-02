@@ -2,6 +2,7 @@
 /// Algorithm 21.2 (3D Points) using ArraySeqPer: flatten of nested tabulates.
 
 pub mod Test30Algorithm_21_2 {
+
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Chap21::Algorithm21_2::Algorithm21_2::*;

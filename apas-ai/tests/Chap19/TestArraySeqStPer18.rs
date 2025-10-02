@@ -1,5 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestArraySeqStPer {
+
     use apas_ai::ArraySeqStPer;
     use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::ArraySeqStPer::ArraySeqStPer::*;
@@ -80,11 +81,7 @@ pub mod TestArraySeqStPer {
         assert_eq!(evens, ArraySeqStPerSLit![2, 4, 6, 8, 10]);
         let odds_only = ArraySeqStPerSLit![1, 3, 5, 7];
         let no_evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&a, &|&x| {
-            if x % 2 == 0 {
-                true
-            } else {
-                false
-            }
+            if x % 2 == 0 { true } else { false }
         });
         assert_eq!(no_evens.length(), 0);
     }

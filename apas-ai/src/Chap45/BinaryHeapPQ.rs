@@ -3,10 +3,11 @@
 
 pub mod BinaryHeapPQ {
 
-use std::fmt::{Debug, Display, Formatter, Result};
+    use std::fmt::{Debug, Display, Formatter, Result};
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq, Clone, Debug)]
     pub struct BinaryHeapPQ<T: StT + Ord> {
         elements: ArraySeqStPerS<T>,
@@ -57,13 +58,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
         fn right_child(i: N) -> N { 2 * i + 2 }
 
         /// parent of node at index i
-        fn parent(i: N) -> N {
-            if i == 0 {
-                0
-            } else {
-                (i - 1) / 2
-            }
-        }
+        fn parent(i: N) -> N { if i == 0 { 0 } else { (i - 1) / 2 } }
 
         /// Check if heap property is satisfied
         fn is_heap(&self) -> bool {

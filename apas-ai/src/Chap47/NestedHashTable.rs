@@ -3,11 +3,12 @@
 
 pub mod NestedHashTable {
 
-use std::fmt::{Debug, Display, Formatter, Result};
+    use std::fmt::{Debug, Display, Formatter, Result};
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug)]
     pub struct NestedHashTable<K: StT, V: StT> {
         buckets: ArraySeqStPerS<ArraySeqStPerS<Pair<K, V>>>,

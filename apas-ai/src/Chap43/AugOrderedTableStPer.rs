@@ -3,13 +3,14 @@
 
 pub mod AugOrderedTableStPer {
 
-use std::fmt::{Debug, Display, Formatter, Result};
+    use std::fmt::{Debug, Display, Formatter, Result};
 
-use crate::Types::Types::*;
-use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-use crate::Chap43::OrderedTableStPer::OrderedTableStPer::*;
-use crate::OrderedTableStPerLit;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+    use crate::Chap43::OrderedTableStPer::OrderedTableStPer::*;
+    use crate::OrderedTableStPerLit;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq, Clone)]
     pub struct AugOrderedTableStPer<K: StT + Ord, V: StT, F>
     where

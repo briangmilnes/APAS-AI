@@ -3,10 +3,11 @@
 
 pub mod Example44_1 {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use crate::Chap44::DocumentIndex::DocumentIndex::*;
-use crate::DocumentCollectionLit;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap44::DocumentIndex::DocumentIndex::*;
+    use crate::DocumentCollectionLit;
+    use crate::Types::Types::*;
+
     pub fn create_tweet_collection() -> DocumentCollection {
         DocumentCollectionLit![
             "jack" => "chess is fun",

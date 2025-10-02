@@ -3,11 +3,12 @@
 
 pub mod BSTTreapMtEph {
 
-use std::sync::{Arc, RwLock};
+    use std::sync::{Arc, RwLock};
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use rand::{rng, Rng};
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+    use rand::{Rng, rng};
+
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Debug, Clone)]
@@ -202,13 +203,7 @@ use rand::{rng, Rng};
             Self::size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         fn height(&self) -> N {
             fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {

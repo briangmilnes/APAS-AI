@@ -4,11 +4,8 @@
 #[cfg(test)]
 mod tests {
     use apas_ai::{
-        Chap05::SetStEph::SetStEph::*,
-        Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
-        Chap62::StarContractionStEph::StarContractionStEph::*,
-        SetLit,
-        Types::Types::*,
+        Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
+        Chap62::StarContractionStEph::StarContractionStEph::*, SetLit, Types::Types::*,
     };
 
     // Helper to create a cycle graph
@@ -30,7 +27,7 @@ mod tests {
     fn test_contract_to_vertices_cycle() {
         let graph = create_cycle_graph(6);
         let result = contract_to_vertices(&graph);
-        
+
         // After contracting, we should have fewer vertices than original
         assert!(result.size() <= graph.sizeV());
         assert!(result.size() > 0);
@@ -39,15 +36,16 @@ mod tests {
     #[test]
     fn test_contract_with_base_expand() {
         let graph = create_cycle_graph(4);
-        
+
         // Simple base function that counts vertices
         let base = |vertices: &Set<N>| vertices.size();
-        
+
         // Expand function that just returns the recursive result
-        let expand = |_v: &Set<N>, _e: &Set<Edge<N>>, _centers: &Set<N>, _part: &std::collections::HashMap<N, N>, r: N| r;
-        
+        let expand =
+            |_v: &Set<N>, _e: &Set<Edge<N>>, _centers: &Set<N>, _part: &std::collections::HashMap<N, N>, r: N| r;
+
         let result = star_contract(&graph, &base, &expand);
-        
+
         // Should eventually contract to some number of isolated vertices
         assert!(result > 0);
     }
@@ -56,7 +54,7 @@ mod tests {
     fn test_empty_graph_contraction() {
         let graph = <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::empty();
         let result = contract_to_vertices(&graph);
-        
+
         assert_eq!(result.size(), 0);
     }
 
@@ -65,12 +63,11 @@ mod tests {
         let vertices = SetLit![0, 1];
         let edges = SetLit![Edge(0, 1)];
         let graph = <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(vertices, edges);
-        
+
         let result = contract_to_vertices(&graph);
-        
+
         // Should contract to at least one vertex
         assert!(result.size() >= 1);
         assert!(result.size() <= 2);
     }
 }
-

@@ -7,6 +7,7 @@ pub mod Types {
 use std::fmt::{Debug, Display};
 use std::hash::Hash;
 
+
     pub type N = usize;
 
     /// Data Type 18.1 (Boolean) type used by APAS.

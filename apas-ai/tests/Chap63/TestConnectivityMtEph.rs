@@ -4,11 +4,8 @@
 #[cfg(test)]
 mod tests {
     use apas_ai::{
-        Chap05::SetStEph::SetStEph::*,
-        Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
-        Chap63::ConnectivityMtEph::ConnectivityMtEph::*,
-        SetLit,
-        Types::Types::*,
+        Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
+        Chap63::ConnectivityMtEph::ConnectivityMtEph::*, SetLit, Types::Types::*,
     };
 
     fn create_connected_graph() -> UnDirGraphMtEph<N> {
@@ -55,9 +52,9 @@ mod tests {
     fn test_connected_components_mt_single() {
         let graph = create_connected_graph();
         let (reps, comp_map) = connected_components_mt(&graph, 123);
-        
+
         assert_eq!(reps.size(), 1);
-        
+
         let first_comp = comp_map.get(&0).unwrap();
         for i in 1..6 {
             assert_eq!(comp_map.get(&i).unwrap(), first_comp);
@@ -68,21 +65,21 @@ mod tests {
     fn test_connected_components_mt_multiple() {
         let graph = create_multi_component_graph();
         let (reps, comp_map) = connected_components_mt(&graph, 789);
-        
+
         assert_eq!(reps.size(), 3);
-        
+
         // Vertices in same component map to same representative
         let comp0 = comp_map.get(&0).unwrap();
         assert_eq!(comp_map.get(&1).unwrap(), comp0);
         assert_eq!(comp_map.get(&2).unwrap(), comp0);
-        
+
         let comp3 = comp_map.get(&3).unwrap();
         assert_eq!(comp_map.get(&4).unwrap(), comp3);
-        
+
         let comp5 = comp_map.get(&5).unwrap();
         assert_eq!(comp_map.get(&6).unwrap(), comp5);
         assert_eq!(comp_map.get(&7).unwrap(), comp5);
-        
+
         assert_ne!(comp0, comp3);
         assert_ne!(comp0, comp5);
         assert_ne!(comp3, comp5);
@@ -97,4 +94,3 @@ mod tests {
         assert_eq!(count_hof, 3);
     }
 }
-

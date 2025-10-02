@@ -6,13 +6,14 @@
 
 pub mod WeightedDirGraphMtEphFloat {
 
-use std::fmt::{Debug, Display, Formatter, Result};
-use std::hash::Hash;
+    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
-use crate::ParaPair;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
+    use crate::ParaPair;
+    use crate::Types::Types::*;
+
     pub type WeightedDirGraphMtEphFloat<V> = LabDirGraphMtEph<V, OrderedF64>;
 
     /// Convenience functions for weighted directed graphs with floating-point weights (multi-threaded)

@@ -4,12 +4,13 @@
 
 pub mod MergeSortMt {
 
-use std::sync::Arc;
-use std::thread;
+    use std::sync::Arc;
+    use std::thread;
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
-use crate::ParaPair;
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
+    use crate::ParaPair;
+    use crate::Types::Types::*;
+
     pub trait MergeSortMtTrait<T: StT + Ord + Send + Sync + 'static> {
         /// Merge two sorted sequences in parallel using binary search.
         /// APAS: Work Θ(n), Span Θ(log n)

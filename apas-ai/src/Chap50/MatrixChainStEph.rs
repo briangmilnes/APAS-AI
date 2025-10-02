@@ -3,10 +3,11 @@
 
 pub mod MatrixChainStEph {
 
-use std::collections::HashMap;
-use std::fmt::{Debug, Display, Formatter, Result};
+    use std::collections::HashMap;
+    use std::fmt::{Debug, Display, Formatter, Result};
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct MatrixDim {
         pub rows: usize,

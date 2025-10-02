@@ -3,9 +3,10 @@
 
 pub mod BSTBBAlphaStEph {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     const ALPHA: f64 = 0.75;
 
     type Link<T> = Option<Box<Node<T>>>;
@@ -68,13 +69,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     impl<T: StT + Ord> BSTBBAlphaStEph<T> {
         // Private helper methods only - no public delegation
 
-        pub fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
-        }
+        pub fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         pub fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
@@ -96,13 +91,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
         pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
 
-        pub fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() {
-                true
-            } else {
-                false
-            }
-        }
+        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
 
         pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
 
@@ -240,13 +229,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
         fn size(&self) -> N { Self::size_link(&self.root) }
 
-        fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {

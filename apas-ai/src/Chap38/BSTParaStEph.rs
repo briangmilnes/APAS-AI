@@ -3,11 +3,12 @@
 
 pub mod BSTParaStEph {
 
-use std::cell::RefCell;
-use std::rc::Rc;
+    use std::cell::RefCell;
+    use std::rc::Rc;
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     #[derive(Debug, Clone, Default)]
     pub enum Exposed<T: StT + Ord> {
         #[default]
@@ -155,13 +156,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
         fn size(&self) -> N { self.root.borrow().as_ref().map_or(0, |node| node.size) }
 
-        fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         fn insert(&self, key: T) {
             let (left, _, right) = ParamBST::split_inner(self, &key);

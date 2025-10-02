@@ -3,8 +3,9 @@
 
 pub mod BalBinTreeStEph {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, PartialEq, Eq, Debug)]
     pub enum BalBinTree<T: StT> {
         Leaf,

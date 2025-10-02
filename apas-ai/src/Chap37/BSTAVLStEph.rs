@@ -3,9 +3,10 @@
 
 pub mod BSTAVLStEph {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone, Debug)]
@@ -206,13 +207,7 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
         fn size(&self) -> N { Self::size_link(&self.root) }
 
-        fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {

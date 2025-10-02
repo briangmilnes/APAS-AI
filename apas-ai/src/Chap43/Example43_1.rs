@@ -3,15 +3,16 @@
 
 pub mod Example43_1 {
 
-use crate::Types::Types::*;
-use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
-use crate::Chap43::OrderedSetStPer::OrderedSetStPer::*;
-use crate::OrderedSetStPerLit;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
+    use crate::Chap43::OrderedSetStPer::OrderedSetStPer::*;
+    use crate::OrderedSetStPerLit;
+    use crate::Types::Types::*;
+
     pub trait Example43_1Trait {
         /// Demonstrates Example 43.1 from the textbook with lexicographic ordering
         /// APAS: Work Θ(n log n), Span Θ(log n)
         fn run_example43_1();
-        
+
         /// Demonstrate ordered set operations
         /// APAS: Work Θ(n log n), Span Θ(log n)
         fn demonstrate_ordered_operations();

@@ -6,14 +6,15 @@
 
 pub mod VertexMatchingMtEph {
 
-use std::hash::Hash;
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use crate::ParaPair;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::ParaPair;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     pub trait VertexMatchingMtEphTrait {
         /// Parallel vertex matching using randomized symmetry breaking
         /// APAS: Work O(|E|), Span O(lg |V|)
@@ -28,7 +29,7 @@ use crate::SetLit;
     /// - All edges incident on its endpoints flipped tails (false)
     ///
     /// APAS: Work Θ(|E| × avg_degree), Span Θ(log |E| + avg_degree)
-    /// Claude: Work Θ(|E| × avg_degree), Span Θ(log |E| + avg_degree), 
+    /// Claude: Work Θ(|E| × avg_degree), Span Θ(log |E| + avg_degree),
     ///         Parallelism Θ(|E|) in coin flipping phase
     ///
     /// Phase 1: Flip coins for all edges in parallel - Θ(|E|) parallelism
@@ -40,10 +41,7 @@ use crate::SetLit;
     ///
     /// Returns:
     /// - A set of edges forming a vertex matching
-    pub fn parallel_matching_mt<V: StT + MtT + Hash + 'static>(
-        graph: &UnDirGraphMtEph<V>,
-        seed: u64,
-    ) -> Set<Edge<V>> {
+    pub fn parallel_matching_mt<V: StT + MtT + Hash + 'static>(graph: &UnDirGraphMtEph<V>, seed: u64) -> Set<Edge<V>> {
         use rand::rngs::StdRng;
         use rand::{Rng, SeedableRng};
         use std::sync::{Arc, Mutex};
@@ -76,7 +74,7 @@ use crate::SetLit;
         rng: &mut rand::rngs::StdRng,
     ) -> ArraySeqStEphS<B> {
         use rand::Rng;
-        
+
         let n = edges.length();
         if n == 0 {
             return ArraySeqStEphS::empty();
@@ -101,17 +99,15 @@ use crate::SetLit;
         coins: &ArraySeqStEphS<B>,
     ) -> Set<Edge<V>> {
         use std::sync::Arc;
-        
+
         let n = edges.length();
         if n == 0 {
             return SetLit![];
         }
 
         // Build edge index for O(1) coin lookups
-        let edge_coin_map: std::collections::HashMap<Edge<V>, bool> = 
-            edges.iter().zip(coins.iter())
-                .map(|(e, c)| (e.clone(), *c))
-                .collect();
+        let edge_coin_map: std::collections::HashMap<Edge<V>, bool> =
+            edges.iter().zip(coins.iter()).map(|(e, c)| (e.clone(), *c)).collect();
 
         // Wrap in Arc for thread-safe sharing
         let graph_arc = Arc::new(graph.clone());
@@ -141,11 +137,11 @@ use crate::SetLit;
         end: usize,
     ) -> ArraySeqStEphS<Edge<V>> {
         let size = end - start;
-        
+
         if size == 0 {
             return ArraySeqStEphS::empty();
         }
-        
+
         if size == 1 {
             // Base case: check single edge
             let edge = edges.nth(start as N);
@@ -158,19 +154,19 @@ use crate::SetLit;
 
         // Recursive case: divide and conquer
         let mid = start + size / 2;
-        
+
         let graph1 = graph.clone();
         let edges1 = edges.clone();
         let coins1 = edge_coins.clone();
         let graph2 = graph;
         let edges2 = edges;
         let coins2 = edge_coins;
-        
+
         let pair = ParaPair!(
             move || select_edges_recursive(graph1, edges1, coins1, start, mid),
             move || select_edges_recursive(graph2, edges2, coins2, mid, end)
         );
-        
+
         // Combine results
         let mut left_vec: std::vec::Vec<Edge<V>> = pair.0.iter().cloned().collect();
         let right_vec: std::vec::Vec<Edge<V>> = pair.1.iter().cloned().collect();
@@ -187,7 +183,7 @@ use crate::SetLit;
         edge_coins: &std::collections::HashMap<Edge<V>, bool>,
     ) -> bool {
         let Edge(u, v) = edge;
-        
+
         // Check if this edge flipped heads
         if !edge_coins.get(edge).copied().unwrap_or(false) {
             return false;
@@ -198,7 +194,7 @@ use crate::SetLit;
             if adj_edge == edge {
                 continue; // Skip the current edge
             }
-            
+
             // Check if adjacent edge is incident on u or v
             if graph.Incident(adj_edge, u) || graph.Incident(adj_edge, v) {
                 if edge_coins.get(adj_edge).copied().unwrap_or(false) {
@@ -210,4 +206,3 @@ use crate::SetLit;
         true
     }
 }
-

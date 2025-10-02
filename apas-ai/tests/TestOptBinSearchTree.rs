@@ -2,13 +2,12 @@
 //! Tests for Optimal Binary Search Tree implementations using Vec-based data structures.
 
 use apas_ai::{
-    prob,
     Chap50::{
         OptBinSearchTreeStEph::OptBinSearchTreeStEph::{KeyProb as OBSTStEphKeyProb, OBSTStEphS, OBSTStEphTrait},
         OptBinSearchTreeStPer::OptBinSearchTreeStPer::{KeyProb as OBSTStPerKeyProb, OBSTStPerS, OBSTStPerTrait},
         Probability::Probability::Probability,
     },
-    OBSTStPerLit,
+    OBSTStPerLit, prob,
 };
 
 #[cfg(test)]

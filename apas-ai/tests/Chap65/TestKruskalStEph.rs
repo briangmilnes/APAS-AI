@@ -36,11 +36,11 @@ mod tests {
     fn test_kruskal_triangle() {
         let graph = build_triangle_graph();
         let mst = kruskal_mst(&graph);
-        
+
         assert_eq!(mst.size(), 2);
         let weight = mst_weight(&mst);
         assert_eq!(weight, OrderedFloat(3.0));
-        
+
         assert!(mst.mem(&LabEdge(0, 1, OrderedFloat(1.0))));
         assert!(mst.mem(&LabEdge(1, 2, OrderedFloat(2.0))));
     }
@@ -49,11 +49,11 @@ mod tests {
     fn test_kruskal_square() {
         let graph = build_square_graph();
         let mst = kruskal_mst(&graph);
-        
+
         assert_eq!(mst.size(), 3);
         let weight = mst_weight(&mst);
         assert_eq!(weight, OrderedFloat(6.0));
-        
+
         assert!(mst.mem(&LabEdge(0, 1, OrderedFloat(1.0))));
         assert!(mst.mem(&LabEdge(1, 2, OrderedFloat(2.0))));
         assert!(mst.mem(&LabEdge(2, 3, OrderedFloat(3.0))));
@@ -64,7 +64,7 @@ mod tests {
         let vertices = SetLit![0];
         let edges = SetLit![];
         let graph = <LabUnDirGraphStEph<N, OrderedFloat<f64>> as LabUnDirGraphStEphTrait<N, OrderedFloat<f64>>>::from_vertices_and_labeled_edges(vertices, edges);
-        
+
         let mst = kruskal_mst(&graph);
         assert_eq!(mst.size(), 0);
         assert_eq!(mst_weight(&mst), OrderedFloat(0.0));
@@ -80,7 +80,7 @@ mod tests {
             LabEdge(0, 3, OrderedFloat(7.0))
         ];
         let graph = <LabUnDirGraphStEph<N, OrderedFloat<f64>> as LabUnDirGraphStEphTrait<N, OrderedFloat<f64>>>::from_vertices_and_labeled_edges(vertices, edges);
-        
+
         let mst = kruskal_mst(&graph);
         assert_eq!(mst.size(), 3);
         assert_eq!(mst_weight(&mst), OrderedFloat(15.0));
@@ -99,7 +99,7 @@ mod tests {
             LabEdge(2, 3, OrderedFloat(6.0))
         ];
         let graph = <LabUnDirGraphStEph<N, OrderedFloat<f64>> as LabUnDirGraphStEphTrait<N, OrderedFloat<f64>>>::from_vertices_and_labeled_edges(vertices, edges);
-        
+
         let mst = kruskal_mst(&graph);
         assert_eq!(mst.size(), 3);
         assert_eq!(mst_weight(&mst), OrderedFloat(6.0));
@@ -123,10 +123,9 @@ mod tests {
             LabEdge(0, 3, OrderedFloat(1.0))
         ];
         let graph = <LabUnDirGraphStEph<N, OrderedFloat<f64>> as LabUnDirGraphStEphTrait<N, OrderedFloat<f64>>>::from_vertices_and_labeled_edges(vertices, edges);
-        
+
         let mst = kruskal_mst(&graph);
         assert_eq!(mst.size(), 3);
         assert_eq!(mst_weight(&mst), OrderedFloat(3.0));
     }
 }
-

@@ -3,11 +3,12 @@
 
 pub mod BSTBBAlphaMtEph {
 
-use std::sync::{Arc, RwLock};
+    use std::sync::{Arc, RwLock};
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     const ALPHA: f64 = 0.75;
 
     type Link<T> = Option<Box<Node<T>>>;
@@ -202,26 +203,14 @@ use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
             Self::find_link(&*guard, target).cloned()
         }
 
-        fn contains(&self, target: &T) -> B {
-            if self.find(target).is_some() {
-                true
-            } else {
-                false
-            }
-        }
+        fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             Self::size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B {
-            if self.size() == 0 {
-                true
-            } else {
-                false
-            }
-        }
+        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
 
         fn height(&self) -> N {
             fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {

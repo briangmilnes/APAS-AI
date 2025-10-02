@@ -3,7 +3,7 @@ use apas_ai::Chap06::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::*;
 use apas_ai::Chap59::JohnsonMtEphFloat::JohnsonMtEphFloat::johnson_apsp;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::OrderedF64;
-use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
 fn generate_sparse_graph_negative(n: usize) -> WeightedDirGraphMtEphFloat<usize> {

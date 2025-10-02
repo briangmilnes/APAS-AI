@@ -3,7 +3,7 @@
 
 pub mod Exercise12_2 {
 
-use std::sync::atomic::{AtomicUsize, Ordering};
+    use std::sync::atomic::{AtomicUsize, Ordering};
 
     pub trait FetchAddCasTrait {
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)

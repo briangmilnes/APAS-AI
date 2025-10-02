@@ -6,12 +6,13 @@
 
 pub mod UnDirGraphMtEph {
 
-use std::hash::Hash;
+    use std::hash::Hash;
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::ParaPair;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::ParaPair;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     #[derive(Clone)]
     pub struct UnDirGraphMtEph<V: StT + MtT + Hash + 'static> {
         V: Set<V>,
@@ -179,13 +180,7 @@ use crate::SetLit;
             parallel_ng_of_vertices(vertices, self.clone())
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B {
-            if &e.0 == v || &e.1 == v {
-                true
-            } else {
-                false
-            }
-        }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { true } else { false } }
 
         fn Degree(&self, v: &V) -> N { self.NG(v).size() }
     }

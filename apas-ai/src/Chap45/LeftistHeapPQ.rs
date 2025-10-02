@@ -3,9 +3,10 @@
 
 pub mod LeftistHeapPQ {
 
-use std::fmt::{Debug, Display, Formatter, Result};
+    use std::fmt::{Debug, Display, Formatter, Result};
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
+
     #[derive(PartialEq, Clone, Debug)]
     pub enum LeftistHeapNode<T: StT + Ord> {
         Leaf,

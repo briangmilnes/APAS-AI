@@ -6,11 +6,12 @@
 
 pub mod BottomUpDPStPer {
 
-use std::cmp::{max, min};
-use std::fmt::{Debug, Display};
+    use std::cmp::{max, min};
+    use std::fmt::{Debug, Display};
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct BottomUpDPStPerS {
         /// Input sequence S

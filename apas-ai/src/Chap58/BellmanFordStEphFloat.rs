@@ -11,12 +11,13 @@
 
 pub mod BellmanFordStEphFloat {
 
-use std::collections::HashMap;
+    use std::collections::HashMap;
 
-use crate::Types::Types::*;
-use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
-use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat;
-use crate::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
+    use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
+    use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat;
+    use crate::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
+    use crate::Types::Types::*;
+
     pub trait BellmanFordStEphFloatTrait {
         /// Bellman-Ford single source shortest path algorithm
         /// APAS: Work O(nm), Span O(n lg n) where n = |V|, m = |E|

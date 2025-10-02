@@ -3,9 +3,10 @@
 
 pub mod LinkedListStEph {
 
-use std::collections::HashSet;
+    use std::collections::HashSet;
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
+
     #[derive(Debug, Clone)]
     pub struct NodeE<T: StT> {
         pub value: T,

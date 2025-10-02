@@ -2,6 +2,7 @@
 /// Exercise 21.6: Cost analysis tests.
 
 pub mod Test32Exercise_21_6 {
+
     use apas_ai::Chap21::Exercise21_6::Exercise21_6::*;
 
     #[test]

@@ -2,22 +2,24 @@
 //! Benchmarks for Chapter 64 TSP 2-Approximation (Sequential)
 
 use apas_ai::{
-    Chap05::SetStEph::SetStEph::*,
-    Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*,
-    Chap64::TSPApproxStEph::TSPApproxStEph::*,
-    SetLit,
-    Types::Types::*,
+    Chap05::SetStEph::SetStEph::*, Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*,
+    Chap64::TSPApproxStEph::TSPApproxStEph::*, SetLit, Types::Types::*,
 };
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use ordered_float::OrderedFloat;
 use std::time::Duration;
 
-fn create_complete_graph(n: N) -> (LabUnDirGraphStEph<N, OrderedFloat<f64>>, Set<LabEdge<N, OrderedFloat<f64>>>) {
+fn create_complete_graph(
+    n: N,
+) -> (
+    LabUnDirGraphStEph<N, OrderedFloat<f64>>,
+    Set<LabEdge<N, OrderedFloat<f64>>>,
+) {
     let mut vertices = SetLit![];
     for i in 0..n {
         let _ = vertices.insert(i);
     }
-    
+
     let mut edges = SetLit![];
     for i in 0..n {
         for j in (i + 1)..n {
@@ -25,15 +27,15 @@ fn create_complete_graph(n: N) -> (LabUnDirGraphStEph<N, OrderedFloat<f64>>, Set
             let _ = edges.insert(LabEdge(i, j, weight));
         }
     }
-    
+
     let graph = <LabUnDirGraphStEph<N, OrderedFloat<f64>> as LabUnDirGraphStEphTrait<N, OrderedFloat<f64>>>::from_vertices_and_labeled_edges(vertices, edges.clone());
-    
+
     let mut spanning_tree = SetLit![];
     for i in 0..(n - 1) {
         let weight = OrderedFloat(((i + i + 1 + 1) as f64) * 1.5);
         let _ = spanning_tree.insert(LabEdge(i, i + 1, weight));
     }
-    
+
     (graph, spanning_tree)
 }
 
@@ -53,4 +55,3 @@ fn bench_tsp_approx_small(c: &mut Criterion) {
 
 criterion_group!(benches, bench_tsp_approx_small);
 criterion_main!(benches);
-

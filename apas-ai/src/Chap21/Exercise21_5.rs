@@ -3,8 +3,9 @@
 
 pub mod Exercise21_5 {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
+
     pub trait Exercise21_5Trait {
         /// Exercise 21.5: Generate all contiguous subsequences using nested tabulate + flatten
         /// APAS: Work Θ(n²), Span Θ(lg n)

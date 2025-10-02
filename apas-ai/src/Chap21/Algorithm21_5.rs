@@ -3,9 +3,10 @@
 
 pub mod Algorithm21_5 {
 
-use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use crate::Chap21::Exercise21_8::Exercise21_8::is_prime;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap21::Exercise21_8::Exercise21_8::is_prime;
+    use crate::Types::Types::*;
+
     pub trait Algorithm21_5Trait {
         /// Algorithm 21.5 (Brute Force Solution to the Primes Problem)
         /// APAS: Work Θ(n^{3/2}), Span Θ(lg n)

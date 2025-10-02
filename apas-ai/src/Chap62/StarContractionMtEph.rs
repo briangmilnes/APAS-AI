@@ -6,17 +6,18 @@
 
 pub mod StarContractionMtEph {
 
-use std::collections::HashMap;
-use std::hash::Hash;
-use std::sync::{Arc, Mutex};
+    use std::collections::HashMap;
+    use std::hash::Hash;
+    use std::sync::{Arc, Mutex};
 
-use crate::Types::Types::*;
-use crate::Chap05::SetStEph::SetStEph::*;
-use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use crate::Chap62::StarPartitionMtEph::StarPartitionMtEph::parallel_star_partition;
-use crate::ParaPair;
-use crate::SetLit;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap62::StarPartitionMtEph::StarPartitionMtEph::parallel_star_partition;
+    use crate::ParaPair;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
     pub trait StarContractionMtEphTrait {
         /// Parallel star contraction higher-order function
         /// APAS: Work O((n + m) lg n), Span O(lg² n)
@@ -26,7 +27,7 @@ use crate::SetLit;
             R: StT + MtT + 'static,
             F: Fn(&Set<V>) -> R + Send + Sync + 'static,
             G: Fn(&Set<V>, &R) -> R + Send + Sync + 'static;
-        
+
         /// Contract graph to just vertices (no edges)
         /// APAS: Work O((n + m) lg n), Span O(lg² n)
         fn contract_to_vertices_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> Set<V>;
@@ -49,12 +50,7 @@ use crate::SetLit;
     ///
     /// Returns:
     /// - Result of type R as computed by base and expand functions
-    pub fn star_contract_mt<V, R, F, G>(
-        graph: &UnDirGraphMtEph<V>,
-        seed: u64,
-        base: &F,
-        expand: &G,
-    ) -> R
+    pub fn star_contract_mt<V, R, F, G>(graph: &UnDirGraphMtEph<V>, seed: u64, base: &F, expand: &G) -> R
     where
         V: StT + MtT + Hash + Ord + 'static,
         F: Fn(&Set<V>) -> R,
@@ -146,10 +142,9 @@ use crate::SetLit;
         let edges2 = edges.clone();
         let map2 = partition_map;
 
-        let pair = ParaPair!(
-            move || route_edges_parallel(&edges1, map1, start, mid),
-            move || route_edges_parallel(&edges2, map2, mid, end)
-        );
+        let pair = ParaPair!(move || route_edges_parallel(&edges1, map1, start, mid), move || {
+            route_edges_parallel(&edges2, map2, mid, end)
+        });
 
         // Union the two sets
         let mut result = pair.0;
@@ -177,4 +172,3 @@ use crate::SetLit;
         )
     }
 }
-

@@ -1,5 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 pub mod TestLinkedListStEph {
+
     use apas_ai::Chap18::LinkedListStEph::LinkedListStEph::*;
     use apas_ai::LinkedListStEphSLit;
     use apas_ai::Types::Types::*;
@@ -61,11 +62,7 @@ pub mod TestLinkedListStEph {
     fn test_filter_ch18() {
         let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
         let b = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&a, &|x: &N| {
-            if *x % 2 == 0 {
-                true
-            } else {
-                false
-            }
+            if *x % 2 == 0 { true } else { false }
         });
         expect_list(&b, &[2, 4]);
     }
