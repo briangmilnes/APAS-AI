@@ -251,9 +251,11 @@ fn _MyMacro_type_checks() {
 
 #### No Free‑Function Wrappers
 - Do not create free functions that merely forward to trait or inherent methods (e.g., `fn select(a,b,i) → <Type as Trait>::method`).
-- If a method isn’t available on the receiver, add an extension trait implemented for the concrete type to expose `value.method(...)`.
+- If a method isn't available on the receiver, add an extension trait implemented for the concrete type to expose `value.method(...)`.
 - Allowed: free functions only when they add real semantics (compose multiple types, add logic not tied to a single receiver, or break dependency cycles). Do not duplicate method names as free functions.
-- Do not add stub functions inside the same module that simply call another function/method in that module. Call sites should invoke the original API directly rather than indirection stubs.
+- Do not add stub functions inside traits or impls that call the same module that simply call another function/method in that module. Call sites should invoke the original API directly rather than indirection stubs.
+- A 'helper' function that is called once from a trait or impl is a stub and should be in the impl, if not public.
+- **Exception**: Purely functional modules may define a typeless trait for type-checking specification and algorithmic analysis documentation alongside free function implementations.
 
 #### Type Conversions and Naming
 - Prefer traits over ad‑hoc functions:

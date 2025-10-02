@@ -20,7 +20,7 @@ unused_imports = "allow"
 dead_code = "allow"
 
 [workspace]
-members = [ "." ]
+members = [ "."]
 
 [[bench]]
 name = "BenchFibonacciMt"

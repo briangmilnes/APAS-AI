@@ -379,6 +379,78 @@ Rust lacks elegant mechanisms for trait delegation and module composition, forci
 
 **Recommendation:** Use explicit UFCS delegation despite the verbosity, as it maintains clear module boundaries and allows selective re-export of only needed methods.
 
+### Functional Module Documentation Limitations
+
+Rust lacks built-in mechanisms for documenting and type-checking purely functional modules (modules containing only stateless functions with no data structures). Unlike languages with module signatures or interface files, Rust provides no way to specify the expected function signatures of a module separately from their implementations.
+
+**Problem:** Purely functional modules have no natural place to document algorithmic complexity or provide type specifications for their functions. Free functions exist in isolation without a unifying interface declaration.
+
+**Example Problem:** A sorting algorithms module with multiple functions has no central location to document expected signatures and complexity:
+
+```rust
+pub mod SortingAlgorithms {
+    // No way to declare expected interface or document complexity centrally
+    
+    pub fn insertion_sort<T: StT>(arr: &mut [T]) { /* O(n²) but where to document? */ }
+    pub fn merge_sort<T: StT>(arr: &mut [T]) { /* O(n log n) but where to document? */ }
+    pub fn quick_sort<T: StT>(arr: &mut [T]) { /* O(n log n) average but where to document? */ }
+}
+```
+
+**What Other Languages Provide:**
+
+- **ML Module Signatures**: `module type SORTING = sig val insertion_sort : 'a array -> unit end`
+- **Haskell Module Exports**: Explicit export lists with type signatures in interface files
+- **F# Interface Files**: `.fsi` files declaring function signatures separately from implementation
+- **OCaml Interface Files**: `.mli` files providing module type specifications
+
+**APAS Workaround:** Use a "typeless trait" pattern for documentation and type specification:
+
+```rust
+pub mod SortingAlgorithms {
+    use crate::Types::Types::*;
+    
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait SortingAlgorithmsTrait<T: StT> {
+        /// Claude Work: O(n²), Span: O(n²)
+        fn insertion_sort(arr: &mut [T]);
+        
+        /// Claude Work: O(n log n), Span: O(log n)
+        fn merge_sort(arr: &mut [T]);
+        
+        /// Claude Work: O(n log n) average, O(n²) worst, Span: O(log n)
+        fn quick_sort(arr: &mut [T]);
+    }
+    
+    // Free functions - actual implementations
+    pub fn insertion_sort<T: StT>(arr: &mut [T]) {
+        // Implementation...
+    }
+    
+    pub fn merge_sort<T: StT>(arr: &mut [T]) {
+        // Implementation...
+    }
+    
+    pub fn quick_sort<T: StT>(arr: &mut [T]) {
+        // Implementation...
+    }
+}
+```
+
+**Benefits of Workaround:**
+- **Type specification**: Documents expected function signatures
+- **Analysis space**: Clean location for algorithmic complexity documentation  
+- **API clarity**: Makes module interface explicit
+- **Minimal type checking**: Rust validates trait signatures are well-formed
+
+**Limitations of Workaround:**
+- **No enforcement**: Trait signatures and free function signatures can diverge
+- **Duplication**: Function signatures must be written twice (trait + implementation)
+- **No automatic checking**: Compiler doesn't verify trait matches free functions
+- **Unusual pattern**: Violates typical Rust idioms of implementing traits
+
+**Impact:** This limitation forces verbose documentation patterns in algorithmic codebases where clear interface specifications and complexity analysis are essential for understanding and verification.
+
 
 Modules may contain:
 - type definitions (struct, enum, type alias)

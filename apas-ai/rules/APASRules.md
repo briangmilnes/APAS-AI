@@ -8,6 +8,7 @@
 - Do not expose raw `Vec` or return structures backed by `Vec`; all public APIs operate on APAS array types.
 - In sweeps, never add `Vec`/`vec![]`/`to_vec()`/`into_vec()` at call sites—use sequence APIs (`tabulate`, `nth`, `length`, `set`, `iter`, literals).
 - Core operations must remain inherent methods on the data structure; no free-function wrappers.
+- **Exception**: Purely functional modules may define a typeless trait for type-checking specification and algorithmic analysis documentation alongside free function implementations.
 - Existing caller-facing `Vec` usage must remain localized and not expand beyond its current footprint.
 - **Seq-First Rule**: When length is known, operate directly on the sequence without converting to `Vec`.
 - **Vec-to-Seq Rule**: When consuming a `Vec`, allocate the target array structure immediately (via `tabulate` or constructors) rather than manipulating the `Vec` in place.
@@ -98,6 +99,75 @@ results.
 - **APAS Type Abbreviations**: Apply `MtKey`, `MtVal`, `MtReduceFn`, `HashOrd`, `ArithmeticT` consistently
 - **Remove Redundant APAS Constraints**: Remove `where T: 'static` when T is already `MtVal` (which includes 'static)
 - **Target**: Minimize where clauses across APAS codebase using APAS type conventions
+
+### Functional Module Pattern
+- **Purely functional modules** (containing only stateless functions with no data structures) **must** define a **typeless trait** that declares all module functions without implementation.
+- The trait serves as a **type-checking specification** and **algorithmic analysis documentation space**.
+- Comment the trait with: `// A dummy trait as a minimal type checking comment and space for algorithmic analysis.`
+- **No implementation required** - the trait exists purely for documentation and type specification.
+- **Free functions**: Implement the actual functionality as free functions in the same module.
+
+#### Example Pattern
+```rust
+pub mod SortingAlgorithms {
+    use crate::Types::Types::*;
+    
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait SortingAlgorithmsTrait<T: StT> {
+        /// Claude Work: O(n²), Span: O(n²)
+        fn insertion_sort(arr: &mut [T]);
+        
+        /// Claude Work: O(n log n), Span: O(log n)
+        fn merge_sort(arr: &mut [T]);
+        
+        /// Claude Work: O(n log n) average, O(n²) worst, Span: O(log n)
+        fn quick_sort(arr: &mut [T]);
+    }
+    
+    // Free functions - actual implementations
+    pub fn insertion_sort<T: StT>(arr: &mut [T]) {
+        for i in 1..arr.len() {
+            let key = arr[i].clone();
+            let mut j = i;
+            while j > 0 && arr[j - 1] > key {
+                arr[j] = arr[j - 1].clone();
+                j -= 1;
+            }
+            arr[j] = key;
+        }
+    }
+    
+    pub fn merge_sort<T: StT>(arr: &mut [T]) {
+        if arr.len() <= 1 { return; }
+        let mid = arr.len() / 2;
+        merge_sort(&mut arr[..mid]);
+        merge_sort(&mut arr[mid..]);
+        merge_in_place(arr, mid);
+    }
+    
+    pub fn quick_sort<T: StT>(arr: &mut [T]) {
+        if arr.len() <= 1 { return; }
+        let pivot = partition(arr);
+        quick_sort(&mut arr[..pivot]);
+        quick_sort(&mut arr[pivot + 1..]);
+    }
+    
+    fn merge_in_place<T: StT>(arr: &mut [T], mid: usize) {
+        // Implementation details...
+    }
+    
+    fn partition<T: StT>(arr: &mut [T]) -> usize {
+        // Implementation details...
+    }
+}
+```
+
+#### Rationale
+- **Type specification**: Documents expected function signatures for all module functions
+- **Analysis space**: Provides clean location for algorithmic complexity documentation
+- **API clarity**: Makes the module's public interface explicit through trait declarations
+- **Minimal type checking**: Rust compiler validates trait function signatures are well-formed
+- **Documentation anchor**: Tests and benchmarks can reference the trait for expected behavior
 
 ### Documentation
 - Always put this copyright in on line 1: "//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'."
