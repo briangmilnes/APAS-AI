@@ -8,6 +8,15 @@ echo "===================================================================="
 echo "Killing all benchmark and cargo processes..."
 echo "===================================================================="
 
+# Kill the benchmark runner script first
+if pgrep -f "RunBenchmarksWithTimeout.sh" > /dev/null; then
+    echo "Killing benchmark runner script..."
+    pkill -9 -f "RunBenchmarksWithTimeout.sh" || true
+    echo "  ✓ Killed RunBenchmarksWithTimeout.sh"
+else
+    echo "  No benchmark runner script found"
+fi
+
 # Kill all cargo bench processes
 if pgrep -f "cargo bench" > /dev/null; then
     echo "Killing 'cargo bench' processes..."

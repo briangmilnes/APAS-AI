@@ -1,0 +1,35 @@
+Decrease steps are:
+   1) Run the benchmark timed out at 10s.
+   2) If it does not complete, cut its input by 8 fold.
+   3) If it does complete > 1s, cut its input by T/10.
+   3) If it does complete < 1s go on to the next one.
+   4) Go back to step 1 until it completes in < 1s.
+
+Increase:
+   1) Run the benchmark timed out at 10s.
+   2) If it does not complete, cut it by T/s. 
+   3) If it does complete > 1s, cut its input by T/10.
+   3) If it does complete < 1s go on to the next one.
+   4) Go back to step 1 until it completes in < 1s.
+ 
+
+Optimize:
+   1) Run the benchmark timed out at 10s.
+   2) If it completes < 500 ms then double it's
+   inputs and go to 1.
+
+
+ Make a plan with todos for each single benchmark in order.
+ The todos are:
+   Decrease
+   
+ Show me the plan in todos.
+ 
+ Run the whole benchmark suite and time it out at #benchmarks (not files)
+ * 5 s.
+
+ Make a todo per benchmark, not file, to:
+  Optimize.
+ 
+
+ 
