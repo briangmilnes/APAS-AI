@@ -9,6 +9,13 @@ pub mod DFSStPer {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::{AVLTreeSetStPer, AVLTreeSetStPerTrait};
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait DFSStPerTrait {
+        /// Performs DFS from source vertex s on adjacency list graph G
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn dfs(graph: &ArraySeqStPerS<ArraySeqStPerS<N>>, source: N) -> AVLTreeSetStPer<N>;
+    }
+
     /// Performs DFS from source vertex s on adjacency list graph G.
     /// Returns the set of all vertices reachable from s.
     pub fn dfs(graph: &ArraySeqStPerS<ArraySeqStPerS<N>>, source: N) -> AVLTreeSetStPer<N> {

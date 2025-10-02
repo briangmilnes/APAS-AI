@@ -25,6 +25,13 @@ pub mod JohnsonMtEphFloat {
     use crate::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait JohnsonMtEphFloatTrait {
+        /// Parallel Johnson's all-pairs shortest path algorithm
+        /// APAS: Work O(mn log n), Span O(m log n) where n = |V|, m = |E|
+        fn johnson_apsp(graph: &WeightedDirGraphMtEphFloat<usize>) -> AllPairsResultStEphFloat;
+    }
+
     /// Algorithm 59.1: Johnson's All-Pairs Shortest Paths (Parallel - Float version)
     ///
     /// Solves APSP problem with negative float weights using:

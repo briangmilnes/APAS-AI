@@ -5,6 +5,13 @@ pub mod Algorithm21_2 {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait Algorithm21_2Trait {
+        /// Algorithm 21.2 (3D Points) using ArraySeqPer: flatten of nested tabulates
+        /// APAS: Work Θ(n³), Span Θ(lg n)
+        fn points3d_tab_flat(n: N) -> ArraySeqStPerS<Pair<N, Pair<N, N>>>;
+    }
+
     /// Algorithm 21.2 (3D Points) using ArraySeqPer: flatten of nested tabulates.
     /// Comprehension form: 〈(x,y,z): 0 ≤ x ≤ n−1, 1 ≤ y ≤ n, 2 ≤ z ≤ n+1〉
     /// Implemented as: flatten ∘ (tabulate_x (flatten ∘ (tabulate_y (tabulate_z))))

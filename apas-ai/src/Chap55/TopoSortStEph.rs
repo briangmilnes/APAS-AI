@@ -8,6 +8,13 @@ pub mod TopoSortStEph {
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeSeqStEphS, AVLTreeSeqStEphTrait};
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait TopoSortStEphTrait {
+        /// Computes topological sort of a DAG
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn topo_sort(graph: &ArraySeqStEphS<ArraySeqStEphS<N>>) -> AVLTreeSeqStEphS<N>;
+    }
+
     /// Computes topological sort of a DAG.
     /// Returns sequence of vertices in topological order (respecting edge directions).
     pub fn topo_sort(graph: &ArraySeqStEphS<ArraySeqStEphS<N>>) -> AVLTreeSeqStEphS<N> {

@@ -18,5 +18,14 @@ pub mod <MODULE> {
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 ... 
 
-Make a plan according to PrePlanChecklist to fix this.
+And anywhere you are including the same named module
+from two chapters such as
+
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeSeqStEphS, AVLTreeSeqStEphTrait};
+has to be wrong. It should only use the last numbered module, 37 in this case.
+
+Make a plan according to PrePlanChecklist to fix this. 
+Be sure to compile after each file change.
+Then be sure to compile and run the tests and the benchmarks, but don't run the benchmarks.
 Show it to the user.

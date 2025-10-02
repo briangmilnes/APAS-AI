@@ -5,6 +5,13 @@ pub mod Problem21_1 {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait Problem21_1Trait {
+        /// Problem 21.1 (Points in 2D) - Imperative approach using nested loops
+        /// APAS: Work Θ(n²), Span Θ(n²)
+        fn points2d(n: N) -> ArraySeqStPerS<Pair<N, N>>;
+    }
+
     /// Problem 21.1 (Points in 2D) - Imperative approach using nested loops.
     /// Construct the sequence of 2D points (x, y) with 0 ≤ x < n and 1 ≤ y < n,
     /// ordered by x major, then y.

@@ -12,6 +12,17 @@ pub mod SpanTreeStEph {
     use std::collections::HashMap;
     use std::hash::Hash;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait SpanTreeStEphTrait {
+        /// Sequential spanning tree via star contraction
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn spanning_tree_star_contraction<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<Edge<V>>;
+        
+        /// Verify spanning tree properties
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn verify_spanning_tree<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>, tree: &Set<Edge<V>>) -> B;
+    }
+
     /// Exercise 64.2: Spanning Tree via Star Contraction
     ///
     /// Computes a spanning tree by recursively applying star contraction and

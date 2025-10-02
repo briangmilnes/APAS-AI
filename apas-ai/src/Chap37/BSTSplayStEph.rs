@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-//! Ephemeral Splay Tree placeholder (standard BST semantics) with public methods.
+//! Ephemeral Splay Tree (standard BST semantics) with public methods.
 
 pub mod BSTSplayStEph {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;

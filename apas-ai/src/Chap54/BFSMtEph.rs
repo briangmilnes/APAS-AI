@@ -10,6 +10,13 @@ pub mod BFSMtEph {
     use crate::ParaPair;
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait BFSMtEphTrait {
+        /// Performs parallel BFS from source vertex s on adjacency list graph G
+        /// APAS: Work O(|V| + |E|), Span O(d·lg n) where d is diameter
+        fn bfs(graph: &ArraySeqMtEphS<ArraySeqMtEphS<N>>, source: N) -> ArraySeqMtEphS<N>;
+    }
+
     const UNREACHABLE: N = N::MAX;
 
     /// Performs parallel BFS from source vertex s on adjacency list graph G.

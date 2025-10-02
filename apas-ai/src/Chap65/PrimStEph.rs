@@ -5,16 +5,29 @@
 //! Uses priority-first search similar to Dijkstra's algorithm.
 
 pub mod PrimStEph {
+    use std::cmp::Ordering;
+    use std::collections::HashMap;
+    use std::fmt::{Display, Formatter, Result as FmtResult};
+    use std::hash::Hash;
+
+    use ordered_float::OrderedFloat;
+
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use ordered_float::OrderedFloat;
-    use std::cmp::Ordering;
-    use std::collections::HashMap;
-    use std::fmt::{Display, Formatter, Result as FmtResult};
-    use std::hash::Hash;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait PrimStEphTrait {
+        /// Prim's MST algorithm
+        /// APAS: Work O(m log n), Span O(m log n) where m = |E|, n = |V|
+        fn prim_mst<V: StT + Hash + Ord + Display>(graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>, start: V) -> Set<LabEdge<V, OrderedFloat<f64>>>;
+        
+        /// Compute total weight of MST
+        /// APAS: Work O(m), Span O(1)
+        fn mst_weight<V: StT + Hash>(mst: &Set<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64>;
+    }
 
     /// Priority queue entry for Prim's algorithm
     #[derive(Clone, Eq, PartialEq, Debug)]

@@ -7,6 +7,17 @@ pub mod Example43_1 {
     use crate::OrderedSetStPerLit;
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait Example43_1Trait {
+        /// Demonstrates Example 43.1 from the textbook with lexicographic ordering
+        /// APAS: Work Θ(n log n), Span Θ(log n)
+        fn run_example43_1();
+        
+        /// Demonstrate ordered set operations
+        /// APAS: Work Θ(n log n), Span Θ(log n)
+        fn demonstrate_ordered_operations();
+    }
+
     /// Demonstrates Example 43.1 from the textbook with lexicographic ordering
     pub fn run_example43_1() {
         println!("=== Example 43.1: Ordered Set Operations ===");

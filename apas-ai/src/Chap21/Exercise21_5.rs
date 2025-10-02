@@ -5,6 +5,13 @@ pub mod Exercise21_5 {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait Exercise21_5Trait {
+        /// Exercise 21.5: Generate all contiguous subsequences using nested tabulate + flatten
+        /// APAS: Work Θ(n²), Span Θ(lg n)
+        fn all_contiguous_subseqs<T: StT>(a: &ArraySeqStPerS<T>) -> ArraySeqStPerS<ArraySeqStPerS<T>>;
+    }
+
     /// Exercise 21.5: Generate all contiguous subsequences using nested tabulate + flatten.
     ///
     /// gpt-5-hard: Work: Θ(n²), Span: Θ(lg n)

@@ -20,6 +20,13 @@ pub mod JohnsonStEphInt {
     use crate::Chap58::BellmanFordStEphInt::BellmanFordStEphInt::bellman_ford;
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait JohnsonStEphIntTrait {
+        /// Johnson's all-pairs shortest path algorithm
+        /// APAS: Work O(mn log n), Span O(mn log n) where n = |V|, m = |E|
+        fn johnson_apsp(graph: &WeightedDirGraphStEphInt<usize>) -> AllPairsResultStEphInt;
+    }
+
     /// Algorithm 59.1: Johnson's All-Pairs Shortest Paths
     ///
     /// Solves APSP problem with negative weights allowed using:

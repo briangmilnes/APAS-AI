@@ -8,14 +8,34 @@
 //! - Exercise 63.2: connected_components using star_contract
 
 pub mod ConnectivityStEph {
+    use std::collections::HashMap;
+    use std::hash::Hash;
+
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
     use crate::Chap62::StarContractionStEph::StarContractionStEph::star_contract;
     use crate::Chap62::StarPartitionStEph::StarPartitionStEph::sequential_star_partition;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use std::collections::HashMap;
-    use std::hash::Hash;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait ConnectivityStEphTrait {
+        /// Count connected components using star contraction
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn count_components<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> N;
+        
+        /// Find connected components using star contraction
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn connected_components<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<Set<V>>;
+        
+        /// Count components using higher-order function approach
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn count_components_hof<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> N;
+        
+        /// Find components using higher-order function approach
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn connected_components_hof<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<Set<V>>;
+    }
 
     /// Algorithm 63.2: Count Connected Components
     ///

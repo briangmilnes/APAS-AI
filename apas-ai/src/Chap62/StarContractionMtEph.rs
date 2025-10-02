@@ -5,6 +5,10 @@
 //! Uses parallel star partition and parallel edge routing for quotient graph construction.
 
 pub mod StarContractionMtEph {
+    use std::collections::HashMap;
+    use std::hash::Hash;
+    use std::sync::{Arc, Mutex};
+
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
@@ -12,9 +16,22 @@ pub mod StarContractionMtEph {
     use crate::ParaPair;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use std::collections::HashMap;
-    use std::hash::Hash;
-    use std::sync::{Arc, Mutex};
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait StarContractionMtEphTrait {
+        /// Parallel star contraction higher-order function
+        /// APAS: Work O((n + m) lg n), Span O(lg² n)
+        fn star_contract_mt<V, R, F, G>(graph: &UnDirGraphMtEph<V>, base: F, expand: G) -> R
+        where
+            V: StT + MtT + Hash + Ord + 'static,
+            R: StT + MtT + 'static,
+            F: Fn(&Set<V>) -> R + Send + Sync + 'static,
+            G: Fn(&Set<V>, &R) -> R + Send + Sync + 'static;
+        
+        /// Contract graph to just vertices (no edges)
+        /// APAS: Work O((n + m) lg n), Span O(lg² n)
+        fn contract_to_vertices_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> Set<V>;
+    }
 
     /// Algorithm 62.5: Star Contraction (Parallel)
     ///

@@ -5,14 +5,23 @@
 //! Uses Seq.inject for efficient parallel updates.
 
 pub mod StarPartitionMtEph {
+    use std::collections::HashMap;
+    use std::hash::Hash;
+
+    use rand::{rngs::StdRng, Rng, SeedableRng};
+
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use rand::{rngs::StdRng, Rng, SeedableRng};
-    use std::collections::HashMap;
-    use std::hash::Hash;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait StarPartitionMtEphTrait {
+        /// Parallel star partition using randomized coin flips
+        /// APAS: Work O(|V| + |E|), Span O(lg |V|)
+        fn parallel_star_partition<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> Set<Set<V>>;
+    }
 
     /// Algorithm 62.3: Parallel Star Partition
     ///

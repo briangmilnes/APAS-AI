@@ -5,6 +5,17 @@ pub mod Problem21_4 {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait Problem21_4Trait {
+        /// Problem 21.4 (Cartesian Product) - Imperative approach using explicit loops
+        /// APAS: Work Θ(|a|·|b|), Span Θ(|a|·|b|)
+        fn cartesian_loops(a: &ArraySeqStPerS<N>, b: &ArraySeqStPerS<&'static str>) -> ArraySeqStPerS<Pair<N, &'static str>>;
+        
+        /// Cartesian product using functional approach with tabulate + flatten
+        /// APAS: Work Θ(|a|·|b|), Span Θ(lg |a|)
+        fn cartesian_functional(a: &ArraySeqStPerS<N>, b: &ArraySeqStPerS<&'static str>) -> ArraySeqStPerS<Pair<N, &'static str>>;
+    }
+
     /// Problem 21.4 (Cartesian Product) - Imperative approach using explicit loops.
     /// Cartesian product by explicit loops (x-major then y).
     ///

@@ -17,6 +17,25 @@ pub mod PathWeightUtilsStEph {
     use crate::Types::Types::OrderedF64;
     use ordered_float::OrderedFloat;
     
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait PathWeightUtilsStEphTrait {
+        /// Claude Work: O(k), Span: O(k) where k is path length
+        /// Computes the total weight of a path given edge weights (integer).
+        fn path_weight_int(path: &ArraySeqStPerS<usize>, weights: &ArraySeqStEphS<ArraySeqStEphS<i64>>) -> Option<i64>;
+        
+        /// Claude Work: O(k), Span: O(k) where k is path length
+        /// Computes the total weight of a path with floating-point weights.
+        fn path_weight_float(path: &ArraySeqStPerS<usize>, weights: &ArraySeqStEphS<ArraySeqStEphS<OrderedF64>>) -> Option<OrderedF64>;
+        
+        /// Claude Work: O(k²), Span: O(k²) for k-vertex path
+        /// Validates the sub-paths property for integer weights.
+        fn validate_subpath_property_int(path: &ArraySeqStPerS<usize>, distances: &ArraySeqStEphS<i64>, weights: &ArraySeqStEphS<ArraySeqStEphS<i64>>) -> bool;
+        
+        /// Claude Work: O(k²), Span: O(k²) for k-vertex path
+        /// Validates the sub-paths property for floating-point weights.
+        fn validate_subpath_property_float(path: &ArraySeqStPerS<usize>, distances: &ArraySeqStEphS<OrderedF64>, weights: &ArraySeqStEphS<ArraySeqStEphS<OrderedF64>>) -> bool;
+    }
+    
     /// Computes the total weight of a path given edge weights.
     /// Path is a sequence of vertices [v0, v1, ..., vk].
     /// Weights is an adjacency matrix where weights.nth(i).nth(j) is the weight of edge (i,j).

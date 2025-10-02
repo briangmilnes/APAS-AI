@@ -6,12 +6,20 @@
 //! vertex-induced subgraph with respect to a star graph.
 
 pub mod StarPartitionStEph {
+    use std::collections::HashMap;
+    use std::hash::Hash;
+
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use std::collections::HashMap;
-    use std::hash::Hash;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait StarPartitionStEphTrait {
+        /// Sequential star partition using greedy selection
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn sequential_star_partition<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<Set<V>>;
+    }
 
     /// Sequential Star Partition using greedy selection
     ///

@@ -101,11 +101,14 @@ results.
 - **Target**: Minimize where clauses across APAS codebase using APAS type conventions
 
 ### Functional Module Pattern
-- **Purely functional modules** (containing only stateless functions with no data structures) **must** define a **typeless trait** that declares all module functions without implementation.
+- **Purely functional modules** (containing only stateless functions with no data structures) **must** define a **typeless trait** that declares the **exact signatures** of all public free functions in the module.
+- **EXCLUSION**: This pattern does **NOT** apply to modules that define data structures, type aliases, or `impl` blocks. Such modules already have proper traits for their types and should not get an additional dummy trait.
+- **Identification**: A functional module contains **only** `pub fn` declarations and imports - no `struct`, `enum`, `type`, or `impl` blocks.
 - The trait serves as a **type-checking specification** and **algorithmic analysis documentation space**.
 - Comment the trait with: `// A dummy trait as a minimal type checking comment and space for algorithmic analysis.`
+- **CRITICAL**: The trait function signatures must **exactly match** the public free function signatures - same names, same parameters, same return types, same generic bounds.
 - **No implementation required** - the trait exists purely for documentation and type specification.
-- **Free functions**: Implement the actual functionality as free functions in the same module.
+- **Free functions**: Implement the actual functionality as free functions in the same module with signatures that exactly match the trait.
 
 #### Example Pattern
 ```rust
@@ -124,7 +127,7 @@ pub mod SortingAlgorithms {
         fn quick_sort(arr: &mut [T]);
     }
     
-    // Free functions - actual implementations
+    // Free functions - actual implementations with EXACT same signatures as trait
     pub fn insertion_sort<T: StT>(arr: &mut [T]) {
         for i in 1..arr.len() {
             let key = arr[i].clone();
@@ -152,6 +155,7 @@ pub mod SortingAlgorithms {
         quick_sort(&mut arr[pivot + 1..]);
     }
     
+    // Private helper functions don't need to be in the trait
     fn merge_in_place<T: StT>(arr: &mut [T], mid: usize) {
         // Implementation details...
     }

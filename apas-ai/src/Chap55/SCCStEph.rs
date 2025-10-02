@@ -10,6 +10,13 @@ pub mod SCCStEph {
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeSeqStEphS, AVLTreeSeqStEphTrait};
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::{AVLTreeSetStEph, AVLTreeSetStEphTrait};
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait SCCStEphTrait {
+        /// Finds strongly connected components in a directed graph
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn scc(graph: &ArraySeqStEphS<ArraySeqStEphS<N>>) -> AVLTreeSeqStEphS<AVLTreeSetStEph<N>>;
+    }
+
     /// Finds strongly connected components in a directed graph.
     /// Returns sequence of components, each component is a set of vertices.
     pub fn scc(graph: &ArraySeqStEphS<ArraySeqStEphS<N>>) -> AVLTreeSeqStEphS<AVLTreeSetStEph<N>> {

@@ -18,6 +18,13 @@ pub mod DijkstraStEphFloat {
     use crate::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait DijkstraStEphFloatTrait {
+        /// Dijkstra's single source shortest path algorithm
+        /// APAS: Work O(m log n), Span O(m log n) where m = |E|, n = |V|
+        fn dijkstra(graph: &WeightedDirGraphStEphFloat<usize>, source: usize) -> SSSPResultStEphFloat;
+    }
+
     /// Priority queue entry: (distance, vertex)
     /// Ordered by distance (min-heap)
     #[derive(Clone, Eq, PartialEq, Debug)]

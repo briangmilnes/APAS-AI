@@ -6,6 +6,13 @@ pub mod Algorithm21_5 {
     use crate::Chap21::Exercise21_8::Exercise21_8::is_prime;
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait Algorithm21_5Trait {
+        /// Algorithm 21.5 (Brute Force Solution to the Primes Problem)
+        /// APAS: Work Θ(n^{3/2}), Span Θ(lg n)
+        fn primes_bf(n: N) -> ArraySeqStPerS<N>;
+    }
+
     /// Algorithm 21.5 (Brute Force Solution to the Primes Problem)
     /// primesBF n = { i in 2..n : isPrime(i) }
     ///

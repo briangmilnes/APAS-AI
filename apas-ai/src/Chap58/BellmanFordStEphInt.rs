@@ -17,6 +17,13 @@ pub mod BellmanFordStEphInt {
     use crate::Chap56::SSSPResultStEphInt::SSSPResultStEphInt::SSSPResultStEphInt;
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait BellmanFordStEphIntTrait {
+        /// Bellman-Ford single source shortest path algorithm
+        /// APAS: Work O(nm), Span O(n lg n) where n = |V|, m = |E|
+        fn bellman_ford(graph: &WeightedDirGraphStEphInt<usize>, source: usize) -> Result<SSSPResultStEphInt, String>;
+    }
+
     /// Runs Bellman-Ford algorithm on a weighted directed graph
     /// Computes single-source shortest paths for arbitrary edge weights (including negative)
     ///

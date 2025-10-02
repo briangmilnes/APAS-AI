@@ -9,6 +9,13 @@ pub mod BFSStEph {
     use crate::Types::Types::*;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait BFSStEphTrait {
+        /// Performs BFS from source vertex s on adjacency list graph G
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn bfs(graph: &ArraySeqStEphS<ArraySeqStEphS<N>>, source: N) -> ArraySeqStEphS<N>;
+    }
+
     const UNREACHABLE: N = N::MAX;
 
     /// Performs BFS from source vertex s on adjacency list graph G.

@@ -5,13 +5,30 @@
 //! Uses Union-Find data structure for efficient cycle detection.
 
 pub mod KruskalStEph {
+    use std::hash::Hash;
+
+    use ordered_float::OrderedFloat;
+
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use ordered_float::OrderedFloat;
-    use std::hash::Hash;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait KruskalStEphTrait {
+        /// Kruskal's MST algorithm
+        /// APAS: Work O(m log m), Span O(m log m) where m = |E|
+        fn kruskal_mst<V: StT + Hash + Ord>(graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>) -> Set<LabEdge<V, OrderedFloat<f64>>>;
+        
+        /// Compute total weight of MST
+        /// APAS: Work O(m), Span O(1)
+        fn mst_weight<V: StT + Hash>(mst: &Set<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64>;
+        
+        /// Verify MST has correct size
+        /// APAS: Work O(1), Span O(1)
+        fn verify_mst_size<V: StT + Hash + Ord>(graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>, mst: &Set<LabEdge<V, OrderedFloat<f64>>>) -> B;
+    }
 
     /// Algorithm 65.2: Kruskal's MST Algorithm
     ///

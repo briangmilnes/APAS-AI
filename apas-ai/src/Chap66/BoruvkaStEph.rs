@@ -5,14 +5,39 @@
 //! using vertex bridges and graph contraction with randomized star contraction.
 
 pub mod BoruvkaStEph {
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::SetLit;
-    use crate::Types::Types::*;
+    use std::collections::HashMap;
+    use std::hash::Hash;
+
     use ordered_float::OrderedFloat;
     use rand::{Rng, SeedableRng};
     use rand::rngs::StdRng;
-    use std::collections::HashMap;
-    use std::hash::Hash;
+
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
+    use crate::Types::Types::*;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait BoruvkaStEphTrait {
+        /// Find vertex bridges for Borůvka's algorithm
+        /// APAS: Work O(|E|), Span O(|E|)
+        fn vertex_bridges<V: StT + Hash + Ord>(edges: &Set<LabeledEdge<V>>) -> Set<(V, LabeledEdge<V>)>;
+        
+        /// Bridge-based star partition
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn bridge_star_partition<V: StT + Hash + Ord>(vertices: &Set<V>, bridges: &Set<(V, LabeledEdge<V>)>) -> Set<Set<V>>;
+        
+        /// Borůvka's MST algorithm
+        /// APAS: Work O(m log n), Span O(m log n)
+        fn boruvka_mst<V: StT + Hash + Ord>(edges: &Set<LabeledEdge<V>>) -> Set<LabeledEdge<V>>;
+        
+        /// Borůvka's MST with random seed
+        /// APAS: Work O(m log n), Span O(m log n)
+        fn boruvka_mst_with_seed<V: StT + Hash + Ord>(edges: &Set<LabeledEdge<V>>, seed: u64) -> Set<LabeledEdge<V>>;
+        
+        /// Compute total weight of MST
+        /// APAS: Work O(m), Span O(1)
+        fn mst_weight<V: StT + Hash>(mst: &Set<LabeledEdge<V>>) -> OrderedFloat<f64>;
+    }
 
     /// Edge with label: (u, v, weight, label)
     /// Vertices u,v change during contraction, but weight and label are immutable

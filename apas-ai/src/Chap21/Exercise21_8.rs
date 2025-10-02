@@ -5,6 +5,17 @@ pub mod Exercise21_8 {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait Exercise21_8Trait {
+        /// Helper function to check divisibility
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn is_divisible(n: N, i: N) -> B;
+        
+        /// Exercise 21.8 / Algorithm 21.4 (Brute Force Primality Test)
+        /// APAS: Work Θ(√n), Span Θ(lg n)
+        fn is_prime(n: N) -> B;
+    }
+
     /// Helper function to check divisibility
     pub fn is_divisible(n: N, i: N) -> B {
         if n % i == 0 {

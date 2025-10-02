@@ -10,6 +10,17 @@ pub mod Example56_3 {
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
     use crate::Chap56::PathWeightUtilsStEph::PathWeightUtilsStEph::path_weight_int;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait Example56_3Trait {
+        /// Example demonstrating a negative weight cycle
+        /// APAS: Work O(|V| + |E|), Span O(1)
+        fn example_negative_cycle();
+        
+        /// Example showing that shortest paths are undefined in presence of negative cycles
+        /// APAS: Work O(|E|), Span O(1)
+        fn example_undefined_shortest_path();
+    }
     
     /// Example demonstrating a negative weight cycle.
     /// Graph: 0 -> 1 -> 2 -> 1 (cycle with negative total weight).

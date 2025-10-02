@@ -9,6 +9,13 @@ pub mod SCCStPer {
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::{AVLTreeSetStPer, AVLTreeSetStPerTrait};
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait SCCStPerTrait {
+        /// Finds strongly connected components in a directed graph
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn scc(graph: &ArraySeqStPerS<ArraySeqStPerS<N>>) -> AVLTreeSeqStPerS<AVLTreeSetStPer<N>>;
+    }
+
     /// Finds strongly connected components in a directed graph.
     /// Returns sequence of components, each component is a set of vertices.
     pub fn scc(graph: &ArraySeqStPerS<ArraySeqStPerS<N>>) -> AVLTreeSeqStPerS<AVLTreeSetStPer<N>> {

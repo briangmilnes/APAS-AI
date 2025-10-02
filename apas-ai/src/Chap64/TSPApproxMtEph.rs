@@ -5,13 +5,34 @@
 //! Note: Euler tour remains sequential (DFS-based), but included for API completeness
 
 pub mod TSPApproxMtEph {
+    use std::collections::{HashMap, HashSet};
+    use std::hash::Hash;
+
+    use ordered_float::OrderedFloat;
+
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use ordered_float::OrderedFloat;
-    use std::collections::{HashMap, HashSet};
-    use std::hash::Hash;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait TSPApproxMtEphTrait {
+        /// Parallel Euler tour of a tree
+        /// APAS: Work O(|V|), Span O(|V|)
+        fn euler_tour_mt<V: StT + MtT + Hash + Ord + 'static>(tree: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>, start: V) -> std::vec::Vec<V>;
+        
+        /// Parallel shortcut Euler tour
+        /// APAS: Work O(|V|), Span O(lg |V|)
+        fn shortcut_tour_mt<V: StT + MtT + Hash + Ord>(euler_tour: &[V]) -> std::vec::Vec<V>;
+        
+        /// Parallel tour weight computation
+        /// APAS: Work O(|V|), Span O(lg |V|)
+        fn tour_weight_mt<V: StT + MtT + Hash + Ord>(tour: &[V], distances: &HashMap<(V, V), OrderedFloat<f64>>) -> OrderedFloat<f64>;
+        
+        /// Parallel 2-approximation algorithm for metric TSP
+        /// APAS: Work O(|V|² log |V|), Span O(|V| log |V|)
+        fn approx_metric_tsp_mt<V: StT + MtT + Hash + Ord + 'static>(distances: &HashMap<(V, V), OrderedFloat<f64>>, vertices: &Set<V>) -> std::vec::Vec<V>;
+    }
 
     /// Euler Tour of a Tree (Parallel version, but DFS remains sequential)
     ///

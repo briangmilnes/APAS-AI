@@ -5,16 +5,41 @@
 //! Achieves Work O(m log n), Span O(log² n).
 
 pub mod BoruvkaMtEph {
+    use std::collections::HashMap;
+    use std::hash::Hash;
+    use std::sync::Arc;
+
+    use ordered_float::OrderedFloat;
+    use rand::{Rng, SeedableRng};
+    use rand::rngs::StdRng;
+
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::ParaPair;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use ordered_float::OrderedFloat;
-    use rand::{Rng, SeedableRng};
-    use rand::rngs::StdRng;
-    use std::collections::HashMap;
-    use std::hash::Hash;
-    use std::sync::Arc;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait BoruvkaMtEphTrait {
+        /// Find vertex bridges for parallel Borůvka's algorithm
+        /// APAS: Work O(|E|), Span O(lg |E|)
+        fn vertex_bridges_mt<V: StT + Hash + Ord + Send + Sync + 'static>(edges: &Set<LabeledEdge<V>>) -> Set<(V, LabeledEdge<V>)>;
+        
+        /// Parallel bridge-based star partition
+        /// APAS: Work O(|V| + |E|), Span O(lg |V|)
+        fn bridge_star_partition_mt<V: StT + Hash + Ord + Send + Sync + 'static>(vertices: &Set<V>, bridges: &Set<(V, LabeledEdge<V>)>) -> Set<Set<V>>;
+        
+        /// Parallel Borůvka's MST algorithm
+        /// APAS: Work O(m log n), Span O(log² n)
+        fn boruvka_mst_mt<V: StT + Hash + Ord + Send + Sync + 'static>(edges: &Set<LabeledEdge<V>>) -> Set<LabeledEdge<V>>;
+        
+        /// Parallel Borůvka's MST with random seed
+        /// APAS: Work O(m log n), Span O(log² n)
+        fn boruvka_mst_mt_with_seed<V: StT + Hash + Ord + Send + Sync + 'static>(edges: &Set<LabeledEdge<V>>, seed: u64) -> Set<LabeledEdge<V>>;
+        
+        /// Compute total weight of MST
+        /// APAS: Work O(m), Span O(1)
+        fn mst_weight<V: StT + Hash>(mst: &Set<LabeledEdge<V>>) -> OrderedFloat<f64>;
+    }
 
     /// Edge with label: (u, v, weight, label)
     pub type LabeledEdge<V> = (V, V, OrderedFloat<f64>, usize);

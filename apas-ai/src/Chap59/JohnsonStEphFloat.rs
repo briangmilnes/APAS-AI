@@ -11,6 +11,8 @@
 //! - Phase 3 (n Dijkstras): Work O(n * m log n) = O(mn log n), Span O(mn log n) sequential
 
 pub mod JohnsonStEphFloat {
+    use ordered_float::OrderedFloat;
+
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
     use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
@@ -19,7 +21,13 @@ pub mod JohnsonStEphFloat {
     use crate::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::dijkstra;
     use crate::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
     use crate::Types::Types::*;
-    use ordered_float::OrderedFloat;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait JohnsonStEphFloatTrait {
+        /// Johnson's all-pairs shortest path algorithm
+        /// APAS: Work O(mn log n), Span O(mn log n) where n = |V|, m = |E|
+        fn johnson_apsp(graph: &WeightedDirGraphStEphFloat<usize>) -> AllPairsResultStEphFloat;
+    }
 
     /// Algorithm 59.1: Johnson's All-Pairs Shortest Paths (Float version)
     ///

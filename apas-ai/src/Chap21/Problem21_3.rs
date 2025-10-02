@@ -5,6 +5,13 @@ pub mod Problem21_3 {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait Problem21_3Trait {
+        /// Problem 21.3 (Points in 3D) using ArraySeqPer — imperative triple loop
+        /// APAS: Work Θ(n³), Span Θ(n³)
+        fn points3d_loops(n: N) -> ArraySeqStPerS<Pair<N, Pair<N, N>>>;
+    }
+
     /// Problem 21.3 (Points in 3D) using ArraySeqPer — imperative triple loop.
     /// Generate points (x, y, z) with 0 ≤ x ≤ n−1, 1 ≤ y ≤ n, 2 ≤ z ≤ n+1 in x-major, then y, then z order.
     ///

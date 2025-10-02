@@ -9,6 +9,13 @@ pub mod CycleDetectStEph {
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::{AVLTreeSetStEph, AVLTreeSetStEphTrait};
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait CycleDetectStEphTrait {
+        /// Detects if a directed graph contains a cycle
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn has_cycle(graph: &ArraySeqStEphS<ArraySeqStEphS<N>>) -> B;
+    }
+
     /// Detects if a directed graph contains a cycle.
     /// Returns true if a cycle exists, false otherwise.
     pub fn has_cycle(graph: &ArraySeqStEphS<ArraySeqStEphS<N>>) -> B {

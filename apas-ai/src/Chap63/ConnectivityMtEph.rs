@@ -8,6 +8,10 @@
 //! - Exercise 63.2: connected_components using star_contract
 
 pub mod ConnectivityMtEph {
+    use std::collections::HashMap;
+    use std::hash::Hash;
+    use std::sync::Arc;
+
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
@@ -16,9 +20,25 @@ pub mod ConnectivityMtEph {
     use crate::ParaPair;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use std::collections::HashMap;
-    use std::hash::Hash;
-    use std::sync::Arc;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait ConnectivityMtEphTrait {
+        /// Count connected components using parallel star contraction
+        /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
+        fn count_components_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> N;
+        
+        /// Find connected components using parallel star contraction
+        /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
+        fn connected_components_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> Set<Set<V>>;
+        
+        /// Count components using higher-order function approach
+        /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
+        fn count_components_hof<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> N;
+        
+        /// Find components using higher-order function approach
+        /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
+        fn connected_components_hof<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> Set<Set<V>>;
+    }
 
     /// Algorithm 63.2: Count Connected Components (Parallel)
     ///

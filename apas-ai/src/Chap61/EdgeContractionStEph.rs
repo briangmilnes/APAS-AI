@@ -6,13 +6,25 @@
 //! - One round of contraction using greedy matching
 
 pub mod EdgeContractionStEph {
+    use std::hash::Hash;
+
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap61::VertexMatchingStEph::VertexMatchingStEph::greedy_matching;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use std::hash::Hash;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait EdgeContractionStEphTrait {
+        /// Sequential edge contraction algorithm
+        /// APAS: Work O(|E|), Span O(|E|)
+        fn edge_contract<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>, matching: &Set<Edge<V>>) -> UnDirGraphStEph<Set<V>>;
+        
+        /// Single round of sequential edge contraction
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn contract_round<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> UnDirGraphStEph<V>;
+    }
 
     /// Algorithm 61.6: Sequential Edge Contraction
     ///

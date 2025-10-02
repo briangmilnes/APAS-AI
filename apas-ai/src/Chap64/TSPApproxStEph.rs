@@ -7,13 +7,34 @@
 //! - 2-approximation guarantee
 
 pub mod TSPApproxStEph {
+    use std::collections::{HashMap, HashSet};
+    use std::hash::Hash;
+
+    use ordered_float::OrderedFloat;
+
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use ordered_float::OrderedFloat;
-    use std::collections::{HashMap, HashSet};
-    use std::hash::Hash;
+
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait TSPApproxStEphTrait {
+        /// Compute Euler tour of a tree
+        /// APAS: Work O(|V|), Span O(|V|)
+        fn euler_tour<V: StT + Hash + Ord>(tree: &LabUnDirGraphStEph<V, OrderedFloat<f64>>, start: V) -> std::vec::Vec<V>;
+        
+        /// Shortcut Euler tour to avoid revisiting vertices
+        /// APAS: Work O(|V|), Span O(|V|)
+        fn shortcut_tour<V: StT + Hash + Ord>(euler_tour: &[V]) -> std::vec::Vec<V>;
+        
+        /// Compute total weight of a tour
+        /// APAS: Work O(|V|), Span O(|V|)
+        fn tour_weight<V: StT + Hash + Ord>(tour: &[V], distances: &HashMap<(V, V), OrderedFloat<f64>>) -> OrderedFloat<f64>;
+        
+        /// 2-approximation algorithm for metric TSP
+        /// APAS: Work O(|V|² log |V|), Span O(|V|² log |V|)
+        fn approx_metric_tsp<V: StT + Hash + Ord>(distances: &HashMap<(V, V), OrderedFloat<f64>>, vertices: &Set<V>) -> std::vec::Vec<V>;
+    }
 
     /// Euler Tour of a Tree
     ///

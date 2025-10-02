@@ -9,6 +9,13 @@ pub mod CycleDetectStPer {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::{AVLTreeSetStPer, AVLTreeSetStPerTrait};
 
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait CycleDetectStPerTrait {
+        /// Detects if a directed graph contains a cycle
+        /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
+        fn has_cycle(graph: &ArraySeqStPerS<ArraySeqStPerS<N>>) -> B;
+    }
+
     /// Detects if a directed graph contains a cycle.
     /// Returns true if a cycle exists, false otherwise.
     pub fn has_cycle(graph: &ArraySeqStPerS<ArraySeqStPerS<N>>) -> B {
