@@ -11,7 +11,7 @@ fn bench_relation_operations(c: &mut Criterion) {
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    let n: N = 1_000;
+    let n: N = 500;
 
     group.bench_with_input(BenchmarkId::new("FromSet", n), &n, |b, &len| {
         let pairs: Set<Pair<N, N>> = Set::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());

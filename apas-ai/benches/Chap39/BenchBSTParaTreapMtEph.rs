@@ -18,7 +18,7 @@ fn bench_para_treap(c: &mut Criterion) {
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    for &n in &[300usize, 512] {
+    for &n in &[150usize, 200] {
         group.bench_with_input(BenchmarkId::new("build", n), &n, |b, &len| {
             b.iter(|| black_box(build_tree(len)));
         });

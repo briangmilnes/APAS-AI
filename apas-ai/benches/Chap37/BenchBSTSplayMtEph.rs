@@ -19,7 +19,7 @@ fn bench_bsteph_splay(c: &mut Criterion) {
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    for &n in &[1_024usize, 2_048] {
+    for &n in &[1_024usize, 1_400] {
         group.bench_with_input(BenchmarkId::new("build", n), &n, |b, &len| {
             b.iter(|| black_box(build_tree(len)));
         });

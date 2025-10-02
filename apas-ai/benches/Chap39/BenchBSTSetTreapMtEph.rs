@@ -43,7 +43,7 @@ fn bench_set_variants<S: BenchSet>(c: &mut Criterion, label: &str) {
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    for &len in &[128usize, 256] {
+    for &len in &[256usize] {
         group.bench_with_input(BenchmarkId::new("union", len), &len, |b, &input| {
             b.iter_batched(
                 || build_pair::<S>(input),

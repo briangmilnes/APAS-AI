@@ -12,7 +12,7 @@ fn bench_exercise12_5(c: &mut Criterion) {
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    let n: N = 250;
+    let n: N = 31;
     group.bench_with_input(BenchmarkId::new("concurrent_stack", n), &n, |b, &len| {
         b.iter(|| {
             let stack = Arc::new(ConcurrentStackMt::new());

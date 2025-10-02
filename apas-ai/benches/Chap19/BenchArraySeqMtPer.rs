@@ -10,7 +10,7 @@ fn bench_tabulate_map_mtper_ch19(c: &mut Criterion) {
     group.sample_size(10);
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
-    let n: N = 3_000;
+    let n: N = 1_500;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
         b.iter(|| {
             let s: ArraySeqMtPerS<N> = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::tabulate(&|i| i, len);

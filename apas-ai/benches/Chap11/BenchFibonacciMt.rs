@@ -10,7 +10,7 @@ fn bench_fibonacci_mt(c: &mut Criterion) {
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    for &n in &[20usize, 24, 28] {
+    for &n in &[10usize, 12, 14] {
         group.bench_with_input(BenchmarkId::from_parameter(n), &n, |b, &input| {
             b.iter(|| black_box(FibonacciMt::fib(input)));
         });

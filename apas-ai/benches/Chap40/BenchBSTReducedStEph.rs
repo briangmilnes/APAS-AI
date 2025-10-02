@@ -29,7 +29,7 @@ fn bench_bst_reduced(c: &mut Criterion) {
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    for &n in &[256usize, 512] {
+    for &n in &[128usize, 256] {
         // Sum reduction benchmarks
         group.bench_with_input(BenchmarkId::new("build_sum", n), &n, |b, &len| {
             b.iter(|| black_box(build_sum_tree(len)));

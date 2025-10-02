@@ -9,7 +9,7 @@ fn bench_arrayseq_operations(c: &mut Criterion) {
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    let n: N = 5_000;
+    let n: N = 2_500;
 
     group.bench_with_input(BenchmarkId::new("tabulate", n), &n, |b, &len| {
         b.iter(|| {

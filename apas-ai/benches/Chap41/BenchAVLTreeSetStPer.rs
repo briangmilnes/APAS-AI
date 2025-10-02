@@ -22,7 +22,7 @@ fn bench_avl_tree_set_per_build(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10, 20].iter() {
+    for size in [20].iter() {
         group.bench_with_input(BenchmarkId::new("build", size), size, |b, &size| {
             b.iter(|| black_box(build_avl_tree_set_per(size)));
         });
@@ -36,7 +36,7 @@ fn bench_avl_tree_set_per_find(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10, 20].iter() {
+    for size in [20].iter() {
         let set = build_avl_tree_set_per(*size);
         group.bench_with_input(BenchmarkId::new("find_existing", size), size, |b, &size| {
             b.iter(|| {
@@ -61,7 +61,7 @@ fn bench_avl_tree_set_per_insert(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10, 20].iter() {
+    for size in [20].iter() {
         group.bench_with_input(BenchmarkId::new("insert_new", size), size, |b, &size| {
             b.iter_batched(
                 || build_avl_tree_set_per(size),
@@ -93,7 +93,7 @@ fn bench_avl_tree_set_per_delete(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10, 20].iter() {
+    for size in [20].iter() {
         group.bench_with_input(BenchmarkId::new("delete_existing", size), size, |b, &size| {
             b.iter_batched(
                 || build_avl_tree_set_per(size),
@@ -125,7 +125,7 @@ fn bench_avl_tree_set_per_bulk_operations(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10, 20].iter() {
+    for size in [20].iter() {
         let set1 = build_avl_tree_set_per(*size);
         let set2 = build_avl_tree_set_per(*size / 2);
 
@@ -150,7 +150,7 @@ fn bench_avl_tree_set_per_from_seq(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10, 20].iter() {
+    for size in [20].iter() {
         // Create sequence with some duplicates
         let mut vec_data = Vec::new();
         for i in 0..*size {
@@ -180,7 +180,7 @@ fn bench_avl_tree_set_per_filter(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10, 20].iter() {
+    for size in [20].iter() {
         let set = build_avl_tree_set_per(*size);
 
         group.bench_with_input(BenchmarkId::new("filter_half", size), size, |b, _| {

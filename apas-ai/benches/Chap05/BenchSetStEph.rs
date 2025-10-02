@@ -10,7 +10,7 @@ fn bench_set_operations(c: &mut Criterion) {
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    let n: N = 1_000;
+    let n: N = 500;
 
     group.bench_with_input(BenchmarkId::new("union", n), &n, |b, &len| {
         let set_a: Set<N> = Set::FromVec((0..len).collect());
