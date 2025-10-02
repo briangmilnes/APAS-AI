@@ -34,9 +34,8 @@ pub mod OptBinSearchTreeStEph {
         /// Create from key-probability pairs
         fn from_key_probs(key_probs: Vec<KeyProb<T>>) -> Self;
 
-        /// Compute optimal BST cost using dynamic programming
-        /// Claude Work: O(n³) where n=number of keys
-        /// Claude Span: O(n²)
+        /// claude-4-sonet: Work Θ(n³), Span Θ(n²), Parallelism Θ(1)
+        /// Compute optimal BST cost where n=number of keys
         fn optimal_cost(&mut self) -> Probability;
 
         /// Get the keys with probabilities

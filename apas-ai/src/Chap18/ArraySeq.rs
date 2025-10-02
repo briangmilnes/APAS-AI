@@ -16,7 +16,7 @@ pub mod ArraySeq {
     /// Data Type 18.1: Generic sequence trait for array-backed sequences.
     pub trait ArraySeq<T> {
         /// Create a new sequence of length `length` with each element initialized to `init_value`. <br/>
-        /// Work: Θ(length), Span: Θ(1).
+        /// claude-4-sonet: Work Θ(length), Span Θ(1), Parallelism Θ(1).
         fn new(length: N, init_value: T) -> ArraySeqS<T>
         where
             T: Clone;

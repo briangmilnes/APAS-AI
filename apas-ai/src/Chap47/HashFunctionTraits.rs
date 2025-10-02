@@ -11,7 +11,7 @@ pub mod HashFunctionTraits {
     /// Trait for hash functions that map keys to hash codes
     /// Used in Definition 47.1 (Hash Tables)
     pub trait HashFunction<K> {
-        /// Claude Work: Θ(|key|), Span: Θ(|key|)
+        /// claude-4-sonet: Work Θ(|key|), Span Θ(|key|), Parallelism Θ(1)
         /// Maps a key to a hash code in range [0, table_size)
         fn hash(&self, key: &K, table_size: N) -> N;
 
@@ -22,7 +22,7 @@ pub mod HashFunctionTraits {
     /// Trait for key equality testing
     /// Required by Definition 47.1 for hash table operations
     pub trait KeyEquality<K> {
-        /// Claude Work: Θ(|key|), Span: Θ(|key|)
+        /// claude-4-sonet: Work Θ(|key|), Span Θ(|key|), Parallelism Θ(1)
         /// Tests if two keys are equal
         fn eq(&self, a: &K, b: &K) -> bool;
     }

@@ -17,31 +17,31 @@ pub mod SortedListPQ {
 
     /// Trait defining the Meldable Priority Queue ADT operations (Data Type 45.1)
     pub trait SortedListPQTrait<T: StT + Ord> {
-        /// Claude Work: Θ(1), Span: Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
 
-        /// Claude Work: Θ(1), Span: Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(element: T) -> Self;
 
-        /// Claude Work: Θ(1), Span: Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         /// Returns the minimum element (first in sorted list), or None if empty
         fn find_min(&self) -> Option<&T>;
 
-        /// Claude Work: Θ(n), Span: Θ(n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         /// Inserts element in correct sorted position
         fn insert(&self, element: T) -> Self;
 
-        /// Claude Work: Θ(1), Span: Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         /// Removes first element (minimum) from sorted list
         fn delete_min(&self) -> (Self, Option<T>)
         where
             Self: Sized;
 
-        /// Claude Work: Θ(m + n), Span: Θ(m + n)
+        /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
         /// Melds two sorted priority queues by merging sorted lists
         fn meld(&self, other: &Self) -> Self;
 
-        /// Claude Work: Θ(n log n), Span: Θ(n log n)
+        /// claude-4-sonet: Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
         /// Creates priority queue from sequence by sorting
         fn from_seq(seq: &ArraySeqStPerS<T>) -> Self;
 

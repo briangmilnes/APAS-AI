@@ -39,14 +39,23 @@ pub mod BSTTreapMtEph {
     pub type BSTreeTreap<T> = BSTTreapMtEph<T>;
 
     pub trait BSTTreapMtEphTrait<T: StTInMtT + Ord>: Sized {
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn new() -> Self;
+        /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected with locking
         fn insert(&self, value: T);
+        /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected with locking
         fn find(&self, target: &T) -> Option<T>;
+        /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected with locking
         fn contains(&self, target: &T) -> B;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn size(&self) -> N;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn is_empty(&self) -> B;
+        /// claude-4-sonet: Work Θ(n), Span Θ(n)
         fn height(&self) -> N;
+        /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected with locking
         fn minimum(&self) -> Option<T>;
+        /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected with locking
         fn maximum(&self) -> Option<T>;
         fn in_order(&self) -> ArraySeqStPerS<T>;
         fn pre_order(&self) -> ArraySeqStPerS<T>;

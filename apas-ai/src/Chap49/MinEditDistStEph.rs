@@ -27,9 +27,8 @@ pub mod MinEditDistStEph {
         /// Create from source and target sequences
         fn from_sequences(source: ArraySeqStEphS<T>, target: ArraySeqStEphS<T>) -> Self;
 
-        /// Compute minimum edit distance between sequences
-        /// Claude Work: O(|S|*|T|) where |S|=source length, |T|=target length
-        /// Claude Span: O(|S|+|T|)
+        /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(1)
+        /// Compute minimum edit distance where |S|=source length, |T|=target length
         fn min_edit_distance(&mut self) -> usize;
 
         /// Get the source sequence

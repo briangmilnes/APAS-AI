@@ -61,15 +61,12 @@ pub mod MaxContigSubSumDivConMtEph {
         /// Compute maximum contiguous subsequence sum using parallel divide-and-conquer.
         /// Returns None for empty sequence (representing -∞).
         /// APAS: Work Θ(n log n), Span Θ(log² n)
+        /// claude-4-sonet: Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log n)
         /// claude-4-sonnet: Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log n)
         fn max_contig_sub_sum_divcon_mt(a: &ArraySeqMtEphS<i32>) -> Option<i32>;
     }
 
     impl MaxContigSubSumDivConMtTrait for ArraySeqMtEphS<i32> {
-        /// Parallel divide-and-conquer based on Shamos' algorithm (CMU CS, 1977).
-        /// Uses ParaPair! with 32MB stack for unconditional parallelism in recursive calls.
-        /// APAS: Work Θ(n log n), Span Θ(log² n)
-        /// claude-4-sonnet: Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log n)
         fn max_contig_sub_sum_divcon_mt(a: &ArraySeqMtEphS<i32>) -> Option<i32> {
             let n = a.length();
 

@@ -40,9 +40,6 @@ pub mod DivConReduceMt {
     }
 
     impl DivConReduceMtTrait for ArraySeqMtPerS<N> {
-        /// Find maximum element using parallel reduce.
-        /// APAS: Work Θ(n), Span Θ(log n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn max_element_parallel(a: &ArraySeqMtPerS<N>) -> Option<N> {
             if a.length() == 0 {
                 return None;
@@ -51,33 +48,21 @@ pub mod DivConReduceMt {
             Some(ArraySeqMtPerS::reduce(a, &|x: &N, y: &N| (*x).max(*y), *a.nth(0)))
         }
 
-        /// Sum all elements using parallel reduce.
-        /// APAS: Work Θ(n), Span Θ(log n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn sum_parallel(a: &ArraySeqMtPerS<N>) -> N {
             // Use parallel reduce from ArraySeqMtPer (already uses ParaPair!)
             ArraySeqMtPerS::reduce(a, &|x: &N, y: &N| *x + *y, 0)
         }
 
-        /// Product of all elements using parallel reduce.
-        /// APAS: Work Θ(n), Span Θ(log n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn product_parallel(a: &ArraySeqMtPerS<N>) -> N {
             // Use parallel reduce from ArraySeqMtPer (already uses ParaPair!)
             ArraySeqMtPerS::reduce(a, &|x: &N, y: &N| *x * *y, 1)
         }
 
-        /// Logical OR of all elements using parallel reduce.
-        /// APAS: Work Θ(n), Span Θ(log n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn any_parallel(a: &ArraySeqMtPerS<B>) -> B {
             // Use parallel reduce from ArraySeqMtPer (already uses ParaPair!)
             ArraySeqMtPerS::reduce(a, &|x: &B, y: &B| *x || *y, false)
         }
 
-        /// Logical AND of all elements using parallel reduce.
-        /// APAS: Work Θ(n), Span Θ(log n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn all_parallel(a: &ArraySeqMtPerS<B>) -> B {
             // Use parallel reduce from ArraySeqMtPer (already uses ParaPair!)
             ArraySeqMtPerS::reduce(a, &|x: &B, y: &B| *x && *y, true)

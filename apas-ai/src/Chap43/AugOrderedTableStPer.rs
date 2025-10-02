@@ -66,11 +66,11 @@ pub mod AugOrderedTableStPer {
             Self: Sized;
 
         // Augmented operations (ADT 43.3) - the key innovation
-        /// Claude Work: O(1), Span: O(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         /// Returns the cached reduction of all values using the reducer function
         fn reduce_val(&self) -> V;
 
-        /// Claude Work: O(lg n), Span: O(lg n)  
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Efficient range reduction: getRange followed by reduceVal
         fn reduce_range(&self, k1: &K, k2: &K) -> V;
     }

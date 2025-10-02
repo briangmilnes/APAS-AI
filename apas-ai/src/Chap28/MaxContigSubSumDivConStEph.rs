@@ -61,16 +61,12 @@ pub mod MaxContigSubSumDivConStEph {
         /// Compute maximum contiguous subsequence sum using divide-and-conquer.
         /// Returns None for empty sequence (representing -∞).
         /// APAS: Work Θ(n log n), Span Θ(log² n)
+        /// claude-4-sonet: Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
         /// claude-4-sonnet: Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log n)
         fn max_contig_sub_sum_divcon(a: &ArraySeqStEphS<i32>) -> Option<i32>;
     }
 
     impl MaxContigSubSumDivConTrait for ArraySeqStEphS<i32> {
-        /// Divide-and-conquer algorithm first designed by Michael Shamos (CMU CS, 1977).
-        /// Splits sequence in half, recursively solves both halves, and handles
-        /// subsequences that span the cut using max suffix of left + max prefix of right.
-        /// APAS: Work Θ(n log n), Span Θ(log² n)
-        /// claude-4-sonnet: Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log n)
         fn max_contig_sub_sum_divcon(a: &ArraySeqStEphS<i32>) -> Option<i32> {
             let n = a.length();
 

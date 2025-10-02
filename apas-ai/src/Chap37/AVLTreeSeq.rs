@@ -47,6 +47,7 @@ pub mod AVLTreeSeq {
     pub trait AVLTreeSeq<T: Copy + Debug> {
         /// Construct an empty tree.
         /// APAS: Work Θ(1), Span Θ(1).
+        /// claude-4-sonet: Work Θ(1), Span Θ(1).
         fn empty() -> AVLTreeS<T>;
 
         /// Construct an empty tree (alias).

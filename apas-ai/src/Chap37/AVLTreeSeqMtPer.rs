@@ -136,6 +136,7 @@ pub mod AVLTreeSeqMtPer {
 
     pub trait AVLTreeSeqMtPerTrait<T: StTInMtT> {
         /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         fn new() -> Self;

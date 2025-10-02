@@ -35,18 +35,31 @@ pub mod ArraySeqMtEphSlice {
 
     /// Sequence trait for the slice-backed MT ephemeral array.
     pub trait ArraySeqMtEphSliceTrait<T: StT + Send + Sync> {
+        /// claude-4-sonet: Work Θ(n), Span Θ(1)
         fn new(length: N, init_value: T) -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn length(&self) -> N;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn nth_cloned(&self, index: N) -> T;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn update(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(item: T) -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(&self) -> B;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(&self) -> B;
+        /// claude-4-sonet: Work Θ(length), Span Θ(1)
         fn subseq_copy(&self, start: N, length: N) -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn slice(&self, start: N, length: N) -> Self;
+        /// claude-4-sonet: Work Θ(n + Σᵢ W(f(i))), Span Θ(1 + maxᵢ S(f(i))), Parallelism Θ(n)
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> Self;
+        /// claude-4-sonet: Work Θ(|a| + Σₓ W(f(x))), Span Θ(1 + maxₓ S(f(x))), Parallelism Θ(|a|)
         fn map<U: MtVal, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &Self, f: F) -> ArraySeqMtEphSliceS<U>;
+        /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(1 + maxᵢ S(f(aᵢ))), Parallelism Θ(|a|)
         fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &Self, pred: F) -> Self;
         fn append(a: &Self, b: &Self) -> Self;
         fn append_select(a: &Self, b: &Self) -> Self;

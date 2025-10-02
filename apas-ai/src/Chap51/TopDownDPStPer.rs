@@ -24,8 +24,7 @@ pub mod TopDownDPStPer {
     }
 
     impl TopDownDPStPerS {
-        /// Claude Work: O(1) - constant time initialization
-        /// Claude Span: O(1) - constant time initialization
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         pub fn new(s: ArraySeqStPerS<char>, t: ArraySeqStPerS<char>) -> Self {
             TopDownDPStPerS {
                 seq_s: s,
@@ -35,8 +34,7 @@ pub mod TopDownDPStPer {
         }
 
         /// Compute minimum edit distance using top-down memoization
-        /// Claude Work: O(|S|*|T|) where |S|=source length, |T|=target length
-        /// Claude Span: O(|S|+|T|) - sequential recursive calls with memoization
+        /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(1)
         pub fn med_memoized(&self) -> usize {
             let s_len = self.seq_s.length();
             let t_len = self.seq_t.length();
@@ -48,8 +46,7 @@ pub mod TopDownDPStPer {
         }
 
         /// Recursive helper with memoization
-        /// Claude Work: O(1) per call with memoization, O(|S|*|T|) total
-        /// Claude Span: O(|S|+|T|) - depth of recursion
+        /// claude-4-sonet: Work Θ(1) amortized per call, Θ(|S|×|T|) total; Span Θ(|S|+|T|)
         fn med_recursive(&self, i: usize, j: usize, memo: &mut HashMap<(usize, usize), usize>) -> usize {
             // Check memo table first
             if let Some(&cached_result) = memo.get(&(i, j)) {

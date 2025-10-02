@@ -45,8 +45,11 @@ pub mod BSTPlainMtEph {
     pub type BSTree<T> = BSTPlainMtEph<T>;
 
     pub trait BSTPlainMtEphTrait<T: StTInMtT + Ord>: Sized {
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn new() -> Self;
+        /// claude-4-sonet: Work Θ(log n) average, Θ(n) worst case; Span Θ(log n) average with locking
         fn insert(&self, value: T);
+        /// claude-4-sonet: Work Θ(log n) average, Θ(n) worst case; Span Θ(log n) average with locking
         fn find(&self, target: &T) -> Option<T>;
         fn contains(&self, target: &T) -> B;
         fn size(&self) -> N;

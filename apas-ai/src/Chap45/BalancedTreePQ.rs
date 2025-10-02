@@ -17,31 +17,31 @@ pub mod BalancedTreePQ {
 
     /// Trait defining the Meldable Priority Queue ADT operations (Data Type 45.1)
     pub trait BalancedTreePQTrait<T: StT + Ord> {
-        /// Claude Work: Θ(1), Span: Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
 
-        /// Claude Work: Θ(1), Span: Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(element: T) -> Self;
 
-        /// Claude Work: Θ(log n), Span: Θ(log n)
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Returns the minimum element (leftmost in balanced tree), or None if empty
         fn find_min(&self) -> Option<&T>;
 
-        /// Claude Work: Θ(log n), Span: Θ(log n)
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Inserts element into balanced tree maintaining order
         fn insert(&self, element: T) -> Self;
 
-        /// Claude Work: Θ(log n), Span: Θ(log n)
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Removes minimum element (leftmost) from balanced tree
         fn delete_min(&self) -> (Self, Option<T>)
         where
             Self: Sized;
 
-        /// Claude Work: Θ(m log(1 + n/m)), Span: Θ(log n + log m)
+        /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log n + log m)
         /// Melds two balanced trees using union operation
         fn meld(&self, other: &Self) -> Self;
 
-        /// Claude Work: Θ(n log n), Span: Θ(log² n)
+        /// claude-4-sonet: Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log² n)
         /// Creates priority queue from sequence using balanced tree construction
         fn from_seq(seq: &AVLTreeSeqStPerS<T>) -> Self;
 

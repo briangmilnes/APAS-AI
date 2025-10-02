@@ -21,13 +21,6 @@ pub mod ReduceContractMtEph {
     }
 
     impl<T: StT + Send + Sync + Clone + 'static> ReduceContractMtEphTrait<T> for ArraySeqMtEphS<T> {
-        /// Parallel reduce via contraction (Algorithm 27.2).
-        /// Base case: |a| ≤ 1
-        /// Contract: Create b[i] = f(a[2i], a[2i+1]) for pairs (parallel)
-        /// Solve: Recursively reduce b (parallel)
-        /// Expand: Return result (no expansion needed for reduce)
-        /// APAS: Work Θ(n), Span Θ(log n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn reduce_contract_parallel<F: Fn(&T, &T) -> T + Send + Sync + 'static>(
             a: &ArraySeqMtEphS<T>,
             f: Arc<F>,

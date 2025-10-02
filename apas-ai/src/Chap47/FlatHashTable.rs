@@ -28,6 +28,7 @@ pub mod FlatHashTable {
 
     /// Trait for probe sequence generation
     pub trait ProbeSequence<K: StT> {
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         /// Generate i-th hash value in probe sequence
         fn probe_hash(&self, key: &K, probe_index: N, table_size: N) -> N;
 

@@ -13,15 +13,12 @@ pub mod MaxContigSubSumOptMtEph {
         /// Compute maximum contiguous subsequence sum using parallel optimal scan-based algorithm.
         /// Returns None for empty sequence (representing -∞).
         /// APAS: Work Θ(n), Span Θ(log n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         /// claude-4-sonnet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn max_contig_sub_sum_opt_mt(a: &ArraySeqMtEphS<i32>) -> Option<i32>;
     }
 
     impl MaxContigSubSumOptMtTrait for ArraySeqMtEphS<i32> {
-        /// Parallel work-optimal algorithm using parallel scan.
-        /// Uses ParaPair! for parallel computation of prefix sums and minimum prefix.
-        /// APAS: Work Θ(n), Span Θ(log n)
-        /// claude-4-sonnet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn max_contig_sub_sum_opt_mt(a: &ArraySeqMtEphS<i32>) -> Option<i32> {
             let n = a.length();
 

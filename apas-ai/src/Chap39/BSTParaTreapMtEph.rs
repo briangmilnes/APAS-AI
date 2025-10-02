@@ -283,20 +283,20 @@ pub mod BSTParaTreapMtEph {
     }
 
     pub trait ParamTreapTrait<T: MtKey + 'static>: Sized {
-        // APAS - work O(1), span O(1)
-        // gpt-5-codex-medium: work O(1), span O(1)
+        /// APAS: Work O(1), Span O(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn new() -> Self;
-        // APAS - work O(1), span O(1)
-        // gpt-5-codex-medium: work O(1), span O(1)
+        /// APAS: Work O(1), Span O(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn expose(&self) -> Exposed<T>;
-        // APAS - work O(1), span O(1)
-        // gpt-5-codex-medium: work O(1), span O(1)
+        /// APAS: Work O(1), Span O(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn join_mid(exposed: Exposed<T>) -> Self;
-        // APAS - work O(1), span O(1)
-        // gpt-5-codex-medium: work O(1), span O(1)
+        /// APAS: Work O(1), Span O(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn size(&self) -> N;
-        // APAS - work O(1), span O(1)
-        // gpt-5-codex-medium: work O(1), span O(1)
+        /// APAS: Work O(1), Span O(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn is_empty(&self) -> B;
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)

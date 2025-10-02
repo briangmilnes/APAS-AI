@@ -69,16 +69,12 @@ pub mod MaxContigSubSumDivConOptStEph {
         /// Compute maximum contiguous subsequence sum using strengthened divide-and-conquer.
         /// Returns None for empty sequence (representing -∞).
         /// APAS: Work Θ(n), Span Θ(log n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         /// claude-4-sonnet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn max_contig_sub_sum_divcon_opt(a: &ArraySeqStEphS<i32>) -> Option<i32>;
     }
 
     impl MaxContigSubSumDivConOptTrait for ArraySeqStEphS<i32> {
-        /// Work-optimal strengthened divide-and-conquer building on Shamos' original D&C algorithm.
-        /// By returning (max_sum, max_prefix, max_suffix, total), we avoid redundant computation
-        /// and achieve O(n) work instead of O(n log n).
-        /// APAS: Work Θ(n), Span Θ(log n)
-        /// claude-4-sonnet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn max_contig_sub_sum_divcon_opt(a: &ArraySeqStEphS<i32>) -> Option<i32> {
             let (max_sum, _, _, _) = max_contig_sub_sum_aux(a);
             max_sum

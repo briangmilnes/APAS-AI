@@ -21,16 +21,12 @@ pub mod MaxContigSubSumReducedStEph {
         /// Compute maximum contiguous subsequence sum using reduction to MCSSS.
         /// Returns None for empty sequence (representing -∞).
         /// APAS: Work Θ(n²), Span Θ(log n)
+        /// claude-4-sonet: Work Θ(n²), Span Θ(n²), Parallelism Θ(1)
         /// claude-4-sonnet: Work Θ(n²), Span Θ(log n), Parallelism Θ(n²/log n)
         fn max_contig_sub_sum_reduced(a: &ArraySeqStEphS<i32>) -> Option<i32>;
     }
 
     impl MaxContigSubSumReducedTrait for ArraySeqStEphS<i32> {
-        /// Reduced force algorithm using reduction to MCSSS (Maximum Contiguous Subsequence Sum with Start).
-        /// For each starting position i, computes all subsequence sums starting at i using scan,
-        /// then finds their maximum. Selects maximum over all starting positions.
-        /// APAS: Work Θ(n²), Span Θ(log n)
-        /// claude-4-sonnet: Work Θ(n²), Span Θ(log n), Parallelism Θ(n²/log n)
         fn max_contig_sub_sum_reduced(a: &ArraySeqStEphS<i32>) -> Option<i32> {
             let n = a.length();
 

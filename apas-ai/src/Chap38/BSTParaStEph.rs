@@ -29,17 +29,29 @@ pub mod BSTParaStEph {
     }
 
     pub trait ParamBSTTrait<T: StT + Ord>: Sized {
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn new() -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn expose(&self) -> Exposed<T>;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn join_mid(exposed: Exposed<T>) -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn size(&self) -> N;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn is_empty(&self) -> B;
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn insert(&self, key: T);
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn delete(&self, key: &T);
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn find(&self, key: &T) -> Option<T>;
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn split(&self, key: &T) -> (Self, B, Self);
+        /// claude-4-sonet: Work Θ(log(|self| + |other|)), Span Θ(log(|self| + |other|)), Parallelism Θ(1)
         fn join_pair(&self, other: Self) -> Self;
+        /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
         fn union(&self, other: &Self) -> Self;
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn in_order(&self) -> ArraySeqStPerS<T>;
     }
 

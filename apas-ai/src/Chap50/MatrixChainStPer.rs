@@ -33,8 +33,7 @@ pub mod MatrixChainStPer {
         fn from_dim_pairs(dim_pairs: Vec<Pair<usize, usize>>) -> Self;
 
         /// Compute optimal matrix chain multiplication cost using dynamic programming
-        /// Claude Work: O(n³) where n=number of matrices
-        /// Claude Span: O(n²)
+        /// claude-4-sonet: Work Θ(n³), Span Θ(n²), Parallelism Θ(1)
         fn optimal_cost(&self) -> usize;
 
         /// Get the matrix dimensions

@@ -21,31 +21,55 @@ pub mod OrderedTableMtEph {
     /// Trait defining all ordered table operations (ADT 42.1 + ADT 43.1 for keys) with multi-threaded ephemeral semantics
     pub trait OrderedTableMtEphTrait<K: MtKey, V: MtVal> {
         // Base table operations (ADT 42.1) - ephemeral semantics with parallelism
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn size(&self) -> N;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(k: K, v: V) -> Self;
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn find(&self, k: &K) -> Option<V>;
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn lookup(&self, k: &K) -> Option<V>; // Alias for find
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn is_empty(&self) -> B;
+        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn insert<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, k: K, v: V, combine: F);
+        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn delete(&mut self, k: &K) -> Option<V>;
+        /// claude-4-sonet: Work Θ(n log n), Span Θ(log n), Parallelism Θ(n)
         fn domain(&self) -> ArraySetStEph<K>;
+        /// claude-4-sonet: Work Θ(|keys| × W(f)), Span Θ(log |keys| + S(f)), Parallelism Θ(|keys|/(log |keys| + S(f)))
         fn tabulate<F: Fn(&K) -> V + Send + Sync + 'static>(f: F, keys: &ArraySetStEph<K>) -> Self;
+        /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(log n + S(f)), Parallelism Θ(n/(log n + S(f)))
         fn map<F: Fn(&K, &V) -> V + Send + Sync + 'static>(&self, f: F) -> Self;
+        /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(log n + S(f)), Parallelism Θ(n/(log n + S(f)))
         fn filter<F: Fn(&K, &V) -> B + Send + Sync + 'static>(&self, f: F) -> Self;
+        /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
         fn intersection<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, f: F);
+        /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
         fn union<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, f: F);
+        /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
         fn difference(&mut self, other: &Self);
+        /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
         fn restrict(&mut self, keys: &ArraySetStEph<K>);
+        /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
         fn subtract(&mut self, keys: &ArraySetStEph<K>);
+        /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(log n + S(f)), Parallelism Θ(n/(log n + S(f)))
         fn reduce<R: StTInMtT + 'static, F: Fn(R, &K, &V) -> R + Send + Sync + 'static>(&self, init: R, f: F) -> R;
+        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>>;
 
         // Key ordering operations (ADT 43.1 adapted for tables) - sequential (inherently sequential on trees)
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn first_key(&self) -> Option<K>;
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn last_key(&self) -> Option<K>;
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn previous_key(&self, k: &K) -> Option<K>;
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn next_key(&self, k: &K) -> Option<K>;
+        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn split_key(&mut self, k: &K) -> (Self, Self)
         where
             Self: Sized;

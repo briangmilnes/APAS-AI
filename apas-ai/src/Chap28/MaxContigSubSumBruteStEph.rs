@@ -20,16 +20,12 @@ pub mod MaxContigSubSumBruteStEph {
         /// Compute maximum contiguous subsequence sum using brute force.
         /// Returns None for empty sequence (representing -∞).
         /// APAS: Work Θ(n³), Span Θ(log n)
+        /// claude-4-sonet: Work Θ(n³), Span Θ(n³), Parallelism Θ(1)
         /// claude-4-sonnet: Work Θ(n³), Span Θ(log n), Parallelism Θ(n³/log n)
         fn max_contig_sub_sum_brute(a: &ArraySeqStEphS<i32>) -> Option<i32>;
     }
 
     impl MaxContigSubSumBruteTrait for ArraySeqStEphS<i32> {
-        /// Brute force algorithm for maximum contiguous subsequence sum.
-        /// Enumerates all O(n²) contiguous subsequences, computes sum for each O(n),
-        /// and selects the maximum.
-        /// APAS: Work Θ(n³), Span Θ(log n)
-        /// claude-4-sonnet: Work Θ(n³), Span Θ(log n), Parallelism Θ(n³/log n)
         fn max_contig_sub_sum_brute(a: &ArraySeqStEphS<i32>) -> Option<i32> {
             let n = a.length();
 

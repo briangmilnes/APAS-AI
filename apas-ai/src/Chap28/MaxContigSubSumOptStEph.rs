@@ -11,15 +11,12 @@ pub mod MaxContigSubSumOptStEph {
         /// Compute maximum contiguous subsequence sum using optimal scan-based algorithm.
         /// Returns None for empty sequence (representing -∞).
         /// APAS: Work Θ(n), Span Θ(log n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         /// claude-4-sonnet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn max_contig_sub_sum_opt(a: &ArraySeqStEphS<i32>) -> Option<i32>;
     }
 
     impl MaxContigSubSumOptTrait for ArraySeqStEphS<i32> {
-        /// Work-optimal algorithm using scan to compute prefix sums and minimum prefix.
-        /// Key insight: max subsequence ending at position i is prefix[i] - min(all prior prefixes).
-        /// APAS: Work Θ(n), Span Θ(log n)
-        /// claude-4-sonnet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn max_contig_sub_sum_opt(a: &ArraySeqStEphS<i32>) -> Option<i32> {
             let n = a.length();
 

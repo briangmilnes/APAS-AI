@@ -41,8 +41,8 @@ pub mod GraphSearchMtPer {
     }
 
     pub trait GraphSearchMtPerTrait<V: StTInMtT + Ord + 'static> {
-        /// Graph search using thread-safe persistent sets.
-        /// Work: O(|V| + |E|), Span: O(|V|) sequential rounds, but set operations are parallel.
+        /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| × log |V|), Parallelism Θ(|E|/|V|)
+        /// Graph search using thread-safe persistent sets with parallel set operations.
         fn graph_search<G, S>(graph: &G, source: V, strategy: &S) -> SearchResult<V>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,

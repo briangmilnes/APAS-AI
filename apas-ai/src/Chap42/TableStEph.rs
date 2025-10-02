@@ -17,23 +17,39 @@ pub mod TableStEph {
 
     /// Trait defining the Table ADT operations from Chapter 42
     pub trait TableStEphTrait<K: StT + Ord, V: StT> {
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn size(&self) -> N;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(key: K, value: V) -> Self;
+        /// claude-4-sonet: Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
         fn domain(&self) -> ArraySetStEph<K>;
+        /// claude-4-sonet: Work Θ(|keys| × W(f)), Span Θ(|keys| × S(f)), Parallelism Θ(1)
         fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self;
+        /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(n × S(f)), Parallelism Θ(1)
         fn map<F: Fn(&V) -> V>(&mut self, f: F);
+        /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(n × S(f)), Parallelism Θ(1)
         fn filter<F: Fn(&K, &V) -> B>(&mut self, f: F);
+        /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
         fn intersection<F: Fn(&V, &V) -> V>(&mut self, other: &Self, combine: F);
+        /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
         fn union<F: Fn(&V, &V) -> V>(&mut self, other: &Self, combine: F);
+        /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
         fn difference(&mut self, other: &Self);
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn find(&self, key: &K) -> Option<V>;
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn delete(&mut self, key: &K);
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn insert<F: Fn(&V, &V) -> V>(&mut self, key: K, value: V, combine: F);
+        /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
         fn restrict(&mut self, keys: &ArraySetStEph<K>);
+        /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
         fn subtract(&mut self, keys: &ArraySetStEph<K>);
 
         /// APAS: Work Θ(|a|), Span Θ(lg |a|)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn collect(&self) -> ArraySeqStEphS<Pair<K, V>>;
     }
 

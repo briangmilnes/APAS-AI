@@ -39,9 +39,6 @@ pub mod DivConReduceSt {
     }
 
     impl DivConReduceStTrait for ArraySeqStPerS<N> {
-        /// Find maximum element using sequential reduce.
-        /// APAS: Work Θ(n), Span Θ(n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn max_element(a: &ArraySeqStPerS<N>) -> Option<N> {
             if a.length() == 0 {
                 return None;
@@ -49,24 +46,12 @@ pub mod DivConReduceSt {
             Some(ArraySeqStPerS::reduce(a, &|x, y| (*x).max(*y), *a.nth(0)))
         }
 
-        /// Sum all elements using sequential reduce.
-        /// APAS: Work Θ(n), Span Θ(n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn sum(a: &ArraySeqStPerS<N>) -> N { ArraySeqStPerS::reduce(a, &|x, y| x + y, 0) }
 
-        /// Product of all elements using sequential reduce.
-        /// APAS: Work Θ(n), Span Θ(n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn product(a: &ArraySeqStPerS<N>) -> N { ArraySeqStPerS::reduce(a, &|x, y| x * y, 1) }
 
-        /// Logical OR of all elements using sequential reduce.
-        /// APAS: Work Θ(n), Span Θ(n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn any(a: &ArraySeqStPerS<B>) -> B { ArraySeqStPerS::reduce(a, &|x, y| *x || *y, false) }
 
-        /// Logical AND of all elements using sequential reduce.
-        /// APAS: Work Θ(n), Span Θ(n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn all(a: &ArraySeqStPerS<B>) -> B { ArraySeqStPerS::reduce(a, &|x, y| *x && *y, true) }
     }
 }

@@ -26,9 +26,8 @@ pub mod SubsetSumStEph {
         /// Create from multiset
         fn from_multiset(multiset: ArraySeqStEphS<T>) -> Self;
 
-        /// Solve subset sum problem
-        /// Claude Work: O(k*|S|) where k=target, |S|=multiset size
-        /// Claude Span: O(|S|)
+        /// claude-4-sonet: Work Θ(k×|S|), Span Θ(|S|), Parallelism Θ(1)
+        /// Solve subset sum problem where k=target, |S|=multiset size
         fn subset_sum(&mut self, target: i32) -> bool
         where
             T: Into<i32> + Copy;

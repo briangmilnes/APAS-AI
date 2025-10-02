@@ -13,12 +13,19 @@ pub mod AdjSeqGraphMtEph {
     }
 
     pub trait AdjSeqGraphMtEphTrait {
+        /// claude-4-sonet: Work Θ(n), Span Θ(1)
         fn new(n: N) -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn num_vertices(&self) -> N;
+        /// claude-4-sonet: Work Θ(Σ deg(v)), Span Θ(n), Parallelism Θ(|E|/n)
         fn num_edges(&self) -> N;
+        /// claude-4-sonet: Work Θ(deg(u)), Span Θ(deg(u)), Parallelism Θ(1)
         fn has_edge(&self, u: N, v: N) -> B;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn out_neighbors(&self, u: N) -> ArraySeqMtEphS<N>;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn out_degree(&self, u: N) -> N;
+        /// claude-4-sonet: Work Θ(deg(u)), Span Θ(deg(u)) with locking
         fn set_edge(&self, u: N, v: N, exists: B);
     }
 

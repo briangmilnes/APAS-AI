@@ -1,0 +1,36 @@
+
+  So we have a serious set of defects on algorithmic analysis.
+  The early chapters I did do not have the APAS alg anal recorded.
+
+  Read rules/AlgorithmicAnalysisRules.md.
+
+  Search src and see which modules do not have both
+  an alg anal from APAS and from you.
+
+  Some started to go on multiple lines with a jejune comment
+  about O(1) - constant ...
+  List these.
+
+  At first I was having you comment them on both the trait
+  function and methods and the impl. I no longer want them
+  commented on the impls.
+
+  List all of these files.
+
+  Some APAS alg anal are recorded in 
+  ~/APASVERUS/APAS-AI/apas-ai/prompts/alganal/ChapDD.txt
+  just the analyses.
+
+  Many are in the full text of the chapters in 
+ ~/APASVERUS/APAS-AI/apas-ai/prompts/ChapDD.txt.
+
+  Make a todo list on all those that you can fix with
+  from those two sources (and the bad comments above).
+
+  There should be one TODO per file to read and comment in the
+  APAS alg anal.
+
+  There should be another following the above TODO per file to read and comment in the
+  your algorithmic analysis.
+
+  And remember bug lines when they differ.

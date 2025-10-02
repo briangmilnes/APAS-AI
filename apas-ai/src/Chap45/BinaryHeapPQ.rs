@@ -18,31 +18,31 @@ pub mod BinaryHeapPQ {
 
     /// Trait defining the Meldable Priority Queue ADT operations (Data Type 45.1)
     pub trait BinaryHeapPQTrait<T: StT + Ord> {
-        /// Claude Work: Θ(1), Span: Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
 
-        /// Claude Work: Θ(1), Span: Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(element: T) -> Self;
 
-        /// Claude Work: Θ(1), Span: Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         /// Returns the minimum element (root of min-heap), or None if empty
         fn find_min(&self) -> Option<&T>;
 
-        /// Claude Work: Θ(log n), Span: Θ(log n)
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Inserts element and bubbles up to maintain heap property
         fn insert(&self, element: T) -> Self;
 
-        /// Claude Work: Θ(log n), Span: Θ(log n)
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Removes root (minimum) and bubbles down to maintain heap property
         fn delete_min(&self) -> (Self, Option<T>)
         where
             Self: Sized;
 
-        /// Claude Work: Θ(m + n), Span: Θ(m + n)
+        /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
         /// Melds two heaps by concatenating and re-heapifying
         fn meld(&self, other: &Self) -> Self;
 
-        /// Claude Work: Θ(n), Span: Θ(n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         /// Creates heap from sequence using bottom-up heapify
         fn from_seq(seq: &ArraySeqStPerS<T>) -> Self;
 

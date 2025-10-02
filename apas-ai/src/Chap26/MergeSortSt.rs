@@ -19,9 +19,6 @@ pub mod MergeSortSt {
     }
 
     impl<T: StT + Ord> MergeSortStTrait<T> for ArraySeqStPerS<T> {
-        /// Sequential two-pointer merge algorithm.
-        /// APAS: Work Θ(n), Span Θ(n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn merge(left: &ArraySeqStPerS<T>, right: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
             let n_left = left.length();
             let n_right = right.length();
@@ -78,9 +75,6 @@ pub mod MergeSortSt {
             )
         }
 
-        /// Recursive divide-and-conquer merge sort.
-        /// APAS: Work Θ(n log n), Span Θ(n log n)
-        /// claude-4-sonet: Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
         fn merge_sort(a: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
             let n = a.length();
 

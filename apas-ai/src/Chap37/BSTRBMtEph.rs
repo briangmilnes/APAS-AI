@@ -45,8 +45,11 @@ pub mod BSTRBMtEph {
     pub type BSTreeRB<T> = BSTRBMtEph<T>;
 
     pub trait BSTRBMtEphTrait<T: StTInMtT + Ord>: Sized {
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn new() -> Self;
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
         fn insert(&self, value: T);
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
         fn find(&self, target: &T) -> Option<T>;
         fn contains(&self, target: &T) -> B;
         fn size(&self) -> N;

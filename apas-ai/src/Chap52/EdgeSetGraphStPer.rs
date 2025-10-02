@@ -15,18 +15,31 @@ pub mod EdgeSetGraphStPer {
     }
 
     pub trait EdgeSetGraphStPerTrait<V: StT + Ord> {
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn from_vertices_and_edges(v: AVLTreeSetStPer<V>, e: AVLTreeSetStPer<Pair<V, V>>) -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn num_vertices(&self) -> N;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn num_edges(&self) -> N;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn vertices(&self) -> &AVLTreeSetStPer<V>;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn edges(&self) -> &AVLTreeSetStPer<Pair<V, V>>;
+        /// claude-4-sonet: Work Θ(log |E|), Span Θ(log |E|), Parallelism Θ(1)
         fn has_edge(&self, u: &V, v: &V) -> B;
+        /// claude-4-sonet: Work Θ(|E| log |V|), Span Θ(|E| log |V|), Parallelism Θ(1)
         fn out_neighbors(&self, u: &V) -> AVLTreeSetStPer<V>;
+        /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1)
         fn out_degree(&self, u: &V) -> N;
+        /// claude-4-sonet: Work Θ(log |V|), Span Θ(log |V|), Parallelism Θ(1)
         fn insert_vertex(&self, v: V) -> Self;
+        /// claude-4-sonet: Work Θ(|E| log |E|), Span Θ(|E| log |E|), Parallelism Θ(1)
         fn delete_vertex(&self, v: &V) -> Self;
+        /// claude-4-sonet: Work Θ(log |V| + log |E|), Span Θ(log |V| + log |E|), Parallelism Θ(1)
         fn insert_edge(&self, u: V, v: V) -> Self;
+        /// claude-4-sonet: Work Θ(log |E|), Span Θ(log |E|), Parallelism Θ(1)
         fn delete_edge(&self, u: &V, v: &V) -> Self;
     }
 

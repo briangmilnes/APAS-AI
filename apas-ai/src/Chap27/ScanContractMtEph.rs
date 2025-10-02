@@ -21,13 +21,6 @@ pub mod ScanContractMtEph {
     }
 
     impl<T: StT + Send + Sync + Clone + 'static> ScanContractMtEphTrait<T> for ArraySeqMtEphS<T> {
-        /// Parallel scan via contraction (Algorithm 27.3).
-        /// Base case: |a| ≤ 1
-        /// Contract: Create b[i] = f(a[2i], a[2i+1]) for pairs (parallel)
-        /// Solve: Recursively scan b to get c (parallel)
-        /// Expand: Reconstruct result using c and original elements (parallel)
-        /// APAS: Work Θ(n), Span Θ(log n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn scan_contract_parallel<F: Fn(&T, &T) -> T + Send + Sync + 'static>(
             a: &ArraySeqMtEphS<T>,
             f: Arc<F>,

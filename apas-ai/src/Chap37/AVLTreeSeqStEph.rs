@@ -41,6 +41,7 @@ pub mod AVLTreeSeqStEph {
 
     pub trait AVLTreeSeqStEphTrait<T: StT> {
         /// APAS: Work Θ(1), Span Θ(1).
+        /// claude-4-sonet: Work Θ(1), Span Θ(1).
         fn empty() -> Self;
         /// APAS: Work Θ(1), Span Θ(1).
         fn new() -> Self;

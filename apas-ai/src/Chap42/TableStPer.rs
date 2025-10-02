@@ -18,36 +18,47 @@ pub mod TableStPer {
     /// Trait defining the Table ADT operations from Chapter 42
     pub trait TableStPerTrait<K: StT + Ord, V: StT> {
         /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn size(&self) -> N;
 
         /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
 
         /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(key: K, value: V) -> Self;
 
         /// APAS: Work Θ(|a|), Span Θ(lg |a|)
+        /// claude-4-sonet: Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
         fn domain(&self) -> ArraySetStEph<K>;
 
         /// APAS: Work Θ(|s| * W(f)), Span Θ(lg |s| + S(f))
+        /// claude-4-sonet: Work Θ(|keys| × W(f)), Span Θ(log |keys| + S(f)), Parallelism Θ(|keys|/(log |keys| + S(f)))
         fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self;
 
         /// APAS: Work Θ(|a| * W(f)), Span Θ(lg |a| + S(f))
+        /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(log n + S(f)), Parallelism Θ(n/(log n + S(f)))
         fn map<F: Fn(&V) -> V>(&self, f: F) -> Self;
 
         /// APAS: Work Θ(|a| * W(f)), Span Θ(lg |a| + S(f))
+        /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(log n + S(f)), Parallelism Θ(n/(log n + S(f)))
         fn filter<F: Fn(&K, &V) -> B>(&self, f: F) -> Self;
 
         /// APAS: Work Θ(m * lg(1 + n/m)), Span Θ(lg(n + m))
+        /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log(n + m)), Parallelism Θ(m/log(n + m))
         fn intersection<F: Fn(&V, &V) -> V>(&self, other: &Self, combine: F) -> Self;
 
         /// APAS: Work Θ(m * lg(1 + n/m)), Span Θ(lg(n + m))
+        /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log(n + m)), Parallelism Θ(m/log(n + m))
         fn union<F: Fn(&V, &V) -> V>(&self, other: &Self, combine: F) -> Self;
 
         /// APAS: Work Θ(m * lg(1 + n/m)), Span Θ(lg(n + m))
+        /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log(n + m)), Parallelism Θ(m/log(n + m))
         fn difference(&self, other: &Self) -> Self;
 
         /// APAS: Work Θ(lg |a|), Span Θ(lg |a|)
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn find(&self, key: &K) -> Option<V>;
 
         /// APAS: Work Θ(lg |a|), Span Θ(lg |a|)

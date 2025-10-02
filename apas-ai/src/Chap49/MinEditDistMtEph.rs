@@ -29,9 +29,8 @@ pub mod MinEditDistMtEph {
         /// Create from source and target sequences
         fn from_sequences(source: ArraySeqMtEphS<T>, target: ArraySeqMtEphS<T>) -> Self;
 
-        /// Compute minimum edit distance with parallel dynamic programming
-        /// Claude Work: O(|S|*|T|) where |S|=source length, |T|=target length
-        /// Claude Span: O(|S|+|T|) with parallelism O(min(|S|,|T|))
+        /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(min(|S|,|T|))
+        /// Compute minimum edit distance with parallel DP where |S|=source length, |T|=target length
         fn min_edit_distance(&mut self) -> usize
         where
             T: Send + Sync + 'static;

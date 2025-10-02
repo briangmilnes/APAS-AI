@@ -23,9 +23,6 @@ pub mod MergeSortMt {
     }
 
     impl<T: StT + Ord + Send + Sync + 'static> MergeSortMtTrait<T> for ArraySeqMtPerS<T> {
-        /// Parallel merge using binary search and divide-and-conquer.
-        /// APAS: Work Θ(n), Span Θ(log n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn merge_parallel(left: &ArraySeqMtPerS<T>, right: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T> {
             let n_left = left.length();
             let n_right = right.length();
@@ -158,9 +155,6 @@ pub mod MergeSortMt {
             }
         }
 
-        /// Parallel divide-and-conquer merge sort using ParaPair!.
-        /// APAS: Work Θ(n log n), Span Θ(log² n)
-        /// claude-4-sonet: Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log n)
         fn merge_sort_parallel(a: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T> {
             let n = a.length();
 

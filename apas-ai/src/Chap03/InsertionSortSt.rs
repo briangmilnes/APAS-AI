@@ -4,9 +4,17 @@
 pub mod InsertionSortSt {
 
     pub trait InsertionSortStTrait<T: Ord + Clone> {
-        // APAS - work O(n²), span O(n²)
-        // gpt-5-codex-medium: work O(n²), span O(n²)
-        // claude-4-sonnet: work Θ(n²), span Θ(n²), parallelism Θ(1) - inherently sequential
+        /// APAS: Work O(n²), Span O(n log n)
+        /// claude-4-sonet: Work Θ(n²), Span Θ(n²), Parallelism Θ(1)
+        /// BUG: claude-4-sonet's span analysis differs from APAS (APAS assumes O(log n) span insert operation)
+        /// 
+        /// APAS is underspecified with:
+        /// Example 3.2 (Cost of Insertion Sort). Considering insertion sort example, suppose that we
+        /// are given a cost specification for insert: for a sequence of length n the cost of insert
+        /// should be O(n) work and O(log n) span. We can then determine the overall asymptotic
+        /// cost of sort using our composition rules described in Section (Work, Span, and Parallel
+        /// Time). Since the code uses insert sequentially and since there are n inserts, the algorithm
+        /// insSort has n × O(n) = O(n²) work and n × O(log n) = O(n log n) span.
         fn insSort(&self, slice: &mut [T]);
     }
 

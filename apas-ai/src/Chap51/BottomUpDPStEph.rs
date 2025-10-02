@@ -21,13 +21,11 @@ pub mod BottomUpDPStEph {
     }
 
     impl BottomUpDPStEphS {
-        /// Claude Work: O(1) - constant time initialization
-        /// Claude Span: O(1) - constant time initialization
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         pub fn new(s: ArraySeqStEphS<char>, t: ArraySeqStEphS<char>) -> Self { BottomUpDPStEphS { seq_s: s, seq_t: t } }
 
         /// Compute minimum edit distance using bottom-up diagonal pebbling
-        /// Claude Work: O(|S|*|T|) where |S|=source length, |T|=target length
-        /// Claude Span: O(|S|+|T|) - sequential diagonal processing
+        /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(1)
         pub fn med_bottom_up(&mut self) -> usize {
             let s_len = self.seq_s.length();
             let t_len = self.seq_t.length();
@@ -45,8 +43,7 @@ pub mod BottomUpDPStEph {
         }
 
         /// Initialize base cases for DP table
-        /// Claude Work: O(|S|+|T|) - linear initialization
-        /// Claude Span: O(|S|+|T|) - sequential initialization
+        /// claude-4-sonet: Work Θ(|S|+|T|), Span Θ(|S|+|T|)
         fn initialize_base_cases(&self) -> Vec<Vec<usize>> {
             let s_len = self.seq_s.length();
             let t_len = self.seq_t.length();

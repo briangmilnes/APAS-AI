@@ -77,15 +77,25 @@ pub mod BSTReducedStEph {
     pub type BSTreeReduced<K, V, R, Op> = BSTReducedStEph<K, V, R, Op>;
 
     pub trait BSTReducedStEphTrait<K: StT + Ord, V: StT, R: StT, Op: ReduceOp<V, R>> {
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn new() -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn size(&self) -> N;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn is_empty(&self) -> B;
+        /// claude-4-sonet: Work Θ(n), Span Θ(n)
         fn height(&self) -> N;
+        /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn insert(&mut self, key: K, value: V);
+        /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn find(&self, key: &K) -> Option<&V>;
+        /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn contains(&self, key: &K) -> B;
+        /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn get(&self, key: &K) -> Option<&V>;
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn keys(&self) -> ArraySeqStPerS<K>;
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn values(&self) -> ArraySeqStPerS<V>;
         fn minimum_key(&self) -> Option<&K>;
         fn maximum_key(&self) -> Option<&K>;

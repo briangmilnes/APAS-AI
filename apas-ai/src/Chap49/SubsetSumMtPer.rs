@@ -27,9 +27,8 @@ pub mod SubsetSumMtPer {
         /// Create from multiset
         fn from_multiset(multiset: ArraySeqMtPerS<T>) -> Self;
 
-        /// Solve subset sum problem with parallel dynamic programming
-        /// Claude Work: O(k*|S|) where k=target, |S|=multiset size
-        /// Claude Span: O(|S|) with parallelism O(k)
+        /// claude-4-sonet: Work Θ(k×|S|), Span Θ(|S|), Parallelism Θ(k)
+        /// Solve subset sum problem with parallel DP where k=target, |S|=multiset size
         fn subset_sum(&self, target: i32) -> bool
         where
             T: Into<i32> + Copy + Send + Sync + 'static;

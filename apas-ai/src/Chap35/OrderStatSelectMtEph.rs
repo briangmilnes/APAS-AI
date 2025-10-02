@@ -11,6 +11,7 @@ pub mod OrderStatSelectMtEph {
     use rand::Rng;
 
     pub trait OrderStatSelectMtEphTrait<T: StTInMtT + Ord> {
+        /// claude-4-sonet: Work Θ(n) expected, Θ(n²) worst case; Span Θ(log² n) expected (with parallel filter), Parallelism Θ(n/log² n) expected
         fn select(&self, k: N) -> Option<T>;
     }
 

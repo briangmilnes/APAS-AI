@@ -29,21 +29,21 @@ pub mod LeftistHeapPQ {
 
     /// Trait defining the Meldable Priority Queue ADT operations (Data Type 45.1)
     pub trait LeftistHeapPQTrait<T: StT + Ord> {
-        /// Claude Work: Θ(1), Span: Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> Self;
 
-        /// Claude Work: Θ(1), Span: Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(element: T) -> Self;
 
-        /// Claude Work: Θ(1), Span: Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         /// Returns the minimum element (root of heap), or None if empty
         fn find_min(&self) -> Option<&T>;
 
-        /// Claude Work: Θ(log n), Span: Θ(log n)
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Inserts element by creating singleton and melding
         fn insert(&self, element: T) -> Self;
 
-        /// Claude Work: Θ(log n), Span: Θ(log n)
+        /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Removes root and melds left and right subtrees
         fn delete_min(&self) -> (Self, Option<T>)
         where

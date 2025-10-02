@@ -14,13 +14,6 @@ pub mod ReduceContractStEph {
     }
 
     impl<T: StT + Clone> ReduceContractStEphTrait<T> for ArraySeqStEphS<T> {
-        /// Sequential reduce via contraction (Algorithm 27.2).
-        /// Base case: |a| ≤ 1
-        /// Contract: Create b[i] = f(a[2i], a[2i+1]) for pairs
-        /// Solve: Recursively reduce b
-        /// Expand: Return result (no expansion needed for reduce)
-        /// APAS: Work Θ(n), Span Θ(n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn reduce_contract<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> T {
             let n = a.length();
 

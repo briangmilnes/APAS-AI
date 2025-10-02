@@ -25,8 +25,7 @@ pub mod TopDownDPMtEph {
     }
 
     impl TopDownDPMtEphS {
-        /// Claude Work: O(1) - constant time initialization
-        /// Claude Span: O(1) - constant time initialization
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         pub fn new(s: ArraySeqMtEphS<char>, t: ArraySeqMtEphS<char>) -> Self {
             TopDownDPMtEphS {
                 seq_s: s,
@@ -36,8 +35,7 @@ pub mod TopDownDPMtEph {
         }
 
         /// Compute minimum edit distance using concurrent top-down memoization
-        /// Claude Work: O(|S|*|T|) where |S|=source length, |T|=target length
-        /// Claude Span: O(|S|+|T|) - limited parallelism due to dependencies
+        /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(min(|S|,|T|))
         pub fn med_memoized_concurrent(&mut self) -> usize {
             let s_len = self.seq_s.length();
             let t_len = self.seq_t.length();
@@ -46,8 +44,7 @@ pub mod TopDownDPMtEph {
         }
 
         /// Recursive helper with concurrent memoization
-        /// Claude Work: O(1) per call with memoization, O(|S|*|T|) total
-        /// Claude Span: O(|S|+|T|) - depth of recursion with limited parallelism
+        /// claude-4-sonet: Work Θ(1) amortized per call, Θ(|S|×|T|) total; Span Θ(|S|+|T|)
         fn med_recursive_concurrent(&self, i: usize, j: usize) -> usize {
             // Check memo table first
             {

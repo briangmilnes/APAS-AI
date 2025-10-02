@@ -25,13 +25,11 @@ pub mod BottomUpDPMtPer {
     }
 
     impl BottomUpDPMtPerS {
-        /// Claude Work: O(1) - constant time initialization
-        /// Claude Span: O(1) - constant time initialization
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
         pub fn new(s: ArraySeqMtPerS<char>, t: ArraySeqMtPerS<char>) -> Self { BottomUpDPMtPerS { seq_s: s, seq_t: t } }
 
         /// Compute minimum edit distance using parallel bottom-up diagonal pebbling
-        /// Claude Work: O(|S|*|T|) where |S|=source length, |T|=target length
-        /// Claude Span: O(|S|+|T|) with parallelism O(min(|S|,|T|))
+        /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(min(|S|,|T|))
         pub fn med_bottom_up_parallel(&self) -> usize {
             let s_len = self.seq_s.length();
             let t_len = self.seq_t.length();
@@ -50,8 +48,7 @@ pub mod BottomUpDPMtPer {
         }
 
         /// Initialize base cases for DP table
-        /// Claude Work: O(|S|+|T|) - linear initialization
-        /// Claude Span: O(|S|+|T|) - sequential initialization
+        /// claude-4-sonet: Work Θ(|S|+|T|), Span Θ(|S|+|T|)
         fn initialize_base_cases(&self) -> Vec<Vec<usize>> {
             let s_len = self.seq_s.length();
             let t_len = self.seq_t.length();
@@ -71,8 +68,7 @@ pub mod BottomUpDPMtPer {
         }
 
         /// Compute one diagonal of the DP table in parallel
-        /// Claude Work: O(min(|S|,|T|)) - diagonal length
-        /// Claude Span: O(1) with parallel threads for diagonal elements
+        /// claude-4-sonet: Work Θ(min(|S|,|T|)), Span Θ(1), Parallelism Θ(min(|S|,|T|))
         fn compute_diagonal_parallel(&self, table: Arc<Mutex<Vec<Vec<usize>>>>, k: usize) {
             let s_len = self.seq_s.length();
             let t_len = self.seq_t.length();

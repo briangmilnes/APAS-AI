@@ -53,6 +53,7 @@ pub mod PQMinMtEph {
 
     pub trait PQMinMtEphTrait<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> {
         /// Min-Priority Queue Search from a single source.
+        /// claude-4-sonet: Work Θ((|V| + |E|) log |V|), Span Θ(|V| log |V|), Parallelism Θ(1)
         /// Work: O((|V| + |E|) log |V|), Span: O(|V| log |V|) sequential rounds.
         /// Set operations use thread-safe structures.
         fn pq_min<G, PF>(graph: G, source: V, priority_fn: PF) -> PQMinResult<V, P>

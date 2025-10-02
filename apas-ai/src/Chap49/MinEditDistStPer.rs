@@ -28,8 +28,7 @@ pub mod MinEditDistStPer {
         fn from_sequences(source: ArraySeqStPerS<T>, target: ArraySeqStPerS<T>) -> Self;
 
         /// Compute minimum edit distance between sequences
-        /// Claude Work: O(|S|*|T|) where |S|=source length, |T|=target length
-        /// Claude Span: O(|S|+|T|)
+        /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(1)
         fn min_edit_distance(&self) -> usize;
 
         /// Get the source sequence

@@ -35,8 +35,7 @@ pub mod OptBinSearchTreeStPer {
         fn from_key_probs(key_probs: Vec<KeyProb<T>>) -> Self;
 
         /// Compute optimal BST cost using dynamic programming
-        /// Claude Work: O(n³) where n=number of keys
-        /// Claude Span: O(n²)
+        /// claude-4-sonet: Work Θ(n³), Span Θ(n²), Parallelism Θ(1)
         fn optimal_cost(&self) -> Probability;
 
         /// Get the keys with probabilities

@@ -36,16 +36,19 @@ pub mod GraphSearchStEph {
     }
 
     pub trait GraphSearchStEphTrait<V: StT + Ord> {
+        /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
         fn graph_search<G, S>(graph: &G, source: V, strategy: &S) -> SearchResult<V>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             S: SelectionStrategy<V>;
 
+        /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
         fn graph_search_multi<G, S>(graph: &G, sources: AVLTreeSetStEph<V>, strategy: &S) -> SearchResult<V>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             S: SelectionStrategy<V>;
 
+        /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
         fn reachable<G>(graph: &G, source: V) -> AVLTreeSetStEph<V>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>;
