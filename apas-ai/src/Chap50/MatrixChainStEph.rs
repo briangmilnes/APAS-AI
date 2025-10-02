@@ -2,6 +2,7 @@
 //! Chapter 50: Matrix Chain Multiplication - ephemeral, single-threaded.
 
 pub mod MatrixChainStEph {
+
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
 

@@ -5,9 +5,11 @@
 //! Used in Kruskal's MST algorithm for efficient cycle detection.
 
 pub mod UnionFindStEph {
-    use crate::Types::Types::*;
+
     use std::collections::HashMap;
     use std::hash::Hash;
+
+    use crate::Types::Types::*;
 
     /// Union-Find data structure
     ///

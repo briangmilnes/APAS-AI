@@ -2,10 +2,11 @@
 //! Chapter 45: Priority Queue implementation using Binary Heap
 
 pub mod BinaryHeapPQ {
+
     use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     /// Priority Queue implemented using a complete binary heap (ArraySeqStPer)
     /// Maintains heap property: parent <= children (min-heap)

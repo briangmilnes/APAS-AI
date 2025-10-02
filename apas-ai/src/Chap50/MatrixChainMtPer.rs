@@ -2,6 +2,7 @@
 //! Multi-threaded persistent matrix chain multiplication implementation using Vec and Arc for thread safety.
 
 pub mod MatrixChainMtPer {
+
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::sync::{Arc, Mutex};

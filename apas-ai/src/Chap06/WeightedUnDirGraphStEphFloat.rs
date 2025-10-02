@@ -30,12 +30,13 @@
 //! ```
 
 pub mod WeightedUnDirGraphStEphFloat {
+
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
-    use crate::Types::Types::*;
 
     /// Weighted undirected graph with floating-point weights (type alias)
     pub type WeightedUnDirGraphStEphFloat<V> = LabUnDirGraphStEph<V, OrderedF64>;

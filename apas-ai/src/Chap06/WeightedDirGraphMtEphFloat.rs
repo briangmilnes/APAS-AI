@@ -5,13 +5,14 @@
 //! Weighted arc filtering (out_neighbors_weighted, in_neighbors_weighted) is parallel.
 
 pub mod WeightedDirGraphMtEphFloat {
+
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
     use crate::ParaPair;
-    use crate::Types::Types::*;
 
     /// Weighted directed graph with floating-point weights (multi-threaded, type alias)
     pub type WeightedDirGraphMtEphFloat<V> = LabDirGraphMtEph<V, OrderedF64>;

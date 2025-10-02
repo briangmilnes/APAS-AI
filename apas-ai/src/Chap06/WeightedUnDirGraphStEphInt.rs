@@ -2,12 +2,13 @@
 //! Chapter 6 Weighted Undirected Graph (ephemeral) with integer weights - Single-threaded version.
 
 pub mod WeightedUnDirGraphStEphInt {
+
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
-    use crate::Types::Types::*;
 
     /// Weighted undirected graph with integer weights (type alias)
     pub type WeightedUnDirGraphStEphInt<V> = LabUnDirGraphStEph<V, i32>;

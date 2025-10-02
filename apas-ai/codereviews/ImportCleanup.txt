@@ -26,6 +26,6 @@ from two chapters such as
 has to be wrong. It should only use the last numbered module, 37 in this case.
 
 Make a plan according to PrePlanChecklist to fix this. 
-Be sure to compile after each file change.
-Then be sure to compile and run the tests and the benchmarks, but don't run the benchmarks.
+Then be sure to have todos to compile after each file change.
+Then be sure to make todos compile and run the tests and the benchmarks, but don't run the benchmarks.
 Show it to the user.

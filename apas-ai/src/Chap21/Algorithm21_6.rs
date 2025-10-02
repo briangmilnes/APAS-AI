@@ -2,8 +2,9 @@
 //! Chapter 21 — Algorithm 21.6: Prime Sieve using ArraySeqPer and ninject.
 
 pub mod Algorithm21_6 {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+
     use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait Algorithm21_6Trait {

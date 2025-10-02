@@ -2,6 +2,7 @@
 //! Chapter 50: Matrix Chain Multiplication - persistent, single-threaded.
 
 pub mod MatrixChainStPer {
+
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
 

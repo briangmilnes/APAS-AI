@@ -6,13 +6,14 @@
 //! vertex-induced subgraph with respect to a star graph.
 
 pub mod StarPartitionStEph {
+
     use std::collections::HashMap;
     use std::hash::Hash;
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
     use crate::SetLit;
-    use crate::Types::Types::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait StarPartitionStEphTrait {

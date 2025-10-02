@@ -2,14 +2,15 @@
 //! Chapter 49: Minimum Edit Distance - ephemeral, multi-threaded.
 
 pub mod MinEditDistMtEph {
+
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::sync::{Arc, Mutex};
     use std::thread;
 
+    use crate::Types::Types::*;
     use crate::ArraySeqMtEphSLit;
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
-    use crate::Types::Types::*;
 
     /// Ephemeral multi-threaded minimum edit distance solver using parallel dynamic programming
     #[derive(Clone, Debug)]

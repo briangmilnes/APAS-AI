@@ -2,10 +2,11 @@
 //! Ephemeral Treap (randomized heap-ordered BST) with `find` support.
 
 pub mod BSTTreapStEph {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
+
     use rand::{rng, Rng};
+
+    use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     type Link<T> = Option<Box<Node<T>>>;
 

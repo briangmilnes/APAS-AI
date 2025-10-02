@@ -2,6 +2,7 @@
 //! Chapter 12 — Exercise 12.2: implement fetch-and-add using compare-and-swap.
 
 pub mod Exercise12_2 {
+
     use std::sync::atomic::{AtomicUsize, Ordering};
 
     pub trait FetchAddCasTrait {

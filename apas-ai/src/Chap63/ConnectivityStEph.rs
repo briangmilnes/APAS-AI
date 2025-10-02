@@ -8,15 +8,16 @@
 //! - Exercise 63.2: connected_components using star_contract
 
 pub mod ConnectivityStEph {
+
     use std::collections::HashMap;
     use std::hash::Hash;
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
     use crate::Chap62::StarContractionStEph::StarContractionStEph::star_contract;
     use crate::Chap62::StarPartitionStEph::StarPartitionStEph::sequential_star_partition;
     use crate::SetLit;
-    use crate::Types::Types::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait ConnectivityStEphTrait {

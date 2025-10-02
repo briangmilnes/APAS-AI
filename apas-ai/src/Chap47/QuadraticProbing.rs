@@ -2,9 +2,10 @@
 //! Chapter 47: Quadratic Probing Strategy
 
 pub mod QuadraticProbing {
+
+    use crate::Types::Types::*;
     use crate::Chap47::FlatHashTable::FlatHashTable::*;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Types::Types::*;
 
     /// Quadratic probing: h_i(x) = (h(x) + c1*i + c2*i^2) mod m
     #[derive(Clone, Debug)]

@@ -2,12 +2,13 @@
 //! Chapter 49: Subset Sum - ephemeral, single-threaded.
 
 pub mod SubsetSumStEph {
+
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
 
+    use crate::Types::Types::*;
     use crate::ArraySeqStEphS;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Types::Types::*;
 
     /// Ephemeral single-threaded subset sum solver using dynamic programming
     #[derive(Clone, Debug, PartialEq, Eq)]

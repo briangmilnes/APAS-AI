@@ -2,12 +2,13 @@
 //! Chapter 49: Minimum Edit Distance - persistent, single-threaded.
 
 pub mod MinEditDistStPer {
+
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
 
+    use crate::Types::Types::*;
     use crate::ArraySeqStPerS;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
 
     /// Persistent single-threaded minimum edit distance solver using dynamic programming
     #[derive(Clone, Debug, PartialEq, Eq)]

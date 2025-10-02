@@ -2,12 +2,13 @@
 //! Chapter 6 Labeled Directed Graph (ephemeral) using Set for vertices and labeled arcs.
 
 pub mod LabDirGraphStEph {
+
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::SetLit;
-    use crate::Types::Types::*;
 
     #[derive(Clone)]
     pub struct LabDirGraphStEph<V: StT + Hash, L: StT + Hash> {

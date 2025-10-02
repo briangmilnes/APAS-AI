@@ -2,6 +2,7 @@
 //! Chapter 18 persistent sequence implementation for array-backed sequences.
 
 pub mod ArraySeqStPer {
+
     use std::collections::HashSet;
     use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
 

@@ -2,11 +2,12 @@
 //! Chapter 19 algorithms for ArraySeqStPer.
 
 pub mod ArraySeqStPer {
+
+    use crate::Types::Types::*;
     use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{
         ArraySeqStPerS as ArraySeqStPerSChap18, ArraySeqStPerTrait as ArraySeqStPerTraitChap18,
     };
-    use crate::Types::Types::*;
 
     pub type ArraySeqStPerS<T> = ArraySeqStPerSChap18<T>;
 

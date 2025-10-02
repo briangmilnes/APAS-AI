@@ -2,13 +2,14 @@
 //! Chapter 44: Document Indexing and Searching implementation.
 
 pub mod DocumentIndex {
+
     use std::fmt::{Debug, Display, Formatter, Result};
 
+    use crate::Types::Types::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     use crate::Chap42::TableStPer::TableStPer::*;
-    use crate::Types::Types::*;
 
     /// Type aliases for document indexing (Data Type 44.1)
     pub type Word = String;

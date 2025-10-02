@@ -6,6 +6,7 @@
 //! using rust vector which is dense.
 
 pub mod MathSeq {
+
     use std::collections::hash_map::Entry;
     use std::collections::{HashMap, HashSet};
     use std::fmt::{Debug, Display, Formatter};

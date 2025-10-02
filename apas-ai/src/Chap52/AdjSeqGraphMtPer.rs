@@ -3,6 +3,7 @@
 //! PARALLEL operations via ArraySeqMtPer.
 
 pub mod AdjSeqGraphMtPer {
+
     use std::sync::Arc;
 
     use crate::Types::Types::*;

@@ -2,11 +2,12 @@
 //! Set interface built atop the Treap multi-threaded BST implementation.
 
 pub mod BSTSetTreapMtEph {
+
     use std::collections::BTreeSet;
 
+    use crate::Types::Types::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap39::BSTTreapMtEph::BSTTreapMtEph::*;
-    use crate::Types::Types::*;
 
     #[derive(Debug, Clone)]
     pub struct BSTSetTreapMtEph<T: StTInMtT + Ord> {

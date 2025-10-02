@@ -2,9 +2,10 @@
 //! Chapter 47: Double Hashing Strategy
 
 pub mod DoubleHashing {
+
+    use crate::Types::Types::*;
     use crate::Chap47::FlatHashTable::FlatHashTable::*;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Types::Types::*;
 
     /// Double hashing: h_i(x) = (h1(x) + i * h2(x)) mod m
     #[derive(Clone, Debug)]

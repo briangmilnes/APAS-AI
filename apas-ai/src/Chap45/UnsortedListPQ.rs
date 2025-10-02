@@ -2,10 +2,11 @@
 //! Chapter 45: Priority Queue implementation using Unsorted List
 
 pub mod UnsortedListPQ {
+
     use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     /// Priority Queue implemented using an unsorted list (ArraySeqStPer)
     /// Data Type 45.1: Meldable Priority Queue

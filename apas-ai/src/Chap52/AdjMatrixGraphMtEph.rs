@@ -2,6 +2,7 @@
 //! Chapter 52: Adjacency Matrix Graph (ephemeral, multi-threaded).
 
 pub mod AdjMatrixGraphMtEph {
+
     use std::sync::Arc;
 
     use crate::Types::Types::*;

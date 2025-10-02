@@ -5,10 +5,12 @@
 //! while maintaining compatibility with APAS MtVal trait requirements.
 
 pub mod Probability {
-    use crate::Types::Types::*;
+
     use std::cmp::Ordering;
     use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
     use std::hash::{Hash, Hasher};
+
+    use crate::Types::Types::*;
 
     /// Probability wrapper for f64 values that implements Eq and Ord
     /// This solves the fundamental issue where OrderedFloat<f64> doesn't implement MtVal

@@ -3,7 +3,9 @@
 //! Implements Example 11.10 using the project Parallel Pair abstraction.
 
 pub mod FibonacciMt {
-    use crate::{ParaPair, Types::Types::*};
+
+    use crate::Types::Types::*;
+    use crate::ParaPair;
 
     pub struct FibonacciMt;
 

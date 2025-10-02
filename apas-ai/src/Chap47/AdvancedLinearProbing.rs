@@ -3,10 +3,12 @@
 //! Definition 47.7: Linear probing with h_i(k) = (h(k) + i) mod m
 
 pub mod AdvancedLinearProbing {
+
+    use std::fmt::{Debug, Display};
+
+    use crate::Types::Types::*;
     use crate::Chap47::FlatHashTable::FlatHashTable::*;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Types::Types::*;
-    use std::fmt::{Debug, Display};
 
     /// Advanced Linear Probing Strategy with Primary Clustering Analysis
     /// Claude Work: Θ(1), Span: Θ(1)

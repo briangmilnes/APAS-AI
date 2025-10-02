@@ -2,11 +2,12 @@
 //! Chapter 47: Hash Table Examples from Textbook
 
 pub mod HashExamples {
+
+    use crate::Types::Types::*;
     use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     use crate::Chap47::LinearProbing::LinearProbing::*;
     use crate::Chap47::SeparateChaining::SeparateChaining::*;
-    use crate::Types::Types::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait HashExamplesTrait {

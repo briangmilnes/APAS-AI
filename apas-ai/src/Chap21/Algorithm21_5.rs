@@ -2,9 +2,10 @@
 //! Chapter 21 — Algorithm 21.5: Brute Force Solution to the Primes Problem.
 
 pub mod Algorithm21_5 {
+
+    use crate::Types::Types::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap21::Exercise21_8::Exercise21_8::is_prime;
-    use crate::Types::Types::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait Algorithm21_5Trait {

@@ -2,6 +2,7 @@
 //! Chapter 18 algorithms for LinkedListStPer.
 
 pub mod LinkedListStPer {
+
     use std::collections::HashSet;
 
     use crate::Types::Types::*;

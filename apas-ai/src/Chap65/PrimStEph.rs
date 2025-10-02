@@ -5,6 +5,7 @@
 //! Uses priority-first search similar to Dijkstra's algorithm.
 
 pub mod PrimStEph {
+
     use std::cmp::Ordering;
     use std::collections::HashMap;
     use std::fmt::{Display, Formatter, Result as FmtResult};
@@ -12,11 +13,11 @@ pub mod PrimStEph {
 
     use ordered_float::OrderedFloat;
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
     use crate::SetLit;
-    use crate::Types::Types::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait PrimStEphTrait {

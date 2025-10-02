@@ -2,6 +2,7 @@
 //! Multi-threaded ephemeral matrix chain multiplication implementation using Vec and Arc<Mutex<Vec>> for mutable thread safety.
 
 pub mod MatrixChainMtEph {
+
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::sync::{Arc, Mutex};

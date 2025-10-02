@@ -2,9 +2,10 @@
 //! Chapter 47: Linear Probing Strategy
 
 pub mod LinearProbing {
+
+    use crate::Types::Types::*;
     use crate::Chap47::FlatHashTable::FlatHashTable::*;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Types::Types::*;
 
     /// Linear probing: h_i(x) = (h(x) + i) mod m
     #[derive(Clone, Debug)]

@@ -2,11 +2,12 @@
 //! Chapter 47: Separate Chaining implementation - Definition 47.3
 
 pub mod SeparateChaining {
+
     use std::fmt::{Debug, Display};
 
+    use crate::Types::Types::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Types::Types::*;
 
     /// Definition 47.3: Separate Chaining Hash Table
     /// Uses lists to store colliding key-value pairs

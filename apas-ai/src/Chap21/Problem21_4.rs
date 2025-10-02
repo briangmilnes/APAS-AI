@@ -2,8 +2,9 @@
 //! Chapter 21 — Problem 21.4: Cartesian Product using different approaches.
 
 pub mod Problem21_4 {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+
     use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait Problem21_4Trait {

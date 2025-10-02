@@ -2,6 +2,7 @@
 //! Chapter 47: Hash Function Traits and Utilities
 
 pub mod HashFunctionTraits {
+
     use std::collections::hash_map::DefaultHasher;
     use std::fmt::{Debug, Display};
     use std::hash::{Hash, Hasher};

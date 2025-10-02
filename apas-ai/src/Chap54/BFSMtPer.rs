@@ -4,7 +4,12 @@
 //! Work: O(|V| + |E|), Span: O(d·lg n) where d is diameter.
 
 pub mod BFSMtPer {
+
     use std::collections::VecDeque;
+
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
+    use crate::ParaPair;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait BFSMtPerTrait {
@@ -12,10 +17,6 @@ pub mod BFSMtPer {
         /// APAS: Work O(|V| + |E|), Span O(d·lg n) where d is diameter
         fn bfs(graph: &ArraySeqMtPerS<ArraySeqMtPerS<N>>, source: N) -> ArraySeqMtPerS<N>;
     }
-
-    use crate::Types::Types::*;
-    use crate::ParaPair;
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
 
     const UNREACHABLE: N = N::MAX;
 

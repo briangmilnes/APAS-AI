@@ -2,11 +2,12 @@
 //! Chapter 47: Flat Hash Table - Data Structure 47.6 Parametric Implementation
 
 pub mod FlatHashTable {
+
     use std::fmt::{Debug, Display};
 
+    use crate::Types::Types::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Types::Types::*;
 
     /// Entry types for flat hash table from Data Structure 47.6
     #[derive(Clone, Debug, PartialEq, Eq)]

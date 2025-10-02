@@ -2,6 +2,7 @@
 //! Chapter 18 algorithms for LinkedListStEph (ephemeral).
 
 pub mod LinkedListStEph {
+
     use std::collections::HashSet;
 
     use crate::Types::Types::*;

@@ -2,12 +2,13 @@
 //! Chapter 6.1 Directed Graph (ephemeral) using Set for vertices and arcs.
 
 pub mod DirGraphStEph {
+
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::SetLit;
-    use crate::Types::Types::*;
 
     #[derive(Clone)]
     pub struct DirGraphStEph<V: StT + Hash> {

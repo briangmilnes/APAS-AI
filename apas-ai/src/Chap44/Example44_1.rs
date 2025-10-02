@@ -2,10 +2,11 @@
 //! Chapter 44: Example 44.1 - Tweet Document Collection
 
 pub mod Example44_1 {
+
+    use crate::Types::Types::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap44::DocumentIndex::DocumentIndex::*;
     use crate::DocumentCollectionLit;
-    use crate::Types::Types::*;
 
     /// Example 44.1: Tweet collection from the textbook
     /// T = ⟨ ('jack', 'chess is fun'),

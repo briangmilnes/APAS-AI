@@ -2,10 +2,10 @@
 //! Chapter 45: Heapsort Example - Algorithm 45.2 using all Priority Queue implementations
 
 pub mod HeapsortExample {
+
+    use crate::Types::Types::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Types::Types::*;
-
     use crate::Chap45::BalancedTreePQ::BalancedTreePQ::*;
     use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
     use crate::Chap45::LeftistHeapPQ::LeftistHeapPQ::*;

@@ -2,10 +2,11 @@
 //! Chapter 45: Priority Queue implementation using Sorted List
 
 pub mod SortedListPQ {
+
     use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     /// Priority Queue implemented using a sorted list (ArraySeqStPer)
     /// Elements are maintained in ascending order (minimum at front)

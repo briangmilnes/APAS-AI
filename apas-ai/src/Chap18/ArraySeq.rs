@@ -6,7 +6,7 @@ pub mod ArraySeq {
     use std::collections::HashSet;
     use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
 
-    pub use crate::Types::Types::*;
+    use crate::Types::Types::*;
 
     #[derive(Clone)]
     pub struct ArraySeqS<T> {

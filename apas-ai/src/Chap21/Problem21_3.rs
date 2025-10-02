@@ -2,8 +2,9 @@
 //! Chapter 21 — Problem 21.3: Points in 3D using imperative triple loop.
 
 pub mod Problem21_3 {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+
     use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait Problem21_3Trait {

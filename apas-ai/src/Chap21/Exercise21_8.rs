@@ -2,8 +2,9 @@
 //! Chapter 21 — Exercise 21.8: Brute Force Primality Test (isPrime).
 
 pub mod Exercise21_8 {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+
     use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait Exercise21_8Trait {

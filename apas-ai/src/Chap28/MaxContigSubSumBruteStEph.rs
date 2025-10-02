@@ -2,8 +2,9 @@
 //! Maximum Contiguous Subsequence Sum - Brute Force (Chapter 28, Algorithm 28.8).
 
 pub mod MaxContigSubSumBruteStEph {
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+
     use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
 
     /// Helper function to compare Option<i32> values, treating None as negative infinity.
     fn max_with_neginf(a: Option<i32>, b: Option<i32>) -> Option<i32> {

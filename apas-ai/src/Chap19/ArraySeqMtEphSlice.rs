@@ -7,6 +7,7 @@
 //! - Adds `with_exclusive` to project a mutable slice guarded by the single mutex for batch updates.
 
 pub mod ArraySeqMtEphSlice {
+
     use std::fmt::{Debug, Display, Formatter};
     use std::ops::Range;
     use std::sync::{Arc, Mutex};

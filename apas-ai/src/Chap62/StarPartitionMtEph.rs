@@ -5,16 +5,17 @@
 //! Uses Seq.inject for efficient parallel updates.
 
 pub mod StarPartitionMtEph {
+
     use std::collections::HashMap;
     use std::hash::Hash;
 
     use rand::{rngs::StdRng, Rng, SeedableRng};
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::SetLit;
-    use crate::Types::Types::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait StarPartitionMtEphTrait {

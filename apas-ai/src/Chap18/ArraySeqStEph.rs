@@ -2,6 +2,7 @@
 //! Single-threaded ephemeral array sequence (mutable) implementation.
 
 pub mod ArraySeqStEph {
+
     use std::collections::HashSet;
     use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
 

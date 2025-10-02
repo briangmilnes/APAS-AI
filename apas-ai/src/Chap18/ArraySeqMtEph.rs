@@ -4,12 +4,13 @@
 //! Note: Uses unconditional parallelism with ParaPair! for divide-and-conquer operations (map, reduce).
 
 pub mod ArraySeqMtEph {
+
     use std::collections::HashSet;
     use std::sync::{Arc, Mutex};
     use std::thread;
 
-    use crate::ParaPair;
     use crate::Types::Types::*;
+    use crate::ParaPair;
 
     /// Fixed-length sequence backed by `Mutex<Box<[T]>>` (ephemeral/mutable MT variant).
     #[derive(Debug)]

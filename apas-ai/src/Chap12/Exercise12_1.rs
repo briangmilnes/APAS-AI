@@ -2,6 +2,7 @@
 //! Chapter 12 — Exercise 12.1: spin-lock via fetch-and-add tickets.
 
 pub mod Exercise12_1 {
+
     use std::hint::spin_loop;
     use std::sync::atomic::{AtomicUsize, Ordering};
     use std::sync::Arc;

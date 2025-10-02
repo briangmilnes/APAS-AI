@@ -1,0 +1,13 @@
+
+ Which files are missing APAS annotations for work and span?
+
+ List them all.
+
+ Can any be fixed by the ChapNN.txt files that contain
+ just algorithm analysis text from APAS in 
+ promts/alganl?
+
+ Make a plan according to PrePlanChecklist to fix these.
+ As they are comments you can avoid building src, checking
+ tests and benches/ until one final sweep of just cargo build.
+ 

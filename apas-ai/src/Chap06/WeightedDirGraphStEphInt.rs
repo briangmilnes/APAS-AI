@@ -2,12 +2,13 @@
 //! Chapter 6 Weighted Directed Graph (ephemeral) with integer weights - Single-threaded version.
 
 pub mod WeightedDirGraphStEphInt {
+
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
-    use crate::Types::Types::*;
 
     /// Weighted directed graph with integer weights (type alias)
     pub type WeightedDirGraphStEphInt<V> = LabDirGraphStEph<V, i32>;

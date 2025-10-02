@@ -2,8 +2,9 @@
 //! Chapter 21 — Algorithm 21.1: 2D Points using ArraySeqPer via tabulate + flatten.
 
 pub mod Algorithm21_1 {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+
     use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait Algorithm21_1Trait {

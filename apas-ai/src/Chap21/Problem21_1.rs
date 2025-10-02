@@ -2,8 +2,9 @@
 //! Chapter 21 — Problem 21.1: Points in 2D using imperative loops.
 
 pub mod Problem21_1 {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+
     use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait Problem21_1Trait {

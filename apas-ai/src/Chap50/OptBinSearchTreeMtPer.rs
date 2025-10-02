@@ -2,13 +2,14 @@
 //! Multi-threaded persistent optimal binary search tree implementation using Vec and Arc for thread safety.
 
 pub mod OptBinSearchTreeMtPer {
+
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::sync::{Arc, Mutex};
     use std::thread;
 
-    use crate::Chap50::Probability::Probability::Probability;
     use crate::Types::Types::*;
+    use crate::Chap50::Probability::Probability::Probability;
 
     /// Key-probability pair for optimal BST
     #[derive(Clone, Debug)]

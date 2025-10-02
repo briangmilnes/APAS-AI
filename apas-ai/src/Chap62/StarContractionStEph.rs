@@ -5,14 +5,15 @@
 //! A higher-order function that recursively contracts a graph using star partitions.
 
 pub mod StarContractionStEph {
+
     use std::collections::HashMap;
     use std::hash::Hash;
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
     use crate::Chap62::StarPartitionStEph::StarPartitionStEph::sequential_star_partition;
     use crate::SetLit;
-    use crate::Types::Types::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait StarContractionStEphTrait {

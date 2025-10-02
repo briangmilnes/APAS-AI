@@ -2,11 +2,12 @@
 //! Chapter 47: Nested Hash Table implementation - Section 1.1 Parametric Design
 
 pub mod NestedHashTable {
+
     use std::fmt::{Debug, Display, Formatter, Result};
 
+    use crate::Types::Types::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Types::Types::*;
 
     /// Simplified Nested Hash Table using separate chaining
     /// Uses ArraySeqStPerS for both outer table and inner chains

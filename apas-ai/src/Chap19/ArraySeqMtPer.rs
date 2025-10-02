@@ -2,10 +2,11 @@
 //! Chapter 19 algorithms for ArraySeqMtPer, just the one multi-threaded update of code that Umut and Guy snuck into this chapter.
 
 pub mod ArraySeqMtPer {
+
     use std::sync::Mutex;
 
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18};
     use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18};
 
     pub trait ArraySeqMtPerTrait<T: StTInMtT> {
         // Chapter 18 wrappers

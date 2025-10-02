@@ -5,12 +5,13 @@
 //! Edge filtering (NG) and vertex map-reduce (NGOfVertices) are parallel.
 
 pub mod UnDirGraphMtEph {
+
     use std::hash::Hash;
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::ParaPair;
     use crate::SetLit;
-    use crate::Types::Types::*;
 
     #[derive(Clone)]
     pub struct UnDirGraphMtEph<V: StT + MtT + Hash + 'static> {

@@ -2,10 +2,11 @@
 //! Chapter 45: Priority Queue implementation using Balanced Trees (AVL Tree)
 
 pub mod BalancedTreePQ {
+
     use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Types::Types::*;
+    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 
     /// Priority Queue implemented using a balanced tree (AVLTreeSeqStPer)
     /// Elements are maintained in sorted order for efficient min/max operations

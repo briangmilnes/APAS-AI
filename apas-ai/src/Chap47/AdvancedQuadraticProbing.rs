@@ -3,10 +3,12 @@
 //! Definition 47.8: Quadratic probing with h_i(k) = (h(k) + c1*i + c2*i^2) mod m
 
 pub mod AdvancedQuadraticProbing {
+
+    use std::fmt::{Debug, Display};
+
+    use crate::Types::Types::*;
     use crate::Chap47::FlatHashTable::FlatHashTable::*;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Types::Types::*;
-    use std::fmt::{Debug, Display};
 
     /// Advanced Quadratic Probing Strategy with Secondary Clustering Avoidance
     /// Claude Work: Θ(1), Span: Θ(1)

@@ -5,15 +5,16 @@
 //! Uses Union-Find data structure for efficient cycle detection.
 
 pub mod KruskalStEph {
+
     use std::hash::Hash;
 
     use ordered_float::OrderedFloat;
 
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
     use crate::SetLit;
-    use crate::Types::Types::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait KruskalStEphTrait {
