@@ -3,13 +3,12 @@
 
 pub mod DirGraphStEph {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::hash::Hash;
+use std::fmt::{Debug, Display, Formatter, Result};
+use std::hash::Hash;
 
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::SetLit;
-
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::SetLit;
     #[derive(Clone)]
     pub struct DirGraphStEph<V: StT + Hash> {
         V: Set<V>,

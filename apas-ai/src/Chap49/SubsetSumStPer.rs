@@ -3,14 +3,12 @@
 
 pub mod SubsetSumStPer {
 
-    use std::collections::HashMap;
-    use std::fmt::{Debug, Display, Formatter, Result};
+use std::collections::HashMap;
+use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Types::Types::*;
-    use crate::ArraySeqStPerS;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-
-    /// Persistent single-threaded subset sum solver using dynamic programming
+use crate::Types::Types::*;
+use crate::ArraySeqStPerS;
+use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct SubsetSumStPerS<T: StT> {
         multiset: ArraySeqStPerS<T>,

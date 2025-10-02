@@ -2,13 +2,12 @@
 //! Example 41.3: Demonstrating set operations from Example 41.1
 
 pub mod Example41_3 {
-    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
-    use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Types::Types::*;
-    use crate::{AVLTreeSeqStEphLit, AVLTreeSetStEphLit, ArraySeqStEphSLit, ArraySetStEphLit};
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+use crate::{AVLTreeSeqStEphLit, AVLTreeSetStEphLit, ArraySeqStEphSLit, ArraySetStEphLit};
     pub trait Example41_3Trait {
         /// Example 41.1 cases using ArraySetStEph
         /// APAS: Work Θ(n log n), Span Θ(log n)

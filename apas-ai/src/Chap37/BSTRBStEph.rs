@@ -2,10 +2,10 @@
 //! Ephemeral Red-Black balanced binary search tree with `find` support and public helpers.
 
 pub mod BSTRBStEph {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
 
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     #[derive(Clone, Copy, PartialEq, Eq, Debug)]
     enum Color {
         Red,

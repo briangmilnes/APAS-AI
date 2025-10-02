@@ -3,10 +3,8 @@
 
 pub mod Problem21_1 {
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     pub trait Problem21_1Trait {
         /// Problem 21.1 (Points in 2D) - Imperative approach using nested loops
         /// APAS: Work Θ(n²), Span Θ(n²)

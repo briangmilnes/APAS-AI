@@ -2,10 +2,9 @@
 //! Sequential merge sort implementation (Chapter 26).
 
 pub mod MergeSortSt {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    use crate::Types::Types::*;
 
-    /// Sequential merge sort trait.
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
     pub trait MergeSortStTrait<T: StT + Ord> {
         /// Merge two sorted sequences into one sorted sequence.
         /// APAS: Work Θ(n), Span Θ(n)

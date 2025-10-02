@@ -2,10 +2,10 @@
 //! Key-Value BST (dictionary/table) with ephemeral treap structure.
 
 pub mod BSTKeyValueStEph {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
-    use rand::{rng, Rng};
 
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use rand::{rng, Rng};
     type Link<K, V> = Option<Box<Node<K, V>>>;
 
     #[derive(Clone, Debug)]

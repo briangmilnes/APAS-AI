@@ -2,15 +2,12 @@
 //! Chapter 36 (Multi-threaded Slice): Quicksort over `ArraySeqMtEphSlice` without extra copies.
 
 pub mod Chapter36MtSlice {
-    use std::thread;
 
-    use rand::{rng, Rng};
+use std::thread;
 
-    use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
-    use crate::Types::Types::*;
-
-    // Unconditionally parallel - no thresholding per APAS rules
-
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
+use rand::{rng, Rng};
     pub trait Chapter36MtSliceTrait<T: StT + Ord + Send> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time pivot selection

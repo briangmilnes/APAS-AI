@@ -2,16 +2,14 @@
 //! Single-threaded ephemeral reducer-augmented ordered table implementation.
 
 pub mod AugOrderedTableStEph {
-    use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Chap43::OrderedTableStEph::OrderedTableStEph::*;
-    use crate::OrderedTableStEphLit;
-    use crate::Types::Types::*;
+use std::fmt::{Debug, Display, Formatter, Result};
 
-    /// Single-threaded ephemeral reducer-augmented ordered table
-    /// Wraps OrderedTableStEph and maintains cached reduction for O(1) reduceVal
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+use crate::Chap43::OrderedTableStEph::OrderedTableStEph::*;
+use crate::OrderedTableStEphLit;
     #[derive(PartialEq, Clone)]
     pub struct AugOrderedTableStEph<K: StT + Ord, V: StT, F>
     where

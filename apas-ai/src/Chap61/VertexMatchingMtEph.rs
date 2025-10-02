@@ -5,16 +5,15 @@
 //! - Algorithm 61.4: Parallel Vertex Matching (randomized with fork/join)
 
 pub mod VertexMatchingMtEph {
-    use std::hash::Hash;
 
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::ParaPair;
-    use crate::SetLit;
-    use crate::Types::Types::*;
+use std::hash::Hash;
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+use crate::ParaPair;
+use crate::SetLit;
     pub trait VertexMatchingMtEphTrait {
         /// Parallel vertex matching using randomized symmetry breaking
         /// APAS: Work O(|E|), Span O(lg |V|)

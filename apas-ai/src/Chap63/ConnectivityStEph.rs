@@ -9,17 +9,15 @@
 
 pub mod ConnectivityStEph {
 
-    use std::collections::HashMap;
-    use std::hash::Hash;
+use std::collections::HashMap;
+use std::hash::Hash;
 
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
-    use crate::Chap62::StarContractionStEph::StarContractionStEph::star_contract;
-    use crate::Chap62::StarPartitionStEph::StarPartitionStEph::sequential_star_partition;
-    use crate::SetLit;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+use crate::Chap62::StarContractionStEph::StarContractionStEph::star_contract;
+use crate::Chap62::StarPartitionStEph::StarPartitionStEph::sequential_star_partition;
+use crate::SetLit;
     pub trait ConnectivityStEphTrait {
         /// Count connected components using star contraction
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)

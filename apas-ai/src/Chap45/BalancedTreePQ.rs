@@ -3,14 +3,10 @@
 
 pub mod BalancedTreePQ {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
+use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Types::Types::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-
-    /// Priority Queue implemented using a balanced tree (AVLTreeSeqStPer)
-    /// Elements are maintained in sorted order for efficient min/max operations
-    /// Data Type 45.1: Meldable Priority Queue
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     #[derive(PartialEq, Clone, Debug)]
     pub struct BalancedTreePQ<T: StT + Ord> {
         elements: AVLTreeSeqStPerS<T>,

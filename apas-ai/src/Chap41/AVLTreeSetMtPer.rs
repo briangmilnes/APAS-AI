@@ -7,12 +7,13 @@
 //! - filter: Work Θ(n), Span Θ(log n) via PARALLEL map-reduce
 
 pub mod AVLTreeSetMtPer {
-    use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
-    use crate::ParaPair;
-    use crate::Types::Types::*;
-    use std::fmt;
-    use std::thread;
 
+use std::fmt;
+use std::thread;
+
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
+use crate::ParaPair;
     #[derive(PartialEq, Eq)]
     pub struct AVLTreeSetMtPer<T: StTInMtT + Ord + 'static> {
         elements: AVLTreeSeqMtPerS<T>,

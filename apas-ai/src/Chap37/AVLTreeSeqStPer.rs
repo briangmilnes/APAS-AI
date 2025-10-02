@@ -2,12 +2,12 @@
 //! StPer (immutable, structurally shared) AVL tree sequence using Rc path-copying.
 
 pub mod AVLTreeSeqStPer {
-    use std::fmt::Debug;
-    use std::rc::Rc;
 
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
+use std::fmt::Debug;
+use std::rc::Rc;
 
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     type Link<T> = Option<Rc<Node<T>>>;
 
     struct Node<T: StT> {

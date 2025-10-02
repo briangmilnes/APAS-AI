@@ -6,15 +6,13 @@
 
 pub mod BottomUpDPMtEph {
 
-    use std::cmp::{max, min};
-    use std::fmt::{Debug, Display};
-    use std::sync::{Arc, Mutex};
-    use std::thread;
+use std::cmp::{max, min};
+use std::fmt::{Debug, Display};
+use std::sync::{Arc, Mutex};
+use std::thread;
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
-
-    /// Ephemeral multi-threaded bottom-up DP structure (struct product record type)
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct BottomUpDPMtEphS {
         /// Input sequence S

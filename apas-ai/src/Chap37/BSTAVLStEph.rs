@@ -2,10 +2,10 @@
 //! Ephemeral AVL-balanced binary search tree with `find` support and public traversal helpers.
 
 pub mod BSTAVLStEph {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
 
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone, Debug)]

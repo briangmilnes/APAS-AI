@@ -3,6 +3,7 @@
 
 pub mod InsertionSortSt {
 
+
     pub trait InsertionSortStTrait<T: Ord + Clone> {
         /// APAS: Work O(n²), Span O(n log n)
         /// claude-4-sonet: Work Θ(n²), Span Θ(n²), Parallelism Θ(1)

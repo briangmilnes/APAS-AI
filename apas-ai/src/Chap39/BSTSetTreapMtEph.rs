@@ -3,12 +3,11 @@
 
 pub mod BSTSetTreapMtEph {
 
-    use std::collections::BTreeSet;
+use std::collections::BTreeSet;
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap39::BSTTreapMtEph::BSTTreapMtEph::*;
-
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap39::BSTTreapMtEph::BSTTreapMtEph::*;
     #[derive(Debug, Clone)]
     pub struct BSTSetTreapMtEph<T: StTInMtT + Ord> {
         tree: BSTTreapMtEph<T>,

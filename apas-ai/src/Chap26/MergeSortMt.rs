@@ -3,13 +3,13 @@
 //! Note: Unconditionally parallel - no thresholding per APAS rules.
 
 pub mod MergeSortMt {
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
-    use crate::ParaPair;
-    use crate::Types::Types::*;
-    use std::sync::Arc;
-    use std::thread;
 
-    /// Parallel merge sort trait.
+use std::sync::Arc;
+use std::thread;
+
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
+use crate::ParaPair;
     pub trait MergeSortMtTrait<T: StT + Ord + Send + Sync + 'static> {
         /// Merge two sorted sequences in parallel using binary search.
         /// APAS: Work Θ(n), Span Θ(log n)

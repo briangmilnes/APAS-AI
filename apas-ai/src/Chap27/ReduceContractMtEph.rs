@@ -2,13 +2,13 @@
 //! Parallel reduce using contraction technique (Chapter 27, Algorithm 27.2).
 
 pub mod ReduceContractMtEph {
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
-    use crate::ParaPair;
-    use crate::Types::Types::*;
-    use std::sync::Arc;
-    use std::thread;
 
-    /// Parallel reduce using contraction technique.
+use std::sync::Arc;
+use std::thread;
+
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
+use crate::ParaPair;
     pub trait ReduceContractMtEphTrait<T: StT + Send + Sync> {
         /// Reduce a sequence using parallel contraction: contract→solve→expand.
         /// APAS: Work Θ(n), Span Θ(log n)

@@ -3,10 +3,8 @@
 
 pub mod Problem21_3 {
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     pub trait Problem21_3Trait {
         /// Problem 21.3 (Points in 3D) using ArraySeqPer — imperative triple loop
         /// APAS: Work Θ(n³), Span Θ(n³)

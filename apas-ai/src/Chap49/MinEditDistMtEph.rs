@@ -3,16 +3,14 @@
 
 pub mod MinEditDistMtEph {
 
-    use std::collections::HashMap;
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::sync::{Arc, Mutex};
-    use std::thread;
+use std::collections::HashMap;
+use std::fmt::{Debug, Display, Formatter, Result};
+use std::sync::{Arc, Mutex};
+use std::thread;
 
-    use crate::Types::Types::*;
-    use crate::ArraySeqMtEphSLit;
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
-
-    /// Ephemeral multi-threaded minimum edit distance solver using parallel dynamic programming
+use crate::Types::Types::*;
+use crate::ArraySeqMtEphSLit;
+use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     #[derive(Clone, Debug)]
     pub struct MinEditDistMtEphS<T: MtVal> {
         source: ArraySeqMtEphS<T>,

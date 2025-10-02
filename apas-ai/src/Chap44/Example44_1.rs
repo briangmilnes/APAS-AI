@@ -3,17 +3,10 @@
 
 pub mod Example44_1 {
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap44::DocumentIndex::DocumentIndex::*;
-    use crate::DocumentCollectionLit;
-
-    /// Example 44.1: Tweet collection from the textbook
-    /// T = ⟨ ('jack', 'chess is fun'),
-    ///       ('mary', 'I had fun in dance club today'),
-    ///       ('nick', 'food at the cafeteria sucks'),
-    ///       ('josefa', 'rock climbing was a blast'),
-    ///       ('peter', 'I had fun at the party, food was great') ⟩
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap44::DocumentIndex::DocumentIndex::*;
+use crate::DocumentCollectionLit;
     pub fn create_tweet_collection() -> DocumentCollection {
         DocumentCollectionLit![
             "jack" => "chess is fun",

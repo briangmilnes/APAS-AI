@@ -7,13 +7,14 @@
 //! - filter: Work Θ(n), Span Θ(log n) via PARALLEL map-reduce
 
 pub mod AVLTreeSetMtEph {
-    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
-    use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
-    use crate::ParaPair;
-    use crate::Types::Types::*;
-    use std::fmt;
-    use std::sync::{Arc, Mutex};
 
+use std::fmt;
+use std::sync::{Arc, Mutex};
+
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
+use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
+use crate::ParaPair;
     pub struct AVLTreeSetMtEph<T: StTInMtT + Ord + 'static> {
         inner: Arc<Mutex<AVLTreeSetStEph<T>>>,
     }

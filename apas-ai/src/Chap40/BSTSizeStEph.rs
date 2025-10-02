@@ -2,10 +2,10 @@
 //! Size-augmented BST with O(1) size queries and rank/select operations.
 
 pub mod BSTSizeStEph {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
-    use rand::{rng, Rng};
 
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use rand::{rng, Rng};
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Clone, Debug)]

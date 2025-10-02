@@ -12,20 +12,19 @@
 //! - Parallelism in Phase 3: Θ(n) - n independent Dijkstra runs
 
 pub mod JohnsonMtEphInt {
-    use std::thread;
 
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::LabDirGraphMtEphTrait;
-    use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
-    use crate::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
-    use crate::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Chap56::AllPairsResultStEphInt::AllPairsResultStEphInt::AllPairsResultStEphInt;
-    use crate::Chap57::DijkstraStEphInt::DijkstraStEphInt::dijkstra;
-    use crate::Chap58::BellmanFordStEphInt::BellmanFordStEphInt::bellman_ford;
-    use crate::Types::Types::*;
+use std::thread;
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::LabDirGraphMtEphTrait;
+use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
+use crate::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
+use crate::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
+use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+use crate::Chap56::AllPairsResultStEphInt::AllPairsResultStEphInt::AllPairsResultStEphInt;
+use crate::Chap57::DijkstraStEphInt::DijkstraStEphInt::dijkstra;
+use crate::Chap58::BellmanFordStEphInt::BellmanFordStEphInt::bellman_ford;
     pub trait JohnsonMtEphIntTrait {
         /// Parallel Johnson's all-pairs shortest path algorithm
         /// APAS: Work O(mn log n), Span O(m log n) where n = |V|, m = |E|

@@ -6,11 +6,9 @@
 
 pub mod PQMinStPer {
 
-    use crate::Types::Types::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
-    use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
-
-    /// Result of PQS containing visited vertices and parent tree.
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
+use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     #[derive(Clone, Debug)]
     pub struct PQMinResult<V: StT + Ord, P: StT + Ord> {
         pub visited: AVLTreeSetStPer<V>,

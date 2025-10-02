@@ -3,10 +3,8 @@
 
 pub mod Problem21_4 {
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     pub trait Problem21_4Trait {
         /// Problem 21.4 (Cartesian Product) - Imperative approach using explicit loops
         /// APAS: Work Θ(|a|·|b|), Span Θ(|a|·|b|)

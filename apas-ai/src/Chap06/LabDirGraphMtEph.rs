@@ -6,14 +6,13 @@
 
 pub mod LabDirGraphMtEph {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::hash::Hash;
+use std::fmt::{Debug, Display, Formatter, Result};
+use std::hash::Hash;
 
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::ParaPair;
-    use crate::SetLit;
-
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::ParaPair;
+use crate::SetLit;
     #[derive(Clone)]
     pub struct LabDirGraphMtEph<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> {
         vertices: Set<V>,

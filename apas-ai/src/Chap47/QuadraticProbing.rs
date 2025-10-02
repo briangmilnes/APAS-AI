@@ -3,11 +3,9 @@
 
 pub mod QuadraticProbing {
 
-    use crate::Types::Types::*;
-    use crate::Chap47::FlatHashTable::FlatHashTable::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-
-    /// Quadratic probing: h_i(x) = (h(x) + c1*i + c2*i^2) mod m
+use crate::Types::Types::*;
+use crate::Chap47::FlatHashTable::FlatHashTable::*;
+use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug)]
     pub struct QuadraticProbingStrategy<K: StT, H: HashFunClone<K>> {
         base_hash: H,

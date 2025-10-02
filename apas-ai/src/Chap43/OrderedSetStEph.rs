@@ -2,13 +2,12 @@
 //! Single-threaded ephemeral ordered set implementation extending AVLTreeSetStEph.
 
 pub mod OrderedSetStEph {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
-    use crate::Types::Types::*;
 
-    /// Single-threaded ephemeral ordered set backed by AVLTreeSetStEph
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
     #[derive(PartialEq)]
     pub struct OrderedSetStEph<T: StT + Ord> {
         base_set: AVLTreeSetStEph<T>,

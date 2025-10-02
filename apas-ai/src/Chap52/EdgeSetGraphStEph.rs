@@ -3,11 +3,9 @@
 
 pub mod EdgeSetGraphStEph {
 
-    use crate::Types::Types::*;
-    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
-    use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
-
-
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
     #[derive(Clone)]
     pub struct EdgeSetGraphStEph<V: StT + Ord> {
         vertices: AVLTreeSetStEph<V>,

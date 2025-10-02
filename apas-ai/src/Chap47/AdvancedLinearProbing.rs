@@ -4,14 +4,11 @@
 
 pub mod AdvancedLinearProbing {
 
-    use std::fmt::{Debug, Display};
+use std::fmt::{Debug, Display};
 
-    use crate::Types::Types::*;
-    use crate::Chap47::FlatHashTable::FlatHashTable::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-
-    /// Advanced Linear Probing Strategy with Primary Clustering Analysis
-    /// Claude Work: Θ(1), Span: Θ(1)
+use crate::Types::Types::*;
+use crate::Chap47::FlatHashTable::FlatHashTable::*;
+use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug)]
     pub struct AdvancedLinearProbingStrategy<K: StT, H: HashFunClone<K>> {
         base_hash: H,

@@ -6,10 +6,9 @@
 //! redundant computation and achieve O(n) work complexity.
 
 pub mod MaxContigSubSumDivConOptStEph {
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
-    use crate::Types::Types::*;
 
-    /// Helper function to compare Option<i32> values, treating None as negative infinity.
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
     fn max_with_neginf(a: Option<i32>, b: Option<i32>) -> Option<i32> {
         match (a, b) {
             | (None, None) => None,

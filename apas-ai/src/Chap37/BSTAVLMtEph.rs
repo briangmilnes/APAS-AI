@@ -2,12 +2,12 @@
 //! Ephemeral AVL-balanced binary search tree with interior locking for multi-threaded access.
 
 pub mod BSTAVLMtEph {
-    use std::sync::{Arc, RwLock};
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
+use std::sync::{Arc, RwLock};
 
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Debug, Clone)]

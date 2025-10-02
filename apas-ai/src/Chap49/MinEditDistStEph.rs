@@ -3,14 +3,12 @@
 
 pub mod MinEditDistStEph {
 
-    use std::collections::HashMap;
-    use std::fmt::{Debug, Display, Formatter, Result};
+use std::collections::HashMap;
+use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Types::Types::*;
-    use crate::ArraySeqStEphS;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-
-    /// Ephemeral single-threaded minimum edit distance solver using dynamic programming
+use crate::Types::Types::*;
+use crate::ArraySeqStEphS;
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct MinEditDistStEphS<T: StT> {
         source: ArraySeqStEphS<T>,

@@ -2,16 +2,14 @@
 //! Single-threaded persistent reducer-augmented ordered table implementation.
 
 pub mod AugOrderedTableStPer {
-    use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Chap43::OrderedTableStPer::OrderedTableStPer::*;
-    use crate::OrderedTableStPerLit;
-    use crate::Types::Types::*;
+use std::fmt::{Debug, Display, Formatter, Result};
 
-    /// Single-threaded persistent reducer-augmented ordered table
-    /// Wraps OrderedTableStPer and maintains cached reduction for O(1) reduceVal
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+use crate::Chap43::OrderedTableStPer::OrderedTableStPer::*;
+use crate::OrderedTableStPerLit;
     #[derive(PartialEq, Clone)]
     pub struct AugOrderedTableStPer<K: StT + Ord, V: StT, F>
     where

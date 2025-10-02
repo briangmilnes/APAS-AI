@@ -13,8 +13,8 @@
 //! - `extract_path`: Work O(k), Span O(k) where k is path length
 
 pub mod AllPairsResultStPerInt {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    
+
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
     const UNREACHABLE: i64 = i64::MAX;
     const NO_PREDECESSOR: usize = usize::MAX;
     

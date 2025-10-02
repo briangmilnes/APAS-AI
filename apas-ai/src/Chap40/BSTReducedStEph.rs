@@ -2,11 +2,12 @@
 //! BST with general reduced values augmentation using associative functions.
 
 pub mod BSTReducedStEph {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
-    use rand::{rng, Rng};
-    use std::marker::PhantomData;
 
+use std::marker::PhantomData;
+
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use rand::{rng, Rng};
     type Link<K, V, R> = Option<Box<Node<K, V, R>>>;
 
     #[derive(Clone, Debug)]

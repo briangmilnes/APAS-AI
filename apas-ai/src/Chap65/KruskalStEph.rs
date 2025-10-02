@@ -6,17 +6,14 @@
 
 pub mod KruskalStEph {
 
-    use std::hash::Hash;
+use std::hash::Hash;
 
-    use ordered_float::OrderedFloat;
-
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
-    use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
-    use crate::SetLit;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
+use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
+use crate::SetLit;
+use ordered_float::OrderedFloat;
     pub trait KruskalStEphTrait {
         /// Kruskal's MST algorithm
         /// APAS: Work O(m log m), Span O(m log m) where m = |E|

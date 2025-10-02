@@ -2,11 +2,10 @@
 //! Maximum Contiguous Subsequence Sum - Work Optimal (Chapter 28, Algorithm 28.16).
 
 pub mod MaxContigSubSumOptStEph {
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
-    use crate::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
-    use crate::Types::Types::*;
 
-    /// Trait for work-optimal maximum contiguous subsequence sum.
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+use crate::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
     pub trait MaxContigSubSumOptTrait {
         /// Compute maximum contiguous subsequence sum using optimal scan-based algorithm.
         /// Returns None for empty sequence (representing -∞).

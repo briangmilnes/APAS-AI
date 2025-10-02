@@ -6,16 +6,14 @@
 
 pub mod StarContractionStEph {
 
-    use std::collections::HashMap;
-    use std::hash::Hash;
+use std::collections::HashMap;
+use std::hash::Hash;
 
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
-    use crate::Chap62::StarPartitionStEph::StarPartitionStEph::sequential_star_partition;
-    use crate::SetLit;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+use crate::Chap62::StarPartitionStEph::StarPartitionStEph::sequential_star_partition;
+use crate::SetLit;
     pub trait StarContractionStEphTrait {
         /// Sequential star contraction higher-order function
         /// APAS: Work O((n + m) lg n), Span O((n + m) lg n)

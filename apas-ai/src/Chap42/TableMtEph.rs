@@ -2,15 +2,15 @@
 //! Chapter 42 multi-threaded ephemeral table implementation using ArraySeqMtEph as backing store.
 
 pub mod TableMtEph {
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
-    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Types::Types::*;
-    use std::cmp::Ordering;
-    use std::sync::Arc;
-    use std::thread;
 
-    /// Multi-threaded ephemeral table backed by ArraySeqMtEph
+use std::cmp::Ordering;
+use std::sync::Arc;
+use std::thread;
+
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
+use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     #[derive(Debug, Clone, PartialEq)]
     pub struct TableMtEph<K: MtKey, V: MtVal> {
         entries: ArraySeqMtEphS<Pair<K, V>>,

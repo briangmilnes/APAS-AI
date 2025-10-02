@@ -3,11 +3,10 @@
 
 pub mod AdjMatrixGraphMtEph {
 
-    use std::sync::Arc;
+use std::sync::Arc;
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
-
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     #[derive(Clone)]
     pub struct AdjMatrixGraphMtEph {
         matrix: ArraySeqMtEphS<ArraySeqMtEphS<bool>>,

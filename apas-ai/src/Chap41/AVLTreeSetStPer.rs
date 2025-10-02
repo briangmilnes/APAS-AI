@@ -2,9 +2,9 @@
 //! Single-threaded persistent set implementation using AVLTreeSeqStPer as backing store.
 
 pub mod AVLTreeSetStPer {
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Types::Types::*;
 
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     #[derive(PartialEq, Eq, Debug)]
     pub struct AVLTreeSetStPer<T: StT + Ord> {
         elements: AVLTreeSeqStPerS<T>,

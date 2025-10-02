@@ -6,16 +6,13 @@
 
 pub mod BottomUpDPMtPer {
 
-    use std::cmp::{max, min};
-    use std::fmt::{Debug, Display};
-    use std::sync::{Arc, Mutex};
-    use std::thread;
+use std::cmp::{max, min};
+use std::fmt::{Debug, Display};
+use std::sync::{Arc, Mutex};
+use std::thread;
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
-
-
-    /// Persistent multi-threaded bottom-up DP structure (struct product record type)
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct BottomUpDPMtPerS {
         /// Input sequence S

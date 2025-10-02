@@ -3,13 +3,9 @@
 
 pub mod LeftistHeapPQ {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
+use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Types::Types::*;
-
-    /// Leftist Heap Node - implements Data Structure 45.3 from textbook
-    /// A binary tree that maintains heap property but not complete binary tree property
-    /// The key insight: meld operation takes O(log n + log m) by following right spines
+use crate::Types::Types::*;
     #[derive(PartialEq, Clone, Debug)]
     pub enum LeftistHeapNode<T: StT + Ord> {
         Leaf,

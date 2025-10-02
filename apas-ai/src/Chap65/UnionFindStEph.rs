@@ -6,15 +6,10 @@
 
 pub mod UnionFindStEph {
 
-    use std::collections::HashMap;
-    use std::hash::Hash;
+use std::collections::HashMap;
+use std::hash::Hash;
 
-    use crate::Types::Types::*;
-
-    /// Union-Find data structure
-    ///
-    /// Maintains disjoint sets with efficient union and find operations.
-    /// Uses path compression and union by rank optimizations.
+use crate::Types::Types::*;
     pub struct UnionFind<V: StT + Hash> {
         parent: HashMap<V, V>,
         rank: HashMap<V, usize>,

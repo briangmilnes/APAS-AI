@@ -2,12 +2,12 @@
 //! Chapter 42 single-threaded ephemeral table implementation using ArraySeq as backing store.
 
 pub mod TableStEph {
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Types::Types::*;
-    use std::cmp::Ordering;
 
-    /// Single-threaded ephemeral table backed by ArraySeq
+use std::cmp::Ordering;
+
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     #[derive(Debug, Clone, PartialEq)]
     pub struct TableStEph<K: StT + Ord, V: StT> {
         entries: ArraySeqStEphS<Pair<K, V>>,

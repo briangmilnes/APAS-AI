@@ -3,9 +3,9 @@
 
 pub mod ArraySeqStPer {
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
+use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{
         ArraySeqStPerS as ArraySeqStPerSChap18, ArraySeqStPerTrait as ArraySeqStPerTraitChap18,
     };
 

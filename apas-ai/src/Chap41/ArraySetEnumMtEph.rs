@@ -5,13 +5,13 @@
 //! Memory: ⌈universe_size / 64⌉ × 8 bytes. Only filter() uses parallelism.
 
 pub mod ArraySetEnumMtEph {
-    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
-    use crate::Types::Types::*;
-    use bitvec::prelude::*;
-    use std::sync::Arc;
-    use std::thread;
 
-    /// Enumerated set using bit array. bits[i] = true iff i ∈ set.
+use std::sync::Arc;
+use std::thread;
+
+use crate::Types::Types::*;
+use bitvec::prelude::*;
+use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
     #[derive(PartialEq, Clone)]
     pub struct ArraySetEnumMtEph {
         bits: BitBox,     // 1 bit per element

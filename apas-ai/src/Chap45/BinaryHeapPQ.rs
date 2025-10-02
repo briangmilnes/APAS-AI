@@ -3,15 +3,10 @@
 
 pub mod BinaryHeapPQ {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
+use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-
-    /// Priority Queue implemented using a complete binary heap (ArraySeqStPer)
-    /// Maintains heap property: parent <= children (min-heap)
-    /// Shape property: complete binary tree (filled left to right)
-    /// Data Type 45.1: Meldable Priority Queue
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     #[derive(PartialEq, Clone, Debug)]
     pub struct BinaryHeapPQ<T: StT + Ord> {
         elements: ArraySeqStPerS<T>,

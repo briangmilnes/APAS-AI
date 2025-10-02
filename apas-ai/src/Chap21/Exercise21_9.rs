@@ -2,6 +2,7 @@
 //! Chapter 21 — Exercise 21.9: Composite generation proof.
 
 pub mod Exercise21_9 {
+
     //! Exercise 21.9 (Composite generation proof) — documentation placeholder.
     //! This is a proof-only exercise; implementation will be provided in Verus later.
     //!

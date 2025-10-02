@@ -3,12 +3,10 @@
 
 pub mod ArraySeqStPer {
 
-    use std::collections::HashSet;
-    use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
+use std::collections::HashSet;
+use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
 
-    use crate::Types::Types::*;
-
-    /// Persistent array-backed sequence (`Per` variant) that never mutates in place.
+use crate::Types::Types::*;
     #[derive(Clone)]
     pub struct ArraySeqStPerS<T: StT> {
         data: Box<[T]>,

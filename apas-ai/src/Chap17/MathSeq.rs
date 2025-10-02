@@ -7,14 +7,12 @@
 
 pub mod MathSeq {
 
-    use std::collections::hash_map::Entry;
-    use std::collections::{HashMap, HashSet};
-    use std::fmt::{Debug, Display, Formatter};
-    use std::hash::Hash;
+use std::collections::hash_map::Entry;
+use std::collections::{HashMap, HashSet};
+use std::fmt::{Debug, Display, Formatter};
+use std::hash::Hash;
 
-    use crate::Types::Types::*;
-
-    /// Mathematical sequence with dense domain, backed by `Vec<T>`.
+use crate::Types::Types::*;
     #[derive(Clone)]
     pub struct MathSeqS<T: StT> {
         data: Vec<T>,

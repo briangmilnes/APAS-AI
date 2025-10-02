@@ -2,10 +2,9 @@
 //! Sequential reduce using contraction technique (Chapter 27, Algorithm 27.2).
 
 pub mod ReduceContractStEph {
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
-    use crate::Types::Types::*;
 
-    /// Sequential reduce using contraction technique.
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
     pub trait ReduceContractStEphTrait<T: StT> {
         /// Reduce a sequence using contraction: contract→solve→expand.
         /// APAS: Work Θ(n), Span Θ(n)

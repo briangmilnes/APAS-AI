@@ -3,14 +3,12 @@
 
 pub mod OptBinSearchTreeStEph {
 
-    use std::collections::HashMap;
-    use std::fmt::{Debug, Display, Formatter, Result};
+use std::collections::HashMap;
+use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Types::Types::*;
-    use crate::Chap50::Probability::Probability::Probability;
-    use crate::prob;
-
-    /// Key-probability pair for optimal BST
+use crate::Types::Types::*;
+use crate::Chap50::Probability::Probability::Probability;
+use crate::prob;
     #[derive(Clone, Debug, PartialEq)]
     pub struct KeyProb<T: StT> {
         pub key: T,

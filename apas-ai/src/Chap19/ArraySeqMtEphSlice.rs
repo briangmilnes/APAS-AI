@@ -8,12 +8,11 @@
 
 pub mod ArraySeqMtEphSlice {
 
-    use std::fmt::{Debug, Display, Formatter};
-    use std::ops::Range;
-    use std::sync::{Arc, Mutex};
+use std::fmt::{Debug, Display, Formatter};
+use std::ops::Range;
+use std::sync::{Arc, Mutex};
 
-    use crate::Types::Types::*;
-
+use crate::Types::Types::*;
     #[derive(Debug)]
     struct Inner<T: StT + Send + Sync> {
         data: Mutex<Box<[T]>>,

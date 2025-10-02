@@ -9,20 +9,18 @@
 
 pub mod ConnectivityMtEph {
 
-    use std::collections::HashMap;
-    use std::hash::Hash;
-    use std::sync::Arc;
+use std::collections::HashMap;
+use std::hash::Hash;
+use std::sync::Arc;
 
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Chap62::StarContractionMtEph::StarContractionMtEph::star_contract_mt;
-    use crate::Chap62::StarPartitionMtEph::StarPartitionMtEph::parallel_star_partition;
-    use crate::ParaPair;
-    use crate::SetLit;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+use crate::Chap62::StarContractionMtEph::StarContractionMtEph::star_contract_mt;
+use crate::Chap62::StarPartitionMtEph::StarPartitionMtEph::parallel_star_partition;
+use crate::ParaPair;
+use crate::SetLit;
     pub trait ConnectivityMtEphTrait {
         /// Count connected components using parallel star contraction
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)

@@ -6,18 +6,15 @@
 
 pub mod StarPartitionMtEph {
 
-    use std::collections::HashMap;
-    use std::hash::Hash;
+use std::collections::HashMap;
+use std::hash::Hash;
 
-    use rand::{rngs::StdRng, Rng, SeedableRng};
-
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::SetLit;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+use crate::SetLit;
+use rand::{rngs::StdRng, Rng, SeedableRng};
     pub trait StarPartitionMtEphTrait {
         /// Parallel star partition using randomized coin flips
         /// APAS: Work O(|V| + |E|), Span O(lg |V|)

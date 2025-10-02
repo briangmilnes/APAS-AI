@@ -3,15 +3,13 @@
 
 pub mod OptBinSearchTreeMtPer {
 
-    use std::collections::HashMap;
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::sync::{Arc, Mutex};
-    use std::thread;
+use std::collections::HashMap;
+use std::fmt::{Debug, Display, Formatter, Result};
+use std::sync::{Arc, Mutex};
+use std::thread;
 
-    use crate::Types::Types::*;
-    use crate::Chap50::Probability::Probability::Probability;
-
-    /// Key-probability pair for optimal BST
+use crate::Types::Types::*;
+use crate::Chap50::Probability::Probability::Probability;
     #[derive(Clone, Debug)]
     pub struct KeyProb<T: MtVal> {
         pub key: T,

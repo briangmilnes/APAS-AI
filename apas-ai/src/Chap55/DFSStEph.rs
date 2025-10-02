@@ -5,11 +5,9 @@
 
 pub mod DFSStEph {
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
-    use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::{AVLTreeSetStEph, AVLTreeSetStEphTrait};
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::{AVLTreeSetStEph, AVLTreeSetStEphTrait};
     pub trait DFSStEphTrait {
         /// Performs DFS from source vertex s on adjacency list graph G
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)

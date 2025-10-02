@@ -3,14 +3,10 @@
 
 pub mod SortedListPQ {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
+use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-
-    /// Priority Queue implemented using a sorted list (ArraySeqStPer)
-    /// Elements are maintained in ascending order (minimum at front)
-    /// Data Type 45.1: Meldable Priority Queue
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     #[derive(PartialEq, Clone, Debug)]
     pub struct SortedListPQ<T: StT + Ord> {
         elements: ArraySeqStPerS<T>,

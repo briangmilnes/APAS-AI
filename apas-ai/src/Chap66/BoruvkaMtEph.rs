@@ -5,20 +5,18 @@
 //! Achieves Work O(m log n), Span O(log² n).
 
 pub mod BoruvkaMtEph {
-    use std::collections::HashMap;
-    use std::hash::Hash;
-    use std::sync::Arc;
 
-    use ordered_float::OrderedFloat;
-    use rand::{Rng, SeedableRng};
-    use rand::rngs::StdRng;
+use std::collections::HashMap;
+use std::hash::Hash;
+use std::sync::Arc;
 
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::ParaPair;
-    use crate::SetLit;
-    use crate::Types::Types::*;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::ParaPair;
+use crate::SetLit;
+use ordered_float::OrderedFloat;
+use rand::rngs::StdRng;
+use rand::{Rng, SeedableRng};
     pub trait BoruvkaMtEphTrait {
         /// Find vertex bridges for parallel Borůvka's algorithm
         /// APAS: Work O(|E|), Span O(lg |E|)

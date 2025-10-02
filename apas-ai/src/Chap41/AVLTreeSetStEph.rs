@@ -2,10 +2,11 @@
 //! Single-threaded ephemeral set implementation using AVLTreeSeqStEph as backing store.
 
 pub mod AVLTreeSetStEph {
-    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
-    use crate::Types::Types::*;
-    use std::fmt;
 
+use std::fmt;
+
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
     #[derive(PartialEq, Eq)]
     pub struct AVLTreeSetStEph<T: StT + Ord> {
         elements: AVLTreeSeqStEphS<T>,

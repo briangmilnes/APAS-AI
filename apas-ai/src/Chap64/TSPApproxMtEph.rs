@@ -5,17 +5,15 @@
 //! Note: Euler tour remains sequential (DFS-based), but included for API completeness
 
 pub mod TSPApproxMtEph {
-    use std::collections::{HashMap, HashSet};
-    use std::hash::Hash;
 
-    use ordered_float::OrderedFloat;
+use std::collections::{HashMap, HashSet};
+use std::hash::Hash;
 
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
-    use crate::SetLit;
-    use crate::Types::Types::*;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
+use crate::SetLit;
+use ordered_float::OrderedFloat;
     pub trait TSPApproxMtEphTrait {
         /// Parallel Euler tour of a tree
         /// APAS: Work O(|V|), Span O(|V|)

@@ -2,13 +2,12 @@
 //! Single-threaded ephemeral ordered table implementation extending TableStEph.
 
 pub mod OrderedTableStEph {
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Chap42::TableStEph::TableStEph::*;
-    use crate::Types::Types::*;
 
-    /// Single-threaded ephemeral ordered table backed by TableStEph
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+use crate::Chap42::TableStEph::TableStEph::*;
     #[derive(PartialEq)]
     pub struct OrderedTableStEph<K: StT + Ord, V: StT> {
         base_table: TableStEph<K, V>,

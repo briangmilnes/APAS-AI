@@ -2,11 +2,11 @@
 //! Ephemeral binary search tree built on `BBTEph` primitives with fine-grained locking.
 
 pub mod BSTPlainMtEph {
-    use std::sync::{Arc, RwLock};
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
+use std::sync::{Arc, RwLock};
 
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     type Link<T> = Arc<RwLock<Option<Node<T>>>>;
 
     #[derive(Clone, Debug)]

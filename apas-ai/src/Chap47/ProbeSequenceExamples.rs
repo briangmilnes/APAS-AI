@@ -4,18 +4,15 @@
 
 pub mod ProbeSequenceExamples {
 
-    use std::collections::HashMap;
-    use std::fmt::{Debug, Display};
+use std::collections::HashMap;
+use std::fmt::{Debug, Display};
 
-    use crate::Types::Types::*;
-    use crate::Chap47::AdvancedDoubleHashing::AdvancedDoubleHashing::*;
-    use crate::Chap47::AdvancedLinearProbing::AdvancedLinearProbing::*;
-    use crate::Chap47::AdvancedQuadraticProbing::AdvancedQuadraticProbing::*;
-    use crate::Chap47::FlatHashTable::FlatHashTable::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-
-    /// Probe Sequence Visualization
-    /// Claude Work: Θ(1), Span: Θ(1)
+use crate::Types::Types::*;
+use crate::Chap47::AdvancedDoubleHashing::AdvancedDoubleHashing::*;
+use crate::Chap47::AdvancedLinearProbing::AdvancedLinearProbing::*;
+use crate::Chap47::AdvancedQuadraticProbing::AdvancedQuadraticProbing::*;
+use crate::Chap47::FlatHashTable::FlatHashTable::*;
+use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug, PartialEq)]
     pub struct ProbeSequenceVisualization {
         pub strategy_name: String,

@@ -4,11 +4,10 @@
 
 pub mod AdjTableGraphStPer {
 
-    use crate::Types::Types::*;
-    use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Chap43::OrderedTableStPer::OrderedTableStPer::*;
-
+use crate::Types::Types::*;
+use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+use crate::Chap43::OrderedTableStPer::OrderedTableStPer::*;
     #[derive(Clone)]
     pub struct AdjTableGraphStPer<V: StT + Ord> {
         adj: OrderedTableStPer<V, AVLTreeSetStPer<V>>,

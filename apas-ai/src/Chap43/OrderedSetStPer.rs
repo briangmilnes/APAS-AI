@@ -2,12 +2,11 @@
 //! Single-threaded persistent ordered set implementation extending AVLTreeSetStPer.
 
 pub mod OrderedSetStPer {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
-    use crate::Types::Types::*;
 
-    /// Single-threaded persistent ordered set backed by AVLTreeSetStPer
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     #[derive(PartialEq)]
     pub struct OrderedSetStPer<T: StT + Ord> {
         base_set: AVLTreeSetStPer<T>,

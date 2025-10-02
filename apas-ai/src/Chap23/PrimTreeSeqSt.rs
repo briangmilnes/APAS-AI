@@ -8,9 +8,8 @@
 //! this strategy with more sophisticated tree management when needed.
 
 pub mod PrimTreeSeqSt {
-    use crate::Types::Types::*;
 
-    /// The tree representation returned from `expose` and consumed by `join`.
+use crate::Types::Types::*;
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub enum PrimTreeSeqStTree<T: StT> {
         Zero,

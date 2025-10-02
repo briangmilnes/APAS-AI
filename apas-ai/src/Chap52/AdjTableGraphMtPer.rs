@@ -4,12 +4,10 @@
 
 pub mod AdjTableGraphMtPer {
 
-    use crate::Types::Types::*;
-    use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
-    use crate::Chap43::OrderedTableMtPer::OrderedTableMtPer::*;
-
-
+use crate::Types::Types::*;
+use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
+use crate::Chap43::OrderedTableMtPer::OrderedTableMtPer::*;
     #[derive(Clone)]
     pub struct AdjTableGraphMtPer<V: StTInMtT + Ord + 'static> {
         adj: OrderedTableMtPer<V, AVLTreeSetMtPer<V>>,

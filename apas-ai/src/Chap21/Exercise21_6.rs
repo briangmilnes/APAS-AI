@@ -2,6 +2,7 @@
 //! Chapter 21 — Exercise 21.6: Cost analysis of all contiguous subsequences.
 
 pub mod Exercise21_6 {
+
     //! Exercise 21.6: Cost analysis of all contiguous subsequences
     //!
     //! This exercise analyzes the work and span complexity of the all_contiguous_subseqs function.

@@ -3,13 +3,12 @@
 
 pub mod LabUnDirGraphStEph {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::hash::Hash;
+use std::fmt::{Debug, Display, Formatter, Result};
+use std::hash::Hash;
 
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::SetLit;
-
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::SetLit;
     #[derive(Clone)]
     pub struct LabUnDirGraphStEph<V: HashOrd, L: StT + Hash> {
         vertices: Set<V>,

@@ -6,15 +6,13 @@
 
 pub mod WeightedUnDirGraphMtEphInt {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::hash::Hash;
+use std::fmt::{Debug, Display, Formatter, Result};
+use std::hash::Hash;
 
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
-    use crate::ParaPair;
-
-    /// Weighted undirected graph with integer weights (multi-threaded, type alias)
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
+use crate::ParaPair;
     pub type WeightedUnDirGraphMtEphInt<V> = LabUnDirGraphMtEph<V, i32>;
 
     /// Convenience functions for weighted undirected graphs with integer weights (multi-threaded)

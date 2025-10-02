@@ -13,11 +13,8 @@
 //! - `size`: Work O(1), Span O(1)
 
 pub mod StackStEph {
-    use crate::Types::Types::*;
 
-    /// Stack implemented using Vec as backing storage
-    /// Items are pushed/popped from the end
-    /// Vec is used internally as it provides efficient dynamic growth
+use crate::Types::Types::*;
     #[derive(Debug, Clone)]
     pub struct StackStEph<T: StT> {
         /// Backing storage using Vec for efficient push/pop

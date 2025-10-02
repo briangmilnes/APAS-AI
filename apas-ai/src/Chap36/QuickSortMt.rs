@@ -2,26 +2,12 @@
 //! Chapter 36 (Multi-threaded): Quicksort with three pivot strategies over `ArraySeqMtEph`.
 
 pub mod Chapter36Mt {
-    use std::thread;
 
-    use rand::{rng, Rng};
+use std::thread;
 
-    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
-    use crate::Types::Types::*;
-
-    // Spawning threads all the way down (always parallelize - no thresholding per APAS rules).
-
-    // SAFETY: Quicksort can run without explicit locks because each recursive call only
-    // receives a disjoint slice of the working buffer. The `partition` step mutates the
-    // range `[lo, hi)` exclusively, and the returned indices `lt` and `gt` split that
-    // range into three non-overlapping regions: `< pivot`, `== pivot`, and `> pivot`.
-    // After partitioning we recurse on `[lo, lt)` and `[gt, hi)`. These slices are
-    // disjoint, so at most one thread ever writes to any element. Rust’s borrow checker
-    // cannot express this dynamic separation, so we copy into a Vec and use
-    // `thread::scope` to spawn threads with unique `&mut [T]` slices. The scope fully
-    // joins before returning, ensuring no references escape and eliminating the need for
-    // locks or atomics in the sorting logic itself.
-
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
+use rand::{rng, Rng};
     pub trait Chapter36MtTrait<T: StT + Ord + Send> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time pivot selection

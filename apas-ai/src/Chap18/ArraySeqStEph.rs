@@ -3,11 +3,10 @@
 
 pub mod ArraySeqStEph {
 
-    use std::collections::HashSet;
-    use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
+use std::collections::HashSet;
+use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
 
-    use crate::Types::Types::*;
-
+use crate::Types::Types::*;
     #[derive(Clone)]
     pub struct ArraySeqStEphS<T: StT> {
         data: Box<[T]>,

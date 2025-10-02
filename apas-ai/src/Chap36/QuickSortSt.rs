@@ -2,11 +2,10 @@
 //! Chapter 36 (Single-threaded): Quicksort with three pivot strategies over `ArraySeqStEph`.
 
 pub mod Chapter36St {
-    use rand::{rng, Rng};
 
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Types::Types::*;
-
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+use rand::{rng, Rng};
     pub trait Chapter36StTrait<T: StT + Ord> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time pivot selection

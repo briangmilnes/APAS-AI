@@ -2,12 +2,12 @@
 //! Multi-threaded ephemeral ordered set implementation using custom backing store.
 
 pub mod OrderedSetMtEph {
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Types::Types::*;
-    use std::sync::Arc;
-    use std::thread;
 
-    /// Multi-threaded ephemeral ordered set with custom implementation
+use std::sync::Arc;
+use std::thread;
+
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     #[derive(PartialEq)]
     pub struct OrderedSetMtEph<T: MtKey> {
         elements: Vec<T>,

@@ -3,14 +3,12 @@
 
 pub mod MatrixChainMtEph {
 
-    use std::collections::HashMap;
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::sync::{Arc, Mutex};
-    use std::thread;
+use std::collections::HashMap;
+use std::fmt::{Debug, Display, Formatter, Result};
+use std::sync::{Arc, Mutex};
+use std::thread;
 
-    use crate::Types::Types::*;
-
-    /// Matrix dimensions for chain multiplication
+use crate::Types::Types::*;
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct MatrixDim {
         pub rows: usize,

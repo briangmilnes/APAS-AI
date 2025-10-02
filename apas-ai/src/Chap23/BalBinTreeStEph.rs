@@ -2,10 +2,9 @@
 //! Ephemeral full binary tree utilities (Chapter 23).
 
 pub mod BalBinTreeStEph {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
 
-    /// Full binary tree nodes (`Leaf` has no stored value).
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     #[derive(Clone, PartialEq, Eq, Debug)]
     pub enum BalBinTree<T: StT> {
         Leaf,

@@ -3,12 +3,11 @@
 
 pub mod BSTTreapMtEph {
 
-    use std::sync::{Arc, RwLock};
-    use rand::{rng, Rng};
+use std::sync::{Arc, RwLock};
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use rand::{rng, Rng};
     type Link<T> = Option<Box<Node<T>>>;
 
     #[derive(Debug, Clone)]

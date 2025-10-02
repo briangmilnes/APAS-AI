@@ -3,4 +3,7 @@
 
  Identify and list all files missing traits.
 
- 
+ Modules such as this which are really functional, although they have an
+ impl are not getting a documentary trait.
+
+src/Chap44/Example44_1.rs 

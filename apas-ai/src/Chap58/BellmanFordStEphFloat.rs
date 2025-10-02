@@ -10,14 +10,13 @@
 //! - Parallelizable: Lines 5-6 parallelize over vertices
 
 pub mod BellmanFordStEphFloat {
-    use std::collections::HashMap;
 
-    use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
-    use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat;
-    use crate::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
-    use crate::Types::Types::*;
+use std::collections::HashMap;
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
+use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat;
+use crate::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
     pub trait BellmanFordStEphFloatTrait {
         /// Bellman-Ford single source shortest path algorithm
         /// APAS: Work O(nm), Span O(n lg n) where n = |V|, m = |E|

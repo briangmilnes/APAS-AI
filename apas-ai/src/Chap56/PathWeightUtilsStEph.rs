@@ -12,12 +12,11 @@
 //! - `validate_subpath_property`: Work O(k²), Span O(k²) for k-vertex path
 
 pub mod PathWeightUtilsStEph {
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
-    use crate::Types::Types::OrderedF64;
-    use ordered_float::OrderedFloat;
-    
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+
+use crate::Types::Types::OrderedF64;
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+use ordered_float::OrderedFloat;
     pub trait PathWeightUtilsStEphTrait {
         /// Claude Work: O(k), Span: O(k) where k is path length
         /// Computes the total weight of a path given edge weights (integer).

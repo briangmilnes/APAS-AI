@@ -2,13 +2,12 @@
 //! Single-threaded persistent ordered table implementation extending TableStPer.
 
 pub mod OrderedTableStPer {
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Chap42::TableStPer::TableStPer::*;
-    use crate::Types::Types::*;
 
-    /// Single-threaded persistent ordered table backed by TableStPer
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+use crate::Chap42::TableStPer::TableStPer::*;
     #[derive(PartialEq)]
     pub struct OrderedTableStPer<K: StT + Ord, V: StT> {
         base_table: TableStPer<K, V>,

@@ -5,14 +5,12 @@
 
 pub mod ArraySeqMtPer {
 
-    use std::collections::HashSet;
-    use std::sync::Arc;
-    use std::thread;
+use std::collections::HashSet;
+use std::sync::Arc;
+use std::thread;
 
-    use crate::Types::Types::*;
-    use crate::ParaPair;
-
-    /// Fixed-length sequence backed by `Box<[T]>` (persistent MT variant).
+use crate::Types::Types::*;
+use crate::ParaPair;
     #[derive(Debug)]
     pub struct ArraySeqMtPerS<T: StTInMtT> {
         data: Box<[T]>,

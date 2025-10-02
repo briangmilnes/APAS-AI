@@ -2,10 +2,9 @@
 //! Sequential scan using contraction technique (Chapter 27, Algorithm 27.3).
 
 pub mod ScanContractStEph {
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
-    use crate::Types::Types::*;
 
-    /// Sequential scan using contraction technique.
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
     pub trait ScanContractStEphTrait<T: StT> {
         /// Scan a sequence using contraction: contract→solve→expand.
         /// APAS: Work Θ(n), Span Θ(n)

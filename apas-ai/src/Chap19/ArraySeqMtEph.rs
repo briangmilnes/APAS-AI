@@ -3,11 +3,11 @@
 
 pub mod ArraySeqMtEph {
 
-    use std::sync::Mutex;
-    use std::thread;
+use std::sync::Mutex;
+use std::thread;
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
         ArraySeqMtEphS as ArraySeqMtEphSChap18, ArraySeqMtEphTrait as ArraySeqMtEphTraitChap18,
     };
 

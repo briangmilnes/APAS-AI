@@ -14,10 +14,10 @@
 //! - `extract_path`: Work O(k), Span O(k) where k is path length
 
 pub mod SSSPResultStPerFloat {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    use crate::Types::Types::OrderedF64;
-    use ordered_float::OrderedFloat;
-    
+
+use crate::Types::Types::OrderedF64;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+use ordered_float::OrderedFloat;
     const UNREACHABLE: OrderedF64 = OrderedFloat(f64::INFINITY);
     const NO_PREDECESSOR: usize = usize::MAX;
     

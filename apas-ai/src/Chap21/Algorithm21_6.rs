@@ -3,10 +3,8 @@
 
 pub mod Algorithm21_6 {
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     pub trait Algorithm21_6Trait {
         /// Algorithm 21.6 (Prime Sieve) using ArraySeqPer - simplified version
         /// APAS: Work Θ(n lg n), Span Θ(lg n)

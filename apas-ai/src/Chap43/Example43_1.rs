@@ -2,12 +2,11 @@
 //! Example 43.1 from the textbook demonstrating ordered set operations.
 
 pub mod Example43_1 {
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
-    use crate::Chap43::OrderedSetStPer::OrderedSetStPer::*;
-    use crate::OrderedSetStPerLit;
-    use crate::Types::Types::*;
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
+use crate::Chap43::OrderedSetStPer::OrderedSetStPer::*;
+use crate::OrderedSetStPerLit;
     pub trait Example43_1Trait {
         /// Demonstrates Example 43.1 from the textbook with lexicographic ordering
         /// APAS: Work Θ(n log n), Span Θ(log n)

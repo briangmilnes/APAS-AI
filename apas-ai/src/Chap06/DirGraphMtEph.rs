@@ -6,13 +6,12 @@
 
 pub mod DirGraphMtEph {
 
-    use std::hash::Hash;
+use std::hash::Hash;
 
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::ParaPair;
-    use crate::SetLit;
-
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::ParaPair;
+use crate::SetLit;
     #[derive(Clone)]
     pub struct DirGraphMtEph<V: StT + MtT + Hash + 'static> {
         V: Set<V>,

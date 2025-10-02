@@ -2,12 +2,12 @@
 //! Set interface built atop the Plain multi-threaded BST implementation.
 
 pub mod BSTSetPlainMtEph {
-    use std::collections::BTreeSet;
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap37::BSTPlainMtEph::BSTPlainMtEph::{BSTPlainMtEph, BSTPlainMtEphTrait};
-    use crate::Types::Types::*;
+use std::collections::BTreeSet;
 
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap37::BSTPlainMtEph::BSTPlainMtEph::{BSTPlainMtEph, BSTPlainMtEphTrait};
     #[derive(Debug, Clone)]
     pub struct BSTSetPlainMtEph<T: StTInMtT + Ord> {
         tree: BSTPlainMtEph<T>,

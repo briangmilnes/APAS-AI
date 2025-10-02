@@ -2,12 +2,12 @@
 //! Set interface built atop the BB-Alpha multi-threaded BST implementation.
 
 pub mod BSTSetBBAlphaMtEph {
-    use std::collections::BTreeSet;
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::{BSTBBAlphaMtEph, BSTBBAlphaMtEphTrait};
-    use crate::Types::Types::*;
+use std::collections::BTreeSet;
 
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::{BSTBBAlphaMtEph, BSTBBAlphaMtEphTrait};
     #[derive(Debug, Clone)]
     pub struct BSTSetBBAlphaMtEph<T: StTInMtT + Ord> {
         tree: BSTBBAlphaMtEph<T>,

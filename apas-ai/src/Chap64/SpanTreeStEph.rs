@@ -4,15 +4,15 @@
 //! Implements Exercise 64.2: Compute spanning tree using star contraction.
 
 pub mod SpanTreeStEph {
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
-    use crate::Chap62::StarContractionStEph::StarContractionStEph::star_contract;
-    use crate::SetLit;
-    use crate::Types::Types::*;
-    use std::collections::HashMap;
-    use std::hash::Hash;
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use std::collections::HashMap;
+use std::hash::Hash;
+
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+use crate::Chap62::StarContractionStEph::StarContractionStEph::star_contract;
+use crate::SetLit;
     pub trait SpanTreeStEphTrait {
         /// Sequential spanning tree via star contraction
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)

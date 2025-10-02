@@ -3,14 +3,11 @@
 
 pub mod SeparateChaining {
 
-    use std::fmt::{Debug, Display};
+use std::fmt::{Debug, Display};
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-
-    /// Definition 47.3: Separate Chaining Hash Table
-    /// Uses lists to store colliding key-value pairs
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug)]
     pub struct SeparateChainingHashTable<K, V, H, E>
     where

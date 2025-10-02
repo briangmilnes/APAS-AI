@@ -6,11 +6,9 @@
 
 pub mod PQMinMtEph {
 
-    use crate::Types::Types::*;
-    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
-    use crate::Chap41::AVLTreeSetMtEph::AVLTreeSetMtEph::*;
-
-    /// Result of min-priority queue search containing visited vertices and optional parent tree.
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+use crate::Chap41::AVLTreeSetMtEph::AVLTreeSetMtEph::*;
     #[derive(Clone, Debug)]
     pub struct PQMinResult<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> {
         pub visited: AVLTreeSetMtEph<V>,

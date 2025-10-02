@@ -6,14 +6,13 @@
 //! - Baseline sequential version of parallel matching algorithm
 
 pub mod VertexMatchingStEph {
-    use std::hash::Hash;
 
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
-    use crate::SetLit;
-    use crate::Types::Types::*;
+use std::hash::Hash;
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+use crate::SetLit;
     pub trait VertexMatchingStEphTrait {
         /// Greedy vertex matching algorithm
         /// APAS: Work Θ(|E|), Span Θ(|E|)

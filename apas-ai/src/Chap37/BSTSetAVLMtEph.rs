@@ -2,12 +2,12 @@
 //! Set interface built atop the AVL multi-threaded BST implementation.
 
 pub mod BSTSetAVLMtEph {
-    use std::collections::BTreeSet;
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap37::BSTAVLMtEph::BSTAVLMtEph::{BSTAVLMtEph, BSTAVLMtEphTrait};
-    use crate::Types::Types::*;
+use std::collections::BTreeSet;
 
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap37::BSTAVLMtEph::BSTAVLMtEph::{BSTAVLMtEph, BSTAVLMtEphTrait};
     #[derive(Debug, Clone)]
     pub struct BSTSetAVLMtEph<T: StTInMtT + Ord> {
         tree: BSTAVLMtEph<T>,

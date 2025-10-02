@@ -5,18 +5,17 @@
 //! - Algorithm 61.6: Parallel Edge Contraction (with fork/join parallelism)
 
 pub mod EdgeContractionMtEph {
-    use std::hash::Hash;
-    use std::sync::Arc;
 
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Chap61::VertexMatchingMtEph::VertexMatchingMtEph::parallel_matching_mt;
-    use crate::ParaPair;
-    use crate::SetLit;
-    use crate::Types::Types::*;
+use std::hash::Hash;
+use std::sync::Arc;
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+use crate::Chap61::VertexMatchingMtEph::VertexMatchingMtEph::parallel_matching_mt;
+use crate::ParaPair;
+use crate::SetLit;
     pub trait EdgeContractionMtEphTrait {
         /// Parallel edge contraction algorithm
         /// APAS: Work O(|E|), Span O(lg |V|)

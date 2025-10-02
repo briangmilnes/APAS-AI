@@ -3,14 +3,12 @@
 
 pub mod WeightedDirGraphStEphInt {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::hash::Hash;
+use std::fmt::{Debug, Display, Formatter, Result};
+use std::hash::Hash;
 
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
-
-    /// Weighted directed graph with integer weights (type alias)
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
     pub type WeightedDirGraphStEphInt<V> = LabDirGraphStEph<V, i32>;
 
     /// Convenience functions for weighted directed graphs with integer weights

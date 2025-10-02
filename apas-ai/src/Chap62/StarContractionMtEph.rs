@@ -6,19 +6,17 @@
 
 pub mod StarContractionMtEph {
 
-    use std::collections::HashMap;
-    use std::hash::Hash;
-    use std::sync::{Arc, Mutex};
+use std::collections::HashMap;
+use std::hash::Hash;
+use std::sync::{Arc, Mutex};
 
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Chap62::StarPartitionMtEph::StarPartitionMtEph::parallel_star_partition;
-    use crate::ParaPair;
-    use crate::SetLit;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+use crate::Chap62::StarPartitionMtEph::StarPartitionMtEph::parallel_star_partition;
+use crate::ParaPair;
+use crate::SetLit;
     pub trait StarContractionMtEphTrait {
         /// Parallel star contraction higher-order function
         /// APAS: Work O((n + m) lg n), Span O(lg² n)

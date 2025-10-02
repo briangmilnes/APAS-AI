@@ -4,20 +4,18 @@
 //! Note: reduce_range_parallel() uses unconditional parallelism with ParaPair! for range reductions.
 
 pub mod AugOrderedTableMtEph {
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::sync::Arc;
-    use std::thread;
 
-    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Chap43::OrderedTableMtEph::OrderedTableMtEph::*;
-    use crate::OrderedTableMtEphLit;
-    use crate::ParaPair;
-    use crate::Types::Types::*;
+use std::fmt::{Debug, Display, Formatter, Result};
+use std::sync::Arc;
+use std::thread;
 
-    /// Multi-threaded ephemeral reducer-augmented ordered table
-    /// Wraps OrderedTableMtEph and maintains cached reduction for O(1) reduceVal
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+use crate::Chap43::OrderedTableMtEph::OrderedTableMtEph::*;
+use crate::OrderedTableMtEphLit;
+use crate::ParaPair;
     #[derive(PartialEq, Clone)]
     pub struct AugOrderedTableMtEph<K: MtKey, V: MtVal, F: MtReduceFn<V>> {
         base_table: OrderedTableMtEph<K, V>,

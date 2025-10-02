@@ -6,13 +6,11 @@
 
 pub mod BottomUpDPStPer {
 
-    use std::cmp::{max, min};
-    use std::fmt::{Debug, Display};
+use std::cmp::{max, min};
+use std::fmt::{Debug, Display};
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-
-    /// Persistent single-threaded bottom-up DP structure (struct product record type)
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct BottomUpDPStPerS {
         /// Input sequence S

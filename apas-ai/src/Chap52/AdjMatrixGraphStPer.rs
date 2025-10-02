@@ -4,9 +4,8 @@
 
 pub mod AdjMatrixGraphStPer {
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct AdjMatrixGraphStPer {
         matrix: ArraySeqStPerS<ArraySeqStPerS<bool>>,

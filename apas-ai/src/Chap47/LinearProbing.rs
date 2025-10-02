@@ -3,11 +3,9 @@
 
 pub mod LinearProbing {
 
-    use crate::Types::Types::*;
-    use crate::Chap47::FlatHashTable::FlatHashTable::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-
-    /// Linear probing: h_i(x) = (h(x) + i) mod m
+use crate::Types::Types::*;
+use crate::Chap47::FlatHashTable::FlatHashTable::*;
+use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug)]
     pub struct LinearProbingStrategy<K: StT, H: HashFunClone<K>> {
         base_hash: H,

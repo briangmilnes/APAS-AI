@@ -2,12 +2,12 @@
 //! Chapter 42 single-threaded persistent table implementation using ArraySeq as backing store.
 
 pub mod TableStPer {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Types::Types::*;
-    use std::cmp::Ordering;
 
-    /// Single-threaded persistent table backed by ArraySeq
+use std::cmp::Ordering;
+
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     #[derive(Debug, Clone, PartialEq)]
     pub struct TableStPer<K: StT + Ord, V: StT> {
         entries: ArraySeqStPerS<Pair<K, V>>,

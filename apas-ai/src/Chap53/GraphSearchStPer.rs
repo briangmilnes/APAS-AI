@@ -5,11 +5,9 @@
 
 pub mod GraphSearchStPer {
 
-    use crate::Types::Types::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
-    use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
-
-    /// Result of a graph search containing visited vertices and optional parent tree.
+use crate::Types::Types::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
+use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     #[derive(Clone, Debug)]
     pub struct SearchResult<V: StT + Ord> {
         pub visited: AVLTreeSetStPer<V>,

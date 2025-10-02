@@ -2,15 +2,15 @@
 //! Multi-threaded ephemeral ordered table implementation extending TableMtEph.
 
 pub mod OrderedTableMtEph {
-    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Chap42::TableMtEph::TableMtEph::*;
-    use crate::Types::Types::*;
-    use std::sync::Arc;
-    use std::thread;
 
-    /// Multi-threaded ephemeral ordered table backed by TableMtEph
+use std::sync::Arc;
+use std::thread;
+
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+use crate::Chap42::TableMtEph::TableMtEph::*;
     #[derive(PartialEq)]
     pub struct OrderedTableMtEph<K: MtKey, V: MtVal> {
         base_table: TableMtEph<K, V>,

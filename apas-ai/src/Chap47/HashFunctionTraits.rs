@@ -3,14 +3,11 @@
 
 pub mod HashFunctionTraits {
 
-    use std::collections::hash_map::DefaultHasher;
-    use std::fmt::{Debug, Display};
-    use std::hash::{Hash, Hasher};
+use std::collections::hash_map::DefaultHasher;
+use std::fmt::{Debug, Display};
+use std::hash::{Hash, Hasher};
 
-    use crate::Types::Types::*;
-
-    /// Trait for hash functions that map keys to hash codes
-    /// Used in Definition 47.1 (Hash Tables)
+use crate::Types::Types::*;
     pub trait HashFunction<K> {
         /// claude-4-sonet: Work Θ(|key|), Span Θ(|key|), Parallelism Θ(1)
         /// Maps a key to a hash code in range [0, table_size)

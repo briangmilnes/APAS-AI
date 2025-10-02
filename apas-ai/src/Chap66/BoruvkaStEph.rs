@@ -5,18 +5,16 @@
 //! using vertex bridges and graph contraction with randomized star contraction.
 
 pub mod BoruvkaStEph {
-    use std::collections::HashMap;
-    use std::hash::Hash;
 
-    use ordered_float::OrderedFloat;
-    use rand::{Rng, SeedableRng};
-    use rand::rngs::StdRng;
+use std::collections::HashMap;
+use std::hash::Hash;
 
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::SetLit;
-    use crate::Types::Types::*;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::SetLit;
+use ordered_float::OrderedFloat;
+use rand::rngs::StdRng;
+use rand::{Rng, SeedableRng};
     pub trait BoruvkaStEphTrait {
         /// Find vertex bridges for Borůvka's algorithm
         /// APAS: Work O(|E|), Span O(|E|)

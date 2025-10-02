@@ -5,11 +5,9 @@
 
 pub mod DFSStPer {
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::{AVLTreeSetStPer, AVLTreeSetStPerTrait};
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::{AVLTreeSetStPer, AVLTreeSetStPerTrait};
     pub trait DFSStPerTrait {
         /// Performs DFS from source vertex s on adjacency list graph G
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)

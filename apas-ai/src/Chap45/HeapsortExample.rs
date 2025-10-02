@@ -3,17 +3,14 @@
 
 pub mod HeapsortExample {
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Chap45::BalancedTreePQ::BalancedTreePQ::*;
-    use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
-    use crate::Chap45::LeftistHeapPQ::LeftistHeapPQ::*;
-    use crate::Chap45::SortedListPQ::SortedListPQ::*;
-    use crate::Chap45::UnsortedListPQ::UnsortedListPQ::*;
-
-    /// Algorithm 45.2: Heapsort implementation using priority queues
-    /// This is the generic heapsort algorithm from the textbook that works with any priority queue
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+use crate::Chap45::BalancedTreePQ::BalancedTreePQ::*;
+use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
+use crate::Chap45::LeftistHeapPQ::LeftistHeapPQ::*;
+use crate::Chap45::SortedListPQ::SortedListPQ::*;
+use crate::Chap45::UnsortedListPQ::UnsortedListPQ::*;
     pub struct Heapsort;
 
     impl Heapsort {

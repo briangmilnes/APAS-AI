@@ -5,14 +5,12 @@
 
 pub mod ArraySeqMtEph {
 
-    use std::collections::HashSet;
-    use std::sync::{Arc, Mutex};
-    use std::thread;
+use std::collections::HashSet;
+use std::sync::{Arc, Mutex};
+use std::thread;
 
-    use crate::Types::Types::*;
-    use crate::ParaPair;
-
-    /// Fixed-length sequence backed by `Mutex<Box<[T]>>` (ephemeral/mutable MT variant).
+use crate::Types::Types::*;
+use crate::ParaPair;
     #[derive(Debug)]
     pub struct ArraySeqMtEphS<T: StTInMtT> {
         data: Mutex<Box<[T]>>,

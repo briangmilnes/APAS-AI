@@ -7,15 +7,13 @@
 
 pub mod StarPartitionStEph {
 
-    use std::collections::HashMap;
-    use std::hash::Hash;
+use std::collections::HashMap;
+use std::hash::Hash;
 
-    use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
-    use crate::SetLit;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+use crate::SetLit;
     pub trait StarPartitionStEphTrait {
         /// Sequential star partition using greedy selection
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)

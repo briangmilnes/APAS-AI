@@ -6,15 +6,13 @@
 
 pub mod TopDownDPMtEph {
 
-    use std::collections::HashMap;
-    use std::fmt::{Debug, Display};
-    use std::sync::{Arc, Mutex};
-    use std::thread;
+use std::collections::HashMap;
+use std::fmt::{Debug, Display};
+use std::sync::{Arc, Mutex};
+use std::thread;
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
-
-    /// Ephemeral multi-threaded top-down DP structure (struct product record type)
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     #[derive(Clone, Debug)]
     pub struct TopDownDPMtEphS {
         /// Input sequence S

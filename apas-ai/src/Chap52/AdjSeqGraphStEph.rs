@@ -3,9 +3,8 @@
 
 pub mod AdjSeqGraphStEph {
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     #[derive(Clone)]
     pub struct AdjSeqGraphStEph {
         adj: ArraySeqStEphS<ArraySeqStEphS<N>>,

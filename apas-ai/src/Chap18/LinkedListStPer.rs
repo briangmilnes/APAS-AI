@@ -3,10 +3,9 @@
 
 pub mod LinkedListStPer {
 
-    use std::collections::HashSet;
+use std::collections::HashSet;
 
-    use crate::Types::Types::*;
-
+use crate::Types::Types::*;
     #[derive(Debug, Clone)]
     pub struct NodeP<T: StT> {
         pub value: T,

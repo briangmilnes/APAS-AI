@@ -6,13 +6,13 @@
 //! unconditional parallelism with 32MB stack per thread.
 
 pub mod MaxContigSubSumDivConMtEph {
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
-    use crate::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
-    use crate::ParaPair;
-    use crate::Types::Types::*;
-    use std::sync::Arc;
 
-    /// Helper function to compare Option<i32> values, treating None as negative infinity.
+use std::sync::Arc;
+
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
+use crate::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
+use crate::ParaPair;
     fn max_with_neginf(a: Option<i32>, b: Option<i32>) -> Option<i32> {
         match (a, b) {
             | (None, None) => None,

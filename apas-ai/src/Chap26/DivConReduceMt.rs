@@ -3,10 +3,9 @@
 //! Note: Unconditionally parallel - no thresholding per APAS rules.
 
 pub mod DivConReduceMt {
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
-    use crate::Types::Types::*;
 
-    /// Divide-and-conquer using reduce pattern (parallel).
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
     pub trait DivConReduceMtTrait {
         /// Find maximum element via parallel reduce.
         /// Pattern: reduce max MIN identity (parallel)

@@ -3,13 +3,11 @@
 
 pub mod FlatHashTable {
 
-    use std::fmt::{Debug, Display};
+use std::fmt::{Debug, Display};
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-
-    /// Entry types for flat hash table from Data Structure 47.6
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub enum Entry<K: StT, V: StT> {
         Empty,

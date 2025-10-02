@@ -4,16 +4,15 @@
 //! Implements Exercise 64.2: Compute spanning tree using parallel star contraction.
 
 pub mod SpanTreeMtEph {
-    use std::collections::HashMap;
-    use std::hash::Hash;
 
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap62::StarContractionMtEph::StarContractionMtEph::star_contract_mt;
-    use crate::SetLit;
-    use crate::Types::Types::*;
+use std::collections::HashMap;
+use std::hash::Hash;
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap05::SetStEph::SetStEph::*;
+use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+use crate::Chap62::StarContractionMtEph::StarContractionMtEph::star_contract_mt;
+use crate::SetLit;
     pub trait SpanTreeMtEphTrait {
         /// Parallel spanning tree via star contraction
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)

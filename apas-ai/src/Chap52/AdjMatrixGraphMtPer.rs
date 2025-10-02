@@ -4,11 +4,10 @@
 
 pub mod AdjMatrixGraphMtPer {
 
-    use std::sync::Arc;
+use std::sync::Arc;
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
-
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     #[derive(Clone)]
     pub struct AdjMatrixGraphMtPer {
         matrix: ArraySeqMtPerS<ArraySeqMtPerS<bool>>,

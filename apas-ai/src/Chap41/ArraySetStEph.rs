@@ -2,8 +2,9 @@
 //! Single-threaded ephemeral set implementation using ArraySeqStEph as backing store.
 
 pub mod ArraySetStEph {
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Types::Types::*;
+
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 
     #[derive(Debug, Clone, PartialEq)]
     pub struct ArraySetStEph<T: StT + Ord> {

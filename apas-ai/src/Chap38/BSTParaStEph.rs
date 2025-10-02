@@ -2,12 +2,12 @@
 //! Parametric single-threaded BST built around a joinMid interface.
 
 pub mod BSTParaStEph {
-    use std::cell::RefCell;
-    use std::rc::Rc;
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
+use std::cell::RefCell;
+use std::rc::Rc;
 
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     #[derive(Debug, Clone, Default)]
     pub enum Exposed<T: StT + Ord> {
         #[default]

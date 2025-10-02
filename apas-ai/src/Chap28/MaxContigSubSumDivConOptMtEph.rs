@@ -6,11 +6,10 @@
 //! for unconditional parallelism.
 
 pub mod MaxContigSubSumDivConOptMtEph {
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
-    use crate::ParaPair;
-    use crate::Types::Types::*;
 
-    /// Helper function to compare Option<i32> values, treating None as negative infinity.
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
+use crate::ParaPair;
     fn max_with_neginf(a: Option<i32>, b: Option<i32>) -> Option<i32> {
         match (a, b) {
             | (None, None) => None,

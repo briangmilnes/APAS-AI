@@ -2,14 +2,13 @@
 //! Chapter 42 Example 42.1 demonstrating table operations.
 
 pub mod Example42_1 {
-    use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
-    use crate::Chap42::TableMtEph::TableMtEph::*;
-    use crate::Chap42::TableStEph::TableStEph::*;
-    use crate::Chap42::TableStPer::TableStPer::*;
-    use crate::Types::Types::*;
-    use crate::{TableMtEphLit, TableStEphLit, TableStPerLit};
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
+use crate::Chap42::TableMtEph::TableMtEph::*;
+use crate::Chap42::TableStEph::TableStEph::*;
+use crate::Chap42::TableStPer::TableStPer::*;
+use crate::{TableMtEphLit, TableStEphLit, TableStPerLit};
     pub trait Example42_1Trait {
         /// Example 42.1: Basic table operations demonstration
         /// APAS: Work Θ(n log n), Span Θ(log n)

@@ -3,11 +3,10 @@
 
 pub mod ArraySeqMtPer {
 
-    use std::sync::Mutex;
+use std::sync::Mutex;
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18};
-
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18};
     pub trait ArraySeqMtPerTrait<T: StTInMtT> {
         // Chapter 18 wrappers
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)

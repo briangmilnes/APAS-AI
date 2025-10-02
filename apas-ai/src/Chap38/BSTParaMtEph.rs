@@ -2,11 +2,11 @@
 //! Parametric multi-threaded BST built around a joinMid interface.
 
 pub mod BSTParaMtEph {
-    use std::sync::{Arc, RwLock};
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
+use std::sync::{Arc, RwLock};
 
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     #[derive(Clone)]
     pub enum Exposed<T: MtKey> {
         Leaf,

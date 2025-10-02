@@ -3,13 +3,11 @@
 
 pub mod HashExamples {
 
-    use crate::Types::Types::*;
-    use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Chap47::LinearProbing::LinearProbing::*;
-    use crate::Chap47::SeparateChaining::SeparateChaining::*;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
+use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+use crate::Chap47::LinearProbing::LinearProbing::*;
+use crate::Chap47::SeparateChaining::SeparateChaining::*;
     pub trait HashExamplesTrait {
         /// Example 47.1: String hash function demonstration
         /// APAS: Work Θ(1), Span Θ(1)

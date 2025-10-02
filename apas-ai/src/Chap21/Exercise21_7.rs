@@ -3,10 +3,8 @@
 
 pub mod Exercise21_7 {
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     pub trait Exercise21_7Trait {
         /// Check if a number is even
         /// APAS: Work Θ(1), Span Θ(1)

@@ -3,15 +3,13 @@
 
 pub mod DocumentIndex {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
+use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
-    use crate::Chap42::TableStPer::TableStPer::*;
-
-    /// Type aliases for document indexing (Data Type 44.1)
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
+use crate::Chap42::TableStPer::TableStPer::*;
     pub type Word = String;
     pub type DocumentId = String;
     pub type Contents = String;

@@ -2,13 +2,13 @@
 //! Maximum Contiguous Subsequence Sum - Parallel Optimal (Chapter 28, Algorithm 28.16).
 
 pub mod MaxContigSubSumOptMtEph {
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
-    use crate::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
-    use crate::ParaPair;
-    use crate::Types::Types::*;
-    use std::sync::Arc;
 
-    /// Trait for parallel work-optimal maximum contiguous subsequence sum.
+use std::sync::Arc;
+
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
+use crate::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
+use crate::ParaPair;
     pub trait MaxContigSubSumOptMtTrait {
         /// Compute maximum contiguous subsequence sum using parallel optimal scan-based algorithm.
         /// Returns None for empty sequence (representing -∞).

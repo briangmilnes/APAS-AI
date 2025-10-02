@@ -6,13 +6,11 @@
 
 pub mod TopDownDPStPer {
 
-    use std::collections::HashMap;
-    use std::fmt::{Debug, Display};
+use std::collections::HashMap;
+use std::fmt::{Debug, Display};
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-
-    /// Persistent single-threaded top-down DP structure (struct product record type)
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct TopDownDPStPerS {
         /// Input sequence S

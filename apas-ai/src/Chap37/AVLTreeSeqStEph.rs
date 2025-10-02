@@ -2,11 +2,11 @@
 //! StEphemeral (mutable) implicit-order AVL tree sequence.
 
 pub mod AVLTreeSeqStEph {
-    use std::fmt::Debug;
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Types::Types::*;
+use std::fmt::Debug;
 
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     type Link<T> = Option<Box<AVLTreeNode<T>>>;
 
     #[derive(Clone)]

@@ -3,13 +3,12 @@
 
 pub mod BSTParaTreapMtEph {
 
-    use std::fmt::Write;
-    use std::hash::{Hash, Hasher};
-    use std::sync::{Arc, RwLock};
+use std::fmt::Write;
+use std::hash::{Hash, Hasher};
+use std::sync::{Arc, RwLock};
 
-    use crate::Types::Types::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     #[derive(Clone)]
     pub enum Exposed<T: MtKey> {
         Leaf,

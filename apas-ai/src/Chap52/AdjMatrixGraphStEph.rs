@@ -3,9 +3,8 @@
 
 pub mod AdjMatrixGraphStEph {
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     #[derive(Clone)]
     pub struct AdjMatrixGraphStEph {
         matrix: ArraySeqStEphS<ArraySeqStEphS<bool>>,

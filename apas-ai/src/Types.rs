@@ -4,10 +4,9 @@
 
 pub mod Types {
 
-    use std::fmt::{Debug, Display};
-    use std::hash::Hash;
+use std::fmt::{Debug, Display};
+use std::hash::Hash;
 
-    /// Type alias for natural numbers to match APAS, N.
     pub type N = usize;
 
     /// Data Type 18.1 (Boolean) type used by APAS.

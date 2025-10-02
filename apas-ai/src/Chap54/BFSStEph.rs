@@ -5,12 +5,10 @@
 
 pub mod BFSStEph {
 
-    use std::collections::VecDeque;
+use std::collections::VecDeque;
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
-
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+use crate::Types::Types::*;
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
     pub trait BFSStEphTrait {
         /// Performs BFS from source vertex s on adjacency list graph G
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)

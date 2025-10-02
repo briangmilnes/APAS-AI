@@ -8,9 +8,10 @@
 //! - Duplicates are supported naturally; a `dup_key` monotonically increases to distinguish insertion order if needed.
 
 pub mod AVLTreeSeq {
-    use std::fmt::Debug;
 
-    use crate::Chap18::ArraySeq::ArraySeq::{ArraySeq, ArraySeqS};
+use std::fmt::Debug;
+
+use crate::Chap18::ArraySeq::ArraySeq::{ArraySeq, ArraySeqS};
     pub use crate::Types::Types::*;
 
     type Link<T> = Option<Box<AVLTreeNode<T>>>;

@@ -2,10 +2,9 @@
 //! Divide-and-conquer via reduce pattern - sequential implementation (Chapter 26, Section 5).
 
 pub mod DivConReduceSt {
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    use crate::Types::Types::*;
 
-    /// Divide-and-conquer using reduce pattern (sequential).
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
     pub trait DivConReduceStTrait {
         /// Find maximum element via reduce.
         /// Pattern: reduce max MIN identity

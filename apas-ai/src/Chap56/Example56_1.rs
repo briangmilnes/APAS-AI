@@ -6,12 +6,11 @@
 //! Shows path weight calculation for simple paths with both positive and negative weights.
 
 pub mod Example56_1 {
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
-    use crate::Chap56::PathWeightUtilsStEph::PathWeightUtilsStEph::{path_weight_float, path_weight_int};
-    use ordered_float::OrderedFloat;
-    
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+use crate::Chap56::PathWeightUtilsStEph::PathWeightUtilsStEph::{path_weight_float, path_weight_int};
+use ordered_float::OrderedFloat;
     pub trait Example56_1Trait {
         /// Claude Work: O(1), Span: O(1)
         /// Example demonstrating path weight computation with integer weights.
