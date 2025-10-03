@@ -4,7 +4,7 @@ pub mod TestLabDirGraphStEph {
     use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
     use apas_ai::Types::Types::*;
-    use apas_ai::{LabDirGraphStEphLit, SetLit};
+    use apas_ai::*;
 
     #[test]
     fn test_labelled_dir_graph_empty() {

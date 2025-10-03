@@ -5,8 +5,10 @@ pub mod ArraySeqMtPer {
 
     use std::sync::Mutex;
 
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18};
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS as ArraySeqMtPerSChap18, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18};
     use crate::Types::Types::*;
+
+    pub type ArraySeqMtPerS<T> = ArraySeqMtPerSChap18<T>;
 
     pub trait ArraySeqMtPerTrait<T: StTInMtT> {
         // Chapter 18 wrappers

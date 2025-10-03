@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use apas_ai::Chap40::BSTKeyValueStEph::BSTKeyValueStEph::{BSTKeyValueStEphTrait, BSTreeKeyValue};
 use apas_ai::{BSTKeyValueStEphLit, *};
-use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 
 fn build_key_value_tree(len: usize) -> BSTreeKeyValue<i32, String> {
     let mut tree = BSTKeyValueStEphLit![];

@@ -3,7 +3,7 @@ use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
 use apas_ai::Chap06::WeightedUnDirGraphMtEphInt::WeightedUnDirGraphMtEphInt::*;
 use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn bench_weighted_undir_graph_mt_eph_int(c: &mut Criterion) {

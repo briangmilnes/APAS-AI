@@ -15,7 +15,7 @@ pub mod ConnectivityMtEph {
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap62::StarContractionMtEph::StarContractionMtEph::star_contract_mt;
     use crate::Chap62::StarPartitionMtEph::StarPartitionMtEph::parallel_star_partition;
     use crate::ParaPair;

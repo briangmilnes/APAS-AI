@@ -16,7 +16,7 @@ use apas_ai::Chap47::AdvancedDoubleHashing::AdvancedDoubleHashing::{
 };
 use apas_ai::Chap47::FlatHashTable::FlatHashTable::{Entry, FlatHashTable, ProbeSequence};
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::DefaultHashFunction;
-use apas_ai::Types::Types::{Pair, StT};
+use apas_ai::Types::Types::*;
 
 /// Test RelativePrimeValidator GCD computation
 #[test]

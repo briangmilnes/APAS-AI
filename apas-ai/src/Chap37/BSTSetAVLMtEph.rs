@@ -5,8 +5,8 @@ pub mod BSTSetAVLMtEph {
 
     use std::collections::BTreeSet;
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap37::BSTAVLMtEph::BSTAVLMtEph::{BSTAVLMtEph, BSTAVLMtEphTrait};
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap37::BSTAVLMtEph::BSTAVLMtEph::*;
     use crate::Types::Types::*;
 
     #[derive(Debug, Clone)]

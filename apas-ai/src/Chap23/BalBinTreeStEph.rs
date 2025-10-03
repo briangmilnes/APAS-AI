@@ -3,7 +3,7 @@
 
 pub mod BalBinTreeStEph {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     #[derive(Clone, PartialEq, Eq, Debug)]

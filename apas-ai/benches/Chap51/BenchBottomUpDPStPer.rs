@@ -3,7 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap51::BottomUpDPStPer::BottomUpDPStPer::*;
-use criterion::{BenchmarkId, Criterion, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn bench_med_bottom_up(c: &mut Criterion) {

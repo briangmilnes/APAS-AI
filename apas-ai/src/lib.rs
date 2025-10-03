@@ -7,9 +7,6 @@ pub mod Types;
 
 pub mod Chap03 {
 
-
-
-
     pub mod InsertionSortSt;
 }
 
@@ -208,6 +205,7 @@ pub mod Chap44 {
 pub mod Chap45 {
     pub mod BalancedTreePQ;
     pub mod BinaryHeapPQ;
+    pub mod Example45_2;
     pub mod HeapsortExample;
     pub mod LeftistHeapPQ;
     pub mod SortedListPQ;

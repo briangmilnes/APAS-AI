@@ -6,7 +6,7 @@ use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
 use apas_ai::Chap65::PrimStEph::PrimStEph::*;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::*;
-use criterion::{Criterion, criterion_group, criterion_main};
+use criterion::*;
 use ordered_float::OrderedFloat;
 use std::time::Duration;
 

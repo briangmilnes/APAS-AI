@@ -15,7 +15,7 @@
 pub mod AllPairsResultStEphInt {
 
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
     use crate::Types::Types::*;
 
     const UNREACHABLE: i64 = i64::MAX;

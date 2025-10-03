@@ -7,7 +7,7 @@ pub mod BFSStPer {
 
     use std::collections::VecDeque;
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     pub trait BFSStPerTrait {

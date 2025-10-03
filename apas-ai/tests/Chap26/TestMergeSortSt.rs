@@ -3,7 +3,7 @@
 
 #[cfg(test)]
 mod test_merge_sort_st {
-    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Chap26::MergeSortSt::MergeSortSt::MergeSortStTrait;
 
     #[test]

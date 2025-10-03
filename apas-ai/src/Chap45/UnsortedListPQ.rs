@@ -5,7 +5,7 @@ pub mod UnsortedListPQ {
 
     use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     #[derive(PartialEq, Clone, Debug)]

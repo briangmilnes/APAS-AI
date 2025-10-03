@@ -8,8 +8,8 @@
 pub mod Example56_1 {
 
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
-    use crate::Chap56::PathWeightUtilsStEph::PathWeightUtilsStEph::{path_weight_float, path_weight_int};
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Chap56::PathWeightUtilsStEph::PathWeightUtilsStEph::*;
     use ordered_float::OrderedFloat;
 
     pub trait Example56_1Trait {

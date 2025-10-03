@@ -5,7 +5,7 @@ use apas_ai::{
     Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
     Chap61::VertexMatchingMtEph::VertexMatchingMtEph::*, SetLit, Types::Types::*,
 };
-use criterion::{BenchmarkId, Criterion, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn create_cycle_graph(n: usize) -> UnDirGraphMtEph<usize> {

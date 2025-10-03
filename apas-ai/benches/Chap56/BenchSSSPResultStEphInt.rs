@@ -3,7 +3,7 @@
 //! Benchmarks for SSSPResultStEphInt.
 
 use apas_ai::Chap56::SSSPResultStEphInt::SSSPResultStEphInt::SSSPResultStEphInt;
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn bench_new(c: &mut Criterion) {

@@ -5,7 +5,7 @@
 
 pub mod OrderStatSelectStPer {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
     use rand::Rng;
 

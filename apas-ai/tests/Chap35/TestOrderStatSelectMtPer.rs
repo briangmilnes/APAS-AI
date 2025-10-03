@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 use apas_ai::ArrayMtPerSLit;
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Chap35::OrderStatSelectMtPer::OrderStatSelectMtPer::OrderStatSelectMtPerTrait;
 
 #[test]

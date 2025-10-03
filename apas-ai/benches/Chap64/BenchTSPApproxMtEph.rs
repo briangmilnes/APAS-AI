@@ -5,7 +5,7 @@ use apas_ai::{
     Chap05::SetStEph::SetStEph::*, Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*,
     Chap64::TSPApproxMtEph::TSPApproxMtEph::*, SetLit, Types::Types::*,
 };
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use ordered_float::OrderedFloat;
 use std::time::Duration;
 

@@ -5,7 +5,7 @@ use apas_ai::{
     Chap50::{OptBinSearchTreeStEph::OptBinSearchTreeStEph::*, Probability::Probability::Probability},
     prob,
 };
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn bench_obst_st_eph_small(c: &mut Criterion) {

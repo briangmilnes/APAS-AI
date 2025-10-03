@@ -3,7 +3,7 @@
 
 pub mod BSTPlainStEph {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap23::BalBinTreeStEph::BalBinTreeStEph::BalBinTree;
     use crate::Types::Types::*;
 

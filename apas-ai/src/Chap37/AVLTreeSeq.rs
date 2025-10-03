@@ -11,7 +11,7 @@ pub mod AVLTreeSeq {
 
     use std::fmt::Debug;
 
-    use crate::Chap18::ArraySeq::ArraySeq::{ArraySeq, ArraySeqS};
+    use crate::Chap18::ArraySeq::ArraySeq::*;
     use crate::Types::Types::*;
 
     type Link<T> = Option<Box<AVLTreeNode<T>>>;

@@ -2,7 +2,7 @@
 //! Benchmarks for SubsetSumMtEph
 
 use apas_ai::{Chap49::SubsetSumMtEph::SubsetSumMtEph::*, SubsetSumMtEphLit};
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn bench_subset_sum_mt_eph(c: &mut Criterion) {

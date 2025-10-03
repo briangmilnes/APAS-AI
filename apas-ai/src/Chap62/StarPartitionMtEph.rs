@@ -11,10 +11,11 @@ pub mod StarPartitionMtEph {
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
-    use rand::{Rng, SeedableRng, rngs::StdRng};
+    use rand::*;
+    use rand::rngs::StdRng;
 
     pub trait StarPartitionMtEphTrait {
         /// Parallel star partition using randomized coin flips
@@ -82,12 +83,17 @@ pub mod StarPartitionMtEph {
         }
 
         // Phase 3: Build base sequence V' where each index maps to itself
-        let base_seq = <ArraySeqStEphS<V> as ArraySeqStEphTrait<V>>::tabulate(&|i| vertices_vec[i as usize].clone(), n);
+        let mut base_seq = <ArraySeqStEphS<V> as ArraySeqStEphTrait<V>>::tabulate(&|i| vertices_vec[i as usize].clone(), n);
 
-        // Phase 4: Apply inject to get partition map P
-        let p_seq = <ArraySeqStEphS<V> as ArraySeqStEphTrait<V>>::inject(&base_seq, &th_edges);
+        // Phase 4: Convert th_edges to ArraySeqStEphS<Pair<usize, V>>
+        let updates_seq = ArraySeqStEphS::from_vec(
+            th_edges.into_iter().map(|(idx, vertex)| Pair(idx, vertex)).collect()
+        );
 
-        // Phase 5: Extract centers (vertices where P[v] = v)
+        // Phase 5: Apply inject to get partition map P
+        let p_seq = base_seq.inject(&updates_seq);
+
+        // Phase 6: Extract centers (vertices where P[v] = v)
         let mut centers: Set<V> = SetLit![];
         let mut partition_map: HashMap<V, V> = HashMap::new();
 

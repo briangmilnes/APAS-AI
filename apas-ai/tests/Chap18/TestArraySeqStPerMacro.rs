@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerS as Seq, ArraySeqStPerTrait};
-use apas_ai::Types::Types::{ArraySeqSetEq, B, Pair};
+use apas_ai::Types::Types::*;
 
 #[test]
 fn arrayseq_stper_macro_empty() {

@@ -16,7 +16,6 @@ pub mod StackStEph {
 
     use crate::Types::Types::*;
 
-
     /// Trait for stack operations
     pub trait StackStEphTrait<T: StT> {
         /// Create new empty stack

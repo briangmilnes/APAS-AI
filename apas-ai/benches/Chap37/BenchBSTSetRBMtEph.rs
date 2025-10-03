@@ -5,7 +5,7 @@ use std::time::Duration;
 
 use apas_ai::BSTSetRBMtEphLit;
 use apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt as RBSet;
-use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 
 trait BenchSet: Sized {
     fn empty() -> Self;

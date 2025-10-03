@@ -2,7 +2,7 @@
 
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
 use apas_ai::Chap28::MaxContigSubSumOptStEph::MaxContigSubSumOptStEph::MaxContigSubSumOptTrait;
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 pub fn bench_optimal(c: &mut Criterion) {

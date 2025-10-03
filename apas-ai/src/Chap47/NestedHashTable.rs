@@ -6,7 +6,7 @@ pub mod NestedHashTable {
 use std::fmt::{Debug, Display, Formatter, Result};
 
 use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug)]
     pub struct NestedHashTable<K: StT, V: StT> {

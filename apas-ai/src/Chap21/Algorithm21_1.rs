@@ -3,7 +3,7 @@
 
 pub mod Algorithm21_1 {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     pub trait Algorithm21_1Trait {

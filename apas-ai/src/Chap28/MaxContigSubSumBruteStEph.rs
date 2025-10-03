@@ -3,7 +3,7 @@
 
 pub mod MaxContigSubSumBruteStEph {
 
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
 
     fn max_with_neginf(a: Option<i32>, b: Option<i32>) -> Option<i32> {

@@ -3,7 +3,7 @@
 
 #[cfg(test)]
 mod test_merge_sort_mt {
-    use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
+    use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use apas_ai::Chap26::MergeSortMt::MergeSortMt::MergeSortMtTrait;
 
     #[test]

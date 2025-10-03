@@ -14,7 +14,7 @@
 
 pub mod SSSPResultStPerInt {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     const UNREACHABLE: i64 = i64::MAX;

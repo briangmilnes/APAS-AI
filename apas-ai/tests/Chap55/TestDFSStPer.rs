@@ -4,7 +4,7 @@
 #[cfg(test)]
 mod TestDFSStPer {
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::{AVLTreeSetStPer, AVLTreeSetStPerTrait};
+    use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     use apas_ai::Chap55::DFSStPer::DFSStPer::dfs;
 
     #[test]

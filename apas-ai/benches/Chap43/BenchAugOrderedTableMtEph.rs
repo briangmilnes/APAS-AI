@@ -6,7 +6,7 @@ use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::AugOrderedTableMtEph::AugOrderedTableMtEph::*;
 use apas_ai::Types::Types::*;
 use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
-use std::sync::{Arc, Mutex};
+use std::sync::*;
 use std::thread;
 use std::time::Duration;
 

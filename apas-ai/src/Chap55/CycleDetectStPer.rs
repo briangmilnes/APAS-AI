@@ -5,8 +5,8 @@
 
 pub mod CycleDetectStPer {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::{AVLTreeSetStPer, AVLTreeSetStPerTrait};
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     use crate::Types::Types::*;
 
     pub trait CycleDetectStPerTrait {

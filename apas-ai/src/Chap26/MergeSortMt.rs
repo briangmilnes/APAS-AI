@@ -7,7 +7,7 @@ pub mod MergeSortMt {
     use std::sync::Arc;
     use std::thread;
 
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use crate::ParaPair;
     use crate::Types::Types::*;
 

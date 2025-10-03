@@ -3,7 +3,7 @@
 
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
-use apas_ai::{AVLTreeSeqStPerLit, AVLTreeSetStPerLit};
+use apas_ai::*;
 
 #[test]
 fn test_avl_tree_set_per_basic_operations() {

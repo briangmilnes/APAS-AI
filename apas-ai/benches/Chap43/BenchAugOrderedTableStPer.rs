@@ -7,7 +7,7 @@ use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::AugOrderedTableStPer::AugOrderedTableStPer::*;
 use apas_ai::Chap43::OrderedTableStPer::OrderedTableStPer::*;
 use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn bench_reduce_val_vs_naive(c: &mut Criterion) {

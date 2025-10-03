@@ -4,7 +4,7 @@
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap42::TableStPer::TableStPer::*;
 use apas_ai::Types::Types::*;
-use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn build_table(size: usize) -> TableStPer<i32, String> {

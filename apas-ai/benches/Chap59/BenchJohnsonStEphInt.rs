@@ -2,7 +2,7 @@ use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
 use apas_ai::Chap59::JohnsonStEphInt::JohnsonStEphInt::johnson_apsp;
 use apas_ai::SetLit;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn generate_sparse_graph_negative(n: usize) -> WeightedDirGraphStEphInt<usize> {

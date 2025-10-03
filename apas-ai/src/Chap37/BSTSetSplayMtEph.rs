@@ -5,8 +5,8 @@ pub mod BSTSetSplayMtEph {
 
     use std::collections::BTreeSet;
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap37::BSTSplayMtEph::BSTSplayMtEph::{BSTSplayMtEph, BSTSplayMtEphTrait};
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap37::BSTSplayMtEph::BSTSplayMtEph::*;
     use crate::Types::Types::*;
 
     #[derive(Debug, Clone)]

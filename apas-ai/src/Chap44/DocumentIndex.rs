@@ -5,7 +5,7 @@ pub mod DocumentIndex {
 
     use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     use crate::Chap42::TableStPer::TableStPer::*;

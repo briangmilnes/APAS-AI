@@ -3,7 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
 use apas_ai::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::sync::Arc;
 use std::time::Duration;
 

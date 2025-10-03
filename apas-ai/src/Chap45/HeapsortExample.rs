@@ -3,7 +3,7 @@
 
 pub mod HeapsortExample {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap45::BalancedTreePQ::BalancedTreePQ::*;
     use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;

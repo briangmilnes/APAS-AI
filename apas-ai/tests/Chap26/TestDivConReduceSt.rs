@@ -3,7 +3,7 @@
 
 #[cfg(test)]
 mod test_divcon_reduce_st {
-    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Chap26::DivConReduceSt::DivConReduceSt::DivConReduceStTrait;
 
     #[test]

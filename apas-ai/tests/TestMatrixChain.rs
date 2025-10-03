@@ -4,7 +4,7 @@
 use apas_ai::Chap50::MatrixChainStEph::MatrixChainStEph::{
     MatrixChainStEphS, MatrixChainStEphTrait, MatrixDim as MatrixChainStEphMatrixDim,
 };
-use apas_ai::Chap50::MatrixChainStPer::MatrixChainStPer::{MatrixChainStPerS, MatrixChainStPerTrait, MatrixDim};
+use apas_ai::Chap50::MatrixChainStPer::MatrixChainStPer::*;
 use apas_ai::MatrixChainStPerLit;
 use apas_ai::Types::Types::*;
 

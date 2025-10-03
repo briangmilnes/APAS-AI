@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn bench_tabulate_map_mteph_ch18(c: &mut Criterion) {

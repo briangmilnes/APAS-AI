@@ -2,7 +2,7 @@
 //! Benchmarks for Chap43 OrderedSetStPer.
 
 use apas_ai::Chap43::OrderedSetStPer::OrderedSetStPer::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn bench_ordered_set_st_per_insert(c: &mut Criterion) {

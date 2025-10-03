@@ -636,7 +636,7 @@ fn test_all_variants_single_element() {
 #[test]
 fn test_concurrent_plain_bst_operations() {
     use apas_ai::Chap37::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMt;
-    use std::sync::{Arc, Barrier};
+    use std::sync::*;
     use std::thread;
 
     let barrier = Arc::new(Barrier::new(4));
@@ -710,7 +710,7 @@ fn test_concurrent_plain_bst_operations() {
 #[test]
 fn test_concurrent_avl_bst_operations() {
     use apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt;
-    use std::sync::{Arc, Barrier};
+    use std::sync::*;
     use std::thread;
 
     let num_threads = 6;
@@ -760,7 +760,7 @@ fn test_concurrent_avl_bst_operations() {
 #[test]
 fn test_concurrent_rb_bst_stress() {
     use apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt;
-    use std::sync::{Arc, Barrier};
+    use std::sync::*;
     use std::thread;
 
     let num_threads = 8;
@@ -809,7 +809,7 @@ fn test_concurrent_rb_bst_stress() {
 #[test]
 fn test_concurrent_bbalpha_operations() {
     use apas_ai::Chap37::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSetBBAlphaMt;
-    use std::sync::{Arc, Barrier};
+    use std::sync::*;
     use std::thread;
 
     let barrier = Arc::new(Barrier::new(3));
@@ -865,7 +865,7 @@ fn test_concurrent_bbalpha_operations() {
 #[test]
 fn test_concurrent_treap_operations() {
     use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt;
-    use std::sync::{Arc, Barrier};
+    use std::sync::*;
     use std::thread;
 
     let num_threads = 4;
@@ -919,7 +919,7 @@ fn test_concurrent_treap_operations() {
 #[test]
 fn test_concurrent_splay_access_patterns() {
     use apas_ai::Chap37::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMt;
-    use std::sync::{Arc, Barrier};
+    use std::sync::*;
     use std::thread;
 
     let barrier = Arc::new(Barrier::new(2));
@@ -1285,7 +1285,7 @@ fn test_deadlock_prevention_bst_sets() {
     use apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt;
     use std::sync::{Arc, Barrier};
     use std::thread;
-    use std::time::{Duration, Instant};
+    use std::time::*;
 
     let barrier = Arc::new(Barrier::new(6));
     let shared_sets = Arc::new(std::sync::RwLock::new(vec![

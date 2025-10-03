@@ -5,8 +5,8 @@ pub mod BSTBBAlphaMtEph {
 
     use std::sync::{Arc, RwLock};
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     const ALPHA: f64 = 0.75;

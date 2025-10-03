@@ -2,7 +2,7 @@
 use std::time::Duration;
 
 use apas_ai::Chap11::FibonacciMt::FibonacciMt::{fib, FibonacciMtTrait};
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 
 fn bench_fibonacci_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("FibonacciMt");

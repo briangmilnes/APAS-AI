@@ -6,7 +6,7 @@ pub mod Test40Chapter36Mt {
     use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use apas_ai::Chap36::QuickSortMt::Chapter36Mt::Chapter36MtTrait;
     use apas_ai::Types::Types::*;
-    use rand::{Rng, rng};
+    use rand::*;
 
     fn to_vec<T: StTInMtT>(a: &ArraySeqMtEphS<T>) -> Vec<T> { (0..a.length()).map(|i| a.nth_cloned(i)).collect() }
 

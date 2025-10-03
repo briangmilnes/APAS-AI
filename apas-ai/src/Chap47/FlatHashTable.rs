@@ -6,7 +6,7 @@ pub mod FlatHashTable {
 use std::fmt::{Debug, Display};
 
 use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub enum Entry<K: StT, V: StT> {

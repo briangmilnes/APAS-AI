@@ -7,7 +7,7 @@ pub mod Chapter36MtSlice {
 
     use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
     use crate::Types::Types::*;
-    use rand::{Rng, rng};
+    use rand::*;
 
     pub trait Chapter36MtSliceTrait<T: StT + Ord + Send> {
         /// APAS: Work Θ(1), Span Θ(1)

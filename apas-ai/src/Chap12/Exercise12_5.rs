@@ -6,7 +6,9 @@ pub mod Exercise12_5 {
     use std::ptr::null_mut;
     use std::sync::atomic::{AtomicPtr, Ordering};
 
-    use crate::Types::Types::StTInMtT;
+    use crate::Types::Types::*;
+
+    
 
     struct Node<T: StTInMtT> {
         value: T,

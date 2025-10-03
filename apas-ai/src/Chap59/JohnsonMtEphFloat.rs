@@ -20,7 +20,7 @@ pub mod JohnsonMtEphFloat {
     use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
     use crate::Chap06::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::*;
     use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap56::AllPairsResultStEphFloat::AllPairsResultStEphFloat::AllPairsResultStEphFloat;
     use crate::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::dijkstra;
     use crate::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;

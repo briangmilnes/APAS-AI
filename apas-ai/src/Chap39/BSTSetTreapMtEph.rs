@@ -5,7 +5,7 @@ pub mod BSTSetTreapMtEph {
 
     use std::collections::BTreeSet;
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap39::BSTTreapMtEph::BSTTreapMtEph::*;
     use crate::Types::Types::*;
 

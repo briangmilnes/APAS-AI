@@ -5,7 +5,7 @@ pub mod Test44Chapter36MtSlice {
     use apas_ai::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
     use apas_ai::Chap36::QuickSortMtSlice::Chapter36MtSlice::Chapter36MtSliceTrait;
     use apas_ai::Types::Types::*;
-    use rand::{Rng, rng};
+    use rand::*;
 
     fn to_vec<T: StT + Send + Sync + 'static>(a: &ArraySeqMtEphSliceS<T>) -> Vec<T> { a.to_vec() }
 

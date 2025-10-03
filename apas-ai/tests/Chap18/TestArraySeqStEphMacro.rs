@@ -2,7 +2,7 @@
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Types::Types::{B, Pair};
+use apas_ai::Types::Types::*;
 
 #[test]
 fn arrayseq_steph_basic_macros() {

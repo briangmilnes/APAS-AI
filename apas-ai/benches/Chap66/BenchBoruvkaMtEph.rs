@@ -3,7 +3,7 @@
 
 use apas_ai::Chap66::BoruvkaMtEph::BoruvkaMtEph::*;
 use apas_ai::SetLit;
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use ordered_float::OrderedFloat;
 use std::time::Duration;
 

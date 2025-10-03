@@ -5,7 +5,7 @@ pub mod TestRelationStEphChap5_2 {
     use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*; // macro import
-    use apas_ai::{PairLit, RelationLit};
+    use apas_ai::*;
 
     #[test]
     fn test_relation_domain_range_and_mem() {

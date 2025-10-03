@@ -14,7 +14,7 @@ pub mod BoruvkaStEph {
     use crate::Types::Types::*;
     use ordered_float::OrderedFloat;
     use rand::rngs::StdRng;
-    use rand::{Rng, SeedableRng};
+    use rand::*;
 
     pub trait BoruvkaStEphTrait {
         /// Find vertex bridges for Borůvka's algorithm

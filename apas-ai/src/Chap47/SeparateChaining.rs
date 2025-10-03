@@ -6,7 +6,7 @@ pub mod SeparateChaining {
 use std::fmt::{Debug, Display};
 
 use crate::Types::Types::*;
-use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug)]
     pub struct SeparateChainingHashTable<K, V, H, E>
@@ -290,7 +290,6 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     pub type StringSeparateChaining<V> =
         SeparateChainingHashTable<String, V, StringPositionHashFunction, DefaultKeyEquality>;
 
-    /// Factory for Example 47.2 from textbook
     pub fn create_example_47_2_table() -> StringSeparateChaining<String> {
         let mut table = SeparateChainingHashTable::create_table(DefaultKeyEquality, StringPositionHashFunction, 5);
 

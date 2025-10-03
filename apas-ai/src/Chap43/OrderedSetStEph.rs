@@ -3,7 +3,7 @@
 
 pub mod OrderedSetStEph {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;

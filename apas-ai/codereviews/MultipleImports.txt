@@ -7,9 +7,30 @@
 
  In which you are importing multiple copies of the same datastructure.
 
- The plan should be to PrePlanChecklist and in todos.
- With per file compilation and test compilation but do not run the tests.
- Build the benchmarks but do not run them.
+ Write a script to find these. Show me what it finds?
 
- And in the final step run the tests.
+ Write another script that finds use like
+  use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::{AVLTreeSetStEph, AVLTreeSetStEphTrait};
+  or say Type::B, N...
+
+ show me what it finds. 
+
+Write script sto fix key pattern 1, another to fix key pattern 2 and key pattern 3. 
+Run the first one then build. 
+When that works,
+run the second one then build.
+When that works, run a script to fix key pattern 3 and cargo build.
+
+
+ Check for use ...{X as Y}.
+
+ Write a script to find these.
+
+ Propose a plan to fix these.
+ The default should be to use import X and change the UFCS on Y to X.
+
+
+
+ 
+
  

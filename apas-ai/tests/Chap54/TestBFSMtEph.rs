@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 use apas_ai::ArraySeqMtEphSLit;
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
+use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Chap54::BFSMtEph::BFSMtEph;
 
 const UNREACHABLE: usize = usize::MAX;

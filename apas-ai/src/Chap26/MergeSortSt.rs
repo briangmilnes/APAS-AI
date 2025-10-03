@@ -3,7 +3,7 @@
 
 pub mod MergeSortSt {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     pub trait MergeSortStTrait<T: StT + Ord> {

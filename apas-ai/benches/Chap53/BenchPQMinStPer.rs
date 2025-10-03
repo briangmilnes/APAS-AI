@@ -4,7 +4,7 @@
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::Chap53::PQMinStPer::PQMinStPer::*;
 use apas_ai::Types::Types::*;
-use criterion::{BatchSize, Criterion, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> { ClosurePriority::new(|v: &N| *v) }

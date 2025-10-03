@@ -1,0 +1,8 @@
+
+ There is standard rust too to check test coverage.
+ Explain it to me.
+ How hard is it to run?
+ Estimate what our test coverage is now?
+ Can this be run chapter by chapter?
+ How many tests do we have now?
+ 

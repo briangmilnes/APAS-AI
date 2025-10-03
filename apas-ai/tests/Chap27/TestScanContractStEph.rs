@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for sequential scan using contraction (Chapter 27).
 
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
 
 #[test]

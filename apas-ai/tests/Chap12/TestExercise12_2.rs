@@ -6,7 +6,7 @@ pub mod TestExercise12_2 {
     use std::sync::atomic::{AtomicUsize, Ordering};
     use std::thread;
 
-    use apas_ai::Chap12::Exercise12_2::Exercise12_2::{FetchAddCasTrait, fetch_add_cas};
+    use apas_ai::Chap12::Exercise12_2::Exercise12_2::*;
 
     #[test]
     fn fetch_add_cas_returns_previous_value() {

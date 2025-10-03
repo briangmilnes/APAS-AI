@@ -3,7 +3,7 @@
 
 pub mod Example44_1 {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap44::DocumentIndex::DocumentIndex::*;
     use crate::DocumentCollectionLit;
     use crate::Types::Types::*;

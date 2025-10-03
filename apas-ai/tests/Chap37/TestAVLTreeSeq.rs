@@ -3,7 +3,7 @@
 
 #[cfg(test)]
 mod TestAVLTreeSeq {
-    use apas_ai::Chap37::AVLTreeSeq::AVLTreeSeq::{AVLTreeS, AVLTreeSeq};
+    use apas_ai::Chap37::AVLTreeSeq::AVLTreeSeq::*;
     use apas_ai::Types::Types::*;
 
     #[test]

@@ -6,7 +6,7 @@
 pub mod TopoSortStEph {
 
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
-    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeSeqStEphS, AVLTreeSeqStEphTrait};
+    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
     use crate::Types::Types::*;
 
     pub trait TopoSortStEphTrait {

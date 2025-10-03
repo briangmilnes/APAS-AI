@@ -5,7 +5,7 @@ use apas_ai::{
     Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
     Chap62::StarPartitionStEph::StarPartitionStEph::*, SetLit, Types::Types::*,
 };
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 // Helper to create a cycle graph

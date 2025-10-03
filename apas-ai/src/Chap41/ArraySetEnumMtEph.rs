@@ -9,7 +9,7 @@ pub mod ArraySetEnumMtEph {
     use std::sync::Arc;
     use std::thread;
 
-    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
     use crate::Types::Types::*;
     use bitvec::prelude::*;
 

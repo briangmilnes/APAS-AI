@@ -2,7 +2,7 @@
 
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
 use apas_ai::Chap28::MaxContigSubSumDivConMtEph::MaxContigSubSumDivConMtEph::MaxContigSubSumDivConMtTrait;
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 pub fn bench_divcon_mt(c: &mut Criterion) {

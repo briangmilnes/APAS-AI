@@ -2,7 +2,7 @@
 //! Benchmark for TopDownDPStEph
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap51::TopDownDPStEph::TopDownDPStEph::*;
-use criterion::{BenchmarkId, Criterion, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn bench_med(c: &mut Criterion) {

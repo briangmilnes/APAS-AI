@@ -8,7 +8,7 @@ pub mod TableMtEph {
     use std::thread;
 
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
-    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     use crate::Types::Types::*;
 

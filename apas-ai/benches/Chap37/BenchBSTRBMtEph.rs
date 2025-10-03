@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use apas_ai::Chap37::BSTRBMtEph::BSTRBMtEph::{BSTRBMtEphTrait, BSTreeRB};
 use apas_ai::{BSTRBMtEphLit, *};
-use criterion::{BatchSize, BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 
 fn build_tree(len: usize) -> BSTreeRB<i32> {
     let tree = BSTRBMtEphLit![]; // BST MtEph: empty constructor

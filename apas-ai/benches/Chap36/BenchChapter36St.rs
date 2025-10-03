@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use apas_ai::Chap36::QuickSortSt::Chapter36St::Chapter36StTrait;
 use apas_ai::{ArraySeqStEphSLit, Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS};
-use criterion::{BatchSize, BenchmarkId, Criterion, criterion_group, criterion_main};
+use criterion::*;
 
 fn gen_data(n: usize) -> ArraySeqStEphS<i32> {
     let mut seed = 0xDEADBEEF12345678u64;

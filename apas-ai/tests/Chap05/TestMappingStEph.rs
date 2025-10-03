@@ -8,7 +8,7 @@ pub mod Test23MappingStEphChap5_5 {
     use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*;
-    use apas_ai::{MappingLit, PairLit};
+    use apas_ai::*;
 
     #[test]
     fn test_empty_mapping() {

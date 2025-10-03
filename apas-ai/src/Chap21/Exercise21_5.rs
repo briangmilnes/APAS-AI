@@ -3,7 +3,7 @@
 
 pub mod Exercise21_5 {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     pub trait Exercise21_5Trait {

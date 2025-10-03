@@ -13,8 +13,9 @@
 
 pub mod PathWeightUtilsStPer {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
-    use crate::Types::Types::OrderedF64;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Types::Types::*;
+    
     use ordered_float::OrderedFloat;
 
     pub trait PathWeightUtilsStPerTrait {

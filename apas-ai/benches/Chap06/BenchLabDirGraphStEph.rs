@@ -3,7 +3,7 @@ use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
 use apas_ai::Types::Types::*;
 use apas_ai::{LabDirGraphStEphLit, SetLit};
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn bench_labelled_dir_graph_creation(c: &mut Criterion) {

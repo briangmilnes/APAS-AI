@@ -3,7 +3,7 @@
 
 use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
 use apas_ai::Types::Types::*;
-use criterion::{Criterion, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn bench_union_find_operations(c: &mut Criterion) {

@@ -9,7 +9,7 @@
 pub mod Example56_3 {
 
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
     use crate::Chap56::PathWeightUtilsStEph::PathWeightUtilsStEph::path_weight_int;
 
     pub trait Example56_3Trait {

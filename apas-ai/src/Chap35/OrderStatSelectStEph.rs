@@ -5,7 +5,7 @@
 
 pub mod OrderStatSelectStEph {
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
     use rand::Rng;
 

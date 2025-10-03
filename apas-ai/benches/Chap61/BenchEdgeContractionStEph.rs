@@ -5,7 +5,7 @@ use apas_ai::{
     Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
     Chap61::EdgeContractionStEph::EdgeContractionStEph::*, SetLit, Types::Types::*,
 };
-use criterion::{BenchmarkId, Criterion, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 fn create_cycle_graph(n: usize) -> UnDirGraphStEph<usize> {

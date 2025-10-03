@@ -19,7 +19,7 @@ use apas_ai::Chap47::ClusteringAnalysis::ClusteringAnalysis::{
 };
 use apas_ai::Chap47::FlatHashTable::FlatHashTable::{Entry, FlatHashTable};
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::DefaultHashFunction;
-use apas_ai::Types::Types::{Pair, StT};
+use apas_ai::Types::Types::*;
 
 /// Test ClusteringAnalyzer creation and basic functionality
 #[test]

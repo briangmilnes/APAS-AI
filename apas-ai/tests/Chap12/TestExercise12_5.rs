@@ -6,7 +6,7 @@ pub mod TestExercise12_5 {
     use std::sync::{Arc, mpsc};
     use std::thread;
 
-    use apas_ai::Chap12::Exercise12_5::Exercise12_5::{ConcurrentStackMt, ConcurrentStackMtTrait};
+    use apas_ai::Chap12::Exercise12_5::Exercise12_5::*;
 
     #[test]
     fn push_pop_lifo_single_thread() {

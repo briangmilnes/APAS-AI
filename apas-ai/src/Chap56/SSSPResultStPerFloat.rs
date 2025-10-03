@@ -15,8 +15,8 @@
 
 pub mod SSSPResultStPerFloat {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    use crate::Types::Types::OrderedF64;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    
     use crate::Types::Types::*;
     use ordered_float::OrderedFloat;
 

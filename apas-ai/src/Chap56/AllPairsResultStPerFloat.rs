@@ -15,7 +15,7 @@
 
 pub mod AllPairsResultStPerFloat {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
     use ordered_float::OrderedFloat;
 

@@ -7,7 +7,7 @@ use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
 use apas_ai::Chap56::PathWeightUtilsStEph::PathWeightUtilsStEph::{
     path_weight_float, path_weight_int, validate_subpath_property_float, validate_subpath_property_int,
 };
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use ordered_float::OrderedFloat;
 use std::time::Duration;
 

@@ -2,7 +2,7 @@
 
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
 use apas_ai::Chap35::OrderStatSelectMtEph::OrderStatSelectMtEph::OrderStatSelectMtEphTrait;
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::*;
 use std::time::Duration;
 
 pub fn bench_select_mt_eph(c: &mut Criterion) {

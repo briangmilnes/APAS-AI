@@ -10,7 +10,7 @@ pub mod VertexMatchingMtEph {
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::ParaPair;
     use crate::SetLit;
     use crate::Types::Types::*;

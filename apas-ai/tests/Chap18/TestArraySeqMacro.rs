@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqS;
 use apas_ai::Chap18::ArraySeq::ArraySeq::{ArraySeq, ArraySeqS};
-use apas_ai::Types::Types::{B, Pair};
+use apas_ai::Types::Types::*;
 
 #[test]
 fn arrayseqs_empty_macro() {

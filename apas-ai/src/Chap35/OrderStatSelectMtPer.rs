@@ -5,7 +5,7 @@
 
 pub mod OrderStatSelectMtPer {
 
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use crate::Types::Types::*;
     use rand::Rng;
 
