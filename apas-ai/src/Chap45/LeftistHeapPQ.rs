@@ -404,27 +404,31 @@ pub mod LeftistHeapPQ {
         let _: LeftistHeapPQ<i32> = LeftistHeapPQLit![1, 2, 3];
     }
 
-    /// Demonstration of leftist heap advantages
-    pub struct LeftistHeapDemo;
-
-    impl LeftistHeapDemo {
+    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+    pub trait LeftistHeapDemoTrait {
         /// Demonstrate the power of O(log n) meld operations
         /// This would be much slower with other priority queue implementations!
-        pub fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T> {
-            // Convert each sorted sequence to a leftist heap
-            let heaps: Vec<LeftistHeapPQ<T>> = sequences.into_iter().map(|seq| LeftistHeapPQ::from_seq(&seq)).collect();
-
-            // Meld all heaps together efficiently
-            let merged_heap = LeftistHeapPQ::meld_multiple(&heaps);
-
-            // Extract all elements in sorted order
-            merged_heap.extract_all_sorted()
-        }
-
+        fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T>;
         /// Demonstrate parallel heap construction
-        pub fn parallel_heap_construction<T: StT + Ord>(elements: Vec<T>) -> LeftistHeapPQ<T> {
-            // This could be parallelized using the reduce pattern
-            LeftistHeapPQ::from_seq(&elements)
-        }
+        fn parallel_heap_construction<T: StT + Ord>(elements: Vec<T>) -> LeftistHeapPQ<T>;
+    }
+
+    /// Demonstrate the power of O(log n) meld operations
+    /// This would be much slower with other priority queue implementations!
+    pub fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T> {
+        // Convert each sorted sequence to a leftist heap
+        let heaps: Vec<LeftistHeapPQ<T>> = sequences.into_iter().map(|seq| LeftistHeapPQ::from_seq(&seq)).collect();
+
+        // Meld all heaps together efficiently
+        let merged_heap = LeftistHeapPQ::meld_multiple(&heaps);
+
+        // Extract all elements in sorted order
+        merged_heap.extract_all_sorted()
+    }
+
+    /// Demonstrate parallel heap construction
+    pub fn parallel_heap_construction<T: StT + Ord>(elements: Vec<T>) -> LeftistHeapPQ<T> {
+        // This could be parallelized using the reduce pattern
+        LeftistHeapPQ::from_seq(&elements)
     }
 }

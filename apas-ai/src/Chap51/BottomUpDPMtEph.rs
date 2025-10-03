@@ -14,6 +14,17 @@ pub mod BottomUpDPMtEph {
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
 
+    /// Trait for bottom-up dynamic programming operations
+    pub trait BottomUpDPMtEphTrait<T: MtVal> {
+        /// Create new bottom-up DP solver
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn new() -> Self;
+
+        /// Solve DP problem
+        /// APAS: Work O(n³), Span O(n)
+        fn solve(&self, input: &[T]) -> T;
+    }
+
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct BottomUpDPMtEphS {
         /// Input sequence S

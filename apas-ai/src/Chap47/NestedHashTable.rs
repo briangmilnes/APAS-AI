@@ -3,12 +3,11 @@
 
 pub mod NestedHashTable {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
+use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Types::Types::*;
-
+use crate::Types::Types::*;
+use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug)]
     pub struct NestedHashTable<K: StT, V: StT> {
         buckets: ArraySeqStPerS<ArraySeqStPerS<Pair<K, V>>>,
@@ -328,19 +327,15 @@ pub mod NestedHashTable {
     pub type StringNestedHashTable<V> = NestedHashTable<String, V>;
     pub type IntegerNestedHashTable<V> = NestedHashTable<i32, V>;
 
-    /// Factory functions for common configurations
-    pub struct NestedHashTableFactory;
+    /// Constructor functions for common nested hash table configurations
+    /// APAS: Work Θ(1), Span Θ(1)
+    pub fn create_string_nested_hash_table<V: StT>(initial_size: N) -> StringNestedHashTable<V> {
+        NestedHashTable::create_table(initial_size)
+    }
 
-    impl NestedHashTableFactory {
-        /// Create string-keyed nested hash table
-        pub fn create_string_table<V: StT>(initial_size: N) -> StringNestedHashTable<V> {
-            NestedHashTable::create_table(initial_size)
-        }
-
-        /// Create integer-keyed nested hash table
-        pub fn create_integer_table<V: StT>(initial_size: N) -> IntegerNestedHashTable<V> {
-            NestedHashTable::create_table(initial_size)
-        }
+    /// APAS: Work Θ(1), Span Θ(1)
+    pub fn create_integer_nested_hash_table<V: StT>(initial_size: N) -> IntegerNestedHashTable<V> {
+        NestedHashTable::create_table(initial_size)
     }
 
     /// Macro for creating nested hash tables with initial data

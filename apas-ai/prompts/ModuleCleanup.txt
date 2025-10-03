@@ -6,4 +6,6 @@
  Modules such as this which are really functional, although they have an
  impl are not getting a documentary trait.
 
-src/Chap44/Example44_1.rs 
+  src/Chap44/Example44_1.rs
+
+ Count the files like this and list them.

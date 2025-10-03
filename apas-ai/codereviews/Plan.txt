@@ -1,0 +1,4 @@
+
+ Make a plan to fix these issues according to PrePlanChecklist.
+ Show it to the user in todos.
+ Do not proceed until she reviews it.

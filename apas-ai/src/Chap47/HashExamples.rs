@@ -3,29 +3,28 @@
 
 pub mod HashExamples {
 
-    use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Chap47::LinearProbing::LinearProbing::*;
-    use crate::Chap47::SeparateChaining::SeparateChaining::*;
-    use crate::Types::Types::*;
-
+use crate::Types::Types::*;
+use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
+use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+use crate::Chap47::LinearProbing::LinearProbing::*;
+use crate::Chap47::SeparateChaining::SeparateChaining::*;
     pub trait HashExamplesTrait {
         /// Example 47.1: String hash function demonstration
         /// APAS: Work Θ(1), Span Θ(1)
         fn example_47_1_hash_function() -> StringPositionHashFunction;
-
+        
         /// Example 47.1: Demonstrate hash function on sample strings
         /// APAS: Work Θ(n), Span Θ(1)
         fn example_47_1_demonstration() -> Vec<(String, N)>;
-
+        
         /// Example 47.2: Linear probing hash table demonstration
         /// APAS: Work Θ(n), Span Θ(1)
         fn example_47_2_linear_probing();
-
+        
         /// Example 47.3: Separate chaining hash table demonstration
         /// APAS: Work Θ(n), Span Θ(1)
         fn example_47_3_separate_chaining();
-
+        
         /// Demonstrate various hash table operations
         /// APAS: Work Θ(n), Span Θ(1)
         fn demonstrate_hash_operations();
@@ -95,7 +94,7 @@ pub mod HashExamples {
 
     /// Example 47.5: Deleted entry handling demonstration
     pub fn example_47_5_deleted_entries() -> LinearProbingHashTable<String, String, StringPositionHashFunction> {
-        let mut table = LinearProbingFactory::create_string_table(8);
+        let mut table = create_linear_probing_string_table(8);
 
         // Insert initial entries
         table = table.insert("B".to_string(), "B_value".to_string());
@@ -112,7 +111,7 @@ pub mod HashExamples {
 
     /// Example 47.6: Insertion with collision handling
     pub fn example_47_6_collision_handling() -> LinearProbingHashTable<String, String, StringPositionHashFunction> {
-        let mut table = LinearProbingFactory::create_string_table(8);
+        let mut table = create_linear_probing_string_table(8);
 
         // Insert entries that will cause collisions
         table = table.insert("B".to_string(), "B_value".to_string());

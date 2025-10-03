@@ -16,9 +16,25 @@ pub mod AllPairsResultStEphInt {
 
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Types::Types::*;
 
     const UNREACHABLE: i64 = i64::MAX;
     const NO_PREDECESSOR: usize = usize::MAX;
+
+    /// Trait for all-pairs shortest path result operations
+    pub trait AllPairsResultStEphIntTrait {
+        /// Create new all-pairs result
+        /// APAS: Work Θ(n²), Span Θ(n²)
+        fn new(n: N) -> Self;
+
+        /// Get distance between vertices
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn distance(&self, u: N, v: N) -> Option<i32>;
+
+        /// Check if path exists
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn has_path(&self, u: N, v: N) -> B;
+    }
 
     /// Result structure for all-pairs shortest paths with integer weights.
     pub struct AllPairsResultStEphInt {

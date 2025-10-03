@@ -57,23 +57,24 @@ pub mod PQMinMtPer {
             PF: PriorityFn<V, P>;
     }
 
-    pub struct PQMinMtPer;
+    /// Priority queue minimum search starting from single source.
+    /// claude-4-sonet: Work Θ(|V| log |V| + |E|), Span Θ(|V| log |V|), Parallelism Θ(1)
+    pub fn pq_min<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
+    where
+        G: Fn(&V) -> AVLTreeSetMtPer<V>,
+        PF: PriorityFn<V, P>,
+    {
+        let sources = AVLTreeSetMtPer::singleton(source);
+        pq_min_multi(graph, sources, priority_fn)
+    }
 
-    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> PQMinMtPerTrait<V, P> for PQMinMtPer {
-        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
-        where
-            G: Fn(&V) -> AVLTreeSetMtPer<V>,
-            PF: PriorityFn<V, P>,
-        {
-            let sources = AVLTreeSetMtPer::singleton(source);
-            Self::pq_min_multi(graph, sources, priority_fn)
-        }
-
-        fn pq_min_multi<G, PF>(graph: &G, sources: AVLTreeSetMtPer<V>, priority_fn: &PF) -> PQMinResult<V, P>
-        where
-            G: Fn(&V) -> AVLTreeSetMtPer<V>,
-            PF: PriorityFn<V, P>,
-        {
+    /// Priority queue minimum search starting from multiple sources.
+    /// claude-4-sonet: Work Θ(|V| log |V| + |E|), Span Θ(|V| log |V|), Parallelism Θ(1)
+    pub fn pq_min_multi<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, G, PF>(graph: &G, sources: AVLTreeSetMtPer<V>, priority_fn: &PF) -> PQMinResult<V, P>
+    where
+        G: Fn(&V) -> AVLTreeSetMtPer<V>,
+        PF: PriorityFn<V, P>,
+    {
             fn find_min_priority<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static>(
                 frontier: &AVLTreeSetMtPer<Pair<Pair<P, V>, V>>,
             ) -> Option<V> {
@@ -151,5 +152,4 @@ pub mod PQMinMtPer {
                 parent: None,
             }
         }
-    }
 }

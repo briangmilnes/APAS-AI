@@ -2,8 +2,6 @@
  Make a plan to sweep all the src, tests and benches looking for
  imports like
 
-    use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeSeqStEphS, AVLTreeSeqStEphTrait};
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::{AVLTreeSetStEph, AVLTreeSetStEphTrait};
 
@@ -13,4 +11,5 @@
  With per file compilation and test compilation but do not run the tests.
  Build the benchmarks but do not run them.
 
- At the end just do a cargo bench --no-run.
+ And in the final step run the tests.
+ 

@@ -4,12 +4,11 @@
 
 pub mod AdvancedDoubleHashing {
 
-    use std::fmt::{Debug, Display};
+use std::fmt::{Debug, Display};
 
-    use crate::Chap47::FlatHashTable::FlatHashTable::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Types::Types::*;
-
+use crate::Types::Types::*;
+use crate::Chap47::FlatHashTable::FlatHashTable::*;
+use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug)]
     pub struct AdvancedDoubleHashingStrategy<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> {
         hash1: H1,
@@ -39,7 +38,13 @@ pub mod AdvancedDoubleHashing {
     impl RelativePrimeValidator {
         /// Compute greatest common divisor using Euclidean algorithm
         /// Claude Work: O(log min(a,b)), Span: O(log min(a,b))
-        pub fn gcd(a: N, b: N) -> N { if b == 0 { a } else { Self::gcd(b, a % b) } }
+        pub fn gcd(a: N, b: N) -> N {
+            if b == 0 {
+                a
+            } else {
+                Self::gcd(b, a % b)
+            }
+        }
 
         /// Check if two numbers are relatively prime (gcd = 1)
         /// Claude Work: O(log min(a,b)), Span: O(log min(a,b))

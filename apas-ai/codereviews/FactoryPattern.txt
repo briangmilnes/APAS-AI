@@ -1,0 +1,17 @@
+
+Add a rule to APAS that we do not name things Factory. This is a very silly Java
+convention. My last code base had 141 of them and we really used 12.
+
+Undo this in Chap47. 
+
+How many of these do we have?
+
+How many impls on a blank struct do we have?
+
+Those should be free functions but have a
+documentary trait.
+
+ Make a plan to fix these issues according to PrePlanChecklist.
+ Show it to the user in todos.
+ Do not proceed until she reviews it.
+

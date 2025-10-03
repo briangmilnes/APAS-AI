@@ -38,7 +38,7 @@ fn bench_graph_search_st_per(c: &mut Criterion) {
     group.bench_function("complete_graph_n=20", |b| {
         b.iter_batched(
             || build_complete_graph(20),
-            |graph| GraphSearchStPer::graph_search(&graph, 1, &SelectAll),
+            |graph| graph_search(&graph, 1, &SelectAll),
             BatchSize::SmallInput,
         );
     });
@@ -46,7 +46,7 @@ fn bench_graph_search_st_per(c: &mut Criterion) {
     group.bench_function("chain_graph_n=100", |b| {
         b.iter_batched(
             || build_chain_graph(100),
-            |graph| GraphSearchStPer::graph_search(&graph, 1, &SelectAll),
+            |graph| graph_search(&graph, 1, &SelectAll),
             BatchSize::SmallInput,
         );
     });
@@ -54,7 +54,7 @@ fn bench_graph_search_st_per(c: &mut Criterion) {
     group.bench_function("reachable_complete_n=15", |b| {
         b.iter_batched(
             || build_complete_graph(15),
-            |graph| GraphSearchStPer::reachable(&graph, 1),
+            |graph| reachable(&graph, 1),
             BatchSize::SmallInput,
         );
     });

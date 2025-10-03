@@ -3,10 +3,9 @@
 
 pub mod DoubleHashing {
 
-    use crate::Chap47::FlatHashTable::FlatHashTable::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Types::Types::*;
-
+use crate::Types::Types::*;
+use crate::Chap47::FlatHashTable::FlatHashTable::*;
+use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug)]
     pub struct DoubleHashingStrategy<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> {
         hash1: H1,
@@ -48,29 +47,27 @@ pub mod DoubleHashing {
     /// Type alias for double hashing hash table
     pub type DoubleHashingHashTable<K, V, H1, H2> = FlatHashTable<K, V, DoubleHashingStrategy<K, H1, H2>>;
 
-    /// Factory functions
-    pub struct DoubleHashingFactory;
+    /// Constructor functions for double hashing hash tables
+    /// APAS: Work Θ(1), Span Θ(1)
+    pub fn create_double_hashing_string_table<V: StT>(
+        initial_size: N,
+    ) -> DoubleHashingHashTable<String, V, StringPositionHashFunction, PolynomialHashFunction> {
+        let hash1 = StringPositionHashFunction;
+        let hash2 = PolynomialHashFunction::new(31); // Common polynomial base
+        let probe_strategy = DoubleHashingStrategy::new(hash1, hash2);
+        FlatHashTable::create_table(probe_strategy, initial_size)
+    }
 
-    impl DoubleHashingFactory {
-        pub fn create_string_table<V: StT>(
-            initial_size: N,
-        ) -> DoubleHashingHashTable<String, V, StringPositionHashFunction, PolynomialHashFunction> {
-            let hash1 = StringPositionHashFunction;
-            let hash2 = PolynomialHashFunction::new(31); // Common polynomial base
-            let probe_strategy = DoubleHashingStrategy::new(hash1, hash2);
-            FlatHashTable::create_table(probe_strategy, initial_size)
-        }
-
-        pub fn create_integer_table<V: StT>(
-            initial_size: N,
-            seed1: u64,
-            seed2: u64,
-        ) -> DoubleHashingHashTable<i32, V, UniversalIntegerHashFunction, UniversalIntegerHashFunction> {
-            let hash_family = UniversalIntegerHashFamily::new();
-            let hash1 = hash_family.generate(seed1);
-            let hash2 = hash_family.generate(seed2);
-            let probe_strategy = DoubleHashingStrategy::new(hash1, hash2);
-            FlatHashTable::create_table(probe_strategy, initial_size)
-        }
+    /// APAS: Work Θ(1), Span Θ(1)
+    pub fn create_double_hashing_integer_table<V: StT>(
+        initial_size: N,
+        seed1: u64,
+        seed2: u64,
+    ) -> DoubleHashingHashTable<i32, V, UniversalIntegerHashFunction, UniversalIntegerHashFunction> {
+        let hash_family = UniversalIntegerHashFamily::new();
+        let hash1 = hash_family.generate(seed1);
+        let hash2 = hash_family.generate(seed2);
+        let probe_strategy = DoubleHashingStrategy::new(hash1, hash2);
+        FlatHashTable::create_table(probe_strategy, initial_size)
     }
 }

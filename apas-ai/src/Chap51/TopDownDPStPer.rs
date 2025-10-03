@@ -12,6 +12,17 @@ pub mod TopDownDPStPer {
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
+    /// Trait for top-down dynamic programming operations
+    pub trait TopDownDPStPerTrait<T: StT> {
+        /// Create new top-down DP solver
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn new() -> Self;
+
+        /// Solve DP problem with memoization
+        /// APAS: Work O(n²), Span O(n²)
+        fn solve(&self, input: &[T]) -> T;
+    }
+
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct TopDownDPStPerS {
         /// Input sequence S

@@ -17,10 +17,26 @@ pub mod SSSPResultStPerFloat {
 
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
     use crate::Types::Types::OrderedF64;
+    use crate::Types::Types::*;
     use ordered_float::OrderedFloat;
 
     const UNREACHABLE: OrderedF64 = OrderedFloat(f64::INFINITY);
     const NO_PREDECESSOR: usize = usize::MAX;
+
+    /// Trait for single-source shortest path result operations
+    pub trait SSSPResultStPerFloatTrait {
+        /// Create new SSSP result
+        /// APAS: Work Θ(n), Span Θ(n)
+        fn new(n: N, source: N) -> Self;
+
+        /// Get distance to vertex
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn distance(&self, v: N) -> Option<OrderedF64>;
+
+        /// Check if vertex is reachable
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn is_reachable(&self, v: N) -> B;
+    }
 
     /// Result structure for single-source shortest paths with floating-point weights (persistent).
     pub struct SSSPResultStPerFloat {

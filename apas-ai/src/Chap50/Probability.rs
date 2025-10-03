@@ -12,6 +12,17 @@ pub mod Probability {
 
     use crate::Types::Types::*;
 
+    /// Trait for probability operations
+    pub trait ProbabilityTrait {
+        /// Create new probability from f64
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn new(value: f64) -> Self;
+
+        /// Get the underlying f64 value
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn value(&self) -> f64;
+    }
+
     #[derive(Clone, Copy)]
     pub struct Probability(pub f64);
 

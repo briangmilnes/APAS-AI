@@ -16,11 +16,26 @@
 pub mod AllPairsResultStPerFloat {
 
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-    use crate::Types::Types::OrderedF64;
+    use crate::Types::Types::*;
     use ordered_float::OrderedFloat;
 
     const UNREACHABLE: OrderedF64 = OrderedFloat(f64::INFINITY);
     const NO_PREDECESSOR: usize = usize::MAX;
+
+    /// Trait for all-pairs shortest path result operations
+    pub trait AllPairsResultStPerFloatTrait {
+        /// Create new all-pairs result
+        /// APAS: Work Θ(n²), Span Θ(n²)
+        fn new(n: N) -> Self;
+
+        /// Get distance between vertices
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn distance(&self, u: N, v: N) -> Option<OrderedF64>;
+
+        /// Check if path exists
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn has_path(&self, u: N, v: N) -> B;
+    }
 
     /// Result structure for all-pairs shortest paths with floating-point weights (persistent).
     pub struct AllPairsResultStPerFloat {

@@ -4,12 +4,11 @@
 
 pub mod AdvancedLinearProbing {
 
-    use std::fmt::{Debug, Display};
+use std::fmt::{Debug, Display};
 
-    use crate::Chap47::FlatHashTable::FlatHashTable::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Types::Types::*;
-
+use crate::Types::Types::*;
+use crate::Chap47::FlatHashTable::FlatHashTable::*;
+use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug)]
     pub struct AdvancedLinearProbingStrategy<K: StT, H: HashFunClone<K>> {
         base_hash: H,

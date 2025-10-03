@@ -40,7 +40,7 @@ fn bench_pq_min_st_per(c: &mut Criterion) {
     group.bench_function("complete_graph_n=15", |b| {
         b.iter_batched(
             || (build_complete_graph(15), vertex_priority()),
-            |(graph, prio_fn)| PQMinStPer::pq_min(&graph, 1, &prio_fn),
+            |(graph, prio_fn)| pq_min(&graph, 1, &prio_fn),
             BatchSize::SmallInput,
         );
     });
@@ -48,7 +48,7 @@ fn bench_pq_min_st_per(c: &mut Criterion) {
     group.bench_function("chain_graph_n=100", |b| {
         b.iter_batched(
             || (build_chain_graph(100), vertex_priority()),
-            |(graph, prio_fn)| PQMinStPer::pq_min(&graph, 1, &prio_fn),
+            |(graph, prio_fn)| pq_min(&graph, 1, &prio_fn),
             BatchSize::SmallInput,
         );
     });
@@ -65,7 +65,7 @@ fn bench_pq_min_st_per(c: &mut Criterion) {
                 };
                 (graph, vertex_priority())
             },
-            |(graph, prio_fn)| PQMinStPer::pq_min(&graph, 1, &prio_fn),
+            |(graph, prio_fn)| pq_min(&graph, 1, &prio_fn),
             BatchSize::SmallInput,
         );
     });

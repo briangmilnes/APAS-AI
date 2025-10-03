@@ -25,7 +25,7 @@ fn test_graph_1() -> impl Fn(&N) -> AVLTreeSetMtEph<N> + Send + Sync + 'static {
 fn test_pq_min_empty_graph() {
     let graph = |_: &N| AVLTreeSetMtEph::empty();
     let prio_fn = vertex_priority();
-    let result = PQMinMtEph::pq_min(graph, 1, prio_fn);
+    let result = pq_min(graph, 1, prio_fn);
     assert_eq!(result.visited.size(), 1);
     assert!(result.visited.find(&1));
 }
@@ -40,7 +40,7 @@ fn test_pq_min_single_edge() {
         }
     };
     let prio_fn = vertex_priority();
-    let result = PQMinMtEph::pq_min(graph, 1, prio_fn);
+    let result = pq_min(graph, 1, prio_fn);
     assert_eq!(result.visited.size(), 2);
     assert!(result.visited.find(&1));
     assert!(result.visited.find(&2));
@@ -50,7 +50,7 @@ fn test_pq_min_single_edge() {
 fn test_pq_min_dag() {
     let graph = test_graph_1();
     let prio_fn = vertex_priority();
-    let result = PQMinMtEph::pq_min(graph, 1, prio_fn);
+    let result = pq_min(graph, 1, prio_fn);
     assert_eq!(result.visited.size(), 5);
     for i in 1..=5 {
         assert!(result.visited.find(&i));
@@ -66,7 +66,7 @@ fn test_pq_min_priority_order() {
         | _ => AVLTreeSetMtEph::empty(),
     };
     let prio_fn = vertex_priority();
-    let result = PQMinMtEph::pq_min(graph, 1, prio_fn);
+    let result = pq_min(graph, 1, prio_fn);
 
     assert_eq!(result.visited.size(), 5);
     assert_eq!(result.priorities.size(), 5);
@@ -77,7 +77,7 @@ fn test_pq_min_multi_source() {
     let graph = test_graph_1();
     let sources = AVLTreeSetMtEph::singleton(2).union(&AVLTreeSetMtEph::singleton(5));
     let prio_fn = vertex_priority();
-    let result = PQMinMtEph::pq_min_multi(graph, sources, prio_fn);
+    let result = pq_min_multi(graph, sources, prio_fn);
 
     assert_eq!(result.visited.size(), 3);
     assert!(result.visited.find(&2));
@@ -94,7 +94,7 @@ fn test_pq_min_linear_chain() {
         | _ => AVLTreeSetMtEph::empty(),
     };
     let prio_fn = vertex_priority();
-    let result = PQMinMtEph::pq_min(graph, 1, prio_fn);
+    let result = pq_min(graph, 1, prio_fn);
 
     assert_eq!(result.visited.size(), 4);
     for i in 1..=4 {
@@ -111,7 +111,7 @@ fn test_pq_min_cycle() {
         | _ => AVLTreeSetMtEph::empty(),
     };
     let prio_fn = vertex_priority();
-    let result = PQMinMtEph::pq_min(graph, 1, prio_fn);
+    let result = pq_min(graph, 1, prio_fn);
 
     assert_eq!(result.visited.size(), 3);
     assert!(result.visited.find(&1));

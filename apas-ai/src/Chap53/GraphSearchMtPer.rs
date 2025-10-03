@@ -58,68 +58,71 @@ pub mod GraphSearchMtPer {
             G: Fn(&V) -> AVLTreeSetMtPer<V>;
     }
 
-    pub struct GraphSearchMtPer;
+    /// Generic graph search starting from single source.
+    /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| × log |V|), Parallelism Θ(|E|/|V|)
+    /// Graph search using thread-safe persistent sets with parallel set operations.
+    pub fn graph_search<V: StTInMtT + Ord + 'static, G, S>(graph: &G, source: V, strategy: &S) -> SearchResult<V>
+    where
+        G: Fn(&V) -> AVLTreeSetMtPer<V>,
+        S: SelectionStrategy<V>,
+    {
+        let sources = AVLTreeSetMtPer::singleton(source);
+        graph_search_multi(graph, sources, strategy)
+    }
 
-    impl<V: StTInMtT + Ord + 'static> GraphSearchMtPerTrait<V> for GraphSearchMtPer {
-        fn graph_search<G, S>(graph: &G, source: V, strategy: &S) -> SearchResult<V>
+    /// Generic graph search starting from multiple sources.
+    /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| × log |V|), Parallelism Θ(|E|/|V|)
+    pub fn graph_search_multi<V: StTInMtT + Ord + 'static, G, S>(graph: &G, sources: AVLTreeSetMtPer<V>, strategy: &S) -> SearchResult<V>
+    where
+        G: Fn(&V) -> AVLTreeSetMtPer<V>,
+        S: SelectionStrategy<V>,
+    {
+        fn explore<V, G, S>(
+            graph: &G,
+            strategy: &S,
+            visited: AVLTreeSetMtPer<V>,
+            frontier: AVLTreeSetMtPer<V>,
+        ) -> AVLTreeSetMtPer<V>
         where
+            V: StTInMtT + Ord + 'static,
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             S: SelectionStrategy<V>,
         {
-            let sources = AVLTreeSetMtPer::singleton(source);
-            Self::graph_search_multi(graph, sources, strategy)
-        }
-
-        fn graph_search_multi<G, S>(graph: &G, sources: AVLTreeSetMtPer<V>, strategy: &S) -> SearchResult<V>
-        where
-            G: Fn(&V) -> AVLTreeSetMtPer<V>,
-            S: SelectionStrategy<V>,
-        {
-            fn explore<V, G, S>(
-                graph: &G,
-                strategy: &S,
-                visited: AVLTreeSetMtPer<V>,
-                frontier: AVLTreeSetMtPer<V>,
-            ) -> AVLTreeSetMtPer<V>
-            where
-                V: StTInMtT + Ord + 'static,
-                G: Fn(&V) -> AVLTreeSetMtPer<V>,
-                S: SelectionStrategy<V>,
-            {
-                if frontier.size() == 0 {
-                    return visited;
-                }
-
-                let (selected, _) = strategy.select(&frontier);
-                // Parallel union via AVLTreeSetMtPer's parallel implementation
-                let visited_new = visited.union(&selected);
-
-                // Compute out-neighbors (sequential loop, but union is parallel)
-                let mut new_neighbors = AVLTreeSetMtPer::empty();
-                let selected_seq = selected.to_seq();
-                for i in 0..selected_seq.length() {
-                    let v = selected_seq.nth(i);
-                    let neighbors = graph(v);
-                    // Parallel union operation
-                    new_neighbors = new_neighbors.union(&neighbors);
-                }
-
-                // Parallel difference operation
-                let frontier_new = new_neighbors.difference(&visited_new);
-                explore(graph, strategy, visited_new, frontier_new)
+            if frontier.size() == 0 {
+                return visited;
             }
 
-            let visited = explore(graph, strategy, AVLTreeSetMtPer::empty(), sources);
+            let (selected, _) = strategy.select(&frontier);
+            // Parallel union via AVLTreeSetMtPer's parallel implementation
+            let visited_new = visited.union(&selected);
 
-            SearchResult { visited, parent: None }
+            // Compute out-neighbors (sequential loop, but union is parallel)
+            let mut new_neighbors = AVLTreeSetMtPer::empty();
+            let selected_seq = selected.to_seq();
+            for i in 0..selected_seq.length() {
+                let v = selected_seq.nth(i);
+                let neighbors = graph(v);
+                // Parallel union operation
+                new_neighbors = new_neighbors.union(&neighbors);
+            }
+
+            // Parallel difference operation
+            let frontier_new = new_neighbors.difference(&visited_new);
+            explore(graph, strategy, visited_new, frontier_new)
         }
 
-        fn reachable<G>(graph: &G, source: V) -> AVLTreeSetMtPer<V>
-        where
-            G: Fn(&V) -> AVLTreeSetMtPer<V>,
-        {
-            let result = Self::graph_search(graph, source, &SelectAll);
-            result.visited
-        }
+        let visited = explore(graph, strategy, AVLTreeSetMtPer::empty(), sources);
+
+        SearchResult { visited, parent: None }
+    }
+
+    /// Find all vertices reachable from source using breadth-first search.
+    /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| × log |V|), Parallelism Θ(|E|/|V|)
+    pub fn reachable<V: StTInMtT + Ord + 'static, G>(graph: &G, source: V) -> AVLTreeSetMtPer<V>
+    where
+        G: Fn(&V) -> AVLTreeSetMtPer<V>,
+    {
+        let result = graph_search(graph, source, &SelectAll);
+        result.visited
     }
 }

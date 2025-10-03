@@ -66,23 +66,24 @@ pub mod GraphSearchStPer {
             G: Fn(&V) -> AVLTreeSetStPer<V>;
     }
 
-    pub struct GraphSearchStPer;
+    /// Generic graph search starting from single source.
+    /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
+    pub fn graph_search<V: StT + Ord, G, S>(graph: &G, source: V, strategy: &S) -> SearchResult<V>
+    where
+        G: Fn(&V) -> AVLTreeSetStPer<V>,
+        S: SelectionStrategy<V>,
+    {
+        let sources = AVLTreeSetStPer::singleton(source);
+        graph_search_multi(graph, sources, strategy)
+    }
 
-    impl<V: StT + Ord> GraphSearchStPerTrait<V> for GraphSearchStPer {
-        fn graph_search<G, S>(graph: &G, source: V, strategy: &S) -> SearchResult<V>
-        where
-            G: Fn(&V) -> AVLTreeSetStPer<V>,
-            S: SelectionStrategy<V>,
-        {
-            let sources = AVLTreeSetStPer::singleton(source);
-            Self::graph_search_multi(graph, sources, strategy)
-        }
-
-        fn graph_search_multi<G, S>(graph: &G, sources: AVLTreeSetStPer<V>, strategy: &S) -> SearchResult<V>
-        where
-            G: Fn(&V) -> AVLTreeSetStPer<V>,
-            S: SelectionStrategy<V>,
-        {
+    /// Generic graph search starting from multiple sources.
+    /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
+    pub fn graph_search_multi<V: StT + Ord, G, S>(graph: &G, sources: AVLTreeSetStPer<V>, strategy: &S) -> SearchResult<V>
+    where
+        G: Fn(&V) -> AVLTreeSetStPer<V>,
+        S: SelectionStrategy<V>,
+    {
             // Algorithm 53.4: Generic Graph Search
             fn explore<V, G, S>(
                 graph: &G,
@@ -129,12 +130,13 @@ pub mod GraphSearchStPer {
             SearchResult { visited, parent: None }
         }
 
-        fn reachable<G>(graph: &G, source: V) -> AVLTreeSetStPer<V>
-        where
-            G: Fn(&V) -> AVLTreeSetStPer<V>,
-        {
-            let result = Self::graph_search(graph, source, &SelectAll);
-            result.visited
-        }
+    /// Find all vertices reachable from source using breadth-first search.
+    /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
+    pub fn reachable<V: StT + Ord, G>(graph: &G, source: V) -> AVLTreeSetStPer<V>
+    where
+        G: Fn(&V) -> AVLTreeSetStPer<V>,
+    {
+        let result = graph_search(graph, source, &SelectAll);
+        result.visited
     }
 }

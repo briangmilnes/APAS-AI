@@ -15,23 +15,23 @@ fn bench_heapsort(c: &mut Criterion) {
         let data: Vec<i32> = (0..*size).rev().collect();
 
         group.bench_with_input(BenchmarkId::new("UnsortedList", size), size, |b, _| {
-            b.iter(|| black_box(Heapsort::heapsort_unsorted_list(&data)))
+            b.iter(|| black_box(heapsort_unsorted_list(&data)))
         });
 
         group.bench_with_input(BenchmarkId::new("SortedList", size), size, |b, _| {
-            b.iter(|| black_box(Heapsort::heapsort_sorted_list(&data)))
+            b.iter(|| black_box(heapsort_sorted_list(&data)))
         });
 
         group.bench_with_input(BenchmarkId::new("BalancedTree", size), size, |b, _| {
-            b.iter(|| black_box(Heapsort::heapsort_balanced_tree(&data)))
+            b.iter(|| black_box(heapsort_balanced_tree(&data)))
         });
 
         group.bench_with_input(BenchmarkId::new("BinaryHeap", size), size, |b, _| {
-            b.iter(|| black_box(Heapsort::heapsort_binary_heap(&data)))
+            b.iter(|| black_box(heapsort_binary_heap(&data)))
         });
 
         group.bench_with_input(BenchmarkId::new("LeftistHeap", size), size, |b, _| {
-            b.iter(|| black_box(Heapsort::heapsort_leftist_heap(&data)))
+            b.iter(|| black_box(heapsort_leftist_heap(&data)))
         });
     }
 

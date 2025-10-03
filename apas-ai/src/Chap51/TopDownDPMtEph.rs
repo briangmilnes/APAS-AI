@@ -14,6 +14,17 @@ pub mod TopDownDPMtEph {
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
 
+    /// Trait for top-down dynamic programming operations
+    pub trait TopDownDPMtEphTrait<T: MtVal> {
+        /// Create new top-down DP solver
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn new() -> Self;
+
+        /// Solve DP problem with memoization
+        /// APAS: Work O(n²), Span O(n)
+        fn solve(&self, input: &[T]) -> T;
+    }
+
     #[derive(Clone, Debug)]
     pub struct TopDownDPMtEphS {
         /// Input sequence S

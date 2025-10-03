@@ -11,6 +11,41 @@ pub mod PrimTreeSeqSt {
 
     use crate::Types::Types::*;
 
+    /// Trait for primitive tree sequence operations
+    pub trait PrimTreeSeqStTrait<T: StT> {
+        /// Creates an empty sequence
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn empty() -> Self;
+
+        /// Builds a sequence containing a single element
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn singleton(value: T) -> Self;
+
+        /// Constructs a sequence from the provided vector
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn from_vec(vec: Vec<T>) -> Self;
+
+        /// Converts this sequence into its backing vector
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn into_vec(self) -> Vec<T>;
+
+        /// Provides a shared view of the underlying elements
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn as_slice(&self) -> &[T];
+
+        /// Returns the number of elements in the sequence
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn length(&self) -> N;
+
+        /// Exposes the internal structure as Zero, One, or Two parts
+        /// APAS: Work Θ(n), Span Θ(n)
+        fn expose(&self) -> PrimTreeSeqStTree<T>;
+
+        /// Reassembles a primitive tree sequence from an exposed tree
+        /// APAS: Work Θ(n), Span Θ(n)
+        fn join(tree: PrimTreeSeqStTree<T>) -> Self;
+    }
+
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub enum PrimTreeSeqStTree<T: StT> {
         Zero,
@@ -75,6 +110,45 @@ pub mod PrimTreeSeqSt {
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential append
         pub fn join(tree: PrimTreeSeqStTree<T>) -> Self {
+            match tree {
+                | PrimTreeSeqStTree::Zero => Self::empty(),
+                | PrimTreeSeqStTree::One(value) => Self::singleton(value),
+                | PrimTreeSeqStTree::Two(left, right) => {
+                    let mut combined = left.into_vec();
+                    combined.extend(right.into_vec());
+                    PrimTreeSeqStS::from_vec(combined)
+                }
+            }
+        }
+    }
+
+    impl<T: StT> PrimTreeSeqStTrait<T> for PrimTreeSeqStS<T> {
+        fn empty() -> Self { Self { data: Vec::new() } }
+
+        fn singleton(value: T) -> Self { Self { data: vec![value] } }
+
+        fn from_vec(vec: Vec<T>) -> Self { Self { data: vec } }
+
+        fn into_vec(self) -> Vec<T> { self.data }
+
+        fn as_slice(&self) -> &[T] { &self.data }
+
+        fn length(&self) -> N { self.data.len() }
+
+        fn expose(&self) -> PrimTreeSeqStTree<T> {
+            match self.data.len() {
+                | 0 => PrimTreeSeqStTree::Zero,
+                | 1 => PrimTreeSeqStTree::One(self.data[0].clone()),
+                | _ => {
+                    let mid = self.data.len() / 2;
+                    let left = self.data[..mid].to_vec();
+                    let right = self.data[mid..].to_vec();
+                    PrimTreeSeqStTree::Two(PrimTreeSeqStS::from_vec(left), PrimTreeSeqStS::from_vec(right))
+                }
+            }
+        }
+
+        fn join(tree: PrimTreeSeqStTree<T>) -> Self {
             match tree {
                 | PrimTreeSeqStTree::Zero => Self::empty(),
                 | PrimTreeSeqStTree::One(value) => Self::singleton(value),

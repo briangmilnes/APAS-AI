@@ -173,6 +173,20 @@ pub mod SortingAlgorithms {
 - **Minimal type checking**: Rust compiler validates trait function signatures are well-formed
 - **Documentation anchor**: Tests and benchmarks can reference the trait for expected behavior
 
+### Factory Pattern Ban
+- **NEVER use "Factory" in struct, trait, or function names**. This is a Java anti-pattern that creates unnecessary complexity and indirection.
+- **Rationale**: Factory patterns obscure simple construction logic behind unnecessary abstractions. Direct constructors, builder patterns, or free functions are clearer and more idiomatic in Rust.
+- **Instead of**: `LinearProbingFactory::create_string_table()` 
+- **Use**: `LinearProbingHashTable::new()` or free function `create_linear_probing_table()`
+- **Exception**: None. Factory naming is banned in all contexts.
+
+### Unit Struct Algorithm Pattern
+- **Unit structs with algorithmic impl blocks should be converted to free functions with documentary traits**.
+- **Identification**: Unit structs (`pub struct Name;`) that contain only algorithmic methods with no state.
+- **Pattern**: Convert to module with documentary trait + free functions following the Functional Module Pattern (see above).
+- **Keep unit structs for**: Data containers, behavioral patterns (strategies), type-level markers with PhantomData.
+- **Convert unit structs for**: Algorithms, utilities, examples, analysis functions, validators.
+
 ### Documentation
 - Always put this copyright in on line 1: "//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'."
 - Always put in a few line summary of the module after that, if one sentence does the job great.

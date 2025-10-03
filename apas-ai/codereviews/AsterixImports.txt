@@ -1,0 +1,9 @@
+
+ Where are we NOT importing from the APAS code base with an *?
+
+ List all the files.
+ Is moving to an * going to cause a problem?
+
+ Make a plan to fix these issues according to PrePlanChecklist.
+ Show it to the user in todos.
+ Do not proceed until she reviews it.

@@ -50,23 +50,24 @@ pub mod PQMinStEph {
             PF: PriorityFn<V, P>;
     }
 
-    pub struct PQMinStEph;
+    /// Priority queue minimum search starting from single source.
+    /// claude-4-sonet: Work Θ(|V| log |V| + |E|), Span Θ(|V| log |V|), Parallelism Θ(1)
+    pub fn pq_min<V: StT + Ord, P: StT + Ord, G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
+    where
+        G: Fn(&V) -> AVLTreeSetStEph<V>,
+        PF: PriorityFn<V, P>,
+    {
+        let sources = AVLTreeSetStEph::singleton(source);
+        pq_min_multi(graph, sources, priority_fn)
+    }
 
-    impl<V: StT + Ord, P: StT + Ord> PQMinStEphTrait<V, P> for PQMinStEph {
-        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
-        where
-            G: Fn(&V) -> AVLTreeSetStEph<V>,
-            PF: PriorityFn<V, P>,
-        {
-            let sources = AVLTreeSetStEph::singleton(source);
-            Self::pq_min_multi(graph, sources, priority_fn)
-        }
-
-        fn pq_min_multi<G, PF>(graph: &G, sources: AVLTreeSetStEph<V>, priority_fn: &PF) -> PQMinResult<V, P>
-        where
-            G: Fn(&V) -> AVLTreeSetStEph<V>,
-            PF: PriorityFn<V, P>,
-        {
+    /// Priority queue minimum search starting from multiple sources.
+    /// claude-4-sonet: Work Θ(|V| log |V| + |E|), Span Θ(|V| log |V|), Parallelism Θ(1)
+    pub fn pq_min_multi<V: StT + Ord, P: StT + Ord, G, PF>(graph: &G, sources: AVLTreeSetStEph<V>, priority_fn: &PF) -> PQMinResult<V, P>
+    where
+        G: Fn(&V) -> AVLTreeSetStEph<V>,
+        PF: PriorityFn<V, P>,
+    {
             fn find_min_priority<V: StT + Ord, P: StT + Ord>(
                 frontier: &AVLTreeSetStEph<Pair<Pair<P, V>, V>>,
             ) -> Option<V> {
@@ -140,5 +141,4 @@ pub mod PQMinStEph {
                 parent: None,
             }
         }
-    }
 }

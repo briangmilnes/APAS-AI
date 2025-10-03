@@ -16,6 +16,26 @@ pub mod StackStEph {
 
     use crate::Types::Types::*;
 
+
+    /// Trait for stack operations
+    pub trait StackStEphTrait<T: StT> {
+        /// Create new empty stack
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn new() -> Self;
+
+        /// Push element onto stack
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn push(&mut self, item: T);
+
+        /// Pop element from stack
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn pop(&mut self) -> Option<T>;
+
+        /// Check if stack is empty
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn is_empty(&self) -> B;
+    }
+
     #[derive(Debug, Clone)]
     pub struct StackStEph<T: StT> {
         /// Backing storage using Vec for efficient push/pop

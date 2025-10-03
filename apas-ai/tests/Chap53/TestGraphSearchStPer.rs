@@ -22,7 +22,7 @@ fn test_graph_1() -> impl Fn(&N) -> AVLTreeSetStPer<N> {
 #[test]
 fn test_empty_graph() {
     let graph = |_: &N| AVLTreeSetStPer::empty();
-    let result = GraphSearchStPer::graph_search(&graph, 1, &SelectAll);
+    let result = graph_search(&graph, 1, &SelectAll);
     assert_eq!(result.visited.size(), 1);
     assert!(result.visited.find(&1));
 }
@@ -36,7 +36,7 @@ fn test_single_edge() {
             AVLTreeSetStPer::empty()
         }
     };
-    let result = GraphSearchStPer::graph_search(&graph, 1, &SelectAll);
+    let result = graph_search(&graph, 1, &SelectAll);
     assert_eq!(result.visited.size(), 2);
     assert!(result.visited.find(&1));
     assert!(result.visited.find(&2));
@@ -50,7 +50,7 @@ fn test_linear_chain() {
         | 3 => AVLTreeSetStPer::singleton(4),
         | _ => AVLTreeSetStPer::empty(),
     };
-    let result = GraphSearchStPer::graph_search(&graph, 1, &SelectAll);
+    let result = graph_search(&graph, 1, &SelectAll);
     assert_eq!(result.visited.size(), 4);
     for i in 1..=4 {
         assert!(result.visited.find(&i));
@@ -60,7 +60,7 @@ fn test_linear_chain() {
 #[test]
 fn test_dag() {
     let graph = test_graph_1();
-    let result = GraphSearchStPer::graph_search(&graph, 1, &SelectAll);
+    let result = graph_search(&graph, 1, &SelectAll);
     assert_eq!(result.visited.size(), 5);
     for i in 1..=5 {
         assert!(result.visited.find(&i));
@@ -75,7 +75,7 @@ fn test_cycle() {
         | 3 => AVLTreeSetStPer::singleton(1),
         | _ => AVLTreeSetStPer::empty(),
     };
-    let result = GraphSearchStPer::graph_search(&graph, 1, &SelectAll);
+    let result = graph_search(&graph, 1, &SelectAll);
     assert_eq!(result.visited.size(), 3);
     assert!(result.visited.find(&1));
     assert!(result.visited.find(&2));
@@ -90,7 +90,7 @@ fn test_disconnected_component() {
         | 3 => AVLTreeSetStPer::singleton(4),
         | _ => AVLTreeSetStPer::empty(),
     };
-    let result = GraphSearchStPer::graph_search(&graph, 1, &SelectAll);
+    let result = graph_search(&graph, 1, &SelectAll);
     assert_eq!(result.visited.size(), 2);
     assert!(result.visited.find(&1));
     assert!(result.visited.find(&2));
@@ -102,7 +102,7 @@ fn test_disconnected_component() {
 fn test_multi_source() {
     let graph = test_graph_1();
     let sources = AVLTreeSetStPer::singleton(2).union(&AVLTreeSetStPer::singleton(5));
-    let result = GraphSearchStPer::graph_search_multi(&graph, sources, &SelectAll);
+    let result = graph_search_multi(&graph, sources, &SelectAll);
     assert_eq!(result.visited.size(), 3);
     assert!(result.visited.find(&2));
     assert!(result.visited.find(&4));
@@ -113,7 +113,7 @@ fn test_multi_source() {
 #[test]
 fn test_reachable() {
     let graph = test_graph_1();
-    let reachable = GraphSearchStPer::reachable(&graph, 1);
+    let reachable = reachable(&graph, 1);
     assert_eq!(reachable.size(), 5);
     for i in 1..=5 {
         assert!(reachable.find(&i));
@@ -123,7 +123,7 @@ fn test_reachable() {
 #[test]
 fn test_select_one_dfs_style() {
     let graph = test_graph_1();
-    let result = GraphSearchStPer::graph_search(&graph, 1, &SelectOne);
+    let result = graph_search(&graph, 1, &SelectOne);
     // SelectOne should still visit all reachable vertices, just in a different order
     assert!(result.visited.size() >= 1);
     assert!(result.visited.find(&1));

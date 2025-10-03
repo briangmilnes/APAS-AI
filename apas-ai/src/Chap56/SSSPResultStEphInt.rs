@@ -16,9 +16,25 @@ pub mod SSSPResultStEphInt {
 
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Types::Types::*;
 
     const UNREACHABLE: i64 = i64::MAX;
     const NO_PREDECESSOR: usize = usize::MAX;
+
+    /// Trait for single-source shortest path result operations
+    pub trait SSSPResultStEphIntTrait {
+        /// Create new SSSP result
+        /// APAS: Work Θ(n), Span Θ(n)
+        fn new(n: N, source: N) -> Self;
+
+        /// Get distance to vertex
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn distance(&self, v: N) -> Option<i32>;
+
+        /// Check if vertex is reachable
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn is_reachable(&self, v: N) -> B;
+    }
 
     /// Result structure for single-source shortest paths with integer weights.
     pub struct SSSPResultStEphInt {

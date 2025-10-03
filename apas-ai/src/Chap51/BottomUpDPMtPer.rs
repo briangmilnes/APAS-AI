@@ -14,6 +14,17 @@ pub mod BottomUpDPMtPer {
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use crate::Types::Types::*;
 
+    /// Trait for bottom-up dynamic programming operations
+    pub trait BottomUpDPMtPerTrait<T: MtVal> {
+        /// Create new bottom-up DP solver
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn new() -> Self;
+
+        /// Solve DP problem
+        /// APAS: Work O(n³), Span O(lg n)
+        fn solve(&self, input: &[T]) -> T;
+    }
+
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub struct BottomUpDPMtPerS {
         /// Input sequence S
