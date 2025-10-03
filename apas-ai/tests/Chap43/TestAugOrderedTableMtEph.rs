@@ -11,7 +11,7 @@ use std::thread;
 #[test]
 fn test_empty_table() {
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
-    let table = AugOrderedTableMtEph::empty(max_reducer, i32::MIN);
+    let table: AugOrderedTableMtEph<String, i32, _> = AugOrderedTableMtEph::empty(max_reducer, i32::MIN);
 
     assert_eq!(table.size(), 0);
     assert_eq!(table.reduce_val(), i32::MIN);
@@ -229,7 +229,7 @@ fn test_string_concatenation_multithreaded() {
     assert_eq!(table.reduce_val(), "Hello World");
 
     // Test thread-safe modification
-    table.insert(2, "Beautiful ", |_old, new| new.clone());
+    table.insert(2, "Beautiful ".to_string(), |_old, new| new.clone());
     assert_eq!(table.reduce_val(), "HelloBeautiful World");
 }
 

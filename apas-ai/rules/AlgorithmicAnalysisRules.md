@@ -33,5 +33,11 @@
 ### Documentation
 - Each AI agent is to mark their estimate before each function and method in the traits with a /// <AGENT-NAME> Work: ... Span: .... .
 - If an Agent's analysis differs from one entered by APAS, mark it with a 
-   /// BUG: <AGENT-NAME>'s algorithmic analysis differs from APAS.
+  /// BUG: <AGENT-NAME>'s algorithmic analysis differs from APAS.
 - If a prompt contains APAS's algorithmic analysis mark each function and method with an /// APAS: Work: ... Span: .... .
+
+### Algorithmic Analysis Process
+- **Source Files Only**: Algorithmic analysis should be performed on `src/` files, not test files.
+- **Consolidated Documentation**: Comprehensive algorithmic analysis should be documented in `chatlogs/AlgorithmicAnalysis.txt`.
+- **Test File Scope**: Test files should focus on correctness verification, not algorithmic analysis documentation.
+- **Analysis Extraction**: If algorithmic analysis is accidentally added to test files, extract it to the consolidated documentation file.

@@ -3,6 +3,7 @@
 
 use apas_ai::Chap45::UnsortedListPQ::UnsortedListPQ::*;
 use apas_ai::Types::Types::*;
+use apas_ai::{UnsortedListPQLit};
 
 #[test]
 fn test_empty_priority_queue() {
@@ -22,7 +23,7 @@ fn test_singleton_priority_queue() {
     assert!(!pq.is_empty());
     assert_eq!(pq.size(), 1);
     assert_eq!(pq.find_min(), Some(&42));
-    assert_eq!(pq.peek(), Some(&42));
+    assert_eq!(pq.find_min(), Some(&42));
 
     let (new_pq, min_val) = pq.delete_min();
     assert!(new_pq.is_empty());

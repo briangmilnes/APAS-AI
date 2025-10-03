@@ -2,6 +2,7 @@
 use apas_ai::Chap38::BSTParaStEph::BSTParaStEph::*;
 use apas_ai::Types::Types::*;
 use apas_ai::*;
+use apas_ai::{ArraySeqStPerSLit};
 
 fn make_tree(values: &[i32]) -> ParamBST<i32> {
     let tree = ParamBST::new();

@@ -354,9 +354,6 @@ name = "BenchArraySeqMtEph"
 path = "benches/Chap18/BenchArraySeqMtEph.rs"
 harness = false
 
-
-
-
 # Test files in chapter subdirectories
 [[test]]
 name = "TestInsertionSortSt"
@@ -1740,3 +1737,164 @@ harness = false
 name = "BenchBoruvkaMtEph"
 path = "benches/Chap66/BenchBoruvkaMtEph.rs"
 harness = false
+
+# Missing test files - added to fix discovery issue
+[[test]]
+name = "TestWeightedDirGraphStEphFloat"
+path = "tests/Chap06/TestWeightedDirGraphStEphFloat.rs"
+
+[[test]]
+name = "TestArraySeqMtPer18"
+path = "tests/Chap19/TestArraySeqMtPer18.rs"
+
+[[test]]
+name = "TestArraySeqStEph18"
+path = "tests/Chap19/TestArraySeqStEph18.rs"
+
+[[test]]
+name = "TestArraySeqStPer18"
+path = "tests/Chap19/TestArraySeqStPer18.rs"
+
+[[test]]
+name = "TestAlgorithm21_6"
+path = "tests/Chap21/TestAlgorithm21_6.rs"
+
+[[test]]
+name = "TestAugOrderedTableMtEph"
+path = "tests/Chap43/TestAugOrderedTableMtEph.rs"
+
+[[test]]
+name = "TestAugOrderedTableStEph"
+path = "tests/Chap43/TestAugOrderedTableStEph.rs"
+
+[[test]]
+name = "TestAugOrderedTableStPer"
+path = "tests/Chap43/TestAugOrderedTableStPer.rs"
+
+[[test]]
+name = "TestDocumentIndex"
+path = "tests/Chap44/TestDocumentIndex.rs"
+
+[[test]]
+name = "TestExample44_1"
+path = "tests/Chap44/TestExample44_1.rs"
+
+[[test]]
+name = "TestBalancedTreePQ"
+path = "tests/Chap45/TestBalancedTreePQ.rs"
+
+[[test]]
+name = "TestSortedListPQ"
+path = "tests/Chap45/TestSortedListPQ.rs"
+
+[[test]]
+name = "TestUnsortedListPQ"
+path = "tests/Chap45/TestUnsortedListPQ.rs"
+
+[[test]]
+name = "TestDoubleHashing"
+path = "tests/Chap47/TestDoubleHashing.rs"
+
+[[test]]
+name = "TestFlatHashTable"
+path = "tests/Chap47/TestFlatHashTable.rs"
+
+[[test]]
+name = "TestHashExamples"
+path = "tests/Chap47/TestHashExamples.rs"
+
+[[test]]
+name = "TestHashFunctionTraits"
+path = "tests/Chap47/TestHashFunctionTraits.rs"
+
+[[test]]
+name = "TestLinearProbing"
+path = "tests/Chap47/TestLinearProbing.rs"
+
+[[test]]
+name = "TestNestedHashTable"
+path = "tests/Chap47/TestNestedHashTable.rs"
+
+[[test]]
+name = "TestQuadraticProbing"
+path = "tests/Chap47/TestQuadraticProbing.rs"
+
+[[test]]
+name = "TestSeparateChaining"
+path = "tests/Chap47/TestSeparateChaining.rs"
+
+[[test]]
+name = "TestAdjMatrixGraphStEph"
+path = "tests/Chap52/TestAdjMatrixGraphStEph.rs"
+
+[[test]]
+name = "TestAdjMatrixGraphStPer"
+path = "tests/Chap52/TestAdjMatrixGraphStPer.rs"
+
+[[test]]
+name = "TestAdjSeqGraphStEph"
+path = "tests/Chap52/TestAdjSeqGraphStEph.rs"
+
+[[test]]
+name = "TestAdjSeqGraphStPer"
+path = "tests/Chap52/TestAdjSeqGraphStPer.rs"
+
+[[test]]
+name = "TestEdgeContractionMtEph"
+path = "tests/Chap61/TestEdgeContractionMtEph.rs"
+
+[[test]]
+name = "TestEdgeContractionStEph"
+path = "tests/Chap61/TestEdgeContractionStEph.rs"
+
+[[test]]
+name = "TestVertexMatchingMtEph"
+path = "tests/Chap61/TestVertexMatchingMtEph.rs"
+
+[[test]]
+name = "TestVertexMatchingStEph"
+path = "tests/Chap61/TestVertexMatchingStEph.rs"
+
+[[test]]
+name = "TestStarContractionMtEph"
+path = "tests/Chap62/TestStarContractionMtEph.rs"
+
+[[test]]
+name = "TestStarContractionStEph"
+path = "tests/Chap62/TestStarContractionStEph.rs"
+
+[[test]]
+name = "TestStarPartitionMtEph"
+path = "tests/Chap62/TestStarPartitionMtEph.rs"
+
+[[test]]
+name = "TestStarPartitionStEph"
+path = "tests/Chap62/TestStarPartitionStEph.rs"
+
+[[test]]
+name = "TestConnectivityMtEph"
+path = "tests/Chap63/TestConnectivityMtEph.rs"
+
+[[test]]
+name = "TestConnectivityStEph"
+path = "tests/Chap63/TestConnectivityStEph.rs"
+
+[[test]]
+name = "TestSpanTreeMtEph"
+path = "tests/Chap64/TestSpanTreeMtEph.rs"
+
+[[test]]
+name = "TestSpanTreeStEph"
+path = "tests/Chap64/TestSpanTreeStEph.rs"
+
+[[test]]
+name = "TestTSPApproxMtEph"
+path = "tests/Chap64/TestTSPApproxMtEph.rs"
+
+[[test]]
+name = "TestTSPApproxStEph"
+path = "tests/Chap64/TestTSPApproxStEph.rs"
+
+[[test]]
+name = "TestLibIntegration"
+path = "tests/TestLibIntegration.rs"

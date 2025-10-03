@@ -20,6 +20,8 @@
       There should be a to-do item for this PER FILE.
 - [ ] Does the plan schedule `cargo nextest` (targeting the new test file) after each test file is added, run one at a time until clean?
       There should be a to-do item for this PER FILE.
+- [ ] Does the plan ensure each test file is added to Cargo.toml with a [[test]] declaration for test discovery?
+      There should be a to-do item for this PER FILE.
 - [ ] Is it clear which benchmark files will be created?
 - [ ] Does the plan schedule running the RustRules and APAS checklists after each new benchmark file is created or edited?
 - [ ] Does the plan schedule `cargo bench -bench <FILENAME> --no-run` (targeting the new benchmark file) after each benchmark is added, run one at a time until clean?
@@ -30,7 +32,7 @@
 - [ ] Estimate the time to execute this plan.
 - [ ] If the user says 'Execute relentlessly without pause' can you for this plan?
 - [ ] If the user says check the todos on the first file, just execute them and ask for review. 
-- [ ] Add a step of running the the AlgorithmicAnalaysis to the rules/AlgorithmicAnalysisRules.md.
+- [ ] Add a step of running the the AlgorithmicAnalaysis to the rules/AlgorithmicAnalysisRules.md for only src files.
 - [ ] It is critical that the todo list is detailed to the file and each task on each file getting
      their own todo. 
 - [ ] Add the last step of running the PostPlanChecklist.

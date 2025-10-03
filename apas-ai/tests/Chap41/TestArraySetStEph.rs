@@ -4,6 +4,7 @@
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap41::Example41_3::Example41_3::*;
 use apas_ai::*;
+use apas_ai::{ArraySeqStEphSLit};
 
 #[test]
 fn test_array_set_basic_operations() {

@@ -470,6 +470,7 @@ fn para_concurrent_expose_join_mid() {
 fn para_concurrent_delete_operations() {
     use std::sync::{Arc, Barrier};
     use std::thread;
+use apas_ai::{ArraySeqStPerSLit};
 
     let tree = Arc::new(make_range_tree(0, 100));
     let barrier = Arc::new(Barrier::new(4));

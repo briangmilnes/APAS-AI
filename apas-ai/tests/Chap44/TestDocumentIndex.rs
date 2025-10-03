@@ -24,9 +24,8 @@ fn doc_set_to_sorted_vec(docs: &DocumentSet) -> Vec<DocumentId> {
     let mut result = Vec::new();
 
     for i in 0..seq.length() {
-        if let Some(doc_id) = seq.nth(i) {
-            result.push(doc_id.clone());
-        }
+        let doc_id = seq.nth(i);
+        result.push(doc_id.clone());
     }
 
     result.sort();
@@ -187,9 +186,8 @@ fn test_to_seq_operation() {
     // Convert to vector and sort for comparison
     let mut programming_vec = Vec::new();
     for i in 0..programming_seq.length() {
-        if let Some(doc_id) = programming_seq.nth(i) {
-            programming_vec.push(doc_id.clone());
-        }
+        let doc_id = programming_seq.nth(i);
+        programming_vec.push(doc_id.clone());
     }
     programming_vec.sort();
     assert_eq!(
@@ -208,9 +206,8 @@ fn test_tokens_function() {
 
     let mut token_vec = Vec::new();
     for i in 0..word_tokens.length() {
-        if let Some(token) = word_tokens.nth(i) {
-            token_vec.push(token.clone());
-        }
+        let token = word_tokens.nth(i);
+        token_vec.push(token.clone());
     }
 
     assert_eq!(token_vec, vec!["hello", "world", "this", "is", "a", "test"]);
@@ -229,7 +226,8 @@ fn test_tokens_edge_cases() {
     // Single word
     let single_tokens = tokens(&"hello".to_string());
     assert_eq!(single_tokens.length(), 1);
-    if let Some(token) = single_tokens.nth(0) {
+    let token = single_tokens.nth(0);
+    if true {
         assert_eq!(token, &"hello".to_string());
     }
 

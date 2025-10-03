@@ -289,6 +289,14 @@ fn _MyMacro_type_checks() {
 - Prefer `<MacroName>Lit![…]` for non‑empty literals; use `T::new()` for empty cases instead of `<MacroName>Lit![]`.
 - The only test we put in source code is for a macro with deadcode allowed to check it's typing. 
 
+#### Integration Test Structure (MANDATORY)
+- **Integration tests** (files in `tests/` directory) must have test functions at the **root level** of the file.
+- **NEVER use `#[cfg(test)]` modules** in integration test files - this prevents test discovery.
+- **Correct pattern**: `use` statements at file root, followed by `#[test]` functions at file root.
+- **Incorrect pattern**: Wrapping tests in `#[cfg(test)] mod TestName { ... }` - this causes tests to be filtered out.
+- **File structure**: `tests/ChapXX/TestModuleName.rs` should contain direct `#[test]` functions, not nested modules.
+- **Import placement**: All `use` statements must be at the top of the file, not inside any module.
+
 #### Test via Public API Only
 - Write tests against exposed methods/traits/macros; never against private fields.
 
