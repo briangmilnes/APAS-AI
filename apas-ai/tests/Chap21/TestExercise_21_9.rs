@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Exercise 21.9 (Composite generation proof) tests.
 
-pub mod Test35Exercise_21_9 {
+
 
     use apas_ai::Chap21::Exercise21_9::Exercise21_9::*;
 
@@ -12,4 +12,4 @@ pub mod Test35Exercise_21_9 {
         // Actual verification will be done in Verus.
         assert!(true); // Placeholder assertion
     }
-}
+

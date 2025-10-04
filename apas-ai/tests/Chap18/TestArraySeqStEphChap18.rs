@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-pub mod TestArraySeqStEphChap {
+
 
     use apas_ai::ArraySeqStEphSLit;
     use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
@@ -203,4 +203,4 @@ pub mod TestArraySeqStEphChap {
         assert_eq!(pair1.0, "b");
         assert_eq!(pair1.1, ArraySeqStEphSLit![2]);
     }
-}
+

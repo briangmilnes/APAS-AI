@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-pub mod TestExercise12_2 {
+
 
     use std::sync::Arc;
     use std::sync::atomic::{AtomicUsize, Ordering};
@@ -45,4 +45,4 @@ pub mod TestExercise12_2 {
 
         assert_eq!(value.load(Ordering::Relaxed), 8 * 1_000);
     }
-}
+

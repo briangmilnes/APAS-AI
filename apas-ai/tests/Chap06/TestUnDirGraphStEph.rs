@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestUnDirGraphStEph {
+
 
     use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
@@ -23,4 +23,4 @@ pub mod TestUnDirGraphStEph {
         assert_eq!(g.vertices(), &v);
         assert_eq!(g.edges(), &e);
     }
-}
+

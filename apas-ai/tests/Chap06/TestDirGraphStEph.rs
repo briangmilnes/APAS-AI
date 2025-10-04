@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestDirGraphStEph {
+
 
     use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::Chap06::DirGraphStEph::DirGraphStEph::*;
@@ -399,4 +399,4 @@ pub mod TestDirGraphStEph {
         assert_eq!(g.Neighbor(&2000, &0), false);
         assert_eq!(g.Degree(&2000), 0);
     }
-}
+

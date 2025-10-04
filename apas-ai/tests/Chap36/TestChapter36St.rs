@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-pub mod Test39Chapter36St {
+
 
     use apas_ai::ArraySeqStEphSLit;
     use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
@@ -93,4 +93,4 @@ pub mod Test39Chapter36St {
         seq_med.quick_sort_st_median3();
         assert_eq!(seq_med.to_vec(), vec![1, 2, 5, 7, 8]);
     }
-}
+

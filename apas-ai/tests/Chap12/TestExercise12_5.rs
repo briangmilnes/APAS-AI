@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-pub mod TestExercise12_5 {
+
 
     use std::collections::HashSet;
     use std::sync::{Arc, mpsc};
@@ -100,4 +100,4 @@ pub mod TestExercise12_5 {
         assert_eq!(unique, expected);
         assert!(stack.pop().is_none());
     }
-}
+

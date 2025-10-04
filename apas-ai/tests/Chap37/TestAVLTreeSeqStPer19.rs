@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestAVLTreeSeqStPer {
+
 
     use apas_ai::AVLTreeSeqStPerLit;
     use apas_ai::Chap37::AVLTreeSeqStPer;
@@ -46,4 +46,4 @@ pub mod TestAVLTreeSeqStPer {
     // fn test_iter_inorder_after_pipeline_ch19() {
     //     // These methods don't exist in the trait
     // }
-}
+

@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestWeightedDirGraphMtEphFloat {
+
 
     use std::sync::{Arc, Barrier};
     use std::thread;
@@ -271,4 +271,4 @@ pub mod TestWeightedDirGraphMtEphFloat {
             let _ = handle.join().unwrap();
         }
     }
-}
+

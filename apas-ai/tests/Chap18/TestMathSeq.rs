@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-pub mod TestMathSeq {
+
 
     use apas_ai::Chap17::MathSeq::MathSeq::*;
     use apas_ai::MathSeqSLit;
@@ -529,4 +529,4 @@ pub mod TestMathSeq {
         assert_eq!(collected[0], 77);
         assert_eq!(collected[999], 77);
     }
-}
+

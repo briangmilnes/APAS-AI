@@ -179,9 +179,4 @@ pub mod ArraySetEnumMtEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _ArraySetEnumMtEphLit_type_checks() {
-        let _: ArraySetEnumMtEph = ArraySetEnumMtEphLit![10;];
-        let _: ArraySetEnumMtEph = ArraySetEnumMtEphLit![10; 1, 2, 3];
-    }
 }

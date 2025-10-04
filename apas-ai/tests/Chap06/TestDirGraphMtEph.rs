@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestDirGraphMtEph {
+
 
     use std::sync::Arc;
     use std::thread;
@@ -727,4 +727,4 @@ pub mod TestDirGraphMtEph {
         assert_eq!(final_b.sizeV(), 3);
         assert_eq!(final_b.sizeA(), 2);
     }
-}
+

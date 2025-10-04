@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for MappingStEphChap5_5 ephemeral mappings.
 
-pub mod Test23MappingStEphChap5_5 {
+
 
     use apas_ai::Chap05::MappingStEph::MappingStEph::*;
     use apas_ai::Chap05::RelationStEph::RelationStEph::*;
@@ -186,4 +186,4 @@ pub mod Test23MappingStEphChap5_5 {
         }
         assert_eq!(count, 10000);
     }
-}
+

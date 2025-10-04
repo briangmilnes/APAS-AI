@@ -5,6 +5,12 @@ use apas_ai::ArraySetEnumMtEphLit;
 use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
 use apas_ai::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::*;
 
+#[allow(dead_code)]
+fn _ArraySetEnumMtEphLit_type_checks() {
+        let _: ArraySetEnumMtEph = ArraySetEnumMtEphLit![10;];
+        let _: ArraySetEnumMtEph = ArraySetEnumMtEphLit![10; 1, 2, 3];
+}
+
 #[test]
 fn test_array_set_enum_mt_basic_operations() {
     // Test new and empty

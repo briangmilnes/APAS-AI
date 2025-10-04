@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestAVLTreeSeqPer {
+
 
     use apas_ai::AVLTreeSeqStPerLit;
     use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
@@ -279,4 +279,4 @@ pub mod TestAVLTreeSeqPer {
             assert_eq!(*array_seq.nth(i), *tree.nth(i));
         }
     }
-}
+

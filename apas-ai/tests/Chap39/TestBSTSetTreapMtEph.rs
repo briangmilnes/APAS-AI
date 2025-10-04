@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-pub mod TestBSTSetTreapMtEph {
+
 
     use std::sync::{Arc, Barrier};
     use std::thread;
@@ -375,4 +375,4 @@ pub mod TestBSTSetTreapMtEph {
         assert_eq!(results[2], 4950); // Sum 0+1+...+99
         assert_eq!(results[3], 99); // Max value
     }
-}
+

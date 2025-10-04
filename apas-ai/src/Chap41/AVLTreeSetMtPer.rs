@@ -314,9 +314,4 @@ pub mod AVLTreeSetMtPer {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _AVLTreeSetMtPerLit_type_checks() {
-        let _: AVLTreeSetMtPer<i32> = AVLTreeSetMtPerLit![];
-        let _: AVLTreeSetMtPer<i32> = AVLTreeSetMtPerLit![1, 2, 3];
-    }
 }

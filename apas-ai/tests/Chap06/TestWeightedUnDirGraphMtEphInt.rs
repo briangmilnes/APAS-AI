@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestWeightedUnDirGraphMtEphInt {
+
 
     use std::sync::{Arc, Barrier};
     use std::thread;
@@ -322,4 +322,4 @@ pub mod TestWeightedUnDirGraphMtEphInt {
             }
         }
     }
-}
+

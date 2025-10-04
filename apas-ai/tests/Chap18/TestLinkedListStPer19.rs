@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestLinkedListPer {
+
 
     use apas_ai::Chap18::LinkedListStPer::LinkedListStPer::*;
     use apas_ai::LinkedListStPerSLit;
@@ -77,4 +77,4 @@ pub mod TestLinkedListPer {
         let injected = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::inject(&values, &changes);
         assert_eq!(injected, LinkedListStPerSLit![10, 99, 30]);
     }
-}
+

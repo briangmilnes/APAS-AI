@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestLabUnDirGraphMtEph {
+
 
     use std::sync::{Arc, Barrier};
     use std::thread;
@@ -240,4 +240,4 @@ pub mod TestLabUnDirGraphMtEph {
             assert_eq!(degree, in_degree); // In undirected graphs, degree = in_degree = out_degree
         }
     }
-}
+

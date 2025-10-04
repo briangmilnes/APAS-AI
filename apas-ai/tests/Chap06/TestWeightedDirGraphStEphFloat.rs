@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestWeightedDirGraphStEphFloat {
+
 
     use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
@@ -232,4 +232,4 @@ pub mod TestWeightedDirGraphStEphFloat {
         assert_eq!(g.get_arc_label(&0, &3), Some(&OrderedFloat(4.0))); // Direct path
         assert_eq!(g.get_arc_label(&1, &3), Some(&OrderedFloat(5.0))); // Via vertex 1
     }
-}
+

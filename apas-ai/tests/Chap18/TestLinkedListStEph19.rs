@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestLinkedListStEph {
+
 
     use apas_ai::Chap18::LinkedListStEph::LinkedListStEph::*;
     use apas_ai::LinkedListStEphSLit;
@@ -72,4 +72,4 @@ pub mod TestLinkedListStEph {
         let inj = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::inject(&a, &ups);
         expect_list(&inj, &[1, 9, 8, 4]);
     }
-}
+

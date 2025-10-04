@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 /// Problem 21.1 (Points in 2D) tests and construction using ArraySeqPer.
 
-pub mod Test38Problem21_1 {
+
 
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
@@ -79,4 +79,4 @@ pub mod Test38Problem21_1 {
         let dbg_str = format!("{:?}", s);
         assert!(!dbg_str.is_empty());
     }
-}
+

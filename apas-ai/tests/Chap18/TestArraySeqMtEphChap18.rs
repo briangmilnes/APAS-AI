@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for ArraySeqMtEphChap18 multithreaded ephemeral algorithms.
 
-pub mod Test28ArraySeqMtEphChap {
+
 
     use apas_ai::ArraySeqMtEphSLit;
     use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
@@ -166,4 +166,4 @@ pub mod Test28ArraySeqMtEphChap {
         assert_eq!(single.length() == 1, true);
         assert_eq!(single.nth_cloned(0), 42);
     }
-}
+

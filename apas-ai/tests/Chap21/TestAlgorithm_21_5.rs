@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 /// Algorithm 21.5: Brute Force Solution to the Primes Problem tests.
 
-pub mod Test34Algorithm_21_5 {
+
 
     use apas_ai::Chap21::Algorithm21_5::Algorithm21_5::*;
     use apas_ai::Types::Types::*;
@@ -32,4 +32,4 @@ pub mod Test34Algorithm_21_5 {
         let v3: Vec<N> = p3.iter().copied().collect();
         assert_eq!(v3, vec![2]);
     }
-}
+

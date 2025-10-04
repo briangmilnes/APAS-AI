@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 /// Algorithm 21.1 (2D Points) using ArraySeqPer: points2D via tabulate + flatten.
 
-pub mod Test29Algorithm_21_1 {
+
 
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
@@ -64,4 +64,4 @@ pub mod Test29Algorithm_21_1 {
         let dbg_str = format!("{:?}", s);
         assert!(!dbg_str.is_empty());
     }
-}
+

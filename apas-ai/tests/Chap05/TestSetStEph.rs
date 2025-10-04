@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestSetStEphChap5_1 {
+
 
     use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::PairLit;
@@ -438,4 +438,4 @@ pub mod TestSetStEphChap5_1 {
         assert_eq!(cartesian_large.mem(&Pair(0, 'a')), true);
         assert_eq!(cartesian_large.mem(&Pair((large_size - 1) as i32, 'a')), true);
     }
-}
+

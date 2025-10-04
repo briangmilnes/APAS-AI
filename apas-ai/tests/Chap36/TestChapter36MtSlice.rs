@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-pub mod Test44Chapter36MtSlice {
+
 
     use apas_ai::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
     use apas_ai::Chap36::QuickSortMtSlice::Chapter36MtSlice::Chapter36MtSliceTrait;
@@ -296,4 +296,4 @@ pub mod Test44Chapter36MtSlice {
         assert_eq!(result[0], 0);
         assert_eq!(result[large_size as usize - 1], large_size - 1);
     }
-}
+

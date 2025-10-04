@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 /// Exercise 21.6: Cost analysis tests.
 
-pub mod Test32Exercise_21_6 {
+
 
     use apas_ai::Chap21::Exercise21_6::Exercise21_6::*;
 
@@ -12,4 +12,4 @@ pub mod Test32Exercise_21_6 {
         // The actual analysis is documented in the Exercise21_6 module.
         assert!(true); // Placeholder assertion for cost analysis exercise
     }
-}
+

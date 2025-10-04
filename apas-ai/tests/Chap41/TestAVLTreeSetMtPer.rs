@@ -2,7 +2,15 @@
 //! Tests for AVLTreeSetMtPer.
 
 use apas_ai::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
+use apas_ai::AVLTreeSetMtPerLit;
 use apas_ai::Types::Types::*;
+
+#[allow(dead_code)]
+fn _AVLTreeSetMtPerLit_type_checks() {
+    let _: AVLTreeSetMtPer<i32> = AVLTreeSetMtPerLit![];
+    let _: AVLTreeSetMtPer<i32> = AVLTreeSetMtPerLit![1, 2, 3];
+}
+
 
 #[test]
 fn test_empty_set() {

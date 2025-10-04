@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestArraySeqStPerChap {
+
 
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
@@ -603,4 +603,4 @@ pub mod TestArraySeqStPerChap {
         assert_eq!(*injected_large.nth(large_size - 1), 888); // Updated
         assert_eq!(*injected_large.nth(1), 1); // Unchanged
     }
-}
+

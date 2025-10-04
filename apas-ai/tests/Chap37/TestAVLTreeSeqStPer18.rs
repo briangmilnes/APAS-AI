@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for AVLTreeSeq Chapter 18 algorithms.
 
-pub mod TestAVLTreeSeqStPer {
+
 
     use apas_ai::AVLTreeSeqStPerLit;
     use apas_ai::ArraySeqStPerS;
@@ -39,4 +39,4 @@ pub mod TestAVLTreeSeqStPer {
         let evens: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerLit![0, 2, 4];
         assert_eq!(evens.to_arrayseq(), ArraySeqStPerSLit![0, 2, 4]);
     }
-}
+

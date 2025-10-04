@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestLabDirGraphMtEph {
+
 
     use std::sync::{Arc, Barrier};
     use std::thread;
@@ -225,4 +225,4 @@ pub mod TestLabDirGraphMtEph {
         assert_eq!(arcs.mem(&Edge(1, 2)), true);
         assert_eq!(arcs.mem(&Edge(0, 2)), false);
     }
-}
+

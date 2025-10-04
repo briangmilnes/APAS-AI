@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestLinkedListStEph {
+
 
     use apas_ai::Chap18::LinkedListStEph::LinkedListStEph::*;
     use apas_ai::LinkedListStEphSLit;
@@ -119,4 +119,4 @@ pub mod TestLinkedListStEph {
         // Expect keys 1 and 2 with their grouped lists
         assert_eq!(<LinkedListStEphS<Pair<N, LinkedListStEphS<N>>> as LinkedListStEphTrait<Pair<N, LinkedListStEphS<N>>>>::length(&grouped), 2);
     }
-}
+

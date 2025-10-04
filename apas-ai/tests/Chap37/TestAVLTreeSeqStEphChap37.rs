@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestAVLTreeSeqEph {
+
 
     use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS;
     use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait as AVLTreeSeqEph;
@@ -383,4 +383,4 @@ pub mod TestAVLTreeSeqEph {
             assert_eq!(*tree.nth(idx), value);
         }
     }
-}
+

@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-pub mod Test53BSTParaTreapMtEph {
+
 
     use apas_ai::ArraySeqStPerSLit;
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
@@ -405,4 +405,4 @@ use apas_ai::{ArraySeqStPerSLit};
             assert!(remaining <= 100);
         }
     }
-}
+

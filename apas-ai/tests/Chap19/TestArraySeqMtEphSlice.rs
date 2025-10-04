@@ -1,6 +1,4 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestArraySeqMtEphSlice {
-
     use std::sync::{Arc, Barrier};
     use std::thread;
 
@@ -304,4 +302,3 @@ pub mod TestArraySeqMtEphSlice {
         assert_eq!(sliced.nth_cloned(0), 12);
         assert_eq!(sliced.nth_cloned(1), 300);
     }
-}

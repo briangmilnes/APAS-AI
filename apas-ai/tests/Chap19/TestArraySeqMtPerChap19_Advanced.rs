@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for ArraySeqMtPer multithreaded algorithms.
 
-pub mod Test28ArraySeqMtPer {
+
 
     use std::sync::Mutex;
 
@@ -98,4 +98,4 @@ pub mod Test28ArraySeqMtPer {
         assert_eq!(*result.nth(1), "rust");
         assert_eq!(*result.nth(2), "test");
     }
-}
+

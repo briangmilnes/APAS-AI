@@ -1,6 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-pub mod Test26ArraySeqMtPer {
+
 
     use apas_ai::ArrayMtPerSLit;
     use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS;
@@ -842,4 +842,4 @@ pub mod Test26ArraySeqMtPer {
             }
         }
     }
-}
+

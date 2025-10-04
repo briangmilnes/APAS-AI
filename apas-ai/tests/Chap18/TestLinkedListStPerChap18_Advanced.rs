@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestLinkedListStPer {
+
 
     use apas_ai::Chap18::LinkedListStPer::LinkedListStPer::*;
     use apas_ai::LinkedListStPerSLit;
@@ -108,4 +108,4 @@ pub mod TestLinkedListStPer {
         // Expect two groups with keys 1 and 2
         assert_eq!(grouped.length(), 2);
     }
-}
+

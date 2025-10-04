@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-pub mod TestTypes {
+
 
     use apas_ai::Types::Types::*;
 
@@ -67,4 +67,4 @@ pub mod TestTypes {
         assert_eq!(format!("{}", true), "true"); // bool display format
         assert_eq!(format!("{}", false), "false"); // bool display format
     }
-}
+

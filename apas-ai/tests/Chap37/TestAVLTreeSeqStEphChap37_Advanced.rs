@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for AVLTreeSeq Eph Chap19-style operations using available Eph APIs.
 
-pub mod TestAVLTreeSeqStEph {
+
 
     use apas_ai::AVLTreeSeqStEphLit;
     use apas_ai::ArraySeqStEphSLit;
@@ -57,4 +57,4 @@ pub mod TestAVLTreeSeqStEph {
         let f = AVLTreeSeqStEphS::from_vec(kept);
         assert_eq!(f.to_arrayseq(), ArraySeqStEphSLit![0, 1, 2]);
     }
-}
+
