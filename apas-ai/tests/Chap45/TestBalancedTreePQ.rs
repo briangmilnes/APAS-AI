@@ -4,8 +4,10 @@
 use apas_ai::Chap45::BalancedTreePQ::BalancedTreePQ::*;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
 use apas_ai::Types::Types::*;
-use apas_ai::{ArraySeqStPerSLit, AVLTreeSeqStPerSLit};
+use apas_ai::ArraySeqStPerSLit;
+use apas_ai::AVLTreeSeqStPerLit;
 
 #[test]
 fn test_empty_priority_queue() {
@@ -80,7 +82,7 @@ fn test_meld_two_priority_queues() {
     assert_eq!(min1, Some(2));
     let (melded, min2) = melded.delete_min();
     assert_eq!(min2, Some(5));
-    let (melded, min3) = melded.delete_min();
+    let (_melded, min3) = melded.delete_min();
     assert_eq!(min3, Some(8));
     }
 
@@ -98,7 +100,7 @@ fn test_meld_with_empty() {
 
 #[test]
 fn test_from_seq() {
-    let elements = AVLTreeSeqStPerSLit![10, 5, 15, 3, 8, 12];
+    let elements = AVLTreeSeqStPerLit![10, 5, 15, 3, 8, 12];
     let pq: BalancedTreePQ<i32> = BalancedTreePQTrait::from_seq(&elements);
     
     assert_eq!(pq.size(), 6);
@@ -113,9 +115,9 @@ fn test_to_seq() {
     let seq = pq.to_seq();
     assert_eq!(seq.length(), 3);
     // Elements should be in sorted order in the sequence
-    assert_eq!(seq.nth(0), 5);
-    assert_eq!(seq.nth(1), 10);
-    assert_eq!(seq.nth(2), 15);
+    assert_eq!(*seq.nth(0), 5);
+    assert_eq!(*seq.nth(1), 10);
+    assert_eq!(*seq.nth(2), 15);
     }
 
 #[test]
@@ -138,13 +140,13 @@ fn test_priority_queue_ordering() {
     while !current_pq.is_empty() {
     let (new_pq, min_val) = current_pq.delete_min();
     if let Some(val) = min_val {
-        extracted = extracted.append(&ArraySeqStPerSLit![val]);
+        extracted = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&extracted, &ArraySeqStPerSLit![val]);
     }
     current_pq = new_pq;
     }
     
     for (i, &expected) in sorted_elements.iter().enumerate() {
-    assert_eq!(extracted.nth(i as N), expected);
+    assert_eq!(*extracted.nth(i as N), expected);
     }
     }
 
@@ -160,7 +162,7 @@ fn test_duplicate_elements() {
     assert_eq!(min1, Some(3));
     let (pq, min2) = pq.delete_min();
     assert_eq!(min2, Some(3));
-    let (pq, min3) = pq.delete_min();
+    let (_pq, min3) = pq.delete_min();
     assert_eq!(min3, Some(5));
     }
 
@@ -185,9 +187,9 @@ fn test_large_priority_queue() {
     let mut pq = pq;
     
     // Insert 100 random-order elements
-    let elements: ArraySeqStPerS<i32> = ArraySeqStPerSTrait::tabulate(&|i| (i * 17 + 13) % 97, 100);
+    let elements: ArraySeqStPerS<i32> = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::tabulate(&|i| (i as i32 * 17 + 13) % 97, 100);
     for i in 0..elements.length() {
-    pq = pq.insert(elements.nth(i));
+    pq = pq.insert(*elements.nth(i));
     }
     
     assert_eq!(pq.size(), 100);

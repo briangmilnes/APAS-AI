@@ -85,7 +85,7 @@ fn test_quadratic_probing_integer_operations() {
     assert_eq!(table.lookup(&20), Some(&"twenty".to_string()));
     assert_eq!(table.lookup(&30), Some(&"thirty".to_string()));
     
-    let (mut table, _deleted) = table.delete(&20);
+    let (table, _deleted) = table.delete(&20);
     assert_eq!(table.lookup(&20), None);
     assert_eq!(table.load_and_size().1, 2);
 }
@@ -173,7 +173,7 @@ fn test_quadratic_probing_empty_operations() {
     assert_eq!(table.lookup(&"nonexistent".to_string()), None);
     
     // Delete from empty table should not crash
-    let (mut table, _deleted) = table.delete(&"nonexistent".to_string());
+    let (table, _deleted) = table.delete(&"nonexistent".to_string());
     assert!(table.load_and_size().0 == 0);
 }
 

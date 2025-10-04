@@ -353,9 +353,9 @@ fn test_intersection_operation_multithreaded() {
 
 #[test]
 fn test_macro_construction_multithreaded() {
-    let sum_reducer = |a: &i32, b: &i32| a + b;
+    let sum_reducer: fn(&i32, &i32) -> i32 = |a: &i32, b: &i32| a + b;
 
-    let table = AugOrderedTableMtEphLit![
+    let table: AugOrderedTableMt<i32, i32, fn(&i32, &i32) -> i32> = AugOrderedTableMtEphLit![
         reducer: sum_reducer, identity: 0,
         1 => 100,
         2 => 200,

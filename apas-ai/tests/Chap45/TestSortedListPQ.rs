@@ -3,6 +3,7 @@
 
 use apas_ai::Chap45::SortedListPQ::SortedListPQ::*;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
 use apas_ai::Types::Types::*;
 
 #[test]
@@ -117,7 +118,7 @@ fn test_meld_with_empty() {
 
 #[test]
 fn test_from_seq() {
-    let seq = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::from_vec(vec![5, 2, 8, 1, 9]);
+    let seq = ArraySeqStPerS::from_vec(vec![5, 2, 8, 1, 9]);
     let pq: SortedListPQ<i32> = SortedListPQTrait::from_seq(&seq);
     
     assert_eq!(pq.size(), 5);
@@ -272,28 +273,28 @@ fn test_meld_large_queues() {
 
 #[test]
 fn test_persistent_nature() {
-    let pq1 = SortedListPQTrait::singleton(10);
+    let pq1: SortedListPQ<i32> = SortedListPQTrait::singleton(10);
     let pq2 = pq1.insert(5);
     let pq3 = pq2.insert(15);
     
     // Original queues should be unchanged
-    assert_eq!(pq1.length(), 1);
+    assert_eq!(pq1.size(), 1);
     assert_eq!(pq1.find_min(), Some(&10));
     
-    assert_eq!(pq2.length(), 2);
+    assert_eq!(pq2.size(), 2);
     assert_eq!(pq2.find_min(), Some(&5));
     
-    assert_eq!(pq3.length(), 3);
+    assert_eq!(pq3.size(), 3);
     assert_eq!(pq3.find_min(), Some(&5));
     
     // Test delete_min persistence
     let (pq4, deleted) = pq3.delete_min();
     assert_eq!(deleted, Some(5));
-    assert_eq!(pq4.length(), 2);
+    assert_eq!(pq4.size(), 2);
     assert_eq!(pq4.find_min(), Some(&10));
     
     // pq3 should be unchanged
-    assert_eq!(pq3.length(), 3);
+    assert_eq!(pq3.size(), 3);
     assert_eq!(pq3.find_min(), Some(&5));
 }
 

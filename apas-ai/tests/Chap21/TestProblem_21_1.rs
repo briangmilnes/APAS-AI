@@ -8,7 +8,6 @@ pub mod Test38Problem21_1 {
     use apas_ai::Chap21::Problem21_1::Problem21_1::*;
     use apas_ai::PairLit;
     use apas_ai::Types::Types::*;
-use apas_ai::{ArraySeqStPerSLit};
 
     fn points2d(n: N) -> ArraySeqStPerS<Pair<N, N>> {
         if n == 0 {

@@ -13,7 +13,7 @@ fn test_tabulate_fibonacci() {
             | _ => fib(n - 1) + fib(n - 2),
         }
     }
-    let a: ArraySeqStPerS<N> = ArraySeqStPerS::tabulate(fib, 10);
+    let a: ArraySeqStPerS<N> = ArraySeqStPerS::tabulate(&fib, 10);
     let fib10_head = ArraySeqStPerSLit![
         *a.nth(0),
         *a.nth(1),
@@ -40,11 +40,11 @@ fn test_map_increment() {
 #[test]
 fn test_subseq() {
     let a = ArraySeqStPerSLit![10, 20, 30, 40, 50];
-    let b = a.subseq(1, 3);
+    let b = a.subseq_copy(1, 3);
     assert_eq!(b, ArraySeqStPerSLit![20, 30, 40]);
-    let c = a.subseq(2, 0);
+    let c = a.subseq_copy(2, 0);
     assert_eq!(c.length(), 0);
-    let d = a.subseq(0, 1);
+    let d = a.subseq_copy(0, 1);
     assert_eq!(d, ArraySeqStPerSLit![10]);
 }
 
@@ -73,10 +73,10 @@ fn test_sequence_literals_and_append() {
 fn test_filter_even() {
     let numbers = ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     let evens =
-        <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&numbers, |&x| if x % 2 == 0 { true } else { false });
+        <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&numbers, &|&x| if x % 2 == 0 { true } else { false });
     assert_eq!(evens, ArraySeqStPerSLit![2, 4, 6, 8, 10]);
     let odds_only = ArraySeqStPerSLit![1, 3, 5, 7];
-    let no_evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&a, &|&x| {
+    let no_evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&odds_only, &|&x| {
         if x % 2 == 0 { true } else { false }
     });
     assert_eq!(no_evens.length(), 0);
@@ -101,10 +101,10 @@ fn test_flatten() {
 #[test]
 fn test_update_sequence() {
     let a = ArraySeqStPerSLit!["hello", "world", "test"];
-    let b = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::update(&a, Pair(1, "rust"));
+    let b = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::inject(&a, &ArraySeqStPerSLit![Pair(1, "rust")]);
     assert_eq!(b, ArraySeqStPerSLit!["hello", "rust", "test"]);
     let c = ArraySeqStPerSLit!["hello", "world", "test"];
-    let d = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::update(&c, Pair(5, "out_of_bounds"));
+    let d = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::inject(&c, &ArraySeqStPerSLit![Pair(5, "out_of_bounds")]);
     assert_eq!(d, ArraySeqStPerSLit!["hello", "world", "test"]);
 }
 
@@ -156,7 +156,7 @@ fn test_iterate_and_prefixes_and_reduce_and_scan() {
 fn test_iterate_sum_basic() {
     let numbers = ArraySeqStPerSLit![1, 2, 3, 4, 5];
     let sum_fn = |a: &N, x: &N| a + x;
-    let r = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::iterate(&numbers, sum_fn, 0);
+    let r = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::iterate(&numbers, &sum_fn, 0);
     assert_eq!(r, 15);
 }
 
@@ -164,7 +164,7 @@ fn test_iterate_sum_basic() {
 fn test_iterate_prefixes_sum() {
     let numbers = ArraySeqStPerSLit![1, 2, 3];
     let sum_fn = |a: &N, x: &N| a + x;
-    let (prefixes, total) = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::iteratePrefixes(&numbers, sum_fn, 0);
+    let (prefixes, total) = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::scan(&numbers, &sum_fn, 0);
     assert_eq!(prefixes.length(), 3);
     assert_eq!(*prefixes.nth(0), 0);
     assert_eq!(*prefixes.nth(1), 1);
@@ -190,4 +190,4 @@ fn test_collect_groups_by_key() {
     assert_eq!(pair1.0, 2);
     assert_eq!(pair1.1, ArraySeqStPerSLit![20]);
 }
-}
+

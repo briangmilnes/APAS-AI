@@ -3,7 +3,6 @@
 
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Types::Types::*;
-use apas_ai::{ArraySeqMtPerSLit};
 
 #[test]
 fn test_tabulate_basic() {
@@ -11,7 +10,17 @@ fn test_tabulate_basic() {
     assert_eq!(a.length(), 5);
 
     // Use set comparison since MT results may vary in order
-    assert!(ArraySeqSetEq(a.length(), |i| *a.nth(i), 5, |i| i));
+    // Convert to vectors for comparison since ArraySeqSetEq needs function pointers
+    let mut a_vec: Vec<N> = Vec::new();
+    for i in 0..a.length() {
+        a_vec.push(*a.nth(i));
+    }
+    let mut expected_vec: Vec<N> = (0..5).collect();
+    
+    // Sort both vectors for comparison
+    a_vec.sort();
+    expected_vec.sort();
+    assert_eq!(a_vec, expected_vec);
 }
 
 #[test]
@@ -33,17 +42,23 @@ fn test_tabulate_fibonacci() {
         }
     }
 
-    let fibs: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(fib, 8);
+    let fibs: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&fib, 8);
     assert_eq!(fibs.length(), 8);
 
     // Expected fibonacci sequence: [0, 1, 1, 2, 3, 5, 8, 13]
     let expected = [0, 1, 1, 2, 3, 5, 8, 13];
-    assert!(ArraySeqSetEq(
-        fibs.length(),
-        |i| *fibs.nth(i),
-        expected.len(),
-        |i| expected[i]
-    ));
+    
+    // Convert to vectors for comparison since ArraySeqSetEq needs function pointers
+    let mut fibs_vec: Vec<N> = Vec::new();
+    for i in 0..fibs.length() {
+        fibs_vec.push(*fibs.nth(i));
+    }
+    let mut expected_vec: Vec<N> = expected.to_vec();
+    
+    // Sort both vectors for comparison
+    fibs_vec.sort();
+    expected_vec.sort();
+    assert_eq!(fibs_vec, expected_vec);
 }
 
 #[test]
@@ -67,12 +82,21 @@ fn test_tabulate_string() {
 
     // Check that all expected strings are present (order may vary in MT)
     let expected = ["item_0", "item_1", "item_2", "item_3"];
-    assert!(ArraySeqSetEq(
-        strings.length(),
-        |i| strings.nth(i).clone(),
-        expected.len(),
-        |i| expected[i].to_string()
-    ));
+    
+    // Convert to vectors for comparison since ArraySeqSetEq needs function pointers
+    let mut strings_vec: Vec<String> = Vec::new();
+    for i in 0..strings.length() {
+        strings_vec.push(strings.nth(i).clone());
+    }
+    let mut expected_vec: Vec<String> = Vec::new();
+    for item in expected.iter() {
+        expected_vec.push(item.to_string());
+    }
+    
+    // Sort both vectors for comparison
+    strings_vec.sort();
+    expected_vec.sort();
+    assert_eq!(strings_vec, expected_vec);
 }
 
 #[test]
@@ -82,12 +106,18 @@ fn test_tabulate_boolean() {
 
     // Expected: [True, False, True, False, True, False]
     let expected = [true, false, true, false, true, false];
-    assert!(ArraySeqSetEq(
-        bools.length(),
-        |i| *bools.nth(i),
-        expected.len(),
-        |i| expected[i]
-    ));
+    
+    // Convert to vectors for comparison since ArraySeqSetEq needs function pointers
+    let mut bools_vec: Vec<B> = Vec::new();
+    for i in 0..bools.length() {
+        bools_vec.push(*bools.nth(i));
+    }
+    let mut expected_vec: Vec<B> = expected.to_vec();
+    
+    // Sort both vectors for comparison
+    bools_vec.sort();
+    expected_vec.sort();
+    assert_eq!(bools_vec, expected_vec);
 }
 
 #[test]
@@ -97,12 +127,18 @@ fn test_tabulate_squares() {
 
     // Expected: [0, 1, 4, 9, 16]
     let expected = [0, 1, 4, 9, 16];
-    assert!(ArraySeqSetEq(
-        squares.length(),
-        |i| *squares.nth(i),
-        expected.len(),
-        |i| expected[i]
-    ));
+    
+    // Convert to vectors for comparison since ArraySeqSetEq needs function pointers
+    let mut squares_vec: Vec<N> = Vec::new();
+    for i in 0..squares.length() {
+        squares_vec.push(*squares.nth(i));
+    }
+    let mut expected_vec: Vec<N> = expected.to_vec();
+    
+    // Sort both vectors for comparison
+    squares_vec.sort();
+    expected_vec.sort();
+    assert_eq!(squares_vec, expected_vec);
 }
 
 #[test]
@@ -116,4 +152,4 @@ fn test_tabulate_large() {
     assert_eq!(*large.nth(500), 600);
     assert_eq!(*large.nth(123), 223);
 }
-}
+

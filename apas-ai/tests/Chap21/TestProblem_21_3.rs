@@ -77,4 +77,4 @@ fn test_points3d_loops_debug_shape() {
     let dbg_str = format!("{:?}", s);
     assert!(!dbg_str.is_empty());
 }
-}
+

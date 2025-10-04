@@ -114,11 +114,11 @@ fn test_inject_conflicts_last_wins() {
     let updates = ArraySeqStEphSLit![Pair(0, "a"), Pair(2, "on"), Pair(4, "mat")];
     let injected = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&mut a, &updates);
     assert_eq!(injected.length(), 5);
-    assert_eq!(injected, ArraySeqStEphSLit!["a", "cat", "on", "the", "mat"]);
+    assert_eq!(*injected, ArraySeqStEphSLit!["a", "cat", "on", "the", "mat"]);
 
     let conflicting_updates = ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")];
     let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&mut a, &conflicting_updates);
-    assert_eq!(result_last, ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]);
+    assert_eq!(*result_last, ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]);
 }
 
 #[test]
@@ -128,13 +128,13 @@ fn test_ninject_conflicts_last_wins() {
         &mut a,
         &ArraySeqStEphSLit![Pair(1, "dog"), Pair(3, "big"), Pair(6, "hog")],
     );
-    assert_eq!(ninjected, ArraySeqStEphSLit!["the", "dog", "in", "big", "hat"]);
+    assert_eq!(*ninjected, ArraySeqStEphSLit!["the", "dog", "in", "big", "hat"]);
     assert_eq!(ninjected.length(), 5);
     let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(
         &mut a,
         &ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")],
     );
-    assert_eq!(result_last, ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]);
+    assert_eq!(*result_last, ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]);
 }
 
 #[test]
@@ -182,9 +182,9 @@ fn test_collect_groups_by_key() {
     >>::collect(&pairs, |k1, k2| k1.cmp(k2));
     assert_eq!(grouped.length(), 2);
     let pair0 = grouped.nth(0);
-    assert_eq!(*pair0.0, "a");
+    assert_eq!(pair0.0, "a");
     assert_eq!(pair0.1, ArraySeqStEphSLit![1, 3]);
     let pair1 = grouped.nth(1);
-    assert_eq!(*pair1.0, "b");
+    assert_eq!(pair1.0, "b");
     assert_eq!(pair1.1, ArraySeqStEphSLit![2]);
 }

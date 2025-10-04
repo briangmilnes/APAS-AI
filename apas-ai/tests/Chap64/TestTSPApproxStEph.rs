@@ -13,8 +13,8 @@ mod tests {
         LabUnDirGraphStEph<N, OrderedFloat<f64>>,
         Set<LabEdge<N, OrderedFloat<f64>>>,
     ) {
-        let mut vertices = SetLit![0, 1, 2];
-        let mut edges = SetLit![
+        let vertices = SetLit![0, 1, 2];
+        let edges = SetLit![
             LabEdge(0, 1, OrderedFloat(1.0)),
             LabEdge(1, 2, OrderedFloat(2.0)),
             LabEdge(2, 0, OrderedFloat(3.0))

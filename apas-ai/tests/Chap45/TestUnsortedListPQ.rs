@@ -2,6 +2,7 @@
 //! Tests for Chapter 45: UnsortedListPQ Priority Queue implementation
 
 use apas_ai::Chap45::UnsortedListPQ::UnsortedListPQ::*;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
 use apas_ai::Types::Types::*;
 use apas_ai::{UnsortedListPQLit};
 
@@ -147,11 +148,11 @@ fn test_meld_with_empty() {
 #[test]
 fn test_from_seq() {
     let elements = vec![7, 2, 9, 1, 5];
-    let mut seq = crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::empty();
+    let mut seq = apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::empty();
 
     for element in elements {
-        let single = crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::singleton(element);
-        seq = crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::append(&seq, &single);
+        let single = apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::singleton(element);
+        seq = apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::append(&seq, &single);
     }
 
     let pq = UnsortedListPQ::from_seq(&seq);
@@ -186,10 +187,10 @@ fn test_insert_all() {
     let pq = UnsortedListPQ::empty();
     let elements = vec![7, 2, 9, 1, 5];
 
-    let mut seq = crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::empty();
+    let mut seq = apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::empty();
     for element in elements {
-        let single = crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::singleton(element);
-        seq = crate::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::append(&seq, &single);
+        let single = apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::singleton(element);
+        seq = apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::append(&seq, &single);
     }
 
     let new_pq = pq.insert_all(&seq);

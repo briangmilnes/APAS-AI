@@ -34,7 +34,7 @@ fn test_create_tweet_index() {
 
 #[test]
 fn test_tweet_query_examples() {
-    let _examples = TweetQueryExamples::new();
+    let examples = TweetQueryExamples::new();
 
     // Test individual searches
     let fun_results = doc_set_to_sorted_vec(&examples.search_fun());
@@ -55,7 +55,7 @@ fn test_tweet_query_examples() {
 
 #[test]
 fn test_complex_query_fun_and_food_or_chess() {
-    let _examples = TweetQueryExamples::new();
+    let examples = TweetQueryExamples::new();
 
     // Test the complex query from the textbook
     let result_seq = examples.complex_query_fun_and_food_or_chess();
@@ -72,7 +72,7 @@ fn test_complex_query_fun_and_food_or_chess() {
 
 #[test]
 fn test_count_fun_but_not_chess() {
-    let _examples = TweetQueryExamples::new();
+    let examples = TweetQueryExamples::new();
 
     // Test the count query from the textbook
     let count = examples.count_fun_but_not_chess();
@@ -81,7 +81,7 @@ fn test_count_fun_but_not_chess() {
 
 #[test]
 fn test_search_food_or_fun() {
-    let _examples = TweetQueryExamples::new();
+    let examples = TweetQueryExamples::new();
 
     let result = examples.search_food_or_fun();
     let result_vec = doc_set_to_sorted_vec(&result);
@@ -100,7 +100,7 @@ fn test_search_food_or_fun() {
 
 #[test]
 fn test_search_party_and_food() {
-    let _examples = TweetQueryExamples::new();
+    let examples = TweetQueryExamples::new();
 
     let result = examples.search_party_and_food();
     let result_vec = doc_set_to_sorted_vec(&result);
@@ -111,7 +111,7 @@ fn test_search_party_and_food() {
 
 #[test]
 fn test_get_all_words() {
-    let _examples = TweetQueryExamples::new();
+    let examples = TweetQueryExamples::new();
 
     let words = examples.get_all_words();
     assert!(words.length() > 15); // Should have many unique words
@@ -127,7 +127,7 @@ fn test_get_all_words() {
 
 #[test]
 fn test_get_word_count() {
-    let _examples = TweetQueryExamples::new();
+    let examples = TweetQueryExamples::new();
 
     let word_count = examples.get_word_count();
     assert!(word_count > 15); // Should have many unique words
@@ -136,7 +136,7 @@ fn test_get_word_count() {
 
 #[test]
 fn test_query_builder_example() {
-    let _examples = TweetQueryExamples::new();
+    let examples = TweetQueryExamples::new();
 
     let result = examples.query_builder_example();
     let result_size = DocumentIndex::size(&result);
@@ -209,7 +209,7 @@ fn test_staged_computation_pattern() {
 
 #[test]
 fn test_case_insensitive_search() {
-    let _examples = TweetQueryExamples::new();
+    let examples = TweetQueryExamples::new();
 
     // All searches should be case-insensitive due to tokenization
     let fun_docs = examples.search_fun();
@@ -242,7 +242,7 @@ fn test_empty_search_results() {
 #[test]
 fn test_single_word_documents() {
     // Test edge case with documents containing single words
-    let _examples = TweetQueryExamples::new();
+    let examples = TweetQueryExamples::new();
 
     // Test searching for words that appear in multiple contexts
     let is_docs = examples.search_fun(); // 'fun' appears in multiple documents
@@ -251,7 +251,7 @@ fn test_single_word_documents() {
 
 #[test]
 fn test_query_combinations() {
-    let _examples = TweetQueryExamples::new();
+    let examples = TweetQueryExamples::new();
 
     // Test various query combinations
     let fun_docs = examples.search_fun();
@@ -281,7 +281,7 @@ fn test_query_combinations() {
 #[test]
 fn test_algorithmic_complexity_verification() {
     // Verify that operations complete in reasonable time
-    let _examples = TweetQueryExamples::new();
+    let examples = TweetQueryExamples::new();
 
     // Test find operation speed (should be O(log n))
     let start = std::time::Instant::now();

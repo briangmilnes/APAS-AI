@@ -339,7 +339,7 @@ fn test_empty_query_results() {
 #[test]
 fn test_large_document_collection() {
     // Create a larger collection to test scalability
-    let mut docs = ArraySeqStPer::empty();
+    let mut docs = ArraySeqStPerS::empty();
     for i in 0..100 {
         let doc_id = format!("doc{}", i);
         let content = format!("document {} contains words like test data item {}", i, i % 10);

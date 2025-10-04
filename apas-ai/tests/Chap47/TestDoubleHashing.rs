@@ -259,8 +259,8 @@ fn test_double_hashing_with_deletions_and_reinsertions() {
     assert_eq!(table.lookup(&"r".to_string()), None);
     
     // Reinsert with different values
-    table = table.insert("q".to_string(), 99);
-    table = table.insert("r".to_string(), 88);
+    let table = table.insert("q".to_string(), 99);
+    let table = table.insert("r".to_string(), 88);
     assert_eq!(table.load_and_size().1, 4);
     assert_eq!(table.lookup(&"q".to_string()), Some(&99));
     assert_eq!(table.lookup(&"r".to_string()), Some(&88));

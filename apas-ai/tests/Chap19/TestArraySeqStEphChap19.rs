@@ -30,4 +30,4 @@ fn test_iterators_collect() {
     let collected: Vec<N> = s.iter().copied().collect();
     assert_eq!(collected, vec![1, 2, 3]);
 }
-}
+
