@@ -6,6 +6,20 @@ use apas_ai::Types::Types::*;
 use apas_ai::{ArraySeqStPerSLit};
 
 #[test]
+fn test_arrayseqstperslit_macro_functionality() {
+    // Test empty sequence creation
+    let empty: ArraySeqStPerS<i32> = ArraySeqStPerSLit![];
+    assert_eq!(empty.length(), 0);
+    
+    // Test sequence creation with elements
+    let with_data: ArraySeqStPerS<i32> = ArraySeqStPerSLit![1, 2, 3];
+    assert_eq!(with_data.length(), 3);
+    assert_eq!(*with_data.nth(0), 1);
+    assert_eq!(*with_data.nth(1), 2);
+    assert_eq!(*with_data.nth(2), 3);
+}
+
+#[test]
 fn test_map_and_select_and_append() {
     let a = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 1, 3);
     let b = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::map(&a, &|x| x * 2);

@@ -4,6 +4,8 @@
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::*;
 use apas_ai::Types::Types::*;
 
+// Note: No HashFunTraitsLit macro exists, skipping macro test
+
 #[test]
 fn test_string_position_hash_function() {
     let hash_fn = StringPositionHashFunction;

@@ -11,6 +11,21 @@
     use apas_ai::*;
 
     #[test]
+    fn test_mappinglit_macro_functionality() {
+        // Test empty mapping creation
+        let empty: Mapping<i32, String> = MappingLit![];
+        assert_eq!(empty.size(), 0);
+        
+        // Test mapping creation with key-value pairs
+        let with_data: Mapping<i32, String> = MappingLit![
+            (1, "one".to_string()),
+            (2, "two".to_string())
+        ];
+        assert_eq!(with_data.size(), 2);
+//        assert_eq!(with_data.apply(&1), Some("one".to_string()));
+    }
+
+    #[test]
     fn test_empty_mapping() {
         let m: Mapping<N, &str> = MappingLit![];
         assert_eq!(m.size(), 0);

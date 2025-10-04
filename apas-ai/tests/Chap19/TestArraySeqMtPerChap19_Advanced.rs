@@ -12,6 +12,20 @@
     use apas_ai::Types::Types::*;
 
     #[test]
+    fn test_arraymtperslit_macro_functionality() {
+        // Test empty sequence creation
+        let empty: ArraySeqMtPerS<i32> = ArrayMtPerSLit![];
+        assert_eq!(empty.length(), 0);
+        
+        // Test sequence creation with elements
+        let with_data: ArraySeqMtPerS<i32> = ArrayMtPerSLit![1, 2, 3];
+        assert_eq!(with_data.length(), 3);
+        assert_eq!(*with_data.nth(0), 1);
+        assert_eq!(*with_data.nth(1), 2);
+        assert_eq!(*with_data.nth(2), 3);
+    }
+
+    #[test]
     fn test_inject_basic() {
         let values = ArrayMtPerSLit![0, 1, 2, 3, 4, 5];
         let changes = ArrayMtPerSLit![PairLit!(2, 99), PairLit!(4, 88)];

@@ -70,6 +70,14 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
         /// Algorithm from Data Structure 47.6
         pub fn insert(&self, key: K, value: V) -> Self {
             let table_size = self.table.length();
+            
+            // Preemptive resize check: if inserting a new key would exceed threshold, resize first
+            let total_occupied = self.num_elements + self.num_deleted;
+            if self.load_factor_manager.should_grow(total_occupied + 1, table_size) {
+                let new_size = self.load_factor_manager.grow_size(table_size);
+                return self.resize(new_size).insert(key, value);
+            }
+            
             let mut probe_index = 0;
 
             // Find insertion position

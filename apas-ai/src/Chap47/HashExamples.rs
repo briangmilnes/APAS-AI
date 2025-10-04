@@ -209,10 +209,10 @@ Cost Analysis:
 - Span: Θ(n) sequential rehashing
   - Could be parallelized to O(log n) span
 
-Amortized Analysis:
+amortized Analysis:
 - Double when α > threshold (e.g., 0.75)
 - Each element pays for future elements
-- Amortized cost per operation remains O(1)
+- amortized cost per operation remains O(1)
 
 Implementation Details:
 - Use insert_without_resize to avoid recursive resizing
@@ -273,22 +273,22 @@ Exercise 47.7: Complete Flat Hash Table Implementation
 
 Additional operations for the parametric flat hash table:
 
-1. Resize Operation:
+1. resize Operation:
    - Create new table with target size
    - Rehash all Live entries (skip Empty/Dead)
    - Cost: O(n) work, O(n) span
 
-2. Load Factor Management:
+2. load factor Management:
    - Monitor (live + dead) / table_size
-   - Resize when threshold exceeded
+   - resize when threshold exceeded
    - Use lower thresholds than separate chaining
 
-3. Statistics Collection:
+3. statistics Collection:
    - Track probe distances
    - Monitor clustering effects
    - Measure actual vs. theoretical performance
 
-4. Probe Sequence Validation:
+4. probe sequence Validation:
    - Ensure probe sequences visit all positions
    - Handle edge cases (h2 = 0 in double hashing)
    - Verify termination conditions
@@ -325,7 +325,7 @@ with support for different probing strategies.
         output.push_str(&format!("  {}\n\n", stats));
 
         // Example 47.4
-        output.push_str("Example 47.4 - Probe Sequences:\n");
+        output.push_str("Example 47.4 - probe Sequences:\n");
         let probe_demo = example_47_4_probe_sequence();
         for (key, sequence) in probe_demo {
             output.push_str(&format!("  '{}': {:?}\n", key, sequence));

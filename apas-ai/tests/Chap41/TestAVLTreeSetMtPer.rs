@@ -5,12 +5,21 @@ use apas_ai::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
 use apas_ai::AVLTreeSetMtPerLit;
 use apas_ai::Types::Types::*;
 
-#[allow(dead_code)]
-fn _AVLTreeSetMtPerLit_type_checks() {
-    let _: AVLTreeSetMtPer<i32> = AVLTreeSetMtPerLit![];
-    let _: AVLTreeSetMtPer<i32> = AVLTreeSetMtPerLit![1, 2, 3];
+#[test]
+fn test_avltreesetmtperlit_macro_type_safety() {
+    // Test empty set creation with explicit type
+    let empty: AVLTreeSetMtPer<i32> = AVLTreeSetMtPerLit![];
+    assert_eq!(empty.size(), 0);
+    assert!(!empty.find(&42));
+    
+    // Test multi-element set creation
+    let multi: AVLTreeSetMtPer<i32> = AVLTreeSetMtPerLit![1, 2, 3];
+    assert_eq!(multi.size(), 3);
+    assert!(multi.find(&1));
+    assert!(multi.find(&2));
+    assert!(multi.find(&3));
+    assert!(!multi.find(&4));
 }
-
 
 #[test]
 fn test_empty_set() {

@@ -8,6 +8,20 @@ use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
 use apas_ai::Types::Types::*;
 use apas_ai::ArraySeqStPerSLit;
 use apas_ai::AVLTreeSeqStPerLit;
+use apas_ai::BalancedTreePQLit;
+
+#[test]
+fn test_balancedtreepqlit_macro_functionality() {
+    // Test empty priority queue creation
+    let empty: BalancedTreePQ<i32> = BalancedTreePQLit![];
+    assert_eq!(empty.size(), 0);
+    assert!(empty.is_empty());
+    
+    // Test priority queue creation with elements
+    let with_data: BalancedTreePQ<i32> = BalancedTreePQLit![3, 1, 4, 1, 5];
+    assert_eq!(with_data.size(), 5);
+    assert!(!with_data.is_empty());
+}
 
 #[test]
 fn test_empty_priority_queue() {

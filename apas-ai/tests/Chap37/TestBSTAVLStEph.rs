@@ -1,6 +1,22 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+use apas_ai::BSTAVLStEphLit;
 use apas_ai::Chap37::BSTAVLStEph::BSTAVLStEph::*;
 use apas_ai::Types::Types::*;
+
+#[test]
+fn test_bstavlstephlit_macro_functionality() {
+    // Test empty tree creation
+    let empty: BSTAVLStEph<i32> = BSTAVLStEphLit![];
+    assert_eq!(empty.size(), 0);
+    
+    // Test tree creation with elements
+    let with_data: BSTAVLStEph<i32> = BSTAVLStEphLit![5, 3, 7, 1, 9];
+    assert_eq!(with_data.size(), 5);
+    assert!(with_data.contains(&5));
+    assert!(with_data.contains(&3));
+    assert!(with_data.contains(&7));
+    assert!(!with_data.contains(&10));
+}
 
 #[test]
 fn avl_insert_find_and_bounds() {

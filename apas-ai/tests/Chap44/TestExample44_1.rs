@@ -170,7 +170,7 @@ fn test_tokenization_demo() {
     let tokens = tokenization_demo();
 
     // Should tokenize "I had fun in dance club today!" correctly
-    assert_eq!(tokens.length(), 6);
+    assert_eq!(tokens.length(), 7); // I had fun in dance club today
 
     let mut token_vec = Vec::new();
     for i in 0..tokens.length() {

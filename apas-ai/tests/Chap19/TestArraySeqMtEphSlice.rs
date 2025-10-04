@@ -4,6 +4,23 @@
 
     use apas_ai::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
     use apas_ai::Types::Types::*;
+    use apas_ai::ArraySeqMtEphSliceSLit;
+
+    #[test]
+    fn test_arrayseqmtephsliceslit_macro_functionality() {
+        // Test empty sequence creation
+        let empty: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceSLit![];
+        assert_eq!(empty.length(), 0);
+        assert_eq!(empty.isEmpty(), true);
+        
+        // Test sequence creation with elements
+        let with_data: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceSLit![1, 2, 3];
+        assert_eq!(with_data.length(), 3);
+        assert_eq!(with_data.isEmpty(), false);
+        assert_eq!(with_data.nth_cloned(0), 1);
+        assert_eq!(with_data.nth_cloned(1), 2);
+        assert_eq!(with_data.nth_cloned(2), 3);
+    }
 
     #[test]
     fn test_arrayseqmtephslice_empty() {

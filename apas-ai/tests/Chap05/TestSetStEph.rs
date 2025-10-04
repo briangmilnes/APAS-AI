@@ -6,11 +6,41 @@
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*; // macro import
 
-    #[allow(dead_code)]
-    fn macro_typecheck_exercise() {
-        let _empty: Set<&'static str> = SetLit![];
-        let _one = SetLit!["only"];
-        let _many = SetLit!["a", "b", "c"];
+    #[test]
+    fn test_setlit_macro_functionality() {
+        // Test empty set creation
+        let empty: Set<i32> = SetLit![];
+        assert_eq!(empty.size(), 0);
+        
+        // Test set creation with elements
+        let with_data: Set<i32> = SetLit![1, 2, 3];
+        assert_eq!(with_data.size(), 3);
+        assert_eq!(with_data.mem(&1), true);
+        assert_eq!(with_data.mem(&2), true);
+        assert_eq!(with_data.mem(&3), true);
+        assert_eq!(with_data.mem(&4), false);
+    }
+
+    #[test]
+    fn test_setlit_macro_type_safety() {
+        // Test empty set creation with explicit type
+        let empty: Set<&'static str> = SetLit![];
+        assert_eq!(empty.size(), 0);
+        assert_eq!(empty.mem(&"any"), false);
+        
+        // Test single element set
+        let one = SetLit!["only"];
+        assert_eq!(one.size(), 1);
+        assert_eq!(one.mem(&"only"), true);
+        assert_eq!(one.mem(&"other"), false);
+        
+        // Test multi-element set
+        let many = SetLit!["a", "b", "c"];
+        assert_eq!(many.size(), 3);
+        assert_eq!(many.mem(&"a"), true);
+        assert_eq!(many.mem(&"b"), true);
+        assert_eq!(many.mem(&"c"), true);
+        assert_eq!(many.mem(&"d"), false);
     }
 
     #[test]

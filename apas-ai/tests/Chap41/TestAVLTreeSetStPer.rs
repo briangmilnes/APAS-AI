@@ -4,6 +4,23 @@
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::*;
+use apas_ai::AVLTreeSetStPerLit;
+
+#[test]
+fn test_avltreesetstperlit_macro_functionality() {
+    // Test empty set creation
+    let empty: AVLTreeSetStPer<i32> = AVLTreeSetStPerLit![];
+    assert_eq!(empty.size(), 0);
+    assert!(!empty.find(&42));
+    
+    // Test set creation with elements
+    let with_data: AVLTreeSetStPer<i32> = AVLTreeSetStPerLit![1, 2, 3];
+    assert_eq!(with_data.size(), 3);
+    assert!(with_data.find(&1));
+    assert!(with_data.find(&2));
+    assert!(with_data.find(&3));
+    assert!(!with_data.find(&4));
+}
 
 #[test]
 fn test_avl_tree_set_per_basic_operations() {

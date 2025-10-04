@@ -8,6 +8,23 @@
     use apas_ai::Chap06::DirGraphMtEph::DirGraphMtEph::*;
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*;
+    use apas_ai::DirGraphMtEphLit;
+
+    #[test]
+    fn test_dirgraphmtephlit_macro_functionality() {
+        // Test empty graph creation
+        let empty: DirGraphMtEph<i32> = DirGraphMtEphLit!();
+        assert_eq!(empty.vertices().size(), 0);
+        assert_eq!(empty.arcs().size(), 0);
+        
+        // Test graph creation with vertices and arcs
+        let with_data: DirGraphMtEph<i32> = DirGraphMtEphLit!(
+            V: [1, 2, 3],
+            A: [(1, 2), (2, 3)]
+        );
+        assert_eq!(with_data.vertices().size(), 3);
+        assert_eq!(with_data.arcs().size(), 2);
+    }
 
     #[test]
     fn test_dirgraphmteph_empty() {

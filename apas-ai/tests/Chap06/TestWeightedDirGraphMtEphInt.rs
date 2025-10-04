@@ -1,17 +1,32 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use std::sync::{Arc, Barrier};
+use std::thread;
 
-    use std::sync::{Arc, Barrier};
-    use std::thread;
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::LabDirGraphMtEphTrait;
+use apas_ai::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
+use apas_ai::WeightedDirGraphMtEphIntLit;
 
-    use apas_ai::Chap05::SetStEph::SetStEph::*;
-    use apas_ai::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::LabDirGraphMtEphTrait;
-    use apas_ai::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
-    use apas_ai::SetLit;
-    use apas_ai::Types::Types::*;
+#[test]
+fn test_weighteddirgraphmtephintlit_macro_functionality() {
+    // Test empty graph creation
+    let empty: WeightedDirGraphMtEphInt<i32> = WeightedDirGraphMtEphIntLit!();
+    assert_eq!(empty.vertices().size(), 0);
+    
+    // Test graph creation with weighted edges
+    let with_data = WeightedDirGraphMtEphIntLit!(
+        V: [1, 2, 3],
+        E: [(1, 2, 10), (2, 3, 20), (3, 1, 30)]
+    );
+    assert_eq!(with_data.vertices().size(), 3);
+    assert_eq!(with_data.arcs().size(), 3);
+}
 
-    #[test]
-    fn test_weighteddirgraphmtephint_empty() {
+#[test]
+fn test_weighteddirgraphmtephint_empty() {
         let empty_graph: WeightedDirGraphMtEphInt<i32> = WeightedDirGraphMtEphInt::empty();
         assert_eq!(empty_graph.vertices().size(), 0);
         assert_eq!(empty_graph.labeled_arcs().size(), 0);

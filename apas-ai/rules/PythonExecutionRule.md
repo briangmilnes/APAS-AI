@@ -3,12 +3,12 @@
 ## MANDATORY PROTOCOL FOR PYTHON SCRIPTS
 
 ### 🚨 CRITICAL REQUIREMENT
-**Claude MUST NEVER write or execute Python scripts without explicit user approval and proper testing protocol.**
+**Claude MUST NEVER run a Python script that modifies files without explicit user approval and proper testing protocol.**
 
 ### 📋 REQUIRED PROCESS
 
 #### 1. **ASK FIRST**
-- **ALWAYS ask the user for permission** before writing any Python script
+- **ALWAYS ask the user for permission** before running any Python script that modifies files
 - Explain what the script will do and why it's needed
 - Get explicit approval before proceeding
 
@@ -55,3 +55,4 @@ Prevent mass automated changes that break the codebase and require extensive man
 ---
 **Rule Created**: In response to 2-hour debugging session caused by automated Python script modifications
 **Severity**: CRITICAL - Must be followed without exception
+**Scope**: Applies only to Python scripts that modify files (write, edit, delete operations). Read-only Python scripts for analysis or search are permitted without approval.

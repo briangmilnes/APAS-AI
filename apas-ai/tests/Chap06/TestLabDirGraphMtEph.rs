@@ -1,16 +1,31 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use std::sync::{Arc, Barrier};
+use std::thread;
 
-    use std::sync::{Arc, Barrier};
-    use std::thread;
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
+use apas_ai::LabDirGraphMtEphLit;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
-    use apas_ai::Chap05::SetStEph::SetStEph::*;
-    use apas_ai::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::*;
-    use apas_ai::SetLit;
-    use apas_ai::Types::Types::*;
+#[test]
+fn test_labdirgraphmtephlit_macro_functionality() {
+    // Test empty graph creation
+    let empty: LabDirGraphMtEph<i32, &str> = LabDirGraphMtEphLit!();
+    assert_eq!(empty.vertices().size(), 0);
+    
+    // Test graph creation with labeled edges
+    let with_data = LabDirGraphMtEphLit!(
+        V: [1, 2, 3],
+        A: [(1, 2, "a"), (2, 3, "b"), (3, 1, "c")]
+    );
+    assert_eq!(with_data.vertices().size(), 3);
+    assert_eq!(with_data.arcs().size(), 3);
+}
 
-    #[test]
-    fn test_labdirgraphmteph_empty() {
+#[test]
+fn test_labdirgraphmteph_empty() {
         let empty_graph: LabDirGraphMtEph<i32, String> = LabDirGraphMtEph::empty();
         assert_eq!(empty_graph.vertices().size(), 0);
         assert_eq!(empty_graph.labeled_arcs().size(), 0);

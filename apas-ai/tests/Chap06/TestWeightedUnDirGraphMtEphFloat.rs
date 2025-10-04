@@ -9,7 +9,24 @@
     use apas_ai::Chap06::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::*;
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*;
+    use apas_ai::WeightedUnDirGraphMtEphFloatLit;
     use ordered_float::OrderedFloat;
+
+    #[test]
+    fn test_weightedundirgraphmtephfloatlit_macro_functionality() {
+        // Test empty graph creation
+        let empty: WeightedUnDirGraphMtEphFloat<i32> = WeightedUnDirGraphMtEphFloatLit!();
+        assert_eq!(empty.vertices().size(), 0);
+        assert_eq!(empty.labeled_edges().size(), 0);
+        
+        // Test graph creation with vertices and edges
+        let with_data: WeightedUnDirGraphMtEphFloat<i32> = WeightedUnDirGraphMtEphFloatLit!(
+            V: [1, 2, 3],
+            E: [(1, 2, 1.5), (2, 3, 2.0)]
+        );
+        assert_eq!(with_data.vertices().size(), 3);
+        assert_eq!(with_data.labeled_edges().size(), 2);
+    }
 
     #[test]
     fn test_weightedundirgraphmtephfloat_empty() {

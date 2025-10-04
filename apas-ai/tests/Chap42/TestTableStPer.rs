@@ -7,6 +7,26 @@ use apas_ai::TableStPerLit;
 use apas_ai::Types::Types::*;
 
 #[test]
+fn test_tablestperlit_macro_functionality() {
+    // Test empty table creation
+    let empty: TableStPer<i32, String> = TableStPerLit![];
+    assert_eq!(empty.size(), 0);
+    assert_eq!(empty.find(&42), None);
+    
+    // Test table creation with key-value pairs
+    let with_data: TableStPer<i32, String> = TableStPerLit![
+        1 => "one".to_string(),
+        2 => "two".to_string(),
+        3 => "three".to_string()
+    ];
+    assert_eq!(with_data.size(), 3);
+    assert_eq!(with_data.find(&1), Some("one".to_string()));
+    assert_eq!(with_data.find(&2), Some("two".to_string()));
+    assert_eq!(with_data.find(&3), Some("three".to_string()));
+    assert_eq!(with_data.find(&4), None);
+}
+
+#[test]
 fn test_table_empty_and_size() {
     let table: TableStPer<i32, String> = TableStPer::empty();
     assert_eq!(table.size(), 0);

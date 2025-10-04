@@ -3,6 +3,23 @@ use apas_ai::Chap38::BSTParaStEph::BSTParaStEph::*;
 use apas_ai::Types::Types::*;
 use apas_ai::*;
 use apas_ai::{ArraySeqStPerSLit};
+use apas_ai::ParamBSTLit;
+
+#[test]
+fn test_parambstlit_macro_functionality() {
+    // Test empty BST creation
+    let empty: ParamBST<i32> = ParamBSTLit![];
+    assert_eq!(empty.size(), 0);
+    assert_eq!(empty.find(&42), None);
+    
+    // Test BST creation with elements
+    let with_data: ParamBST<i32> = ParamBSTLit![2, 1, 3];
+    assert_eq!(with_data.size(), 3);
+    assert_eq!(with_data.find(&1), Some(1));
+    assert_eq!(with_data.find(&2), Some(2));
+    assert_eq!(with_data.find(&3), Some(3));
+    assert_eq!(with_data.find(&4), None);
+}
 
 fn make_tree(values: &[i32]) -> ParamBST<i32> {
     let tree = ParamBST::new();

@@ -5,6 +5,20 @@ use apas_ai::Types::Types::*;
 use apas_ai::{ArraySeqStEphSLit};
 
 #[test]
+fn test_arrayseqstephslit_macro_functionality() {
+    // Test empty sequence creation
+    let empty: ArraySeqStEphS<i32> = ArraySeqStEphSLit![];
+    assert_eq!(empty.length(), 0);
+    
+    // Test sequence creation with elements
+    let with_data: ArraySeqStEphS<i32> = ArraySeqStEphSLit![1, 2, 3];
+    assert_eq!(with_data.length(), 3);
+    assert_eq!(*with_data.nth(0), 1);
+    assert_eq!(*with_data.nth(1), 2);
+    assert_eq!(*with_data.nth(2), 3);
+}
+
+#[test]
 fn test_ephemeral_arrayseq_basic() {
     let mut s: ArraySeqStEphS<N> = ArraySeqStEphSLit![1; 3];
     assert_eq!(s.length(), 3);

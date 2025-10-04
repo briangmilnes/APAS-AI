@@ -9,7 +9,24 @@
     use apas_ai::Chap06::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::*;
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*;
+    use apas_ai::WeightedDirGraphMtEphFloatLit;
     use ordered_float::OrderedFloat;
+
+    #[test]
+    fn test_weighteddirgraphmtephfloatlit_macro_functionality() {
+        // Test empty graph creation
+        let empty: WeightedDirGraphMtEphFloat<i32> = WeightedDirGraphMtEphFloatLit!();
+        assert_eq!(empty.vertices().size(), 0);
+        assert_eq!(empty.labeled_arcs().size(), 0);
+        
+        // Test graph creation with vertices and arcs
+        let with_data: WeightedDirGraphMtEphFloat<i32> = WeightedDirGraphMtEphFloatLit!(
+            V: [1, 2, 3],
+            A: [(1, 2, 1.5), (2, 3, 2.0)]
+        );
+        assert_eq!(with_data.vertices().size(), 3);
+        assert_eq!(with_data.labeled_arcs().size(), 2);
+    }
 
     #[test]
     fn test_weighteddirgraphmtephfloat_empty() {

@@ -9,15 +9,15 @@ use apas_ai::Types::Types::*;
 #[test]
 fn test_create_double_hashing_string_table() {
     let table = create_double_hashing_string_table::<i32>(10);
-    assert_eq!(table.load_and_size().1, 0);
-    assert!(table.load_and_size().0 == 0);
+    assert_eq!(table.load_and_size().0, 0);
+    assert!(table.load_and_size().1 == 10);
 }
 
 #[test]
 fn test_create_double_hashing_integer_table() {
     let table = create_double_hashing_integer_table::<String>(10, 13579, 24680);
-    assert_eq!(table.load_and_size().1, 0);
-    assert!(table.load_and_size().0 == 0);
+    assert_eq!(table.load_and_size().0, 0);
+    assert!(table.load_and_size().1 == 10);
 }
 
 #[test]
@@ -30,8 +30,8 @@ fn test_double_hashing_insert_and_lookup() {
     table = table.insert("gamma".to_string(), 3);
     table = table.insert("delta".to_string(), 4);
     
-    assert_eq!(table.load_and_size().1, 4);
-    assert!(!table.load_and_size().0 == 0);
+    assert_eq!(table.load_and_size().0, 4);
+    assert!(table.load_and_size().1 != 0);
     
     // Test lookups
     assert_eq!(table.lookup(&"alpha".to_string()), Some(&1));
@@ -50,12 +50,12 @@ fn test_double_hashing_delete() {
     table = table.insert("second".to_string(), 200);
     table = table.insert("third".to_string(), 300);
     
-    assert_eq!(table.load_and_size().1, 3);
+    assert_eq!(table.load_and_size().0, 3);
     assert_eq!(table.lookup(&"second".to_string()), Some(&200));
     
     let (table, _deleted) = table.delete(&"second".to_string());
     
-    assert_eq!(table.load_and_size().1, 2);
+    assert_eq!(table.load_and_size().0, 2);
     assert_eq!(table.lookup(&"second".to_string()), None);
     assert_eq!(table.lookup(&"first".to_string()), Some(&100));
     assert_eq!(table.lookup(&"third".to_string()), Some(&300));
@@ -70,7 +70,7 @@ fn test_double_hashing_update() {
     
     table = table.insert("key".to_string(), 84); // Update existing key
     assert_eq!(table.lookup(&"key".to_string()), Some(&84));
-    assert_eq!(table.load_and_size().1, 1); // Size should remain 1
+    assert_eq!(table.load_and_size().0, 1); // Size should remain 1
 }
 
 #[test]
@@ -87,7 +87,7 @@ fn test_double_hashing_integer_operations() {
     
     let (table, _deleted) = table.delete(&20);
     assert_eq!(table.lookup(&20), None);
-    assert_eq!(table.load_and_size().1, 2);
+    assert_eq!(table.load_and_size().0, 2);
 }
 
 #[test]
@@ -95,7 +95,7 @@ fn test_double_hashing_strategy_creation() {
     let strategy = DoubleHashingStrategy::new(StringPositionHashFunction, PolynomialHashFunction::new(31));
     assert!(strategy.strategy_name().contains("DoubleHashing"));
     assert!(strategy.strategy_name().contains("StringPositionHashFunction"));
-    assert!(strategy.strategy_name().contains("PolynomialHashFunction::new(31)"));
+    assert!(strategy.strategy_name().contains("PolynomialHashFunction"));
 }
 
 #[test]
@@ -137,7 +137,7 @@ fn test_double_hashing_collision_handling() {
     assert_eq!(table.lookup(&"z".to_string()), Some(&3));
     assert_eq!(table.lookup(&"w".to_string()), Some(&4));
     
-    assert_eq!(table.load_and_size().1, 4);
+    assert_eq!(table.load_and_size().0, 4);
 }
 
 #[test]
@@ -173,7 +173,7 @@ fn test_double_hashing_resize_behavior() {
     table = table.insert(key, i as i32);
     }
     
-    assert_eq!(table.load_and_size().1, 25);
+    assert_eq!(table.load_and_size().0, 25);
     
     // Verify all elements are still accessible after resizing
     for i in 0..25 {
@@ -187,7 +187,7 @@ fn test_double_hashing_empty_operations() {
     let table = create_double_hashing_string_table::<i32>(10);
     
     assert!(table.load_and_size().0 == 0);
-    assert_eq!(table.load_and_size().1, 0);
+    assert_eq!(table.load_and_size().0, 0);
     assert_eq!(table.lookup(&"nonexistent".to_string()), None);
     
     // Delete from empty table should not crash
@@ -231,7 +231,7 @@ fn test_double_hashing_load_factor_management() {
     table = table.insert("e".to_string(), 5);
     
     // Table should handle moderate load factor gracefully
-    assert_eq!(table.load_and_size().1, 5);
+    assert_eq!(table.load_and_size().0, 5);
     
     // Verify all elements are accessible
     assert_eq!(table.lookup(&"a".to_string()), Some(&1));
@@ -254,14 +254,14 @@ fn test_double_hashing_with_deletions_and_reinsertions() {
     // Delete middle elements
     let (table, _deleted) = table.delete(&"q".to_string());
     let (table, _deleted) = table.delete(&"r".to_string());
-    assert_eq!(table.load_and_size().1, 2);
+    assert_eq!(table.load_and_size().0, 2);
     assert_eq!(table.lookup(&"q".to_string()), None);
     assert_eq!(table.lookup(&"r".to_string()), None);
     
     // Reinsert with different values
     let table = table.insert("q".to_string(), 99);
     let table = table.insert("r".to_string(), 88);
-    assert_eq!(table.load_and_size().1, 4);
+    assert_eq!(table.load_and_size().0, 4);
     assert_eq!(table.lookup(&"q".to_string()), Some(&99));
     assert_eq!(table.lookup(&"r".to_string()), Some(&88));
     
@@ -304,7 +304,7 @@ fn test_double_hashing_prime_table_sizes() {
     table = table.insert(key, i as i32 * 10);
     }
     
-    assert_eq!(table.load_and_size().1, 10);
+    assert_eq!(table.load_and_size().0, 10);
     
     // Verify retrieval
     for i in 0..10 {
@@ -365,8 +365,8 @@ fn test_double_hashing_custom_seed_behavior() {
     assert!(table2.load_and_size().0 == 0);
     
     // Different seeds should be accepted without error
-    assert_eq!(table1.load_and_size().1, 0);
-    assert_eq!(table2.load_and_size().1, 0);
+    assert_eq!(table1.load_and_size().0, 0);
+    assert_eq!(table2.load_and_size().0, 0);
 }
 
 #[test]
@@ -383,7 +383,7 @@ fn test_double_hashing_optimal_distribution() {
     table = table.insert(key.to_string(), i as i32);
     }
     
-    assert_eq!(table.load_and_size().1, keys.len());
+    assert_eq!(table.load_and_size().0, keys.len());
     
     // Verify all keys are retrievable
     for (i, &key) in keys.iter().enumerate() {

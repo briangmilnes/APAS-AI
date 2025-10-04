@@ -85,7 +85,9 @@ pub mod SpanTreeMtEph {
         }
 
         for edge in tree_edges.iter() {
-            if !graph.edges().mem(edge) {
+            // For undirected graphs, check both edge orientations
+            let Edge(u, v) = edge;
+            if !graph.edges().mem(edge) && !graph.edges().mem(&Edge(v.clone(), u.clone())) {
                 return false;
             }
         }

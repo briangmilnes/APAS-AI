@@ -5,10 +5,22 @@ use apas_ai::ArraySetEnumMtEphLit;
 use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
 use apas_ai::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::*;
 
-#[allow(dead_code)]
-fn _ArraySetEnumMtEphLit_type_checks() {
-        let _: ArraySetEnumMtEph = ArraySetEnumMtEphLit![10;];
-        let _: ArraySetEnumMtEph = ArraySetEnumMtEphLit![10; 1, 2, 3];
+#[test]
+fn test_arraysetenummtephlit_macro_type_safety() {
+    // Test capacity-only creation
+    let capacity_only: ArraySetEnumMtEph = ArraySetEnumMtEphLit![10;];
+    assert_eq!(capacity_only.size(), 0);
+    assert!(!capacity_only.find(0));
+    assert!(!capacity_only.find(5));
+    
+    // Test capacity with initial elements
+    let with_elements: ArraySetEnumMtEph = ArraySetEnumMtEphLit![10; 1, 2, 3];
+    assert_eq!(with_elements.size(), 3);
+    assert!(with_elements.find(1));
+    assert!(with_elements.find(2));
+    assert!(with_elements.find(3));
+    assert!(!with_elements.find(4));
+    assert!(!with_elements.find(0));
 }
 
 #[test]

@@ -5,6 +5,23 @@
     use apas_ai::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*;
+    use apas_ai::UnDirGraphStEphLit;
+
+    #[test]
+    fn test_undirgraphstephlit_macro_functionality() {
+        // Test empty graph creation
+        let empty: UnDirGraphStEph<i32> = UnDirGraphStEphLit!();
+        assert_eq!(empty.vertices().size(), 0);
+        assert_eq!(empty.edges().size(), 0);
+        
+        // Test graph creation with vertices and edges
+        let with_data: UnDirGraphStEph<i32> = UnDirGraphStEphLit!(
+            V: [1, 2, 3],
+            E: [(1, 2), (2, 3)]
+        );
+        assert_eq!(with_data.vertices().size(), 3);
+        assert_eq!(with_data.edges().size(), 2);
+    }
 
     #[test]
     fn test_undigraph_vertices_and_edges() {

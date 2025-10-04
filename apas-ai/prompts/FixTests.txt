@@ -1,0 +1,49 @@
+Make a plan down to the file to fix all of these tests.
+At each step, check the failing tests, then compile the test file and run it
+fixing any missed bugs.
+
+Show it to me in the todo window and wait for me to say execute.
+
+
+        FAIL [   0.816s] apas-ai::TestDocumentIndex test_large_document_collection
+        FAIL [   0.008s] apas-ai::TestDoubleHashing test_create_double_hashing_integer_table
+        FAIL [   0.007s] apas-ai::TestDoubleHashing test_create_double_hashing_string_table
+        FAIL [   0.009s] apas-ai::TestDoubleHashing test_double_hashing_collision_handling
+        FAIL [   0.007s] apas-ai::TestDoubleHashing test_double_hashing_custom_seed_behavior
+        FAIL [   0.005s] apas-ai::TestDoubleHashing test_double_hashing_delete
+        FAIL [   0.005s] apas-ai::TestDoubleHashing test_double_hashing_empty_operations
+        FAIL [   0.005s] apas-ai::TestDoubleHashing test_double_hashing_insert_and_lookup
+        FAIL [   0.006s] apas-ai::TestDoubleHashing test_double_hashing_integer_operations
+        FAIL [   0.005s] apas-ai::TestDoubleHashing test_double_hashing_load_factor_management
+        FAIL [   0.006s] apas-ai::TestDoubleHashing test_double_hashing_optimal_distribution
+        FAIL [   0.005s] apas-ai::TestDoubleHashing test_double_hashing_prime_table_sizes
+        FAIL [   0.011s] apas-ai::TestDoubleHashing test_double_hashing_resize_behavior
+        FAIL [   0.005s] apas-ai::TestDoubleHashing test_double_hashing_strategy_creation
+        FAIL [   0.006s] apas-ai::TestDoubleHashing test_double_hashing_update
+        FAIL [   0.006s] apas-ai::TestDoubleHashing test_double_hashing_with_deletions_and_reinsertions
+        FAIL [   0.005s] apas-ai::TestExample44_1 test_tokenization_demo
+        FAIL [   0.006s] apas-ai::TestFlatHashTable test_resize_on_high_load_factor
+        FAIL [   0.006s] apas-ai::TestHashExamples test_example_47_2_separate_chaining
+        FAIL [   0.007s] apas-ai::TestHashExamples test_exercise_47_3_resize_implementation
+        FAIL [   0.007s] apas-ai::TestHashExamples test_exercise_47_7_complete_implementation
+        FAIL [   0.005s] apas-ai::TestHashExamples test_run_all_examples
+        FAIL [   0.005s] apas-ai::TestHashExamples test_textbook_fidelity
+        FAIL [   0.005s] apas-ai::TestLinearProbing test_linear_probing_insert_and_lookup
+        FAIL [   0.007s] apas-ai::TestQuadraticProbing test_create_quadratic_probing_integer_table
+        FAIL [   0.008s] apas-ai::TestQuadraticProbing test_create_quadratic_probing_string_table
+        FAIL [   0.006s] apas-ai::TestQuadraticProbing test_quadratic_probing_collision_handling
+        FAIL [   0.005s] apas-ai::TestQuadraticProbing test_quadratic_probing_delete
+        FAIL [   0.006s] apas-ai::TestQuadraticProbing test_quadratic_probing_empty_operations
+        FAIL [   0.005s] apas-ai::TestQuadraticProbing test_quadratic_probing_insert_and_lookup
+        FAIL [   0.007s] apas-ai::TestQuadraticProbing test_quadratic_probing_integer_operations
+        FAIL [   0.006s] apas-ai::TestQuadraticProbing test_quadratic_probing_load_factor_management
+        FAIL [   0.006s] apas-ai::TestQuadraticProbing test_quadratic_probing_prime_table_sizes
+        FAIL [   0.007s] apas-ai::TestQuadraticProbing test_quadratic_probing_resize_behavior
+        FAIL [   0.005s] apas-ai::TestQuadraticProbing test_quadratic_probing_update
+        FAIL [   0.007s] apas-ai::TestQuadraticProbing test_quadratic_probing_with_deletions_and_reinsertions
+        FAIL [   0.004s] apas-ai::TestSeparateChaining test_collision_handling
+        FAIL [   0.005s] apas-ai::TestSeparateChaining test_example_47_2_table
+        FAIL [   0.008s] apas-ai::TestSeparateChaining test_insert_and_lookup
+        FAIL [   0.005s] apas-ai::TestSeparateChaining test_resize_on_high_load_factor
+        FAIL [   0.004s] apas-ai::TestSeparateChaining test_statistics
+        

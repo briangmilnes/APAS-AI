@@ -25,3 +25,18 @@ Look carefully at each use of Vec? Can it be replaced with a macro?
 Make a plan with to-dos to sweep the benches files using the new macros.
 Look carefully at each use of Vec? Can it be replaced with a macro?
 
+
+Find and list all of the Lit! macros.
+Find those that do not have a test file and list them.
+You may not fix any other test bugs not change src files in this sweep.
+
+Make a plan in todos down to the file. Don't later decide to change it to batch it.
+
+Each of these three tasks should have a separate todo per file.
+1) Add the Lit! macro test and of course it's uses.
+2) compile that changed test file. Fix any problems.
+3) run that change test file. Fix any problems.
+
+At the end run all the tests.
+
+Show me the plan in a todo window and wait for me to review it before executing.

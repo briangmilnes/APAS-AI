@@ -5,6 +5,23 @@
     use apas_ai::Chap06::DirGraphStEph::DirGraphStEph::*;
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*;
+    use apas_ai::DirGraphStEphLit;
+
+    #[test]
+    fn test_dirgraphstephlit_macro_functionality() {
+        // Test empty graph creation
+        let empty: DirGraphStEph<i32> = DirGraphStEphLit!();
+        assert_eq!(empty.vertices().size(), 0);
+        assert_eq!(empty.arcs().size(), 0);
+        
+        // Test graph creation with vertices and arcs
+        let with_data: DirGraphStEph<i32> = DirGraphStEphLit!(
+            V: [1, 2, 3],
+            A: [(1, 2), (2, 3)]
+        );
+        assert_eq!(with_data.vertices().size(), 3);
+        assert_eq!(with_data.arcs().size(), 2);
+    }
 
     #[test]
     fn test_digraph_vertices_and_arcs() {

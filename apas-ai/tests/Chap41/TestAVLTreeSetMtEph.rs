@@ -6,6 +6,23 @@ mod tests_avl_tree_set_mt_eph {
     use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
     use apas_ai::Chap41::AVLTreeSetMtEph::AVLTreeSetMtEph::*;
     use apas_ai::Types::Types::*;
+    use apas_ai::AVLTreeSetMtEphLit;
+
+    #[test]
+    fn test_avltreesetmtephlit_macro_functionality() {
+        // Test empty set creation
+        let empty: AVLTreeSetMtEph<i32> = AVLTreeSetMtEphLit![];
+        assert_eq!(empty.size(), 0);
+        assert!(!empty.find(&42));
+        
+        // Test set creation with elements
+        let with_data: AVLTreeSetMtEph<i32> = AVLTreeSetMtEphLit![1, 2, 3];
+        assert_eq!(with_data.size(), 3);
+        assert!(with_data.find(&1));
+        assert!(with_data.find(&2));
+        assert!(with_data.find(&3));
+        assert!(!with_data.find(&4));
+    }
 
     #[test]
     fn test_empty() {

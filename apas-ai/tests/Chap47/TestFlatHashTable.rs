@@ -113,12 +113,15 @@ fn test_resize_on_high_load_factor() {
     let initial_size = table.load_and_size().1;
 
     // Insert enough elements to trigger resize (load factor > 0.5 for flat tables)
+    // With min size 8, need > 4 elements to exceed 0.5 threshold
     table = table.insert("key1".to_string(), 1);
     table = table.insert("key2".to_string(), 2);
-    table = table.insert("key3".to_string(), 3); // This should trigger resize
+    table = table.insert("key3".to_string(), 3);
+    table = table.insert("key4".to_string(), 4);
+    table = table.insert("key5".to_string(), 5); // This should trigger resize
 
     let (load, new_size) = table.load_and_size();
-    assert_eq!(load, 3);
+    assert_eq!(load, 5);
     assert!(new_size > initial_size); // Table should have grown
 
     // All elements should still be accessible

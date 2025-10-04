@@ -1,14 +1,30 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use std::sync::{Arc, Barrier};
+use std::thread;
 
-    use std::sync::{Arc, Barrier};
-    use std::thread;
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::LabUnDirGraphMtEphTrait;
+use apas_ai::Chap06::WeightedUnDirGraphMtEphInt::WeightedUnDirGraphMtEphInt::*;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
+use apas_ai::WeightedUnDirGraphMtEphIntLit;
 
-    use apas_ai::Chap05::SetStEph::SetStEph::*;
-    use apas_ai::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::LabUnDirGraphMtEphTrait;
-    use apas_ai::Chap06::WeightedUnDirGraphMtEphInt::WeightedUnDirGraphMtEphInt::*;
-    use apas_ai::SetLit;
-    use apas_ai::Types::Types::*;
+#[test]
+fn test_weightedundirgraphmtephintlit_macro_functionality() {
+        // Test empty graph creation
+        let empty: WeightedUnDirGraphMtEphInt<i32> = WeightedUnDirGraphMtEphIntLit!();
+        assert_eq!(empty.vertices().size(), 0);
+        assert_eq!(empty.labeled_edges().size(), 0);
+        
+        // Test graph creation with vertices and edges
+        let with_data: WeightedUnDirGraphMtEphInt<i32> = WeightedUnDirGraphMtEphIntLit!(
+            V: [1, 2, 3],
+            E: [(1, 2, 10), (2, 3, 20)]
+        );
+        assert_eq!(with_data.vertices().size(), 3);
+        assert_eq!(with_data.labeled_edges().size(), 2);
+    }
 
     #[test]
     fn test_weightedundirgraphmtephint_empty() {

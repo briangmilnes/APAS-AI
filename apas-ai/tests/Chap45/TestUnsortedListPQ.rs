@@ -7,6 +7,19 @@ use apas_ai::Types::Types::*;
 use apas_ai::{UnsortedListPQLit};
 
 #[test]
+fn test_unsortedlistpqlit_macro_functionality() {
+    // Test empty priority queue creation
+    let empty: UnsortedListPQ<i32> = UnsortedListPQLit![];
+    assert_eq!(empty.size(), 0);
+    assert!(empty.is_empty());
+    
+    // Test priority queue creation with elements
+    let with_data: UnsortedListPQ<i32> = UnsortedListPQLit![3, 1, 4, 1, 5];
+    assert_eq!(with_data.size(), 5);
+    assert!(!with_data.is_empty());
+}
+
+#[test]
 fn test_empty_priority_queue() {
     let pq: UnsortedListPQ<i32> = UnsortedListPQ::empty();
     assert!(pq.is_empty());

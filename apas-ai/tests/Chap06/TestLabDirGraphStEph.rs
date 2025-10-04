@@ -5,6 +5,23 @@
     use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
     use apas_ai::Types::Types::*;
     use apas_ai::*;
+    use apas_ai::LabDirGraphStEphLit;
+
+    #[test]
+    fn test_labdirgraphstephlit_macro_functionality() {
+        // Test empty graph creation
+        let empty: LabDirGraphStEph<i32, String> = LabDirGraphStEphLit!();
+        assert_eq!(empty.vertices().size(), 0);
+        assert_eq!(empty.labeled_arcs().size(), 0);
+        
+        // Test graph creation with vertices and arcs
+        let with_data: LabDirGraphStEph<i32, String> = LabDirGraphStEphLit!(
+            V: [1, 2, 3],
+            A: [(1, 2, "arc1".to_string()), (2, 3, "arc2".to_string())]
+        );
+        assert_eq!(with_data.vertices().size(), 3);
+        assert_eq!(with_data.labeled_arcs().size(), 2);
+    }
 
     #[test]
     fn test_labelled_dir_graph_empty() {

@@ -30,7 +30,7 @@ fn test_linear_probing_insert_and_lookup() {
     table = table.insert("cherry".to_string(), 3);
     
     assert_eq!(table.load_and_size().0, 3);
-    assert!(!table.load_and_size().0 == 0);
+    assert!(table.load_and_size().0 != 0);
     
     // Test lookups
     assert_eq!(table.lookup(&"apple".to_string()), Some(&1));

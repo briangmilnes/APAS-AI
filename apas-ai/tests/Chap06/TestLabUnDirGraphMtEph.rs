@@ -9,6 +9,23 @@
     use apas_ai::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*;
+    use apas_ai::LabUnDirGraphMtEphLit;
+
+    #[test]
+    fn test_labundirgraphmtephlit_macro_functionality() {
+        // Test empty graph creation
+        let empty: LabUnDirGraphMtEph<i32, String> = LabUnDirGraphMtEphLit!();
+        assert_eq!(empty.vertices().size(), 0);
+        assert_eq!(empty.labeled_edges().size(), 0);
+        
+        // Test graph creation with vertices and edges
+        let with_data: LabUnDirGraphMtEph<i32, String> = LabUnDirGraphMtEphLit!(
+            V: [1, 2, 3],
+            E: [(1, 2, "edge1".to_string()), (2, 3, "edge2".to_string())]
+        );
+        assert_eq!(with_data.vertices().size(), 3);
+        assert_eq!(with_data.labeled_edges().size(), 2);
+    }
 
     #[test]
     fn test_labundirgraphmteph_empty() {

@@ -9,6 +9,23 @@
     use apas_ai::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*;
+    use apas_ai::UnDirGraphMtEphLit;
+
+    #[test]
+    fn test_undirgraphmtephlit_macro_functionality() {
+        // Test empty graph creation
+        let empty: UnDirGraphMtEph<i32> = UnDirGraphMtEphLit!();
+        assert_eq!(empty.vertices().size(), 0);
+        assert_eq!(empty.edges().size(), 0);
+        
+        // Test graph creation with vertices and edges
+        let with_data: UnDirGraphMtEph<i32> = UnDirGraphMtEphLit!(
+            V: [1, 2, 3],
+            E: [(1, 2), (2, 3)]
+        );
+        assert_eq!(with_data.vertices().size(), 3);
+        assert_eq!(with_data.edges().size(), 2);
+    }
 
     #[test]
     fn test_undirgraphmteph_empty() {

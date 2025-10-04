@@ -3,6 +3,22 @@
 
 use apas_ai::Chap47::NestedHashTable::NestedHashTable::*;
 use apas_ai::Types::Types::*;
+use apas_ai::NestedHashTableLit;
+
+#[test]
+fn test_nestedhashtablelit_macro_functionality() {
+    // Test hash table creation with size
+    let empty: NestedHashTable<String, i32> = NestedHashTableLit!(10);
+    assert_eq!(empty.size(), 0);
+    
+    // Test hash table creation with size and key-value pairs
+    let with_data: NestedHashTable<String, i32> = NestedHashTableLit!(
+        10, 
+        ("key1".to_string(), 1),
+        ("key2".to_string(), 2)
+    );
+    assert_eq!(with_data.size(), 2);
+}
 
 /*
 #[test]

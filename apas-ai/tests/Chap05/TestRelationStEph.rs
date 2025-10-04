@@ -6,6 +6,22 @@
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*; // macro import
     use apas_ai::*;
+    use apas_ai::RelationLit;
+
+    #[test]
+    fn test_relationlit_macro_functionality() {
+        // Test empty relation creation
+        let empty: Relation<i32, String> = RelationLit![];
+        assert_eq!(empty.size(), 0);
+        
+        // Test relation creation with pairs
+        let with_data: Relation<i32, String> = RelationLit![
+            (1, "one".to_string()),
+            (2, "two".to_string())
+        ];
+        assert_eq!(with_data.size(), 2);
+        assert!(with_data.mem(&1, &"one".to_string()));
+    }
 
     #[test]
     fn test_relation_domain_range_and_mem() {

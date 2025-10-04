@@ -5,6 +5,23 @@ use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
 use apas_ai::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
 use apas_ai::Chap41::Example41_3::Example41_3::*;
 use apas_ai::*;
+use apas_ai::AVLTreeSetStEphLit;
+
+#[test]
+fn test_avltreesetstephlit_macro_functionality() {
+    // Test empty set creation
+    let empty: AVLTreeSetStEph<i32> = AVLTreeSetStEphLit![];
+    assert_eq!(empty.size(), 0);
+    assert!(!empty.find(&42));
+    
+    // Test set creation with elements
+    let with_data: AVLTreeSetStEph<i32> = AVLTreeSetStEphLit![1, 2, 3];
+    assert_eq!(with_data.size(), 3);
+    assert!(with_data.find(&1));
+    assert!(with_data.find(&2));
+    assert!(with_data.find(&3));
+    assert!(!with_data.find(&4));
+}
 
 #[test]
 fn test_avl_tree_set_basic_operations() {

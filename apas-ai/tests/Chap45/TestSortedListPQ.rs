@@ -5,6 +5,20 @@ use apas_ai::Chap45::SortedListPQ::SortedListPQ::*;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
 use apas_ai::Types::Types::*;
+use apas_ai::SortedListPQLit;
+
+#[test]
+fn test_sortedlistpqlit_macro_functionality() {
+    // Test empty priority queue creation
+    let empty: SortedListPQ<i32> = SortedListPQLit![];
+    assert_eq!(empty.size(), 0);
+    assert!(empty.is_empty());
+    
+    // Test priority queue creation with elements
+    let with_data: SortedListPQ<i32> = SortedListPQLit![3, 1, 4, 1, 5];
+    assert_eq!(with_data.size(), 5);
+    assert!(!with_data.is_empty());
+}
 
 #[test]
 fn test_empty_priority_queue() {

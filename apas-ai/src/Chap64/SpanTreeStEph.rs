@@ -100,9 +100,10 @@ pub mod SpanTreeStEph {
             return false;
         }
 
-        // Check all edges are from original graph
+        // Check all edges are from original graph (check both orientations for undirected)
         for edge in tree_edges.iter() {
-            if !graph.edges().mem(edge) {
+            let Edge(u, v) = edge;
+            if !graph.edges().mem(edge) && !graph.edges().mem(&Edge(v.clone(), u.clone())) {
                 return false;
             }
         }

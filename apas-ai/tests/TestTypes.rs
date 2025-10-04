@@ -1,10 +1,21 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use apas_ai::EdgeLit;
+use apas_ai::Types::Types::*;
 
-    use apas_ai::Types::Types::*;
+#[test]
+fn test_edgelit_macro_functionality() {
+    // Test edge creation with two vertices
+    let edge: Edge<i32> = EdgeLit![1, 2];
+    assert_eq!(edge, Edge(1, 2));
+    
+    // Test another edge
+    let edge2: Edge<i32> = EdgeLit![5, 10];
+    assert_eq!(edge2, Edge(5, 10));
+}
 
-    #[test]
-    fn test_boolean_eq_neq_and_ordering() {
+#[test]
+fn test_boolean_eq_neq_and_ordering() {
         assert_eq!(true, true);
         assert_ne!(true, false);
         assert_ne!(false, true);
