@@ -36,8 +36,8 @@ pub mod Algorithm21_6 {
             );
         let composites: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::flatten(&nested);
 
-        // Create candidates: 2, 3, ..., n-1
-        let candidates: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 2, n - 2);
+        // Create candidates: 2, 3, ..., n
+        let candidates: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 2, n - 1);
 
         // Filter out composites to get primes
         let filtered: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&candidates, &|x| {

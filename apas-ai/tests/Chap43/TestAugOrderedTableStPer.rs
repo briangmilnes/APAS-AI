@@ -140,7 +140,9 @@ fn test_range_operations() {
 
     // Test range [3, 7]
     let range_sum = table.reduce_range(&3, &7);
-    assert_eq!(range_sum, 300); // 30+40+50+60+70 = 250... wait, let me recalculate
+    // Keys 3,4,5,6,7 have values 30,40,50,60,70 respectively
+    // Sum: 30+40+50+60+70 = 250
+    assert_eq!(range_sum, 250);
 
     // Actually: range [3,7] should include keys 3,4,5,6,7
     // Values: 30+40+50+60+70 = 250

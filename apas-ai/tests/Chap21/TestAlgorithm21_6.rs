@@ -169,7 +169,7 @@ fn test_prime_sieve_edge_cases() {
 
     let result = prime_sieve(5);
     let primes = seq_to_vec(&result);
-    let expected = vec![2, 3];
+    let expected = vec![2, 3, 5]; // 5 is prime!
     
     assert_eq!(primes.len(), expected.len());
     for prime in expected {

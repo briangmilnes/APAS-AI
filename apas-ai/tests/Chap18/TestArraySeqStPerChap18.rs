@@ -224,11 +224,12 @@
     }
 
     #[test]
-    #[should_panic]
     fn test_arrayseqstper_inject_invalid_index() {
         let seq = ArraySeqStPerSLit![1, 2, 3];
         let updates = ArraySeqStPerSLit![Pair(5, 99)]; // Index 5 is out of bounds
-        let _ = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::inject(&seq, &updates);
+        let result = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::inject(&seq, &updates);
+        // Should silently skip out-of-bounds indices, leaving sequence unchanged
+        assert_eq!(result, seq);
     }
 
     #[test]

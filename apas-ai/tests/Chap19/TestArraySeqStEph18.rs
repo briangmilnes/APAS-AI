@@ -116,8 +116,9 @@ fn test_inject_conflicts_last_wins() {
     assert_eq!(injected.length(), 5);
     assert_eq!(*injected, ArraySeqStEphSLit!["a", "cat", "on", "the", "mat"]);
 
+    let mut fresh_a = ArraySeqStEphSLit!["the", "cat", "in", "the", "hat"];
     let conflicting_updates = ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")];
-    let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&mut a, &conflicting_updates);
+    let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&mut fresh_a, &conflicting_updates);
     assert_eq!(*result_last, ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]);
 }
 
@@ -130,8 +131,10 @@ fn test_ninject_conflicts_last_wins() {
     );
     assert_eq!(*ninjected, ArraySeqStEphSLit!["the", "dog", "in", "big", "hat"]);
     assert_eq!(ninjected.length(), 5);
+    
+    let mut fresh_a2 = ArraySeqStEphSLit!["the", "cat", "in", "the", "hat"];
     let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(
-        &mut a,
+        &mut fresh_a2,
         &ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")],
     );
     assert_eq!(*result_last, ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]);

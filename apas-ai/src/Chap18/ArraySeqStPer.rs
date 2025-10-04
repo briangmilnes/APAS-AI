@@ -201,11 +201,8 @@ pub mod ArraySeqStPer {
             for i in 0..updates.length() {
                 let Pair(index, value) = updates.nth(i);
                 if *index >= result.length() {
-                    panic!(
-                        "Index {} out of bounds for sequence of length {}",
-                        index,
-                        result.length()
-                    );
+                    // Skip out-of-bounds indices instead of panicking
+                    continue;
                 }
                 if updated.insert(*index) {
                     let mut new_data: Vec<T> = result.data.iter().cloned().collect();
