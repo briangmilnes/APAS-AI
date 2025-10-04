@@ -423,6 +423,14 @@ path = "tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs"
 name = "TestWeightedUnDirGraphMtEphInt"
 path = "tests/Chap06/TestWeightedUnDirGraphMtEphInt.rs"
 
+[[test]]
+name = "TestWeightedUnDirGraphStEphInt"
+path = "tests/Chap06/TestWeightedUnDirGraphStEphInt.rs"
+
+[[test]]
+name = "TestWeightedUnDirGraphStEphFloat"
+path = "tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs"
+
 
 [[test]]
 name = "TestArraySeqMtEphSlice"
@@ -1019,6 +1027,22 @@ path = "tests/Chap53/TestPQMinStPer.rs"
 name = "TestPQMinMtEph"
 path = "tests/Chap53/TestPQMinMtEph.rs"
 
+[[test]]
+name = "TestPQMinStEph"
+path = "tests/Chap53/TestPQMinStEph.rs"
+
+[[test]]
+name = "TestPQMinMtPer"
+path = "tests/Chap53/TestPQMinMtPer.rs"
+
+[[test]]
+name = "TestGraphSearchStEph"
+path = "tests/Chap53/TestGraphSearchStEph.rs"
+
+[[test]]
+name = "TestGraphSearchMtPer"
+path = "tests/Chap53/TestGraphSearchMtPer.rs"
+
 [[bench]]
 name = "BenchGraphSearchStPer"
 path = "benches/Chap53/BenchGraphSearchStPer.rs"
@@ -1154,6 +1178,26 @@ harness = false
 # [[test]]
 # name = "TestMatrixChain"
 # path = "tests/TestMatrixChain.rs"
+
+[[test]]
+name = "TestOBSTMtPer"
+path = "tests/Chap50/TestOBSTMtPer.rs"
+
+[[test]]
+name = "TestOBSTMtEph"
+path = "tests/Chap50/TestOBSTMtEph.rs"
+
+[[test]]
+name = "TestMatrixChainMtEph"
+path = "tests/Chap50/TestMatrixChainMtEph.rs"
+
+[[test]]
+name = "TestMatrixChainMtPer"
+path = "tests/Chap50/TestMatrixChainMtPer.rs"
+
+[[test]]
+name = "TestMatrixChainStEph"
+path = "tests/Chap50/TestMatrixChainStEph.rs"
 
 # [[bench]]
 # name = "BenchOBST"
@@ -1790,6 +1834,10 @@ path = "tests/Chap45/TestSortedListPQ.rs"
 [[test]]
 name = "TestUnsortedListPQ"
 path = "tests/Chap45/TestUnsortedListPQ.rs"
+
+[[test]]
+name = "TestHeapsortExample"
+path = "tests/Chap45/TestHeapsortExample.rs"
 
 [[test]]
 name = "TestDoubleHashing"

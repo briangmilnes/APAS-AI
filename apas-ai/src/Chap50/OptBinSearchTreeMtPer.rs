@@ -243,12 +243,12 @@ pub mod OptBinSearchTreeMtPer {
 #[macro_export]
 macro_rules! OBSTMtPerLit {
     (keys: [$($k:expr),* $(,)?], probs: [$($p:expr),* $(,)?]) => {
-        $crate::Chap50::OBSTMtPer::OBSTMtPer::OBSTMtPerS::from_keys_probs(
+        $crate::Chap50::OptBinSearchTreeMtPer::OptBinSearchTreeMtPer::OBSTMtPerS::from_keys_probs(
             vec![$($k),*],
-            vec![$($crate::Chap50::Probability::Probability::new($p)),*]
+            vec![$($crate::Chap50::Probability::Probability::Probability::new($p)),*]
         )
     };
     () => {
-        $crate::Chap50::OBSTMtPer::OBSTMtPer::OBSTMtPerS::new()
+        $crate::Chap50::OptBinSearchTreeMtPer::OptBinSearchTreeMtPer::OBSTMtPerS::new()
     };
 }

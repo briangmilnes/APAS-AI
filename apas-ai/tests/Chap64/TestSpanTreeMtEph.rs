@@ -22,8 +22,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore] // TODO: Fix algorithmic bug - quotient edges added directly instead of original edges
-    #[ignore] // TODO: Fix algorithmic bug - quotient edges
     fn test_spanning_tree_mt_cycle() {
         let graph = create_cycle_graph(6);
         let tree = spanning_tree_star_contraction_mt(&graph, 123);
@@ -33,8 +31,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore] // TODO: Fix algorithmic bug - quotient edges added directly instead of original edges
-    #[ignore] // TODO: Fix algorithmic bug - quotient edges
     fn test_spanning_tree_mt_larger() {
         let graph = create_cycle_graph(10);
         let tree = spanning_tree_star_contraction_mt(&graph, 456);
@@ -44,7 +40,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore] // TODO: Fix algorithmic bug - quotient edges
     fn test_spanning_tree_mt_empty() {
         let vertices = SetLit![];
         let edges = SetLit![];

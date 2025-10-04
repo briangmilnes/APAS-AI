@@ -234,10 +234,10 @@ pub mod HeapsortExample {
     pub fn large_example(size: usize) -> Vec<i32> {
         // Generate pseudo-random sequence for testing
         let mut result = Vec::with_capacity(size);
-        let mut x = 1;
+        let mut x: i64 = 1;
         for _ in 0..size {
-            x = (x * 1103515245 + 12345) % (1 << 31); // Linear congruential generator
-            result.push((x % 1000) as i32);
+            x = (x * 1103515245 + 12345) % (1i64 << 31); // Linear congruential generator
+            result.push(((x % 1000) as i32));
         }
         result
     }
