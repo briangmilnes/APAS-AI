@@ -35,7 +35,7 @@ pub mod SpanTreeStEph {
     /// 3. Add all edges from partition map to spanning tree
     /// 4. Build quotient graph
     /// 5. Recursively compute spanning tree of quotient
-    /// 6. Combine edges from partition and quotient spanning tree
+    /// 6. Map quotient tree edges back to original edges
     ///
     /// APAS: Work O((n+m) lg n), Span O((n+m) lg n)
     /// claude-4-sonet: Work O((n+m) lg n), Span O((n+m) lg n)
@@ -49,12 +49,12 @@ pub mod SpanTreeStEph {
         // Base: no edges means no spanning tree edges (isolated vertices)
         let base = |_vertices: &Set<V>| SetLit![];
 
-        // Expand: add star partition edges to recursive result
+        // Expand: add star partition edges and map quotient tree edges back
         let expand = |_v: &Set<V>,
-                      _e: &Set<Edge<V>>,
+                      original_edges: &Set<Edge<V>>,
                       _centers: &Set<V>,
                       partition_map: &HashMap<V, V>,
-                      quotient_edges: Set<Edge<V>>| {
+                      quotient_tree: Set<Edge<V>>| {
             // Collect edges from partition map (vertex → center edges)
             let mut spanning_edges = SetLit![];
 
@@ -71,10 +71,23 @@ pub mod SpanTreeStEph {
                 }
             }
 
-            // Map quotient edges back to original graph
-            // Quotient edges are between centers, which are valid in original graph
-            for edge in quotient_edges.iter() {
-                let _ = spanning_edges.insert(edge.clone());
+            // Map quotient tree edges back to original edges
+            // For each edge between centers in quotient tree, find original edge that maps to it
+            for quotient_edge in quotient_tree.iter() {
+                let Edge(c1, c2) = quotient_edge;
+
+                // Find an original edge that connects the two stars (centers c1 and c2)
+                for original_edge in original_edges.iter() {
+                    let Edge(u, v) = original_edge;
+                    let u_center = partition_map.get(u).unwrap_or(u);
+                    let v_center = partition_map.get(v).unwrap_or(v);
+
+                    // Check if this original edge connects the two centers (in either direction)
+                    if (u_center == c1 && v_center == c2) || (u_center == c2 && v_center == c1) {
+                        let _ = spanning_edges.insert(original_edge.clone());
+                        break; // Only need one edge between the two stars
+                    }
+                }
             }
 
             spanning_edges
@@ -100,10 +113,11 @@ pub mod SpanTreeStEph {
             return false;
         }
 
-        // Check all edges are from original graph (check both orientations for undirected)
+        // Check all edges are from original graph
         for edge in tree_edges.iter() {
             let Edge(u, v) = edge;
-            if !graph.edges().mem(edge) && !graph.edges().mem(&Edge(v.clone(), u.clone())) {
+            // For undirected graphs, Neighbor checks if u and v are connected
+            if !graph.Neighbor(u, v) {
                 return false;
             }
         }

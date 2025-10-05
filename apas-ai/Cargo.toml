@@ -513,6 +513,10 @@ name = "TestAVLTreeSeq"
 path = "tests/Chap37/TestAVLTreeSeq.rs"
 
 [[test]]
+name = "TestBSTAVLMtEph"
+path = "tests/Chap37/TestBSTAVLMtEph.rs"
+
+[[test]]
 name = "TestBSTAVLStEph"
 path = "tests/Chap37/TestBSTAVLStEph.rs"
 
@@ -1581,8 +1585,20 @@ name = "TestAllPairsResultStPerFloat"
 path = "tests/Chap56/TestAllPairsResultStPerFloat.rs"
 
 [[test]]
+name = "TestExample56_1"
+path = "tests/Chap56/TestExample56_1.rs"
+
+[[test]]
+name = "TestExample56_3"
+path = "tests/Chap56/TestExample56_3.rs"
+
+[[test]]
 name = "TestDijkstraStEphInt"
 path = "tests/Chap57/TestDijkstraStEphInt.rs"
+
+[[test]]
+name = "TestDijkstraStEphFloat"
+path = "tests/Chap57/TestDijkstraStEphFloat.rs"
 
 [[test]]
 name = "TestStackStEph"
@@ -2004,5 +2020,105 @@ name = "TestTSPApproxStEph"
 path = "tests/Chap64/TestTSPApproxStEph.rs"
 
 [[test]]
+name = "TestBSTBBAlphaMtEph"
+path = "tests/Chap37/TestBSTBBAlphaMtEph.rs"
+
+[[test]]
+name = "TestBSTPlainMtEph"
+path = "tests/Chap37/TestBSTPlainMtEph.rs"
+
+[[test]]
+name = "TestBSTPlainStEph"
+path = "tests/Chap37/TestBSTPlainStEph.rs"
+
+[[test]]
+name = "TestBSTRBMtEph"
+path = "tests/Chap37/TestBSTRBMtEph.rs"
+
+[[test]]
+name = "TestBSTSplayMtEph"
+path = "tests/Chap37/TestBSTSplayMtEph.rs"
+
+[[test]]
+name = "TestMatrixChainStPer"
+path = "tests/Chap50/TestMatrixChainStPer.rs"
+
+[[test]]
+name = "TestSubsetSumStEph"
+path = "tests/Chap49/TestSubsetSumStEph.rs"
+
+[[test]]
+name = "TestSubsetSumMtEph"
+path = "tests/Chap49/TestSubsetSumMtEph.rs"
+
+[[test]]
+name = "TestSubsetSumStPer"
+path = "tests/Chap49/TestSubsetSumStPer.rs"
+
+[[test]]
+name = "TestSubsetSumMtPer"
+path = "tests/Chap49/TestSubsetSumMtPer.rs"
+
+[[test]]
+name = "TestMinEditDistStPer"
+path = "tests/Chap49/TestMinEditDistStPer.rs"
+
+[[test]]
+name = "TestMinEditDistMtPer"
+path = "tests/Chap49/TestMinEditDistMtPer.rs"
+
+[[test]]
+name = "TestOrderedTableMtPer"
+path = "tests/Chap43/TestOrderedTableMtPer.rs"
+
+[[test]]
 name = "TestLibIntegration"
 path = "tests/TestLibIntegration.rs"
+
+[[test]]
+name = "TestParaHashTableStEph"
+path = "tests/Chap47clean/TestParaHashTableStEph.rs"
+
+[[test]]
+name = "TestLinProbFlatHashTable"
+path = "tests/Chap47clean/TestLinProbFlatHashTable.rs"
+
+[[test]]
+name = "TestVecChainedHashTable"
+path = "tests/Chap47clean/TestVecChainedHashTable.rs"
+
+[[test]]
+name = "TestLinkedListChainedHashTable"
+path = "tests/Chap47clean/TestLinkedListChainedHashTable.rs"
+
+[[test]]
+name = "TestStructChainedHashTable"
+path = "tests/Chap47clean/TestStructChainedHashTable.rs"
+
+[[test]]
+name = "TestQuadProbFlatHashTable"
+path = "tests/Chap47clean/TestQuadProbFlatHashTable.rs"
+
+[[test]]
+name = "TestDoubleHashFlatHashTable"
+path = "tests/Chap47clean/TestDoubleHashFlatHashTable.rs"
+
+[[bench]]
+name = "BenchLinProbFlatHashTable"
+path = "benches/Chap47/BenchLinProbFlatHashTable.rs"
+harness = false
+
+[[bench]]
+name = "BenchQuadProbFlatHashTable"
+path = "benches/Chap47/BenchQuadProbFlatHashTable.rs"
+harness = false
+
+[[bench]]
+name = "BenchDoubleHashFlatHashTable"
+path = "benches/Chap47/BenchDoubleHashFlatHashTable.rs"
+harness = false
+
+[[bench]]
+name = "BenchVecChainedHashTable"
+path = "benches/Chap47/BenchVecChainedHashTable.rs"
+harness = false

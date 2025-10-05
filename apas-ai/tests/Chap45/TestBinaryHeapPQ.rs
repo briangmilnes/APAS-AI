@@ -404,7 +404,12 @@ fn test_ascending_insertion() {
 fn test_descending_insertion() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap = heap.insert(5).insert(4).insert(3).insert(2).insert(1);
-    
+
     assert_eq!(heap.find_min(), Some(&1));
     assert!(heap.is_valid_heap());
+}
+
+#[test]
+fn test_macro_type_check() {
+    let _heap: BinaryHeapPQ<i32> = BinaryHeapPQLit![1, 2, 3];
 }

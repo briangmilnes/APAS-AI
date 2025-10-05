@@ -7,7 +7,7 @@
 
  Wait for me to tell you when to fix, build and test.
 
- This goes in Chap47.
+ This goes in src/Chap47clean/
 
 Chapter 47
 

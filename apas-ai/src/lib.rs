@@ -228,6 +228,18 @@ pub mod Chap47 {
     pub mod SeparateChaining;
 }
 
+pub mod Chap47clean {
+    pub mod ParaHashTableStEph;
+    pub mod FlatHashTable;
+    pub mod ChainedHashTable;
+    pub mod LinkedListChainedHashTable;
+    pub mod VecChainedHashTable;
+    pub mod StructChainedHashTable;
+    pub mod LinProbFlatHashTable;
+    pub mod QuadProbFlatHashTable;
+    pub mod DoubleHashFlatHashTable;
+}
+
 pub mod Chap49 {
     pub mod MinEditDistMtEph;
     pub mod MinEditDistMtPer;
@@ -274,11 +286,11 @@ pub mod Chap52 {
     pub mod AdjSeqGraphStEph;
     pub mod AdjSeqGraphStPer;
     // pub mod AdjSeqGraphMtPer; // API mismatch - ArraySeqMtPerS lacks full interface
-    // pub mod AdjSeqGraphMtEph; // API mismatch - ArraySeqMtEphS lacks full interface
+    // pub mod AdjSeqGraphMtEph; // API mismatch - ArraySeqMtEphS lacks nth method
     pub mod AdjMatrixGraphStEph;
     pub mod AdjMatrixGraphStPer;
     // pub mod AdjMatrixGraphMtPer; // API mismatch - ArraySeqMtPerS lacks full interface
-    // pub mod AdjMatrixGraphMtEph; // API mismatch - ArraySeqMtEphS lacks full interface
+    // pub mod AdjMatrixGraphMtEph; // API mismatch - ArraySeqMtEphS lacks nth method
 }
 
 pub mod Chap53 {

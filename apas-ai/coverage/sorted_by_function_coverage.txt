@@ -1,246 +1,46 @@
-Coverage Report - Sorted by Function Coverage (Worst to Best)
-
-warning: 670 functions have mismatched data
-Filename                                    Regions    Missed Regions     Cover   Functions  Missed Functions  Executed       Lines      Missed Lines     Cover    Branches   Missed Branches     Cover
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
- Chap21/Problem21_1.rs 21 21 0.00% 1 1 0.00% 12 12 0.00% 0 0 -
- Chap21/Problem21_3.rs 24 24 0.00% 1 1 0.00% 13 13 0.00% 0 0 -
- Chap21/Problem21_4.rs 42 42 0.00% 4 4 0.00% 28 28 0.00% 0 0 -
- Chap45/Example45_2.rs 172 172 0.00% 8 8 0.00% 73 73 0.00% 0 0 -
- Chap56/Example56_1.rs 83 83 0.00% 3 3 0.00% 48 48 0.00% 0 0 -
- Chap56/Example56_3.rs 64 64 0.00% 2 2 0.00% 30 30 0.00% 0 0 -
- main.rs 4 4 0.00% 1 1 0.00% 3 3 0.00% 0 0 -
- Chap47/NestedHashTable.rs 423 341 19.39% 15 12 20.00% 220 174 20.91% 0 0 -
- Types.rs 197 109 44.67% 43 29 32.56% 95 49 48.42% 0 0 -
- Chap06/WeightedDirGraphMtEphInt.rs 208 136 34.62% 15 10 33.33% 100 65 35.00% 0 0 -
- Chap06/WeightedDirGraphStEphInt.rs 130 81 37.69% 12 8 33.33% 63 35 44.44% 0 0 -
- Chap49/MinEditDistMtEph.rs 162 64 60.49% 17 11 35.29% 93 40 56.99% 0 0 -
- Chap06/WeightedDirGraphMtEphFloat.rs 213 138 35.21% 16 10 37.50% 116 75 35.34% 0 0 -
- Chap49/MinEditDistMtPer.rs 134 45 66.42% 12 7 41.67% 77 29 62.34% 0 0 -
- Chap49/SubsetSumMtEph.rs 134 44 67.16% 14 8 42.86% 83 32 61.45% 0 0 -
- Chap49/SubsetSumStEph.rs 104 38 63.46% 14 8 42.86% 61 24 60.66% 0 0 -
- Chap23/BalBinTreeStEph.rs 117 40 65.81% 16 9 43.75% 55 17 69.09% 0 0 -
- Chap49/MinEditDistStEph.rs 154 62 59.74% 20 11 45.00% 88 45 48.86% 0 0 -
- Chap49/SubsetSumMtPer.rs 117 34 70.94% 11 6 45.45% 73 26 64.38% 0 0 -
- Chap50/OptBinSearchTreeStEph.rs 150 63 58.00% 22 12 45.45% 88 32 63.64% 0 0 -
- Chap06/DirGraphMtEph.rs 451 269 40.35% 37 20 45.95% 222 146 34.23% 0 0 -
- Chap65/UnionFindStEph.rs 203 104 48.77% 13 7 46.15% 98 49 50.00% 0 0 -
- Chap45/SortedListPQ.rs 319 134 57.99% 21 11 47.62% 161 68 57.76% 0 0 -
- Chap37/BSTSetPlainMtEph.rs 443 220 50.34% 52 27 48.08% 238 110 53.78% 0 0 -
- Chap23/PrimTreeSeqSt.rs 106 55 48.11% 16 8 50.00% 48 26 45.83% 0 0 -
- Chap43/Example43_1.rs 347 126 63.69% 2 1 50.00% 144 50 65.28% 0 0 -
- Chap55/TopoSortStEph.rs 109 46 57.80% 4 2 50.00% 65 27 58.46% 0 0 -
- Chap55/TopoSortStPer.rs 150 61 59.33% 4 2 50.00% 81 33 59.26% 0 0 -
- Chap37/BSTSetAVLMtEph.rs 337 114 66.17% 49 24 51.02% 159 31 80.50% 0 0 -
- Chap37/BSTSetBBAlphaMtEph.rs 337 114 66.17% 49 24 51.02% 159 31 80.50% 0 0 -
- Chap37/BSTSetRBMtEph.rs 337 114 66.17% 49 24 51.02% 159 31 80.50% 0 0 -
- Chap37/BSTSetSplayMtEph.rs 337 114 66.17% 49 24 51.02% 159 31 80.50% 0 0 -
- Chap18/ArraySeqMtPer.rs 521 239 54.13% 41 20 51.22% 230 103 55.22% 0 0 -
- Chap39/BSTTreapStEph.rs 229 108 52.84% 27 13 51.85% 135 61 54.81% 0 0 -
- Chap06/LabDirGraphMtEph.rs 233 125 46.35% 21 10 52.38% 135 75 44.44% 0 0 -
- Chap06/UnDirGraphMtEph.rs 271 149 45.02% 30 14 53.33% 126 78 38.10% 0 0 -
- Chap37/AVLTreeSeqMtPer.rs 358 248 30.73% 30 14 53.33% 170 100 41.18% 0 0 -
- Chap05/SetStEph.rs 295 129 56.27% 28 13 53.57% 164 72 56.10% 0 0 -
- Chap19/ArraySeqMtEphSlice.rs 551 292 47.01% 44 20 54.55% 266 138 48.12% 0 0 -
- Chap41/AVLTreeSetMtPer.rs 401 192 52.12% 33 15 54.55% 196 69 64.80% 0 0 -
- Chap39/BSTSetTreapMtEph.rs 337 106 68.55% 49 22 55.10% 159 29 81.76% 0 0 -
- Chap06/LabUnDirGraphStEph.rs 148 50 66.22% 21 9 57.14% 79 18 77.22% 0 0 -
- Chap50/Probability.rs 73 29 60.27% 17 7 58.82% 32 10 68.75% 0 0 -
- Chap37/BSTBBAlphaStEph.rs 308 104 66.23% 37 15 59.46% 157 45 71.34% 0 0 -
- Chap05/MappingStEph.rs 87 30 65.52% 15 6 60.00% 43 17 60.47% 0 0 -
- Chap12/Exercise12_1.rs 75 14 81.33% 10 4 60.00% 43 4 90.70% 0 0 -
- Chap05/RelationStEph.rs 77 27 64.94% 13 5 61.54% 43 12 72.09% 0 0 -
- Chap06/LabUnDirGraphMtEph.rs 217 105 51.61% 24 9 62.50% 117 62 47.01% 0 0 -
- Chap06/UnDirGraphStEph.rs 148 70 52.70% 24 9 62.50% 60 31 48.33% 0 0 -
- Chap59/JohnsonStEphFloat.rs 141 16 88.65% 8 3 62.50% 83 12 85.54% 0 0 -
- Chap59/JohnsonStEphInt.rs 145 16 88.97% 8 3 62.50% 80 12 85.00% 0 0 -
- Chap50/OptBinSearchTreeStPer.rs 126 34 73.02% 17 6 64.71% 74 21 71.62% 0 0 -
- Chap19/ArraySeqMtPer.rs 329 67 79.64% 32 11 65.62% 169 45 73.37% 0 0 -
- Chap06/WeightedUnDirGraphMtEphInt.rs 157 75 52.23% 12 4 66.67% 72 38 47.22% 0 0 -
- Chap18/ArraySeqMtEph.rs 479 153 68.06% 39 13 66.67% 223 66 70.40% 0 0 -
- Chap18/ArraySeq.rs 436 113 74.08% 45 15 66.67% 186 40 78.49% 0 0 -
- Chap59/JohnsonMtEphFloat.rs 202 18 91.09% 12 4 66.67% 112 15 86.61% 0 0 -
- Chap50/MatrixChainStPer.rs 122 28 77.05% 16 5 68.75% 76 14 81.58% 0 0 -
- Chap06/WeightedUnDirGraphMtEphFloat.rs 162 77 52.47% 13 4 69.23% 85 41 51.76% 0 0 -
- Chap19/ArraySeqStEph.rs 254 56 77.95% 26 8 69.23% 128 26 79.69% 0 0 -
- Chap49/MinEditDistStPer.rs 121 27 77.69% 13 4 69.23% 70 22 68.57% 0 0 -
- Chap37/BSTSplayStEph.rs 173 53 69.36% 23 7 69.57% 94 28 70.21% 0 0 -
- Chap49/SubsetSumStPer.rs 88 13 85.23% 10 3 70.00% 55 12 78.18% 0 0 -
- Chap44/DocumentIndex.rs 321 39 87.85% 24 7 70.83% 143 28 80.42% 0 0 -
- Chap66/BoruvkaStEph.rs 211 4 98.10% 7 2 71.43% 97 2 97.94% 0 0 -
- Chap19/ArraySeqMtEph.rs 336 38 88.69% 25 7 72.00% 165 24 85.45% 0 0 -
- Chap42/Example42_1.rs 357 12 96.64% 22 6 72.73% 138 6 95.65% 0 0 -
- Chap43/OrderedTableMtPer.rs 45 13 71.11% 11 3 72.73% 39 11 71.79% 0 0 -
- Chap59/JohnsonMtEphInt.rs 198 17 91.41% 11 3 72.73% 107 13 87.85% 0 0 -
- Chap50/MatrixChainMtPer.rs 195 34 82.56% 20 5 75.00% 112 16 85.71% 0 0 -
- Chap52/EdgeSetGraphMtPer.rs 113 13 88.50% 16 4 75.00% 62 6 90.32% 0 0 -
- Chap63/ConnectivityMtEph.rs 229 44 80.79% 12 3 75.00% 116 24 79.31% 0 0 -
- Chap17/MathSeq.rs 210 28 86.67% 29 7 75.86% 98 15 84.69% 0 0 -
- Chap50/MatrixChainStEph.rs 148 32 78.38% 21 5 76.19% 91 14 84.62% 0 0 -
- Chap41/AVLTreeSetStEph.rs 251 59 76.49% 17 4 76.47% 131 23 82.44% 0 0 -
- Chap41/AVLTreeSetStPer.rs 227 23 89.87% 17 4 76.47% 131 15 88.55% 0 0 -
- Chap18/LinkedListStPer.rs 516 48 90.70% 35 8 77.14% 267 22 91.76% 0 0 -
- Chap06/DirGraphStEph.rs 169 30 82.25% 22 5 77.27% 77 16 79.22% 0 0 -
- Chap45/UnsortedListPQ.rs 204 29 85.78% 18 4 77.78% 115 13 88.70% 0 0 -
- Chap52/AdjSeqGraphStEph.rs 127 18 85.83% 9 2 77.78% 66 12 81.82% 0 0 -
- Chap19/ArraySeqStPer.rs 211 41 80.57% 28 6 78.57% 110 22 80.00% 0 0 -
- Chap37/BSTRBStEph.rs 277 74 73.29% 28 6 78.57% 163 47 71.17% 0 0 -
- Chap52/EdgeSetGraphStEph.rs 118 11 90.68% 14 3 78.57% 51 5 90.20% 0 0 -
- Chap18/ArraySeqStEph.rs 382 63 83.51% 38 8 78.95% 160 20 87.50% 0 0 -
- Chap50/MatrixChainMtEph.rs 262 42 83.97% 24 5 79.17% 157 21 86.62% 0 0 -
- Chap51/TopDownDPStEph.rs 134 18 86.57% 15 3 80.00% 60 9 85.00% 0 0 -
- Chap52/EdgeSetGraphStPer.rs 108 9 91.67% 15 3 80.00% 61 5 91.80% 0 0 -
- Chap57/DijkstraStEphFloat.rs 94 8 91.49% 5 1 80.00% 37 3 91.89% 0 0 -
- Chap57/DijkstraStEphInt.rs 93 7 92.47% 5 1 80.00% 37 2 94.59% 0 0 -
- Chap50/OptBinSearchTreeMtPer.rs 204 30 85.29% 22 4 81.82% 115 13 88.70% 0 0 -
- Chap37/BSTSplayMtEph.rs 201 36 82.09% 23 4 82.61% 116 18 84.48% 0 0 -
- Chap41/AVLTreeSetMtEph.rs 344 67 80.52% 24 4 83.33% 173 27 84.39% 0 0 -
- Chap47/ClusteringAnalysis.rs 454 163 64.10% 18 3 83.33% 293 66 77.47% 0 0 -
- Chap52/AdjTableGraphStEph.rs 176 10 94.32% 18 3 83.33% 79 5 93.67% 0 0 -
- Chap37/BSTAVLMtEph.rs 269 44 83.64% 26 4 84.62% 164 27 83.54% 0 0 -
- Chap39/BSTTreapMtEph.rs 257 41 84.05% 27 4 85.19% 155 24 84.52% 0 0 -
- Chap37/BSTRBMtEph.rs 319 54 83.07% 28 4 85.71% 197 36 81.73% 0 0 -
- Chap51/TopDownDPMtEph.rs 261 24 90.80% 21 3 85.71% 121 13 89.26% 0 0 -
- Chap18/LinkedListStEph.rs 512 37 92.77% 36 5 86.11% 270 13 95.19% 0 0 -
- Chap06/LabDirGraphStEph.rs 116 16 86.21% 15 2 86.67% 71 9 87.32% 0 0 -
- Chap52/AdjTableGraphMtPer.rs 132 9 93.18% 15 2 86.67% 63 4 93.65% 0 0 -
- Chap66/BoruvkaMtEph.rs 369 8 97.83% 15 2 86.67% 177 6 96.61% 0 0 -
- Chap37/AVLTreeSeq.rs 504 109 78.37% 39 5 87.18% 271 47 82.66% 0 0 -
- Chap12/Exercise12_5.rs 87 6 93.10% 8 1 87.50% 58 6 89.66% 0 0 -
- Chap47/ProbeSequenceExamples.rs 486 71 85.39% 16 2 87.50% 284 27 90.49% 0 0 -
- Chap51/BottomUpDPMtEph.rs 181 8 95.58% 16 2 87.50% 90 2 97.78% 0 0 -
- Chap65/PrimStEph.rs 146 9 93.84% 8 1 87.50% 77 4 94.81% 0 0 -
- Chap37/BSTPlainStEph.rs 114 13 88.60% 17 2 88.24% 66 8 87.88% 0 0 -
- Chap41/ArraySetStEph.rs 143 9 93.71% 17 2 88.24% 84 5 94.05% 0 0 -
- Chap45/LeftistHeapPQ.rs 366 31 91.53% 34 4 88.24% 210 14 93.33% 0 0 -
- Chap26/MergeSortMt.rs 273 13 95.24% 9 1 88.89% 116 8 93.10% 0 0 -
- Chap52/AdjMatrixGraphStEph.rs 132 10 92.42% 9 1 88.89% 81 8 90.12% 0 0 -
- Chap52/AdjMatrixGraphStPer.rs 157 11 92.99% 9 1 88.89% 98 8 91.84% 0 0 -
- Chap52/AdjSeqGraphStPer.rs 155 12 92.26% 9 1 88.89% 82 6 92.68% 0 0 -
- Chap06/WeightedDirGraphStEphFloat.rs 187 19 89.84% 19 2 89.47% 99 9 90.91% 0 0 -
- Chap47/AdvancedDoubleHashing.rs 318 45 85.85% 19 2 89.47% 185 33 82.16% 0 0 -
- Chap06/WeightedUnDirGraphStEphInt.rs 127 11 91.34% 10 1 90.00% 57 6 89.47% 0 0 -
- Chap37/AVLTreeSeqStPer.rs 379 97 74.41% 31 3 90.32% 178 27 84.83% 0 0 -
- Chap43/OrderedTableMtEph.rs 392 12 96.94% 34 3 91.18% 215 6 97.21% 0 0 -
- Chap43/OrderedTableStEph.rs 385 12 96.88% 34 3 91.18% 196 6 96.94% 0 0 -
- Chap43/OrderedSetMtEph.rs 201 27 86.57% 25 2 92.00% 119 13 89.08% 0 0 -
- Chap43/AugOrderedTableStEph.rs 362 17 95.30% 38 3 92.11% 198 12 93.94% 0 0 -
- Chap40/BSTKeyValueStEph.rs 225 16 92.89% 26 2 92.31% 132 14 89.39% 0 0 -
- Chap50/OptBinSearchTreeMtEph.rs 269 25 90.71% 26 2 92.31% 161 13 91.93% 0 0 -
- Chap37/BSTBBAlphaMtEph.rs 273 9 96.70% 27 2 92.59% 153 6 96.08% 0 0 -
- Chap40/BSTReducedStEph.rs 343 32 90.67% 41 3 92.68% 191 19 90.05% 0 0 -
- Chap43/AugOrderedTableMtEph.rs 406 23 94.33% 41 3 92.68% 225 15 93.33% 0 0 -
- Chap47/AdvancedLinearProbing.rs 187 22 88.24% 14 1 92.86% 144 21 85.42% 0 0 -
- Chap06/WeightedUnDirGraphStEphFloat.rs 155 14 90.97% 15 1 93.33% 81 6 92.59% 0 0 -
- Chap39/BSTParaTreapMtEph.rs 532 44 91.73% 46 3 93.48% 233 23 90.13% 0 0 -
- Chap40/BSTSizeStEph.rs 313 16 94.89% 32 2 93.75% 181 14 92.27% 0 0 -
- Chap18/ArraySeqStPer.rs 419 15 96.42% 33 2 93.94% 165 3 98.18% 0 0 -
- Chap37/AVLTreeSeqStEph.rs 450 55 87.78% 34 2 94.12% 237 20 91.56% 0 0 -
- Chap43/AugOrderedTableStPer.rs 381 17 95.54% 34 2 94.12% 233 11 95.28% 0 0 -
- Chap51/TopDownDPMtPer.rs 243 10 95.88% 19 1 94.74% 119 8 93.28% 0 0 -
- Chap37/BSTPlainMtEph.rs 233 8 96.57% 21 1 95.24% 127 5 96.06% 0 0 -
- Chap38/BSTParaStEph.rs 229 7 96.94% 21 1 95.24% 102 5 95.10% 0 0 -
- Chap37/BSTAVLStEph.rs 251 15 94.02% 27 1 96.30% 147 15 89.80% 0 0 -
- Chap45/BalancedTreePQ.rs 382 11 97.12% 29 1 96.55% 226 6 97.35% 0 0 -
- Chap45/BinaryHeapPQ.rs 414 17 95.89% 29 1 96.55% 204 7 96.57% 0 0 -
- Chap43/OrderedSetStEph.rs 306 9 97.06% 30 1 96.67% 156 8 94.87% 0 0 -
- Chap43/OrderedTableStPer.rs 300 2 99.33% 30 1 96.67% 192 1 99.48% 0 0 -
- Chap47/HashFunctionTraits.rs 252 10 96.03% 34 1 97.06% 177 8 95.48% 0 0 -
- Chap03/InsertionSortSt.rs 17 0 100.00% 1 0 100.00% 10 0 100.00% 0 0 -
- Chap11/FibonacciMt.rs 12 0 100.00% 3 0 100.00% 8 0 100.00% 0 0 -
- Chap12/Exercise12_2.rs 27 0 100.00% 3 0 100.00% 11 0 100.00% 0 0 -
- Chap21/Algorithm21_1.rs 18 2 88.89% 3 0 100.00% 13 1 92.31% 0 0 -
- Chap21/Algorithm21_2.rs 26 0 100.00% 4 0 100.00% 25 0 100.00% 0 0 -
- Chap21/Algorithm21_5.rs 18 0 100.00% 3 0 100.00% 10 0 100.00% 0 0 -
- Chap21/Algorithm21_6.rs 61 2 96.72% 5 0 100.00% 30 0 100.00% 0 0 -
- Chap21/Exercise21_5.rs 22 0 100.00% 3 0 100.00% 16 0 100.00% 0 0 -
- Chap21/Exercise21_7.rs 40 0 100.00% 7 0 100.00% 23 0 100.00% 0 0 -
- Chap21/Exercise21_8.rs 28 0 100.00% 3 0 100.00% 12 0 100.00% 0 0 -
- Chap26/DivConReduceMt.rs 35 0 100.00% 10 0 100.00% 23 0 100.00% 0 0 -
- Chap26/DivConReduceSt.rs 35 0 100.00% 10 0 100.00% 15 0 100.00% 0 0 -
- Chap26/MergeSortSt.rs 92 2 97.83% 3 0 100.00% 53 1 98.11% 0 0 -
- Chap27/ReduceContractMtEph.rs 65 1 98.46% 4 0 100.00% 34 1 97.06% 0 0 -
- Chap27/ReduceContractStEph.rs 40 1 97.50% 2 0 100.00% 19 1 94.74% 0 0 -
- Chap27/ScanContractMtEph.rs 88 1 98.86% 3 0 100.00% 43 1 97.67% 0 0 -
- Chap27/ScanContractStEph.rs 60 1 98.33% 3 0 100.00% 25 1 96.00% 0 0 -
- Chap28/MaxContigSubSumBruteStEph.rs 37 2 94.59% 2 0 100.00% 22 2 90.91% 0 0 -
- Chap28/MaxContigSubSumDivConMtEph.rs 114 5 95.61% 8 0 100.00% 64 5 92.19% 0 0 -
- Chap28/MaxContigSubSumDivConOptMtEph.rs 89 3 96.63% 5 0 100.00% 39 3 92.31% 0 0 -
- Chap28/MaxContigSubSumDivConOptStEph.rs 74 3 95.95% 3 0 100.00% 32 3 90.62% 0 0 -
- Chap28/MaxContigSubSumDivConStEph.rs 90 5 94.44% 4 0 100.00% 51 5 90.20% 0 0 -
- Chap28/MaxContigSubSumOptMtEph.rs 56 0 100.00% 1 0 100.00% 28 0 100.00% 0 0 -
- Chap28/MaxContigSubSumOptStEph.rs 55 0 100.00% 1 0 100.00% 28 0 100.00% 0 0 -
- Chap28/MaxContigSubSumReducedStEph.rs 33 2 93.94% 2 0 100.00% 21 2 90.48% 0 0 -
- Chap35/OrderStatSelectMtEph.rs 88 4 95.45% 3 0 100.00% 53 2 96.23% 0 0 -
- Chap35/OrderStatSelectMtPer.rs 90 4 95.56% 3 0 100.00% 53 2 96.23% 0 0 -
- Chap35/OrderStatSelectStEph.rs 90 4 95.56% 3 0 100.00% 53 2 96.23% 0 0 -
- Chap35/OrderStatSelectStPer.rs 90 4 95.56% 3 0 100.00% 53 2 96.23% 0 0 -
- Chap36/QuickSortMt.rs 255 2 99.22% 15 0 100.00% 140 2 98.57% 0 0 -
- Chap36/QuickSortMtSlice.rs 246 2 99.19% 18 0 100.00% 143 2 98.60% 0 0 -
- Chap36/QuickSortSt.rs 271 3 98.89% 10 0 100.00% 129 2 98.45% 0 0 -
- Chap38/BSTParaMtEph.rs 414 8 98.07% 40 0 100.00% 185 2 98.92% 0 0 -
- Chap41/ArraySetEnumMtEph.rs 146 6 95.89% 14 0 100.00% 94 0 100.00% 0 0 -
- Chap41/Example41_3.rs 386 0 100.00% 6 0 100.00% 129 0 100.00% 0 0 -
- Chap42/TableMtEph.rs 919 93 89.88% 37 0 100.00% 454 54 88.11% 0 0 -
- Chap42/TableStEph.rs 325 16 95.08% 27 0 100.00% 179 13 92.74% 0 0 -
- Chap42/TableStPer.rs 318 0 100.00% 28 0 100.00% 186 0 100.00% 0 0 -
- Chap43/OrderedSetStPer.rs 238 0 100.00% 30 0 100.00% 142 0 100.00% 0 0 -
- Chap44/Example44_1.rs 255 4 98.43% 22 0 100.00% 124 4 96.77% 0 0 -
- Chap45/HeapsortExample.rs 315 6 98.10% 26 0 100.00% 201 0 100.00% 0 0 -
- Chap47/AdvancedQuadraticProbing.rs 286 11 96.15% 19 0 100.00% 215 12 94.42% 0 0 -
- Chap47/DoubleHashing.rs 62 0 100.00% 5 0 100.00% 38 0 100.00% 0 0 -
- Chap47/FlatHashTable.rs 405 34 91.60% 11 0 100.00% 209 19 90.91% 0 0 -
- Chap47/HashExamples.rs 247 0 100.00% 14 0 100.00% 259 0 100.00% 0 0 -
- Chap47/LinearProbing.rs 39 0 100.00% 5 0 100.00% 26 0 100.00% 0 0 -
- Chap47/QuadraticProbing.rs 48 0 100.00% 6 0 100.00% 34 0 100.00% 0 0 -
- Chap47/SeparateChaining.rs 442 10 97.74% 9 0 100.00% 193 7 96.37% 0 0 -
- Chap51/BottomUpDPMtPer.rs 171 0 100.00% 14 0 100.00% 88 0 100.00% 0 0 -
- Chap51/BottomUpDPStEph.rs 126 0 100.00% 12 0 100.00% 60 0 100.00% 0 0 -
- Chap51/BottomUpDPStPer.rs 120 0 100.00% 10 0 100.00% 59 0 100.00% 0 0 -
- Chap51/TopDownDPStPer.rs 128 0 100.00% 13 0 100.00% 65 0 100.00% 0 0 -
- Chap52/AdjTableGraphStPer.rs 166 4 97.59% 12 0 100.00% 74 1 98.65% 0 0 -
- Chap53/GraphSearchMtPer.rs 78 1 98.72% 6 0 100.00% 54 1 98.15% 0 0 -
- Chap53/GraphSearchStEph.rs 78 1 98.72% 6 0 100.00% 53 1 98.11% 0 0 -
- Chap53/GraphSearchStPer.rs 78 1 98.72% 6 0 100.00% 53 1 98.11% 0 0 -
- Chap53/PQMinMtEph.rs 116 0 100.00% 5 0 100.00% 62 0 100.00% 0 0 -
- Chap53/PQMinMtPer.rs 138 0 100.00% 6 0 100.00% 79 0 100.00% 0 0 -
- Chap53/PQMinStEph.rs 138 0 100.00% 6 0 100.00% 77 0 100.00% 0 0 -
- Chap53/PQMinStPer.rs 141 0 100.00% 6 0 100.00% 78 0 100.00% 0 0 -
- Chap54/BFSMtEph.rs 54 1 98.15% 1 0 100.00% 27 1 96.30% 0 0 -
- Chap54/BFSMtPer.rs 56 1 98.21% 1 0 100.00% 27 1 96.30% 0 0 -
- Chap54/BFSStEph.rs 45 1 97.78% 1 0 100.00% 22 1 95.45% 0 0 -
- Chap54/BFSStPer.rs 49 1 97.96% 1 0 100.00% 22 1 95.45% 0 0 -
- Chap55/CycleDetectStEph.rs 63 0 100.00% 2 0 100.00% 36 0 100.00% 0 0 -
- Chap55/CycleDetectStPer.rs 69 0 100.00% 2 0 100.00% 38 0 100.00% 0 0 -
- Chap55/DFSStEph.rs 44 0 100.00% 2 0 100.00% 27 0 100.00% 0 0 -
- Chap55/DFSStPer.rs 40 0 100.00% 2 0 100.00% 24 0 100.00% 0 0 -
- Chap55/SCCStEph.rs 151 1 99.34% 6 0 100.00% 78 1 98.72% 0 0 -
- Chap55/SCCStPer.rs 166 1 99.40% 6 0 100.00% 83 0 100.00% 0 0 -
- Chap56/AllPairsResultStEphFloat.rs 116 8 93.10% 7 0 100.00% 64 4 93.75% 0 0 -
- Chap56/AllPairsResultStEphInt.rs 116 8 93.10% 7 0 100.00% 64 4 93.75% 0 0 -
- Chap56/AllPairsResultStPerFloat.rs 113 8 92.92% 10 0 100.00% 69 6 91.30% 0 0 -
- Chap56/AllPairsResultStPerInt.rs 113 8 92.92% 10 0 100.00% 69 6 91.30% 0 0 -
- Chap56/PathWeightUtilsStEph.rs 142 10 92.96% 4 0 100.00% 82 10 87.80% 0 0 -
- Chap56/PathWeightUtilsStPer.rs 150 10 93.33% 4 0 100.00% 82 10 87.80% 0 0 -
- Chap56/SSSPResultStEphFloat.rs 80 6 92.50% 7 0 100.00% 52 3 94.23% 0 0 -
- Chap56/SSSPResultStEphInt.rs 80 6 92.50% 7 0 100.00% 52 3 94.23% 0 0 -
- Chap56/SSSPResultStPerFloat.rs 88 6 93.18% 8 0 100.00% 61 5 91.80% 0 0 -
- Chap56/SSSPResultStPerInt.rs 88 6 93.18% 8 0 100.00% 61 5 91.80% 0 0 -
- Chap57/StackStEph.rs 26 0 100.00% 7 0 100.00% 7 0 100.00% 0 0 -
- Chap58/BellmanFordStEphFloat.rs 131 2 98.47% 2 0 100.00% 72 2 97.22% 0 0 -
- Chap58/BellmanFordStEphInt.rs 133 2 98.50% 2 0 100.00% 65 2 96.92% 0 0 -
- Chap61/EdgeContractionMtEph.rs 156 2 98.72% 5 0 100.00% 75 2 97.33% 0 0 -
- Chap61/EdgeContractionStEph.rs 80 0 100.00% 2 0 100.00% 36 0 100.00% 0 0 -
- Chap61/VertexMatchingMtEph.rs 198 4 97.98% 8 0 100.00% 100 4 96.00% 0 0 -
- Chap61/VertexMatchingStEph.rs 91 0 100.00% 2 0 100.00% 40 0 100.00% 0 0 -
- Chap62/StarContractionMtEph.rs 135 1 99.26% 7 0 100.00% 73 1 98.63% 0 0 -
- Chap62/StarContractionStEph.rs 69 0 100.00% 4 0 100.00% 36 0 100.00% 0 0 -
- Chap62/StarPartitionMtEph.rs 121 2 98.35% 3 0 100.00% 46 0 100.00% 0 0 -
- Chap62/StarPartitionStEph.rs 49 0 100.00% 1 0 100.00% 19 0 100.00% 0 0 -
- Chap63/ConnectivityStEph.rs 155 0 100.00% 8 0 100.00% 71 0 100.00% 0 0 -
- Chap64/SpanTreeMtEph.rs 65 3 95.38% 3 0 100.00% 35 2 94.29% 0 0 -
- Chap64/SpanTreeStEph.rs 64 2 96.88% 3 0 100.00% 32 1 96.88% 0 0 -
- Chap64/TSPApproxMtEph.rs 176 5 97.16% 7 0 100.00% 107 3 97.20% 0 0 -
- Chap64/TSPApproxStEph.rs 176 5 97.16% 7 0 100.00% 107 3 97.20% 0 0 -
- Chap65/KruskalStEph.rs 72 1 98.61% 4 0 100.00% 37 0 100.00% 0 0 -
+  107|      8|                Self::gcd(b, a % b)
+  127|     48|            let hash_value = ((self.a * x + self.b) % self.p) as N;
+  128|     48|            hash_value % table_size
+  166|    270|                current_pos = (current_pos + h2_value) % table_size;
+  172|     14|            let a = (seed * 1103515245 + 12345) % (self.p - 1) + 1; // Ensure a != 0
+  173|     14|            let b = (a * 1103515245 + 12345) % self.p;
+  182|  1.20k|                if sequence[i] == (sequence[i - 1] + 1) % sequence.len() {
+  196|  3.28k|                    let pos = (i + self.c1 * probe_idx + self.c2 * probe_idx * probe_idx) % size;
+  202|      3|            (h1 + probe_index * h2) % table_size
+   20|     31|    pub fn is_divisible(n: N, i: N) -> B { if n % i == 0 { true } else { false } }
+  211|    417|            (base_hash + probe_index) % table_size
+  239|    230|            x = (x * 1103515245 + 12345) % (1i64 << 31); // Linear congruential generator
+  240|    230|            result.push((x % 1000) as i32);
+   24|      5|    pub fn is_even(x: &N) -> B { if *x % 2 == 0 { true } else { false } }
+  248|       |        // Create a table with 50% load factor (α = 1/2)
+  259|    560|                current_pos = (current_pos + h2_value) % table_size;
+  274|     82|            (h1_value + probe_index * h2_value) % table_size
+   28|    875|            (base_hash + probe_index) % table_size
+  301|    450|            (base_hash + quadratic_offset) % table_size
+  309|      4|            let mut candidate = if n % 2 == 0 { n + 1 } else { n };
+  323|       |        // Estimate probe counts for 50% load factor
+  325|      9|            if n % 2 == 0 {
+  331|      6|                if n % i == 0 {
+  350|       |        // Estimate probe counts for 50% load factor
+   35|    390|            (h1 + probe_index * h2_safe) % table_size
+  366|     60|                    hash_value % table_size
+   36|    966|            (base_hash + quadratic_offset) % table_size
+   42|       |        Minimal,  // < 10% performance degradation
+   43|    228|                    if i % 2 == 0 {
+   43|       |        Moderate, // 10-30% performance degradation
+   44|     22|            if n % 2 == 1 { f(&result, a.nth(n - 1)) } else { result }
+   44|       |        Severe,   // 30-50% performance degradation
+   45|    332|                Self::gcd(b, a % b)
+   45|       |        Critical, // > 50% performance degradation
+   48|  1.38k|            (hasher.finish() as N) % table_size
+   49|     68|            if n % 2 == 0 {
+   51|     15|                if n % 2 == 0 { n } else { n - 1 },
+   55|     15|            if n % 2 == 1 {
+   55|     43|                if n % i == 0 {
+   59|     22|            if n % 2 == 1 {
+   70|    228|                    if i % 2 == 0 {
+   72|  2.40k|            sum % table_size
+   80|     15|                if n % 2 == 0 { n } else { n - 1 },
+   84|     15|            if n % 2 == 1 {
+   96|  1.81k|                hash_value = (hash_value + (ch as N) * power) % table_size;
+   97|  1.81k|                power = (power * self.base) % table_size;

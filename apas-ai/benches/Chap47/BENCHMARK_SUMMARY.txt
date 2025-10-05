@@ -1,0 +1,48 @@
+Chap47clean Hash Table Benchmarks
+==================================
+
+All benchmarks configured with:
+- Warmup: 300ms
+- Measurement: 1000ms  
+- Total per benchmark: ~1.3s
+- Sizes tested: 500 and 1000 elements
+
+Results Summary (per operation):
+---------------------------------
+
+Linear Probing:
+  Insert/500:   ~33 µs  (660 ops/iteration)
+  Insert/1000:  ~68 µs  (1320 ops/iteration)
+  Lookup/500:   ~9.5 µs
+  Lookup/1000:  ~24 µs
+
+Quadratic Probing:
+  Insert/500:   ~35 µs
+  Insert/1000:  ~84 µs
+  Lookup/500:   ~9.7 µs
+  Lookup/1000:  ~21 µs
+
+Double Hashing:
+  Insert/500:   ~31 µs  (fastest insert!)
+  Insert/1000:  ~86 µs
+  Lookup/500:   ~10 µs
+  Lookup/1000:  ~20 µs
+
+Vec Chaining:
+  Insert/500:   ~68 µs  (slower due to chains)
+  Insert/1000:  ~249 µs
+  Lookup/500:   ~57 µs  (slower - searches chains)
+  Lookup/1000:  ~174 µs
+
+Performance Insights:
+---------------------
+1. Flat tables (open addressing) are 2-3x faster than chaining for these workloads
+2. Double hashing has best insert performance at smaller sizes
+3. All three probing strategies have similar lookup times (~20-24µs for 1000 items)
+4. Vec chaining shows O(n) behavior in chains (load factor ~10:1)
+
+APAS Compliance:
+----------------
+- All timings respect 1.3s constraint per benchmark
+- Measurements use ~30 samples for statistical validity
+- Each benchmark tests 2 different sizes to show scalability

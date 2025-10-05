@@ -192,3 +192,93 @@
         assert!(g.labeled_edges().mem(&LabEdge(1, 2, "second")) == true);
     }
 
+    #[test]
+    fn test_sizea() {
+        let g = LabUnDirGraphStEphLit!(
+            V: [1, 2, 3],
+            E: [(1, 2, "a"), (2, 3, "b")]
+        );
+        assert_eq!(g.sizeA(), 2);
+    }
+
+    #[test]
+    fn test_arcs() {
+        let g = LabUnDirGraphStEphLit!(
+            V: [1, 2, 3],
+            E: [(1, 2, "first"), (2, 3, "second")]
+        );
+        let arcs = g.arcs();
+        assert_eq!(arcs.size(), 2);
+        assert!(arcs.mem(&LabEdge(1, 2, "first")));
+        assert!(arcs.mem(&LabEdge(2, 3, "second")));
+    }
+
+    #[test]
+    fn test_nplus() {
+        let g = LabUnDirGraphStEphLit!(
+            V: [1, 2, 3],
+            E: [(1, 2, "a")]
+        );
+        let nplus = g.NPlus(&1);
+        assert_eq!(nplus.size(), 1);
+        assert!(nplus.mem(&2));
+    }
+
+    #[test]
+    fn test_nminus() {
+        let g = LabUnDirGraphStEphLit!(
+            V: [1, 2, 3],
+            E: [(1, 2, "a")]
+        );
+        let nminus = g.NMinus(&2);
+        assert_eq!(nminus.size(), 1);
+        assert!(nminus.mem(&1));
+    }
+
+    #[test]
+    fn test_indegree() {
+        let g = LabUnDirGraphStEphLit!(
+            V: [1, 2, 3],
+            E: [(1, 2, "a"), (2, 3, "b")]
+        );
+        assert_eq!(g.InDegree(&2), 2);
+        assert_eq!(g.InDegree(&1), 1);
+        assert_eq!(g.InDegree(&3), 1);
+    }
+
+    #[test]
+    fn test_outdegree() {
+        let g = LabUnDirGraphStEphLit!(
+            V: [1, 2, 3],
+            E: [(1, 2, "a"), (2, 3, "b")]
+        );
+        assert_eq!(g.OutDegree(&2), 2);
+        assert_eq!(g.OutDegree(&1), 1);
+        assert_eq!(g.OutDegree(&3), 1);
+    }
+
+    #[test]
+    fn test_from_vertices_and_labeled_edges() {
+        use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEphTrait;
+
+        let v: Set<i32> = SetLit![1, 2, 3];
+        let e: Set<LabEdge<i32, &str>> = SetLit![LabEdge(1, 2, "edge")];
+        let g = <LabUnDirGraphStEph<i32, &str> as LabUnDirGraphStEphTrait<i32, &str>>::from_vertices_and_labeled_edges(v, e);
+
+        assert_eq!(g.vertices().size(), 3);
+        assert_eq!(g.labeled_edges().size(), 1);
+    }
+
+    #[test]
+    fn test_clone_graph() {
+        let g1 = LabUnDirGraphStEphLit!(
+            V: [1, 2, 3],
+            E: [(1, 2, "test")]
+        );
+
+        let g2 = g1.clone();
+        assert_eq!(g2.vertices().size(), g1.vertices().size());
+        assert_eq!(g2.labeled_edges().size(), g1.labeled_edges().size());
+        assert!(g2.has_edge(&1, &2));
+    }
+
