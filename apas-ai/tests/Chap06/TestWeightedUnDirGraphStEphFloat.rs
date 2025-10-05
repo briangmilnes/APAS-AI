@@ -223,3 +223,195 @@ fn test_undirected_edge_symmetry() {
     assert_eq!(graph.get_edge_weight(&1, &2), graph.get_edge_weight(&2, &1));
 }
 
+#[test]
+fn test_vertices_method() {
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3, 4], E: [(1, 2, 1.0), (3, 4, 2.0)]);
+    let verts = graph.vertices();
+    assert_eq!(verts.size(), 4);
+    assert!(verts.mem(&1));
+    assert!(verts.mem(&4));
+}
+
+#[test]
+fn test_edges_method() {
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3], E: [(1, 2, 5.0), (2, 3, 10.0)]);
+    let edges = graph.edges();
+    assert_eq!(edges.size(), 2);
+}
+
+#[test]
+fn test_neighbors_method() {
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3, 4], E: [(1, 2, 1.0), (1, 3, 2.0), (1, 4, 3.0)]);
+    let neighbors = graph.neighbors(&1);
+    assert_eq!(neighbors.size(), 3);
+    assert!(neighbors.mem(&2));
+    assert!(neighbors.mem(&3));
+    assert!(neighbors.mem(&4));
+}
+
+#[test]
+fn test_has_vertex() {
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3], E: [(1, 2, 1.0)]);
+    assert!(graph.vertices().mem(&1));
+    assert!(graph.vertices().mem(&2));
+    assert!(!graph.vertices().mem(&99));
+}
+
+#[test]
+fn test_has_edge() {
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3], E: [(1, 2, 1.0), (2, 3, 2.0)]);
+    assert!(graph.get_edge_weight(&1, &2).is_some());
+    assert!(graph.get_edge_weight(&2, &1).is_some()); // Undirected
+    assert!(graph.get_edge_weight(&2, &3).is_some());
+    assert!(graph.get_edge_weight(&1, &3).is_none());
+}
+
+#[test]
+fn test_large_graph() {
+    let mut graph = WeightedUnDirGraphStEphFloat::empty();
+    for i in 0..50 {
+        graph.add_vertex(i);
+    }
+    for i in 0..49 {
+        graph.add_weighted_edge(i, i + 1, OrderedFloat((i as f64) * 0.5));
+    }
+    assert_eq!(graph.vertices().size(), 50);
+    assert_eq!(graph.edges().size(), 49);
+    assert!(graph.is_connected());
+}
+
+#[test]
+fn test_cycle_graph() {
+    let graph = WeightedUnDirGraphStEphFloatLit!(
+        V: [1, 2, 3, 4],
+        E: [(1,2,1.0), (2,3,1.0), (3,4,1.0), (4,1,1.0)]
+    );
+    assert_eq!(graph.edges().size(), 4);
+    for i in 1..=4 {
+        assert_eq!(graph.vertex_degree(&i), 2);
+    }
+}
+
+#[test]
+fn test_isolated_vertices() {
+    let mut graph = WeightedUnDirGraphStEphFloat::empty();
+    graph.add_vertex(1);
+    graph.add_vertex(2);
+    graph.add_vertex(3);
+    assert_eq!(graph.vertices().size(), 3);
+    assert_eq!(graph.edges().size(), 0);
+    assert!(!graph.is_connected());
+}
+
+#[test]
+fn test_self_loop() {
+    let mut graph = WeightedUnDirGraphStEphFloat::empty();
+    graph.add_vertex(1);
+    graph.add_weighted_edge(1, 1, OrderedFloat(5.0));
+    assert_eq!(graph.edges().size(), 1);
+}
+
+#[test]
+fn test_duplicate_edge_addition() {
+    let mut graph = WeightedUnDirGraphStEphFloat::empty();
+    graph.add_vertex(1);
+    graph.add_vertex(2);
+    graph.add_weighted_edge(1, 2, OrderedFloat(5.0));
+    graph.add_weighted_edge(1, 2, OrderedFloat(10.0));
+    // Behavior depends on underlying implementation
+    assert!(graph.has_edge(&1, &2));
+}
+
+#[test]
+fn test_string_vertices() {
+    let graph = WeightedUnDirGraphStEphFloatLit!(
+        V: ["New York", "Boston", "Philadelphia"],
+        E: [("New York", "Boston", 215.0), ("Boston", "Philadelphia", 305.0)]
+    );
+    assert_eq!(graph.vertices().size(), 3);
+    assert_eq!(graph.edges().size(), 2);
+    assert!(graph.vertices().mem(&"New York"));
+}
+
+#[test]
+fn test_weighted_neighbors_isolated() {
+    let mut graph = WeightedUnDirGraphStEphFloat::empty();
+    graph.add_vertex(1);
+    let neighbors = graph.neighbors_weighted(&1);
+    assert_eq!(neighbors.size(), 0);
+}
+
+#[test]
+fn test_total_weight_empty() {
+    let graph: WeightedUnDirGraphStEphFloat<i32> = WeightedUnDirGraphStEphFloatLit!();
+    assert_eq!(graph.total_weight(), OrderedFloat(0.0));
+}
+
+#[test]
+fn test_vertex_degree_zero() {
+    let mut graph = WeightedUnDirGraphStEphFloat::empty();
+    graph.add_vertex(1);
+    assert_eq!(graph.vertex_degree(&1), 0);
+}
+
+#[test]
+fn test_complete_graph_k4() {
+    let graph = WeightedUnDirGraphStEphFloatLit!(
+        V: [1, 2, 3, 4],
+        E: [(1,2,1.0), (1,3,1.0), (1,4,1.0), (2,3,1.0), (2,4,1.0), (3,4,1.0)]
+    );
+    assert_eq!(graph.edges().size(), 6);
+    for i in 1..=4 {
+        assert_eq!(graph.vertex_degree(&i), 3);
+    }
+    assert!(graph.is_connected());
+}
+
+#[test]
+fn test_path_graph() {
+    let graph = WeightedUnDirGraphStEphFloatLit!(
+        V: [1, 2, 3, 4, 5],
+        E: [(1,2,1.0), (2,3,2.0), (3,4,3.0), (4,5,4.0)]
+    );
+    assert!(graph.is_connected());
+    assert_eq!(graph.vertex_degree(&1), 1);
+    assert_eq!(graph.vertex_degree(&3), 2);
+}
+
+#[test]
+fn test_star_graph() {
+    let graph = WeightedUnDirGraphStEphFloatLit!(
+        V: [0, 1, 2, 3, 4],
+        E: [(0,1,1.0), (0,2,2.0), (0,3,3.0), (0,4,4.0)]
+    );
+    assert_eq!(graph.vertex_degree(&0), 4);
+    for i in 1..=4 {
+        assert_eq!(graph.vertex_degree(&i), 1);
+    }
+}
+
+#[test]
+fn test_inf_weight() {
+    let mut graph = WeightedUnDirGraphStEphFloat::empty();
+    graph.add_vertex(1);
+    graph.add_vertex(2);
+    graph.add_weighted_edge(1, 2, OrderedFloat(f64::INFINITY));
+    assert_eq!(graph.get_edge_weight(&1, &2), Some(OrderedFloat(f64::INFINITY)));
+}
+
+#[test]
+fn test_very_small_weight() {
+    let mut graph = WeightedUnDirGraphStEphFloat::empty();
+    graph.add_vertex(1);
+    graph.add_vertex(2);
+    graph.add_weighted_edge(1, 2, OrderedFloat(1e-10));
+    let weight = graph.get_edge_weight(&1, &2).unwrap();
+    assert!((weight.0 - 1e-10).abs() < 1e-15);
+}
+
+#[test]
+fn test_display_format() {
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [(1, 2, 3.14)]);
+    let display_str = format!("{}", graph);
+    assert!(display_str.len() > 0);
+}

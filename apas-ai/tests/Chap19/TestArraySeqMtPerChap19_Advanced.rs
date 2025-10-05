@@ -113,3 +113,151 @@
         assert_eq!(*result.nth(2), "test");
     }
 
+    #[test]
+    fn test_tabulate_basic() {
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::tabulate(&|i| i * 2, 5);
+        assert_eq!(result.length(), 5);
+        assert_eq!(*result.nth(0), 0);
+        assert_eq!(*result.nth(1), 2);
+        assert_eq!(*result.nth(4), 8);
+    }
+
+    #[test]
+    fn test_map_basic() {
+        let seq = ArrayMtPerSLit![1, 2, 3, 4];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::map(&seq, |x| x * x);
+        assert_eq!(result.length(), 4);
+        assert_eq!(*result.nth(0), 1);
+        assert_eq!(*result.nth(1), 4);
+        assert_eq!(*result.nth(3), 16);
+    }
+
+    #[test]
+    fn test_filter_basic() {
+        let seq = ArrayMtPerSLit![1, 2, 3, 4, 5, 6];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::filter(&seq, |x| *x % 2 == 0);
+        assert_eq!(result.length(), 3);
+    }
+
+    #[test]
+    fn test_reduce_basic() {
+        let seq = ArrayMtPerSLit![1, 2, 3, 4, 5];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::reduce(&seq, |a, b| a + b, 0);
+        assert_eq!(result, 15);
+    }
+
+    #[test]
+    fn test_scan_basic() {
+        let seq = ArrayMtPerSLit![1, 2, 3, 4];
+        let (result, total) = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::scan(&seq, &|a, b| a + b, 0);
+        assert_eq!(result.length(), 4);
+        assert_eq!(total, 10);
+    }
+
+    #[test]
+    fn test_append_basic() {
+        let a = ArrayMtPerSLit![1, 2, 3];
+        let b = ArrayMtPerSLit![4, 5, 6];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::append(&a, &b);
+        assert_eq!(result.length(), 6);
+        assert_eq!(*result.nth(0), 1);
+        assert_eq!(*result.nth(5), 6);
+    }
+
+    #[test]
+    fn test_flatten_basic() {
+        let a = ArrayMtPerSLit![1, 2];
+        let b = ArrayMtPerSLit![3, 4];
+        let c = ArrayMtPerSLit![5, 6];
+        let nested = ArrayMtPerSLit![a, b, c];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::flatten(&nested);
+        assert_eq!(result.length(), 6);
+    }
+
+    #[test]
+    fn test_isEmpty() {
+        let empty: ArraySeqMtPerS<N> = ArrayMtPerSLit![];
+        let non_empty = ArrayMtPerSLit![1];
+        assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isEmpty(&empty));
+        assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isEmpty(&non_empty));
+    }
+
+    #[test]
+    fn test_isSingleton() {
+        let empty: ArraySeqMtPerS<N> = ArrayMtPerSLit![];
+        let single = ArrayMtPerSLit![42];
+        let multi = ArrayMtPerSLit![1, 2];
+        assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&empty));
+        assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&single));
+        assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&multi));
+    }
+
+    #[test]
+    fn test_append_select() {
+        let a = ArrayMtPerSLit![1, 2, 3];
+        let b = ArrayMtPerSLit![4, 5];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::append_select(&a, &b);
+        assert_eq!(result.length(), 5);
+    }
+
+    #[test]
+    fn test_select() {
+        let a = ArrayMtPerSLit![1, 2, 3];
+        let b = ArrayMtPerSLit![4, 5];
+        assert_eq!(*<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::select(&a, &b, 0).unwrap(), 1);
+        assert_eq!(*<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::select(&a, &b, 3).unwrap(), 4);
+    }
+
+    #[test]
+    fn test_iterate_basic() {
+        let seq = ArrayMtPerSLit![1, 2, 3, 4];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::iterate(&seq, &|acc, x| acc + x, 0);
+        assert_eq!(result, 10);
+    }
+
+    #[test]
+    fn test_ninject_basic() {
+        let seq = ArrayMtPerSLit![0, 1, 2, 3, 4];
+        let updates = ArrayMtPerSLit![PairLit!(1, 99), PairLit!(3, 88)];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::ninject(&seq, &updates);
+        assert_eq!(result.length(), 5);
+        assert_eq!(*result.nth(1), 99);
+        assert_eq!(*result.nth(3), 88);
+    }
+
+    #[test]
+    fn test_update_single() {
+        let seq = ArrayMtPerSLit![0, 1, 2, 3];
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::update_single(&seq, 2, 99);
+        assert_eq!(*result.nth(2), 99);
+        assert_eq!(*result.nth(0), 0);
+    }
+
+    #[test]
+    fn test_large_tabulate() {
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::tabulate(&|i| i, 1000);
+        assert_eq!(result.length(), 1000);
+        assert_eq!(*result.nth(500), 500);
+    }
+
+    #[test]
+    fn test_large_reduce() {
+        let seq = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::tabulate(&|i| i + 1, 100);
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::reduce(&seq, |a, b| a + b, 0);
+        assert_eq!(result, 5050);
+    }
+
+    #[test]
+    fn test_parallel_map_large() {
+        let seq = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::tabulate(&|i| i, 100);
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::map(&seq, |x| x * 2);
+        assert_eq!(*result.nth(50), 100);
+    }
+
+    #[test]
+    fn test_parallel_filter_large() {
+        let seq = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::tabulate(&|i| i, 100);
+        let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::filter(&seq, |x| *x % 2 == 0);
+        assert_eq!(result.length(), 50);
+    }
+

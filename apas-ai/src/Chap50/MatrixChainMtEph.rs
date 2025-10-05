@@ -300,16 +300,16 @@ pub mod MatrixChainMtEph {
         let dims = vec![MatrixDim { rows: 2, cols: 10 }, MatrixDim { rows: 10, cols: 2 }];
         let _: MatrixChainMtEphS = MatrixChainMtEphS::from_dimensions(dims);
     }
-}
 
-#[macro_export]
-macro_rules! MatrixChainMtEphLit {
-    (dims: [$(($r:expr, $c:expr)),* $(,)?]) => {
-        $crate::Chap50::MatrixChainMtEph::MatrixChainMtEph::MatrixChainMtEphS::from_dim_pairs(
-            vec![$($crate::Types::Types::Pair($r, $c)),*]
-        )
-    };
-    () => {
-        $crate::Chap50::MatrixChainMtEph::MatrixChainMtEph::MatrixChainMtEphS::new()
-    };
+    #[macro_export]
+    macro_rules! MatrixChainMtEphLit {
+        (dims: [$(($r:expr, $c:expr)),* $(,)?]) => {
+            $crate::Chap50::MatrixChainMtEph::MatrixChainMtEph::MatrixChainMtEphS::from_dim_pairs(
+                vec![$($crate::Types::Types::Pair($r, $c)),*]
+            )
+        };
+        () => {
+            $crate::Chap50::MatrixChainMtEph::MatrixChainMtEph::MatrixChainMtEphS::new()
+        };
+    }
 }

@@ -373,3 +373,118 @@ fn test_edge_cases() {
     assert_eq!(val, Some(5));
     assert_eq!(after.size(), 3);
 }
+
+#[test]
+fn test_to_seq() {
+    let pq = UnsortedListPQLit![5, 3, 8, 1];
+    let seq = pq.to_seq();
+    assert_eq!(seq.length(), 4);
+
+    // The sequence should contain all elements
+    let mut found = vec![false; 4];
+    for i in 0..seq.length() {
+        let val = *seq.nth(i);
+        if val == 5 { found[0] = true; }
+        if val == 3 { found[1] = true; }
+        if val == 8 { found[2] = true; }
+        if val == 1 { found[3] = true; }
+    }
+    assert!(found.iter().all(|&x| x));
+}
+
+#[test]
+fn test_to_vec() {
+    let pq = UnsortedListPQLit![5, 3, 8, 1];
+    let vec = pq.to_vec();
+    assert_eq!(vec.len(), 4);
+
+    // The vector should contain all elements
+    assert!(vec.contains(&5));
+    assert!(vec.contains(&3));
+    assert!(vec.contains(&8));
+    assert!(vec.contains(&1));
+}
+
+#[test]
+fn test_to_seq_empty() {
+    let pq: UnsortedListPQ<i32> = UnsortedListPQ::empty();
+    let seq = pq.to_seq();
+    assert_eq!(seq.length(), 0);
+}
+
+#[test]
+fn test_to_vec_empty() {
+    let pq: UnsortedListPQ<i32> = UnsortedListPQ::empty();
+    let vec = pq.to_vec();
+    assert_eq!(vec.len(), 0);
+}
+
+#[test]
+fn test_roundtrip_vec() {
+    let original = vec![7, 2, 9, 1, 5];
+    let pq = UnsortedListPQ::from_vec(original.clone());
+    let vec = pq.to_vec();
+
+    // Should have same elements (order may differ)
+    assert_eq!(vec.len(), original.len());
+    for &elem in &original {
+        assert!(vec.contains(&elem));
+    }
+}
+
+#[test]
+fn test_empty_constructor() {
+    let pq: UnsortedListPQ<i32> = UnsortedListPQ::empty();
+    assert!(pq.is_empty());
+    assert_eq!(pq.size(), 0);
+    assert_eq!(pq.find_min(), None);
+}
+
+#[test]
+fn test_singleton_constructor() {
+    let pq = UnsortedListPQ::singleton(100);
+    assert!(!pq.is_empty());
+    assert_eq!(pq.size(), 1);
+    assert_eq!(pq.find_min(), Some(&100));
+}
+
+#[test]
+fn test_meld_multiple() {
+    let pq1 = UnsortedListPQLit![5, 3];
+    let pq2 = UnsortedListPQLit![7, 1];
+    let pq3 = UnsortedListPQLit![9, 2];
+
+    let melded12 = pq1.meld(&pq2);
+    let melded_all = melded12.meld(&pq3);
+
+    assert_eq!(melded_all.size(), 6);
+    assert_eq!(melded_all.find_min(), Some(&1));
+}
+
+#[test]
+fn test_insert_after_delete() {
+    let pq = UnsortedListPQLit![5, 3, 8];
+    let (pq2, _) = pq.delete_min();
+    let pq3 = pq2.insert(1);
+
+    assert_eq!(pq3.size(), 3);
+    assert_eq!(pq3.find_min(), Some(&1));
+}
+
+#[test]
+fn test_negative_numbers() {
+    let pq = UnsortedListPQLit![-5, -3, -8, -1];
+    assert_eq!(pq.find_min(), Some(&-8));
+
+    let sorted = pq.to_sorted_vec();
+    assert_eq!(sorted, vec![-8, -5, -3, -1]);
+}
+
+#[test]
+fn test_mixed_positive_negative() {
+    let pq = UnsortedListPQLit![5, -3, 8, -1, 0];
+    assert_eq!(pq.find_min(), Some(&-3));
+
+    let sorted = pq.to_sorted_vec();
+    assert_eq!(sorted, vec![-3, -1, 0, 5, 8]);
+}

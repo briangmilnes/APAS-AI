@@ -28,6 +28,29 @@ use std::hash::Hash;
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "({} -> {})", self.0, self.1) }
     }
 
+    // Triple wrapper for three-element tuples
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct Triple<A, B, C>(pub A, pub B, pub C);
+
+    impl<A: Display, B: Display, C: Display> Display for Triple<A, B, C> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "({}, {}, {})", self.0, self.1, self.2)
+        }
+    }
+
+    // Key-value struct with named fields
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct KeyVal<K, V> {
+        pub key: K,
+        pub val: V,
+    }
+
+    impl<K: Display, V: Display> Display for KeyVal<K, V> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{{key: {}, val: {}}}", self.key, self.val)
+        }
+    }
+
     // Type bounds shorthands
     // StT: single-threaded friendly elements: Eq + Clone + Display + Debug + Sized
     pub trait StT: Eq + Clone + Display + Debug + Sized {}

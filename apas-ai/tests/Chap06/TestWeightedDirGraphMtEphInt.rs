@@ -304,3 +304,61 @@ fn test_weighteddirgraphmtephint_empty() {
         }
     }
 
+    #[test]
+    fn test_from_weighted_edges() {
+        let vertices = SetLit![1, 2, 3];
+        let edges = SetLit![(1, 2, 10), (2, 3, 20)];
+        let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
+        assert_eq!(g.vertices().size(), 3);
+    }
+
+    #[test]
+    fn test_in_neighbors_weighted() {
+        let vertices = SetLit![1, 2, 3];
+        let edges = SetLit![(1, 2, 10), (3, 2, 20)];
+        let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
+        let in_neighbors = g.in_neighbors_weighted(&2);
+        assert_eq!(in_neighbors.size(), 2);
+    }
+
+    #[test]
+    fn test_total_weight() {
+        let vertices = SetLit![1, 2];
+        let edges = SetLit![(1, 2, 100)];
+        let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
+        assert_eq!(g.total_weight(), 100);
+    }
+
+    #[test]
+    fn test_weighted_edges_empty() {
+        let vertices = SetLit![1, 2, 3];
+        let edges = SetLit![];
+        let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
+        assert_eq!(g.weighted_edges().size(), 0);
+        assert_eq!(g.total_weight(), 0);
+    }
+
+    #[test]
+    fn test_get_edge_weight_nonexistent() {
+        let vertices = SetLit![1, 2];
+        let edges = SetLit![(1, 2, 50)];
+        let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
+        assert_eq!(g.get_edge_weight(&2, &1), None);
+    }
+
+    #[test]
+    fn test_out_neighbors_weighted_isolated() {
+        let vertices = SetLit![1, 2, 3];
+        let edges = SetLit![(1, 2, 10)];
+        let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
+        assert_eq!(g.out_neighbors_weighted(&3).size(), 0);
+    }
+
+    #[test]
+    fn test_in_neighbors_weighted_empty() {
+        let vertices = SetLit![1, 2];
+        let edges = SetLit![(1, 2, 30)];
+        let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
+        assert_eq!(g.in_neighbors_weighted(&1).size(), 0);
+    }
+

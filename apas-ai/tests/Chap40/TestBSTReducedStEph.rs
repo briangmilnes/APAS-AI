@@ -183,3 +183,222 @@
         // apple + banana: 1+2
     }
 
+    #[test]
+    fn test_contains_method() {
+        let mut bst: BSTSumStEph<i32, i32> = BSTreeReduced::new();
+        bst.insert(5, 50);
+        bst.insert(3, 30);
+        bst.insert(7, 70);
+        
+        assert!(bst.contains(&5));
+        assert!(bst.contains(&3));
+        assert!(bst.contains(&7));
+        assert!(!bst.contains(&1));
+        assert!(!bst.contains(&10));
+    }
+
+    #[test]
+    fn test_get_method() {
+        let mut bst: BSTSumStEph<i32, i32> = BSTreeReduced::new();
+        bst.insert(5, 50);
+        bst.insert(3, 30);
+        bst.insert(7, 70);
+        
+        assert_eq!(bst.get(&5), Some(&50));
+        assert_eq!(bst.get(&3), Some(&30));
+        assert_eq!(bst.get(&7), Some(&70));
+        assert_eq!(bst.get(&1), None);
+        assert_eq!(bst.get(&10), None);
+    }
+
+    #[test]
+    fn test_minimum_maximum_keys() {
+        let mut bst: BSTSumStEph<i32, i32> = BSTreeReduced::new();
+        
+        // Empty tree
+        assert_eq!(bst.minimum_key(), None);
+        assert_eq!(bst.maximum_key(), None);
+        
+        // Insert elements in random order
+        bst.insert(5, 50);
+        assert_eq!(bst.minimum_key(), Some(&5));
+        assert_eq!(bst.maximum_key(), Some(&5));
+        
+        bst.insert(3, 30);
+        assert_eq!(bst.minimum_key(), Some(&3));
+        assert_eq!(bst.maximum_key(), Some(&5));
+        
+        bst.insert(7, 70);
+        assert_eq!(bst.minimum_key(), Some(&3));
+        assert_eq!(bst.maximum_key(), Some(&7));
+        
+        bst.insert(1, 10);
+        assert_eq!(bst.minimum_key(), Some(&1));
+        assert_eq!(bst.maximum_key(), Some(&7));
+        
+        bst.insert(9, 90);
+        assert_eq!(bst.minimum_key(), Some(&1));
+        assert_eq!(bst.maximum_key(), Some(&9));
+    }
+
+    #[test]
+    fn test_count_reducer_all_operations() {
+        let mut bst: BSTCountStEph<i32, &str> = BSTreeReduced::new();
+        
+        // Insert and verify count updates
+        bst.insert(5, "five");
+        assert_eq!(bst.reduced_value(), 1);
+        assert_eq!(bst.size(), 1);
+        
+        bst.insert(3, "three");
+        bst.insert(7, "seven");
+        assert_eq!(bst.reduced_value(), 3);
+        assert_eq!(bst.size(), 3);
+        
+        // Test min/max with string values
+        assert_eq!(bst.minimum_key(), Some(&3));
+        assert_eq!(bst.maximum_key(), Some(&7));
+        
+        // Test contains and get
+        assert!(bst.contains(&5));
+        assert_eq!(bst.get(&5), Some(&"five"));
+        assert!(!bst.contains(&10));
+    }
+
+    #[test]
+    fn test_empty_tree_operations() {
+        let bst: BSTSumStEph<i32, i32> = BSTreeReduced::new();
+        
+        assert!(bst.is_empty());
+        assert_eq!(bst.size(), 0);
+        assert_eq!(bst.height(), 0);
+        assert_eq!(bst.reduced_value(), 0);
+        assert_eq!(bst.minimum_key(), None);
+        assert_eq!(bst.maximum_key(), None);
+        assert!(!bst.contains(&0));
+        assert_eq!(bst.find(&0), None);
+        assert_eq!(bst.get(&0), None);
+        assert_eq!(bst.keys().length(), 0);
+        assert_eq!(bst.values().length(), 0);
+        assert_eq!(bst.range_reduce(&0, &10), 0);
+    }
+
+    #[test]
+    fn test_single_element_operations() {
+        let mut bst: BSTSumStEph<i32, i32> = BSTreeReduced::new();
+        bst.insert(42, 100);
+        
+        assert!(!bst.is_empty());
+        assert_eq!(bst.size(), 1);
+        assert_eq!(bst.height(), 1);
+        assert_eq!(bst.reduced_value(), 100);
+        assert_eq!(bst.minimum_key(), Some(&42));
+        assert_eq!(bst.maximum_key(), Some(&42));
+        assert!(bst.contains(&42));
+        assert_eq!(bst.find(&42), Some(&100));
+        assert_eq!(bst.get(&42), Some(&100));
+        
+        let keys = bst.keys();
+        assert_eq!(keys.length(), 1);
+        assert_eq!(keys.nth(0), &42);
+        
+        let values = bst.values();
+        assert_eq!(values.length(), 1);
+        assert_eq!(values.nth(0), &100);
+        
+        assert_eq!(bst.range_reduce(&42, &42), 100);
+        assert_eq!(bst.range_reduce(&0, &50), 100);
+        assert_eq!(bst.range_reduce(&50, &100), 0);
+    }
+
+    #[test]
+    fn test_large_tree_with_all_operations() {
+        let mut bst: BSTSumStEph<i32, i32> = BSTreeReduced::new();
+        
+        // Insert 50 elements
+        let mut expected_sum = 0;
+        for i in 0..50 {
+            let value = i * 2;
+            bst.insert(i, value);
+            expected_sum += value;
+        }
+        
+        // Verify basic properties
+        assert_eq!(bst.size(), 50);
+        assert_eq!(bst.reduced_value(), expected_sum);
+        assert_eq!(bst.minimum_key(), Some(&0));
+        assert_eq!(bst.maximum_key(), Some(&49));
+        
+        // Verify all elements are present
+        for i in 0..50 {
+            assert!(bst.contains(&i));
+            assert_eq!(bst.get(&i), Some(&(i * 2)));
+            assert_eq!(bst.find(&i), Some(&(i * 2)));
+        }
+        
+        // Verify keys and values collections
+        let keys = bst.keys();
+        let values = bst.values();
+        assert_eq!(keys.length(), 50);
+        assert_eq!(values.length(), 50);
+        
+        for i in 0..50 {
+            assert_eq!(keys.nth(i), &(i as i32));
+            assert_eq!(values.nth(i), &((i as i32) * 2));
+        }
+        
+        // Test range reductions
+        let range_sum_0_10 = (0..=10).map(|i| i * 2).sum::<i32>();
+        assert_eq!(bst.range_reduce(&0, &10), range_sum_0_10);
+        
+        let range_sum_20_30 = (20..=30).map(|i| i * 2).sum::<i32>();
+        assert_eq!(bst.range_reduce(&20, &30), range_sum_20_30);
+    }
+
+    #[test]
+    fn test_duplicate_keys_overwrite() {
+        let mut bst: BSTSumStEph<i32, i32> = BSTreeReduced::new();
+        
+        bst.insert(5, 50);
+        assert_eq!(bst.size(), 1);
+        assert_eq!(bst.reduced_value(), 50);
+        
+        // Insert same key with different value
+        bst.insert(5, 100);
+        assert_eq!(bst.size(), 1); // Size should not change
+        assert_eq!(bst.get(&5), Some(&100)); // Value should be updated
+        assert_eq!(bst.reduced_value(), 100); // Reduced value should reflect new value
+        
+        // Insert again
+        bst.insert(5, 200);
+        assert_eq!(bst.size(), 1);
+        assert_eq!(bst.get(&5), Some(&200));
+        assert_eq!(bst.reduced_value(), 200);
+    }
+
+    #[test]
+    fn test_edge_case_ranges() {
+        let mut bst: BSTSumStEph<i32, i32> = BSTreeReduced::new();
+        
+        for i in 1..=5 {
+            bst.insert(i, i * 10);
+        }
+        
+        // Range with no elements
+        assert_eq!(bst.range_reduce(&10, &20), 0);
+        assert_eq!(bst.range_reduce(&-10, &0), 0);
+        
+        // Range with single element
+        assert_eq!(bst.range_reduce(&3, &3), 30);
+        
+        // Range covering all elements
+        assert_eq!(bst.range_reduce(&1, &5), 150); // 10+20+30+40+50
+        
+        // Range with partial coverage
+        assert_eq!(bst.range_reduce(&2, &4), 90); // 20+30+40
+        
+        // Range extending beyond tree bounds
+        assert_eq!(bst.range_reduce(&-10, &10), 150); // All elements
+        assert_eq!(bst.range_reduce(&3, &100), 120); // 30+40+50
+    }
+

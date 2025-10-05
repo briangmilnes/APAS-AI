@@ -218,3 +218,42 @@
         assert_eq!(large_seq.as_slice(), reconstructed.as_slice());
     }
 
+    #[test]
+    fn test_empty() {
+        let seq: PrimTreeSeqStS<i32> = PrimTreeSeqStS::empty();
+        assert_eq!(seq.length(), 0);
+    }
+
+    #[test]
+    fn test_singleton() {
+        let seq = PrimTreeSeqStS::singleton(42);
+        assert_eq!(seq.length(), 1);
+        assert_eq!(seq.as_slice()[0], 42);
+    }
+
+    #[test]
+    fn test_from_vec() {
+        let vec = vec![1, 2, 3];
+        let seq = PrimTreeSeqStS::from_vec(vec);
+        assert_eq!(seq.length(), 3);
+    }
+
+    #[test]
+    fn test_into_vec() {
+        let seq = PrimTreeSeqStS::from_vec(vec![1, 2, 3]);
+        let vec = seq.into_vec();
+        assert_eq!(vec, vec![1, 2, 3]);
+    }
+
+    #[test]
+    fn test_as_slice() {
+        let seq = PrimTreeSeqStS::from_vec(vec![1, 2, 3]);
+        assert_eq!(seq.as_slice(), &[1, 2, 3]);
+    }
+
+    #[test]
+    fn test_length() {
+        let seq = PrimTreeSeqStS::from_vec(vec![1, 2, 3, 4, 5]);
+        assert_eq!(seq.length(), 5);
+    }
+

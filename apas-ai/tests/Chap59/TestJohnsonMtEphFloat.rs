@@ -86,4 +86,78 @@ mod tests {
         assert_eq!(result.get_distance(0, 2), OrderedF64::from(f64::INFINITY));
         assert_eq!(result.get_distance(1, 3), OrderedF64::from(f64::INFINITY));
     }
+
+    #[test]
+    fn test_two_vertex_cycle() {
+        let vertices = SetLit![0, 1];
+        let edges = SetLit![
+            (0, 1, OrderedF64::from(1.0)),
+            (1, 0, OrderedF64::from(2.0))
+        ];
+
+        let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+        let result = johnson_apsp(&graph);
+
+        assert_eq!(result.get_distance(0, 1), OrderedF64::from(1.0));
+        assert_eq!(result.get_distance(1, 0), OrderedF64::from(2.0));
+    }
+
+    #[test]
+    fn test_triangle() {
+        let vertices = SetLit![0, 1, 2];
+        let edges = SetLit![
+            (0, 1, OrderedF64::from(1.0)),
+            (1, 2, OrderedF64::from(1.0)),
+            (2, 0, OrderedF64::from(1.0))
+        ];
+
+        let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+        let result = johnson_apsp(&graph);
+
+        assert_eq!(result.get_distance(0, 2), OrderedF64::from(2.0));
+        assert_eq!(result.get_distance(1, 0), OrderedF64::from(2.0));
+    }
+
+    #[test]
+    fn test_zero_weights() {
+        let vertices = SetLit![0, 1, 2];
+        let edges = SetLit![
+            (0, 1, OrderedF64::from(0.0)),
+            (1, 2, OrderedF64::from(0.0))
+        ];
+
+        let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+        let result = johnson_apsp(&graph);
+
+        assert_eq!(result.get_distance(0, 2), OrderedF64::from(0.0));
+    }
+
+    #[test]
+    fn test_large_weights() {
+        let vertices = SetLit![0, 1, 2];
+        let edges = SetLit![
+            (0, 1, OrderedF64::from(1000.5)),
+            (1, 2, OrderedF64::from(2000.3))
+        ];
+
+        let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+        let result = johnson_apsp(&graph);
+
+        assert_eq!(result.get_distance(0, 2), OrderedF64::from(3000.8));
+    }
+
+    #[test]
+    fn test_self_loop() {
+        let vertices = SetLit![0, 1];
+        let edges = SetLit![
+            (0, 0, OrderedF64::from(1.0)),
+            (0, 1, OrderedF64::from(2.0))
+        ];
+
+        let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+        let result = johnson_apsp(&graph);
+
+        assert_eq!(result.get_distance(0, 0), OrderedF64::from(0.0));
+        assert_eq!(result.get_distance(0, 1), OrderedF64::from(2.0));
+    }
 }

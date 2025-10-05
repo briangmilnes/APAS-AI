@@ -45,3 +45,69 @@ fn splay_duplicate_insert_is_idempotent() {
     assert_eq!(bst.size(), 1);
     assert_eq!(bst.find(&10), Some(&10));
 }
+
+#[test]
+fn test_empty() {
+    let bst: BSTreeSplay<i32> = BSTreeSplay::new();
+    assert_eq!(bst.size(), 0);
+    assert!(bst.is_empty());
+}
+
+#[test]
+fn test_large_tree() {
+    let mut bst = BSTreeSplay::new();
+    for i in 0..100 {
+        bst.insert(i);
+    }
+    assert_eq!(bst.size(), 100);
+    assert!(bst.contains(&50));
+}
+
+#[test]
+fn test_reverse_insert() {
+    let mut bst = BSTreeSplay::new();
+    for i in (0..50).rev() {
+        bst.insert(i);
+    }
+    assert_eq!(bst.size(), 50);
+    assert_eq!(bst.minimum(), Some(&0));
+}
+
+#[test]
+fn test_negative_numbers() {
+    let mut bst = BSTreeSplay::new();
+    bst.insert(-5);
+    bst.insert(-3);
+    bst.insert(-7);
+    assert!(bst.contains(&-5));
+    assert_eq!(bst.minimum(), Some(&-7));
+    assert_eq!(bst.maximum(), Some(&-3));
+}
+
+#[test]
+fn test_singleton() {
+    let mut bst = BSTreeSplay::new();
+    bst.insert(42);
+    assert_eq!(bst.size(), 1);
+    assert!(bst.contains(&42));
+}
+
+#[test]
+fn test_pre_order() {
+    let mut bst = BSTreeSplay::new();
+    bst.insert(5);
+    bst.insert(3);
+    bst.insert(7);
+    let pre = bst.pre_order();
+    assert_eq!(pre.length(), 3);
+}
+
+#[test]
+fn test_height() {
+    let mut bst = BSTreeSplay::new();
+    for i in 0..64 {
+        bst.insert(i);
+    }
+    let h = bst.height();
+    assert!(h >= 6);
+}

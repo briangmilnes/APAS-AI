@@ -46,3 +46,30 @@
         assert_eq!(value.load(Ordering::Relaxed), 8 * 1_000);
     }
 
+    #[test]
+    fn efficiency_note_exists() {
+        let note = efficiency_note();
+        assert!(note.contains("fetch_add"));
+    }
+
+    #[test]
+    fn fetch_add_cas_zero_delta() {
+        let value = AtomicUsize::new(42);
+        assert_eq!(fetch_add_cas(&value, 0), 42);
+        assert_eq!(value.load(Ordering::Relaxed), 42);
+    }
+
+    #[test]
+    fn fetch_add_cas_max_value() {
+        let value = AtomicUsize::new(usize::MAX - 5);
+        assert_eq!(fetch_add_cas(&value, 3), usize::MAX - 5);
+        assert_eq!(value.load(Ordering::Relaxed), usize::MAX - 2);
+    }
+
+    #[test]
+    fn fetch_add_cas_wrapping() {
+        let value = AtomicUsize::new(usize::MAX);
+        assert_eq!(fetch_add_cas(&value, 1), usize::MAX);
+        assert_eq!(value.load(Ordering::Relaxed), 0);
+    }
+

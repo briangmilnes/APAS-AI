@@ -2,6 +2,7 @@
 //! Tests for single-threaded persistent reducer-augmented ordered table implementation.
 
 use apas_ai::AugOrderedTableStPerLit;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::AugOrderedTableStPer::AugOrderedTableStPer::*;
 use apas_ai::Types::Types::*;
@@ -341,4 +342,224 @@ fn test_complex_tramlaw_scenario() {
     let peak_sales = weekly_sales.reduce_range(&18, &30);
     let expected_peak = (18..=24).map(|h| h * 50).sum::<i32>() + (25..=30).map(|h| (h - 24) * 60).sum::<i32>();
     assert_eq!(peak_sales, expected_peak);
+}
+
+#[test]
+fn test_domain_operation() {
+    let sum_reducer = |a: &i32, b: &i32| a + b;
+    let mut table = AugOrderedTableStPer::empty(sum_reducer, 0);
+    
+    // Insert elements
+    for i in 1..=10 {
+        table = table.insert(i, i * 10);
+    }
+    
+    // Get domain (set of all keys)
+    let domain = table.domain();
+    assert_eq!(domain.size(), 10);
+    for i in 1..=10 {
+        assert!(domain.find(&i));
+    }
+    assert!(!domain.find(&11));
+}
+
+#[test]
+fn test_collect_operation() {
+    let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
+    let mut table = AugOrderedTableStPer::empty(max_reducer, 0);
+    
+    // Insert elements
+    for i in 1..=5 {
+        table = table.insert(i, i * 10);
+    }
+    
+    // Collect to sequence
+    let seq = table.collect();
+    assert_eq!(seq.length(), 5);
+    
+    // Verify elements are in order
+    let first = seq.nth(0);
+    assert_eq!(first.0, 1);
+    assert_eq!(first.1, 10);
+}
+
+#[test]
+fn test_difference_operation() {
+    let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
+    let mut table1 = AugOrderedTableStPer::empty(max_reducer, 0);
+    let mut table2 = AugOrderedTableStPer::empty(max_reducer, 0);
+    
+    // table1: {1:10, 2:20, 3:30, 4:40}
+    for i in 1..=4 {
+        table1 = table1.insert(i, i * 10);
+    }
+    
+    // table2: {2:20, 3:30, 5:50}
+    table2 = table2.insert(2, 20);
+    table2 = table2.insert(3, 30);
+    table2 = table2.insert(5, 50);
+    
+    // Difference: table1 - table2 = {1:10, 4:40}
+    let diff = table1.difference(&table2);
+    assert_eq!(diff.size(), 2);
+    assert_eq!(diff.find(&1), Some(10));
+    assert_eq!(diff.find(&4), Some(40));
+    assert_eq!(diff.find(&2), None);
+    assert_eq!(diff.find(&3), None);
+}
+
+#[test]
+fn test_restrict_operation() {
+    let sum_reducer = |a: &i32, b: &i32| a + b;
+    let mut table = AugOrderedTableStPer::empty(sum_reducer, 0);
+    
+    // Insert elements
+    for i in 1..=10 {
+        table = table.insert(i, i * 10);
+    }
+    
+    // Create a set to restrict to
+    let mut key_set = ArraySetStEph::empty();
+    key_set.insert(2);
+    key_set.insert(4);
+    key_set.insert(6);
+    
+    // Restrict table to keys in set
+    let restricted = table.restrict(&key_set);
+    assert_eq!(restricted.size(), 3);
+    assert_eq!(restricted.find(&2), Some(20));
+    assert_eq!(restricted.find(&4), Some(40));
+    assert_eq!(restricted.find(&6), Some(60));
+    assert_eq!(restricted.find(&3), None);
+}
+
+#[test]
+fn test_subtract_operation() {
+    let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
+    let mut table = AugOrderedTableStPer::empty(max_reducer, 0);
+    
+    // Insert elements
+    for i in 1..=10 {
+        table = table.insert(i, i * 10);
+    }
+    
+    // Create a set of keys to subtract
+    let mut key_set = ArraySetStEph::empty();
+    key_set.insert(2);
+    key_set.insert(5);
+    key_set.insert(8);
+    
+    // Subtract keys from table
+    let subtracted = table.subtract(&key_set);
+    assert_eq!(subtracted.size(), 7);
+    assert_eq!(subtracted.find(&1), Some(10));
+    assert_eq!(subtracted.find(&2), None);
+    assert_eq!(subtracted.find(&5), None);
+    assert_eq!(subtracted.find(&8), None);
+    assert_eq!(subtracted.find(&10), Some(100));
+}
+
+#[test]
+fn test_tabulate_operation() {
+    let sum_reducer = |a: &i32, b: &i32| a + b;
+    
+    // Create domain set
+    let mut domain = ArraySetStEph::empty();
+    for i in 1..=5 {
+        domain.insert(i);
+    }
+    
+    // Tabulate: create table from domain and function
+    let table = AugOrderedTableStPer::tabulate(|k: &i32| k * k, &domain, sum_reducer, 0);
+    
+    assert_eq!(table.size(), 5);
+    assert_eq!(table.find(&1), Some(1));
+    assert_eq!(table.find(&2), Some(4));
+    assert_eq!(table.find(&3), Some(9));
+    assert_eq!(table.find(&4), Some(16));
+    assert_eq!(table.find(&5), Some(25));
+    assert_eq!(table.reduce_val(), 55); // 1+4+9+16+25
+}
+
+#[test]
+fn test_get_key_range() {
+    let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
+    let mut table = AugOrderedTableStPer::empty(max_reducer, 0);
+    
+    // Insert values from 10 to 100
+    for i in 1..=10 {
+        table = table.insert(i * 10, i * 10);
+    }
+    
+    // Get range [30, 70]
+    let range = table.get_key_range(&30, &70);
+    assert_eq!(range.size(), 5); // 30, 40, 50, 60, 70
+    assert_eq!(range.find(&30), Some(30));
+    assert_eq!(range.find(&40), Some(40));
+    assert_eq!(range.find(&50), Some(50));
+    assert_eq!(range.find(&60), Some(60));
+    assert_eq!(range.find(&70), Some(70));
+    assert_eq!(range.find(&20), None);
+    assert_eq!(range.find(&80), None);
+}
+
+#[test]
+fn test_split_rank_key() {
+    let sum_reducer = |a: &i32, b: &i32| a + b;
+    let mut table = AugOrderedTableStPer::empty(sum_reducer, 0);
+    
+    // Insert: 10, 20, 30, 40, 50
+    for i in 1..=5 {
+        table = table.insert(i * 10, i);
+    }
+    
+    // Split at rank 2 (index 2 = key 30)
+    let (left, right) = table.split_rank_key(2);
+    
+    // Left should have keys < 30 (10, 20)
+    assert_eq!(left.size(), 2);
+    assert_eq!(left.find(&10), Some(1));
+    assert_eq!(left.find(&20), Some(2));
+    
+    // Right should have keys >= 30 (30, 40, 50)
+    assert_eq!(right.size(), 3);
+    assert_eq!(right.find(&30), Some(3));
+    assert_eq!(right.find(&40), Some(4));
+    assert_eq!(right.find(&50), Some(5));
+}
+
+#[test]
+fn test_intersection_operation() {
+    let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
+    let mut table1 = AugOrderedTableStPer::empty(max_reducer, 0);
+    let mut table2 = AugOrderedTableStPer::empty(max_reducer, 0);
+    
+    // table1: {1:10, 2:20, 3:30, 4:40}
+    for i in 1..=4 {
+        table1 = table1.insert(i, i * 10);
+    }
+    
+    // table2: {2:25, 3:35, 5:50}
+    table2 = table2.insert(2, 25);
+    table2 = table2.insert(3, 35);
+    table2 = table2.insert(5, 50);
+    
+    // Intersection: keep keys in both, take max values
+    let intersection = table1.intersection(&table2, |v1, v2| if v1 > v2 { *v1 } else { *v2 });
+    assert_eq!(intersection.size(), 2); // keys 2 and 3
+    assert_eq!(intersection.find(&2), Some(25)); // max(20, 25)
+    assert_eq!(intersection.find(&3), Some(35)); // max(30, 35)
+    assert_eq!(intersection.find(&1), None);
+    assert_eq!(intersection.find(&4), None);
+}
+
+// Note: AugOrderedTableStPer doesn't have a general reduce method, only reduce_val and reduce_range
+
+#[test]
+fn test_delete_nonexistent() {
+    let table = AugOrderedTableStPer::empty(|a: &i32, b: &i32| a + b, 0)
+        .insert(1, 10)
+        .insert(3, 30);
+    let table2 = table.delete(&2);
+    assert_eq!(table2.size(), 2);
 }

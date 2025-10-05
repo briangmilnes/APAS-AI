@@ -2,6 +2,7 @@
 //! Tests for multi-threaded ephemeral reducer-augmented ordered table implementation.
 
 use apas_ai::AugOrderedTableMtEphLit;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::AugOrderedTableMtEph::AugOrderedTableMtEph::*;
 use apas_ai::Types::Types::*;
@@ -495,3 +496,279 @@ fn test_complex_multithreaded_scenario() {
     assert_eq!(final_table.size(), 100); // 5 threads * 20 insertions each
     assert!(final_table.reduce_val() > 0); // Should have positive sum
 }
+
+#[test]
+fn test_delete_operation() {
+    let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
+    let mut table = AugOrderedTableMtEph::empty(max_reducer, i32::MIN);
+    
+    // Insert some elements
+    table.insert(1, 10, |_old, new| *new);
+    table.insert(2, 20, |_old, new| *new);
+    table.insert(3, 30, |_old, new| *new);
+    assert_eq!(table.size(), 3);
+    assert_eq!(table.reduce_val(), 30);
+    
+    // Delete an element
+    table.delete(&2);
+    assert_eq!(table.size(), 2);
+    assert_eq!(table.find(&2), None);
+    assert_eq!(table.reduce_val(), 30); // max(10, 30) = 30
+    
+    // Delete another
+    table.delete(&3);
+    assert_eq!(table.size(), 1);
+    assert_eq!(table.reduce_val(), 10);
+    
+    // Delete non-existent key (should do nothing)
+    table.delete(&999);
+    assert_eq!(table.size(), 1);
+}
+
+#[test]
+fn test_domain_operation() {
+    let sum_reducer = |a: &i32, b: &i32| a + b;
+    let mut table = AugOrderedTableMtEph::empty(sum_reducer, 0);
+    
+    // Insert elements
+    for i in 1..=10 {
+        table.insert(i, i * 10, |_old, new| *new);
+    }
+    
+    // Get domain (set of all keys)
+    let domain = table.domain();
+    assert_eq!(domain.size(), 10);
+    for i in 1..=10 {
+        assert!(domain.find(&i));
+    }
+    assert!(!domain.find(&11));
+}
+
+#[test]
+fn test_collect_operation() {
+    let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
+    let mut table = AugOrderedTableMtEph::empty(max_reducer, 0);
+    
+    // Insert elements
+    for i in 1..=5 {
+        table.insert(i, i * 10, |_old, new| *new);
+    }
+    
+    // Collect to sequence
+    let seq = table.collect();
+    assert_eq!(seq.length(), 5);
+    
+    // Verify elements are in order
+    let first = seq.nth(0);
+    assert_eq!(first.0, 1);
+    assert_eq!(first.1, 10);
+}
+
+#[test]
+fn test_difference_operation() {
+    let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
+    let mut table1 = AugOrderedTableMtEph::empty(max_reducer, 0);
+    let mut table2 = AugOrderedTableMtEph::empty(max_reducer, 0);
+    
+    // table1: {1:10, 2:20, 3:30, 4:40}
+    for i in 1..=4 {
+        table1.insert(i, i * 10, |_old, new| *new);
+    }
+    
+    // table2: {2:20, 3:30, 5:50}
+    table2.insert(2, 20, |_old, new| *new);
+    table2.insert(3, 30, |_old, new| *new);
+    table2.insert(5, 50, |_old, new| *new);
+    
+    // Difference: table1 - table2 = {1:10, 4:40}
+    table1.difference(&table2);
+    assert_eq!(table1.size(), 2);
+    assert_eq!(table1.find(&1), Some(10));
+    assert_eq!(table1.find(&4), Some(40));
+    assert_eq!(table1.find(&2), None);
+    assert_eq!(table1.find(&3), None);
+}
+
+#[test]
+fn test_restrict_operation() {
+    let sum_reducer = |a: &i32, b: &i32| a + b;
+    let mut table = AugOrderedTableMtEph::empty(sum_reducer, 0);
+    
+    // Insert elements
+    for i in 1..=10 {
+        table.insert(i, i * 10, |_old, new| *new);
+    }
+    
+    // Create a set to restrict to
+    let mut key_set = ArraySetStEph::empty();
+    key_set.insert(2);
+    key_set.insert(4);
+    key_set.insert(6);
+    
+    // Restrict table to keys in set
+    table.restrict(&key_set);
+    assert_eq!(table.size(), 3);
+    assert_eq!(table.find(&2), Some(20));
+    assert_eq!(table.find(&4), Some(40));
+    assert_eq!(table.find(&6), Some(60));
+    assert_eq!(table.find(&3), None);
+}
+
+#[test]
+fn test_subtract_operation() {
+    let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
+    let mut table = AugOrderedTableMtEph::empty(max_reducer, 0);
+    
+    // Insert elements
+    for i in 1..=10 {
+        table.insert(i, i * 10, |_old, new| *new);
+    }
+    
+    // Create a set of keys to subtract
+    let mut key_set = ArraySetStEph::empty();
+    key_set.insert(2);
+    key_set.insert(5);
+    key_set.insert(8);
+    
+    // Subtract keys from table
+    table.subtract(&key_set);
+    assert_eq!(table.size(), 7);
+    assert_eq!(table.find(&1), Some(10));
+    assert_eq!(table.find(&2), None);
+    assert_eq!(table.find(&5), None);
+    assert_eq!(table.find(&8), None);
+    assert_eq!(table.find(&10), Some(100));
+}
+
+#[test]
+fn test_tabulate_operation() {
+    let sum_reducer = |a: &i32, b: &i32| a + b;
+    
+    // Create domain set
+    let mut domain = ArraySetStEph::empty();
+    for i in 1..=5 {
+        domain.insert(i);
+    }
+    
+    // Tabulate: create table from domain and function
+    let table = AugOrderedTableMtEph::tabulate(|k: &i32| k * k, &domain, sum_reducer, 0);
+    
+    assert_eq!(table.size(), 5);
+    assert_eq!(table.find(&1), Some(1));
+    assert_eq!(table.find(&2), Some(4));
+    assert_eq!(table.find(&3), Some(9));
+    assert_eq!(table.find(&4), Some(16));
+    assert_eq!(table.find(&5), Some(25));
+    assert_eq!(table.reduce_val(), 55); // 1+4+9+16+25
+}
+
+#[test]
+fn test_key_navigation() {
+    let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
+    let mut table = AugOrderedTableMtEph::empty(max_reducer, 0);
+    
+    // Insert: 10, 20, 30, 40, 50
+    for i in 1..=5 {
+        table.insert(i * 10, i * 100, |_old, new| *new);
+    }
+    
+    // Test next_key
+    assert_eq!(table.next_key(&10), Some(20));
+    assert_eq!(table.next_key(&20), Some(30));
+    assert_eq!(table.next_key(&30), Some(40));
+    assert_eq!(table.next_key(&40), Some(50));
+    assert_eq!(table.next_key(&50), None);
+    assert_eq!(table.next_key(&25), Some(30)); // Next after non-existent key
+    
+    // Test previous_key
+    assert_eq!(table.previous_key(&50), Some(40));
+    assert_eq!(table.previous_key(&40), Some(30));
+    assert_eq!(table.previous_key(&30), Some(20));
+    assert_eq!(table.previous_key(&20), Some(10));
+    assert_eq!(table.previous_key(&10), None);
+    assert_eq!(table.previous_key(&25), Some(20)); // Previous before non-existent key
+}
+
+#[test]
+fn test_rank_and_select() {
+    let sum_reducer = |a: &i32, b: &i32| a + b;
+    let mut table = AugOrderedTableMtEph::empty(sum_reducer, 0);
+    
+    // Insert: 10, 20, 30, 40, 50
+    for i in 1..=5 {
+        table.insert(i * 10, i, |_old, new| *new);
+    }
+    
+    // Test rank_key (0-indexed position)
+    assert_eq!(table.rank_key(&10), 0);
+    assert_eq!(table.rank_key(&20), 1);
+    assert_eq!(table.rank_key(&30), 2);
+    assert_eq!(table.rank_key(&40), 3);
+    assert_eq!(table.rank_key(&50), 4);
+    
+    // Test select_key (key at given rank)
+    assert_eq!(table.select_key(0), Some(10));
+    assert_eq!(table.select_key(1), Some(20));
+    assert_eq!(table.select_key(2), Some(30));
+    assert_eq!(table.select_key(3), Some(40));
+    assert_eq!(table.select_key(4), Some(50));
+    assert_eq!(table.select_key(5), None); // Out of bounds
+}
+
+#[test]
+fn test_get_key_range() {
+    let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
+    let mut table = AugOrderedTableMtEph::empty(max_reducer, 0);
+    
+    // Insert values from 10 to 100
+    for i in 1..=10 {
+        table.insert(i * 10, i * 10, |_old, new| *new);
+    }
+    
+    // Get range [30, 70]
+    let range = table.get_key_range(&30, &70);
+    assert_eq!(range.size(), 5); // 30, 40, 50, 60, 70
+    assert_eq!(range.find(&30), Some(30));
+    assert_eq!(range.find(&40), Some(40));
+    assert_eq!(range.find(&50), Some(50));
+    assert_eq!(range.find(&60), Some(60));
+    assert_eq!(range.find(&70), Some(70));
+    assert_eq!(range.find(&20), None);
+    assert_eq!(range.find(&80), None);
+}
+
+#[test]
+fn test_split_rank_key() {
+    let sum_reducer = |a: &i32, b: &i32| a + b;
+    let mut table = AugOrderedTableMtEph::empty(sum_reducer, 0);
+    
+    // Insert: 10, 20, 30, 40, 50
+    for i in 1..=5 {
+        table.insert(i * 10, i, |_old, new| *new);
+    }
+    
+    // Split at rank 2 (index 2 = key 30)
+    let (left, right) = table.split_rank_key(2);
+    
+    // Left should have keys < 30 (10, 20)
+    assert_eq!(left.size(), 2);
+    assert_eq!(left.find(&10), Some(1));
+    assert_eq!(left.find(&20), Some(2));
+    
+    // Right should have keys >= 30 (30, 40, 50)
+    assert_eq!(right.size(), 3);
+    assert_eq!(right.find(&30), Some(3));
+    assert_eq!(right.find(&40), Some(4));
+    assert_eq!(right.find(&50), Some(5));
+}
+
+#[test]
+fn test_delete_nonexistent() {
+    let mut table = AugOrderedTableMtEph::empty(|a: &i32, b: &i32| a + b, 0);
+    table.insert(1, 10, |_old, new| new.clone());
+    table.insert(3, 30, |_old, new| new.clone());
+    let deleted = table.delete(&2);
+    assert_eq!(deleted, None);
+    assert_eq!(table.size(), 2);
+}
+

@@ -289,3 +289,44 @@
         }
     }
 
+    #[test]
+    fn test_from_weighted_edges() {
+        let vertices = SetLit![1, 2, 3];
+        let edges = SetLit![(1, 2, OrderedFloat(1.5)), (2, 3, OrderedFloat(2.0))];
+        let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+        assert_eq!(g.vertices().size(), 3);
+    }
+
+    #[test]
+    fn test_in_neighbors_weighted() {
+        let vertices = SetLit![1, 2, 3];
+        let edges = SetLit![(1, 2, OrderedFloat(1.5)), (3, 2, OrderedFloat(2.5))];
+        let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+        let in_neighbors = g.in_neighbors_weighted(&2);
+        assert_eq!(in_neighbors.size(), 2);
+    }
+
+    #[test]
+    fn test_total_weight() {
+        let vertices = SetLit![1, 2];
+        let edges = SetLit![(1, 2, OrderedFloat(3.0))];
+        let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+        assert_eq!(g.total_weight(), OrderedFloat(3.0));
+    }
+
+    #[test]
+    fn test_weighted_edges_empty() {
+        let vertices = SetLit![1, 2];
+        let edges = SetLit![];
+        let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+        assert_eq!(g.weighted_edges().size(), 0);
+    }
+
+    #[test]
+    fn test_get_edge_weight_missing() {
+        let vertices = SetLit![1, 2];
+        let edges = SetLit![(1, 2, OrderedFloat(1.5))];
+        let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+        assert_eq!(g.get_edge_weight(&2, &1), None);
+    }
+

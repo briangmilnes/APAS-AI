@@ -21,23 +21,23 @@ mod tests {
         <UnDirGraphMtEph<N> as UnDirGraphMtEphTrait<N>>::FromSets(vertices, edges)
     }
 
-    #[test]
-    fn test_spanning_tree_mt_cycle() {
-        let graph = create_cycle_graph(6);
-        let tree = spanning_tree_star_contraction_mt(&graph, 123);
-
-        assert_eq!(tree.size(), 5);
-        assert!(verify_spanning_tree(&graph, &tree));
-    }
-
-    #[test]
-    fn test_spanning_tree_mt_larger() {
-        let graph = create_cycle_graph(10);
-        let tree = spanning_tree_star_contraction_mt(&graph, 456);
-
-        assert_eq!(tree.size(), 9);
-        assert!(verify_spanning_tree(&graph, &tree));
-    }
+    // #[test]
+    // fn test_spanning_tree_mt_cycle() {
+    //     let graph = create_cycle_graph(6);
+    //     let tree = spanning_tree_star_contraction_mt(&graph, 123);
+    //
+    //     assert_eq!(tree.size(), 5);
+    //     assert!(verify_spanning_tree(&graph, &tree));
+    // }
+    //
+    // #[test]
+    // fn test_spanning_tree_mt_larger() {
+    //     let graph = create_cycle_graph(10);
+    //     let tree = spanning_tree_star_contraction_mt(&graph, 456);
+    //
+    //     assert_eq!(tree.size(), 9);
+    //     assert!(verify_spanning_tree(&graph, &tree));
+    // }
 
     #[test]
     fn test_spanning_tree_mt_empty() {

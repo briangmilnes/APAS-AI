@@ -1,0 +1,21 @@
+warning: --branch flag requires nightly toolchain; consider using `cargo +nightly llvm-cov`
+warning: --branch option is unstable
+info: cargo-llvm-cov currently setting cfg(coverage); you can opt-out it by passing --no-cfg-coverage
+error: process didn't exit successfully: `/home/milnes/.rustup/toolchains/1.88.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --tests --manifest-path /home/milnes/APASVERUS/APAS-AI/apas-ai/Cargo.toml --target-dir /home/milnes/APASVERUS/APAS-AI/apas-ai/target/llvm-cov-target` (exit status: 101)
+--- stderr
+error: failed to run `rustc` to learn about target-specific information
+
+Caused by:
+  process didn't exit successfully: `/home/milnes/.rustup/toolchains/1.88.0-x86_64-unknown-linux-gnu/bin/rustc - --crate-name ___ --print=file-names -C instrument-coverage -Z coverage-options=branch --cfg=coverage --cfg=trybuild_no_target --crate-type bin --crate-type rlib --crate-type dylib --crate-type cdylib --crate-type staticlib --crate-type proc-macro --print=sysroot --print=split-debuginfo --print=crate-name --print=cfg -Wwarnings` (exit status: 1)
+  --- stderr
+  error: the option `Z` is only accepted on the nightly compiler
+
+  help: consider switching to a nightly toolchain: `rustup default nightly`
+
+  note: selecting a toolchain with `+toolchain` arguments require a rustup proxy; see <https://rust-lang.github.io/rustup/concepts/index.html>
+
+  note: for more information about Rust's stability policy, see <https://doc.rust-lang.org/book/appendix-07-nightly-rust.html#unstable-features>
+
+  error: 1 nightly option were parsed
+
+

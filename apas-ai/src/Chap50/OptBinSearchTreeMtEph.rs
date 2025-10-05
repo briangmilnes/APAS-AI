@@ -310,17 +310,17 @@ pub mod OptBinSearchTreeMtEph {
         let probs = vec![Probability::new(0.125), Probability::new(0.5)];
         let _: OBSTMtEphS<char> = OBSTMtEphS::from_keys_probs(keys, probs);
     }
-}
 
-#[macro_export]
-macro_rules! OBSTMtEphLit {
-    (keys: [$($k:expr),* $(,)?], probs: [$($p:expr),* $(,)?]) => {
-        $crate::Chap50::OBSTMtEph::OBSTMtEph::OBSTMtEphS::from_keys_probs(
-            vec![$($k),*],
-            vec![$($crate::Chap50::Probability::Probability::new($p)),*]
-        )
-    };
-    () => {
-        $crate::Chap50::OBSTMtEph::OBSTMtEph::OBSTMtEphS::new()
-    };
+    #[macro_export]
+    macro_rules! OBSTMtEphLit {
+        (keys: [$($k:expr),* $(,)?], probs: [$($p:expr),* $(,)?]) => {
+            $crate::Chap50::OptBinSearchTreeMtEph::OptBinSearchTreeMtEph::OBSTMtEphS::from_keys_probs(
+                vec![$($k),*],
+                vec![$($crate::Chap50::Probability::Probability::Probability::new($p)),*]
+            )
+        };
+        () => {
+            $crate::Chap50::OptBinSearchTreeMtEph::OptBinSearchTreeMtEph::OBSTMtEphS::new()
+        };
+    }
 }

@@ -330,3 +330,73 @@
         }
     }
 
+    #[test]
+    fn test_from_weighted_edges() {
+        let vertices = SetLit![1, 2, 3];
+        let edges = SetLit![(1, 2, OrderedFloat(1.5)), (2, 3, OrderedFloat(2.0))];
+        let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+        assert_eq!(g.vertices().size(), 3);
+        assert_eq!(g.labeled_edges().size(), 2);
+    }
+
+    #[test]
+    fn test_add_weighted_edge() {
+        let mut g: WeightedUnDirGraphMtEphFloat<i32> = WeightedUnDirGraphMtEphFloat::empty();
+        g.add_vertex(1);
+        g.add_vertex(2);
+        g.add_weighted_edge(1, 2, OrderedFloat(3.14));
+        assert!(g.has_edge(&1, &2));
+        assert_eq!(g.get_edge_weight(&1, &2), Some(OrderedFloat(3.14)));
+    }
+
+    #[test]
+    fn test_get_edge_weight() {
+        let vertices = SetLit![1, 2, 3];
+        let edges = SetLit![(1, 2, OrderedFloat(1.5)), (2, 3, OrderedFloat(2.7))];
+        let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+
+        assert_eq!(g.get_edge_weight(&1, &2), Some(OrderedFloat(1.5)));
+        assert_eq!(g.get_edge_weight(&2, &3), Some(OrderedFloat(2.7)));
+        assert_eq!(g.get_edge_weight(&1, &3), None);
+    }
+
+    #[test]
+    fn test_weighted_edges() {
+        let vertices = SetLit![1, 2];
+        let edges = SetLit![(1, 2, OrderedFloat(5.0))];
+        let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+
+        let weighted = g.weighted_edges();
+        assert_eq!(weighted.size(), 1);
+    }
+
+    #[test]
+    fn test_neighbors_weighted() {
+        let vertices = SetLit![1, 2, 3];
+        let edges = SetLit![(1, 2, OrderedFloat(1.5)), (1, 3, OrderedFloat(2.5))];
+        let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+
+        let neighbors = g.neighbors_weighted(&1);
+        assert_eq!(neighbors.size(), 2);
+    }
+
+    #[test]
+    fn test_total_weight() {
+        let vertices = SetLit![1, 2, 3];
+        let edges = SetLit![(1, 2, OrderedFloat(1.0)), (2, 3, OrderedFloat(2.0))];
+        let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+
+        assert_eq!(g.total_weight(), OrderedFloat(3.0));
+    }
+
+    #[test]
+    fn test_vertex_degree() {
+        let vertices = SetLit![1, 2, 3];
+        let edges = SetLit![(1, 2, OrderedFloat(1.0)), (1, 3, OrderedFloat(2.0))];
+        let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+
+        assert_eq!(g.vertex_degree(&1), 2);
+        assert_eq!(g.vertex_degree(&2), 1);
+        assert_eq!(g.vertex_degree(&3), 1);
+    }
+

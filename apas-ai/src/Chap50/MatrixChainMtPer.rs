@@ -230,16 +230,16 @@ pub mod MatrixChainMtPer {
         let dims = vec![MatrixDim { rows: 2, cols: 10 }, MatrixDim { rows: 10, cols: 2 }];
         let _: MatrixChainMtPerS = MatrixChainMtPerS::from_dimensions(dims);
     }
-}
 
-#[macro_export]
-macro_rules! MatrixChainMtPerLit {
-    (dims: [$(($r:expr, $c:expr)),* $(,)?]) => {
-        $crate::Chap50::MatrixChainMtPer::MatrixChainMtPer::MatrixChainMtPerS::from_dim_pairs(
-            vec![$($crate::Types::Types::Pair($r, $c)),*]
-        )
-    };
-    () => {
-        $crate::Chap50::MatrixChainMtPer::MatrixChainMtPer::MatrixChainMtPerS::new()
-    };
+    #[macro_export]
+    macro_rules! MatrixChainMtPerLit {
+        (dims: [$(($r:expr, $c:expr)),* $(,)?]) => {
+            $crate::Chap50::MatrixChainMtPer::MatrixChainMtPer::MatrixChainMtPerS::from_dim_pairs(
+                vec![$($crate::Types::Types::Pair($r, $c)),*]
+            )
+        };
+        () => {
+            $crate::Chap50::MatrixChainMtPer::MatrixChainMtPer::MatrixChainMtPerS::new()
+        };
+    }
 }

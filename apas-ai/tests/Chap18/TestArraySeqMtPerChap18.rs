@@ -125,3 +125,96 @@
         assert_eq!(*large.nth(123), 223);
     }
 
+    #[test]
+    fn test_empty() {
+        let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
+        assert_eq!(empty.length(), 0);
+        assert!(empty.is_empty());
+    }
+
+    #[test]
+    fn test_singleton() {
+        let single = ArraySeqMtPerS::singleton(42);
+        assert_eq!(single.length(), 1);
+        assert_eq!(*single.nth(0), 42);
+        assert!(single.is_singleton());
+    }
+
+    #[test]
+    fn test_from_vec() {
+        let vec = vec![1, 2, 3, 4, 5];
+        let seq = ArraySeqMtPerS::from_vec(vec);
+        assert_eq!(seq.length(), 5);
+        assert_eq!(*seq.nth(2), 3);
+    }
+
+    #[test]
+    fn test_subseq_copy() {
+        let seq = ArraySeqMtPerS::from_vec(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        let sub = seq.subseq_copy(3, 4);
+        assert_eq!(sub.length(), 4);
+        assert_eq!(*sub.nth(0), 3);
+        assert_eq!(*sub.nth(3), 6);
+    }
+
+    #[test]
+    fn test_is_empty() {
+        let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
+        assert!(empty.is_empty());
+
+        let non_empty = ArraySeqMtPerS::singleton(1);
+        assert!(!non_empty.is_empty());
+    }
+
+    #[test]
+    fn test_is_singleton() {
+        let single = ArraySeqMtPerS::singleton(10);
+        assert!(single.is_singleton());
+
+        let multiple = ArraySeqMtPerS::from_vec(vec![1, 2]);
+        assert!(!multiple.is_singleton());
+
+        let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
+        assert!(!empty.is_singleton());
+    }
+
+    #[test]
+    fn test_new() {
+        let seq = ArraySeqMtPerS::new(5, 42);
+        assert_eq!(seq.length(), 5);
+        for i in 0..5 {
+            assert_eq!(*seq.nth(i), 42);
+        }
+    }
+
+    #[test]
+    fn test_iter() {
+        let seq = ArraySeqMtPerS::from_vec(vec![1, 2, 3]);
+        let sum: i32 = seq.iter().sum();
+        assert_eq!(sum, 6);
+    }
+
+    #[test]
+    fn test_large_sequence() {
+        let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&identity, 10000);
+        assert_eq!(seq.length(), 10000);
+        assert_eq!(*seq.nth(0), 0);
+        assert_eq!(*seq.nth(9999), 9999);
+    }
+
+    #[test]
+    fn test_subseq_edge_cases() {
+        let seq = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
+
+        let all = seq.subseq_copy(0, 5);
+        assert_eq!(all.length(), 5);
+
+        let start = seq.subseq_copy(0, 2);
+        assert_eq!(start.length(), 2);
+        assert_eq!(*start.nth(0), 1);
+
+        let end = seq.subseq_copy(3, 2);
+        assert_eq!(end.length(), 2);
+        assert_eq!(*end.nth(0), 4);
+    }
+

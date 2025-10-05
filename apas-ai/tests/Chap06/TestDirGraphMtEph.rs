@@ -745,3 +745,27 @@
         assert_eq!(final_b.sizeA(), 2);
     }
 
+    #[test]
+    fn test_empty_graph_operations() {
+        let vertices = SetLit![];
+        let edges: Set<Edge<N>> = Set::empty();
+        let g = DirGraphMtEph::FromSets(vertices, edges);
+        assert_eq!(g.sizeV(), 0);
+        assert_eq!(g.sizeA(), 0);
+        assert_eq!(g.vertices().size(), 0);
+    }
+
+    #[test]
+    fn test_isolated_vertex() {
+        let vertices = SetLit![1, 2, 3];
+        let edges = {
+            let mut s: Set<Edge<N>> = Set::empty();
+            let _ = s.insert(Edge(1, 2));
+            s
+        };
+        let g = DirGraphMtEph::FromSets(vertices, edges);
+        assert_eq!(g.NPlus(&3).size(), 0);
+        assert_eq!(g.NMinus(&3).size(), 0);
+    }
+
+

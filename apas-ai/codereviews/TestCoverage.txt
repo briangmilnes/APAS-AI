@@ -46,6 +46,9 @@ Chap06/WeightedUnDirGraphStEphFloat.rs
 
  Start by listing the those with no test file.
  Write tests for them, get them compiling, and run them.
- 
 
- 
+ Make a plan to add test coverage for all missing functions/methods
+in the next 20 modules with low coverage. You must compile each
+test module after you change it and then run it.
+
+ Show it to me in todos and wait until I agree to execute it.

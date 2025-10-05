@@ -416,6 +416,10 @@ name = "TestWeightedDirGraphMtEphInt"
 path = "tests/Chap06/TestWeightedDirGraphMtEphInt.rs"
 
 [[test]]
+name = "TestWeightedDirGraphStEphInt"
+path = "tests/Chap06/TestWeightedDirGraphStEphInt.rs"
+
+[[test]]
 name = "TestWeightedUnDirGraphMtEphFloat"
 path = "tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs"
 
@@ -527,6 +531,30 @@ path = "tests/Chap37/TestBSTSplayStEph.rs"
 [[test]]
 name = "TestBSTMtEph"
 path = "tests/Chap37/TestBSTMtEph.rs"
+
+[[test]]
+name = "TestBSTSetPlainMtEph"
+path = "tests/Chap37/TestBSTSetPlainMtEph.rs"
+
+[[test]]
+name = "TestBSTSetAVLMtEph"
+path = "tests/Chap37/TestBSTSetAVLMtEph.rs"
+
+[[test]]
+name = "TestBSTSetBBAlphaMtEph"
+path = "tests/Chap37/TestBSTSetBBAlphaMtEph.rs"
+
+[[test]]
+name = "TestBSTSetRBMtEph"
+path = "tests/Chap37/TestBSTSetRBMtEph.rs"
+
+[[test]]
+name = "TestBSTSetSplayMtEph"
+path = "tests/Chap37/TestBSTSetSplayMtEph.rs"
+
+[[test]]
+name = "TestAVLTreeSeqMtPer"
+path = "tests/Chap37/TestAVLTreeSeqMtPer.rs"
 
 [[test]]
 name = "TestBSTSetMtEph"
@@ -1199,6 +1227,26 @@ path = "tests/Chap50/TestMatrixChainMtPer.rs"
 name = "TestMatrixChainStEph"
 path = "tests/Chap50/TestMatrixChainStEph.rs"
 
+[[test]]
+name = "TestProbability"
+path = "tests/Chap50/TestProbability.rs"
+
+[[test]]
+name = "TestOptBinSearchTreeStEph"
+path = "tests/Chap50/TestOptBinSearchTreeStEph.rs"
+
+[[test]]
+name = "TestMinEditDistStEph"
+path = "tests/Chap49/TestMinEditDistStEph.rs"
+
+[[test]]
+name = "TestMinEditDistMtEph"
+path = "tests/Chap49/TestMinEditDistMtEph.rs"
+
+[[test]]
+name = "TestOptBinSearchTreeStPer"
+path = "tests/Chap50/TestOptBinSearchTreeStPer.rs"
+
 # [[bench]]
 # name = "BenchOBST"
 # path = "benches/BenchOBST.rs"
@@ -1826,6 +1874,14 @@ path = "tests/Chap44/TestExample44_1.rs"
 [[test]]
 name = "TestBalancedTreePQ"
 path = "tests/Chap45/TestBalancedTreePQ.rs"
+
+[[test]]
+name = "TestBinaryHeapPQ"
+path = "tests/Chap45/TestBinaryHeapPQ.rs"
+
+[[test]]
+name = "TestLeftistHeapPQ"
+path = "tests/Chap45/TestLeftistHeapPQ.rs"
 
 [[test]]
 name = "TestSortedListPQ"

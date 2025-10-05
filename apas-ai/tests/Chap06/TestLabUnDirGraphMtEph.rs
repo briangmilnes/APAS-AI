@@ -258,3 +258,68 @@
         }
     }
 
+    #[test]
+    fn test_sizea() {
+        let v: Set<N> = SetLit![1, 2, 3];
+        let a: Set<LabEdge<N, String>> = SetLit![
+            LabEdge(1, 2, "a".to_string()),
+            LabEdge(2, 3, "b".to_string())
+        ];
+        let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
+        assert_eq!(g.sizeA(), 2);
+    }
+
+    #[test]
+    fn test_arcs() {
+        let v: Set<N> = SetLit![1, 2, 3];
+        let a: Set<LabEdge<N, String>> = SetLit![
+            LabEdge(1, 2, "edge1".to_string()),
+            LabEdge(2, 3, "edge2".to_string())
+        ];
+        let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
+        let arcs = g.arcs();
+        assert_eq!(arcs.size(), 2);
+    }
+
+    #[test]
+    fn test_nplus() {
+        let v: Set<N> = SetLit![1, 2, 3];
+        let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
+        let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
+        let nplus = g.NPlus(&1);
+        assert_eq!(nplus.size(), 1);
+        assert!(nplus.mem(&2));
+    }
+
+    #[test]
+    fn test_nminus() {
+        let v: Set<N> = SetLit![1, 2, 3];
+        let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
+        let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
+        let nminus = g.NMinus(&2);
+        assert_eq!(nminus.size(), 1);
+        assert!(nminus.mem(&1));
+    }
+
+    #[test]
+    fn test_indegree() {
+        let v: Set<N> = SetLit![1, 2, 3];
+        let a: Set<LabEdge<N, String>> = SetLit![
+            LabEdge(1, 2, "a".to_string()),
+            LabEdge(2, 3, "b".to_string())
+        ];
+        let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
+        assert_eq!(g.InDegree(&2), 2);
+    }
+
+    #[test]
+    fn test_outdegree() {
+        let v: Set<N> = SetLit![1, 2, 3];
+        let a: Set<LabEdge<N, String>> = SetLit![
+            LabEdge(1, 2, "a".to_string()),
+            LabEdge(2, 3, "b".to_string())
+        ];
+        let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
+        assert_eq!(g.OutDegree(&2), 2);
+    }
+

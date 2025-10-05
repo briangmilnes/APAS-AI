@@ -330,3 +330,144 @@ fn test_to_seq_conversion() {
     assert_eq!(seq.nth(i as N), &expected_val);
     }
 }
+
+#[test]
+fn test_negative_numbers() {
+    let mut pq: SortedListPQ<i32> = SortedListPQTrait::empty();
+    pq = pq.insert(-5);
+    pq = pq.insert(-3);
+    pq = pq.insert(-8);
+    pq = pq.insert(-1);
+
+    assert_eq!(pq.find_min(), Some(&-8));
+
+    let (pq, min1) = pq.delete_min();
+    assert_eq!(min1, Some(-8));
+
+    let (pq, min2) = pq.delete_min();
+    assert_eq!(min2, Some(-5));
+
+    let (pq, min3) = pq.delete_min();
+    assert_eq!(min3, Some(-3));
+
+    let (pq, min4) = pq.delete_min();
+    assert_eq!(min4, Some(-1));
+
+    assert!(pq.is_empty());
+}
+
+#[test]
+fn test_mixed_positive_negative() {
+    let mut pq: SortedListPQ<i32> = SortedListPQTrait::empty();
+    pq = pq.insert(5);
+    pq = pq.insert(-3);
+    pq = pq.insert(0);
+    pq = pq.insert(-7);
+    pq = pq.insert(2);
+
+    assert_eq!(pq.find_min(), Some(&-7));
+
+    let seq = pq.to_seq();
+    assert_eq!(seq.nth(0), &-7);
+    assert_eq!(seq.nth(1), &-3);
+    assert_eq!(seq.nth(2), &0);
+    assert_eq!(seq.nth(3), &2);
+    assert_eq!(seq.nth(4), &5);
+}
+
+#[test]
+fn test_to_seq_empty() {
+    let pq: SortedListPQ<i32> = SortedListPQTrait::empty();
+    let seq = pq.to_seq();
+    assert_eq!(seq.length(), 0);
+}
+
+#[test]
+fn test_meld_same_elements() {
+    let mut pq1: SortedListPQ<i32> = SortedListPQTrait::empty();
+    pq1 = pq1.insert(5);
+    pq1 = pq1.insert(10);
+
+    let mut pq2: SortedListPQ<i32> = SortedListPQTrait::empty();
+    pq2 = pq2.insert(5);
+    pq2 = pq2.insert(10);
+
+    let merged = pq1.meld(&pq2);
+    assert_eq!(merged.size(), 4);
+    assert_eq!(merged.find_min(), Some(&5));
+
+    let seq = merged.to_seq();
+    assert_eq!(seq.nth(0), &5);
+    assert_eq!(seq.nth(1), &5);
+    assert_eq!(seq.nth(2), &10);
+    assert_eq!(seq.nth(3), &10);
+}
+
+#[test]
+fn test_insert_maintains_order() {
+    let mut pq: SortedListPQ<i32> = SortedListPQTrait::empty();
+
+    // Insert in various orders
+    pq = pq.insert(50);
+    let seq1 = pq.to_seq();
+    assert_eq!(seq1.nth(0), &50);
+
+    pq = pq.insert(30);
+    let seq2 = pq.to_seq();
+    assert_eq!(seq2.nth(0), &30);
+    assert_eq!(seq2.nth(1), &50);
+
+    pq = pq.insert(70);
+    let seq3 = pq.to_seq();
+    assert_eq!(seq3.nth(0), &30);
+    assert_eq!(seq3.nth(1), &50);
+    assert_eq!(seq3.nth(2), &70);
+
+    pq = pq.insert(40);
+    let seq4 = pq.to_seq();
+    assert_eq!(seq4.nth(0), &30);
+    assert_eq!(seq4.nth(1), &40);
+    assert_eq!(seq4.nth(2), &50);
+    assert_eq!(seq4.nth(3), &70);
+}
+
+#[test]
+fn test_from_seq_with_duplicates() {
+    let seq = ArraySeqStPerS::from_vec(vec![5, 2, 5, 1, 2]);
+    let pq: SortedListPQ<i32> = SortedListPQTrait::from_seq(&seq);
+
+    assert_eq!(pq.size(), 5);
+    let sorted = pq.to_seq();
+    assert_eq!(sorted.nth(0), &1);
+    assert_eq!(sorted.nth(1), &2);
+    assert_eq!(sorted.nth(2), &2);
+    assert_eq!(sorted.nth(3), &5);
+    assert_eq!(sorted.nth(4), &5);
+}
+
+#[test]
+fn test_zero_value() {
+    let mut pq: SortedListPQ<i32> = SortedListPQTrait::empty();
+    pq = pq.insert(0);
+    pq = pq.insert(5);
+    pq = pq.insert(-5);
+
+    assert_eq!(pq.find_min(), Some(&-5));
+
+    let (pq, _) = pq.delete_min();
+    assert_eq!(pq.find_min(), Some(&0));
+}
+
+#[test]
+fn test_macro_with_values() {
+    let pq = SortedListPQLit![3, 1, 4, 1, 5];
+    assert_eq!(pq.size(), 5);
+    assert_eq!(pq.find_min(), Some(&1));
+
+    let seq = pq.to_seq();
+    assert_eq!(seq.nth(0), &1);
+    assert_eq!(seq.nth(1), &1);
+    assert_eq!(seq.nth(2), &3);
+    assert_eq!(seq.nth(3), &4);
+    assert_eq!(seq.nth(4), &5);
+}

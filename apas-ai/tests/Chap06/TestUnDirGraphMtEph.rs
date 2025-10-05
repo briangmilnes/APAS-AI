@@ -266,3 +266,346 @@
         }
     }
 
+    #[test]
+    fn test_sizea() {
+        let v: Set<N> = SetLit![1, 2];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+        assert_eq!(g.sizeA(), 1);
+    }
+
+    #[test]
+    fn test_nplus() {
+        let v: Set<N> = SetLit![1, 2];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+        assert!(g.NPlus(&1).mem(&2));
+    }
+
+    #[test]
+    fn test_nminus() {
+        let v: Set<N> = SetLit![1, 2];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+        assert!(g.NMinus(&2).mem(&1));
+    }
+
+    #[test]
+    fn test_indegree() {
+        let v: Set<N> = SetLit![1, 2, 3];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+        assert_eq!(g.InDegree(&2), 2);
+    }
+
+    #[test]
+    fn test_outdegree() {
+        let v: Set<N> = SetLit![1, 2, 3];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+        assert_eq!(g.OutDegree(&2), 2);
+    }
+
+    #[test]
+    fn test_arcs() {
+        let v: Set<N> = SetLit![1, 2, 3];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+        let g = UnDirGraphMtEph::FromSets(v, e.clone());
+        assert_eq!(g.arcs(), &e);
+        assert_eq!(g.arcs().size(), 2);
+    }
+
+    #[test]
+    fn test_nplusofvertices() {
+        let v: Set<N> = SetLit![0, 1, 2, 3];
+        let e: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        let vertices_subset: Set<N> = SetLit![0, 1];
+        let nplus = g.NPlusOfVertices(&vertices_subset);
+
+        // Should include all neighbors of 0 and 1
+        assert!(nplus.mem(&0));
+        assert!(nplus.mem(&1));
+        assert!(nplus.mem(&2));
+    }
+
+    #[test]
+    fn test_nminusofvertices() {
+        let v: Set<N> = SetLit![0, 1, 2, 3];
+        let e: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        let vertices_subset: Set<N> = SetLit![1, 2];
+        let nminus = g.NMinusOfVertices(&vertices_subset);
+
+        // In undirected graph, same as NPlusOfVertices
+        assert!(nminus.mem(&0));
+        assert!(nminus.mem(&1));
+        assert!(nminus.mem(&2));
+        assert!(nminus.mem(&3));
+    }
+
+    #[test]
+    fn test_incident() {
+        let v: Set<N> = SetLit![1, 2, 3];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        // Edge(1, 2) is incident to both 1 and 2
+        assert_eq!(g.Incident(&Edge(1, 2), &1), true);
+        assert_eq!(g.Incident(&Edge(1, 2), &2), true);
+        assert_eq!(g.Incident(&Edge(1, 2), &3), false);
+
+        // Edge(2, 3) is incident to both 2 and 3
+        assert_eq!(g.Incident(&Edge(2, 3), &2), true);
+        assert_eq!(g.Incident(&Edge(2, 3), &3), true);
+        assert_eq!(g.Incident(&Edge(2, 3), &1), false);
+    }
+
+    #[test]
+    fn test_empty_graph_all_operations() {
+        let g: UnDirGraphMtEph<i32> = UnDirGraphMtEph::empty();
+
+        assert_eq!(g.sizeV(), 0);
+        assert_eq!(g.sizeE(), 0);
+        assert_eq!(g.sizeA(), 0);
+        assert_eq!(g.vertices().size(), 0);
+        assert_eq!(g.edges().size(), 0);
+        assert_eq!(g.arcs().size(), 0);
+
+        assert_eq!(g.Neighbor(&1, &2), false);
+        assert_eq!(g.NG(&1).size(), 0);
+        assert_eq!(g.Degree(&1), 0);
+        assert_eq!(g.InDegree(&1), 0);
+        assert_eq!(g.OutDegree(&1), 0);
+
+        let empty_set: Set<i32> = SetLit![];
+        assert_eq!(g.NGOfVertices(&empty_set).size(), 0);
+        assert_eq!(g.NPlusOfVertices(&empty_set).size(), 0);
+        assert_eq!(g.NMinusOfVertices(&empty_set).size(), 0);
+    }
+
+    #[test]
+    fn test_isolated_vertices() {
+        let v: Set<N> = SetLit![1, 2, 3, 4, 5];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        // Vertices 3, 4, 5 are isolated
+        assert_eq!(g.Degree(&3), 0);
+        assert_eq!(g.Degree(&4), 0);
+        assert_eq!(g.Degree(&5), 0);
+        assert_eq!(g.NG(&3).size(), 0);
+        assert_eq!(g.NG(&4).size(), 0);
+        assert_eq!(g.NG(&5).size(), 0);
+
+        // Vertices 1, 2 are connected
+        assert_eq!(g.Degree(&1), 1);
+        assert_eq!(g.Degree(&2), 1);
+        assert!(g.NG(&1).mem(&2));
+        assert!(g.NG(&2).mem(&1));
+    }
+
+    #[test]
+    fn test_disconnected_components() {
+        let v: Set<N> = SetLit![1, 2, 3, 4];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(3, 4)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        // Component 1: {1, 2}
+        assert!(g.Neighbor(&1, &2));
+        assert!(!g.Neighbor(&1, &3));
+        assert!(!g.Neighbor(&1, &4));
+
+        // Component 2: {3, 4}
+        assert!(g.Neighbor(&3, &4));
+        assert!(!g.Neighbor(&3, &1));
+        assert!(!g.Neighbor(&3, &2));
+
+        // NGOfVertices across components
+        let component1: Set<N> = SetLit![1, 2];
+        let ng1 = g.NGOfVertices(&component1);
+        assert!(ng1.mem(&1));
+        assert!(ng1.mem(&2));
+        assert!(!ng1.mem(&3)); // Different component
+        assert!(!ng1.mem(&4)); // Different component
+    }
+
+    #[test]
+    fn test_star_graph() {
+        // Star graph: one central vertex connected to all others
+        let v: Set<N> = SetLit![0, 1, 2, 3, 4];
+        let e: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(0, 2), Edge(0, 3), Edge(0, 4)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        // Center has degree 4
+        assert_eq!(g.Degree(&0), 4);
+
+        // All others have degree 1
+        for i in 1..=4 {
+            assert_eq!(g.Degree(&i), 1);
+            assert!(g.NG(&i).mem(&0));
+        }
+
+        // No edges between non-center vertices
+        assert!(!g.Neighbor(&1, &2));
+        assert!(!g.Neighbor(&2, &3));
+    }
+
+    #[test]
+    fn test_cycle_graph() {
+        // Cycle graph: 0-1-2-3-0
+        let v: Set<N> = SetLit![0, 1, 2, 3];
+        let e: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3), Edge(3, 0)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        // All vertices have degree 2 in a cycle
+        for i in 0..=3 {
+            assert_eq!(g.Degree(&i), 2);
+        }
+
+        // Check cycle connectivity
+        assert!(g.Neighbor(&0, &1));
+        assert!(g.Neighbor(&1, &2));
+        assert!(g.Neighbor(&2, &3));
+        assert!(g.Neighbor(&3, &0));
+
+        // No chords in simple cycle
+        assert!(!g.Neighbor(&0, &2));
+        assert!(!g.Neighbor(&1, &3));
+    }
+
+    #[test]
+    fn test_path_graph() {
+        // Path graph: 1-2-3-4-5
+        let v: Set<N> = SetLit![1, 2, 3, 4, 5];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3), Edge(3, 4), Edge(4, 5)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        // End vertices have degree 1
+        assert_eq!(g.Degree(&1), 1);
+        assert_eq!(g.Degree(&5), 1);
+
+        // Middle vertices have degree 2
+        assert_eq!(g.Degree(&2), 2);
+        assert_eq!(g.Degree(&3), 2);
+        assert_eq!(g.Degree(&4), 2);
+    }
+
+    #[test]
+    fn test_large_parallel_graph() {
+        // Create a larger graph to trigger parallel operations
+        let mut v: Set<N> = Set::empty();
+        let mut e: Set<Edge<N>> = Set::empty();
+
+        // Create a grid-like graph
+        for i in 0..20 {
+            v.insert(i);
+        }
+
+        for i in 0..19 {
+            e.insert(Edge(i, i + 1));
+        }
+
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        assert_eq!(g.sizeV(), 20);
+        assert_eq!(g.sizeE(), 19);
+
+        // Test parallel NG operation
+        assert_eq!(g.Degree(&10), 2); // Middle vertex
+        assert_eq!(g.Degree(&0), 1);  // End vertex
+        assert_eq!(g.Degree(&19), 1); // End vertex
+
+        // Test parallel NGOfVertices
+        let subset: Set<N> = SetLit![5, 10, 15];
+        let ng = g.NGOfVertices(&subset);
+        assert!(ng.size() >= 6); // At least neighbors of the 3 vertices
+    }
+
+    #[test]
+    fn test_equality() {
+        let v1: Set<N> = SetLit![1, 2, 3];
+        let e1: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+        let g1 = UnDirGraphMtEph::FromSets(v1.clone(), e1.clone());
+        let g2 = UnDirGraphMtEph::FromSets(v1, e1);
+
+        assert_eq!(g1, g2);
+
+        let v3: Set<N> = SetLit![1, 2, 3];
+        let e3: Set<Edge<N>> = SetLit![Edge(1, 2)];
+        let g3 = UnDirGraphMtEph::FromSets(v3, e3);
+
+        assert_ne!(g1, g3);
+    }
+
+    #[test]
+    fn test_display_format() {
+        let v: Set<N> = SetLit![1, 2];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        let display_str = format!("{}", g);
+        assert!(display_str.contains("V="));
+        assert!(display_str.contains("E="));
+    }
+
+    #[test]
+    fn test_debug_format() {
+        let v: Set<N> = SetLit![1, 2];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        let debug_str = format!("{:?}", g);
+        assert!(debug_str.len() > 0);
+    }
+
+    #[test]
+    fn test_edge_order_symmetry() {
+        // In undirected graph, Edge(1,2) and Edge(2,1) should be treated as equivalent
+        let v: Set<N> = SetLit![1, 2, 3];
+        let e1: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+        let g = UnDirGraphMtEph::FromSets(v, e1);
+
+        // Both orderings should return true
+        assert!(g.Neighbor(&1, &2));
+        assert!(g.Neighbor(&2, &1));
+        assert!(g.Neighbor(&2, &3));
+        assert!(g.Neighbor(&3, &2));
+    }
+
+    #[test]
+    fn test_ngofvertices_empty_subset() {
+        let v: Set<N> = SetLit![1, 2, 3];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        let empty_set: Set<N> = SetLit![];
+        let result = g.NGOfVertices(&empty_set);
+        assert_eq!(result.size(), 0);
+    }
+
+    #[test]
+    fn test_multiple_self_loops() {
+        let v: Set<N> = SetLit![1, 2];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 1), Edge(2, 2)];
+        let g = UnDirGraphMtEph::FromSets(v, e);
+
+        assert!(g.Neighbor(&1, &1));
+        assert!(g.Neighbor(&2, &2));
+        assert!(!g.Neighbor(&1, &2));
+    }
+
+    #[test]
+    fn test_clone() {
+        let v: Set<N> = SetLit![1, 2, 3];
+        let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+        let g1 = UnDirGraphMtEph::FromSets(v, e);
+        let g2 = g1.clone();
+
+        assert_eq!(g1, g2);
+        assert_eq!(g1.sizeV(), g2.sizeV());
+        assert_eq!(g1.sizeE(), g2.sizeE());
+    }
+

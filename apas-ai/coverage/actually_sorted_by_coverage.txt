@@ -206,6 +206,7 @@ Chap06/WeightedDirGraphStEphFloat.rs            187               138    26.20% 
 Chap47/NestedHashTable.rs                       423               341    19.39%          15                12    20.00%         220               174    20.91%           0                 0         -
 Chap06/WeightedDirGraphMtEphInt.rs              208               164    21.15%          15                12    20.00%         100                77    23.00%           0                 0         -
 Chap06/WeightedDirGraphMtEphFloat.rs            213               169    20.66%          16                13    18.75%         116                93    19.83%           0                 0         -
+
 Chap19/ArraySeqMtEph.rs                         336               277    17.56%          25                21    16.00%         165               134    18.79%           0                 0         -
 Chap19/ArraySeqMtPer.rs                         329               318     3.34%          32                29     9.38%         169               160     5.33%           0                 0         -
 Types.rs                                        187               176     5.88%          41                38     7.32%          89                84     5.62%           0                 0         -
@@ -233,6 +234,7 @@ Chap45/LeftistHeapPQ.rs                         366               366     0.00% 
 Chap45/HeapsortExample.rs                       314               314     0.00%          26                26     0.00%         201               201     0.00%           0                 0         -
 Chap06/WeightedUnDirGraphStEphInt.rs            127               127     0.00%          10                10     0.00%          57                57     0.00%           0                 0         -
 Chap06/WeightedUnDirGraphStEphFloat.rs          155               155     0.00%          15                15     0.00%          81                81     0.00%           0                 0         -
+
 Chap56/Example56_3.rs                            64                64     0.00%           2                 2     0.00%          30                30     0.00%           0                 0         -
 Chap56/Example56_1.rs                            83                83     0.00%           3                 3     0.00%          48                48     0.00%           0                 0         -
 Chap45/Example45_2.rs                           172               172     0.00%           8                 8     0.00%          73                73     0.00%           0                 0         -

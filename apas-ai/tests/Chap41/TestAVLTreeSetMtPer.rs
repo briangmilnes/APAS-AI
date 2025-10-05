@@ -2,6 +2,7 @@
 //! Tests for AVLTreeSetMtPer.
 
 use apas_ai::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
+use apas_ai::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerS;
 use apas_ai::AVLTreeSetMtPerLit;
 use apas_ai::Types::Types::*;
 
@@ -128,4 +129,93 @@ fn test_clone() {
     assert!(s2.find(&1));
     assert!(s2.find(&2));
     assert!(s2.find(&3));
+}
+
+#[test]
+fn test_union_extended() {
+    let s1 = AVLTreeSetMtPer::empty().insert(1).insert(2);
+    let s2 = AVLTreeSetMtPer::empty().insert(2).insert(3);
+    let u = s1.union(&s2);
+    assert_eq!(u.size(), 3);
+    assert!(u.find(&1));
+    assert!(u.find(&2));
+    assert!(u.find(&3));
+}
+
+#[test]
+fn test_intersection_extended() {
+    let s1 = AVLTreeSetMtPer::empty().insert(1).insert(2).insert(3);
+    let s2 = AVLTreeSetMtPer::empty().insert(2).insert(3).insert(4);
+    let i = s1.intersection(&s2);
+    assert_eq!(i.size(), 2);
+    assert!(i.find(&2));
+    assert!(i.find(&3));
+}
+
+#[test]
+fn test_difference_extended() {
+    let s1 = AVLTreeSetMtPer::empty().insert(1).insert(2).insert(3);
+    let s2 = AVLTreeSetMtPer::empty().insert(2);
+    let d = s1.difference(&s2);
+    assert_eq!(d.size(), 2);
+    assert!(d.find(&1));
+    assert!(d.find(&3));
+}
+
+#[test]
+fn test_delete_operation() {
+    let s = AVLTreeSetMtPer::empty().insert(1).insert(2).insert(3);
+    let s2 = s.delete(&2);
+    assert_eq!(s2.size(), 2);
+    assert!(!s2.find(&2));
+    assert!(s2.find(&1));
+    assert!(s2.find(&3));
+}
+
+#[test]
+fn test_persistence_delete() {
+    let s1 = AVLTreeSetMtPer::empty().insert(1).insert(2).insert(3);
+    let s2 = s1.delete(&2);
+    assert!(s1.find(&2)); // Original unchanged
+    assert!(!s2.find(&2)); // New set without 2
+}
+
+#[test]
+fn test_large_set() {
+    let mut s = AVLTreeSetMtPer::empty();
+    for i in 0..100 {
+        s = s.insert(i);
+    }
+    assert_eq!(s.size(), 100);
+    assert!(s.find(&0));
+    assert!(s.find(&99));
+}
+
+#[test]
+fn test_negative_numbers() {
+    let s = AVLTreeSetMtPer::empty().insert(-5).insert(-3).insert(-7).insert(0);
+    assert!(s.find(&-7));
+    assert!(s.find(&0));
+}
+
+#[test]
+fn test_duplicate_insert() {
+    let s = AVLTreeSetMtPer::empty().insert(5).insert(5).insert(5);
+    assert_eq!(s.size(), 1);
+}
+
+#[test]
+fn test_intersection_disjoint() {
+    let s1 = AVLTreeSetMtPer::empty().insert(1).insert(2);
+    let s2 = AVLTreeSetMtPer::empty().insert(3).insert(4);
+    let i = s1.intersection(&s2);
+    assert_eq!(i.size(), 0);
+}
+
+#[test]
+fn test_union_empty() {
+    let s1 = AVLTreeSetMtPer::empty().insert(1);
+    let s2 = AVLTreeSetMtPer::empty();
+    let u = s1.union(&s2);
+    assert_eq!(u.size(), 1);
 }

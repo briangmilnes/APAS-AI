@@ -283,3 +283,205 @@ fn balbintree_traversal_consistency() {
     assert_eq!(inorder.length(), preorder.length());
     assert_eq!(inorder.length(), tree.size());
 }
+
+#[test]
+fn balbintree_is_leaf_check() {
+    let leaf = BalBinTree::<N>::leaf();
+    assert_eq!(leaf.is_leaf(), true);
+
+    let single = BalBinTree::node(BalBinTree::leaf(), 42, BalBinTree::leaf());
+    assert_eq!(single.is_leaf(), false);
+
+    let complex = BalBinTree::node(
+        BalBinTree::node(BalBinTree::leaf(), 1, BalBinTree::leaf()),
+        2,
+        BalBinTree::node(BalBinTree::leaf(), 3, BalBinTree::leaf()),
+    );
+    assert_eq!(complex.is_leaf(), false);
+}
+
+#[test]
+fn balbintree_unbalanced_left() {
+    let tree = BalBinTree::node(
+        BalBinTree::node(
+            BalBinTree::node(BalBinTree::leaf(), 1, BalBinTree::leaf()),
+            2,
+            BalBinTree::leaf(),
+        ),
+        3,
+        BalBinTree::leaf(),
+    );
+
+    assert_eq!(tree.size(), 3);
+    assert_eq!(tree.height(), 3);
+    assert_eq!(tree.in_order(), ArraySeqStPerSLit![1, 2, 3]);
+    assert_eq!(tree.pre_order(), ArraySeqStPerSLit![3, 2, 1]);
+}
+
+#[test]
+fn balbintree_unbalanced_right() {
+    let tree = BalBinTree::node(
+        BalBinTree::leaf(),
+        1,
+        BalBinTree::node(
+            BalBinTree::leaf(),
+            2,
+            BalBinTree::node(BalBinTree::leaf(), 3, BalBinTree::leaf()),
+        ),
+    );
+
+    assert_eq!(tree.size(), 3);
+    assert_eq!(tree.height(), 3);
+    assert_eq!(tree.in_order(), ArraySeqStPerSLit![1, 2, 3]);
+    assert_eq!(tree.pre_order(), ArraySeqStPerSLit![1, 2, 3]);
+}
+
+#[test]
+fn bstree_large_dataset() {
+    let mut bst = BSTree::new();
+    let n = 100;
+
+    // Insert 1 to 100
+    for i in 1..=n {
+        bst.insert(i);
+    }
+
+    assert_eq!(bst.size(), n);
+    assert_eq!(bst.minimum().copied(), Some(1));
+    assert_eq!(bst.maximum().copied(), Some(n));
+
+    // Verify all elements are present
+    for i in 1..=n {
+        assert_eq!(bst.contains(&i), true);
+        assert_eq!(bst.find(&i), Some(&i));
+    }
+
+    // Verify inorder is sorted
+    let inorder = bst.in_order();
+    assert_eq!(inorder.length(), n);
+    for i in 0..(n - 1) {
+        assert!(*inorder.nth(i) < *inorder.nth(i + 1));
+    }
+}
+
+#[test]
+fn bstree_alternating_insertions() {
+    let mut bst = BSTree::new();
+    // Insert in alternating pattern: 50, 25, 75, 12, 37, 62, 87...
+    let keys = ArraySeqStPerSLit![50, 25, 75, 12, 37, 62, 87, 6, 18, 31, 43];
+
+    for i in 0..keys.length() {
+        bst.insert(*keys.nth(i));
+    }
+
+    assert_eq!(bst.size(), keys.length());
+
+    // Verify inorder is sorted
+    let inorder = bst.in_order();
+    for i in 1..inorder.length() {
+        assert!(*inorder.nth(i - 1) < *inorder.nth(i));
+    }
+
+    assert_eq!(bst.minimum().copied(), Some(6));
+    assert_eq!(bst.maximum().copied(), Some(87));
+}
+
+#[test]
+fn balbintree_large_balanced_tree() {
+    // Build a perfectly balanced tree with 7 nodes
+    let tree = BalBinTree::node(
+        BalBinTree::node(
+            BalBinTree::node(BalBinTree::leaf(), 1, BalBinTree::leaf()),
+            2,
+            BalBinTree::node(BalBinTree::leaf(), 3, BalBinTree::leaf()),
+        ),
+        4,
+        BalBinTree::node(
+            BalBinTree::node(BalBinTree::leaf(), 5, BalBinTree::leaf()),
+            6,
+            BalBinTree::node(BalBinTree::leaf(), 7, BalBinTree::leaf()),
+        ),
+    );
+
+    assert_eq!(tree.size(), 7);
+    assert_eq!(tree.height(), 3);
+    assert_eq!(tree.in_order(), ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7]);
+    assert_eq!(tree.pre_order(), ArraySeqStPerSLit![4, 2, 1, 3, 6, 5, 7]);
+}
+
+#[test]
+fn bstree_negative_numbers() {
+    let mut bst = BSTree::new();
+    let keys = ArraySeqStPerSLit![-10, -5, -15, -3, -7, -20];
+
+    for i in 0..keys.length() {
+        bst.insert(*keys.nth(i));
+    }
+
+    assert_eq!(bst.size(), keys.length());
+    assert_eq!(bst.minimum().copied(), Some(-20));
+    assert_eq!(bst.maximum().copied(), Some(-3));
+
+    let inorder = bst.in_order();
+    assert_eq!(inorder, ArraySeqStPerSLit![-20, -15, -10, -7, -5, -3]);
+}
+
+#[test]
+fn bstree_mixed_positive_negative() {
+    let mut bst = BSTree::new();
+    let keys = ArraySeqStPerSLit![0, -5, 5, -3, 3, -8, 8];
+
+    for i in 0..keys.length() {
+        bst.insert(*keys.nth(i));
+    }
+
+    assert_eq!(bst.minimum().copied(), Some(-8));
+    assert_eq!(bst.maximum().copied(), Some(8));
+
+    let inorder = bst.in_order();
+    for i in 1..inorder.length() {
+        assert!(*inorder.nth(i - 1) < *inorder.nth(i));
+    }
+}
+
+#[test]
+fn balbintree_only_left_children() {
+    let tree = BalBinTree::node(
+        BalBinTree::node(
+            BalBinTree::node(
+                BalBinTree::node(BalBinTree::leaf(), 1, BalBinTree::leaf()),
+                2,
+                BalBinTree::leaf(),
+            ),
+            3,
+            BalBinTree::leaf(),
+        ),
+        4,
+        BalBinTree::leaf(),
+    );
+
+    assert_eq!(tree.size(), 4);
+    assert_eq!(tree.height(), 4);
+    assert_eq!(tree.in_order(), ArraySeqStPerSLit![1, 2, 3, 4]);
+}
+
+#[test]
+fn balbintree_only_right_children() {
+    let tree = BalBinTree::node(
+        BalBinTree::leaf(),
+        1,
+        BalBinTree::node(
+            BalBinTree::leaf(),
+            2,
+            BalBinTree::node(
+                BalBinTree::leaf(),
+                3,
+                BalBinTree::node(BalBinTree::leaf(), 4, BalBinTree::leaf()),
+            ),
+        ),
+    );
+
+    assert_eq!(tree.size(), 4);
+    assert_eq!(tree.height(), 4);
+    assert_eq!(tree.in_order(), ArraySeqStPerSLit![1, 2, 3, 4]);
+}

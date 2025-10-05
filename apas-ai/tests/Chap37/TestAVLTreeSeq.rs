@@ -3,6 +3,7 @@
 
 #[cfg(test)]
 mod TestAVLTreeSeq {
+    use apas_ai::Chap18::ArraySeq::ArraySeq::ArraySeq;
     use apas_ai::Chap37::AVLTreeSeq::AVLTreeSeq::*;
     use apas_ai::Types::Types::*;
 
@@ -213,5 +214,80 @@ mod TestAVLTreeSeq {
         let empty2: AVLTreeS<N> = <AVLTreeS<N> as AVLTreeSeq<N>>::empty();
         assert_eq!(empty1.length(), empty2.length());
         assert_eq!(empty1.isEmpty(), empty2.isEmpty());
+    }
+
+    #[test]
+    fn test_new_root() {
+        let tree = AVLTreeS::<i32>::new_root();
+        assert_eq!(tree.length(), 0);
+    }
+
+    #[test]
+    fn test_update() {
+        let mut tree = AVLTreeS::<i32>::from_vec(vec![1, 2, 3]);
+        tree.update((1, 99));
+        assert_eq!(*tree.nth(1), 99);
+    }
+
+    #[test]
+    fn test_from_vec() {
+        let tree = AVLTreeS::<i32>::from_vec(vec![1, 2, 3]);
+        assert_eq!(tree.length(), 3);
+        assert_eq!(*tree.nth(0), 1);
+        assert_eq!(*tree.nth(2), 3);
+    }
+
+    #[test]
+    fn test_to_arrayseq() {
+        let tree = AVLTreeS::<i32>::from_vec(vec![1, 2, 3]);
+        let seq = tree.to_arrayseq();
+        assert_eq!(seq.length(), 3);
+    }
+
+    #[test]
+    fn test_push_back() {
+        let mut tree = AVLTreeS::<i32>::new();
+        tree.push_back(1);
+        tree.push_back(2);
+        assert_eq!(tree.length(), 2);
+        assert_eq!(*tree.nth(1), 2);
+    }
+
+    #[test]
+    fn test_contains_value() {
+        let tree = AVLTreeS::<i32>::from_vec(vec![1, 2, 3]);
+        assert!(tree.contains_value(&2));
+        assert!(!tree.contains_value(&99));
+    }
+
+    #[test]
+    fn test_insert_value() {
+        let mut tree = AVLTreeS::<i32>::new();
+        tree.insert_value(5);
+        assert!(tree.contains_value(&5));
+    }
+
+    #[test]
+    fn test_delete_value() {
+        let mut tree = AVLTreeS::<i32>::from_vec(vec![1, 2, 3]);
+        let deleted = tree.delete_value(&2);
+        assert!(deleted);
+        assert_eq!(tree.length(), 2);
+    }
+
+    #[test]
+    fn test_is_tree_empty() {
+        let empty_tree = AVLTreeS::<i32>::new();
+        assert!(empty_tree.is_tree_empty());
+
+        let tree = AVLTreeS::<i32>::from_vec(vec![1]);
+        assert!(!tree.is_tree_empty());
+    }
+
+    #[test]
+    fn test_values_in_order() {
+        let tree = AVLTreeS::<i32>::from_vec(vec![1, 2, 3]);
+        let values = tree.values_in_order();
+        assert_eq!(values.len(), 3);
     }
 }

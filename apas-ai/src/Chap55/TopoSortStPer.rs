@@ -17,6 +17,29 @@ pub mod TopoSortStPer {
     }
 
     /// Computes topological sort of a DAG.
+    /// Returns Some(sequence) if graph is acyclic, None if contains a cycle.
+    pub fn topological_sort_opt(graph: &ArraySeqStPerS<ArraySeqStPerS<N>>) -> Option<AVLTreeSeqStPerS<N>> {
+        let n = graph.length();
+        let mut visited = AVLTreeSetStPer::empty();
+        let mut rec_stack = AVLTreeSetStPer::empty();
+        let mut result = Vec::new();
+
+        for start in 0..n {
+            if !visited.find(&start) {
+                match dfs_finish_order_cycle_detect(graph, visited, rec_stack, result, start) {
+                    Some((new_visited, new_rec_stack, new_result)) => {
+                        visited = new_visited;
+                        rec_stack = new_rec_stack;
+                        result = new_result;
+                    }
+                    None => return None, // Cycle detected
+                }
+            }
+        }
+        Some(AVLTreeSeqStPerS::from_vec(result))
+    }
+
+    /// Computes topological sort of a DAG.
     /// Returns sequence of vertices in topological order (respecting edge directions).
     pub fn topo_sort(graph: &ArraySeqStPerS<ArraySeqStPerS<N>>) -> AVLTreeSeqStPerS<N> {
         let n = graph.length();
@@ -31,6 +54,43 @@ pub mod TopoSortStPer {
             }
         }
         AVLTreeSeqStPerS::from_vec(result)
+    }
+
+    fn dfs_finish_order_cycle_detect(
+        graph: &ArraySeqStPerS<ArraySeqStPerS<N>>,
+        visited: AVLTreeSetStPer<N>,
+        rec_stack: AVLTreeSetStPer<N>,
+        mut result: Vec<N>,
+        vertex: N,
+    ) -> Option<(AVLTreeSetStPer<N>, AVLTreeSetStPer<N>, Vec<N>)> {
+        if rec_stack.find(&vertex) {
+            return None; // Cycle detected
+        }
+        if visited.find(&vertex) {
+            return Some((visited, rec_stack, result));
+        }
+
+        let visited = visited.insert(vertex);
+        let rec_stack = rec_stack.insert(vertex);
+        let neighbors = graph.nth(vertex);
+
+        let mut visited = visited;
+        let mut rec_stack = rec_stack;
+        for i in 0..neighbors.length() {
+            let neighbor = *neighbors.nth(i);
+            match dfs_finish_order_cycle_detect(graph, visited, rec_stack, result, neighbor) {
+                Some((new_visited, new_rec_stack, new_result)) => {
+                    visited = new_visited;
+                    rec_stack = new_rec_stack;
+                    result = new_result;
+                }
+                None => return None, // Cycle detected
+            }
+        }
+
+        let rec_stack = rec_stack.delete(&vertex);
+        result.insert(0, vertex);
+        Some((visited, rec_stack, result))
     }
 
     fn dfs_finish_order(

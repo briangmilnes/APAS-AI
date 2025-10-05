@@ -471,3 +471,81 @@ fn test_string_key_ordering() {
     assert_eq!(table.next_key(&"alice".to_string()), Some("bob".to_string()));
     assert_eq!(table.previous_key(&"charlie".to_string()), Some("bob".to_string()));
 }
+
+
+#[test]
+fn test_collect() {
+    let table = OrderedTableStPer::empty()
+        .insert(3, "three".to_string())
+        .insert(1, "one".to_string())
+        .insert(2, "two".to_string());
+
+    let collected = table.collect();
+    assert_eq!(collected.length(), 3);
+    
+    // Should be in sorted order
+    assert_eq!(collected.nth(0).0, 1);
+    assert_eq!(collected.nth(1).0, 2);
+    assert_eq!(collected.nth(2).0, 3);
+}
+
+#[test]
+fn test_empty_operations() {
+    let empty: OrderedTableStPer<i32, String> = OrderedTableStPer::empty();
+    
+    assert_eq!(empty.size(), 0);
+    assert_eq!(empty.find(&1), None);
+    assert_eq!(empty.first_key(), None);
+    assert_eq!(empty.last_key(), None);
+    assert_eq!(empty.previous_key(&1), None);
+    assert_eq!(empty.next_key(&1), None);
+    assert_eq!(empty.select_key(0), None);
+    
+    let domain = empty.domain();
+    assert_eq!(domain.size(), 0);
+    
+    let collected = empty.collect();
+    assert_eq!(collected.length(), 0);
+}
+
+#[test]
+fn test_insert_duplicate_key() {
+    let table = OrderedTableStPer::empty()
+        .insert(1, "first".to_string())
+        .insert(2, "two".to_string())
+        .insert(1, "second".to_string()); // Duplicate key
+
+    // Should overwrite the first value
+    assert_eq!(table.size(), 2);
+    assert_eq!(table.find(&1), Some("second".to_string()));
+    assert_eq!(table.find(&2), Some("two".to_string()));
+}
+
+#[test]
+fn test_large_dataset() {
+    let mut table = OrderedTableStPer::empty();
+    
+    for i in 0..100 {
+        table = table.insert(i, format!("value_{}", i));
+    }
+    
+    assert_eq!(table.size(), 100);
+    assert_eq!(table.first_key(), Some(0));
+    assert_eq!(table.last_key(), Some(99));
+    assert_eq!(table.select_key(50), Some(50));
+    assert_eq!(table.rank_key(&50), 50);
+    
+    // Test filter on large dataset
+    let evens = table.filter(|k, _v| k % 2 == 0);
+    assert_eq!(evens.size(), 50);
+}
+
+#[test]
+fn test_delete_nonexistent() {
+    let table = OrderedTableStPer::empty()
+        .insert(1, "one".to_string())
+        .insert(3, "three".to_string());
+
+    let table2 = table.delete(&2);
+    assert_eq!(table2.size(), 2);
+}

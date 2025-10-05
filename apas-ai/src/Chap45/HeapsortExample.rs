@@ -237,7 +237,7 @@ pub mod HeapsortExample {
         let mut x: i64 = 1;
         for _ in 0..size {
             x = (x * 1103515245 + 12345) % (1i64 << 31); // Linear congruential generator
-            result.push(((x % 1000) as i32));
+            result.push((x % 1000) as i32);
         }
         result
     }

@@ -46,3 +46,73 @@ fn bbalpha_duplicate_insert_is_idempotent() {
     assert_eq!(bst.size(), 1);
     assert_eq!(bst.find(&10), Some(&10));
 }
+
+#[test]
+fn test_empty() {
+    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+    assert_eq!(bst.size(), 0);
+    assert!(bst.is_empty());
+}
+
+#[test]
+fn test_singleton() {
+    let mut bst = BSTreeBBAlpha::new();
+    bst.insert(42);
+    assert_eq!(bst.size(), 1);
+    assert!(bst.contains(&42));
+}
+
+#[test]
+fn test_large_tree() {
+    let mut bst = BSTreeBBAlpha::new();
+    for i in 0..100 {
+        bst.insert(i);
+    }
+    assert_eq!(bst.size(), 100);
+}
+
+#[test]
+fn test_reverse_insert() {
+    let mut bst = BSTreeBBAlpha::new();
+    for i in (0..50).rev() {
+        bst.insert(i);
+    }
+    assert_eq!(bst.size(), 50);
+    assert_eq!(bst.minimum().copied(), Some(0));
+}
+
+#[test]
+fn test_contains_empty() {
+    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+    assert!(!bst.contains(&5));
+}
+
+#[test]
+fn test_negative_numbers() {
+    let mut bst = BSTreeBBAlpha::new();
+    bst.insert(-5);
+    bst.insert(-3);
+    bst.insert(-7);
+    assert!(bst.contains(&-5));
+    assert_eq!(bst.minimum().copied(), Some(-7));
+}
+
+#[test]
+fn test_find() {
+    let mut bst = BSTreeBBAlpha::new();
+    bst.insert(5);
+    bst.insert(3);
+    bst.insert(7);
+    assert_eq!(bst.find(&5), Some(&5));
+    assert_eq!(bst.find(&10), None);
+}
+
+#[test]
+fn test_maximum() {
+    let mut bst = BSTreeBBAlpha::new();
+    bst.insert(5);
+    bst.insert(3);
+    bst.insert(7);
+    bst.insert(9);
+    assert_eq!(bst.maximum().copied(), Some(9));
+}
