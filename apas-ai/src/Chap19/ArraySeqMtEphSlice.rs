@@ -430,10 +430,4 @@ pub mod ArraySeqMtEphSlice {
         ($($x:expr),* $(,)?) => { $crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::ArraySeqMtEphSliceS::from_vec(vec![$($x),*]) };
     }
 
-    #[allow(dead_code)]
-    fn _ArraySeqMtEphSliceSLit_type_checks() {
-        let _ = ArraySeqMtEphSliceSLit![1];
-        let _ = ArraySeqMtEphSliceSLit![0; 2];
-        let _: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceSLit![];
-    }
 }

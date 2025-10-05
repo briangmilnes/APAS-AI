@@ -129,12 +129,4 @@ pub mod BalBinTreeStEph {
         };
     }
 
-    #[allow(dead_code)]
-    fn _BalBinNodeLit_type_checks() {
-        let _: BalBinNode<i32> = BalBinNodeLit!({
-            left: crate::Chap23::BalBinTreeStEph::BalBinTreeStEph::BalBinTree::Leaf,
-            value: 0,
-            right: crate::Chap23::BalBinTreeStEph::BalBinTreeStEph::BalBinTree::Leaf
-        });
-    }
 }

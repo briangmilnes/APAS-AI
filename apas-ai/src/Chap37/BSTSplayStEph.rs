@@ -197,9 +197,4 @@ pub mod BSTSplayStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _BSTSplayStEphLit_type_checks() {
-        let _ = BSTSplayStEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
-        let _: BSTSplayStEph<i32> = BSTSplayStEphLit![]; // empty form requires explicit type
-    }
 }

@@ -188,17 +188,4 @@ pub mod WeightedDirGraphStEphFloat {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _WeightedDirGraphStEphFloatLit_type_checks() {
-        let _ = WeightedDirGraphStEphFloatLit!( V: [1], A: [(1, 2, 10.5)] ); // non-empty infers
-        let _: WeightedDirGraphStEphFloat<i32> = WeightedDirGraphStEphFloatLit!();
-        // empty form requires explicit type
-    }
-
-    #[allow(dead_code)]
-    pub fn __weighted_dir_graph_st_float_macro_typecheck_exercise() {
-        let _g0: WeightedDirGraphStEphFloat<usize> = WeightedDirGraphStEphFloatLit!();
-        let _g1 = WeightedDirGraphStEphFloatLit!( V: [0, 1, 2], A: [(0, 1, 5.5), (1, 2, 3.14)] );
-        let _g2 = WeightedDirGraphStEphFloatLit!( V: ["a", "b"], A: [("a", "b", 42.0)] );
-    }
 }

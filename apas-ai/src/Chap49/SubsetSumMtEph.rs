@@ -181,10 +181,6 @@ pub mod SubsetSumMtEph {
 
     // Note: IntoIterator not implemented for ArraySeqMtEphS, so we don't provide it here
 
-    #[allow(dead_code)]
-    fn _SubsetSumMtEphLit_type_checks() {
-        let _: SubsetSumMtEphS<i32> = SubsetSumMtEphS::from_multiset(ArraySeqMtEphSLit![1, 4, 2, 9]);
-    }
 }
 
 #[macro_export]

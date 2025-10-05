@@ -196,3 +196,90 @@ fn test_simple_integer_hash_macro() {
     assert!(hash_value < table_size);
     assert!(hash_fn.description().contains("Knuth"));
 }
+
+// Dedicated tests for impl_hash_function macro
+
+#[test]
+fn test_impl_hash_function_macro_basic_usage() {
+    // Test the macro-generated SimpleIntegerHash
+    let hash_fn = SimpleIntegerHash;
+    let table_size = 100;
+
+    // Test basic hashing
+    let hash1 = hash_fn.hash(&42, table_size);
+    let hash2 = hash_fn.hash(&42, table_size);
+    assert_eq!(hash1, hash2); // Same input should give same hash
+    assert!(hash1 < table_size);
+
+    // Test different inputs give different hashes (likely)
+    let hash3 = hash_fn.hash(&99, table_size);
+    assert!(hash3 < table_size);
+
+    // Test description
+    let desc = hash_fn.description();
+    assert!(desc.contains("Knuth"));
+    assert!(desc.contains("multiplicative"));
+}
+
+#[test]
+fn test_impl_hash_function_macro_custom_hash() {
+    // Define a custom hash function using the macro
+    apas_ai::impl_hash_function!(
+        CustomTestHash,
+        i32,
+        |key: &i32| (*key as N * 7 + 13),
+        "CustomTestHash (linear function)"
+    );
+
+    let hash_fn = CustomTestHash;
+    let table_size = 50;
+
+    // Test basic properties
+    let hash1 = hash_fn.hash(&10, table_size);
+    let hash2 = hash_fn.hash(&10, table_size);
+    assert_eq!(hash1, hash2); // Deterministic
+    assert!(hash1 < table_size); // Within bounds
+
+    // Manually verify the hash computation: (10 * 7 + 13) % 50 = 83 % 50 = 33
+    assert_eq!(hash1, 33);
+
+    // Test description
+    assert_eq!(hash_fn.description(), "CustomTestHash (linear function)");
+}
+
+#[test]
+fn test_impl_hash_function_macro_edge_cases() {
+    let hash_fn = SimpleIntegerHash;
+
+    // Test with small table sizes
+    assert_eq!(hash_fn.hash(&42, 1), 0); // Any hash mod 1 = 0
+
+    let hash2 = hash_fn.hash(&42, 2);
+    assert!(hash2 < 2); // Either 0 or 1
+
+    // Test with zero
+    let hash_zero = hash_fn.hash(&0, 100);
+    assert!(hash_zero < 100);
+
+    // Test with negative numbers
+    let hash_neg = hash_fn.hash(&-42, 100);
+    assert!(hash_neg < 100);
+}
+
+#[test]
+fn test_impl_hash_function_macro_distribution() {
+    let hash_fn = SimpleIntegerHash;
+    let table_size = 10;
+
+    // Test that different keys hash to different buckets (mostly)
+    let mut seen_hashes = std::collections::HashSet::new();
+    for i in 0..50 {
+        let hash_value = hash_fn.hash(&i, table_size);
+        assert!(hash_value < table_size);
+        seen_hashes.insert(hash_value);
+    }
+
+    // With 50 keys and 10 buckets, we should see most buckets used
+    // (not a strict requirement due to randomness, but likely)
+    assert!(seen_hashes.len() >= 5); // At least half the buckets used
+}

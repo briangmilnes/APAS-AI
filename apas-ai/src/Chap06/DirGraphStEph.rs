@@ -183,15 +183,4 @@ pub mod DirGraphStEph {
             < $crate::Chap06::DirGraphStEph::DirGraphStEph::DirGraphStEph<_> as $crate::Chap06::DirGraphStEph::DirGraphStEph::DirGraphStEphTrait<_> >::FromSets(__V, __A)
         }}}
 
-    #[allow(dead_code)]
-    fn _DirGraphStEphLit_type_checks() {
-        let _ = DirGraphStEphLit!( V: [1], A: [(1,2)] ); // non-empty infers (e.g., i32)
-        let _: DirGraphStEph<i32> = DirGraphStEphLit![]; // empty form requires explicit type
-    }
-
-    #[allow(dead_code)]
-    pub fn __dirgraph_macro_typecheck_exercise() {
-        let _g0: DirGraphStEph<usize> = DirGraphStEphLit!( V: [], A: [] );
-        let _g1 = DirGraphStEphLit!( V: [0,1,2], A: [(0,1),(1,2)] );
-    }
 }

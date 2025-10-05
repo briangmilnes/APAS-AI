@@ -201,23 +201,17 @@ pub mod OptBinSearchTreeStEph {
 
     impl<T: StT> Eq for KeyProb<T> {}
 
-    #[allow(dead_code)]
-    fn _OBSTStEphLit_type_checks() {
-        let keys = vec!['k', '1', 'k', '2'];
-        let probs = vec![prob!(0.125), prob!(0.5)];
-        let _: OBSTStEphS<char> = OBSTStEphS::from_keys_probs(keys, probs);
-    }
 }
 
 #[macro_export]
 macro_rules! OBSTStEphLit {
     (keys: [$($k:expr),* $(,)?], probs: [$($p:expr),* $(,)?]) => {
-        $crate::Chap50::OBSTStEph::OBSTStEph::OBSTStEphS::from_keys_probs(
+        $crate::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph::OBSTStEphS::from_keys_probs(
             vec![$($k),*],
             vec![$(prob!($p)),*]
         )
     };
     () => {
-        $crate::Chap50::OBSTStEph::OBSTStEph::OBSTStEphS::new()
+        $crate::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph::OBSTStEphS::new()
     };
 }

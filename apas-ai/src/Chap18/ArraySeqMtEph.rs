@@ -381,10 +381,4 @@ pub mod ArraySeqMtEph {
         ($($x:expr),* $(,)?) => { $crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS::from_vec(vec![$($x),*]) };
     }
 
-    #[allow(dead_code)]
-    fn _ArraySeqMtEphSLit_type_checks() {
-        let _ = ArraySeqMtEphSLit![1];
-        let _ = ArraySeqMtEphSLit![0; 2];
-        let _: ArraySeqMtEphS<i32> = ArraySeqMtEphSLit![];
-    }
 }

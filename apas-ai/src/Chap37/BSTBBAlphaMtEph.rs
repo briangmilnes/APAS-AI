@@ -261,9 +261,4 @@ pub mod BSTBBAlphaMtEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _BSTBBAlphaMtEphLit_type_checks() {
-        let _ = BSTBBAlphaMtEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
-        let _: BSTBBAlphaMtEph<i32> = BSTBBAlphaMtEphLit![]; // empty form requires explicit type
-    }
 }

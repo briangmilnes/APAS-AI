@@ -3,6 +3,8 @@
 
 use apas_ai::BSTSetBBAlphaMtEphLit;
 use apas_ai::Chap37::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::*;
+use apas_ai::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::BSTBBAlphaMtEphTrait;
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
 use apas_ai::Types::Types::*;
 
 #[test]
@@ -248,4 +250,227 @@ fn test_join_pair() {
     right.insert(6);
     let joined = BSTSetBBAlphaMtEph::join_pair(left, right);
     assert_eq!(joined.size(), 4);
+}
+
+#[test]
+fn test_join_m() {
+    let mut left = BSTSetBBAlphaMtEph::empty();
+    left.insert(1);
+    left.insert(2);
+
+    let mut right = BSTSetBBAlphaMtEph::empty();
+    right.insert(6);
+    right.insert(7);
+
+    let joined = BSTSetBBAlphaMtEph::join_m(left, 5, right);
+    assert_eq!(joined.size(), 5);
+    assert!(joined.contains(&1));
+    assert!(joined.contains(&2));
+    assert!(joined.contains(&5));
+    assert!(joined.contains(&6));
+    assert!(joined.contains(&7));
+}
+
+#[test]
+fn test_join_m_with_empty() {
+    let empty = BSTSetBBAlphaMtEph::empty();
+    let mut right = BSTSetBBAlphaMtEph::empty();
+    right.insert(6);
+    right.insert(7);
+
+    let joined = BSTSetBBAlphaMtEph::join_m(empty, 5, right);
+    assert_eq!(joined.size(), 3);
+    assert!(joined.contains(&5));
+    assert!(joined.contains(&6));
+    assert!(joined.contains(&7));
+}
+
+#[test]
+fn test_as_tree() {
+    let mut set = BSTSetBBAlphaMtEph::empty();
+    set.insert(5);
+    set.insert(3);
+    set.insert(7);
+
+    let tree = set.as_tree();
+    assert_eq!(tree.size(), 3);
+    assert!(tree.contains(&5));
+}
+
+#[test]
+fn test_trait_impl_empty() {
+    let set: BSTSetBBAlphaMtEph<i32> = <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::empty();
+    assert_eq!(set.size(), 0);
+}
+
+#[test]
+fn test_trait_impl_singleton() {
+    let set = <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::singleton(42);
+    assert_eq!(set.size(), 1);
+    assert!(set.contains(&42));
+}
+
+#[test]
+fn test_trait_impl_contains() {
+    let mut set = BSTSetBBAlphaMtEph::empty();
+    set.insert(10);
+    assert!(<BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::contains(&set, &10));
+}
+
+#[test]
+fn test_trait_impl_find() {
+    let mut set = BSTSetBBAlphaMtEph::empty();
+    set.insert(20);
+    assert_eq!(<BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::find(&set, &20), Some(20));
+}
+
+#[test]
+fn test_trait_impl_minimum() {
+    let mut set = BSTSetBBAlphaMtEph::empty();
+    set.insert(5);
+    set.insert(3);
+    set.insert(7);
+    assert_eq!(<BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::minimum(&set), Some(3));
+}
+
+#[test]
+fn test_trait_impl_maximum() {
+    let mut set = BSTSetBBAlphaMtEph::empty();
+    set.insert(5);
+    set.insert(3);
+    set.insert(7);
+    assert_eq!(<BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::maximum(&set), Some(7));
+}
+
+#[test]
+fn test_trait_impl_insert() {
+    let mut set = BSTSetBBAlphaMtEph::empty();
+    <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::insert(&mut set, 15);
+    assert_eq!(set.size(), 1);
+}
+
+#[test]
+fn test_trait_impl_delete() {
+    let mut set = BSTSetBBAlphaMtEph::empty();
+    set.insert(10);
+    set.insert(20);
+    <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::delete(&mut set, &10);
+    assert_eq!(set.size(), 1);
+    assert!(!set.contains(&10));
+}
+
+#[test]
+fn test_trait_impl_union() {
+    let mut set1 = BSTSetBBAlphaMtEph::empty();
+    set1.insert(1);
+    let mut set2 = BSTSetBBAlphaMtEph::empty();
+    set2.insert(2);
+
+    let result = <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::union(&set1, &set2);
+    assert_eq!(result.size(), 2);
+}
+
+#[test]
+fn test_trait_impl_intersection() {
+    let mut set1 = BSTSetBBAlphaMtEph::empty();
+    set1.insert(1);
+    set1.insert(2);
+    let mut set2 = BSTSetBBAlphaMtEph::empty();
+    set2.insert(2);
+    set2.insert(3);
+
+    let result = <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::intersection(&set1, &set2);
+    assert_eq!(result.size(), 1);
+    assert!(result.contains(&2));
+}
+
+#[test]
+fn test_trait_impl_difference() {
+    let mut set1 = BSTSetBBAlphaMtEph::empty();
+    set1.insert(1);
+    set1.insert(2);
+    let mut set2 = BSTSetBBAlphaMtEph::empty();
+    set2.insert(2);
+
+    let result = <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::difference(&set1, &set2);
+    assert_eq!(result.size(), 1);
+    assert!(result.contains(&1));
+}
+
+#[test]
+fn test_trait_impl_split() {
+    let mut set = BSTSetBBAlphaMtEph::empty();
+    set.insert(1);
+    set.insert(5);
+    set.insert(10);
+
+    let (left, found, right) = <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::split(&set, &5);
+    assert!(found);
+    assert_eq!(left.size(), 1);
+    assert_eq!(right.size(), 1);
+}
+
+#[test]
+fn test_trait_impl_join_pair() {
+    let mut left = BSTSetBBAlphaMtEph::empty();
+    left.insert(1);
+    let mut right = BSTSetBBAlphaMtEph::empty();
+    right.insert(5);
+
+    let result = <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::join_pair(left, right);
+    assert_eq!(result.size(), 2);
+}
+
+#[test]
+fn test_trait_impl_join_m() {
+    let mut left = BSTSetBBAlphaMtEph::empty();
+    left.insert(1);
+    let mut right = BSTSetBBAlphaMtEph::empty();
+    right.insert(5);
+
+    let result = <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::join_m(left, 3, right);
+    assert_eq!(result.size(), 3);
+    assert!(result.contains(&3));
+}
+
+#[test]
+fn test_trait_impl_filter() {
+    let mut set = BSTSetBBAlphaMtEph::empty();
+    set.insert(1);
+    set.insert(2);
+    set.insert(3);
+
+    let result = <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::filter(&set, |x| x % 2 == 1);
+    assert_eq!(result.size(), 2);
+}
+
+#[test]
+fn test_trait_impl_reduce() {
+    let mut set = BSTSetBBAlphaMtEph::empty();
+    set.insert(1);
+    set.insert(2);
+    set.insert(3);
+
+    let sum = <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::reduce(&set, |a, b| a + b, 0);
+    assert_eq!(sum, 6);
+}
+
+#[test]
+fn test_trait_impl_iter_in_order() {
+    let mut set = BSTSetBBAlphaMtEph::empty();
+    set.insert(3);
+    set.insert(1);
+    set.insert(2);
+
+    let seq = <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::iter_in_order(&set);
+    assert_eq!(seq.length(), 3);
+}
+
+#[test]
+fn test_trait_impl_as_tree() {
+    let mut set = BSTSetBBAlphaMtEph::empty();
+    set.insert(5);
+
+    let tree = <BSTSetBBAlphaMtEph<i32> as BSTSetBBAlphaMtEphTrait<i32>>::as_tree(&set);
+    assert_eq!(tree.size(), 1);
 }

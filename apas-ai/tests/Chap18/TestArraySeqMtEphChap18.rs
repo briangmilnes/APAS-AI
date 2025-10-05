@@ -167,3 +167,73 @@
         assert_eq!(single.nth_cloned(0), 42);
     }
 
+    #[test]
+    fn test_subseq_copy() {
+        let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        let sub = seq.subseq_copy(3, 4);
+        assert_eq!(sub.length(), 4);
+        assert_eq!(sub.nth_cloned(0), 3);
+        assert_eq!(sub.nth_cloned(3), 6);
+    }
+
+    #[test]
+    fn test_ninject() {
+        let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3, 4, 5]);
+        let updates = ArraySeqMtEphS::from_vec(vec![Pair(1, 10), Pair(3, 30)]);
+        let result = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::ninject(&seq, &updates);
+        assert_eq!(result.nth_cloned(1), 10);
+        assert_eq!(result.nth_cloned(3), 30);
+    }
+
+    #[test]
+    fn test_collect_mt_eph() {
+        let pairs: ArraySeqMtEphS<Pair<N, N>> = ArraySeqMtEphS::from_vec(vec![
+            Pair(1, 10),
+            Pair(2, 20),
+            Pair(1, 11),
+        ]);
+        let grouped = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::collect(&pairs, |a, b| a.cmp(b));
+        assert_eq!(grouped.length(), 2);
+    }
+
+    #[test]
+    fn test_clone_mt_eph() {
+        let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
+        let cloned = seq.clone();
+        assert_eq!(seq, cloned);
+    }
+
+    #[test]
+    fn test_partial_eq_mt_eph() {
+        let seq1: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
+        let seq2: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
+        let seq3: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 4]);
+        assert_eq!(seq1, seq2);
+        assert_ne!(seq1, seq3);
+    }
+
+    #[test]
+    fn test_display_mt_eph() {
+        let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
+        let display_str = format!("{}", seq);
+        assert!(display_str.contains("1"));
+        assert!(display_str.contains("2"));
+        assert!(display_str.contains("3"));
+    }
+
+    #[test]
+    fn test_to_vec() {
+        let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3, 4, 5]);
+        let vec = seq.to_vec();
+        assert_eq!(vec, vec![1, 2, 3, 4, 5]);
+    }
+
+    #[test]
+    fn test_iter_cloned() {
+        let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3, 4, 5]);
+        let vec = seq.iter_cloned();
+        assert_eq!(vec.len(), 5);
+        assert_eq!(vec[0], 1);
+        assert_eq!(vec[4], 5);
+    }
+

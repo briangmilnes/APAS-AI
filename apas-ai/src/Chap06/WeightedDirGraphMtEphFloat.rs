@@ -193,9 +193,4 @@ pub mod WeightedDirGraphMtEphFloat {
         }};
     }
 
-    #[allow(dead_code)]
-    pub fn __weighted_dir_graph_mt_float_macro_typecheck_exercise() {
-        let _g0: WeightedDirGraphMtEphFloat<usize> = WeightedDirGraphMtEphFloatLit!();
-        let _g1 = WeightedDirGraphMtEphFloatLit!( V: [0, 1, 2], A: [(0, 1, 5.5), (1, 2, 3.14)] );
-    }
 }

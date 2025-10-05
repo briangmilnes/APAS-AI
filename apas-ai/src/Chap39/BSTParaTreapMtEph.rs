@@ -449,9 +449,4 @@ pub mod BSTParaTreapMtEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _ParamTreapLit_type_checks() {
-        let _ = ParamTreapLit![1, 2, 3];
-        let _: ParamTreap<i32> = ParamTreapLit![];
-    }
 }

@@ -298,9 +298,4 @@ pub mod AVLTreeSetMtEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _AVLTreeSetMtEphLit_type_checks() {
-        let _: AVLTreeSetMtEph<i32> = AVLTreeSetMtEphLit![];
-        let _: AVLTreeSetMtEph<i32> = AVLTreeSetMtEphLit![1, 2, 3];
-    }
 }

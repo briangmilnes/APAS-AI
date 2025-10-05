@@ -123,16 +123,4 @@ pub mod MappingStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _MappingLit_type_checks() {
-        let _ = MappingLit![(1, "a")]; // non-empty infers (e.g., i32, &str)
-        let _: Mapping<i32, &str> = MappingLit![]; // empty form requires explicit type
-    }
-
-    #[allow(dead_code)]
-    pub fn __mapping_macro_typecheck_exercise() {
-        let _m0: Mapping<usize, char> = MappingLit![];
-        let _m1 = MappingLit![(0, 'a')];
-        let _m2 = MappingLit![(0, 'a'), (1, 'b')];
-    }
 }

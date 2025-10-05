@@ -278,9 +278,4 @@ pub mod BSTRBStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _BSTRBStEphLit_type_checks() {
-        let _ = BSTRBStEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
-        let _: BSTRBStEph<i32> = BSTRBStEphLit![]; // empty form requires explicit type
-    }
 }

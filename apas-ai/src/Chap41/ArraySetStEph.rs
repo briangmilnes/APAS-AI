@@ -158,9 +158,4 @@ pub mod ArraySetStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _ArraySetStEphLit_type_checks() {
-        let _: ArraySetStEph<i32> = ArraySetStEphLit![];
-        let _: ArraySetStEph<i32> = ArraySetStEphLit![1, 2, 3];
-    }
 }

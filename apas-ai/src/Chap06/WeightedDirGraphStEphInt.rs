@@ -118,16 +118,4 @@ pub mod WeightedDirGraphStEphInt {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _WeightedDirGraphStEphIntLit_type_checks() {
-        let _ = WeightedDirGraphStEphIntLit!( V: [1], E: [(1, 2, 10)] ); // non-empty infers
-        let _: WeightedDirGraphStEphInt<i32> = WeightedDirGraphStEphIntLit!(); // empty form requires explicit type
-    }
-
-    #[allow(dead_code)]
-    pub fn __weighted_dir_graph_st_int_macro_typecheck_exercise() {
-        let _g0: WeightedDirGraphStEphInt<usize> = WeightedDirGraphStEphIntLit!();
-        let _g1 = WeightedDirGraphStEphIntLit!( V: [0, 1, 2], E: [(0, 1, 5), (1, 2, 3)] );
-        let _g2 = WeightedDirGraphStEphIntLit!( V: ["a", "b"], E: [("a", "b", 42)] );
-    }
 }

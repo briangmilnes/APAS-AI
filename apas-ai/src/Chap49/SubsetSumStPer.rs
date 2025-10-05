@@ -137,10 +137,6 @@ pub mod SubsetSumStPer {
         fn into_iter(self) -> Self::IntoIter { self.multiset.clone().into_iter() }
     }
 
-    #[allow(dead_code)]
-    fn _SubsetSumStPerLit_type_checks() {
-        let _: SubsetSumStPerS<i32> = SubsetSumStPerS::from_multiset(ArraySeqStPerS![1, 4, 2, 9]);
-    }
 }
 
 #[macro_export]

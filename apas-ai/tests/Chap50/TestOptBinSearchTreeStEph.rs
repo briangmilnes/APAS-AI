@@ -3,7 +3,7 @@
 
 use apas_ai::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph::*;
 use apas_ai::Chap50::Probability::Probability::Probability;
-use apas_ai::prob;
+use apas_ai::{prob, OBSTStEphLit};
 
 #[test]
 fn test_new_empty_obst() {
@@ -318,4 +318,46 @@ fn test_zero_probability() {
 
     let cost = obst.optimal_cost();
     assert!(cost.value() >= 0.0);
+}
+
+#[test]
+fn test_obststephlit_macro_empty() {
+    let obst: OBSTStEphS<i32> = OBSTStEphLit!();
+    assert_eq!(obst.num_keys(), 0);
+}
+
+#[test]
+fn test_obststephlit_macro_single_key() {
+    let mut obst = OBSTStEphLit!(keys: [1], probs: [1.0]);
+    assert_eq!(obst.num_keys(), 1);
+    let cost = obst.optimal_cost();
+    assert_eq!(cost, prob!(1.0));
+}
+
+#[test]
+fn test_obststephlit_macro_multiple_keys() {
+    let mut obst = OBSTStEphLit!(keys: [1, 2, 3], probs: [0.2, 0.5, 0.3]);
+    assert_eq!(obst.num_keys(), 3);
+    let cost = obst.optimal_cost();
+    assert!(cost.value() > 0.0);
+}
+
+#[test]
+fn test_obststephlit_macro_trailing_comma() {
+    let mut obst = OBSTStEphLit!(keys: [10, 20,], probs: [0.4, 0.6,]);
+    assert_eq!(obst.num_keys(), 2);
+    let keys = obst.keys();
+    assert_eq!(keys[0].key, 10);
+    assert_eq!(keys[1].key, 20);
+}
+
+#[test]
+fn test_obststephlit_macro_string_keys() {
+    let mut obst = OBSTStEphLit!(
+        keys: ["a".to_string(), "b".to_string()],
+        probs: [0.3, 0.7]
+    );
+    assert_eq!(obst.num_keys(), 2);
+    let cost = obst.optimal_cost();
+    assert!(cost.value() > 0.0);
 }

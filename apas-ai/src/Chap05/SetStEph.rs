@@ -275,16 +275,4 @@ pub mod SetStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _SetLit_type_checks() {
-        let _ = SetLit![1]; // non-empty infers (e.g., i32)
-        let _: Set<i32> = SetLit![]; // empty form requires explicit type
-    }
-
-    #[allow(dead_code)]
-    pub fn __set_macro_typecheck_exercise() {
-        let _s0: Set<&'static str> = SetLit![];
-        let _s1 = SetLit!("only");
-        let _s2 = SetLit!("a", "b", "c");
-    }
 }

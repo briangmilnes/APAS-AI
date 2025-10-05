@@ -215,12 +215,6 @@ pub mod MinEditDistStEph {
         }
     }
 
-    #[allow(dead_code)]
-    fn _MinEditDistStEphLit_type_checks() {
-        let source = ArraySeqStEphS!['A', 'B', 'C', 'A', 'D', 'A'];
-        let target = ArraySeqStEphS!['A', 'B', 'A', 'D', 'C'];
-        let _: MinEditDistStEphS<char> = MinEditDistStEphS::from_sequences(source, target);
-    }
 }
 
 #[macro_export]

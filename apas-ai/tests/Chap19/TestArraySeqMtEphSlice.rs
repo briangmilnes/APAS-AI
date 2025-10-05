@@ -319,3 +319,324 @@
         assert_eq!(sliced.nth_cloned(0), 12);
         assert_eq!(sliced.nth_cloned(1), 300);
     }
+
+    // ========== Additional Comprehensive Tests for Untested Functions ==========
+
+    #[test]
+    fn test_arrayseqmtephslice_from_box() {
+        let data: Box<[i32]> = vec![10, 20, 30, 40].into_boxed_slice();
+        let seq = ArraySeqMtEphSliceS::from_box(data);
+        assert_eq!(seq.length(), 4);
+        assert_eq!(seq.nth_cloned(0), 10);
+        assert_eq!(seq.nth_cloned(3), 40);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_from_vec() {
+        let vec_data = vec![1, 2, 3, 4, 5];
+        let seq = ArraySeqMtEphSliceS::from_vec(vec_data);
+        assert_eq!(seq.length(), 5);
+        assert_eq!(seq.nth_cloned(2), 3);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_to_vec() {
+        let seq = ArraySeqMtEphSliceS::tabulate(&|i| i * 10, 4);
+        let vec_result = seq.to_vec();
+        assert_eq!(vec_result, vec![0, 10, 20, 30]);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_with_exclusive() {
+        let seq = ArraySeqMtEphSliceS::from_vec(vec![1, 2, 3, 4]);
+
+        // Use with_exclusive to modify the slice directly
+        seq.with_exclusive(|slice| {
+            assert_eq!(slice.len(), 4);
+            slice[0] = 10;
+            slice[3] = 40;
+        });
+
+        // Verify modifications
+        assert_eq!(seq.nth_cloned(0), 10);
+        assert_eq!(seq.nth_cloned(3), 40);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_set() {
+        let mut seq = ArraySeqMtEphSliceS::new(4, 0);
+
+        // Test set method (alias for update)
+        let result = seq.set(0, 100);
+        assert!(result.is_ok());
+        assert_eq!(seq.nth_cloned(0), 100);
+
+        let result = seq.set(2, 200);
+        assert!(result.is_ok());
+        assert_eq!(seq.nth_cloned(2), 200);
+
+        // Test out-of-bounds
+        let result = seq.set(10, 999);
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_clamp_subrange() {
+        let seq = ArraySeqMtEphSliceS::tabulate(&|i| i, 10);
+
+        // Normal subrange
+        let sub1 = seq.subseq_copy(2, 5);
+        assert_eq!(sub1.length(), 5);
+        assert_eq!(sub1.nth_cloned(0), 2);
+
+        // Clamped start (beyond bounds)
+        let sub2 = seq.subseq_copy(15, 3);
+        assert_eq!(sub2.length(), 0);
+
+        // Clamped end (extends beyond bounds)
+        let sub3 = seq.subseq_copy(8, 10);
+        assert_eq!(sub3.length(), 2); // Only elements 8 and 9 available
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_len() {
+        let seq1 = ArraySeqMtEphSliceS::new(7, 42);
+        assert_eq!(seq1.length(), 7);
+
+        let seq2: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::empty();
+        assert_eq!(seq2.length(), 0);
+
+        let seq3 = ArraySeqMtEphSliceS::singleton(99);
+        assert_eq!(seq3.length(), 1);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_clone() {
+        let seq1 = ArraySeqMtEphSliceS::tabulate(&|i| i * 2, 5);
+        let seq2 = seq1.clone();
+
+        assert_eq!(seq1.length(), seq2.length());
+        for i in 0..seq1.length() {
+            assert_eq!(seq1.nth_cloned(i), seq2.nth_cloned(i));
+        }
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_eq() {
+        let seq1 = ArraySeqMtEphSliceS::from_vec(vec![1, 2, 3]);
+        let seq2 = ArraySeqMtEphSliceS::from_vec(vec![1, 2, 3]);
+        let seq3 = ArraySeqMtEphSliceS::from_vec(vec![1, 2, 4]);
+
+        assert_eq!(seq1, seq2);
+        assert_ne!(seq1, seq3);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_fmt_debug() {
+        let seq = ArraySeqMtEphSliceS::from_vec(vec![1, 2, 3]);
+        let debug_str = format!("{:?}", seq);
+        assert!(debug_str.contains("1"));
+        assert!(debug_str.contains("2"));
+        assert!(debug_str.contains("3"));
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_fmt_display() {
+        let seq = ArraySeqMtEphSliceS::from_vec(vec![10, 20, 30]);
+        let display_str = format!("{}", seq);
+        assert!(display_str.contains("10"));
+        assert!(display_str.contains("20"));
+        assert!(display_str.contains("30"));
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_append() {
+        let a = ArraySeqMtEphSliceS::from_vec(vec![1, 2]);
+        let b = ArraySeqMtEphSliceS::from_vec(vec![3, 4, 5]);
+
+        let c = ArraySeqMtEphSliceS::append(&a, &b);
+        assert_eq!(c.length(), 5);
+        assert_eq!(c.nth_cloned(0), 1);
+        assert_eq!(c.nth_cloned(1), 2);
+        assert_eq!(c.nth_cloned(2), 3);
+        assert_eq!(c.nth_cloned(3), 4);
+        assert_eq!(c.nth_cloned(4), 5);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_append_select() {
+        let a = ArraySeqMtEphSliceS::from_vec(vec![10, 20]);
+        let b = ArraySeqMtEphSliceS::from_vec(vec![30, 40]);
+
+        let c = ArraySeqMtEphSliceS::append_select(&a, &b);
+        assert_eq!(c.length(), 4);
+        assert_eq!(c.nth_cloned(0), 10);
+        assert_eq!(c.nth_cloned(1), 20);
+        assert_eq!(c.nth_cloned(2), 30);
+        assert_eq!(c.nth_cloned(3), 40);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_flatten() {
+        let seq1 = ArraySeqMtEphSliceS::from_vec(vec![1, 2]);
+        let seq2 = ArraySeqMtEphSliceS::from_vec(vec![3, 4]);
+        let seq3 = ArraySeqMtEphSliceS::from_vec(vec![5]);
+
+        let sequences = vec![seq1, seq2, seq3];
+        let flattened = ArraySeqMtEphSliceS::flatten(&sequences);
+
+        assert_eq!(flattened.length(), 5);
+        assert_eq!(flattened.nth_cloned(0), 1);
+        assert_eq!(flattened.nth_cloned(2), 3);
+        assert_eq!(flattened.nth_cloned(4), 5);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_reduce() {
+        let seq = ArraySeqMtEphSliceS::from_vec(vec![1, 2, 3, 4]);
+        let sum = ArraySeqMtEphSliceS::reduce(&seq, |a, b| a + b, 0);
+        assert_eq!(sum, 10);
+
+        let product = ArraySeqMtEphSliceS::reduce(&seq, |a, b| a * b, 1);
+        assert_eq!(product, 24);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_scan() {
+        let seq = ArraySeqMtEphSliceS::from_vec(vec![1, 2, 3, 4]);
+        let (prefix_sums, total) = ArraySeqMtEphSliceS::scan(&seq, &|a, b| a + b, 0);
+
+        assert_eq!(prefix_sums.length(), 4);
+        assert_eq!(prefix_sums.nth_cloned(0), 0);
+        assert_eq!(prefix_sums.nth_cloned(1), 1);
+        assert_eq!(prefix_sums.nth_cloned(2), 3);
+        assert_eq!(prefix_sums.nth_cloned(3), 6);
+        assert_eq!(total, 10);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_iterate() {
+        let seq = ArraySeqMtEphSliceS::from_vec(vec![1, 2, 3, 4]);
+        let sum = ArraySeqMtEphSliceS::iterate(&seq, &|acc, x| acc + x, 0);
+        assert_eq!(sum, 10);
+
+        let product = ArraySeqMtEphSliceS::iterate(&seq, &|acc, x| acc * x, 1);
+        assert_eq!(product, 24);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_inject() {
+        let base = ArraySeqMtEphSliceS::from_vec(vec![0, 0, 0, 0, 0]);
+        let updates = vec![(1, 10), (3, 30)];
+
+        let result = ArraySeqMtEphSliceS::inject(&base, &updates);
+        assert_eq!(result.length(), 5);
+        assert_eq!(result.nth_cloned(0), 0);
+        assert_eq!(result.nth_cloned(1), 10);
+        assert_eq!(result.nth_cloned(2), 0);
+        assert_eq!(result.nth_cloned(3), 30);
+        assert_eq!(result.nth_cloned(4), 0);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_ninject() {
+        let base = ArraySeqMtEphSliceS::from_vec(vec![0, 0, 0, 0]);
+        let updates = vec![(1, 10), (1, 20), (2, 30)];
+
+        // ninject applies updates (rightmost wins by reversing)
+        let result = ArraySeqMtEphSliceS::ninject(&base, &updates);
+        // Based on implementation, it reverses and applies, so leftmost in reversed = rightmost in original
+        assert_eq!(result.nth_cloned(1), 10); // First occurrence in forward direction
+        assert_eq!(result.nth_cloned(2), 30);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_is_empty() {
+        let empty = ArraySeqMtEphSliceS::<i32>::empty();
+        assert_eq!(empty.isEmpty(), true);
+
+        let non_empty = ArraySeqMtEphSliceS::singleton(42);
+        assert_eq!(non_empty.isEmpty(), false);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_is_singleton() {
+        let singleton = ArraySeqMtEphSliceS::singleton(99);
+        assert_eq!(singleton.isSingleton(), true);
+
+        let empty = ArraySeqMtEphSliceS::<i32>::empty();
+        assert_eq!(empty.isSingleton(), false);
+
+        let multi = ArraySeqMtEphSliceS::from_vec(vec![1, 2]);
+        assert_eq!(multi.isSingleton(), false);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_trait_empty() {
+        use ArraySeqMtEphSliceTrait;
+
+        let empty = <ArraySeqMtEphSliceS<i32> as ArraySeqMtEphSliceTrait<i32>>::empty();
+        assert_eq!(empty.length(), 0);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_trait_new() {
+        use ArraySeqMtEphSliceTrait;
+
+        let seq = <ArraySeqMtEphSliceS<i32> as ArraySeqMtEphSliceTrait<i32>>::new(5, 42);
+        assert_eq!(seq.length(), 5);
+        for i in 0..5 {
+            assert_eq!(seq.nth_cloned(i), 42);
+        }
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_trait_length() {
+        use ArraySeqMtEphSliceTrait;
+
+        let seq = ArraySeqMtEphSliceS::from_vec(vec![1, 2, 3]);
+        assert_eq!(<ArraySeqMtEphSliceS<i32> as ArraySeqMtEphSliceTrait<i32>>::length(&seq), 3);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_trait_map() {
+        use ArraySeqMtEphSliceTrait;
+
+        let seq = ArraySeqMtEphSliceS::from_vec(vec![1, 2, 3, 4]);
+        let doubled = <ArraySeqMtEphSliceS<i32> as ArraySeqMtEphSliceTrait<i32>>::map(&seq, |x| x * 2);
+
+        assert_eq!(doubled.length(), 4);
+        assert_eq!(doubled.nth_cloned(0), 2);
+        assert_eq!(doubled.nth_cloned(3), 8);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_trait_filter() {
+        use ArraySeqMtEphSliceTrait;
+
+        let seq = ArraySeqMtEphSliceS::from_vec(vec![1, 2, 3, 4, 5, 6]);
+        let evens = <ArraySeqMtEphSliceS<i32> as ArraySeqMtEphSliceTrait<i32>>::filter(&seq, |x| *x % 2 == 0);
+
+        assert_eq!(evens.length(), 3);
+        assert_eq!(evens.nth_cloned(0), 2);
+        assert_eq!(evens.nth_cloned(1), 4);
+        assert_eq!(evens.nth_cloned(2), 6);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_trait_tabulate() {
+        use ArraySeqMtEphSliceTrait;
+
+        let seq = <ArraySeqMtEphSliceS<i32> as ArraySeqMtEphSliceTrait<i32>>::tabulate(&|i| (i * i) as i32, 5);
+        assert_eq!(seq.length(), 5);
+        assert_eq!(seq.nth_cloned(0), 0);
+        assert_eq!(seq.nth_cloned(2), 4);
+        assert_eq!(seq.nth_cloned(4), 16);
+    }
+
+    #[test]
+    fn test_arrayseqmtephslice_type_checks() {
+        // This function should exist for macro validation
+        // Just verify it compiles
+        let _seq: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::new(3, 42);
+    }

@@ -129,16 +129,4 @@ pub mod RelationStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _RelationLit_type_checks() {
-        let _ = RelationLit![(1, "a")]; // non-empty infers (e.g., i32, &str)
-        let _: Relation<i32, &str> = RelationLit![]; // empty form requires explicit type
-    }
-
-    #[allow(dead_code)]
-    pub fn __relation_macro_typecheck_exercise() {
-        let _r0: Relation<usize, char> = RelationLit![];
-        let _r1 = RelationLit![(0, 'a')];
-        let _r2 = RelationLit![(0, 'a'), (1, 'b')];
-    }
 }

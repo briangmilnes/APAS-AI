@@ -248,15 +248,4 @@ pub mod UnDirGraphMtEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _UnDirGraphMtEphLit_type_checks() {
-        let _ = UnDirGraphMtEphLit!( V: [1], E: [(1, 2)] ); // non-empty infers
-        let _: UnDirGraphMtEph<i32> = UnDirGraphMtEphLit![]; // empty form requires explicit type
-    }
-
-    #[allow(dead_code)]
-    pub fn __undirgraph_mt_macro_typecheck_exercise() {
-        let _g0: UnDirGraphMtEph<usize> = UnDirGraphMtEphLit!( V: [], E: [] );
-        let _g1 = UnDirGraphMtEphLit!( V: [0, 1, 2], E: [(0, 1), (1, 2)] );
-    }
 }

@@ -359,9 +359,4 @@ pub mod BSTSetPlainMtEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _BSTSetPlainMtEphLit_type_checks() {
-        let _ = BSTSetPlainMtEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
-        let _: BSTSetPlainMtEph<i32> = BSTSetPlainMtEphLit![]; // empty form requires explicit type
-    }
 }

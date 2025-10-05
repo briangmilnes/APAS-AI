@@ -395,15 +395,4 @@ pub mod AugOrderedTableStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _AugOrderedTableStEphLit_type_checks() {
-        let sum_reducer = |a: &i32, b: &i32| a + b;
-        let _: AugOrderedTableStEph<i32, i32, _> = AugOrderedTableStEphLit![
-            reducer: sum_reducer, identity: 0,
-            1 => 10, 2 => 20
-        ];
-        let _: AugOrderedTableStEph<i32, i32, _> = AugOrderedTableStEphLit![
-            reducer: sum_reducer, identity: 0
-        ];
-    }
 }

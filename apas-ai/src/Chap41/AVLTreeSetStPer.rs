@@ -219,9 +219,4 @@ pub mod AVLTreeSetStPer {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _AVLTreeSetStPerLit_type_checks() {
-        let _: AVLTreeSetStPer<i32> = AVLTreeSetStPerLit![];
-        let _: AVLTreeSetStPer<i32> = AVLTreeSetStPerLit![1, 2, 3];
-    }
 }

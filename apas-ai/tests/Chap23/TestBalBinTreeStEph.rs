@@ -4,7 +4,9 @@ use apas_ai::Chap23::BalBinTreeStEph::BalBinTreeStEph::*;
 use apas_ai::Chap37::BSTPlainStEph::BSTPlainStEph::*;
 use apas_ai::Types::Types::*;
 
-// Note: BalBinNodeLit macro uses private constructor and cannot be tested externally
+// Note: BalBinNodeLit macro cannot be tested externally because BalBinNode::new() is private
+// and the struct fields (left, value, right) are pub(crate) only.
+// The macro is meant for internal use within the BalBinTreeStEph module.
 
 #[test]
 fn inorder_and_preorder_traversals_match_definitions() {

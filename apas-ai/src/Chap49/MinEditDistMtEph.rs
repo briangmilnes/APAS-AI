@@ -204,12 +204,6 @@ pub mod MinEditDistMtEph {
 
     // Note: IntoIterator not implemented for ArraySeqMtEphS, so we don't provide it here
 
-    #[allow(dead_code)]
-    fn _MinEditDistMtEphLit_type_checks() {
-        let source = ArraySeqMtEphSLit!['A', 'B', 'C', 'A', 'D', 'A'];
-        let target = ArraySeqMtEphSLit!['A', 'B', 'A', 'D', 'C'];
-        let _: MinEditDistMtEphS<char> = MinEditDistMtEphS::from_sequences(source, target);
-    }
 }
 
 #[macro_export]

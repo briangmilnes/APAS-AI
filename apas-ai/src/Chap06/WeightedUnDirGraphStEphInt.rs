@@ -116,10 +116,4 @@ pub mod WeightedUnDirGraphStEphInt {
         }};
     }
 
-    #[allow(dead_code)]
-    pub fn __weighted_undir_graph_st_int_macro_typecheck_exercise() {
-        let _g0: WeightedUnDirGraphStEphInt<usize> = WeightedUnDirGraphStEphIntLit!();
-        let _g1 = WeightedUnDirGraphStEphIntLit!( V: [0, 1, 2], E: [(0, 1, 5), (1, 2, 3)] );
-        let _g2 = WeightedUnDirGraphStEphIntLit!( V: ["a", "b"], E: [("a", "b", 42)] );
-    }
 }

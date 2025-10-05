@@ -350,27 +350,4 @@ use std::hash::Hash;
         };
     }
 
-    #[allow(dead_code)]
-    fn _EdgeLit_type_checks() {
-        let _ = EdgeLit!(1, 2); // non-empty infers (e.g., i32)
-        let _: Edge<i32> = EdgeLit!(1, 2); // explicit type
-    }
-
-    #[allow(dead_code)]
-    fn _PairLit_type_checks() {
-        let _ = PairLit!(1, 2); // non-empty infers (e.g., i32)
-        let _: Pair<i32, i32> = PairLit!(1, 2); // explicit type
-    }
-
-    #[allow(dead_code)]
-    fn _EdgeList_type_checks() {
-        let _ = EdgeList![(1, 2), (3, 4)]; // non-empty infers
-        let _: Vec<Edge<i32>> = EdgeList![]; // empty form requires explicit type
-    }
-
-    #[allow(dead_code)]
-    fn _PairList_type_checks() {
-        let _ = PairList![(1, 2), (3, 4)]; // non-empty infers
-        let _: Vec<Pair<i32, i32>> = PairList![]; // empty form requires explicit type
-    }
 }

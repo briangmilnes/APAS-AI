@@ -146,9 +146,4 @@ pub mod WeightedUnDirGraphMtEphFloat {
         }};
     }
 
-    #[allow(dead_code)]
-    pub fn __weighted_undir_graph_mt_float_macro_typecheck_exercise() {
-        let _g0: WeightedUnDirGraphMtEphFloat<usize> = WeightedUnDirGraphMtEphFloatLit!();
-        let _g1 = WeightedUnDirGraphMtEphFloatLit!( V: [0, 1, 2], E: [(0, 1, 5.5), (1, 2, 3.14)] );
-    }
 }

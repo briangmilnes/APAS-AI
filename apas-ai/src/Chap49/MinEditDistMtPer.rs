@@ -165,12 +165,6 @@ pub mod MinEditDistMtPer {
 
     // Note: IntoIterator not implemented for ArraySeqMtPerS, so we don't provide it here
 
-    #[allow(dead_code)]
-    fn _MinEditDistMtPerLit_type_checks() {
-        let source = ArraySeqMtPerS::from_vec(vec!['A', 'B', 'C', 'A', 'D', 'A']);
-        let target = ArraySeqMtPerS::from_vec(vec!['A', 'B', 'A', 'D', 'C']);
-        let _: MinEditDistMtPerS<char> = MinEditDistMtPerS::from_sequences(source, target);
-    }
 }
 
 #[macro_export]

@@ -254,3 +254,171 @@ fn test_iterator_collects_in_order() {
     let collected: Vec<N> = s.iter().copied().collect();
     assert_eq!(collected, vec![1, 2, 3, 4]);
 }
+
+// ========== Additional Comprehensive Tests for Untested Functions ==========
+
+#[test]
+fn test_arrayseqstper_trait_empty() {
+    let empty = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::empty();
+    assert_eq!(empty.length(), 0);
+    assert!(<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::isEmpty(&empty));
+}
+
+#[test]
+fn test_arrayseqstper_trait_new() {
+    let seq = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::new(5, 42);
+    assert_eq!(seq.length(), 5);
+    for i in 0..5 {
+        assert_eq!(*seq.nth(i), 42);
+    }
+}
+
+#[test]
+fn test_arrayseqstper_trait_singleton() {
+    let seq = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::singleton(99);
+    assert_eq!(seq.length(), 1);
+    assert_eq!(*seq.nth(0), 99);
+    assert!(<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::isSingleton(&seq));
+}
+
+#[test]
+fn test_arrayseqstper_trait_length() {
+    let seq = ArraySeqStPerSLit![1, 2, 3, 4];
+    assert_eq!(<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::length(&seq), 4);
+}
+
+#[test]
+fn test_arrayseqstper_trait_nth() {
+    let seq = ArraySeqStPerSLit![10, 20, 30];
+    assert_eq!(*<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::nth(&seq, 0), 10);
+    assert_eq!(*<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::nth(&seq, 2), 30);
+}
+
+#[test]
+fn test_arrayseqstper_trait_tabulate() {
+    let seq = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::tabulate(&|i| (i * 3) as i32, 5);
+    assert_eq!(seq.length(), 5);
+    assert_eq!(*seq.nth(0), 0);
+    assert_eq!(*seq.nth(2), 6);
+    assert_eq!(*seq.nth(4), 12);
+}
+
+#[test]
+fn test_arrayseqstper_trait_map() {
+    let seq = ArraySeqStPerSLit![1, 2, 3, 4];
+    let doubled = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&seq, &|x| x * 2);
+    assert_eq!(doubled.length(), 4);
+    assert_eq!(*doubled.nth(0), 2);
+    assert_eq!(*doubled.nth(3), 8);
+}
+
+#[test]
+fn test_arrayseqstper_trait_filter() {
+    let seq = ArraySeqStPerSLit![1, 2, 3, 4, 5, 6];
+    let evens = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&seq, &|x| *x % 2 == 0);
+    assert_eq!(evens.length(), 3);
+    assert_eq!(*evens.nth(0), 2);
+    assert_eq!(*evens.nth(1), 4);
+    assert_eq!(*evens.nth(2), 6);
+}
+
+#[test]
+fn test_arrayseqstper_trait_append() {
+    let a = ArraySeqStPerSLit![1, 2];
+    let b = ArraySeqStPerSLit![3, 4, 5];
+    let c = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&a, &b);
+    assert_eq!(c.length(), 5);
+    assert_eq!(*c.nth(0), 1);
+    assert_eq!(*c.nth(4), 5);
+}
+
+#[test]
+fn test_arrayseqstper_trait_append_select() {
+    let a = ArraySeqStPerSLit![10, 20];
+    let b = ArraySeqStPerSLit![30, 40];
+    let c = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append_select(&a, &b);
+    assert_eq!(c.length(), 4);
+    assert_eq!(*c.nth(0), 10);
+    assert_eq!(*c.nth(3), 40);
+}
+
+#[test]
+fn test_arrayseqstper_trait_flatten() {
+    let seq1 = ArraySeqStPerSLit![1, 2];
+    let seq2 = ArraySeqStPerSLit![3, 4];
+    let nested = ArraySeqStPerSLit![seq1, seq2];
+    let flat = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::flatten(&nested);
+    assert_eq!(flat.length(), 4);
+    assert_eq!(*flat.nth(0), 1);
+    assert_eq!(*flat.nth(3), 4);
+}
+
+#[test]
+fn test_arrayseqstper_trait_reduce() {
+    let seq = ArraySeqStPerSLit![1, 2, 3, 4];
+    let sum = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::reduce(&seq, &|a, b| a + b, 0);
+    assert_eq!(sum, 10);
+}
+
+#[test]
+fn test_arrayseqstper_trait_scan() {
+    let seq = ArraySeqStPerSLit![1, 2, 3, 4];
+    let (prefix_sums, total) = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::scan(&seq, &|a, b| a + b, 0);
+    assert_eq!(prefix_sums.length(), 4);
+    assert_eq!(total, 10);
+}
+
+#[test]
+fn test_arrayseqstper_trait_iterate() {
+    let seq = ArraySeqStPerSLit![1, 2, 3, 4];
+    let sum = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::iterate(&seq, &|acc, x| acc + x, 0);
+    assert_eq!(sum, 10);
+}
+
+#[test]
+fn test_arrayseqstper_trait_inject() {
+    let base = ArraySeqStPerSLit![0, 0, 0, 0, 0];
+    let updates = ArraySeqStPerSLit![Pair(1, 10), Pair(3, 30)];
+    let result = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::inject(&base, &updates);
+    assert_eq!(result.length(), 5);
+    assert_eq!(*result.nth(1), 10);
+    assert_eq!(*result.nth(3), 30);
+}
+
+#[test]
+fn test_arrayseqstper_trait_ninject() {
+    let base = ArraySeqStPerSLit![0, 0, 0, 0, 0];
+    let updates = ArraySeqStPerSLit![Pair(1, 10), Pair(3, 30)];
+    let result = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::ninject(&base, &updates);
+    assert_eq!(result.length(), 5);
+    assert_eq!(*result.nth(1), 10);
+    assert_eq!(*result.nth(3), 30);
+}
+
+#[test]
+fn test_arrayseqstper_trait_select() {
+    let a = ArraySeqStPerSLit![1, 2];
+    let b = ArraySeqStPerSLit![3, 4];
+    let result = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::select(&a, &b, 1);
+    assert_eq!(result, Some(&2));
+    let result2 = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::select(&a, &b, 2);
+    assert_eq!(result2, Some(&3));
+}
+
+#[test]
+fn test_arrayseqstper_trait_deflate() {
+    let result = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::deflate(&|x| *x > 0, &5);
+    assert_eq!(result.length(), 1);
+    assert_eq!(*result.nth(0), 5);
+
+    let empty = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::deflate(&|x| *x < 0, &5);
+    assert_eq!(empty.length(), 0);
+}
+
+#[test]
+fn test_arrayseqstper_trait_update() {
+    let seq = ArraySeqStPerSLit![1, 2, 3];
+    let updated = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::update(&seq, 1, 99);
+    assert_eq!(*updated.nth(1), 99);
+    assert_eq!(*seq.nth(1), 2); // Original unchanged
+}

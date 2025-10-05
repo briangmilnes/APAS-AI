@@ -374,15 +374,4 @@ pub mod DirGraphMtEph {
             < $crate::Chap06::DirGraphMtEph::DirGraphMtEph::DirGraphMtEph<_> as $crate::Chap06::DirGraphMtEph::DirGraphMtEph::DirGraphMtEphTrait<_> >::FromSets(__V, __A)
         }}}
 
-    #[allow(dead_code)]
-    fn _DirGraphMtEphLit_type_checks() {
-        let _ = DirGraphMtEphLit!( V: [1], A: [(1, 2)] ); // non-empty infers
-        let _: DirGraphMtEph<i32> = DirGraphMtEphLit![]; // empty form requires explicit type
-    }
-
-    #[allow(dead_code)]
-    pub fn __dirgraph_mt_macro_typecheck_exercise() {
-        let _g0: DirGraphMtEph<usize> = DirGraphMtEphLit!( V: [], A: [] );
-        let _g1 = DirGraphMtEphLit!( V: [0, 1, 2], A: [(0, 1), (1, 2)] );
-    }
 }

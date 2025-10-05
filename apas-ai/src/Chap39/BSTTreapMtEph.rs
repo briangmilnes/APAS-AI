@@ -254,9 +254,4 @@ pub mod BSTTreapMtEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _BSTTreapMtEphLit_type_checks() {
-        let _ = BSTTreapMtEphLit![1, 2, 3]; // non-empty infers (e.g., i32)
-        let _: BSTTreapMtEph<i32> = BSTTreapMtEphLit![]; // empty form requires explicit type
-    }
 }

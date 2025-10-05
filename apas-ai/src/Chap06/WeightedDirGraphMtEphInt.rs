@@ -178,9 +178,4 @@ pub mod WeightedDirGraphMtEphInt {
         }};
     }
 
-    #[allow(dead_code)]
-    pub fn __weighted_dir_graph_mt_int_macro_typecheck_exercise() {
-        let _g0: WeightedDirGraphMtEphInt<usize> = WeightedDirGraphMtEphIntLit!();
-        let _g1 = WeightedDirGraphMtEphIntLit!( V: [0, 1, 2], E: [(0, 1, 5), (1, 2, 3)] );
-    }
 }

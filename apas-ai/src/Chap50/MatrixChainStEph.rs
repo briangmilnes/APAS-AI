@@ -204,12 +204,6 @@ pub mod MatrixChainStEph {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "{}×{}", self.rows, self.cols) }
     }
 
-    #[allow(dead_code)]
-    fn _MatrixChainStEphLit_type_checks() {
-        let dims = vec![MatrixDim { rows: 2, cols: 10 }, MatrixDim { rows: 10, cols: 2 }];
-        let _: MatrixChainStEphS = MatrixChainStEphS::from_dimensions(dims);
-    }
-
     #[macro_export]
     macro_rules! MatrixChainStEphLit {
         (dims: [$(($r:expr, $c:expr)),* $(,)?]) => {

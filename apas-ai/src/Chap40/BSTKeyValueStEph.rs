@@ -235,9 +235,4 @@ pub mod BSTKeyValueStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _BSTKeyValueStEphLit_type_checks() {
-        let _ = BSTKeyValueStEphLit![(1, "one"), (2, "two")]; // non-empty infers types
-        let _: BSTKeyValueStEph<i32, &str> = BSTKeyValueStEphLit![]; // empty form requires explicit type
-    }
 }

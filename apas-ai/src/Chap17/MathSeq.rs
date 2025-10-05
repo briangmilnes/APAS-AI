@@ -252,10 +252,4 @@ pub mod MathSeq {
         };
     }
 
-    #[allow(dead_code)]
-    fn _MathSeqSLit_type_checks() {
-        let _ = MathSeqSLit![1];
-        let _ = MathSeqSLit![0; 3];
-        let _: crate::Chap17::MathSeq::MathSeq::MathSeqS<i32> = MathSeqSLit![];
-    }
 }

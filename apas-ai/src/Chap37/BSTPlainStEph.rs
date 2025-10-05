@@ -151,11 +151,4 @@ pub mod BSTPlainStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _BSTPlainStEphLit_type_checks() {
-        use crate::Chap37::BSTPlainStEph::BSTPlainStEph::BSTPlainStEph;
-        let _: BSTPlainStEph<i32> = BSTPlainStEphLit![];
-        let _ = BSTPlainStEphLit![1, 2, 3];
-        let _ = BSTPlainStEphLit![0; 2];
-    }
 }

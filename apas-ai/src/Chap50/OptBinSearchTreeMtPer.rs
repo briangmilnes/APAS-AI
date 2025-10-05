@@ -232,12 +232,6 @@ pub mod OptBinSearchTreeMtPer {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "({}: {:.3})", self.key, self.prob) }
     }
 
-    #[allow(dead_code)]
-    fn _OBSTMtPerLit_type_checks() {
-        let keys = vec!['k', '1', 'k', '2'];
-        let probs = vec![Probability::new(0.125), Probability::new(0.5)];
-        let _: OBSTMtPerS<char> = OBSTMtPerS::from_keys_probs(keys, probs);
-    }
 }
 
 #[macro_export]

@@ -843,3 +843,170 @@
         }
     }
 
+    // ========== Additional Comprehensive Tests for Untested Functions ==========
+
+    #[test]
+    fn test_arrayseqmtper_trait_empty() {
+        let empty = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::empty();
+        assert_eq!(empty.length(), 0);
+        assert!(<ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::isEmpty(&empty));
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_new() {
+        let seq = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::new(5, 42);
+        assert_eq!(seq.length(), 5);
+        for i in 0..5 {
+            assert_eq!(*seq.nth(i), 42);
+        }
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_singleton() {
+        let seq = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::singleton(99);
+        assert_eq!(seq.length(), 1);
+        assert_eq!(*seq.nth(0), 99);
+        assert!(<ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::isSingleton(&seq));
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_length() {
+        let seq = ArrayMtPerSLit![1, 2, 3, 4];
+        assert_eq!(<ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::length(&seq), 4);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_nth() {
+        let seq = ArrayMtPerSLit![10, 20, 30];
+        assert_eq!(*<ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::nth(&seq, 0), 10);
+        assert_eq!(*<ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::nth(&seq, 2), 30);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_tabulate() {
+        let seq = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::tabulate(&|i| (i * 3) as i32, 5);
+        assert_eq!(seq.length(), 5);
+        assert_eq!(*seq.nth(0), 0);
+        assert_eq!(*seq.nth(2), 6);
+        assert_eq!(*seq.nth(4), 12);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_map() {
+        let seq = ArrayMtPerSLit![1, 2, 3, 4];
+        let doubled = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::map(&seq, |x| x * 2);
+        assert_eq!(doubled.length(), 4);
+        assert_eq!(*doubled.nth(0), 2);
+        assert_eq!(*doubled.nth(3), 8);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_filter() {
+        let seq = ArrayMtPerSLit![1, 2, 3, 4, 5, 6];
+        let evens = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::filter(&seq, |x| *x % 2 == 0);
+        assert!(evens.length() >= 3);
+        // Values should be even
+        for i in 0..evens.length() {
+            assert_eq!(*evens.nth(i) % 2, 0);
+        }
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_append() {
+        let a = ArrayMtPerSLit![1, 2];
+        let b = ArrayMtPerSLit![3, 4, 5];
+        let c = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::append(&a, &b);
+        assert_eq!(c.length(), 5);
+        assert_eq!(*c.nth(0), 1);
+        assert_eq!(*c.nth(4), 5);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_append_select() {
+        let a = ArrayMtPerSLit![10, 20];
+        let b = ArrayMtPerSLit![30, 40];
+        let c = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::append_select(&a, &b);
+        assert_eq!(c.length(), 4);
+        assert_eq!(*c.nth(0), 10);
+        assert_eq!(*c.nth(3), 40);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_flatten() {
+        let seq1 = ArrayMtPerSLit![1, 2];
+        let seq2 = ArrayMtPerSLit![3, 4];
+        let nested = ArrayMtPerSLit![seq1, seq2];
+        let flat = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::flatten(&nested);
+        assert_eq!(flat.length(), 4);
+        assert_eq!(*flat.nth(0), 1);
+        assert_eq!(*flat.nth(3), 4);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_reduce() {
+        let seq = ArrayMtPerSLit![1, 2, 3, 4];
+        let sum = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::reduce(&seq, |a, b| a + b, 0);
+        assert_eq!(sum, 10);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_scan() {
+        let seq = ArrayMtPerSLit![1, 2, 3, 4];
+        let (prefix_sums, total) = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::scan(&seq, &|a, b| a + b, 0);
+        assert_eq!(prefix_sums.length(), 4);
+        assert_eq!(total, 10);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_iterate() {
+        let seq = ArrayMtPerSLit![1, 2, 3, 4];
+        let sum = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::iterate(&seq, &|acc, x| acc + x, 0);
+        assert_eq!(sum, 10);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_ninject() {
+        let base = ArrayMtPerSLit![0, 0, 0, 0, 0];
+        let updates = ArrayMtPerSLit![Pair(1, 10), Pair(3, 30)];
+        let result = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::ninject(&base, &updates);
+        assert_eq!(result.length(), 5);
+        assert_eq!(*result.nth(1), 10);
+        assert_eq!(*result.nth(3), 30);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_select() {
+        let a = ArrayMtPerSLit![1, 2];
+        let b = ArrayMtPerSLit![3, 4];
+        let result = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::select(&a, &b, 1);
+        assert_eq!(result, Some(&2));
+        let result2 = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::select(&a, &b, 2);
+        assert_eq!(result2, Some(&3));
+    }
+
+    #[test]
+    fn test_arrayseqmtper_trait_deflate() {
+        let result = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::deflate(&|x| *x > 0, &5);
+        assert_eq!(result.length(), 1);
+        assert_eq!(*result.nth(0), 5);
+
+        let empty = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::deflate(&|x| *x < 0, &5);
+        assert_eq!(empty.length(), 0);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_collect() {
+        let pairs = ArrayMtPerSLit![Pair(1, 1), Pair(1, 2), Pair(2, 3)];
+        let grouped = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::collect(&pairs, |a, b| a.cmp(b));
+        assert!(grouped.length() > 0);
+    }
+
+    #[test]
+    fn test_arrayseqmtper_atomic_write() {
+        // atomic write is a stub, just test it doesn't panic
+        let mut values = ArrayMtPerSLit![Pair(0, 0), Pair(1, 1)];
+        let changes = ArrayMtPerSLit![Pair(0, 99)];
+        <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::atomicWrite(&mut values, &changes, 0);
+        // No panic means success for stub
+    }
+

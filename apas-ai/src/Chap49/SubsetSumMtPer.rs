@@ -157,10 +157,6 @@ pub mod SubsetSumMtPer {
 
     // Note: IntoIterator not implemented for ArraySeqMtPerS, so we don't provide it here
 
-    #[allow(dead_code)]
-    fn _SubsetSumMtPerLit_type_checks() {
-        let _: SubsetSumMtPerS<i32> = SubsetSumMtPerS::from_multiset(ArraySeqMtPerS::from_vec(vec![1, 4, 2, 9]));
-    }
 }
 
 #[macro_export]

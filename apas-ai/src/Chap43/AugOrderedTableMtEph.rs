@@ -428,15 +428,4 @@ pub mod AugOrderedTableMtEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _AugOrderedTableMtEphLit_type_checks() {
-        let sum_reducer = |a: &i32, b: &i32| a + b;
-        let _: AugOrderedTableMtEph<i32, i32, _> = AugOrderedTableMtEphLit![
-            reducer: sum_reducer, identity: 0,
-            1 => 10, 2 => 20
-        ];
-        let _: AugOrderedTableMtEph<i32, i32, _> = AugOrderedTableMtEphLit![
-            reducer: sum_reducer, identity: 0
-        ];
-    }
 }

@@ -209,9 +209,4 @@ pub mod BSTParaStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _ParamBSTLit_type_checks() {
-        let _ = ParamBSTLit![1, 2, 3]; // non-empty infers (e.g., i32)
-        let _: ParamBST<i32> = ParamBSTLit![]; // empty form requires explicit type
-    }
 }

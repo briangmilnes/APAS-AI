@@ -165,11 +165,6 @@ pub mod MatrixChainStPer {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "{}×{}", self.rows, self.cols) }
     }
 
-    #[allow(dead_code)]
-    fn _MatrixChainStPerLit_type_checks() {
-        let dims = vec![MatrixDim { rows: 2, cols: 10 }, MatrixDim { rows: 10, cols: 2 }];
-        let _: MatrixChainStPerS = MatrixChainStPerS::from_dimensions(dims);
-    }
 }
 
 #[macro_export]

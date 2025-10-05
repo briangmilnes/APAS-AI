@@ -224,9 +224,4 @@ pub mod AVLTreeSetStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _AVLTreeSetStEphLit_type_checks() {
-        let _: AVLTreeSetStEph<i32> = AVLTreeSetStEphLit![];
-        let _: AVLTreeSetStEph<i32> = AVLTreeSetStEphLit![1, 2, 3];
-    }
 }

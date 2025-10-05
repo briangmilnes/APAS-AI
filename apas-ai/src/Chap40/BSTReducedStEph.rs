@@ -346,9 +346,4 @@ pub mod BSTReducedStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _BSTReducedStEphLit_type_checks() {
-        let _: BSTSumStEph<i32, i32> = BSTReducedStEphLit![(1, 10), (2, 20)]; // explicit type needed
-        let _: BSTSumStEph<i32, i32> = BSTReducedStEphLit![]; // empty form requires explicit type
-    }
 }

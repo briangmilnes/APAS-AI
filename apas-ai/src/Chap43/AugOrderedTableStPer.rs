@@ -430,15 +430,4 @@ pub mod AugOrderedTableStPer {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _AugOrderedTableStPerLit_type_checks() {
-        let sum_reducer = |a: &i32, b: &i32| a + b;
-        let _: AugOrderedTableStPer<i32, i32, _> = AugOrderedTableStPerLit![
-            reducer: sum_reducer, identity: 0,
-            1 => 10, 2 => 20
-        ];
-        let _: AugOrderedTableStPer<i32, i32, _> = AugOrderedTableStPerLit![
-            reducer: sum_reducer, identity: 0
-        ];
-    }
 }

@@ -623,6 +623,10 @@ name = "TestBSTTreapStEph"
 path = "tests/Chap39/TestBSTTreapStEph.rs"
 
 [[test]]
+name = "TestBSTTreapMtEph"
+path = "tests/Chap39/TestBSTTreapMtEph.rs"
+
+[[test]]
 name = "TestBSTParaTreapMtEph"
 path = "tests/Chap39/TestBSTParaTreapMtEph.rs"
 

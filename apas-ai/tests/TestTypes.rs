@@ -2,6 +2,7 @@
 //! Tests for Types module.
 
 use apas_ai::Types::Types::*;
+use apas_ai::{EdgeLit, PairLit, EdgeList, PairList, ParaPair};
 
 #[test]
 fn test_pair_creation() {
@@ -230,4 +231,279 @@ fn test_lab_edge_display() {
     let le = LabEdge(1, 2, "test");
     let s = format!("{}", le);
     assert_eq!(s, "(1, 2, test)");
+}
+
+#[test]
+fn test_edgelit_macro() {
+    let e = EdgeLit!(1, 2);
+    assert_eq!(e.0, 1);
+    assert_eq!(e.1, 2);
+}
+
+#[test]
+fn test_edgelit_macro_type_inference() {
+    let e = EdgeLit!(10, 20);
+    assert_eq!(e, Edge(10, 20));
+}
+
+#[test]
+fn test_pairlit_macro() {
+    let p = PairLit!(3, 4);
+    assert_eq!(p.0, 3);
+    assert_eq!(p.1, 4);
+}
+
+#[test]
+fn test_pairlit_macro_different_types() {
+    let p = PairLit!("key", 100);
+    assert_eq!(p.0, "key");
+    assert_eq!(p.1, 100);
+}
+
+#[test]
+fn test_edgelist_macro_empty() {
+    let edges: Vec<Edge<i32>> = EdgeList![];
+    assert_eq!(edges.len(), 0);
+}
+
+#[test]
+fn test_edgelist_macro_single() {
+    let edges = EdgeList![(1, 2)];
+    assert_eq!(edges.len(), 1);
+    assert_eq!(edges[0], Edge(1, 2));
+}
+
+#[test]
+fn test_edgelist_macro_multiple() {
+    let edges = EdgeList![(1, 2), (3, 4), (5, 6)];
+    assert_eq!(edges.len(), 3);
+    assert_eq!(edges[0], Edge(1, 2));
+    assert_eq!(edges[1], Edge(3, 4));
+    assert_eq!(edges[2], Edge(5, 6));
+}
+
+#[test]
+fn test_edgelist_macro_trailing_comma() {
+    let edges = EdgeList![(1, 2), (3, 4),];
+    assert_eq!(edges.len(), 2);
+}
+
+#[test]
+fn test_pairlist_macro_empty() {
+    let pairs: Vec<Pair<i32, i32>> = PairList![];
+    assert_eq!(pairs.len(), 0);
+}
+
+#[test]
+fn test_pairlist_macro_single() {
+    let pairs = PairList![(10, 20)];
+    assert_eq!(pairs.len(), 1);
+    assert_eq!(pairs[0], Pair(10, 20));
+}
+
+#[test]
+fn test_pairlist_macro_multiple() {
+    let pairs = PairList![(1, 2), (3, 4), (5, 6)];
+    assert_eq!(pairs.len(), 3);
+    assert_eq!(pairs[0], Pair(1, 2));
+    assert_eq!(pairs[1], Pair(3, 4));
+    assert_eq!(pairs[2], Pair(5, 6));
+}
+
+#[test]
+fn test_pairlist_macro_different_types() {
+    let pairs = PairList![("a", 1), ("b", 2)];
+    assert_eq!(pairs[0], Pair("a", 1));
+    assert_eq!(pairs[1], Pair("b", 2));
+}
+
+#[test]
+fn test_parapair_macro() {
+    let result = ParaPair!(
+        || { 10 + 20 },
+        || { 5 * 6 }
+    );
+    assert_eq!(result.0, 30);
+    assert_eq!(result.1, 30);
+}
+
+#[test]
+fn test_parapair_macro_complex() {
+    let result = ParaPair!(
+        || {
+            let mut sum = 0;
+            for i in 1..=100 {
+                sum += i;
+            }
+            sum
+        },
+        || {
+            let mut product = 1;
+            for i in 1..=10 {
+                product *= i;
+            }
+            product
+        }
+    );
+    assert_eq!(result.0, 5050);
+    assert_eq!(result.1, 3628800);
+}
+
+// MtT trait tests
+#[test]
+fn test_mtt_usize_clone_mt() {
+    let val: usize = 42;
+    let cloned = MtT::clone_mt(&val);
+    assert_eq!(val, cloned);
+}
+
+#[test]
+fn test_mtt_usize_new_mt() {
+    let val = <usize as MtT>::new_mt(42usize);
+    assert_eq!(val, 42);
+}
+
+#[test]
+fn test_mtt_isize_clone_mt() {
+    let val: isize = -42;
+    let cloned = MtT::clone_mt(&val);
+    assert_eq!(val, cloned);
+}
+
+#[test]
+fn test_mtt_isize_new_mt() {
+    let val = <isize as MtT>::new_mt(-42isize);
+    assert_eq!(val, -42);
+}
+
+#[test]
+fn test_mtt_i32_clone_mt() {
+    let val: i32 = 100;
+    let cloned = MtT::clone_mt(&val);
+    assert_eq!(val, cloned);
+}
+
+#[test]
+fn test_mtt_i32_new_mt() {
+    let val = <i32 as MtT>::new_mt(100i32);
+    assert_eq!(val, 100);
+}
+
+#[test]
+fn test_mtt_u32_clone_mt() {
+    let val: u32 = 200;
+    let cloned = MtT::clone_mt(&val);
+    assert_eq!(val, cloned);
+}
+
+#[test]
+fn test_mtt_u32_new_mt() {
+    let val = <u32 as MtT>::new_mt(200u32);
+    assert_eq!(val, 200);
+}
+
+#[test]
+fn test_mtt_i64_clone_mt() {
+    let val: i64 = 1000;
+    let cloned = MtT::clone_mt(&val);
+    assert_eq!(val, cloned);
+}
+
+#[test]
+fn test_mtt_i64_new_mt() {
+    let val = <i64 as MtT>::new_mt(1000i64);
+    assert_eq!(val, 1000);
+}
+
+#[test]
+fn test_mtt_u64_clone_mt() {
+    let val: u64 = 2000;
+    let cloned = MtT::clone_mt(&val);
+    assert_eq!(val, cloned);
+}
+
+#[test]
+fn test_mtt_u64_new_mt() {
+    let val = <u64 as MtT>::new_mt(2000u64);
+    assert_eq!(val, 2000);
+}
+
+#[test]
+fn test_mtt_bool_clone_mt() {
+    let val: bool = true;
+    let cloned = MtT::clone_mt(&val);
+    assert_eq!(val, cloned);
+}
+
+#[test]
+fn test_mtt_bool_new_mt() {
+    let val = <bool as MtT>::new_mt(true);
+    assert_eq!(val, true);
+}
+
+#[test]
+fn test_mtt_char_clone_mt() {
+    let val: char = 'A';
+    let cloned = MtT::clone_mt(&val);
+    assert_eq!(val, cloned);
+}
+
+#[test]
+fn test_mtt_char_new_mt() {
+    let val = <char as MtT>::new_mt('Z');
+    assert_eq!(val, 'Z');
+}
+
+#[test]
+fn test_mtt_string_clone_mt() {
+    let val = String::from("test");
+    let cloned = MtT::clone_mt(&val);
+    assert_eq!(val, cloned);
+}
+
+#[test]
+fn test_mtt_string_new_mt() {
+    let val = <String as MtT>::new_mt(String::from("hello"));
+    assert_eq!(val, "hello");
+}
+
+#[test]
+fn test_mtt_str_clone_mt() {
+    let val: &str = "test";
+    let cloned = MtT::clone_mt(&val);
+    assert_eq!(val, cloned);
+}
+
+#[test]
+fn test_mtt_str_new_mt() {
+    let val = <&str as MtT>::new_mt("world");
+    assert_eq!(val, "world");
+}
+
+#[test]
+fn test_mtt_mutex_clone_mt() {
+    use std::sync::Mutex;
+    let val = Mutex::new(42);
+    let cloned = MtT::clone_mt(&val);
+    assert_eq!(*val.lock().unwrap(), *cloned.lock().unwrap());
+}
+
+#[test]
+fn test_mtt_mutex_new_mt() {
+    use std::sync::Mutex;
+    let val: Mutex<i32> = MtT::new_mt(99);
+    assert_eq!(*val.lock().unwrap(), 99);
+}
+
+#[test]
+fn test_mtt_pair_clone_mt() {
+    let val = Pair(1, 2);
+    let cloned = MtT::clone_mt(&val);
+    assert_eq!(val, cloned);
+}
+
+#[test]
+fn test_mtt_pair_new_mt() {
+    let val: Pair<i32, i32> = MtT::new_mt(Pair(5, 10));
+    assert_eq!(val, Pair(5, 10));
 }

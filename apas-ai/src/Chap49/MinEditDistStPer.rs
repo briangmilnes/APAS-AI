@@ -164,12 +164,6 @@ pub mod MinEditDistStPer {
         }
     }
 
-    #[allow(dead_code)]
-    fn _MinEditDistStPerLit_type_checks() {
-        let source = ArraySeqStPerS!['A', 'B', 'C', 'A', 'D', 'A'];
-        let target = ArraySeqStPerS!['A', 'B', 'A', 'D', 'C'];
-        let _: MinEditDistStPerS<char> = MinEditDistStPerS::from_sequences(source, target);
-    }
 }
 
 #[macro_export]

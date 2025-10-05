@@ -129,3 +129,122 @@ fn test_deflate() {
     assert_eq!(result.length(), 1);
     assert_eq!(result.nth_cloned(0), 5);
 }
+
+// ========== Additional Comprehensive Tests for Untested Functions ==========
+
+#[test]
+fn test_arrayseqmteph_trait_empty() {
+    let empty = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::empty();
+    assert_eq!(empty.length(), 0);
+    assert!(<ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::isEmpty(&empty));
+}
+
+#[test]
+fn test_arrayseqmteph_trait_new() {
+    let seq = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::new(5, 42);
+    assert_eq!(seq.length(), 5);
+    for i in 0..5 {
+        assert_eq!(seq.nth_cloned(i), 42);
+    }
+}
+
+#[test]
+fn test_arrayseqmteph_trait_singleton() {
+    let seq = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::singleton(99);
+    assert_eq!(seq.length(), 1);
+    assert_eq!(seq.nth_cloned(0), 99);
+    assert!(<ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::isSingleton(&seq));
+}
+
+#[test]
+fn test_arrayseqmteph_trait_length() {
+    let seq = ArraySeqMtEphSLit![1, 2, 3, 4];
+    assert_eq!(<ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::length(&seq), 4);
+}
+
+#[test]
+fn test_arrayseqmteph_trait_nth_cloned() {
+    let seq = ArraySeqMtEphSLit![10, 20, 30];
+    assert_eq!(<ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::nth_cloned(&seq, 0), 10);
+    assert_eq!(<ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::nth_cloned(&seq, 2), 30);
+}
+
+#[test]
+fn test_arrayseqmteph_trait_tabulate() {
+    let seq = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::tabulate(&|i| (i * 3) as i32, 5);
+    assert_eq!(seq.length(), 5);
+    assert_eq!(seq.nth_cloned(0), 0);
+    assert_eq!(seq.nth_cloned(2), 6);
+    assert_eq!(seq.nth_cloned(4), 12);
+}
+
+#[test]
+fn test_arrayseqmteph_trait_map() {
+    let seq = ArraySeqMtEphSLit![1, 2, 3, 4];
+    let doubled = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::map(&seq, |x| x * 2);
+    assert_eq!(doubled.length(), 4);
+    assert_eq!(doubled.nth_cloned(0), 2);
+    assert_eq!(doubled.nth_cloned(3), 8);
+}
+
+#[test]
+fn test_arrayseqmteph_trait_filter() {
+    let seq = ArraySeqMtEphSLit![1, 2, 3, 4, 5, 6];
+    let evens = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::filter(&seq, |x| *x % 2 == 0);
+    assert_eq!(evens.length(), 3);
+    for i in 0..evens.length() {
+        assert_eq!(evens.nth_cloned(i) % 2, 0);
+    }
+}
+
+#[test]
+fn test_arrayseqmteph_trait_append() {
+    let a = ArraySeqMtEphSLit![1, 2];
+    let b = ArraySeqMtEphSLit![3, 4, 5];
+    let c = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::append(&a, &b);
+    assert_eq!(c.length(), 5);
+    assert_eq!(c.nth_cloned(0), 1);
+    assert_eq!(c.nth_cloned(4), 5);
+}
+
+#[test]
+fn test_arrayseqmteph_trait_flatten() {
+    let seq1 = ArraySeqMtEphSLit![1, 2];
+    let seq2 = ArraySeqMtEphSLit![3, 4];
+    let nested = ArraySeqMtEphSLit![seq1, seq2];
+    let flat = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::flatten(&nested);
+    assert_eq!(flat.length(), 4);
+    assert_eq!(flat.nth_cloned(0), 1);
+    assert_eq!(flat.nth_cloned(3), 4);
+}
+
+#[test]
+fn test_arrayseqmteph_trait_reduce() {
+    let seq = ArraySeqMtEphSLit![1, 2, 3, 4];
+    let sum = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::reduce(&seq, |a, b| a + b, 0);
+    assert_eq!(sum, 10);
+}
+
+#[test]
+fn test_arrayseqmteph_trait_scan() {
+    let seq = ArraySeqMtEphSLit![1, 2, 3, 4];
+    let (prefix_sums, total) = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::scan(&seq, &|a, b| a + b, 0);
+    assert_eq!(prefix_sums.length(), 4);
+    assert_eq!(total, 10);
+}
+
+#[test]
+fn test_arrayseqmteph_trait_iterate() {
+    let seq = ArraySeqMtEphSLit![1, 2, 3, 4];
+    let sum = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::iterate(&seq, &|acc, x| acc + x, 0);
+    assert_eq!(sum, 10);
+}
+
+#[test]
+fn test_arrayseqmteph_trait_subseq_copy() {
+    let seq = ArraySeqMtEphSLit![1, 2, 3, 4, 5];
+    let sub = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::subseq_copy(&seq, 1, 3);
+    assert_eq!(sub.length(), 3);
+    assert_eq!(sub.nth_cloned(0), 2);
+    assert_eq!(sub.nth_cloned(2), 4);
+}

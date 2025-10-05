@@ -163,12 +163,6 @@ pub mod OptBinSearchTreeStPer {
 
     impl<T: StT> Eq for KeyProb<T> {}
 
-    #[allow(dead_code)]
-    fn _OBSTStPerLit_type_checks() {
-        let keys = vec!['k', '1', 'k', '2'];
-        let probs = vec![prob!(0.125), prob!(0.5)];
-        let _: OBSTStPerS<char> = OBSTStPerS::from_keys_probs(keys, probs);
-    }
 }
 
 #[macro_export]

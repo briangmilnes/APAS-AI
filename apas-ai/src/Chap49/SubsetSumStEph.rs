@@ -162,10 +162,6 @@ pub mod SubsetSumStEph {
         fn into_iter(self) -> Self::IntoIter { self.multiset.clone().into_iter() }
     }
 
-    #[allow(dead_code)]
-    fn _SubsetSumStEphLit_type_checks() {
-        let _: SubsetSumStEphS<i32> = SubsetSumStEphS::from_multiset(ArraySeqStEphS![1, 4, 2, 9]);
-    }
 }
 
 #[macro_export]

@@ -194,16 +194,4 @@ pub mod LabUnDirGraphStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _LabUnDirGraphStEphLit_type_checks() {
-        let _ = LabUnDirGraphStEphLit!( V: [1], E: [(1, 2, "label")] ); // non-empty infers
-        let _: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEphLit!(); // empty form requires explicit type
-    }
-
-    #[allow(dead_code)]
-    pub fn __lab_undir_graph_macro_typecheck_exercise() {
-        let _g0: LabUnDirGraphStEph<usize, i32> = LabUnDirGraphStEphLit!();
-        let _g1 = LabUnDirGraphStEphLit!( V: [0, 1, 2], E: [(0, 1, 10), (1, 2, 20)] );
-        let _g2 = LabUnDirGraphStEphLit!( V: ["a", "b"], E: [("a", "b", 314)] );
-    }
 }

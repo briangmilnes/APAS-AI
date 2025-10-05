@@ -134,9 +134,4 @@ pub mod WeightedUnDirGraphMtEphInt {
         }};
     }
 
-    #[allow(dead_code)]
-    pub fn __weighted_undir_graph_mt_int_macro_typecheck_exercise() {
-        let _g0: WeightedUnDirGraphMtEphInt<usize> = WeightedUnDirGraphMtEphIntLit!();
-        let _g1 = WeightedUnDirGraphMtEphIntLit!( V: [0, 1, 2], E: [(0, 1, 5), (1, 2, 3)] );
-    }
 }

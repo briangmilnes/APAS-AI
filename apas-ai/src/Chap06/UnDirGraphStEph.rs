@@ -163,15 +163,4 @@ pub mod UnDirGraphStEph {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _UnDirGraphStEphLit_type_checks() {
-        let _ = UnDirGraphStEphLit!( V: [1], E: [(1,2)] ); // non-empty infers (e.g., i32)
-        let _: UnDirGraphStEph<i32> = UnDirGraphStEphLit![]; // empty form requires explicit type
-    }
-
-    #[allow(dead_code)]
-    pub fn __undirgraph_macro_typecheck_exercise() {
-        let _g0: UnDirGraphStEph<usize> = UnDirGraphStEphLit!( V: [], E: [] );
-        let _g1 = UnDirGraphStEphLit!( V: [0,1,2], E: [(0,1),(1,2)] );
-    }
 }

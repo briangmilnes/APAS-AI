@@ -169,10 +169,4 @@ pub mod WeightedUnDirGraphStEphFloat {
         }};
     }
 
-    #[allow(dead_code)]
-    pub fn __weighted_undir_graph_st_float_macro_typecheck_exercise() {
-        let _g0: WeightedUnDirGraphStEphFloat<usize> = WeightedUnDirGraphStEphFloatLit!();
-        let _g1 = WeightedUnDirGraphStEphFloatLit!( V: [0, 1, 2], E: [(0, 1, 5.5), (1, 2, 3.14)] );
-        let _g2 = WeightedUnDirGraphStEphFloatLit!( V: ["a", "b"], E: [("a", "b", 42.0)] );
-    }
 }
