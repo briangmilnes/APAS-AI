@@ -163,7 +163,7 @@ fn test_memo_size() {
 
     med.min_edit_distance();
     // Memo should have some entries after computation
-    assert!(med.memo_size() >= 0);
+    assert!(med.memo_size() > 0);
 }
 
 #[test]
@@ -230,7 +230,7 @@ fn test_source_mut() {
 
     {
         let source_mut = med.source_mut();
-        source_mut.set(0, 99);
+        let _ = source_mut.set(0, 99);
     }
 
     assert_eq!(med.source().nth_cloned(0), 99);
@@ -245,7 +245,7 @@ fn test_target_mut() {
 
     {
         let target_mut = med.target_mut();
-        target_mut.set(2, 77);
+        let _ = target_mut.set(2, 77);
     }
 
     assert_eq!(med.target().nth_cloned(2), 77);

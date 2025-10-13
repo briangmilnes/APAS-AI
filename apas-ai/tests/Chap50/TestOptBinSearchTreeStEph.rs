@@ -344,7 +344,7 @@ fn test_obststephlit_macro_multiple_keys() {
 
 #[test]
 fn test_obststephlit_macro_trailing_comma() {
-    let mut obst = OBSTStEphLit!(keys: [10, 20,], probs: [0.4, 0.6,]);
+    let obst = OBSTStEphLit!(keys: [10, 20,], probs: [0.4, 0.6,]);
     assert_eq!(obst.num_keys(), 2);
     let keys = obst.keys();
     assert_eq!(keys[0].key, 10);

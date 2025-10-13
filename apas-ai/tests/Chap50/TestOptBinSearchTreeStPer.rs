@@ -93,8 +93,8 @@ fn test_memo_size() {
     // Before computation
     let _cost = obst.optimal_cost();
 
-    // After computation, memo should have entries
-    assert!(obst.memo_size() >= 0);
+    // Memo size method should work without panicking
+    let _ = obst.memo_size();
 }
 
 #[test]
