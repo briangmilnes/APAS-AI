@@ -453,10 +453,6 @@ name = "TestArraySeqStPerChap18"
 path = "tests/Chap18/TestArraySeqStPerChap18.rs"
 
 [[test]]
-name = "TestArraySeqStPerChap19_Advanced"
-path = "tests/Chap19/TestArraySeqStPerChap19_Advanced.rs"
-
-[[test]]
 name = "TestArraySeqStEphChap19"
 path = "tests/Chap19/TestArraySeqStEphChap19.rs"
 
@@ -465,20 +461,12 @@ name = "TestArraySeqStEphChap18"
 path = "tests/Chap18/TestArraySeqStEphChap18.rs"
 
 [[test]]
-name = "TestArraySeqStEphChap19_Advanced"
-path = "tests/Chap19/TestArraySeqStEphChap19_Advanced.rs"
-
-[[test]]
 name = "TestArraySeqMtPerChap19"
 path = "tests/Chap19/TestArraySeqMtPerChap19.rs"
 
 [[test]]
 name = "TestArraySeqMtPerChap18"
 path = "tests/Chap18/TestArraySeqMtPerChap18.rs"
-
-[[test]]
-name = "TestArraySeqMtPerChap19_Advanced"
-path = "tests/Chap19/TestArraySeqMtPerChap19_Advanced.rs"
 
 [[test]]
 name = "TestArraySeqMtEph"
@@ -503,10 +491,6 @@ path = "tests/Chap37/TestAVLTreeSeqStEphChap37.rs"
 [[test]]
 name = "TestAVLTreeSeqStEph18"
 path = "tests/Chap37/TestAVLTreeSeqStEph18.rs"
-
-[[test]]
-name = "TestAVLTreeSeqStEphChap37_Advanced"
-path = "tests/Chap37/TestAVLTreeSeqStEphChap37_Advanced.rs"
 
 [[test]]
 name = "TestAVLTreeSeq"
@@ -575,10 +559,6 @@ path = "tests/Chap38/TestBSTParaStEph.rs"
 [[test]]
 name = "TestLinkedListStEphChap18"
 path = "tests/Chap18/TestLinkedListStEphChap18.rs"
-
-[[test]]
-name = "TestLinkedListStPerChap18_Advanced"
-path = "tests/Chap18/TestLinkedListStPerChap18_Advanced.rs"
 
 [[test]]
 name = "TestLinkedListStEph19"
@@ -709,11 +689,6 @@ path = "tests/Chap18/TestArraySeqMacro.rs"
 [[test]]
 name = "TestLinkedListStPerChap18"
 path = "tests/Chap18/TestLinkedListStPerChap18.rs"
-
-[[test]]
-name = "TestLinkedListStEphChap18_Advanced"
-path = "tests/Chap18/TestLinkedListStEphChap18_Advanced.rs"
-
 
 [[test]]
 name = "TestArraySeqStPerMacro"
