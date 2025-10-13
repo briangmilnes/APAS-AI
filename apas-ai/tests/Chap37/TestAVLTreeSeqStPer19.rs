@@ -40,10 +40,3 @@
         let expected_f = AVLTreeSeqStPerLit![0, 1, 2];
         assert_eq!(f, expected_f);
     }
-
-    // AVLTreeSeqStPerTrait doesn't have append, filter, or map methods - removing invalid test
-    // #[test]
-    // fn test_iter_inorder_after_pipeline_ch19() {
-    //     // These methods don't exist in the trait
-    // }
-

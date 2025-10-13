@@ -97,12 +97,6 @@
         assert_eq!(collected_sorted, vec![1, 2, 3]);
     }
 
-    // ArraySeqMtPerS doesn't have update method - removing invalid test
-    // #[test]
-    // fn test_set_out_of_bounds() {
-    //     // Per types don't have update methods
-    // }
-
     #[test]
     fn test_macro_literals() {
         let empty: ArraySeqMtPerS<N> = ArrayMtPerSLit![];

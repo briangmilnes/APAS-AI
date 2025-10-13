@@ -59,7 +59,7 @@ pub mod ArraySeqMtPer {
         /// claude-4-sonet: Work Θ(Σ |sᵢ|), Span Θ(log(Σ |sᵢ|))
         fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(|a|²) worst case, Span Θ(|a|²) worst case
-        fn collect(a: &ArraySeqMtPerS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>>;
+        fn collect<K: StTInMtT, V: StTInMtT>(a: &ArraySeqMtPerS<Pair<K, V>>, cmp: fn(&K, &K) -> O) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>>;
 
         // Chapter 19 specific functions
         /// claude-4-sonet: Work Θ(|values| + |changes|), Span Θ(log |values| + log |changes|)
@@ -258,8 +258,8 @@ pub mod ArraySeqMtPer {
             <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::flatten(ss)
         }
 
-        fn collect(a: &ArraySeqMtPerS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>> {
-            <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::collect(a, cmp)
+        fn collect<K: StTInMtT, V: StTInMtT>(a: &ArraySeqMtPerS<Pair<K, V>>, cmp: fn(&K, &K) -> O) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>> {
+            <ArraySeqMtPerS<Pair<K, V>> as ArraySeqMtPerTraitChap18<Pair<K, V>>>::collect(a, cmp)
         }
 
         fn inject(values: &ArraySeqMtPerS<T>, changes: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T> {

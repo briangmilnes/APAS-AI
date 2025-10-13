@@ -90,7 +90,7 @@ pub mod StructChainedHashTable {StructChainedHashTable5,239
     impl<Key: StT, Value: StT, Metrics: Default> StructChainedHashTableStEph99,3325
         fn hash_index(table: &HashTable<Key, Value, ChainList<Key, Value>, Metrics>, _key: &Key)hash_index103,3491
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47clean/ParaHashTableStEph.rs,1732
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47clean/ParaHashTableStEph.rs,1736
 pub mod ParaHashTableStEph {ParaHashTableStEph7,357
     pub type HashFun<K> = Box<dyn Fn(&K) -> N>;HashFun14,482
     pub struct LoadAndSize {LoadAndSize17,576
@@ -103,19 +103,32 @@ pub mod ParaHashTableStEph {ParaHashTableStEph7,357
         pub current_size: N,current_size27,854
         pub num_elements: N,num_elements28,883
         pub metrics: Metrics,metrics29,912
-        _phantom: PhantomData<(Key, Value)>,_phantom30,942
-    pub trait EntryTrait<Key, Value> {EntryTrait35,1128
-        fn new() -> Self;new36,1167
-        fn insert(&mut self, key: Key, value: Value);insert37,1193
-        fn lookup(&self, key: &Key) -> Option<Value>;lookup38,1247
-        fn delete(&mut self, key: &Key) -> B;delete39,1301
-    pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, MetriParaHashTableStEphTrait43,1403
-        fn createTable(hash_fn: HashFun<Key>, initial_size: N) -> HashTable<Key, Value, Entry, McreateTable47,1651
-        fn insert(table: &mut HashTable<Key, Value, Entry, Metrics>, key: Key, value: Value);insert61,2195
-        fn lookup(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key) -> Option<Value>;lookup65,2415
-        fn delete(table: &mut HashTable<Key, Value, Entry, Metrics>, key: &Key) -> B;delete69,2619
-        fn metrics(table: &HashTable<Key, Value, Entry, Metrics>) -> &Metrics { &table.metrics }metrics72,2746
-        fn loadAndSize(table: &HashTable<Key, Value, Entry, Metrics>) -> LoadAndSize {loadAndSize77,3019
+        pub _phantom: PhantomData<(Key, Value)>,_phantom30,942
+    pub trait EntryTrait<Key, Value> {EntryTrait35,1132
+        fn new() -> Self;new36,1171
+        fn insert(&mut self, key: Key, value: Value);insert37,1197
+        fn lookup(&self, key: &Key) -> Option<Value>;lookup38,1251
+        fn delete(&mut self, key: &Key) -> B;delete39,1305
+    pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, MetriParaHashTableStEphTrait43,1407
+        fn createTable(hash_fn: HashFun<Key>, initial_size: N) -> HashTable<Key, Value, Entry, McreateTable47,1655
+        fn insert(table: &mut HashTable<Key, Value, Entry, Metrics>, key: Key, value: Value);insert61,2199
+        fn lookup(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key) -> Option<Value>;lookup65,2419
+        fn delete(table: &mut HashTable<Key, Value, Entry, Metrics>, key: &Key) -> B;delete69,2623
+        fn metrics(table: &HashTable<Key, Value, Entry, Metrics>) -> &Metrics { &table.metrics }metrics72,2750
+        fn loadAndSize(table: &HashTable<Key, Value, Entry, Metrics>) -> LoadAndSize {loadAndSize77,3023
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47clean/DoubleHashFlatHashTable.rs,1049
+pub mod DoubleHashFlatHashTable {DoubleHashFlatHashTable5,231
+    pub struct DoubleHashFlatHashTableStEph;DoubleHashFlatHashTableStEph14,623
+    impl DoubleHashFlatHashTableStEph {DoubleHashFlatHashTableStEph16,669
+        pub fn second_hash<Key: StT>(key: &Key, table_size: N) -> N {second_hash21,960
+    impl<Key: StT, Value: StT, Metrics: Default> DoubleHashFlatHashTableStEph56,2222
+        fn insert(table: &mut HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: Key, vinsert60,2396
+        fn lookup(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) -> Olookup77,3129
+        fn delete(table: &mut HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) delete92,3756
+    impl<Key: StT, Value: StT, Metrics: Default> DoubleHashFlatHashTableStEph112,4533
+        fn probe(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key, attemprobe116,4697
+        fn find_slot(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) -find_slot124,5067
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47clean/LinkedListChainedHashTable.rs,1163
 pub mod LinkedListChainedHashTable {LinkedListChainedHashTable5,228
@@ -148,6 +161,17 @@ pub mod FlatHashTable {FlatHashTable5,201
         fn find_slot(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key) -> N;find_slot56,2200
         fn insert_with_probe(table: &mut HashTable<Key, Value, Entry, Metrics>, key: Key, value:insert_with_probe60,2388
         fn lookup_with_probe(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key) -> Optionlookup_with_probe69,2760
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47clean/QuadProbFlatHashTable.rs,867
+pub mod QuadProbFlatHashTable {QuadProbFlatHashTable5,237
+    pub struct QuadProbFlatHashTableStEph;QuadProbFlatHashTableStEph13,545
+    impl<Key: StT, Value: StT, Metrics: Default> QuadProbFlatHashTableStEph15,589
+        fn insert(table: &mut HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: Key, vinsert19,761
+        fn lookup(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) -> Olookup38,1567
+        fn delete(table: &mut HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) delete54,2305
+    impl<Key: StT, Value: StT, Metrics: Default> QuadProbFlatHashTableStEph75,3193
+        fn probe(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key, attemprobe79,3355
+        fn find_slot(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) -find_slot86,3665
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47clean/ChainedHashTable.rs,824
 pub mod ChainedHashTable {ChainedHashTable5,206
@@ -6474,7 +6498,7 @@ pub mod ArraySeqStPer {ArraySeqStPer4,171
         fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerninject284,12439
     macro_rules! ArraySeqStPerS {ArraySeqStPerS299,13021
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/lib.rs,14994
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/lib.rs,15130
 pub mod Types;Types6,240
 pub mod Chap03 {Chap038,256
     pub mod InsertionSortSt;InsertionSortSt10,274
@@ -6655,117 +6679,119 @@ pub mod Chap47clean {Chap47clean231,5061
     pub mod VecChainedHashTable;VecChainedHashTable236,5212
     pub mod StructChainedHashTable;StructChainedHashTable237,5245
     pub mod LinProbFlatHashTable;LinProbFlatHashTable238,5281
-pub mod Chap49 {Chap49241,5318
-    pub mod MinEditDistMtEph;MinEditDistMtEph242,5335
-    pub mod MinEditDistMtPer;MinEditDistMtPer243,5365
-    pub mod MinEditDistStEph;MinEditDistStEph244,5395
-    pub mod MinEditDistStPer;MinEditDistStPer245,5425
-    pub mod SubsetSumMtEph;SubsetSumMtEph246,5455
-    pub mod SubsetSumMtPer;SubsetSumMtPer247,5483
-    pub mod SubsetSumStEph;SubsetSumStEph248,5511
-    pub mod SubsetSumStPer;SubsetSumStPer249,5539
-pub mod Chap50 {Chap50252,5570
-    pub mod MatrixChainMtEph;MatrixChainMtEph253,5587
-    pub mod MatrixChainMtPer;MatrixChainMtPer254,5617
-    pub mod MatrixChainStEph;MatrixChainStEph255,5647
-    pub mod MatrixChainStPer;MatrixChainStPer256,5677
-    pub mod OptBinSearchTreeMtEph;OptBinSearchTreeMtEph257,5707
-    pub mod OptBinSearchTreeMtPer;OptBinSearchTreeMtPer258,5742
-    pub mod OptBinSearchTreeStEph;OptBinSearchTreeStEph259,5777
-    pub mod OptBinSearchTreeStPer;OptBinSearchTreeStPer260,5812
-    pub mod Probability;Probability261,5847
-pub mod Chap51 {Chap51264,5875
-    pub mod BottomUpDPMtEph;BottomUpDPMtEph265,5892
-    pub mod BottomUpDPMtPer;BottomUpDPMtPer266,5921
-    pub mod BottomUpDPStEph;BottomUpDPStEph267,5950
-    pub mod BottomUpDPStPer;BottomUpDPStPer268,5979
-    pub mod TopDownDPMtEph;TopDownDPMtEph269,6008
-    pub mod TopDownDPMtPer;TopDownDPMtPer270,6036
-    pub mod TopDownDPStEph;TopDownDPStEph271,6064
-    pub mod TopDownDPStPer;TopDownDPStPer272,6092
-pub mod Chap52 {Chap52275,6123
-    pub mod EdgeSetGraphMtPer;EdgeSetGraphMtPer276,6140
-    pub mod EdgeSetGraphStEph;EdgeSetGraphStEph277,6171
-    pub mod EdgeSetGraphStPer;EdgeSetGraphStPer278,6202
-    pub mod AdjTableGraphMtPer;AdjTableGraphMtPer280,6267
-    pub mod AdjTableGraphStEph;AdjTableGraphStEph281,6299
-    pub mod AdjTableGraphStPer;AdjTableGraphStPer282,6331
-    pub mod AdjSeqGraphStEph;AdjSeqGraphStEph284,6398
-    pub mod AdjSeqGraphStPer;AdjSeqGraphStPer285,6428
-    pub mod AdjMatrixGraphStEph;AdjMatrixGraphStEph288,6628
-    pub mod AdjMatrixGraphStPer;AdjMatrixGraphStPer289,6661
-pub mod Chap53 {Chap53294,6873
-    pub mod GraphSearchMtPer;GraphSearchMtPer295,6890
-    pub mod GraphSearchStEph;GraphSearchStEph296,6920
-    pub mod GraphSearchStPer;GraphSearchStPer297,6950
-    pub mod PQMinMtEph;PQMinMtEph298,6980
-    pub mod PQMinMtPer;PQMinMtPer299,7004
-    pub mod PQMinStEph;PQMinStEph300,7028
-    pub mod PQMinStPer;PQMinStPer301,7052
-pub mod Chap54 {Chap54304,7079
-    pub mod BFSMtEph;BFSMtEph305,7096
-    pub mod BFSMtPer;BFSMtPer306,7118
-    pub mod BFSStEph;BFSStEph307,7140
-    pub mod BFSStPer;BFSStPer308,7162
-pub mod Chap55 {Chap55311,7187
-    pub mod CycleDetectStEph;CycleDetectStEph312,7204
-    pub mod CycleDetectStPer;CycleDetectStPer313,7234
-    pub mod DFSStEph;DFSStEph314,7264
-    pub mod DFSStPer;DFSStPer315,7286
-    pub mod SCCStEph;SCCStEph316,7308
-    pub mod SCCStPer;SCCStPer317,7330
-    pub mod TopoSortStEph;TopoSortStEph318,7352
-    pub mod TopoSortStPer;TopoSortStPer319,7379
-pub mod Chap56 {Chap56322,7409
-    pub mod AllPairsResultStEphFloat;AllPairsResultStEphFloat323,7426
-    pub mod AllPairsResultStEphInt;AllPairsResultStEphInt324,7464
-    pub mod AllPairsResultStPerFloat;AllPairsResultStPerFloat325,7500
-    pub mod AllPairsResultStPerInt;AllPairsResultStPerInt326,7538
-    pub mod Example56_1;Example56_1327,7574
-    pub mod Example56_3;Example56_3328,7599
-    pub mod PathWeightUtilsStEph;PathWeightUtilsStEph329,7624
-    pub mod PathWeightUtilsStPer;PathWeightUtilsStPer330,7658
-    pub mod SSSPResultStEphFloat;SSSPResultStEphFloat331,7692
-    pub mod SSSPResultStEphInt;SSSPResultStEphInt332,7726
-    pub mod SSSPResultStPerFloat;SSSPResultStPerFloat333,7758
-    pub mod SSSPResultStPerInt;SSSPResultStPerInt334,7792
-pub mod Chap57 {Chap57337,7827
-    pub mod DijkstraStEphFloat;DijkstraStEphFloat338,7844
-    pub mod DijkstraStEphInt;DijkstraStEphInt339,7876
-    pub mod StackStEph;StackStEph340,7906
-pub mod Chap58 {Chap58343,7933
-    pub mod BellmanFordStEphFloat;BellmanFordStEphFloat344,7950
-    pub mod BellmanFordStEphInt;BellmanFordStEphInt345,7985
-pub mod Chap59 {Chap59348,8021
-    pub mod JohnsonMtEphFloat;JohnsonMtEphFloat349,8038
-    pub mod JohnsonMtEphInt;JohnsonMtEphInt350,8069
-    pub mod JohnsonStEphFloat;JohnsonStEphFloat351,8098
-    pub mod JohnsonStEphInt;JohnsonStEphInt352,8129
-pub mod Chap61 {Chap61355,8161
-    pub mod EdgeContractionMtEph;EdgeContractionMtEph356,8178
-    pub mod EdgeContractionStEph;EdgeContractionStEph357,8212
-    pub mod VertexMatchingMtEph;VertexMatchingMtEph358,8246
-    pub mod VertexMatchingStEph;VertexMatchingStEph359,8279
-pub mod Chap62 {Chap62361,8314
-    pub mod StarContractionMtEph;StarContractionMtEph362,8331
-    pub mod StarContractionStEph;StarContractionStEph363,8365
-    pub mod StarPartitionMtEph;StarPartitionMtEph364,8399
-    pub mod StarPartitionStEph;StarPartitionStEph365,8431
-pub mod Chap63 {Chap63367,8465
-    pub mod ConnectivityMtEph;ConnectivityMtEph368,8482
-    pub mod ConnectivityStEph;ConnectivityStEph369,8513
-pub mod Chap64 {Chap64371,8546
-    pub mod SpanTreeMtEph;SpanTreeMtEph372,8563
-    pub mod SpanTreeStEph;SpanTreeStEph373,8590
-    pub mod TSPApproxMtEph;TSPApproxMtEph374,8617
-    pub mod TSPApproxStEph;TSPApproxStEph375,8645
-pub mod Chap65 {Chap65377,8675
-    pub mod KruskalStEph;KruskalStEph378,8692
-    pub mod PrimStEph;PrimStEph379,8718
-    pub mod UnionFindStEph;UnionFindStEph380,8741
-pub mod Chap66 {Chap66382,8771
-    pub mod BoruvkaMtEph;BoruvkaMtEph383,8788
-    pub mod BoruvkaStEph;BoruvkaStEph384,8814
+    pub mod QuadProbFlatHashTable;QuadProbFlatHashTable239,5315
+    pub mod DoubleHashFlatHashTable;DoubleHashFlatHashTable240,5350
+pub mod Chap49 {Chap49243,5390
+    pub mod MinEditDistMtEph;MinEditDistMtEph244,5407
+    pub mod MinEditDistMtPer;MinEditDistMtPer245,5437
+    pub mod MinEditDistStEph;MinEditDistStEph246,5467
+    pub mod MinEditDistStPer;MinEditDistStPer247,5497
+    pub mod SubsetSumMtEph;SubsetSumMtEph248,5527
+    pub mod SubsetSumMtPer;SubsetSumMtPer249,5555
+    pub mod SubsetSumStEph;SubsetSumStEph250,5583
+    pub mod SubsetSumStPer;SubsetSumStPer251,5611
+pub mod Chap50 {Chap50254,5642
+    pub mod MatrixChainMtEph;MatrixChainMtEph255,5659
+    pub mod MatrixChainMtPer;MatrixChainMtPer256,5689
+    pub mod MatrixChainStEph;MatrixChainStEph257,5719
+    pub mod MatrixChainStPer;MatrixChainStPer258,5749
+    pub mod OptBinSearchTreeMtEph;OptBinSearchTreeMtEph259,5779
+    pub mod OptBinSearchTreeMtPer;OptBinSearchTreeMtPer260,5814
+    pub mod OptBinSearchTreeStEph;OptBinSearchTreeStEph261,5849
+    pub mod OptBinSearchTreeStPer;OptBinSearchTreeStPer262,5884
+    pub mod Probability;Probability263,5919
+pub mod Chap51 {Chap51266,5947
+    pub mod BottomUpDPMtEph;BottomUpDPMtEph267,5964
+    pub mod BottomUpDPMtPer;BottomUpDPMtPer268,5993
+    pub mod BottomUpDPStEph;BottomUpDPStEph269,6022
+    pub mod BottomUpDPStPer;BottomUpDPStPer270,6051
+    pub mod TopDownDPMtEph;TopDownDPMtEph271,6080
+    pub mod TopDownDPMtPer;TopDownDPMtPer272,6108
+    pub mod TopDownDPStEph;TopDownDPStEph273,6136
+    pub mod TopDownDPStPer;TopDownDPStPer274,6164
+pub mod Chap52 {Chap52277,6195
+    pub mod EdgeSetGraphMtPer;EdgeSetGraphMtPer278,6212
+    pub mod EdgeSetGraphStEph;EdgeSetGraphStEph279,6243
+    pub mod EdgeSetGraphStPer;EdgeSetGraphStPer280,6274
+    pub mod AdjTableGraphMtPer;AdjTableGraphMtPer282,6339
+    pub mod AdjTableGraphStEph;AdjTableGraphStEph283,6371
+    pub mod AdjTableGraphStPer;AdjTableGraphStPer284,6403
+    pub mod AdjSeqGraphStEph;AdjSeqGraphStEph286,6470
+    pub mod AdjSeqGraphStPer;AdjSeqGraphStPer287,6500
+    pub mod AdjMatrixGraphStEph;AdjMatrixGraphStEph290,6700
+    pub mod AdjMatrixGraphStPer;AdjMatrixGraphStPer291,6733
+pub mod Chap53 {Chap53296,6945
+    pub mod GraphSearchMtPer;GraphSearchMtPer297,6962
+    pub mod GraphSearchStEph;GraphSearchStEph298,6992
+    pub mod GraphSearchStPer;GraphSearchStPer299,7022
+    pub mod PQMinMtEph;PQMinMtEph300,7052
+    pub mod PQMinMtPer;PQMinMtPer301,7076
+    pub mod PQMinStEph;PQMinStEph302,7100
+    pub mod PQMinStPer;PQMinStPer303,7124
+pub mod Chap54 {Chap54306,7151
+    pub mod BFSMtEph;BFSMtEph307,7168
+    pub mod BFSMtPer;BFSMtPer308,7190
+    pub mod BFSStEph;BFSStEph309,7212
+    pub mod BFSStPer;BFSStPer310,7234
+pub mod Chap55 {Chap55313,7259
+    pub mod CycleDetectStEph;CycleDetectStEph314,7276
+    pub mod CycleDetectStPer;CycleDetectStPer315,7306
+    pub mod DFSStEph;DFSStEph316,7336
+    pub mod DFSStPer;DFSStPer317,7358
+    pub mod SCCStEph;SCCStEph318,7380
+    pub mod SCCStPer;SCCStPer319,7402
+    pub mod TopoSortStEph;TopoSortStEph320,7424
+    pub mod TopoSortStPer;TopoSortStPer321,7451
+pub mod Chap56 {Chap56324,7481
+    pub mod AllPairsResultStEphFloat;AllPairsResultStEphFloat325,7498
+    pub mod AllPairsResultStEphInt;AllPairsResultStEphInt326,7536
+    pub mod AllPairsResultStPerFloat;AllPairsResultStPerFloat327,7572
+    pub mod AllPairsResultStPerInt;AllPairsResultStPerInt328,7610
+    pub mod Example56_1;Example56_1329,7646
+    pub mod Example56_3;Example56_3330,7671
+    pub mod PathWeightUtilsStEph;PathWeightUtilsStEph331,7696
+    pub mod PathWeightUtilsStPer;PathWeightUtilsStPer332,7730
+    pub mod SSSPResultStEphFloat;SSSPResultStEphFloat333,7764
+    pub mod SSSPResultStEphInt;SSSPResultStEphInt334,7798
+    pub mod SSSPResultStPerFloat;SSSPResultStPerFloat335,7830
+    pub mod SSSPResultStPerInt;SSSPResultStPerInt336,7864
+pub mod Chap57 {Chap57339,7899
+    pub mod DijkstraStEphFloat;DijkstraStEphFloat340,7916
+    pub mod DijkstraStEphInt;DijkstraStEphInt341,7948
+    pub mod StackStEph;StackStEph342,7978
+pub mod Chap58 {Chap58345,8005
+    pub mod BellmanFordStEphFloat;BellmanFordStEphFloat346,8022
+    pub mod BellmanFordStEphInt;BellmanFordStEphInt347,8057
+pub mod Chap59 {Chap59350,8093
+    pub mod JohnsonMtEphFloat;JohnsonMtEphFloat351,8110
+    pub mod JohnsonMtEphInt;JohnsonMtEphInt352,8141
+    pub mod JohnsonStEphFloat;JohnsonStEphFloat353,8170
+    pub mod JohnsonStEphInt;JohnsonStEphInt354,8201
+pub mod Chap61 {Chap61357,8233
+    pub mod EdgeContractionMtEph;EdgeContractionMtEph358,8250
+    pub mod EdgeContractionStEph;EdgeContractionStEph359,8284
+    pub mod VertexMatchingMtEph;VertexMatchingMtEph360,8318
+    pub mod VertexMatchingStEph;VertexMatchingStEph361,8351
+pub mod Chap62 {Chap62363,8386
+    pub mod StarContractionMtEph;StarContractionMtEph364,8403
+    pub mod StarContractionStEph;StarContractionStEph365,8437
+    pub mod StarPartitionMtEph;StarPartitionMtEph366,8471
+    pub mod StarPartitionStEph;StarPartitionStEph367,8503
+pub mod Chap63 {Chap63369,8537
+    pub mod ConnectivityMtEph;ConnectivityMtEph370,8554
+    pub mod ConnectivityStEph;ConnectivityStEph371,8585
+pub mod Chap64 {Chap64373,8618
+    pub mod SpanTreeMtEph;SpanTreeMtEph374,8635
+    pub mod SpanTreeStEph;SpanTreeStEph375,8662
+    pub mod TSPApproxMtEph;TSPApproxMtEph376,8689
+    pub mod TSPApproxStEph;TSPApproxStEph377,8717
+pub mod Chap65 {Chap65379,8747
+    pub mod KruskalStEph;KruskalStEph380,8764
+    pub mod PrimStEph;PrimStEph381,8790
+    pub mod UnionFindStEph;UnionFindStEph382,8813
+pub mod Chap66 {Chap66384,8843
+    pub mod BoruvkaMtEph;BoruvkaMtEph385,8860
+    pub mod BoruvkaStEph;BoruvkaStEph386,8886
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap66/BoruvkaMtEph.rs,1467
 pub mod BoruvkaMtEph {BoruvkaMtEph7,288
@@ -13848,7 +13874,7 @@ pub mod StructChainedHashTable {StructChainedHashTable5,239
     impl<Key: StT, Value: StT, Metrics: Default> StructChainedHashTableStEph99,3325
         fn hash_index(table: &HashTable<Key, Value, ChainList<Key, Value>, Metrics>, _key: &Key)hash_index103,3491
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47clean/ParaHashTableStEph.rs,1732
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47clean/ParaHashTableStEph.rs,1736
 pub mod ParaHashTableStEph {ParaHashTableStEph7,357
     pub type HashFun<K> = Box<dyn Fn(&K) -> N>;HashFun14,482
     pub struct LoadAndSize {LoadAndSize17,576
@@ -13861,19 +13887,32 @@ pub mod ParaHashTableStEph {ParaHashTableStEph7,357
         pub current_size: N,current_size27,854
         pub num_elements: N,num_elements28,883
         pub metrics: Metrics,metrics29,912
-        _phantom: PhantomData<(Key, Value)>,_phantom30,942
-    pub trait EntryTrait<Key, Value> {EntryTrait35,1128
-        fn new() -> Self;new36,1167
-        fn insert(&mut self, key: Key, value: Value);insert37,1193
-        fn lookup(&self, key: &Key) -> Option<Value>;lookup38,1247
-        fn delete(&mut self, key: &Key) -> B;delete39,1301
-    pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, MetriParaHashTableStEphTrait43,1403
-        fn createTable(hash_fn: HashFun<Key>, initial_size: N) -> HashTable<Key, Value, Entry, McreateTable47,1651
-        fn insert(table: &mut HashTable<Key, Value, Entry, Metrics>, key: Key, value: Value);insert61,2195
-        fn lookup(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key) -> Option<Value>;lookup65,2415
-        fn delete(table: &mut HashTable<Key, Value, Entry, Metrics>, key: &Key) -> B;delete69,2619
-        fn metrics(table: &HashTable<Key, Value, Entry, Metrics>) -> &Metrics { &table.metrics }metrics72,2746
-        fn loadAndSize(table: &HashTable<Key, Value, Entry, Metrics>) -> LoadAndSize {loadAndSize77,3019
+        pub _phantom: PhantomData<(Key, Value)>,_phantom30,942
+    pub trait EntryTrait<Key, Value> {EntryTrait35,1132
+        fn new() -> Self;new36,1171
+        fn insert(&mut self, key: Key, value: Value);insert37,1197
+        fn lookup(&self, key: &Key) -> Option<Value>;lookup38,1251
+        fn delete(&mut self, key: &Key) -> B;delete39,1305
+    pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, MetriParaHashTableStEphTrait43,1407
+        fn createTable(hash_fn: HashFun<Key>, initial_size: N) -> HashTable<Key, Value, Entry, McreateTable47,1655
+        fn insert(table: &mut HashTable<Key, Value, Entry, Metrics>, key: Key, value: Value);insert61,2199
+        fn lookup(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key) -> Option<Value>;lookup65,2419
+        fn delete(table: &mut HashTable<Key, Value, Entry, Metrics>, key: &Key) -> B;delete69,2623
+        fn metrics(table: &HashTable<Key, Value, Entry, Metrics>) -> &Metrics { &table.metrics }metrics72,2750
+        fn loadAndSize(table: &HashTable<Key, Value, Entry, Metrics>) -> LoadAndSize {loadAndSize77,3023
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47clean/DoubleHashFlatHashTable.rs,1049
+pub mod DoubleHashFlatHashTable {DoubleHashFlatHashTable5,231
+    pub struct DoubleHashFlatHashTableStEph;DoubleHashFlatHashTableStEph14,623
+    impl DoubleHashFlatHashTableStEph {DoubleHashFlatHashTableStEph16,669
+        pub fn second_hash<Key: StT>(key: &Key, table_size: N) -> N {second_hash21,960
+    impl<Key: StT, Value: StT, Metrics: Default> DoubleHashFlatHashTableStEph56,2222
+        fn insert(table: &mut HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: Key, vinsert60,2396
+        fn lookup(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) -> Olookup77,3129
+        fn delete(table: &mut HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) delete92,3756
+    impl<Key: StT, Value: StT, Metrics: Default> DoubleHashFlatHashTableStEph112,4533
+        fn probe(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key, attemprobe116,4697
+        fn find_slot(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) -find_slot124,5067
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47clean/LinkedListChainedHashTable.rs,1163
 pub mod LinkedListChainedHashTable {LinkedListChainedHashTable5,228
@@ -13906,6 +13945,17 @@ pub mod FlatHashTable {FlatHashTable5,201
         fn find_slot(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key) -> N;find_slot56,2200
         fn insert_with_probe(table: &mut HashTable<Key, Value, Entry, Metrics>, key: Key, value:insert_with_probe60,2388
         fn lookup_with_probe(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key) -> Optionlookup_with_probe69,2760
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47clean/QuadProbFlatHashTable.rs,867
+pub mod QuadProbFlatHashTable {QuadProbFlatHashTable5,237
+    pub struct QuadProbFlatHashTableStEph;QuadProbFlatHashTableStEph13,545
+    impl<Key: StT, Value: StT, Metrics: Default> QuadProbFlatHashTableStEph15,589
+        fn insert(table: &mut HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: Key, vinsert19,761
+        fn lookup(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) -> Olookup38,1567
+        fn delete(table: &mut HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) delete54,2305
+    impl<Key: StT, Value: StT, Metrics: Default> QuadProbFlatHashTableStEph75,3193
+        fn probe(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key, attemprobe79,3355
+        fn find_slot(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) -find_slot86,3665
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap47clean/ChainedHashTable.rs,824
 pub mod ChainedHashTable {ChainedHashTable5,206
@@ -16111,6 +16161,75 @@ fn test_self_loop_returns_none() {test_self_loop_returns_none51,1673
 fn test_disconnected_components() {test_disconnected_components59,1901
 fn test_empty_graph() {test_empty_graph70,2278
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestDoubleHashFlatHashTable.rs,939
+type DoubleHashTable = HashTable<i32, String, FlatEntry<i32, String>, ()>;DoubleHashTable6,238
+fn test_insert_and_lookup() {test_insert_and_lookup9,322
+fn test_delete() {test_delete29,1242
+fn test_second_hash_nonzero() {test_second_hash_nonzero45,1889
+fn test_second_hash_is_odd() {test_second_hash_is_odd55,2222
+fn test_probe_double_hash_sequence() {test_probe_double_hash_sequence64,2533
+fn test_probe_visits_all_slots_prime_size() {test_probe_visits_all_slots_prime_size85,3257
+fn test_find_slot() {test_find_slot107,4154
+fn test_update_existing_key() {test_update_existing_key121,4594
+fn test_high_load_factor() {test_high_load_factor137,5268
+fn test_delete_maintains_probe_chain() {test_delete_maintains_probe_chain159,6011
+fn test_lookup_nonexistent_key() {test_lookup_nonexistent_key182,7012
+fn test_different_probe_sequences_for_colliding_keys() {test_different_probe_sequences_for_colliding_keys196,7523
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestStructChainedHashTable.rs,633
+type StructChainTable = HashTable<i32, String, ChainList<i32, String>, ()>;StructChainTable6,242
+fn test_chainlist_new() {test_chainlist_new9,327
+fn test_chainlist_insert() {test_chainlist_insert15,455
+fn test_chainlist_insert_multiple() {test_chainlist_insert_multiple22,686
+fn test_chainlist_update() {test_chainlist_update33,1188
+fn test_chainlist_delete() {test_chainlist_delete41,1476
+fn test_chainlist_delete_not_found() {test_chainlist_delete_not_found51,1865
+fn test_struct_chained_insert_lookup() {test_struct_chained_insert_lookup58,2085
+fn test_struct_chained_delete() {test_struct_chained_delete75,2795
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestLinProbFlatHashTable.rs,265
+type FlatTable = HashTable<i32, String, FlatEntry<i32, String>, ()>;FlatTable6,232
+fn test_insert_and_lookup() {test_insert_and_lookup9,310
+fn test_delete() {test_delete30,1092
+fn test_probe() {test_probe45,1634
+fn test_find_slot() {test_find_slot58,2099
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestLinkedListChainedHashTable.rs,545
+type LLChainTable = HashTable<i32, String, LinkedList<(i32, String)>, ()>;LLChainTable7,284
+fn test_linkedlist_entry_new() {test_linkedlist_entry_new10,368
+fn test_linkedlist_entry_insert() {test_linkedlist_entry_insert16,549
+fn test_linkedlist_entry_update() {test_linkedlist_entry_update24,825
+fn test_linkedlist_entry_delete() {test_linkedlist_entry_delete33,1159
+fn test_linkedlist_chained_insert_lookup() {test_linkedlist_chained_insert_lookup43,1564
+fn test_linkedlist_chained_delete() {test_linkedlist_chained_delete60,2298
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestVecChainedHashTable.rs,455
+type VecChainTable = HashTable<i32, String, Vec<(i32, String)>, ()>;VecChainTable6,236
+fn test_vec_entry_new() {test_vec_entry_new9,314
+fn test_vec_entry_insert() {test_vec_entry_insert15,474
+fn test_vec_entry_update() {test_vec_entry_update23,736
+fn test_vec_entry_delete() {test_vec_entry_delete32,1056
+fn test_vec_chained_insert_lookup() {test_vec_chained_insert_lookup42,1447
+fn test_vec_chained_delete() {test_vec_chained_delete59,2126
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestQuadProbFlatHashTable.rs,691
+type QuadTable = HashTable<i32, String, FlatEntry<i32, String>, ()>;QuadTable6,234
+fn test_insert_and_lookup() {test_insert_and_lookup9,312
+fn test_delete() {test_delete26,1018
+fn test_probe_quadratic_sequence() {test_probe_quadratic_sequence42,1649
+fn test_find_slot() {test_find_slot66,2530
+fn test_update_existing_key() {test_update_existing_key80,2960
+fn test_max_attempts_ceiling_m_over_2() {test_max_attempts_ceiling_m_over_296,3620
+fn test_lookup_stops_at_max_attempts() {test_lookup_stops_at_max_attempts122,4584
+fn test_delete_maintains_probe_chain() {test_delete_maintains_probe_chain142,5302
+fn test_prime_size_guarantees() {test_prime_size_guarantees164,6171
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestParaHashTableStEph.rs,225
+fn test_createtable() {test_createtable7,209
+fn test_loadandsize_empty() {test_loadandsize_empty17,609
+fn test_metrics() {test_metrics34,1167
+fn test_loadandsize_with_elements() {test_loadandsize_with_elements49,1637
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap35/TestOrderStatSelectMtPer.rs,344
 fn test_empty() {test_empty8,277
 fn test_single() {test_single14,393
@@ -17145,17 +17264,17 @@ fn test_set_source() {test_set_source122,3547
 fn test_set_target() {test_set_target133,3843
 fn test_clear_memo() {test_clear_memo144,4139
 fn test_memo_size() {test_memo_size158,4531
-fn test_single_char_same() {test_single_char_same170,4870
-fn test_completely_different() {test_completely_different181,5154
-fn test_prefix_match() {test_prefix_match192,5474
-fn test_integer_sequences() {test_integer_sequences203,5784
-fn test_empty_both() {test_empty_both214,6083
-fn test_source_mut() {test_source_mut225,6379
-fn test_target_mut() {test_target_mut240,6735
-fn test_concurrent_reads() {test_concurrent_reads255,7091
-fn test_equality() {test_equality274,7574
-fn test_inequality() {test_inequality287,8024
-fn test_string_sequences() {test_string_sequences302,8523
+fn test_single_char_same() {test_single_char_same170,4869
+fn test_completely_different() {test_completely_different181,5153
+fn test_prefix_match() {test_prefix_match192,5473
+fn test_integer_sequences() {test_integer_sequences203,5783
+fn test_empty_both() {test_empty_both214,6082
+fn test_source_mut() {test_source_mut225,6378
+fn test_target_mut() {test_target_mut240,6742
+fn test_concurrent_reads() {test_concurrent_reads255,7106
+fn test_equality() {test_equality274,7589
+fn test_inequality() {test_inequality287,8039
+fn test_string_sequences() {test_string_sequences302,8538
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap49/TestSubsetSumStPer.rs,223
 fn test_new_empty() {test_new_empty8,285
@@ -17234,7 +17353,7 @@ fn test_update_and_recompute() {test_update_and_recompute299,8578
 fn test_empty_both() {test_empty_both316,9044
 fn test_large_sequences() {test_large_sequences328,9366
 fn test_source_mut() {test_source_mut340,9754
-fn test_target_mut() {test_target_mut355,10104
+fn test_target_mut() {test_target_mut355,10112
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap62/TestStarPartitionStEph.rs,553
 mod tests {tests5,165
@@ -17434,8 +17553,31 @@ fn test_quadratic_probing_different_coefficients() {test_quadratic_probing_diff
 fn test_quadratic_probing_edge_cases() {test_quadratic_probing_edge_cases401,15472
 fn test_probe_count_estimation_edge_cases() {test_probe_count_estimation_edge_cases418,16018
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47/TestNestedHashTable.rs,101
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47/TestNestedHashTable.rs,2381
 fn test_nestedhashtablelit_macro_functionality() {test_nestedhashtablelit_macro_functionality9,300
+fn test_create_nested_hash_table() {test_create_nested_hash_table24,768
+fn test_nested_hash_table_insert_and_lookup() {test_nested_hash_table_insert_and_lookup31,961
+fn test_nested_hash_table_delete() {test_nested_hash_table_delete52,1716
+fn test_nested_hash_table_update() {test_nested_hash_table_update72,2409
+fn test_nested_hash_table_integer_keys() {test_nested_hash_table_integer_keys84,2822
+fn test_nested_hash_table_collision_handling() {test_nested_hash_table_collision_handling101,3409
+fn test_nested_hash_table_resize_behavior() {test_nested_hash_table_resize_behavior121,4282
+fn test_nested_hash_table_empty_operations() {test_nested_hash_table_empty_operations140,4775
+fn test_nested_hash_table_load_factor_management() {test_nested_hash_table_load_factor_management153,5201
+fn test_nested_hash_table_with_deletions_and_reinsertions() {test_nested_hash_table_with_deletions_and_reinsertions175,6056
+fn test_nested_hash_table_nested_structure() {test_nested_hash_table_nested_structure204,7157
+fn test_nested_hash_table_bucket_distribution() {test_nested_hash_table_bucket_distribution224,7726
+fn test_nested_hash_table_delete_from_nested_chain() {test_nested_hash_table_delete_from_nested_chain243,8309
+fn test_nested_hash_table_update_in_nested_chain() {test_nested_hash_table_update_in_nested_chain273,9489
+fn test_nested_hash_table_performance_with_good_distribution() {test_nested_hash_table_performance_with_good_distribution292,10226
+fn test_nested_hash_table_stress_test() {test_nested_hash_table_stress_test315,10956
+fn test_nested_hash_table_mixed_operations() {test_nested_hash_table_mixed_operations351,11888
+fn test_nested_hash_table_edge_cases() {test_nested_hash_table_edge_cases378,12953
+fn test_nested_hash_table_integer_hash_behavior() {test_nested_hash_table_integer_hash_behavior404,13854
+fn test_nested_hash_table_display_functionality() {test_nested_hash_table_display_functionality430,14593
+fn test_nested_hash_table_debug_functionality() {test_nested_hash_table_debug_functionality444,15074
+fn test_nested_hash_table_clone_functionality() {test_nested_hash_table_clone_functionality454,15427
+fn test_nested_hash_table_large_scale_operations() {test_nested_hash_table_large_scale_operations470,16007
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47/TestClusteringAnalysis.rs,1427
 fn test_clustering_analyzer_creation() {test_clustering_analyzer_creation26,1326
@@ -18167,7 +18309,7 @@ fn test_obststephlit_macro_empty() {test_obststephlit_macro_empty324,8341
 fn test_obststephlit_macro_single_key() {test_obststephlit_macro_single_key330,8474
 fn test_obststephlit_macro_multiple_keys() {test_obststephlit_macro_multiple_keys338,8692
 fn test_obststephlit_macro_trailing_comma() {test_obststephlit_macro_trailing_comma346,8928
-fn test_obststephlit_macro_string_keys() {test_obststephlit_macro_string_keys355,9186
+fn test_obststephlit_macro_string_keys() {test_obststephlit_macro_string_keys355,9182
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap50/TestOptBinSearchTreeStPer.rs,825
 fn test_new_empty_obst() {test_new_empty_obst9,288
@@ -18179,12 +18321,12 @@ fn test_optimal_cost_three_keys() {test_optimal_cost_three_keys56,1479
 fn test_keys_method() {test_keys_method68,1754
 fn test_num_keys() {test_num_keys81,2061
 fn test_memo_size() {test_memo_size90,2275
-fn test_empty_keys() {test_empty_keys101,2546
-fn test_string_keys() {test_string_keys109,2706
-fn test_skewed_probabilities() {test_skewed_probabilities120,2948
-fn test_clone() {test_clone131,3188
-fn test_equality() {test_equality140,3432
-fn test_persistent_nature() {test_persistent_nature148,3669
+fn test_empty_keys() {test_empty_keys101,2543
+fn test_string_keys() {test_string_keys109,2703
+fn test_skewed_probabilities() {test_skewed_probabilities120,2945
+fn test_clone() {test_clone131,3185
+fn test_equality() {test_equality140,3429
+fn test_persistent_nature() {test_persistent_nature148,3666
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap50/TestMatrixChainStPer.rs,671
 fn test_matrixchainstperlit_macro_functionality() {test_matrixchainstperlit_macro_functionality9,258
@@ -19715,10 +19857,12 @@ mod tests {tests5,160
     fn test_tour_weight() {test_tour_weight47,1518
     fn test_approx_metric_tsp() {test_approx_metric_tsp56,1754
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap64/TestSpanTreeMtEph.rs,181
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap64/TestSpanTreeMtEph.rs,332
 mod tests {tests5,173
     fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {create_cycle_graph12,429
-    fn test_spanning_tree_mt_empty() {test_spanning_tree_mt_empty43,1404
+    fn test_spanning_tree_mt_cycle() {test_spanning_tree_mt_cycle25,824
+    fn test_spanning_tree_mt_larger() {test_spanning_tree_mt_larger34,1083
+    fn test_spanning_tree_mt_empty() {test_spanning_tree_mt_empty43,1344
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap37/TestBSTSplayStEph.rs,572
 fn test_bstsplaystephlit_macro_functionality() {test_bstsplaystephlit_macro_functionality7,216
@@ -23592,8 +23736,31 @@ fn test_quadratic_probing_different_coefficients() {test_quadratic_probing_diff
 fn test_quadratic_probing_edge_cases() {test_quadratic_probing_edge_cases401,15472
 fn test_probe_count_estimation_edge_cases() {test_probe_count_estimation_edge_cases418,16018
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47/TestNestedHashTable.rs,101
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47/TestNestedHashTable.rs,2381
 fn test_nestedhashtablelit_macro_functionality() {test_nestedhashtablelit_macro_functionality9,300
+fn test_create_nested_hash_table() {test_create_nested_hash_table24,768
+fn test_nested_hash_table_insert_and_lookup() {test_nested_hash_table_insert_and_lookup31,961
+fn test_nested_hash_table_delete() {test_nested_hash_table_delete52,1716
+fn test_nested_hash_table_update() {test_nested_hash_table_update72,2409
+fn test_nested_hash_table_integer_keys() {test_nested_hash_table_integer_keys84,2822
+fn test_nested_hash_table_collision_handling() {test_nested_hash_table_collision_handling101,3409
+fn test_nested_hash_table_resize_behavior() {test_nested_hash_table_resize_behavior121,4282
+fn test_nested_hash_table_empty_operations() {test_nested_hash_table_empty_operations140,4775
+fn test_nested_hash_table_load_factor_management() {test_nested_hash_table_load_factor_management153,5201
+fn test_nested_hash_table_with_deletions_and_reinsertions() {test_nested_hash_table_with_deletions_and_reinsertions175,6056
+fn test_nested_hash_table_nested_structure() {test_nested_hash_table_nested_structure204,7157
+fn test_nested_hash_table_bucket_distribution() {test_nested_hash_table_bucket_distribution224,7726
+fn test_nested_hash_table_delete_from_nested_chain() {test_nested_hash_table_delete_from_nested_chain243,8309
+fn test_nested_hash_table_update_in_nested_chain() {test_nested_hash_table_update_in_nested_chain273,9489
+fn test_nested_hash_table_performance_with_good_distribution() {test_nested_hash_table_performance_with_good_distribution292,10226
+fn test_nested_hash_table_stress_test() {test_nested_hash_table_stress_test315,10956
+fn test_nested_hash_table_mixed_operations() {test_nested_hash_table_mixed_operations351,11888
+fn test_nested_hash_table_edge_cases() {test_nested_hash_table_edge_cases378,12953
+fn test_nested_hash_table_integer_hash_behavior() {test_nested_hash_table_integer_hash_behavior404,13854
+fn test_nested_hash_table_display_functionality() {test_nested_hash_table_display_functionality430,14593
+fn test_nested_hash_table_debug_functionality() {test_nested_hash_table_debug_functionality444,15074
+fn test_nested_hash_table_clone_functionality() {test_nested_hash_table_clone_functionality454,15427
+fn test_nested_hash_table_large_scale_operations() {test_nested_hash_table_large_scale_operations470,16007
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47/TestClusteringAnalysis.rs,1427
 fn test_clustering_analyzer_creation() {test_clustering_analyzer_creation26,1326
@@ -23733,6 +23900,75 @@ fn test_flat_hash_table_integration() {test_flat_hash_table_integration273,940
 fn test_entry_enum() {test_entry_enum297,10205
 fn test_comprehensive_double_hashing() {test_comprehensive_double_hashing316,10789
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestDoubleHashFlatHashTable.rs,939
+type DoubleHashTable = HashTable<i32, String, FlatEntry<i32, String>, ()>;DoubleHashTable6,238
+fn test_insert_and_lookup() {test_insert_and_lookup9,322
+fn test_delete() {test_delete29,1242
+fn test_second_hash_nonzero() {test_second_hash_nonzero45,1889
+fn test_second_hash_is_odd() {test_second_hash_is_odd55,2222
+fn test_probe_double_hash_sequence() {test_probe_double_hash_sequence64,2533
+fn test_probe_visits_all_slots_prime_size() {test_probe_visits_all_slots_prime_size85,3257
+fn test_find_slot() {test_find_slot107,4154
+fn test_update_existing_key() {test_update_existing_key121,4594
+fn test_high_load_factor() {test_high_load_factor137,5268
+fn test_delete_maintains_probe_chain() {test_delete_maintains_probe_chain159,6011
+fn test_lookup_nonexistent_key() {test_lookup_nonexistent_key182,7012
+fn test_different_probe_sequences_for_colliding_keys() {test_different_probe_sequences_for_colliding_keys196,7523
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestStructChainedHashTable.rs,633
+type StructChainTable = HashTable<i32, String, ChainList<i32, String>, ()>;StructChainTable6,242
+fn test_chainlist_new() {test_chainlist_new9,327
+fn test_chainlist_insert() {test_chainlist_insert15,455
+fn test_chainlist_insert_multiple() {test_chainlist_insert_multiple22,686
+fn test_chainlist_update() {test_chainlist_update33,1188
+fn test_chainlist_delete() {test_chainlist_delete41,1476
+fn test_chainlist_delete_not_found() {test_chainlist_delete_not_found51,1865
+fn test_struct_chained_insert_lookup() {test_struct_chained_insert_lookup58,2085
+fn test_struct_chained_delete() {test_struct_chained_delete75,2795
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestLinProbFlatHashTable.rs,265
+type FlatTable = HashTable<i32, String, FlatEntry<i32, String>, ()>;FlatTable6,232
+fn test_insert_and_lookup() {test_insert_and_lookup9,310
+fn test_delete() {test_delete30,1092
+fn test_probe() {test_probe45,1634
+fn test_find_slot() {test_find_slot58,2099
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestLinkedListChainedHashTable.rs,545
+type LLChainTable = HashTable<i32, String, LinkedList<(i32, String)>, ()>;LLChainTable7,284
+fn test_linkedlist_entry_new() {test_linkedlist_entry_new10,368
+fn test_linkedlist_entry_insert() {test_linkedlist_entry_insert16,549
+fn test_linkedlist_entry_update() {test_linkedlist_entry_update24,825
+fn test_linkedlist_entry_delete() {test_linkedlist_entry_delete33,1159
+fn test_linkedlist_chained_insert_lookup() {test_linkedlist_chained_insert_lookup43,1564
+fn test_linkedlist_chained_delete() {test_linkedlist_chained_delete60,2298
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestVecChainedHashTable.rs,455
+type VecChainTable = HashTable<i32, String, Vec<(i32, String)>, ()>;VecChainTable6,236
+fn test_vec_entry_new() {test_vec_entry_new9,314
+fn test_vec_entry_insert() {test_vec_entry_insert15,474
+fn test_vec_entry_update() {test_vec_entry_update23,736
+fn test_vec_entry_delete() {test_vec_entry_delete32,1056
+fn test_vec_chained_insert_lookup() {test_vec_chained_insert_lookup42,1447
+fn test_vec_chained_delete() {test_vec_chained_delete59,2126
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestQuadProbFlatHashTable.rs,691
+type QuadTable = HashTable<i32, String, FlatEntry<i32, String>, ()>;QuadTable6,234
+fn test_insert_and_lookup() {test_insert_and_lookup9,312
+fn test_delete() {test_delete26,1018
+fn test_probe_quadratic_sequence() {test_probe_quadratic_sequence42,1649
+fn test_find_slot() {test_find_slot66,2530
+fn test_update_existing_key() {test_update_existing_key80,2960
+fn test_max_attempts_ceiling_m_over_2() {test_max_attempts_ceiling_m_over_296,3620
+fn test_lookup_stops_at_max_attempts() {test_lookup_stops_at_max_attempts122,4584
+fn test_delete_maintains_probe_chain() {test_delete_maintains_probe_chain142,5302
+fn test_prime_size_guarantees() {test_prime_size_guarantees164,6171
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap47clean/TestParaHashTableStEph.rs,225
+fn test_createtable() {test_createtable7,209
+fn test_loadandsize_empty() {test_loadandsize_empty17,609
+fn test_metrics() {test_metrics34,1167
+fn test_loadandsize_with_elements() {test_loadandsize_with_elements49,1637
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap49/TestMinEditDistMtEph.rs,1336
 fn test_new_empty() {test_new_empty10,336
 fn test_from_sequences() {test_from_sequences17,522
@@ -23748,17 +23984,17 @@ fn test_set_source() {test_set_source122,3547
 fn test_set_target() {test_set_target133,3843
 fn test_clear_memo() {test_clear_memo144,4139
 fn test_memo_size() {test_memo_size158,4531
-fn test_single_char_same() {test_single_char_same170,4870
-fn test_completely_different() {test_completely_different181,5154
-fn test_prefix_match() {test_prefix_match192,5474
-fn test_integer_sequences() {test_integer_sequences203,5784
-fn test_empty_both() {test_empty_both214,6083
-fn test_source_mut() {test_source_mut225,6379
-fn test_target_mut() {test_target_mut240,6735
-fn test_concurrent_reads() {test_concurrent_reads255,7091
-fn test_equality() {test_equality274,7574
-fn test_inequality() {test_inequality287,8024
-fn test_string_sequences() {test_string_sequences302,8523
+fn test_single_char_same() {test_single_char_same170,4869
+fn test_completely_different() {test_completely_different181,5153
+fn test_prefix_match() {test_prefix_match192,5473
+fn test_integer_sequences() {test_integer_sequences203,5783
+fn test_empty_both() {test_empty_both214,6082
+fn test_source_mut() {test_source_mut225,6378
+fn test_target_mut() {test_target_mut240,6742
+fn test_concurrent_reads() {test_concurrent_reads255,7106
+fn test_equality() {test_equality274,7589
+fn test_inequality() {test_inequality287,8039
+fn test_string_sequences() {test_string_sequences302,8538
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap49/TestSubsetSumStPer.rs,223
 fn test_new_empty() {test_new_empty8,285
@@ -23837,7 +24073,7 @@ fn test_update_and_recompute() {test_update_and_recompute299,8578
 fn test_empty_both() {test_empty_both316,9044
 fn test_large_sequences() {test_large_sequences328,9366
 fn test_source_mut() {test_source_mut340,9754
-fn test_target_mut() {test_target_mut355,10104
+fn test_target_mut() {test_target_mut355,10112
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap50/TestOBSTMtEph.rs,1368
 fn test_obstmtephlit_macro_functionality() {test_obstmtephlit_macro_functionality9,283
@@ -23898,7 +24134,7 @@ fn test_obststephlit_macro_empty() {test_obststephlit_macro_empty324,8341
 fn test_obststephlit_macro_single_key() {test_obststephlit_macro_single_key330,8474
 fn test_obststephlit_macro_multiple_keys() {test_obststephlit_macro_multiple_keys338,8692
 fn test_obststephlit_macro_trailing_comma() {test_obststephlit_macro_trailing_comma346,8928
-fn test_obststephlit_macro_string_keys() {test_obststephlit_macro_string_keys355,9186
+fn test_obststephlit_macro_string_keys() {test_obststephlit_macro_string_keys355,9182
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap50/TestOptBinSearchTreeStPer.rs,825
 fn test_new_empty_obst() {test_new_empty_obst9,288
@@ -23910,12 +24146,12 @@ fn test_optimal_cost_three_keys() {test_optimal_cost_three_keys56,1479
 fn test_keys_method() {test_keys_method68,1754
 fn test_num_keys() {test_num_keys81,2061
 fn test_memo_size() {test_memo_size90,2275
-fn test_empty_keys() {test_empty_keys101,2546
-fn test_string_keys() {test_string_keys109,2706
-fn test_skewed_probabilities() {test_skewed_probabilities120,2948
-fn test_clone() {test_clone131,3188
-fn test_equality() {test_equality140,3432
-fn test_persistent_nature() {test_persistent_nature148,3669
+fn test_empty_keys() {test_empty_keys101,2543
+fn test_string_keys() {test_string_keys109,2703
+fn test_skewed_probabilities() {test_skewed_probabilities120,2945
+fn test_clone() {test_clone131,3185
+fn test_equality() {test_equality140,3429
+fn test_persistent_nature() {test_persistent_nature148,3666
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap50/TestMatrixChainStPer.rs,671
 fn test_matrixchainstperlit_macro_functionality() {test_matrixchainstperlit_macro_functionality9,258
@@ -24755,10 +24991,12 @@ mod tests {tests5,160
     fn test_tour_weight() {test_tour_weight47,1518
     fn test_approx_metric_tsp() {test_approx_metric_tsp56,1754
 
-/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap64/TestSpanTreeMtEph.rs,181
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap64/TestSpanTreeMtEph.rs,332
 mod tests {tests5,173
     fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {create_cycle_graph12,429
-    fn test_spanning_tree_mt_empty() {test_spanning_tree_mt_empty43,1404
+    fn test_spanning_tree_mt_cycle() {test_spanning_tree_mt_cycle25,824
+    fn test_spanning_tree_mt_larger() {test_spanning_tree_mt_larger34,1083
+    fn test_spanning_tree_mt_empty() {test_spanning_tree_mt_empty43,1344
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap65/TestUnionFindStEph.rs,1009
 mod tests {tests5,151
@@ -25110,20 +25348,40 @@ fn bench_memory_efficiency(c: &mut Criterion) {bench_memory_efficiency310,1002
 fn build_vec(len: usize) -> Vec<i32> { (0..len as i32).rev().collect() }build_vec7,214
 fn bench_insertion_sort(c: &mut Criterion) {bench_insertion_sort9,288
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchLinProbFlatHashTable.rs,115
+fn bench_insert(c: &mut Criterion) {bench_insert10,392
+fn bench_lookup(c: &mut Criterion) {bench_lookup35,1425
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchQuadProbFlatHashTable.rs,115
+fn bench_insert(c: &mut Criterion) {bench_insert10,397
+fn bench_lookup(c: &mut Criterion) {bench_lookup35,1433
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchAdvancedQuadraticProbing.rs,93
 fn bench_quadratic_probing_insert(c: &mut Criterion) {bench_quadratic_probing_insert10,435
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchLinearProbing.rs,87
 fn bench_linear_probing_insert(c: &mut Criterion) {bench_linear_probing_insert10,341
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchDoubleHashFlatHashTable.rs,115
+fn bench_insert(c: &mut Criterion) {bench_insert10,398
+fn bench_lookup(c: &mut Criterion) {bench_lookup35,1440
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchSeparateChaining.rs,92
 fn bench_separate_chaining_insert(c: &mut Criterion) {bench_separate_chaining_insert9,296
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BENCHMARK_SUMMARY.txt,0
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchVecChainedHashTable.rs,114
+fn bench_insert(c: &mut Criterion) {bench_insert9,329
+fn bench_lookup(c: &mut Criterion) {bench_lookup33,1284
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchAdvancedLinearProbing.rs,87
 fn bench_linear_probing_insert(c: &mut Criterion) {bench_linear_probing_insert10,423
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchFlatHashTable.rs,97
 fn bench_flat_hash_table_operations(c: &mut Criterion) {bench_flat_hash_table_operations10,341
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchLinProbFlatHashTable.rs.backup,0
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchAdvancedDoubleHashing.rs,87
 fn bench_double_hashing_insert(c: &mut Criterion) {bench_double_hashing_insert10,423
@@ -26464,20 +26722,40 @@ fn bench_meld(c: &mut Criterion) {bench_meld55,1723
 fn bench_find_min(c: &mut Criterion) {bench_find_min74,2376
 fn bench_construction(c: &mut Criterion) {bench_construction91,2901
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchLinProbFlatHashTable.rs,115
+fn bench_insert(c: &mut Criterion) {bench_insert10,392
+fn bench_lookup(c: &mut Criterion) {bench_lookup35,1425
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchQuadProbFlatHashTable.rs,115
+fn bench_insert(c: &mut Criterion) {bench_insert10,397
+fn bench_lookup(c: &mut Criterion) {bench_lookup35,1433
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchAdvancedQuadraticProbing.rs,93
 fn bench_quadratic_probing_insert(c: &mut Criterion) {bench_quadratic_probing_insert10,435
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchLinearProbing.rs,87
 fn bench_linear_probing_insert(c: &mut Criterion) {bench_linear_probing_insert10,341
 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchDoubleHashFlatHashTable.rs,115
+fn bench_insert(c: &mut Criterion) {bench_insert10,398
+fn bench_lookup(c: &mut Criterion) {bench_lookup35,1440
+
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchSeparateChaining.rs,92
 fn bench_separate_chaining_insert(c: &mut Criterion) {bench_separate_chaining_insert9,296
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BENCHMARK_SUMMARY.txt,0
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchVecChainedHashTable.rs,114
+fn bench_insert(c: &mut Criterion) {bench_insert9,329
+fn bench_lookup(c: &mut Criterion) {bench_lookup33,1284
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchAdvancedLinearProbing.rs,87
 fn bench_linear_probing_insert(c: &mut Criterion) {bench_linear_probing_insert10,423
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchFlatHashTable.rs,97
 fn bench_flat_hash_table_operations(c: &mut Criterion) {bench_flat_hash_table_operations10,341
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchLinProbFlatHashTable.rs.backup,0
 
 /home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap47/BenchAdvancedDoubleHashing.rs,87
 fn bench_double_hashing_insert(c: &mut Criterion) {bench_double_hashing_insert10,423

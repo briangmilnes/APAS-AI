@@ -178,7 +178,7 @@ pub mod ArraySeqMtPer {
         fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T>;
         /// APAS: Work Θ(|a|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - sequential with linear search
-        fn collect(a: &ArraySeqMtPerS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>>;
+        fn collect<K: StTInMtT, V: StTInMtT>(a: &ArraySeqMtPerS<Pair<K, V>>, cmp: fn(&K, &K) -> O) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>>;
         fn inject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T>;
         fn isEmpty(&self) -> B;
         fn isSingleton(&self) -> B;
@@ -349,17 +349,17 @@ pub mod ArraySeqMtPer {
             ArraySeqMtPerS::from_vec(values)
         }
 
-        fn collect(a: &ArraySeqMtPerS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtPerS<Pair<T, ArraySeqMtPerS<T>>> {
+        fn collect<K: StTInMtT, V: StTInMtT>(a: &ArraySeqMtPerS<Pair<K, V>>, cmp: fn(&K, &K) -> O) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>> {
             if a.length() == 0 {
                 return ArraySeqMtPerS::from_vec(vec![]);
             }
-            let mut groups: Vec<Pair<T, ArraySeqMtPerS<T>>> = Vec::new();
+            let mut groups: Vec<Pair<K, ArraySeqMtPerS<V>>> = Vec::new();
             for i in 0..a.length() {
                 let Pair(key, value) = a.nth(i);
                 let mut found_group = false;
                 for group in &mut groups {
                     if cmp(&key, &group.0) == O::Equal {
-                        let mut values: Vec<T> = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect();
+                        let mut values: Vec<V> = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect();
                         values.push(value.clone());
                         group.1 = ArraySeqMtPerS::from_vec(values);
                         found_group = true;

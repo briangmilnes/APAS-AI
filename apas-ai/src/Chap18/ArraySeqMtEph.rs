@@ -148,7 +148,7 @@ pub mod ArraySeqMtEph {
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T>;
         /// APAS: Work Θ(|a|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - sequential with linear search
-        fn collect(a: &ArraySeqMtEphS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtEphS<Pair<T, ArraySeqMtEphS<T>>>;
+        fn collect<K: StTInMtT, V: StTInMtT>(a: &ArraySeqMtEphS<Pair<K, V>>, cmp: fn(&K, &K) -> O) -> ArraySeqMtEphS<Pair<K, ArraySeqMtEphS<V>>>;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
         fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
@@ -291,17 +291,17 @@ pub mod ArraySeqMtEph {
             ArraySeqMtEphS::from_vec(values)
         }
 
-        fn collect(a: &ArraySeqMtEphS<Pair<T, T>>, cmp: fn(&T, &T) -> O) -> ArraySeqMtEphS<Pair<T, ArraySeqMtEphS<T>>> {
+        fn collect<K: StTInMtT, V: StTInMtT>(a: &ArraySeqMtEphS<Pair<K, V>>, cmp: fn(&K, &K) -> O) -> ArraySeqMtEphS<Pair<K, ArraySeqMtEphS<V>>> {
             if a.length() == 0 {
                 return ArraySeqMtEphS::from_vec(vec![]);
             }
-            let mut groups: Vec<Pair<T, ArraySeqMtEphS<T>>> = Vec::new();
+            let mut groups: Vec<Pair<K, ArraySeqMtEphS<V>>> = Vec::new();
             for i in 0..a.length() {
                 let Pair(key, value) = a.nth_cloned(i);
                 let mut found_group = false;
                 for group in &mut groups {
                     if cmp(&key, &group.0) == O::Equal {
-                        let mut values: Vec<T> = Vec::with_capacity(group.1.length() + 1);
+                        let mut values: Vec<V> = Vec::with_capacity(group.1.length() + 1);
                         for j in 0..group.1.length() {
                             values.push(group.1.nth_cloned(j));
                         }

@@ -1856,18 +1856,6 @@ name = "TestWeightedDirGraphStEphFloat"
 path = "tests/Chap06/TestWeightedDirGraphStEphFloat.rs"
 
 [[test]]
-name = "TestArraySeqMtPer18"
-path = "tests/Chap19/TestArraySeqMtPer18.rs"
-
-[[test]]
-name = "TestArraySeqStEph18"
-path = "tests/Chap19/TestArraySeqStEph18.rs"
-
-[[test]]
-name = "TestArraySeqStPer18"
-path = "tests/Chap19/TestArraySeqStPer18.rs"
-
-[[test]]
 name = "TestAlgorithm21_6"
 path = "tests/Chap21/TestAlgorithm21_6.rs"
 

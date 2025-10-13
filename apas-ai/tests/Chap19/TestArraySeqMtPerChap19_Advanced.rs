@@ -94,13 +94,6 @@
     // The function signature expects values_with_change_number and changes arrays
     // to have specific relationships that need more investigation
 
-    // Mutex test removed - Mutex doesn't implement required traits (Clone, Eq, Display)
-    // atomicWrite method requires types that implement these traits
-    // #[test]
-    // fn test_atomic_write_migrated_from_st_test() {
-    //     // Invalid test - Mutex doesn't implement required traits
-    // }
-
     #[test]
     fn test_inject_string_values() {
         let values = ArrayMtPerSLit!["hello", "world", "test"];

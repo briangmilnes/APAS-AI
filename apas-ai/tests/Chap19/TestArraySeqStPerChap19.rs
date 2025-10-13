@@ -217,19 +217,6 @@ fn test_nth_upper_bound_panics() {
     a.nth(3);
 }
 
-// ArraySeqStPer doesn't have update method - removing invalid test
-// #[test]
-// #[should_panic]
-// fn test_set_out_of_bounds_panics_on_unwrap() {
-//     // Per types don't have update methods
-// }
-
-// ArraySeqStPer doesn't have update method - removing invalid test
-// #[test]
-// fn test_set_in_bounds_ok_and_writes() {
-//     // Per types don't have update methods
-// }
-
 #[test]
 fn test_subseq_trait_form_basic() {
     let a = ArraySeqStPerSLit![10, 20, 30, 40, 50];

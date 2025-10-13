@@ -120,11 +120,27 @@
         assert_eq!(sum, 15); // 1 + 2 + 3 + 4 + 5
     }
 
-    // ArraySeqMtEph collect method expects Pair<T, T> (same type) - removing invalid test
-    // #[test]
-    // fn test_collect() {
-    //     // collect method signature doesn't match this use case
-    // }
+    #[test]
+    fn test_collect() {
+        // Now that collect supports Pair<K, V>, we can use different types
+        let pairs: ArraySeqMtEphS<Pair<N, &str>> = ArraySeqMtEphS::from_vec(vec![
+            Pair(1, "alice"),
+            Pair(2, "bob"),
+            Pair(1, "alex"),
+            Pair(2, "betty"),
+        ]);
+        let grouped = <ArraySeqMtEphS<Pair<N, &str>> as ArraySeqMtEphTrait<Pair<N, &str>>>::collect(&pairs, |a, b| a.cmp(b));
+        
+        assert_eq!(grouped.length(), 2);
+        // First group should have key 1 with values ["alice", "alex"]
+        let group0 = grouped.nth_cloned(0);
+        assert_eq!(group0.0, 1);
+        assert_eq!(group0.1.length(), 2);
+        // Second group should have key 2 with values ["bob", "betty"]
+        let group1 = grouped.nth_cloned(1);
+        assert_eq!(group1.0, 2);
+        assert_eq!(group1.1.length(), 2);
+    }
 
     #[test]
     fn test_update() {
@@ -192,7 +208,7 @@
             Pair(2, 20),
             Pair(1, 11),
         ]);
-        let grouped = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::collect(&pairs, |a, b| a.cmp(b));
+        let grouped = <ArraySeqMtEphS<Pair<N, N>> as ArraySeqMtEphTrait<Pair<N, N>>>::collect(&pairs, |a, b| a.cmp(b));
         assert_eq!(grouped.length(), 2);
     }
 
