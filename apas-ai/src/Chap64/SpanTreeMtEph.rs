@@ -46,14 +46,15 @@ pub mod SpanTreeMtEph {
         // Base: no edges means no spanning tree edges
         let base = |_vertices: &Set<V>| SetLit![];
 
-        // Expand: add star partition edges to recursive result
+        // Expand: add star partition edges and map quotient tree edges back
         let expand = |_v: &Set<V>,
-                      _e: &Set<Edge<V>>,
+                      original_edges: &Set<Edge<V>>,
                       _centers: &Set<V>,
                       partition_map: &HashMap<V, V>,
-                      quotient_edges: Set<Edge<V>>| {
+                      quotient_tree: Set<Edge<V>>| {
             let mut spanning_edges = SetLit![];
 
+            // Add edges from vertices to their centers (star edges)
             for (vertex, center) in partition_map.iter() {
                 if vertex != center {
                     let edge = if vertex < center {
@@ -65,8 +66,23 @@ pub mod SpanTreeMtEph {
                 }
             }
 
-            for edge in quotient_edges.iter() {
-                let _ = spanning_edges.insert(edge.clone());
+            // Map quotient tree edges back to original edges
+            // For each edge between centers in quotient tree, find original edge that maps to it
+            for quotient_edge in quotient_tree.iter() {
+                let Edge(c1, c2) = quotient_edge;
+
+                // Find an original edge that connects the two stars (centers c1 and c2)
+                for original_edge in original_edges.iter() {
+                    let Edge(u, v) = original_edge;
+                    let u_center = partition_map.get(u).unwrap_or(u);
+                    let v_center = partition_map.get(v).unwrap_or(v);
+
+                    // Check if this original edge connects the two centers (in either direction)
+                    if (u_center == c1 && v_center == c2) || (u_center == c2 && v_center == c1) {
+                        let _ = spanning_edges.insert(original_edge.clone());
+                        break; // Only need one edge between the two stars
+                    }
+                }
             }
 
             spanning_edges
