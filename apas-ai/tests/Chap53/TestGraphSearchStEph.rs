@@ -77,10 +77,10 @@ fn test_empty_graph() {
 #[test]
 fn test_cycle_detection() {
     let graph = |v: &i32| match *v {
-        1 => AVLTreeSetStEph::singleton(2),
-        2 => AVLTreeSetStEph::singleton(3),
-        3 => AVLTreeSetStEph::singleton(1),
-        _ => AVLTreeSetStEph::empty(),
+        | 1 => AVLTreeSetStEph::singleton(2),
+        | 2 => AVLTreeSetStEph::singleton(3),
+        | 3 => AVLTreeSetStEph::singleton(1),
+        | _ => AVLTreeSetStEph::empty(),
     };
     let reachable_set = reachable(&graph, 1);
     assert_eq!(reachable_set.size(), 3);

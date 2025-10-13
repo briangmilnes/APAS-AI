@@ -1,10 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+use apas_ai::ArraySeqStPerSLit;
 /// Exercise 21.5: All contiguous subsequences tests.
-
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap21::Exercise21_5::Exercise21_5::*;
 use apas_ai::Types::Types::*;
-use apas_ai::{ArraySeqStPerSLit};
 
 #[test]
 fn test_all_contiguous_subseqs_n0() {

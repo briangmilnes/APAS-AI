@@ -31,9 +31,18 @@ fn test_from_keys_probs() {
 #[test]
 fn test_from_key_probs() {
     let key_probs = vec![
-        KeyProb { key: 10, prob: prob!(0.1) },
-        KeyProb { key: 20, prob: prob!(0.4) },
-        KeyProb { key: 30, prob: prob!(0.5) },
+        KeyProb {
+            key: 10,
+            prob: prob!(0.1),
+        },
+        KeyProb {
+            key: 20,
+            prob: prob!(0.4),
+        },
+        KeyProb {
+            key: 30,
+            prob: prob!(0.5),
+        },
     ];
     let obst = OBSTStEphS::from_key_probs(key_probs.clone());
 
@@ -64,10 +73,7 @@ fn test_optimal_cost_two_keys() {
 
 #[test]
 fn test_optimal_cost_three_keys() {
-    let mut obst = OBSTStEphS::from_keys_probs(
-        vec![1, 2, 3],
-        vec![prob!(0.2), prob!(0.5), prob!(0.3)],
-    );
+    let mut obst = OBSTStEphS::from_keys_probs(vec![1, 2, 3], vec![prob!(0.2), prob!(0.5), prob!(0.3)]);
     let cost = obst.optimal_cost();
 
     // Cost should be positive
@@ -91,8 +97,14 @@ fn test_optimal_cost_uniform_probs() {
 #[test]
 fn test_keys_method() {
     let key_probs = vec![
-        KeyProb { key: 5, prob: prob!(0.3) },
-        KeyProb { key: 10, prob: prob!(0.7) },
+        KeyProb {
+            key: 5,
+            prob: prob!(0.3),
+        },
+        KeyProb {
+            key: 10,
+            prob: prob!(0.7),
+        },
     ];
     let obst = OBSTStEphS::from_key_probs(key_probs);
 
@@ -120,7 +132,13 @@ fn test_keys_mut_method() {
 fn test_set_key_prob() {
     let mut obst = OBSTStEphS::from_keys_probs(vec![1, 2], vec![prob!(0.5), prob!(0.5)]);
 
-    obst.set_key_prob(0, KeyProb { key: 10, prob: prob!(0.2) });
+    obst.set_key_prob(
+        0,
+        KeyProb {
+            key: 10,
+            prob: prob!(0.2),
+        },
+    );
 
     assert_eq!(obst.keys()[0].key, 10);
     assert_eq!(obst.keys()[0].prob, prob!(0.2));
@@ -137,18 +155,17 @@ fn test_update_prob() {
 
 #[test]
 fn test_num_keys() {
-    let obst = OBSTStEphS::from_keys_probs(vec![1, 2, 3, 4, 5], vec![
-        prob!(0.1), prob!(0.2), prob!(0.3), prob!(0.2), prob!(0.2)
-    ]);
+    let obst = OBSTStEphS::from_keys_probs(
+        vec![1, 2, 3, 4, 5],
+        vec![prob!(0.1), prob!(0.2), prob!(0.3), prob!(0.2), prob!(0.2)],
+    );
 
     assert_eq!(obst.num_keys(), 5);
 }
 
 #[test]
 fn test_clear_memo() {
-    let mut obst = OBSTStEphS::from_keys_probs(vec![1, 2, 3], vec![
-        prob!(0.3), prob!(0.3), prob!(0.4)
-    ]);
+    let mut obst = OBSTStEphS::from_keys_probs(vec![1, 2, 3], vec![prob!(0.3), prob!(0.3), prob!(0.4)]);
 
     // Compute optimal cost (fills memo)
     let _cost1 = obst.optimal_cost();
@@ -177,10 +194,7 @@ fn test_memo_size() {
 
 #[test]
 fn test_optimal_cost_memoization() {
-    let mut obst = OBSTStEphS::from_keys_probs(
-        vec![1, 2, 3, 4],
-        vec![prob!(0.2), prob!(0.3), prob!(0.3), prob!(0.2)],
-    );
+    let mut obst = OBSTStEphS::from_keys_probs(vec![1, 2, 3, 4], vec![prob!(0.2), prob!(0.3), prob!(0.3), prob!(0.2)]);
 
     let cost1 = obst.optimal_cost();
     let memo_size1 = obst.memo_size();
@@ -215,10 +229,7 @@ fn test_string_keys() {
 
 #[test]
 fn test_skewed_probabilities() {
-    let mut obst = OBSTStEphS::from_keys_probs(
-        vec![1, 2, 3],
-        vec![prob!(0.9), prob!(0.05), prob!(0.05)],
-    );
+    let mut obst = OBSTStEphS::from_keys_probs(vec![1, 2, 3], vec![prob!(0.9), prob!(0.05), prob!(0.05)]);
 
     let cost = obst.optimal_cost();
 
@@ -240,7 +251,10 @@ fn test_large_tree() {
 
 #[test]
 fn test_key_prob_display() {
-    let kp = KeyProb { key: 42, prob: prob!(0.5) };
+    let kp = KeyProb {
+        key: 42,
+        prob: prob!(0.5),
+    };
     let display_str = format!("{}", kp);
 
     assert!(display_str.contains("42"));
@@ -249,7 +263,10 @@ fn test_key_prob_display() {
 
 #[test]
 fn test_key_prob_debug() {
-    let kp = KeyProb { key: 42, prob: prob!(0.5) };
+    let kp = KeyProb {
+        key: 42,
+        prob: prob!(0.5),
+    };
     let debug_str = format!("{:?}", kp);
 
     assert!(debug_str.len() > 0);
@@ -257,7 +274,10 @@ fn test_key_prob_debug() {
 
 #[test]
 fn test_key_prob_clone() {
-    let kp1 = KeyProb { key: 10, prob: prob!(0.3) };
+    let kp1 = KeyProb {
+        key: 10,
+        prob: prob!(0.3),
+    };
     let kp2 = kp1.clone();
 
     assert_eq!(kp1.key, kp2.key);
@@ -266,9 +286,18 @@ fn test_key_prob_clone() {
 
 #[test]
 fn test_key_prob_equality() {
-    let kp1 = KeyProb { key: 5, prob: prob!(0.2) };
-    let kp2 = KeyProb { key: 5, prob: prob!(0.2) };
-    let kp3 = KeyProb { key: 5, prob: prob!(0.3) };
+    let kp1 = KeyProb {
+        key: 5,
+        prob: prob!(0.2),
+    };
+    let kp2 = KeyProb {
+        key: 5,
+        prob: prob!(0.2),
+    };
+    let kp3 = KeyProb {
+        key: 5,
+        prob: prob!(0.3),
+    };
 
     assert_eq!(kp1, kp2);
     assert_ne!(kp1, kp3);
@@ -311,10 +340,7 @@ fn test_update_after_cost_computation() {
 
 #[test]
 fn test_zero_probability() {
-    let mut obst = OBSTStEphS::from_keys_probs(
-        vec![1, 2, 3],
-        vec![prob!(0.0), prob!(0.5), prob!(0.5)],
-    );
+    let mut obst = OBSTStEphS::from_keys_probs(vec![1, 2, 3], vec![prob!(0.0), prob!(0.5), prob!(0.5)]);
 
     let cost = obst.optimal_cost();
     assert!(cost.value() >= 0.0);

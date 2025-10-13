@@ -99,7 +99,16 @@ fn test_obst_from_keys_probs() {
 
 #[test]
 fn test_obst_from_key_probs() {
-    let key_probs = vec![KeyProb { key: 1, prob: Probability::new(0.25) }, KeyProb { key: 2, prob: Probability::new(0.75) }];
+    let key_probs = vec![
+        KeyProb {
+            key: 1,
+            prob: Probability::new(0.25),
+        },
+        KeyProb {
+            key: 2,
+            prob: Probability::new(0.75),
+        },
+    ];
     let obst = OBSTMtPerS::from_key_probs(key_probs);
     assert_eq!(obst.num_keys(), 2);
     let cost = obst.optimal_cost();
@@ -155,4 +164,3 @@ fn test_obst_iterability() {
     }
     assert_eq!(count, 3);
 }
-

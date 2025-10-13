@@ -166,7 +166,7 @@ fn test_statistics() {
     assert_eq!(stats.num_elements, 3);
     assert_eq!(stats.table_size, 8); // Minimum table size is 8
     assert_eq!(stats.load_factor, 0.375); // 3 / 8
-    // Collision behavior depends on hash function and table size
+                                          // Collision behavior depends on hash function and table size
 }
 
 #[test]

@@ -91,7 +91,16 @@ fn test_skewed_probabilities() {
 fn test_large_tree() {
     use apas_ai::Chap50::Probability::Probability::Probability;
     let keys = vec![1, 2, 3, 4, 5, 6, 7, 8];
-    let probs = vec![Probability::new(0.1), Probability::new(0.1), Probability::new(0.1), Probability::new(0.2), Probability::new(0.2), Probability::new(0.1), Probability::new(0.1), Probability::new(0.1)];
+    let probs = vec![
+        Probability::new(0.1),
+        Probability::new(0.1),
+        Probability::new(0.1),
+        Probability::new(0.2),
+        Probability::new(0.2),
+        Probability::new(0.1),
+        Probability::new(0.1),
+        Probability::new(0.1),
+    ];
     let mut obst = OBSTMtEphS::from_keys_probs(keys, probs);
     let cost = obst.optimal_cost();
     assert!(cost.value() > 0.0);
@@ -105,9 +114,7 @@ fn test_parallel_execution() {
     let mut handles = vec![];
     for _ in 0..4 {
         let o = Arc::clone(&obst);
-        let handle = thread::spawn(move || {
-            o.keys().len()
-        });
+        let handle = thread::spawn(move || o.keys().len());
         handles.push(handle);
     }
     for handle in handles {
@@ -133,7 +140,13 @@ fn test_clone() {
 fn test_set_key_prob() {
     use apas_ai::Chap50::Probability::Probability::Probability;
     let mut obst = OBSTMtEphLit![keys: [1, 2, 3], probs: [0.1, 0.2, 0.3]];
-    obst.set_key_prob(1, KeyProb { key: 5, prob: Probability::new(0.5) });
+    obst.set_key_prob(
+        1,
+        KeyProb {
+            key: 5,
+            prob: Probability::new(0.5),
+        },
+    );
     let keys = obst.keys();
     assert_eq!(keys[1].key, 5);
 }
@@ -175,8 +188,14 @@ fn test_equality() {
 fn test_from_key_probs() {
     use apas_ai::Chap50::Probability::Probability::Probability;
     let key_probs = vec![
-        KeyProb { key: 1, prob: Probability::new(0.2) },
-        KeyProb { key: 2, prob: Probability::new(0.8) },
+        KeyProb {
+            key: 1,
+            prob: Probability::new(0.2),
+        },
+        KeyProb {
+            key: 2,
+            prob: Probability::new(0.8),
+        },
     ];
     let obst = OBSTMtEphS::from_key_probs(key_probs);
     assert_eq!(obst.num_keys(), 2);
@@ -199,8 +218,10 @@ fn test_into_iter_ref() {
 #[test]
 fn test_keyprob_display() {
     use apas_ai::Chap50::Probability::Probability::Probability;
-    let kp = KeyProb { key: 42, prob: Probability::new(0.333) };
+    let kp = KeyProb {
+        key: 42,
+        prob: Probability::new(0.333),
+    };
     let s = format!("{}", kp);
     assert!(s.contains("42"));
 }
-

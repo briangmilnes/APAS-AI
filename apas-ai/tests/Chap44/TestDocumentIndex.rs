@@ -12,7 +12,7 @@ fn test_documentcollectionlit_macro_functionality() {
     // Test empty document collection creation
     let empty: DocumentCollection = DocumentCollectionLit![];
     assert_eq!(empty.length(), 0);
-    
+
     // Test document collection creation with documents
     let with_data: DocumentCollection = DocumentCollectionLit![
         "doc1" => "hello world",

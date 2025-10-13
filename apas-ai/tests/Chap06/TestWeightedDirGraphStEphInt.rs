@@ -4,8 +4,8 @@
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
 use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
-use apas_ai::{SetLit, WeightedDirGraphStEphIntLit};
 use apas_ai::Types::Types::*;
+use apas_ai::{SetLit, WeightedDirGraphStEphIntLit};
 
 #[test]
 fn test_from_weighted_edges() {
@@ -174,11 +174,7 @@ fn test_self_loop() {
 #[test]
 fn test_complete_graph_weighted() {
     let v: Set<N> = SetLit![1, 2, 3];
-    let edges: Set<(N, N, i32)> = SetLit![
-        (1, 2, 10), (1, 3, 11),
-        (2, 1, 20), (2, 3, 21),
-        (3, 1, 30), (3, 2, 31)
-    ];
+    let edges: Set<(N, N, i32)> = SetLit![(1, 2, 10), (1, 3, 11), (2, 1, 20), (2, 3, 21), (3, 1, 30), (3, 2, 31)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.labeled_arcs().size(), 6);

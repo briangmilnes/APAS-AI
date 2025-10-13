@@ -54,4 +54,3 @@ fn test_single_substitution() {
 
     assert_eq!(dist, 2);
 }
-

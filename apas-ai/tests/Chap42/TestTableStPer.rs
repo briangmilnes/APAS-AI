@@ -12,7 +12,7 @@ fn test_tablestperlit_macro_functionality() {
     let empty: TableStPer<i32, String> = TableStPerLit![];
     assert_eq!(empty.size(), 0);
     assert_eq!(empty.find(&42), None);
-    
+
     // Test table creation with key-value pairs
     let with_data: TableStPer<i32, String> = TableStPerLit![
         1 => "one".to_string(),

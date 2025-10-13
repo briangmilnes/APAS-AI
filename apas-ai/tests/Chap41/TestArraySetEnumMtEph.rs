@@ -12,7 +12,7 @@ fn test_arraysetenummtephlit_macro_type_safety() {
     assert_eq!(capacity_only.size(), 0);
     assert!(!capacity_only.find(0));
     assert!(!capacity_only.find(5));
-    
+
     // Test capacity with initial elements
     let with_elements: ArraySetEnumMtEph = ArraySetEnumMtEphLit![10; 1, 2, 3];
     assert_eq!(with_elements.size(), 3);

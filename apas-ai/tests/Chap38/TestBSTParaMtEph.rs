@@ -215,7 +215,7 @@ fn para_concurrent_insertions() {
     assert!(results[0] >= 1); // Thread 1 size - at least some insertions should succeed
     assert!(results[1] >= 1); // Thread 2 size - at least some insertions should succeed
     assert!(results[2] >= 1); // Thread 3 size - at least some insertions should succeed
-    // Thread 4 found count can vary due to timing
+                              // Thread 4 found count can vary due to timing
 }
 
 #[test]
@@ -372,7 +372,7 @@ fn para_concurrent_filter_reduce() {
     assert_eq!(results[0], 50); // 50 even numbers (0,2,4,...,98)
     assert_eq!(results[1], 50); // 50 odd numbers (1,3,5,...,99)
     assert_eq!(results[2], 4950); // Sum 0+1+...+99 = 99*100/2 = 4950
-    // Product result varies due to modulo
+                                  // Product result varies due to modulo
 }
 
 #[test]
@@ -468,9 +468,9 @@ fn para_concurrent_expose_join_mid() {
 
 #[test]
 fn para_concurrent_delete_operations() {
+    use apas_ai::ArraySeqStPerSLit;
     use std::sync::{Arc, Barrier};
     use std::thread;
-use apas_ai::{ArraySeqStPerSLit};
 
     let tree = Arc::new(make_range_tree(0, 100));
     let barrier = Arc::new(Barrier::new(4));
@@ -531,5 +531,5 @@ use apas_ai::{ArraySeqStPerSLit};
     // Verify results - exact counts depend on deletion timing
     assert!(results[0] <= 100); // Size after deletions
     assert!(results[1] <= 100); // Size after deletions
-    // Count results can vary due to concurrent deletions
+                                // Count results can vary due to concurrent deletions
 }

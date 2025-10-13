@@ -1,11 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for ArraySetStEph
 
+use apas_ai::ArraySeqStEphSLit;
+use apas_ai::ArraySetStEphLit;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap41::Example41_3::Example41_3::*;
 use apas_ai::*;
-use apas_ai::{ArraySeqStEphSLit};
-use apas_ai::ArraySetStEphLit;
 
 #[test]
 fn test_arraysetstephlit_macro_functionality() {
@@ -13,7 +13,7 @@ fn test_arraysetstephlit_macro_functionality() {
     let empty: ArraySetStEph<i32> = ArraySetStEphLit![];
     assert_eq!(empty.size(), 0);
     assert!(!empty.find(&42));
-    
+
     // Test set creation with elements
     let with_data: ArraySetStEph<i32> = ArraySetStEphLit![1, 2, 3];
     assert_eq!(with_data.size(), 3);

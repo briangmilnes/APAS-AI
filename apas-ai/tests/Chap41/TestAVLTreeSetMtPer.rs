@@ -1,9 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for AVLTreeSetMtPer.
 
-use apas_ai::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
-use apas_ai::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerS;
 use apas_ai::AVLTreeSetMtPerLit;
+use apas_ai::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerS;
+use apas_ai::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
 use apas_ai::Types::Types::*;
 
 #[test]
@@ -12,7 +12,7 @@ fn test_avltreesetmtperlit_macro_type_safety() {
     let empty: AVLTreeSetMtPer<i32> = AVLTreeSetMtPerLit![];
     assert_eq!(empty.size(), 0);
     assert!(!empty.find(&42));
-    
+
     // Test multi-element set creation
     let multi: AVLTreeSetMtPer<i32> = AVLTreeSetMtPerLit![1, 2, 3];
     assert_eq!(multi.size(), 3);

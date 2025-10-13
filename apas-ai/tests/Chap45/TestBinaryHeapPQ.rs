@@ -10,7 +10,7 @@ fn test_binaryheappqlit_macro_functionality() {
     // Test empty heap creation
     let empty: BinaryHeapPQ<i32> = BinaryHeapPQLit![];
     assert_eq!(empty.size(), 0);
-    
+
     // Test heap creation with elements
     let with_data: BinaryHeapPQ<i32> = BinaryHeapPQLit![5, 3, 7, 1, 9];
     assert_eq!(with_data.size(), 5);
@@ -36,7 +36,7 @@ fn test_singleton() {
 fn test_insert_maintains_heap_property() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap = heap.insert(10).insert(5).insert(15).insert(3).insert(8);
-    
+
     assert_eq!(heap.size(), 5);
     assert_eq!(heap.find_min(), Some(&3));
     assert!(heap.is_valid_heap());
@@ -46,13 +46,13 @@ fn test_insert_maintains_heap_property() {
 fn test_find_min() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     assert_eq!(heap.find_min(), None);
-    
+
     let heap = heap.insert(10);
     assert_eq!(heap.find_min(), Some(&10));
-    
+
     let heap = heap.insert(5);
     assert_eq!(heap.find_min(), Some(&5));
-    
+
     let heap = heap.insert(15);
     assert_eq!(heap.find_min(), Some(&5));
 }
@@ -61,13 +61,13 @@ fn test_find_min() {
 fn test_delete_min() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap = heap.insert(10).insert(5).insert(15).insert(3).insert(8);
-    
+
     let (heap, min) = heap.delete_min();
     assert_eq!(min, Some(3));
     assert_eq!(heap.find_min(), Some(&5));
     assert_eq!(heap.size(), 4);
     assert!(heap.is_valid_heap());
-    
+
     let (heap, min) = heap.delete_min();
     assert_eq!(min, Some(5));
     assert_eq!(heap.size(), 3);
@@ -86,10 +86,10 @@ fn test_delete_min_empty() {
 fn test_meld() {
     let heap1: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap1 = heap1.insert(10).insert(5).insert(15);
-    
+
     let heap2: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap2 = heap2.insert(2).insert(8).insert(12);
-    
+
     let melded = heap1.meld(&heap2);
     assert_eq!(melded.size(), 6);
     assert_eq!(melded.find_min(), Some(&2));
@@ -100,9 +100,9 @@ fn test_meld() {
 fn test_meld_with_empty() {
     let heap1: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap1 = heap1.insert(10).insert(5);
-    
+
     let heap2: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
-    
+
     let melded = heap1.meld(&heap2);
     assert_eq!(melded.size(), 2);
     assert_eq!(melded.find_min(), Some(&5));
@@ -110,12 +110,12 @@ fn test_meld_with_empty() {
 
 #[test]
 fn test_from_seq() {
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
     use apas_ai::ArraySeqStPerSLit;
-    
+    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+
     let seq = ArraySeqStPerSLit![10, 5, 15, 3, 8, 12];
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::from_seq(&seq);
-    
+
     assert_eq!(heap.size(), 6);
     assert_eq!(heap.find_min(), Some(&3));
     assert!(heap.is_valid_heap());
@@ -125,7 +125,7 @@ fn test_from_seq() {
 fn test_to_seq() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap = heap.insert(10).insert(5).insert(15);
-    
+
     let seq = heap.to_seq();
     assert_eq!(seq.length(), 3);
 }
@@ -133,10 +133,10 @@ fn test_to_seq() {
 #[test]
 fn test_insert_all() {
     use apas_ai::ArraySeqStPerSLit;
-    
+
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::singleton(5);
     let new_elements = ArraySeqStPerSLit![10, 2, 8, 12];
-    
+
     let heap = heap.insert_all(&new_elements);
     assert_eq!(heap.size(), 5);
     assert_eq!(heap.find_min(), Some(&2));
@@ -147,7 +147,7 @@ fn test_insert_all() {
 fn test_extract_all_sorted() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap = heap.insert(10).insert(5).insert(15).insert(3).insert(8);
-    
+
     let sorted = heap.extract_all_sorted();
     assert_eq!(sorted.length(), 5);
     assert_eq!(*sorted.nth(0), 3);
@@ -161,7 +161,7 @@ fn test_extract_all_sorted() {
 fn test_is_valid_heap() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     assert!(heap.is_valid_heap());
-    
+
     let heap = heap.insert(10).insert(5).insert(15).insert(3).insert(8);
     assert!(heap.is_valid_heap());
 }
@@ -170,10 +170,10 @@ fn test_is_valid_heap() {
 fn test_height() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     assert_eq!(heap.height(), 0);
-    
+
     let heap = heap.insert(10);
     assert_eq!(heap.height(), 1);
-    
+
     let heap = heap.insert(5).insert(15);
     assert!(heap.height() >= 1);
 }
@@ -181,13 +181,20 @@ fn test_height() {
 #[test]
 fn test_level_elements() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
-    let heap = heap.insert(1).insert(3).insert(2).insert(7).insert(5).insert(4).insert(6);
-    
+    let heap = heap
+        .insert(1)
+        .insert(3)
+        .insert(2)
+        .insert(7)
+        .insert(5)
+        .insert(4)
+        .insert(6);
+
     // After heapify, root should be minimum
     let level0 = heap.level_elements(0);
     assert_eq!(level0.length(), 1);
     assert_eq!(*level0.nth(0), 1);
-    
+
     // Level 1 should have at most 2 elements
     let level1 = heap.level_elements(1);
     assert!(level1.length() <= 2);
@@ -197,7 +204,7 @@ fn test_level_elements() {
 fn test_from_vec() {
     let vec = vec![10, 5, 15, 3, 8];
     let heap = BinaryHeapPQ::from_vec(vec);
-    
+
     assert_eq!(heap.size(), 5);
     assert_eq!(heap.find_min(), Some(&3));
     assert!(heap.is_valid_heap());
@@ -207,7 +214,7 @@ fn test_from_vec() {
 fn test_to_vec() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap = heap.insert(10).insert(5).insert(15);
-    
+
     let vec = heap.to_vec();
     assert_eq!(vec.len(), 3);
 }
@@ -216,7 +223,7 @@ fn test_to_vec() {
 fn test_to_sorted_vec() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap = heap.insert(10).insert(5).insert(15).insert(3).insert(8);
-    
+
     let sorted_vec = heap.to_sorted_vec();
     assert_eq!(sorted_vec.len(), 5);
     assert_eq!(sorted_vec, vec![3, 5, 8, 10, 15]);
@@ -233,7 +240,7 @@ fn test_default() {
 fn test_duplicate_elements() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap = heap.insert(5).insert(3).insert(5).insert(3).insert(5);
-    
+
     assert_eq!(heap.size(), 5);
     assert_eq!(heap.find_min(), Some(&3));
     assert!(heap.is_valid_heap());
@@ -242,11 +249,12 @@ fn test_duplicate_elements() {
 #[test]
 fn test_string_heap() {
     let heap: BinaryHeapPQ<String> = BinaryHeapPQTrait::empty();
-    let heap = heap.insert("zebra".to_string())
-           .insert("apple".to_string())
-           .insert("banana".to_string())
-           .insert("cherry".to_string());
-    
+    let heap = heap
+        .insert("zebra".to_string())
+        .insert("apple".to_string())
+        .insert("banana".to_string())
+        .insert("cherry".to_string());
+
     assert_eq!(heap.find_min(), Some(&"apple".to_string()));
     assert!(heap.is_valid_heap());
 }
@@ -255,17 +263,17 @@ fn test_string_heap() {
 fn test_heapsort_via_extract() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let elements = vec![42, 17, 89, 3, 56, 23, 71, 8];
-    
+
     let mut heap = heap;
     for &elem in &elements {
         heap = heap.insert(elem);
     }
-    
+
     let sorted = heap.extract_all_sorted();
-    
+
     let mut expected = elements.clone();
     expected.sort();
-    
+
     for (i, &expected_val) in expected.iter().enumerate() {
         assert_eq!(*sorted.nth(i as N), expected_val);
     }
@@ -275,10 +283,10 @@ fn test_heapsort_via_extract() {
 fn test_sequential_delete_all() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap = heap.insert(5).insert(3).insert(8).insert(1).insert(10);
-    
+
     let mut current_heap = heap;
     let mut extracted = vec![];
-    
+
     while !current_heap.is_empty() {
         let (new_heap, min_val) = current_heap.delete_min();
         if let Some(val) = min_val {
@@ -286,31 +294,31 @@ fn test_sequential_delete_all() {
         }
         current_heap = new_heap;
     }
-    
+
     assert_eq!(extracted, vec![1, 3, 5, 8, 10]);
 }
 
 #[test]
 fn test_large_heap() {
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
     use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
-    
+    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let mut heap = heap;
-    
+
     // Insert 100 elements
     let elements: ArraySeqStPerS<i32> = ArraySeqStPerS::tabulate(&|i| (i as i32 * 17 + 13) % 97, 100);
     for i in 0..elements.length() {
         heap = heap.insert(*elements.nth(i));
     }
-    
+
     assert_eq!(heap.size(), 100);
     assert!(heap.is_valid_heap());
-    
+
     // Extract first 10 elements to verify ordering
     let mut current_heap = heap;
     let mut prev_min = -1;
-    
+
     for _ in 0..10 {
         let (new_heap, min_val) = current_heap.delete_min();
         if let Some(val) = min_val {
@@ -326,11 +334,11 @@ fn test_large_heap() {
 fn test_persistent_semantics() {
     let heap1: BinaryHeapPQ<i32> = BinaryHeapPQTrait::singleton(5);
     let heap2 = heap1.insert(10);
-    
+
     // heap1 should remain unchanged (persistent)
     assert_eq!(heap1.size(), 1);
     assert_eq!(heap1.find_min(), Some(&5));
-    
+
     // heap2 should have both elements
     assert_eq!(heap2.size(), 2);
     assert_eq!(heap2.find_min(), Some(&5));
@@ -344,7 +352,7 @@ fn test_meld_multiple() {
     let heap2 = heap2.insert(3).insert(7);
     let heap3: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap3 = heap3.insert(2).insert(6);
-    
+
     let melded = heap1.meld(&heap2).meld(&heap3);
     assert_eq!(melded.size(), 6);
     assert_eq!(melded.find_min(), Some(&1));
@@ -355,7 +363,7 @@ fn test_meld_multiple() {
 fn test_display() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap = heap.insert(5).insert(3).insert(7);
-    
+
     let display_str = format!("{}", heap);
     assert!(display_str.contains("BinaryHeapPQ"));
 }
@@ -363,15 +371,15 @@ fn test_display() {
 #[test]
 fn test_heap_property_after_operations() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
-    
+
     // Insert sequence
     let heap = heap.insert(50).insert(30).insert(70).insert(20).insert(40);
     assert!(heap.is_valid_heap());
-    
+
     // Delete and check
     let (heap, _) = heap.delete_min();
     assert!(heap.is_valid_heap());
-    
+
     // Meld and check
     let heap2: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap2 = heap2.insert(10).insert(60);
@@ -382,10 +390,10 @@ fn test_heap_property_after_operations() {
 #[test]
 fn test_single_element_operations() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::singleton(42);
-    
+
     assert_eq!(heap.find_min(), Some(&42));
     assert_eq!(heap.size(), 1);
-    
+
     let (heap, min) = heap.delete_min();
     assert_eq!(min, Some(42));
     assert!(heap.is_empty());
@@ -395,7 +403,7 @@ fn test_single_element_operations() {
 fn test_ascending_insertion() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap = heap.insert(1).insert(2).insert(3).insert(4).insert(5);
-    
+
     assert_eq!(heap.find_min(), Some(&1));
     assert!(heap.is_valid_heap());
 }
@@ -410,6 +418,4 @@ fn test_descending_insertion() {
 }
 
 #[test]
-fn test_macro_type_check() {
-    let _heap: BinaryHeapPQ<i32> = BinaryHeapPQLit![1, 2, 3];
-}
+fn test_macro_type_check() { let _heap: BinaryHeapPQ<i32> = BinaryHeapPQLit![1, 2, 3]; }

@@ -14,8 +14,8 @@ use apas_ai::Chap47::AdvancedDoubleHashing::AdvancedDoubleHashing::AdvancedDoubl
 use apas_ai::Chap47::AdvancedLinearProbing::AdvancedLinearProbing::AdvancedLinearProbingStrategy;
 use apas_ai::Chap47::AdvancedQuadraticProbing::AdvancedQuadraticProbing::AdvancedQuadraticProbingStrategy;
 use apas_ai::Chap47::ClusteringAnalysis::ClusteringAnalysis::{
-    ClusteringAnalyzer, ClusteringComparison, ClusteringPerformanceImpact, ClusteringSeverity,
-    ComprehensiveClusteringAnalysis, example_comprehensive_clustering_analysis, example_load_factor_impact_analysis,
+    example_comprehensive_clustering_analysis, example_load_factor_impact_analysis, ClusteringAnalyzer,
+    ClusteringComparison, ClusteringPerformanceImpact, ClusteringSeverity, ComprehensiveClusteringAnalysis,
 };
 use apas_ai::Chap47::FlatHashTable::FlatHashTable::{Entry, FlatHashTable};
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::DefaultHashFunction;

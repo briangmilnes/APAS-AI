@@ -24,7 +24,11 @@ fn arrayseq_steph_full_pipeline() {
 
     let appended = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::append(&mapped, &ArraySeqStEphSLit![99]);
     let evens = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::filter(&appended, &|value| {
-        if *value % 2 == 0 { true } else { false }
+        if *value % 2 == 0 {
+            true
+        } else {
+            false
+        }
     });
     assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::length(&evens), 5);
 
@@ -91,7 +95,7 @@ fn test_arrayseqsteph_outofbounds_graceful() {
     // Out-of-bounds update should be silently ignored (APAS style)
     let original_values = [*seq.nth(0), *seq.nth(1), *seq.nth(2)];
     let _ = seq.update(Pair(10, 99)); // Index 10 is out of bounds - should be ignored
-    // Verify sequence is unchanged
+                                      // Verify sequence is unchanged
     assert_eq!(*seq.nth(0), original_values[0]);
     assert_eq!(*seq.nth(1), original_values[1]);
     assert_eq!(*seq.nth(2), original_values[2]);

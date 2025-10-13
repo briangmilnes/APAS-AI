@@ -68,7 +68,7 @@ fn test_tabulate() {
 fn test_filter() {
     let a = ArraySeqMtEphSLit![1, 2, 3, 4, 5];
     let b = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::filter(&a, |x| *x % 2 == 0);
-    assert!(b.length() >= 2);  // May include filtered elements
+    assert!(b.length() >= 2); // May include filtered elements
 }
 
 #[test]
@@ -165,8 +165,14 @@ fn test_arrayseqmteph_trait_length() {
 #[test]
 fn test_arrayseqmteph_trait_nth_cloned() {
     let seq = ArraySeqMtEphSLit![10, 20, 30];
-    assert_eq!(<ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::nth_cloned(&seq, 0), 10);
-    assert_eq!(<ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::nth_cloned(&seq, 2), 30);
+    assert_eq!(
+        <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::nth_cloned(&seq, 0),
+        10
+    );
+    assert_eq!(
+        <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::nth_cloned(&seq, 2),
+        30
+    );
 }
 
 #[test]

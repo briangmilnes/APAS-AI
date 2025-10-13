@@ -1,6 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 /// Problem 21.3 (Points in 3D) using ArraySeqPer — imperative triple loop.
-
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap21::Problem21_3::Problem21_3::*;
 use apas_ai::Types::Types::*;
@@ -77,4 +76,3 @@ fn test_points3d_loops_debug_shape() {
     let dbg_str = format!("{:?}", s);
     assert!(!dbg_str.is_empty());
 }
-

@@ -1,8 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap35::OrderStatSelectStEph::OrderStatSelectStEph::OrderStatSelectStEphTrait;
-use apas_ai::{ArraySeqStEphSLit};
 
 #[test]
 fn test_empty() {

@@ -19,14 +19,14 @@ fn test_new() {
 
 #[test]
 fn test_from_dimensions() {
-    let dims = vec![MatrixDim{rows:10,cols:20}, MatrixDim{rows:20,cols:30}];
+    let dims = vec![MatrixDim { rows: 10, cols: 20 }, MatrixDim { rows: 20, cols: 30 }];
     let chain = MatrixChainMtEphS::from_dimensions(dims);
     assert_eq!(chain.num_matrices(), 2);
 }
 
 #[test]
 fn test_from_dim_pairs() {
-    let pairs = vec![Pair(10,20), Pair(20,30), Pair(30,40)];
+    let pairs = vec![Pair(10, 20), Pair(20, 30), Pair(30, 40)];
     let chain = MatrixChainMtEphS::from_dim_pairs(pairs);
     assert_eq!(chain.num_matrices(), 3);
 }
@@ -35,7 +35,7 @@ fn test_from_dim_pairs() {
 fn test_optimal_cost_two_matrices() {
     let mut chain = MatrixChainMtEphLit![dims: [(10,20), (20,30)]];
     let cost = chain.optimal_cost();
-    assert_eq!(cost, 10*20*30);
+    assert_eq!(cost, 10 * 20 * 30);
 }
 
 #[test]
@@ -57,7 +57,7 @@ fn test_dimensions() {
 #[test]
 fn test_set_dimension() {
     let mut chain = MatrixChainMtEphLit![dims: [(10,20), (20,30)]];
-    chain.set_dimension(0, MatrixDim{rows:5,cols:10});
+    chain.set_dimension(0, MatrixDim { rows: 5, cols: 10 });
     let dims = chain.dimensions();
     assert_eq!(dims[0].rows, 5);
 }
@@ -135,9 +135,7 @@ fn test_parallel_execution() {
     let mut handles = vec![];
     for _ in 0..4 {
         let c = Arc::clone(&chain);
-        let handle = thread::spawn(move || {
-            c.dimensions().len()
-        });
+        let handle = thread::spawn(move || c.dimensions().len());
         handles.push(handle);
     }
     for handle in handles {
@@ -180,4 +178,3 @@ fn test_matrixdim_equality() {
     let dim2 = MatrixDim { rows: 10, cols: 20 };
     assert_eq!(dim1, dim2);
 }
-

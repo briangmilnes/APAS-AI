@@ -22,10 +22,7 @@ fn test_new() {
 
 #[test]
 fn test_from_dimensions() {
-    let dims = vec![
-        MatrixDim { rows: 10, cols: 20 },
-        MatrixDim { rows: 20, cols: 30 },
-    ];
+    let dims = vec![MatrixDim { rows: 10, cols: 20 }, MatrixDim { rows: 20, cols: 30 }];
     let chain = MatrixChainStEphS::from_dimensions(dims);
     assert_eq!(chain.num_matrices(), 2);
 }
@@ -107,4 +104,3 @@ fn test_memo_size() {
     let _ = chain.optimal_cost();
     assert!(chain.memo_size() > 0);
 }
-

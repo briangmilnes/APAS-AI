@@ -481,9 +481,9 @@ fn mt_concurrent_plain_bst_operations() {
     // but we should have reasonable results
     assert!(results[0] >= 25); // Thread 1 size
     assert!(results[1] >= 25); // Thread 2 size
-    // Thread 3 found count can vary
-    // Height can be 0 for empty tree or vary based on timing in concurrent operations
-    // Just verify it's a valid height value (non-negative, which is always true for usize)
+                               // Thread 3 found count can vary
+                               // Height can be 0 for empty tree or vary based on timing in concurrent operations
+                               // Just verify it's a valid height value (non-negative, which is always true for usize)
 }
 
 #[test]
@@ -527,7 +527,7 @@ fn mt_concurrent_avl_bst_operations() {
     for (thread_id, size, height, min, max) in results {
         assert!(size >= 10); // At least the thread's own insertions
         assert!(height > 0); // Tree has some height
-        // Min/max depend on insertion order across threads
+                             // Min/max depend on insertion order across threads
         println!(
             "Thread {}: size={}, height={}, min={:?}, max={:?}",
             thread_id, size, height, min, max

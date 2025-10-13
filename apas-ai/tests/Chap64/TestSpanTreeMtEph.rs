@@ -5,8 +5,8 @@
 mod tests {
     use apas_ai::{
         Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
-        Chap62::StarPartitionMtEph::StarPartitionMtEph::*,
-        Chap64::SpanTreeMtEph::SpanTreeMtEph::*, SetLit, Types::Types::*,
+        Chap62::StarPartitionMtEph::StarPartitionMtEph::*, Chap64::SpanTreeMtEph::SpanTreeMtEph::*, SetLit,
+        Types::Types::*,
     };
 
     fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {

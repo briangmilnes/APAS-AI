@@ -193,4 +193,3 @@ fn test_generate_test_sequences() {
         assert_eq!(seq.len(), 10);
     }
 }
-

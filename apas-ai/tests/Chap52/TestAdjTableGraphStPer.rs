@@ -151,10 +151,11 @@ fn test_delete_edge_nonexistent() {
 #[test]
 fn test_complex_graph() {
     let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
-    let g = g.insert_edge(1, 2)
-             .insert_edge(1, 3)
-             .insert_edge(2, 3)
-             .insert_edge(3, 4);
+    let g = g
+        .insert_edge(1, 2)
+        .insert_edge(1, 3)
+        .insert_edge(2, 3)
+        .insert_edge(3, 4);
 
     assert_eq!(g.num_vertices(), 4);
     assert_eq!(g.num_edges(), 4);

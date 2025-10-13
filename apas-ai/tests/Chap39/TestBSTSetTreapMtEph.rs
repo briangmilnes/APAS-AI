@@ -2,9 +2,9 @@
 //! Tests for BSTSetTreapMtEph.
 
 use apas_ai::BSTSetTreapMtEphLit;
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
 use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::*;
 use apas_ai::Chap39::BSTTreapMtEph::BSTTreapMtEph::BSTTreapMtEphTrait;
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
 use apas_ai::Types::Types::*;
 
 #[test]
@@ -314,14 +314,19 @@ fn test_trait_impl_singleton() {
 fn test_trait_impl_contains() {
     let mut set = BSTSetTreapMtEph::empty();
     set.insert(10);
-    assert!(<BSTSetTreapMtEph<i32> as BSTSetTreapMtEphTrait<i32>>::contains(&set, &10));
+    assert!(<BSTSetTreapMtEph<i32> as BSTSetTreapMtEphTrait<i32>>::contains(
+        &set, &10
+    ));
 }
 
 #[test]
 fn test_trait_impl_find() {
     let mut set = BSTSetTreapMtEph::empty();
     set.insert(20);
-    assert_eq!(<BSTSetTreapMtEph<i32> as BSTSetTreapMtEphTrait<i32>>::find(&set, &20), Some(20));
+    assert_eq!(
+        <BSTSetTreapMtEph<i32> as BSTSetTreapMtEphTrait<i32>>::find(&set, &20),
+        Some(20)
+    );
 }
 
 #[test]
@@ -330,7 +335,10 @@ fn test_trait_impl_minimum() {
     set.insert(5);
     set.insert(3);
     set.insert(7);
-    assert_eq!(<BSTSetTreapMtEph<i32> as BSTSetTreapMtEphTrait<i32>>::minimum(&set), Some(3));
+    assert_eq!(
+        <BSTSetTreapMtEph<i32> as BSTSetTreapMtEphTrait<i32>>::minimum(&set),
+        Some(3)
+    );
 }
 
 #[test]
@@ -339,7 +347,10 @@ fn test_trait_impl_maximum() {
     set.insert(5);
     set.insert(3);
     set.insert(7);
-    assert_eq!(<BSTSetTreapMtEph<i32> as BSTSetTreapMtEphTrait<i32>>::maximum(&set), Some(7));
+    assert_eq!(
+        <BSTSetTreapMtEph<i32> as BSTSetTreapMtEphTrait<i32>>::maximum(&set),
+        Some(7)
+    );
 }
 
 #[test]

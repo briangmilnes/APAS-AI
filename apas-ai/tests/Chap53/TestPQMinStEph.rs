@@ -189,10 +189,18 @@ fn test_pq_min_linear_chain() {
 fn test_pq_min_complete_graph() {
     // Complete graph on 4 vertices: each vertex connects to all others
     let graph = |v: &N| match *v {
-        | 1 => AVLTreeSetStEph::singleton(2).union(&AVLTreeSetStEph::singleton(3)).union(&AVLTreeSetStEph::singleton(4)),
-        | 2 => AVLTreeSetStEph::singleton(1).union(&AVLTreeSetStEph::singleton(3)).union(&AVLTreeSetStEph::singleton(4)),
-        | 3 => AVLTreeSetStEph::singleton(1).union(&AVLTreeSetStEph::singleton(2)).union(&AVLTreeSetStEph::singleton(4)),
-        | 4 => AVLTreeSetStEph::singleton(1).union(&AVLTreeSetStEph::singleton(2)).union(&AVLTreeSetStEph::singleton(3)),
+        | 1 => AVLTreeSetStEph::singleton(2)
+            .union(&AVLTreeSetStEph::singleton(3))
+            .union(&AVLTreeSetStEph::singleton(4)),
+        | 2 => AVLTreeSetStEph::singleton(1)
+            .union(&AVLTreeSetStEph::singleton(3))
+            .union(&AVLTreeSetStEph::singleton(4)),
+        | 3 => AVLTreeSetStEph::singleton(1)
+            .union(&AVLTreeSetStEph::singleton(2))
+            .union(&AVLTreeSetStEph::singleton(4)),
+        | 4 => AVLTreeSetStEph::singleton(1)
+            .union(&AVLTreeSetStEph::singleton(2))
+            .union(&AVLTreeSetStEph::singleton(3)),
         | _ => AVLTreeSetStEph::empty(),
     };
     let prio_fn = vertex_priority();
@@ -208,7 +216,10 @@ fn test_pq_min_complete_graph() {
 fn test_pq_min_star_graph() {
     // Star graph: 1 is center, connects to 2, 3, 4, 5
     let graph = |v: &N| match *v {
-        | 1 => AVLTreeSetStEph::singleton(2).union(&AVLTreeSetStEph::singleton(3)).union(&AVLTreeSetStEph::singleton(4)).union(&AVLTreeSetStEph::singleton(5)),
+        | 1 => AVLTreeSetStEph::singleton(2)
+            .union(&AVLTreeSetStEph::singleton(3))
+            .union(&AVLTreeSetStEph::singleton(4))
+            .union(&AVLTreeSetStEph::singleton(5)),
         | _ => AVLTreeSetStEph::empty(),
     };
     let prio_fn = vertex_priority();
@@ -252,4 +263,3 @@ fn test_pq_min_self_loop() {
     assert!(result.visited.find(&1));
     assert!(result.visited.find(&2));
 }
-

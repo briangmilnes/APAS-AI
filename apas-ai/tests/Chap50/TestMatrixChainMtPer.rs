@@ -19,14 +19,14 @@ fn test_new() {
 
 #[test]
 fn test_from_dimensions() {
-    let dims = vec![MatrixDim{rows:10,cols:20}, MatrixDim{rows:20,cols:30}];
+    let dims = vec![MatrixDim { rows: 10, cols: 20 }, MatrixDim { rows: 20, cols: 30 }];
     let chain = MatrixChainMtPerS::from_dimensions(dims);
     assert_eq!(chain.num_matrices(), 2);
 }
 
 #[test]
 fn test_from_dim_pairs() {
-    let pairs = vec![Pair(10,20), Pair(20,30), Pair(30,40)];
+    let pairs = vec![Pair(10, 20), Pair(20, 30), Pair(30, 40)];
     let chain = MatrixChainMtPerS::from_dim_pairs(pairs);
     assert_eq!(chain.num_matrices(), 3);
 }
@@ -35,7 +35,7 @@ fn test_from_dim_pairs() {
 fn test_optimal_cost_two_matrices() {
     let chain = MatrixChainMtPerLit![dims: [(10,20), (20,30)]];
     let cost = chain.optimal_cost();
-    assert_eq!(cost, 10*20*30);
+    assert_eq!(cost, 10 * 20 * 30);
 }
 
 #[test]
@@ -106,9 +106,7 @@ fn test_parallel_execution() {
     let mut handles = vec![];
     for _ in 0..4 {
         let c = Arc::clone(&chain);
-        let handle = thread::spawn(move || {
-            c.dimensions().len()
-        });
+        let handle = thread::spawn(move || c.dimensions().len());
         handles.push(handle);
     }
     for handle in handles {
@@ -146,9 +144,7 @@ fn test_concurrent_reads() {
     let mut handles = vec![];
     for _ in 0..4 {
         let c = Arc::clone(&chain);
-        let handle = thread::spawn(move || {
-            (c.num_matrices(), c.optimal_cost())
-        });
+        let handle = thread::spawn(move || (c.num_matrices(), c.optimal_cost()));
         handles.push(handle);
     }
     for handle in handles {
@@ -171,4 +167,3 @@ fn test_matrixdim_clone() {
     let dim2 = dim1.clone();
     assert_eq!(dim1, dim2);
 }
-

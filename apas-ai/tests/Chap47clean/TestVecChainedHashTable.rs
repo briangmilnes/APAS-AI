@@ -1,5 +1,5 @@
-use apas_ai::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
 use apas_ai::Chap47clean::ChainedHashTable::ChainedHashTable::*;
+use apas_ai::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
 use apas_ai::Chap47clean::VecChainedHashTable::VecChainedHashTable::*;
 use apas_ai::Types::Types::*;
 
@@ -41,30 +41,37 @@ fn test_vec_entry_delete() {
 #[test]
 fn test_vec_chained_insert_lookup() {
     let hash_fn: HashFun<i32> = Box::new(|k| (*k as N) % 10);
-    let mut table: VecChainTable = 
-        <VecChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, Vec<(i32, String)>, ()>>::createTable(hash_fn, 10);
-    
+    let mut table: VecChainTable =
+        <VecChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, Vec<(i32, String)>, ()>>::createTable(
+            hash_fn, 10,
+        );
+
     for _ in 0..10 {
         table.table.push(Vec::new());
     }
-    
+
     VecChainedHashTableStEph::insert(&mut table, 1, "one".to_string());
     VecChainedHashTableStEph::insert(&mut table, 11, "eleven".to_string());
-    
+
     assert_eq!(VecChainedHashTableStEph::lookup(&table, &1), Some("one".to_string()));
-    assert_eq!(VecChainedHashTableStEph::lookup(&table, &11), Some("eleven".to_string()));
+    assert_eq!(
+        VecChainedHashTableStEph::lookup(&table, &11),
+        Some("eleven".to_string())
+    );
 }
 
 #[test]
 fn test_vec_chained_delete() {
     let hash_fn: HashFun<i32> = Box::new(|k| (*k as N) % 10);
-    let mut table: VecChainTable = 
-        <VecChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, Vec<(i32, String)>, ()>>::createTable(hash_fn, 10);
-    
+    let mut table: VecChainTable =
+        <VecChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, Vec<(i32, String)>, ()>>::createTable(
+            hash_fn, 10,
+        );
+
     for _ in 0..10 {
         table.table.push(Vec::new());
     }
-    
+
     VecChainedHashTableStEph::insert(&mut table, 1, "one".to_string());
     assert!(VecChainedHashTableStEph::delete(&mut table, &1));
     assert_eq!(VecChainedHashTableStEph::lookup(&table, &1), None);

@@ -262,9 +262,7 @@ fn test_concurrent_reads() {
     let med_arc = Arc::new(med);
     let med_clone = Arc::clone(&med_arc);
 
-    let handle = thread::spawn(move || {
-        med_clone.source().length()
-    });
+    let handle = thread::spawn(move || med_clone.source().length());
 
     let len = handle.join().unwrap();
     assert_eq!(len, 3);

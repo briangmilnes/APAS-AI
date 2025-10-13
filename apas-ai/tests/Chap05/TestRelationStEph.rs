@@ -1,308 +1,303 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use apas_ai::Chap05::RelationStEph::RelationStEph::*;
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::RelationLit;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*; // macro import
+use apas_ai::*;
 
-    use apas_ai::Chap05::RelationStEph::RelationStEph::*;
-    use apas_ai::Chap05::SetStEph::SetStEph::*;
-    use apas_ai::SetLit;
-    use apas_ai::Types::Types::*; // macro import
-    use apas_ai::*;
-    use apas_ai::RelationLit;
+#[test]
+fn test_relationlit_macro_functionality() {
+    // Test empty relation creation
+    let empty: Relation<i32, String> = RelationLit![];
+    assert_eq!(empty.size(), 0);
 
-    #[test]
-    fn test_relationlit_macro_functionality() {
-        // Test empty relation creation
-        let empty: Relation<i32, String> = RelationLit![];
-        assert_eq!(empty.size(), 0);
-        
-        // Test relation creation with pairs
-        let with_data: Relation<i32, String> = RelationLit![
-            (1, "one".to_string()),
-            (2, "two".to_string())
-        ];
-        assert_eq!(with_data.size(), 2);
-        assert!(with_data.mem(&1, &"one".to_string()));
+    // Test relation creation with pairs
+    let with_data: Relation<i32, String> = RelationLit![(1, "one".to_string()), (2, "two".to_string())];
+    assert_eq!(with_data.size(), 2);
+    assert!(with_data.mem(&1, &"one".to_string()));
+}
+
+#[test]
+fn test_relation_domain_range_and_mem() {
+    // R subset of A x B
+    let pairs = SetLit![PairLit!(1usize, 'a'), PairLit!(2usize, 'b'), PairLit!(1usize, 'b')];
+    let r = Relation::FromSet(pairs);
+
+    let d = r.domain();
+    let e = SetLit![1usize, 2usize];
+    assert_eq!(d, e);
+
+    let rg = r.range();
+    let rexp = SetLit!['a', 'b'];
+    assert_eq!(rg, rexp);
+
+    assert_eq!(r.mem(&1usize, &'a'), true);
+    assert_eq!(r.mem(&2usize, &'a'), false);
+}
+
+#[test]
+fn test_relation_empty() {
+    let empty_rel: Relation<i32, char> = Relation::empty();
+    assert_eq!(empty_rel.size(), 0);
+    assert_eq!(empty_rel.mem(&1, &'a'), false);
+}
+
+#[test]
+fn test_relation_size() {
+    let empty_rel: Relation<i32, char> = Relation::empty();
+    assert_eq!(empty_rel.size(), 0);
+
+    let single_pair = SetLit![PairLit!(1, 'a')];
+    let single_rel = Relation::FromSet(single_pair);
+    assert_eq!(single_rel.size(), 1);
+
+    let multi_pairs = SetLit![PairLit!(1, 'a'), PairLit!(2, 'b'), PairLit!(3, 'c')];
+    let multi_rel = Relation::FromSet(multi_pairs);
+    assert_eq!(multi_rel.size(), 3);
+}
+
+#[test]
+fn test_relation_domain_empty_edge() {
+    let empty_rel: Relation<i32, char> = Relation::empty();
+    let empty_domain = empty_rel.domain();
+    assert_eq!(empty_domain.size(), 0);
+}
+
+#[test]
+fn test_relation_range_empty_edge() {
+    let empty_rel: Relation<i32, char> = Relation::empty();
+    let empty_range = empty_rel.range();
+    assert_eq!(empty_range.size(), 0);
+}
+
+#[test]
+fn test_relation_mem_empty_edge() {
+    let empty_rel: Relation<i32, char> = Relation::empty();
+    assert_eq!(empty_rel.mem(&1, &'a'), false);
+    assert_eq!(empty_rel.mem(&0, &'z'), false);
+}
+
+#[test]
+fn test_relation_iter() {
+    let pairs = SetLit![PairLit!(1, 'a'), PairLit!(2, 'b')];
+    let rel = Relation::FromSet(pairs);
+
+    let collected: Vec<_> = rel.iter().cloned().collect();
+    assert_eq!(collected.len(), 2);
+    assert!(collected.contains(&PairLit!(1, 'a')));
+    assert!(collected.contains(&PairLit!(2, 'b')));
+}
+
+#[test]
+fn test_relation_fromvec() {
+    let vec_pairs = vec![PairLit!(1, 'a'), PairLit!(2, 'b'), PairLit!(1, 'c')];
+    let rel = Relation::FromVec(vec_pairs);
+
+    assert_eq!(rel.size(), 3);
+    assert_eq!(rel.mem(&1, &'a'), true);
+    assert_eq!(rel.mem(&2, &'b'), true);
+    assert_eq!(rel.mem(&1, &'c'), true);
+}
+
+#[test]
+fn test_relationlit_macro_direct() {
+    let empty_rel: Relation<i32, char> = RelationLit![];
+    assert_eq!(empty_rel.size(), 0);
+
+    let single_rel = RelationLit![(1, 'a')];
+    assert_eq!(single_rel.size(), 1);
+    assert_eq!(single_rel.mem(&1, &'a'), true);
+
+    let multi_rel = RelationLit![(1, 'a'), (2, 'b'), (3, 'c')];
+    assert_eq!(multi_rel.size(), 3);
+    assert_eq!(multi_rel.mem(&1, &'a'), true);
+    assert_eq!(multi_rel.mem(&2, &'b'), true);
+    assert_eq!(multi_rel.mem(&3, &'c'), true);
+}
+
+#[test]
+fn test_empty_relation_domain_range() {
+    let empty_rel: Relation<i32, String> = RelationLit![];
+
+    let domain = empty_rel.domain();
+    assert_eq!(domain.size(), 0);
+
+    let range = empty_rel.range();
+    assert_eq!(range.size(), 0);
+
+    assert_eq!(empty_rel.mem(&42, &"test".to_string()), false);
+}
+
+#[test]
+fn test_relation_iterator_boundaries() {
+    // Test iterator at beginning/end boundaries
+    let rel = RelationLit![(10, 'a'), (20, 'b'), (30, 'c'), (40, 'd'), (50, 'e')];
+
+    // Test iterator starting from beginning
+    let mut iter = rel.iter();
+    let first = iter.next();
+    assert!(first.is_some()); // Should have first element
+    let second = iter.next();
+    assert!(second.is_some()); // Should have second element
+
+    // Test iterator ending at end
+    let iter_end = rel.iter();
+    let collected: Vec<Pair<i32, char>> = iter_end.cloned().collect();
+    assert_eq!(collected.len(), 5);
+    // Note: HashSet iteration order is not guaranteed, so we check membership
+    for pair in &collected {
+        assert_eq!(rel.mem(&pair.0, &pair.1), true);
     }
 
-    #[test]
-    fn test_relation_domain_range_and_mem() {
-        // R subset of A x B
-        let pairs = SetLit![PairLit!(1usize, 'a'), PairLit!(2usize, 'b'), PairLit!(1usize, 'b')];
-        let r = Relation::FromSet(pairs);
+    // Test iterator on single element - both beginning and end
+    let single_rel = RelationLit![(99, 'z')];
+    let mut single_iter = single_rel.iter();
+    assert_eq!(single_iter.next(), Some(&Pair(99, 'z'))); // Beginning = end
+    assert_eq!(single_iter.next(), None); // Past end
 
-        let d = r.domain();
-        let e = SetLit![1usize, 2usize];
-        assert_eq!(d, e);
+    // Test iterator on empty relation - no boundaries
+    let empty_rel: Relation<i32, char> = RelationLit![];
+    let mut empty_iter = empty_rel.iter();
+    assert_eq!(empty_iter.next(), None); // No beginning
 
-        let rg = r.range();
-        let rexp = SetLit!['a', 'b'];
-        assert_eq!(rg, rexp);
+    // Test iterator exhaustion and reset
+    let rel_reset = RelationLit![(1, 'x'), (2, 'y')];
+    let mut iter1 = rel_reset.iter();
+    // Exhaust iterator by consuming all elements
+    let first_elem = iter1.next();
+    let second_elem = iter1.next();
+    assert!(first_elem.is_some());
+    assert!(second_elem.is_some());
+    assert_eq!(iter1.next(), None); // Should be exhausted
 
-        assert_eq!(r.mem(&1usize, &'a'), true);
-        assert_eq!(r.mem(&2usize, &'a'), false);
+    // New iterator should start fresh at beginning
+    let mut iter2 = rel_reset.iter();
+    let fresh_first = iter2.next();
+    assert!(fresh_first.is_some()); // Fresh start at beginning
+
+    // Test iterator with functional operations at boundaries
+    let rel_func = RelationLit![(100, 'p'), (200, 'q'), (300, 'r')];
+
+    // First element via iterator (order not guaranteed)
+    let first = rel_func.iter().next();
+    assert!(first.is_some());
+    assert_eq!(rel_func.mem(&first.unwrap().0, &first.unwrap().1), true);
+
+    // Count elements via iterator
+    let count = rel_func.iter().count();
+    assert_eq!(count, 3);
+
+    // Test iterator chain boundaries
+    let rel1 = RelationLit![(1, 'a'), (2, 'b')];
+    let rel2 = RelationLit![(3, 'c'), (4, 'd')];
+    let chained: Vec<Pair<i32, char>> = rel1.iter().chain(rel2.iter()).cloned().collect();
+    assert_eq!(chained.len(), 4);
+    // Check all elements are present
+    for pair in &chained {
+        assert!(rel1.mem(&pair.0, &pair.1) == true || rel2.mem(&pair.0, &pair.1) == true);
     }
 
-    #[test]
-    fn test_relation_empty() {
-        let empty_rel: Relation<i32, char> = Relation::empty();
-        assert_eq!(empty_rel.size(), 0);
-        assert_eq!(empty_rel.mem(&1, &'a'), false);
+    // Test iterator skip/take boundaries
+    let rel_skip = RelationLit![(10, 'a'), (20, 'b'), (30, 'c'), (40, 'd'), (50, 'e')];
+    let skipped: Vec<Pair<i32, char>> = rel_skip.iter().skip(2).cloned().collect();
+    assert_eq!(skipped.len(), 3);
+    // All skipped elements should be in original relation
+    for pair in &skipped {
+        assert_eq!(rel_skip.mem(&pair.0, &pair.1), true);
     }
 
-    #[test]
-    fn test_relation_size() {
-        let empty_rel: Relation<i32, char> = Relation::empty();
-        assert_eq!(empty_rel.size(), 0);
-
-        let single_pair = SetLit![PairLit!(1, 'a')];
-        let single_rel = Relation::FromSet(single_pair);
-        assert_eq!(single_rel.size(), 1);
-
-        let multi_pairs = SetLit![PairLit!(1, 'a'), PairLit!(2, 'b'), PairLit!(3, 'c')];
-        let multi_rel = Relation::FromSet(multi_pairs);
-        assert_eq!(multi_rel.size(), 3);
+    let taken: Vec<Pair<i32, char>> = rel_skip.iter().take(3).cloned().collect();
+    assert_eq!(taken.len(), 3);
+    // All taken elements should be in original relation
+    for pair in &taken {
+        assert_eq!(rel_skip.mem(&pair.0, &pair.1), true);
     }
 
-    #[test]
-    fn test_relation_domain_empty_edge() {
-        let empty_rel: Relation<i32, char> = Relation::empty();
-        let empty_domain = empty_rel.domain();
-        assert_eq!(empty_domain.size(), 0);
+    // Test iterator collect and verify completeness
+    let original = RelationLit![(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd'), (5, 'e')];
+    let collected_all: Vec<Pair<i32, char>> = original.iter().cloned().collect();
+    assert_eq!(collected_all.len(), 5);
+
+    // Create new relation from collected elements and verify equality
+    let reconstructed = Relation::FromVec(collected_all);
+    assert_eq!(reconstructed.size(), original.size());
+    for i in 1..=5 {
+        let expected_char = match i {
+            | 1 => 'a',
+            | 2 => 'b',
+            | 3 => 'c',
+            | 4 => 'd',
+            | 5 => 'e',
+            | _ => unreachable!(),
+        };
+        assert_eq!(original.mem(&i, &expected_char), reconstructed.mem(&i, &expected_char));
     }
+}
 
-    #[test]
-    fn test_relation_range_empty_edge() {
-        let empty_rel: Relation<i32, char> = Relation::empty();
-        let empty_range = empty_rel.range();
-        assert_eq!(empty_range.size(), 0);
-    }
+#[test]
+fn test_relation_maximum_size_boundary() {
+    // Test maximum size collection boundary - use reasonably large size
+    // to verify graceful handling without causing memory issues
+    let large_size = 50_000usize;
+    let large_vec: Vec<Pair<i32, i32>> = (0..large_size as i32).map(|i| Pair(i, i * 2)).collect();
+    let large_rel = Relation::FromVec(large_vec);
 
-    #[test]
-    fn test_relation_mem_empty_edge() {
-        let empty_rel: Relation<i32, char> = Relation::empty();
-        assert_eq!(empty_rel.mem(&1, &'a'), false);
-        assert_eq!(empty_rel.mem(&0, &'z'), false);
-    }
+    // Verify basic operations work on large relation
+    assert_eq!(large_rel.size(), large_size);
+    assert_eq!(large_rel.mem(&0, &0), true);
+    assert_eq!(
+        large_rel.mem(&((large_size - 1) as i32), &(((large_size - 1) * 2) as i32)),
+        true
+    );
+    assert_eq!(large_rel.mem(&(large_size as i32), &0), false);
 
-    #[test]
-    fn test_relation_iter() {
-        let pairs = SetLit![PairLit!(1, 'a'), PairLit!(2, 'b')];
-        let rel = Relation::FromSet(pairs);
+    // Test domain and range on large relation
+    let domain = large_rel.domain();
+    assert_eq!(domain.size(), large_size);
+    assert_eq!(domain.mem(&0), true);
+    assert_eq!(domain.mem(&((large_size - 1) as i32)), true);
+    assert_eq!(domain.mem(&(large_size as i32)), false);
 
-        let collected: Vec<_> = rel.iter().cloned().collect();
-        assert_eq!(collected.len(), 2);
-        assert!(collected.contains(&PairLit!(1, 'a')));
-        assert!(collected.contains(&PairLit!(2, 'b')));
-    }
+    let range = large_rel.range();
+    assert_eq!(range.size(), large_size);
+    assert_eq!(range.mem(&0), true);
+    assert_eq!(range.mem(&(((large_size - 1) * 2) as i32)), true);
+    assert_eq!(range.mem(&(((large_size * 2) + 1) as i32)), false); // Value not in range
 
-    #[test]
-    fn test_relation_fromvec() {
-        let vec_pairs = vec![PairLit!(1, 'a'), PairLit!(2, 'b'), PairLit!(1, 'c')];
-        let rel = Relation::FromVec(vec_pairs);
-
-        assert_eq!(rel.size(), 3);
-        assert_eq!(rel.mem(&1, &'a'), true);
-        assert_eq!(rel.mem(&2, &'b'), true);
-        assert_eq!(rel.mem(&1, &'c'), true);
-    }
-
-    #[test]
-    fn test_relationlit_macro_direct() {
-        let empty_rel: Relation<i32, char> = RelationLit![];
-        assert_eq!(empty_rel.size(), 0);
-
-        let single_rel = RelationLit![(1, 'a')];
-        assert_eq!(single_rel.size(), 1);
-        assert_eq!(single_rel.mem(&1, &'a'), true);
-
-        let multi_rel = RelationLit![(1, 'a'), (2, 'b'), (3, 'c')];
-        assert_eq!(multi_rel.size(), 3);
-        assert_eq!(multi_rel.mem(&1, &'a'), true);
-        assert_eq!(multi_rel.mem(&2, &'b'), true);
-        assert_eq!(multi_rel.mem(&3, &'c'), true);
-    }
-
-    #[test]
-    fn test_empty_relation_domain_range() {
-        let empty_rel: Relation<i32, String> = RelationLit![];
-
-        let domain = empty_rel.domain();
-        assert_eq!(domain.size(), 0);
-
-        let range = empty_rel.range();
-        assert_eq!(range.size(), 0);
-
-        assert_eq!(empty_rel.mem(&42, &"test".to_string()), false);
-    }
-
-    #[test]
-    fn test_relation_iterator_boundaries() {
-        // Test iterator at beginning/end boundaries
-        let rel = RelationLit![(10, 'a'), (20, 'b'), (30, 'c'), (40, 'd'), (50, 'e')];
-
-        // Test iterator starting from beginning
-        let mut iter = rel.iter();
-        let first = iter.next();
-        assert!(first.is_some()); // Should have first element
-        let second = iter.next();
-        assert!(second.is_some()); // Should have second element
-
-        // Test iterator ending at end
-        let iter_end = rel.iter();
-        let collected: Vec<Pair<i32, char>> = iter_end.cloned().collect();
-        assert_eq!(collected.len(), 5);
-        // Note: HashSet iteration order is not guaranteed, so we check membership
-        for pair in &collected {
-            assert_eq!(rel.mem(&pair.0, &pair.1), true);
+    // Test iterator on large relation (sample check)
+    let mut count = 0;
+    for pair in large_rel.iter() {
+        if count < 10 {
+            assert_eq!(large_rel.mem(&pair.0, &pair.1), true);
+            assert_eq!(pair.1, pair.0 * 2); // Verify relationship
         }
-
-        // Test iterator on single element - both beginning and end
-        let single_rel = RelationLit![(99, 'z')];
-        let mut single_iter = single_rel.iter();
-        assert_eq!(single_iter.next(), Some(&Pair(99, 'z'))); // Beginning = end
-        assert_eq!(single_iter.next(), None); // Past end
-
-        // Test iterator on empty relation - no boundaries
-        let empty_rel: Relation<i32, char> = RelationLit![];
-        let mut empty_iter = empty_rel.iter();
-        assert_eq!(empty_iter.next(), None); // No beginning
-
-        // Test iterator exhaustion and reset
-        let rel_reset = RelationLit![(1, 'x'), (2, 'y')];
-        let mut iter1 = rel_reset.iter();
-        // Exhaust iterator by consuming all elements
-        let first_elem = iter1.next();
-        let second_elem = iter1.next();
-        assert!(first_elem.is_some());
-        assert!(second_elem.is_some());
-        assert_eq!(iter1.next(), None); // Should be exhausted
-
-        // New iterator should start fresh at beginning
-        let mut iter2 = rel_reset.iter();
-        let fresh_first = iter2.next();
-        assert!(fresh_first.is_some()); // Fresh start at beginning
-
-        // Test iterator with functional operations at boundaries
-        let rel_func = RelationLit![(100, 'p'), (200, 'q'), (300, 'r')];
-
-        // First element via iterator (order not guaranteed)
-        let first = rel_func.iter().next();
-        assert!(first.is_some());
-        assert_eq!(rel_func.mem(&first.unwrap().0, &first.unwrap().1), true);
-
-        // Count elements via iterator
-        let count = rel_func.iter().count();
-        assert_eq!(count, 3);
-
-        // Test iterator chain boundaries
-        let rel1 = RelationLit![(1, 'a'), (2, 'b')];
-        let rel2 = RelationLit![(3, 'c'), (4, 'd')];
-        let chained: Vec<Pair<i32, char>> = rel1.iter().chain(rel2.iter()).cloned().collect();
-        assert_eq!(chained.len(), 4);
-        // Check all elements are present
-        for pair in &chained {
-            assert!(rel1.mem(&pair.0, &pair.1) == true || rel2.mem(&pair.0, &pair.1) == true);
-        }
-
-        // Test iterator skip/take boundaries
-        let rel_skip = RelationLit![(10, 'a'), (20, 'b'), (30, 'c'), (40, 'd'), (50, 'e')];
-        let skipped: Vec<Pair<i32, char>> = rel_skip.iter().skip(2).cloned().collect();
-        assert_eq!(skipped.len(), 3);
-        // All skipped elements should be in original relation
-        for pair in &skipped {
-            assert_eq!(rel_skip.mem(&pair.0, &pair.1), true);
-        }
-
-        let taken: Vec<Pair<i32, char>> = rel_skip.iter().take(3).cloned().collect();
-        assert_eq!(taken.len(), 3);
-        // All taken elements should be in original relation
-        for pair in &taken {
-            assert_eq!(rel_skip.mem(&pair.0, &pair.1), true);
-        }
-
-        // Test iterator collect and verify completeness
-        let original = RelationLit![(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd'), (5, 'e')];
-        let collected_all: Vec<Pair<i32, char>> = original.iter().cloned().collect();
-        assert_eq!(collected_all.len(), 5);
-
-        // Create new relation from collected elements and verify equality
-        let reconstructed = Relation::FromVec(collected_all);
-        assert_eq!(reconstructed.size(), original.size());
-        for i in 1..=5 {
-            let expected_char = match i {
-                | 1 => 'a',
-                | 2 => 'b',
-                | 3 => 'c',
-                | 4 => 'd',
-                | 5 => 'e',
-                | _ => unreachable!(),
-            };
-            assert_eq!(original.mem(&i, &expected_char), reconstructed.mem(&i, &expected_char));
+        count += 1;
+        if count > large_size + 100 {
+            // Safety check
+            break;
         }
     }
+    assert_eq!(count, large_size);
 
-    #[test]
-    fn test_relation_maximum_size_boundary() {
-        // Test maximum size collection boundary - use reasonably large size
-        // to verify graceful handling without causing memory issues
-        let large_size = 50_000usize;
-        let large_vec: Vec<Pair<i32, i32>> = (0..large_size as i32).map(|i| Pair(i, i * 2)).collect();
-        let large_rel = Relation::FromVec(large_vec);
+    // Test with another large relation (partial overlap)
+    let large_vec2: Vec<Pair<i32, i32>> = (25_000..75_000).map(|i| Pair(i, i * 3)).collect();
+    let large_rel2 = Relation::FromVec(large_vec2);
 
-        // Verify basic operations work on large relation
-        assert_eq!(large_rel.size(), large_size);
-        assert_eq!(large_rel.mem(&0, &0), true);
-        assert_eq!(
-            large_rel.mem(&((large_size - 1) as i32), &(((large_size - 1) * 2) as i32)),
-            true
-        );
-        assert_eq!(large_rel.mem(&(large_size as i32), &0), false);
+    // Verify the second relation
+    assert_eq!(large_rel2.size(), 50_000);
+    assert_eq!(large_rel2.mem(&25_000, &75_000), true);
+    assert_eq!(large_rel2.mem(&74_999, &224_997), true);
 
-        // Test domain and range on large relation
-        let domain = large_rel.domain();
-        assert_eq!(domain.size(), large_size);
-        assert_eq!(domain.mem(&0), true);
-        assert_eq!(domain.mem(&((large_size - 1) as i32)), true);
-        assert_eq!(domain.mem(&(large_size as i32)), false);
+    // Test operations between large relations would be memory intensive,
+    // so we test with smaller subsets
+    let small_rel1 = RelationLit![(1, 2), (2, 4), (3, 6)];
+    let small_rel2 = RelationLit![(2, 4), (4, 8), (5, 10)];
 
-        let range = large_rel.range();
-        assert_eq!(range.size(), large_size);
-        assert_eq!(range.mem(&0), true);
-        assert_eq!(range.mem(&(((large_size - 1) * 2) as i32)), true);
-        assert_eq!(range.mem(&(((large_size * 2) + 1) as i32)), false); // Value not in range
-
-        // Test iterator on large relation (sample check)
-        let mut count = 0;
-        for pair in large_rel.iter() {
-            if count < 10 {
-                assert_eq!(large_rel.mem(&pair.0, &pair.1), true);
-                assert_eq!(pair.1, pair.0 * 2); // Verify relationship
-            }
-            count += 1;
-            if count > large_size + 100 {
-                // Safety check
-                break;
-            }
-        }
-        assert_eq!(count, large_size);
-
-        // Test with another large relation (partial overlap)
-        let large_vec2: Vec<Pair<i32, i32>> = (25_000..75_000).map(|i| Pair(i, i * 3)).collect();
-        let large_rel2 = Relation::FromVec(large_vec2);
-
-        // Verify the second relation
-        assert_eq!(large_rel2.size(), 50_000);
-        assert_eq!(large_rel2.mem(&25_000, &75_000), true);
-        assert_eq!(large_rel2.mem(&74_999, &224_997), true);
-
-        // Test operations between large relations would be memory intensive,
-        // so we test with smaller subsets
-        let small_rel1 = RelationLit![(1, 2), (2, 4), (3, 6)];
-        let small_rel2 = RelationLit![(2, 4), (4, 8), (5, 10)];
-
-        // Verify these work as expected (proxy for large relation operations)
-        assert_eq!(small_rel1.size(), 3);
-        assert_eq!(small_rel2.size(), 3);
-        assert_eq!(small_rel1.mem(&2, &4), true);
-        assert_eq!(small_rel2.mem(&2, &4), true);
-    }
-
+    // Verify these work as expected (proxy for large relation operations)
+    assert_eq!(small_rel1.size(), 3);
+    assert_eq!(small_rel2.size(), 3);
+    assert_eq!(small_rel1.mem(&2, &4), true);
+    assert_eq!(small_rel2.mem(&2, &4), true);
+}

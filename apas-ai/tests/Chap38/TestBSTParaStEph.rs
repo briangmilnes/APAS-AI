@@ -1,9 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Chap38::BSTParaStEph::BSTParaStEph::*;
+use apas_ai::ParamBSTLit;
 use apas_ai::Types::Types::*;
 use apas_ai::*;
-use apas_ai::{ArraySeqStPerSLit};
-use apas_ai::ParamBSTLit;
 
 #[test]
 fn test_parambstlit_macro_functionality() {
@@ -11,7 +11,7 @@ fn test_parambstlit_macro_functionality() {
     let empty: ParamBST<i32> = ParamBSTLit![];
     assert_eq!(empty.size(), 0);
     assert_eq!(empty.find(&42), None);
-    
+
     // Test BST creation with elements
     let with_data: ParamBST<i32> = ParamBSTLit![2, 1, 3];
     assert_eq!(with_data.size(), 3);

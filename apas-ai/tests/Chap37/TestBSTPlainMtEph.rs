@@ -123,4 +123,3 @@ fn test_duplicate_insert() {
     assert_eq!(tree.size(), 1); // Duplicates are idempotent
     assert!(tree.contains(&5));
 }
-

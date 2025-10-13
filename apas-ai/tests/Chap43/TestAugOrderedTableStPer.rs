@@ -348,12 +348,12 @@ fn test_complex_tramlaw_scenario() {
 fn test_domain_operation() {
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableStPer::empty(sum_reducer, 0);
-    
+
     // Insert elements
     for i in 1..=10 {
         table = table.insert(i, i * 10);
     }
-    
+
     // Get domain (set of all keys)
     let domain = table.domain();
     assert_eq!(domain.size(), 10);
@@ -367,16 +367,16 @@ fn test_domain_operation() {
 fn test_collect_operation() {
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
     let mut table = AugOrderedTableStPer::empty(max_reducer, 0);
-    
+
     // Insert elements
     for i in 1..=5 {
         table = table.insert(i, i * 10);
     }
-    
+
     // Collect to sequence
     let seq = table.collect();
     assert_eq!(seq.length(), 5);
-    
+
     // Verify elements are in order
     let first = seq.nth(0);
     assert_eq!(first.0, 1);
@@ -388,17 +388,17 @@ fn test_difference_operation() {
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
     let mut table1 = AugOrderedTableStPer::empty(max_reducer, 0);
     let mut table2 = AugOrderedTableStPer::empty(max_reducer, 0);
-    
+
     // table1: {1:10, 2:20, 3:30, 4:40}
     for i in 1..=4 {
         table1 = table1.insert(i, i * 10);
     }
-    
+
     // table2: {2:20, 3:30, 5:50}
     table2 = table2.insert(2, 20);
     table2 = table2.insert(3, 30);
     table2 = table2.insert(5, 50);
-    
+
     // Difference: table1 - table2 = {1:10, 4:40}
     let diff = table1.difference(&table2);
     assert_eq!(diff.size(), 2);
@@ -412,18 +412,18 @@ fn test_difference_operation() {
 fn test_restrict_operation() {
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableStPer::empty(sum_reducer, 0);
-    
+
     // Insert elements
     for i in 1..=10 {
         table = table.insert(i, i * 10);
     }
-    
+
     // Create a set to restrict to
     let mut key_set = ArraySetStEph::empty();
     key_set.insert(2);
     key_set.insert(4);
     key_set.insert(6);
-    
+
     // Restrict table to keys in set
     let restricted = table.restrict(&key_set);
     assert_eq!(restricted.size(), 3);
@@ -437,18 +437,18 @@ fn test_restrict_operation() {
 fn test_subtract_operation() {
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
     let mut table = AugOrderedTableStPer::empty(max_reducer, 0);
-    
+
     // Insert elements
     for i in 1..=10 {
         table = table.insert(i, i * 10);
     }
-    
+
     // Create a set of keys to subtract
     let mut key_set = ArraySetStEph::empty();
     key_set.insert(2);
     key_set.insert(5);
     key_set.insert(8);
-    
+
     // Subtract keys from table
     let subtracted = table.subtract(&key_set);
     assert_eq!(subtracted.size(), 7);
@@ -462,16 +462,16 @@ fn test_subtract_operation() {
 #[test]
 fn test_tabulate_operation() {
     let sum_reducer = |a: &i32, b: &i32| a + b;
-    
+
     // Create domain set
     let mut domain = ArraySetStEph::empty();
     for i in 1..=5 {
         domain.insert(i);
     }
-    
+
     // Tabulate: create table from domain and function
     let table = AugOrderedTableStPer::tabulate(|k: &i32| k * k, &domain, sum_reducer, 0);
-    
+
     assert_eq!(table.size(), 5);
     assert_eq!(table.find(&1), Some(1));
     assert_eq!(table.find(&2), Some(4));
@@ -485,12 +485,12 @@ fn test_tabulate_operation() {
 fn test_get_key_range() {
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
     let mut table = AugOrderedTableStPer::empty(max_reducer, 0);
-    
+
     // Insert values from 10 to 100
     for i in 1..=10 {
         table = table.insert(i * 10, i * 10);
     }
-    
+
     // Get range [30, 70]
     let range = table.get_key_range(&30, &70);
     assert_eq!(range.size(), 5); // 30, 40, 50, 60, 70
@@ -507,20 +507,20 @@ fn test_get_key_range() {
 fn test_split_rank_key() {
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableStPer::empty(sum_reducer, 0);
-    
+
     // Insert: 10, 20, 30, 40, 50
     for i in 1..=5 {
         table = table.insert(i * 10, i);
     }
-    
+
     // Split at rank 2 (index 2 = key 30)
     let (left, right) = table.split_rank_key(2);
-    
+
     // Left should have keys < 30 (10, 20)
     assert_eq!(left.size(), 2);
     assert_eq!(left.find(&10), Some(1));
     assert_eq!(left.find(&20), Some(2));
-    
+
     // Right should have keys >= 30 (30, 40, 50)
     assert_eq!(right.size(), 3);
     assert_eq!(right.find(&30), Some(3));
@@ -533,17 +533,17 @@ fn test_intersection_operation() {
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
     let mut table1 = AugOrderedTableStPer::empty(max_reducer, 0);
     let mut table2 = AugOrderedTableStPer::empty(max_reducer, 0);
-    
+
     // table1: {1:10, 2:20, 3:30, 4:40}
     for i in 1..=4 {
         table1 = table1.insert(i, i * 10);
     }
-    
+
     // table2: {2:25, 3:35, 5:50}
     table2 = table2.insert(2, 25);
     table2 = table2.insert(3, 35);
     table2 = table2.insert(5, 50);
-    
+
     // Intersection: keep keys in both, take max values
     let intersection = table1.intersection(&table2, |v1, v2| if v1 > v2 { *v1 } else { *v2 });
     assert_eq!(intersection.size(), 2); // keys 2 and 3

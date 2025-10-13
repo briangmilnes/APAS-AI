@@ -141,4 +141,3 @@ fn test_default() {
     assert_eq!(tree.size(), 0);
     assert!(tree.is_empty());
 }
-

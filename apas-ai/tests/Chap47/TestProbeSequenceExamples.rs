@@ -11,9 +11,9 @@
 //! Span: O(1) per probe sequence test
 
 use apas_ai::Chap47::ProbeSequenceExamples::ProbeSequenceExamples::{
-    ProbeSequenceAnalyzer, ProbeSequenceVisualization, TextbookExampleResults, comprehensive_probe_sequence_comparison,
-    example_47_4_linear_probing_clustering, example_47_5_quadratic_probing_prime_table,
-    example_47_6_double_hashing_optimal, load_factor_impact_analysis, prime_vs_composite_table_comparison,
+    comprehensive_probe_sequence_comparison, example_47_4_linear_probing_clustering,
+    example_47_5_quadratic_probing_prime_table, example_47_6_double_hashing_optimal, load_factor_impact_analysis,
+    prime_vs_composite_table_comparison, ProbeSequenceAnalyzer, ProbeSequenceVisualization, TextbookExampleResults,
 };
 use apas_ai::Types::Types::*;
 

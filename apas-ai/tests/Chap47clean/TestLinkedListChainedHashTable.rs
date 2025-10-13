@@ -1,8 +1,8 @@
-use std::collections::LinkedList;
-use apas_ai::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
 use apas_ai::Chap47clean::ChainedHashTable::ChainedHashTable::*;
 use apas_ai::Chap47clean::LinkedListChainedHashTable::LinkedListChainedHashTable::*;
+use apas_ai::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
 use apas_ai::Types::Types::*;
+use std::collections::LinkedList;
 
 type LLChainTable = HashTable<i32, String, LinkedList<(i32, String)>, ()>;
 
@@ -42,30 +42,44 @@ fn test_linkedlist_entry_delete() {
 #[test]
 fn test_linkedlist_chained_insert_lookup() {
     let hash_fn: HashFun<i32> = Box::new(|k| (*k as N) % 10);
-    let mut table: LLChainTable = 
-        <LinkedListChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, LinkedList<(i32, String)>, ()>>::createTable(hash_fn, 10);
-    
+    let mut table: LLChainTable = <LinkedListChainedHashTableStEph as ParaHashTableStEphTrait<
+        i32,
+        String,
+        LinkedList<(i32, String)>,
+        (),
+    >>::createTable(hash_fn, 10);
+
     for _ in 0..10 {
         table.table.push(LinkedList::new());
     }
-    
+
     LinkedListChainedHashTableStEph::insert(&mut table, 1, "one".to_string());
     LinkedListChainedHashTableStEph::insert(&mut table, 11, "eleven".to_string());
-    
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &1), Some("one".to_string()));
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &11), Some("eleven".to_string()));
+
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &1),
+        Some("one".to_string())
+    );
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &11),
+        Some("eleven".to_string())
+    );
 }
 
 #[test]
 fn test_linkedlist_chained_delete() {
     let hash_fn: HashFun<i32> = Box::new(|k| (*k as N) % 10);
-    let mut table: LLChainTable = 
-        <LinkedListChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, LinkedList<(i32, String)>, ()>>::createTable(hash_fn, 10);
-    
+    let mut table: LLChainTable = <LinkedListChainedHashTableStEph as ParaHashTableStEphTrait<
+        i32,
+        String,
+        LinkedList<(i32, String)>,
+        (),
+    >>::createTable(hash_fn, 10);
+
     for _ in 0..10 {
         table.table.push(LinkedList::new());
     }
-    
+
     LinkedListChainedHashTableStEph::insert(&mut table, 1, "one".to_string());
     assert!(LinkedListChainedHashTableStEph::delete(&mut table, &1));
     assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &1), None);

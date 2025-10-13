@@ -378,14 +378,14 @@ fn test_ordered_table_mt_eph_domain_empty() {
 #[test]
 fn test_ordered_table_mt_eph_tabulate() {
     use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
-    
+
     let mut keys = ArraySetStEph::empty();
     keys.insert(1);
     keys.insert(2);
     keys.insert(3);
 
     let table = OrderedTableMtEph::tabulate(|k| format!("value_{}", k), &keys);
-    
+
     assert_eq!(table.size(), 3);
     assert_eq!(table.lookup(&1), Some("value_1".to_string()));
     assert_eq!(table.lookup(&2), Some("value_2".to_string()));
@@ -395,10 +395,10 @@ fn test_ordered_table_mt_eph_tabulate() {
 #[test]
 fn test_ordered_table_mt_eph_tabulate_empty() {
     use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
-    
+
     let keys = ArraySetStEph::<i32>::empty();
     let table = OrderedTableMtEph::tabulate(|k| format!("value_{}", k), &keys);
-    
+
     assert_eq!(table.size(), 0);
     assert!(table.is_empty());
 }
@@ -416,7 +416,7 @@ fn test_ordered_table_mt_eph_intersection() {
     table2.insert(4, "FOUR".to_string(), |_old, new| new.clone());
 
     table1.intersection(&table2, |v1, _v2| v1.clone());
-    
+
     assert_eq!(table1.size(), 2);
     assert_eq!(table1.lookup(&1), None);
     assert_eq!(table1.lookup(&2), Some("two".to_string()));
@@ -435,7 +435,7 @@ fn test_ordered_table_mt_eph_intersection_disjoint() {
     table2.insert(4, "four".to_string(), |_old, new| new.clone());
 
     table1.intersection(&table2, |v1, _v2| v1.clone());
-    
+
     assert_eq!(table1.size(), 0);
     assert!(table1.is_empty());
 }
@@ -451,7 +451,7 @@ fn test_ordered_table_mt_eph_union() {
     table2.insert(3, "three".to_string(), |_old, new| new.clone());
 
     table1.union(&table2, |v1, _v2| v1.clone());
-    
+
     assert_eq!(table1.size(), 3);
     assert_eq!(table1.lookup(&1), Some("one".to_string()));
     assert_eq!(table1.lookup(&2), Some("two".to_string()));
@@ -465,7 +465,7 @@ fn test_ordered_table_mt_eph_union_empty() {
 
     let table2 = OrderedTableMtEph::<i32, String>::empty();
     table1.union(&table2, |v1, _v2| v1.clone());
-    
+
     assert_eq!(table1.size(), 1);
     assert_eq!(table1.lookup(&1), Some("one".to_string()));
 }
@@ -482,7 +482,7 @@ fn test_ordered_table_mt_eph_difference() {
     table2.insert(4, "FOUR".to_string(), |_old, new| new.clone());
 
     table1.difference(&table2);
-    
+
     assert_eq!(table1.size(), 2);
     assert_eq!(table1.lookup(&1), Some("one".to_string()));
     assert_eq!(table1.lookup(&2), None);
@@ -496,7 +496,7 @@ fn test_ordered_table_mt_eph_difference_empty() {
 
     let table2 = OrderedTableMtEph::<i32, String>::empty();
     table1.difference(&table2);
-    
+
     assert_eq!(table1.size(), 1);
     assert_eq!(table1.lookup(&1), Some("one".to_string()));
 }
@@ -504,7 +504,7 @@ fn test_ordered_table_mt_eph_difference_empty() {
 #[test]
 fn test_ordered_table_mt_eph_restrict() {
     use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
-    
+
     let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(2, "two".to_string(), |_old, new| new.clone());
@@ -516,7 +516,7 @@ fn test_ordered_table_mt_eph_restrict() {
     keys.insert(4);
 
     table.restrict(&keys);
-    
+
     assert_eq!(table.size(), 2);
     assert_eq!(table.lookup(&1), None);
     assert_eq!(table.lookup(&2), Some("two".to_string()));
@@ -527,14 +527,14 @@ fn test_ordered_table_mt_eph_restrict() {
 #[test]
 fn test_ordered_table_mt_eph_restrict_empty_keys() {
     use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
-    
+
     let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(2, "two".to_string(), |_old, new| new.clone());
 
     let keys = ArraySetStEph::<i32>::empty();
     table.restrict(&keys);
-    
+
     assert_eq!(table.size(), 0);
     assert!(table.is_empty());
 }
@@ -542,7 +542,7 @@ fn test_ordered_table_mt_eph_restrict_empty_keys() {
 #[test]
 fn test_ordered_table_mt_eph_subtract() {
     use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
-    
+
     let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(2, "two".to_string(), |_old, new| new.clone());
@@ -554,7 +554,7 @@ fn test_ordered_table_mt_eph_subtract() {
     keys.insert(4);
 
     table.subtract(&keys);
-    
+
     assert_eq!(table.size(), 2);
     assert_eq!(table.lookup(&1), Some("one".to_string()));
     assert_eq!(table.lookup(&2), None);
@@ -565,14 +565,14 @@ fn test_ordered_table_mt_eph_subtract() {
 #[test]
 fn test_ordered_table_mt_eph_subtract_empty_keys() {
     use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
-    
+
     let mut table = OrderedTableMtEph::empty();
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(2, "two".to_string(), |_old, new| new.clone());
 
     let keys = ArraySetStEph::<i32>::empty();
     table.subtract(&keys);
-    
+
     assert_eq!(table.size(), 2);
     assert_eq!(table.lookup(&1), Some("one".to_string()));
     assert_eq!(table.lookup(&2), Some("two".to_string()));
@@ -585,7 +585,7 @@ fn test_ordered_table_mt_eph_clone() {
     table1.insert(2, "two".to_string(), |_old, new| new.clone());
 
     let table2 = table1.clone();
-    
+
     assert_eq!(table2.size(), 2);
     assert_eq!(table2.lookup(&1), Some("one".to_string()));
     assert_eq!(table2.lookup(&2), Some("two".to_string()));

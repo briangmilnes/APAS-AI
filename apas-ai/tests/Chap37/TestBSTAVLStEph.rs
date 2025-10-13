@@ -8,7 +8,7 @@ fn test_bstavlstephlit_macro_functionality() {
     // Test empty tree creation
     let empty: BSTAVLStEph<i32> = BSTAVLStEphLit![];
     assert_eq!(empty.size(), 0);
-    
+
     // Test tree creation with elements
     let with_data: BSTAVLStEph<i32> = BSTAVLStEphLit![5, 3, 7, 1, 9];
     assert_eq!(with_data.size(), 5);

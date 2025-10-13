@@ -1,6 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 /// Exercise 21.7 (Comprehension with Conditionals): even elements of a paired with vowels of b.
-
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap21::Exercise21_7::Exercise21_7::*;
 use apas_ai::Types::Types::*;

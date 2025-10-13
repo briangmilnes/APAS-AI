@@ -1,5 +1,5 @@
-use apas_ai::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
 use apas_ai::Chap47clean::ChainedHashTable::ChainedHashTable::*;
+use apas_ai::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
 use apas_ai::Chap47clean::StructChainedHashTable::StructChainedHashTable::*;
 use apas_ai::Types::Types::*;
 
@@ -57,30 +57,37 @@ fn test_chainlist_delete_not_found() {
 #[test]
 fn test_struct_chained_insert_lookup() {
     let hash_fn: HashFun<i32> = Box::new(|k| (*k as N) % 10);
-    let mut table: StructChainTable = 
-        <StructChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, ChainList<i32, String>, ()>>::createTable(hash_fn, 10);
-    
+    let mut table: StructChainTable =
+        <StructChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, ChainList<i32, String>, ()>>::createTable(
+            hash_fn, 10,
+        );
+
     for _ in 0..10 {
         table.table.push(ChainList::new());
     }
-    
+
     StructChainedHashTableStEph::insert(&mut table, 1, "one".to_string());
     StructChainedHashTableStEph::insert(&mut table, 11, "eleven".to_string());
-    
+
     assert_eq!(StructChainedHashTableStEph::lookup(&table, &1), Some("one".to_string()));
-    assert_eq!(StructChainedHashTableStEph::lookup(&table, &11), Some("eleven".to_string()));
+    assert_eq!(
+        StructChainedHashTableStEph::lookup(&table, &11),
+        Some("eleven".to_string())
+    );
 }
 
 #[test]
 fn test_struct_chained_delete() {
     let hash_fn: HashFun<i32> = Box::new(|k| (*k as N) % 10);
-    let mut table: StructChainTable = 
-        <StructChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, ChainList<i32, String>, ()>>::createTable(hash_fn, 10);
-    
+    let mut table: StructChainTable =
+        <StructChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, ChainList<i32, String>, ()>>::createTable(
+            hash_fn, 10,
+        );
+
     for _ in 0..10 {
         table.table.push(ChainList::new());
     }
-    
+
     StructChainedHashTableStEph::insert(&mut table, 1, "one".to_string());
     assert!(StructChainedHashTableStEph::delete(&mut table, &1));
     assert_eq!(StructChainedHashTableStEph::lookup(&table, &1), None);

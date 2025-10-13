@@ -1,10 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chapter 45: UnsortedListPQ Priority Queue implementation
 
-use apas_ai::Chap45::UnsortedListPQ::UnsortedListPQ::*;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+use apas_ai::Chap45::UnsortedListPQ::UnsortedListPQ::*;
 use apas_ai::Types::Types::*;
-use apas_ai::{UnsortedListPQLit};
+use apas_ai::UnsortedListPQLit;
 
 #[test]
 fn test_unsortedlistpqlit_macro_functionality() {
@@ -12,7 +12,7 @@ fn test_unsortedlistpqlit_macro_functionality() {
     let empty: UnsortedListPQ<i32> = UnsortedListPQLit![];
     assert_eq!(empty.size(), 0);
     assert!(empty.is_empty());
-    
+
     // Test priority queue creation with elements
     let with_data: UnsortedListPQ<i32> = UnsortedListPQLit![3, 1, 4, 1, 5];
     assert_eq!(with_data.size(), 5);
@@ -384,10 +384,18 @@ fn test_to_seq() {
     let mut found = vec![false; 4];
     for i in 0..seq.length() {
         let val = *seq.nth(i);
-        if val == 5 { found[0] = true; }
-        if val == 3 { found[1] = true; }
-        if val == 8 { found[2] = true; }
-        if val == 1 { found[3] = true; }
+        if val == 5 {
+            found[0] = true;
+        }
+        if val == 3 {
+            found[1] = true;
+        }
+        if val == 8 {
+            found[2] = true;
+        }
+        if val == 1 {
+            found[3] = true;
+        }
     }
     assert!(found.iter().all(|&x| x));
 }

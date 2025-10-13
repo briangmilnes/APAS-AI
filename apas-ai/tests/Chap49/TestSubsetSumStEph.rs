@@ -22,7 +22,7 @@ fn test_subset_sum_exists() {
     let multiset = ArraySeqStEphS::from_vec(vec![3, 5, 7]);
     let mut ss = SubsetSumStEphS::from_multiset(multiset);
 
-    assert!(ss.subset_sum(8));  // 3 + 5 = 8
+    assert!(ss.subset_sum(8)); // 3 + 5 = 8
     assert!(ss.subset_sum(10)); // 3 + 7 = 10
     assert!(ss.subset_sum(12)); // 5 + 7 = 12
 }

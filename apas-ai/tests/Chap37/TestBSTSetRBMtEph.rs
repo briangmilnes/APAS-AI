@@ -2,9 +2,9 @@
 //! Tests for BSTSetRBMtEph.
 
 use apas_ai::BSTSetRBMtEphLit;
-use apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::*;
-use apas_ai::Chap37::BSTRBMtEph::BSTRBMtEph::BSTRBMtEphTrait;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+use apas_ai::Chap37::BSTRBMtEph::BSTRBMtEph::BSTRBMtEphTrait;
+use apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::*;
 use apas_ai::Types::Types::*;
 
 #[test]
@@ -321,7 +321,10 @@ fn test_trait_impl_contains() {
 fn test_trait_impl_find() {
     let mut set = BSTSetRBMtEph::empty();
     set.insert(20);
-    assert_eq!(<BSTSetRBMtEph<i32> as BSTSetRBMtEphTrait<i32>>::find(&set, &20), Some(20));
+    assert_eq!(
+        <BSTSetRBMtEph<i32> as BSTSetRBMtEphTrait<i32>>::find(&set, &20),
+        Some(20)
+    );
 }
 
 #[test]

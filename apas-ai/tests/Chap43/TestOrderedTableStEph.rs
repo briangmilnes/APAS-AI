@@ -355,7 +355,7 @@ fn test_ordered_table_st_eph_tabulate() {
     keys.insert(3);
 
     let table = OrderedTableStEph::tabulate(|k| format!("value_{}", k), &keys);
-    
+
     assert_eq!(table.size(), 3);
     assert_eq!(table.lookup(&1), Some("value_1".to_string()));
     assert_eq!(table.lookup(&2), Some("value_2".to_string()));
@@ -366,7 +366,7 @@ fn test_ordered_table_st_eph_tabulate() {
 fn test_ordered_table_st_eph_tabulate_empty() {
     let keys = ArraySetStEph::<i32>::empty();
     let table = OrderedTableStEph::tabulate(|k| format!("value_{}", k), &keys);
-    
+
     assert_eq!(table.size(), 0);
     assert!(table.is_empty());
 }
@@ -384,7 +384,7 @@ fn test_ordered_table_st_eph_intersection() {
     table2.insert(4, "FOUR".to_string(), |_old, new| new.clone());
 
     table1.intersection(&table2, |v1, _v2| v1.clone());
-    
+
     assert_eq!(table1.size(), 2);
     assert_eq!(table1.lookup(&1), None);
     assert_eq!(table1.lookup(&2), Some("two".to_string()));
@@ -403,7 +403,7 @@ fn test_ordered_table_st_eph_intersection_disjoint() {
     table2.insert(4, "four".to_string(), |_old, new| new.clone());
 
     table1.intersection(&table2, |v1, _v2| v1.clone());
-    
+
     assert_eq!(table1.size(), 0);
     assert!(table1.is_empty());
 }
@@ -419,7 +419,7 @@ fn test_ordered_table_st_eph_union() {
     table2.insert(3, "three".to_string(), |_old, new| new.clone());
 
     table1.union(&table2, |v1, _v2| v1.clone());
-    
+
     assert_eq!(table1.size(), 3);
     assert_eq!(table1.lookup(&1), Some("one".to_string()));
     assert_eq!(table1.lookup(&2), Some("two".to_string()));
@@ -433,7 +433,7 @@ fn test_ordered_table_st_eph_union_empty() {
 
     let table2 = OrderedTableStEph::<i32, String>::empty();
     table1.union(&table2, |v1, _v2| v1.clone());
-    
+
     assert_eq!(table1.size(), 1);
     assert_eq!(table1.lookup(&1), Some("one".to_string()));
 }
@@ -450,7 +450,7 @@ fn test_ordered_table_st_eph_difference() {
     table2.insert(4, "FOUR".to_string(), |_old, new| new.clone());
 
     table1.difference(&table2);
-    
+
     assert_eq!(table1.size(), 2);
     assert_eq!(table1.lookup(&1), Some("one".to_string()));
     assert_eq!(table1.lookup(&2), None);
@@ -464,7 +464,7 @@ fn test_ordered_table_st_eph_difference_empty() {
 
     let table2 = OrderedTableStEph::<i32, String>::empty();
     table1.difference(&table2);
-    
+
     assert_eq!(table1.size(), 1);
     assert_eq!(table1.lookup(&1), Some("one".to_string()));
 }
@@ -482,7 +482,7 @@ fn test_ordered_table_st_eph_restrict() {
     keys.insert(4);
 
     table.restrict(&keys);
-    
+
     assert_eq!(table.size(), 2);
     assert_eq!(table.lookup(&1), None);
     assert_eq!(table.lookup(&2), Some("two".to_string()));
@@ -498,7 +498,7 @@ fn test_ordered_table_st_eph_restrict_empty_keys() {
 
     let keys = ArraySetStEph::<i32>::empty();
     table.restrict(&keys);
-    
+
     assert_eq!(table.size(), 0);
     assert!(table.is_empty());
 }
@@ -516,7 +516,7 @@ fn test_ordered_table_st_eph_subtract() {
     keys.insert(4);
 
     table.subtract(&keys);
-    
+
     assert_eq!(table.size(), 2);
     assert_eq!(table.lookup(&1), Some("one".to_string()));
     assert_eq!(table.lookup(&2), None);
@@ -532,7 +532,7 @@ fn test_ordered_table_st_eph_subtract_empty_keys() {
 
     let keys = ArraySetStEph::<i32>::empty();
     table.subtract(&keys);
-    
+
     assert_eq!(table.size(), 2);
     assert_eq!(table.lookup(&1), Some("one".to_string()));
     assert_eq!(table.lookup(&2), Some("two".to_string()));
@@ -545,7 +545,7 @@ fn test_ordered_table_st_eph_clone() {
     table1.insert(2, "two".to_string(), |_old, new| new.clone());
 
     let table2 = table1.clone();
-    
+
     assert_eq!(table2.size(), 2);
     assert_eq!(table2.lookup(&1), Some("one".to_string()));
     assert_eq!(table2.lookup(&2), Some("two".to_string()));
@@ -601,4 +601,3 @@ fn test_delete_nonexistent() {
     table.delete(&2);
     assert_eq!(table.size(), 2);
 }
-

@@ -1,15 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 /// Problem 21.4 (Cartesian Product) tests.
-
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap21::Problem21_4::Problem21_4::*;
 use apas_ai::Types::Types::*;
 use apas_ai::{ArraySeqStPerSLit, PairLit};
 
-fn cartesian_loops(
-    a: &ArraySeqStPerS<N>,
-    b: &ArraySeqStPerS<&'static str>,
-) -> ArraySeqStPerS<Pair<N, &'static str>> {
+fn cartesian_loops(a: &ArraySeqStPerS<N>, b: &ArraySeqStPerS<&'static str>) -> ArraySeqStPerS<Pair<N, &'static str>> {
     let mut v: Vec<Pair<N, &'static str>> = Vec::with_capacity(a.length() * b.length());
     for i in 0..a.length() {
         for j in 0..b.length() {
@@ -92,4 +88,3 @@ fn test_cartesian_debug_shape() {
     let dbg_str = format!("{:?}", s);
     assert!(!dbg_str.is_empty());
 }
-

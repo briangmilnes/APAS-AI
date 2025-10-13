@@ -122,4 +122,3 @@ fn test_bsttreapmtephlit_macro_negative_numbers() {
     assert!(tree.contains(&0));
     assert!(tree.contains(&5));
 }
-

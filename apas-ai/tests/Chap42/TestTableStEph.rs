@@ -12,7 +12,7 @@ fn test_tablestephlit_macro_functionality() {
     let empty: TableStEph<i32, String> = TableStEphLit![];
     assert_eq!(empty.size(), 0);
     assert_eq!(empty.find(&42), None);
-    
+
     // Test table creation with key-value pairs
     let with_data: TableStEph<i32, String> = TableStEphLit![
         1 => "one".to_string(),

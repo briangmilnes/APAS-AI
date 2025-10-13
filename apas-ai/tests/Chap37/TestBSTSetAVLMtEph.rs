@@ -2,9 +2,9 @@
 //! Tests for BSTSetAVLMtEph.
 
 use apas_ai::BSTSetAVLMtEphLit;
-use apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::*;
-use apas_ai::Chap37::BSTAVLMtEph::BSTAVLMtEph::BSTAVLMtEphTrait;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+use apas_ai::Chap37::BSTAVLMtEph::BSTAVLMtEph::BSTAVLMtEphTrait;
+use apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::*;
 use apas_ai::Types::Types::*;
 
 #[test]
@@ -321,7 +321,10 @@ fn test_trait_impl_contains() {
 fn test_trait_impl_find() {
     let mut set = BSTSetAVLMtEph::empty();
     set.insert(20);
-    assert_eq!(<BSTSetAVLMtEph<i32> as BSTSetAVLMtEphTrait<i32>>::find(&set, &20), Some(20));
+    assert_eq!(
+        <BSTSetAVLMtEph<i32> as BSTSetAVLMtEphTrait<i32>>::find(&set, &20),
+        Some(20)
+    );
 }
 
 #[test]
@@ -330,7 +333,10 @@ fn test_trait_impl_minimum() {
     set.insert(5);
     set.insert(3);
     set.insert(7);
-    assert_eq!(<BSTSetAVLMtEph<i32> as BSTSetAVLMtEphTrait<i32>>::minimum(&set), Some(3));
+    assert_eq!(
+        <BSTSetAVLMtEph<i32> as BSTSetAVLMtEphTrait<i32>>::minimum(&set),
+        Some(3)
+    );
 }
 
 #[test]
@@ -339,7 +345,10 @@ fn test_trait_impl_maximum() {
     set.insert(5);
     set.insert(3);
     set.insert(7);
-    assert_eq!(<BSTSetAVLMtEph<i32> as BSTSetAVLMtEphTrait<i32>>::maximum(&set), Some(7));
+    assert_eq!(
+        <BSTSetAVLMtEph<i32> as BSTSetAVLMtEphTrait<i32>>::maximum(&set),
+        Some(7)
+    );
 }
 
 #[test]

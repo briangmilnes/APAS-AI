@@ -2,9 +2,9 @@
 //! Tests for BSTSetPlainMtEph.
 
 use apas_ai::BSTSetPlainMtEphLit;
-use apas_ai::Chap37::BSTSetPlainMtEph::BSTSetPlainMtEph::*;
-use apas_ai::Chap37::BSTPlainMtEph::BSTPlainMtEph::BSTPlainMtEphTrait;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+use apas_ai::Chap37::BSTPlainMtEph::BSTPlainMtEph::BSTPlainMtEphTrait;
+use apas_ai::Chap37::BSTSetPlainMtEph::BSTSetPlainMtEph::*;
 use apas_ai::Types::Types::*;
 
 #[test]
@@ -12,7 +12,7 @@ fn test_bstsetplainmtephlit_macro_functionality() {
     // Test empty tree creation
     let empty: BSTSetPlainMtEph<i32> = BSTSetPlainMtEphLit![];
     assert_eq!(empty.size(), 0);
-    
+
     // Test tree creation with elements
     let with_data: BSTSetPlainMtEph<i32> = BSTSetPlainMtEphLit![5, 3, 7, 1, 9];
     assert_eq!(with_data.size(), 5);
@@ -379,14 +379,19 @@ fn test_trait_impl_singleton() {
 fn test_trait_impl_contains() {
     let mut set = BSTSetPlainMtEph::empty();
     set.insert(10);
-    assert!(<BSTSetPlainMtEph<i32> as BSTSetPlainMtEphTrait<i32>>::contains(&set, &10));
+    assert!(<BSTSetPlainMtEph<i32> as BSTSetPlainMtEphTrait<i32>>::contains(
+        &set, &10
+    ));
 }
 
 #[test]
 fn test_trait_impl_find() {
     let mut set = BSTSetPlainMtEph::empty();
     set.insert(20);
-    assert_eq!(<BSTSetPlainMtEph<i32> as BSTSetPlainMtEphTrait<i32>>::find(&set, &20), Some(20));
+    assert_eq!(
+        <BSTSetPlainMtEph<i32> as BSTSetPlainMtEphTrait<i32>>::find(&set, &20),
+        Some(20)
+    );
 }
 
 #[test]
@@ -395,7 +400,10 @@ fn test_trait_impl_minimum() {
     set.insert(5);
     set.insert(3);
     set.insert(7);
-    assert_eq!(<BSTSetPlainMtEph<i32> as BSTSetPlainMtEphTrait<i32>>::minimum(&set), Some(3));
+    assert_eq!(
+        <BSTSetPlainMtEph<i32> as BSTSetPlainMtEphTrait<i32>>::minimum(&set),
+        Some(3)
+    );
 }
 
 #[test]
@@ -404,7 +412,10 @@ fn test_trait_impl_maximum() {
     set.insert(5);
     set.insert(3);
     set.insert(7);
-    assert_eq!(<BSTSetPlainMtEph<i32> as BSTSetPlainMtEphTrait<i32>>::maximum(&set), Some(7));
+    assert_eq!(
+        <BSTSetPlainMtEph<i32> as BSTSetPlainMtEphTrait<i32>>::maximum(&set),
+        Some(7)
+    );
 }
 
 #[test]
@@ -539,4 +550,3 @@ fn test_trait_impl_as_tree() {
     let tree = <BSTSetPlainMtEph<i32> as BSTSetPlainMtEphTrait<i32>>::as_tree(&set);
     assert_eq!(tree.size(), 1);
 }
-

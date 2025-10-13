@@ -1,10 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for AVLTreeSetStPer
 
+use apas_ai::AVLTreeSetStPerLit;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::*;
-use apas_ai::AVLTreeSetStPerLit;
 
 #[test]
 fn test_avltreesetstperlit_macro_functionality() {
@@ -12,7 +12,7 @@ fn test_avltreesetstperlit_macro_functionality() {
     let empty: AVLTreeSetStPer<i32> = AVLTreeSetStPerLit![];
     assert_eq!(empty.size(), 0);
     assert!(!empty.find(&42));
-    
+
     // Test set creation with elements
     let with_data: AVLTreeSetStPer<i32> = AVLTreeSetStPerLit![1, 2, 3];
     assert_eq!(with_data.size(), 3);
