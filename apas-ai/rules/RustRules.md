@@ -74,15 +74,17 @@ Result guidance
 
 #### Specialized import rules
 - Inside `src/` (library code):
-  - Use `crate::…` for all intra-crate paths.
-  - Prefer wildcard imports for your own modules: `use crate::Mod1::Mod1::*;`.
-  - Macros exported at crate root: import with `use crate::FooSeqLit;` (or call as `crate::FooSeqLit![…]`).
+  - **MUST** use `crate::…` for all intra-crate paths
+  - **NEVER** use `apas_ai::` in library code
+  - Prefer wildcard imports for your own modules: `use crate::Mod1::Mod1::*;`
+  - Macros exported at crate root: import with `use crate::FooSeqLit;` (or call as `crate::FooSeqLit![…]`)
 - Outside the crate (`tests/`, `benches/`, `examples/`, dependents):
-  - Use the crate identifier derived from `[package] name` with hyphens replaced by underscores. Example: package `apas-ai` → `apas_ai` in code.
-  - Prefer wildcard imports: `use apas_ai::Mod1::Mod1::*;`.
-  - Macros: `use apas_ai::FooSeqLit;` then `FooSeqLit![…]`.
+  - **MUST** use the crate identifier `apas_ai::` (from package name `apas-ai`)
+  - **NEVER** use `crate::` in integration tests or benchmarks
+  - Prefer wildcard imports: `use apas_ai::Mod1::Mod1::*;`
+  - Macros: `use apas_ai::FooSeqLit;` then `FooSeqLit![…]`
 - Unit tests inside `src/` modules (`#[cfg(test)] mod tests`):
-  - Treat as inside-crate: `use crate::…` and `use crate::FooSeqLit;`.
+  - Treat as inside-crate: `use crate::…` and `use crate::FooSeqLit;`
 - Never use `extern crate`. Do not add re-exports.
 
 #### Module import style for this project
