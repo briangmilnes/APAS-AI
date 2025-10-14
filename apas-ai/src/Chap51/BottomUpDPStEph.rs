@@ -95,7 +95,7 @@ pub mod BottomUpDPStEph {
         /// Compute value for a single DP table cell
         /// Claude Work: O(1) - constant time per cell
         /// Claude Span: O(1) - constant time per cell
-        fn compute_cell_value(&self, table: &Vec<Vec<usize>>, i: usize, j: usize) -> usize {
+        fn compute_cell_value(&self, table: &[Vec<usize>], i: usize, j: usize) -> usize {
             let s_char = *self.seq_s.nth(i - 1);
             let t_char = *self.seq_t.nth(j - 1);
 
