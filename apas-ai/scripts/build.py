@@ -13,9 +13,9 @@ def main():
     print("Building project with cargo build...")
     print("=" * 60)
     
-    # Run cargo build
+    # Run cargo build with -j 10 to keep computer responsive
     result = subprocess.run(
-        ["cargo", "build"],
+        ["cargo", "build", "-j", "10"],
         cwd=project_root
     )
     
