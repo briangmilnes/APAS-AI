@@ -12,10 +12,10 @@
 | review_camelcase.py | Lines 303-306 | 0 | ✅ PASS |
 | review_variable_naming.py | Lines 22-26 | 0 | ✅ PASS |
 | review_module_encapsulation.py | Lines 117-123 | 0 | ✅ PASS |
-| review_where_clause_simplification.py | Lines 322-329 | 0 | ✅ PASS |
+| review_where_clause_simplification.py | Lines 322-329 | 50 | ❌ FAIL |
 | review_integration_test_structure.py | Lines 292-298 | 51 | ❌ FAIL |
 
-**Total Violations: 231**
+**Total Violations: 281**
 
 ## Violation Details
 
@@ -53,6 +53,21 @@
 
 ---
 
+### 4. Where Clause Simplification (50 violations)
+**Rule**: Inline simple single-bound where clauses into generic parameters
+
+**Pattern**: Functions with `where T: SingleTrait` that could be `<T: SingleTrait>`
+
+**Examples:**
+- `fn filter<F>(...) where F: FnMut(&T) -> bool` → `fn filter<F: FnMut(&T) -> bool>(...)`
+- `fn from_sorted_iter<I>(...) where I: IntoIterator<Item = T>` → `fn from_sorted_iter<I: IntoIterator<Item = T>>(...)`
+
+**Files**: 50 functions across multiple chapters (Chap37, Chap39, Chap45, Chap53, etc.)
+
+**Fix Needed**: Inline simple bounds from where clause to generic parameter list
+
+---
+
 ## Passing Reviews
 
 ### ✅ No extern crate
@@ -67,9 +82,6 @@ No temp_ or rock band variable names.
 ### ✅ Module Encapsulation
 All code properly inside `pub mod` blocks (except lib.rs/main.rs).
 
-### ✅ Where Clause Simplification
-No obvious simple where clauses that should be inlined.
-
 ---
 
 ## Next Steps
@@ -77,7 +89,8 @@ No obvious simple where clauses that should be inlined.
 User requested: **Don't fix anything yet** - just identify violations.
 
 When ready to fix:
-1. Import order (automated fix possible)
-2. Integration test structure (automated fix possible)
-3. UFCS call sites (requires case-by-case review)
+1. Import order (168) - automated fix possible
+2. Integration test structure (51) - automated fix possible
+3. Where clause simplification (50) - automated fix possible
+4. UFCS call sites (12) - requires case-by-case review
 

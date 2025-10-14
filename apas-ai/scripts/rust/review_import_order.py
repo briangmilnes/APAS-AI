@@ -7,24 +7,27 @@ then all use std::… lines, then a blank line, then use statements from externa
 then another blank line followed by use crate::Types::Types::*; if needed and the rest
 of the internal crate::… imports."
 
-Checks src/, tests/, and benches/ for proper import ordering:
-1. std imports
-2. blank line
-3. external crate imports
-4. blank line
-5. internal crate imports
+RustRules.md Lines 75-86: "Inside src/ use crate::, outside src/ (tests/benches) use apas_ai::"
 
-Note: This is a simplified checker - full validation would require AST parsing.
+Checks:
+1. Import ordering: std → external → internal (crate:: or apas_ai::)
+2. Blank lines between sections
+3. crate:: in src/ vs apas_ai:: in tests/benches/
 """
 
 import sys
 from pathlib import Path
 
 
-def check_file_imports(file_path):
+def check_file_imports(file_path, repo_root):
     """Check if imports follow the correct order."""
     with open(file_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
+    
+    # Determine if file is in src/, tests/, or benches/
+    relative_path = file_path.relative_to(repo_root)
+    in_src = relative_path.parts[0] == 'src'
+    in_tests_benches = relative_path.parts[0] in ('tests', 'benches')
     
     # Find first use statement
     first_use_idx = None
@@ -39,37 +42,69 @@ def check_file_imports(file_path):
     
     violations = []
     
-    # Collect imports and check order
-    std_imports = []
-    external_imports = []
-    crate_imports = []
-    current_section = None
+    # Track import sections
+    std_section = []
+    external_section = []
+    internal_section = []
     
-    for idx in range(first_use_idx, len(lines)):
-        line = lines[idx]
+    # Parse imports
+    i = first_use_idx
+    current_section = None
+    blank_after_std = False
+    blank_after_external = False
+    
+    while i < len(lines):
+        line = lines[i]
         stripped = line.strip()
         
-        # Stop at first non-import, non-blank, non-comment line after imports start
+        # Stop at first non-import, non-blank, non-comment line
         if not stripped.startswith('use ') and stripped and not stripped.startswith('//'):
             break
         
         if stripped.startswith('use std::') or stripped.startswith('use core::') or stripped.startswith('use alloc::'):
-            if current_section not in [None, 'std']:
-                violations.append((idx + 1, "std import after external/crate imports", line.strip()))
-            std_imports.append((idx + 1, line))
-            current_section = 'std'
-        elif stripped.startswith('use crate::'):
             if current_section == 'external':
-                # This is ok - external then crate
-                pass
-            crate_imports.append((idx + 1, line))
-            current_section = 'crate'
+                violations.append((i + 1, "std import after external imports", line.strip()))
+            elif current_section == 'internal':
+                violations.append((i + 1, "std import after internal imports", line.strip()))
+            std_section.append((i + 1, line))
+            current_section = 'std'
+            
+        elif stripped.startswith('use crate::') or stripped.startswith('use apas_ai::'):
+            # Check crate:: vs apas_ai::
+            if in_src and stripped.startswith('use apas_ai::'):
+                violations.append((i + 1, "use apas_ai:: in src/ (should be crate::)", line.strip()))
+            elif in_tests_benches and stripped.startswith('use crate::'):
+                violations.append((i + 1, "use crate:: in tests/benches (should be apas_ai::)", line.strip()))
+            
+            if current_section == 'external' and not blank_after_external:
+                violations.append((i + 1, "missing blank line before internal imports", line.strip()))
+            
+            internal_section.append((i + 1, line))
+            current_section = 'internal'
+            
         elif stripped.startswith('use ') and not stripped.startswith('use self::') and not stripped.startswith('use super::'):
             # External crate import
-            if current_section == 'crate':
-                violations.append((idx + 1, "external import after crate imports", line.strip()))
-            external_imports.append((idx + 1, line))
+            if current_section == 'std' and not blank_after_std:
+                violations.append((i + 1, "missing blank line before external imports", line.strip()))
+            if current_section == 'internal':
+                violations.append((i + 1, "external import after internal imports", line.strip()))
+                
+            external_section.append((i + 1, line))
             current_section = 'external'
+            
+        elif not stripped:  # Blank line
+            if current_section == 'std' and not blank_after_std:
+                blank_after_std = True
+            elif current_section == 'external' and not blank_after_external:
+                blank_after_external = True
+        
+        i += 1
+    
+    # Check for required blank lines
+    if std_section and external_section and not blank_after_std:
+        violations.append((std_section[-1][0], "missing blank line after std imports", ""))
+    if external_section and internal_section and not blank_after_external:
+        violations.append((external_section[-1][0], "missing blank line after external imports", ""))
     
     return violations
 
@@ -90,26 +125,30 @@ def main():
             continue
         
         for rust_file in search_dir.rglob("*.rs"):
-            violations = check_file_imports(rust_file)
+            violations = check_file_imports(rust_file, repo_root)
             if violations:
                 all_violations.append((rust_file, violations))
     
     if all_violations:
-        print("✗ Found import order violations (RustRules.md Line 50):\n")
+        print("✗ Found import order violations (RustRules.md Lines 50, 75-86):\n")
         for file_path, violations in all_violations:
             rel_path = file_path.relative_to(repo_root)
             print(f"  {rel_path}:")
             for line_num, reason, line_content in violations:
                 print(f"    Line {line_num}: {reason}")
-                print(f"      {line_content}")
+                if line_content:
+                    print(f"      {line_content}")
             print()
         
         total = sum(len(v) for _, v in all_violations)
         print(f"Total violations: {total}")
-        print("\nExpected order: std imports → external crate imports → internal crate:: imports")
+        print("\nExpected:")
+        print("  - Order: std imports → [blank] → external imports → [blank] → internal imports")
+        print("  - In src/: use crate::")
+        print("  - In tests/benches/: use apas_ai::")
         return 1
     else:
-        print("✓ Import order looks correct")
+        print("✓ Import order correct: std → external → internal, with blank lines")
         return 0
 
 
