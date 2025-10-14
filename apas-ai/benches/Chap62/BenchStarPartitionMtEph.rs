@@ -40,6 +40,7 @@ fn bench_parallel_star_partition_cycle(c: &mut Criterion) {
     let mut group = c.benchmark_group("parallel_star_partition_cycle");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for &n in &[10, 20, 30] {
         let graph = create_cycle_graph(n);
@@ -54,6 +55,7 @@ fn bench_parallel_star_partition_dense(c: &mut Criterion) {
     let mut group = c.benchmark_group("parallel_star_partition_dense");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for &n in &[10, 15, 20] {
         let graph = create_dense_graph(n);

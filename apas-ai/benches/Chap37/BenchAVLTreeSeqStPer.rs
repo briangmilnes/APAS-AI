@@ -11,6 +11,7 @@ fn bench_build_and_contains(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchAVLTreeSeqPer");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
     let n: N = 1_000;
 
     group.bench_with_input(BenchmarkId::new("build_then_length", n), &n, |b, &_len| {

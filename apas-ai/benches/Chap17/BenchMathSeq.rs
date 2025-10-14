@@ -11,6 +11,7 @@ fn bench_mathseq_basics(c: &mut Criterion) {
     let mut group = c.benchmark_group("MathSeq_ops");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
     let n: N = 10_000;
 
     group.bench_with_input(BenchmarkId::new("new_then_set", n), &n, |b, &len| {

@@ -2,7 +2,6 @@
 
 use apas_ai::AVLTreeSeqStPerLit;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Types::Types::*;
 
 #[test]

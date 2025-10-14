@@ -31,8 +31,8 @@ path = "benches/Chap11/BenchFibonacciMt.rs"
 harness = false
 
 [[bench]]
-name = "BenchArraySeqStEph"
-path = "benches/Chap19/BenchArraySeqStEph.rs"
+name = "BenchArraySeqStEphChap19"
+path = "benches/Chap19/BenchArraySeqStEphChap19.rs"
 harness = false
 
 [[bench]]
@@ -84,30 +84,25 @@ path = "benches/Chap18/BenchArraySeqStEphChap18.rs"
 harness = false
 
 [[bench]]
-name = "BenchArraySeqStPer"
-path = "benches/Chap19/BenchArraySeqStPer.rs"
+name = "BenchArraySeqStPerChap19"
+path = "benches/Chap19/BenchArraySeqStPerChap19.rs"
 harness = false
 
 [[bench]]
-name = "BenchAVLTreeSeqStPerChap19"
-path = "benches/Chap37/BenchAVLTreeSeqStPer19.rs"
+name = "BenchAVLTreeSeqStPerChap37Build"
+path = "benches/Chap37/BenchAVLTreeSeqStPerChap37Build.rs"
 harness = false
 
 [[bench]]
-name = "BenchAVLTreeSeqStPerChap18"
-path = "benches/Chap37/BenchAVLTreeSeqStPer18.rs"
-
+name = "BenchAVLTreeSeqStPerChap37Ops"
+path = "benches/Chap37/BenchAVLTreeSeqStPerChap37Ops.rs"
 harness = false
 
 [[bench]]
-name = "BenchArraySeqMtPer"
-path = "benches/Chap19/BenchArraySeqMtPer.rs"
+name = "BenchArraySeqMtPerChap19"
+path = "benches/Chap19/BenchArraySeqMtPerChap19.rs"
 harness = false
 
-[[bench]]
-name = "BenchArraySeqMtPerChap18"
-path = "benches/Chap19/BenchArraySeqMtPer18.rs"
-harness = false
 
 [[bench]]
 name = "BenchAVLTreeSeqStEph"
@@ -115,13 +110,13 @@ path = "benches/Chap37/BenchAVLTreeSeqStEph.rs"
 harness = false
 
 [[bench]]
-name = "BenchAVLTreeSeqStEphChap18"
-path = "benches/Chap37/BenchAVLTreeSeqStEph18.rs"
+name = "BenchAVLTreeSeqStEphChap37Ops"
+path = "benches/Chap37/BenchAVLTreeSeqStEphChap37Ops.rs"
 harness = false
 
 [[bench]]
-name = "BenchAVLTreeSeqStEphChap19"
-path = "benches/Chap37/BenchAVLTreeSeqStEph19.rs"
+name = "BenchAVLTreeSeqStEphChap37Build"
+path = "benches/Chap37/BenchAVLTreeSeqStEphChap37Build.rs"
 harness = false
 
 [[bench]]
@@ -235,7 +230,7 @@ harness = false
 
 
 [[bench]]
-name = "BenchMappingStEphChap5_5"
+name = "BenchMappingStEph"
 path = "benches/Chap05/BenchMappingStEph.rs"
 harness = false
 
@@ -579,13 +574,13 @@ path = "benches/Chap18/BenchLinkedListStPer.rs"
 harness = false
 
 [[bench]]
-name = "BenchLinkedListStEph19"
-path = "benches/Chap18/BenchLinkedListStEph19.rs"
+name = "BenchLinkedListStEphChap18"
+path = "benches/Chap18/BenchLinkedListStEphChap18.rs"
 harness = false
 
 [[bench]]
-name = "BenchLinkedListStPer19"
-path = "benches/Chap18/BenchLinkedListStPer19.rs"
+name = "BenchLinkedListStPerChap18"
+path = "benches/Chap18/BenchLinkedListStPerChap18.rs"
 harness = false
 
 # Chapter 36 tests
@@ -2084,4 +2079,9 @@ harness = false
 [[bench]]
 name = "BenchVecChainedHashTable"
 path = "benches/Chap47/BenchVecChainedHashTable.rs"
+harness = false
+
+[[bench]]
+name = "BenchArraySeqMtEphChap18"
+path = "benches/Chap18/BenchArraySeqMtEphChap18.rs"
 harness = false

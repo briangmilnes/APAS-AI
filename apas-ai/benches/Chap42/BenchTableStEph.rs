@@ -27,6 +27,7 @@ fn bench_table_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("TableStEph Operations");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
@@ -109,6 +110,7 @@ fn bench_table_bulk_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("TableStEph Bulk Operations");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
@@ -187,6 +189,7 @@ fn bench_table_construction(c: &mut Criterion) {
     let mut group = c.benchmark_group("TableStEph Construction");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
@@ -215,6 +218,7 @@ fn bench_table_ephemeral_semantics(c: &mut Criterion) {
     let mut group = c.benchmark_group("TableStEph Ephemeral Semantics");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 

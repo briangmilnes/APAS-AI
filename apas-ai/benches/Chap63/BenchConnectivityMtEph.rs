@@ -40,6 +40,7 @@ fn bench_count_components_mt_single(c: &mut Criterion) {
     let mut group = c.benchmark_group("count_components_mt_single");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for &n in &[10, 15, 20] {
         let graph = create_cycle_graph(n);
@@ -54,6 +55,7 @@ fn bench_count_components_mt_multiple(c: &mut Criterion) {
     let mut group = c.benchmark_group("count_components_mt_multiple");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for &n_comp in &[3, 5, 8] {
         let graph = create_multi_component_graph(n_comp, 3);
@@ -68,6 +70,7 @@ fn bench_connected_components_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("connected_components_mt");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for &n_comp in &[3, 5, 8] {
         let graph = create_multi_component_graph(n_comp, 3);

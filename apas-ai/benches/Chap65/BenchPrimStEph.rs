@@ -45,6 +45,7 @@ fn bench_prim_mst(c: &mut Criterion) {
     let mut group = c.benchmark_group("Prim_MST");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     // Benchmark: Complete graph (dense)
     group.bench_function("complete_graph_n10", |b| {

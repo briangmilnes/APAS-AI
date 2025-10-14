@@ -11,6 +11,7 @@ fn bench_boruvka_mt_complete(c: &mut Criterion) {
     let mut group = c.benchmark_group("boruvka_mt_complete");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for n in [8, 10, 12] {
         let vertices: Vec<usize> = (0..n).collect();
@@ -46,6 +47,7 @@ fn bench_boruvka_mt_sparse(c: &mut Criterion) {
     let mut group = c.benchmark_group("boruvka_mt_sparse");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for n in [10, 15, 20] {
         let vertices: Vec<usize> = (0..n).collect();
@@ -84,6 +86,7 @@ fn bench_boruvka_mt_path(c: &mut Criterion) {
     let mut group = c.benchmark_group("boruvka_mt_path");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for n in [20, 25, 30] {
         let vertices: Vec<usize> = (0..n).collect();
@@ -115,6 +118,7 @@ fn bench_boruvka_mt_star(c: &mut Criterion) {
     let mut group = c.benchmark_group("boruvka_mt_star");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for n in [20, 30, 40] {
         let vertices: Vec<usize> = (0..n).collect();
@@ -146,6 +150,7 @@ fn bench_mst_weight_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("mst_weight_mt");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let n = 15;
     let vertices: Vec<usize> = (0..n).collect();

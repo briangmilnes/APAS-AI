@@ -9,6 +9,7 @@ fn bench_ordered_set_mt_eph_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetMtEph_insert");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
@@ -31,6 +32,7 @@ fn bench_ordered_set_mt_eph_contains(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetMtEph_contains");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let mut set = <OrderedSetMtEph<i32>>::empty();
@@ -53,6 +55,7 @@ fn bench_ordered_set_mt_eph_delete(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetMtEph_delete");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("delete", size), size, |b, &size| {
@@ -81,6 +84,7 @@ fn bench_ordered_set_mt_eph_parallel_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetMtEph_parallel_operations");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("parallel_filter", size), size, |b, &size| {
@@ -178,6 +182,7 @@ fn bench_ordered_set_mt_eph_first_last(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetMtEph_first_last");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let mut set = <OrderedSetMtEph<i32>>::empty();
@@ -200,6 +205,7 @@ fn bench_ordered_set_mt_eph_previous_next(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetMtEph_previous_next");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let mut set = <OrderedSetMtEph<i32>>::empty();
@@ -230,6 +236,7 @@ fn bench_ordered_set_mt_eph_split_join(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetMtEph_split_join");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("split", size), size, |b, &size| {
@@ -279,6 +286,7 @@ fn bench_ordered_set_mt_eph_get_range(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetMtEph_get_range");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let mut set = <OrderedSetMtEph<i32>>::empty();
@@ -301,6 +309,7 @@ fn bench_ordered_set_mt_eph_rank_select(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetMtEph_rank_select");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let mut set = <OrderedSetMtEph<i32>>::empty();
@@ -331,6 +340,7 @@ fn bench_ordered_set_mt_eph_split_rank(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetMtEph_split_rank");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("split_rank", size), size, |b, &size| {

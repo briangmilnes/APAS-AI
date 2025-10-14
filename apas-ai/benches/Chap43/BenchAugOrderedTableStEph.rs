@@ -13,6 +13,7 @@ fn bench_ephemeral_reduce_val_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_reduce_val");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -49,6 +50,7 @@ fn bench_qadsan_stock_scenario(c: &mut Criterion) {
     let mut group = c.benchmark_group("qadsan_stock_analysis");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
     let mut stock_table = AugOrderedTableStEph::empty(max_reducer, 0);
@@ -93,6 +95,7 @@ fn bench_ephemeral_insert_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_insert_operations");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -127,6 +130,7 @@ fn bench_ephemeral_delete_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_delete_operations");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -160,6 +164,7 @@ fn bench_different_reducers_ephemeral(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_reducer_types");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let size = 1000;
 
@@ -203,6 +208,7 @@ fn bench_ephemeral_mutable_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_mutable_operations");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -279,6 +285,7 @@ fn bench_ephemeral_split_join(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_split_join");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -323,6 +330,7 @@ fn bench_ephemeral_range_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_range_operations");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableStEph::empty(sum_reducer, 0);
@@ -352,6 +360,7 @@ fn bench_ephemeral_macro_construction(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_construction");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -384,6 +393,7 @@ fn bench_ephemeral_update_patterns(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_update_patterns");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 

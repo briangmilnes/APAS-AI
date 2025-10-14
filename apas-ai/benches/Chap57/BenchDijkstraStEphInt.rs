@@ -49,6 +49,7 @@ fn bench_sparse_graphs(c: &mut Criterion) {
     let mut group = c.benchmark_group("Dijkstra Int Sparse");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [10, 20, 30].iter() {
         let graph = create_sparse_graph(*size);
@@ -65,6 +66,7 @@ fn bench_dense_graphs(c: &mut Criterion) {
     let mut group = c.benchmark_group("Dijkstra Int Dense");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [10, 20, 30].iter() {
         let graph = create_dense_graph(*size);

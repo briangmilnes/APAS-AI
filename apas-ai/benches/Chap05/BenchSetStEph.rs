@@ -9,6 +9,7 @@ fn bench_set_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("SetStEph");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let n: N = 500;
 

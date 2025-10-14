@@ -58,6 +58,7 @@ fn bench_johnson_sparse(c: &mut Criterion) {
     let mut group = c.benchmark_group("johnson_st_eph_float_sparse");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [10, 20, 30].iter() {
         let graph = generate_sparse_graph_negative(*size);
@@ -75,6 +76,7 @@ fn bench_johnson_dense(c: &mut Criterion) {
     let mut group = c.benchmark_group("johnson_st_eph_float_dense");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [10, 20, 30].iter() {
         let graph = generate_dense_graph_negative(*size);

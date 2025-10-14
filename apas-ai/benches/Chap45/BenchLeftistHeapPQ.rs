@@ -10,6 +10,7 @@ fn bench_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("LeftistHeapPQ Insert");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [10, 50, 100].iter() {
         let data: Vec<i32> = (0..*size).rev().collect();
@@ -32,6 +33,7 @@ fn bench_delete_min(c: &mut Criterion) {
     let mut group = c.benchmark_group("LeftistHeapPQ DeleteMin");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [10, 50, 100].iter() {
         let data: Vec<i32> = (0..*size).collect();
@@ -56,6 +58,7 @@ fn bench_meld(c: &mut Criterion) {
     let mut group = c.benchmark_group("LeftistHeapPQ Meld");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [10, 50, 100].iter() {
         let data1: Vec<i32> = (0..*size).collect();
@@ -75,6 +78,7 @@ fn bench_find_min(c: &mut Criterion) {
     let mut group = c.benchmark_group("LeftistHeapPQ FindMin");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500].iter() {
         let data: Vec<i32> = (0..*size).collect();
@@ -92,6 +96,7 @@ fn bench_construction(c: &mut Criterion) {
     let mut group = c.benchmark_group("LeftistHeapPQ Construction");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [50, 100].iter() {
         let data: Vec<i32> = (0..*size).collect();

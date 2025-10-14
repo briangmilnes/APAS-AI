@@ -17,8 +17,8 @@ fn bench_merge_sort_mt(c: &mut Criterion) {
         b.iter(|| ArraySeqMtPerS::merge_sort_parallel(black_box(&seq)))
     });
 
-    group.bench_function("sort_parallel_1000", |b| {
-        let seq = ArraySeqMtPerS::tabulate(&|i| 1000 - i, 1000);
+    group.bench_function("sort_parallel_350", |b| {
+        let seq = ArraySeqMtPerS::tabulate(&|i| 350 - i, 350);
         b.iter(|| ArraySeqMtPerS::merge_sort_parallel(black_box(&seq)))
     });
 

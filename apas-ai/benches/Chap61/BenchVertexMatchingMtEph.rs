@@ -42,6 +42,7 @@ fn bench_parallel_matching_mt_cycle(c: &mut Criterion) {
     let mut group = c.benchmark_group("parallel_matching_mt_cycle");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for n in [100, 200, 300] {
         let graph = create_cycle_graph(n);
@@ -57,6 +58,7 @@ fn bench_parallel_matching_mt_star(c: &mut Criterion) {
     let mut group = c.benchmark_group("parallel_matching_mt_star");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for n in [50, 100, 150] {
         let graph = create_star_graph(n);

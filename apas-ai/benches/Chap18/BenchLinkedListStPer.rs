@@ -11,6 +11,7 @@ fn bench_sll_persistent_ops(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchLinkedListPer");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
     let n: N = 1_000; // reduce N to ensure ≤10s total
 
     group.bench_with_input(BenchmarkId::new("new_then_updates", n), &n, |b, &len| {

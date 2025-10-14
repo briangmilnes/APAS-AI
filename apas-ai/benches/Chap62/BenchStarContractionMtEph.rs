@@ -24,6 +24,7 @@ fn bench_contract_to_vertices_mt_cycle(c: &mut Criterion) {
     let mut group = c.benchmark_group("contract_to_vertices_mt_cycle");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for &n in &[8, 12, 16] {
         let graph = create_cycle_graph(n);

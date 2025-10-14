@@ -24,6 +24,7 @@ fn bench_spanning_tree_cycle(c: &mut Criterion) {
     let mut group = c.benchmark_group("spanning_tree_cycle");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for &n in &[8, 12, 16] {
         let graph = create_cycle_graph(n);

@@ -10,6 +10,7 @@ fn bench_relation_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("RelationStEph");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let n: N = 500;
 

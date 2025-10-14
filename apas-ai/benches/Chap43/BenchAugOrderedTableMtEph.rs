@@ -14,6 +14,7 @@ fn bench_multithreaded_reduce_val_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_reduce_val");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -46,6 +47,7 @@ fn bench_concurrent_access_patterns(c: &mut Criterion) {
     let mut group = c.benchmark_group("concurrent_access");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableMtEph::empty(sum_reducer, 0);
@@ -96,6 +98,7 @@ fn bench_qadsan_multithreaded_scenario(c: &mut Criterion) {
     let mut group = c.benchmark_group("qadsan_multithreaded_stock");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
 
@@ -168,6 +171,7 @@ fn bench_multithreaded_insert_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_insert");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -220,6 +224,7 @@ fn bench_parallel_vs_sequential_range_reduction(c: &mut Criterion) {
     let mut group = c.benchmark_group("parallel_vs_sequential_range");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableMtEph::empty(sum_reducer, 0);
@@ -258,6 +263,7 @@ fn bench_different_reducers_multithreaded(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_reducer_types");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let size = 1000;
 
@@ -301,6 +307,7 @@ fn bench_multithreaded_mutable_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_mutable_operations");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -355,6 +362,7 @@ fn bench_multithreaded_split_join(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_split_join");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -399,6 +407,7 @@ fn bench_multithreaded_macro_construction(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_construction");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -431,6 +440,7 @@ fn bench_thread_safety_overhead(c: &mut Criterion) {
     let mut group = c.benchmark_group("thread_safety_overhead");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 

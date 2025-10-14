@@ -21,6 +21,7 @@ fn bench_matrix_chain_st_eph_optimal_cost(c: &mut Criterion) {
     let mut group = c.benchmark_group("MatrixChainStEph_optimal_cost");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [5, 10, 15, 20].iter() {
         let dimensions = create_random_dimensions_eph(*size);

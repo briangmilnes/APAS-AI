@@ -11,6 +11,7 @@ fn bench_ordered_table_st_eph_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_insert");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
@@ -33,6 +34,7 @@ fn bench_ordered_table_st_eph_lookup(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_lookup");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let mut table = <OrderedTableStEph<i32, String>>::empty();
@@ -55,6 +57,7 @@ fn bench_ordered_table_st_eph_delete(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_delete");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("delete", size), size, |b, &size| {
@@ -83,6 +86,7 @@ fn bench_ordered_table_st_eph_first_last_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_first_last_key");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let mut table = <OrderedTableStEph<i32, String>>::empty();
@@ -105,6 +109,7 @@ fn bench_ordered_table_st_eph_previous_next_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_previous_next_key");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let mut table = <OrderedTableStEph<i32, String>>::empty();
@@ -136,6 +141,7 @@ fn bench_ordered_table_st_eph_split_join_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_split_join_key");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("split_key", size), size, |b, &size| {
@@ -185,6 +191,7 @@ fn bench_ordered_table_st_eph_get_key_range(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_get_key_range");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let mut table = <OrderedTableStEph<i32, String>>::empty();
@@ -207,6 +214,7 @@ fn bench_ordered_table_st_eph_rank_select_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_rank_select_key");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let mut table = <OrderedTableStEph<i32, String>>::empty();
@@ -237,6 +245,7 @@ fn bench_ordered_table_st_eph_split_rank_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_split_rank_key");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("split_rank_key", size), size, |b, &size| {
@@ -263,6 +272,7 @@ fn bench_ordered_table_st_eph_table_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_table_operations");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let mut table = <OrderedTableStEph<i32, String>>::empty();
@@ -289,6 +299,7 @@ fn bench_ordered_table_st_eph_collect(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_collect");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let mut table = <OrderedTableStEph<i32, String>>::empty();
@@ -307,6 +318,7 @@ fn bench_ordered_table_st_eph_from_sorted_entries(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_from_sorted_entries");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
         let entries: Vec<Pair<i32, String>> = (0..*size).map(|i| Pair(i, format!("value_{}", i))).collect();

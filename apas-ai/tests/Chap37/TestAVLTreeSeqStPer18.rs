@@ -6,7 +6,6 @@ use apas_ai::ArraySeqStPerS;
 use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Types::Types::*;
 
 #[test]

@@ -10,6 +10,7 @@ fn bench_union_find_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("UnionFind_Operations");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     // Benchmark: insert n elements
     group.bench_function("insert_100", |b| {

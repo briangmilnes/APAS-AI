@@ -1,12 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
+use apas_ai::Chap19::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Types::Types::*;
 use criterion::*;
 use std::time::Duration;
 
 fn bench_tabulate_map_mtper_ch19(c: &mut Criterion) {
-    let mut group = c.benchmark_group("BenchArraySeqMtPer");
+    let mut group = c.benchmark_group("BenchArraySeqMtPerChap19");
     group.sample_size(10);
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));

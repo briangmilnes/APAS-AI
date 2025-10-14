@@ -10,6 +10,7 @@ fn bench_heapsort(c: &mut Criterion) {
     let mut group = c.benchmark_group("Heapsort");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [50, 100].iter() {
         let data: Vec<i32> = (0..*size).rev().collect();

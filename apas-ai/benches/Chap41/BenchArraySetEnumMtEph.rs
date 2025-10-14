@@ -21,6 +21,7 @@ fn bench_array_set_enum_mt_build(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetEnumMtEph_build");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [300, 800].iter() {
         group.bench_with_input(BenchmarkId::new("build_50pct", size), size, |b, &size| {
@@ -34,6 +35,7 @@ fn bench_array_set_enum_mt_find(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetEnumMtEph_find");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [300, 800].iter() {
         let set = build_array_set_enum_mt(*size, 0.5);
@@ -59,6 +61,7 @@ fn bench_array_set_enum_mt_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetEnumMtEph_insert");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [300, 800].iter() {
         group.bench_with_input(BenchmarkId::new("insert_new", size), size, |b, &size| {
@@ -92,6 +95,7 @@ fn bench_array_set_enum_mt_delete(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetEnumMtEph_delete");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [300, 800].iter() {
         group.bench_with_input(BenchmarkId::new("delete_existing", size), size, |b, &size| {
@@ -125,6 +129,7 @@ fn bench_array_set_enum_mt_bulk_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetEnumMtEph_bulk");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [300, 800].iter() {
         let set1 = build_array_set_enum_mt(*size, 0.5);
@@ -149,6 +154,7 @@ fn bench_array_set_enum_mt_from_seq(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetEnumMtEph_from_seq");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [300, 800].iter() {
         // Create sequence with some duplicates
@@ -173,6 +179,7 @@ fn bench_array_set_enum_mt_filter(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetEnumMtEph_filter");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [300, 800].iter() {
         let set = build_array_set_enum_mt(*size, 0.5);

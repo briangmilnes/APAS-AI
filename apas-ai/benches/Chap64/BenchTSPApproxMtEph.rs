@@ -43,6 +43,7 @@ fn bench_tsp_approx_mt_small(c: &mut Criterion) {
     let mut group = c.benchmark_group("tsp_approx_mt");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for &n in &[5, 7, 9] {
         let (graph, tree) = create_complete_graph(n);

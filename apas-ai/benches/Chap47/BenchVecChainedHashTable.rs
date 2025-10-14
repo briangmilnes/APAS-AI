@@ -10,6 +10,7 @@ fn bench_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("VecChained_Insert");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
+    group.sample_size(30);
     
     for size in [500, 1000] {
         group.bench_with_input(BenchmarkId::from_parameter(size), &size, |b, s| {
@@ -34,6 +35,7 @@ fn bench_lookup(c: &mut Criterion) {
     let mut group = c.benchmark_group("VecChained_Lookup");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_millis(1000));
+    group.sample_size(30);
     
     for size in [500, 1000] {
         let hash_fn: HashFun<i32> = Box::new(|k| (*k as N) % 100);

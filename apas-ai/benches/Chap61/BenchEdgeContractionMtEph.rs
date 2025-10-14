@@ -29,6 +29,7 @@ fn bench_edge_contract_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("edge_contract_mt");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for n in [100, 200, 300] {
         let graph = create_cycle_graph(n);
@@ -51,6 +52,7 @@ fn bench_contract_round_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("contract_round_mt");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for n in [100, 200, 300] {
         let graph = create_cycle_graph(n);

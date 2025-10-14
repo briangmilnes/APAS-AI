@@ -16,9 +16,9 @@ pub fn bench_divcon_mt(c: &mut Criterion) {
         b.iter(|| ArraySeqMtEphS::max_contig_sub_sum_divcon_mt(black_box(&a125)))
     });
 
-    let a1250: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 1250);
-    group.bench_function("divcon_mt_1250", |b| {
-        b.iter(|| ArraySeqMtEphS::max_contig_sub_sum_divcon_mt(black_box(&a1250)))
+    let a200: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 200);
+    group.bench_function("divcon_mt_200", |b| {
+        b.iter(|| ArraySeqMtEphS::max_contig_sub_sum_divcon_mt(black_box(&a200)))
     });
 
     group.finish();

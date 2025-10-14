@@ -66,6 +66,7 @@ fn bench_sparse_graphs(c: &mut Criterion) {
     let mut group = c.benchmark_group("BellmanFord Float Sparse");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [10, 20, 30].iter() {
         let graph = create_sparse_graph(*size);
@@ -82,6 +83,7 @@ fn bench_dense_graphs(c: &mut Criterion) {
     let mut group = c.benchmark_group("BellmanFord Float Dense");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [10, 20, 30].iter() {
         let graph = create_dense_graph(*size);
@@ -98,6 +100,7 @@ fn bench_negative_edges(c: &mut Criterion) {
     let mut group = c.benchmark_group("BellmanFord Float Negative");
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
+    group.sample_size(30);
 
     for size in [10, 20].iter() {
         let graph = create_negative_edges_graph(*size);
