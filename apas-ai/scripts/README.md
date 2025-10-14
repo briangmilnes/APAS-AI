@@ -19,6 +19,7 @@ Scripts for reviewing and fixing APAS source code conventions.
 
 **Import Pattern Analysis (find_*):**
 - `find_and_fix_ufcs_aliases.py` - Finds and fixes UFCS type alias patterns
+- `find_duplicate_chap_imports.py` - Finds duplicate chapter imports across the codebase
 - `find_duplicate_imports.py` - Finds duplicate import statements
 - `find_missing_traits.py` - Finds missing trait imports
 - `find_multi_import_patterns.py` - Finds multi-import patterns requiring consolidation
@@ -75,6 +76,7 @@ General Rust source code fixes and utilities.
 General Rust test running utilities.
 
 - `nextest.sh` - Wrapper for cargo nextest with project-specific flags
+- `test_single_file.py` - Tests a single Rust file in isolation
 
 #### rust/benches/
 General Rust benchmark running and management utilities.
@@ -128,13 +130,10 @@ Legacy test utilities directory (empty, historically used).
 
 General project utilities and cross-cutting tools.
 
-- `find_remaining_duplicates.py` - Finds remaining duplicate code patterns across the codebase
 - `format.sh` - Runs rustfmt on the codebase
 - `generate_tags.sh` - Generates ctags/rusty-tags for editor navigation
 - `install_ubuntu_tools.sh` - Installs required Ubuntu development tools
-- `rename_to_add_st.sh` - Renames files to add St (single-threaded) suffix following APAS conventions
-- `run_all_checks.sh` - Master script that runs all APAS code review checks
-- `test_single_file.py` - Tests a single file in isolation
+- `review_codebase.sh` - Master script that runs all APAS code review checks
 
 ---
 
@@ -143,7 +142,7 @@ General project utilities and cross-cutting tools.
 ### Running Code Reviews
 ```bash
 # Run all APAS code reviews
-./scripts/run_all_checks.sh
+./scripts/review_codebase.sh
 
 # Run specific review
 python3 scripts/APAS/src/review_naming.py
