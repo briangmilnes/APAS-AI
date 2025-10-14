@@ -14,6 +14,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "lib"))
+from review_utils import ReviewContext, create_review_parser
+
 
 def parse_function_with_where(lines, start_idx):
     """
@@ -91,16 +94,25 @@ def is_simple_bound(bound):
 
 
 def main():
-    repo_root = Path(__file__).parent.parent.parent.parent
-    src_dir = repo_root / "src"
+    parser = create_review_parser(__doc__)
+    args = parser.parse_args()
+    context = ReviewContext(args)
     
+    src_dir = context.repo_root / "src"
+
     if not src_dir.exists():
         print("✓ No src/ directory found")
         return 0
-    
+
+    if context.dry_run:
+        files = context.find_files([src_dir])
+        print(f"Would check {len(files)} file(s) for simplifiable where clauses")
+        return 0
+
     violations = []
-    
-    for src_file in src_dir.rglob("*.rs"):
+    files = context.find_files([src_dir])
+
+    for src_file in files:
         with open(src_file, 'r', encoding='utf-8') as f:
             lines = f.readlines()
         
@@ -137,7 +149,7 @@ def main():
     if violations:
         print("✗ Found simplifiable where clauses (RustRules.md Lines 322-329):\n")
         for file_path, fn_line, where_line, fn_name, param, bound in violations:
-            rel_path = file_path.relative_to(repo_root)
+            rel_path = file_path.relative_to(context.repo_root)
             print(f"  {rel_path}:{fn_line}")
             print(f"    fn {fn_name}<{param}>")
             print(f"    where {param}: {bound}  ← could be inlined as <{param}: {bound}>")

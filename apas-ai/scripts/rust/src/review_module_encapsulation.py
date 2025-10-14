@@ -9,12 +9,14 @@ block. Exceptions: src/main.rs (fn main), src/lib.rs (module declarations)."
 Checks src/ for code outside module blocks.
 """
 
-import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "lib"))
+from review_utils import ReviewContext, create_review_parser
 
-def check_file_encapsulation(file_path):
+
+def check_file(file_path: Path, context: ReviewContext) -> list:
     """Check if all code is inside pub mod blocks."""
     
     # Skip lib.rs and main.rs
@@ -28,13 +30,11 @@ def check_file_encapsulation(file_path):
     in_module = False
     module_depth = 0
     
-    # Keywords that define items (must be inside modules)
     item_keywords = ['fn ', 'struct ', 'enum ', 'type ', 'trait ', 'impl ', 'const ', 'static ']
     
     for idx, line in enumerate(lines, start=1):
         stripped = line.strip()
         
-        # Skip empty lines and comments
         if not stripped or stripped.startswith('//') or stripped.startswith('/*') or stripped.startswith('*'):
             continue
         
@@ -54,50 +54,52 @@ def check_file_encapsulation(file_path):
         if not in_module:
             for keyword in item_keywords:
                 if keyword in stripped and not stripped.startswith('use ') and not stripped.startswith('#['):
-                    # Allow macro_rules! and #[macro_export] at file level
+                    # Allow macro_rules! at file level
                     if 'macro_rules!' in stripped or stripped.startswith('macro_rules!'):
                         continue
                     
-                    violations.append((idx, stripped, keyword.strip()))
+                    rel_path = context.relative_path(file_path)
+                    violations.append(
+                        f"  {rel_path}:{idx}\n    {keyword.strip()} outside pub mod\n      {stripped[:80]}"
+                    )
                     break
     
     return violations
 
 
 def main():
-    repo_root = Path(__file__).parent.parent.parent.parent
-    src_dir = repo_root / "src"
+    parser = create_review_parser(__doc__)
+    args = parser.parse_args()
+    context = ReviewContext(args)
     
+    src_dir = context.repo_root / "src"
     if not src_dir.exists():
         print("✓ No src/ directory found")
         return 0
     
+    if context.dry_run:
+        files = context.find_files([src_dir])
+        print(f"Would check {len(files)} file(s) for module encapsulation")
+        return 0
+    
     all_violations = []
+    files = context.find_files([src_dir])
     
-    for src_file in src_dir.rglob("*.rs"):
-        violations = check_file_encapsulation(src_file)
-        if violations:
-            all_violations.append((src_file, violations))
+    for file_path in files:
+        violations = check_file(file_path, context)
+        all_violations.extend(violations)
     
-    if all_violations:
-        print("✗ Found code outside module blocks (RustRules.md Lines 117-123):\n")
-        for file_path, violations in all_violations:
-            rel_path = file_path.relative_to(repo_root)
-            print(f"  {rel_path}:")
-            for line_num, line_content, keyword in violations:
-                print(f"    Line {line_num}: {keyword} outside pub mod")
-                print(f"      {line_content[:80]}")
-            print()
-        
-        total = sum(len(v) for _, v in all_violations)
-        print(f"Total violations: {total}")
-        print("\nFix: Move all definitions inside 'pub mod ModuleName { ... }' block.")
-        return 1
-    else:
+    if not all_violations:
         print("✓ All code properly encapsulated in modules")
         return 0
+    
+    print(f"✗ Found code outside module blocks (RustRules.md Lines 117-123):\n")
+    for violation in all_violations:
+        print(violation)
+    print(f"\nTotal violations: {len(all_violations)}")
+    print("\nFix: Move all definitions inside 'pub mod ModuleName { ... }' block.")
+    return 1
 
 
 if __name__ == "__main__":
     sys.exit(main())
-

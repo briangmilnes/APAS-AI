@@ -18,6 +18,9 @@ Checks:
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent.parent / "lib"))
+from review_utils import ReviewContext, create_review_parser
+
 
 def check_file_imports(file_path, repo_root):
     """Check if imports follow the correct order."""
@@ -110,29 +113,33 @@ def check_file_imports(file_path, repo_root):
 
 
 def main():
-    repo_root = Path(__file__).parent.parent.parent
-    
+    parser = create_review_parser(__doc__)
+    args = parser.parse_args()
+    context = ReviewContext(args)
+
     search_dirs = [
-        repo_root / "src",
-        repo_root / "tests",
-        repo_root / "benches",
+        context.repo_root / "src",
+        context.repo_root / "tests",
+        context.repo_root / "benches",
     ]
-    
+
+    if context.dry_run:
+        files = context.find_files(search_dirs)
+        print(f"Would check {len(files)} file(s) for import order")
+        return 0
+
     all_violations = []
-    
-    for search_dir in search_dirs:
-        if not search_dir.exists():
-            continue
-        
-        for rust_file in search_dir.rglob("*.rs"):
-            violations = check_file_imports(rust_file, repo_root)
-            if violations:
-                all_violations.append((rust_file, violations))
+    files = context.find_files(search_dirs)
+
+    for rust_file in files:
+        violations = check_file_imports(rust_file, context.repo_root)
+        if violations:
+            all_violations.append((rust_file, violations))
     
     if all_violations:
         print("✗ Found import order violations (RustRules.md Lines 50, 75-86):\n")
         for file_path, violations in all_violations:
-            rel_path = file_path.relative_to(repo_root)
+            rel_path = file_path.relative_to(context.repo_root)
             print(f"  {rel_path}:")
             for line_num, reason, line_content in violations:
                 print(f"    Line {line_num}: {reason}")

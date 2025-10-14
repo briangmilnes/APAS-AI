@@ -14,8 +14,10 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "lib"))
+from review_utils import ReviewContext, create_review_parser
 
-# Prohibited patterns
+
 TEMP_PATTERN = re.compile(r'\btemp_\w+\b')
 ROCK_BANDS = [
     'led_zeppelin', 'pink_floyd', 'the_beatles', 'rolling_stones',
@@ -24,60 +26,70 @@ ROCK_BANDS = [
 ]
 
 
-def main():
-    repo_root = Path(__file__).parent.parent.parent.parent
-    src_dir = repo_root / "src"
+def check_file(file_path: Path, context: ReviewContext) -> list:
+    """Check a single file for prohibited variable names."""
+    violations = []
     
+    with open(file_path, 'r', encoding='utf-8') as f:
+        for line_num, line in enumerate(f, start=1):
+            stripped = line.strip()
+            if stripped.startswith('//') or stripped.startswith('/*') or stripped.startswith('*'):
+                continue
+            
+            # Check for temp_ pattern
+            temp_matches = TEMP_PATTERN.findall(line)
+            for match in temp_matches:
+                rel_path = context.relative_path(file_path)
+                violations.append(
+                    f"  {rel_path}:{line_num} - temp variable: {match}\n    {stripped}"
+                )
+            
+            # Check for rock band names
+            line_lower = line.lower()
+            for band in ROCK_BANDS:
+                if re.search(rf'\b{band}\b', line_lower):
+                    rel_path = context.relative_path(file_path)
+                    violations.append(
+                        f"  {rel_path}:{line_num} - rock band name: {band}\n    {stripped}"
+                    )
+                    break
+    
+    return violations
+
+
+def main():
+    parser = create_review_parser(__doc__)
+    args = parser.parse_args()
+    context = ReviewContext(args)
+    
+    src_dir = context.repo_root / "src"
     if not src_dir.exists():
         print("✓ No src/ directory found")
         return 0
     
-    violations = []
+    if context.dry_run:
+        files = context.find_files([src_dir])
+        print(f"Would check {len(files)} file(s) for prohibited variable names")
+        return 0
     
-    for src_file in src_dir.rglob("*.rs"):
-        with open(src_file, 'r', encoding='utf-8') as f:
-            for line_num, line in enumerate(f, start=1):
-                # Skip comments
-                stripped = line.strip()
-                if stripped.startswith('//'):
-                    continue
-                if stripped.startswith('/*') or stripped.startswith('*'):
-                    continue
-                
-                # Check for temp_ pattern
-                temp_matches = TEMP_PATTERN.findall(line)
-                for match in temp_matches:
-                    violations.append((
-                        src_file, line_num, line.strip(),
-                        f"temp variable: {match}"
-                    ))
-                
-                # Check for rock band names
-                line_lower = line.lower()
-                for band in ROCK_BANDS:
-                    if band in line_lower:
-                        # Make sure it's a whole word
-                        if re.search(rf'\b{band}\b', line_lower):
-                            violations.append((
-                                src_file, line_num, line.strip(),
-                                f"rock band name: {band}"
-                            ))
+    all_violations = []
+    files = context.find_files([src_dir])
     
-    if violations:
-        print("✗ Found prohibited variable names (RustRules.md Lines 22-26):\n")
-        for file_path, line_num, line_content, reason in violations:
-            rel_path = file_path.relative_to(repo_root)
-            print(f"  {rel_path}:{line_num} - {reason}")
-            print(f"    {line_content}")
-            print()
-        print(f"Total violations: {len(violations)}")
-        print("\nFix: Use descriptive names like 'entries', 'result_vec', 'filtered_data'.")
-        return 1
-    else:
+    for file_path in files:
+        violations = check_file(file_path, context)
+        all_violations.extend(violations)
+    
+    if not all_violations:
         print("✓ No prohibited variable names found")
         return 0
+    
+    print(f"✗ Found prohibited variable names (RustRules.md Lines 22-26):\n")
+    for violation in all_violations:
+        print(violation)
+    print(f"\nTotal violations: {len(all_violations)}")
+    print("\nFix: Use descriptive names like 'entries', 'result_vec', 'filtered_data'.")
+    return 1
 
 
 if __name__ == "__main__":
     sys.exit(main())
-
