@@ -33,13 +33,13 @@ fn test_length_and_nth_basic() {
 fn test_empty() {
     let empty: ArraySeqMtPerS<N> = ArrayMtPerSLit![];
     assert_eq!(empty.length(), 0);
-    assert_eq!(empty.length() == 0, true);
+    assert!(empty.length() == 0);
 }
 
 #[test]
 fn test_sequence_basic() {
     let a: ArraySeqMtPerS<B> = ArrayMtPerSLit![false; 10];
-    assert_eq!(a.length() == 0, false);
+    assert!(a.length() != 0);
     assert_eq!(a.length(), 10);
     let changes1 = ArrayMtPerSLit![Pair(0, true), Pair(1, false), Pair(2, true)];
     let d = <ArraySeqMtPerS<B> as ArraySeqMtPerTrait<B>>::inject(&a, &changes1);
@@ -53,7 +53,7 @@ fn test_singleton() {
     let a: ArraySeqMtPerS<N> = ArraySeqMtPerS::singleton(42);
     assert_eq!(a.length(), 1);
     assert_eq!(*a.nth(0), 42);
-    assert_eq!(a.length() == 0, false);
+    assert!(a.length() != 0);
 }
 
 #[test]
@@ -125,7 +125,7 @@ fn test_equality_and_debug() {
     assert_ne!(a, c);
 
     // Debug format should work
-    let debug_str = format!("{:?}", a);
+    let debug_str = format!("{a:?}");
     assert!(debug_str.contains("1"));
     assert!(debug_str.contains("2"));
     assert!(debug_str.contains("3"));
@@ -134,7 +134,7 @@ fn test_equality_and_debug() {
 #[test]
 fn test_display_format() {
     let a = ArrayMtPerSLit![1, 2, 3];
-    let display_str = format!("{}", a);
+    let display_str = format!("{a}");
     assert!(display_str.contains("1"));
     assert!(display_str.contains("2"));
     assert!(display_str.contains("3"));
@@ -152,9 +152,9 @@ fn test_string_sequences() {
 fn test_boolean_sequences() {
     let a = ArrayMtPerSLit![true, false, true];
     assert_eq!(a.length(), 3);
-    assert_eq!(*a.nth(0), true);
-    assert_eq!(*a.nth(1), false);
-    assert_eq!(*a.nth(2), true);
+    assert!(*a.nth(0));
+    assert!(!(*a.nth(1)));
+    assert!(*a.nth(2));
 }
 
 #[test]
@@ -364,7 +364,7 @@ fn test_race_condition_verification_concurrent_reads() {
                 local_sum += val;
 
                 // Verify data consistency during concurrent access
-                if val < 1 || val > 10 {
+                if !(1..=10).contains(&val) {
                     race_detected_clone.store(true, Ordering::SeqCst);
                 }
             }
@@ -388,7 +388,7 @@ fn test_race_condition_verification_concurrent_reads() {
 
     // All threads should get the same sum (1+2+...+10 = 55)
     for (thread_id, sum) in results {
-        assert_eq!(sum, 55, "Thread {} got incorrect sum", thread_id);
+        assert_eq!(sum, 55, "Thread {thread_id} got incorrect sum");
     }
 }
 
@@ -450,8 +450,7 @@ fn test_race_condition_verification_concurrent_inject_operations() {
         for (index, expected_value, actual_value) in results {
             assert_eq!(
                 actual_value, expected_value,
-                "Thread {} inject at index {} failed: expected {}, got {}",
-                thread_id, index, expected_value, actual_value
+                "Thread {thread_id} inject at index {index} failed: expected {expected_value}, got {actual_value}"
             );
         }
     }
@@ -486,7 +485,7 @@ fn test_race_condition_verification_mixed_operations() {
                     sum += val;
 
                     // Check for impossible values
-                    if val < 1 || val > 10 {
+                    if !(1..=10).contains(&val) {
                         inconsistency_clone.store(true, Ordering::SeqCst);
                     }
                 }
@@ -560,8 +559,8 @@ fn test_race_condition_verification_mixed_operations() {
     }
 
     for (thread_id, op_count) in inject_results {
-        assert!(thread_id >= 3 && thread_id < 6, "Inject thread ID out of range");
-        assert_eq!(op_count, 50, "Thread {} didn't complete all operations", thread_id);
+        assert!((3..6).contains(&thread_id), "Inject thread ID out of range");
+        assert_eq!(op_count, 50, "Thread {thread_id} didn't complete all operations");
     }
 }
 
@@ -608,7 +607,7 @@ fn test_atomic_operation_correctness_concurrent_reads() {
                 // Atomic read of elements
                 for i in 0..length {
                     let val = *seq_clone.nth(i);
-                    if val < 1 || val > 10 {
+                    if !(1..=10).contains(&val) {
                         error_clone.store(true, Ordering::SeqCst);
                     }
                 }
@@ -637,7 +636,7 @@ fn test_atomic_operation_correctness_concurrent_reads() {
     );
 
     for (thread_id, local_count) in results {
-        assert_eq!(local_count, 100, "Thread {} didn't complete all reads", thread_id);
+        assert_eq!(local_count, 100, "Thread {thread_id} didn't complete all reads");
     }
 }
 
@@ -716,7 +715,7 @@ fn test_atomic_operation_correctness_inject_operations() {
     );
 
     for (thread_id, op_count) in results {
-        assert_eq!(op_count, 25, "Thread {} didn't complete all operations", thread_id);
+        assert_eq!(op_count, 25, "Thread {thread_id} didn't complete all operations");
     }
 }
 
@@ -798,7 +797,7 @@ fn test_atomic_operation_correctness_memory_ordering() {
 
                 // Verify all values are within expected ranges
                 for &val in &snapshot {
-                    if val < 1 || val > 300 { // Original values 1-5, or thread values 0-299
+                    if !(1..=300).contains(&val) { // Original values 1-5, or thread values 0-299
                          // This might happen due to concurrent writes, which is acceptable
                     }
                 }
@@ -828,9 +827,9 @@ fn test_atomic_operation_correctness_memory_ordering() {
     // Verify all threads completed their operations
     for (i, count) in results.iter().enumerate() {
         if i < 3 {
-            assert_eq!(*count, 20, "Writer thread {} didn't complete all writes", i);
+            assert_eq!(*count, 20, "Writer thread {i} didn't complete all writes");
         } else {
-            assert_eq!(*count, 30, "Reader thread {} didn't complete all reads", i);
+            assert_eq!(*count, 30, "Reader thread {i} didn't complete all reads");
         }
     }
 }

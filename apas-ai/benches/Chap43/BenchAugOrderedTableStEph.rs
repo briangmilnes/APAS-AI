@@ -59,7 +59,7 @@ fn bench_qadsan_stock_scenario(c: &mut Criterion) {
     for minute in 570..960 {
         // 9:30am to 4:00pm in minutes from midnight
         let base_price = 15000; // $150.00 in cents
-        let volatility = ((minute - 570) % 50) as i32 * 10; // Cyclical volatility
+        let volatility = ((minute - 570) % 50) * 10; // Cyclical volatility
         let trend = (minute - 570) / 10; // Slight upward trend
         let price = base_price + volatility + trend;
         stock_table.insert(minute, price, |old, new| if old > new { *old } else { *new });

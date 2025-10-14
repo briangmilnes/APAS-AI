@@ -63,7 +63,7 @@ pub mod SSSPResultStPerInt {
             if v >= self.distances.length() {
                 return UNREACHABLE;
             }
-            self.distances.nth(v).clone()
+            *self.distances.nth(v)
         }
 
         /// Sets the distance from source to vertex v, returning a new structure.
@@ -83,7 +83,7 @@ pub mod SSSPResultStPerInt {
             if v >= self.predecessors.length() {
                 return None;
             }
-            let pred = self.predecessors.nth(v).clone();
+            let pred = *self.predecessors.nth(v);
             if pred == NO_PREDECESSOR { None } else { Some(pred) }
         }
 

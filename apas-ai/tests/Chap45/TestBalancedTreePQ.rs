@@ -512,7 +512,7 @@ fn test_map_to_string() {
     let pq: BalancedTreePQ<i32> = BalancedTreePQTrait::empty();
     let pq = pq.insert(1).insert(2).insert(3);
 
-    let mapped: BalancedTreePQ<String> = pq.map(|&x| format!("num{}", x));
+    let mapped: BalancedTreePQ<String> = pq.map(|&x| format!("num{x}"));
     assert_eq!(mapped.size(), 3);
     assert_eq!(mapped.find_min(), Some(&"num1".to_string()));
     assert_eq!(mapped.find_max(), Some(&"num3".to_string()));
@@ -578,7 +578,7 @@ fn test_display() {
     let pq: BalancedTreePQ<i32> = BalancedTreePQTrait::empty();
     let pq = pq.insert(5).insert(3).insert(7);
 
-    let display_str = format!("{}", pq);
+    let display_str = format!("{pq}");
     assert!(display_str.contains("BalancedTreePQ"));
     assert!(display_str.contains("3"));
     assert!(display_str.contains("5"));

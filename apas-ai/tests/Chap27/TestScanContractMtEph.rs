@@ -49,7 +49,7 @@ fn test_scan_contract_parallel_odd_length() {
     let result = ArraySeqMtEphS::scan_contract_parallel(&a, Arc::new(|x: &usize, y: &usize| x + y), 0);
     assert_eq!(result.length(), 7);
     for i in 0..7 {
-        assert_eq!(result.nth_cloned(i), i, "scan[{}] should be {}", i, i);
+        assert_eq!(result.nth_cloned(i), i, "scan[{i}] should be {i}");
     }
 }
 
@@ -59,7 +59,7 @@ fn test_scan_contract_parallel_even_length() {
     let result = ArraySeqMtEphS::scan_contract_parallel(&a, Arc::new(|x: &usize, y: &usize| x + y), 0);
     assert_eq!(result.length(), 8);
     for i in 0..8 {
-        assert_eq!(result.nth_cloned(i), i, "scan[{}] should be {}", i, i);
+        assert_eq!(result.nth_cloned(i), i, "scan[{i}] should be {i}");
     }
 }
 

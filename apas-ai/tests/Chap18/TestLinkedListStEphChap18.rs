@@ -8,9 +8,9 @@ use apas_ai::Types::Types::*; // macro import
 fn test_empty_singleton_and_predicates() {
     let l: LinkedListStEphS<N> = LinkedListStEphSLit![];
     assert_eq!(l.length(), 0);
-    assert_eq!(l.length() == 0, true);
+    assert!(l.length() == 0);
     let one = LinkedListStEphSLit![7];
-    assert_eq!(one.length() == 1, true);
+    assert!(one.length() == 1);
 }
 
 #[test]
@@ -44,13 +44,13 @@ fn test_linkedlisteph_basic() {
 #[test]
 fn test_debug_format_for_eph() {
     let l = LinkedListStEphSLit![1, 2, 3];
-    assert_eq!(format!("{:?}", l), "[1, 2, 3]");
+    assert_eq!(format!("{l:?}"), "[1, 2, 3]");
 }
 
 #[test]
 fn test_display_format_for_eph() {
     let l = LinkedListStEphSLit![1, 2, 3];
-    assert_eq!(format!("{}", l), "[1, 2, 3]");
+    assert_eq!(format!("{l}"), "[1, 2, 3]");
 }
 
 #[test]
@@ -110,7 +110,7 @@ fn test_append_concatenation() {
 fn test_filter_predicate() {
     let l = LinkedListStEphSLit![1, 2, 3, 4, 5];
     let evens =
-        <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&l, &|x| if *x % 2 == 0 { true } else { false });
+        <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&l, &|x| *x % 2 == 0);
     assert_eq!(evens.length(), 2);
     assert_eq!(*evens.nth(0), 2);
     assert_eq!(*evens.nth(1), 4);
@@ -119,12 +119,12 @@ fn test_filter_predicate() {
 #[test]
 fn test_deflate_helper() {
     let result_true =
-        <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| if *x > 5 { true } else { false }, &10);
+        <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| *x > 5, &10);
     assert_eq!(result_true.length(), 1);
     assert_eq!(*result_true.nth(0), 10);
 
     let result_false =
-        <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| if *x > 5 { true } else { false }, &3);
+        <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| *x > 5, &3);
     assert_eq!(result_false.length(), 0);
 }
 
@@ -309,9 +309,9 @@ fn test_construct_eph_from_vec() {
 #[test]
 fn test_eph_is_empty_and_singleton() {
     let e: LinkedListStEphS<N> = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::empty();
-    assert_eq!(e.length() == 0, true);
+    assert!(e.length() == 0);
     let s = LinkedListStEphSLit![1];
-    assert_eq!(s.length() == 1, true);
+    assert!(s.length() == 1);
 }
 
 #[test]
@@ -348,11 +348,7 @@ fn test_append_ch18() {
 fn test_filter_ch18() {
     let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
     let b = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&a, &|x: &N| {
-        if *x % 2 == 0 {
-            true
-        } else {
-            false
-        }
+        *x % 2 == 0
     });
     expect_list(&b, &[2, 4]);
 }

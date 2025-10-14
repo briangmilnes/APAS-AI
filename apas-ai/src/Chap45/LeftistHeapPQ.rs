@@ -373,7 +373,7 @@ pub mod LeftistHeapPQ {
                     | LeftistHeapNode::Leaf => Ok(()),
                     | LeftistHeapNode::Node { key, left, right, rank } => {
                         let indent = "  ".repeat(depth);
-                        writeln!(f, "{}{}(rank:{})", indent, key, rank)?;
+                        writeln!(f, "{indent}{key}(rank:{rank})")?;
                         format_node(left, f, depth + 1)?;
                         format_node(right, f, depth + 1)?;
                         Ok(())

@@ -30,7 +30,7 @@ pub mod ArraySeqStPer {
             let total = self.data.len();
             let begin = start.min(total);
             let end = start.saturating_add(length).min(total);
-            let slice: Vec<T> = self.data[begin..end].iter().cloned().collect();
+            let slice: Vec<T> = self.data[begin..end].to_vec();
             Self::from_vec(slice)
         }
 
@@ -69,7 +69,7 @@ pub mod ArraySeqStPer {
                 if i > 0 {
                     write!(f, ", ")?;
                 }
-                write!(f, "{}", item)?;
+                write!(f, "{item}")?;
             }
             write!(f, "]")
         }
@@ -177,7 +177,7 @@ pub mod ArraySeqStPer {
             let mut values: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let item = a.nth(i);
-                if pred(item) == true {
+                if pred(item) {
                     values.push(item.clone());
                 }
             }
@@ -205,7 +205,7 @@ pub mod ArraySeqStPer {
                     continue;
                 }
                 if updated.insert(*index) {
-                    let mut new_data: Vec<T> = result.data.iter().cloned().collect();
+                    let mut new_data: Vec<T> = result.data.to_vec();
                     new_data[*index] = value.clone();
                     result = ArraySeqStPerS::from_vec(new_data);
                 }
@@ -213,9 +213,9 @@ pub mod ArraySeqStPer {
             result
         }
 
-        fn isEmpty(&self) -> B { if self.data.is_empty() { true } else { false } }
+        fn isEmpty(&self) -> B { self.data.is_empty() }
 
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B { self.data.len() == 1 }
 
         fn collect<K: StT, V: StT>(
             a: &ArraySeqStPerS<Pair<K, V>>,
@@ -229,7 +229,7 @@ pub mod ArraySeqStPer {
                 let Pair(key, value) = a.nth(i);
                 let mut found_group = false;
                 for group in &mut groups {
-                    if cmp(&key, &group.0) == O::Equal {
+                    if cmp(key, &group.0) == O::Equal {
                         let mut values: Vec<V> = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect();
                         values.push(value.clone());
                         group.1 = ArraySeqStPerS::from_vec(values);
@@ -286,7 +286,7 @@ pub mod ArraySeqStPer {
             for i in 0..updates.length() {
                 let Pair(index, value) = updates.nth(i);
                 if *index < result.length() {
-                    let mut new_data: Vec<T> = result.data.iter().cloned().collect();
+                    let mut new_data: Vec<T> = result.data.to_vec();
                     new_data[*index] = value.clone();
                     result = ArraySeqStPerS::from_vec(new_data);
                 }

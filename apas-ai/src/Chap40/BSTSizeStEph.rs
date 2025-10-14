@@ -117,7 +117,7 @@ pub mod BSTSizeStEph {
             if let Some(node) = link.as_mut() {
                 if value < node.key {
                     Self::insert_link(&mut node.left, value, rng);
-                    if node.left.as_ref().map_or(false, |left| left.priority < node.priority) {
+                    if node.left.as_ref().is_some_and(|left| left.priority < node.priority) {
                         Self::rotate_right(link);
                     }
                 } else if value > node.key {
@@ -125,7 +125,7 @@ pub mod BSTSizeStEph {
                     if node
                         .right
                         .as_ref()
-                        .map_or(false, |right| right.priority < node.priority)
+                        .is_some_and(|right| right.priority < node.priority)
                     {
                         Self::rotate_left(link);
                     }
@@ -153,7 +153,7 @@ pub mod BSTSizeStEph {
             }
         }
 
-        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
+        fn min_link(link: &Link<T>) -> Option<&T> {
             match link {
                 | None => None,
                 | Some(node) => match node.left {
@@ -163,7 +163,7 @@ pub mod BSTSizeStEph {
             }
         }
 
-        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
+        fn max_link(link: &Link<T>) -> Option<&T> {
             match link {
                 | None => None,
                 | Some(node) => match node.right {
@@ -197,7 +197,7 @@ pub mod BSTSizeStEph {
             }
         }
 
-        fn select_link<'a>(link: &'a Link<T>, rank: N) -> Option<&'a T> {
+        fn select_link(link: &Link<T>, rank: N) -> Option<&T> {
             match link {
                 | None => None,
                 | Some(node) => {

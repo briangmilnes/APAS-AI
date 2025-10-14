@@ -12,11 +12,7 @@ fn add_ten(i: N) -> N { i + 10 }
 fn multiply_by_two(x: &N) -> N { x * 2 }
 fn add_nums(x: &N, y: &N) -> N { x + y }
 fn is_even_bool(x: &N) -> B {
-    if x % 2 == 0 {
-        true
-    } else {
-        false
-    }
+    x % 2 == 0
 }
 
 #[test]
@@ -178,13 +174,13 @@ fn test_inject() {
 fn test_empty_and_singleton() {
     let empty: ArraySeqMtEphS<N> = ArraySeqMtEphS::empty();
     assert_eq!(empty.length(), 0);
-    assert_eq!(empty.length() == 0, true);
-    assert_eq!(empty.length() == 1, false);
+    assert!(empty.length() == 0);
+    assert!(empty.length() != 1);
 
     let single: ArraySeqMtEphS<N> = ArraySeqMtEphS::singleton(42);
     assert_eq!(single.length(), 1);
-    assert_eq!(single.length() == 0, false);
-    assert_eq!(single.length() == 1, true);
+    assert!(single.length() != 0);
+    assert!(single.length() == 1);
     assert_eq!(single.nth_cloned(0), 42);
 }
 
@@ -232,7 +228,7 @@ fn test_partial_eq_mt_eph() {
 #[test]
 fn test_display_mt_eph() {
     let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
-    let display_str = format!("{}", seq);
+    let display_str = format!("{seq}");
     assert!(display_str.contains("1"));
     assert!(display_str.contains("2"));
     assert!(display_str.contains("3"));

@@ -83,6 +83,12 @@ pub mod AVLTreeSeq {
             T: Clone + Eq;
     }
 
+    impl<T: Copy + Debug> Default for AVLTreeS<T> {
+        fn default() -> Self {
+            Self::new()
+        }
+    }
+
     impl<T: Copy + Debug> AVLTreeS<T> {
         pub fn new_root() -> Self {
             AVLTreeS {
@@ -119,11 +125,11 @@ pub mod AVLTreeSeq {
                 return <ArraySeqS<T> as ArraySeq<T>>::empty();
             }
             let mut it = self.iter();
-            let first = it.next().expect("length > 0 but iter was empty").clone();
+            let first = *it.next().expect("length > 0 but iter was empty");
             let mut out = <ArraySeqS<T> as ArraySeq<T>>::new(len, first);
             let mut index: N = 1;
             for v in it {
-                let _ = out.set(index, v.clone());
+                let _ = out.set(index, *v);
                 index += 1;
             }
             out
@@ -168,10 +174,10 @@ pub mod AVLTreeSeq {
                 // Rebuild without the element at idx, using ArraySeq preallocation
                 let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
                 for i in 0..idx {
-                    out_vec.push(self.nth(i).clone());
+                    out_vec.push(*self.nth(i));
                 }
                 for i in (idx + 1)..len {
-                    out_vec.push(self.nth(i).clone());
+                    out_vec.push(*self.nth(i));
                 }
                 *self = AVLTreeS::from_vec(out_vec);
                 true
@@ -219,9 +225,9 @@ pub mod AVLTreeSeq {
         }
 
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
+        fn isEmpty(&self) -> B { self.length() == 0 }
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B { self.length() == 1 }
 
         /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
         fn subseq_copy(&self, start: N, length: N) -> AVLTreeS<T>
@@ -236,7 +242,7 @@ pub mod AVLTreeSeq {
             }
             let mut vals: Vec<T> = Vec::with_capacity(e - s);
             for i in s..e {
-                vals.push(self.nth(i).clone());
+                vals.push(*self.nth(i));
             }
             AVLTreeS::from_vec(vals)
         }
@@ -274,7 +280,7 @@ pub mod AVLTreeSeq {
                     write!(f, ", ")?;
                 }
                 first = false;
-                write!(f, "{}", v)?;
+                write!(f, "{v}")?;
             }
             write!(f, "]")
         }
@@ -299,7 +305,7 @@ pub mod AVLTreeSeq {
 
         fn push_left(&mut self, link: &'a Link<T>) {
             let mut cursor = link;
-            while let Some(ref node) = cursor.as_ref() {
+            while let Some(node) = cursor.as_ref() {
                 self.stack.push(node);
                 cursor = &node.left;
             }
@@ -405,7 +411,7 @@ pub mod AVLTreeSeq {
         }
     }
 
-    fn nth_link<'a, T: Copy + Debug>(node: &'a Link<T>, index: N) -> &'a T {
+    fn nth_link<T: Copy + Debug>(node: &Link<T>, index: N) -> &T {
         let n = node.as_ref().expect("index out of bounds");
         let left_size = n.left_size;
         if index < left_size {

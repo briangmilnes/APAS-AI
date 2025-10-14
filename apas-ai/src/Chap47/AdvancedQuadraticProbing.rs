@@ -76,7 +76,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             let mut issues = Vec::new();
 
             if !Self::is_prime(table_size) {
-                issues.push(format!("Table size {} is not prime", table_size));
+                issues.push(format!("Table size {table_size} is not prime"));
             }
 
             if c2 == 0 {
@@ -85,7 +85,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
 
             // For prime table size, c2 should be coprime to m
             if Self::is_prime(table_size) && Self::gcd(c2, table_size) != 1 {
-                issues.push(format!("c2 ({}) is not coprime to table size ({})", c2, table_size));
+                issues.push(format!("c2 ({c2}) is not coprime to table size ({table_size})"));
             }
 
             let is_valid = issues.is_empty();
@@ -185,7 +185,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             let table_size_is_prime = PrimeValidator::is_prime(size);
 
             // Analyze collision chains by tracking probe sequences
-            let collision_chains;
+            
             let mut probe_sequences = std::collections::HashSet::new();
 
             // Simulate probe sequences for different keys to measure diversity
@@ -204,7 +204,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             }
 
             // Estimate collision chains based on load factor and probe diversity
-            collision_chains = (load as f64 * 0.7) as N; // Heuristic estimate
+            let collision_chains = (load as f64 * 0.7) as N; // Heuristic estimate
             let max_chain_length = if collision_chains > 0 {
                 load / collision_chains.max(1)
             } else {

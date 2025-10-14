@@ -37,7 +37,7 @@ pub mod Example56_1 {
 
         let path = ArraySeqStPerS::from_vec(vec![0, 1, 2, 3]);
         match path_weight_int(&path, &weights) {
-            | Some(w) => println!("Path 0→1→2→3 has weight: {}", w),
+            | Some(w) => println!("Path 0→1→2→3 has weight: {w}"),
             | None => println!("Invalid path"),
         }
     }
@@ -88,7 +88,7 @@ pub mod Example56_1 {
 
         let path = ArraySeqStPerS::from_vec(vec![0, 1, 2]);
         match path_weight_int(&path, &weights) {
-            | Some(w) => println!("Path 0→1→2 with negative weight has total: {}", w),
+            | Some(w) => println!("Path 0→1→2 with negative weight has total: {w}"),
             | None => println!("Invalid path"),
         }
     }

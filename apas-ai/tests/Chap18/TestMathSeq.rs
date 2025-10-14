@@ -29,13 +29,13 @@ fn test_add_last_and_delete_last() {
 fn test_new_empty_singleton_and_predicates() {
     let e: MathSeqS<N> = MathSeqSLit![];
     assert_eq!(e.length(), 0);
-    assert_eq!(e.length() == 0, true);
-    assert_eq!(e.length() == 1, false);
+    assert!(e.length() == 0);
+    assert!(e.length() != 1);
 
     let s: MathSeqS<N> = MathSeqSLit![7];
     assert_eq!(s.length(), 1);
-    assert_eq!(s.length() == 0, false);
-    assert_eq!(s.length() == 1, true);
+    assert!(s.length() != 0);
+    assert!(s.length() == 1);
 
     let mut a: MathSeqS<N> = MathSeqSLit![0; 3];
     assert_eq!(a.length(), 3);
@@ -94,13 +94,13 @@ fn test_range_deduplicates_preserving_order() {
 #[test]
 fn test_debug_format_for_mathseq() {
     let s: MathSeqS<N> = MathSeqSLit![1, 2, 3];
-    assert_eq!(format!("{:?}", s), "[1, 2, 3]");
+    assert_eq!(format!("{s:?}"), "[1, 2, 3]");
 }
 
 #[test]
 fn test_display_format_for_mathseq() {
     let s: MathSeqS<N> = MathSeqSLit![1, 2, 3];
-    assert_eq!(format!("{}", s), "[1, 2, 3]");
+    assert_eq!(format!("{s}"), "[1, 2, 3]");
 }
 
 #[test]
@@ -198,22 +198,22 @@ fn test_set_out_of_bounds_error() {
 #[test]
 fn test_isEmpty_predicate() {
     let empty: MathSeqS<N> = MathSeqSLit![];
-    assert_eq!(empty.isEmpty(), true);
+    assert!(empty.isEmpty());
 
     let non_empty: MathSeqS<N> = MathSeqSLit![1];
-    assert_eq!(non_empty.isEmpty(), false);
+    assert!(!non_empty.isEmpty());
 }
 
 #[test]
 fn test_isSingleton_predicate() {
     let empty: MathSeqS<N> = MathSeqSLit![];
-    assert_eq!(empty.isSingleton(), false);
+    assert!(!empty.isSingleton());
 
     let singleton: MathSeqS<N> = MathSeqSLit![42];
-    assert_eq!(singleton.isSingleton(), true);
+    assert!(singleton.isSingleton());
 
     let multi: MathSeqS<N> = MathSeqSLit![1, 2];
-    assert_eq!(multi.isSingleton(), false);
+    assert!(!multi.isSingleton());
 }
 
 #[test]
@@ -255,8 +255,8 @@ fn test_mathseq_empty_operations_comprehensive() {
 
     // Basic properties
     assert_eq!(empty.length(), 0);
-    assert_eq!(empty.isEmpty(), true);
-    assert_eq!(empty.isSingleton(), false);
+    assert!(empty.isEmpty());
+    assert!(!empty.isSingleton());
 
     // Operations on empty sequence should return empty or appropriate defaults
     let empty_subseq = empty.subseq(0, 0);
@@ -292,8 +292,8 @@ fn test_mathseq_single_element_boundary() {
 
     // Basic properties
     assert_eq!(single.length(), 1);
-    assert_eq!(single.isEmpty(), false);
-    assert_eq!(single.isSingleton(), true);
+    assert!(!single.isEmpty());
+    assert!(single.isSingleton());
 
     // Access operations
     assert_eq!(*single.nth(0), 42);
@@ -472,8 +472,8 @@ fn test_mathseq_maximum_size_boundary() {
     assert_eq!(large_seq.length(), large_size);
     assert_eq!(*large_seq.nth(0), 42);
     assert_eq!(*large_seq.nth(large_size - 1), 42);
-    assert_eq!(large_seq.isEmpty(), false);
-    assert_eq!(large_seq.isSingleton(), false);
+    assert!(!large_seq.isEmpty());
+    assert!(!large_seq.isSingleton());
 
     // Test subseq on large sequence
     let large_subseq = large_seq.subseq(1000, 5000);

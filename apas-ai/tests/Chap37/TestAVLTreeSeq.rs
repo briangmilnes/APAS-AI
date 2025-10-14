@@ -11,24 +11,24 @@ mod TestAVLTreeSeq {
     fn test_avltreeseq_empty_constructor() {
         let empty: AVLTreeS<N> = <AVLTreeS<N> as AVLTreeSeq<N>>::empty();
         assert_eq!(empty.length(), 0);
-        assert_eq!(empty.isEmpty(), true);
-        assert_eq!(empty.isSingleton(), false);
+        assert!(empty.isEmpty());
+        assert!(!empty.isSingleton());
     }
 
     #[test]
     fn test_avltreeseq_new_constructor() {
         let new_tree: AVLTreeS<N> = <AVLTreeS<N> as AVLTreeSeq<N>>::new();
         assert_eq!(new_tree.length(), 0);
-        assert_eq!(new_tree.isEmpty(), true);
-        assert_eq!(new_tree.isSingleton(), false);
+        assert!(new_tree.isEmpty());
+        assert!(!new_tree.isSingleton());
     }
 
     #[test]
     fn test_avltreeseq_singleton_constructor() {
         let single: AVLTreeS<N> = <AVLTreeS<N> as AVLTreeSeq<N>>::singleton(42);
         assert_eq!(single.length(), 1);
-        assert_eq!(single.isEmpty(), false);
-        assert_eq!(single.isSingleton(), true);
+        assert!(!single.isEmpty());
+        assert!(single.isSingleton());
         assert_eq!(*single.nth(0), 42);
     }
 
@@ -83,12 +83,12 @@ mod TestAVLTreeSeq {
     fn test_avltreeseq_predicates() {
         // Test isEmpty
         let empty: AVLTreeS<N> = <AVLTreeS<N> as AVLTreeSeq<N>>::empty();
-        assert_eq!(empty.isEmpty(), true);
-        assert_eq!(empty.isSingleton(), false);
+        assert!(empty.isEmpty());
+        assert!(!empty.isSingleton());
 
         let single: AVLTreeS<N> = <AVLTreeS<N> as AVLTreeSeq<N>>::singleton(42);
-        assert_eq!(single.isEmpty(), false);
-        assert_eq!(single.isSingleton(), true);
+        assert!(!single.isEmpty());
+        assert!(single.isSingleton());
     }
 
     #[test]
@@ -103,12 +103,12 @@ mod TestAVLTreeSeq {
         // Empty subseq
         let empty_subseq = single.subseq_copy(0, 0);
         assert_eq!(empty_subseq.length(), 0);
-        assert_eq!(empty_subseq.isEmpty(), true);
+        assert!(empty_subseq.isEmpty());
 
         // Out of bounds subseq
         let oob_subseq = single.subseq_copy(1, 1);
         assert_eq!(oob_subseq.length(), 0);
-        assert_eq!(oob_subseq.isEmpty(), true);
+        assert!(oob_subseq.isEmpty());
     }
 
     #[test]
@@ -117,17 +117,17 @@ mod TestAVLTreeSeq {
 
         // Basic properties
         assert_eq!(empty.length(), 0);
-        assert_eq!(empty.isEmpty(), true);
-        assert_eq!(empty.isSingleton(), false);
+        assert!(empty.isEmpty());
+        assert!(!empty.isSingleton());
 
         // Subseq operations on empty tree
         let empty_subseq = empty.subseq_copy(0, 0);
         assert_eq!(empty_subseq.length(), 0);
-        assert_eq!(empty_subseq.isEmpty(), true);
+        assert!(empty_subseq.isEmpty());
 
         let empty_subseq2 = empty.subseq_copy(0, 10);
         assert_eq!(empty_subseq2.length(), 0);
-        assert_eq!(empty_subseq2.isEmpty(), true);
+        assert!(empty_subseq2.isEmpty());
     }
 
     #[test]
@@ -136,8 +136,8 @@ mod TestAVLTreeSeq {
 
         // Basic properties
         assert_eq!(single.length(), 1);
-        assert_eq!(single.isEmpty(), false);
-        assert_eq!(single.isSingleton(), true);
+        assert!(!single.isEmpty());
+        assert!(single.isSingleton());
 
         // Access operations
         assert_eq!(*single.nth(0), 42);
@@ -172,23 +172,23 @@ mod TestAVLTreeSeq {
         // Zero-length subseq at start
         let zero_start = single.subseq_copy(0, 0);
         assert_eq!(zero_start.length(), 0);
-        assert_eq!(zero_start.isEmpty(), true);
+        assert!(zero_start.isEmpty());
 
         // Zero-length subseq at end
         let zero_end = single.subseq_copy(1, 0);
         assert_eq!(zero_end.length(), 0);
-        assert_eq!(zero_end.isEmpty(), true);
+        assert!(zero_end.isEmpty());
 
         // Zero-length subseq beyond end should still return empty
         let zero_beyond = single.subseq_copy(10, 0);
         assert_eq!(zero_beyond.length(), 0);
-        assert_eq!(zero_beyond.isEmpty(), true);
+        assert!(zero_beyond.isEmpty());
 
         // Test with empty tree
         let empty: AVLTreeS<N> = <AVLTreeS<N> as AVLTreeSeq<N>>::empty();
         let zero_empty = empty.subseq_copy(0, 0);
         assert_eq!(zero_empty.length(), 0);
-        assert_eq!(zero_empty.isEmpty(), true);
+        assert!(zero_empty.isEmpty());
 
         // All zero-length subsequences should be equivalent to empty
         assert_eq!(zero_start.length(), empty.length());

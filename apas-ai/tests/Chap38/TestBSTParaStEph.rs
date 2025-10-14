@@ -35,7 +35,7 @@ fn para_basic_insert_find() {
     assert_eq!(tree.size(), 7);
     assert_eq!(tree.find(&3), Some(3));
     assert_eq!(tree.find(&8), None);
-    assert_eq!(tree.is_empty(), false);
+    assert!(!tree.is_empty());
     assert_eq!(tree.in_order(), ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7]);
 }
 
@@ -43,7 +43,7 @@ fn para_basic_insert_find() {
 fn para_split_and_join_pair() {
     let tree = make_tree(&[0, 1, 2, 3, 4, 5]);
     let (less, present, greater) = tree.split(&3);
-    assert_eq!(present, true);
+    assert!(present);
     assert_eq!(less.in_order(), ArraySeqStPerSLit![0, 1, 2]);
     assert_eq!(greater.in_order(), ArraySeqStPerSLit![4, 5]);
 

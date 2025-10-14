@@ -24,7 +24,7 @@ fn bench_insert(c: &mut Criterion) {
                     table.table.push(FlatEntry::Empty);
                 }
                 for i in 0..size {
-                    DoubleHashFlatHashTableStEph::insert(&mut table, black_box(i as i32), black_box(format!("value{}", i)));
+                    DoubleHashFlatHashTableStEph::insert(&mut table, black_box(i as i32), black_box(format!("value{i}")));
                 }
                 table
             });
@@ -47,7 +47,7 @@ fn bench_lookup(c: &mut Criterion) {
             table.table.push(FlatEntry::Empty);
         }
         for i in 0..size {
-            DoubleHashFlatHashTableStEph::insert(&mut table, i as i32, format!("value{}", i));
+            DoubleHashFlatHashTableStEph::insert(&mut table, i as i32, format!("value{i}"));
         }
         
         group.bench_with_input(BenchmarkId::from_parameter(size), &size, |b, s| {

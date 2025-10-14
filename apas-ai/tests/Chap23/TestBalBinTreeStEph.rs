@@ -28,13 +28,13 @@ fn bst_insert_and_search_behavior() {
     let mut bst = BSTree::new();
     let keys = ArraySeqStPerSLit![4, 2, 6, 1, 3, 5, 7];
     for index in 0..keys.length() {
-        bst.insert(keys.nth(index).clone());
+        bst.insert(*keys.nth(index));
     }
     assert_eq!(bst.size(), 7);
     assert_eq!(bst.height(), 3);
-    assert_eq!(bst.contains(&4), true);
-    assert_eq!(bst.contains(&5), true);
-    assert_eq!(bst.contains(&8), false);
+    assert!(bst.contains(&4));
+    assert!(bst.contains(&5));
+    assert!(!bst.contains(&8));
     assert_eq!(bst.find(&4), Some(&4));
     assert_eq!(bst.find(&6), Some(&6));
     assert_eq!(bst.find(&9), None);
@@ -90,7 +90,7 @@ fn bstree_empty_operations() {
     let empty_bst = BSTree::<N>::new();
     assert_eq!(empty_bst.size(), 0);
     assert_eq!(empty_bst.height(), 0);
-    assert_eq!(empty_bst.contains(&42), false);
+    assert!(!empty_bst.contains(&42));
     assert_eq!(empty_bst.find(&42), None);
     assert_eq!(empty_bst.minimum(), None);
     assert_eq!(empty_bst.maximum(), None);
@@ -105,8 +105,8 @@ fn bstree_single_element() {
 
     assert_eq!(bst.size(), 1);
     assert_eq!(bst.height(), 1);
-    assert_eq!(bst.contains(&42), true);
-    assert_eq!(bst.contains(&99), false);
+    assert!(bst.contains(&42));
+    assert!(!bst.contains(&99));
     assert_eq!(bst.find(&42), Some(&42));
     assert_eq!(bst.find(&99), None);
     assert_eq!(bst.minimum().copied(), Some(42));
@@ -125,9 +125,9 @@ fn bstree_duplicate_insertions() {
     bst.insert(7);
 
     // BST should handle duplicates appropriately
-    assert_eq!(bst.contains(&5), true);
-    assert_eq!(bst.contains(&3), true);
-    assert_eq!(bst.contains(&7), true);
+    assert!(bst.contains(&5));
+    assert!(bst.contains(&3));
+    assert!(bst.contains(&7));
 
     let inorder = bst.in_order();
     // Check that inorder traversal is still sorted
@@ -179,7 +179,7 @@ fn bstree_random_insertions() {
 
     // Verify all keys are present
     for i in 0..keys.length() {
-        assert_eq!(bst.contains(keys.nth(i)), true);
+        assert!(bst.contains(keys.nth(i)));
         assert_eq!(bst.find(keys.nth(i)), Some(keys.nth(i)));
     }
 
@@ -244,10 +244,10 @@ fn bstree_edge_case_searches() {
     }
 
     // Test searches for non-existent keys
-    assert_eq!(bst.contains(&1), false); // Less than minimum
-    assert_eq!(bst.contains(&20), false); // Greater than maximum
-    assert_eq!(bst.contains(&6), false); // Between existing keys
-    assert_eq!(bst.contains(&14), false); // Between existing keys
+    assert!(!bst.contains(&1)); // Less than minimum
+    assert!(!bst.contains(&20)); // Greater than maximum
+    assert!(!bst.contains(&6)); // Between existing keys
+    assert!(!bst.contains(&14)); // Between existing keys
 
     assert_eq!(bst.find(&1), None);
     assert_eq!(bst.find(&20), None);
@@ -289,17 +289,17 @@ fn balbintree_traversal_consistency() {
 #[test]
 fn balbintree_is_leaf_check() {
     let leaf = BalBinTree::<N>::leaf();
-    assert_eq!(leaf.is_leaf(), true);
+    assert!(leaf.is_leaf());
 
     let single = BalBinTree::node(BalBinTree::leaf(), 42, BalBinTree::leaf());
-    assert_eq!(single.is_leaf(), false);
+    assert!(!single.is_leaf());
 
     let complex = BalBinTree::node(
         BalBinTree::node(BalBinTree::leaf(), 1, BalBinTree::leaf()),
         2,
         BalBinTree::node(BalBinTree::leaf(), 3, BalBinTree::leaf()),
     );
-    assert_eq!(complex.is_leaf(), false);
+    assert!(!complex.is_leaf());
 }
 
 #[test]
@@ -354,7 +354,7 @@ fn bstree_large_dataset() {
 
     // Verify all elements are present
     for i in 1..=n {
-        assert_eq!(bst.contains(&i), true);
+        assert!(bst.contains(&i));
         assert_eq!(bst.find(&i), Some(&i));
     }
 

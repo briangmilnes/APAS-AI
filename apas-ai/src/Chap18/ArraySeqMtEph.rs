@@ -72,7 +72,7 @@ pub mod ArraySeqMtEph {
             let n = guard.len();
             let s = start.min(n);
             let e = start.saturating_add(length).min(n);
-            let values: Vec<T> = guard[s..e].iter().cloned().collect();
+            let values: Vec<T> = guard[s..e].to_vec();
             ArraySeqMtEphS::from_vec(values)
         }
 
@@ -171,7 +171,7 @@ pub mod ArraySeqMtEph {
                 if i > 0 {
                     write!(f, ", ")?;
                 }
-                write!(f, "{}", item)?;
+                write!(f, "{item}")?;
             }
             write!(f, "]")
         }
@@ -252,7 +252,7 @@ pub mod ArraySeqMtEph {
             let n = a.length();
             for i in 0..n {
                 let value = a.nth_cloned(i);
-                if pred(&value) == true {
+                if pred(&value) {
                     kept.push(value);
                 }
             }
@@ -276,9 +276,9 @@ pub mod ArraySeqMtEph {
             out
         }
 
-        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
+        fn isEmpty(&self) -> B { self.length() == 0 }
 
-        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B { self.length() == 1 }
 
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {
             let mut values: Vec<T> = Vec::new();

@@ -330,7 +330,7 @@ fn test_secondary_clustering_metrics_display() {
         table_size_is_prime: true,
     };
 
-    let display_str = format!("{}", metrics);
+    let display_str = format!("{metrics}");
     assert!(display_str.contains("Secondary Clustering Metrics:"));
     assert!(display_str.contains("Collision chains: 8"));
     assert!(display_str.contains("Max chain length: 4"));

@@ -160,7 +160,7 @@ fn test_primary_clustering_metrics_display() {
         probe_variance: 2.1,
     };
 
-    let display_str = format!("{}", metrics);
+    let display_str = format!("{metrics}");
     assert!(display_str.contains("Primary Clustering Metrics:"));
     assert!(display_str.contains("Total clusters: 3"));
     assert!(display_str.contains("Max cluster size: 5"));

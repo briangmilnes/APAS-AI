@@ -109,7 +109,7 @@ fn test_display() {
     let s = ArraySeqStEphS::tabulate(&|i| ['a', 'b'][i], 2);
     let t = ArraySeqStEphS::tabulate(&|i| ['c', 'd'][i], 2);
     let dp = TopDownDPStEphS::new(s, t);
-    let display_str = format!("{}", dp);
+    let display_str = format!("{dp}");
     assert!(display_str.contains("TopDownDPStEph"));
     assert!(display_str.contains("s_len=2"));
     assert!(display_str.contains("t_len=2"));

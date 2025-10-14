@@ -110,16 +110,16 @@ fn test_linear_probing_resize_behavior() {
 
     // Insert many elements to trigger resizing
     for i in 0..20 {
-        let key = format!("key{}", i);
-        table = table.insert(key, i as i32);
+        let key = format!("key{i}");
+        table = table.insert(key, i);
     }
 
     assert_eq!(table.load_and_size().0, 20);
 
     // Verify all elements are still accessible after resizing
     for i in 0..20 {
-        let key = format!("key{}", i);
-        assert_eq!(table.lookup(&key), Some(&(i as i32)));
+        let key = format!("key{i}");
+        assert_eq!(table.lookup(&key), Some(&{ i }));
     }
 }
 

@@ -301,7 +301,7 @@ pub mod LinkedListStEph {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
-                if pred(value) == true {
+                if pred(value) {
                     kept.push(value.clone());
                 }
             }
@@ -310,7 +310,7 @@ pub mod LinkedListStEph {
 
         fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> Self {
             // Helper for filter: deflate f x = if f(x) then [x] else []
-            if f(x) == true {
+            if f(x) {
                 LinkedListStEphS::from_vec(vec![x.clone()])
             } else {
                 LinkedListStEphS::empty()

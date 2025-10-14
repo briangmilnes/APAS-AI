@@ -294,7 +294,7 @@ fn test_macro_creation() {
 #[test]
 fn test_display_formatting() {
     let pq = UnsortedListPQLit![3, 1, 4];
-    let display_str = format!("{}", pq);
+    let display_str = format!("{pq}");
 
     // The display should show elements in insertion order (unsorted)
     assert!(display_str.contains("UnsortedListPQ["));
@@ -381,7 +381,7 @@ fn test_to_seq() {
     assert_eq!(seq.length(), 4);
 
     // The sequence should contain all elements
-    let mut found = vec![false; 4];
+    let mut found = [false; 4];
     for i in 0..seq.length() {
         let val = *seq.nth(i);
         if val == 5 {

@@ -10,23 +10,19 @@ fn double(i: N) -> N { i * 2 }
 fn square(i: N) -> N { i * i }
 fn add_100(i: N) -> N { i + 100 }
 fn const_42(_i: N) -> N { 42 }
-fn format_item(i: N) -> String { format!("item_{}", i) }
+fn format_item(i: N) -> String { format!("item_{i}") }
 fn is_even_bool(i: N) -> B {
-    if i % 2 == 0 {
-        true
-    } else {
-        false
-    }
+    i % 2 == 0
 }
 
 // Helper function for set equality comparison
 fn assert_set_eq<T: PartialEq + std::fmt::Debug>(actual: &[T], expected: &[T]) {
     assert_eq!(actual.len(), expected.len());
     for val in actual {
-        assert!(expected.contains(val), "Value {:?} not found in expected", val);
+        assert!(expected.contains(val), "Value {val:?} not found in expected");
     }
     for val in expected {
-        assert!(actual.contains(val), "Expected value {:?} not found in actual", val);
+        assert!(actual.contains(val), "Expected value {val:?} not found in actual");
     }
 }
 
@@ -73,7 +69,7 @@ fn test_tabulate_fibonacci() {
 fn test_tabulate_empty() {
     let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&double, 0);
     assert_eq!(empty.length(), 0);
-    assert_eq!(empty.length() == 0, true);
+    assert!(empty.length() == 0);
 }
 
 #[test]
@@ -436,25 +432,24 @@ fn test_inject_first_wins() {
 #[test]
 fn test_isEmpty_trait() {
     let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
-    assert_eq!(<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isEmpty(&empty), true);
+    assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isEmpty(&empty));
 
     let non_empty = ArraySeqMtPerS::singleton(1);
-    assert_eq!(<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isEmpty(&non_empty), false);
+    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isEmpty(&non_empty));
 }
 
 #[test]
 fn test_isSingleton_trait() {
     let single = ArraySeqMtPerS::singleton(42);
-    assert_eq!(<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&single), true);
+    assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&single));
 
     let multiple = ArraySeqMtPerS::from_vec(vec![1, 2]);
-    assert_eq!(
-        <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&multiple),
-        false
+    assert!(
+        !<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&multiple)
     );
 
     let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
-    assert_eq!(<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&empty), false);
+    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&empty));
 }
 
 #[test]
@@ -501,7 +496,7 @@ fn test_into_iterator_owned() {
 #[test]
 fn test_display() {
     let seq = ArraySeqMtPerS::from_vec(vec![1, 2, 3]);
-    let display_str = format!("{}", seq);
+    let display_str = format!("{seq}");
     assert!(display_str.contains("1"));
     assert!(display_str.contains("2"));
     assert!(display_str.contains("3"));

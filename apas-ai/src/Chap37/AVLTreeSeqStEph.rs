@@ -62,6 +62,12 @@ pub mod AVLTreeSeqStEph {
         fn subseq_copy(&self, start: N, length: N) -> Self;
     }
 
+    impl<T: StT> Default for AVLTreeSeqStEphS<T> {
+        fn default() -> Self {
+            Self::new()
+        }
+    }
+
     impl<T: StT> AVLTreeSeqStEphS<T> {
         pub fn new_root() -> Self {
             AVLTreeSeqStEphS {
@@ -159,9 +165,9 @@ pub mod AVLTreeSeqStEph {
             t
         }
 
-        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
+        fn isEmpty(&self) -> B { self.length() == 0 }
 
-        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B { self.length() == 1 }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.length();
@@ -194,7 +200,7 @@ pub mod AVLTreeSeqStEph {
         }
         fn push_left(&mut self, link: &'a Link<T>) {
             let mut cursor = link;
-            while let Some(ref node) = cursor.as_ref() {
+            while let Some(node) = cursor.as_ref() {
                 self.stack.push(node);
                 cursor = &node.left;
             }
@@ -292,7 +298,7 @@ pub mod AVLTreeSeqStEph {
         }
     }
 
-    fn nth_link<'a, T: StT>(node: &'a Link<T>, index: N) -> &'a T {
+    fn nth_link<T: StT>(node: &Link<T>, index: N) -> &T {
         let n = node.as_ref().expect("index out of bounds");
         let left_size = n.left_size;
         if index < left_size {

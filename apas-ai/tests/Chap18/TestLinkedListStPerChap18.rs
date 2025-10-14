@@ -8,9 +8,9 @@ use apas_ai::Types::Types::*; // macro import
 fn test_empty_singleton_and_predicates() {
     let l: LinkedListStPerS<N> = LinkedListStPerSLit![];
     assert_eq!(l.length(), 0);
-    assert_eq!(l.length() == 0, true);
+    assert!(l.length() == 0);
     let one = LinkedListStPerSLit![7];
-    assert_eq!(one.length() == 1, true);
+    assert!(one.length() == 1);
 }
 
 #[test]
@@ -39,7 +39,7 @@ fn test_subseq() {
 fn test_from_vec_and_debug_format() {
     let l = LinkedListStPerSLit![1, 2, 3];
     assert_eq!(l.length(), 3);
-    assert_eq!(format!("{:?}", l), "[1, 2, 3]");
+    assert_eq!(format!("{l:?}"), "[1, 2, 3]");
 }
 
 #[test]
@@ -59,7 +59,7 @@ fn test_nth_out_of_bounds_panics() {
 #[test]
 fn test_display_impl() {
     let l = LinkedListStPerSLit![1, 2, 3];
-    assert_eq!(format!("{}", l), "[1, 2, 3]");
+    assert_eq!(format!("{l}"), "[1, 2, 3]");
 }
 
 #[test]
@@ -125,7 +125,7 @@ fn test_select_from_concatenated() {
 fn test_filter_predicate() {
     let l = LinkedListStPerSLit![1, 2, 3, 4, 5];
     let evens =
-        <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(&l, &|x| if *x % 2 == 0 { true } else { false });
+        <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(&l, &|x| *x % 2 == 0);
     assert_eq!(evens.length(), 2);
     assert_eq!(*evens.nth(0), 2);
     assert_eq!(*evens.nth(1), 4);
@@ -310,11 +310,7 @@ fn test_map() {
 fn test_filter() {
     let a = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::tabulate(&|i| i + 1, 5);
     let c = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(&a, &|x: &N| {
-        if *x % 2 == 1 {
-            true
-        } else {
-            false
-        }
+        *x % 2 == 1
     });
     assert_eq!(c, LinkedListStPerSLit![1, 3, 5]);
 }

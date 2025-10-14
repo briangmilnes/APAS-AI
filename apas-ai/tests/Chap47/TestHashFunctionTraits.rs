@@ -137,7 +137,7 @@ fn test_hash_table_stats() {
     assert_eq!(stats.max_chain_length, 5);
     assert_eq!(stats.avg_chain_length, 2.5);
 
-    let display_str = format!("{}", stats);
+    let display_str = format!("{stats}");
     assert!(display_str.contains("elements: 100"));
     assert!(display_str.contains("size: 200"));
     assert!(display_str.contains("load_factor: 0.500"));

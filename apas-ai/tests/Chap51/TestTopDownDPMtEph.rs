@@ -110,7 +110,7 @@ fn test_display() {
     let s = ArraySeqMtEphS::from_vec(vec!['a', 'b']);
     let t = ArraySeqMtEphS::from_vec(vec!['c', 'd']);
     let dp = TopDownDPMtEphS::new(s, t);
-    let display_str = format!("{}", dp);
+    let display_str = format!("{dp}");
     assert!(display_str.contains("TopDownDPMtEph"));
     assert!(display_str.contains("s_len=2"));
     assert!(display_str.contains("t_len=2"));

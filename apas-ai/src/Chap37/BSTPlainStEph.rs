@@ -86,7 +86,7 @@ pub mod BSTPlainStEph {
         }
     }
 
-    fn contains_node<'a, T: StT + Ord>(node: &'a BalBinTree<T>, target: &T) -> B {
+    fn contains_node<T: StT + Ord>(node: &BalBinTree<T>, target: &T) -> B {
         match node {
             | BalBinTree::Leaf => false,
             | BalBinTree::Node(inner) => {
@@ -116,7 +116,7 @@ pub mod BSTPlainStEph {
         }
     }
 
-    fn min_node<'a, T: StT + Ord>(node: &'a BalBinTree<T>) -> Option<&'a T> {
+    fn min_node<T: StT + Ord>(node: &BalBinTree<T>) -> Option<&T> {
         match node {
             | BalBinTree::Leaf => None,
             | BalBinTree::Node(inner) => match &inner.left {
@@ -126,7 +126,7 @@ pub mod BSTPlainStEph {
         }
     }
 
-    fn max_node<'a, T: StT + Ord>(node: &'a BalBinTree<T>) -> Option<&'a T> {
+    fn max_node<T: StT + Ord>(node: &BalBinTree<T>) -> Option<&T> {
         match node {
             | BalBinTree::Leaf => None,
             | BalBinTree::Node(inner) => match &inner.right {

@@ -22,7 +22,7 @@ fn bench_linear_probing_insert(c: &mut Criterion) {
                 let mut table = FlatHashTable::create_table(strategy.clone(), size);
                 let num_elements = (size as f64 * 0.3) as usize;
                 for i in 0..num_elements {
-                    table = table.insert(black_box(i as i32), black_box(format!("value_{}", i)));
+                    table = table.insert(black_box(i as i32), black_box(format!("value_{i}")));
                 }
                 black_box(table)
             });

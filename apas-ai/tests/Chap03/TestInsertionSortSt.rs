@@ -47,6 +47,6 @@ fn insertion_sort_large_input_stress_test() {
 
     // Verify it's actually sorted
     for i in 1..data.len() {
-        assert!(data[i - 1] <= data[i], "Array not properly sorted at index {}", i);
+        assert!(data[i - 1] <= data[i], "Array not properly sorted at index {i}");
     }
 }

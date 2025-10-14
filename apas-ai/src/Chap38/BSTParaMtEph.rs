@@ -180,7 +180,7 @@ pub mod BSTParaMtEph {
                         crate::ParaPair!(move || ParamBST::intersect_inner(&al, &bl), move || {
                             ParamBST::intersect_inner(&ar, &br)
                         });
-                    if found == true {
+                    if found {
                         ParamBST::join_m(left_res, ak, right_res)
                     } else {
                         ParamBST::join_pair_inner(left_res, right_res)
@@ -201,7 +201,7 @@ pub mod BSTParaMtEph {
                         crate::ParaPair!(move || ParamBST::difference_inner(&al, &bl), move || {
                             ParamBST::difference_inner(&ar, &br)
                         });
-                    if found == true {
+                    if found {
                         ParamBST::join_pair_inner(left_res, right_res)
                     } else {
                         ParamBST::join_m(left_res, ak, right_res)
@@ -306,7 +306,7 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)

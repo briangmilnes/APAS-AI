@@ -244,7 +244,7 @@ fn test_display_format() {
 
     table = table.insert("key".to_string(), 100);
 
-    let display_str = format!("{}", table);
+    let display_str = format!("{table}");
     assert!(display_str.contains("FlatHashTable"));
     assert!(display_str.contains("LinearProbing"));
     assert!(display_str.contains("elements: 1"));

@@ -103,11 +103,7 @@ pub mod RelationStEph {
             X: Clone,
             Y: Clone,
         {
-            if self.pairs.mem(&Pair(a.clone(), b.clone())) == true {
-                true
-            } else {
-                false
-            }
+            self.pairs.mem(&Pair(a.clone(), b.clone()))
         }
 
         fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.pairs.iter() }

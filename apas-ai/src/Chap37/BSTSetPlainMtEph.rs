@@ -99,7 +99,7 @@ pub mod BSTSetPlainMtEph {
             for value in other.values_vec() {
                 merged.insert(value);
             }
-            Self::from_sorted_iter(merged.into_iter())
+            Self::from_sorted_iter(merged)
         }
 
         pub fn intersection(&self, other: &Self) -> Self {
@@ -116,7 +116,7 @@ pub mod BSTSetPlainMtEph {
                     }
                 })
                 .collect();
-            Self::from_sorted_iter(filtered.into_iter())
+            Self::from_sorted_iter(filtered)
         }
 
         pub fn difference(&self, other: &Self) -> Self {
@@ -133,7 +133,7 @@ pub mod BSTSetPlainMtEph {
                     }
                 })
                 .collect();
-            Self::from_sorted_iter(filtered.into_iter())
+            Self::from_sorted_iter(filtered)
         }
 
         pub fn split(&self, pivot: &T) -> (Self, B, Self) {
@@ -150,9 +150,9 @@ pub mod BSTSetPlainMtEph {
                 }
             }
             (
-                Self::from_sorted_iter(left.into_iter()),
+                Self::from_sorted_iter(left),
                 found,
-                Self::from_sorted_iter(right.into_iter()),
+                Self::from_sorted_iter(right),
             )
         }
 
@@ -161,7 +161,7 @@ pub mod BSTSetPlainMtEph {
             for value in right.values_vec() {
                 combined.insert(value);
             }
-            Self::from_sorted_iter(combined.into_iter())
+            Self::from_sorted_iter(combined)
         }
 
         pub fn join_m(left: Self, pivot: T, right: Self) -> Self {
@@ -170,7 +170,7 @@ pub mod BSTSetPlainMtEph {
             for value in right.values_vec() {
                 combined.insert(value);
             }
-            Self::from_sorted_iter(combined.into_iter())
+            Self::from_sorted_iter(combined)
         }
 
         pub fn filter<F>(&self, mut predicate: F) -> Self
@@ -183,7 +183,7 @@ pub mod BSTSetPlainMtEph {
                 .iter()
                 .filter_map(|v| if predicate(v) { Some(v.clone()) } else { None })
                 .collect();
-            Self::from_sorted_iter(filtered.into_iter())
+            Self::from_sorted_iter(filtered)
         }
 
         pub fn reduce<F>(&self, mut op: F, base: T) -> T
@@ -254,7 +254,7 @@ pub mod BSTSetPlainMtEph {
             for value in other.values_vec() {
                 merged.insert(value);
             }
-            Self::from_sorted_iter(merged.into_iter())
+            Self::from_sorted_iter(merged)
         }
 
         fn intersection(&self, other: &Self) -> Self {
@@ -271,7 +271,7 @@ pub mod BSTSetPlainMtEph {
                     }
                 })
                 .collect();
-            Self::from_sorted_iter(filtered.into_iter())
+            Self::from_sorted_iter(filtered)
         }
 
         fn difference(&self, other: &Self) -> Self {
@@ -288,7 +288,7 @@ pub mod BSTSetPlainMtEph {
                     }
                 })
                 .collect();
-            Self::from_sorted_iter(filtered.into_iter())
+            Self::from_sorted_iter(filtered)
         }
 
         fn split(&self, pivot: &T) -> (Self, B, Self) {
@@ -305,9 +305,9 @@ pub mod BSTSetPlainMtEph {
                 }
             }
             (
-                Self::from_sorted_iter(left.into_iter()),
+                Self::from_sorted_iter(left),
                 found,
-                Self::from_sorted_iter(right.into_iter()),
+                Self::from_sorted_iter(right),
             )
         }
 
@@ -316,7 +316,7 @@ pub mod BSTSetPlainMtEph {
             for value in right.values_vec() {
                 combined.insert(value);
             }
-            Self::from_sorted_iter(combined.into_iter())
+            Self::from_sorted_iter(combined)
         }
 
         fn join_m(left: Self, pivot: T, right: Self) -> Self {
@@ -325,7 +325,7 @@ pub mod BSTSetPlainMtEph {
             for value in right.values_vec() {
                 combined.insert(value);
             }
-            Self::from_sorted_iter(combined.into_iter())
+            Self::from_sorted_iter(combined)
         }
 
         fn filter<F>(&self, predicate: F) -> Self

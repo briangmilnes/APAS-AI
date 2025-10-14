@@ -131,14 +131,14 @@ pub mod BSTPlainMtEph {
             find_rec(&self.root, target)
         }
 
-        fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
+        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             guard.as_ref().map_or(0, |node| node.size)
         }
 
-        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         fn height(&self) -> N {
             let guard = self.root.read().unwrap();

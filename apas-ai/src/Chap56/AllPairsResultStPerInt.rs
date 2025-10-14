@@ -66,7 +66,7 @@ pub mod AllPairsResultStPerInt {
             if u >= self.n || v >= self.n {
                 return UNREACHABLE;
             }
-            self.distances.nth(u).nth(v).clone()
+            *self.distances.nth(u).nth(v)
         }
 
         /// Sets the distance from vertex u to vertex v, returning a new structure.
@@ -87,7 +87,7 @@ pub mod AllPairsResultStPerInt {
             if u >= self.n || v >= self.n {
                 return None;
             }
-            let pred = self.predecessors.nth(u).nth(v).clone();
+            let pred = *self.predecessors.nth(u).nth(v);
             if pred == NO_PREDECESSOR { None } else { Some(pred) }
         }
 

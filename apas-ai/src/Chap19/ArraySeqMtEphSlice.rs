@@ -88,7 +88,7 @@ pub mod ArraySeqMtEphSlice {
         /// Materializes the current slice into a Vec for diagnostics or copies.
         pub fn to_vec(&self) -> Vec<T> {
             let guard = self.inner.data.lock().unwrap();
-            guard[self.range.start..self.range.end].iter().cloned().collect()
+            guard[self.range.start..self.range.end].to_vec()
         }
 
         /// Invokes the closure with a mutable slice under the single mutex.
@@ -154,14 +154,14 @@ pub mod ArraySeqMtEphSlice {
             Self { inner, range: 0..1 }
         }
 
-        fn isEmpty(&self) -> B { if self.len() == 0 { true } else { false } }
+        fn isEmpty(&self) -> B { self.len() == 0 }
 
-        fn isSingleton(&self) -> B { if self.len() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B { self.len() == 1 }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let sub = self.clamp_subrange(start, length);
             let guard = self.inner.data.lock().unwrap();
-            let data: Vec<T> = guard[sub.start..sub.end].iter().cloned().collect();
+            let data: Vec<T> = guard[sub.start..sub.end].to_vec();
             ArraySeqMtEphSliceS::from_vec(data)
         }
 
@@ -226,7 +226,7 @@ pub mod ArraySeqMtEphSlice {
             // Serial compaction phase: collect kept values
             let mut kept_values = Vec::new();
             for i in 0..a.length() {
-                if keep_results[i] == true {
+                if keep_results[i] {
                     kept_values.push(a.nth_cloned(i));
                 }
             }
@@ -409,7 +409,7 @@ pub mod ArraySeqMtEphSlice {
                     write!(f, ", ")?;
                 }
                 first = false;
-                write!(f, "{}", item)?;
+                write!(f, "{item}")?;
             }
             write!(f, "]")
         }

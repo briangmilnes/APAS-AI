@@ -162,7 +162,7 @@ mod tests {
             target: ['C', 'D']
         );
 
-        let display_str = format!("{}", solver);
+        let display_str = format!("{solver}");
         assert!(display_str.contains("MinEditDistStPer"));
         assert!(display_str.contains("source"));
         assert!(display_str.contains("target"));

@@ -61,9 +61,9 @@ pub mod VertexMatchingMtEph {
         let coins = flip_coins_parallel(&edges_seq, &mut rng);
 
         // Phase 2: Select edges where coin is heads and all adjacent edges are tails
-        let matching = select_edges_parallel(graph, &edges_seq, &coins);
+        
 
-        matching
+        select_edges_parallel(graph, &edges_seq, &coins)
     }
 
     /// Phase 1: Flip coins for all edges in parallel
@@ -196,11 +196,10 @@ pub mod VertexMatchingMtEph {
             }
 
             // Check if adjacent edge is incident on u or v
-            if graph.Incident(adj_edge, u) || graph.Incident(adj_edge, v) {
-                if edge_coins.get(adj_edge).copied().unwrap_or(false) {
+            if (graph.Incident(adj_edge, u) || graph.Incident(adj_edge, v))
+                && edge_coins.get(adj_edge).copied().unwrap_or(false) {
                     return false; // Adjacent edge flipped heads
                 }
-            }
         }
 
         true

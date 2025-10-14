@@ -69,7 +69,7 @@ pub mod BSTBBAlphaStEph {
     impl<T: StT + Ord> BSTBBAlphaStEph<T> {
         // Private helper methods only - no public delegation
 
-        pub fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        pub fn is_empty(&self) -> B { self.size() == 0 }
 
         pub fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
@@ -91,7 +91,7 @@ pub mod BSTBBAlphaStEph {
 
         pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
 
-        pub fn contains(&self, target: &T) -> B { if self.find(target).is_some() { true } else { false } }
+        pub fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
         pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
 
@@ -187,7 +187,7 @@ pub mod BSTBBAlphaStEph {
             }
         }
 
-        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
+        fn min_link(link: &Link<T>) -> Option<&T> {
             match link {
                 | None => None,
                 | Some(node) => match node.left {
@@ -197,7 +197,7 @@ pub mod BSTBBAlphaStEph {
             }
         }
 
-        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
+        fn max_link(link: &Link<T>) -> Option<&T> {
             match link {
                 | None => None,
                 | Some(node) => match node.right {
@@ -229,7 +229,7 @@ pub mod BSTBBAlphaStEph {
 
         fn size(&self) -> N { Self::size_link(&self.root) }
 
-        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {

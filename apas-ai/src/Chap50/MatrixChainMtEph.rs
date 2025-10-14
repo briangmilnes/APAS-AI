@@ -249,8 +249,7 @@ pub mod MatrixChainMtEph {
             };
             write!(
                 f,
-                "MatrixChainMtEph(matrices: {}, memo_entries: {})",
-                dimensions_len, memo_size
+                "MatrixChainMtEph(matrices: {dimensions_len}, memo_entries: {memo_size})"
             )
         }
     }
@@ -271,7 +270,7 @@ pub mod MatrixChainMtEph {
         }
     }
 
-    impl<'a> IntoIterator for &'a MatrixChainMtEphS {
+    impl IntoIterator for &MatrixChainMtEphS {
         type Item = MatrixDim;
         type IntoIter = std::vec::IntoIter<MatrixDim>;
 
@@ -281,7 +280,7 @@ pub mod MatrixChainMtEph {
         }
     }
 
-    impl<'a> IntoIterator for &'a mut MatrixChainMtEphS {
+    impl IntoIterator for &mut MatrixChainMtEphS {
         type Item = MatrixDim;
         type IntoIter = std::vec::IntoIter<MatrixDim>;
 

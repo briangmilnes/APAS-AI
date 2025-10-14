@@ -158,9 +158,9 @@ fn bench_array_set_from_seq(c: &mut Criterion) {
         // Create sequence with some duplicates
         let mut vec_data = Vec::new();
         for i in 0..*size {
-            vec_data.push(i as i32);
+            vec_data.push(i);
             if i % 3 == 0 {
-                vec_data.push(i as i32); // Add duplicate
+                vec_data.push(i); // Add duplicate
             }
         }
         let seq = ArraySeqStEphS::from_vec(vec_data);

@@ -85,11 +85,7 @@ pub mod DirGraphStEph {
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Adjacent if there is an arc either way
-            if true == self.A.mem(&Edge(u.clone(), v.clone())) {
-                true
-            } else {
-                false
-            }
+            self.A.mem(&Edge(u.clone(), v.clone()))
         }
 
         fn NG(&self, v: &V) -> Set<V> { self.NPlus(v).union(&self.NMinus(v)) }
@@ -141,7 +137,7 @@ pub mod DirGraphStEph {
             result
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { true } else { false } }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B { &e.0 == v || &e.1 == v }
 
         fn Degree(&self, v: &V) -> N { self.InDegree(v) + self.OutDegree(v) }
         fn InDegree(&self, v: &V) -> N { self.NMinus(v).size() }

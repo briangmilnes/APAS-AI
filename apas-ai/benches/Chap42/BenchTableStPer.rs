@@ -10,7 +10,7 @@ use std::time::Duration;
 fn build_table(size: usize) -> TableStPer<i32, String> {
     let mut table = TableStPer::empty();
     for i in 0..size {
-        table = table.insert(i as i32, format!("value_{}", i), |_old, new| new.clone());
+        table = table.insert(i as i32, format!("value_{i}"), |_old, new| new.clone());
     }
     table
 }
@@ -31,7 +31,8 @@ fn bench_table_operations(c: &mut Criterion) {
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
-    for size in [10].iter() {
+    {
+        let size = &10;
         // Benchmark insert
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
             b.iter_batched(
@@ -100,19 +101,20 @@ fn bench_table_bulk_operations(c: &mut Criterion) {
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
-    for size in [10].iter() {
+    {
+        let size = &10;
         // Benchmark intersection
         group.bench_with_input(BenchmarkId::new("intersection", size), size, |b, &size| {
             let table1 = build_table(size);
             let table2 = build_table(size / 2);
-            b.iter(|| black_box(table1.intersection(&table2, |v1, v2| format!("{}+{}", v1, v2))));
+            b.iter(|| black_box(table1.intersection(&table2, |v1, v2| format!("{v1}+{v2}"))));
         });
 
         // Benchmark union
         group.bench_with_input(BenchmarkId::new("union", size), size, |b, &size| {
             let table1 = build_table(size);
             let table2 = build_table(size / 2);
-            b.iter(|| black_box(table1.union(&table2, |v1, v2| format!("{}+{}", v1, v2))));
+            b.iter(|| black_box(table1.union(&table2, |v1, v2| format!("{v1}+{v2}"))));
         });
 
         // Benchmark difference
@@ -154,13 +156,14 @@ fn bench_table_construction(c: &mut Criterion) {
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
-    for size in [10].iter() {
+    {
+        let size = &10;
         // Benchmark sequential construction
         group.bench_with_input(BenchmarkId::new("sequential_insert", size), size, |b, &size| {
             b.iter(|| {
                 let mut table = TableStPer::empty();
                 for i in 0..size {
-                    table = table.insert(i as i32, format!("value_{}", i), |_old, new| new.clone());
+                    table = table.insert(i, format!("value_{i}"), |_old, new| new.clone());
                 }
                 black_box(table)
             });
@@ -183,7 +186,8 @@ fn bench_table_persistence(c: &mut Criterion) {
     group.warm_up_time(std::time::Duration::from_millis(50));
     group.measurement_time(std::time::Duration::from_millis(150));
 
-    for size in [20].iter() {
+    {
+        let size = &20;
         // Benchmark that persistent operations don't affect original
         group.bench_with_input(BenchmarkId::new("persistent_insert", size), size, |b, &size| {
             let original = build_table(size);

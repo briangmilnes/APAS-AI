@@ -47,7 +47,7 @@ fn bench_tsp_approx_mt_small(c: &mut Criterion) {
 
     for &n in &[5, 7, 9] {
         let (graph, tree) = create_complete_graph(n);
-        group.bench_function(format!("n={}", n), |b| {
+        group.bench_function(format!("n={n}"), |b| {
             b.iter(|| approx_metric_tsp_mt(black_box(&graph), black_box(&tree), &0))
         });
     }

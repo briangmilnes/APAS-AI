@@ -11,12 +11,12 @@ fn test_arrayseqmtephsliceslit_macro_functionality() {
     // Test empty sequence creation
     let empty: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceSLit![];
     assert_eq!(empty.length(), 0);
-    assert_eq!(empty.isEmpty(), true);
+    assert!(empty.isEmpty());
 
     // Test sequence creation with elements
     let with_data: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceSLit![1, 2, 3];
     assert_eq!(with_data.length(), 3);
-    assert_eq!(with_data.isEmpty(), false);
+    assert!(!with_data.isEmpty());
     assert_eq!(with_data.nth_cloned(0), 1);
     assert_eq!(with_data.nth_cloned(1), 2);
     assert_eq!(with_data.nth_cloned(2), 3);
@@ -26,16 +26,16 @@ fn test_arrayseqmtephsliceslit_macro_functionality() {
 fn test_arrayseqmtephslice_empty() {
     let empty: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::empty();
     assert_eq!(empty.length(), 0);
-    assert_eq!(empty.isEmpty(), true);
-    assert_eq!(empty.isSingleton(), false);
+    assert!(empty.isEmpty());
+    assert!(!empty.isSingleton());
 }
 
 #[test]
 fn test_arrayseqmtephslice_new() {
     let seq = ArraySeqMtEphSliceS::new(5, 42);
     assert_eq!(seq.length(), 5);
-    assert_eq!(seq.isEmpty(), false);
-    assert_eq!(seq.isSingleton(), false);
+    assert!(!seq.isEmpty());
+    assert!(!seq.isSingleton());
 
     for i in 0..5 {
         assert_eq!(seq.nth_cloned(i), 42);
@@ -46,8 +46,8 @@ fn test_arrayseqmtephslice_new() {
 fn test_arrayseqmtephslice_singleton() {
     let seq = ArraySeqMtEphSliceS::singleton(99);
     assert_eq!(seq.length(), 1);
-    assert_eq!(seq.isEmpty(), false);
-    assert_eq!(seq.isSingleton(), true);
+    assert!(!seq.isEmpty());
+    assert!(seq.isSingleton());
     assert_eq!(seq.nth_cloned(0), 99);
 }
 
@@ -88,7 +88,7 @@ fn test_arrayseqmtephslice_subseq_copy() {
     // Test empty subseq
     let empty_sub = seq.subseq_copy(2, 0);
     assert_eq!(empty_sub.length(), 0);
-    assert_eq!(empty_sub.isEmpty(), true);
+    assert!(empty_sub.isEmpty());
 
     // Test out-of-bounds start (should return empty)
     let oob_sub = seq.subseq_copy(10, 2);
@@ -115,7 +115,7 @@ fn test_arrayseqmtephslice_slice() {
     // Test empty slice
     let empty_slice = seq.slice(3, 0);
     assert_eq!(empty_slice.length(), 0);
-    assert_eq!(empty_slice.isEmpty(), true);
+    assert!(empty_slice.isEmpty());
 }
 
 #[test]
@@ -143,7 +143,7 @@ fn test_arrayseqmtephslice_map() {
 #[test]
 fn test_arrayseqmtephslice_filter() {
     let seq = ArraySeqMtEphSliceS::tabulate(&|i| i, 6);
-    let filtered = ArraySeqMtEphSliceS::filter(&seq, |x| if *x % 2 == 0 { true } else { false });
+    let filtered = ArraySeqMtEphSliceS::filter(&seq, |x| *x % 2 == 0);
 
     assert_eq!(filtered.length(), 3); // 0, 2, 4
     assert_eq!(filtered.nth_cloned(0), 0);
@@ -174,7 +174,7 @@ fn test_arrayseqmtephslice_concurrent_access() {
 
             // Verify basic properties
             assert_eq!(seq_clone.length(), 10);
-            assert_eq!(seq_clone.isEmpty(), false);
+            assert!(!seq_clone.isEmpty());
 
             (thread_id, sum, seq_clone.length())
         }));
@@ -232,8 +232,8 @@ fn test_arrayseqmtephslice_edge_cases() {
     // Test with zero-length sequence
     let empty = ArraySeqMtEphSliceS::new(0, 42);
     assert_eq!(empty.length(), 0);
-    assert_eq!(empty.isEmpty(), true);
-    assert_eq!(empty.isSingleton(), false);
+    assert!(empty.isEmpty());
+    assert!(!empty.isSingleton());
 
     // Test subseq on empty sequence
     let empty_sub = empty.subseq_copy(0, 0);
@@ -278,16 +278,16 @@ fn test_arrayseqmtephslice_large_sequence() {
 #[test]
 fn test_arrayseqmtephslice_predicates() {
     let seq1: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::empty();
-    assert_eq!(seq1.isEmpty(), true);
-    assert_eq!(seq1.isSingleton(), false);
+    assert!(seq1.isEmpty());
+    assert!(!seq1.isSingleton());
 
     let seq2 = ArraySeqMtEphSliceS::singleton(42);
-    assert_eq!(seq2.isEmpty(), false);
-    assert_eq!(seq2.isSingleton(), true);
+    assert!(!seq2.isEmpty());
+    assert!(seq2.isSingleton());
 
     let seq3 = ArraySeqMtEphSliceS::new(3, 0);
-    assert_eq!(seq3.isEmpty(), false);
-    assert_eq!(seq3.isSingleton(), false);
+    assert!(!seq3.isEmpty());
+    assert!(!seq3.isSingleton());
 }
 
 #[test]
@@ -434,7 +434,7 @@ fn test_arrayseqmtephslice_eq() {
 #[test]
 fn test_arrayseqmtephslice_fmt_debug() {
     let seq = ArraySeqMtEphSliceS::from_vec(vec![1, 2, 3]);
-    let debug_str = format!("{:?}", seq);
+    let debug_str = format!("{seq:?}");
     assert!(debug_str.contains("1"));
     assert!(debug_str.contains("2"));
     assert!(debug_str.contains("3"));
@@ -443,7 +443,7 @@ fn test_arrayseqmtephslice_fmt_debug() {
 #[test]
 fn test_arrayseqmtephslice_fmt_display() {
     let seq = ArraySeqMtEphSliceS::from_vec(vec![10, 20, 30]);
-    let display_str = format!("{}", seq);
+    let display_str = format!("{seq}");
     assert!(display_str.contains("10"));
     assert!(display_str.contains("20"));
     assert!(display_str.contains("30"));
@@ -553,22 +553,22 @@ fn test_arrayseqmtephslice_ninject() {
 #[test]
 fn test_arrayseqmtephslice_is_empty() {
     let empty = ArraySeqMtEphSliceS::<i32>::empty();
-    assert_eq!(empty.isEmpty(), true);
+    assert!(empty.isEmpty());
 
     let non_empty = ArraySeqMtEphSliceS::singleton(42);
-    assert_eq!(non_empty.isEmpty(), false);
+    assert!(!non_empty.isEmpty());
 }
 
 #[test]
 fn test_arrayseqmtephslice_is_singleton() {
     let singleton = ArraySeqMtEphSliceS::singleton(99);
-    assert_eq!(singleton.isSingleton(), true);
+    assert!(singleton.isSingleton());
 
     let empty = ArraySeqMtEphSliceS::<i32>::empty();
-    assert_eq!(empty.isSingleton(), false);
+    assert!(!empty.isSingleton());
 
     let multi = ArraySeqMtEphSliceS::from_vec(vec![1, 2]);
-    assert_eq!(multi.isSingleton(), false);
+    assert!(!multi.isSingleton());
 }
 
 #[test]

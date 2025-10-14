@@ -32,11 +32,11 @@ fn test_empty_mapping() {
 fn test_from_vec_basic() {
     let m = MappingLit![(1, "one"), (2, "two"), (3, "three")];
     assert_eq!(m.size(), 3);
-    assert_eq!(m.mem(&1, &"one"), true);
-    assert_eq!(m.mem(&2, &"two"), true);
-    assert_eq!(m.mem(&3, &"three"), true);
-    assert_eq!(m.mem(&1, &"wrong"), false);
-    assert_eq!(m.mem(&99, &"one"), false);
+    assert!(m.mem(&1, &"one"));
+    assert!(m.mem(&2, &"two"));
+    assert!(m.mem(&3, &"three"));
+    assert!(!m.mem(&1, &"wrong"));
+    assert!(!m.mem(&99, &"one"));
 }
 
 #[test]
@@ -55,8 +55,8 @@ fn test_from_relation() {
     // Mapping should convert relation to function (one value per key)
     assert!(m.size() <= 2); // At most 2 keys (1 and 2)
                             // Either "one" or "uno" for key 1, depending on implementation
-    assert!(m.mem(&1, &"one") == true || m.mem(&1, &"uno") == true);
-    assert_eq!(m.mem(&2, &"two"), true);
+    assert!(m.mem(&1, &"one") || m.mem(&1, &"uno"));
+    assert!(m.mem(&2, &"two"));
 }
 
 #[test]
@@ -65,16 +65,16 @@ fn test_domain_and_range() {
 
     let domain = m.domain();
     assert_eq!(domain.size(), 3);
-    assert_eq!(domain.mem(&1), true);
-    assert_eq!(domain.mem(&2), true);
-    assert_eq!(domain.mem(&3), true);
-    assert_eq!(domain.mem(&4), false);
+    assert!(domain.mem(&1));
+    assert!(domain.mem(&2));
+    assert!(domain.mem(&3));
+    assert!(!domain.mem(&4));
 
     let range = m.range();
     assert_eq!(range.size(), 2); // "one" and "two"
-    assert_eq!(range.mem(&"one"), true);
-    assert_eq!(range.mem(&"two"), true);
-    assert_eq!(range.mem(&"three"), false);
+    assert!(range.mem(&"one"));
+    assert!(range.mem(&"two"));
+    assert!(!range.mem(&"three"));
 }
 
 #[test]
@@ -94,17 +94,17 @@ fn test_mem_comprehensive() {
     let m = MappingLit![("a", 1), ("b", 2), ("c", 3)];
 
     // Test existing pairs
-    assert_eq!(m.mem(&"a", &1), true);
-    assert_eq!(m.mem(&"b", &2), true);
-    assert_eq!(m.mem(&"c", &3), true);
+    assert!(m.mem(&"a", &1));
+    assert!(m.mem(&"b", &2));
+    assert!(m.mem(&"c", &3));
 
     // Test wrong key-value combinations
-    assert_eq!(m.mem(&"a", &2), false);
-    assert_eq!(m.mem(&"b", &3), false);
+    assert!(!m.mem(&"a", &2));
+    assert!(!m.mem(&"b", &3));
 
     // Test non-existent keys/values
-    assert_eq!(m.mem(&"d", &1), false);
-    assert_eq!(m.mem(&"a", &99), false);
+    assert!(!m.mem(&"d", &1));
+    assert!(!m.mem(&"a", &99));
 }
 
 #[test]
@@ -114,7 +114,7 @@ fn test_empty_mapping_operations() {
     assert_eq!(m.size(), 0);
     assert_eq!(m.domain().size(), 0);
     assert_eq!(m.range().size(), 0);
-    assert_eq!(m.mem(&1, &"anything"), false);
+    assert!(!m.mem(&1, &"anything"));
 
     let collected: Vec<_> = m.iter().collect();
     assert_eq!(collected.len(), 0);
@@ -129,7 +129,7 @@ fn test_from_relation_empty_edge() {
     assert_eq!(m.size(), 0);
     assert_eq!(m.domain().size(), 0);
     assert_eq!(m.range().size(), 0);
-    assert_eq!(m.mem(&42, &"test".to_string()), false);
+    assert!(!m.mem(&42, &"test".to_string()));
 }
 
 #[test]
@@ -143,47 +143,47 @@ fn test_mapping_extreme_values_graceful() {
     let m = MappingLit![(large_key, "max"), (small_key, "min"), (0, "zero")];
 
     assert_eq!(m.size(), 3);
-    assert_eq!(m.mem(&large_key, &"max"), true);
-    assert_eq!(m.mem(&small_key, &"min"), true);
-    assert_eq!(m.mem(&0, &"zero"), true);
+    assert!(m.mem(&large_key, &"max"));
+    assert!(m.mem(&small_key, &"min"));
+    assert!(m.mem(&0, &"zero"));
 
     // Test domain and range operations with extreme values
     let domain = m.domain();
     assert_eq!(domain.size(), 3);
-    assert_eq!(domain.mem(&large_key), true);
-    assert_eq!(domain.mem(&small_key), true);
+    assert!(domain.mem(&large_key));
+    assert!(domain.mem(&small_key));
 
     let range = m.range();
     assert_eq!(range.size(), 3);
-    assert_eq!(range.mem(&"max"), true);
-    assert_eq!(range.mem(&"min"), true);
+    assert!(range.mem(&"max"));
+    assert!(range.mem(&"min"));
 
     // Test with non-existent extreme keys - should return False, not panic
-    assert_eq!(m.mem(&(large_key - 1), &"max"), false);
-    assert_eq!(m.mem(&(small_key + 1), &"min"), false);
+    assert!(!m.mem(&(large_key - 1), &"max"));
+    assert!(!m.mem(&(small_key + 1), &"min"));
 }
 
 #[test]
 fn test_mapping_large_dataset_stress() {
     // Test with large mapping to verify no panics occur
-    let large_pairs: Vec<Pair<i32, String>> = (0..10000).map(|i| Pair(i, format!("value_{}", i))).collect();
+    let large_pairs: Vec<Pair<i32, String>> = (0..10000).map(|i| Pair(i, format!("value_{i}"))).collect();
 
     let m = <Mapping<i32, String> as MappingStEphTrait<i32, String>>::FromVec(large_pairs);
 
     assert_eq!(m.size(), 10000);
-    assert_eq!(m.mem(&5000, &"value_5000".to_string()), true);
-    assert_eq!(m.mem(&15000, &"value_15000".to_string()), false);
+    assert!(m.mem(&5000, &"value_5000".to_string()));
+    assert!(!m.mem(&15000, &"value_15000".to_string()));
 
     // Test domain and range operations on large mapping
     let domain = m.domain();
     assert_eq!(domain.size(), 10000);
-    assert_eq!(domain.mem(&9999), true);
-    assert_eq!(domain.mem(&10000), false);
+    assert!(domain.mem(&9999));
+    assert!(!domain.mem(&10000));
 
     let range = m.range();
     assert_eq!(range.size(), 10000);
-    assert_eq!(range.mem(&"value_0".to_string()), true);
-    assert_eq!(range.mem(&"value_10000".to_string()), false);
+    assert!(range.mem(&"value_0".to_string()));
+    assert!(!range.mem(&"value_10000".to_string()));
 
     // Test iteration on large mapping - should not panic
     let mut count = 0;

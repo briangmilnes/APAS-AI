@@ -110,7 +110,7 @@ fn test_display() {
     let s = ArraySeqMtPerS::from_vec(vec!['a', 'b']);
     let t = ArraySeqMtPerS::from_vec(vec!['c', 'd']);
     let dp = TopDownDPMtPerS::new(s, t);
-    let display_str = format!("{}", dp);
+    let display_str = format!("{dp}");
     assert!(display_str.contains("TopDownDPMtPer"));
     assert!(display_str.contains("s_len=2"));
     assert!(display_str.contains("t_len=2"));

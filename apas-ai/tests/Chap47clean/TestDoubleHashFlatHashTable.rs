@@ -63,8 +63,8 @@ fn test_second_hash_nonzero() {
     // APAS: hh(k) cannot equal zero
     for i in 0..100 {
         let step = DoubleHashFlatHashTableStEph::second_hash(&i, 11);
-        assert_ne!(step, 0, "Second hash returned zero for key {}", i);
-        assert!(step < 11, "Second hash {} >= table size 11 for key {}", step, i);
+        assert_ne!(step, 0, "Second hash returned zero for key {i}");
+        assert!(step < 11, "Second hash {step} >= table size 11 for key {i}");
     }
 }
 
@@ -73,7 +73,7 @@ fn test_second_hash_is_odd() {
     // Our implementation ensures step is odd (for power-of-2 coprimality)
     for i in 0..100 {
         let step = DoubleHashFlatHashTableStEph::second_hash(&i, 16); // Power of 2
-        assert_eq!(step % 2, 1, "Second hash {} is not odd for key {}", step, i);
+        assert_eq!(step % 2, 1, "Second hash {step} is not odd for key {i}");
     }
 }
 
@@ -125,7 +125,7 @@ fn test_probe_visits_all_slots_prime_size() {
 
     // All slots should be visited (assuming step is coprime to 11)
     let all_visited = visited.iter().all(|&v| v);
-    assert!(all_visited, "Not all slots visited with step={}: {:?}", step, visited);
+    assert!(all_visited, "Not all slots visited with step={step}: {visited:?}");
 }
 
 #[test]
@@ -186,14 +186,14 @@ fn test_high_load_factor() {
 
     // Insert 8 items (load factor ≈ 0.73)
     for i in 0..8 {
-        DoubleHashFlatHashTableStEph::insert(&mut table, i, format!("value{}", i));
+        DoubleHashFlatHashTableStEph::insert(&mut table, i, format!("value{i}"));
     }
 
     // All should be retrievable
     for i in 0..8 {
         assert_eq!(
             DoubleHashFlatHashTableStEph::lookup(&table, &i),
-            Some(format!("value{}", i))
+            Some(format!("value{i}"))
         );
     }
 }

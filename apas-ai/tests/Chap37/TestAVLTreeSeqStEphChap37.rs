@@ -26,21 +26,21 @@ fn test_avl_ephemeral_basic() {
 fn test_avl_empty_constructor() {
     let empty: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::empty();
     assert_eq!(empty.length(), 0);
-    assert_eq!(empty.isEmpty(), true);
-    assert_eq!(empty.isSingleton(), false);
+    assert!(empty.isEmpty());
+    assert!(!empty.isSingleton());
 
     let new_empty: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::new();
     assert_eq!(new_empty.length(), 0);
-    assert_eq!(new_empty.isEmpty(), true);
-    assert_eq!(new_empty.isSingleton(), false);
+    assert!(new_empty.isEmpty());
+    assert!(!new_empty.isSingleton());
 }
 
 #[test]
 fn test_avl_singleton_constructor() {
     let single = AVLTreeSeqStEphS::singleton(42);
     assert_eq!(single.length(), 1);
-    assert_eq!(single.isEmpty(), false);
-    assert_eq!(single.isSingleton(), true);
+    assert!(!single.isEmpty());
+    assert!(single.isSingleton());
     assert_eq!(*single.nth(0), 42);
 }
 
@@ -57,7 +57,7 @@ fn test_avl_from_vec_constructor() {
     // Test empty vec
     let empty_tree: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::from_vec(vec![]);
     assert_eq!(empty_tree.length(), 0);
-    assert_eq!(empty_tree.isEmpty(), true);
+    assert!(empty_tree.isEmpty());
 }
 
 #[test]
@@ -119,12 +119,12 @@ fn test_avl_subseq_copy() {
     // Test empty subseq (length 0)
     let empty_sub = tree.subseq_copy(5, 0);
     assert_eq!(empty_sub.length(), 0);
-    assert_eq!(empty_sub.isEmpty(), true);
+    assert!(empty_sub.isEmpty());
 
     // Test out-of-bounds start
     let oob_sub = tree.subseq_copy(15, 3);
     assert_eq!(oob_sub.length(), 0);
-    assert_eq!(oob_sub.isEmpty(), true);
+    assert!(oob_sub.isEmpty());
 
     // Test partial out-of-bounds (extends beyond end)
     let partial_sub = tree.subseq_copy(8, 5); // Should get [9, 10]
@@ -158,18 +158,18 @@ fn test_avl_contains_value() {
     let tree = AVLTreeSeqStEphS::from_vec(vec![10, 20, 30, 40, 50]);
 
     // Test existing values
-    assert_eq!(tree.contains_value(&20), true);
-    assert_eq!(tree.contains_value(&50), true);
-    assert_eq!(tree.contains_value(&10), true);
+    assert!(tree.contains_value(&20));
+    assert!(tree.contains_value(&50));
+    assert!(tree.contains_value(&10));
 
     // Test non-existing values
-    assert_eq!(tree.contains_value(&15), false);
-    assert_eq!(tree.contains_value(&60), false);
-    assert_eq!(tree.contains_value(&0), false);
+    assert!(!tree.contains_value(&15));
+    assert!(!tree.contains_value(&60));
+    assert!(!tree.contains_value(&0));
 
     // Test empty tree
     let empty = AVLTreeSeqStEphS::new();
-    assert_eq!(empty.contains_value(&42), false);
+    assert!(!empty.contains_value(&42));
 }
 
 #[test]
@@ -334,14 +334,14 @@ fn test_avl_large_tree_operations() {
     assert_eq!(*tree.nth(10), 999);
 
     // Test contains after modification
-    assert_eq!(tree.contains_value(&999), true);
-    assert_eq!(tree.contains_value(&11), false); // 11 was replaced by 999
+    assert!(tree.contains_value(&999));
+    assert!(!tree.contains_value(&11)); // 11 was replaced by 999
 
     // Test deletion
     let deleted = tree.delete_value(&5);
     assert!(deleted);
     assert_eq!(tree.length(), 19);
-    assert_eq!(tree.contains_value(&5), false);
+    assert!(!tree.contains_value(&5));
 }
 
 #[test]
@@ -416,7 +416,7 @@ fn test_select_and_append() {
     assert_eq!(select(&a, &b, 0), Some(0));
     assert_eq!(select(&a, &b, 4), Some(4));
     assert_eq!(select(&a, &b, 6), None);
-    let mut vals: Vec<N> = a.iter().map(|x| *x).collect();
+    let mut vals: Vec<N> = a.iter().copied().collect();
     for x in b.iter() {
         if !vals.contains(x) {
             vals.push(*x);
@@ -435,7 +435,7 @@ fn test_deflate_and_filter() {
         AVLTreeSeqStEphLit![]
     };
     assert_eq!(d.to_arrayseq(), ArraySeqStEphSLit![2]);
-    let kept: Vec<N> = t.iter().filter(|x| **x < 3).map(|x| *x).collect();
+    let kept: Vec<N> = t.iter().filter(|x| **x < 3).copied().collect();
     let f = AVLTreeSeqStEphS::from_vec(kept);
     assert_eq!(f.to_arrayseq(), ArraySeqStEphSLit![0, 1, 2]);
 }

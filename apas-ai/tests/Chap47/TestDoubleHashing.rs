@@ -115,7 +115,7 @@ fn test_double_hash_probe_sequence() {
     let h2_safe = if h2 == 0 { 1 } else { h2 };
 
     assert_eq!(hash0, h1 % table_size);
-    assert_eq!(hash1, (h1 + 1 * h2_safe) % table_size);
+    assert_eq!(hash1, (h1 + h2_safe) % table_size);
     assert_eq!(hash2, (h1 + 2 * h2_safe) % table_size);
     assert_eq!(hash3, (h1 + 3 * h2_safe) % table_size);
 }
@@ -159,7 +159,7 @@ fn test_double_hashing_zero_h2_handling() {
     let h2_safe = if h2_raw == 0 { 1 } else { h2_raw };
 
     assert_eq!(hash0, h1 % table_size);
-    assert_eq!(hash1, (h1 + 1 * h2_safe) % table_size);
+    assert_eq!(hash1, (h1 + h2_safe) % table_size);
     assert_eq!(hash2, (h1 + 2 * h2_safe) % table_size);
 }
 
@@ -169,16 +169,16 @@ fn test_double_hashing_resize_behavior() {
 
     // Insert many elements to trigger resizing
     for i in 0..25 {
-        let key = format!("item{}", i);
-        table = table.insert(key, i as i32);
+        let key = format!("item{i}");
+        table = table.insert(key, i);
     }
 
     assert_eq!(table.load_and_size().0, 25);
 
     // Verify all elements are still accessible after resizing
     for i in 0..25 {
-        let key = format!("item{}", i);
-        assert_eq!(table.lookup(&key), Some(&(i as i32)));
+        let key = format!("item{i}");
+        assert_eq!(table.lookup(&key), Some(&{ i }));
     }
 }
 
@@ -300,16 +300,16 @@ fn test_double_hashing_prime_table_sizes() {
 
     // Insert elements
     for i in 0..10 {
-        let key = format!("prime{}", i);
-        table = table.insert(key, i as i32 * 10);
+        let key = format!("prime{i}");
+        table = table.insert(key, i * 10);
     }
 
     assert_eq!(table.load_and_size().0, 10);
 
     // Verify retrieval
     for i in 0..10 {
-        let key = format!("prime{}", i);
-        assert_eq!(table.lookup(&key), Some(&(i as i32 * 10)));
+        let key = format!("prime{i}");
+        assert_eq!(table.lookup(&key), Some(&(i * 10)));
     }
 }
 
@@ -342,7 +342,7 @@ fn test_double_hashing_step_size_variation() {
 
     // Different keys should generally produce different step sizes
     // (unless they happen to have the same length mod table_size)
-    if key1.len() % (table_size as usize) != key2.len() % (table_size as usize) {
+    if key1.len() % table_size != key2.len() % table_size {
         assert_ne!(step1, step2);
     }
 

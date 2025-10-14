@@ -16,10 +16,10 @@ fn bench_ordered_table_st_eph_insert(c: &mut Criterion) {
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
             b.iter_batched(
-                || <OrderedTableStEph<i32, String>>::empty(),
+                <OrderedTableStEph<i32, String>>::empty,
                 |mut table| {
                     for i in 0..size {
-                        table.insert(black_box(i), black_box(format!("value_{}", i)), |_old, new| new.clone());
+                        table.insert(black_box(i), black_box(format!("value_{i}")), |_old, new| new.clone());
                     }
                     black_box(table)
                 },
@@ -39,7 +39,7 @@ fn bench_ordered_table_st_eph_lookup(c: &mut Criterion) {
     for size in [100, 500, 1000].iter() {
         let mut table = <OrderedTableStEph<i32, String>>::empty();
         for i in 0..*size {
-            table.insert(i, format!("value_{}", i), |_old, new| new.clone());
+            table.insert(i, format!("value_{i}"), |_old, new| new.clone());
         }
 
         group.bench_with_input(BenchmarkId::new("lookup", size), size, |b, &size| {
@@ -65,7 +65,7 @@ fn bench_ordered_table_st_eph_delete(c: &mut Criterion) {
                 || {
                     let mut table = <OrderedTableStEph<i32, String>>::empty();
                     for i in 0..size {
-                        table.insert(i, format!("value_{}", i), |_old, new| new.clone());
+                        table.insert(i, format!("value_{i}"), |_old, new| new.clone());
                     }
                     table
                 },
@@ -91,7 +91,7 @@ fn bench_ordered_table_st_eph_first_last_key(c: &mut Criterion) {
     for size in [100, 500, 1000].iter() {
         let mut table = <OrderedTableStEph<i32, String>>::empty();
         for i in 0..*size {
-            table.insert(i, format!("value_{}", i), |_old, new| new.clone());
+            table.insert(i, format!("value_{i}"), |_old, new| new.clone());
         }
 
         group.bench_with_input(BenchmarkId::new("first_key", size), size, |b, _size| {
@@ -149,7 +149,7 @@ fn bench_ordered_table_st_eph_split_join_key(c: &mut Criterion) {
                 || {
                     let mut table = <OrderedTableStEph<i32, String>>::empty();
                     for i in 0..size {
-                        table.insert(i, format!("value_{}", i), |_old, new| new.clone());
+                        table.insert(i, format!("value_{i}"), |_old, new| new.clone());
                     }
                     table
                 },
@@ -169,10 +169,10 @@ fn bench_ordered_table_st_eph_split_join_key(c: &mut Criterion) {
                     let mid = size / 2;
 
                     for i in 0..mid {
-                        left.insert(i, format!("value_{}", i), |_old, new| new.clone());
+                        left.insert(i, format!("value_{i}"), |_old, new| new.clone());
                     }
                     for i in mid..size {
-                        right.insert(i, format!("value_{}", i), |_old, new| new.clone());
+                        right.insert(i, format!("value_{i}"), |_old, new| new.clone());
                     }
                     (left, right)
                 },
@@ -196,7 +196,7 @@ fn bench_ordered_table_st_eph_get_key_range(c: &mut Criterion) {
     for size in [100, 500, 1000].iter() {
         let mut table = <OrderedTableStEph<i32, String>>::empty();
         for i in 0..*size {
-            table.insert(i, format!("value_{}", i), |_old, new| new.clone());
+            table.insert(i, format!("value_{i}"), |_old, new| new.clone());
         }
 
         group.bench_with_input(BenchmarkId::new("get_key_range", size), size, |b, &size| {
@@ -219,7 +219,7 @@ fn bench_ordered_table_st_eph_rank_select_key(c: &mut Criterion) {
     for size in [100, 500, 1000].iter() {
         let mut table = <OrderedTableStEph<i32, String>>::empty();
         for i in 0..*size {
-            table.insert(i, format!("value_{}", i), |_old, new| new.clone());
+            table.insert(i, format!("value_{i}"), |_old, new| new.clone());
         }
 
         group.bench_with_input(BenchmarkId::new("rank_key", size), size, |b, &size| {
@@ -253,7 +253,7 @@ fn bench_ordered_table_st_eph_split_rank_key(c: &mut Criterion) {
                 || {
                     let mut table = <OrderedTableStEph<i32, String>>::empty();
                     for i in 0..size {
-                        table.insert(i, format!("value_{}", i), |_old, new| new.clone());
+                        table.insert(i, format!("value_{i}"), |_old, new| new.clone());
                     }
                     table
                 },
@@ -285,7 +285,7 @@ fn bench_ordered_table_st_eph_table_operations(c: &mut Criterion) {
         });
 
         group.bench_with_input(BenchmarkId::new("map", size), size, |b, _size| {
-            b.iter(|| black_box(table.map(|k, v| format!("{}:{}", k, v))));
+            b.iter(|| black_box(table.map(|k, v| format!("{k}:{v}"))));
         });
 
         group.bench_with_input(BenchmarkId::new("reduce", size), size, |b, _size| {
@@ -304,7 +304,7 @@ fn bench_ordered_table_st_eph_collect(c: &mut Criterion) {
     for size in [100, 500, 1000].iter() {
         let mut table = <OrderedTableStEph<i32, String>>::empty();
         for i in 0..*size {
-            table.insert(i, format!("value_{}", i), |_old, new| new.clone());
+            table.insert(i, format!("value_{i}"), |_old, new| new.clone());
         }
 
         group.bench_with_input(BenchmarkId::new("collect", size), size, |b, _size| {
@@ -321,7 +321,7 @@ fn bench_ordered_table_st_eph_from_sorted_entries(c: &mut Criterion) {
     group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
-        let entries: Vec<Pair<i32, String>> = (0..*size).map(|i| Pair(i, format!("value_{}", i))).collect();
+        let entries: Vec<Pair<i32, String>> = (0..*size).map(|i| Pair(i, format!("value_{i}"))).collect();
 
         group.bench_with_input(BenchmarkId::new("from_sorted_entries", size), &entries, |b, entries| {
             b.iter(|| {

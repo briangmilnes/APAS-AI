@@ -121,7 +121,7 @@ fn test_max_attempts_ceiling_m_over_2() {
 
     // Insert 6 keys (all hash to 0, probe quadratically)
     for i in 0..6 {
-        QuadProbFlatHashTableStEph::insert(&mut table, i, format!("value{}", i));
+        QuadProbFlatHashTableStEph::insert(&mut table, i, format!("value{i}"));
     }
 
     // Verify all 6 were inserted
@@ -148,7 +148,7 @@ fn test_lookup_stops_at_max_attempts() {
 
     // Fill table with many entries
     for i in 0..8 {
-        QuadProbFlatHashTableStEph::insert(&mut table, i, format!("value{}", i));
+        QuadProbFlatHashTableStEph::insert(&mut table, i, format!("value{i}"));
     }
 
     // Looking up non-existent key should return None, not hang
@@ -197,10 +197,10 @@ fn test_prime_size_guarantees() {
 
     // Insert up to ⌈13/2⌉ = 7 items - should always succeed
     for i in 0..7 {
-        QuadProbFlatHashTableStEph::insert(&mut table, i, format!("value{}", i));
+        QuadProbFlatHashTableStEph::insert(&mut table, i, format!("value{i}"));
         assert_eq!(
             QuadProbFlatHashTableStEph::lookup(&table, &i),
-            Some(format!("value{}", i))
+            Some(format!("value{i}"))
         );
     }
 }

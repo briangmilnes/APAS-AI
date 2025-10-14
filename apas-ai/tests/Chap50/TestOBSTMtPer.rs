@@ -134,7 +134,7 @@ fn test_obst_display() {
         keys: ['a', 'b'],
         probs: [0.5, 0.5]
     );
-    let display_str = format!("{}", obst);
+    let display_str = format!("{obst}");
     assert!(display_str.contains("OBSTMtPer"));
     assert!(display_str.contains("keys: 2"));
 }

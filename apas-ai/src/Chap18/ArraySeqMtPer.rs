@@ -48,13 +48,13 @@ pub mod ArraySeqMtPer {
             let n = self.data.len();
             let s = start.min(n);
             let e = start.saturating_add(length).min(n);
-            let values: Vec<T> = self.data[s..e].iter().cloned().collect();
+            let values: Vec<T> = self.data[s..e].to_vec();
             ArraySeqMtPerS::from_vec(values)
         }
 
-        pub fn is_empty(&self) -> B { if self.data.is_empty() { true } else { false } }
+        pub fn is_empty(&self) -> B { self.data.is_empty() }
 
-        pub fn is_singleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
+        pub fn is_singleton(&self) -> B { self.data.len() == 1 }
 
         /// Iterator over references to elements
         pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
@@ -62,7 +62,7 @@ pub mod ArraySeqMtPer {
 
     impl<T: StTInMtT> Clone for ArraySeqMtPerS<T> {
         fn clone(&self) -> Self {
-            let values: Vec<T> = self.data.iter().cloned().collect();
+            let values: Vec<T> = self.data.to_vec();
             ArraySeqMtPerS::from_vec(values)
         }
     }
@@ -104,7 +104,7 @@ pub mod ArraySeqMtPer {
                 if i > 0 {
                     write!(f, ", ")?;
                 }
-                write!(f, "{}", item)?;
+                write!(f, "{item}")?;
             }
             write!(f, "]")
         }
@@ -198,7 +198,7 @@ pub mod ArraySeqMtPer {
             if index >= self.data.len() {
                 return Err("Index out of bounds");
             }
-            let mut new_data: Vec<T> = self.data.iter().cloned().collect();
+            let mut new_data: Vec<T> = self.data.to_vec();
             new_data[index] = item;
             Ok(ArraySeqMtPerS::from_vec(new_data))
         }
@@ -252,7 +252,7 @@ pub mod ArraySeqMtPer {
             let mut values: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let item = a.nth(i);
-                if pred(item) == true {
+                if pred(item) {
                     values.push(item.clone());
                 }
             }
@@ -264,7 +264,7 @@ pub mod ArraySeqMtPer {
             if index >= a.length() {
                 return a.clone();
             }
-            let mut new_data: Vec<T> = a.data.iter().cloned().collect();
+            let mut new_data: Vec<T> = a.data.to_vec();
             new_data[index] = item;
             ArraySeqMtPerS::from_vec(new_data)
         }
@@ -358,7 +358,7 @@ pub mod ArraySeqMtPer {
                 let Pair(key, value) = a.nth(i);
                 let mut found_group = false;
                 for group in &mut groups {
-                    if cmp(&key, &group.0) == O::Equal {
+                    if cmp(key, &group.0) == O::Equal {
                         let mut values: Vec<V> = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect();
                         values.push(value.clone());
                         group.1 = ArraySeqMtPerS::from_vec(values);

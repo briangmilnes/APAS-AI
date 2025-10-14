@@ -139,7 +139,7 @@ pub mod OptBinSearchTreeMtPer {
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self {
             let key_probs: Vec<KeyProb<T>> = keys
                 .into_iter()
-                .zip(probs.into_iter())
+                .zip(probs)
                 .map(|(key, prob)| KeyProb { key, prob })
                 .collect();
 

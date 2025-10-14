@@ -120,16 +120,16 @@ fn test_nested_hash_table_resize_behavior() {
 
     // Insert many elements to trigger resizing
     for i in 0..20 {
-        let key = format!("item{}", i);
-        table = table.insert(key, i as i32);
+        let key = format!("item{i}");
+        table = table.insert(key, i);
     }
 
     assert_eq!(table.size(), 20);
 
     // Verify all elements are still accessible after resizing
     for i in 0..20 {
-        let key = format!("item{}", i);
-        assert_eq!(table.lookup(&key), Some(&(i as i32)));
+        let key = format!("item{i}");
+        assert_eq!(table.lookup(&key), Some(&{ i }));
     }
 }
 
@@ -204,16 +204,16 @@ fn test_nested_hash_table_nested_structure() {
 
     // Insert many elements that will collide and create nested structure
     for i in 0..12 {
-        let key = format!("key{}", i);
-        table = table.insert(key, i as i32);
+        let key = format!("key{i}");
+        table = table.insert(key, i);
     }
 
     assert_eq!(table.size(), 12);
 
     // Verify all elements are accessible despite nested structure
     for i in 0..12 {
-        let key = format!("key{}", i);
-        assert_eq!(table.lookup(&key), Some(&(i as i32)));
+        let key = format!("key{i}");
+        assert_eq!(table.lookup(&key), Some(&{ i }));
     }
 }
 
@@ -313,32 +313,32 @@ fn test_nested_hash_table_stress_test() {
 
     // Insert many elements to test robustness
     for i in 0..100 {
-        let key = format!("stress{:03}", i);
-        table = table.insert(key, i as i32);
+        let key = format!("stress{i:03}");
+        table = table.insert(key, i);
     }
 
     assert_eq!(table.size(), 100);
 
     // Verify all elements are accessible
     for i in 0..100 {
-        let key = format!("stress{:03}", i);
-        assert_eq!(table.lookup(&key), Some(&(i as i32)));
+        let key = format!("stress{i:03}");
+        assert_eq!(table.lookup(&key), Some(&{ i }));
     }
 
     // Delete some elements
     for i in (0..100).step_by(3) {
-        let key = format!("stress{:03}", i);
+        let key = format!("stress{i:03}");
         let (new_table, _deleted) = table.delete(&key);
         table = new_table;
     }
 
     // Verify correct elements were deleted
     for i in 0..100 {
-        let key = format!("stress{:03}", i);
+        let key = format!("stress{i:03}");
         if i % 3 == 0 {
             assert_eq!(table.lookup(&key), None);
         } else {
-            assert_eq!(table.lookup(&key), Some(&(i as i32)));
+            assert_eq!(table.lookup(&key), Some(&{ i }));
         }
     }
 }
@@ -431,7 +431,7 @@ fn test_nested_hash_table_display_functionality() {
     table = table.insert("gamma".to_string(), 3);
 
     // Test that display functionality works (doesn't crash)
-    let display_str = format!("{}", table);
+    let display_str = format!("{table}");
     assert!(display_str.contains("NestedHashTable"));
     assert!(display_str.contains("size: 3"));
 }
@@ -441,7 +441,7 @@ fn test_nested_hash_table_debug_functionality() {
     let table: NestedHashTable<String, i32> = NestedHashTable::create_table(5);
 
     // Test that debug functionality works (doesn't crash)
-    let debug_str = format!("{:?}", table);
+    let debug_str = format!("{table:?}");
     assert!(debug_str.contains("NestedHashTable"));
     assert!(debug_str.contains("num_elements: 0"));
 }
@@ -471,8 +471,8 @@ fn test_nested_hash_table_large_scale_operations() {
 
     // Insert a smaller number of elements for reasonable test time
     for i in 0..100 {
-        let key = format!("large{:04}", i);
-        table = table.insert(key, i as i32);
+        let key = format!("large{i:04}");
+        table = table.insert(key, i);
     }
 
     assert_eq!(table.size(), 100);
@@ -484,7 +484,7 @@ fn test_nested_hash_table_large_scale_operations() {
 
     // Delete every 10th element
     for i in (0..100).step_by(10) {
-        let key = format!("large{:04}", i);
+        let key = format!("large{i:04}");
         let (new_table, _deleted) = table.delete(&key);
         table = new_table;
     }

@@ -73,22 +73,22 @@ fn test_ord() {
 #[test]
 fn test_clone() {
     let p1 = Probability::new(0.7);
-    let p2 = p1.clone();
+    let p2 = p1;
     assert_eq!(p1, p2);
 }
 
 #[test]
 fn test_display() {
     let p = Probability::new(0.75);
-    let s = format!("{}", p);
+    let s = format!("{p}");
     assert!(s.contains("0.75"));
 }
 
 #[test]
 fn test_debug() {
     let p = Probability::new(0.5);
-    let s = format!("{:?}", p);
-    assert!(s.len() > 0);
+    let s = format!("{p:?}");
+    assert!(!s.is_empty());
 }
 
 #[test]

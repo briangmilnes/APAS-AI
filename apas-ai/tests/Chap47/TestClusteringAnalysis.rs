@@ -44,7 +44,7 @@ fn test_linear_probing_clustering_analysis() {
 
     // Insert consecutive keys that will likely cluster
     for i in 0..5 {
-        table = table.insert(i, format!("value_{}", i));
+        table = table.insert(i, format!("value_{i}"));
     }
 
     let analyzer = ClusteringAnalyzer::new();
@@ -77,7 +77,7 @@ fn test_quadratic_probing_clustering_analysis() {
     // Insert keys that hash to same initial position
     let keys = vec![13, 26, 39, 52]; // All hash to same position mod 13
     for &key in &keys {
-        table = table.insert(key, format!("value_{}", key));
+        table = table.insert(key, format!("value_{key}"));
     }
 
     let analyzer = ClusteringAnalyzer::new();
@@ -234,7 +234,7 @@ fn test_minimal_analyzer_behavior() {
 
     // Insert some data
     for i in 0..5 {
-        table = table.insert(i, format!("value_{}", i));
+        table = table.insert(i, format!("value_{i}"));
     }
 
     let minimal_analyzer = ClusteringAnalyzer::new_minimal();
@@ -256,7 +256,7 @@ fn test_performance_impact_assessment() {
 
     // Create high load factor to trigger performance impact
     for i in 0..8 {
-        table = table.insert(i, format!("value_{}", i));
+        table = table.insert(i, format!("value_{i}"));
     }
 
     let analyzer = ClusteringAnalyzer::new();
@@ -412,9 +412,9 @@ fn test_comprehensive_clustering_integration() {
 
     // Insert same data into all tables
     for i in 0..8 {
-        linear_table = linear_table.insert(i, format!("value_{}", i));
-        quad_table = quad_table.insert(i, format!("value_{}", i));
-        double_table = double_table.insert(i, format!("value_{}", i));
+        linear_table = linear_table.insert(i, format!("value_{i}"));
+        quad_table = quad_table.insert(i, format!("value_{i}"));
+        double_table = double_table.insert(i, format!("value_{i}"));
     }
 
     // Analyze each strategy

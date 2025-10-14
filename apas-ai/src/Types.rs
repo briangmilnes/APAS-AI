@@ -195,7 +195,7 @@ use std::hash::Hash;
     // String slice implementation
     impl<'a> MtT for &'a str {
         type Inner = &'a str;
-        fn clone_mt(&self) -> Self { *self }
+        fn clone_mt(&self) -> Self { self }
         fn new_mt(inner: Self::Inner) -> Self { inner }
     }
 

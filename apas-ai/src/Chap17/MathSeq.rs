@@ -104,7 +104,7 @@ pub mod MathSeq {
                 } else {
                     first = false;
                 }
-                write!(f, "{}", x)?;
+                write!(f, "{x}")?;
             }
             write!(f, "]")
         }
@@ -204,9 +204,9 @@ pub mod MathSeq {
 
         fn delete_last(&mut self) -> Option<T> { self.data.pop() }
 
-        fn isEmpty(&self) -> B { if self.data.is_empty() { true } else { false } }
+        fn isEmpty(&self) -> B { self.data.is_empty() }
 
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B { self.data.len() == 1 }
 
         fn domain(&self) -> Vec<N> { (0..self.data.len()).collect() }
 

@@ -140,20 +140,20 @@ pub mod Example45_2 {
         for (name, data) in efficiency {
             output.push_str(&format!("{}: {} elements\n", name, data.len()));
         }
-        output.push_str("\n");
+        output.push('\n');
         
         // Complexity Analysis
         output.push_str("PART 7: Complexity Analysis\n");
         let complexity = complexity_analysis();
         for (impl_name, complexity_str, notes) in complexity {
-            output.push_str(&format!("{}: {} - {}\n", impl_name, complexity_str, notes));
+            output.push_str(&format!("{impl_name}: {complexity_str} - {notes}\n"));
         }
-        output.push_str("\n");
+        output.push('\n');
         
         // Correctness Verification
         output.push_str("PART 8: Correctness Verification\n");
         let all_correct = correctness_verification();
-        output.push_str(&format!("All implementations correct: {}\n", all_correct));
+        output.push_str(&format!("All implementations correct: {all_correct}\n"));
         
         output.push_str("\nSummary:\n");
         output.push_str("- Binary heap and leftist heap provide optimal Θ(n log n) performance\n");

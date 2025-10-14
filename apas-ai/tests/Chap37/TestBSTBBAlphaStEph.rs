@@ -26,7 +26,7 @@ fn bbalpha_insert_find_balances() {
     }
     assert_eq!(bst.size(), 64);
     let height = bst.height();
-    assert!(height <= 12, "height {} too large", height);
+    assert!(height <= 12, "height {height} too large");
     assert_eq!(bst.find(&10), Some(&10));
     assert_eq!(bst.find(&128), None);
     assert_eq!(bst.minimum().copied(), Some(0));

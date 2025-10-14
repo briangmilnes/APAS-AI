@@ -66,7 +66,7 @@ pub mod EdgeSetGraphStEph {
 
         fn out_neighbors(&self, u: &V) -> AVLTreeSetStEph<V> {
             let u_clone = u.clone();
-            let filtered = self.edges.filter(|edge| &edge.0 == &u_clone);
+            let filtered = self.edges.filter(|edge| edge.0 == u_clone);
             let mut neighbors = AVLTreeSetStEph::empty();
             let seq = filtered.to_seq();
             for i in 0..seq.length() {

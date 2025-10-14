@@ -47,26 +47,26 @@ fn test_labundirgraphmteph_basic_operations() {
     assert_eq!(g.labeled_edges().size(), 3);
 
     // Test neighbor relationships (undirected - both directions)
-    assert_eq!(g.has_edge(&0, &1), true);
-    assert_eq!(g.has_edge(&1, &0), true); // Undirected graph
-    assert_eq!(g.has_edge(&1, &2), true);
-    assert_eq!(g.has_edge(&2, &1), true);
-    assert_eq!(g.has_edge(&0, &2), false); // No direct edge
+    assert!(g.has_edge(&0, &1));
+    assert!(g.has_edge(&1, &0)); // Undirected graph
+    assert!(g.has_edge(&1, &2));
+    assert!(g.has_edge(&2, &1));
+    assert!(!g.has_edge(&0, &2)); // No direct edge
 
     // Test NG (neighbors) - should be symmetric
     let ng0 = g.neighbors(&0);
     assert_eq!(ng0.size(), 1);
-    assert_eq!(ng0.mem(&1), true);
+    assert!(ng0.mem(&1));
 
     let ng1 = g.neighbors(&1);
     assert_eq!(ng1.size(), 2);
-    assert_eq!(ng1.mem(&0), true);
-    assert_eq!(ng1.mem(&2), true);
+    assert!(ng1.mem(&0));
+    assert!(ng1.mem(&2));
 
     let ng2 = g.neighbors(&2);
     assert_eq!(ng2.size(), 2);
-    assert_eq!(ng2.mem(&1), true);
-    assert_eq!(ng2.mem(&3), true);
+    assert!(ng2.mem(&1));
+    assert!(ng2.mem(&3));
 
     // Test degrees (in undirected graph, InDegree = OutDegree = Degree)
     assert_eq!(g.neighbors(&0).size(), 1);
@@ -180,7 +180,7 @@ fn test_labundirgraphmteph_edge_cases() {
     let a_self: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 1, "self".to_string())];
     let g_self = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v_self, a_self);
 
-    assert_eq!(g_self.has_edge(&1, &1), true);
+    assert!(g_self.has_edge(&1, &1));
     // In undirected graph, self-loop contributes 2 to degree
     assert_eq!(g_self.neighbors(&1).size(), 1); // Self-loop contributes degree 1
     assert_eq!(g_self.neighbors(&1).size(), 1); // Self-loop contributes degree 1
@@ -194,7 +194,7 @@ fn test_labundirgraphmteph_nonexistent_vertex() {
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
 
     // Query non-existent vertex
-    assert_eq!(g.has_edge(&99, &0), false);
+    assert!(!g.has_edge(&99, &0));
     assert_eq!(g.neighbors(&99).size(), 0);
     assert_eq!(g.neighbors(&99).size(), 0);
     assert_eq!(g.neighbors(&99).size(), 0);
@@ -401,7 +401,7 @@ fn test_display() {
     let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
 
-    let display_str = format!("{}", g);
+    let display_str = format!("{g}");
     assert!(display_str.contains("LabUnDirGraph"));
 }
 
@@ -411,7 +411,7 @@ fn test_debug() {
     let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
 
-    let debug_str = format!("{:?}", g);
+    let debug_str = format!("{g:?}");
     assert!(debug_str.contains("LabUnDirGraph"));
     assert!(debug_str.contains("vertices"));
     assert!(debug_str.contains("labeled_edges"));

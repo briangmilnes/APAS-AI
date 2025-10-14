@@ -142,7 +142,7 @@ pub mod ArraySeqStPer {
 
         fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> ArraySeqStPerS<T> {
             // Helper for filter: deflate f x = if f(x) then [x] else []
-            if f(x) == true {
+            if f(x) {
                 <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::singleton(x.clone())
             } else {
                 <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::empty()

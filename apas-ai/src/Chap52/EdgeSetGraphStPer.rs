@@ -69,7 +69,7 @@ pub mod EdgeSetGraphStPer {
         // Work: Θ(|E|), Span: Θ(log |E|) - filter over all edges
         fn out_neighbors(&self, u: &V) -> AVLTreeSetStPer<V> {
             let u_clone = u.clone();
-            let filtered = self.edges.filter(|edge| &edge.0 == &u_clone);
+            let filtered = self.edges.filter(|edge| edge.0 == u_clone);
             let mut neighbors = AVLTreeSetStPer::empty();
             let seq = filtered.to_seq();
             for i in 0..seq.length() {

@@ -172,7 +172,7 @@ pub mod MinEditDistStEph {
         fn into_iter(self) -> Self::IntoIter {
             self.source
                 .into_iter()
-                .zip(self.target.into_iter())
+                .zip(self.target)
                 .map(|(a, b)| Pair(a, b))
         }
     }
@@ -191,7 +191,7 @@ pub mod MinEditDistStEph {
             self.source
                 .clone()
                 .into_iter()
-                .zip(self.target.clone().into_iter())
+                .zip(self.target.clone())
                 .map(|(a, b)| Pair(a, b))
         }
     }
@@ -210,7 +210,7 @@ pub mod MinEditDistStEph {
             self.source
                 .clone()
                 .into_iter()
-                .zip(self.target.clone().into_iter())
+                .zip(self.target.clone())
                 .map(|(a, b)| Pair(a, b))
         }
     }

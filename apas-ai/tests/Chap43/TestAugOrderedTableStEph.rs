@@ -144,7 +144,7 @@ fn test_min_reducer() {
 
 #[test]
 fn test_string_concatenation_reducer() {
-    let concat_reducer = |a: &String, b: &String| format!("{}{}", a, b);
+    let concat_reducer = |a: &String, b: &String| format!("{a}{b}");
     let mut table = AugOrderedTableStEph::empty(concat_reducer, String::new());
 
     table.insert(1, "Hello".to_string(), |_old, new| new.clone());
@@ -257,7 +257,7 @@ fn test_filter_operation() {
 #[test]
 fn test_union_operation() {
     let sum_reducer = |a: &i32, b: &i32| a + b;
-    let mut table1 = AugOrderedTableStEph::empty(sum_reducer.clone(), 0);
+    let mut table1 = AugOrderedTableStEph::empty(sum_reducer, 0);
     let mut table2 = AugOrderedTableStEph::empty(sum_reducer, 0);
 
     table1.insert(1, 10, |_old, new| *new);
@@ -278,7 +278,7 @@ fn test_union_operation() {
 #[test]
 fn test_intersection_operation() {
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
-    let mut table1 = AugOrderedTableStEph::empty(max_reducer.clone(), 0);
+    let mut table1 = AugOrderedTableStEph::empty(max_reducer, 0);
     let mut table2 = AugOrderedTableStEph::empty(max_reducer, 0);
 
     table1.insert(1, 10, |_old, new| *new);
@@ -302,7 +302,7 @@ fn test_intersection_operation() {
 #[test]
 fn test_difference_operation() {
     let sum_reducer = |a: &i32, b: &i32| a + b;
-    let mut table1 = AugOrderedTableStEph::empty(sum_reducer.clone(), 0);
+    let mut table1 = AugOrderedTableStEph::empty(sum_reducer, 0);
     let mut table2 = AugOrderedTableStEph::empty(sum_reducer, 0);
 
     table1.insert(1, 10, |_old, new| *new);
@@ -351,12 +351,12 @@ fn test_display_and_debug() {
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
     let table = AugOrderedTableStEph::singleton(42, 100, max_reducer, 0);
 
-    let display_str = format!("{}", table);
+    let display_str = format!("{table}");
     assert!(display_str.contains("AugOrderedTableStEph"));
     assert!(display_str.contains("size: 1"));
     assert!(display_str.contains("reduction: 100"));
 
-    let debug_str = format!("{:?}", table);
+    let debug_str = format!("{table:?}");
     assert!(debug_str.contains("AugOrderedTableStEph"));
     assert!(debug_str.contains("size"));
     assert!(debug_str.contains("cached_reduction"));
@@ -399,7 +399,7 @@ fn test_complex_qadsan_scenario() {
     // Regular session (930-1600): higher volatility
     for minute in (930..1600).step_by(15) {
         let base_price = 15000;
-        let volatility = ((minute - 930) % 100) as i32 * 5; // Cyclical volatility
+        let volatility = ((minute - 930) % 100) * 5; // Cyclical volatility
         let price = base_price + volatility;
         daily_highs.insert(minute, price, |old, new| if old > new { *old } else { *new });
     }
@@ -666,8 +666,8 @@ fn test_split_rank_key() {
 #[test]
 fn test_delete_nonexistent() {
     let mut table = AugOrderedTableStEph::empty(|a: &i32, b: &i32| a + b, 0);
-    table.insert(1, 10, |_old, new| new.clone());
-    table.insert(3, 30, |_old, new| new.clone());
+    table.insert(1, 10, |_old, new| *new);
+    table.insert(3, 30, |_old, new| *new);
     table.delete(&2);
     assert_eq!(table.size(), 2);
 }

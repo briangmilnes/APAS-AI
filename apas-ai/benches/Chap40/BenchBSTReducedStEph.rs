@@ -18,7 +18,7 @@ fn build_sum_tree(len: usize) -> BSTSumStEph<i32, i32> {
 fn build_count_tree(len: usize) -> BSTCountStEph<i32, String> {
     let mut tree = BSTReducedStEphLit![];
     for i in 0..len {
-        tree.insert(i as i32, format!("item_{}", i));
+        tree.insert(i as i32, format!("item_{i}"));
     }
     tree
 }

@@ -71,7 +71,7 @@ pub mod AVLTreeSeqMtPer {
         n
     }
 
-    fn nth_ref<'a, T: StTInMtT>(mut cur: &'a Link<T>, mut index: N) -> &'a T {
+    fn nth_ref<T: StTInMtT>(mut cur: &Link<T>, mut index: N) -> &T {
         loop {
             let node = cur.as_ref().expect("index out of bounds");
             let ls = size(&node.left);
@@ -187,7 +187,7 @@ pub mod AVLTreeSeqMtPer {
             if s >= e {
                 return Self::empty();
             }
-            let mut vals = Vec::with_capacity((e - s) as usize);
+            let mut vals = Vec::with_capacity(e - s);
             for i in s..e {
                 vals.push(self.nth(i).clone());
             }

@@ -71,7 +71,7 @@ pub mod EdgeSetGraphMtPer {
         // PARALLEL: Work: Θ(|E|), Span: Θ(log |E|) - TRUE parallel filter
         fn out_neighbors(&self, u: &V) -> AVLTreeSetMtPer<V> {
             let u_clone = u.clone();
-            let filtered = self.edges.filter(move |edge| &edge.0 == &u_clone);
+            let filtered = self.edges.filter(move |edge| edge.0 == u_clone);
             let mut neighbors = AVLTreeSetMtPer::empty();
             let seq = filtered.to_seq();
             for i in 0..seq.length() {

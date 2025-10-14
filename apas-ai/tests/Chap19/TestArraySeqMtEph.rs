@@ -12,8 +12,8 @@ fn test_arrayseq_mteph_basic_ops() {
     for i in 0..a.length() {
         assert_eq!(a.nth_cloned(i), i as i32);
     }
-    assert_eq!(<ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::isEmpty(&a), false);
-    assert_eq!(<ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::isSingleton(&a), false);
+    assert!(!<ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::isEmpty(&a));
+    assert!(!<ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::isSingleton(&a));
     let s = a.subseq_copy(1, 3);
     assert_eq!(s.length(), 3);
     assert_eq!(s.nth_cloned(0), 1);

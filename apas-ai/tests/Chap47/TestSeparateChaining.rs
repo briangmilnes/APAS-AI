@@ -210,8 +210,8 @@ fn test_large_table() {
 
     // Insert many elements
     for i in 0..50 {
-        let key = format!("key_{}", i);
-        let value = format!("value_{}", i);
+        let key = format!("key_{i}");
+        let value = format!("value_{i}");
         table = table.insert(key, value);
     }
 
@@ -221,8 +221,8 @@ fn test_large_table() {
 
     // Verify all elements are accessible
     for i in 0..50 {
-        let key = format!("key_{}", i);
-        let expected_value = format!("value_{}", i);
+        let key = format!("key_{i}");
+        let expected_value = format!("value_{i}");
         assert_eq!(table.lookup(&key), Some(&expected_value));
     }
 }

@@ -14,7 +14,7 @@ fn bench_ordered_set_mt_eph_insert(c: &mut Criterion) {
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
             b.iter_batched(
-                || <OrderedSetMtEph<i32>>::empty(),
+                <OrderedSetMtEph<i32>>::empty,
                 |mut set| {
                     for i in 0..size {
                         set.insert(black_box(i));
@@ -69,7 +69,8 @@ fn bench_ordered_set_mt_eph_delete(c: &mut Criterion) {
                 },
                 |mut set| {
                     for i in 0..size {
-                        black_box(set.delete(&black_box(i)));
+                        set.delete(&black_box(i));
+                        black_box(());
                     }
                     black_box(set)
                 },
@@ -96,7 +97,10 @@ fn bench_ordered_set_mt_eph_parallel_operations(c: &mut Criterion) {
                     }
                     set
                 },
-                |mut set| black_box(set.filter(|x| x % 2 == 0)),
+                |mut set| {
+                    set.filter(|x| x % 2 == 0);
+                    black_box(())
+                },
                 criterion::BatchSize::SmallInput,
             );
         });

@@ -64,7 +64,7 @@ pub mod PathWeightUtilsStPer {
             if u >= weights.length() || v >= weights.nth(u).length() {
                 return None;
             }
-            let edge_weight = weights.nth(u).nth(v).clone();
+            let edge_weight = *weights.nth(u).nth(v);
             total = total.saturating_add(edge_weight);
         }
         Some(total)
@@ -87,7 +87,7 @@ pub mod PathWeightUtilsStPer {
             if u >= weights.length() || v >= weights.nth(u).length() {
                 return None;
             }
-            let edge_weight = weights.nth(u).nth(v).clone();
+            let edge_weight = *weights.nth(u).nth(v);
             total += edge_weight;
         }
         Some(total)
@@ -112,9 +112,9 @@ pub mod PathWeightUtilsStPer {
             if u >= distances.length() || v >= distances.length() {
                 return false;
             }
-            let dist_u = distances.nth(u).clone();
-            let dist_v = distances.nth(v).clone();
-            let edge_weight = weights.nth(u).nth(v).clone();
+            let dist_u = *distances.nth(u);
+            let dist_v = *distances.nth(v);
+            let edge_weight = *weights.nth(u).nth(v);
 
             if dist_u != i64::MAX && dist_v != dist_u.saturating_add(edge_weight) {
                 return false;
@@ -141,9 +141,9 @@ pub mod PathWeightUtilsStPer {
             if u >= distances.length() || v >= distances.length() {
                 return false;
             }
-            let dist_u = distances.nth(u).clone();
-            let dist_v = distances.nth(v).clone();
-            let edge_weight = weights.nth(u).nth(v).clone();
+            let dist_u = *distances.nth(u);
+            let dist_v = *distances.nth(v);
+            let edge_weight = *weights.nth(u).nth(v);
 
             if dist_u.is_finite() && ((dist_v - (dist_u + edge_weight)).abs() > epsilon) {
                 return false;

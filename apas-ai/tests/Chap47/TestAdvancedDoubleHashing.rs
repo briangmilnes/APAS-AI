@@ -300,9 +300,9 @@ fn test_entry_enum() {
     let live = Entry::Live(42, "test".to_string());
 
     // Test Display implementation
-    assert_eq!(format!("{}", empty), "Empty");
-    assert_eq!(format!("{}", dead), "Dead");
-    assert_eq!(format!("{}", live), "Live(42, test)");
+    assert_eq!(format!("{empty}"), "Empty");
+    assert_eq!(format!("{dead}"), "Dead");
+    assert_eq!(format!("{live}"), "Live(42, test)");
 
     // Test equality
     assert_eq!(empty, Entry::Empty);

@@ -270,7 +270,7 @@ fn test_display() {
     let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphStEph::FromSets(v, e);
 
-    let s = format!("{}", g);
+    let s = format!("{g}");
     assert!(s.contains("V="));
 }
 
@@ -280,8 +280,8 @@ fn test_debug() {
     let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphStEph::FromSets(v, e);
 
-    let s = format!("{:?}", g);
-    assert!(s.len() > 0);
+    let s = format!("{g:?}");
+    assert!(!s.is_empty());
 }
 
 #[test]

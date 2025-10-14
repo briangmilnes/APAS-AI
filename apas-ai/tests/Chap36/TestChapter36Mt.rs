@@ -187,8 +187,8 @@ fn quick_sort_mt_thread_safety_stress_test() {
     // Verify all threads completed successfully
     for handle in handles {
         let (thread_id, is_sorted_result, length) = handle.join().unwrap();
-        assert!(is_sorted_result, "Thread {} failed to sort correctly", thread_id);
-        assert_eq!(length, data_size, "Thread {} lost data during sorting", thread_id);
+        assert!(is_sorted_result, "Thread {thread_id} failed to sort correctly");
+        assert_eq!(length, data_size, "Thread {thread_id} lost data during sorting");
     }
 }
 
@@ -248,6 +248,6 @@ fn quick_sort_mt_pivot_strategies_concurrent() {
                 break;
             }
         }
-        assert!(found, "Random pivot {} not found in expected range", pivot);
+        assert!(found, "Random pivot {pivot} not found in expected range");
     }
 }

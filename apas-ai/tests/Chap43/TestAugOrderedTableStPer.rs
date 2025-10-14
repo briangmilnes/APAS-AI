@@ -114,7 +114,7 @@ fn test_max_reducer() {
 
 #[test]
 fn test_string_concatenation_reducer() {
-    let concat_reducer = |a: &String, b: &String| format!("{}{}", a, b);
+    let concat_reducer = |a: &String, b: &String| format!("{a}{b}");
     let mut table = AugOrderedTableStPer::empty(concat_reducer, String::new());
 
     table = table.insert(1, "Hello".to_string());
@@ -229,7 +229,7 @@ fn test_filter_operation() {
 #[test]
 fn test_union_operation() {
     let sum_reducer = |a: &i32, b: &i32| a + b;
-    let mut table1 = AugOrderedTableStPer::empty(sum_reducer.clone(), 0);
+    let mut table1 = AugOrderedTableStPer::empty(sum_reducer, 0);
     let mut table2 = AugOrderedTableStPer::empty(sum_reducer, 0);
 
     table1 = table1.insert(1, 10);
@@ -274,12 +274,12 @@ fn test_display_and_debug() {
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let table = AugOrderedTableStPer::singleton(42, 100, sum_reducer, 0);
 
-    let display_str = format!("{}", table);
+    let display_str = format!("{table}");
     assert!(display_str.contains("AugOrderedTableStPer"));
     assert!(display_str.contains("size: 1"));
     assert!(display_str.contains("reduction: 100"));
 
-    let debug_str = format!("{:?}", table);
+    let debug_str = format!("{table:?}");
     assert!(debug_str.contains("AugOrderedTableStPer"));
     assert!(debug_str.contains("size"));
     assert!(debug_str.contains("cached_reduction"));

@@ -66,17 +66,15 @@ pub mod BinaryHeapPQ {
                 let left = Self::left_child(i);
                 let right = Self::right_child(i);
 
-                if left < self.elements.length() {
-                    if self.elements.nth(i) > self.elements.nth(left) {
+                if left < self.elements.length()
+                    && self.elements.nth(i) > self.elements.nth(left) {
                         return false;
                     }
-                }
 
-                if right < self.elements.length() {
-                    if self.elements.nth(i) > self.elements.nth(right) {
+                if right < self.elements.length()
+                    && self.elements.nth(i) > self.elements.nth(right) {
                         return false;
                     }
-                }
             }
             true
         }

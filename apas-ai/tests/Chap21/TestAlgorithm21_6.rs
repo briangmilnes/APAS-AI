@@ -82,7 +82,7 @@ fn test_prime_sieve_n_3() {
 
     assert_eq!(primes.len(), expected.len());
     for prime in expected {
-        assert!(primes.contains(&prime), "Missing prime: {}", prime);
+        assert!(primes.contains(&prime), "Missing prime: {prime}");
     }
 }
 
@@ -96,7 +96,7 @@ fn test_prime_sieve_n_10() {
 
     assert_eq!(primes.len(), expected.len());
     for prime in expected {
-        assert!(primes.contains(&prime), "Missing prime: {}", prime);
+        assert!(primes.contains(&prime), "Missing prime: {prime}");
     }
 }
 
@@ -109,7 +109,7 @@ fn test_prime_sieve_n_20() {
 
     assert_eq!(primes.len(), expected.len());
     for prime in expected {
-        assert!(primes.contains(&prime), "Missing prime: {}", prime);
+        assert!(primes.contains(&prime), "Missing prime: {prime}");
     }
 }
 
@@ -122,7 +122,7 @@ fn test_prime_sieve_n_30() {
 
     assert_eq!(primes.len(), expected.len());
     for prime in expected {
-        assert!(primes.contains(&prime), "Missing prime: {}", prime);
+        assert!(primes.contains(&prime), "Missing prime: {prime}");
     }
 }
 
@@ -135,7 +135,7 @@ fn test_prime_sieve_n_50() {
 
     assert_eq!(primes.len(), expected.len());
     for prime in expected {
-        assert!(primes.contains(&prime), "Missing prime: {}", prime);
+        assert!(primes.contains(&prime), "Missing prime: {prime}");
     }
 }
 
@@ -148,7 +148,7 @@ fn test_prime_sieve_n_100() {
 
     assert_eq!(primes.len(), expected.len());
     for prime in expected {
-        assert!(primes.contains(&prime), "Missing prime: {}", prime);
+        assert!(primes.contains(&prime), "Missing prime: {prime}");
     }
 
     // Check that the first few primes are correct
@@ -210,7 +210,7 @@ fn test_prime_sieve_specific_ranges() {
     // First 10 primes are: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29
     let first_10_primes = vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29];
     for prime in first_10_primes {
-        assert!(primes.contains(&prime), "Missing prime: {}", prime);
+        assert!(primes.contains(&prime), "Missing prime: {prime}");
     }
 }
 
@@ -235,13 +235,13 @@ fn test_prime_sieve_ordering() {
 
     // Check that all returned numbers are actually prime
     for &prime in &primes {
-        assert!(is_prime(prime), "{} is not prime", prime);
+        assert!(is_prime(prime), "{prime} is not prime");
     }
 
     // Check that all primes in range are included
     for candidate in 2..30 {
         if is_prime(candidate) {
-            assert!(primes.contains(&candidate), "Missing prime: {}", candidate);
+            assert!(primes.contains(&candidate), "Missing prime: {candidate}");
         }
     }
 }
@@ -262,7 +262,7 @@ fn test_prime_sieve_larger_input() {
     ];
 
     for &prime in &known_primes {
-        assert!(primes.contains(&prime), "Missing known prime: {}", prime);
+        assert!(primes.contains(&prime), "Missing known prime: {prime}");
     }
 
     // Check that some known composites are not included
@@ -273,7 +273,7 @@ fn test_prime_sieve_larger_input() {
 
     for &composite in &known_composites {
         if composite < 200 {
-            assert!(!primes.contains(&composite), "Found composite number: {}", composite);
+            assert!(!primes.contains(&composite), "Found composite number: {composite}");
         }
     }
 }

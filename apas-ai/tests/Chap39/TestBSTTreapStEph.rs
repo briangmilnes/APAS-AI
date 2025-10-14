@@ -289,7 +289,7 @@ fn test_height_balanced() {
     let height = tree.height();
     // Treap should maintain reasonable balance (not degenerate)
     // For 64 elements, expect O(log n) height, so should be < 20
-    assert!(height < 20, "Height {} is too large for 64 elements", height);
+    assert!(height < 20, "Height {height} is too large for 64 elements");
 }
 
 #[test]

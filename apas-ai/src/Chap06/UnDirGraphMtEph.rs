@@ -70,13 +70,7 @@ pub mod UnDirGraphMtEph {
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Treat edges as unordered: {u,v}
-            if true == self.E.mem(&Edge(u.clone_mt(), v.clone_mt()))
-                || true == self.E.mem(&Edge(v.clone_mt(), u.clone_mt()))
-            {
-                true
-            } else {
-                false
-            }
+            self.E.mem(&Edge(u.clone_mt(), v.clone_mt())) || self.E.mem(&Edge(v.clone_mt(), u.clone_mt()))
         }
 
         fn NG(&self, v: &V) -> Set<V> {
@@ -180,7 +174,7 @@ pub mod UnDirGraphMtEph {
             parallel_ng_of_vertices(vertices, self.clone())
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B { if &e.0 == v || &e.1 == v { true } else { false } }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B { &e.0 == v || &e.1 == v }
 
         fn Degree(&self, v: &V) -> N { self.NG(v).size() }
     }

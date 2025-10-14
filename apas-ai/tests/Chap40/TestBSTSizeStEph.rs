@@ -90,7 +90,7 @@ fn size_bst_rank_select_consistency() {
     // For each element, rank(select(i)) should equal i
     for i in 1..=bst.size() {
         if let Some(key) = bst.select(i) {
-            assert_eq!(bst.rank(key), i, "Rank-select inconsistency at rank {}", i);
+            assert_eq!(bst.rank(key), i, "Rank-select inconsistency at rank {i}");
         }
     }
 
@@ -99,7 +99,7 @@ fn size_bst_rank_select_consistency() {
     for i in 0..in_order.length() {
         let key = in_order.nth(i);
         let rank = bst.rank(key);
-        assert_eq!(bst.select(rank), Some(key), "Select-rank inconsistency for key {}", key);
+        assert_eq!(bst.select(rank), Some(key), "Select-rank inconsistency for key {key}");
     }
 }
 
@@ -120,13 +120,13 @@ fn size_bst_split_rank_operations() {
 
     // Check left tree contains {1,2,3,4,5}
     for i in 1..=5 {
-        assert!(left.contains(&i), "Left tree missing {}", i);
+        assert!(left.contains(&i), "Left tree missing {i}");
     }
     assert!(!left.contains(&6));
 
     // Check right tree contains {6,7,8,9}
     for i in 6..=9 {
-        assert!(right.contains(&i), "Right tree missing {}", i);
+        assert!(right.contains(&i), "Right tree missing {i}");
     }
     assert!(!right.contains(&5));
 
@@ -182,7 +182,7 @@ fn size_bst_large_dataset_performance() {
 
     // Height should be logarithmic (allow some slack for unbalanced insertions)
     let height = bst.height();
-    assert!(height <= 30, "Height {} too large for 1000 elements", height);
+    assert!(height <= 30, "Height {height} too large for 1000 elements");
 
     // Test split at middle
     let (left, right) = bst.split_rank(500);

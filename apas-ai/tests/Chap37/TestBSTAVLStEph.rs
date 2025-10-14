@@ -26,9 +26,9 @@ fn avl_insert_find_and_bounds() {
     }
     assert_eq!(bst.size(), 7);
     assert!(bst.height() <= 4);
-    assert_eq!(bst.contains(&3), true);
+    assert!(bst.contains(&3));
     assert_eq!(bst.find(&3), Some(&3));
-    assert_eq!(bst.contains(&9), false);
+    assert!(!bst.contains(&9));
     assert_eq!(bst.find(&9), None);
     assert_eq!(bst.minimum().copied(), Some(1));
     assert_eq!(bst.maximum().copied(), Some(7));
@@ -54,12 +54,12 @@ fn avl_duplicate_insert_is_idempotent() {
 fn test_bst_empty_constructor() {
     let bst: BSTreeAVL<N> = BSTreeAVL::new();
     assert_eq!(bst.size(), 0);
-    assert_eq!(bst.is_empty(), true);
+    assert!(bst.is_empty());
     assert_eq!(bst.height(), 0);
     assert_eq!(bst.minimum(), None);
     assert_eq!(bst.maximum(), None);
     assert_eq!(bst.find(&42), None);
-    assert_eq!(bst.contains(&42), false);
+    assert!(!bst.contains(&42));
 }
 
 #[test]
@@ -68,13 +68,13 @@ fn test_bst_single_element() {
     bst.insert(42);
 
     assert_eq!(bst.size(), 1);
-    assert_eq!(bst.is_empty(), false);
+    assert!(!bst.is_empty());
     assert_eq!(bst.height(), 1);
     assert_eq!(bst.minimum(), Some(&42));
     assert_eq!(bst.maximum(), Some(&42));
     assert_eq!(bst.find(&42), Some(&42));
-    assert_eq!(bst.contains(&42), true);
-    assert_eq!(bst.contains(&99), false);
+    assert!(bst.contains(&42));
+    assert!(!bst.contains(&99));
 
     let inorder = bst.in_order();
     assert_eq!(inorder.length(), 1);
@@ -88,14 +88,14 @@ fn test_bst_single_element() {
 #[test]
 fn test_bst_is_empty_predicate() {
     let mut bst = BSTreeAVL::new();
-    assert_eq!(bst.is_empty(), true);
+    assert!(bst.is_empty());
 
     bst.insert(10);
-    assert_eq!(bst.is_empty(), false);
+    assert!(!bst.is_empty());
 
     // Create another empty tree to verify
     let empty_bst: BSTreeAVL<N> = BSTreeAVL::new();
-    assert_eq!(empty_bst.is_empty(), true);
+    assert!(empty_bst.is_empty());
 }
 
 #[test]
@@ -182,7 +182,7 @@ fn test_bst_contains_comprehensive() {
     let mut bst = BSTreeAVL::new();
 
     // Empty tree
-    assert_eq!(bst.contains(&1), false);
+    assert!(!bst.contains(&1));
 
     // Build tree with various values
     let values = [15, 10, 20, 8, 12, 25, 6, 11, 13, 27];
@@ -192,13 +192,13 @@ fn test_bst_contains_comprehensive() {
 
     // Test all inserted values
     for &value in &values {
-        assert_eq!(bst.contains(&value), true);
+        assert!(bst.contains(&value));
     }
 
     // Test non-existent values
     let non_existent = [1, 5, 7, 9, 14, 16, 19, 21, 24, 26, 30];
     for &value in &non_existent {
-        assert_eq!(bst.contains(&value), false);
+        assert!(!bst.contains(&value));
     }
 }
 
@@ -238,7 +238,7 @@ fn test_bst_large_tree_operations() {
     }
 
     assert_eq!(bst.size(), 100);
-    assert_eq!(bst.is_empty(), false);
+    assert!(!bst.is_empty());
 
     // AVL tree should maintain logarithmic height
     assert!(bst.height() <= 8); // log2(100) ≈ 6.6, AVL allows +1
@@ -249,7 +249,7 @@ fn test_bst_large_tree_operations() {
 
     // Test random access
     for &value in &[1, 25, 50, 75, 100] {
-        assert_eq!(bst.contains(&value), true);
+        assert!(bst.contains(&value));
         assert_eq!(bst.find(&value), Some(&value));
     }
 
@@ -277,9 +277,9 @@ fn test_bst_duplicate_handling() {
     assert_eq!(bst.size(), 3);
 
     // All values should still be findable
-    assert_eq!(bst.contains(&10), true);
-    assert_eq!(bst.contains(&5), true);
-    assert_eq!(bst.contains(&15), true);
+    assert!(bst.contains(&10));
+    assert!(bst.contains(&5));
+    assert!(bst.contains(&15));
 
     // In-order should still be correct
     let inorder = bst.in_order();
@@ -330,7 +330,7 @@ fn test_bst_avl_balancing_stress() {
 fn test_bst_default_trait() {
     let bst: BSTreeAVL<N> = Default::default();
     assert_eq!(bst.size(), 0);
-    assert_eq!(bst.is_empty(), true);
+    assert!(bst.is_empty());
     assert_eq!(bst.height(), 0);
 }
 

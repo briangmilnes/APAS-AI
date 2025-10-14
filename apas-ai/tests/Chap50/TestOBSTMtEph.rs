@@ -125,8 +125,8 @@ fn test_parallel_execution() {
 #[test]
 fn test_display() {
     let obst = OBSTMtEphLit![keys: [1, 2, 3], probs: [0.1, 0.2, 0.3]];
-    let s = format!("{}", obst);
-    assert!(s.len() > 0);
+    let s = format!("{obst}");
+    assert!(!s.is_empty());
 }
 
 #[test]
@@ -222,6 +222,6 @@ fn test_keyprob_display() {
         key: 42,
         prob: Probability::new(0.333),
     };
-    let s = format!("{}", kp);
+    let s = format!("{kp}");
     assert!(s.contains("42"));
 }

@@ -157,6 +157,12 @@ use crate::Types::Types::*;
         p: u64,
     }
 
+    impl Default for UniversalIntegerHashFamily {
+        fn default() -> Self {
+            Self::new()
+        }
+    }
+
     impl UniversalIntegerHashFamily {
         pub fn new() -> Self {
             const LARGE_PRIME: u64 = 1000000007;

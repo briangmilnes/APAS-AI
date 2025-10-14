@@ -48,7 +48,7 @@ fn test_scan_contract_odd_length() {
     let result = ArraySeqStEphS::scan_contract(&a, &|x, y| x + y, 0);
     assert_eq!(result.length(), 7);
     for i in 0..7 {
-        assert_eq!(result.nth(i), &i, "scan[{}] should be {}", i, i);
+        assert_eq!(result.nth(i), &i, "scan[{i}] should be {i}");
     }
 }
 
@@ -58,7 +58,7 @@ fn test_scan_contract_even_length() {
     let result = ArraySeqStEphS::scan_contract(&a, &|x, y| x + y, 0);
     assert_eq!(result.length(), 8);
     for i in 0..8 {
-        assert_eq!(result.nth(i), &i, "scan[{}] should be {}", i, i);
+        assert_eq!(result.nth(i), &i, "scan[{i}] should be {i}");
     }
 }
 

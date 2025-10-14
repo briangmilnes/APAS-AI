@@ -33,7 +33,7 @@ pub mod BSTParaTreapMtEph {
     fn priority_for<T: MtKey>(key: &T) -> i64 {
         let mut hasher = std::collections::hash_map::DefaultHasher::new();
         let mut buf = String::new();
-        let _ = write!(&mut buf, "{:?}", key);
+        let _ = write!(&mut buf, "{key:?}");
         Hash::hash(&buf, &mut hasher);
         hasher.finish() as i64
     }
@@ -178,7 +178,7 @@ pub mod BSTParaTreapMtEph {
                         crate::ParaPair!(move || ParamTreap::intersect_inner(&al, &bl), move || {
                             ParamTreap::intersect_inner(&ar, &br)
                         });
-                    if found == true {
+                    if found {
                         ParamTreap::join_with_priority(left_res, ak, ap, right_res)
                     } else {
                         ParamTreap::join_pair_inner(left_res, right_res)
@@ -198,7 +198,7 @@ pub mod BSTParaTreapMtEph {
                         crate::ParaPair!(move || ParamTreap::difference_inner(&al, &bl), move || {
                             ParamTreap::difference_inner(&ar, &br)
                         });
-                    if found == true {
+                    if found {
                         ParamTreap::join_pair_inner(left_res, right_res)
                     } else {
                         ParamTreap::join_with_priority(left_res, ak, ap, right_res)
@@ -359,7 +359,7 @@ pub mod BSTParaTreapMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)

@@ -41,11 +41,7 @@ fn prime_sieve(n: N) -> ArraySeqStPerS<N> {
     let candidates: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i, n);
     let filtered_idx: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&candidates, &|i| {
         if *i >= 2 && *i < n {
-            if *is_prime.nth(*i) == true {
-                true
-            } else {
-                false
-            }
+            *is_prime.nth(*i)
         } else {
             false
         }
@@ -68,6 +64,6 @@ fn test_prime_sieve_n2_empty() {
 #[test]
 fn test_prime_sieve_debug_shape() {
     let p = prime_sieve(20);
-    let dbg_str = format!("{:?}", p);
+    let dbg_str = format!("{p:?}");
     assert!(!dbg_str.is_empty());
 }

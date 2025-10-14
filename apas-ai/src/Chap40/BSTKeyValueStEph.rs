@@ -98,7 +98,7 @@ pub mod BSTKeyValueStEph {
             if let Some(node) = link.as_mut() {
                 if key < node.key {
                     let inserted = Self::insert_link(&mut node.left, key, value, rng);
-                    if node.left.as_ref().map_or(false, |left| left.priority < node.priority) {
+                    if node.left.as_ref().is_some_and(|left| left.priority < node.priority) {
                         Self::rotate_right(link);
                     }
                     inserted
@@ -107,7 +107,7 @@ pub mod BSTKeyValueStEph {
                     if node
                         .right
                         .as_ref()
-                        .map_or(false, |right| right.priority < node.priority)
+                        .is_some_and(|right| right.priority < node.priority)
                     {
                         Self::rotate_left(link);
                     }
@@ -138,7 +138,7 @@ pub mod BSTKeyValueStEph {
             }
         }
 
-        fn min_key_link<'a>(link: &'a Link<K, V>) -> Option<&'a K> {
+        fn min_key_link(link: &Link<K, V>) -> Option<&K> {
             match link {
                 | None => None,
                 | Some(node) => match node.left {
@@ -148,7 +148,7 @@ pub mod BSTKeyValueStEph {
             }
         }
 
-        fn max_key_link<'a>(link: &'a Link<K, V>) -> Option<&'a K> {
+        fn max_key_link(link: &Link<K, V>) -> Option<&K> {
             match link {
                 | None => None,
                 | Some(node) => match node.right {

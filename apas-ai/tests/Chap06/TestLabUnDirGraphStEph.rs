@@ -10,7 +10,7 @@ fn test_labelled_undir_graph_empty() {
     let g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
     assert_eq!(g.vertices().size(), 0);
     assert_eq!(g.labeled_edges().size(), 0);
-    assert_eq!(format!("{}", g), "LabUnDirGraph(V: {}, E: {})");
+    assert_eq!(format!("{g}"), "LabUnDirGraph(V: {}, E: {})");
 }
 
 #[test]
@@ -20,8 +20,8 @@ fn test_labelled_undir_graph_add_vertex() {
     g.add_vertex(2);
 
     assert_eq!(g.vertices().size(), 2);
-    assert!(g.vertices().mem(&1) == true);
-    assert!(g.vertices().mem(&2) == true);
+    assert!(g.vertices().mem(&1));
+    assert!(g.vertices().mem(&2));
     assert_eq!(g.labeled_edges().size(), 0);
 }
 
@@ -55,18 +55,18 @@ fn test_labelled_undir_graph_neighbors() {
 
     let neighbors_1 = g.neighbors(&1);
     assert_eq!(neighbors_1.size(), 2);
-    assert!(neighbors_1.mem(&2) == true);
-    assert!(neighbors_1.mem(&3) == true);
+    assert!(neighbors_1.mem(&2));
+    assert!(neighbors_1.mem(&3));
 
     let neighbors_2 = g.neighbors(&2);
     assert_eq!(neighbors_2.size(), 2);
-    assert!(neighbors_2.mem(&1) == true);
-    assert!(neighbors_2.mem(&3) == true);
+    assert!(neighbors_2.mem(&1));
+    assert!(neighbors_2.mem(&3));
 
     let neighbors_3 = g.neighbors(&3);
     assert_eq!(neighbors_3.size(), 2);
-    assert!(neighbors_3.mem(&1) == true);
-    assert!(neighbors_3.mem(&2) == true);
+    assert!(neighbors_3.mem(&1));
+    assert!(neighbors_3.mem(&2));
 }
 
 #[test]
@@ -79,8 +79,8 @@ fn test_labelled_undir_graph_edges() {
     assert_eq!(edges.size(), 2);
     // Note: edges are normalized, so (1,2) and (2,3) should be stored as is
     // since 1 < 2 and 2 < 3
-    assert!(edges.mem(&Edge(1, 2)) == true);
-    assert!(edges.mem(&Edge(2, 3)) == true);
+    assert!(edges.mem(&Edge(1, 2)));
+    assert!(edges.mem(&Edge(2, 3)));
 }
 
 #[test]
@@ -146,7 +146,7 @@ fn test_labelled_undir_graph_display() {
         V: [1, 2],
         E: [(1, 2, "test")]
     );
-    let display_str = format!("{}", g);
+    let display_str = format!("{g}");
     assert!(display_str.contains("LabUnDirGraph"));
     assert!(display_str.contains("V:"));
     assert!(display_str.contains("E:"));
@@ -158,7 +158,7 @@ fn test_labelled_undir_graph_debug() {
         V: [1],
         E: [(1, 1, "self")]
     );
-    let debug_str = format!("{:?}", g);
+    let debug_str = format!("{g:?}");
     assert!(debug_str.contains("LabUnDirGraph"));
     assert!(debug_str.contains("vertices"));
     assert!(debug_str.contains("labeled_edges"));
@@ -174,7 +174,7 @@ fn test_labelled_undir_graph_self_loop() {
 
     let neighbors = g.neighbors(&1);
     assert_eq!(neighbors.size(), 1);
-    assert!(neighbors.mem(&1) == true);
+    assert!(neighbors.mem(&1));
 }
 
 #[test]
@@ -187,8 +187,8 @@ fn test_labelled_undir_graph_multiple_edges_same_vertices() {
 
     assert_eq!(g.labeled_edges().size(), 2);
     // Both edges should exist in the graph
-    assert!(g.labeled_edges().mem(&LabEdge(1, 2, "first")) == true);
-    assert!(g.labeled_edges().mem(&LabEdge(1, 2, "second")) == true);
+    assert!(g.labeled_edges().mem(&LabEdge(1, 2, "first")));
+    assert!(g.labeled_edges().mem(&LabEdge(1, 2, "second")));
 }
 
 #[test]

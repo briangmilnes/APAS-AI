@@ -17,7 +17,7 @@ fn mt_plain_basic_ops() {
     }
     assert_eq!(bst.size(), 7);
     assert_eq!(bst.find(&3), Some(3));
-    assert_eq!(bst.contains(&9), false);
+    assert!(!bst.contains(&9));
     assert_eq!(bst.minimum(), Some(1));
     assert_eq!(bst.maximum(), Some(7));
 }
@@ -30,7 +30,7 @@ fn mt_avl_basic_ops() {
     }
     assert_eq!(bst.size(), 7);
     assert_eq!(bst.find(&7), Some(7));
-    assert_eq!(bst.contains(&30), false);
+    assert!(!bst.contains(&30));
 }
 
 #[test]
@@ -80,12 +80,12 @@ fn mt_plain_comprehensive_operations() {
 
     // Test empty state
     assert_eq!(bst.size(), 0);
-    assert_eq!(bst.is_empty(), true);
+    assert!(bst.is_empty());
     assert_eq!(bst.height(), 0);
     assert_eq!(bst.minimum(), None);
     assert_eq!(bst.maximum(), None);
     assert_eq!(bst.find(&42), None);
-    assert_eq!(bst.contains(&42), false);
+    assert!(!bst.contains(&42));
 
     // Test insertions
     let values = [50, 25, 75, 12, 37, 62, 87, 6, 18, 31, 43];
@@ -94,7 +94,7 @@ fn mt_plain_comprehensive_operations() {
     }
 
     assert_eq!(bst.size(), values.len());
-    assert_eq!(bst.is_empty(), false);
+    assert!(!bst.is_empty());
     assert!(bst.height() > 0);
     assert_eq!(bst.minimum(), Some(6));
     assert_eq!(bst.maximum(), Some(87));
@@ -102,15 +102,15 @@ fn mt_plain_comprehensive_operations() {
     // Test find and contains
     for &val in &values {
         assert_eq!(bst.find(&val), Some(val));
-        assert_eq!(bst.contains(&val), true);
+        assert!(bst.contains(&val));
     }
     assert_eq!(bst.find(&99), None);
-    assert_eq!(bst.contains(&99), false);
+    assert!(!bst.contains(&99));
 
     // Note: BSTPlainMtEph doesn't have delete method - test only insertion and search
     // Verify all inserted values are present
     for &val in &values {
-        assert_eq!(bst.contains(&val), true);
+        assert!(bst.contains(&val));
     }
 
     // Test in-order traversal
@@ -141,14 +141,14 @@ fn mt_avl_comprehensive_operations() {
 
     // Test that all elements are accessible
     for i in 1..=20 {
-        assert_eq!(bst.contains(&i), true);
+        assert!(bst.contains(&i));
         assert_eq!(bst.find(&i), Some(i));
     }
 
     // Note: BSTAVLMtEph doesn't have delete method - test balance properties only
     // Verify all elements are accessible and tree maintains balance
     for i in 1..=20 {
-        assert_eq!(bst.contains(&i), true);
+        assert!(bst.contains(&i));
         assert_eq!(bst.find(&i), Some(i));
     }
 
@@ -178,7 +178,7 @@ fn mt_rb_comprehensive_operations() {
     // Test comprehensive search
     for &val in &values {
         assert_eq!(bst.find(&val), Some(val));
-        assert_eq!(bst.contains(&val), true);
+        assert!(bst.contains(&val));
     }
 
     // Test edge values
@@ -188,7 +188,7 @@ fn mt_rb_comprehensive_operations() {
     // Note: BSTRBMtEph doesn't have delete method - test comprehensive search only
     // Verify all values are accessible
     for &val in &values {
-        assert_eq!(bst.contains(&val), true);
+        assert!(bst.contains(&val));
         assert_eq!(bst.find(&val), Some(val));
     }
 
@@ -223,7 +223,7 @@ fn mt_bbalpha_comprehensive_operations() {
     // Note: BSTBBAlphaMtEph doesn't have delete method - test balance properties only
     // Verify all elements are accessible
     for i in 1..=30 {
-        assert_eq!(bst.contains(&i), true);
+        assert!(bst.contains(&i));
         assert_eq!(bst.find(&i), Some(i));
     }
 
@@ -255,21 +255,21 @@ fn mt_treap_comprehensive_operations() {
     // Test search operations
     for &val in &values {
         assert_eq!(bst.find(&val), Some(val));
-        assert_eq!(bst.contains(&val), true);
+        assert!(bst.contains(&val));
     }
 
     // Test non-existent values
     for &val in &[0, 100, 50, 25] {
         if !values.contains(&val) {
             assert_eq!(bst.find(&val), None);
-            assert_eq!(bst.contains(&val), false);
+            assert!(!bst.contains(&val));
         }
     }
 
     // Note: BSTTreapMtEph doesn't have delete method - test comprehensive search only
     // Verify all values are accessible
     for &val in &values {
-        assert_eq!(bst.contains(&val), true);
+        assert!(bst.contains(&val));
         assert_eq!(bst.find(&val), Some(val));
     }
 
@@ -296,7 +296,7 @@ fn mt_splay_comprehensive_operations() {
     let frequent_values = [25, 75];
     for _ in 0..5 {
         for &val in &frequent_values {
-            assert_eq!(bst.contains(&val), true);
+            assert!(bst.contains(&val));
         }
     }
 
@@ -306,13 +306,13 @@ fn mt_splay_comprehensive_operations() {
 
     for &val in &values {
         assert_eq!(bst.find(&val), Some(val));
-        assert_eq!(bst.contains(&val), true);
+        assert!(bst.contains(&val));
     }
 
     // Note: BSTSplayMtEph doesn't have delete method - test splay behavior only
     // Verify all values are accessible
     for &val in &values {
-        assert_eq!(bst.contains(&val), true);
+        assert!(bst.contains(&val));
         assert_eq!(bst.find(&val), Some(val));
     }
 
@@ -460,7 +460,7 @@ fn mt_concurrent_plain_bst_operations() {
         barrier3.wait();
         let mut found_count = 0;
         for i in 1..=50 {
-            if bst3.contains(&i) == true {
+            if bst3.contains(&i) {
                 found_count += 1;
             }
         }
@@ -529,8 +529,7 @@ fn mt_concurrent_avl_bst_operations() {
         assert!(height > 0); // Tree has some height
                              // Min/max depend on insertion order across threads
         println!(
-            "Thread {}: size={}, height={}, min={:?}, max={:?}",
-            thread_id, size, height, min, max
+            "Thread {thread_id}: size={size}, height={height}, min={min:?}, max={max:?}"
         );
     }
 }
@@ -573,7 +572,7 @@ fn mt_concurrent_rb_bst_stress() {
     for (thread_id, final_size, height, is_sorted) in results {
         assert!(final_size >= 100); // At least the thread's own insertions
         assert!(height > 0);
-        assert!(is_sorted, "Thread {} produced unsorted result", thread_id);
+        assert!(is_sorted, "Thread {thread_id} produced unsorted result");
     }
 }
 
@@ -626,7 +625,7 @@ fn mt_concurrent_bbalpha_operations() {
     for (i, (size, height)) in results.iter().enumerate() {
         assert!(*size >= 7); // At least some insertions
         assert!(*height > 0);
-        println!("Thread {}: size={}, height={}", i, size, height);
+        println!("Thread {i}: size={size}, height={height}");
     }
 }
 
@@ -668,8 +667,7 @@ fn mt_concurrent_treap_operations() {
         assert!(*size >= 20); // At least the thread's own insertions
         assert!(*height > 0);
         println!(
-            "Thread {}: size={}, height={}, min={:?}, max={:?}",
-            i, size, height, min, max
+            "Thread {i}: size={size}, height={height}, min={min:?}, max={max:?}"
         );
     }
 }
@@ -698,7 +696,7 @@ fn mt_concurrent_splay_access_patterns() {
         let frequent_values = [5, 10, 15];
         for _ in 0..10 {
             for &val in &frequent_values {
-                assert_eq!(bst1.contains(&val), true);
+                assert!(bst1.contains(&val));
             }
         }
 

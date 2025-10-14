@@ -65,6 +65,12 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
         pub detailed_metrics: B,
     }
 
+    impl Default for ClusteringAnalyzer {
+        fn default() -> Self {
+            Self::new()
+        }
+    }
+
     impl ClusteringAnalyzer {
         /// Create new clustering analyzer
         /// Claude Work: Θ(1), Span: Θ(1)
@@ -389,17 +395,17 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             writeln!(f)?;
 
             if let Some(ref primary) = self.primary_clustering {
-                writeln!(f, "{}", primary)?;
+                writeln!(f, "{primary}")?;
                 writeln!(f)?;
             }
 
             if let Some(ref secondary) = self.secondary_clustering {
-                writeln!(f, "{}", secondary)?;
+                writeln!(f, "{secondary}")?;
                 writeln!(f)?;
             }
 
             if let Some(ref double) = self.double_hashing_quality {
-                writeln!(f, "{}", double)?;
+                writeln!(f, "{double}")?;
                 writeln!(f)?;
             }
 

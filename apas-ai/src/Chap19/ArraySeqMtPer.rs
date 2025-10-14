@@ -159,7 +159,7 @@ pub mod ArraySeqMtPer {
             for i in 0..a.length() {
                 let value = a.nth(i).clone();
                 let pred_clone = pred.clone();
-                let handle = std::thread::spawn(move || if pred_clone(&value) == true { Some(value) } else { None });
+                let handle = std::thread::spawn(move || if pred_clone(&value) { Some(value) } else { None });
                 handles.push(handle);
             }
 
@@ -211,7 +211,7 @@ pub mod ArraySeqMtPer {
             let mut acc = x;
             for i in 0..a.length() {
                 result_vec.push(acc.clone());
-                acc = f(&acc, &a.nth(i));
+                acc = f(&acc, a.nth(i));
             }
             (ArraySeqMtPerS::from_vec(result_vec), acc)
         }
@@ -308,7 +308,7 @@ pub mod ArraySeqMtPer {
 
         fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtPerS<T> {
             // Helper for filter: deflate f x = if f(x) then [x] else []
-            if f(x) == true {
+            if f(x) {
                 <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::singleton(x.clone())
             } else {
                 <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::empty()

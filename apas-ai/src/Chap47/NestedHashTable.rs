@@ -307,7 +307,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
                 let chain = self.buckets.nth(i);
 
                 if chain.length() > 0 {
-                    write!(f, "  bucket[{}]: ", i)?;
+                    write!(f, "  bucket[{i}]: ")?;
                     for j in 0..chain.length() {
                         let pair = chain.nth(j);
                         if j > 0 {

@@ -45,26 +45,26 @@ fn test_undirgraphmteph_basic_operations() {
     assert_eq!(g.sizeE(), 3);
 
     // Test neighbor relationships (undirected - both directions)
-    assert_eq!(g.Neighbor(&0, &1), true);
-    assert_eq!(g.Neighbor(&1, &0), true); // Undirected graph
-    assert_eq!(g.Neighbor(&1, &2), true);
-    assert_eq!(g.Neighbor(&2, &1), true);
-    assert_eq!(g.Neighbor(&0, &2), false); // No direct edge
+    assert!(g.Neighbor(&0, &1));
+    assert!(g.Neighbor(&1, &0)); // Undirected graph
+    assert!(g.Neighbor(&1, &2));
+    assert!(g.Neighbor(&2, &1));
+    assert!(!g.Neighbor(&0, &2)); // No direct edge
 
     // Test NG (neighbors) - should be symmetric
     let ng0 = g.NG(&0);
     assert_eq!(ng0.size(), 1);
-    assert_eq!(ng0.mem(&1), true);
+    assert!(ng0.mem(&1));
 
     let ng1 = g.NG(&1);
     assert_eq!(ng1.size(), 2);
-    assert_eq!(ng1.mem(&0), true);
-    assert_eq!(ng1.mem(&2), true);
+    assert!(ng1.mem(&0));
+    assert!(ng1.mem(&2));
 
     let ng2 = g.NG(&2);
     assert_eq!(ng2.size(), 2);
-    assert_eq!(ng2.mem(&1), true);
-    assert_eq!(ng2.mem(&3), true);
+    assert!(ng2.mem(&1));
+    assert!(ng2.mem(&3));
 
     // Test degrees (in undirected graph, InDegree = OutDegree = Degree)
     assert_eq!(g.Degree(&0), 1);
@@ -112,10 +112,10 @@ fn test_undirgraphmteph_ngofvertices() {
 
     // Neighbors of {0, 1} includes all vertices connected to 0 or 1 (including 0 and 1 themselves)
     assert_eq!(ng_subset.size(), 4); // Should be {0, 1, 2, 3}
-    assert_eq!(ng_subset.mem(&0), true); // 0 is connected to 1 and 3
-    assert_eq!(ng_subset.mem(&1), true); // 1 is connected to 0 and 2
-    assert_eq!(ng_subset.mem(&2), true); // 1-2
-    assert_eq!(ng_subset.mem(&3), true); // 0-3
+    assert!(ng_subset.mem(&0)); // 0 is connected to 1 and 3
+    assert!(ng_subset.mem(&1)); // 1 is connected to 0 and 2
+    assert!(ng_subset.mem(&2)); // 1-2
+    assert!(ng_subset.mem(&3)); // 0-3
 }
 
 #[test]
@@ -131,10 +131,10 @@ fn test_undirgraphmteph_nplusminusofvertices() {
 
     // Neighbors of {0, 1} includes all vertices connected to 0 or 1 (including 0 and 1 themselves)
     assert_eq!(ng_subset.size(), 4); // Should include all vertices 0, 1, 2, 3
-    assert_eq!(ng_subset.mem(&0), true); // 0 is connected to 1 and 2
-    assert_eq!(ng_subset.mem(&1), true); // 1 is connected to 0, 2, and 3
-    assert_eq!(ng_subset.mem(&2), true); // Connected to both 0 and 1
-    assert_eq!(ng_subset.mem(&3), true); // Connected to 1
+    assert!(ng_subset.mem(&0)); // 0 is connected to 1 and 2
+    assert!(ng_subset.mem(&1)); // 1 is connected to 0, 2, and 3
+    assert!(ng_subset.mem(&2)); // Connected to both 0 and 1
+    assert!(ng_subset.mem(&3)); // Connected to 1
 
     // In undirected graphs, all neighbors are both in and out neighbors
 }
@@ -143,7 +143,7 @@ fn test_undirgraphmteph_nplusminusofvertices() {
 fn test_undirgraphmteph_edge_cases() {
     // Test empty graph
     let empty: UnDirGraphMtEph<i32> = UnDirGraphMtEph::empty();
-    assert_eq!(empty.Neighbor(&0, &1), false);
+    assert!(!empty.Neighbor(&0, &1));
     assert_eq!(empty.NG(&0).size(), 0);
     assert_eq!(empty.Degree(&0), 0);
 
@@ -162,7 +162,7 @@ fn test_undirgraphmteph_edge_cases() {
     let a_self: Set<Edge<N>> = SetLit![Edge(1, 1)];
     let g_self = UnDirGraphMtEph::FromSets(v_self, a_self);
 
-    assert_eq!(g_self.Neighbor(&1, &1), true);
+    assert!(g_self.Neighbor(&1, &1));
     // In undirected graph, self-loop contributes 1 to degree (based on neighbors implementation)
     assert_eq!(g_self.Degree(&1), 1);
     assert_eq!(g_self.Degree(&1), 1);
@@ -176,7 +176,7 @@ fn test_undirgraphmteph_nonexistent_vertex() {
     let g = UnDirGraphMtEph::FromSets(v, a);
 
     // Query non-existent vertex
-    assert_eq!(g.Neighbor(&99, &0), false);
+    assert!(!g.Neighbor(&99, &0));
     assert_eq!(g.NG(&99).size(), 0);
     assert_eq!(g.Degree(&99), 0);
     assert_eq!(g.Degree(&99), 0);
@@ -259,7 +259,7 @@ fn test_undirgraphmteph_complete_graph() {
     for i in [0, 1, 2, 3] {
         for j in [0, 1, 2, 3] {
             if i != j {
-                assert_eq!(g.Neighbor(&i, &j), true);
+                assert!(g.Neighbor(&i, &j));
             }
         }
     }
@@ -352,14 +352,14 @@ fn test_incident() {
     let g = UnDirGraphMtEph::FromSets(v, e);
 
     // Edge(1, 2) is incident to both 1 and 2
-    assert_eq!(g.Incident(&Edge(1, 2), &1), true);
-    assert_eq!(g.Incident(&Edge(1, 2), &2), true);
-    assert_eq!(g.Incident(&Edge(1, 2), &3), false);
+    assert!(g.Incident(&Edge(1, 2), &1));
+    assert!(g.Incident(&Edge(1, 2), &2));
+    assert!(!g.Incident(&Edge(1, 2), &3));
 
     // Edge(2, 3) is incident to both 2 and 3
-    assert_eq!(g.Incident(&Edge(2, 3), &2), true);
-    assert_eq!(g.Incident(&Edge(2, 3), &3), true);
-    assert_eq!(g.Incident(&Edge(2, 3), &1), false);
+    assert!(g.Incident(&Edge(2, 3), &2));
+    assert!(g.Incident(&Edge(2, 3), &3));
+    assert!(!g.Incident(&Edge(2, 3), &1));
 }
 
 #[test]
@@ -373,7 +373,7 @@ fn test_empty_graph_all_operations() {
     assert_eq!(g.edges().size(), 0);
     assert_eq!(g.arcs().size(), 0);
 
-    assert_eq!(g.Neighbor(&1, &2), false);
+    assert!(!g.Neighbor(&1, &2));
     assert_eq!(g.NG(&1).size(), 0);
     assert_eq!(g.Degree(&1), 0);
     assert_eq!(g.InDegree(&1), 0);
@@ -545,7 +545,7 @@ fn test_display_format() {
     let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
-    let display_str = format!("{}", g);
+    let display_str = format!("{g}");
     assert!(display_str.contains("V="));
     assert!(display_str.contains("E="));
 }
@@ -556,8 +556,8 @@ fn test_debug_format() {
     let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
-    let debug_str = format!("{:?}", g);
-    assert!(debug_str.len() > 0);
+    let debug_str = format!("{g:?}");
+    assert!(!debug_str.is_empty());
 }
 
 #[test]

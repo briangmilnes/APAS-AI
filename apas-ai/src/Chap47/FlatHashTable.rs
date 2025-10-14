@@ -20,7 +20,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             match self {
                 | Entry::Empty => write!(f, "Empty"),
                 | Entry::Dead => write!(f, "Dead"),
-                | Entry::Live(key, value) => write!(f, "Live({}, {})", key, value),
+                | Entry::Live(key, value) => write!(f, "Live({key}, {value})"),
             }
         }
     }
@@ -347,9 +347,9 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             for i in 0..self.table.length() {
                 let entry = self.table.nth(i);
                 match entry {
-                    | Entry::Empty => writeln!(f, "  [{}]: Empty", i)?,
-                    | Entry::Dead => writeln!(f, "  [{}]: Dead", i)?,
-                    | Entry::Live(key, value) => writeln!(f, "  [{}]: {} → {}", i, key, value)?,
+                    | Entry::Empty => writeln!(f, "  [{i}]: Empty")?,
+                    | Entry::Dead => writeln!(f, "  [{i}]: Dead")?,
+                    | Entry::Live(key, value) => writeln!(f, "  [{i}]: {key} → {value}")?,
                 }
             }
 

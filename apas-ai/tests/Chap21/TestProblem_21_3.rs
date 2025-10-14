@@ -73,6 +73,6 @@ fn test_points3d_loops_iterator_order() {
 #[test]
 fn test_points3d_loops_debug_shape() {
     let s = points3d_loops(2);
-    let dbg_str = format!("{:?}", s);
+    let dbg_str = format!("{s:?}");
     assert!(!dbg_str.is_empty());
 }

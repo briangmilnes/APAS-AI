@@ -7,7 +7,7 @@ use apas_ai::Types::Types::*;
 fn arrayseqs_empty_macro() {
     let seq: ArraySeqS<i32> = ArraySeqS![];
     assert_eq!(ArraySeq::length(&seq), 0);
-    assert_eq!(ArraySeq::isEmpty(&seq), true);
+    assert!(ArraySeq::isEmpty(&seq));
 }
 
 #[test]
@@ -25,7 +25,7 @@ fn arrayseqs_repeat_macro_clones_element() {
     for index in 0..3 {
         assert_eq!(ArraySeq::nth(&seq, index), &"hi");
     }
-    assert_eq!(ArraySeq::isSingleton(&seq), false);
+    assert!(!ArraySeq::isSingleton(&seq));
 }
 
 #[test]

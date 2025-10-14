@@ -38,6 +38,12 @@ pub mod Example44_1 {
         fw: Box<dyn Fn(&Word) -> DocumentSet>,
     }
 
+    impl Default for TweetQueryExamples {
+        fn default() -> Self {
+            Self::new()
+        }
+    }
+
     impl TweetQueryExamples {
         pub fn new() -> Self {
             let index = create_tweet_index();

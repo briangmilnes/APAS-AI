@@ -14,10 +14,10 @@ fn test_setlit_macro_functionality() {
     // Test set creation with elements
     let with_data: Set<i32> = SetLit![1, 2, 3];
     assert_eq!(with_data.size(), 3);
-    assert_eq!(with_data.mem(&1), true);
-    assert_eq!(with_data.mem(&2), true);
-    assert_eq!(with_data.mem(&3), true);
-    assert_eq!(with_data.mem(&4), false);
+    assert!(with_data.mem(&1));
+    assert!(with_data.mem(&2));
+    assert!(with_data.mem(&3));
+    assert!(!with_data.mem(&4));
 }
 
 #[test]
@@ -25,21 +25,21 @@ fn test_setlit_macro_type_safety() {
     // Test empty set creation with explicit type
     let empty: Set<&'static str> = SetLit![];
     assert_eq!(empty.size(), 0);
-    assert_eq!(empty.mem(&"any"), false);
+    assert!(!empty.mem(&"any"));
 
     // Test single element set
     let one = SetLit!["only"];
     assert_eq!(one.size(), 1);
-    assert_eq!(one.mem(&"only"), true);
-    assert_eq!(one.mem(&"other"), false);
+    assert!(one.mem(&"only"));
+    assert!(!one.mem(&"other"));
 
     // Test multi-element set
     let many = SetLit!["a", "b", "c"];
     assert_eq!(many.size(), 3);
-    assert_eq!(many.mem(&"a"), true);
-    assert_eq!(many.mem(&"b"), true);
-    assert_eq!(many.mem(&"c"), true);
-    assert_eq!(many.mem(&"d"), false);
+    assert!(many.mem(&"a"));
+    assert!(many.mem(&"b"));
+    assert!(many.mem(&"c"));
+    assert!(!many.mem(&"d"));
 }
 
 #[test]
@@ -68,7 +68,7 @@ fn test_partition_example_5_2_true() {
     let odd: Set<N> = SetLit![1, 3, 5];
     let even: Set<N> = SetLit![2, 4, 6];
     let p: Set<Set<N>> = SetLit![odd, even];
-    assert_eq!(a.partition(&p), true);
+    assert!(a.partition(&p));
 }
 
 #[test]
@@ -77,7 +77,7 @@ fn test_partition_example_5_2_false_due_to_overlap() {
     let odd_with_6: Set<N> = SetLit![1, 3, 5, 6];
     let even_with_6: Set<N> = SetLit![2, 4, 6];
     let q: Set<Set<N>> = SetLit![odd_with_6, even_with_6];
-    assert_eq!(a.partition(&q), false);
+    assert!(!a.partition(&q));
 }
 
 #[test]
@@ -86,22 +86,22 @@ fn test_partition_false_due_to_missing_element() {
     let s1: Set<N> = SetLit![1];
     let s2: Set<N> = SetLit![2];
     let parts: Set<Set<N>> = SetLit![s1, s2];
-    assert_eq!(a.partition(&parts), false);
+    assert!(!a.partition(&parts));
 }
 
 #[test]
 fn test_set_empty() {
     let empty_set: Set<i32> = Set::empty();
     assert_eq!(empty_set.size(), 0);
-    assert_eq!(empty_set.mem(&42), false);
+    assert!(!empty_set.mem(&42));
 }
 
 #[test]
 fn test_set_singleton() {
     let single_set = Set::singleton(42);
     assert_eq!(single_set.size(), 1);
-    assert_eq!(single_set.mem(&42), true);
-    assert_eq!(single_set.mem(&99), false);
+    assert!(single_set.mem(&42));
+    assert!(!single_set.mem(&99));
 }
 
 #[test]
@@ -119,11 +119,11 @@ fn test_set_size_comprehensive() {
 #[test]
 fn test_set_mem_comprehensive() {
     let set = SetLit![1, 2, 3];
-    assert_eq!(set.mem(&1), true);
-    assert_eq!(set.mem(&2), true);
-    assert_eq!(set.mem(&3), true);
-    assert_eq!(set.mem(&4), false);
-    assert_eq!(set.mem(&0), false);
+    assert!(set.mem(&1));
+    assert!(set.mem(&2));
+    assert!(set.mem(&3));
+    assert!(!set.mem(&4));
+    assert!(!set.mem(&0));
 }
 
 #[test]
@@ -133,12 +133,12 @@ fn test_set_union() {
     let union_set = set1.union(&set2);
 
     assert_eq!(union_set.size(), 5);
-    assert_eq!(union_set.mem(&1), true);
-    assert_eq!(union_set.mem(&2), true);
-    assert_eq!(union_set.mem(&3), true);
-    assert_eq!(union_set.mem(&4), true);
-    assert_eq!(union_set.mem(&5), true);
-    assert_eq!(union_set.mem(&6), false);
+    assert!(union_set.mem(&1));
+    assert!(union_set.mem(&2));
+    assert!(union_set.mem(&3));
+    assert!(union_set.mem(&4));
+    assert!(union_set.mem(&5));
+    assert!(!union_set.mem(&6));
 }
 
 #[test]
@@ -148,10 +148,10 @@ fn test_set_intersection() {
     let intersect_set = set1.intersection(&set2);
 
     assert_eq!(intersect_set.size(), 2);
-    assert_eq!(intersect_set.mem(&3), true);
-    assert_eq!(intersect_set.mem(&4), true);
-    assert_eq!(intersect_set.mem(&1), false);
-    assert_eq!(intersect_set.mem(&5), false);
+    assert!(intersect_set.mem(&3));
+    assert!(intersect_set.mem(&4));
+    assert!(!intersect_set.mem(&1));
+    assert!(!intersect_set.mem(&5));
 }
 
 #[test]
@@ -162,8 +162,8 @@ fn test_set_insert() {
     set.insert(1); // duplicate
 
     assert_eq!(set.size(), 2);
-    assert_eq!(set.mem(&1), true);
-    assert_eq!(set.mem(&2), true);
+    assert!(set.mem(&1));
+    assert!(set.mem(&2));
 }
 
 #[test]
@@ -181,9 +181,9 @@ fn test_set_fromvec() {
     let set = Set::FromVec(vec_data);
 
     assert_eq!(set.size(), 3);
-    assert_eq!(set.mem(&1), true);
-    assert_eq!(set.mem(&2), true);
-    assert_eq!(set.mem(&3), true);
+    assert!(set.mem(&1));
+    assert!(set.mem(&2));
+    assert!(set.mem(&3));
 }
 
 #[test]
@@ -205,7 +205,7 @@ fn test_setlit_macro_direct() {
 
     let single = SetLit![42];
     assert_eq!(single.size(), 1);
-    assert_eq!(single.mem(&42), true);
+    assert!(single.mem(&42));
 
     let multi = SetLit![1, 2, 3];
     assert_eq!(multi.size(), 3);
@@ -248,8 +248,8 @@ fn test_set_large_operations_stress() {
     let large_set = Set::FromVec(large_vec);
 
     assert_eq!(large_set.size(), 10000);
-    assert_eq!(large_set.mem(&5000), true);
-    assert_eq!(large_set.mem(&15000), false);
+    assert!(large_set.mem(&5000));
+    assert!(!large_set.mem(&15000));
 
     // Test union with another large set
     let large_vec2: Vec<i32> = (5000..15000).collect();
@@ -276,14 +276,14 @@ fn test_set_single_element_boundary() {
     // Test single element set operations
     let single = Set::singleton(42);
     assert_eq!(single.size(), 1);
-    assert_eq!(single.mem(&42), true);
-    assert_eq!(single.mem(&43), false);
+    assert!(single.mem(&42));
+    assert!(!single.mem(&43));
 
     // Operations with single element set
     let empty: Set<i32> = Set::empty();
     let union_with_empty = single.union(&empty);
     assert_eq!(union_with_empty.size(), 1);
-    assert_eq!(union_with_empty.mem(&42), true);
+    assert!(union_with_empty.mem(&42));
 
     let intersection_with_empty = single.intersection(&empty);
     assert_eq!(intersection_with_empty.size(), 0);
@@ -292,14 +292,14 @@ fn test_set_single_element_boundary() {
     let single2 = Set::singleton(99);
     let union_singles = single.union(&single2);
     assert_eq!(union_singles.size(), 2);
-    assert_eq!(union_singles.mem(&42), true);
-    assert_eq!(union_singles.mem(&99), true);
+    assert!(union_singles.mem(&42));
+    assert!(union_singles.mem(&99));
 
     // Intersection with same element
     let single_same = Set::singleton(42);
     let intersection_same = single.intersection(&single_same);
     assert_eq!(intersection_same.size(), 1);
-    assert_eq!(intersection_same.mem(&42), true);
+    assert!(intersection_same.mem(&42));
 
     // Intersection with different element
     let intersection_diff = single.intersection(&single2);
@@ -309,7 +309,7 @@ fn test_set_single_element_boundary() {
     let single_char = Set::singleton('a');
     let cartesian = single.CartesianProduct(&single_char);
     assert_eq!(cartesian.size(), 1);
-    assert_eq!(cartesian.mem(&Pair(42, 'a')), true);
+    assert!(cartesian.mem(&Pair(42, 'a')));
 
     // Iterator on single element
     let collected: Vec<i32> = single.iter().cloned().collect();
@@ -335,7 +335,7 @@ fn test_set_iterator_boundaries() {
     assert_eq!(collected.len(), 5);
     // Note: HashSet iteration order is not guaranteed, so we check membership
     for val in &collected {
-        assert_eq!(set.mem(val), true);
+        assert!(set.mem(val));
     }
 
     // Test iterator on single element - both beginning and end
@@ -370,7 +370,7 @@ fn test_set_iterator_boundaries() {
     // First element via iterator (order not guaranteed)
     let first = set_func.iter().next();
     assert!(first.is_some());
-    assert_eq!(set_func.mem(first.unwrap()), true);
+    assert!(set_func.mem(first.unwrap()));
 
     // Count elements via iterator
     let count = set_func.iter().count();
@@ -383,7 +383,7 @@ fn test_set_iterator_boundaries() {
     assert_eq!(chained.len(), 4);
     // Check all elements are present
     for val in &chained {
-        assert!(set1.mem(val) == true || set2.mem(val) == true);
+        assert!(set1.mem(val) || set2.mem(val));
     }
 
     // Test iterator skip/take boundaries
@@ -392,14 +392,14 @@ fn test_set_iterator_boundaries() {
     assert_eq!(skipped.len(), 3);
     // All skipped elements should be in original set
     for val in &skipped {
-        assert_eq!(set_skip.mem(val), true);
+        assert!(set_skip.mem(val));
     }
 
     let taken: Vec<i32> = set_skip.iter().take(3).cloned().collect();
     assert_eq!(taken.len(), 3);
     // All taken elements should be in original set
     for val in &taken {
-        assert_eq!(set_skip.mem(val), true);
+        assert!(set_skip.mem(val));
     }
 
     // Test iterator collect and verify completeness
@@ -424,9 +424,9 @@ fn test_set_maximum_size_boundary() {
 
     // Verify basic operations work on large set
     assert_eq!(large_set.size(), large_size);
-    assert_eq!(large_set.mem(&0), true);
-    assert_eq!(large_set.mem(&((large_size - 1) as i32)), true);
-    assert_eq!(large_set.mem(&(large_size as i32)), false);
+    assert!(large_set.mem(&0));
+    assert!(large_set.mem(&((large_size - 1) as i32)));
+    assert!(!large_set.mem(&(large_size as i32)));
 
     // Test operations on large set
     let empty_set: Set<i32> = Set::empty();
@@ -450,7 +450,7 @@ fn test_set_maximum_size_boundary() {
     let mut count = 0;
     for val in large_set.iter() {
         if count < 10 {
-            assert_eq!(large_set.mem(val), true);
+            assert!(large_set.mem(val));
         }
         count += 1;
         if count > large_size + 100 {
@@ -464,6 +464,6 @@ fn test_set_maximum_size_boundary() {
     let small_set = Set::singleton('a');
     let cartesian_large = large_set.CartesianProduct(&small_set);
     assert_eq!(cartesian_large.size(), large_size);
-    assert_eq!(cartesian_large.mem(&Pair(0, 'a')), true);
-    assert_eq!(cartesian_large.mem(&Pair((large_size - 1) as i32, 'a')), true);
+    assert!(cartesian_large.mem(&Pair(0, 'a')));
+    assert!(cartesian_large.mem(&Pair((large_size - 1) as i32, 'a')));
 }

@@ -327,7 +327,7 @@ fn test_to_seq_conversion() {
     assert_eq!(seq.length(), 5);
 
     // Should be in sorted order
-    let expected = vec![5, 10, 20, 25, 30];
+    let expected = [5, 10, 20, 25, 30];
     for (i, &expected_val) in expected.iter().enumerate() {
         assert_eq!(seq.nth(i as N), &expected_val);
     }

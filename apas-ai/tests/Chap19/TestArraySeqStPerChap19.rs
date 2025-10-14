@@ -30,13 +30,13 @@ fn test_length_and_nth_basic() {
 fn test_empty() {
     let empty: ArraySeqStPerS<N> = ArraySeqStPerS::empty();
     assert_eq!(empty.length(), 0);
-    assert_eq!(<ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::isEmpty(&empty), true);
+    assert!(<ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::isEmpty(&empty));
 }
 
 #[test]
 fn test_sequence_basic() {
     let a: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::new(10, false);
-    assert_eq!(a.length() == 0, false);
+    assert!(a.length() != 0);
     assert_eq!(a.length(), 10);
     let b = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::update(&a, 0, true);
     let c = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::update(&b, 1, false);
@@ -51,29 +51,29 @@ fn test_singleton() {
     let s = ArraySeqStPerS::singleton(42);
     assert_eq!(s.length(), 1);
     assert_eq!(*s.nth(0), 42);
-    assert_eq!(s.length() == 1, true);
+    assert!(s.length() == 1);
 }
 
 #[test]
 fn test_is_empty_and_is_singleton() {
     let e: ArraySeqStPerS<N> = ArraySeqStPerS::empty();
-    assert_eq!(e.length() == 0, true);
-    assert_eq!(e.length() == 1, false);
+    assert!(e.length() == 0);
+    assert!(e.length() != 1);
 
     let s = ArraySeqStPerS::singleton(7);
-    assert_eq!(s.length() == 0, false);
-    assert_eq!(s.length() == 1, true);
+    assert!(s.length() != 0);
+    assert!(s.length() == 1);
 
     let a = ArraySeqStPerSLit![1, 2];
-    assert_eq!(a.length() == 0, false);
-    assert_eq!(a.length() == 1, false);
+    assert!(a.length() != 0);
+    assert!(a.length() != 1);
 }
 
 #[test]
 fn test_from_vec() {
     let empty_seq: ArraySeqStPerS<N> = ArraySeqStPerSLit![];
     assert_eq!(empty_seq.length(), 0);
-    assert_eq!(empty_seq.length() == 0, true);
+    assert!(empty_seq.length() == 0);
     let single_vec = vec![42];
     let single_seq = ArraySeqStPerS::from_vec(single_vec);
     assert_eq!(single_seq, ArraySeqStPerSLit![42]);
@@ -192,15 +192,15 @@ fn test_numbers_equal_is_equal() {
 fn test_ordering_strings_basic() {
     let a = "a";
     let b = "b";
-    assert!(matches!(a.cmp(&b), O::Less));
-    assert!(matches!(b.cmp(&a), O::Greater));
-    assert!(matches!(a.cmp(&a), O::Equal));
+    assert!(matches!(a.cmp(b), O::Less));
+    assert!(matches!(b.cmp(a), O::Greater));
+    assert!(matches!(a.cmp(a), O::Equal));
 }
 
 #[test]
 fn test_strings_equal_is_equal() {
     let s = "foo";
-    assert!(matches!(s.cmp(&s), O::Equal));
+    assert!(matches!(s.cmp(s), O::Equal));
 }
 
 #[test]
@@ -441,10 +441,10 @@ fn test_map_and_select_and_append() {
 
 #[test]
 fn test_deflate_and_filter() {
-    let y = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::deflate(&|&x: &N| if x % 2 == 0 { true } else { false }, &6);
+    let y = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::deflate(&|&x: &N| x % 2 == 0, &6);
     assert_eq!(y, ArraySeqStPerSLit![6]);
     let a = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 1, 10);
-    let evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&a, &|x| if *x % 2 == 0 { true } else { false });
+    let evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&a, &|x| *x % 2 == 0);
     assert_eq!(evens, ArraySeqStPerSLit![2, 4, 6, 8, 10]);
 }
 

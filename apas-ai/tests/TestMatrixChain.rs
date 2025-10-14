@@ -128,7 +128,7 @@ mod matrix_chain_tests {
     #[test]
     fn test_matrix_dim_display() {
         let dim = MatrixDim { rows: 10, cols: 20 };
-        let display_str = format!("{}", dim);
+        let display_str = format!("{dim}");
         assert!(display_str.contains("10"));
         assert!(display_str.contains("20"));
     }

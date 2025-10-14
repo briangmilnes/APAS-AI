@@ -65,12 +65,12 @@ fn test_dirgraphmteph_neighbor() {
     let g = DirGraphMtEph::FromSets(v, a);
 
     // Test Neighbor method - checks if edge exists between two vertices
-    assert_eq!(g.Neighbor(&0, &1), true); // edge 0->1 exists
-    assert_eq!(g.Neighbor(&0, &2), true); // edge 0->2 exists
-    assert_eq!(g.Neighbor(&1, &2), true); // edge 1->2 exists
-    assert_eq!(g.Neighbor(&1, &0), false); // edge 1->0 does not exist
-    assert_eq!(g.Neighbor(&2, &0), false); // edge 2->0 does not exist
-    assert_eq!(g.Neighbor(&2, &1), false); // edge 2->1 does not exist
+    assert!(g.Neighbor(&0, &1)); // edge 0->1 exists
+    assert!(g.Neighbor(&0, &2)); // edge 0->2 exists
+    assert!(g.Neighbor(&1, &2)); // edge 1->2 exists
+    assert!(!g.Neighbor(&1, &0)); // edge 1->0 does not exist
+    assert!(!g.Neighbor(&2, &0)); // edge 2->0 does not exist
+    assert!(!g.Neighbor(&2, &1)); // edge 2->1 does not exist
 }
 
 #[test]
@@ -86,11 +86,11 @@ fn test_dirgraphmteph_ng() {
 
     let ng_0 = g.NG(&0);
     assert_eq!(ng_0.size(), 1);
-    assert_eq!(ng_0.mem(&1), true);
+    assert!(ng_0.mem(&1));
 
     let ng_2 = g.NG(&2);
     assert_eq!(ng_2.size(), 1); // vertex 2 has incoming neighbor 1
-    assert_eq!(ng_2.mem(&1), true);
+    assert!(ng_2.mem(&1));
 }
 
 #[test]
@@ -107,9 +107,9 @@ fn test_dirgraphmteph_ngofvertices() {
     let vertices_subset = SetLit![0, 1];
     let ng_subset = g.NGOfVertices(&vertices_subset);
     assert_eq!(ng_subset.size(), 3); // NG(0)={1} ∪ NG(1)={0,2} = {0,1,2}
-    assert_eq!(ng_subset.mem(&0), true);
-    assert_eq!(ng_subset.mem(&1), true);
-    assert_eq!(ng_subset.mem(&2), true);
+    assert!(ng_subset.mem(&0));
+    assert!(ng_subset.mem(&1));
+    assert!(ng_subset.mem(&2));
 }
 
 #[test]
@@ -125,7 +125,7 @@ fn test_dirgraphmteph_nplus() {
 
     let nplus_0 = g.NPlus(&0);
     assert_eq!(nplus_0.size(), 1);
-    assert_eq!(nplus_0.mem(&1), true);
+    assert!(nplus_0.mem(&1));
 
     let nplus_2 = g.NPlus(&2);
     assert_eq!(nplus_2.size(), 0);
@@ -144,7 +144,7 @@ fn test_dirgraphmteph_nminus() {
 
     let nminus_1 = g.NMinus(&1);
     assert_eq!(nminus_1.size(), 1);
-    assert_eq!(nminus_1.mem(&0), true);
+    assert!(nminus_1.mem(&0));
 
     let nminus_0 = g.NMinus(&0);
     assert_eq!(nminus_0.size(), 0);
@@ -164,8 +164,8 @@ fn test_dirgraphmteph_nplusofvertices() {
     let vertices_subset = SetLit![0, 1];
     let nplus_subset = g.NPlusOfVertices(&vertices_subset);
     assert_eq!(nplus_subset.size(), 2);
-    assert_eq!(nplus_subset.mem(&1), true);
-    assert_eq!(nplus_subset.mem(&2), true);
+    assert!(nplus_subset.mem(&1));
+    assert!(nplus_subset.mem(&2));
 }
 
 #[test]
@@ -182,8 +182,8 @@ fn test_dirgraphmteph_nminusofvertices() {
     let vertices_subset = SetLit![1, 2];
     let nminus_subset = g.NMinusOfVertices(&vertices_subset);
     assert_eq!(nminus_subset.size(), 2);
-    assert_eq!(nminus_subset.mem(&0), true);
-    assert_eq!(nminus_subset.mem(&1), true);
+    assert!(nminus_subset.mem(&0));
+    assert!(nminus_subset.mem(&1));
 }
 
 #[test]
@@ -199,11 +199,11 @@ fn test_dirgraphmteph_incident() {
     let g = DirGraphMtEph::FromSets(v, a);
 
     // Test Incident method - checks if edge is incident to vertex
-    assert_eq!(g.Incident(&Edge(0, 1), &0), true); // edge (0,1) is incident to vertex 0
-    assert_eq!(g.Incident(&Edge(0, 1), &1), true); // edge (0,1) is incident to vertex 1
-    assert_eq!(g.Incident(&Edge(0, 1), &2), false); // edge (0,1) is not incident to vertex 2
-    assert_eq!(g.Incident(&Edge(1, 2), &1), true); // edge (1,2) is incident to vertex 1
-    assert_eq!(g.Incident(&Edge(1, 2), &2), true); // edge (1,2) is incident to vertex 2
+    assert!(g.Incident(&Edge(0, 1), &0)); // edge (0,1) is incident to vertex 0
+    assert!(g.Incident(&Edge(0, 1), &1)); // edge (0,1) is incident to vertex 1
+    assert!(!g.Incident(&Edge(0, 1), &2)); // edge (0,1) is not incident to vertex 2
+    assert!(g.Incident(&Edge(1, 2), &1)); // edge (1,2) is incident to vertex 1
+    assert!(g.Incident(&Edge(1, 2), &2)); // edge (1,2) is incident to vertex 2
 }
 
 #[test]
@@ -316,14 +316,14 @@ fn test_dirgraphmteph_thread_safety() {
         let g_clone = Arc::clone(&g);
         let handle = thread::spawn(move || {
             // Perform various read operations
-            assert_eq!(g_clone.Neighbor(&0, &1), true);
-            assert_eq!(g_clone.Neighbor(&1, &0), false);
+            assert!(g_clone.Neighbor(&0, &1));
+            assert!(!g_clone.Neighbor(&1, &0));
             assert_eq!(g_clone.sizeV(), 3);
             assert_eq!(g_clone.sizeA(), 2);
 
             let ng_0 = g_clone.NG(&0);
             assert_eq!(ng_0.size(), 1);
-            assert_eq!(ng_0.mem(&1), true);
+            assert!(ng_0.mem(&1));
         });
         handles.push(handle);
     }
@@ -382,7 +382,7 @@ fn test_race_condition_verification_concurrent_graph_reads() {
                 let neighbor_01 = graph_clone.Neighbor(&0, &1);
                 let neighbor_10 = graph_clone.Neighbor(&1, &0);
 
-                if neighbor_01 != true || neighbor_10 != false {
+                if !neighbor_01 || neighbor_10 {
                     race_detected_clone.store(true, Ordering::SeqCst);
                 }
 
@@ -428,7 +428,7 @@ fn test_race_condition_verification_concurrent_graph_reads() {
 
     // Verify all threads completed their reads
     for (thread_id, read_count) in results {
-        assert_eq!(read_count, 100, "Thread {} didn't complete all reads", thread_id);
+        assert_eq!(read_count, 100, "Thread {thread_id} didn't complete all reads");
     }
 }
 
@@ -462,7 +462,7 @@ fn test_race_condition_verification_mixed_graph_operations() {
             let mut read_count = 0;
             for _ in 0..50 {
                 if let Ok(graph_vec) = graphs_clone.read() {
-                    for (_idx, graph) in graph_vec.iter().enumerate() {
+                    for graph in graph_vec.iter() {
                         let size_v = graph.sizeV();
                         let size_a = graph.sizeA();
 
@@ -546,10 +546,10 @@ fn test_race_condition_verification_mixed_graph_operations() {
     for (thread_id, count) in results {
         if thread_id < 3 {
             // Reader thread
-            assert!(count > 0, "Reader thread {} performed no reads", thread_id);
+            assert!(count > 0, "Reader thread {thread_id} performed no reads");
         } else {
             // Writer thread
-            assert_eq!(count, 10, "Writer thread {} didn't complete all writes", thread_id);
+            assert_eq!(count, 10, "Writer thread {thread_id} didn't complete all writes");
         }
     }
 
@@ -562,10 +562,7 @@ fn test_race_condition_verification_mixed_graph_operations() {
             // Basic sanity checks
             assert!(
                 size_a <= size_v * size_v,
-                "Graph {} has {} edges but only {} vertices",
-                idx,
-                size_a,
-                size_v
+                "Graph {idx} has {size_a} edges but only {size_v} vertices"
             );
 
             if size_v > 0 {
@@ -729,8 +726,7 @@ fn test_deadlock_prevention_concurrent_graph_operations() {
     for (thread_id, op_count) in results.iter().enumerate() {
         assert!(
             *op_count > 0,
-            "Thread {} completed no operations - possible deadlock",
-            thread_id
+            "Thread {thread_id} completed no operations - possible deadlock"
         );
     }
 

@@ -159,7 +159,7 @@ pub mod ArraySeqMtEph {
 
         fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtEphS<T> {
             // Helper for filter: deflate f x = if f(x) then [x] else []
-            if f(x) == true {
+            if f(x) {
                 Self::singleton(x.clone())
             } else {
                 Self::empty()
@@ -189,7 +189,7 @@ pub mod ArraySeqMtEph {
             // Serial compaction phase: count kept values
             let mut kept_count = 0;
             for i in 0..keep_results.length() {
-                if keep_results.nth_cloned(i) == true {
+                if keep_results.nth_cloned(i) {
                     kept_count += 1;
                 }
             }
@@ -201,7 +201,7 @@ pub mod ArraySeqMtEph {
             // Find first kept value and create result sequence
             let mut first_kept = None;
             for i in 0..a.length() {
-                if keep_results.nth_cloned(i) == true {
+                if keep_results.nth_cloned(i) {
                     first_kept = Some(a.nth_cloned(i));
                     break;
                 }
@@ -212,7 +212,7 @@ pub mod ArraySeqMtEph {
             let mut result_idx = 1;
 
             for i in 0..a.length() {
-                if keep_results.nth_cloned(i) == true && result_idx < kept_count {
+                if keep_results.nth_cloned(i) && result_idx < kept_count {
                     result.set(result_idx, a.nth_cloned(i)).unwrap();
                     result_idx += 1;
                 }

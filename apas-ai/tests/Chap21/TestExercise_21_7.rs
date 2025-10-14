@@ -19,6 +19,6 @@ fn test_pair_even_with_vowels_debug_shape() {
     let a = ArraySeqStPerSLit![2];
     let b = ArraySeqStPerSLit!['a', 'x'];
     let s = pair_even_with_vowels(&a, &b);
-    let dbg_str = format!("{:?}", s);
+    let dbg_str = format!("{s:?}");
     assert!(!dbg_str.is_empty());
 }

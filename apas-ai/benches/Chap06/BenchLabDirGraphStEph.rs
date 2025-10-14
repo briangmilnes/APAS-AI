@@ -12,7 +12,8 @@ fn bench_labelled_dir_graph_creation(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10].iter() {
+    {
+        let size = &10;
         group.bench_with_input(BenchmarkId::new("empty", size), size, |b, _| {
             b.iter(|| black_box(LabDirGraphStEph::<i32, &str>::empty()))
         });
@@ -42,7 +43,8 @@ fn bench_labelled_dir_graph_add_vertex(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10].iter() {
+    {
+        let size = &10;
         group.bench_with_input(BenchmarkId::new("add_vertex", size), size, |b, &size| {
             b.iter(|| {
                 let mut g = LabDirGraphStEph::<i32, &str>::empty();
@@ -63,7 +65,8 @@ fn bench_labelled_dir_graph_add_labeled_arc(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10].iter() {
+    {
+        let size = &10;
         group.bench_with_input(BenchmarkId::new("add_labeled_arc", size), size, |b, &size| {
             b.iter(|| {
                 let mut g = LabDirGraphStEph::<i32, &str>::empty();
@@ -84,7 +87,8 @@ fn bench_labelled_dir_graph_has_arc(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10].iter() {
+    {
+        let size = &10;
         group.bench_with_input(BenchmarkId::new("has_arc", size), size, |b, &size| {
             let mut g = LabDirGraphStEph::<i32, &str>::empty();
             // Setup graph with arcs
@@ -111,7 +115,8 @@ fn bench_labelled_dir_graph_get_arc_label(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10].iter() {
+    {
+        let size = &10;
         group.bench_with_input(BenchmarkId::new("get_arc_label", size), size, |b, &size| {
             let mut g = LabDirGraphStEph::<i32, &str>::empty();
             // Setup graph with labeled arcs
@@ -140,7 +145,8 @@ fn bench_labelled_dir_graph_out_neighbors(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10].iter() {
+    {
+        let size = &10;
         group.bench_with_input(BenchmarkId::new("out_neighbors", size), size, |b, &size| {
             let mut g = LabDirGraphStEph::<i32, &str>::empty();
             // Setup graph - each vertex connects to next 3 vertices (with wraparound)
@@ -170,7 +176,8 @@ fn bench_labelled_dir_graph_in_neighbors(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10].iter() {
+    {
+        let size = &10;
         group.bench_with_input(BenchmarkId::new("in_neighbors", size), size, |b, &size| {
             let mut g = LabDirGraphStEph::<i32, &str>::empty();
             // Setup graph - each vertex connects to next 3 vertices (with wraparound)
@@ -200,7 +207,8 @@ fn bench_labelled_dir_graph_arcs(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    for size in [10].iter() {
+    {
+        let size = &10;
         group.bench_with_input(BenchmarkId::new("arcs", size), size, |b, &size| {
             let mut g = LabDirGraphStEph::<i32, &str>::empty();
             // Setup graph with arcs

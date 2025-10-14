@@ -151,16 +151,16 @@ fn test_quadratic_probing_resize_behavior() {
 
     // Insert many elements to trigger resizing
     for i in 0..25 {
-        let key = format!("item{}", i);
-        table = table.insert(key, i as i32);
+        let key = format!("item{i}");
+        table = table.insert(key, i);
     }
 
     assert_eq!(table.load_and_size().0, 25);
 
     // Verify all elements are still accessible after resizing
     for i in 0..25 {
-        let key = format!("item{}", i);
-        assert_eq!(table.lookup(&key), Some(&(i as i32)));
+        let key = format!("item{i}");
+        assert_eq!(table.lookup(&key), Some(&{ i }));
     }
 }
 
@@ -280,15 +280,15 @@ fn test_quadratic_probing_prime_table_sizes() {
 
     // Insert elements (limited to 6 to stay within probe sequence coverage)
     for i in 0..6 {
-        let key = format!("prime{}", i);
-        table = table.insert(key, i as i32 * 10);
+        let key = format!("prime{i}");
+        table = table.insert(key, i * 10);
     }
 
     assert_eq!(table.load_and_size().0, 6);
 
     // Verify retrieval
     for i in 0..6 {
-        let key = format!("prime{}", i);
-        assert_eq!(table.lookup(&key), Some(&(i as i32 * 10)));
+        let key = format!("prime{i}");
+        assert_eq!(table.lookup(&key), Some(&(i * 10)));
     }
 }

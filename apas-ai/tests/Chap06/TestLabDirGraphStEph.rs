@@ -27,7 +27,7 @@ fn test_labelled_dir_graph_empty() {
     let g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
     assert_eq!(g.vertices().size(), 0);
     assert_eq!(g.labeled_arcs().size(), 0);
-    assert_eq!(format!("{}", g), "LabDirGraph(V: {}, A: {})");
+    assert_eq!(format!("{g}"), "LabDirGraph(V: {}, A: {})");
 }
 
 #[test]
@@ -37,8 +37,8 @@ fn test_labelled_dir_graph_add_vertex() {
     g.add_vertex(2);
 
     assert_eq!(g.vertices().size(), 2);
-    assert!(g.vertices().mem(&1) == true);
-    assert!(g.vertices().mem(&2) == true);
+    assert!(g.vertices().mem(&1));
+    assert!(g.vertices().mem(&2));
     assert_eq!(g.labeled_arcs().size(), 0);
 }
 
@@ -68,19 +68,19 @@ fn test_labelled_dir_graph_neighbors() {
 
     let out_neighbors_1 = g.out_neighbors(&1);
     assert_eq!(out_neighbors_1.size(), 2);
-    assert!(out_neighbors_1.mem(&2) == true);
-    assert!(out_neighbors_1.mem(&3) == true);
+    assert!(out_neighbors_1.mem(&2));
+    assert!(out_neighbors_1.mem(&3));
 
     let in_neighbors_1 = g.in_neighbors(&1);
     assert_eq!(in_neighbors_1.size(), 1);
-    assert!(in_neighbors_1.mem(&3) == true);
+    assert!(in_neighbors_1.mem(&3));
 
     let out_neighbors_2 = g.out_neighbors(&2);
     assert_eq!(out_neighbors_2.size(), 0);
 
     let in_neighbors_2 = g.in_neighbors(&2);
     assert_eq!(in_neighbors_2.size(), 1);
-    assert!(in_neighbors_2.mem(&1) == true);
+    assert!(in_neighbors_2.mem(&1));
 }
 
 #[test]
@@ -91,8 +91,8 @@ fn test_labelled_dir_graph_arcs() {
 
     let arcs = g.arcs();
     assert_eq!(arcs.size(), 2);
-    assert!(arcs.mem(&Edge(1, 2)) == true);
-    assert!(arcs.mem(&Edge(2, 3)) == true);
+    assert!(arcs.mem(&Edge(1, 2)));
+    assert!(arcs.mem(&Edge(2, 3)));
 }
 
 #[test]
@@ -140,7 +140,7 @@ fn test_labelled_dir_graph_display() {
         V: [1, 2],
         A: [(1, 2, "test")]
     );
-    let display_str = format!("{}", g);
+    let display_str = format!("{g}");
     assert!(display_str.contains("LabDirGraph"));
     assert!(display_str.contains("V:"));
     assert!(display_str.contains("A:"));
@@ -152,7 +152,7 @@ fn test_labelled_dir_graph_debug() {
         V: [1],
         A: [(1, 1, "self")]
     );
-    let debug_str = format!("{:?}", g);
+    let debug_str = format!("{g:?}");
     assert!(debug_str.contains("LabDirGraph"));
     assert!(debug_str.contains("vertices"));
     assert!(debug_str.contains("labeled_arcs"));
@@ -168,9 +168,9 @@ fn test_labelled_dir_graph_self_loop() {
 
     let out_neighbors = g.out_neighbors(&1);
     assert_eq!(out_neighbors.size(), 1);
-    assert!(out_neighbors.mem(&1) == true);
+    assert!(out_neighbors.mem(&1));
 
     let in_neighbors = g.in_neighbors(&1);
     assert_eq!(in_neighbors.size(), 1);
-    assert!(in_neighbors.mem(&1) == true);
+    assert!(in_neighbors.mem(&1));
 }

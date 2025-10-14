@@ -151,7 +151,7 @@ pub mod OptBinSearchTreeMtEph {
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self {
             let key_probs: Vec<KeyProb<T>> = keys
                 .into_iter()
-                .zip(probs.into_iter())
+                .zip(probs)
                 .map(|(key, prob)| KeyProb { key, prob })
                 .collect();
 
@@ -252,7 +252,7 @@ pub mod OptBinSearchTreeMtEph {
                 let keys_guard = self.keys.lock().unwrap();
                 keys_guard.len()
             };
-            write!(f, "OBSTMtEph(keys: {}, memo_entries: {})", keys_len, memo_size)
+            write!(f, "OBSTMtEph(keys: {keys_len}, memo_entries: {memo_size})")
         }
     }
 
@@ -272,7 +272,7 @@ pub mod OptBinSearchTreeMtEph {
         }
     }
 
-    impl<'a, T: MtVal> IntoIterator for &'a OBSTMtEphS<T> {
+    impl<T: MtVal> IntoIterator for &OBSTMtEphS<T> {
         type Item = KeyProb<T>;
         type IntoIter = std::vec::IntoIter<KeyProb<T>>;
 
@@ -282,7 +282,7 @@ pub mod OptBinSearchTreeMtEph {
         }
     }
 
-    impl<'a, T: MtVal> IntoIterator for &'a mut OBSTMtEphS<T> {
+    impl<T: MtVal> IntoIterator for &mut OBSTMtEphS<T> {
         type Item = KeyProb<T>;
         type IntoIter = std::vec::IntoIter<KeyProb<T>>;
 

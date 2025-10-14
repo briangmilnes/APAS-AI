@@ -48,7 +48,7 @@ fn test_table_insert_ephemeral() {
     assert_eq!(table.find(&1), Some("one".to_string()));
 
     // Insert duplicate key with combine function
-    table.insert(1, "ONE".to_string(), |old, new| format!("{}-{}", old, new));
+    table.insert(1, "ONE".to_string(), |old, new| format!("{old}-{new}"));
     assert_eq!(table.size(), 1);
     assert_eq!(table.find(&1), Some("one-ONE".to_string()));
 
@@ -144,7 +144,7 @@ fn test_table_intersection_ephemeral() {
     table2.insert(3, "THREE".to_string(), |_old, new| new.clone());
     table2.insert(4, "FOUR".to_string(), |_old, new| new.clone());
 
-    table1.intersection(&table2, |v1, v2| format!("{}+{}", v1, v2));
+    table1.intersection(&table2, |v1, v2| format!("{v1}+{v2}"));
     assert_eq!(table1.size(), 2);
     assert_eq!(table1.find(&2), Some("two+TWO".to_string()));
     assert_eq!(table1.find(&3), Some("three+THREE".to_string()));
@@ -162,7 +162,7 @@ fn test_table_union_ephemeral() {
     table2.insert(2, "TWO".to_string(), |_old, new| new.clone());
     table2.insert(3, "THREE".to_string(), |_old, new| new.clone());
 
-    table1.union(&table2, |v1, v2| format!("{}+{}", v1, v2));
+    table1.union(&table2, |v1, v2| format!("{v1}+{v2}"));
     assert_eq!(table1.size(), 3);
     assert_eq!(table1.find(&1), Some("one".to_string()));
     assert_eq!(table1.find(&2), Some("two+TWO".to_string()));
@@ -278,13 +278,13 @@ fn test_table_large_operations() {
 
     // Insert many elements
     for i in 0..100 {
-        table.insert(i, format!("value_{}", i), |_old, new| new.clone());
+        table.insert(i, format!("value_{i}"), |_old, new| new.clone());
     }
     assert_eq!(table.size(), 100);
 
     // Test find on large table
     for i in 0..100 {
-        assert_eq!(table.find(&i), Some(format!("value_{}", i)));
+        assert_eq!(table.find(&i), Some(format!("value_{i}")));
     }
 
     // Filter to even numbers
@@ -293,7 +293,7 @@ fn test_table_large_operations() {
 
     for i in 0..100 {
         if i % 2 == 0 {
-            assert_eq!(table.find(&i), Some(format!("value_{}", i)));
+            assert_eq!(table.find(&i), Some(format!("value_{i}")));
         } else {
             assert_eq!(table.find(&i), None);
         }

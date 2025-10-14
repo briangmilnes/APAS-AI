@@ -8,7 +8,7 @@ use criterion::*;
 fn build_key_value_tree(len: usize) -> BSTreeKeyValue<i32, String> {
     let mut tree = BSTKeyValueStEphLit![];
     for i in 0..len {
-        tree.insert(i as i32, format!("value_{}", i));
+        tree.insert(i as i32, format!("value_{i}"));
     }
     tree
 }
@@ -19,7 +19,8 @@ fn bench_bst_key_value(c: &mut Criterion) {
     group.warm_up_time(Duration::from_millis(300));
     group.measurement_time(Duration::from_secs(1));
 
-    for &n in &[1_024usize] {
+    {
+        let &n = &1_024usize;
         group.bench_with_input(BenchmarkId::new("build", n), &n, |b, &len| {
             b.iter(|| black_box(build_key_value_tree(len)));
         });

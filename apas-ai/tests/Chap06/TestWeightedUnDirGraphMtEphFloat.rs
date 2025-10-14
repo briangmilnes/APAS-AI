@@ -59,17 +59,17 @@ fn test_weightedundirgraphmtephfloat_basic_operations() {
     // Test NG (neighbors) - should be symmetric
     let ng0 = g.neighbors(&0);
     assert_eq!(ng0.size(), 1);
-    assert_eq!(ng0.mem(&1), true);
+    assert!(ng0.mem(&1));
 
     let ng1 = g.neighbors(&1);
     assert_eq!(ng1.size(), 2);
-    assert_eq!(ng1.mem(&0), true);
-    assert_eq!(ng1.mem(&2), true);
+    assert!(ng1.mem(&0));
+    assert!(ng1.mem(&2));
 
     let ng2 = g.neighbors(&2);
     assert_eq!(ng2.size(), 2);
-    assert_eq!(ng2.mem(&1), true);
-    assert_eq!(ng2.mem(&3), true);
+    assert!(ng2.mem(&1));
+    assert!(ng2.mem(&3));
 
     // Test degrees (in undirected graph, InDegree = OutDegree = Degree)
     assert_eq!(g.vertex_degree(&0), 1);

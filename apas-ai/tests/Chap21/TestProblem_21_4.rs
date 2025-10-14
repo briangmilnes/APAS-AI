@@ -85,6 +85,6 @@ fn test_cartesian_debug_shape() {
     let a = ArraySeqStPerSLit![1];
     let b = ArraySeqStPerSLit!["x"];
     let s = cartesian_loops(&a, &b);
-    let dbg_str = format!("{:?}", s);
+    let dbg_str = format!("{s:?}");
     assert!(!dbg_str.is_empty());
 }

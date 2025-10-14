@@ -33,7 +33,7 @@ fn test_ephemeral_ch18_map_append_filter() {
     let m = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::map(&a, &|x| x + 1);
     let c = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&a, &m);
     assert_eq!(c.length(), 10);
-    let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&c, &|x| if *x % 2 == 0 { true } else { false });
+    let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&c, &|x| *x % 2 == 0);
     assert!(evens.length() > 0);
 }
 
@@ -249,41 +249,41 @@ fn test_append2() {
 
 #[test]
 fn test_deflate_true() {
-    let y: ArraySeqStEphS<N> = ArraySeqStEphS::deflate(&|&x: &N| if x % 2 == 0 { true } else { false }, &6);
+    let y: ArraySeqStEphS<N> = ArraySeqStEphS::deflate(&|&x: &N| x % 2 == 0, &6);
     assert_eq!(y, ArraySeqStEphSLit![6]);
 }
 
 #[test]
 fn test_deflate_false() {
-    let y: ArraySeqStEphS<N> = ArraySeqStEphS::deflate(&|&x: &N| if x % 2 == 0 { true } else { false }, &5);
+    let y: ArraySeqStEphS<N> = ArraySeqStEphS::deflate(&|&x: &N| x % 2 == 0, &5);
     assert_eq!(y.length(), 0);
 }
 
 #[test]
 fn test_filter_even_numbers() {
     let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i + 1, 10);
-    let evens: ArraySeqStEphS<N> = ArraySeqStEphS::filter(&a, &|x| if *x % 2 == 0 { true } else { false });
+    let evens: ArraySeqStEphS<N> = ArraySeqStEphS::filter(&a, &|x| *x % 2 == 0);
     assert_eq!(evens, ArraySeqStEphSLit![2, 4, 6, 8, 10]);
 }
 
 #[test]
 fn test_filter_none() {
     let a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i, 5);
-    let odds_only: ArraySeqStEphS<N> = ArraySeqStEphS::filter(&a, &|x| if *x % 2 == 1 { true } else { false });
+    let odds_only: ArraySeqStEphS<N> = ArraySeqStEphS::filter(&a, &|x| *x % 2 == 1);
     assert_eq!(odds_only, ArraySeqStEphSLit![1, 3]);
 }
 
 #[test]
 fn test_update_in_bounds() {
     let mut a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i + 1, 5);
-    let _ = a.update(Pair(2, 99).into());
+    let _ = a.update(Pair(2, 99));
     assert_eq!(a, ArraySeqStEphSLit![1, 2, 99, 4, 5]);
 }
 
 #[test]
 fn test_update_out_of_bounds() {
     let mut a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i + 1, 3);
-    let _ = a.update(Pair(10, 7).into());
+    let _ = a.update(Pair(10, 7));
     assert_eq!(a, ArraySeqStEphSLit![1, 2, 3]);
 }
 
@@ -291,34 +291,31 @@ fn test_update_out_of_bounds() {
 fn test_isEmpty() {
     let _e: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
     let e_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::empty();
-    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&e_i32), true);
+    assert!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&e_i32));
     let _s: ArraySeqStEphS<N> = ArraySeqStEphS::singleton(7);
     let s_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::singleton(7);
-    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&s_i32), false);
+    assert!(!<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&s_i32));
     let _a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i, 2);
     let a_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| i as i32, 2);
-    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&a_i32), false);
+    assert!(!<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&a_i32));
 }
 
 #[test]
 fn test_isSingleton() {
     let _e: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
     let e_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::empty();
-    assert_eq!(
-        <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&e_i32),
-        false
+    assert!(
+        !<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&e_i32)
     );
     let _s: ArraySeqStEphS<N> = ArraySeqStEphS::singleton(7);
     let s_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::singleton(7);
-    assert_eq!(
-        <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&s_i32),
-        true
+    assert!(
+        <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&s_i32)
     );
     let _a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i, 2);
     let a_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| i as i32, 2);
-    assert_eq!(
-        <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&a_i32),
-        false
+    assert!(
+        !<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&a_i32)
     );
 }
 
@@ -339,7 +336,7 @@ fn test_iterate_concat() {
         },
         3,
     );
-    let res: String = ArraySeqStEphS::iterate(&a, &|acc: &String, x: &&str| format!("{}{}", acc, x), String::new());
+    let res: String = ArraySeqStEphS::iterate(&a, &|acc: &String, x: &&str| format!("{acc}{x}"), String::new());
     assert_eq!(res, "abc");
 }
 

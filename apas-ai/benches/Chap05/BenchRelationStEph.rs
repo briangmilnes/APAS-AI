@@ -46,7 +46,7 @@ fn bench_relation_operations(c: &mut Criterion) {
         b.iter(|| {
             let mut found = 0;
             for i in 0..len {
-                if relation.mem(&i, &(i * 2)) == true {
+                if relation.mem(&i, &(i * 2)) {
                     found += 1;
                 }
             }

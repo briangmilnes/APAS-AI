@@ -57,6 +57,6 @@ fn test_points3d_tab_flat_iterator_order() {
 #[test]
 fn test_points3d_tab_flat_debug_shape() {
     let s = points3d_tab_flat(2);
-    let dbg_str = format!("{:?}", s);
+    let dbg_str = format!("{s:?}");
     assert!(!dbg_str.is_empty());
 }

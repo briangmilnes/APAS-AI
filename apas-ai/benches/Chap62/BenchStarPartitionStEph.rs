@@ -48,7 +48,7 @@ fn bench_sequential_star_partition_cycle(c: &mut Criterion) {
 
     for &n in &[10, 20, 30] {
         let graph = create_cycle_graph(n);
-        group.bench_function(format!("n={}", n), |b| {
+        group.bench_function(format!("n={n}"), |b| {
             b.iter(|| sequential_star_partition(black_box(&graph)))
         });
     }
@@ -63,7 +63,7 @@ fn bench_sequential_star_partition_dense(c: &mut Criterion) {
 
     for &n in &[10, 15, 20] {
         let graph = create_dense_graph(n);
-        group.bench_function(format!("n={}", n), |b| {
+        group.bench_function(format!("n={n}"), |b| {
             b.iter(|| sequential_star_partition(black_box(&graph)))
         });
     }

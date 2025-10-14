@@ -32,7 +32,7 @@ fn bench_boruvka_complete(c: &mut Criterion) {
             let _ = vertices_set.insert(*v);
         }
 
-        group.bench_function(format!("n{}", n), |b| {
+        group.bench_function(format!("n{n}"), |b| {
             b.iter(|| {
                 let mst = boruvka_mst_with_seed(black_box(&vertices_set), black_box(&edges), 42);
                 black_box(mst)
@@ -71,7 +71,7 @@ fn bench_boruvka_sparse(c: &mut Criterion) {
             let _ = vertices_set.insert(*v);
         }
 
-        group.bench_function(format!("n{}", n), |b| {
+        group.bench_function(format!("n{n}"), |b| {
             b.iter(|| {
                 let mst = boruvka_mst_with_seed(black_box(&vertices_set), black_box(&edges), 42);
                 black_box(mst)
@@ -103,7 +103,7 @@ fn bench_boruvka_path(c: &mut Criterion) {
             let _ = vertices_set.insert(*v);
         }
 
-        group.bench_function(format!("n{}", n), |b| {
+        group.bench_function(format!("n{n}"), |b| {
             b.iter(|| {
                 let mst = boruvka_mst_with_seed(black_box(&vertices_set), black_box(&edges), 42);
                 black_box(mst)
@@ -135,7 +135,7 @@ fn bench_boruvka_star(c: &mut Criterion) {
             let _ = vertices_set.insert(*v);
         }
 
-        group.bench_function(format!("n{}", n), |b| {
+        group.bench_function(format!("n{n}"), |b| {
             b.iter(|| {
                 let mst = boruvka_mst_with_seed(black_box(&vertices_set), black_box(&edges), 42);
                 black_box(mst)

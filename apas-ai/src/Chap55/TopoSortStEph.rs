@@ -24,11 +24,10 @@ pub mod TopoSortStEph {
         let mut result = Vec::new();
 
         for start in 0..n {
-            if !*visited.nth(start) {
-                if !dfs_finish_order_cycle_detect(graph, &mut visited, &mut rec_stack, &mut result, start) {
+            if !*visited.nth(start)
+                && !dfs_finish_order_cycle_detect(graph, &mut visited, &mut rec_stack, &mut result, start) {
                     return None; // Cycle detected
                 }
-            }
         }
         Some(AVLTreeSeqStEphS::from_vec(result))
     }

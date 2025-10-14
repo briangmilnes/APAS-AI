@@ -68,7 +68,7 @@ fn test_single_substitution() {
     let dist = med.min_edit_distance();
 
     // Should have small edit distance
-    assert!(dist >= 1 && dist <= 3);
+    assert!((1..=3).contains(&dist));
 }
 
 #[test]
@@ -104,7 +104,7 @@ fn test_classic_kitten_sitting() {
     let dist = med.min_edit_distance();
 
     // Should have moderate edit distance
-    assert!(dist >= 3 && dist <= 7);
+    assert!((3..=7).contains(&dist));
 }
 
 #[test]
@@ -116,7 +116,7 @@ fn test_saturday_sunday() {
     let dist = med.min_edit_distance();
 
     // Should have moderate edit distance
-    assert!(dist >= 3 && dist <= 8);
+    assert!((3..=8).contains(&dist));
 }
 
 #[test]
@@ -220,7 +220,7 @@ fn test_single_char_strings() {
     let dist = med.min_edit_distance();
 
     // Should be non-zero
-    assert!(dist >= 1 && dist <= 2);
+    assert!((1..=2).contains(&dist));
 }
 
 #[test]
@@ -244,7 +244,7 @@ fn test_completely_different() {
     let dist = med.min_edit_distance();
 
     // Should have significant edit distance
-    assert!(dist >= 3 && dist <= 6);
+    assert!((3..=6).contains(&dist));
 }
 
 #[test]
@@ -292,7 +292,7 @@ fn test_string_sequences() {
     let dist = med.min_edit_distance();
 
     // Should be non-zero (at least one difference)
-    assert!(dist >= 1 && dist <= 2);
+    assert!((1..=2).contains(&dist));
 }
 
 #[test]
@@ -309,7 +309,7 @@ fn test_update_and_recompute() {
     med.clear_memo();
 
     let dist2 = med.min_edit_distance();
-    assert!(dist2 >= 1 && dist2 <= 2); // Now needs some edits
+    assert!((1..=2).contains(&dist2)); // Now needs some edits
 }
 
 #[test]

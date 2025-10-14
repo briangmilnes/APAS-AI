@@ -96,7 +96,7 @@ mod obst_tests {
             key: 'A',
             prob: prob!(0.125),
         };
-        let display_str = format!("{}", key_prob);
+        let display_str = format!("{key_prob}");
         assert!(display_str.contains("A"));
         assert!(display_str.contains("0.125"));
     }

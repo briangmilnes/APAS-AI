@@ -46,7 +46,7 @@ fn test_ordered_table_mt_eph_parallel_operations() {
 
     // Insert test data
     for i in 0..100 {
-        table.insert(i, format!("value_{}", i), |_old, new| new.clone());
+        table.insert(i, format!("value_{i}"), |_old, new| new.clone());
     }
 
     // Test parallel filter
@@ -54,7 +54,7 @@ fn test_ordered_table_mt_eph_parallel_operations() {
     assert_eq!(filtered.size(), 50);
 
     // Test parallel map
-    let mapped = table.map(|k, v| format!("{}:{}", k, v));
+    let mapped = table.map(|k, v| format!("{k}:{v}"));
     assert_eq!(mapped.size(), 100);
 
     // Test parallel reduce
@@ -311,14 +311,14 @@ fn test_ordered_table_mt_eph_large_dataset_parallel() {
 
     // Insert a dataset (reduced from 1000 to 200 for faster testing)
     for i in 0..200 {
-        table.insert(i, format!("value_{}", i), |_old, new| new.clone());
+        table.insert(i, format!("value_{i}"), |_old, new| new.clone());
     }
 
     // Test parallel operations on dataset
     let even_filtered = table.filter(|k, _v| k % 2 == 0);
     assert_eq!(even_filtered.size(), 100);
 
-    let mapped = table.map(|k, v| format!("mapped_{}:{}", k, v));
+    let mapped = table.map(|k, v| format!("mapped_{k}:{v}"));
     assert_eq!(mapped.size(), 200);
 
     // Test ordering operations
@@ -384,7 +384,7 @@ fn test_ordered_table_mt_eph_tabulate() {
     keys.insert(2);
     keys.insert(3);
 
-    let table = OrderedTableMtEph::tabulate(|k| format!("value_{}", k), &keys);
+    let table = OrderedTableMtEph::tabulate(|k| format!("value_{k}"), &keys);
 
     assert_eq!(table.size(), 3);
     assert_eq!(table.lookup(&1), Some("value_1".to_string()));
@@ -397,7 +397,7 @@ fn test_ordered_table_mt_eph_tabulate_empty() {
     use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 
     let keys = ArraySetStEph::<i32>::empty();
-    let table = OrderedTableMtEph::tabulate(|k| format!("value_{}", k), &keys);
+    let table = OrderedTableMtEph::tabulate(|k| format!("value_{k}"), &keys);
 
     assert_eq!(table.size(), 0);
     assert!(table.is_empty());
@@ -594,9 +594,9 @@ fn test_ordered_table_mt_eph_clone() {
 #[test]
 fn test_ordered_table_mt_eph_reduce_sum() {
     let mut table = OrderedTableMtEph::empty();
-    table.insert(1, 10, |_old, new| new.clone());
-    table.insert(2, 20, |_old, new| new.clone());
-    table.insert(3, 30, |_old, new| new.clone());
+    table.insert(1, 10, |_old, new| *new);
+    table.insert(2, 20, |_old, new| *new);
+    table.insert(3, 30, |_old, new| *new);
 
     let sum = table.reduce(0, |acc, _k, v| acc + v);
     assert_eq!(sum, 60);

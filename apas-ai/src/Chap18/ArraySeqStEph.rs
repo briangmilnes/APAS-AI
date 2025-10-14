@@ -39,7 +39,7 @@ pub mod ArraySeqStEph {
             let total = self.data.len();
             let begin = start.min(total);
             let end = start.saturating_add(length).min(total);
-            Self::from_vec(self.data[begin..end].iter().cloned().collect())
+            Self::from_vec(self.data[begin..end].to_vec())
         }
 
         pub fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
@@ -102,7 +102,7 @@ pub mod ArraySeqStEph {
                 if i > 0 {
                     write!(f, ", ")?;
                 }
-                write!(f, "{}", item)?;
+                write!(f, "{item}")?;
             }
             write!(f, "]")
         }
@@ -223,7 +223,7 @@ pub mod ArraySeqStEph {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
-                if pred(value) == true {
+                if pred(value) {
                     kept.push(value.clone());
                 }
             }
@@ -247,9 +247,9 @@ pub mod ArraySeqStEph {
             ArraySeqStEphS::inject(self, updates)
         }
 
-        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
+        fn isEmpty(&self) -> B { self.length() == 0 }
 
-        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B { self.length() == 1 }
 
         fn collect<K: StT, V: StT>(
             pairs: &ArraySeqStEphS<Pair<K, V>>,

@@ -89,10 +89,10 @@ pub mod WeightedUnDirGraphStEphInt {
                 stack.push(start.clone());
 
                 while let Some(current) = stack.pop() {
-                    if visited.mem(&current) == false {
+                    if !visited.mem(&current) {
                         visited.insert(current.clone());
                         for neighbor in self.neighbors(&current).iter() {
-                            if visited.mem(neighbor) == false {
+                            if !visited.mem(neighbor) {
                                 stack.push(neighbor.clone());
                             }
                         }

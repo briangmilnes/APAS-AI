@@ -192,7 +192,7 @@ fn slice_pivot_mt_random_range_validation() {
                     break;
                 }
             }
-            assert!(found, "Random pivot {} not found in range [{}..{})", pivot, start, end);
+            assert!(found, "Random pivot {pivot} not found in range [{start}..{end})");
         }
     }
 }
@@ -274,7 +274,7 @@ fn slice_pivot_concurrent_access() {
                 break;
             }
         }
-        assert!(found, "Random pivot {} not in expected range", random_pivot);
+        assert!(found, "Random pivot {random_pivot} not in expected range");
     }
 }
 

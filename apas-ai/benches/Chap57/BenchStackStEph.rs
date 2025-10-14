@@ -10,7 +10,7 @@ fn bench_push(c: &mut Criterion) {
     let sizes = [100, 500, 1000];
 
     for n in sizes {
-        c.bench_function(&format!("stack_push_n{}", n), |b| {
+        c.bench_function(&format!("stack_push_n{n}"), |b| {
             b.iter(|| {
                 let mut stack = StackStEph::new();
                 for i in 0..n {
@@ -26,7 +26,7 @@ fn bench_pop(c: &mut Criterion) {
     let sizes = [100, 500, 1000];
 
     for n in sizes {
-        c.bench_function(&format!("stack_pop_n{}", n), |b| {
+        c.bench_function(&format!("stack_pop_n{n}"), |b| {
             b.iter_batched(
                 || {
                     let mut stack = StackStEph::new();
@@ -50,7 +50,7 @@ fn bench_push_pop_mixed(c: &mut Criterion) {
     let sizes = [100, 500, 1000];
 
     for n in sizes {
-        c.bench_function(&format!("stack_push_pop_mixed_n{}", n), |b| {
+        c.bench_function(&format!("stack_push_pop_mixed_n{n}"), |b| {
             b.iter(|| {
                 let mut stack = StackStEph::new();
                 for i in 0..n {
@@ -69,7 +69,7 @@ fn bench_peek(c: &mut Criterion) {
     let sizes = [100, 500, 1000];
 
     for n in sizes {
-        c.bench_function(&format!("stack_peek_n{}", n), |b| {
+        c.bench_function(&format!("stack_peek_n{n}"), |b| {
             let mut stack = StackStEph::new();
             for i in 0..n {
                 stack.push(i);

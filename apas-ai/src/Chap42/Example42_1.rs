@@ -126,8 +126,8 @@ pub mod Example42_1 {
         let table1 = TableStPerLit![1 => "A".to_string(), 2 => "B".to_string()];
         let table2 = TableStPerLit![2 => "X".to_string(), 3 => "Y".to_string()];
 
-        let intersection = table1.intersection(&table2, |v1, v2| format!("{}+{}", v1, v2));
-        let union = table1.union(&table2, |v1, v2| format!("{}+{}", v1, v2));
+        let intersection = table1.intersection(&table2, |v1, v2| format!("{v1}+{v2}"));
+        let union = table1.union(&table2, |v1, v2| format!("{v1}+{v2}"));
         let difference = table1.difference(&table2);
 
         println!(
@@ -146,34 +146,34 @@ pub mod Example42_1 {
         println!("\n=== Performance Comparison ===");
 
         let size = 1000;
-        println!("Building tables with {} entries...", size);
+        println!("Building tables with {size} entries...");
 
         // Build persistent table
         let start = std::time::Instant::now();
         let mut table_per = TableStPer::empty();
         for i in 0..size {
-            table_per = table_per.insert(i, format!("value_{}", i), |_old, new| new.clone());
+            table_per = table_per.insert(i, format!("value_{i}"), |_old, new| new.clone());
         }
         let per_time = start.elapsed();
-        println!("Persistent table construction: {:?}", per_time);
+        println!("Persistent table construction: {per_time:?}");
 
         // Build ephemeral table
         let start = std::time::Instant::now();
         let mut table_eph = TableStEph::empty();
         for i in 0..size {
-            table_eph.insert(i, format!("value_{}", i), |_old, new| new.clone());
+            table_eph.insert(i, format!("value_{i}"), |_old, new| new.clone());
         }
         let eph_time = start.elapsed();
-        println!("Ephemeral table construction: {:?}", eph_time);
+        println!("Ephemeral table construction: {eph_time:?}");
 
         // Build multi-threaded table
         let start = std::time::Instant::now();
         let mut table_mt = TableMtEph::empty();
         for i in 0..size {
-            table_mt.insert(i, format!("value_{}", i), |_old, new| new.clone());
+            table_mt.insert(i, format!("value_{i}"), |_old, new| new.clone());
         }
         let mt_time = start.elapsed();
-        println!("Multi-threaded table construction: {:?}", mt_time);
+        println!("Multi-threaded table construction: {mt_time:?}");
 
         // Test map operation performance
         println!("\nMap operation performance:");
@@ -181,16 +181,16 @@ pub mod Example42_1 {
         let start = std::time::Instant::now();
         let _mapped_per = table_per.map(|s| s.to_uppercase());
         let per_map_time = start.elapsed();
-        println!("Persistent map: {:?}", per_map_time);
+        println!("Persistent map: {per_map_time:?}");
 
         let start = std::time::Instant::now();
         table_eph.map(|s| s.to_uppercase());
         let eph_map_time = start.elapsed();
-        println!("Ephemeral map: {:?}", eph_map_time);
+        println!("Ephemeral map: {eph_map_time:?}");
 
         let start = std::time::Instant::now();
         table_mt.map(|s| s.to_uppercase());
         let mt_map_time = start.elapsed();
-        println!("Multi-threaded map: {:?}", mt_map_time);
+        println!("Multi-threaded map: {mt_map_time:?}");
     }
 }

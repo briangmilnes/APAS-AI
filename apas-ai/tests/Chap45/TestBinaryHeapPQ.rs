@@ -364,7 +364,7 @@ fn test_display() {
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let heap = heap.insert(5).insert(3).insert(7);
 
-    let display_str = format!("{}", heap);
+    let display_str = format!("{heap}");
     assert!(display_str.contains("BinaryHeapPQ"));
 }
 

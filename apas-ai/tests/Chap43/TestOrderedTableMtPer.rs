@@ -40,7 +40,7 @@ fn test_ordered_table_mt_per_filter() {
     let mut table: OrderedTableMtPer<i32, String> = OrderedTableMtPerTrait::empty();
 
     for i in 0..20 {
-        table = table.insert(i, format!("value_{}", i));
+        table = table.insert(i, format!("value_{i}"));
     }
 
     let filtered = table.filter(|k, _v| k % 2 == 0);
@@ -52,10 +52,10 @@ fn test_ordered_table_mt_per_map() {
     let mut table: OrderedTableMtPer<i32, String> = OrderedTableMtPerTrait::empty();
 
     for i in 0..10 {
-        table = table.insert(i, format!("val_{}", i));
+        table = table.insert(i, format!("val_{i}"));
     }
 
-    let mapped = table.map(|v| format!("mapped_{}", v));
+    let mapped = table.map(|v| format!("mapped_{v}"));
     assert_eq!(mapped.size(), 10);
 }
 
@@ -70,8 +70,8 @@ fn test_ordered_table_mt_per_singleton() {
 fn test_ordered_table_mt_per_domain() {
     let mut table: OrderedTableMtPer<i32, String> = OrderedTableMtPerTrait::empty();
 
-    for i in vec![5, 2, 8] {
-        table = table.insert(i, format!("val_{}", i));
+    for i in [5, 2, 8] {
+        table = table.insert(i, format!("val_{i}"));
     }
 
     let domain = table.domain();

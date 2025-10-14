@@ -237,7 +237,7 @@ fn test_ordered_table_st_eph_map() {
     table.insert(1, "one".to_string(), |_old, new| new.clone());
     table.insert(2, "two".to_string(), |_old, new| new.clone());
 
-    let mapped = table.map(|k, v| format!("{}:{}", k, v));
+    let mapped = table.map(|k, v| format!("{k}:{v}"));
 
     assert_eq!(mapped.size(), 2);
     assert_eq!(mapped.lookup(&1), Some("1:one".to_string()));
@@ -247,9 +247,9 @@ fn test_ordered_table_st_eph_map() {
 #[test]
 fn test_ordered_table_st_eph_reduce() {
     let mut table = OrderedTableStEph::empty();
-    table.insert(1, 10, |_old, new| new.clone());
-    table.insert(2, 20, |_old, new| new.clone());
-    table.insert(3, 30, |_old, new| new.clone());
+    table.insert(1, 10, |_old, new| *new);
+    table.insert(2, 20, |_old, new| *new);
+    table.insert(3, 30, |_old, new| *new);
 
     let sum = table.reduce(0, |acc, _k, v| acc + v);
     assert_eq!(sum, 60);
@@ -354,7 +354,7 @@ fn test_ordered_table_st_eph_tabulate() {
     keys.insert(2);
     keys.insert(3);
 
-    let table = OrderedTableStEph::tabulate(|k| format!("value_{}", k), &keys);
+    let table = OrderedTableStEph::tabulate(|k| format!("value_{k}"), &keys);
 
     assert_eq!(table.size(), 3);
     assert_eq!(table.lookup(&1), Some("value_1".to_string()));
@@ -365,7 +365,7 @@ fn test_ordered_table_st_eph_tabulate() {
 #[test]
 fn test_ordered_table_st_eph_tabulate_empty() {
     let keys = ArraySetStEph::<i32>::empty();
-    let table = OrderedTableStEph::tabulate(|k| format!("value_{}", k), &keys);
+    let table = OrderedTableStEph::tabulate(|k| format!("value_{k}"), &keys);
 
     assert_eq!(table.size(), 0);
     assert!(table.is_empty());
@@ -554,9 +554,9 @@ fn test_ordered_table_st_eph_clone() {
 #[test]
 fn test_ordered_table_st_eph_reduce_sum() {
     let mut table = OrderedTableStEph::empty();
-    table.insert(1, 10, |_old, new| new.clone());
-    table.insert(2, 20, |_old, new| new.clone());
-    table.insert(3, 30, |_old, new| new.clone());
+    table.insert(1, 10, |_old, new| *new);
+    table.insert(2, 20, |_old, new| *new);
+    table.insert(3, 30, |_old, new| *new);
 
     let sum = table.reduce(0, |acc, _k, v| acc + v);
     assert_eq!(sum, 60);
@@ -575,7 +575,7 @@ fn test_ordered_table_st_eph_large_dataset() {
 
     // Insert a dataset (200 for consistency)
     for i in 0..200 {
-        table.insert(i, format!("value_{}", i), |_old, new| new.clone());
+        table.insert(i, format!("value_{i}"), |_old, new| new.clone());
     }
 
     // Test filter operation
@@ -583,7 +583,7 @@ fn test_ordered_table_st_eph_large_dataset() {
     assert_eq!(even_filtered.size(), 100);
 
     // Test map operation
-    let mapped = table.map(|k, v| format!("mapped_{}:{}", k, v));
+    let mapped = table.map(|k, v| format!("mapped_{k}:{v}"));
     assert_eq!(mapped.size(), 200);
 
     // Test ordering operations

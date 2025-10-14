@@ -60,28 +60,28 @@ fn test_weighteddirgraphmtephfloat_basic_operations() {
     // Test NG (neighbors)
     let ng0 = g.out_neighbors(&0);
     assert_eq!(ng0.size(), 2);
-    assert_eq!(ng0.mem(&1), true);
-    assert_eq!(ng0.mem(&3), true);
+    assert!(ng0.mem(&1));
+    assert!(ng0.mem(&3));
 
     let ng1 = g.out_neighbors(&1);
     assert_eq!(ng1.size(), 1);
-    assert_eq!(ng1.mem(&2), true);
+    assert!(ng1.mem(&2));
 
     // Test NPlus (out-neighbors)
     let nplus0 = g.out_neighbors(&0);
     assert_eq!(nplus0.size(), 2);
-    assert_eq!(nplus0.mem(&1), true);
-    assert_eq!(nplus0.mem(&3), true);
+    assert!(nplus0.mem(&1));
+    assert!(nplus0.mem(&3));
 
     // Test NMinus (in-neighbors)
     let nminus1 = g.in_neighbors(&1);
     assert_eq!(nminus1.size(), 1);
-    assert_eq!(nminus1.mem(&0), true);
+    assert!(nminus1.mem(&0));
 
     let nminus3 = g.in_neighbors(&3);
     assert_eq!(nminus3.size(), 2);
-    assert_eq!(nminus3.mem(&0), true);
-    assert_eq!(nminus3.mem(&2), true);
+    assert!(nminus3.mem(&0));
+    assert!(nminus3.mem(&2));
 
     // Test degrees
     assert_eq!(g.out_neighbors(&0).size(), 2);

@@ -87,7 +87,7 @@ fn bench_tramlaw_scenario(c: &mut Criterion) {
     // Simulate a full day of sales data (1440 minutes)
     for minute in 0..1440 {
         let base_sales = 1000;
-        let time_factor = if minute >= 540 && minute <= 1200 { 2 } else { 1 }; // Business hours
+        let time_factor = if (540..=1200).contains(&minute) { 2 } else { 1 }; // Business hours
         let sales = base_sales * time_factor + (minute % 100);
         sales_table = sales_table.insert(minute, sales);
     }

@@ -44,7 +44,7 @@ fn bench_count_components_single(c: &mut Criterion) {
 
     for &n in &[10, 15, 20] {
         let graph = create_cycle_graph(n);
-        group.bench_function(format!("n={}", n), |b| b.iter(|| count_components(black_box(&graph))));
+        group.bench_function(format!("n={n}"), |b| b.iter(|| count_components(black_box(&graph))));
     }
     group.finish();
 }
@@ -57,7 +57,7 @@ fn bench_count_components_multiple(c: &mut Criterion) {
 
     for &n_comp in &[3, 5, 8] {
         let graph = create_multi_component_graph(n_comp, 3);
-        group.bench_function(format!("comp={}", n_comp), |b| {
+        group.bench_function(format!("comp={n_comp}"), |b| {
             b.iter(|| count_components(black_box(&graph)))
         });
     }
@@ -72,7 +72,7 @@ fn bench_connected_components(c: &mut Criterion) {
 
     for &n_comp in &[3, 5, 8] {
         let graph = create_multi_component_graph(n_comp, 3);
-        group.bench_function(format!("comp={}", n_comp), |b| {
+        group.bench_function(format!("comp={n_comp}"), |b| {
             b.iter(|| connected_components(black_box(&graph)))
         });
     }

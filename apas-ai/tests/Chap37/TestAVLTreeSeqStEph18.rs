@@ -26,7 +26,7 @@ fn test_map_increment() {
 fn test_append_union() {
     let a: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphLit![0, 1, 2, 3];
     let b: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphLit![2, 3, 4, 5];
-    let mut vals: Vec<N> = a.iter().map(|x| *x).collect();
+    let mut vals: Vec<N> = a.iter().copied().collect();
     for x in b.iter() {
         if !vals.contains(x) {
             vals.push(*x);
@@ -39,7 +39,7 @@ fn test_append_union() {
 #[test]
 fn test_filter_even() {
     let base: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphLit![0, 1, 2, 3, 4, 5];
-    let kept: Vec<N> = base.iter().filter(|x| **x % 2 == 0).map(|x| *x).collect();
+    let kept: Vec<N> = base.iter().filter(|x| **x % 2 == 0).copied().collect();
     let evens: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::from_vec(kept);
     assert_eq!(evens.to_arrayseq(), ArraySeqStEphSLit![0, 2, 4]);
 }

@@ -17,7 +17,7 @@ fn test_persistent_set_does_not_mutate() {
 #[test]
 fn test_iterator_inorder_values() {
     let a: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerLit![1, 2, 3, 4, 5]; // tabulate(&|i| i + 1, 5)
-    let vals: Vec<N> = a.iter().map(|x| *x).collect();
+    let vals: Vec<N> = a.iter().copied().collect();
     assert_eq!(vals, vec![1, 2, 3, 4, 5]);
 }
 
@@ -158,15 +158,15 @@ fn test_avl_empty_and_singleton_edge_cases() {
     // Test empty tree
     let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
     assert_eq!(empty.length(), 0);
-    assert_eq!(empty.isEmpty(), true);
-    assert_eq!(empty.isSingleton(), false);
+    assert!(empty.isEmpty());
+    assert!(!empty.isSingleton());
     assert_eq!(empty.values_in_order(), vec![]);
 
     // Test singleton
     let single = AVLTreeSeqStPerS::singleton(42);
     assert_eq!(single.length(), 1);
-    assert_eq!(single.isEmpty(), false);
-    assert_eq!(single.isSingleton(), true);
+    assert!(!single.isEmpty());
+    assert!(single.isSingleton());
     assert_eq!(*single.nth(0), 42);
     assert_eq!(single.values_in_order(), vec![42]);
 
@@ -201,11 +201,11 @@ fn test_avl_subseq_balancing() {
     // Test edge cases
     let empty_sub = tree.subseq_copy(5, 0); // Empty subseq
     assert_eq!(empty_sub.length(), 0);
-    assert_eq!(empty_sub.isEmpty(), true);
+    assert!(empty_sub.isEmpty());
 
     let out_of_bounds = tree.subseq_copy(15, 5); // Start beyond end
     assert_eq!(out_of_bounds.length(), 0);
-    assert_eq!(out_of_bounds.isEmpty(), true);
+    assert!(out_of_bounds.isEmpty());
 
     let partial_bounds = tree.subseq_copy(8, 5); // Extends beyond end
     assert_eq!(partial_bounds.length(), 2); // Should get [9, 10]
@@ -262,7 +262,7 @@ fn test_avl_equality_and_debug() {
     assert_ne!(tree1, tree3);
 
     // Test debug formatting (should not panic)
-    let debug_str = format!("{:?}", tree1);
+    let debug_str = format!("{tree1:?}");
     assert!(debug_str.contains("1"));
     assert!(debug_str.contains("5"));
 }

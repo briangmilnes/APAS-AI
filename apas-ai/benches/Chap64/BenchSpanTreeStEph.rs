@@ -28,7 +28,7 @@ fn bench_spanning_tree_cycle(c: &mut Criterion) {
 
     for &n in &[8, 12, 16] {
         let graph = create_cycle_graph(n);
-        group.bench_function(format!("n={}", n), |b| {
+        group.bench_function(format!("n={n}"), |b| {
             b.iter(|| spanning_tree_star_contraction(black_box(&graph)))
         });
     }

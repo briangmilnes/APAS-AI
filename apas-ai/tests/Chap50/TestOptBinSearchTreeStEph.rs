@@ -255,7 +255,7 @@ fn test_key_prob_display() {
         key: 42,
         prob: prob!(0.5),
     };
-    let display_str = format!("{}", kp);
+    let display_str = format!("{kp}");
 
     assert!(display_str.contains("42"));
     assert!(display_str.contains("0.5"));
@@ -267,9 +267,9 @@ fn test_key_prob_debug() {
         key: 42,
         prob: prob!(0.5),
     };
-    let debug_str = format!("{:?}", kp);
+    let debug_str = format!("{kp:?}");
 
-    assert!(debug_str.len() > 0);
+    assert!(!debug_str.is_empty());
 }
 
 #[test]

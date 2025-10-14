@@ -22,7 +22,7 @@ fn bench_insert(c: &mut Criterion) {
                     table.table.push(Vec::new());
                 }
                 for i in 0..size {
-                    VecChainedHashTableStEph::insert(&mut table, black_box(i as i32), black_box(format!("value{}", i)));
+                    VecChainedHashTableStEph::insert(&mut table, black_box(i), black_box(format!("value{i}")));
                 }
                 table
             });
@@ -44,14 +44,14 @@ fn bench_lookup(c: &mut Criterion) {
             table.table.push(Vec::new());
         }
         for i in 0..size {
-            VecChainedHashTableStEph::insert(&mut table, i as i32, format!("value{}", i));
+            VecChainedHashTableStEph::insert(&mut table, i, format!("value{i}"));
         }
         
         group.bench_with_input(BenchmarkId::from_parameter(size), &size, |b, s| {
             let size = *s;
             b.iter(|| {
                 for i in 0..size {
-                    black_box(VecChainedHashTableStEph::lookup(&table, black_box(&(i as i32))));
+                    black_box(VecChainedHashTableStEph::lookup(&table, black_box(&{ i })));
                 }
             });
         });

@@ -71,7 +71,7 @@ pub mod AVLTreeSeqStPer {
         n
     }
 
-    fn nth_ref<'a, T: StT>(mut cur: &'a Link<T>, mut index: N) -> &'a T {
+    fn nth_ref<T: StT>(mut cur: &Link<T>, mut index: N) -> &T {
         loop {
             let node = cur.as_ref().expect("index out of bounds");
             let ls = size(&node.left);
@@ -179,8 +179,8 @@ pub mod AVLTreeSeqStPer {
                 root: Some(mk(item, None, None)),
             }
         }
-        fn isEmpty(&self) -> B { if self.length() == 0 { true } else { false } }
-        fn isSingleton(&self) -> B { if self.length() == 1 { true } else { false } }
+        fn isEmpty(&self) -> B { self.length() == 0 }
+        fn isSingleton(&self) -> B { self.length() == 1 }
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.length();
             let s = start.min(n);
@@ -191,7 +191,7 @@ pub mod AVLTreeSeqStPer {
             let mut vals: Vec<T> = Vec::with_capacity(e - s);
             let all = self.values_in_order();
             for i in s..e {
-                vals.push(all[i as usize].clone());
+                vals.push(all[i].clone());
             }
             Self::from_vec(vals)
         }

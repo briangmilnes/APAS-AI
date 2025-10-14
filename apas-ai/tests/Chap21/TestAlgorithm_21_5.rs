@@ -13,7 +13,7 @@ fn test_primes_bf_small() {
 #[test]
 fn test_primes_bf_debug_shape() {
     let p = primes_bf(5);
-    let dbg_str = format!("{:?}", p);
+    let dbg_str = format!("{p:?}");
     assert!(!dbg_str.is_empty());
 }
 

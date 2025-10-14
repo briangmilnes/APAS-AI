@@ -45,19 +45,19 @@ pub mod Example43_1 {
 
         // first A → 'artie'
         match set_a.first() {
-            | Some(first) => println!("first(A) = '{}'", first),
+            | Some(first) => println!("first(A) = '{first}'"),
             | None => println!("first(A) = ⊥"),
         }
 
         // next(A, 'quinn') → 'rachel'
         match set_a.next(&"quinn".to_string()) {
-            | Some(next_elem) => println!("next(A, 'quinn') = '{}'", next_elem),
+            | Some(next_elem) => println!("next(A, 'quinn') = '{next_elem}'"),
             | None => println!("next(A, 'quinn') = ⊥"),
         }
 
         // next(A, 'mike') → 'rachel'
         match set_a.next(&"mike".to_string()) {
-            | Some(next_elem) => println!("next(A, 'mike') = '{}'", next_elem),
+            | Some(next_elem) => println!("next(A, 'mike') = '{next_elem}'"),
             | None => println!("next(A, 'mike') = ⊥"),
         }
 
@@ -75,15 +75,15 @@ pub mod Example43_1 {
 
         // rank(A, 'rachel') → 4
         let rachel_rank = set_a.rank(&"rachel".to_string());
-        println!("rank(A, 'rachel') = {}", rachel_rank);
+        println!("rank(A, 'rachel') = {rachel_rank}");
 
         // rank(A, 'quinn') → 4 (elements less than 'quinn')
         let quinn_rank = set_a.rank(&"quinn".to_string());
-        println!("rank(A, 'quinn') = {}", quinn_rank);
+        println!("rank(A, 'quinn') = {quinn_rank}");
 
         // select(A, 5) → 'sam'
         match set_a.select(5) {
-            | Some(selected) => println!("select(A, 5) = '{}'", selected),
+            | Some(selected) => println!("select(A, 5) = '{selected}'"),
             | None => println!("select(A, 5) = ⊥"),
         }
 
@@ -115,13 +115,13 @@ pub mod Example43_1 {
 
         // last A → 'tina'
         match set_a.last() {
-            | Some(last) => println!("last(A) = '{}'", last),
+            | Some(last) => println!("last(A) = '{last}'"),
             | None => println!("last(A) = ⊥"),
         }
 
         // previous(A, 'rachel') → 'mike'
         match set_a.previous(&"rachel".to_string()) {
-            | Some(prev) => println!("previous(A, 'rachel') = '{}'", prev),
+            | Some(prev) => println!("previous(A, 'rachel') = '{prev}'"),
             | None => println!("previous(A, 'rachel') = ⊥"),
         }
 
@@ -137,7 +137,7 @@ pub mod Example43_1 {
             print!("\"{}\"", seq.nth(i));
         }
         println!("],");
-        println!("  found: {},", found);
+        println!("  found: {found},");
         print!("  right: [");
         let seq = right_split.to_seq();
         for i in 0..seq.length() {

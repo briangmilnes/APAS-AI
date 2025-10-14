@@ -154,8 +154,8 @@ fn test_dimension_consistency() {
 #[test]
 fn test_display() {
     let chain = MatrixChainMtEphLit![dims: [(10,20), (20,30)]];
-    let s = format!("{}", chain);
-    assert!(s.len() > 0);
+    let s = format!("{chain}");
+    assert!(!s.is_empty());
 }
 
 #[test]

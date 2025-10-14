@@ -241,19 +241,19 @@ impl TestSet for apas_ai::Chap37::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSpla
 
 fn exercise_set<S: TestSet>() {
     let mut set = S::empty();
-    assert_eq!(set.is_empty(), true);
+    assert!(set.is_empty());
 
     for value in [3, 1, 4, 2] {
         set.insert(value);
     }
 
     assert_eq!(set.size(), 4);
-    assert_eq!(set.contains(&2), true);
+    assert!(set.contains(&2));
     assert_eq!(set.minimum(), Some(1));
     assert_eq!(set.maximum(), Some(4));
 
     set.delete(&3);
-    assert_eq!(set.contains(&3), false);
+    assert!(!set.contains(&3));
     assert_eq!(set.size(), 3);
 
     let mut other = S::empty();
@@ -266,15 +266,15 @@ fn exercise_set<S: TestSet>() {
 
     let intersection = set.intersection(&other);
     assert_eq!(intersection.size(), 1);
-    assert_eq!(intersection.contains(&2), true);
+    assert!(intersection.contains(&2));
 
     let difference = set.difference(&other);
     assert_eq!(difference.size(), 2);
-    assert_eq!(difference.contains(&1), true);
-    assert_eq!(difference.contains(&4), true);
+    assert!(difference.contains(&1));
+    assert!(difference.contains(&4));
 
     let (lt, found_missing, gt) = union.split(&3);
-    assert_eq!(found_missing, false);
+    assert!(!found_missing);
     assert_eq!(lt.size(), 2);
     assert_eq!(gt.size(), 2);
 
@@ -282,14 +282,14 @@ fn exercise_set<S: TestSet>() {
     assert_eq!(rejoined_pair.size(), union.size());
 
     let (lt_with_pivot, found_pivot, gt_with_pivot) = union.split(&4);
-    assert_eq!(found_pivot, true);
+    assert!(found_pivot);
     let rejoined_mid = S::join_m(lt_with_pivot, 4, gt_with_pivot);
     assert_eq!(rejoined_mid.size(), union.size());
 
     let evens = union.filter(|value| *value % 2 == 0);
     assert_eq!(evens.size(), 2);
-    assert_eq!(evens.contains(&2), true);
-    assert_eq!(evens.contains(&4), true);
+    assert!(evens.contains(&2));
+    assert!(evens.contains(&4));
 
     let sum = union.reduce(|acc, value| acc + value, 0);
     assert_eq!(sum, 12);
@@ -330,7 +330,7 @@ fn test_plain_bst_individual_operations() {
     use apas_ai::Chap37::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMt;
 
     let mut set = BSTSetPlainMt::<i32>::empty();
-    assert_eq!(set.is_empty(), true);
+    assert!(set.is_empty());
     assert_eq!(set.size(), 0);
     assert_eq!(set.minimum(), None);
     assert_eq!(set.maximum(), None);
@@ -338,7 +338,7 @@ fn test_plain_bst_individual_operations() {
     // Test individual insertions
     set.insert(10);
     assert_eq!(set.size(), 1);
-    assert_eq!(set.contains(&10), true);
+    assert!(set.contains(&10));
     assert_eq!(set.minimum(), Some(10));
     assert_eq!(set.maximum(), Some(10));
 
@@ -355,7 +355,7 @@ fn test_plain_bst_individual_operations() {
 
     // Test deletions
     set.delete(&10);
-    assert_eq!(set.contains(&10), false);
+    assert!(!set.contains(&10));
     assert_eq!(set.size(), 6);
 
     // Test set operations
@@ -366,17 +366,17 @@ fn test_plain_bst_individual_operations() {
 
     let union_result = set.union(&other);
     assert_eq!(union_result.size(), 8); // 6 from set + 2 new from other
-    assert_eq!(union_result.contains(&7), true);
-    assert_eq!(union_result.contains(&20), true);
+    assert!(union_result.contains(&7));
+    assert!(union_result.contains(&20));
 
     let intersection_result = set.intersection(&other);
     assert_eq!(intersection_result.size(), 1); // Only 7 is common
-    assert_eq!(intersection_result.contains(&7), true);
+    assert!(intersection_result.contains(&7));
 
     let difference_result = set.difference(&other);
     assert_eq!(difference_result.size(), 5); // set minus common element
-    assert_eq!(difference_result.contains(&7), false);
-    assert_eq!(difference_result.contains(&5), true);
+    assert!(!difference_result.contains(&7));
+    assert!(difference_result.contains(&5));
 }
 
 #[test]
@@ -396,14 +396,14 @@ fn test_avl_bst_individual_operations() {
 
     // Test split operation
     let (left, found, right) = set.split(&8);
-    assert_eq!(found, true);
+    assert!(found);
     assert_eq!(left.size(), 7); // 1-7
     assert_eq!(right.size(), 7); // 9-15
 
     // Test join operations
     let rejoined = BSTSetAVLMt::join_m(left, 8, right);
     assert_eq!(rejoined.size(), 15);
-    assert_eq!(rejoined.contains(&8), true);
+    assert!(rejoined.contains(&8));
 
     // Test filter
     let evens = set.filter(|x| *x % 2 == 0);
@@ -430,7 +430,7 @@ fn test_rb_bst_individual_operations() {
 
     // Verify all values are present
     for &val in &values {
-        assert_eq!(set.contains(&val), true);
+        assert!(set.contains(&val));
     }
 
     // Test iterator ordering
@@ -447,8 +447,8 @@ fn test_rb_bst_individual_operations() {
     set.delete(&25);
     set.delete(&75);
     assert_eq!(set.size(), values.len() - 2);
-    assert_eq!(set.contains(&25), false);
-    assert_eq!(set.contains(&75), false);
+    assert!(!set.contains(&25));
+    assert!(!set.contains(&75));
 }
 
 #[test]
@@ -472,7 +472,7 @@ fn test_bbalpha_bst_individual_operations() {
 
     // Test complex split and join
     let (left_part, found_10, right_part) = set.split(&10);
-    assert_eq!(found_10, true);
+    assert!(found_10);
     assert_eq!(left_part.size(), 9); // 1-9
     assert_eq!(right_part.size(), 10); // 11-20
 
@@ -482,8 +482,8 @@ fn test_bbalpha_bst_individual_operations() {
     // Test filter with complex predicate
     let multiples_of_3 = set.filter(|x| *x % 3 == 0);
     assert_eq!(multiples_of_3.size(), 6); // 3,6,9,12,15,18
-    assert_eq!(multiples_of_3.contains(&9), true);
-    assert_eq!(multiples_of_3.contains(&10), false);
+    assert!(multiples_of_3.contains(&9));
+    assert!(!multiples_of_3.contains(&10));
 }
 
 #[test]
@@ -513,9 +513,9 @@ fn test_treap_bst_individual_operations() {
 
     let intersection_result = set.intersection(&other);
     assert_eq!(intersection_result.size(), 3); // 17,56,78
-    assert_eq!(intersection_result.contains(&17), true);
-    assert_eq!(intersection_result.contains(&56), true);
-    assert_eq!(intersection_result.contains(&78), true);
+    assert!(intersection_result.contains(&17));
+    assert!(intersection_result.contains(&56));
+    assert!(intersection_result.contains(&78));
 
     // Test reduce operation
     let product = intersection_result.reduce(|acc, x| acc * x, 1);
@@ -538,7 +538,7 @@ fn test_splay_bst_individual_operations() {
 
     // Repeatedly access certain elements (should splay to root)
     for _ in 0..5 {
-        assert_eq!(set.contains(&75), true);
+        assert!(set.contains(&75));
     }
 
     // Test difference operation
@@ -548,9 +548,9 @@ fn test_splay_bst_individual_operations() {
 
     let difference_result = set.difference(&subtract_set);
     assert_eq!(difference_result.size(), 5); // Original 7 minus 2
-    assert_eq!(difference_result.contains(&50), false);
-    assert_eq!(difference_result.contains(&150), false);
-    assert_eq!(difference_result.contains(&100), true);
+    assert!(!difference_result.contains(&50));
+    assert!(!difference_result.contains(&150));
+    assert!(difference_result.contains(&100));
 
     // Test join_pair operation
     let (left_split, _, right_split) = difference_result.split(&100);
@@ -802,7 +802,7 @@ fn test_concurrent_rb_bst_stress() {
         // Every third element deleted: 0,3,6,9,12,15,18,21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,66,69,72,75,78,81,84,87,90,93,96,99
         // That's 34 elements deleted (0 to 99 step 3), so 100 - 34 = 66
         assert_eq!(final_size, 66); // 100 - 34 (every third deleted starting from 0) = 66
-        assert!(is_sorted, "Thread {} produced unsorted result", thread_id);
+        assert!(is_sorted, "Thread {thread_id} produced unsorted result");
     }
 }
 
@@ -898,7 +898,7 @@ fn test_concurrent_treap_operations() {
             // Test reduce operation
             let sum = intersection.reduce(|acc, x| acc + x, 0);
 
-            (union.size(), intersection.size(), difference.size(), sum as usize)
+            (union.size(), intersection.size(), difference.size(), sum)
         }));
     }
 
@@ -940,7 +940,7 @@ fn test_concurrent_splay_access_patterns() {
         let frequent_values = [5, 10, 15];
         for _ in 0..10 {
             for &val in &frequent_values {
-                assert_eq!(set.contains(&val), true);
+                assert!(set.contains(&val));
             }
         }
 
@@ -961,7 +961,7 @@ fn test_concurrent_splay_access_patterns() {
         let (left, found, right) = set.split(&100);
 
         // Test that split worked correctly
-        assert_eq!(found, true);
+        assert!(found);
         assert_eq!(left.size() + right.size(), 6); // 7 - 1 (pivot) = 6
 
         // Rejoin using join_pair
@@ -1082,10 +1082,8 @@ fn test_race_condition_verification_bst_sets() {
                                 race_detected_clone.store(true, Ordering::SeqCst);
                             }
                         }
-                    } else {
-                        if min.is_some() || max.is_some() {
-                            race_detected_clone.store(true, Ordering::SeqCst);
-                        }
+                    } else if min.is_some() || max.is_some() {
+                        race_detected_clone.store(true, Ordering::SeqCst);
                     }
 
                     read_count += 1;
@@ -1145,17 +1143,17 @@ fn test_race_condition_verification_bst_sets() {
     for (thread_id, count) in results {
         if thread_id < 4 {
             // Reader thread
-            assert!(count > 0, "Reader thread {} performed no reads", thread_id);
+            assert!(count > 0, "Reader thread {thread_id} performed no reads");
         } else {
             // Writer thread
-            assert_eq!(count, 25, "Writer thread {} didn't complete all writes", thread_id);
+            assert_eq!(count, 25, "Writer thread {thread_id} didn't complete all writes");
         }
     }
 
     // Final consistency check
     if let Ok(final_set) = shared_set.read() {
         let final_size = final_set.size();
-        assert!(final_size <= 100, "Set size {} exceeds maximum expected", final_size);
+        assert!(final_size <= 100, "Set size {final_size} exceeds maximum expected");
 
         if final_size > 0 {
             let min = final_set.minimum();
@@ -1163,7 +1161,7 @@ fn test_race_condition_verification_bst_sets() {
             assert!(min.is_some() && max.is_some(), "Non-empty set missing min/max");
 
             if let (Some(min_val), Some(max_val)) = (min, max) {
-                assert!(min_val <= max_val, "Min {} > Max {}", min_val, max_val);
+                assert!(min_val <= max_val, "Min {min_val} > Max {max_val}");
             }
         }
     }
@@ -1209,7 +1207,7 @@ fn test_race_condition_verification_concurrent_modifications() {
                     set.insert(value);
 
                     // Verify the insertion worked
-                    if set.contains(&value) != true {
+                    if !set.contains(&value) {
                         inconsistency_clone.store(true, Ordering::SeqCst);
                     }
 
@@ -1255,7 +1253,7 @@ fn test_race_condition_verification_concurrent_modifications() {
 
     // Verify all operations completed
     for (thread_id, op_count) in results {
-        assert_eq!(op_count, 50, "Thread {} didn't complete all operations", thread_id);
+        assert_eq!(op_count, 50, "Thread {thread_id} didn't complete all operations");
     }
 
     // Final verification of set states
@@ -1264,16 +1262,14 @@ fn test_race_condition_verification_concurrent_modifications() {
             let size = set.size();
             // Each set should have been modified by 2 threads (6 threads, 3 sets)
             // Each thread inserts 50 values, so each set should have up to 100 elements
-            assert!(size <= 100, "Set {} has size {} > 100", idx, size);
+            assert!(size <= 100, "Set {idx} has size {size} > 100");
 
             if size > 0 {
                 let min = set.minimum();
                 let max = set.maximum();
                 assert!(
                     min.is_some() && max.is_some(),
-                    "Set {} with size {} missing min/max",
-                    idx,
-                    size
+                    "Set {idx} with size {size} missing min/max"
                 );
             }
         }
@@ -1344,8 +1340,7 @@ fn test_deadlock_prevention_bst_sets() {
     for (thread_id, op_count) in results {
         assert!(
             op_count > 0,
-            "Thread {} completed no operations - possible deadlock",
-            thread_id
+            "Thread {thread_id} completed no operations - possible deadlock"
         );
     }
 
@@ -1355,7 +1350,7 @@ fn test_deadlock_prevention_bst_sets() {
         for (idx, set) in final_sets.iter().enumerate() {
             let size = set.size();
             total_elements += size;
-            println!("Set {}: size = {}", idx, size);
+            println!("Set {idx}: size = {size}");
         }
         // At least some operations should have completed across all sets
         assert!(

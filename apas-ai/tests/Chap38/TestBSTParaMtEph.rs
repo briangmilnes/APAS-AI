@@ -25,7 +25,7 @@ fn para_basic_insert_find() {
     assert_eq!(tree.size(), 7);
     assert_eq!(tree.find(&3), Some(3));
     assert_eq!(tree.find(&8), None);
-    assert_eq!(tree.is_empty(), false);
+    assert!(!tree.is_empty());
     assert_eq!(tree.in_order(), ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7]);
 }
 
@@ -33,7 +33,7 @@ fn para_basic_insert_find() {
 fn para_split_and_join_pair() {
     let tree = make_tree(&[0, 1, 2, 3, 4, 5]);
     let (less, present, greater) = tree.split(&3);
-    assert_eq!(present, true);
+    assert!(present);
     assert_eq!(less.in_order(), ArraySeqStPerSLit![0, 1, 2]);
     assert_eq!(greater.in_order(), ArraySeqStPerSLit![4, 5]);
 
@@ -266,11 +266,10 @@ fn para_concurrent_operations_stress() {
         // In concurrent execution, size might be less than 20 when a thread finishes
         // if other threads haven't completed their insertions yet
         assert!(size >= 1); // At least some insertions should be visible
-        assert_eq!(is_empty, false); // Tree should not be empty
+        assert!(!is_empty); // Tree should not be empty
         assert!(found_own >= 0); // Should find some of its own insertions
         println!(
-            "Thread {}: size={}, empty={:?}, found_own={}",
-            thread_id, size, is_empty, found_own
+            "Thread {thread_id}: size={size}, empty={is_empty:?}, found_own={found_own}"
         );
     }
 }

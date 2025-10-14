@@ -24,11 +24,7 @@ fn arrayseq_steph_full_pipeline() {
 
     let appended = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::append(&mapped, &ArraySeqStEphSLit![99]);
     let evens = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::filter(&appended, &|value| {
-        if *value % 2 == 0 {
-            true
-        } else {
-            false
-        }
+        *value % 2 == 0
     });
     assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::length(&evens), 5);
 

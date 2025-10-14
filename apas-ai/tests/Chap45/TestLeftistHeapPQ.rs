@@ -392,6 +392,6 @@ fn test_display() {
     let heap: LeftistHeapPQ<i32> = LeftistHeapPQTrait::empty();
     let heap = heap.insert(5).insert(3).insert(7);
 
-    let display_str = format!("{}", heap);
+    let display_str = format!("{heap}");
     assert!(display_str.contains("LeftistHeapPQ"));
 }

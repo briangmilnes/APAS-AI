@@ -77,7 +77,7 @@ fn bench_dirgraph_build(c: &mut Criterion) {
             let g = DirGraphStEph::FromSets(v, a);
             let mut edge_count = 0;
             for i in 0..len {
-                if g.Neighbor(&i, &((i + 1) % len)) == true {
+                if g.Neighbor(&i, &((i + 1) % len)) {
                     edge_count += 1;
                 }
             }

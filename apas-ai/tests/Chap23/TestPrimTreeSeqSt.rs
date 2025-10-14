@@ -14,7 +14,7 @@ fn expose_one_returns_one() {
     let seq = PrimTreeSeqStS::singleton(7);
     match seq.expose() {
         | PrimTreeSeqStTree::One(value) => assert_eq!(value, 7),
-        | other => panic!("expected One variant, got {:?}", other),
+        | other => panic!("expected One variant, got {other:?}"),
     }
 }
 
@@ -29,7 +29,7 @@ fn expose_two_splits_sequence() {
             assert_eq!(left.as_slice(), &[0, 1, 2]);
             assert_eq!(right.as_slice(), &[3, 4, 5]);
         }
-        | other => panic!("expected Two variant, got {:?}", other),
+        | other => panic!("expected Two variant, got {other:?}"),
     }
 }
 
@@ -119,7 +119,7 @@ fn test_expose_edge_cases() {
             assert_eq!(left.as_slice(), &[1]);
             assert_eq!(right.as_slice(), &[2]);
         }
-        | other => panic!("expected Two variant for 2 elements, got {:?}", other),
+        | other => panic!("expected Two variant for 2 elements, got {other:?}"),
     }
 
     // Test with odd number of elements
@@ -131,7 +131,7 @@ fn test_expose_edge_cases() {
             assert_eq!(left.as_slice(), &[1, 2]);
             assert_eq!(right.as_slice(), &[3, 4, 5]);
         }
-        | other => panic!("expected Two variant for 5 elements, got {:?}", other),
+        | other => panic!("expected Two variant for 5 elements, got {other:?}"),
     }
 }
 
@@ -171,7 +171,7 @@ fn test_clone_functionality() {
 #[test]
 fn test_debug_format() {
     let seq = PrimTreeSeqStS::from_vec(vec![1, 2, 3]);
-    let debug_str = format!("{:?}", seq);
+    let debug_str = format!("{seq:?}");
     assert!(debug_str.contains("PrimTreeSeqStS"));
     assert!(debug_str.contains("1"));
     assert!(debug_str.contains("2"));

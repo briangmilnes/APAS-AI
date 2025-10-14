@@ -165,7 +165,7 @@ pub mod BSTAVLStEph {
             }
         }
 
-        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
+        fn min_link(link: &Link<T>) -> Option<&T> {
             match link {
                 | None => None,
                 | Some(node) => match node.left {
@@ -175,7 +175,7 @@ pub mod BSTAVLStEph {
             }
         }
 
-        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
+        fn max_link(link: &Link<T>) -> Option<&T> {
             match link {
                 | None => None,
                 | Some(node) => match node.right {
@@ -207,7 +207,7 @@ pub mod BSTAVLStEph {
 
         fn size(&self) -> N { Self::size_link(&self.root) }
 
-        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {

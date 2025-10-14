@@ -90,12 +90,10 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
                     } else {
                         current_cluster_size += 1;
                     }
-                } else {
-                    if in_cluster {
-                        clusters.push(current_cluster_size);
-                        in_cluster = false;
-                        current_cluster_size = 0;
-                    }
+                } else if in_cluster {
+                    clusters.push(current_cluster_size);
+                    in_cluster = false;
+                    current_cluster_size = 0;
                 }
             }
 

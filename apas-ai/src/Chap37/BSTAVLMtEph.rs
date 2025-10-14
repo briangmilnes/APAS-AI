@@ -165,7 +165,7 @@ pub mod BSTAVLMtEph {
             }
         }
 
-        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
+        fn min_link(link: &Link<T>) -> Option<&T> {
             match link {
                 | None => None,
                 | Some(node) => match &node.left {
@@ -175,7 +175,7 @@ pub mod BSTAVLMtEph {
             }
         }
 
-        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
+        fn max_link(link: &Link<T>) -> Option<&T> {
             match link {
                 | None => None,
                 | Some(node) => match &node.right {
@@ -226,7 +226,7 @@ pub mod BSTAVLMtEph {
             Self::size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         fn height(&self) -> N {
             let guard = self.root.read().unwrap();

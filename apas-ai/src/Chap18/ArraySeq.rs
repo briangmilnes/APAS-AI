@@ -130,9 +130,9 @@ pub mod ArraySeq {
 
         fn singleton(item: T) -> ArraySeqS<T> { ArraySeqS::from_vec(vec![item]) }
 
-        fn isEmpty(&self) -> B { if self.data.is_empty() { true } else { false } }
+        fn isEmpty(&self) -> B { self.data.is_empty() }
 
-        fn isSingleton(&self) -> B { if self.data.len() == 1 { true } else { false } }
+        fn isSingleton(&self) -> B { self.data.len() == 1 }
 
         /// Definition 18.2 (subseq view). Return a slice for the subsequence starting at `start`
         /// and of length `length` without copying or allocation (zero‑copy view). <br/>
@@ -153,7 +153,7 @@ pub mod ArraySeq {
             if end_exclusive <= start_index {
                 return ArraySeqS::from_vec(Vec::new());
             }
-            let segment: Vec<T> = self.data[start_index..end_exclusive].iter().cloned().collect();
+            let segment: Vec<T> = self.data[start_index..end_exclusive].to_vec();
             ArraySeqS::from_vec(segment)
         }
 
@@ -234,7 +234,7 @@ pub mod ArraySeq {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
-                if pred(value) == true {
+                if pred(value) {
                     kept.push(value.clone());
                 }
             }
@@ -341,7 +341,7 @@ pub mod ArraySeq {
                 if i > 0 {
                     write!(f, ", ")?;
                 }
-                write!(f, "{}", item)?;
+                write!(f, "{item}")?;
             }
             write!(f, "]")
         }

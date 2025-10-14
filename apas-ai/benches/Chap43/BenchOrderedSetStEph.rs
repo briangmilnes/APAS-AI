@@ -14,7 +14,7 @@ fn bench_ordered_set_st_eph_insert(c: &mut Criterion) {
     for size in [100, 500, 1000].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
             b.iter_batched(
-                || <OrderedSetStEph<i32>>::empty(),
+                <OrderedSetStEph<i32>>::empty,
                 |mut set| {
                     for i in 0..size {
                         set.insert(black_box(i));
@@ -69,7 +69,8 @@ fn bench_ordered_set_st_eph_delete(c: &mut Criterion) {
                 },
                 |mut set| {
                     for i in 0..size {
-                        black_box(set.delete(&black_box(i)));
+                        set.delete(&black_box(i));
+                        black_box(());
                     }
                     black_box(set)
                 },
@@ -348,7 +349,10 @@ fn bench_ordered_set_st_eph_filter_map(c: &mut Criterion) {
         }
 
         group.bench_with_input(BenchmarkId::new("filter", size), size, |b, _size| {
-            b.iter(|| black_box(set.filter(|x| x % 2 == 0)));
+            b.iter(|| {
+                set.filter(|x| x % 2 == 0);
+                black_box(())
+            });
         });
     }
     group.finish();

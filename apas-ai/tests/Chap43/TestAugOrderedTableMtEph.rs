@@ -155,7 +155,7 @@ fn test_qadsan_multithreaded_scenario() {
     let mut handles = vec![];
 
     // Simulate multiple trading venues updating prices concurrently
-    let venues = vec!["NYSE", "NASDAQ", "CBOE"];
+    let venues = ["NYSE", "NASDAQ", "CBOE"];
     for (venue_id, _venue_name) in venues.iter().enumerate() {
         let table_clone = Arc::clone(&table);
         let handle = thread::spawn(move || {
@@ -217,7 +217,7 @@ fn test_sum_reducer_multithreaded() {
 
 #[test]
 fn test_string_concatenation_multithreaded() {
-    let concat_reducer = |a: &String, b: &String| format!("{}{}", a, b);
+    let concat_reducer = |a: &String, b: &String| format!("{a}{b}");
     let mut table = AugOrderedTableMtEph::empty(concat_reducer, String::new());
 
     table.insert(1, "Hello".to_string(), |_old, new| new.clone());
@@ -313,7 +313,7 @@ fn test_filter_operation_multithreaded() {
 #[test]
 fn test_union_operation_multithreaded() {
     let sum_reducer = |a: &i32, b: &i32| a + b;
-    let mut table1 = AugOrderedTableMtEph::empty(sum_reducer.clone(), 0);
+    let mut table1 = AugOrderedTableMtEph::empty(sum_reducer, 0);
     let mut table2 = AugOrderedTableMtEph::empty(sum_reducer, 0);
 
     table1.insert(1, 10, |_old, new| *new);
@@ -334,7 +334,7 @@ fn test_union_operation_multithreaded() {
 #[test]
 fn test_intersection_operation_multithreaded() {
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
-    let mut table1 = AugOrderedTableMtEph::empty(max_reducer.clone(), 0);
+    let mut table1 = AugOrderedTableMtEph::empty(max_reducer, 0);
     let mut table2 = AugOrderedTableMtEph::empty(max_reducer, 0);
 
     table1.insert(1, 10, |_old, new| *new);
@@ -383,12 +383,12 @@ fn test_display_and_debug_multithreaded() {
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
     let table = AugOrderedTableMtEph::singleton(42, 100, max_reducer, 0);
 
-    let display_str = format!("{}", table);
+    let display_str = format!("{table}");
     assert!(display_str.contains("AugOrderedTableMtEph"));
     assert!(display_str.contains("size: 1"));
     assert!(display_str.contains("reduction: 100"));
 
-    let debug_str = format!("{:?}", table);
+    let debug_str = format!("{table:?}");
     assert!(debug_str.contains("AugOrderedTableMtEph"));
     assert!(debug_str.contains("size"));
     assert!(debug_str.contains("cached_reduction"));
@@ -765,8 +765,8 @@ fn test_split_rank_key() {
 #[test]
 fn test_delete_nonexistent() {
     let mut table = AugOrderedTableMtEph::empty(|a: &i32, b: &i32| a + b, 0);
-    table.insert(1, 10, |_old, new| new.clone());
-    table.insert(3, 30, |_old, new| new.clone());
+    table.insert(1, 10, |_old, new| *new);
+    table.insert(3, 30, |_old, new| *new);
     let deleted = table.delete(&2);
     assert_eq!(deleted, None);
     assert_eq!(table.size(), 2);

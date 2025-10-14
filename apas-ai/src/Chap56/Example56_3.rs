@@ -35,19 +35,19 @@ pub mod Example56_3 {
 
         let simple_path = ArraySeqStPerS::from_vec(vec![0, 1]);
         match path_weight_int(&simple_path, &weights) {
-            | Some(w) => println!("  Path 0→1: {}", w),
+            | Some(w) => println!("  Path 0→1: {w}"),
             | None => println!("  Invalid path"),
         }
 
         let one_cycle = ArraySeqStPerS::from_vec(vec![0, 1, 2, 1]);
         match path_weight_int(&one_cycle, &weights) {
-            | Some(w) => println!("  Path 0→1→2→1 (one cycle): {}", w),
+            | Some(w) => println!("  Path 0→1→2→1 (one cycle): {w}"),
             | None => println!("  Invalid path"),
         }
 
         let two_cycles = ArraySeqStPerS::from_vec(vec![0, 1, 2, 1, 2, 1]);
         match path_weight_int(&two_cycles, &weights) {
-            | Some(w) => println!("  Path 0→1→2→1→2→1 (two cycles): {}", w),
+            | Some(w) => println!("  Path 0→1→2→1→2→1 (two cycles): {w}"),
             | None => println!("  Invalid path"),
         }
 

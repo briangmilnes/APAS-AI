@@ -261,7 +261,7 @@ fn test_large_graph() {
         graph.add_vertex(i);
     }
     for i in 0..49 {
-        graph.add_weighted_edge(i, i + 1, (i as i32) * 5);
+        graph.add_weighted_edge(i, i + 1, i * 5);
     }
     assert_eq!(graph.vertices().size(), 50);
     assert_eq!(graph.edges().size(), 49);
@@ -398,6 +398,6 @@ fn test_min_weight() {
 #[test]
 fn test_display_format() {
     let graph = WeightedUnDirGraphStEphIntLit!(V: [1, 2], E: [(1, 2, 314)]);
-    let display_str = format!("{}", graph);
-    assert!(display_str.len() > 0);
+    let display_str = format!("{graph}");
+    assert!(!display_str.is_empty());
 }

@@ -37,7 +37,7 @@ pub mod QuadProbFlatHashTable {
 
         fn lookup(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) -> Option<Value> {
             let mut attempt = 0;
-            let max_attempts = (table.current_size + 1) / 2; // APAS Lemma 47.1: first ⌈m/2⌉ probes are distinct
+            let max_attempts = table.current_size.div_ceil(2); // APAS Lemma 47.1: first ⌈m/2⌉ probes are distinct
             while attempt < max_attempts {
                 let slot = Self::probe(table, key, attempt);
                 match &table.table[slot] {
@@ -53,7 +53,7 @@ pub mod QuadProbFlatHashTable {
 
         fn delete(table: &mut HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) -> B {
             let mut attempt = 0;
-            let max_attempts = (table.current_size + 1) / 2; // APAS Lemma 47.1: first ⌈m/2⌉ probes are distinct
+            let max_attempts = table.current_size.div_ceil(2); // APAS Lemma 47.1: first ⌈m/2⌉ probes are distinct
             while attempt < max_attempts {
                 let slot = Self::probe(table, key, attempt);
                 match &table.table[slot] {
@@ -85,7 +85,7 @@ pub mod QuadProbFlatHashTable {
 
         fn find_slot(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, key: &Key) -> N {
             let mut attempt = 0;
-            let max_attempts = (table.current_size + 1) / 2; // APAS Lemma 47.1: first ⌈m/2⌉ probes are distinct
+            let max_attempts = table.current_size.div_ceil(2); // APAS Lemma 47.1: first ⌈m/2⌉ probes are distinct
             while attempt < max_attempts {
                 let slot = Self::probe(table, key, attempt);
                 match &table.table[slot] {

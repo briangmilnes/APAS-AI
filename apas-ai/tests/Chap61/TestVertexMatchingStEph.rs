@@ -52,8 +52,8 @@ mod tests {
         let mut matched_vertices: Set<usize> = SetLit![];
         for edge in matching.iter() {
             let Edge(u, v) = edge;
-            assert!(!matched_vertices.mem(u), "Vertex {} already matched", u);
-            assert!(!matched_vertices.mem(v), "Vertex {} already matched", v);
+            assert!(!matched_vertices.mem(u), "Vertex {u} already matched");
+            assert!(!matched_vertices.mem(v), "Vertex {v} already matched");
             let _ = matched_vertices.insert(*u);
             let _ = matched_vertices.insert(*v);
         }
@@ -83,8 +83,8 @@ mod tests {
         let mut matched_vertices: Set<usize> = SetLit![];
         for edge in matching.iter() {
             let Edge(u, v) = edge;
-            assert!(!matched_vertices.mem(u), "Vertex {} already matched", u);
-            assert!(!matched_vertices.mem(v), "Vertex {} already matched", v);
+            assert!(!matched_vertices.mem(u), "Vertex {u} already matched");
+            assert!(!matched_vertices.mem(v), "Vertex {v} already matched");
             let _ = matched_vertices.insert(*u);
             let _ = matched_vertices.insert(*v);
         }

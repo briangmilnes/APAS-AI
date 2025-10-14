@@ -14,7 +14,7 @@ fn test_pair_creation() {
 #[test]
 fn test_pair_clone() {
     let p1 = Pair(5, 10);
-    let p2 = p1.clone();
+    let p2 = p1;
     assert_eq!(p1, p2);
 }
 
@@ -29,7 +29,7 @@ fn test_triple_creation() {
 #[test]
 fn test_triple_clone() {
     let t1 = Triple(5, 10, 15);
-    let t2 = t1.clone();
+    let t2 = t1;
     assert_eq!(t1, t2);
 }
 
@@ -43,7 +43,7 @@ fn test_key_val_creation() {
 #[test]
 fn test_key_val_clone() {
     let kv1 = KeyVal{ key: 5, val: 100 };
-    let kv2 = kv1.clone();
+    let kv2 = kv1;
     assert_eq!(kv1, kv2);
 }
 
@@ -84,7 +84,7 @@ fn test_edge_creation() {
 #[test]
 fn test_edge_clone() {
     let e1 = Edge(1, 2);
-    let e2 = e1.clone();
+    let e2 = e1;
     assert_eq!(e1, e2);
 }
 
@@ -186,9 +186,9 @@ fn test_array_seq_set_eq_different_length() {
 #[test]
 fn test_bool_type_alias() {
     let b: B = true;
-    assert_eq!(b, true);
+    assert!(b);
     let b: B = false;
-    assert_eq!(b, false);
+    assert!(!b);
 }
 
 #[test]
@@ -201,35 +201,35 @@ fn test_ordering_type_alias() {
 #[test]
 fn test_pair_display() {
     let p = Pair(1, 2);
-    let s = format!("{}", p);
+    let s = format!("{p}");
     assert_eq!(s, "(1 -> 2)");
 }
 
 #[test]
 fn test_triple_display() {
     let t = Triple(1, 2, 3);
-    let s = format!("{}", t);
+    let s = format!("{t}");
     assert_eq!(s, "(1, 2, 3)");
 }
 
 #[test]
 fn test_key_val_display() {
     let kv = KeyVal { key: 1, val: 2 };
-    let s = format!("{}", kv);
+    let s = format!("{kv}");
     assert_eq!(s, "{key: 1, val: 2}");
 }
 
 #[test]
 fn test_edge_display() {
     let e = Edge(1, 2);
-    let s = format!("{}", e);
+    let s = format!("{e}");
     assert_eq!(s, "(1, 2)");
 }
 
 #[test]
 fn test_lab_edge_display() {
     let le = LabEdge(1, 2, "test");
-    let s = format!("{}", le);
+    let s = format!("{le}");
     assert_eq!(s, "(1, 2, test)");
 }
 
@@ -438,7 +438,7 @@ fn test_mtt_bool_clone_mt() {
 #[test]
 fn test_mtt_bool_new_mt() {
     let val = <bool as MtT>::new_mt(true);
-    assert_eq!(val, true);
+    assert!(val);
 }
 
 #[test]

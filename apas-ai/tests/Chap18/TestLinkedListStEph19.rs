@@ -24,8 +24,8 @@ fn test_eph_subseq_and_display_debug() {
     let sub = a.subseq_copy(1, 2);
     assert_eq!(sub.length(), 2);
     let v = LinkedListStEphSLit![1, 2, 3];
-    assert_eq!(format!("{:?}", v), "[1, 2, 3]");
-    assert_eq!(format!("{}", v), "[1, 2, 3]");
+    assert_eq!(format!("{v:?}"), "[1, 2, 3]");
+    assert_eq!(format!("{v}"), "[1, 2, 3]");
 }
 
 #[test]
@@ -51,15 +51,11 @@ fn test_tabulate_map_select_append_ch19() {
 #[test]
 fn test_deflate_filter_iterate_reduce_scan_flatten_inject_ch19() {
     let one =
-        <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x: &N| if *x == 1 { true } else { false }, &1);
+        <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x: &N| *x == 1, &1);
     expect_list(&one, &[1]);
     let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
     let even = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&a, &|x: &N| {
-        if *x % 2 == 0 {
-            true
-        } else {
-            false
-        }
+        *x % 2 == 0
     });
     expect_list(&even, &[2, 4]);
     let sum = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::reduce(&a, &|x, y| x + y, 0);

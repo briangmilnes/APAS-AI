@@ -25,6 +25,6 @@ fn test_all_contiguous_subseqs_n3_values() {
 fn test_all_contiguous_subseqs_debug_shape() {
     let a = ArraySeqStPerSLit![1, 2];
     let res = all_contiguous_subseqs(&a);
-    let dbg_str = format!("{:?}", res);
+    let dbg_str = format!("{res:?}");
     assert!(!dbg_str.is_empty());
 }

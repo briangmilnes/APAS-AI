@@ -82,7 +82,7 @@ fn reduced_bst_collections() {
     // Test keys (should be in sorted order)
     let keys = bst.keys();
     assert_eq!(keys.length(), 5);
-    let expected_keys = vec![1, 2, 3, 4, 5];
+    let expected_keys = [1, 2, 3, 4, 5];
     for (i, expected) in expected_keys.iter().enumerate() {
         assert_eq!(keys.nth(i), expected);
     }
@@ -90,7 +90,7 @@ fn reduced_bst_collections() {
     // Test values (should be in key-sorted order)
     let values = bst.values();
     assert_eq!(values.length(), 5);
-    let expected_values = vec![100, 200, 300, 400, 500];
+    let expected_values = [100, 200, 300, 400, 500];
     for (i, expected) in expected_values.iter().enumerate() {
         assert_eq!(values.nth(i), expected);
     }
@@ -135,7 +135,7 @@ fn reduced_bst_height_stays_reasonable() {
     let height = bst.height();
 
     // Treap should keep height logarithmic (allow some slack for randomness)
-    assert!(height <= 20, "Height {} too large for 100 elements", height);
+    assert!(height <= 20, "Height {height} too large for 100 elements");
 
     // Verify all elements are findable
     for i in 0..100 {

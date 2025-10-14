@@ -83,7 +83,7 @@ pub mod StarPartitionMtEph {
         }
 
         // Phase 3: Build base sequence V' where each index maps to itself
-        let mut base_seq = <ArraySeqStEphS<V> as ArraySeqStEphTrait<V>>::tabulate(&|i| vertices_vec[i as usize].clone(), n);
+        let mut base_seq = <ArraySeqStEphS<V> as ArraySeqStEphTrait<V>>::tabulate(&|i| vertices_vec[i].clone(), n);
 
         // Phase 4: Convert th_edges to ArraySeqStEphS<Pair<usize, V>>
         let updates_seq = ArraySeqStEphS::from_vec(

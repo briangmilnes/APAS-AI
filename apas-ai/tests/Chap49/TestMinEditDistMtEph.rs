@@ -65,7 +65,7 @@ fn test_single_substitution() {
     let mut med = MinEditDistMtEphS::from_sequences(source, target);
     let dist = med.min_edit_distance();
 
-    assert!(dist >= 1 && dist <= 3);
+    assert!((1..=3).contains(&dist));
 }
 
 #[test]
@@ -185,7 +185,7 @@ fn test_completely_different() {
     let mut med = MinEditDistMtEphS::from_sequences(source, target);
     let dist = med.min_edit_distance();
 
-    assert!(dist >= 3 && dist <= 6);
+    assert!((3..=6).contains(&dist));
 }
 
 #[test]
@@ -304,5 +304,5 @@ fn test_string_sequences() {
     let mut med = MinEditDistMtEphS::from_sequences(source, target);
     let dist = med.min_edit_distance();
 
-    assert!(dist >= 1 && dist <= 2);
+    assert!((1..=2).contains(&dist));
 }

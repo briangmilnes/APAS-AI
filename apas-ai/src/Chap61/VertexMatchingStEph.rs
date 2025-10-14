@@ -104,12 +104,11 @@ pub mod VertexMatchingStEph {
                 }
 
                 // Check if adjacent edge is incident on u or v
-                if graph.Incident(adj_edge, u) || graph.Incident(adj_edge, v) {
-                    if edge_coins.get(adj_edge).copied().unwrap_or(false) {
+                if (graph.Incident(adj_edge, u) || graph.Incident(adj_edge, v))
+                    && edge_coins.get(adj_edge).copied().unwrap_or(false) {
                         all_adjacent_tails = false;
                         break;
                     }
-                }
             }
 
             if all_adjacent_tails {

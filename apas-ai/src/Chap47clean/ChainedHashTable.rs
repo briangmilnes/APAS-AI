@@ -37,7 +37,7 @@ pub mod ChainedHashTable {
         /// Looks up in the chain at the hashed bucket.
         /// APAS: Work O(1) expected, Span O(1).
         fn lookup_chained(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key) -> Option<Value> {
-            let index = Self::hash_index(table, &key);
+            let index = Self::hash_index(table, key);
             if index < table.table.len() {
                 table.table[index].lookup(key)
             } else {
@@ -48,7 +48,7 @@ pub mod ChainedHashTable {
         /// Deletes from the chain at the hashed bucket.
         /// APAS: Work O(1) expected, Span O(1).
         fn delete_chained(table: &mut HashTable<Key, Value, Entry, Metrics>, key: &Key) -> B {
-            let index = Self::hash_index(table, &key);
+            let index = Self::hash_index(table, key);
             if index < table.table.len() {
                 table.table[index].delete(key)
             } else {

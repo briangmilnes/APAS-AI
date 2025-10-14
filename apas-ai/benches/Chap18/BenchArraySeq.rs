@@ -30,7 +30,7 @@ fn bench_arrayseq_operations(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("filter", n), &n, |b, &len| {
         let seq = <ArraySeqS<N> as ArraySeq<N>>::tabulate(&|i| i, len);
         b.iter(|| {
-            let filtered = <ArraySeqS<N> as ArraySeq<N>>::filter(&seq, &|x| if *x % 2 == 0 { true } else { false });
+            let filtered = <ArraySeqS<N> as ArraySeq<N>>::filter(&seq, &|x| *x % 2 == 0);
             black_box(filtered)
         })
     });

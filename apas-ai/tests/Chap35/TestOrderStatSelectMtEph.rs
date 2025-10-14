@@ -23,7 +23,7 @@ fn test_small() {
     let sorted = ArraySeqMtEphSLit![1, 1, 2, 3, 4, 5, 6, 9];
 
     for k in 0..sorted.length() {
-        assert_eq!(a.select(k), Some(sorted.nth_cloned(k)), "Failed at k={}", k);
+        assert_eq!(a.select(k), Some(sorted.nth_cloned(k)), "Failed at k={k}");
     }
 }
 

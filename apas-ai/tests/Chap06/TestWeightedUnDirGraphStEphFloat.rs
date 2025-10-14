@@ -412,6 +412,6 @@ fn test_very_small_weight() {
 #[test]
 fn test_display_format() {
     let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [(1, 2, 3.14)]);
-    let display_str = format!("{}", graph);
-    assert!(display_str.len() > 0);
+    let display_str = format!("{graph}");
+    assert!(!display_str.is_empty());
 }

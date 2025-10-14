@@ -59,7 +59,7 @@ pub mod AdjTableGraphMtPer {
             count
         }
 
-        fn has_edge(&self, u: &V, v: &V) -> B { self.adj.find(u).map_or(false, |neighbors| neighbors.find(v)) }
+        fn has_edge(&self, u: &V, v: &V) -> B { self.adj.find(u).is_some_and(|neighbors| neighbors.find(v)) }
 
         fn out_neighbors(&self, u: &V) -> AVLTreeSetMtPer<V> {
             self.adj.find(u).unwrap_or_else(|| AVLTreeSetMtPer::empty())

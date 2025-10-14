@@ -58,6 +58,6 @@ fn test_points2d_iterator_in_order() {
 #[test]
 fn test_points2d_debug_shape() {
     let s = points2d_tab_flat(3);
-    let dbg_str = format!("{:?}", s);
+    let dbg_str = format!("{s:?}");
     assert!(!dbg_str.is_empty());
 }

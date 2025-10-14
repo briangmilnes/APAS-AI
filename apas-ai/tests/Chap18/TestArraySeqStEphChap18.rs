@@ -73,20 +73,12 @@ fn test_sequence_literals_and_append() {
 fn test_filter_even() {
     let numbers = ArraySeqStEphSLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&numbers, &|&x| {
-        if x % 2 == 0 {
-            true
-        } else {
-            false
-        }
+        x % 2 == 0
     });
     assert_eq!(evens, ArraySeqStEphSLit![2, 4, 6, 8, 10]);
     let odds_only = ArraySeqStEphSLit![1, 3, 5, 7];
     let no_evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&odds_only, &|&x| {
-        if x % 2 == 0 {
-            true
-        } else {
-            false
-        }
+        x % 2 == 0
     });
     assert_eq!(no_evens.length(), 0);
 }
@@ -110,10 +102,10 @@ fn test_update_sequence() {
     // Eph: update mutates a clone (via update helper)
     let a = ArraySeqStEphSLit!["hello", "world", "test"];
     let mut b = a.clone();
-    let _ = b.update(Pair(1, "rust").into());
+    let _ = b.update(Pair(1, "rust"));
     assert_eq!(b, ArraySeqStEphSLit!["hello", "rust", "test"]);
     let mut c = ArraySeqStEphSLit!["hello", "world", "test"];
-    let _ = c.update(Pair(5, "out_of_bounds").into());
+    let _ = c.update(Pair(5, "out_of_bounds"));
     assert_eq!(c, ArraySeqStEphSLit!["hello", "world", "test"]);
 }
 

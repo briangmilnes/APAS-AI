@@ -105,7 +105,7 @@ pub mod BSTTreapMtEph {
             if let Some(node) = link.as_mut() {
                 if value < node.key {
                     Self::insert_link(&mut node.left, value, rng);
-                    if node.left.as_ref().map_or(false, |left| left.priority < node.priority) {
+                    if node.left.as_ref().is_some_and(|left| left.priority < node.priority) {
                         Self::rotate_right(link);
                     }
                 } else if value > node.key {
@@ -113,7 +113,7 @@ pub mod BSTTreapMtEph {
                     if node
                         .right
                         .as_ref()
-                        .map_or(false, |right| right.priority < node.priority)
+                        .is_some_and(|right| right.priority < node.priority)
                     {
                         Self::rotate_left(link);
                     }
@@ -141,7 +141,7 @@ pub mod BSTTreapMtEph {
             }
         }
 
-        fn min_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
+        fn min_link(link: &Link<T>) -> Option<&T> {
             match link {
                 | None => None,
                 | Some(node) => match node.left {
@@ -151,7 +151,7 @@ pub mod BSTTreapMtEph {
             }
         }
 
-        fn max_link<'a>(link: &'a Link<T>) -> Option<&'a T> {
+        fn max_link(link: &Link<T>) -> Option<&T> {
             match link {
                 | None => None,
                 | Some(node) => match node.right {
@@ -203,7 +203,7 @@ pub mod BSTTreapMtEph {
             Self::size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B { if self.size() == 0 { true } else { false } }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         fn height(&self) -> N {
             fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {

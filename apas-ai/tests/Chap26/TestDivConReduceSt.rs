@@ -38,27 +38,27 @@ mod test_divcon_reduce_st {
     fn test_any_true() {
         let seq = ArraySeqStPerS::tabulate(&|i| i == 5, 10);
         let result = ArraySeqStPerS::any(&seq);
-        assert_eq!(result, true);
+        assert!(result);
     }
 
     #[test]
     fn test_any_false() {
         let seq = ArraySeqStPerS::tabulate(&|_i| false, 10);
         let result = ArraySeqStPerS::any(&seq);
-        assert_eq!(result, false);
+        assert!(!result);
     }
 
     #[test]
     fn test_all_true() {
         let seq = ArraySeqStPerS::tabulate(&|_i| true, 10);
         let result = ArraySeqStPerS::all(&seq);
-        assert_eq!(result, true);
+        assert!(result);
     }
 
     #[test]
     fn test_all_false() {
         let seq = ArraySeqStPerS::tabulate(&|i| i != 5, 10);
         let result = ArraySeqStPerS::all(&seq);
-        assert_eq!(result, false);
+        assert!(!result);
     }
 }

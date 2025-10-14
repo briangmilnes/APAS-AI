@@ -46,6 +46,12 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
         pub visualization_enabled: B,
     }
 
+    impl Default for ProbeSequenceAnalyzer {
+        fn default() -> Self {
+            Self::new()
+        }
+    }
+
     impl ProbeSequenceAnalyzer {
         /// Create new probe sequence analyzer
         /// Claude Work: Θ(1), Span: Θ(1)
@@ -128,7 +134,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             let sequence_length = probe_sequence.len();
 
             ProbeSequenceVisualization {
-                strategy_name: format!("Quadratic Probing (c1={}, c2={})", c1, c2),
+                strategy_name: format!("Quadratic Probing (c1={c1}, c2={c2})"),
                 key: key.to_string(),
                 table_size,
                 probe_sequence,
@@ -183,14 +189,14 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
                     consecutive_count += 1;
                 } else {
                     if consecutive_count > 1 {
-                        pattern.push_str(&format!("Cluster of {} consecutive positions; ", consecutive_count));
+                        pattern.push_str(&format!("Cluster of {consecutive_count} consecutive positions; "));
                     }
                     consecutive_count = 1;
                 }
             }
 
             if consecutive_count > 1 {
-                pattern.push_str(&format!("Final cluster of {} consecutive positions", consecutive_count));
+                pattern.push_str(&format!("Final cluster of {consecutive_count} consecutive positions"));
             }
 
             if pattern.is_empty() {
@@ -234,7 +240,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             writeln!(f)?;
 
             for probe_viz in &self.probe_sequences {
-                writeln!(f, "{}", probe_viz)?;
+                writeln!(f, "{probe_viz}")?;
                 writeln!(f)?;
             }
 
@@ -413,7 +419,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
 
         let prime_results = TextbookExampleResults {
             example_name: "Quadratic Probing with Prime Table Size".to_string(),
-            description: format!("Analysis with prime table size m={}", prime_size),
+            description: format!("Analysis with prime table size m={prime_size}"),
             table_size: prime_size,
             keys: vec![test_key.to_string()],
             probe_sequences: prime_sequences,
@@ -427,7 +433,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
 
         let composite_results = TextbookExampleResults {
             example_name: "Quadratic Probing with Composite Table Size".to_string(),
-            description: format!("Analysis with composite table size m={}", composite_size),
+            description: format!("Analysis with composite table size m={composite_size}"),
             table_size: composite_size,
             keys: vec![test_key.to_string()],
             probe_sequences: composite_sequences,

@@ -54,17 +54,17 @@ fn test_weightedundirgraphmtephint_basic_operations() {
     // Test NG (neighbors) - should be symmetric
     let ng0 = g.neighbors(&0);
     assert_eq!(ng0.size(), 1);
-    assert_eq!(ng0.mem(&1), true);
+    assert!(ng0.mem(&1));
 
     let ng1 = g.neighbors(&1);
     assert_eq!(ng1.size(), 2);
-    assert_eq!(ng1.mem(&0), true);
-    assert_eq!(ng1.mem(&2), true);
+    assert!(ng1.mem(&0));
+    assert!(ng1.mem(&2));
 
     let ng2 = g.neighbors(&2);
     assert_eq!(ng2.size(), 2);
-    assert_eq!(ng2.mem(&1), true);
-    assert_eq!(ng2.mem(&3), true);
+    assert!(ng2.mem(&1));
+    assert!(ng2.mem(&3));
 
     // Test degrees (in undirected graph, InDegree = OutDegree = Degree)
     assert_eq!(g.vertex_degree(&0), 1);
@@ -150,7 +150,7 @@ fn test_weightedundirgraphmtephint_nplusminusofvertices() {
 fn test_weightedundirgraphmtephint_edge_cases() {
     // Test empty graph
     let empty: WeightedUnDirGraphMtEphInt<i32> = WeightedUnDirGraphMtEphInt::empty();
-    assert_eq!(empty.has_edge(&0, &1), false);
+    assert!(!empty.has_edge(&0, &1));
     assert_eq!(empty.neighbors(&0).size(), 0);
     assert_eq!(empty.vertex_degree(&0), 0);
 
@@ -169,7 +169,7 @@ fn test_weightedundirgraphmtephint_edge_cases() {
     let a_self: Set<LabEdge<N, i32>> = SetLit![LabEdge(1, 1, 999)];
     let g_self = WeightedUnDirGraphMtEphInt::from_vertices_and_labeled_edges(v_self, a_self);
 
-    assert_eq!(g_self.has_edge(&1, &1), true);
+    assert!(g_self.has_edge(&1, &1));
     // In this implementation, self-loop contributes 1 to degree (unique neighbors only)
     assert_eq!(g_self.vertex_degree(&1), 1);
 }
@@ -181,7 +181,7 @@ fn test_weightedundirgraphmtephint_nonexistent_vertex() {
     let g = WeightedUnDirGraphMtEphInt::from_vertices_and_labeled_edges(v, a);
 
     // Query non-existent vertex
-    assert_eq!(g.has_edge(&99, &0), false);
+    assert!(!g.has_edge(&99, &0));
     assert_eq!(g.neighbors(&99).size(), 0);
     assert_eq!(g.vertex_degree(&99), 0);
     assert_eq!(g.vertex_degree(&99), 0);
@@ -209,12 +209,12 @@ fn test_weightedundirgraphmtephint_weight_variations() {
     assert!(g.has_edge(&1, &0)); // Undirected
     assert!(g.has_edge(&1, &2));
     assert!(g.has_edge(&2, &1)); // Undirected
-    assert_eq!(g.has_edge(&2, &3), true);
-    assert_eq!(g.has_edge(&3, &2), true); // Undirected
-    assert_eq!(g.has_edge(&3, &4), true);
-    assert_eq!(g.has_edge(&4, &3), true); // Undirected
-    assert_eq!(g.has_edge(&4, &0), true);
-    assert_eq!(g.has_edge(&0, &4), true); // Undirected
+    assert!(g.has_edge(&2, &3));
+    assert!(g.has_edge(&3, &2)); // Undirected
+    assert!(g.has_edge(&3, &4));
+    assert!(g.has_edge(&4, &3)); // Undirected
+    assert!(g.has_edge(&4, &0));
+    assert!(g.has_edge(&0, &4)); // Undirected
 
     // Each vertex should have degree 2 (connected to 2 neighbors)
     for vertex in [0, 1, 2, 3, 4] {
@@ -243,8 +243,8 @@ fn test_weightedundirgraphmtephint_large_weights() {
     assert!(g.has_edge(&1, &0));
     assert!(g.has_edge(&1, &2));
     assert!(g.has_edge(&2, &1));
-    assert_eq!(g.has_edge(&2, &0), true);
-    assert_eq!(g.has_edge(&0, &2), true);
+    assert!(g.has_edge(&2, &0));
+    assert!(g.has_edge(&0, &2));
 
     // Each vertex should have degree 2 (connected to 2 neighbors)
     for vertex in [0, 1, 2] {
@@ -333,7 +333,7 @@ fn test_weightedundirgraphmtephint_completegraph() {
     for i in [0, 1, 2, 3] {
         for j in [0, 1, 2, 3] {
             if i != j {
-                assert_eq!(g.has_edge(&i, &j), true);
+                assert!(g.has_edge(&i, &j));
             }
         }
     }

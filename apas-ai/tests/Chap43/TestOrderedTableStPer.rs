@@ -272,7 +272,7 @@ fn test_tabulate() {
     keys.insert(2);
     keys.insert(3);
 
-    let table = OrderedTableStPer::tabulate(|k| format!("value_{}", k), &keys);
+    let table = OrderedTableStPer::tabulate(|k| format!("value_{k}"), &keys);
     assert_eq!(table.size(), 3);
     assert_eq!(table.find(&1), Some("value_1".to_string()));
     assert_eq!(table.find(&2), Some("value_2".to_string()));
@@ -525,7 +525,7 @@ fn test_large_dataset() {
     let mut table = OrderedTableStPer::empty();
 
     for i in 0..100 {
-        table = table.insert(i, format!("value_{}", i));
+        table = table.insert(i, format!("value_{i}"));
     }
 
     assert_eq!(table.size(), 100);

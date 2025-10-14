@@ -23,8 +23,8 @@ fn bench_med_bottom_up(c: &mut Criterion) {
     });
 
     // Medium: 30 chars
-    let s_med_data = vec!['a'; 30];
-    let t_med_data = vec!['b'; 30];
+    let s_med_data = ['a'; 30];
+    let t_med_data = ['b'; 30];
     let s_med = ArraySeqStPerS::tabulate(&|i| s_med_data[i], 30);
     let t_med = ArraySeqStPerS::tabulate(&|i| t_med_data[i], 30);
     group.bench_function(BenchmarkId::new("med", "medium_30"), |b| {

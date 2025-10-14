@@ -38,27 +38,27 @@ mod test_divcon_reduce_mt {
     fn test_any_parallel_true() {
         let seq = ArraySeqMtPerS::tabulate(&|i| i == 5, 10);
         let result = ArraySeqMtPerS::any_parallel(&seq);
-        assert_eq!(result, true);
+        assert!(result);
     }
 
     #[test]
     fn test_any_parallel_false() {
         let seq = ArraySeqMtPerS::tabulate(&|_i| false, 10);
         let result = ArraySeqMtPerS::any_parallel(&seq);
-        assert_eq!(result, false);
+        assert!(!result);
     }
 
     #[test]
     fn test_all_parallel_true() {
         let seq = ArraySeqMtPerS::tabulate(&|_i| true, 10);
         let result = ArraySeqMtPerS::all_parallel(&seq);
-        assert_eq!(result, true);
+        assert!(result);
     }
 
     #[test]
     fn test_all_parallel_false() {
         let seq = ArraySeqMtPerS::tabulate(&|i| i != 5, 10);
         let result = ArraySeqMtPerS::all_parallel(&seq);
-        assert_eq!(result, false);
+        assert!(!result);
     }
 }

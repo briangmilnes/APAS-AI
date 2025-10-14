@@ -314,23 +314,23 @@ with support for different probing strategies.
         output.push_str("Example 47.1 - Hash Function:\n");
         let hash_demo = example_47_1_demonstration();
         for (key, hash_val) in hash_demo {
-            output.push_str(&format!("  hash('{}') = {}\n", key, hash_val));
+            output.push_str(&format!("  hash('{key}') = {hash_val}\n"));
         }
-        output.push_str("\n");
+        output.push('\n');
 
         // Example 47.2
         output.push_str("Example 47.2 - Separate Chaining:\n");
         let sep_chain = example_47_2_separate_chaining();
         let stats = sep_chain.statistics();
-        output.push_str(&format!("  {}\n\n", stats));
+        output.push_str(&format!("  {stats}\n\n"));
 
         // Example 47.4
         output.push_str("Example 47.4 - probe Sequences:\n");
         let probe_demo = example_47_4_probe_sequence();
         for (key, sequence) in probe_demo {
-            output.push_str(&format!("  '{}': {:?}\n", key, sequence));
+            output.push_str(&format!("  '{key}': {sequence:?}\n"));
         }
-        output.push_str("\n");
+        output.push('\n');
 
         // Exercises
         output.push_str("Exercise Solutions:\n");

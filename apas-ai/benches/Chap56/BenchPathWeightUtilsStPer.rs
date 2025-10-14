@@ -27,7 +27,7 @@ fn bench_path_weight_int(c: &mut Criterion) {
         let path_vec: Vec<usize> = (0..n).collect();
         let path = ArraySeqStPerS::from_vec(path_vec);
 
-        c.bench_function(&format!("path_weight_int_n{}", n), |b| {
+        c.bench_function(&format!("path_weight_int_n{n}"), |b| {
             b.iter(|| black_box(path_weight_int(black_box(&path), black_box(&weights))))
         });
     }
@@ -50,7 +50,7 @@ fn bench_path_weight_float(c: &mut Criterion) {
         let path_vec: Vec<usize> = (0..n).collect();
         let path = ArraySeqStPerS::from_vec(path_vec);
 
-        c.bench_function(&format!("path_weight_float_n{}", n), |b| {
+        c.bench_function(&format!("path_weight_float_n{n}"), |b| {
             b.iter(|| black_box(path_weight_float(black_box(&path), black_box(&weights))))
         });
     }
@@ -76,7 +76,7 @@ fn bench_validate_subpath_int(c: &mut Criterion) {
         let path_vec: Vec<usize> = (0..n).collect();
         let path = ArraySeqStPerS::from_vec(path_vec);
 
-        c.bench_function(&format!("validate_subpath_int_n{}", n), |b| {
+        c.bench_function(&format!("validate_subpath_int_n{n}"), |b| {
             b.iter(|| {
                 black_box(validate_subpath_property_int(
                     black_box(&path),
@@ -108,7 +108,7 @@ fn bench_validate_subpath_float(c: &mut Criterion) {
         let path_vec: Vec<usize> = (0..n).collect();
         let path = ArraySeqStPerS::from_vec(path_vec);
 
-        c.bench_function(&format!("validate_subpath_float_n{}", n), |b| {
+        c.bench_function(&format!("validate_subpath_float_n{n}"), |b| {
             b.iter(|| {
                 black_box(validate_subpath_property_float(
                     black_box(&path),

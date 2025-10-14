@@ -60,7 +60,7 @@ pub mod SubsetSumMtPer {
                 | (_, 0) => true,  // Base case: target sum is 0
                 | (0, _) => false, // Base case: no elements left, target > 0
                 | (i, j) => {
-                    let element_value: i32 = self.multiset.nth(i - 1).clone().into();
+                    let element_value: i32 = (*self.multiset.nth(i - 1)).into();
                     if element_value > j {
                         // Element too large, skip it
                         self.subset_sum_rec(i - 1, j)

@@ -41,8 +41,8 @@ pub mod Example41_3 {
 
         // find {6, 2, 9, 11, 8} 4 = false
         let set_search = ArraySetStEphLit![6, 2, 9, 11, 8];
-        assert_eq!(set_search.find(&4), false);
-        assert_eq!(set_search.find(&6), true);
+        assert!(!set_search.find(&4));
+        assert!(set_search.find(&6));
 
         // {2, 7, 8, 11} ∪ {7, 9, 11, 14, 17} = {2, 7, 8, 9, 11, 14, 17}
         let set1 = ArraySetStEphLit![2, 7, 8, 11];
@@ -91,8 +91,8 @@ pub mod Example41_3 {
 
         // find {6, 2, 9, 11, 8} 4 = false
         let set_search = AVLTreeSetStEphLit![6, 2, 9, 11, 8];
-        assert_eq!(set_search.find(&4), false);
-        assert_eq!(set_search.find(&6), true);
+        assert!(!set_search.find(&4));
+        assert!(set_search.find(&6));
 
         // {2, 7, 8, 11} ∪ {7, 9, 11, 14, 17} = {2, 7, 8, 9, 11, 14, 17}
         let set1 = AVLTreeSetStEphLit![2, 7, 8, 11];

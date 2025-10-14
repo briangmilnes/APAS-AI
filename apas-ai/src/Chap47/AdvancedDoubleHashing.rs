@@ -64,7 +64,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
 
             let is_valid = Self::are_relatively_prime(h2_value, table_size);
             let message = if is_valid {
-                format!("h2(k)={} and table_size={} are relatively prime", h2_value, table_size)
+                format!("h2(k)={h2_value} and table_size={table_size} are relatively prime")
             } else {
                 format!(
                     "h2(k)={} and table_size={} are NOT relatively prime (gcd={})",
@@ -93,7 +93,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             let mut valid_values = Vec::new();
             let mut candidate = 1;
 
-            while valid_values.len() < max_count as usize && candidate < table_size {
+            while valid_values.len() < max_count && candidate < table_size {
                 if Self::are_relatively_prime(candidate, table_size) {
                     valid_values.push(candidate);
                 }
@@ -170,11 +170,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
 
             // Measure hash function independence (simplified heuristic)
             let independence_score = if h1_value != h2_value {
-                let diff = if h1_value > h2_value {
-                    h1_value - h2_value
-                } else {
-                    h2_value - h1_value
-                };
+                let diff = h1_value.abs_diff(h2_value);
                 (diff as f64) / (table_size as f64)
             } else {
                 0.0 // Same hash values indicate poor independence
