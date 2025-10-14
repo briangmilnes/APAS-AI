@@ -10,24 +10,23 @@ def main():
     script_dir = Path(__file__).parent
     my_name = Path(__file__).name
     
-    # Find all review_*.py and find_*.py scripts in this directory (excluding this script)
-    scripts = sorted([
+    # Find all review_*.py scripts in this directory (excluding this script)
+    review_scripts = sorted([
         f for f in script_dir.glob("review_*.py")
         if f.name != my_name
     ])
     
-    if not scripts:
+    if not review_scripts:
         print("✓ No Rust src review scripts configured")
         return 0
     
-    print(f"Running {len(scripts)} Rust src check(s)\n")
+    print(f"Running {len(review_scripts)} Rust src review(s)\n")
     
     passed = 0
     failed = 0
-    for script_path in scripts:
-        prefix = 'review_' if script_path.name.startswith('review_') else 'find_'
-        name = script_path.stem.replace(prefix, '').replace('_', ' ').title()
-        print(f"[{prefix.strip('_').title()}: {name}]")
+    for script_path in review_scripts:
+        name = script_path.stem.replace('review_', '').replace('_', ' ').title()
+        print(f"[{name}]")
         try:
             subprocess.run([sys.executable, str(script_path)], check=True)
             print()
@@ -40,7 +39,7 @@ def main():
         print(f"✗ Rust src: {passed} passed, {failed} failed")
         return 1
     else:
-        print(f"✓ All Rust src checks passed ({passed}/{len(scripts)})")
+        print(f"✓ All Rust src checks passed ({passed}/{len(review_scripts)})")
         return 0
 
 
