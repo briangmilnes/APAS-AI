@@ -156,37 +156,37 @@ General project utilities and cross-cutting tools.
 ### Running Code Reviews
 ```bash
 # Run all code reviews (APAS + Rust)
-python3 scripts/review.py
+./scripts/review.py
 
 # Run only APAS reviews
-python3 scripts/APAS/review_APAS.py
+./scripts/APAS/review_APAS.py
 
 # Run only APAS src reviews
-python3 scripts/APAS/src/review_APAS_src.py
+./scripts/APAS/src/review_APAS_src.py
 
 # Run specific review
-python3 scripts/APAS/src/review_naming.py
-python3 scripts/APAS/src/review_conventions.py
+./scripts/APAS/src/review_naming.py
+./scripts/APAS/src/review_conventions.py
 ```
 
 ### Finding Issues
 ```bash
 # Find import issues
-python3 scripts/APAS/src/find_duplicate_imports.py
-python3 scripts/APAS/src/find_missing_traits.py
+./scripts/APAS/src/find_duplicate_imports.py
+./scripts/APAS/src/find_missing_traits.py
 
 # Find patterns
-python3 scripts/APAS/src/find_multi_import_patterns.py
+./scripts/APAS/src/find_multi_import_patterns.py
 ```
 
 ### Fixing Issues
 ```bash
 # Fix imports
-python3 scripts/APAS/src/fix_imports.py
-python3 scripts/APAS/src/fix_duplicate_imports.py
+./scripts/APAS/src/fix_imports.py
+./scripts/APAS/src/fix_duplicate_imports.py
 
 # Fix compilation errors
-python3 scripts/rust/src/fix_remaining_compilation_errors.py
+./scripts/rust/src/fix_remaining_compilation_errors.py
 ```
 
 ### Running Tests and Benchmarks
