@@ -16,7 +16,7 @@ fn main() {
     println!("📊 Example 47.1: String Position Hash Function");
     let hash_demo = example_47_1_demonstration();
     for (key, hash_val) in &hash_demo[..5] {
-        println!("  hash('{}') = {}", key, hash_val);
+        println!("  hash('{key}') = {hash_val}");
     }
     println!();
 
@@ -38,8 +38,8 @@ fn main() {
     println!("  Lookups:");
     for key in ["aa", "bb", "cc", "nonexistent"] {
         match sep_chain_table.lookup(&key.to_string()) {
-            | Some(value) => println!("    '{}' → '{}'", key, value),
-            | None => println!("    '{}' → Not Found", key),
+            | Some(value) => println!("    '{key}' → '{value}'"),
+            | None => println!("    '{key}' → Not Found"),
         }
     }
     println!();
@@ -50,7 +50,7 @@ fn main() {
 
     // Insert some data
     for i in 1..=5 {
-        let key = format!("item_{}", i);
+        let key = format!("item_{i}");
         nested_table = nested_table.insert(key, i * 10);
     }
 
@@ -65,10 +65,10 @@ fn main() {
     // Test lookups
     println!("  Lookups:");
     for i in 1..=6 {
-        let key = format!("item_{}", i);
+        let key = format!("item_{i}");
         match nested_table.lookup(&key) {
-            | Some(value) => println!("    '{}' → {}", key, value),
-            | None => println!("    '{}' → Not Found", key),
+            | Some(value) => println!("    '{key}' → {value}"),
+            | None => println!("    '{key}' → Not Found"),
         }
     }
     println!();
@@ -88,17 +88,16 @@ fn main() {
     let (load, size) = flat_table.load_and_size();
     let (live, dead, load_factor) = flat_table.probe_statistics();
     println!(
-        "  Elements: {}, Table Size: {}, Load Factor: {:.2}",
-        load, size, load_factor
+        "  Elements: {load}, Table Size: {size}, Load Factor: {load_factor:.2}"
     );
-    println!("  Live Entries: {}, Dead Entries: {}", live, dead);
+    println!("  Live Entries: {live}, Dead Entries: {dead}");
 
     // Test lookups
     println!("  Lookups:");
     for (key, _) in &test_data {
         match flat_table.lookup(&key.to_string()) {
-            | Some(value) => println!("    '{}' → {}", key, value),
-            | None => println!("    '{}' → Not Found", key),
+            | Some(value) => println!("    '{key}' → {value}"),
+            | None => println!("    '{key}' → Not Found"),
         }
     }
 
@@ -109,7 +108,7 @@ fn main() {
         if was_deleted { "Success" } else { "Failed" }
     );
     let (live, dead, _) = flat_table_after_delete.probe_statistics();
-    println!("  Live Entries: {}, Dead Entries: {}", live, dead);
+    println!("  Live Entries: {live}, Dead Entries: {dead}");
     println!();
 
     // Hash Function Comparison
@@ -128,7 +127,7 @@ fn main() {
         let h1 = string_hash.hash(&key_str, table_size);
         let h2 = poly_hash.hash(&key_str, table_size);
         let h3 = default_hash.hash(&key_str, table_size);
-        println!("  {:8} | {:9} | {:10} | {:7}", key, h1, h2, h3);
+        println!("  {key:8} | {h1:9} | {h2:10} | {h3:7}");
     }
     println!();
 
@@ -143,8 +142,7 @@ fn main() {
         let should_shrink = manager.should_shrink(elements, table_size);
 
         println!(
-            "    {}/{} elements: α={:.2}, grow={}, shrink={}",
-            elements, table_size, load_factor, should_grow, should_shrink
+            "    {elements}/{table_size} elements: α={load_factor:.2}, grow={should_grow}, shrink={should_shrink}"
         );
     }
     println!();

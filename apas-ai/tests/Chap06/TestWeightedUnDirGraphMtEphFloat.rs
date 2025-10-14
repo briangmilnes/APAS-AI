@@ -93,9 +93,9 @@ fn test_weightedundirgraphmtephfloat_basic_operations() {
 fn test_weightedundirgraphmtephfloat_incident_operations() {
     let v: Set<N> = SetLit![0, 1, 2];
     let a: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![
-        LabEdge(0, 1, OrderedFloat(3.14)),
-        LabEdge(1, 2, OrderedFloat(2.71)),
-        LabEdge(0, 2, OrderedFloat(1.41))
+        LabEdge(0, 1, OrderedFloat(std::f64::consts::PI)),
+        LabEdge(1, 2, OrderedFloat(std::f64::consts::E)),
+        LabEdge(0, 2, OrderedFloat(std::f64::consts::SQRT_2))
     ];
     let _g = WeightedUnDirGraphMtEphFloat::from_vertices_and_labeled_edges(v, a);
 
@@ -343,9 +343,9 @@ fn test_add_weighted_edge() {
     let mut g: WeightedUnDirGraphMtEphFloat<i32> = WeightedUnDirGraphMtEphFloat::empty();
     g.add_vertex(1);
     g.add_vertex(2);
-    g.add_weighted_edge(1, 2, OrderedFloat(3.14));
+    g.add_weighted_edge(1, 2, OrderedFloat(std::f64::consts::PI));
     assert!(g.has_edge(&1, &2));
-    assert_eq!(g.get_edge_weight(&1, &2), Some(OrderedFloat(3.14)));
+    assert_eq!(g.get_edge_weight(&1, &2), Some(OrderedFloat(std::f64::consts::PI)));
 }
 
 #[test]
