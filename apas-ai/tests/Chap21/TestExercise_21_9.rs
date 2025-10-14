@@ -4,6 +4,7 @@
 use apas_ai::Chap21::Exercise21_9::Exercise21_9::*;
 
 #[test]
+#[allow(clippy::assertions_on_constants)]
 fn test_exercise21_9_placeholder() {
     // This is a proof-only exercise with no implementation code.
     // The test simply verifies that the module can be imported.

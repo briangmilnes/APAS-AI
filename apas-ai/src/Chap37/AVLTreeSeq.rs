@@ -53,7 +53,7 @@ pub mod AVLTreeSeq {
 
         /// Construct an empty tree (alias).
         /// APAS: Work Θ(1), Span Θ(1).
-        fn new() -> AVLTreeS<T>;
+        fn new() -> Self;
 
         /// Return number of elements.
         /// APAS: Work Θ(1), Span Θ(1).

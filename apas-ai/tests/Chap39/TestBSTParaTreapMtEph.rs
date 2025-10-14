@@ -203,6 +203,7 @@ fn test_reduce() {
 #[test]
 fn test_expose() {
     let tree: ParamTreap<i32> = ParamTreapTrait::new();
+    #[allow(clippy::assertions_on_constants)]
     match tree.expose() {
         | Exposed::Leaf => assert!(true),
         | _ => panic!("Empty tree should expose as Leaf"),

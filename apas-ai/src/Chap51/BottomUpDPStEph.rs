@@ -76,7 +76,7 @@ pub mod BottomUpDPStEph {
         /// Compute one diagonal of the DP table
         /// Claude Work: O(min(|S|,|T|)) - diagonal length
         /// Claude Span: O(min(|S|,|T|)) - sequential diagonal computation
-        fn compute_diagonal(&self, table: &mut Vec<Vec<usize>>, k: usize) {
+        fn compute_diagonal(&self, table: &mut [Vec<usize>], k: usize) {
             let s_len = self.seq_s.length();
             let t_len = self.seq_t.length();
 

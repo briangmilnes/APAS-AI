@@ -48,7 +48,10 @@ fn test_all_chapters_compile() {
     use apas_ai::Chap39;
 
     // If this compiles, the module structure is correct
-    assert!(true);
+    #[allow(clippy::assertions_on_constants)]
+    {
+        assert!(true);
+    }
 }
 
 #[test]

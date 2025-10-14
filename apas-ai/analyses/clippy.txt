@@ -1,21 +1,4 @@
-warning: methods called `new` usually return `Self`
-  --> src/Chap37/AVLTreeSeq.rs:56:9
-   |
-56 |         fn new() -> AVLTreeS<T>;
-   |         ^^^^^^^^^^^^^^^^^^^^^^^^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#new_ret_no_self
-   = note: `#[warn(clippy::new_ret_no_self)]` on by default
-
-warning: writing `&mut Vec` instead of `&mut [_]` involves a new object where a slice will do
-  --> src/Chap51/BottomUpDPStEph.rs:79:43
-   |
-79 |         fn compute_diagonal(&self, table: &mut Vec<Vec<usize>>, k: usize) {
-   |                                           ^^^^^^^^^^^^^^^^^^^^ help: change this to: `&mut [Vec<usize>]`
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#ptr_arg
-   = note: `#[warn(clippy::ptr_arg)]` on by default
-
+    Checking apas-ai v0.1.0 (/home/milnes/APASVERUS/APAS-AI/apas-ai)
 warning: very complex type used. Consider factoring parts into `type` definitions
    --> src/Chap66/BoruvkaMtEph.rs:138:10
     |
@@ -41,34 +24,8 @@ warning: very complex type used. Consider factoring parts into `type` definition
     |
     = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
 
-warning: `apas-ai` (lib) generated 5 warnings
-warning: `apas-ai` (lib test) generated 5 warnings (5 duplicates)
-warning: `assert!(true)` will be optimized out by the compiler
-  --> tests/Chap21/TestExercise_21_9.rs:11:5
-   |
-11 |     assert!(true); // Placeholder assertion
-   |     ^^^^^^^^^^^^^
-   |
-   = help: remove it
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
-   = note: `#[warn(clippy::assertions_on_constants)]` on by default
-
-warning: `apas-ai` (test "TestExercise_21_9") generated 1 warning
-warning: the loop variable `i` is used to index `positions`
-   --> tests/Chap47/TestLinearProbing.rs:191:14
-    |
-191 |     for i in 1..table_size {
-    |              ^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-    = note: `#[warn(clippy::needless_range_loop)]` on by default
-help: consider using an iterator and enumerate()
-    |
-191 -     for i in 1..table_size {
-191 +     for (i, <item>) in positions.iter().enumerate().take(table_size).skip(1) {
-    |
-
-warning: `apas-ai` (test "TestLinearProbing") generated 1 warning
+warning: `apas-ai` (lib test) generated 3 warnings (2 duplicates)
+warning: `apas-ai` (lib) generated 3 warnings (1 duplicate)
 warning: the loop variable `i` is only used to index `results`
    --> tests/Chap36/TestChapter36Mt.rs:242:14
     |
@@ -84,21 +41,6 @@ help: consider using an iterator
     |
 
 warning: `apas-ai` (test "TestChapter36Mt") generated 1 warning
-    Checking apas-ai v0.1.0 (/home/milnes/APASVERUS/APAS-AI/apas-ai)
-warning: very complex type used. Consider factoring parts into `type` definitions
-  --> benches/Chap64/BenchTSPApproxStEph.rs:14:6
-   |
-14 |   ) -> (
-   |  ______^
-15 | |     LabUnDirGraphStEph<N, OrderedFloat<f64>>,
-16 | |     Set<LabEdge<N, OrderedFloat<f64>>>,
-17 | | ) {
-   | |_^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
-   = note: `#[warn(clippy::type_complexity)]` on by default
-
-warning: `apas-ai` (bench "BenchTSPApproxStEph") generated 1 warning
 warning: very complex type used. Consider factoring parts into `type` definitions
   --> tests/Chap64/TestTSPApproxStEph.rs:12:35
    |
@@ -112,118 +54,7 @@ warning: very complex type used. Consider factoring parts into `type` definition
    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
    = note: `#[warn(clippy::type_complexity)]` on by default
 
-warning: `assert!(true)` will be optimized out by the compiler
-   --> tests/Chap39/TestBSTParaTreapMtEph.rs:207:28
-    |
-207 |         | Exposed::Leaf => assert!(true),
-    |                            ^^^^^^^^^^^^^
-    |
-    = help: remove it
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
-    = note: `#[warn(clippy::assertions_on_constants)]` on by default
-
 warning: `apas-ai` (test "TestTSPApproxStEph") generated 1 warning
-warning: `apas-ai` (test "TestBSTParaTreapMtEph") generated 1 warning
-warning: `assert!(true)` will be optimized out by the compiler
-  --> tests/TestLibIntegration.rs:51:5
-   |
-51 |     assert!(true);
-   |     ^^^^^^^^^^^^^
-   |
-   = help: remove it
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
-   = note: `#[warn(clippy::assertions_on_constants)]` on by default
-
-warning: `apas-ai` (test "TestLibIntegration") generated 1 warning
-warning: this loop could be written as a `while let` loop
-  --> tests/Chap12/TestExercise12_5.rs:73:13
-   |
-73 | /             loop {
-74 | |                 match stack_clone.pop() {
-75 | |                     | Some(value) => items.push(value),
-76 | |                     | None => break,
-77 | |                 }
-78 | |             }
-   | |_____________^ help: try: `while let | Some(value) = stack_clone.pop() { .. }`
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#while_let_loop
-   = note: `#[warn(clippy::while_let_loop)]` on by default
-
-warning: `apas-ai` (test "TestExercise12_5") generated 1 warning
-warning: very complex type used. Consider factoring parts into `type` definitions
-  --> tests/Chap64/TestTSPApproxMtEph.rs:12:35
-   |
-12 |       fn create_triangle_graph() -> (
-   |  ___________________________________^
-13 | |         LabUnDirGraphMtEph<N, OrderedFloat<f64>>,
-14 | |         Set<LabEdge<N, OrderedFloat<f64>>>,
-15 | |     ) {
-   | |_____^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
-   = note: `#[warn(clippy::type_complexity)]` on by default
-
-warning: `apas-ai` (test "TestTSPApproxMtEph") generated 1 warning
-warning: bound is defined in more than one place
-  --> tests/Chap21/TestAlgorithm21_6.rs:49:15
-   |
-49 | fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
-   |               ^
-50 | where
-51 |     T: std::fmt::Debug,
-   |     ^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#multiple_bound_locations
-   = note: `#[warn(clippy::multiple_bound_locations)]` on by default
-
-warning: bound is defined in more than one place
-  --> tests/Chap21/TestAlgorithm21_6.rs:49:15
-   |
-49 | fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
-   |               ^
-...
-52 |     T: Eq,
-   |     ^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#multiple_bound_locations
-
-warning: bound is defined in more than one place
-  --> tests/Chap21/TestAlgorithm21_6.rs:49:15
-   |
-49 | fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
-   |               ^
-...
-53 |     T: StT,
-   |     ^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#multiple_bound_locations
-
-warning: bound is defined in more than one place
-  --> tests/Chap21/TestAlgorithm21_6.rs:49:15
-   |
-49 | fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
-   |               ^
-...
-54 |     T: std::fmt::Display,
-   |     ^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#multiple_bound_locations
-
-warning: `apas-ai` (test "TestAlgorithm21_6") generated 4 warnings
-warning: very complex type used. Consider factoring parts into `type` definitions
-  --> benches/Chap64/BenchTSPApproxMtEph.rs:14:6
-   |
-14 |   ) -> (
-   |  ______^
-15 | |     LabUnDirGraphMtEph<N, OrderedFloat<f64>>,
-16 | |     Set<LabEdge<N, OrderedFloat<f64>>>,
-17 | | ) {
-   | |_^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
-   = note: `#[warn(clippy::type_complexity)]` on by default
-
-warning: `apas-ai` (bench "BenchTSPApproxMtEph") generated 1 warning
 warning: the function `<ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first` doesn't need a mutable reference
   --> tests/Chap36/TestChapter36MtSlice.rs:20:83
    |
@@ -360,4 +191,122 @@ warning: the function `<ArraySeqMtEphSliceS<i32> as
     = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
 
 warning: `apas-ai` (test "TestChapter36MtSlice") generated 16 warnings
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.32s
+warning: the loop variable `i` is used to index `positions`
+   --> tests/Chap47/TestLinearProbing.rs:191:14
+    |
+191 |     for i in 1..table_size {
+    |              ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
+    = note: `#[warn(clippy::needless_range_loop)]` on by default
+help: consider using an iterator and enumerate()
+    |
+191 -     for i in 1..table_size {
+191 +     for (i, <item>) in positions.iter().enumerate().take(table_size).skip(1) {
+    |
+
+warning: `apas-ai` (test "TestLinearProbing") generated 1 warning
+warning: very complex type used. Consider factoring parts into `type` definitions
+  --> tests/Chap64/TestTSPApproxMtEph.rs:12:35
+   |
+12 |       fn create_triangle_graph() -> (
+   |  ___________________________________^
+13 | |         LabUnDirGraphMtEph<N, OrderedFloat<f64>>,
+14 | |         Set<LabEdge<N, OrderedFloat<f64>>>,
+15 | |     ) {
+   | |_____^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
+   = note: `#[warn(clippy::type_complexity)]` on by default
+
+warning: `apas-ai` (test "TestTSPApproxMtEph") generated 1 warning
+warning: this loop could be written as a `while let` loop
+  --> tests/Chap12/TestExercise12_5.rs:73:13
+   |
+73 | /             loop {
+74 | |                 match stack_clone.pop() {
+75 | |                     | Some(value) => items.push(value),
+76 | |                     | None => break,
+77 | |                 }
+78 | |             }
+   | |_____________^ help: try: `while let | Some(value) = stack_clone.pop() { .. }`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#while_let_loop
+   = note: `#[warn(clippy::while_let_loop)]` on by default
+
+warning: `apas-ai` (test "TestExercise12_5") generated 1 warning
+warning: very complex type used. Consider factoring parts into `type` definitions
+  --> benches/Chap64/BenchTSPApproxMtEph.rs:14:6
+   |
+14 |   ) -> (
+   |  ______^
+15 | |     LabUnDirGraphMtEph<N, OrderedFloat<f64>>,
+16 | |     Set<LabEdge<N, OrderedFloat<f64>>>,
+17 | | ) {
+   | |_^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
+   = note: `#[warn(clippy::type_complexity)]` on by default
+
+warning: `apas-ai` (bench "BenchTSPApproxMtEph") generated 1 warning
+warning: very complex type used. Consider factoring parts into `type` definitions
+  --> benches/Chap64/BenchTSPApproxStEph.rs:14:6
+   |
+14 |   ) -> (
+   |  ______^
+15 | |     LabUnDirGraphStEph<N, OrderedFloat<f64>>,
+16 | |     Set<LabEdge<N, OrderedFloat<f64>>>,
+17 | | ) {
+   | |_^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
+   = note: `#[warn(clippy::type_complexity)]` on by default
+
+warning: `apas-ai` (bench "BenchTSPApproxStEph") generated 1 warning
+warning: bound is defined in more than one place
+  --> tests/Chap21/TestAlgorithm21_6.rs:49:15
+   |
+49 | fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
+   |               ^
+50 | where
+51 |     T: std::fmt::Debug,
+   |     ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#multiple_bound_locations
+   = note: `#[warn(clippy::multiple_bound_locations)]` on by default
+
+warning: bound is defined in more than one place
+  --> tests/Chap21/TestAlgorithm21_6.rs:49:15
+   |
+49 | fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
+   |               ^
+...
+52 |     T: Eq,
+   |     ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#multiple_bound_locations
+
+warning: bound is defined in more than one place
+  --> tests/Chap21/TestAlgorithm21_6.rs:49:15
+   |
+49 | fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
+   |               ^
+...
+53 |     T: StT,
+   |     ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#multiple_bound_locations
+
+warning: bound is defined in more than one place
+  --> tests/Chap21/TestAlgorithm21_6.rs:49:15
+   |
+49 | fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
+   |               ^
+...
+54 |     T: std::fmt::Display,
+   |     ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#multiple_bound_locations
+
+warning: `apas-ai` (test "TestAlgorithm21_6") generated 4 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 7.40s
