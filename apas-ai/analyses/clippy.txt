@@ -1,4 +1,3 @@
-    Blocking waiting for file lock on build directory
 warning: the loop variable `i` is used to index `keep_results`
    --> src/Chap19/ArraySeqMtEphSlice.rs:228:22
     |
@@ -236,6 +235,34 @@ warning: very complex type used. Consider factoring parts into `type` definition
 warning: `apas-ai` (lib) generated 20 warnings
 warning: `apas-ai` (lib test) generated 20 warnings (20 duplicates)
     Checking apas-ai v0.1.0 (/home/milnes/APASVERUS/APAS-AI/apas-ai)
+warning: the loop variable `i` is used to index `positions`
+   --> tests/Chap47/TestLinearProbing.rs:191:14
+    |
+191 |     for i in 1..table_size {
+    |              ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
+    = note: `#[warn(clippy::needless_range_loop)]` on by default
+help: consider using an iterator and enumerate()
+    |
+191 -     for i in 1..table_size {
+191 +     for (i, <item>) in positions.iter().enumerate().take(table_size).skip(1) {
+    |
+
+warning: `apas-ai` (test "TestLinearProbing") generated 1 warning
+warning: very complex type used. Consider factoring parts into `type` definitions
+  --> benches/Chap64/BenchTSPApproxMtEph.rs:14:6
+   |
+14 |   ) -> (
+   |  ______^
+15 | |     LabUnDirGraphMtEph<N, OrderedFloat<f64>>,
+16 | |     Set<LabEdge<N, OrderedFloat<f64>>>,
+17 | | ) {
+   | |_^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
+   = note: `#[warn(clippy::type_complexity)]` on by default
+
 warning: variables can be used directly in the `format!` string
   --> examples/hash_table_demo.rs:19:9
    |
@@ -415,7 +442,145 @@ warning: variables can be used directly in the `format!` string
     |
     = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#uninlined_format_args
 
+warning: `apas-ai` (bench "BenchTSPApproxMtEph") generated 1 warning
 warning: `apas-ai` (example "hash_table_demo") generated 14 warnings (run `cargo clippy --fix --example "hash_table_demo"` to apply 14 suggestions)
+warning: the loop variable `i` is used to index `values`
+  --> tests/Chap37/TestAVLTreeSeqStEphChap37.rs:53:14
+   |
+53 |     for i in 0..tree.length() {
+   |              ^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
+   = note: `#[warn(clippy::needless_range_loop)]` on by default
+help: consider using an iterator and enumerate()
+   |
+53 -     for i in 0..tree.length() {
+53 +     for (i, <item>) in values.iter().enumerate().take(tree.length()) {
+   |
+
+warning: the loop variable `i` is used to index `values`
+   --> tests/Chap37/TestAVLTreeSeqStEphChap37.rs:328:14
+    |
+328 |     for i in 0..tree.length() {
+    |              ^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
+help: consider using an iterator and enumerate()
+    |
+328 -     for i in 0..tree.length() {
+328 +     for (i, <item>) in values.iter().enumerate().take(tree.length()) {
+    |
+
+warning: `apas-ai` (test "TestAVLTreeSeqStEphChap37") generated 2 warnings
+warning: `assert!(true)` will be optimized out by the compiler
+  --> tests/TestLibIntegration.rs:51:5
+   |
+51 |     assert!(true);
+   |     ^^^^^^^^^^^^^
+   |
+   = help: remove it
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
+   = note: `#[warn(clippy::assertions_on_constants)]` on by default
+
+warning: `apas-ai` (test "TestLibIntegration") generated 1 warning
+warning: very complex type used. Consider factoring parts into `type` definitions
+  --> tests/Chap64/TestTSPApproxMtEph.rs:12:35
+   |
+12 |       fn create_triangle_graph() -> (
+   |  ___________________________________^
+13 | |         LabUnDirGraphMtEph<N, OrderedFloat<f64>>,
+14 | |         Set<LabEdge<N, OrderedFloat<f64>>>,
+15 | |     ) {
+   | |_____^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
+   = note: `#[warn(clippy::type_complexity)]` on by default
+
+warning: `apas-ai` (test "TestTSPApproxMtEph") generated 1 warning
+error: approximate value of `f{32, 64}::consts::PI` found
+  --> tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:40:48
+   |
+40 |     graph.add_weighted_edge(1, 2, OrderedFloat(3.14));
+   |                                                ^^^^
+   |
+   = help: consider using the constant directly
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
+   = note: `#[deny(clippy::approx_constant)]` on by default
+
+error: approximate value of `f{32, 64}::consts::PI` found
+  --> tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs:96:36
+   |
+96 |         LabEdge(0, 1, OrderedFloat(3.14)),
+   |                                    ^^^^
+   |
+   = help: consider using the constant directly
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
+   = note: `#[deny(clippy::approx_constant)]` on by default
+
+error: approximate value of `f{32, 64}::consts::PI` found
+   --> tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:180:48
+    |
+180 |     graph.add_weighted_edge(1, 2, OrderedFloat(3.14159));
+    |                                                ^^^^^^^
+    |
+    = help: consider using the constant directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
+
+error: approximate value of `f{32, 64}::consts::PI` found
+   --> tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:183:25
+    |
+183 |     assert!((weight.0 - 3.14159).abs() < 0.00001);
+    |                         ^^^^^^^
+    |
+    = help: consider using the constant directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
+
+error: approximate value of `f{32, 64}::consts::PI` found
+  --> tests/Chap06/TestWeightedDirGraphStEphFloat.rs:93:42
+   |
+93 |     g.add_labeled_arc(0, 1, OrderedFloat(3.14));
+   |                                          ^^^^
+   |
+   = help: consider using the constant directly
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
+   = note: `#[deny(clippy::approx_constant)]` on by default
+
+error: approximate value of `f{32, 64}::consts::PI` found
+   --> tests/Chap06/TestWeightedDirGraphStEphFloat.rs:102:60
+    |
+102 |     assert_eq!(g.get_arc_label(&0, &1), Some(&OrderedFloat(3.14)));
+    |                                                            ^^^^
+    |
+    = help: consider using the constant directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
+
+error: approximate value of `f{32, 64}::consts::PI` found
+   --> tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:414:72
+    |
+414 |     let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [(1, 2, 3.14)]);
+    |                                                                        ^^^^
+    |
+    = help: consider using the constant directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
+
+error: approximate value of `f{32, 64}::consts::PI` found
+   --> tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs:346:44
+    |
+346 |     g.add_weighted_edge(1, 2, OrderedFloat(3.14));
+    |                                            ^^^^
+    |
+    = help: consider using the constant directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
+
+error: approximate value of `f{32, 64}::consts::PI` found
+   --> tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs:348:61
+    |
+348 |     assert_eq!(g.get_edge_weight(&1, &2), Some(OrderedFloat(3.14)));
+    |                                                             ^^^^
+    |
+    = help: consider using the constant directly
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
+
 warning: the function `<ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first` doesn't need a mutable reference
   --> tests/Chap36/TestChapter36MtSlice.rs:20:83
    |
@@ -552,353 +717,7 @@ warning: the function `<ArraySeqMtEphSliceS<i32> as
     = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
 
 warning: `apas-ai` (test "TestChapter36MtSlice") generated 16 warnings
-warning: very complex type used. Consider factoring parts into `type` definitions
-  --> tests/Chap64/TestTSPApproxMtEph.rs:12:35
-   |
-12 |       fn create_triangle_graph() -> (
-   |  ___________________________________^
-13 | |         LabUnDirGraphMtEph<N, OrderedFloat<f64>>,
-14 | |         Set<LabEdge<N, OrderedFloat<f64>>>,
-15 | |     ) {
-   | |_____^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
-   = note: `#[warn(clippy::type_complexity)]` on by default
-
-warning: very complex type used. Consider factoring parts into `type` definitions
-  --> benches/Chap64/BenchTSPApproxMtEph.rs:14:6
-   |
-14 |   ) -> (
-   |  ______^
-15 | |     LabUnDirGraphMtEph<N, OrderedFloat<f64>>,
-16 | |     Set<LabEdge<N, OrderedFloat<f64>>>,
-17 | | ) {
-   | |_^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
-   = note: `#[warn(clippy::type_complexity)]` on by default
-
-warning: `apas-ai` (bench "BenchTSPApproxMtEph") generated 1 warning
-warning: `apas-ai` (test "TestTSPApproxMtEph") generated 1 warning
-warning: the loop variable `i` is used to index `values`
-  --> tests/Chap37/TestAVLTreeSeqStEphChap37.rs:53:14
-   |
-53 |     for i in 0..tree.length() {
-   |              ^^^^^^^^^^^^^^^^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-   = note: `#[warn(clippy::needless_range_loop)]` on by default
-help: consider using an iterator and enumerate()
-   |
-53 -     for i in 0..tree.length() {
-53 +     for (i, <item>) in values.iter().enumerate().take(tree.length()) {
-   |
-
-warning: the loop variable `i` is used to index `values`
-   --> tests/Chap37/TestAVLTreeSeqStEphChap37.rs:328:14
-    |
-328 |     for i in 0..tree.length() {
-    |              ^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator and enumerate()
-    |
-328 -     for i in 0..tree.length() {
-328 +     for (i, <item>) in values.iter().enumerate().take(tree.length()) {
-    |
-
-warning: `apas-ai` (test "TestAVLTreeSeqStEphChap37") generated 2 warnings
-warning: the loop variable `i` is used to index `vals`
-  --> tests/Chap37/TestAVLTreeSeqStPer.rs:41:14
-   |
-41 |     for i in 0..tree.length() {
-   |              ^^^^^^^^^^^^^^^^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-   = note: `#[warn(clippy::needless_range_loop)]` on by default
-help: consider using an iterator and enumerate()
-   |
-41 -     for i in 0..tree.length() {
-41 +     for (i, <item>) in vals.iter().enumerate().take(tree.length()) {
-   |
-
-warning: the loop variable `i` is used to index `vals`
-  --> tests/Chap37/TestAVLTreeSeqStPer.rs:62:14
-   |
-62 |     for i in 0..tree.length() {
-   |              ^^^^^^^^^^^^^^^^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator and enumerate()
-   |
-62 -     for i in 0..tree.length() {
-62 +     for (i, <item>) in vals.iter().enumerate().take(tree.length()) {
-   |
-
-warning: the loop variable `i` is used to index `vals`
-  --> tests/Chap37/TestAVLTreeSeqStPer.rs:82:14
-   |
-82 |     for i in 0..tree.length() {
-   |              ^^^^^^^^^^^^^^^^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator and enumerate()
-   |
-82 -     for i in 0..tree.length() {
-82 +     for (i, <item>) in vals.iter().enumerate().take(tree.length()) {
-   |
-
-warning: the loop variable `i` is used to index `vals`
-   --> tests/Chap37/TestAVLTreeSeqStPer.rs:102:14
-    |
-102 |     for i in 0..tree.length() {
-    |              ^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator and enumerate()
-    |
-102 -     for i in 0..tree.length() {
-102 +     for (i, <item>) in vals.iter().enumerate().take(tree.length()) {
-    |
-
-warning: the loop variable `i` is used to index `values`
-   --> tests/Chap37/TestAVLTreeSeqStPer.rs:117:14
-    |
-117 |     for i in 0..tree.length() {
-    |              ^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator and enumerate()
-    |
-117 -     for i in 0..tree.length() {
-117 +     for (i, <item>) in values.iter().enumerate().take(tree.length()) {
-    |
-
-warning: the loop variable `i` is used to index `values`
-   --> tests/Chap37/TestAVLTreeSeqStPer.rs:127:14
-    |
-127 |     for i in 0..modified.length() {
-    |              ^^^^^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator and enumerate()
-    |
-127 -     for i in 0..modified.length() {
-127 +     for (i, <item>) in values.iter().enumerate().take(modified.length()) {
-    |
-
-warning: the loop variable `i` is used to index `vals`
-   --> tests/Chap37/TestAVLTreeSeqStPer.rs:151:14
-    |
-151 |     for i in 0..tree.length() {
-    |              ^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator and enumerate()
-    |
-151 -     for i in 0..tree.length() {
-151 +     for (i, <item>) in vals.iter().enumerate().take(tree.length()) {
-    |
-
-warning: the loop variable `i` is used to index `vals`
-   --> tests/Chap37/TestAVLTreeSeqStPer.rs:230:14
-    |
-230 |     for i in 0..tree.length() {
-    |              ^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator and enumerate()
-    |
-230 -     for i in 0..tree.length() {
-230 +     for (i, <item>) in vals.iter().enumerate().take(tree.length()) {
-    |
-
-warning: `apas-ai` (test "TestAVLTreeSeqStPer") generated 8 warnings
-warning: `assert!(true)` will be optimized out by the compiler
-  --> tests/TestLibIntegration.rs:51:5
-   |
-51 |     assert!(true);
-   |     ^^^^^^^^^^^^^
-   |
-   = help: remove it
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
-   = note: `#[warn(clippy::assertions_on_constants)]` on by default
-
-warning: `apas-ai` (test "TestLibIntegration") generated 1 warning
-error: approximate value of `f{32, 64}::consts::PI` found
-   --> tests/Chap06/TestWeightedDirGraphMtEphFloat.rs:104:36
-    |
-104 |         LabEdge(0, 1, OrderedFloat(3.14)),
-    |                                    ^^^^
-    |
-    = help: consider using the constant directly
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
-    = note: `#[deny(clippy::approx_constant)]` on by default
-
-error: this boolean expression contains a logic bug
-   --> tests/Chap47/TestAdvancedDoubleHashing.rs:179:13
-    |
-179 |     assert!(is_optimal || !is_optimal); // Tautology to ensure it compiles and runs
-    |             ^^^^^^^^^^^^^^^^^^^^^^^^^ help: it would look like the following: `true`
-    |
-help: this expression can be optimized out by applying boolean operations to the outer expression
-   --> tests/Chap47/TestAdvancedDoubleHashing.rs:179:13
-    |
-179 |     assert!(is_optimal || !is_optimal); // Tautology to ensure it compiles and runs
-    |             ^^^^^^^^^^
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#overly_complex_bool_expr
-    = note: `#[deny(clippy::overly_complex_bool_expr)]` on by default
-
-error: this boolean expression contains a logic bug
-   --> tests/Chap47/TestAdvancedDoubleHashing.rs:245:13
-    |
-245 |     assert!(is_valid || !is_valid); // Should return some boolean
-    |             ^^^^^^^^^^^^^^^^^^^^^ help: it would look like the following: `true`
-    |
-help: this expression can be optimized out by applying boolean operations to the outer expression
-   --> tests/Chap47/TestAdvancedDoubleHashing.rs:245:13
-    |
-245 |     assert!(is_valid || !is_valid); // Should return some boolean
-    |             ^^^^^^^^
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#overly_complex_bool_expr
-
-error: could not compile `apas-ai` (test "TestAdvancedDoubleHashing") due to 2 previous errors
-warning: build failed, waiting for other jobs to finish...
-error: could not compile `apas-ai` (test "TestWeightedDirGraphMtEphFloat") due to 1 previous error
-            ^^^^
-   |
-   = help: consider using the constant directly
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
-   = note: `#[deny(clippy::approx_constant)]` on by default
-
-warning: this loop could be written as a `while let` loop
-  --> tests/Chap12/TestExercise12_5.rs:73:13
-   |
-73 | /             loop {
-74 | |                 match stack_clone.pop() {
-75 | |                     | Some(value) => items.push(value),
-76 | |                     | None => break,
-77 | |                 }
-78 | |             }
-   | |_____________^ help: try: `while let | Some(value) = stack_clone.pop() { .. }`
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#while_let_loop
-   = note: `#[warn(clippy::while_let_loop)]` on by default
-
-warning: `apas-ai` (test "TestExercise12_5") generated 1 warning
-error: approximate value of `f{32, 64}::consts::PI` found
-   --> tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:180:48
-    |
-180 |     graph.add_weighted_edge(1, 2, OrderedFloat(3.14159));
-    |                                                ^^^^^^^
-    |
-    = help: consider using the constant directly
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
-
-error: approximate value of `f{32, 64}::consts::PI` found
-   --> tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:183:25
-    |
-183 |     assert!((weight.0 - 3.14159).abs() < 0.00001);
-    |                         ^^^^^^^
-    |
-    = help: consider using the constant directly
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
-
-error: approximate value of `f{32, 64}::consts::PI` found
-   --> tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:414:72
-    |
-414 |     let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [(1, 2, 3.14)]);
-    |                                                                        ^^^^
-    |
-    = help: consider using the constant directly
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
-
 error: could not compile `apas-ai` (test "TestWeightedUnDirGraphStEphFloat") due to 4 previous errors
 warning: build failed, waiting for other jobs to finish...
-warning: the loop variable `i` is used to index `values`
-  --> tests/Chap37/TestAVLTreeSeqStEphChap37.rs:53:14
-   |
-53 |     for i in 0..tree.length() {
-   |              ^^^^^^^^^^^^^^^^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-   = note: `#[warn(clippy::needless_range_loop)]` on by default
-help: consider using an iterator and enumerate()
-   |
-53 -     for i in 0..tree.length() {
-53 +     for (i, <item>) in values.iter().enumerate().take(tree.length()) {
-   |
-
-warning: the loop variable `i` is used to index `values`
-   --> tests/Chap37/TestAVLTreeSeqStEphChap37.rs:328:14
-    |
-328 |     for i in 0..tree.length() {
-    |              ^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator and enumerate()
-    |
-328 -     for i in 0..tree.length() {
-328 +     for (i, <item>) in values.iter().enumerate().take(tree.length()) {
-    |
-
-warning: the loop variable `i` is only used to index `results`
-   --> tests/Chap36/TestChapter36Mt.rs:242:14
-    |
-242 |     for i in 6..9 {
-    |              ^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-    = note: `#[warn(clippy::needless_range_loop)]` on by default
-help: consider using an iterator
-    |
-242 -     for i in 6..9 {
-242 +     for <item> in results.iter().take(9).skip(6) {
-    |
-
-warning: `apas-ai` (test "TestAVLTreeSeqStEphChap37") generated 2 warnings
-warning: `apas-ai` (test "TestChapter36Mt") generated 1 warning
-warning: the loop variable `i` is used to index `positions`
-   --> tests/Chap47/TestLinearProbing.rs:191:14
-    |
-191 |     for i in 1..table_size {
-    |              ^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-    = note: `#[warn(clippy::needless_range_loop)]` on by default
-help: consider using an iterator and enumerate()
-    |
-191 -     for i in 1..table_size {
-191 +     for (i, <item>) in positions.iter().enumerate().take(table_size).skip(1) {
-    |
-
-error: approximate value of `f{32, 64}::consts::PI` found
-  --> tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs:96:36
-   |
-96 |         LabEdge(0, 1, OrderedFloat(3.14)),
-   |                                    ^^^^
-   |
-   = help: consider using the constant directly
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
-   = note: `#[deny(clippy::approx_constant)]` on by default
-
-warning: `apas-ai` (test "TestLinearProbing") generated 1 warning
-error: approximate value of `f{32, 64}::consts::PI` found
-   --> tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs:346:44
-    |
-346 |     g.add_weighted_edge(1, 2, OrderedFloat(3.14));
-    |                                            ^^^^
-    |
-    = help: consider using the constant directly
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
-
-error: approximate value of `f{32, 64}::consts::PI` found
-   --> tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs:348:61
-    |
-348 |     assert_eq!(g.get_edge_weight(&1, &2), Some(OrderedFloat(3.14)));
-    |                                                             ^^^^
-    |
-    = help: consider using the constant directly
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
-
 error: could not compile `apas-ai` (test "TestWeightedUnDirGraphMtEphFloat") due to 3 previous errors
+error: could not compile `apas-ai` (test "TestWeightedDirGraphStEphFloat") due to 2 previous errors

@@ -7,9 +7,9 @@ import subprocess
 import sys
 
 def main():
-    print("Building benchmarks with 'cargo bench --no-run'...")
+    print("Building benchmarks with 'cargo bench --no-run -j 10'...")
     try:
-        subprocess.run(["cargo", "bench", "--no-run"], check=True)
+        subprocess.run(["cargo", "bench", "--no-run", "-j", "10"], check=True)
         print("✅ Benchmark build successful!")
         return 0
     except subprocess.CalledProcessError as e:

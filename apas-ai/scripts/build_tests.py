@@ -7,9 +7,9 @@ import subprocess
 import sys
 
 def main():
-    print("Building tests with 'cargo test --no-run'...")
+    print("Building tests with 'cargo test --no-run -j 10'...")
     try:
-        subprocess.run(["cargo", "test", "--no-run"], check=True)
+        subprocess.run(["cargo", "test", "--no-run", "-j", "10"], check=True)
         print("✅ Test build successful!")
         return 0
     except subprocess.CalledProcessError as e:
