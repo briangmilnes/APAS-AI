@@ -77,8 +77,11 @@ General Rust tooling and utilities, not APAS-specific.
 **Cross-Cutting Reviews (check all of src/, tests/, benches/):**
 - `review_no_extern_crate.py` - Reviews for forbidden 'extern crate' usage (RustRules.md Line 86)
 - `review_no_ufcs_call_sites.py` - Reviews for UFCS usage at call sites (RustRules.md Lines 309-320)
-- `review_import_order.py` - Reviews import ordering: std → external → crate (RustRules.md Line 50)
+- `review_import_order.py` - Reviews import ordering: std → external → internal, with blank lines (RustRules.md Lines 50, 75-86)
 - `review_camelcase.py` - Reviews file names for CamelCase convention (RustRules.md Lines 303-306)
+
+**Cross-Cutting Fixes:**
+- `fix_import_order.py` - Fixes import ordering and blank lines, sorts Types first
 
 #### rust/src/
 General Rust source code fixes and utilities.
