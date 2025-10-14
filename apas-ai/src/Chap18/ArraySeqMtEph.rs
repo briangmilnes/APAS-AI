@@ -95,7 +95,7 @@ pub mod ArraySeqMtEph {
     pub trait ArraySeqMtEphTrait<T: StTInMtT> {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn new(length: N, init_value: T) -> ArraySeqMtEphS<T>;
+        fn new(length: N, init_value: T) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - locks mutex
         fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqMtEphS<T>, &'static str>;

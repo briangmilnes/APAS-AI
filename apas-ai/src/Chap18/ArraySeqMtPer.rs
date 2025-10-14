@@ -113,7 +113,7 @@ pub mod ArraySeqMtPer {
     pub trait ArraySeqMtPerTrait<T: StTInMtT> {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn new(length: N, init_value: T) -> ArraySeqMtPerS<T>;
+        fn new(length: N, init_value: T) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn empty() -> ArraySeqMtPerS<T>;

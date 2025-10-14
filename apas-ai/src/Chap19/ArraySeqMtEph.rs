@@ -15,7 +15,7 @@ pub mod ArraySeqMtEph {
 
     pub trait ArraySeqMtEphTrait<T: StTInMtT> {
         /// claude-4-sonet: Work Θ(n), Span Θ(1)
-        fn new(length: N, init_value: T) -> ArraySeqMtEphS<T>;
+        fn new(length: N, init_value: T) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> ArraySeqMtEphS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)

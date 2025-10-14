@@ -13,7 +13,7 @@ pub mod ArraySeqMtPer {
     pub trait ArraySeqMtPerTrait<T: StTInMtT> {
         // Chapter 18 wrappers
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn new(length: N, init_value: T) -> ArraySeqMtPerS<T>;
+        fn new(length: N, init_value: T) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)

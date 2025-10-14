@@ -17,7 +17,7 @@ pub mod ArraySeq {
     pub trait ArraySeq<T> {
         /// Create a new sequence of length `length` with each element initialized to `init_value`. <br/>
         /// claude-4-sonet: Work Θ(length), Span Θ(1), Parallelism Θ(1).
-        fn new(length: N, init_value: T) -> ArraySeqS<T>
+        fn new(length: N, init_value: T) -> Self
         where
             T: Clone;
 

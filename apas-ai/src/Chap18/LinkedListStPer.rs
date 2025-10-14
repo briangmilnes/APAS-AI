@@ -22,7 +22,7 @@ pub mod LinkedListStPer {
     pub trait LinkedListStPerTrait<T: StT> {
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn new(length: N, init_value: T) -> LinkedListStPerS<T>
+        fn new(length: N, init_value: T) -> Self
         where
             T: Clone;
         /// APAS: Work Θ(1), Span Θ(1)

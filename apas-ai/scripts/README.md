@@ -158,6 +158,8 @@ General project utilities and cross-cutting tools.
 
 **Core Development:**
 - `build.py` - Build project with cargo build
+- `build_tests.py` - Build all tests without running (cargo test --no-run)
+- `build_benches.py` - Build all benchmarks without running (cargo bench --no-run)
 - `test.py` - Run tests with cargo nextest (--no-fail-fast)
 - `bench.py` - Run benchmarks with cargo bench -j 10
 

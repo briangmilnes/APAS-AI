@@ -53,7 +53,6 @@ pub mod LeftistHeapPQ {
 
         /// Claude Work: Θ(n), Span: Θ(n)
         /// Creates heap from sequence using reduce with meld
-
         fn from_seq(seq: &[T]) -> Self;
 
         /// Helper methods

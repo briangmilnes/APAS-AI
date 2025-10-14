@@ -405,7 +405,6 @@ pub mod OrderedTableMtEph {
     }
 
     /// Macro for creating multi-threaded ephemeral ordered tables from sorted key-value pairs
-
     #[macro_export]
     macro_rules! OrderedTableMtEphLit {
         () => {

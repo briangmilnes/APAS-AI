@@ -13,7 +13,7 @@ pub mod ArraySeqStEph {
 
     pub trait ArraySeqStEphTrait<T: StT> {
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn new(length: N, init_value: T) -> ArraySeqStEphS<T>;
+        fn new(length: N, init_value: T) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty() -> ArraySeqStEphS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
