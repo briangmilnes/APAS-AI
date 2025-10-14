@@ -79,6 +79,11 @@ General Rust source code fixes and utilities.
 
 - `review_rust_src.py` - Runs all Rust src reviews
 
+**Module Registration Reviews:**
+- `review_cargo.py` - Reviews Cargo.toml for missing test/benchmark registrations
+- `review_lib.py` - Reviews lib.rs for missing module declarations
+
+**Compilation Fixes:**
 - `fix_delete_assignments.py` - Fixes delete assignment syntax errors
 - `fix_delete_tuples.py` - Fixes tuple deletion syntax errors
 - `fix_dereference_issues.py` - Fixes dereference operator issues
@@ -88,6 +93,7 @@ General Rust source code fixes and utilities.
 General Rust test running utilities.
 
 - `review_rust_tests.py` - Runs all Rust test reviews
+- `review_test_modules.py` - Reviews that all test files compile
 - `nextest.sh` - Wrapper for cargo nextest with project-specific flags
 - `test_single_file.py` - Tests a single Rust file in isolation
 
@@ -95,6 +101,7 @@ General Rust test running utilities.
 General Rust benchmark running and management utilities.
 
 - `review_rust_benches.py` - Runs all Rust benchmark reviews
+- `review_bench_modules.py` - Reviews that all benchmark files compile
 - `audit_benchmarks.sh` - Audits first 50 benchmark files with timeouts, reports slow benchmarks
 - `benchmark.sh` - Basic benchmark runner
 - `kill_benchmarks.sh` - Kills running benchmark processes

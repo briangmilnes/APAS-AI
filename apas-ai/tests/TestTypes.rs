@@ -141,14 +141,14 @@ fn test_pair_to_tuple() {
 
 #[test]
 fn test_ordered_float_f32() {
-    let f: OrderedF32 = OrderedFloat(3.14);
-    assert_eq!(*f, 3.14);
+    let f: OrderedF32 = OrderedFloat(std::f32::consts::PI);
+    assert_eq!(*f, std::f32::consts::PI);
 }
 
 #[test]
 fn test_ordered_float_f64() {
-    let f: OrderedF64 = OrderedFloat(2.718);
-    assert_eq!(*f, 2.718);
+    let f: OrderedF64 = OrderedFloat(std::f64::consts::E);
+    assert_eq!(*f, std::f64::consts::E);
 }
 
 #[test]
