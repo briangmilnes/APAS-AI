@@ -2,6 +2,27 @@
 
 Organized scripts for Rust tooling, APAS code review, and project utilities.
 
+## New Infrastructure (2025-10-14)
+
+### Shared Library: `lib/review_utils.py`
+All review scripts now use a common library providing:
+- **Standardized arguments**: `--file <path>` and `--dry-run`
+- **File discovery**: Smart file finding with single-file mode
+- **Path handling**: Consistent relative path display
+- **Reporting**: Unified violation output format
+
+### Analysis: `analyze/`
+Renamed from `counting/` for better semantics.
+- **pareto_violations.py**: Runs all reviews and generates Pareto chart showing which issues are most impactful (80/20 rule)
+- **review_clippy.py**: Pareto analysis of Clippy warnings
+- **count_*.sh**: Various LOC/pattern counters
+
+### Top-Level Review: `review.py`
+Master review runner that:
+- Calls APAS and Rust review suites
+- Outputs to both stdout AND `analyses/review.txt`
+- Provides historical record of review results
+
 ## Directory Structure
 
 ### APAS/
