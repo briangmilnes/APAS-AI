@@ -46,13 +46,7 @@ fn expected_primes_up_to(n: usize) -> Vec<usize> {
 }
 
 // Helper function to convert sequence to vector for testing
-fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
-where
-    T: std::fmt::Debug,
-    T: Eq,
-    T: StT,
-    T: std::fmt::Display,
-{
+fn seq_to_vec<T: StT>(seq: &ArraySeqStPerS<T>) -> Vec<T> {
     let mut vec = Vec::new();
     for i in 0..seq.length() {
         vec.push(seq.nth(i).clone());
