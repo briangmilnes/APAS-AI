@@ -175,8 +175,8 @@ fn test_configuration_optimality() {
     let metrics = strategy.analyze_double_hashing_quality(&key, table_size);
     let is_optimal = strategy.is_configuration_optimal(&metrics, table_size);
 
-    // Should return a boolean result
-    assert!(is_optimal || !is_optimal); // Tautology to ensure it compiles and runs
+    // Should return a boolean result - just check it compiles
+    let _ = is_optimal;
 }
 
 /// Test hash value generation
@@ -242,7 +242,7 @@ fn test_example_double_hashing_analysis() {
 
     // Validate configuration
     let (is_valid, message) = validation;
-    assert!(is_valid || !is_valid); // Should return some boolean
+    let _ = is_valid; // Just check it compiles and returns a boolean
     assert!(!message.is_empty());
 }
 

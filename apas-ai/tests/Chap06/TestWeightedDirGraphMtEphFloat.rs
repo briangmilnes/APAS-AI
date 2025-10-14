@@ -101,9 +101,9 @@ fn test_weighteddirgraphmtephfloat_basic_operations() {
 fn test_weighteddirgraphmtephfloat_incident_operations() {
     let v: Set<N> = SetLit![0, 1, 2];
     let a: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![
-        LabEdge(0, 1, OrderedFloat(3.14)),
-        LabEdge(1, 2, OrderedFloat(2.71)),
-        LabEdge(0, 2, OrderedFloat(1.41))
+        LabEdge(0, 1, OrderedFloat(std::f64::consts::PI)),
+        LabEdge(1, 2, OrderedFloat(std::f64::consts::E)),
+        LabEdge(0, 2, OrderedFloat(std::f64::consts::SQRT_2))
     ];
     let _g = WeightedDirGraphMtEphFloat::from_vertices_and_labeled_arcs(v, a);
 
