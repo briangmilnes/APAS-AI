@@ -22,6 +22,9 @@ non_upper_case_globals = "allow"
 unused_imports = "allow"
 dead_code = "allow"
 
+[lints.clippy]
+module_inception = "allow"
+
 [workspace]
 members = [ "."]
 

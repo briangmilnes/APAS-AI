@@ -127,6 +127,7 @@ Counting and metrics utilities for codebase analysis.
 - `count_loc.sh` - Counts lines of code
 - `count_vec.sh` - Counts Vec usage patterns
 - `count_where.sh` - Counts where clause usage
+- `review_clippy.py` - Pareto analysis of Clippy warnings from analyses/clippy.txt
 
 ---
 
