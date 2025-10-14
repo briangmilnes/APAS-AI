@@ -130,13 +130,17 @@ Legacy lint directory (being migrated to APAS/src/).
 
 ---
 
-### src/
-Legacy source utilities directory (empty, historically used).
+### tmp/
+**Temporary one-time scripts only.**
 
----
+Scripts that solve a specific problem once and are done. Examples:
+- Migration scripts (rename files following new convention)
+- One-time import pattern fixes
+- Revert scripts for undoing mistakes
+- Batch compilation error fixes
+- Test structure migrations
 
-### tests/
-Legacy test utilities directory (empty, historically used).
+See `tmp/README.md` for details. Clean out periodically.
 
 ---
 
@@ -144,14 +148,37 @@ Legacy test utilities directory (empty, historically used).
 
 General project utilities and cross-cutting tools.
 
+**Core Development:**
+- `build.py` - Build project with cargo build
+- `test.py` - Run tests with cargo nextest (--no-fail-fast)
+- `bench.py` - Run benchmarks with cargo bench -j 10
+
+**Code Quality:**
 - `review.py` - Master script that runs all code reviews (APAS + Rust)
 - `format.sh` - Runs rustfmt on the codebase
+
+**Development Environment:**
 - `generate_tags.sh` - Generates ctags/rusty-tags for editor navigation
 - `install_ubuntu_tools.sh` - Installs required Ubuntu development tools
 
 ---
 
 ## Usage Patterns
+
+### Core Development Workflow
+```bash
+# Build the project
+./scripts/build.py
+
+# Run tests
+./scripts/test.py
+
+# Run benchmarks
+./scripts/bench.py
+
+# Format code
+./scripts/format.sh
+```
 
 ### Running Code Reviews
 ```bash

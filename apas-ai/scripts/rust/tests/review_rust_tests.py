@@ -14,10 +14,10 @@ def main():
     scripts = sorted([
         f for f in script_dir.glob("review_*.py")
         if f.name != my_name
-    ])
+    ] + list(script_dir.glob("find_*.py")))
     
     if not scripts:
-        print("✓ No Rust test review scripts configured")
+        print("✓ No Rust test review/find scripts configured")
         return 0
     
     print(f"Running {len(scripts)} Rust test check(s)\n")

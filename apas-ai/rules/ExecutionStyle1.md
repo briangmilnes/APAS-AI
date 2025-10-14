@@ -232,4 +232,11 @@ User activates by saying "careful mode" or "ask first":
   - `scripts/rust/benches/` - General Rust benchmark utilities
   - `scripts/benches/` - Shared benchmark utilities
   - `scripts/counting/` - Counting and metrics utilities
+  - `scripts/tmp/` - **Temporary one-time scripts only** (migrations, one-off fixes, reverts)
   - See `scripts/README.md` for complete organization
+- **One-time scripts**: All temporary single-use scripts go in `scripts/tmp/`
+  - Migration scripts (rename files, restructure)
+  - One-time pattern fixes or reverts
+  - Batch compilation error fixes from specific changes
+  - **Never** put permanent/reusable tools in `tmp/`
+  - Clean out periodically after scripts serve their purpose
