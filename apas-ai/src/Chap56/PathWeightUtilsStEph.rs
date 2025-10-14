@@ -13,11 +13,11 @@
 
 pub mod PathWeightUtilsStEph {
 
+    use ordered_float::OrderedFloat;
+
+    use crate::Types::Types::*;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
-    use crate::Types::Types::*;
-    
-    use ordered_float::OrderedFloat;
 
     pub trait PathWeightUtilsStEphTrait {
         /// Claude Work: O(k), Span: O(k) where k is path length

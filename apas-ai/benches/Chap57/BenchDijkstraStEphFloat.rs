@@ -1,14 +1,15 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Dijkstra's Algorithm with float weights
 
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
 
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+
+use apas_ai::Types::Types::OrderedF64;
 use apas_ai::Chap05::SetStEph::SetStEph;
 use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat;
 use apas_ai::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::dijkstra;
 use apas_ai::SetLit;
-use apas_ai::Types::Types::OrderedF64;
 
 fn create_sparse_graph(n: usize) -> WeightedDirGraphStEphFloat<usize> {
     let mut vertices = SetLit![];

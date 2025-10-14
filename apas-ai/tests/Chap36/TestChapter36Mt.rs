@@ -1,10 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use rand::*;
+
+use apas_ai::Types::Types::*;
 use apas_ai::ArraySeqMtEphSLit;
 use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Chap36::QuickSortMt::Chapter36Mt::Chapter36MtTrait;
-use apas_ai::Types::Types::*;
-use rand::*;
 
 fn to_vec<T: StTInMtT>(a: &ArraySeqMtEphS<T>) -> Vec<T> { (0..a.length()).map(|i| a.nth_cloned(i)).collect() }
 

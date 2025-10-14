@@ -1,10 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for sequential merge sort (Chapter 26).
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
 use apas_ai::Chap26::MergeSortSt::MergeSortSt::MergeSortStTrait;
-use criterion::*;
-use std::time::Duration;
 
 fn bench_merge_sort_st(c: &mut Criterion) {
     let mut group = c.benchmark_group("merge_sort_st");

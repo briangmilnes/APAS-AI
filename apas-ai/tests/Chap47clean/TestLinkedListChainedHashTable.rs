@@ -1,8 +1,9 @@
+use std::collections::LinkedList;
+
+use apas_ai::Types::Types::*;
 use apas_ai::Chap47clean::ChainedHashTable::ChainedHashTable::*;
 use apas_ai::Chap47clean::LinkedListChainedHashTable::LinkedListChainedHashTable::*;
 use apas_ai::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
-use apas_ai::Types::Types::*;
-use std::collections::LinkedList;
 
 type LLChainTable = HashTable<i32, String, LinkedList<(i32, String)>, ()>;
 

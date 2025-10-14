@@ -9,9 +9,10 @@ pub mod ArraySetEnumMtEph {
     use std::sync::Arc;
     use std::thread;
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
-    use crate::Types::Types::*;
     use bitvec::prelude::*;
+
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
 
     #[derive(PartialEq, Clone)]
     pub struct ArraySetEnumMtEph {

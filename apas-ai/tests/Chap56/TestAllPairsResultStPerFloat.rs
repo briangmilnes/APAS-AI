@@ -4,8 +4,9 @@
 
 #[cfg(test)]
 mod TestAllPairsResultStPerFloat {
-    use apas_ai::Chap56::AllPairsResultStPerFloat::AllPairsResultStPerFloat::AllPairsResultStPerFloat;
     use ordered_float::OrderedFloat;
+
+    use apas_ai::Chap56::AllPairsResultStPerFloat::AllPairsResultStPerFloat::AllPairsResultStPerFloat;
 
     #[test]
     fn test_new() {

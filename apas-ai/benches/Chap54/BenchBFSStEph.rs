@@ -1,9 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
 use apas_ai::Chap54::BFSStEph::BFSStEph;
-use criterion::*;
-use std::time::Duration;
 
 fn create_dag(n: usize) -> ArraySeqStEphS<ArraySeqStEphS<usize>> {
     ArraySeqStEphS::tabulate(

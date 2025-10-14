@@ -1,13 +1,14 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for multi-threaded ephemeral reducer-augmented ordered table implementation.
 
+use std::sync::Arc;
+use std::thread;
+
+use apas_ai::Types::Types::*;
 use apas_ai::AugOrderedTableMtEphLit;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::AugOrderedTableMtEph::AugOrderedTableMtEph::*;
-use apas_ai::Types::Types::*;
-use std::sync::Arc;
-use std::thread;
 
 #[test]
 fn test_empty_table() {

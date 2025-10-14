@@ -1,9 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
 use apas_ai::Chap54::BFSMtPer::BFSMtPer;
-use criterion::*;
-use std::time::Duration;
 
 fn create_dag(n: usize) -> ArraySeqMtPerS<ArraySeqMtPerS<usize>> {
     ArraySeqMtPerS::tabulate(

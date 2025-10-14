@@ -8,12 +8,13 @@ pub mod KruskalStEph {
 
     use std::hash::Hash;
 
+    use ordered_float::OrderedFloat;
+
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
     use crate::SetLit;
-    use crate::Types::Types::*;
-    use ordered_float::OrderedFloat;
 
     pub trait KruskalStEphTrait {
         /// Kruskal's MST algorithm

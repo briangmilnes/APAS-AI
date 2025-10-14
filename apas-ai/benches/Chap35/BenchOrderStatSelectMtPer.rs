@@ -1,9 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
 use apas_ai::Chap35::OrderStatSelectMtPer::OrderStatSelectMtPer::OrderStatSelectMtPerTrait;
-use criterion::*;
-use std::time::Duration;
 
 pub fn bench_select_mt_per(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap35::OrderStatSelectMtPer");

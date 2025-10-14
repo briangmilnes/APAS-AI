@@ -1,11 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chapter 42 single-threaded ephemeral table implementation.
 
+use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap42::TableStEph::TableStEph::*;
-use apas_ai::Types::Types::*;
-use criterion::*;
-use std::time::Duration;
 
 fn build_table(size: usize) -> TableStEph<i32, String> {
     let mut table = TableStEph::empty();

@@ -11,12 +11,13 @@ pub mod PrimStEph {
     use std::fmt::{Display, Formatter, Result as FmtResult};
     use std::hash::Hash;
 
+    use ordered_float::OrderedFloat;
+
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
     use crate::SetLit;
-    use crate::Types::Types::*;
-    use ordered_float::OrderedFloat;
 
     pub trait PrimStEphTrait {
         /// Prim's MST algorithm

@@ -1,7 +1,8 @@
+use std::marker::PhantomData;
+
+use apas_ai::Types::Types::*;
 use apas_ai::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
 use apas_ai::Chap47clean::VecChainedHashTable::VecChainedHashTable::*;
-use apas_ai::Types::Types::*;
-use std::marker::PhantomData;
 
 #[test]
 fn test_createtable() {

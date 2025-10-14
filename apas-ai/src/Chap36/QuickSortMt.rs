@@ -5,9 +5,10 @@ pub mod Chapter36Mt {
 
     use std::thread;
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
-    use crate::Types::Types::*;
     use rand::*;
+
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
 
     pub trait Chapter36MtTrait<T: StT + Ord + Send> {
         /// APAS: Work Θ(1), Span Θ(1)

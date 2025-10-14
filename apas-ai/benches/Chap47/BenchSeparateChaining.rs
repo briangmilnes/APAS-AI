@@ -1,10 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmark for SeparateChaining
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::*;
 use apas_ai::Chap47::SeparateChaining::SeparateChaining::*;
-use criterion::*;
-use std::time::Duration;
 
 fn bench_separate_chaining_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("separate_chaining_insert");

@@ -10,13 +10,14 @@ pub mod BoruvkaMtEph {
     use std::hash::Hash;
     use std::sync::Arc;
 
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::ParaPair;
-    use crate::SetLit;
-    use crate::Types::Types::*;
     use ordered_float::OrderedFloat;
     use rand::rngs::StdRng;
     use rand::*;
+
+    use crate::Types::Types::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::ParaPair;
+    use crate::SetLit;
 
     pub trait BoruvkaMtEphTrait {
         /// Find vertex bridges for parallel Borůvka's algorithm

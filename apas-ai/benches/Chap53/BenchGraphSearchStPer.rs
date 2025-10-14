@@ -1,11 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chap53 GraphSearchStPer.
 
+use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::Chap53::GraphSearchStPer::GraphSearchStPer::*;
-use apas_ai::Types::Types::*;
-use criterion::*;
-use std::time::Duration;
 
 fn build_complete_graph(n: N) -> impl Fn(&N) -> AVLTreeSetStPer<N> {
     move |v: &N| {

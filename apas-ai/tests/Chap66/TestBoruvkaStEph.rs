@@ -3,9 +3,10 @@
 
 #[cfg(test)]
 mod tests_boruvka_st_eph {
+    use ordered_float::OrderedFloat;
+
     use apas_ai::Chap66::BoruvkaStEph::BoruvkaStEph::*;
     use apas_ai::SetLit;
-    use ordered_float::OrderedFloat;
 
     #[test]
     fn test_boruvka_triangle() {

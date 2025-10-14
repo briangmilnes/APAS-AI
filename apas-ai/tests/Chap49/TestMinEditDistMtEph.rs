@@ -1,10 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for MinEditDistMtEph - Minimum Edit Distance (ephemeral, multithreaded).
 
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
-use apas_ai::Chap49::MinEditDistMtEph::MinEditDistMtEph::*;
 use std::sync::Arc;
 use std::thread;
+
+use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+use apas_ai::Chap49::MinEditDistMtEph::MinEditDistMtEph::*;
 
 #[test]
 fn test_new_empty() {

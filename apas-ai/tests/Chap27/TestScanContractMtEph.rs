@@ -1,9 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for parallel scan using contraction (Chapter 27).
 
+use std::sync::Arc;
+
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
-use std::sync::Arc;
 
 #[test]
 fn test_scan_contract_parallel_empty() {

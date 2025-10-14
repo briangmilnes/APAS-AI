@@ -3,9 +3,10 @@
 
 pub mod Chapter36St {
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Types::Types::*;
     use rand::*;
+
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 
     pub trait Chapter36StTrait<T: StT + Ord> {
         /// APAS: Work Θ(1), Span Θ(1)

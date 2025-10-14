@@ -1,8 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap38::BSTParaStEph::BSTParaStEph::*;
-use apas_ai::Types::Types::*;
-use criterion::*;
 use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
+use apas_ai::Chap38::BSTParaStEph::BSTParaStEph::*;
 
 fn bench_bst_para_st_eph(c: &mut Criterion) {
     let mut group = c.benchmark_group("BSTParaStEph");

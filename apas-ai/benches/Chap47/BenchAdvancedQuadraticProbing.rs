@@ -1,11 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmark for AdvancedQuadraticProbing
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap47::AdvancedQuadraticProbing::AdvancedQuadraticProbing::AdvancedQuadraticProbingStrategy;
 use apas_ai::Chap47::FlatHashTable::FlatHashTable::FlatHashTable;
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::DefaultHashFunction;
-use criterion::*;
-use std::time::Duration;
 
 fn bench_quadratic_probing_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("quadratic_probing_insert");

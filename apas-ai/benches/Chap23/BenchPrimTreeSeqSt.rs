@@ -1,8 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap23::PrimTreeSeqSt::PrimTreeSeqSt::*;
-use apas_ai::Types::Types::*;
-use criterion::*;
 use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
+use apas_ai::Chap23::PrimTreeSeqSt::PrimTreeSeqSt::*;
 
 fn bench_prim_tree_seq_st(c: &mut Criterion) {
     let mut group = c.benchmark_group("PrimTreeSeqSt");

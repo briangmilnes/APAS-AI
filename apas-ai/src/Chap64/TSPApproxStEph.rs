@@ -11,11 +11,12 @@ pub mod TSPApproxStEph {
     use std::collections::{HashMap, HashSet};
     use std::hash::Hash;
 
+    use ordered_float::OrderedFloat;
+
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::SetLit;
-    use crate::Types::Types::*;
-    use ordered_float::OrderedFloat;
 
     pub trait TSPApproxStEphTrait {
         /// Compute Euler tour of a tree

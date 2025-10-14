@@ -1,8 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap18::LinkedListStPer::LinkedListStPer::*;
-use apas_ai::Types::Types::*;
-use criterion::*;
 use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
+use apas_ai::Chap18::LinkedListStPer::LinkedListStPer::*;
 
 fn bench_ll_per_ch19(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchLinkedListPer");

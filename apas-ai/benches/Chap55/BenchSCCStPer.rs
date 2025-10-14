@@ -1,8 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmark for Chapter 55 DFS algorithms.
 
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
 use std::time::Duration;
+
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 
 fn bench_placeholder(c: &mut Criterion) { c.bench_function("placeholder", |b| b.iter(|| black_box(1 + 1))); }
 

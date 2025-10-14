@@ -1,14 +1,16 @@
 // Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 65: Prim's MST Algorithm Benchmarks (Sequential)
 
+use std::time::Duration;
+
+use criterion::*;
+use ordered_float::OrderedFloat;
+
+use apas_ai::Types::Types::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
 use apas_ai::Chap65::PrimStEph::PrimStEph::*;
 use apas_ai::SetLit;
-use apas_ai::Types::Types::*;
-use criterion::*;
-use ordered_float::OrderedFloat;
-use std::time::Duration;
 
 fn create_complete_graph(n: N) -> LabUnDirGraphStEph<N, OrderedFloat<f64>> {
     let mut vertices = SetLit![];

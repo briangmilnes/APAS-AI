@@ -1,13 +1,15 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for single-threaded ephemeral reducer-augmented ordered table implementation.
 
+use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
 use apas_ai::AugOrderedTableStEphLit;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::AugOrderedTableStEph::AugOrderedTableStEph::*;
-use apas_ai::Types::Types::*;
-use criterion::*;
-use std::time::Duration;
 
 fn bench_ephemeral_reduce_val_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("ephemeral_reduce_val");

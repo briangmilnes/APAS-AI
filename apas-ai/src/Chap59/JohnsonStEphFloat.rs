@@ -12,6 +12,9 @@
 
 pub mod JohnsonStEphFloat {
 
+    use ordered_float::OrderedFloat;
+
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
     use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
@@ -19,8 +22,6 @@ pub mod JohnsonStEphFloat {
     use crate::Chap56::AllPairsResultStEphFloat::AllPairsResultStEphFloat::AllPairsResultStEphFloat;
     use crate::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::dijkstra;
     use crate::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
-    use crate::Types::Types::*;
-    use ordered_float::OrderedFloat;
 
     pub trait JohnsonStEphFloatTrait {
         /// Johnson's all-pairs shortest path algorithm

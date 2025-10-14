@@ -3,8 +3,9 @@
 
 use std::time::Duration;
 
-use apas_ai::Chap52::AdjTableGraphStPer::AdjTableGraphStPer::*;
 use criterion::*;
+
+use apas_ai::Chap52::AdjTableGraphStPer::AdjTableGraphStPer::*;
 
 fn bench_adj_table_graph_build(c: &mut Criterion) {
     let mut group = c.benchmark_group("AdjTableGraphStPer_build");

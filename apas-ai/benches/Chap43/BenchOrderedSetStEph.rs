@@ -1,9 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chap43 OrderedSetStEph.
 
-use apas_ai::Chap43::OrderedSetStEph::OrderedSetStEph::*;
-use criterion::*;
 use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Chap43::OrderedSetStEph::OrderedSetStEph::*;
 
 fn bench_ordered_set_st_eph_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedSetStEph_insert");

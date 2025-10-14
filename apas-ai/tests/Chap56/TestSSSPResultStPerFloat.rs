@@ -4,8 +4,9 @@
 
 #[cfg(test)]
 mod TestSSSPResultStPerFloat {
-    use apas_ai::Chap56::SSSPResultStPerFloat::SSSPResultStPerFloat::SSSPResultStPerFloat;
     use ordered_float::OrderedFloat;
+
+    use apas_ai::Chap56::SSSPResultStPerFloat::SSSPResultStPerFloat::SSSPResultStPerFloat;
 
     #[test]
     fn test_new() {

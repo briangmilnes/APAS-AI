@@ -2,9 +2,11 @@
 //!
 //! Benchmarks for SSSPResultStEphInt.
 
-use apas_ai::Chap56::SSSPResultStEphInt::SSSPResultStEphInt::SSSPResultStEphInt;
-use criterion::*;
 use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Chap56::SSSPResultStEphInt::SSSPResultStEphInt::SSSPResultStEphInt;
 
 fn bench_new(c: &mut Criterion) {
     let sizes = vec![100, 500, 1000];

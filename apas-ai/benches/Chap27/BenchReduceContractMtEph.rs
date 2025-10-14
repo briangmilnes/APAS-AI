@@ -1,11 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for parallel reduce using contraction (Chapter 27).
 
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
-use apas_ai::Chap27::ReduceContractMtEph::ReduceContractMtEph::ReduceContractMtEphTrait;
-use criterion::*;
 use std::sync::Arc;
 use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
+use apas_ai::Chap27::ReduceContractMtEph::ReduceContractMtEph::ReduceContractMtEphTrait;
 
 fn bench_reduce_contract_parallel_100(c: &mut Criterion) {
     let a = ArraySeqMtEphS::tabulate(&|i| i + 1, 100);

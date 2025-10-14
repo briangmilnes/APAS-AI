@@ -3,9 +3,10 @@
 
 pub mod BSTKeyValueStEph {
 
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Types::Types::*;
     use rand::*;
+
+    use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 
     type Link<K, V> = Option<Box<Node<K, V>>>;
 

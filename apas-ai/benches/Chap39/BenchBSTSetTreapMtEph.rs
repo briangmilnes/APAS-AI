@@ -3,9 +3,10 @@
 
 use std::time::Duration;
 
+use criterion::*;
+
 use apas_ai::BSTSetTreapMtEphLit;
 use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt as TreapSet;
-use criterion::*;
 
 trait BenchSet: Sized {
     fn empty() -> Self;

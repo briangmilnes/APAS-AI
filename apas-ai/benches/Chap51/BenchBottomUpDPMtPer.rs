@@ -1,9 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmark for BottomUpDPMtPer
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Chap51::BottomUpDPMtPer::BottomUpDPMtPer::*;
-use criterion::*;
-use std::time::Duration;
 
 fn bench_med(c: &mut Criterion) {
     let mut group = c.benchmark_group("BottomUpDPMtPer_MED");

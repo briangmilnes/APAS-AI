@@ -1,9 +1,11 @@
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
 use apas_ai::Chap59::JohnsonStEphInt::JohnsonStEphInt::johnson_apsp;
 use apas_ai::SetLit;
-use criterion::*;
-use std::time::Duration;
 
 fn generate_sparse_graph_negative(n: usize) -> WeightedDirGraphStEphInt<usize> {
     let mut vertices = Set::empty();

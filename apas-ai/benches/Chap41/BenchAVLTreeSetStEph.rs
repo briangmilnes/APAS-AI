@@ -3,10 +3,11 @@
 
 use std::time::Duration;
 
+use criterion::*;
+
 use apas_ai::AVLTreeSetStEphLit;
 use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS;
 use apas_ai::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
-use criterion::*;
 
 fn build_avl_tree_set(len: usize) -> AVLTreeSetStEph<i32> {
     let mut set = AVLTreeSetStEph::empty();

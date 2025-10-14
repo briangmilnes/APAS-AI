@@ -1,11 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chap06 WeightedUnDirGraphStEphFloat.
 
+use ordered_float::OrderedFloat;
+
 use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEphTrait;
 use apas_ai::Chap06::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::*;
 use apas_ai::SetLit;
 use apas_ai::WeightedUnDirGraphStEphFloatLit;
-use ordered_float::OrderedFloat;
 
 #[test]
 fn test_weightedundirgraphstephfloatlit_macro_functionality() {

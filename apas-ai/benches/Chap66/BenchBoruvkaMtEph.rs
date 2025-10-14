@@ -1,11 +1,13 @@
 // Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chapter 66: Borůvka's MST Algorithm (Parallel Ephemeral)
 
-use apas_ai::Chap66::BoruvkaMtEph::BoruvkaMtEph::*;
-use apas_ai::SetLit;
+use std::time::Duration;
+
 use criterion::*;
 use ordered_float::OrderedFloat;
-use std::time::Duration;
+
+use apas_ai::Chap66::BoruvkaMtEph::BoruvkaMtEph::*;
+use apas_ai::SetLit;
 
 fn bench_boruvka_mt_complete(c: &mut Criterion) {
     let mut group = c.benchmark_group("boruvka_mt_complete");

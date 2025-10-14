@@ -3,9 +3,10 @@
 
 use std::time::Duration;
 
+use criterion::*;
+
 use apas_ai::BSTSetPlainMtEphLit;
 use apas_ai::Chap37::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMt as PlainSet;
-use criterion::*;
 
 trait BenchSet: Sized {
     fn empty() -> Self;

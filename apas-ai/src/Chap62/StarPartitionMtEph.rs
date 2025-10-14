@@ -9,13 +9,14 @@ pub mod StarPartitionMtEph {
     use std::collections::HashMap;
     use std::hash::Hash;
 
+    use rand::*;
+    use rand::rngs::StdRng;
+
+    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::SetLit;
-    use crate::Types::Types::*;
-    use rand::*;
-    use rand::rngs::StdRng;
 
     pub trait StarPartitionMtEphTrait {
         /// Parallel star partition using randomized coin flips

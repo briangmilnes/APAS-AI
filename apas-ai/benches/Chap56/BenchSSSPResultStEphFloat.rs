@@ -2,10 +2,12 @@
 //!
 //! Benchmarks for SSSPResultStEphFloat.
 
-use apas_ai::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
+use std::time::Duration;
+
 use criterion::*;
 use ordered_float::OrderedFloat;
-use std::time::Duration;
+
+use apas_ai::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
 
 fn bench_new(c: &mut Criterion) {
     let sizes = vec![100, 500, 1000];

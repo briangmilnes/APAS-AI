@@ -1,9 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
+use criterion::*;
+
 use apas_ai::Chap37::BSTParaStEph::BSTParaStEph::ParamBST;
 use apas_ai::{ParamBSTLit, *};
-use criterion::*;
 
 fn build_tree(len: usize) -> ParamBST<i32> {
     let tree = ParamBSTLit![]; // BST StEph: empty constructor

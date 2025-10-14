@@ -1,12 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use ordered_float::OrderedFloat;
+
+use apas_ai::Types::Types::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
 use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
 use apas_ai::SetLit;
-use apas_ai::Types::Types::*;
 use apas_ai::WeightedDirGraphStEphFloatLit;
-use ordered_float::OrderedFloat;
 
 #[test]
 fn test_weighteddirgraphstephfloatlit_macro_functionality() {

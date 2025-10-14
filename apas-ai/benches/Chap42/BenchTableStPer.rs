@@ -1,11 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chapter 42 single-threaded persistent table implementation.
 
+use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap42::TableStPer::TableStPer::*;
-use apas_ai::Types::Types::*;
-use criterion::*;
-use std::time::Duration;
 
 fn build_table(size: usize) -> TableStPer<i32, String> {
     let mut table = TableStPer::empty();

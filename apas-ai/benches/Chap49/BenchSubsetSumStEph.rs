@@ -1,9 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for SubsetSumStEph
 
-use apas_ai::{Chap49::SubsetSumStEph::SubsetSumStEph::*, SubsetSumStEphLit};
-use criterion::*;
 use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::{Chap49::SubsetSumStEph::SubsetSumStEph::*, SubsetSumStEphLit};
 
 fn bench_subset_sum_st_eph(c: &mut Criterion) {
     let mut group = c.benchmark_group("subset_sum_st_eph");

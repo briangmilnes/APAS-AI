@@ -1,12 +1,14 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS;
-use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
-use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-use apas_ai::Types::Types::*;
-use criterion::*;
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 
 fn bench_build_and_read_persistent(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchAVLTreeSeqPer");

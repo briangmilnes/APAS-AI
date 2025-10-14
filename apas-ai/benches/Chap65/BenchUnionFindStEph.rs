@@ -1,10 +1,12 @@
 // Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 65: Union-Find Benchmarks (Sequential)
 
-use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
-use apas_ai::Types::Types::*;
-use criterion::*;
 use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
+use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
 
 fn bench_union_find_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("UnionFind_Operations");

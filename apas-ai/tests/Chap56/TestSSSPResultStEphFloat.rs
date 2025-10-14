@@ -4,8 +4,9 @@
 
 #[cfg(test)]
 mod TestSSSPResultStEphFloat {
-    use apas_ai::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
     use ordered_float::OrderedFloat;
+
+    use apas_ai::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
 
     #[test]
     fn test_new() {

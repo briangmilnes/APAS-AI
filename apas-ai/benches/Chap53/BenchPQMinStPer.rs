@@ -1,11 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chap53 PQMinStPer.
 
+use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::Chap53::PQMinStPer::PQMinStPer::*;
-use apas_ai::Types::Types::*;
-use criterion::*;
-use std::time::Duration;
 
 fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> { ClosurePriority::new(|v: &N| *v) }
 

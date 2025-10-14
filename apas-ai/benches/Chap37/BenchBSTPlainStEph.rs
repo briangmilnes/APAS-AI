@@ -1,9 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
+use criterion::*;
+
 use apas_ai::Chap37::BSTPlainStEph::BSTPlainStEph::{BSTPlainStEphTrait, BSTree};
 use apas_ai::{BSTPlainStEphLit, *};
-use criterion::*;
 
 fn build_tree(len: usize) -> BSTree<i32> {
     let mut tree = BSTPlainStEphLit![]; // BST Eph: empty constructor

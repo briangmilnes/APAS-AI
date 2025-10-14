@@ -1,10 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for parallel divide-and-conquer via reduce (Chapter 26).
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS, ArraySeqMtPerTrait};
 use apas_ai::Chap26::DivConReduceMt::DivConReduceMt::DivConReduceMtTrait;
-use criterion::*;
-use std::time::Duration;
 
 fn bench_divcon_reduce_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("divcon_reduce_mt");

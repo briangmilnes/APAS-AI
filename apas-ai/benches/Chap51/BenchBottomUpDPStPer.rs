@@ -1,10 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmark for BottomUpDPStPer - Bottom-Up DP Single-Threaded Persistent
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap51::BottomUpDPStPer::BottomUpDPStPer::*;
-use criterion::*;
-use std::time::Duration;
 
 fn bench_med_bottom_up(c: &mut Criterion) {
     let mut group = c.benchmark_group("BottomUpDPStPer_MED");

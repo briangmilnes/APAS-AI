@@ -3,13 +3,14 @@
 use std::sync::{Arc, Barrier};
 use std::thread;
 
+use ordered_float::OrderedFloat;
+
+use apas_ai::Types::Types::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::LabDirGraphMtEphTrait;
 use apas_ai::Chap06::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::*;
 use apas_ai::SetLit;
-use apas_ai::Types::Types::*;
 use apas_ai::WeightedDirGraphMtEphFloatLit;
-use ordered_float::OrderedFloat;
 
 #[test]
 fn test_weighteddirgraphmtephfloatlit_macro_functionality() {

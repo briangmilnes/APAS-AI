@@ -5,9 +5,10 @@
 pub mod LinkedListChainedHashTable {
 
     use std::collections::LinkedList;
+
+    use crate::Types::Types::*;
     use crate::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
     use crate::Chap47clean::ChainedHashTable::ChainedHashTable::*;
-    use crate::Types::Types::*;
 
     impl<Key: PartialEq + Clone, Value: Clone> EntryTrait<Key, Value> for LinkedList<(Key, Value)> {
         fn new() -> Self { LinkedList::new() }

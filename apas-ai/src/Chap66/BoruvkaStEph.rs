@@ -9,12 +9,13 @@ pub mod BoruvkaStEph {
     use std::collections::HashMap;
     use std::hash::Hash;
 
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::SetLit;
-    use crate::Types::Types::*;
     use ordered_float::OrderedFloat;
     use rand::rngs::StdRng;
     use rand::*;
+
+    use crate::Types::Types::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
 
     pub trait BoruvkaStEphTrait {
         /// Find vertex bridges for Borůvka's algorithm

@@ -1,11 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmark for AdvancedLinearProbing
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap47::AdvancedLinearProbing::AdvancedLinearProbing::AdvancedLinearProbingStrategy;
 use apas_ai::Chap47::FlatHashTable::FlatHashTable::FlatHashTable;
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::DefaultHashFunction;
-use criterion::*;
-use std::time::Duration;
 
 fn bench_linear_probing_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("linear_probing_insert");

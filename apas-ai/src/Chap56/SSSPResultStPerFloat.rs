@@ -15,10 +15,10 @@
 
 pub mod SSSPResultStPerFloat {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-    
-    use crate::Types::Types::*;
     use ordered_float::OrderedFloat;
+
+    use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     const UNREACHABLE: OrderedF64 = OrderedFloat(f64::INFINITY);
     const NO_PREDECESSOR: usize = usize::MAX;

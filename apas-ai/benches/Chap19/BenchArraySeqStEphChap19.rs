@@ -1,10 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
-use apas_ai::Types::Types::*;
-use criterion::*;
-use std::time::Duration;
 
 fn bench_tabulate_map_eph_ch19(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqStEphChap19");

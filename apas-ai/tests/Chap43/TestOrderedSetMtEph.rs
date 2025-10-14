@@ -1,11 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Comprehensive tests for OrderedSetMtEph - multi-threaded ephemeral ordered set implementation.
 
-use apas_ai::Chap43::OrderedSetMtEph::OrderedSetMtEph::*;
-use apas_ai::OrderedSetMtEphLit;
-use apas_ai::Types::Types::*;
 use std::sync::Arc;
 use std::thread;
+
+use apas_ai::Types::Types::*;
+use apas_ai::Chap43::OrderedSetMtEph::OrderedSetMtEph::*;
+use apas_ai::OrderedSetMtEphLit;
 
 #[test]
 fn test_empty() {

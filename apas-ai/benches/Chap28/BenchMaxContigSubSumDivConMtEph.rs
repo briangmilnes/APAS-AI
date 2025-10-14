@@ -1,9 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
 use apas_ai::Chap28::MaxContigSubSumDivConMtEph::MaxContigSubSumDivConMtEph::MaxContigSubSumDivConMtTrait;
-use criterion::*;
-use std::time::Duration;
 
 pub fn bench_divcon_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap28::MaxContigSubSumDivConMtEph");

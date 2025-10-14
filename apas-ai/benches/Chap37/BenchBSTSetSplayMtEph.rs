@@ -3,9 +3,10 @@
 
 use std::time::Duration;
 
+use criterion::*;
+
 use apas_ai::BSTSetSplayMtEphLit;
 use apas_ai::Chap37::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMt as SplaySet;
-use criterion::*;
 
 trait BenchSet: Sized {
     fn empty() -> Self;

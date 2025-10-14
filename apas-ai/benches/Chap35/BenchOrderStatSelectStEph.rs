@@ -1,9 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
 use apas_ai::Chap35::OrderStatSelectStEph::OrderStatSelectStEph::OrderStatSelectStEphTrait;
-use criterion::*;
-use std::time::Duration;
 
 pub fn bench_select_st_eph(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap35::OrderStatSelectStEph");

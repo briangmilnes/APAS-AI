@@ -1,11 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmark for FlatHashTable
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap47::FlatHashTable::FlatHashTable::*;
 use apas_ai::Chap47::HashFunctionTraits::HashFunctionTraits::*;
 use apas_ai::Chap47::LinearProbing::LinearProbing::*;
-use criterion::*;
-use std::time::Duration;
 
 fn bench_flat_hash_table_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("flat_hash_table_operations");

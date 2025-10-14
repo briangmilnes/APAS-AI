@@ -1,10 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for sequential scan using contraction (Chapter 27).
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
 use apas_ai::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
-use criterion::*;
-use std::time::Duration;
 
 fn bench_scan_contract_100(c: &mut Criterion) {
     let a = ArraySeqStEphS::tabulate(&|i| i + 1, 100);

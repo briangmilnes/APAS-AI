@@ -1,14 +1,16 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for single-threaded persistent reducer-augmented ordered table implementation.
 
+use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
 use apas_ai::AugOrderedTableStPerLit;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::AugOrderedTableStPer::AugOrderedTableStPer::*;
 use apas_ai::Chap43::OrderedTableStPer::OrderedTableStPer::*;
-use apas_ai::Types::Types::*;
-use criterion::*;
-use std::time::Duration;
 
 fn bench_reduce_val_vs_naive(c: &mut Criterion) {
     let mut group = c.benchmark_group("reduce_val_comparison");

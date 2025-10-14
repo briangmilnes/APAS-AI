@@ -1,9 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
+use criterion::*;
+
 use apas_ai::Chap40::BSTReducedStEph::BSTReducedStEph::{BSTReducedStEphTrait, *};
 use apas_ai::{BSTReducedStEphLit, *};
-use criterion::*;
 
 fn build_sum_tree(len: usize) -> BSTSumStEph<i32, i32> {
     let mut tree = BSTReducedStEphLit![];

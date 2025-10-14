@@ -5,9 +5,10 @@ pub mod Chapter36MtSlice {
 
     use std::thread;
 
-    use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
-    use crate::Types::Types::*;
     use rand::*;
+
+    use crate::Types::Types::*;
+    use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
 
     pub trait Chapter36MtSliceTrait<T: StT + Ord + Send> {
         /// APAS: Work Θ(1), Span Θ(1)

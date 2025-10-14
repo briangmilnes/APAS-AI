@@ -1,14 +1,16 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for multi-threaded ephemeral reducer-augmented ordered table implementation.
 
-use apas_ai::AugOrderedTableMtEphLit;
-use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
-use apas_ai::Chap43::AugOrderedTableMtEph::AugOrderedTableMtEph::*;
-use apas_ai::Types::Types::*;
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
 use std::sync::*;
 use std::thread;
 use std::time::Duration;
+
+use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+
+use apas_ai::Types::Types::*;
+use apas_ai::AugOrderedTableMtEphLit;
+use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
+use apas_ai::Chap43::AugOrderedTableMtEph::AugOrderedTableMtEph::*;
 
 fn bench_multithreaded_reduce_val_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_reduce_val");

@@ -1,10 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::time::Duration;
 
+use criterion::*;
+
 use apas_ai::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::BSTBBAlphaMtEphTrait;
 use apas_ai::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::BSTreeBBAlpha;
 use apas_ai::{BSTBBAlphaMtEphLit, *};
-use criterion::*;
 
 fn build_tree(len: usize) -> BSTreeBBAlpha<i32> {
     let tree = BSTBBAlphaMtEphLit![]; // BST MtEph: empty constructor

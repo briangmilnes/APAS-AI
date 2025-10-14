@@ -1,11 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap18::LinkedListStPer::LinkedListStPer::*;
-use apas_ai::LinkedListStPerSLit;
-use apas_ai::Types::Types::*;
-use criterion::*;
 use std::env;
 use std::path::PathBuf;
 use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
+use apas_ai::Chap18::LinkedListStPer::LinkedListStPer::*;
+use apas_ai::LinkedListStPerSLit;
 
 fn bench_sll_persistent_ops(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchLinkedListPer");

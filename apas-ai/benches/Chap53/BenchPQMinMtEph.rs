@@ -1,11 +1,13 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chap53 PQMinMtEph.
 
+use std::time::Duration;
+
+use criterion::*;
+
+use apas_ai::Types::Types::*;
 use apas_ai::Chap41::AVLTreeSetMtEph::AVLTreeSetMtEph::*;
 use apas_ai::Chap53::PQMinMtEph::PQMinMtEph::*;
-use apas_ai::Types::Types::*;
-use criterion::*;
-use std::time::Duration;
 
 fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N + Send + Sync + 'static> {
     ClosurePriority::new(|v: &N| *v)

@@ -1,10 +1,12 @@
 //! Benchmark for Vec-based Chained Hash Table
 
+use std::time::Duration;
+
+use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
+
+use apas_ai::Types::Types::*;
 use apas_ai::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
 use apas_ai::Chap47clean::VecChainedHashTable::VecChainedHashTable::*;
-use apas_ai::Types::Types::*;
-use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
-use std::time::Duration;
 
 fn bench_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("VecChained_Insert");

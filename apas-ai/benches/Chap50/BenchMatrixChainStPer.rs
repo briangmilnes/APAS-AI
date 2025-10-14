@@ -1,10 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for MatrixChainStPer
 
+use std::time::Duration;
+
+use criterion::*;
+
 use apas_ai::Chap50::MatrixChainStPer::MatrixChainStPer::{MatrixChainStPerS, MatrixChainStPerTrait, MatrixDim};
 use apas_ai::MatrixChainStPerLit;
-use criterion::*;
-use std::time::Duration;
 
 fn create_random_dimensions(n: usize) -> Vec<MatrixDim> {
     (0..n)
