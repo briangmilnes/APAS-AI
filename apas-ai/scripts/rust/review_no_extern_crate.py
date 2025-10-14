@@ -10,46 +10,59 @@ Checks all Rust source files in src/, tests/, and benches/ for 'extern crate' us
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).parent.parent / "lib"))
+from review_utils import ReviewContext, create_review_parser
 
-def main():
-    repo_root = Path(__file__).parent.parent.parent
-    
-    # Directories to check
-    search_dirs = [
-        repo_root / "src",
-        repo_root / "tests",
-        repo_root / "benches",
-    ]
-    
+
+def check_file(file_path: Path, context: ReviewContext) -> list:
+    """Check a single file for extern crate usage."""
     violations = []
     
-    for search_dir in search_dirs:
-        if not search_dir.exists():
-            continue
-            
-        for rust_file in search_dir.rglob("*.rs"):
-            with open(rust_file, 'r', encoding='utf-8') as f:
-                for line_num, line in enumerate(f, start=1):
-                    # Check for 'extern crate' (ignoring comments)
-                    stripped = line.strip()
-                    if stripped.startswith('//'):
-                        continue
-                    if 'extern crate' in line:
-                        violations.append((rust_file, line_num, line.strip()))
+    with open(file_path, 'r', encoding='utf-8') as f:
+        for line_num, line in enumerate(f, start=1):
+            stripped = line.strip()
+            if stripped.startswith('//'):
+                continue
+            if 'extern crate' in line:
+                rel_path = context.relative_path(file_path)
+                violations.append(f"  {rel_path}:{line_num}\n    {stripped}")
     
-    if violations:
-        print("✗ Found 'extern crate' usage (RustRules.md Line 86):\n")
-        for file_path, line_num, line_content in violations:
-            rel_path = file_path.relative_to(repo_root)
-            print(f"  {rel_path}:{line_num}")
-            print(f"    {line_content}")
-            print()
-        print(f"Total violations: {len(violations)}")
-        print("\nFix: Remove 'extern crate' statements. Use 'use' statements instead.")
-        return 1
-    else:
+    return violations
+
+
+def main():
+    parser = create_review_parser(__doc__)
+    args = parser.parse_args()
+    context = ReviewContext(args)
+    
+    search_dirs = [
+        context.repo_root / "src",
+        context.repo_root / "tests",
+        context.repo_root / "benches",
+    ]
+    
+    if context.dry_run:
+        files = context.find_files(search_dirs)
+        print(f"Would check {len(files)} file(s) for 'extern crate' usage")
+        return 0
+    
+    all_violations = []
+    files = context.find_files(search_dirs)
+    
+    for file_path in files:
+        violations = check_file(file_path, context)
+        all_violations.extend(violations)
+    
+    if not all_violations:
         print("✓ No 'extern crate' usage found")
         return 0
+    
+    print(f"✗ Found 'extern crate' usage (RustRules.md Line 86):\n")
+    for violation in all_violations:
+        print(violation)
+    print(f"\nTotal violations: {len(all_violations)}")
+    print("\nFix: Remove 'extern crate' statements. Use 'use' statements instead.")
+    return 1
 
 
 if __name__ == "__main__":

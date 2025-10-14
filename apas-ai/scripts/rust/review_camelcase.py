@@ -10,63 +10,68 @@ RustRules.md Lines 303-306:
 Checks file names in src/, tests/, and benches/ for CamelCase convention.
 """
 
-import re
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent / "lib"))
+from review_utils import ReviewContext, create_review_parser
 
 
 def is_camelcase(name):
     """Check if a name follows CamelCase convention (starts with capital)."""
-    # Remove .rs extension
     if name.endswith('.rs'):
         name = name[:-3]
+    return name[0].isupper() if name else False
+
+
+def check_file(file_path: Path, context: ReviewContext) -> list:
+    """Check a single file's name for CamelCase convention."""
+    filename = file_path.name
     
-    # Should start with capital letter
-    if not name[0].isupper():
-        return False
+    # Skip special files
+    if filename in ['lib.rs', 'main.rs', 'mod.rs']:
+        return []
     
-    return True
+    if not is_camelcase(filename):
+        rel_path = context.relative_path(file_path)
+        return [f"  {rel_path}\n    File '{filename}' should start with capital letter"]
+    
+    return []
 
 
 def main():
-    repo_root = Path(__file__).parent.parent.parent
+    parser = create_review_parser(__doc__)
+    args = parser.parse_args()
+    context = ReviewContext(args)
     
     search_dirs = [
-        repo_root / "src",
-        repo_root / "tests",
-        repo_root / "benches",
+        context.repo_root / "src",
+        context.repo_root / "tests",
+        context.repo_root / "benches",
     ]
     
-    violations = []
+    if context.dry_run:
+        files = context.find_files(search_dirs)
+        print(f"Would check {len(files)} file(s) for CamelCase naming")
+        return 0
     
-    for search_dir in search_dirs:
-        if not search_dir.exists():
-            continue
-        
-        for rust_file in search_dir.rglob("*.rs"):
-            filename = rust_file.name
-            
-            # Skip special files
-            if filename in ['lib.rs', 'main.rs', 'mod.rs']:
-                continue
-            
-            # Check if filename is CamelCase
-            if not is_camelcase(filename):
-                violations.append((rust_file, filename))
+    all_violations = []
+    files = context.find_files(search_dirs)
     
-    if violations:
-        print("✗ Found non-CamelCase file names (RustRules.md Lines 303-306):\n")
-        for file_path, filename in violations:
-            rel_path = file_path.relative_to(repo_root)
-            print(f"  {rel_path}")
-            print(f"    File '{filename}' should start with capital letter")
-            print()
-        print(f"Total violations: {len(violations)}")
-        print("\nFix: Rename files to start with capital letter (e.g., 'myFile.rs' → 'MyFile.rs').")
-        return 1
-    else:
+    for file_path in files:
+        violations = check_file(file_path, context)
+        all_violations.extend(violations)
+    
+    if not all_violations:
         print("✓ All file names follow CamelCase convention")
         return 0
+    
+    print(f"✗ Found non-CamelCase file names (RustRules.md Lines 303-306):\n")
+    for violation in all_violations:
+        print(violation)
+    print(f"\nTotal violations: {len(all_violations)}")
+    print("\nFix: Rename files to start with capital letter (e.g., 'myFile.rs' → 'MyFile.rs').")
+    return 1
 
 
 if __name__ == "__main__":
