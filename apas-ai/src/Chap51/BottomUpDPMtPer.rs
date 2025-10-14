@@ -66,11 +66,11 @@ pub mod BottomUpDPMtPer {
             let mut table = vec![vec![0usize; t_len + 1]; s_len + 1];
 
             // Set base cases: empty string transformations
-            for i in 0..=s_len {
-                table[i][0] = i;
+            for (i, row) in table.iter_mut().enumerate().take(s_len + 1) {
+                row[0] = i;
             }
-            for j in 0..=t_len {
-                table[0][j] = j;
+            for (j, cell) in table[0].iter_mut().enumerate().take(t_len + 1) {
+                *cell = j;
             }
 
             table

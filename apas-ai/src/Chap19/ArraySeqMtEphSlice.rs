@@ -225,8 +225,8 @@ pub mod ArraySeqMtEphSlice {
 
             // Serial compaction phase: collect kept values
             let mut kept_values = Vec::new();
-            for i in 0..a.length() {
-                if keep_results[i] {
+            for (i, &keep) in keep_results.iter().enumerate() {
+                if keep {
                     kept_values.push(a.nth_cloned(i));
                 }
             }
