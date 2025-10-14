@@ -7,8 +7,12 @@ Organized scripts for Rust tooling, APAS code review, and project utilities.
 ### APAS/
 APAS-specific code review, style enforcement, and refactoring tools.
 
+- `review_APAS.py` - Runs all APAS code reviews (src, tests, benches)
+
 #### APAS/src/
 Scripts for reviewing and fixing APAS source code conventions.
+
+- `review_APAS_src.py` - Runs all APAS src reviews
 
 **Code Review (review_*):**
 - `review_conventions.py` - Reviews APAS conventions (graph notation A:/E:, Mt files use MtT, Per files immutability, UFCS patterns)
@@ -43,6 +47,8 @@ Scripts for reviewing and fixing APAS source code conventions.
 #### APAS/tests/
 Scripts for reviewing and fixing APAS test code.
 
+- `review_APAS_tests.py` - Runs all APAS test reviews
+
 - `find_multi_imports_tests_benches.py` - Finds multi-import patterns in tests and benchmarks
 - `fix_all_test_issues.py` - Batch fixes for common test issues
 - `fix_integration_test_structure.py` - Fixes integration test structure (removes cfg(test) modules)
@@ -52,6 +58,8 @@ Scripts for reviewing and fixing APAS test code.
 
 #### APAS/benches/
 Scripts for reviewing and managing APAS benchmark code.
+
+- `review_APAS_benches.py` - Runs all APAS benchmark reviews
 
 - `review_cargo_bench_names.py` - Reviews benchmark registration in Cargo.toml
 - `review_duplicate_ids.py` - Reviews for duplicate benchmark IDs
@@ -64,8 +72,12 @@ Scripts for reviewing and managing APAS benchmark code.
 ### rust/
 General Rust tooling and utilities, not APAS-specific.
 
+- `review_rust.py` - Runs all Rust code reviews (src, tests, benches)
+
 #### rust/src/
 General Rust source code fixes and utilities.
+
+- `review_rust_src.py` - Runs all Rust src reviews
 
 - `fix_delete_assignments.py` - Fixes delete assignment syntax errors
 - `fix_delete_tuples.py` - Fixes tuple deletion syntax errors
@@ -75,12 +87,14 @@ General Rust source code fixes and utilities.
 #### rust/tests/
 General Rust test running utilities.
 
+- `review_rust_tests.py` - Runs all Rust test reviews
 - `nextest.sh` - Wrapper for cargo nextest with project-specific flags
 - `test_single_file.py` - Tests a single Rust file in isolation
 
 #### rust/benches/
 General Rust benchmark running and management utilities.
 
+- `review_rust_benches.py` - Runs all Rust benchmark reviews
 - `audit_benchmarks.sh` - Audits first 50 benchmark files with timeouts, reports slow benchmarks
 - `benchmark.sh` - Basic benchmark runner
 - `kill_benchmarks.sh` - Kills running benchmark processes
@@ -130,10 +144,10 @@ Legacy test utilities directory (empty, historically used).
 
 General project utilities and cross-cutting tools.
 
+- `review.py` - Master script that runs all code reviews (APAS + Rust)
 - `format.sh` - Runs rustfmt on the codebase
 - `generate_tags.sh` - Generates ctags/rusty-tags for editor navigation
 - `install_ubuntu_tools.sh` - Installs required Ubuntu development tools
-- `review_codebase.sh` - Master script that runs all APAS code review checks
 
 ---
 
@@ -141,8 +155,14 @@ General project utilities and cross-cutting tools.
 
 ### Running Code Reviews
 ```bash
-# Run all APAS code reviews
-./scripts/review_codebase.sh
+# Run all code reviews (APAS + Rust)
+python3 scripts/review.py
+
+# Run only APAS reviews
+python3 scripts/APAS/review_APAS.py
+
+# Run only APAS src reviews
+python3 scripts/APAS/src/review_APAS_src.py
 
 # Run specific review
 python3 scripts/APAS/src/review_naming.py
