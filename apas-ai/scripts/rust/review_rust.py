@@ -9,6 +9,12 @@ from pathlib import Path
 def main():
     script_dir = Path(__file__).parent
     
+    # Cross-cutting checks (check all of src/, tests/, benches/)
+    cross_cutting = [
+        ("No extern crate", "review_no_extern_crate.py"),
+    ]
+    
+    # Directory-specific checks
     suites = [
         ("Rust src", "src/review_rust_src.py"),
         ("Rust tests", "tests/review_rust_tests.py"),
@@ -17,6 +23,20 @@ def main():
     
     print("Running Rust Code Review\n")
     
+    # Run cross-cutting checks first
+    for name, script in cross_cutting:
+        script_path = script_dir / script
+        if not script_path.exists():
+            continue
+        print(f"[{name}]")
+        try:
+            subprocess.run([sys.executable, str(script_path)], check=True)
+            print()
+        except subprocess.CalledProcessError:
+            print(f"\nFAILED: {name}")
+            return 1
+    
+    # Run directory-specific checks
     for name, script in suites:
         script_path = script_dir / script
         if not script_path.exists():

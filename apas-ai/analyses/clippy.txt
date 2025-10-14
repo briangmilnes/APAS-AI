@@ -1,2 +1,1 @@
-    Checking apas-ai v0.1.0 (/home/milnes/APASVERUS/APAS-AI/apas-ai)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.32s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.09s

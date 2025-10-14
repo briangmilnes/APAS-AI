@@ -74,6 +74,9 @@ General Rust tooling and utilities, not APAS-specific.
 
 - `review_rust.py` - Runs all Rust code reviews (src, tests, benches)
 
+**Cross-Cutting Reviews (check all of src/, tests/, benches/):**
+- `review_no_extern_crate.py` - Reviews for forbidden 'extern crate' usage (RustRules.md Line 86)
+
 #### rust/src/
 General Rust source code fixes and utilities.
 
