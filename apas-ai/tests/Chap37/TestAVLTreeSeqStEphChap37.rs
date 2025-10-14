@@ -50,8 +50,8 @@ fn test_avl_from_vec_constructor() {
     let tree = AVLTreeSeqStEphS::from_vec(values.clone());
 
     assert_eq!(tree.length(), 5);
-    for i in 0..tree.length() {
-        assert_eq!(*tree.nth(i), values[i]);
+    for (i, &val) in values.iter().enumerate().take(tree.length()) {
+        assert_eq!(*tree.nth(i), val);
     }
 
     // Test empty vec
@@ -325,8 +325,8 @@ fn test_avl_large_tree_operations() {
     assert_eq!(tree.length(), 20);
 
     // Test random access
-    for i in 0..tree.length() {
-        assert_eq!(*tree.nth(i), values[i]);
+    for (i, &val) in values.iter().enumerate().take(tree.length()) {
+        assert_eq!(*tree.nth(i), val);
     }
 
     // Test modifications

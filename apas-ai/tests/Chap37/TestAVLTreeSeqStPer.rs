@@ -38,8 +38,8 @@ fn test_avl_left_heavy_rebalancing() {
     assert_eq!(vals, vec![5, 15, 25, 40, 50]);
 
     // Verify all elements are accessible
-    for i in 0..tree.length() {
-        assert_eq!(*tree.nth(i), vals[i]);
+    for (i, &val) in vals.iter().enumerate().take(tree.length()) {
+        assert_eq!(*tree.nth(i), val);
     }
 }
 
@@ -59,8 +59,8 @@ fn test_avl_right_heavy_rebalancing() {
     assert_eq!(vals, vec![1, 3, 30, 40, 50]);
 
     // Verify all elements are accessible
-    for i in 0..tree.length() {
-        assert_eq!(*tree.nth(i), vals[i]);
+    for (i, &val) in vals.iter().enumerate().take(tree.length()) {
+        assert_eq!(*tree.nth(i), val);
     }
 }
 
@@ -79,8 +79,8 @@ fn test_avl_left_right_rotation() {
     assert_eq!(vals, vec![1, 12, 15, 4, 5, 6, 7]);
 
     // Verify structural integrity
-    for i in 0..tree.length() {
-        assert_eq!(*tree.nth(i), vals[i]);
+    for (i, &val) in vals.iter().enumerate().take(tree.length()) {
+        assert_eq!(*tree.nth(i), val);
     }
 }
 
@@ -99,8 +99,8 @@ fn test_avl_right_left_rotation() {
     assert_eq!(vals, vec![10, 20, 30, 40, 25, 35, 70]);
 
     // Verify structural integrity
-    for i in 0..tree.length() {
-        assert_eq!(*tree.nth(i), vals[i]);
+    for (i, &val) in vals.iter().enumerate().take(tree.length()) {
+        assert_eq!(*tree.nth(i), val);
     }
 }
 
@@ -148,8 +148,8 @@ fn test_avl_sequential_modifications() {
     assert_eq!(vals, vec![1, 8, 12, 22, 30]);
 
     // Verify all elements accessible
-    for i in 0..tree.length() {
-        assert_eq!(*tree.nth(i), vals[i]);
+    for (i, &val) in vals.iter().enumerate().take(tree.length()) {
+        assert_eq!(*tree.nth(i), val);
     }
 }
 
@@ -227,8 +227,8 @@ fn test_avl_stress_balancing() {
 
     // Verify all elements are accessible and tree maintains integrity
     let vals = tree.values_in_order();
-    for i in 0..tree.length() {
-        assert_eq!(*tree.nth(i), vals[i]);
+    for (i, &val) in vals.iter().enumerate().take(tree.length()) {
+        assert_eq!(*tree.nth(i), val);
     }
 
     // Expected values: [0, 15, 10, 45, 20, 75, 30, 105, 40, 135]
