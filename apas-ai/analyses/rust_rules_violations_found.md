@@ -8,14 +8,14 @@
 |--------|------|------------|--------|
 | review_no_extern_crate.py | Line 86 | 0 | ✅ PASS |
 | review_no_ufcs_call_sites.py | Lines 309-320 | 12 | ❌ FAIL |
-| review_import_order.py | Line 50 | 168 | ❌ FAIL |
+| review_import_order.py | Lines 50, 75-86 | 460 | ❌ FAIL |
 | review_camelcase.py | Lines 303-306 | 0 | ✅ PASS |
 | review_variable_naming.py | Lines 22-26 | 0 | ✅ PASS |
 | review_module_encapsulation.py | Lines 117-123 | 0 | ✅ PASS |
 | review_where_clause_simplification.py | Lines 322-329 | 50 | ❌ FAIL |
 | review_integration_test_structure.py | Lines 292-298 | 51 | ❌ FAIL |
 
-**Total Violations: 281**
+**Total Violations: 573**
 
 ## Violation Details
 
@@ -30,17 +30,24 @@
 
 ---
 
-### 2. Import Order (168 violations)
-**Rule**: std → external → crate imports
+### 2. Import Order (460 violations)
+**Rule**: std → [blank] → external → [blank] → internal (crate:: or apas_ai::)
+
+**Violation Types:**
+- 168 ordering violations (external after internal, std after external)
+- 292 missing blank line violations (between sections)
+- 0 crate:: vs apas_ai:: violations (already correct!)
 
 **Breakdown:**
-- src/: 27 files (external after crate)
-- tests/: 7 files (std after crate)
-- benches/: 134 files (std after crate)
+- src/: 27 files (external after internal)
+- tests/: 7 files (std after external)
+- benches/: 134 files (std after external, missing blank lines)
 
-**Pattern**: Most benches have `use std::time::Duration;` after criterion imports
+**Pattern**: Most files missing blank lines between import sections
 
-**Fix Needed**: Reorder imports to match standard
+**Fix Needed**: 
+1. Reorder: external before internal
+2. Add blank lines between sections
 
 ---
 
@@ -89,7 +96,9 @@ All code properly inside `pub mod` blocks (except lib.rs/main.rs).
 User requested: **Don't fix anything yet** - just identify violations.
 
 When ready to fix:
-1. Import order (168) - automated fix possible
+1. Import order (460) - automated fix possible
+   - Reorder external before internal
+   - Add blank lines between sections
 2. Integration test structure (51) - automated fix possible
 3. Where clause simplification (50) - automated fix possible
 4. UFCS call sites (12) - requires case-by-case review
