@@ -76,11 +76,19 @@ General Rust tooling and utilities, not APAS-specific.
 
 **Cross-Cutting Reviews (check all of src/, tests/, benches/):**
 - `review_no_extern_crate.py` - Reviews for forbidden 'extern crate' usage (RustRules.md Line 86)
+- `review_no_ufcs_call_sites.py` - Reviews for UFCS usage at call sites (RustRules.md Lines 309-320)
+- `review_import_order.py` - Reviews import ordering: std → external → crate (RustRules.md Line 50)
+- `review_camelcase.py` - Reviews file names for CamelCase convention (RustRules.md Lines 303-306)
 
 #### rust/src/
 General Rust source code fixes and utilities.
 
 - `review_rust_src.py` - Runs all Rust src reviews
+
+**Code Structure Reviews:**
+- `review_module_encapsulation.py` - Reviews that all code is within pub mod blocks (RustRules.md Lines 117-123)
+- `review_variable_naming.py` - Reviews for prohibited variable names: temp_, rock bands (RustRules.md Lines 22-26)
+- `review_where_clause_simplification.py` - Reviews for overly simple where clauses (RustRules.md Lines 322-329)
 
 **Module Registration Reviews:**
 - `review_cargo.py` - Reviews Cargo.toml for missing test/benchmark registrations
@@ -96,7 +104,12 @@ General Rust source code fixes and utilities.
 General Rust test running utilities.
 
 - `review_rust_tests.py` - Runs all Rust test reviews
+
+**Test Structure Reviews:**
+- `review_integration_test_structure.py` - Reviews for #[cfg(test)] in integration tests (RustRules.md Lines 292-298)
 - `review_test_modules.py` - Reviews that all test files compile
+
+**Test Utilities:**
 - `nextest.sh` - Wrapper for cargo nextest with project-specific flags
 - `test_single_file.py` - Tests a single Rust file in isolation
 

@@ -12,6 +12,9 @@ def main():
     # Cross-cutting checks (check all of src/, tests/, benches/)
     cross_cutting = [
         ("No extern crate", "review_no_extern_crate.py"),
+        ("No UFCS at call sites", "review_no_ufcs_call_sites.py"),
+        ("Import order", "review_import_order.py"),
+        ("CamelCase file names", "review_camelcase.py"),
     ]
     
     # Directory-specific checks
