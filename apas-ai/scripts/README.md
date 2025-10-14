@@ -162,6 +162,7 @@ General project utilities and cross-cutting tools.
 - `bench.py` - Run benchmarks with cargo bench -j 10
 
 **Code Quality:**
+- `clippy.py` - Run Clippy linter, output to analyses/clippy.txt (Emacs compile mode compatible)
 - `review.py` - Master script that runs all code reviews (APAS + Rust)
 - `format.sh` - Runs rustfmt on the codebase
 
