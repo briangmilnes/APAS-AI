@@ -239,8 +239,7 @@ fn quick_sort_mt_pivot_strategies_concurrent() {
     assert_eq!(results[4], results[5]);
 
     // pivot_mt_random results may vary, but should be within valid range
-    for i in 6..9 {
-        let pivot = results[i];
+    for &pivot in results.iter().skip(6).take(3) {
         let mut found = false;
         for j in 1..9 {
             if test_seq.nth_cloned(j) == pivot {

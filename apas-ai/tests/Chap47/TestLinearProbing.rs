@@ -188,8 +188,8 @@ fn test_linear_probing_pattern_verification() {
 
     // Verify linear progression
     let base = positions[0];
-    for i in 1..table_size {
-        assert_eq!(positions[i], (base + i) % table_size);
+    for (i, &pos) in positions.iter().enumerate().skip(1).take(table_size - 1) {
+        assert_eq!(pos, (base + i) % table_size);
     }
 }
 

@@ -70,11 +70,8 @@ fn multi_thread_pop_consumes_all_elements() {
         let tx_clone = tx.clone();
         handles.push(thread::spawn(move || {
             let mut items = Vec::new();
-            loop {
-                match stack_clone.pop() {
-                    | Some(value) => items.push(value),
-                    | None => break,
-                }
+            while let Some(value) = stack_clone.pop() {
+                items.push(value);
             }
             tx_clone.send(items).expect("send popped items");
         }));

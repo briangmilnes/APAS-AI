@@ -1,4 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+#![allow(clippy::unnecessary_mut_passed)]
 
 use apas_ai::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
 use apas_ai::Chap36::QuickSortMtSlice::Chapter36MtSlice::Chapter36MtSliceTrait;
