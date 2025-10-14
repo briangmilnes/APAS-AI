@@ -24,6 +24,7 @@ dead_code = "allow"
 
 [lints.clippy]
 module_inception = "allow"
+type_complexity = "allow"
 
 [workspace]
 members = [ "."]
