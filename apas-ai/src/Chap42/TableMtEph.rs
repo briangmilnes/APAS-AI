@@ -271,12 +271,8 @@ pub mod TableMtEph {
 
             // Merge results - combine both filtered sequences
             let mut filtered_entries = Vec::with_capacity(left_filtered.len() + right_filtered.len());
-            for i in 0..left_filtered.len() {
-                filtered_entries.push(left_filtered[i].clone());
-            }
-            for i in 0..right_filtered.len() {
-                filtered_entries.push(right_filtered[i].clone());
-            }
+            filtered_entries.extend(left_filtered.iter().cloned());
+            filtered_entries.extend(right_filtered.iter().cloned());
 
             self.entries = ArraySeqMtEphS::from_vec(filtered_entries);
         }
@@ -454,12 +450,8 @@ pub mod TableMtEph {
 
             // Merge results - combine both filtered sequences
             let mut filtered_entries = Vec::with_capacity(left_filtered.len() + right_filtered.len());
-            for i in 0..left_filtered.len() {
-                filtered_entries.push(left_filtered[i].clone());
-            }
-            for i in 0..right_filtered.len() {
-                filtered_entries.push(right_filtered[i].clone());
-            }
+            filtered_entries.extend(left_filtered.iter().cloned());
+            filtered_entries.extend(right_filtered.iter().cloned());
 
             self.entries = ArraySeqMtEphS::from_vec(filtered_entries);
         }
@@ -590,12 +582,8 @@ pub mod TableMtEph {
 
             // Merge results - combine both filtered sequences
             let mut filtered_entries = Vec::with_capacity(left_filtered.len() + right_filtered.len());
-            for i in 0..left_filtered.len() {
-                filtered_entries.push(left_filtered[i].clone());
-            }
-            for i in 0..right_filtered.len() {
-                filtered_entries.push(right_filtered[i].clone());
-            }
+            filtered_entries.extend(left_filtered.iter().cloned());
+            filtered_entries.extend(right_filtered.iter().cloned());
 
             self.entries = ArraySeqMtEphS::from_vec(filtered_entries);
         }
@@ -646,12 +634,8 @@ pub mod TableMtEph {
 
             // Merge results - combine both filtered sequences
             let mut filtered_entries = Vec::with_capacity(left_filtered.len() + right_filtered.len());
-            for i in 0..left_filtered.len() {
-                filtered_entries.push(left_filtered[i].clone());
-            }
-            for i in 0..right_filtered.len() {
-                filtered_entries.push(right_filtered[i].clone());
-            }
+            filtered_entries.extend(left_filtered.iter().cloned());
+            filtered_entries.extend(right_filtered.iter().cloned());
 
             self.entries = ArraySeqMtEphS::from_vec(filtered_entries);
         }

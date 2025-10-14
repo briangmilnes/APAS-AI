@@ -190,9 +190,7 @@ pub mod AVLTreeSeqStPer {
             }
             let mut vals: Vec<T> = Vec::with_capacity(e - s);
             let all = self.values_in_order();
-            for i in s..e {
-                vals.push(all[i].clone());
-            }
+            vals.extend(all[s..e].iter().cloned());
             Self::from_vec(vals)
         }
         fn from_vec(values: Vec<T>) -> Self {

@@ -439,8 +439,8 @@ fn test_rb_bst_individual_operations() {
     sorted_values.sort();
 
     assert_eq!(in_order.length(), sorted_values.len());
-    for i in 0..in_order.length() {
-        assert_eq!(*in_order.nth(i), sorted_values[i]);
+    for (i, &val) in sorted_values.iter().enumerate().take(in_order.length()) {
+        assert_eq!(*in_order.nth(i), val);
     }
 
     // Test multiple deletions

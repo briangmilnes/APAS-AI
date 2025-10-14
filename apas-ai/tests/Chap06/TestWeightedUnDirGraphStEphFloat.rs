@@ -37,8 +37,8 @@ fn test_add_vertices_and_edges() {
     graph.add_vertex(3);
     assert_eq!(graph.vertices().size(), 3);
 
-    graph.add_weighted_edge(1, 2, OrderedFloat(3.14));
-    graph.add_weighted_edge(2, 3, OrderedFloat(2.71));
+    graph.add_weighted_edge(1, 2, OrderedFloat(std::f64::consts::PI));
+    graph.add_weighted_edge(2, 3, OrderedFloat(std::f64::consts::E));
     assert_eq!(graph.edges().size(), 2);
 }
 
@@ -177,10 +177,10 @@ fn test_fractional_weights() {
     let mut graph = WeightedUnDirGraphStEphFloat::empty();
     graph.add_vertex(1);
     graph.add_vertex(2);
-    graph.add_weighted_edge(1, 2, OrderedFloat(3.14159));
+    graph.add_weighted_edge(1, 2, OrderedFloat(std::f64::consts::PI));
 
     let weight = graph.get_edge_weight(&1, &2).unwrap();
-    assert!((weight.0 - 3.14159).abs() < 0.00001);
+    assert!((weight.0 - std::f64::consts::PI).abs() < 0.00001);
 }
 
 #[test]
@@ -411,7 +411,7 @@ fn test_very_small_weight() {
 
 #[test]
 fn test_display_format() {
-    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [(1, 2, 3.14)]);
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [(1, 2, std::f64::consts::PI)]);
     let display_str = format!("{graph}");
     assert!(!display_str.is_empty());
 }

@@ -114,8 +114,8 @@ fn test_avl_large_tree_balancing() {
     assert_eq!(tree.values_in_order(), values);
 
     // Verify random access works correctly
-    for i in 0..tree.length() {
-        assert_eq!(*tree.nth(i), values[i]);
+    for (i, &val) in values.iter().enumerate().take(tree.length()) {
+        assert_eq!(*tree.nth(i), val);
     }
 
     // Test modifications maintain balance
@@ -124,9 +124,9 @@ fn test_avl_large_tree_balancing() {
     assert_eq!(*modified.nth(7), 100);
 
     // Verify other elements unchanged
-    for i in 0..modified.length() {
+    for (i, &val) in values.iter().enumerate().take(modified.length()) {
         if i != 7 {
-            assert_eq!(*modified.nth(i), values[i]);
+            assert_eq!(*modified.nth(i), val);
         }
     }
 }

@@ -1,4 +1,3 @@
-    Checking apas-ai v0.1.0 (/home/milnes/APASVERUS/APAS-AI/apas-ai)
 warning: methods called `new` usually return `Self`
   --> src/Chap37/AVLTreeSeq.rs:56:9
    |
@@ -7,124 +6,6 @@ warning: methods called `new` usually return `Self`
    |
    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#new_ret_no_self
    = note: `#[warn(clippy::new_ret_no_self)]` on by default
-
-warning: the loop variable `i` is only used to index `all`
-   --> src/Chap37/AVLTreeSeqStPer.rs:193:22
-    |
-193 |             for i in s..e {
-    |                      ^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-    = note: `#[warn(clippy::needless_range_loop)]` on by default
-help: consider using an iterator
-    |
-193 -             for i in s..e {
-193 +             for <item> in all.iter().take(e).skip(s) {
-    |
-
-warning: the loop variable `i` is only used to index `left_filtered`
-   --> src/Chap42/TableMtEph.rs:274:22
-    |
-274 |             for i in 0..left_filtered.len() {
-    |                      ^^^^^^^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator
-    |
-274 -             for i in 0..left_filtered.len() {
-274 +             for <item> in &left_filtered {
-    |
-
-warning: the loop variable `i` is only used to index `right_filtered`
-   --> src/Chap42/TableMtEph.rs:277:22
-    |
-277 |             for i in 0..right_filtered.len() {
-    |                      ^^^^^^^^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator
-    |
-277 -             for i in 0..right_filtered.len() {
-277 +             for <item> in &right_filtered {
-    |
-
-warning: the loop variable `i` is only used to index `left_filtered`
-   --> src/Chap42/TableMtEph.rs:457:22
-    |
-457 |             for i in 0..left_filtered.len() {
-    |                      ^^^^^^^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator
-    |
-457 -             for i in 0..left_filtered.len() {
-457 +             for <item> in &left_filtered {
-    |
-
-warning: the loop variable `i` is only used to index `right_filtered`
-   --> src/Chap42/TableMtEph.rs:460:22
-    |
-460 |             for i in 0..right_filtered.len() {
-    |                      ^^^^^^^^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator
-    |
-460 -             for i in 0..right_filtered.len() {
-460 +             for <item> in &right_filtered {
-    |
-
-warning: the loop variable `i` is only used to index `left_filtered`
-   --> src/Chap42/TableMtEph.rs:593:22
-    |
-593 |             for i in 0..left_filtered.len() {
-    |                      ^^^^^^^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator
-    |
-593 -             for i in 0..left_filtered.len() {
-593 +             for <item> in &left_filtered {
-    |
-
-warning: the loop variable `i` is only used to index `right_filtered`
-   --> src/Chap42/TableMtEph.rs:596:22
-    |
-596 |             for i in 0..right_filtered.len() {
-    |                      ^^^^^^^^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator
-    |
-596 -             for i in 0..right_filtered.len() {
-596 +             for <item> in &right_filtered {
-    |
-
-warning: the loop variable `i` is only used to index `left_filtered`
-   --> src/Chap42/TableMtEph.rs:649:22
-    |
-649 |             for i in 0..left_filtered.len() {
-    |                      ^^^^^^^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator
-    |
-649 -             for i in 0..left_filtered.len() {
-649 +             for <item> in &left_filtered {
-    |
-
-warning: the loop variable `i` is only used to index `right_filtered`
-   --> src/Chap42/TableMtEph.rs:652:22
-    |
-652 |             for i in 0..right_filtered.len() {
-    |                      ^^^^^^^^^^^^^^^^^^^^^^^
-    |
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-help: consider using an iterator
-    |
-652 -             for i in 0..right_filtered.len() {
-652 +             for <item> in &right_filtered {
-    |
 
 warning: writing `&mut Vec` instead of `&mut [_]` involves a new object where a slice will do
   --> src/Chap51/BottomUpDPStEph.rs:79:43
@@ -160,8 +41,8 @@ warning: very complex type used. Consider factoring parts into `type` definition
     |
     = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
 
-warning: `apas-ai` (lib test) generated 14 warnings
-warning: `apas-ai` (lib) generated 14 warnings (14 duplicates)
+warning: `apas-ai` (lib) generated 5 warnings
+warning: `apas-ai` (lib test) generated 5 warnings (5 duplicates)
 warning: `assert!(true)` will be optimized out by the compiler
   --> tests/Chap21/TestExercise_21_9.rs:11:5
    |
@@ -173,34 +54,21 @@ warning: `assert!(true)` will be optimized out by the compiler
    = note: `#[warn(clippy::assertions_on_constants)]` on by default
 
 warning: `apas-ai` (test "TestExercise_21_9") generated 1 warning
-warning: the loop variable `i` is used to index `values`
-  --> tests/Chap37/TestAVLTreeSeqStEphChap37.rs:53:14
-   |
-53 |     for i in 0..tree.length() {
-   |              ^^^^^^^^^^^^^^^^
-   |
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
-   = note: `#[warn(clippy::needless_range_loop)]` on by default
-help: consider using an iterator and enumerate()
-   |
-53 -     for i in 0..tree.length() {
-53 +     for (i, <item>) in values.iter().enumerate().take(tree.length()) {
-   |
-
-warning: the loop variable `i` is used to index `values`
-   --> tests/Chap37/TestAVLTreeSeqStEphChap37.rs:328:14
+warning: the loop variable `i` is used to index `positions`
+   --> tests/Chap47/TestLinearProbing.rs:191:14
     |
-328 |     for i in 0..tree.length() {
-    |              ^^^^^^^^^^^^^^^^
+191 |     for i in 1..table_size {
+    |              ^^^^^^^^^^^^^
     |
     = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#needless_range_loop
+    = note: `#[warn(clippy::needless_range_loop)]` on by default
 help: consider using an iterator and enumerate()
     |
-328 -     for i in 0..tree.length() {
-328 +     for (i, <item>) in values.iter().enumerate().take(tree.length()) {
+191 -     for i in 1..table_size {
+191 +     for (i, <item>) in positions.iter().enumerate().take(table_size).skip(1) {
     |
 
-warning: `apas-ai` (test "TestAVLTreeSeqStEphChap37") generated 2 warnings
+warning: `apas-ai` (test "TestLinearProbing") generated 1 warning
 warning: the loop variable `i` is only used to index `results`
    --> tests/Chap36/TestChapter36Mt.rs:242:14
     |
@@ -216,43 +84,7 @@ help: consider using an iterator
     |
 
 warning: `apas-ai` (test "TestChapter36Mt") generated 1 warning
-error: approximate value of `f{32, 64}::consts::PI` found
-  --> tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:40:48
-   |
-40 |     graph.add_weighted_edge(1, 2, OrderedFloat(3.14));
-   |                                                ^^^^
-   |
-   = help: consider using the constant directly
-   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
-   = note: `#[deny(clippy::approx_constant)]` on by default
-
-error: approximate value of `f{32, 64}::consts::PI` found
-   --> tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:180:48
-    |
-180 |     graph.add_weighted_edge(1, 2, OrderedFloat(3.14159));
-    |                                                ^^^^^^^
-    |
-    = help: consider using the constant directly
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
-
-error: approximate value of `f{32, 64}::consts::PI` found
-   --> tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:183:25
-    |
-183 |     assert!((weight.0 - 3.14159).abs() < 0.00001);
-    |                         ^^^^^^^
-    |
-    = help: consider using the constant directly
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
-
-error: approximate value of `f{32, 64}::consts::PI` found
-   --> tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:414:72
-    |
-414 |     let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [(1, 2, 3.14)]);
-    |                                                                        ^^^^
-    |
-    = help: consider using the constant directly
-    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
-
+    Checking apas-ai v0.1.0 (/home/milnes/APASVERUS/APAS-AI/apas-ai)
 warning: very complex type used. Consider factoring parts into `type` definitions
   --> benches/Chap64/BenchTSPApproxStEph.rs:14:6
    |
@@ -266,17 +98,266 @@ warning: very complex type used. Consider factoring parts into `type` definition
    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
    = note: `#[warn(clippy::type_complexity)]` on by default
 
-warning: `assert!(true)` will be optimized out by the compiler
-  --> tests/Chap21/TestExercise_21_6.rs:10:5
+warning: `apas-ai` (bench "BenchTSPApproxStEph") generated 1 warning
+warning: very complex type used. Consider factoring parts into `type` definitions
+  --> tests/Chap64/TestTSPApproxStEph.rs:12:35
    |
-10 |     assert!(true); // Placeholder assertion for cost analysis exercise
+12 |       fn create_triangle_graph() -> (
+   |  ___________________________________^
+13 | |         LabUnDirGraphStEph<N, OrderedFloat<f64>>,
+14 | |         Set<LabEdge<N, OrderedFloat<f64>>>,
+15 | |     ) {
+   | |_____^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
+   = note: `#[warn(clippy::type_complexity)]` on by default
+
+warning: `assert!(true)` will be optimized out by the compiler
+   --> tests/Chap39/TestBSTParaTreapMtEph.rs:207:28
+    |
+207 |         | Exposed::Leaf => assert!(true),
+    |                            ^^^^^^^^^^^^^
+    |
+    = help: remove it
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
+    = note: `#[warn(clippy::assertions_on_constants)]` on by default
+
+warning: `apas-ai` (test "TestTSPApproxStEph") generated 1 warning
+warning: `apas-ai` (test "TestBSTParaTreapMtEph") generated 1 warning
+warning: `assert!(true)` will be optimized out by the compiler
+  --> tests/TestLibIntegration.rs:51:5
+   |
+51 |     assert!(true);
    |     ^^^^^^^^^^^^^
    |
    = help: remove it
    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#assertions_on_constants
    = note: `#[warn(clippy::assertions_on_constants)]` on by default
 
-error: could not compile `apas-ai` (test "TestWeightedUnDirGraphStEphFloat") due to 4 previous errors
-warning: build failed, waiting for other jobs to finish...
-warning: `apas-ai` (test "TestExercise_21_6") generated 1 warning
-warning: `apas-ai` (bench "BenchTSPApproxStEph") generated 1 warning
+warning: `apas-ai` (test "TestLibIntegration") generated 1 warning
+warning: this loop could be written as a `while let` loop
+  --> tests/Chap12/TestExercise12_5.rs:73:13
+   |
+73 | /             loop {
+74 | |                 match stack_clone.pop() {
+75 | |                     | Some(value) => items.push(value),
+76 | |                     | None => break,
+77 | |                 }
+78 | |             }
+   | |_____________^ help: try: `while let | Some(value) = stack_clone.pop() { .. }`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#while_let_loop
+   = note: `#[warn(clippy::while_let_loop)]` on by default
+
+warning: `apas-ai` (test "TestExercise12_5") generated 1 warning
+warning: very complex type used. Consider factoring parts into `type` definitions
+  --> tests/Chap64/TestTSPApproxMtEph.rs:12:35
+   |
+12 |       fn create_triangle_graph() -> (
+   |  ___________________________________^
+13 | |         LabUnDirGraphMtEph<N, OrderedFloat<f64>>,
+14 | |         Set<LabEdge<N, OrderedFloat<f64>>>,
+15 | |     ) {
+   | |_____^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
+   = note: `#[warn(clippy::type_complexity)]` on by default
+
+warning: `apas-ai` (test "TestTSPApproxMtEph") generated 1 warning
+warning: bound is defined in more than one place
+  --> tests/Chap21/TestAlgorithm21_6.rs:49:15
+   |
+49 | fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
+   |               ^
+50 | where
+51 |     T: std::fmt::Debug,
+   |     ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#multiple_bound_locations
+   = note: `#[warn(clippy::multiple_bound_locations)]` on by default
+
+warning: bound is defined in more than one place
+  --> tests/Chap21/TestAlgorithm21_6.rs:49:15
+   |
+49 | fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
+   |               ^
+...
+52 |     T: Eq,
+   |     ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#multiple_bound_locations
+
+warning: bound is defined in more than one place
+  --> tests/Chap21/TestAlgorithm21_6.rs:49:15
+   |
+49 | fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
+   |               ^
+...
+53 |     T: StT,
+   |     ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#multiple_bound_locations
+
+warning: bound is defined in more than one place
+  --> tests/Chap21/TestAlgorithm21_6.rs:49:15
+   |
+49 | fn seq_to_vec<T: Clone>(seq: &ArraySeqStPerS<T>) -> Vec<T>
+   |               ^
+...
+54 |     T: std::fmt::Display,
+   |     ^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#multiple_bound_locations
+
+warning: `apas-ai` (test "TestAlgorithm21_6") generated 4 warnings
+warning: very complex type used. Consider factoring parts into `type` definitions
+  --> benches/Chap64/BenchTSPApproxMtEph.rs:14:6
+   |
+14 |   ) -> (
+   |  ______^
+15 | |     LabUnDirGraphMtEph<N, OrderedFloat<f64>>,
+16 | |     Set<LabEdge<N, OrderedFloat<f64>>>,
+17 | | ) {
+   | |_^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#type_complexity
+   = note: `#[warn(clippy::type_complexity)]` on by default
+
+warning: `apas-ai` (bench "BenchTSPApproxMtEph") generated 1 warning
+warning: the function `<ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first` doesn't need a mutable reference
+  --> tests/Chap36/TestChapter36MtSlice.rs:20:83
+   |
+20 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first(&mut first);
+   |                                                                                   ^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+   = note: `#[warn(clippy::unnecessary_mut_passed)]` on by default
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as
+         Chapter36MtSliceTrait<i32>>::quick_sort_mt_median3` doesn't need a mutable reference
+  --> tests/Chap36/TestChapter36MtSlice.rs:24:85
+   |
+24 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_median3(&mut median3);
+   |                                                                                     ^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_random` doesn't need a mutable reference
+  --> tests/Chap36/TestChapter36MtSlice.rs:28:84
+   |
+28 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_random(&mut random);
+   |                                                                                    ^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first` doesn't need a mutable reference
+  --> tests/Chap36/TestChapter36MtSlice.rs:35:83
+   |
+35 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first(&mut empty);
+   |                                                                                   ^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as
+         Chapter36MtSliceTrait<i32>>::quick_sort_mt_median3` doesn't need a mutable reference
+  --> tests/Chap36/TestChapter36MtSlice.rs:39:85
+   |
+39 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_median3(&mut single);
+   |                                                                                     ^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_random` doesn't need a mutable reference
+  --> tests/Chap36/TestChapter36MtSlice.rs:43:84
+   |
+43 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_random(&mut sorted);
+   |                                                                                    ^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first` doesn't need a mutable reference
+  --> tests/Chap36/TestChapter36MtSlice.rs:47:83
+   |
+47 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first(&mut reversed);
+   |                                                                                   ^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as
+         Chapter36MtSliceTrait<i32>>::quick_sort_mt_median3` doesn't need a mutable reference
+  --> tests/Chap36/TestChapter36MtSlice.rs:51:85
+   |
+51 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_median3(&mut pair);
+   |                                                                                     ^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first` doesn't need a mutable reference
+  --> tests/Chap36/TestChapter36MtSlice.rs:58:83
+   |
+58 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first(&mut descending);
+   |                                                                                   ^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_random` doesn't need a mutable reference
+  --> tests/Chap36/TestChapter36MtSlice.rs:64:84
+   |
+64 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_random(&mut random_seq);
+   |                                                                                    ^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first` doesn't need a mutable reference
+  --> tests/Chap36/TestChapter36MtSlice.rs:92:83
+   |
+92 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first(&mut seq);
+   |                                                                                   ^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as
+         Chapter36MtSliceTrait<i32>>::quick_sort_mt_median3` doesn't need a mutable reference
+  --> tests/Chap36/TestChapter36MtSlice.rs:97:85
+   |
+97 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_median3(&mut seq_med);
+   |                                                                                     ^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first` doesn't need a mutable reference
+   --> tests/Chap36/TestChapter36MtSlice.rs:218:102
+    |
+218 |                 | 0 => <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_first(&mut seq),
+    |                                                                                                      ^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as
+         Chapter36MtSliceTrait<i32>>::quick_sort_mt_median3` doesn't need a mutable reference
+   --> tests/Chap36/TestChapter36MtSlice.rs:219:104
+    |
+219 |                 | 1 => <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_median3(&mut seq),
+    |                                                                                                        ^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_random` doesn't need a mutable reference
+   --> tests/Chap36/TestChapter36MtSlice.rs:220:103
+    |
+220 |                 | _ => <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_random(&mut seq),
+    |                                                                                                       ^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: the function `<ArraySeqMtEphSliceS<i32> as
+         Chapter36MtSliceTrait<i32>>::quick_sort_mt_median3` doesn't need a mutable reference
+   --> tests/Chap36/TestChapter36MtSlice.rs:289:85
+    |
+289 |     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_median3(&mut seq);
+    |                                                                                     ^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#unnecessary_mut_passed
+
+warning: `apas-ai` (test "TestChapter36MtSlice") generated 16 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.32s

@@ -90,8 +90,8 @@ fn test_weighteddirgraphstephfloat_mutable_operations() {
     assert!(g.vertices().mem(&2));
 
     // Add weighted arcs
-    g.add_labeled_arc(0, 1, OrderedFloat(3.14));
-    g.add_labeled_arc(1, 2, OrderedFloat(2.71));
+    g.add_labeled_arc(0, 1, OrderedFloat(std::f64::consts::PI));
+    g.add_labeled_arc(1, 2, OrderedFloat(std::f64::consts::E));
 
     assert_eq!(g.labeled_arcs().size(), 2);
     assert!(g.has_arc(&0, &1));
@@ -99,8 +99,8 @@ fn test_weighteddirgraphstephfloat_mutable_operations() {
     assert!(!g.has_arc(&0, &2));
 
     // Test weights
-    assert_eq!(g.get_arc_label(&0, &1), Some(&OrderedFloat(3.14)));
-    assert_eq!(g.get_arc_label(&1, &2), Some(&OrderedFloat(2.71)));
+    assert_eq!(g.get_arc_label(&0, &1), Some(&OrderedFloat(std::f64::consts::PI)));
+    assert_eq!(g.get_arc_label(&1, &2), Some(&OrderedFloat(std::f64::consts::E)));
 }
 
 #[test]
