@@ -1,0 +1,44 @@
+Running 24 review scripts...
+
+  review_cargo_bench_names.py... ✓
+  review_duplicate_ids.py... ✓
+  review_timing_params.py... ✓
+  review_conventions.py... ✓
+  review_duplicate_chap_imports.py... Error running review_duplicate_chap_imports.py: [Errno 13] Permission denied: '/home/milnes/APASVERUS/APAS-AI/apas-ai/scripts/APAS/src/review_duplicate_chap_imports.py'
+✗ (parsing failed)
+  review_duplicate_imports.py... Error running review_duplicate_imports.py: [Errno 13] Permission denied: '/home/milnes/APASVERUS/APAS-AI/apas-ai/scripts/APAS/src/review_duplicate_imports.py'
+✗ (parsing failed)
+  review_imports.py... ✓
+  review_missing_traits.py... Error running review_missing_traits.py: [Errno 13] Permission denied: '/home/milnes/APASVERUS/APAS-AI/apas-ai/scripts/APAS/src/review_missing_traits.py'
+✗ (parsing failed)
+  review_naming.py... ✓
+  review_remaining_alias_usage.py... Error running review_remaining_alias_usage.py: [Errno 13] Permission denied: '/home/milnes/APASVERUS/APAS-AI/apas-ai/scripts/APAS/src/review_remaining_alias_usage.py'
+✗ (parsing failed)
+  review_specific_imports.py... Error running review_specific_imports.py: [Errno 13] Permission denied: '/home/milnes/APASVERUS/APAS-AI/apas-ai/scripts/APAS/src/review_specific_imports.py'
+✗ (parsing failed)
+  review_structure.py... ✓
+  review_bench_modules.py... ✗ (parsing failed)
+  review_camelcase.py... ✓
+  review_import_order.py... ✓
+  review_no_extern_crate.py... ✓
+  review_no_ufcs_call_sites.py... 12 violations
+  review_cargo.py... ✗ (parsing failed)
+  review_lib.py... ✗ (parsing failed)
+  review_module_encapsulation.py... ✓
+  review_variable_naming.py... 7 violations
+  review_where_clause_simplification.py... ✗ (parsing failed)
+  review_integration_test_structure.py... 51 violations
+  review_test_modules.py... ✓
+
+======================================================================
+PARETO ANALYSIS: 70 total violations
+======================================================================
+
+ 1. Integration Test Structure       51 │█████████████████████████████           │  72.9% (cum:  72.9%)
+ 2. No Ufcs Call Sites               12 │██████                                  │  17.1% (cum:  90.0%)
+ 3. Variable Naming                   7 │████                                    │  10.0% (cum: 100.0%)
+
+──────────────────────────────────────────────────────────────────────
+📊 Pareto Principle: Fix top 2 issue(s) to resolve ~80% of violations
+   1. Integration Test Structure
+   2. No Ufcs Call Sites

@@ -1,0 +1,684 @@
+============================================================
+APAS Project Code Review
+============================================================
+
+Running APAS Convention Checks...
+Project root: /home/milnes/APASVERUS/APAS-AI/apas-ai/scripts
+
+✓ All convention checks passed
+🔍 CHECKING FOR REMAINING DUPLICATE CHAPTER IMPORTS
+============================================================
+Files checked: 713
+Files with Chap18 + Chap19 imports: 0
+
+✅ NO DUPLICATE CHAPTER IMPORTS FOUND!
+All files import from either Chap18 OR Chap19, not both.
+🔍 Scanning for duplicate datastructure imports...
+
+📋 DUPLICATE DATASTRUCTURE IMPORTS ANALYSIS
+============================================================
+
+📊 DATASTRUCTURE USAGE SUMMARY
+========================================
+
+📦 ArraySeqStPer:
+   Chap18: 84 files
+     - src/Chap19/ArraySeqStPer.rs
+     - src/Chap21/Algorithm21_1.rs
+     - src/Chap21/Algorithm21_2.rs
+     - src/Chap21/Algorithm21_5.rs
+     - src/Chap21/Algorithm21_6.rs
+     - src/Chap21/Exercise21_5.rs
+     - src/Chap21/Exercise21_7.rs
+     - src/Chap21/Exercise21_8.rs
+     - src/Chap21/Problem21_1.rs
+     - src/Chap21/Problem21_3.rs
+     - src/Chap21/Problem21_4.rs
+     - src/Chap23/BalBinTreeStEph.rs
+     - src/Chap26/DivConReduceSt.rs
+     - src/Chap26/MergeSortSt.rs
+     - src/Chap35/OrderStatSelectStPer.rs
+     - src/Chap37/AVLTreeSeqMtPer.rs
+     - src/Chap37/AVLTreeSeqStPer.rs
+     - src/Chap37/BSTAVLMtEph.rs
+     - src/Chap37/BSTAVLStEph.rs
+     - src/Chap37/BSTBBAlphaMtEph.rs
+     - src/Chap37/BSTBBAlphaStEph.rs
+     - src/Chap37/BSTPlainMtEph.rs
+     - src/Chap37/BSTPlainStEph.rs
+     - src/Chap37/BSTRBMtEph.rs
+     - src/Chap37/BSTRBStEph.rs
+     - src/Chap37/BSTSetAVLMtEph.rs
+     - src/Chap37/BSTSetBBAlphaMtEph.rs
+     - src/Chap37/BSTSetPlainMtEph.rs
+     - src/Chap37/BSTSetRBMtEph.rs
+     - src/Chap37/BSTSetSplayMtEph.rs
+     - src/Chap37/BSTSplayMtEph.rs
+     - src/Chap37/BSTSplayStEph.rs
+     - src/Chap38/BSTParaMtEph.rs
+     - src/Chap38/BSTParaStEph.rs
+     - src/Chap39/BSTParaTreapMtEph.rs
+     - src/Chap39/BSTSetTreapMtEph.rs
+     - src/Chap39/BSTTreapMtEph.rs
+     - src/Chap39/BSTTreapStEph.rs
+     - src/Chap40/BSTKeyValueStEph.rs
+     - src/Chap40/BSTReducedStEph.rs
+     - src/Chap40/BSTSizeStEph.rs
+     - src/Chap42/TableStPer.rs
+     - src/Chap43/OrderedSetStEph.rs
+     - src/Chap43/OrderedSetStPer.rs
+     - src/Chap43/OrderedTableStPer.rs
+     - src/Chap44/DocumentIndex.rs
+     - src/Chap44/Example44_1.rs
+     - src/Chap45/BinaryHeapPQ.rs
+     - src/Chap45/HeapsortExample.rs
+     - src/Chap45/SortedListPQ.rs
+     - src/Chap45/UnsortedListPQ.rs
+     - src/Chap47/Example47_2.rs
+     - src/Chap47/Example47_4.rs
+     - src/Chap47/Example47_5.rs
+     - src/Chap47/Example47_6.rs
+     - src/Chap47/FlatHashTable.rs
+     - src/Chap47/NestedHashTable.rs
+     - src/Chap47/SeparateChaining.rs
+     - src/Chap49/MinEditDistStPer.rs
+     - src/Chap49/SubsetSumStPer.rs
+     - src/Chap51/BottomUpDPStPer.rs
+     - src/Chap51/TopDownDPStPer.rs
+     - src/Chap52/AdjMatrixGraphStPer.rs
+     - src/Chap52/AdjSeqGraphStPer.rs
+     - src/Chap55/CycleDetectStPer.rs
+     - src/Chap55/DFSStPer.rs
+     - src/Chap55/SCCStPer.rs
+     - src/Chap55/TopoSortStPer.rs
+     - src/Chap56/AllPairsResultStEphFloat.rs
+     - src/Chap56/AllPairsResultStEphInt.rs
+     - src/Chap56/Example56_1.rs
+     - src/Chap56/Example56_3.rs
+     - src/Chap56/PathWeightUtilsStEph.rs
+     - src/Chap56/PathWeightUtilsStPer.rs
+     - src/Chap56/SSSPResultStEphFloat.rs
+     - src/Chap56/SSSPResultStEphInt.rs
+   Chap19: 5 files
+     - src/Chap54/BFSStPer.rs
+     - src/Chap56/AllPairsResultStPerFloat.rs
+     - src/Chap56/AllPairsResultStPerInt.rs
+     - src/Chap56/SSSPResultStPerFloat.rs
+     - src/Chap56/SSSPResultStPerInt.rs
+
+✅ No duplicate datastructure imports found within individual files.
+
+⚠️  Found 1 datastructures imported from multiple chapters.
+Running APAS Import Checks...
+Project root: /home/milnes/APASVERUS/APAS-AI/apas-ai/scripts
+
+✓ All import checks passed
+=== DATA STRUCTURES WITH IMPLS BUT NO TRAITS ===
+
+EXAMPLES/EXERCISES/PROBLEMS (2 files):
+  src/Chap44/Example44_1.rs
+  src/Chap47/ProbeSequenceExamples.rs
+
+DATA STRUCTURES (12 files):
+  src/Chap47/AdvancedDoubleHashing.rs
+  src/Chap47/AdvancedLinearProbing.rs
+  src/Chap47/AdvancedQuadraticProbing.rs
+  src/Chap47/ClusteringAnalysis.rs
+  src/Chap47/DoubleHashing.rs
+  src/Chap47/LinearProbing.rs
+  src/Chap47/NestedHashTable.rs
+  src/Chap47/QuadraticProbing.rs
+  src/Chap47clean/DoubleHashFlatHashTable.rs
+  src/Chap47clean/LinkedListChainedHashTable.rs
+  src/Chap47clean/StructChainedHashTable.rs
+  src/Chap47clean/VecChainedHashTable.rs
+
+TOTAL: 14 files with data structures missing traits
+Running APAS Naming Convention Checks...
+Project root: /home/milnes/APASVERUS/APAS-AI/apas-ai/scripts
+
+✓ All naming convention checks passed
+🔍 CHECKING FOR REMAINING ALIAS UFCS USAGE
+==================================================
+
+📁 Checking src/...
+
+⚠️  src/Chap19/ArraySeqStEph.rs
+   Aliases found: {'ArraySeqStEphTraitChap18': 'ArraySeqStEphTrait'}
+   Line 89: fn length(&self) -> N { ArraySeqStEphTraitChap18::length(self) }
+      → Using alias 'ArraySeqStEphTraitChap18' (original: 'ArraySeqStEphTrait')
+   Line 91: fn nth(&self, index: N) -> &T { ArraySeqStEphTraitChap18::nth(self, index) }
+      → Using alias 'ArraySeqStEphTraitChap18' (original: 'ArraySeqStEphTrait')
+
+⚠️  src/Chap19/ArraySeqMtPer.rs
+   Aliases found: {'ArraySeqMtPerTraitChap18': 'ArraySeqMtPerTrait'}
+   Line 100: fn length(&self) -> N { ArraySeqMtPerTraitChap18::length(self) }
+      → Using alias 'ArraySeqMtPerTraitChap18' (original: 'ArraySeqMtPerTrait')
+   Line 102: fn nth(&self, index: N) -> &T { ArraySeqMtPerTraitChap18::nth(self, index) }
+      → Using alias 'ArraySeqMtPerTraitChap18' (original: 'ArraySeqMtPerTrait')
+
+⚠️  src/Chap19/ArraySeqMtEph.rs
+   Aliases found: {'ArraySeqMtEphTraitChap18': 'ArraySeqMtEphTrait'}
+   Line 82: fn length(&self) -> N { ArraySeqMtEphTraitChap18::length(self) }
+      → Using alias 'ArraySeqMtEphTraitChap18' (original: 'ArraySeqMtEphTrait')
+   Line 84: fn nth_cloned(&self, index: N) -> T { ArraySeqMtEphTraitChap18::nth_cloned(self, index) }
+      → Using alias 'ArraySeqMtEphTraitChap18' (original: 'ArraySeqMtEphTrait')
+   Line 88: ArraySeqMtEphTraitChap18::subseq_copy(self, start, length)
+      → Using alias 'ArraySeqMtEphTraitChap18' (original: 'ArraySeqMtEphTrait')
+
+⚠️  src/Chap19/ArraySeqStPer.rs
+   Aliases found: {'ArraySeqStPerTraitChap18': 'ArraySeqStPerTrait'}
+   Line 88: fn length(&self) -> N { ArraySeqStPerTraitChap18::length(self) }
+      → Using alias 'ArraySeqStPerTraitChap18' (original: 'ArraySeqStPerTrait')
+   Line 90: fn nth(&self, index: N) -> &T { ArraySeqStPerTraitChap18::nth(self, index) }
+      → Using alias 'ArraySeqStPerTraitChap18' (original: 'ArraySeqStPerTrait')
+
+📊 src summary: 4 files, 9 potential issues
+
+📁 Checking tests/...
+
+📊 tests summary: 0 files, 0 potential issues
+
+📁 Checking benches/...
+
+📊 benches summary: 0 files, 0 potential issues
+
+🎯 OVERALL SUMMARY
+==============================
+Files with potential issues: 4
+Total potential issues: 9
+
+⚠️  Found 9 potential alias UFCS usages to review.
+These may need manual inspection to determine if they should be changed.
+🔍 Scanning for specific import patterns...
+
+📋 SPECIFIC IMPORT PATTERNS ANALYSIS
+============================================================
+
+🎯 TYPES MODULE IMPORTS (21 found)
+----------------------------------------
+📁 src/Chap35/OrderStatSelectMtEph.rs
+   use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
+        ArraySeqMtEphS, ArraySeqMtEphTrait as ArraySeqMtEphTraitImported,
+    };
+    use crate::Types::Types::*;
+    use rand::Rng;
+   Items: Rng
+
+📁 src/Chap41/ArraySetEnumMtEph.rs
+   use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
+   Items: ArraySeqMtEphS
+
+📁 src/Chap62/StarPartitionMtEph.rs
+   use crate::Types::Types::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::SetLit;
+   Items: SetLit
+
+📁 src/Chap47/Example47_4.rs
+   use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::LinearProbing::LinearProbing::*;
+    use crate::Chap47::ProbeSequenceExamples::ProbeSequenceExamples::*;
+    use crate::ArraySeqStPerSLit;
+   Items: ArraySeqStPerSLit
+
+📁 src/Chap47/Example47_6.rs
+   use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap47::AdvancedDoubleHashing::AdvancedDoubleHashing::*;
+    use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::LinearProbing::LinearProbing::*;
+    use crate::Chap47::ProbeSequenceExamples::ProbeSequenceExamples::*;
+    use crate::ArraySeqStPerSLit;
+   Items: ArraySeqStPerSLit
+
+📁 src/Chap47/Example47_2.rs
+   use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::SeparateChaining::SeparateChaining::*;
+    use crate::ArraySeqStPerSLit;
+   Items: ArraySeqStPerSLit
+
+📁 src/Chap47/HashExamples.rs
+   use crate::Types::Types::*;
+use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
+   Items: ProbeSequence
+
+📁 src/Chap47/Example47_5.rs
+   use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap47::AdvancedQuadraticProbing::AdvancedQuadraticProbing::*;
+    use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::LinearProbing::LinearProbing::*;
+    use crate::Chap47::ProbeSequenceExamples::ProbeSequenceExamples::*;
+    use crate::ArraySeqStPerSLit;
+   Items: ArraySeqStPerSLit
+
+📁 src/Chap65/KruskalStEph.rs
+   use crate::Types::Types::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
+    use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
+    use crate::SetLit;
+   Items: SetLit
+
+📁 src/Chap65/PrimStEph.rs
+   use crate::Types::Types::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
+    use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
+    use crate::SetLit;
+   Items: SetLit
+
+📁 src/Chap50/OptBinSearchTreeStPer.rs
+   use crate::Chap50::Probability::Probability::Probability;
+    use crate::Types::Types::*;
+    use crate::prob;
+   Items: prob
+
+📁 src/Chap50/OptBinSearchTreeStEph.rs
+   use crate::Chap50::Probability::Probability::Probability;
+    use crate::Types::Types::*;
+    use crate::prob;
+   Items: prob
+
+📁 src/Chap56/SSSPResultStEphFloat.rs
+   use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+   Items: ArraySeqStPerS
+
+📁 src/Chap56/PathWeightUtilsStEph.rs
+   use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+   Items: ArraySeqStPerS
+
+📁 src/Chap56/PathWeightUtilsStPer.rs
+   use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+   Items: ArraySeqStPerS
+
+📁 src/Chap56/AllPairsResultStEphFloat.rs
+   use crate::Types::Types::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+   Items: ArraySeqStPerS
+
+📁 src/Chap66/BoruvkaMtEph.rs
+   use crate::Types::Types::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::ParaPair;
+    use crate::SetLit;
+   Items: SetLit
+
+📁 src/Chap66/BoruvkaStEph.rs
+   use crate::Types::Types::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::SetLit;
+   Items: SetLit
+
+📁 src/Chap64/TSPApproxStEph.rs
+   use crate::Types::Types::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
+    use crate::SetLit;
+   Items: SetLit
+
+📁 src/Chap64/TSPApproxMtEph.rs
+   use crate::Types::Types::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
+    use crate::SetLit;
+   Items: SetLit
+
+📁 src/Chap59/JohnsonStEphFloat.rs
+   use crate::Types::Types::*;
+    use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
+    use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap56::AllPairsResultStEphFloat::AllPairsResultStEphFloat::AllPairsResultStEphFloat;
+    use crate::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::dijkstra;
+    use crate::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
+   Items: bellman_ford
+
+
+🏷️  TRAIT IMPORTS (28 found)
+----------------------------------------
+📁 src/Chap55/DFSStEph.rs
+   use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+   Traits: ArraySeqStEphTrait
+
+📁 src/Chap55/CycleDetectStPer.rs
+   use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+   Traits: ArraySeqStPerTrait
+
+📁 src/Chap55/DFSStPer.rs
+   use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+   Traits: ArraySeqStPerTrait
+
+📁 src/Chap55/TopoSortStPer.rs
+   use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+   Traits: ArraySeqStPerTrait
+
+📁 src/Chap55/TopoSortStPer.rs
+   use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::{AVLTreeSeqStPerS, AVLTreeSeqStPerTrait};
+   Traits: AVLTreeSeqStPerTrait
+
+📁 src/Chap55/TopoSortStEph.rs
+   use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+   Traits: ArraySeqStEphTrait
+
+📁 src/Chap55/SCCStEph.rs
+   use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+   Traits: ArraySeqStEphTrait
+
+📁 src/Chap55/SCCStEph.rs
+   use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeSeqStEphS, AVLTreeSeqStEphTrait};
+   Traits: AVLTreeSeqStEphTrait
+
+📁 src/Chap55/CycleDetectStEph.rs
+   use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+   Traits: ArraySeqStEphTrait
+
+📁 src/Chap55/SCCStPer.rs
+   use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+   Traits: ArraySeqStPerTrait
+
+📁 src/Chap55/SCCStPer.rs
+   use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::{AVLTreeSeqStPerS, AVLTreeSeqStPerTrait};
+   Traits: AVLTreeSeqStPerTrait
+
+📁 src/Chap41/Example41_3.rs
+   use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+   Traits: AVLTreeSeqStEphTrait
+
+📁 src/Chap42/TableMtEph.rs
+   use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
+   Traits: ArraySeqStEphTrait
+
+📁 src/Chap52/EdgeSetGraphStEph.rs
+   use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+   Traits: AVLTreeSeqStEphTrait
+
+📁 src/Chap52/AdjTableGraphMtPer.rs
+   use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
+   Traits: ArraySetStEphTrait
+
+📁 src/Chap52/AdjTableGraphStEph.rs
+   use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+    use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
+    use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
+   Traits: ArraySetStEphTrait
+
+📁 src/Chap52/EdgeSetGraphMtPer.rs
+   use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerTrait;
+   Traits: AVLTreeSeqMtPerTrait
+
+📁 src/Chap52/EdgeSetGraphStPer.rs
+   use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
+   Traits: AVLTreeSeqStPerTrait
+
+📁 src/Chap28/MaxContigSubSumReducedStEph.rs
+   use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
+   Traits: ScanContractStEphTrait
+
+📁 src/Chap28/MaxContigSubSumOptStEph.rs
+   use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
+   Traits: ScanContractStEphTrait
+
+📁 src/Chap28/MaxContigSubSumDivConStEph.rs
+   use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
+   Traits: ScanContractStEphTrait
+
+📁 src/Chap53/PQMinStPer.rs
+   use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
+   Traits: AVLTreeSeqStPerTrait
+
+📁 src/Chap53/GraphSearchStPer.rs
+   use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
+   Traits: AVLTreeSeqStPerTrait
+
+📁 src/Chap53/GraphSearchMtPer.rs
+   use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerTrait;
+   Traits: AVLTreeSeqMtPerTrait
+
+📁 src/Chap53/GraphSearchStEph.rs
+   use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+   Traits: AVLTreeSeqStEphTrait
+
+📁 src/Chap53/PQMinStEph.rs
+   use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+   Traits: AVLTreeSeqStEphTrait
+
+📁 src/Chap53/PQMinMtPer.rs
+   use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerTrait;
+   Traits: AVLTreeSeqMtPerTrait
+
+📁 src/Chap53/PQMinMtEph.rs
+   use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+   Traits: AVLTreeSeqStEphTrait
+
+
+🏗️  STRUCT IMPORTS (49 found)
+----------------------------------------
+📁 src/Chap35/OrderStatSelectMtEph.rs
+   use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait as ArraySeqMtEphTraitImported, };
+   Structs: ArraySeqMtEphS, ArraySeqMtEphTrait as ArraySeqMtEphTraitImported
+
+📁 src/Chap41/AVLTreeSetMtPer.rs
+   use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
+    use crate::ParaPair;
+   Structs: ParaPair
+
+📁 src/Chap41/AVLTreeSetMtEph.rs
+   use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
+    use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
+    use crate::ParaPair;
+   Structs: ParaPair
+
+📁 src/Chap27/ScanContractMtEph.rs
+   use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::ParaPair;
+   Structs: ParaPair
+
+📁 src/Chap27/ReduceContractMtEph.rs
+   use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::ParaPair;
+   Structs: ParaPair
+
+📁 src/Chap26/MergeSortMt.rs
+   use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
+    use crate::ParaPair;
+   Structs: ParaPair
+
+📁 src/Chap19/ArraySeqStEph.rs
+   use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS as ArraySeqStEphSChap18, ArraySeqStEphTrait as ArraySeqStEphTraitChap18, };
+   Structs: ArraySeqStEphS as ArraySeqStEphSChap18, ArraySeqStEphTrait as ArraySeqStEphTraitChap18
+
+📁 src/Chap19/ArraySeqMtPer.rs
+   use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS as ArraySeqMtPerSChap18, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18};
+   Structs: ArraySeqMtPerS as ArraySeqMtPerSChap18, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18
+
+📁 src/Chap19/ArraySeqMtEph.rs
+   use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS as ArraySeqMtEphSChap18, ArraySeqMtEphTrait as ArraySeqMtEphTraitChap18, };
+   Structs: ArraySeqMtEphS as ArraySeqMtEphSChap18, ArraySeqMtEphTrait as ArraySeqMtEphTraitChap18
+
+📁 src/Chap19/ArraySeqStPer.rs
+   use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS as ArraySeqStPerSChap18, ArraySeqStPerTrait as ArraySeqStPerTraitChap18, };
+   Structs: ArraySeqStPerS as ArraySeqStPerSChap18, ArraySeqStPerTrait as ArraySeqStPerTraitChap18
+
+   ... and 39 more struct imports
+
+⚙️  FUNCTION IMPORTS (5 found)
+----------------------------------------
+📁 src/Chap21/Algorithm21_5.rs
+   use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap21::Exercise21_8::Exercise21_8::is_prime;
+   Functions: is_prime
+
+📁 src/Chap56/Example56_3.rs
+   use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Chap56::PathWeightUtilsStEph::PathWeightUtilsStEph::path_weight_int;
+   Functions: path_weight_int
+
+📁 src/Chap59/JohnsonStEphInt.rs
+   use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
+    use crate::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap56::AllPairsResultStEphInt::AllPairsResultStEphInt::AllPairsResultStEphInt;
+    use crate::Chap57::DijkstraStEphInt::DijkstraStEphInt::dijkstra;
+    use crate::Chap58::BellmanFordStEphInt::BellmanFordStEphInt::bellman_ford;
+   Functions: bellman_ford
+
+📁 src/Chap59/JohnsonMtEphInt.rs
+   use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::LabDirGraphMtEphTrait;
+    use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
+    use crate::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
+    use crate::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap56::AllPairsResultStEphInt::AllPairsResultStEphInt::AllPairsResultStEphInt;
+    use crate::Chap57::DijkstraStEphInt::DijkstraStEphInt::dijkstra;
+    use crate::Chap58::BellmanFordStEphInt::BellmanFordStEphInt::bellman_ford;
+   Functions: bellman_ford
+
+📁 src/Chap59/JohnsonMtEphFloat.rs
+   use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::LabDirGraphMtEphTrait;
+    use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
+    use crate::Chap06::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::*;
+    use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap56::AllPairsResultStEphFloat::AllPairsResultStEphFloat::AllPairsResultStEphFloat;
+    use crate::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::dijkstra;
+    use crate::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
+   Functions: bellman_ford
+
+
+📊 SUMMARY
+==============================
+Types module imports: 21
+Single letter imports: 0
+Trait imports: 28
+Struct imports: 49
+Function imports: 5
+Other imports: 0
+Total specific imports: 103
+Running APAS Structure Checks...
+Project root: /home/milnes/APASVERUS/APAS-AI/apas-ai/scripts
+
+✓ All structure checks passed
+Running 9 APAS src review(s)
+
+[Conventions]
+
+[Duplicate Chap Imports]
+
+[Duplicate Imports]
+
+[Imports]
+
+[Missing Traits]
+
+[Naming]
+
+[Remaining Alias Usage]
+
+[Specific Imports]
+
+[Structure]
+
+✓ All APAS src checks passed (9/9)
+✓ No APAS test review scripts configured
+No mismatches found!
+✓ No duplicate benchmark IDs found!
+  Total files scanned: 187
+Running APAS Benchmark Timing Parameter Checks...
+Project root: /home/milnes/APASVERUS/APAS-AI/apas-ai/scripts/APAS
+
+✓ All benchmark timing parameters are correct
+Running 3 APAS benchmark review(s)
+
+[Cargo Bench Names]
+
+[Duplicate Ids]
+
+[Timing Params]
+
+✓ All APAS benchmark checks passed (3/3)
+Running APAS Code Review
+
+[APAS src]
+
+[APAS tests]
+
+[APAS benches]
+
+✓ All APAS reviews passed
+✓ No 'extern crate' usage found
+✗ Found UFCS at call sites (RustRules.md Lines 309-320):
+
+  src/Chap41/ArraySetEnumMtEph.rs:174
+    < $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEph as $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEphTrait >::empty($u)
+    UFCS: < $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEph as $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEphTrait >::empty
+  src/Chap41/ArraySetEnumMtEph.rs:177
+    let mut __set = < $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEph as $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEphTrait >::empty($u);
+    UFCS: < $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEph as $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEphTrait >::empty
+  tests/TestTypes.rs:362
+    let val = <usize as MtT>::new_mt(42usize);
+    UFCS: <usize as MtT>::new_mt
+  tests/TestTypes.rs:375
+    let val = <isize as MtT>::new_mt(-42isize);
+    UFCS: <isize as MtT>::new_mt
+  tests/TestTypes.rs:388
+    let val = <i32 as MtT>::new_mt(100i32);
+    UFCS: <i32 as MtT>::new_mt
+  tests/TestTypes.rs:401
+    let val = <u32 as MtT>::new_mt(200u32);
+    UFCS: <u32 as MtT>::new_mt
+  tests/TestTypes.rs:414
+    let val = <i64 as MtT>::new_mt(1000i64);
+    UFCS: <i64 as MtT>::new_mt
+  tests/TestTypes.rs:427
+    let val = <u64 as MtT>::new_mt(2000u64);
+    UFCS: <u64 as MtT>::new_mt
+  tests/TestTypes.rs:440
+    let val = <bool as MtT>::new_mt(true);
+    UFCS: <bool as MtT>::new_mt
+  tests/TestTypes.rs:453
+    let val = <char as MtT>::new_mt('Z');
+    UFCS: <char as MtT>::new_mt
+  tests/TestTypes.rs:466
+    let val = <String as MtT>::new_mt(String::from("hello"));
+    UFCS: <String as MtT>::new_mt
+  tests/TestTypes.rs:479
+    let val = <&str as MtT>::new_mt("world");
+    UFCS: <&str as MtT>::new_mt
+
+Total violations: 12
+
+Fix: Use method-call syntax: value.method(...) instead of <Type as Trait>::method(value, ...)
+Running Rust Code Review
+
+[No extern crate]
+
+[No UFCS at call sites]
+
+FAILED: No UFCS at call sites
