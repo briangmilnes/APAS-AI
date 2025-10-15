@@ -2,58 +2,55 @@
 //!
 //! Test suite for AllPairsResultStEphInt.
 
-#[cfg(test)]
-mod TestAllPairsResultStEphInt {
-    use apas_ai::Chap56::AllPairsResultStEphInt::AllPairsResultStEphInt::AllPairsResultStEphInt;
+use apas_ai::Chap56::AllPairsResultStEphInt::AllPairsResultStEphInt::AllPairsResultStEphInt;
 
-    #[test]
-    fn test_new() {
-        let result = AllPairsResultStEphInt::new(3);
-        assert_eq!(result.get_distance(0, 0), 0);
-        assert_eq!(result.get_distance(0, 1), i64::MAX);
-        assert!(result.is_reachable(0, 0));
-        assert!(!result.is_reachable(0, 1));
-    }
+#[test]
+fn test_new() {
+    let result = AllPairsResultStEphInt::new(3);
+    assert_eq!(result.get_distance(0, 0), 0);
+    assert_eq!(result.get_distance(0, 1), i64::MAX);
+    assert!(result.is_reachable(0, 0));
+    assert!(!result.is_reachable(0, 1));
+}
 
-    #[test]
-    fn test_set_distance() {
-        let mut result = AllPairsResultStEphInt::new(3);
-        result.set_distance(0, 1, 5);
-        result.set_distance(1, 2, 10);
-        assert_eq!(result.get_distance(0, 1), 5);
-        assert_eq!(result.get_distance(1, 2), 10);
-    }
+#[test]
+fn test_set_distance() {
+    let mut result = AllPairsResultStEphInt::new(3);
+    result.set_distance(0, 1, 5);
+    result.set_distance(1, 2, 10);
+    assert_eq!(result.get_distance(0, 1), 5);
+    assert_eq!(result.get_distance(1, 2), 10);
+}
 
-    #[test]
-    fn test_set_predecessor() {
-        let mut result = AllPairsResultStEphInt::new(3);
-        result.set_predecessor(0, 1, 0);
-        result.set_predecessor(1, 2, 1);
-        assert_eq!(result.get_predecessor(0, 1), Some(0));
-        assert_eq!(result.get_predecessor(1, 2), Some(1));
-    }
+#[test]
+fn test_set_predecessor() {
+    let mut result = AllPairsResultStEphInt::new(3);
+    result.set_predecessor(0, 1, 0);
+    result.set_predecessor(1, 2, 1);
+    assert_eq!(result.get_predecessor(0, 1), Some(0));
+    assert_eq!(result.get_predecessor(1, 2), Some(1));
+}
 
-    #[test]
-    fn test_extract_path() {
-        let mut result = AllPairsResultStEphInt::new(4);
-        result.set_distance(0, 1, 1);
-        result.set_predecessor(0, 1, 0);
-        result.set_distance(0, 2, 2);
-        result.set_predecessor(0, 2, 1);
-        result.set_distance(0, 3, 3);
-        result.set_predecessor(0, 3, 2);
+#[test]
+fn test_extract_path() {
+    let mut result = AllPairsResultStEphInt::new(4);
+    result.set_distance(0, 1, 1);
+    result.set_predecessor(0, 1, 0);
+    result.set_distance(0, 2, 2);
+    result.set_predecessor(0, 2, 1);
+    result.set_distance(0, 3, 3);
+    result.set_predecessor(0, 3, 2);
 
-        let path = result.extract_path(0, 3).unwrap();
-        assert_eq!(path.length(), 4);
-        assert_eq!(*path.nth(0), 0);
-        assert_eq!(*path.nth(1), 1);
-        assert_eq!(*path.nth(2), 2);
-        assert_eq!(*path.nth(3), 3);
-    }
+    let path = result.extract_path(0, 3).unwrap();
+    assert_eq!(path.length(), 4);
+    assert_eq!(*path.nth(0), 0);
+    assert_eq!(*path.nth(1), 1);
+    assert_eq!(*path.nth(2), 2);
+    assert_eq!(*path.nth(3), 3);
+}
 
-    #[test]
-    fn test_extract_path_unreachable() {
-        let result = AllPairsResultStEphInt::new(3);
-        assert_eq!(result.extract_path(0, 2), None);
-    }
+#[test]
+fn test_extract_path_unreachable() {
+    let result = AllPairsResultStEphInt::new(3);
+    assert_eq!(result.extract_path(0, 2), None);
 }

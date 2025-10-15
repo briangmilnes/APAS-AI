@@ -1,73 +1,70 @@
 // Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 62: Star Contraction - Sequential Ephemeral Tests
 
-#[cfg(test)]
-mod tests {
-    use apas_ai::{
-        Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
-        Chap62::StarContractionStEph::StarContractionStEph::*, SetLit, Types::Types::*,
-    };
+use apas_ai::{
+    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
+    Chap62::StarContractionStEph::StarContractionStEph::*, SetLit, Types::Types::*,
+};
 
-    // Helper to create a cycle graph
-    fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {
-        let mut vertices = SetLit![];
-        for i in 0..n {
-            let _ = vertices.insert(i);
-        }
-        let mut edges = SetLit![];
-        for i in 0..n {
-            let u = i;
-            let v = (i + 1) % n;
-            let _ = edges.insert(Edge(u, v));
-        }
-        <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(vertices, edges)
+// Helper to create a cycle graph
+fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {
+    let mut vertices = SetLit![];
+    for i in 0..n {
+        let _ = vertices.insert(i);
     }
-
-    #[test]
-    fn test_contract_to_vertices_cycle() {
-        let graph = create_cycle_graph(6);
-        let result = contract_to_vertices(&graph);
-
-        // After contracting, we should have fewer vertices than original
-        assert!(result.size() <= graph.sizeV());
-        assert!(result.size() > 0);
+    let mut edges = SetLit![];
+    for i in 0..n {
+        let u = i;
+        let v = (i + 1) % n;
+        let _ = edges.insert(Edge(u, v));
     }
+    <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(vertices, edges)
+}
 
-    #[test]
-    fn test_contract_with_base_expand() {
-        let graph = create_cycle_graph(4);
+#[test]
+fn test_contract_to_vertices_cycle() {
+    let graph = create_cycle_graph(6);
+    let result = contract_to_vertices(&graph);
 
-        // Simple base function that counts vertices
-        let base = |vertices: &Set<N>| vertices.size();
+    // After contracting, we should have fewer vertices than original
+    assert!(result.size() <= graph.sizeV());
+    assert!(result.size() > 0);
+}
 
-        // Expand function that just returns the recursive result
-        let expand =
-            |_v: &Set<N>, _e: &Set<Edge<N>>, _centers: &Set<N>, _part: &std::collections::HashMap<N, N>, r: N| r;
+#[test]
+fn test_contract_with_base_expand() {
+    let graph = create_cycle_graph(4);
 
-        let result = star_contract(&graph, &base, &expand);
+    // Simple base function that counts vertices
+    let base = |vertices: &Set<N>| vertices.size();
 
-        // Should eventually contract to some number of isolated vertices
-        assert!(result > 0);
-    }
+    // Expand function that just returns the recursive result
+    let expand =
+        |_v: &Set<N>, _e: &Set<Edge<N>>, _centers: &Set<N>, _part: &std::collections::HashMap<N, N>, r: N| r;
 
-    #[test]
-    fn test_empty_graph_contraction() {
-        let graph = <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::empty();
-        let result = contract_to_vertices(&graph);
+    let result = star_contract(&graph, &base, &expand);
 
-        assert_eq!(result.size(), 0);
-    }
+    // Should eventually contract to some number of isolated vertices
+    assert!(result > 0);
+}
 
-    #[test]
-    fn test_single_edge_contraction() {
-        let vertices = SetLit![0, 1];
-        let edges = SetLit![Edge(0, 1)];
-        let graph = <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(vertices, edges);
+#[test]
+fn test_empty_graph_contraction() {
+    let graph = <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::empty();
+    let result = contract_to_vertices(&graph);
 
-        let result = contract_to_vertices(&graph);
+    assert_eq!(result.size(), 0);
+}
 
-        // Should contract to at least one vertex
-        assert!(result.size() >= 1);
-        assert!(result.size() <= 2);
-    }
+#[test]
+fn test_single_edge_contraction() {
+    let vertices = SetLit![0, 1];
+    let edges = SetLit![Edge(0, 1)];
+    let graph = <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(vertices, edges);
+
+    let result = contract_to_vertices(&graph);
+
+    // Should contract to at least one vertex
+    assert!(result.size() >= 1);
+    assert!(result.size() <= 2);
 }

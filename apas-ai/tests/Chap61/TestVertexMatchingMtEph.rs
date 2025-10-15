@@ -1,97 +1,94 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chapter 61 Vertex Matching (Multi-threaded)
 
-#[cfg(test)]
-mod tests {
-    use apas_ai::{
-        Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
-        Chap61::VertexMatchingMtEph::VertexMatchingMtEph::*, SetLit, Types::Types::*,
-    };
+use apas_ai::{
+    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
+    Chap61::VertexMatchingMtEph::VertexMatchingMtEph::*, SetLit, Types::Types::*,
+};
 
-    /// Helper: Create a cycle graph
-    fn create_cycle_graph(n: usize) -> UnDirGraphMtEph<usize> {
-        let mut vertices: Set<usize> = SetLit![];
-        let mut edges: Set<Edge<usize>> = SetLit![];
+/// Helper: Create a cycle graph
+fn create_cycle_graph(n: usize) -> UnDirGraphMtEph<usize> {
+    let mut vertices: Set<usize> = SetLit![];
+    let mut edges: Set<Edge<usize>> = SetLit![];
 
-        for i in 0..n {
-            let _ = vertices.insert(i);
-        }
-
-        for i in 0..n {
-            let next = (i + 1) % n;
-            let edge = if i < next { Edge(i, next) } else { Edge(next, i) };
-            let _ = edges.insert(edge);
-        }
-
-        <UnDirGraphMtEph<usize> as UnDirGraphMtEphTrait<usize>>::FromSets(vertices, edges)
+    for i in 0..n {
+        let _ = vertices.insert(i);
     }
 
-    /// Helper: Create a star graph
-    fn create_star_graph(n: usize) -> UnDirGraphMtEph<usize> {
-        let mut vertices: Set<usize> = SetLit![];
-        let mut edges: Set<Edge<usize>> = SetLit![];
-
-        let _ = vertices.insert(0);
-        for i in 1..=n {
-            let _ = vertices.insert(i);
-            let _ = edges.insert(Edge(0, i));
-        }
-
-        <UnDirGraphMtEph<usize> as UnDirGraphMtEphTrait<usize>>::FromSets(vertices, edges)
+    for i in 0..n {
+        let next = (i + 1) % n;
+        let edge = if i < next { Edge(i, next) } else { Edge(next, i) };
+        let _ = edges.insert(edge);
     }
 
-    #[test]
-    fn test_parallel_matching_mt_cycle() {
-        let graph = create_cycle_graph(10);
-        let matching = parallel_matching_mt(&graph, 789);
+    <UnDirGraphMtEph<usize> as UnDirGraphMtEphTrait<usize>>::FromSets(vertices, edges)
+}
 
-        // Verify matching property
-        let mut matched_vertices: Set<usize> = SetLit![];
-        for edge in matching.iter() {
-            let Edge(u, v) = edge;
-            assert!(!matched_vertices.mem(u));
-            assert!(!matched_vertices.mem(v));
-            let _ = matched_vertices.insert(*u);
-            let _ = matched_vertices.insert(*v);
-        }
+/// Helper: Create a star graph
+fn create_star_graph(n: usize) -> UnDirGraphMtEph<usize> {
+    let mut vertices: Set<usize> = SetLit![];
+    let mut edges: Set<Edge<usize>> = SetLit![];
+
+    let _ = vertices.insert(0);
+    for i in 1..=n {
+        let _ = vertices.insert(i);
+        let _ = edges.insert(Edge(0, i));
     }
 
-    #[test]
-    fn test_parallel_matching_mt_star() {
-        let graph = create_star_graph(6);
-        let matching = parallel_matching_mt(&graph, 456);
+    <UnDirGraphMtEph<usize> as UnDirGraphMtEphTrait<usize>>::FromSets(vertices, edges)
+}
 
-        // Verify matching property
-        let mut matched_vertices: Set<usize> = SetLit![];
-        for edge in matching.iter() {
-            let Edge(u, v) = edge;
-            assert!(!matched_vertices.mem(u));
-            assert!(!matched_vertices.mem(v));
-            let _ = matched_vertices.insert(*u);
-            let _ = matched_vertices.insert(*v);
-        }
+#[test]
+fn test_parallel_matching_mt_cycle() {
+    let graph = create_cycle_graph(10);
+    let matching = parallel_matching_mt(&graph, 789);
 
-        assert!(matching.size() <= 1);
+    // Verify matching property
+    let mut matched_vertices: Set<usize> = SetLit![];
+    for edge in matching.iter() {
+        let Edge(u, v) = edge;
+        assert!(!matched_vertices.mem(u));
+        assert!(!matched_vertices.mem(v));
+        let _ = matched_vertices.insert(*u);
+        let _ = matched_vertices.insert(*v);
+    }
+}
+
+#[test]
+fn test_parallel_matching_mt_star() {
+    let graph = create_star_graph(6);
+    let matching = parallel_matching_mt(&graph, 456);
+
+    // Verify matching property
+    let mut matched_vertices: Set<usize> = SetLit![];
+    for edge in matching.iter() {
+        let Edge(u, v) = edge;
+        assert!(!matched_vertices.mem(u));
+        assert!(!matched_vertices.mem(v));
+        let _ = matched_vertices.insert(*u);
+        let _ = matched_vertices.insert(*v);
     }
 
-    #[test]
-    fn test_parallel_matching_mt_correctness() {
-        let graph = create_cycle_graph(12);
-        let matching = parallel_matching_mt(&graph, 101);
+    assert!(matching.size() <= 1);
+}
 
-        // All edges in matching must be in graph
-        for edge in matching.iter() {
-            assert!(graph.edges().mem(edge));
-        }
+#[test]
+fn test_parallel_matching_mt_correctness() {
+    let graph = create_cycle_graph(12);
+    let matching = parallel_matching_mt(&graph, 101);
 
-        // No two edges share an endpoint
-        let all_edges: std::vec::Vec<&Edge<usize>> = matching.iter().collect();
-        for i in 0..all_edges.len() {
-            for j in (i + 1)..all_edges.len() {
-                let Edge(u1, v1) = all_edges[i];
-                let Edge(u2, v2) = all_edges[j];
-                assert!(u1 != u2 && u1 != v2 && v1 != u2 && v1 != v2);
-            }
+    // All edges in matching must be in graph
+    for edge in matching.iter() {
+        assert!(graph.edges().mem(edge));
+    }
+
+    // No two edges share an endpoint
+    let all_edges: std::vec::Vec<&Edge<usize>> = matching.iter().collect();
+    for i in 0..all_edges.len() {
+        for j in (i + 1)..all_edges.len() {
+            let Edge(u1, v1) = all_edges[i];
+            let Edge(u2, v2) = all_edges[j];
+            assert!(u1 != u2 && u1 != v2 && v1 != u2 && v1 != v2);
         }
     }
 }

@@ -1,71 +1,68 @@
 // Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 62: Star Contraction - Multi-threaded Ephemeral Tests
 
-#[cfg(test)]
-mod tests {
-    use apas_ai::{
-        Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
-        Chap62::StarContractionMtEph::StarContractionMtEph::*, SetLit, Types::Types::*,
-    };
+use apas_ai::{
+    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
+    Chap62::StarContractionMtEph::StarContractionMtEph::*, SetLit, Types::Types::*,
+};
 
-    // Helper to create a cycle graph
-    fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {
-        let mut vertices = SetLit![];
-        for i in 0..n {
-            let _ = vertices.insert(i);
-        }
-        let mut edges = SetLit![];
-        for i in 0..n {
-            let u = i;
-            let v = (i + 1) % n;
-            let _ = edges.insert(Edge(u, v));
-        }
-        <UnDirGraphMtEph<N> as UnDirGraphMtEphTrait<N>>::FromSets(vertices, edges)
+// Helper to create a cycle graph
+fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {
+    let mut vertices = SetLit![];
+    for i in 0..n {
+        let _ = vertices.insert(i);
     }
-
-    #[test]
-    fn test_contract_to_vertices_mt_cycle() {
-        let graph = create_cycle_graph(8);
-        let result = contract_to_vertices_mt(&graph, 123);
-
-        // After contracting, we should have fewer or equal vertices
-        assert!(result.size() <= graph.sizeV());
-        assert!(result.size() > 0);
+    let mut edges = SetLit![];
+    for i in 0..n {
+        let u = i;
+        let v = (i + 1) % n;
+        let _ = edges.insert(Edge(u, v));
     }
+    <UnDirGraphMtEph<N> as UnDirGraphMtEphTrait<N>>::FromSets(vertices, edges)
+}
 
-    #[test]
-    fn test_contract_with_base_expand_mt() {
-        let graph = create_cycle_graph(6);
+#[test]
+fn test_contract_to_vertices_mt_cycle() {
+    let graph = create_cycle_graph(8);
+    let result = contract_to_vertices_mt(&graph, 123);
 
-        // Simple base function that counts vertices
-        let base = |vertices: &Set<N>| vertices.size();
+    // After contracting, we should have fewer or equal vertices
+    assert!(result.size() <= graph.sizeV());
+    assert!(result.size() > 0);
+}
 
-        // Expand function that just returns the recursive result
-        let expand =
-            |_v: &Set<N>, _e: &Set<Edge<N>>, _centers: &Set<N>, _part: &std::collections::HashMap<N, N>, r: N| r;
+#[test]
+fn test_contract_with_base_expand_mt() {
+    let graph = create_cycle_graph(6);
 
-        let result = star_contract_mt(&graph, 456, &base, &expand);
+    // Simple base function that counts vertices
+    let base = |vertices: &Set<N>| vertices.size();
 
-        // Should eventually contract to some number of isolated vertices
-        assert!(result > 0);
-    }
+    // Expand function that just returns the recursive result
+    let expand =
+        |_v: &Set<N>, _e: &Set<Edge<N>>, _centers: &Set<N>, _part: &std::collections::HashMap<N, N>, r: N| r;
 
-    #[test]
-    fn test_determinism_mt() {
-        let graph = create_cycle_graph(6);
+    let result = star_contract_mt(&graph, 456, &base, &expand);
 
-        // Same seed should give same result
-        let result1 = contract_to_vertices_mt(&graph, 789);
-        let result2 = contract_to_vertices_mt(&graph, 789);
+    // Should eventually contract to some number of isolated vertices
+    assert!(result > 0);
+}
 
-        assert_eq!(result1.size(), result2.size());
-    }
+#[test]
+fn test_determinism_mt() {
+    let graph = create_cycle_graph(6);
 
-    #[test]
-    fn test_empty_graph_contraction_mt() {
-        let graph = <UnDirGraphMtEph<N> as UnDirGraphMtEphTrait<N>>::empty();
-        let result = contract_to_vertices_mt(&graph, 999);
+    // Same seed should give same result
+    let result1 = contract_to_vertices_mt(&graph, 789);
+    let result2 = contract_to_vertices_mt(&graph, 789);
 
-        assert_eq!(result.size(), 0);
-    }
+    assert_eq!(result1.size(), result2.size());
+}
+
+#[test]
+fn test_empty_graph_contraction_mt() {
+    let graph = <UnDirGraphMtEph<N> as UnDirGraphMtEphTrait<N>>::empty();
+    let result = contract_to_vertices_mt(&graph, 999);
+
+    assert_eq!(result.size(), 0);
 }
