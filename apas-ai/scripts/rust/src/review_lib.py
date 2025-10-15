@@ -110,6 +110,16 @@ def main():
     if errors:
         for line in errors:
             print(line)
+        
+        # Count violations for pareto analysis
+        violation_count = 0
+        for line in errors:
+            if line.startswith("   pub mod "):
+                violation_count += 1
+            elif line.startswith("   ") and "(expected " in line:
+                violation_count += 1
+        
+        print(f"\nTotal violations: {violation_count}")
         return 1
     
     total_declared = len(declared_top) + sum(len(mods) for mods in declared_chapters.values())

@@ -48,6 +48,8 @@ def main():
             for bench in sorted(missing_benches):
                 print(f"   benches/{bench}")
         
+        total_violations = len(missing_tests) + len(missing_benches)
+        print(f"\nTotal violations: {total_violations}")
         return 1
     
     print(f"✓ All {len(test_files)} tests and {len(bench_files)} benchmarks registered in Cargo.toml")
