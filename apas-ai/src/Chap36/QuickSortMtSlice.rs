@@ -10,7 +10,7 @@ pub mod Chapter36MtSlice {
     use crate::Types::Types::*;
     use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
 
-    pub trait Chapter36MtSliceTrait<T: StT + Ord + Send> {
+    pub trait Chapter36MtSliceTrait<T: StTInMtT + Ord> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time pivot selection
         fn pivot_mt_first(&self, lo: N, hi: N) -> T;
@@ -31,7 +31,7 @@ pub mod Chapter36MtSlice {
         fn quick_sort_mt_random(&self);
     }
 
-    impl<T: StT + Ord + Send + Sync + 'static> Chapter36MtSliceTrait<T> for ArraySeqMtEphSliceS<T> {
+    impl<T: StTInMtT + Ord + 'static> Chapter36MtSliceTrait<T> for ArraySeqMtEphSliceS<T> {
         fn pivot_mt_first(&self, lo: N, _hi: N) -> T { self.nth_cloned(lo) }
 
         fn pivot_mt_median3(&self, lo: N, hi: N) -> T {
@@ -59,7 +59,7 @@ pub mod Chapter36MtSlice {
                 return;
             }
             self.with_exclusive(|data| {
-                fn sort<T: StT + Ord + Send>(data: &mut [T]) {
+                fn sort<T: StTInMtT + Ord>(data: &mut [T]) {
                     let len = data.len();
                     if len <= 1 {
                         return;
@@ -97,7 +97,7 @@ pub mod Chapter36MtSlice {
                 return;
             }
             self.with_exclusive(|data| {
-                fn sort<T: StT + Ord + Send>(data: &mut [T]) {
+                fn sort<T: StTInMtT + Ord>(data: &mut [T]) {
                     let len = data.len();
                     if len <= 1 {
                         return;
@@ -148,7 +148,7 @@ pub mod Chapter36MtSlice {
                 return;
             }
             self.with_exclusive(|data| {
-                fn sort<T: StT + Ord + Send>(data: &mut [T]) {
+                fn sort<T: StTInMtT + Ord>(data: &mut [T]) {
                     let len = data.len();
                     if len <= 1 {
                         return;

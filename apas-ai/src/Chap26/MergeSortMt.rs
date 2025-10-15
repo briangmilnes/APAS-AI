@@ -11,7 +11,7 @@ pub mod MergeSortMt {
     use crate::ParaPair;
     use crate::Types::Types::*;
 
-    pub trait MergeSortMtTrait<T: StT + Ord + Send + Sync + 'static> {
+    pub trait MergeSortMtTrait<T: StTInMtT + Ord + 'static> {
         /// Merge two sorted sequences in parallel using binary search.
         /// APAS: Work Θ(n), Span Θ(log n)
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
@@ -23,7 +23,7 @@ pub mod MergeSortMt {
         fn merge_sort_parallel(a: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
     }
 
-    impl<T: StT + Ord + Send + Sync + 'static> MergeSortMtTrait<T> for ArraySeqMtPerS<T> {
+    impl<T: StTInMtT + Ord + 'static> MergeSortMtTrait<T> for ArraySeqMtPerS<T> {
         fn merge_parallel(left: &ArraySeqMtPerS<T>, right: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T> {
             let n_left = left.length();
             let n_right = right.length();

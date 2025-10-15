@@ -10,7 +10,7 @@ pub mod Chapter36Mt {
     use crate::Types::Types::*;
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
 
-    pub trait Chapter36MtTrait<T: StT + Ord + Send> {
+    pub trait Chapter36MtTrait<T: StTInMtT + Ord> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time pivot selection
         fn pivot_mt_first(&self, lo: N, hi: N) -> T;
@@ -31,7 +31,7 @@ pub mod Chapter36Mt {
         fn quick_sort_mt_random(&mut self);
     }
 
-    impl<T: StT + Ord + Send + Sync> Chapter36MtTrait<T> for ArraySeqMtEphS<T> {
+    impl<T: StTInMtT + Ord> Chapter36MtTrait<T> for ArraySeqMtEphS<T> {
         fn pivot_mt_first(&self, lo: N, _hi: N) -> T { self.nth_cloned(lo) }
         fn pivot_mt_median3(&self, lo: N, hi: N) -> T {
             let mid = lo + (hi - lo) / 2;
@@ -57,7 +57,7 @@ pub mod Chapter36Mt {
                 return;
             }
 
-            fn quick_sort<T: StT + Ord + Send>(data: &mut [T]) {
+            fn quick_sort<T: StTInMtT + Ord>(data: &mut [T]) {
                 let len = data.len();
                 if len <= 1 {
                     return;
@@ -96,7 +96,7 @@ pub mod Chapter36Mt {
                 return;
             }
 
-            fn quick_sort<T: StT + Ord + Send>(data: &mut [T]) {
+            fn quick_sort<T: StTInMtT + Ord>(data: &mut [T]) {
                 let len = data.len();
                 if len <= 1 {
                     return;
@@ -147,7 +147,7 @@ pub mod Chapter36Mt {
                 return;
             }
 
-            fn quick_sort<T: StT + Ord + Send>(data: &mut [T]) {
+            fn quick_sort<T: StTInMtT + Ord>(data: &mut [T]) {
                 let len = data.len();
                 if len <= 1 {
                     return;

@@ -10,7 +10,7 @@ pub mod ScanContractMtEph {
     use crate::ParaPair;
     use crate::Types::Types::*;
 
-    pub trait ScanContractMtEphTrait<T: StT + Send + Sync> {
+    pub trait ScanContractMtEphTrait<T: StTInMtT> {
         /// Scan a sequence using parallel contraction: contract→solve→expand.
         /// APAS: Work Θ(n), Span Θ(log n)
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
@@ -21,7 +21,7 @@ pub mod ScanContractMtEph {
         ) -> ArraySeqMtEphS<T>;
     }
 
-    impl<T: StT + Send + Sync + Clone + 'static> ScanContractMtEphTrait<T> for ArraySeqMtEphS<T> {
+    impl<T: StTInMtT + Clone + 'static> ScanContractMtEphTrait<T> for ArraySeqMtEphS<T> {
         fn scan_contract_parallel<F: Fn(&T, &T) -> T + Send + Sync + 'static>(
             a: &ArraySeqMtEphS<T>,
             f: Arc<F>,

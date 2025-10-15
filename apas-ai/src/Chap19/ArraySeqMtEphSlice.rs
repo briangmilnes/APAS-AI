@@ -15,11 +15,11 @@ pub mod ArraySeqMtEphSlice {
     use crate::Types::Types::*;
 
     #[derive(Debug)]
-    struct Inner<T: StT + Send + Sync> {
+    struct Inner<T: StTInMtT> {
         data: Mutex<Box<[T]>>,
     }
 
-    impl<T: StT + Send + Sync> Inner<T> {
+    impl<T: StTInMtT> Inner<T> {
         fn new(data: Box<[T]>) -> Self { Inner { data: Mutex::new(data) } }
 
         fn len(&self) -> N {
@@ -29,13 +29,13 @@ pub mod ArraySeqMtEphSlice {
     }
 
     /// Shared slice view over the mutex-protected backing buffer.
-    pub struct ArraySeqMtEphSliceS<T: StT + Send + Sync> {
+    pub struct ArraySeqMtEphSliceS<T: StTInMtT> {
         inner: Arc<Inner<T>>,
         range: Range<N>,
     }
 
     /// Sequence trait for the slice-backed MT ephemeral array.
-    pub trait ArraySeqMtEphSliceTrait<T: StT + Send + Sync> {
+    pub trait ArraySeqMtEphSliceTrait<T: StTInMtT> {
         /// claude-4-sonet: Work Θ(n), Span Θ(1)
         fn new(length: N, init_value: T) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
@@ -67,12 +67,12 @@ pub mod ArraySeqMtEphSlice {
         fn flatten(sequences: &[ArraySeqMtEphSliceS<T>]) -> Self;
         fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &Self, f: F, id: T) -> T;
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &Self, f: &F, id: T) -> (ArraySeqMtEphSliceS<T>, T);
-        fn iterate<A: StT + Send, F: Fn(&A, &T) -> A + Send + Sync>(a: &Self, f: &F, seed: A) -> A;
+        fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &Self, f: &F, seed: A) -> A;
         fn inject(a: &Self, updates: &[(N, T)]) -> Self;
         fn ninject(a: &Self, updates: &[(N, T)]) -> Self;
     }
 
-    impl<T: StT + Send + Sync + 'static> ArraySeqMtEphSliceS<T> {
+    impl<T: StTInMtT + 'static> ArraySeqMtEphSliceS<T> {
         /// Constructs a sequence from an owned boxed slice.
         pub fn from_box(data: Box<[T]>) -> Self {
             let len = data.len();
@@ -113,7 +113,7 @@ pub mod ArraySeqMtEphSlice {
         }
     }
 
-    impl<T: StT + Send + Sync + 'static> ArraySeqMtEphSliceTrait<T> for ArraySeqMtEphSliceS<T> {
+    impl<T: StTInMtT + 'static> ArraySeqMtEphSliceTrait<T> for ArraySeqMtEphSliceS<T> {
         fn new(length: N, init_value: T) -> Self {
             let data = repeat_vec(length, init_value);
             ArraySeqMtEphSliceS::from_vec(data)
@@ -332,7 +332,7 @@ pub mod ArraySeqMtEphSlice {
             (result_seq, acc)
         }
 
-        fn iterate<A: StT + Send, F: Fn(&A, &T) -> A + Send + Sync>(a: &Self, f: &F, seed: A) -> A {
+        fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &Self, f: &F, seed: A) -> A {
             // Algorithm 19.8: iterate f x a (sequential left-to-right)
             let mut acc = seed;
             for i in 0..a.length() {
@@ -365,7 +365,7 @@ pub mod ArraySeqMtEphSlice {
         }
     }
 
-    impl<T: StT + Send + Sync> Clone for ArraySeqMtEphSliceS<T> {
+    impl<T: StTInMtT> Clone for ArraySeqMtEphSliceS<T> {
         fn clone(&self) -> Self {
             ArraySeqMtEphSliceS {
                 inner: Arc::clone(&self.inner),
@@ -374,7 +374,7 @@ pub mod ArraySeqMtEphSlice {
         }
     }
 
-    impl<T: StT + Send + Sync + 'static> PartialEq for ArraySeqMtEphSliceS<T> {
+    impl<T: StTInMtT + 'static> PartialEq for ArraySeqMtEphSliceS<T> {
         fn eq(&self, other: &Self) -> bool {
             if Arc::ptr_eq(&self.inner, &other.inner) && self.range == other.range {
                 return true;
@@ -388,9 +388,9 @@ pub mod ArraySeqMtEphSlice {
         }
     }
 
-    impl<T: StT + Send + Sync + 'static> Eq for ArraySeqMtEphSliceS<T> {}
+    impl<T: StTInMtT + 'static> Eq for ArraySeqMtEphSliceS<T> {}
 
-    impl<T: StT + Send + Sync> Debug for ArraySeqMtEphSliceS<T> {
+    impl<T: StTInMtT> Debug for ArraySeqMtEphSliceS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             let guard = self.inner.data.lock().unwrap();
             f.debug_list()
@@ -399,7 +399,7 @@ pub mod ArraySeqMtEphSlice {
         }
     }
 
-    impl<T: StT + Send + Sync> Display for ArraySeqMtEphSliceS<T> {
+    impl<T: StTInMtT> Display for ArraySeqMtEphSliceS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             let guard = self.inner.data.lock().unwrap();
             let mut first = true;
@@ -415,7 +415,7 @@ pub mod ArraySeqMtEphSlice {
         }
     }
 
-    fn repeat_vec<T: StT + Send + Sync>(length: N, init: T) -> Vec<T> {
+    fn repeat_vec<T: StTInMtT>(length: N, init: T) -> Vec<T> {
         let mut data = Vec::with_capacity(length);
         for _ in 0..length {
             data.push(init.clone());

@@ -22,26 +22,26 @@ pub mod BoruvkaMtEph {
     pub trait BoruvkaMtEphTrait {
         /// Find vertex bridges for parallel Borůvka's algorithm
         /// APAS: Work O(|E|), Span O(lg |E|)
-        fn vertex_bridges_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+        fn vertex_bridges_mt<V: StTInMtT + Hash + Ord + 'static>(
             edges: &Set<LabeledEdge<V>>,
         ) -> Set<(V, LabeledEdge<V>)>;
 
         /// Parallel bridge-based star partition
         /// APAS: Work O(|V| + |E|), Span O(lg |V|)
-        fn bridge_star_partition_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+        fn bridge_star_partition_mt<V: StTInMtT + Hash + Ord + 'static>(
             vertices: &Set<V>,
             bridges: &Set<(V, LabeledEdge<V>)>,
         ) -> Set<Set<V>>;
 
         /// Parallel Borůvka's MST algorithm
         /// APAS: Work O(m log n), Span O(log² n)
-        fn boruvka_mst_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+        fn boruvka_mst_mt<V: StTInMtT + Hash + Ord + 'static>(
             edges: &Set<LabeledEdge<V>>,
         ) -> Set<LabeledEdge<V>>;
 
         /// Parallel Borůvka's MST with random seed
         /// APAS: Work O(m log n), Span O(log² n)
-        fn boruvka_mst_mt_with_seed<V: StT + Hash + Ord + Send + Sync + 'static>(
+        fn boruvka_mst_mt_with_seed<V: StTInMtT + Hash + Ord + 'static>(
             edges: &Set<LabeledEdge<V>>,
             seed: u64,
         ) -> Set<LabeledEdge<V>>;
@@ -69,7 +69,7 @@ pub mod BoruvkaMtEph {
     ///
     /// Returns:
     /// - HashMap mapping vertex → (neighbor, weight, label) for minimum edge
-    pub fn vertex_bridges_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+    pub fn vertex_bridges_mt<V: StTInMtT + Hash + Ord + 'static>(
         edges: Arc<Vec<LabeledEdge<V>>>,
         start: usize,
         end: usize,
@@ -132,7 +132,7 @@ pub mod BoruvkaMtEph {
     ///
     /// Returns:
     /// - (remaining_vertices, partition_map) where partition_map: tail → (head, weight, label)
-    pub fn bridge_star_partition_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+    pub fn bridge_star_partition_mt<V: StTInMtT + Hash + Ord + 'static>(
         vertices_vec: Vec<V>,
         bridges: HashMap<V, (V, OrderedFloat<f64>, usize)>,
         rng: &mut StdRng,
@@ -162,7 +162,7 @@ pub mod BoruvkaMtEph {
     }
 
     /// Parallel filter: find edges from Tail→Head
-    fn filter_tail_to_head_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+    fn filter_tail_to_head_mt<V: StTInMtT + Hash + Ord + 'static>(
         vertices: Arc<Vec<V>>,
         bridges: Arc<HashMap<V, (V, OrderedFloat<f64>, usize)>>,
         coin_flips: Arc<HashMap<V, bool>>,
@@ -226,7 +226,7 @@ pub mod BoruvkaMtEph {
     ///
     /// Returns:
     /// - Set of edge labels in the MST
-    pub fn boruvka_mst_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+    pub fn boruvka_mst_mt<V: StTInMtT + Hash + Ord + 'static>(
         vertices_vec: Vec<V>,
         edges_vec: Vec<LabeledEdge<V>>,
         mst_labels: Set<usize>,
@@ -270,7 +270,7 @@ pub mod BoruvkaMtEph {
     }
 
     /// Parallel edge re-routing: map edges to new endpoints and remove self-edges
-    fn reroute_edges_mt<V: StT + Hash + Ord + Send + Sync + 'static>(
+    fn reroute_edges_mt<V: StTInMtT + Hash + Ord + 'static>(
         edges: Arc<Vec<LabeledEdge<V>>>,
         partition: Arc<HashMap<V, V>>,
         start: usize,
@@ -322,7 +322,7 @@ pub mod BoruvkaMtEph {
     ///
     /// Returns:
     /// - Set of edge labels in the MST
-    pub fn boruvka_mst_mt_with_seed<V: StT + Hash + Ord + Send + Sync + 'static>(
+    pub fn boruvka_mst_mt_with_seed<V: StTInMtT + Hash + Ord + 'static>(
         vertices: &Set<V>,
         edges: &Set<LabeledEdge<V>>,
         seed: u64,
