@@ -86,8 +86,14 @@ fn test_empty_graph() {
 }
 
 #[test]
-fn test_display_graph() {
-    let graph: AdjMatrixGraphStEph = AdjMatrixGraphStEphTrait::new(2);
-    let display_str = format!("{}", graph);
-    assert!(!display_str.is_empty());
+fn test_num_edges_large() {
+    let mut graph: AdjMatrixGraphStEph = AdjMatrixGraphStEphTrait::new(5);
+    for i in 0..5 {
+        for j in 0..5 {
+            if i != j {
+                graph.set_edge(i, j, true);
+            }
+        }
+    }
+    assert_eq!(graph.num_edges(), 20);
 }
