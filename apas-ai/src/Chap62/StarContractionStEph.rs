@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 62: Star Contraction - Sequential Ephemeral Implementation
 //!
 //! Implements Algorithm 62.5: Star Contraction (sequential version)

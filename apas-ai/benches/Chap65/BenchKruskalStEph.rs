@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 65: Kruskal's MST Algorithm Benchmarks (Sequential)
 
 use std::time::Duration;

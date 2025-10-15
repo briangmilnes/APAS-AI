@@ -1,4 +1,4 @@
-//! Copyright © 2025 APAS-VERUS. All rights reserved.
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //!
 //! Shortest Path Utility Functions - Sequential Ephemeral (Integer Weights)
 //!

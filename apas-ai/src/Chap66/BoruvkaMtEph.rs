@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 66: Borůvka's MST Algorithm (Parallel Ephemeral)
 //!
 //! Implements parallel versions of Algorithm 66.2 and 66.3 using ParaPair! macro.

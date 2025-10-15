@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 63: Graph Connectivity - Multi-threaded Ephemeral Implementation
 //!
 //! Implements parallel graph connectivity algorithms using star contraction.

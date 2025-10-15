@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 65: Prim's MST Algorithm (Sequential Ephemeral)
 //!
 //! Implements Algorithm 65.1: Prim's algorithm for computing Minimum Spanning Trees.

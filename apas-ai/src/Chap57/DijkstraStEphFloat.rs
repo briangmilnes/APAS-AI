@@ -1,4 +1,4 @@
-//! Copyright © 2025 APAS-VERUS. All rights reserved.
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //!
 //! Dijkstra's Algorithm - Single Source Shortest Path (SSSP+) for non-negative float edge weights
 //!

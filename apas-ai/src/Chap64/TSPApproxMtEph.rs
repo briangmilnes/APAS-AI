@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 64: TSP 2-Approximation via MST (Parallel)
 //!
 //! Implements Section 4: Approximating Metric TSP via MST (parallel version)

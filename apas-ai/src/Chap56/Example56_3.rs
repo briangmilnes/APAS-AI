@@ -1,4 +1,4 @@
-//! Copyright © 2025 APAS-VERUS. All rights reserved.
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //!
 //! Example 56.3 - Negative Weight Cycles
 //!

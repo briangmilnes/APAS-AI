@@ -1,4 +1,4 @@
-// Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 64: Minimum Spanning Trees - Spanning Tree via Star Contraction (Sequential)
 //!
 //! Implements Exercise 64.2: Compute spanning tree using star contraction.
