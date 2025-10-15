@@ -95,3 +95,82 @@ fn multi_thread_pop_consumes_all_elements() {
     assert_eq!(unique, expected);
     assert!(stack.pop().is_none());
 }
+
+#[test]
+fn test_default_trait() {
+    let stack: ConcurrentStackMt<i32> = Default::default();
+    assert!(stack.is_empty());
+    assert_eq!(stack.pop(), None);
+}
+
+#[test]
+fn test_drain_comprehensive() {
+    let stack = ConcurrentStackMt::new();
+    for i in 0..10 {
+        stack.push(i);
+    }
+    
+    let drained = stack.drain();
+    assert_eq!(drained.len(), 10);
+    assert!(stack.is_empty());
+    
+    // Stack should be usable after drain
+    stack.push(99);
+    assert!(!stack.is_empty());
+    assert_eq!(stack.pop(), Some(99));
+}
+
+#[test]
+fn test_multiple_push_pop_cycles() {
+    let stack = ConcurrentStackMt::new();
+    
+    // Cycle 1
+    stack.push(1);
+    stack.push(2);
+    assert_eq!(stack.pop(), Some(2));
+    assert_eq!(stack.pop(), Some(1));
+    
+    // Cycle 2
+    stack.push(3);
+    stack.push(4);
+    stack.push(5);
+    assert_eq!(stack.pop(), Some(5));
+    assert_eq!(stack.pop(), Some(4));
+    assert_eq!(stack.pop(), Some(3));
+    
+    assert!(stack.is_empty());
+}
+
+#[test]
+fn test_is_empty_states() {
+    let stack = ConcurrentStackMt::new();
+    assert!(stack.is_empty());
+    
+    stack.push(1);
+    assert!(!stack.is_empty());
+    
+    stack.push(2);
+    assert!(!stack.is_empty());
+    
+    stack.pop();
+    assert!(!stack.is_empty());
+    
+    stack.pop();
+    assert!(stack.is_empty());
+}
+
+#[test]
+fn test_large_sequential_operations() {
+    let stack = ConcurrentStackMt::new();
+    let count = 10_000;
+    
+    for i in 0..count {
+        stack.push(i);
+    }
+    
+    for expected in (0..count).rev() {
+        assert_eq!(stack.pop(), Some(expected));
+    }
+    
+    assert!(stack.is_empty());
+}

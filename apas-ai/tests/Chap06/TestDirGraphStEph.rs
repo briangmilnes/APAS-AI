@@ -415,3 +415,56 @@ fn test_dirgraph_large_graph_stress() {
     assert!(!g.Neighbor(&2000, &0));
     assert_eq!(g.Degree(&2000), 0);
 }
+
+#[test]
+fn test_dirgraph_clone() {
+    let v: Set<N> = SetLit![1, 2, 3];
+    let a: Set<Edge<N>> = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 3));
+        s
+    };
+    let g = DirGraphStEph::FromSets(v, a);
+    let g2 = g.clone();
+    
+    assert_eq!(g.sizeV(), g2.sizeV());
+    assert_eq!(g.sizeA(), g2.sizeA());
+    assert!(g2.Neighbor(&1, &2));
+    assert!(g2.Neighbor(&2, &3));
+}
+
+#[test]
+fn test_dirgraph_debug_display() {
+    let v: Set<N> = SetLit![1, 2];
+    let a: Set<Edge<N>> = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+    let g = DirGraphStEph::FromSets(v, a);
+    
+    let debug_str = format!("{:?}", g);
+    assert!(!debug_str.is_empty());
+    
+    let display_str = format!("{}", g);
+    assert!(!display_str.is_empty());
+}
+
+#[test]
+fn test_dirgraph_equality() {
+    let v1: Set<N> = SetLit![1, 2];
+    let a1: Set<Edge<N>> = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+    let g1 = DirGraphStEph::FromSets(v1.clone(), a1.clone());
+    
+    let g2 = DirGraphStEph::FromSets(v1, a1);
+    assert_eq!(g1, g2);
+    
+    let v3: Set<N> = SetLit![1, 2, 3];
+    let g3 = DirGraphStEph::FromSets(v3, Set::empty());
+    assert_ne!(g1, g3);
+}

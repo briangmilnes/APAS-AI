@@ -467,3 +467,76 @@ fn test_set_maximum_size_boundary() {
     assert!(cartesian_large.mem(&Pair(0, 'a')));
     assert!(cartesian_large.mem(&Pair((large_size - 1) as i32, 'a')));
 }
+
+#[test]
+fn test_trait_empty() {
+    let s: Set<i32> = <Set<i32> as SetStEphTrait<i32>>::empty();
+    assert_eq!(s.size(), 0);
+}
+
+#[test]
+fn test_trait_singleton() {
+    let s: Set<i32> = <Set<i32> as SetStEphTrait<i32>>::singleton(42);
+    assert_eq!(s.size(), 1);
+    assert!(s.mem(&42));
+}
+
+#[test]
+fn test_trait_union() {
+    let s1 = SetLit![1, 2];
+    let s2 = SetLit![2, 3];
+    let u: Set<i32> = <Set<i32> as SetStEphTrait<i32>>::union(&s1, &s2);
+    assert_eq!(u.size(), 3);
+}
+
+#[test]
+fn test_trait_intersection() {
+    let s1 = SetLit![1, 2, 3];
+    let s2 = SetLit![2, 3, 4];
+    let i: Set<i32> = <Set<i32> as SetStEphTrait<i32>>::intersection(&s1, &s2);
+    assert_eq!(i.size(), 2);
+}
+
+#[test]
+fn test_trait_partition() {
+    let whole = SetLit![1, 2, 3, 4];
+    let part1 = SetLit![1, 2];
+    let part2 = SetLit![3, 4];
+    let parts = SetLit![part1, part2];
+    assert!(<Set<i32> as SetStEphTrait<i32>>::partition(&whole, &parts));
+}
+
+#[test]
+fn test_trait_cartesian_product() {
+    let s1 = SetLit![1, 2];
+    let s2 = SetLit!['a', 'b'];
+    let cp = <Set<i32> as SetStEphTrait<i32>>::CartesianProduct(&s1, &s2);
+    assert_eq!(cp.size(), 4);
+}
+
+#[test]
+fn test_trait_insert() {
+    let mut s: Set<i32> = Set::empty();
+    <Set<i32> as SetStEphTrait<i32>>::insert(&mut s, 42);
+    assert_eq!(s.size(), 1);
+}
+
+#[test]
+fn test_trait_from_vec() {
+    let s = <Set<i32> as SetStEphTrait<i32>>::FromVec(vec![1, 2, 3]);
+    assert_eq!(s.size(), 3);
+}
+
+#[test]
+fn test_debug_trait() {
+    let s = SetLit![1, 2, 3];
+    let debug_str = format!("{:?}", s);
+    assert!(debug_str.contains("1") || debug_str.contains("2") || debug_str.contains("3"));
+}
+
+#[test]
+fn test_display_trait() {
+    let s = SetLit![1, 2, 3];
+    let display_str = format!("{}", s);
+    assert!(display_str.contains("1"));
+}

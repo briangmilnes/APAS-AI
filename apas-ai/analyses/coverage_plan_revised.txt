@@ -1,0 +1,141 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    COVERAGE IMPROVEMENT PLAN - REVISED
+                      Problems & Exercises First! 🎯
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 0: QUICK WINS - Problems & Exercises (5 files)
+─────────────────────────────────────────────────────────────────────────────
+Strategy: Get easy greens first, build momentum!
+
+EXERCISES (Already ~90%, Easy Wins)
+───────────────────────────────────
+1. Chap12::Exercise12_5              89.7%     6 uncovered / 58 total
+   Strategy: Add 3-5 edge case tests
+   Expected: 98%+ (reduce to ~1 uncovered)
+   Effort: 10 minutes
+
+2. Chap12::Exercise12_1              90.7%     4 uncovered / 43 total
+   Strategy: Add 2-4 edge case tests
+   Expected: 98%+ (reduce to ~1 uncovered)
+   Effort: 10 minutes
+
+PROBLEMS (0% Coverage, Build from Scratch)
+───────────────────────────────────────────
+3. Chap21::Problem21_4                0.0%    28 uncovered / 28 total
+   Strategy: Read code, understand problem, add comprehensive tests
+   Expected: 85%+ (reduce to ~4 uncovered)
+   Effort: 30 minutes
+
+4. Chap21::Problem21_3                0.0%    13 uncovered / 13 total
+   Strategy: Read code, understand problem, add comprehensive tests
+   Expected: 85%+ (reduce to ~2 uncovered)
+   Effort: 20 minutes
+
+5. Chap21::Problem21_1                0.0%    12 uncovered / 12 total
+   Strategy: Read code, understand problem, add comprehensive tests
+   Expected: 85%+ (reduce to ~2 uncovered)
+   Effort: 20 minutes
+
+─────────────────────────────────────────────────────────────────────────────
+Phase 0 Target: 63 lines → ~10 lines = 53 lines covered
+Time Estimate: 90 minutes
+Impact: MASSIVE GREEN in HTML! 😊😊😊
+─────────────────────────────────────────────────────────────────────────────
+
+PHASE 1: Core Data Structures (Tier 1, 10 files)
+─────────────────────────────────────────────────────────────────────────────
+
+1.  Chap37::BSTBBAlphaStEph              83.7%    25 uncovered / 153 total
+2.  Chap37::AVLTreeSeqMtPer              85.3%    25 uncovered / 170 total
+3.  Chap18::LinkedListStPer              91.8%    22 uncovered / 267 total
+4.  Chap19::ArraySeqMtPer                88.2%    20 uncovered / 169 total
+5.  Chap39::BSTParaTreapMtEph            91.7%    19 uncovered / 229 total
+6.  Chap37::AVLTreeSeqStEph              92.1%    19 uncovered / 240 total
+7.  Chap37::BSTRBMtEph                   90.7%    18 uncovered / 193 total
+8.  Chap37::AVLTreeSeq                   93.4%    18 uncovered / 274 total
+9.  Chap45::LeftistHeapPQ                93.3%    14 uncovered / 210 total
+10. Chap37::BSTRBStEph                   92.5%    12 uncovered / 159 total
+
+Target: 186 lines → ~75 lines = 111 lines covered
+
+PHASE 2: Sets & Advanced Trees (Tier 2, 5 files)
+─────────────────────────────────────────────────────────────────────────────
+
+11. Chap41::AVLTreeSetStPer              91.3%    11 uncovered / 127 total
+12. Chap37::BSTAVLStEph                  92.3%    11 uncovered / 143 total
+13. Chap43::OrderedSetMtEph              89.1%    13 uncovered / 119 total
+14. Chap42::TableStEph                   92.7%    13 uncovered / 179 total
+15. Chap40::BSTReducedStEph              92.0%    15 uncovered / 187 total
+
+Target: 63 lines → ~25 lines = 38 lines covered
+
+PHASE 3: Dynamic Programming (Tier 3, 5 files)
+─────────────────────────────────────────────────────────────────────────────
+
+16. Chap50::MatrixChainMtEph             88.9%    17 uncovered / 153 total
+17. Chap50::MatrixChainMtPer             88.9%    12 uncovered / 108 total
+18. Chap51::TopDownDPMtEph               89.3%    13 uncovered / 121 total
+19. Chap49::SubsetSumMtPer               80.0%    14 uncovered / 70 total
+20. Chap49::SubsetSumStEph               79.3%    12 uncovered / 58 total
+
+Target: 68 lines → ~26 lines = 42 lines covered
+
+═══════════════════════════════════════════════════════════════════════════════
+
+REVISED OVERALL TARGETS
+═══════════════════════════════════════════════════════════════════════════════
+
+Total Files:                            25 files (5 + 20 original)
+Total Uncovered Lines (Before):         380 lines
+Target Uncovered Lines (After):         ~136 lines
+Expected Lines Covered:                 ~244 lines direct
+Expected Project-Wide Impact:           ~320-380 lines (with multiplier)
+
+Current Project Coverage:               89.26% (5,012 uncovered)
+Target Project Coverage:                89.8%+ (4,650 uncovered)
+
+Total Tests to Add:                     ~450-550 tests
+
+═══════════════════════════════════════════════════════════════════════════════
+
+EXECUTION PLAN
+═══════════════════════════════════════════════════════════════════════════════
+
+Session 1: Phase 0 - Problems & Exercises (ALL 5 files)
+  ✓ Quick wins, massive visual impact
+  ✓ Build confidence and momentum
+  ✓ Establish patterns for Problem files
+  Expected: 53 lines covered, nice green HTML! 😊
+
+Session 2-4: Phase 1 - Core Data Structures (3-4 files per session)
+  ✓ Leverage existing patterns
+  ✓ Focus on trees and sequences
+  Expected: 111 lines covered
+
+Session 5-6: Phase 2 - Sets & Advanced Trees (2-3 files per session)
+  ✓ Quick wins on already-high coverage
+  ✓ Finish strong
+  Expected: 38 lines covered
+
+Session 7-8: Phase 3 - DP Algorithms (2-3 files per session)
+  ✓ More thoughtful, algorithm-focused
+  ✓ Final push to 89.8%+
+  Expected: 42 lines covered
+
+═══════════════════════════════════════════════════════════════════════════════
+
+WHY THIS ORDERING ROCKS
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ Immediate visual gratification (HTML goes GREEN fast)
+✓ Easy wins build momentum and confidence
+✓ Problem files teach us new patterns
+✓ Exercise files are trivial but look great
+✓ Then we tackle the heavy hitters with momentum
+✓ Psychological boost: 5 files done in first session!
+
+═══════════════════════════════════════════════════════════════════════════════
+
+NICE GREEN OPTIMIZATION ACHIEVED! 🎨💚
+═══════════════════════════════════════════════════════════════════════════════
+

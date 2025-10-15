@@ -72,3 +72,31 @@ fn test_empty_graph() {
     let result = topological_sort_opt(&graph);
     assert!(result.is_some());
 }
+
+#[test]
+fn test_topo_sort_simple() {
+    let adj0 = ArraySeqStEphS::from_vec(vec![1]);
+    let adj1 = ArraySeqStEphS::from_vec(vec![2]);
+    let adj2 = ArraySeqStEphS::empty();
+    let graph = ArraySeqStEphS::from_vec(vec![adj0, adj1, adj2]);
+    let result = topo_sort(&graph);
+    assert_eq!(result.length(), 3);
+}
+
+#[test]
+fn test_topo_sort_disconnected() {
+    let adj0 = ArraySeqStEphS::empty();
+    let adj1 = ArraySeqStEphS::empty();
+    let adj2 = ArraySeqStEphS::from_vec(vec![3]);
+    let adj3 = ArraySeqStEphS::empty();
+    let graph = ArraySeqStEphS::from_vec(vec![adj0, adj1, adj2, adj3]);
+    let result = topo_sort(&graph);
+    assert_eq!(result.length(), 4);
+}
+
+#[test]
+fn test_topo_sort_empty() {
+    let graph: ArraySeqStEphS<ArraySeqStEphS<usize>> = ArraySeqStEphS::empty();
+    let result = topo_sort(&graph);
+    assert_eq!(result.length(), 0);
+}

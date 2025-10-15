@@ -29,6 +29,15 @@ fn test_empty_mapping() {
 }
 
 #[test]
+fn test_empty_mapping_trait() {
+    // Test calling empty() directly through the trait
+    let m: Mapping<N, &str> = <Mapping<N, &str> as MappingStEphTrait<N, &str>>::empty();
+    assert_eq!(m.size(), 0);
+    assert_eq!(m.domain().size(), 0);
+    assert_eq!(m.range().size(), 0);
+}
+
+#[test]
 fn test_from_vec_basic() {
     let m = MappingLit![(1, "one"), (2, "two"), (3, "three")];
     assert_eq!(m.size(), 3);
@@ -195,4 +204,36 @@ fn test_mapping_large_dataset_stress() {
         }
     }
     assert_eq!(count, 10000);
+}
+
+#[test]
+fn test_mapping_debug_display() {
+    let m = MappingLit![(1, "one"), (2, "two")];
+    
+    let debug_str = format!("{:?}", m);
+    assert!(!debug_str.is_empty());
+    
+    let display_str = format!("{}", m);
+    assert!(!display_str.is_empty());
+}
+
+#[test]
+fn test_mapping_equality() {
+    let m1 = MappingLit![(1, "one"), (2, "two")];
+    let m2 = MappingLit![(1, "one"), (2, "two")];
+    let m3 = MappingLit![(1, "one"), (3, "three")];
+    
+    assert_eq!(m1, m2);
+    assert_ne!(m1, m3);
+}
+
+#[test]
+fn test_mapping_clone() {
+    let m1 = MappingLit![(1, "one"), (2, "two")];
+    let m2 = m1.clone();
+    
+    assert_eq!(m1, m2);
+    assert_eq!(m1.size(), m2.size());
+    assert!(m2.mem(&1, &"one"));
+    assert!(m2.mem(&2, &"two"));
 }

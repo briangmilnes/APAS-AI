@@ -428,3 +428,20 @@ fn test_clone() {
     assert_eq!(g2.labeled_edges().size(), g1.labeled_edges().size());
     assert!(g2.has_edge(&1, &2));
 }
+
+#[test]
+fn test_parallel_neighbors() {
+    let mut vertices = Set::empty();
+    for i in 0..16 {
+        vertices.insert(i);
+    }
+    
+    let mut edges = Set::empty();
+    for i in 1..13 {
+        edges.insert(LabEdge(0, i, format!("edge_{i}")));
+    }
+    
+    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(vertices, edges);
+    let neighbors = g.neighbors(&0);
+    assert_eq!(neighbors.size(), 12);
+}

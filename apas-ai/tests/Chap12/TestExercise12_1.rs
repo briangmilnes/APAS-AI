@@ -75,3 +75,46 @@ fn spin_lock_is_non_reentrant() {
     handle.join().expect("spin_lock_is_non_reentrant: worker panicked");
     assert!(acquired.load(Ordering::Relaxed));
 }
+
+#[test]
+fn test_default_trait() {
+    let lock: SpinLock = Default::default();
+    lock.lock();
+    lock.unlock();
+}
+
+#[test]
+fn test_with_lock_returns_value() {
+    let lock = SpinLock::new();
+    let result = lock.with_lock(|| 42);
+    assert_eq!(result, 42);
+    
+    let result2 = lock.with_lock(|| "hello");
+    assert_eq!(result2, "hello");
+}
+
+#[test]
+fn test_multiple_lock_unlock_cycles() {
+    let lock = SpinLock::new();
+    
+    for i in 0..10 {
+        lock.lock();
+        // Critical section
+        let _ = i;
+        lock.unlock();
+    }
+}
+
+#[test]
+fn test_with_lock_multiple_times() {
+    let lock = SpinLock::new();
+    let counter = AtomicUsize::new(0);
+    
+    for _ in 0..5 {
+        lock.with_lock(|| {
+            counter.fetch_add(1, Ordering::Relaxed);
+        });
+    }
+    
+    assert_eq!(counter.load(Ordering::Relaxed), 5);
+}

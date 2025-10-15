@@ -201,3 +201,177 @@ fn test_collect_groups_by_key() {
     assert_eq!(pair1.0, "b");
     assert_eq!(pair1.1, ArraySeqStEphSLit![2]);
 }
+
+#[test]
+fn test_from_vec_empty() {
+    let seq: ArraySeqStEphS<N> = ArraySeqStEphS::from_vec(vec![]);
+    assert_eq!(seq.length(), 0);
+}
+
+#[test]
+fn test_new() {
+    let seq = ArraySeqStEphS::new(5, 42);
+    assert_eq!(seq.length(), 5);
+    for i in 0..5 {
+        assert_eq!(*seq.nth(i), 42);
+    }
+}
+
+#[test]
+fn test_singleton() {
+    let seq = ArraySeqStEphS::singleton(99);
+    assert_eq!(seq.length(), 1);
+    assert_eq!(*seq.nth(0), 99);
+}
+
+#[test]
+fn test_set_out_of_bounds() {
+    let mut seq = ArraySeqStEphSLit![1, 2, 3];
+    let result = seq.set(10, 99);
+    assert!(result.is_err());
+    assert_eq!(result.unwrap_err(), "Index out of bounds");
+}
+
+#[test]
+fn test_set_success() {
+    let mut seq = ArraySeqStEphSLit![1, 2, 3];
+    let result = seq.set(1, 42);
+    assert!(result.is_ok());
+    assert_eq!(*seq.nth(1), 42);
+}
+
+#[test]
+fn test_iter_comprehensive() {
+    let seq = ArraySeqStEphSLit![10, 20, 30, 40, 50];
+    let collected: Vec<N> = seq.iter().copied().collect();
+    assert_eq!(collected, vec![10, 20, 30, 40, 50]);
+
+    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+    let empty_collected: Vec<N> = empty.iter().copied().collect();
+    assert_eq!(empty_collected.len(), 0);
+}
+
+#[test]
+fn test_subseq_edge_cases() {
+    let seq = ArraySeqStEphSLit![1, 2, 3, 4, 5];
+    
+    // Start beyond end
+    let sub1 = seq.subseq(10, 5);
+    assert_eq!(sub1.length(), 0);
+    
+    // Length extends beyond end
+    let sub2 = seq.subseq(3, 10);
+    assert_eq!(sub2.length(), 2);
+    assert_eq!(sub2, ArraySeqStEphSLit![4, 5]);
+    
+    // Zero length
+    let sub3 = seq.subseq(2, 0);
+    assert_eq!(sub3.length(), 0);
+    
+    // Full sequence
+    let sub4 = seq.subseq(0, 5);
+    assert_eq!(sub4, seq);
+}
+
+#[test]
+fn test_equality() {
+    let seq1 = ArraySeqStEphSLit![1, 2, 3];
+    let seq2 = ArraySeqStEphSLit![1, 2, 3];
+    let seq3 = ArraySeqStEphSLit![1, 2, 4];
+    
+    assert_eq!(seq1, seq2);
+    assert_ne!(seq1, seq3);
+}
+
+#[test]
+fn test_debug_display() {
+    let seq = ArraySeqStEphSLit![1, 2, 3];
+    let debug_str = format!("{:?}", seq);
+    assert!(debug_str.contains("1"));
+    
+    let display_str = format!("{}", seq);
+    assert!(display_str.contains("1"));
+}
+
+#[test]
+fn test_map_empty() {
+    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+    let mapped = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::map(&empty, &|x| x + 1);
+    assert_eq!(mapped.length(), 0);
+}
+
+#[test]
+fn test_filter_empty() {
+    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+    let filtered = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&empty, &|_| true);
+    assert_eq!(filtered.length(), 0);
+}
+
+#[test]
+fn test_flatten_empty() {
+    let empty: ArraySeqStEphS<ArraySeqStEphS<N>> = ArraySeqStEphS::empty();
+    let flattened = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::flatten(&empty);
+    assert_eq!(flattened.length(), 0);
+}
+
+#[test]
+fn test_reduce_empty() {
+    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+    let result = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::reduce(&empty, &|a, b| a + b, 100);
+    assert_eq!(result, 100);
+}
+
+#[test]
+fn test_scan_empty() {
+    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+    let (prefixes, total) = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::scan(&empty, &|a, b| a + b, 0);
+    // scan returns initial value as first prefix even for empty sequence
+    assert_eq!(prefixes.length(), 1);
+    assert_eq!(*prefixes.nth(0), 0);
+    assert_eq!(total, 0);
+}
+
+#[test]
+fn test_append_empty() {
+    let seq = ArraySeqStEphSLit![1, 2, 3];
+    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+    
+    let result1 = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&seq, &empty);
+    assert_eq!(result1, seq);
+    
+    let result2 = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&empty, &seq);
+    assert_eq!(result2, seq);
+    
+    let result3 = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&empty, &empty);
+    assert_eq!(result3.length(), 0);
+}
+
+#[test]
+fn test_inject_empty_updates() {
+    let mut seq = ArraySeqStEphSLit![1, 2, 3];
+    let empty_updates: ArraySeqStEphS<Pair<N, N>> = ArraySeqStEphS::empty();
+    seq.inject(&empty_updates);
+    assert_eq!(seq, ArraySeqStEphSLit![1, 2, 3]);
+}
+
+#[test]
+fn test_clone() {
+    let seq1 = ArraySeqStEphSLit![1, 2, 3];
+    let seq2 = seq1.clone();
+    assert_eq!(seq1, seq2);
+}
+
+#[test]
+fn test_tabulate_empty() {
+    let seq = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::tabulate(&|i| i, 0);
+    assert_eq!(seq.length(), 0);
+}
+
+#[test]
+fn test_large_sequence() {
+    let seq = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::tabulate(&|i| i, 1000);
+    assert_eq!(seq.length(), 1000);
+    assert_eq!(*seq.nth(0), 0);
+    assert_eq!(*seq.nth(500), 500);
+    assert_eq!(*seq.nth(999), 999);
+}

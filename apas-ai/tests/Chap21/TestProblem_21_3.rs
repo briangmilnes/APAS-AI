@@ -1,78 +1,114 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-/// Problem 21.3 (Points in 3D) using ArraySeqPer — imperative triple loop.
-use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap21::Problem21_3::Problem21_3::*;
 use apas_ai::Types::Types::*;
-use apas_ai::{ArraySeqStPerSLit, PairLit};
 
-fn points3d_loops(n: N) -> ArraySeqStPerS<Pair<N, Pair<N, N>>> {
-    if n == 0 {
-        return ArraySeqStPerSLit![];
-    }
-    let len = n * n * n;
-    let mut v: Vec<Pair<N, Pair<N, N>>> = Vec::with_capacity(len);
-    for x in 0..n {
-        for y in 1..=n {
-            for z in 2..=n + 1 {
-                v.push(PairLit!(x, Pair(y, z)));
-            }
+#[test]
+fn test_points3d_loops_empty() {
+    let result = points3d_loops(0);
+    assert_eq!(result.length(), 0);
+}
+
+#[test]
+fn test_points3d_loops_one() {
+    let result = points3d_loops(1);
+    assert_eq!(result.length(), 1);
+    // n=1: x in [0,1), y in [1,1], z in [2,2] => (0, 1, 2)
+    assert_eq!(*result.nth(0), Pair(0, Pair(1, 2)));
+}
+
+#[test]
+fn test_points3d_loops_two() {
+    let result = points3d_loops(2);
+    assert_eq!(result.length(), 8); // 2 * 2 * 2 = 8
+    
+    // x=0, y=1: (0,1,2), (0,1,3)
+    assert_eq!(*result.nth(0), Pair(0, Pair(1, 2)));
+    assert_eq!(*result.nth(1), Pair(0, Pair(1, 3)));
+    
+    // x=0, y=2: (0,2,2), (0,2,3)
+    assert_eq!(*result.nth(2), Pair(0, Pair(2, 2)));
+    assert_eq!(*result.nth(3), Pair(0, Pair(2, 3)));
+    
+    // x=1, y=1: (1,1,2), (1,1,3)
+    assert_eq!(*result.nth(4), Pair(1, Pair(1, 2)));
+    assert_eq!(*result.nth(5), Pair(1, Pair(1, 3)));
+    
+    // x=1, y=2: (1,2,2), (1,2,3)
+    assert_eq!(*result.nth(6), Pair(1, Pair(2, 2)));
+    assert_eq!(*result.nth(7), Pair(1, Pair(2, 3)));
+}
+
+#[test]
+fn test_points3d_loops_three() {
+    let result = points3d_loops(3);
+    assert_eq!(result.length(), 27); // 3 * 3 * 3 = 27
+    
+    // Check first point
+    assert_eq!(*result.nth(0), Pair(0, Pair(1, 2)));
+    
+    // Check last point
+    assert_eq!(*result.nth(26), Pair(2, Pair(3, 4)));
+}
+
+#[test]
+fn test_points3d_loops_ordering() {
+    let result = points3d_loops(3);
+    
+    // Verify x-major, then y, then z ordering
+    let mut prev_x = 0;
+    let mut prev_y = 0;
+    let mut prev_z = 0;
+    
+    for i in 0..result.length() {
+        let Pair(x, Pair(y, z)) = *result.nth(i);
+        
+        if x != prev_x {
+            assert!(x > prev_x);
+            prev_y = 0;
+            prev_z = 0;
+        } else if y != prev_y {
+            assert!(y > prev_y);
+            prev_z = 0;
+        } else {
+            assert!(z > prev_z);
         }
+        
+        prev_x = x;
+        prev_y = y;
+        prev_z = z;
     }
-    ArraySeqStPerS::from_vec(v)
 }
 
 #[test]
-fn test_points3d_loops_n0_empty() {
-    let s = points3d_loops(0);
-    assert_eq!(s.length(), 0);
+fn test_points3d_loops_bounds() {
+    let n = 5;
+    let result = points3d_loops(n);
+    
+    // Verify all points satisfy: 0 <= x < n, 1 <= y <= n, 2 <= z <= n+1
+    for i in 0..result.length() {
+        let Pair(x, Pair(y, z)) = *result.nth(i);
+        assert!(x < n);
+        assert!(y >= 1 && y <= n);
+        assert!(z >= 2 && z <= n + 1);
+    }
 }
 
 #[test]
-fn test_points3d_loops_n1_single() {
-    let s = points3d_loops(1);
-    let expect = ArraySeqStPerSLit![PairLit!(0, Pair(1, 2))];
-    assert_eq!(s, expect);
+fn test_points3d_loops_count() {
+    for n in 1..=10 {
+        let result = points3d_loops(n);
+        assert_eq!(result.length(), n * n * n);
+    }
 }
 
 #[test]
-fn test_points3d_loops_n2_values_and_order() {
-    let s = points3d_loops(2);
-    let expect = ArraySeqStPerS::from_vec(vec![
-        PairLit!(0, Pair(1, 2)),
-        PairLit!(0, Pair(1, 3)),
-        PairLit!(0, Pair(2, 2)),
-        PairLit!(0, Pair(2, 3)),
-        PairLit!(1, Pair(1, 2)),
-        PairLit!(1, Pair(1, 3)),
-        PairLit!(1, Pair(2, 2)),
-        PairLit!(1, Pair(2, 3)),
-    ]);
-    assert_eq!(s.length(), 8);
-    assert_eq!(s, expect);
-}
-
-#[test]
-fn test_points3d_loops_iterator_order() {
-    let s = points3d_loops(2);
-    let collected: Vec<Pair<N, Pair<N, N>>> = s.iter().copied().collect();
-    assert_eq!(
-        collected,
-        vec![
-            PairLit!(0, Pair(1, 2)),
-            PairLit!(0, Pair(1, 3)),
-            PairLit!(0, Pair(2, 2)),
-            PairLit!(0, Pair(2, 3)),
-            PairLit!(1, Pair(1, 2)),
-            PairLit!(1, Pair(1, 3)),
-            PairLit!(1, Pair(2, 2)),
-            PairLit!(1, Pair(2, 3))
-        ]
-    );
-}
-
-#[test]
-fn test_points3d_loops_debug_shape() {
-    let s = points3d_loops(2);
-    let dbg_str = format!("{s:?}");
-    assert!(!dbg_str.is_empty());
+fn test_points3d_loops_large() {
+    let result = points3d_loops(20);
+    assert_eq!(result.length(), 8000); // 20^3 = 8000
+    
+    // Spot check first and last
+    assert_eq!(*result.nth(0), Pair(0, Pair(1, 2)));
+    assert_eq!(*result.nth(7999), Pair(19, Pair(20, 21)));
 }

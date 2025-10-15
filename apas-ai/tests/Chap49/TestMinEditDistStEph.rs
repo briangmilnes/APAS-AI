@@ -365,3 +365,61 @@ fn test_target_mut() {
 
     assert_eq!(*med.target().nth(2), 77);
 }
+
+#[test]
+fn test_display_formatting() {
+    let source = ArraySeqStEphS::from_vec(vec!['a', 'b']);
+    let target = ArraySeqStEphS::from_vec(vec!['c', 'd']);
+    let med = MinEditDistStEphS::from_sequences(source, target);
+    
+    let display = format!("{}", med);
+    assert!(display.contains("MinEditDist"));
+}
+
+#[test]
+fn test_debug_formatting() {
+    let source = ArraySeqStEphS::from_vec(vec![1, 2]);
+    let target = ArraySeqStEphS::from_vec(vec![3, 4]);
+    let med = MinEditDistStEphS::from_sequences(source, target);
+    
+    let debug = format!("{:?}", med);
+    assert!(debug.contains("MinEditDistStEphS"));
+}
+
+#[test]
+fn test_clone() {
+    let source = ArraySeqStEphS::from_vec(vec![1, 2, 3]);
+    let target = ArraySeqStEphS::from_vec(vec![4, 5, 6]);
+    let med = MinEditDistStEphS::from_sequences(source, target);
+    
+    let cloned = med.clone();
+    assert_eq!(cloned.source().length(), 3);
+    assert_eq!(cloned.target().length(), 3);
+}
+
+#[test]
+fn test_equality() {
+    let source1 = ArraySeqStEphS::from_vec(vec![1, 2]);
+    let target1 = ArraySeqStEphS::from_vec(vec![3, 4]);
+    let med1 = MinEditDistStEphS::from_sequences(source1, target1);
+    
+    let source2 = ArraySeqStEphS::from_vec(vec![1, 2]);
+    let target2 = ArraySeqStEphS::from_vec(vec![3, 4]);
+    let med2 = MinEditDistStEphS::from_sequences(source2, target2);
+    
+    assert_eq!(med1, med2);
+}
+
+#[test]
+fn test_repeated_computation() {
+    let source = ArraySeqStEphS::from_vec(vec![1, 2, 3]);
+    let target = ArraySeqStEphS::from_vec(vec![4, 5, 6]);
+    let mut med = MinEditDistStEphS::from_sequences(source, target);
+    
+    let dist1 = med.min_edit_distance();
+    let dist2 = med.min_edit_distance();
+    let dist3 = med.min_edit_distance();
+    
+    assert_eq!(dist1, dist2);
+    assert_eq!(dist2, dist3);
+}

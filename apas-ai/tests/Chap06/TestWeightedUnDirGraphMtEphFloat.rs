@@ -399,3 +399,50 @@ fn test_vertex_degree() {
     assert_eq!(g.vertex_degree(&2), 1);
     assert_eq!(g.vertex_degree(&3), 1);
 }
+
+#[test]
+fn test_parallel_neighbors_weighted() {
+    let mut vertices = Set::empty();
+    for i in 0..15 {
+        vertices.insert(i);
+    }
+    
+    let mut edges = Set::empty();
+    for i in 1..13 {
+        edges.insert((0, i, OrderedFloat(i as f64 * 1.5)));
+    }
+    
+    let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+    
+    let neighbors_weighted = g.neighbors_weighted(&0);
+    assert_eq!(neighbors_weighted.size(), 12);
+    
+    assert!(neighbors_weighted.mem(&(1, OrderedFloat(1.5))));
+    assert!(neighbors_weighted.mem(&(5, OrderedFloat(7.5))));
+    assert!(neighbors_weighted.mem(&(12, OrderedFloat(18.0))));
+}
+
+#[test]
+fn test_display_debug_traits() {
+    let vertices = SetLit![1, 2];
+    let edges = SetLit![(1, 2, OrderedFloat(3.14))];
+    let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+    
+    let display_str = format!("{}", g);
+    assert!(display_str.contains("LabUnDirGraph"));
+    
+    let debug_str = format!("{:?}", g);
+    assert!(debug_str.contains("LabUnDirGraph"));
+}
+
+#[test]
+fn test_clone() {
+    let vertices = SetLit![1, 2, 3];
+    let edges = SetLit![(1, 2, OrderedFloat(1.5)), (2, 3, OrderedFloat(2.5))];
+    let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+    
+    let g2 = g.clone();
+    assert_eq!(g2.vertices().size(), 3);
+    assert_eq!(g2.labeled_edges().size(), 2);
+    assert!(g2.has_edge(&1, &2));
+}

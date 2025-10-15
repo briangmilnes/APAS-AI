@@ -300,3 +300,33 @@ fn test_relation_maximum_size_boundary() {
     assert!(small_rel1.mem(&2, &4));
     assert!(small_rel2.mem(&2, &4));
 }
+
+#[test]
+fn test_relation_debug_display() {
+    let rel = RelationLit![(1, 'a'), (2, 'b')];
+    
+    let debug_str = format!("{:?}", rel);
+    assert!(!debug_str.is_empty());
+    
+    let display_str = format!("{}", rel);
+    assert!(!display_str.is_empty());
+}
+
+#[test]
+fn test_relation_equality() {
+    let rel1 = RelationLit![(1, 'a'), (2, 'b')];
+    let rel2 = RelationLit![(1, 'a'), (2, 'b')];
+    let rel3 = RelationLit![(1, 'a'), (3, 'c')];
+    
+    assert_eq!(rel1, rel2);
+    assert_ne!(rel1, rel3);
+}
+
+#[test]
+fn test_relation_clone() {
+    let rel1 = RelationLit![(1, 'a'), (2, 'b')];
+    let rel2 = rel1.clone();
+    
+    assert_eq!(rel1, rel2);
+    assert_eq!(rel1.size(), rel2.size());
+}

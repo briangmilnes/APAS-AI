@@ -441,3 +441,36 @@ fn test_deflate_and_filter() {
 }
 
 // ========== Merged from TestAVLTreeSeqStEphChap37_Advanced.rs above ==========
+
+#[test]
+fn test_very_large_tree_with_deletions() {
+    let mut tree = AVLTreeSeqStEphS::from_vec((1..=100).collect());
+    assert_eq!(tree.length(), 100);
+    
+    // Delete every 10th element
+    for i in (0..10).rev() {
+        let val_to_delete = (i * 10) + 10;
+        tree.delete_value(&val_to_delete);
+    }
+    
+    assert_eq!(tree.length(), 90);
+    assert!(!tree.contains_value(&10));
+    assert!(!tree.contains_value(&50));
+}
+
+#[test]
+fn test_clone() {
+    let tree1 = AVLTreeSeqStEphS::from_vec(vec![1, 2, 3]);
+    let tree2 = tree1.clone();
+    
+    assert_eq!(tree1.length(), tree2.length());
+    for i in 0..tree1.length() {
+        assert_eq!(tree1.nth(i), tree2.nth(i));
+    }
+}
+
+#[test]
+fn test_default_trait() {
+    let tree: AVLTreeSeqStEphS<i32> = Default::default();
+    assert_eq!(tree.length(), 0);
+}

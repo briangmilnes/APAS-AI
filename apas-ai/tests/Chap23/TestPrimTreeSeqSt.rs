@@ -255,3 +255,148 @@ fn test_length() {
     let seq = PrimTreeSeqStS::from_vec(vec![1, 2, 3, 4, 5]);
     assert_eq!(seq.length(), 5);
 }
+
+// Tests calling through the trait interface to cover trait impl lines
+
+#[test]
+fn test_trait_empty() {
+    let seq = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::empty();
+    assert_eq!(seq.length(), 0);
+}
+
+#[test]
+fn test_trait_singleton() {
+    let seq = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::singleton(42);
+    assert_eq!(seq.length(), 1);
+    assert_eq!(seq.as_slice()[0], 42);
+}
+
+#[test]
+fn test_trait_from_vec() {
+    let vec = vec![1, 2, 3];
+    let seq = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::from_vec(vec);
+    assert_eq!(seq.length(), 3);
+}
+
+#[test]
+fn test_trait_into_vec() {
+    let seq = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::from_vec(vec![1, 2, 3]);
+    let vec = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::into_vec(seq);
+    assert_eq!(vec, vec![1, 2, 3]);
+}
+
+#[test]
+fn test_trait_as_slice() {
+    let seq = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::from_vec(vec![1, 2, 3]);
+    assert_eq!(seq.as_slice(), &[1, 2, 3]);
+}
+
+#[test]
+fn test_trait_length() {
+    let seq = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::from_vec(vec![1, 2, 3, 4, 5]);
+    assert_eq!(seq.length(), 5);
+}
+
+#[test]
+fn test_trait_expose_zero() {
+    let seq = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::empty();
+    assert!(matches!(seq.expose(), PrimTreeSeqStTree::Zero));
+}
+
+#[test]
+fn test_trait_expose_one() {
+    let seq = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::singleton(7);
+    match seq.expose() {
+        | PrimTreeSeqStTree::One(value) => assert_eq!(value, 7),
+        | other => panic!("expected One variant, got {other:?}"),
+    }
+}
+
+#[test]
+fn test_trait_expose_two() {
+    let seq = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::from_vec((0..6).collect());
+    match seq.expose() {
+        | PrimTreeSeqStTree::Two(left, right) => {
+            assert_eq!(left.length() + right.length(), 6);
+            assert_eq!(left.as_slice(), &[0, 1, 2]);
+            assert_eq!(right.as_slice(), &[3, 4, 5]);
+        }
+        | other => panic!("expected Two variant, got {other:?}"),
+    }
+}
+
+#[test]
+fn test_trait_join_zero() {
+    let seq = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::join(PrimTreeSeqStTree::Zero);
+    assert_eq!(seq.length(), 0);
+}
+
+#[test]
+fn test_trait_join_one() {
+    let seq = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::join(PrimTreeSeqStTree::One(99));
+    assert_eq!(seq.length(), 1);
+    assert_eq!(seq.as_slice(), &[99]);
+}
+
+#[test]
+fn test_trait_join_two() {
+    let left = PrimTreeSeqStS::from_vec(vec![1, 2]);
+    let right = PrimTreeSeqStS::from_vec(vec![3, 4, 5]);
+    let joined = <PrimTreeSeqStS<i32> as PrimTreeSeqStTrait<i32>>::join(PrimTreeSeqStTree::Two(left, right));
+    assert_eq!(joined.length(), 5);
+    assert_eq!(joined.as_slice(), &[1, 2, 3, 4, 5]);
+}
+
+// Generic helper functions to force trait dispatch
+
+fn generic_as_slice<T: StT, S: PrimTreeSeqStTrait<T>>(seq: &S) -> &[T] {
+    seq.as_slice()
+}
+
+fn generic_length<T: StT, S: PrimTreeSeqStTrait<T>>(seq: &S) -> N {
+    seq.length()
+}
+
+fn generic_expose<T: StT, S: PrimTreeSeqStTrait<T>>(seq: &S) -> PrimTreeSeqStTree<T> {
+    seq.expose()
+}
+
+#[test]
+fn test_generic_as_slice() {
+    let seq = PrimTreeSeqStS::from_vec(vec![1, 2, 3]);
+    let slice = generic_as_slice(&seq);
+    assert_eq!(slice, &[1, 2, 3]);
+}
+
+#[test]
+fn test_generic_length() {
+    let seq = PrimTreeSeqStS::from_vec(vec![1, 2, 3, 4, 5]);
+    assert_eq!(generic_length(&seq), 5);
+}
+
+#[test]
+fn test_generic_expose_empty() {
+    let seq = PrimTreeSeqStS::<i32>::empty();
+    assert!(matches!(generic_expose(&seq), PrimTreeSeqStTree::Zero));
+}
+
+#[test]
+fn test_generic_expose_one() {
+    let seq = PrimTreeSeqStS::singleton(42);
+    match generic_expose(&seq) {
+        | PrimTreeSeqStTree::One(value) => assert_eq!(value, 42),
+        | other => panic!("expected One, got {other:?}"),
+    }
+}
+
+#[test]
+fn test_generic_expose_two() {
+    let seq = PrimTreeSeqStS::from_vec(vec![1, 2, 3, 4]);
+    match generic_expose(&seq) {
+        | PrimTreeSeqStTree::Two(left, right) => {
+            assert_eq!(left.length(), 2);
+            assert_eq!(right.length(), 2);
+        }
+        | other => panic!("expected Two, got {other:?}"),
+    }
+}

@@ -1,0 +1,238 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    COVERAGE IMPROVEMENT PLAN - NEXT 20 FILES
+                          Target: 90%+ Coverage per File
+═══════════════════════════════════════════════════════════════════════════════
+
+SELECTION CRITERIA
+─────────────────────────────────────────────────────────────────────────────
+✓ 70-95% current coverage (prime improvement zone)
+✓ 8-35 uncovered lines (achievable targets)
+✓ Core data structures prioritized over specialized algorithms
+✓ Exclude: graphs, hash tables, connectivity (require domain expertise)
+✓ Focus on: trees, sequences, heaps, sets, DP structures
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PRIORITY TIER 1: Core Data Structures (High Value, 10 files)
+─────────────────────────────────────────────────────────────────────────────
+
+1.  Chap37::BSTBBAlphaStEph              83.7%    25 uncovered / 153 total
+    Type: Weight-Balanced BST (ephemeral)
+    Strategy: Similar to AVL tests (rotations, balancing, large trees)
+    Expected: 95%+ (reduce to ~8 uncovered)
+
+2.  Chap37::AVLTreeSeqMtPer              85.3%    25 uncovered / 170 total
+    Type: Thread-safe persistent AVL tree sequence
+    Strategy: Persistence tests, thread-safety patterns
+    Expected: 95%+ (reduce to ~8 uncovered)
+
+3.  Chap18::LinkedListStPer              91.8%    22 uncovered / 267 total
+    Type: Persistent linked list
+    Strategy: Edge cases, large lists, persistence verification
+    Expected: 96%+ (reduce to ~10 uncovered)
+
+4.  Chap19::ArraySeqMtPer                88.2%    20 uncovered / 169 total
+    Type: Thread-safe persistent array sequence
+    Strategy: Similar to ArraySeqStEph but with persistence
+    Expected: 95%+ (reduce to ~8 uncovered)
+
+5.  Chap39::BSTParaTreapMtEph            91.7%    19 uncovered / 229 total
+    Type: Parallel randomized treap
+    Strategy: Similar to BSTTreapMtEph with parallelism edge cases
+    Expected: 96%+ (reduce to ~9 uncovered)
+
+6.  Chap37::AVLTreeSeqStEph              92.1%    19 uncovered / 240 total
+    Type: Ephemeral AVL tree sequence
+    Strategy: Mutation tests, large sequences, edge cases
+    Expected: 96%+ (reduce to ~9 uncovered)
+
+7.  Chap37::BSTRBMtEph                   90.7%    18 uncovered / 193 total
+    Type: Red-Black tree (thread-safe, ephemeral)
+    Strategy: Rotations, color invariants, rebalancing
+    Expected: 96%+ (reduce to ~8 uncovered)
+
+8.  Chap37::AVLTreeSeq                   93.4%    18 uncovered / 274 total
+    Type: Core AVL tree sequence
+    Strategy: Already high coverage, target edge cases only
+    Expected: 97%+ (reduce to ~8 uncovered)
+
+9.  Chap45::LeftistHeapPQ                93.3%    14 uncovered / 210 total
+    Type: Leftist heap priority queue
+    Strategy: Merge operations, heap property tests
+    Expected: 97%+ (reduce to ~6 uncovered)
+
+10. Chap37::BSTRBStEph                   92.5%    12 uncovered / 159 total
+    Type: Red-Black tree (single-threaded, ephemeral)
+    Strategy: Similar to BSTRBMtEph without threading
+    Expected: 97%+ (reduce to ~5 uncovered)
+
+─────────────────────────────────────────────────────────────────────────────
+Tier 1 Target: 186 lines → ~75 lines = 111 lines covered
+─────────────────────────────────────────────────────────────────────────────
+
+PRIORITY TIER 2: Sets & Advanced Trees (Good Value, 5 files)
+─────────────────────────────────────────────────────────────────────────────
+
+11. Chap41::AVLTreeSetStPer              91.3%    11 uncovered / 127 total
+    Type: Persistent AVL tree set
+    Strategy: Set operations, persistence verification
+    Expected: 97%+ (reduce to ~4 uncovered)
+
+12. Chap37::BSTAVLStEph                  92.3%    11 uncovered / 143 total
+    Type: AVL-based BST (ephemeral)
+    Strategy: Similar to other AVL tests
+    Expected: 97%+ (reduce to ~4 uncovered)
+
+13. Chap43::OrderedSetMtEph              89.1%    13 uncovered / 119 total
+    Type: Thread-safe ordered set
+    Strategy: Ordering tests, concurrent operations
+    Expected: 96%+ (reduce to ~5 uncovered)
+
+14. Chap42::TableStEph                   92.7%    13 uncovered / 179 total
+    Type: Ephemeral table/map structure
+    Strategy: Key-value operations, edge cases
+    Expected: 97%+ (reduce to ~5 uncovered)
+
+15. Chap40::BSTReducedStEph              92.0%    15 uncovered / 187 total
+    Type: Reduced/simplified BST
+    Strategy: Basic BST operations, edge cases
+    Expected: 96%+ (reduce to ~7 uncovered)
+
+─────────────────────────────────────────────────────────────────────────────
+Tier 2 Target: 63 lines → ~25 lines = 38 lines covered
+─────────────────────────────────────────────────────────────────────────────
+
+PRIORITY TIER 3: Dynamic Programming & Algorithms (Medium Value, 5 files)
+─────────────────────────────────────────────────────────────────────────────
+
+16. Chap50::MatrixChainMtEph             88.9%    17 uncovered / 153 total
+    Type: Matrix chain multiplication (thread-safe)
+    Strategy: Edge cases for DP table, small/large inputs
+    Expected: 95%+ (reduce to ~8 uncovered)
+
+17. Chap50::MatrixChainMtPer             88.9%    12 uncovered / 108 total
+    Type: Matrix chain multiplication (persistent)
+    Strategy: Persistence + DP patterns
+    Expected: 96%+ (reduce to ~4 uncovered)
+
+18. Chap51::TopDownDPMtEph               89.3%    13 uncovered / 121 total
+    Type: Top-down DP framework (thread-safe)
+    Strategy: Memoization tests, recursion patterns
+    Expected: 96%+ (reduce to ~5 uncovered)
+
+19. Chap49::SubsetSumMtPer               80.0%    14 uncovered / 70 total
+    Type: Subset sum (persistent)
+    Strategy: Small/large subsets, edge cases
+    Expected: 93%+ (reduce to ~5 uncovered)
+
+20. Chap49::SubsetSumStEph               79.3%    12 uncovered / 58 total
+    Type: Subset sum (ephemeral)
+    Strategy: Similar to MtPer variant
+    Expected: 93%+ (reduce to ~4 uncovered)
+
+─────────────────────────────────────────────────────────────────────────────
+Tier 3 Target: 68 lines → ~26 lines = 42 lines covered
+─────────────────────────────────────────────────────────────────────────────
+
+OVERALL TARGETS
+═══════════════════════════════════════════════════════════════════════════════
+
+Total Uncovered Lines (Before):        317 lines across 20 files
+Target Uncovered Lines (After):         ~126 lines
+Expected Lines Covered:                 ~191 lines direct
+Expected Project-Wide Impact:           ~250-300 lines (with multiplier)
+
+Current Project Coverage:               89.26% (5,012 uncovered)
+Target Project Coverage:                89.6%+ (4,750 uncovered)
+
+Average Tests Per File:                 ~20-25 tests
+Total Tests to Add:                     ~400-500 tests
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TESTING PATTERNS TO REUSE
+─────────────────────────────────────────────────────────────────────────────
+
+For Tree Structures:
+  ✓ Empty/singleton/large (0, 1, 100+ elements)
+  ✓ Rotations and rebalancing (insertion patterns)
+  ✓ Find/contains edge cases
+  ✓ Min/max on various sizes
+  ✓ Traversals (in-order, pre-order)
+  ✓ Height verification
+  ✓ Clone and equality
+  ✓ Debug/Display traits
+
+For Persistent Structures:
+  ✓ Verify original unchanged after operations
+  ✓ Multiple versions from same base
+  ✓ Structural sharing tests
+  ✓ Deep modifications
+
+For Thread-Safe (Mt) Structures:
+  ✓ Basic concurrent operations
+  ✓ Large datasets (trigger parallel paths)
+  ✓ Thread safety verification (via usage patterns)
+
+For Sets:
+  ✓ Union/intersection/difference
+  ✓ Filter operations
+  ✓ from_seq/to_seq conversions
+  ✓ Empty set operations
+
+For Sequences:
+  ✓ Append, subseq, map, filter
+  ✓ Reduce, scan patterns
+  ✓ Boundary conditions
+  ✓ Iterator comprehensive tests
+
+For DP Algorithms:
+  ✓ Empty input
+  ✓ Single element
+  ✓ Small known cases (verify correctness)
+  ✓ Larger cases (verify no crashes)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+EXECUTION STRATEGY
+─────────────────────────────────────────────────────────────────────────────
+
+Phase 1: Tier 1 (Sessions 1-3)
+  - Focus on 3-4 files per session
+  - Prioritize highest value targets
+  - Build momentum with familiar patterns
+
+Phase 2: Tier 2 (Sessions 4-5)
+  - 2-3 files per session
+  - Leverage established patterns
+  - Quick wins on already-high coverage
+
+Phase 3: Tier 3 (Sessions 6-7)
+  - 2-3 files per session
+  - DP algorithms require more thought
+  - Focus on correctness verification
+
+Success Criteria:
+  ✓ Minimum 60% completion (12 of 20 files)
+  ✓ Target 80%+ completion (16+ of 20 files)
+  ✓ Project coverage reaches 89.5%+
+  ✓ All enhanced files reach 93%+ coverage
+  ✓ No test failures or regressions
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DEFERRED/SKIPPED CATEGORIES
+─────────────────────────────────────────────────────────────────────────────
+• Graph algorithms (require specialized knowledge)
+• Hash tables (Chap47 variations, complex implementations)
+• Connectivity algorithms (graph theory expertise needed)
+• Johnson's algorithm variants (shortest paths, complex)
+• MinEditDist variants (string algorithms, complex)
+• DocumentIndex (specialized structure)
+• Path/weight utilities (graph-related)
+
+These will be addressed in future sessions once domain expertise is built up
+or when they become critical bottlenecks.
+
+═══════════════════════════════════════════════════════════════════════════════
+

@@ -3,6 +3,7 @@
 
 use apas_ai::AVLTreeSetStEphLit;
 use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS;
 use apas_ai::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
 use apas_ai::Chap41::Example41_3::Example41_3::*;
 use apas_ai::*;
@@ -155,3 +156,300 @@ fn test_avl_tree_set_ordering() {
 
 #[test]
 fn test_example_41_1_avl_cases() { example_41_1_avl_set(); }
+
+#[test]
+fn test_clone_set() {
+    let set1 = AVLTreeSetStEphLit![1, 2, 3, 4, 5];
+    let mut set2 = set1.clone();
+
+    assert_eq!(set1.size(), set2.size());
+    for i in 1..=5 {
+        assert!(set2.find(&i));
+    }
+
+    // Modify clone
+    set2.insert(6);
+    assert_eq!(set2.size(), 6);
+    assert_eq!(set1.size(), 5); // Original unchanged (ephemeral, so this creates new backing)
+}
+
+#[test]
+fn test_debug_trait() {
+    let set = AVLTreeSetStEphLit![10, 20, 30];
+    let debug_str = format!("{:?}", set);
+    assert!(debug_str.contains("10"));
+    assert!(debug_str.contains("20"));
+    assert!(debug_str.contains("30"));
+}
+
+#[test]
+fn test_large_set_operations() {
+    let mut set = AVLTreeSetStEph::empty();
+    for i in 0..100 {
+        set.insert(i);
+    }
+
+    assert_eq!(set.size(), 100);
+    for i in 0..100 {
+        assert!(set.find(&i));
+    }
+
+    // Delete half
+    for i in (0..100).step_by(2) {
+        set.delete(&i);
+    }
+
+    assert_eq!(set.size(), 50);
+    for i in (1..100).step_by(2) {
+        assert!(set.find(&i));
+    }
+    for i in (0..100).step_by(2) {
+        assert!(!set.find(&i));
+    }
+}
+
+#[test]
+fn test_union_empty_sets() {
+    let empty1: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+    let empty2: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+    let result = empty1.union(&empty2);
+    assert_eq!(result.size(), 0);
+
+    let set = AVLTreeSetStEphLit![1, 2, 3];
+    let result = set.union(&empty1);
+    assert_eq!(result.size(), 3);
+    assert!(result.find(&1));
+
+    let result = empty1.union(&set);
+    assert_eq!(result.size(), 3);
+    assert!(result.find(&2));
+}
+
+#[test]
+fn test_intersection_empty_sets() {
+    let empty1: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+    let set = AVLTreeSetStEphLit![1, 2, 3];
+    let result = set.intersection(&empty1);
+    assert_eq!(result.size(), 0);
+
+    let result = empty1.intersection(&set);
+    assert_eq!(result.size(), 0);
+}
+
+#[test]
+fn test_difference_empty_sets() {
+    let empty1: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+    let set = AVLTreeSetStEphLit![1, 2, 3];
+
+    let result = set.difference(&empty1);
+    assert_eq!(result.size(), 3);
+
+    let result = empty1.difference(&set);
+    assert_eq!(result.size(), 0);
+}
+
+#[test]
+fn test_filter_empty_set() {
+    let empty: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+    let filtered = empty.filter(|&x| x > 5);
+    assert_eq!(filtered.size(), 0);
+}
+
+#[test]
+fn test_filter_all_match() {
+    let set = AVLTreeSetStEphLit![2, 4, 6, 8];
+    let filtered = set.filter(|&x| x % 2 == 0);
+    assert_eq!(filtered.size(), 4);
+    for i in [2, 4, 6, 8] {
+        assert!(filtered.find(&i));
+    }
+}
+
+#[test]
+fn test_filter_none_match() {
+    let set = AVLTreeSetStEphLit![1, 3, 5, 7];
+    let filtered = set.filter(|&x| x % 2 == 0);
+    assert_eq!(filtered.size(), 0);
+}
+
+#[test]
+fn test_from_seq_empty() {
+    let seq: AVLTreeSeqStEphS<i32> = AVLTreeSeqStEphLit![];
+    let set = AVLTreeSetStEph::from_seq(seq);
+    assert_eq!(set.size(), 0);
+}
+
+#[test]
+fn test_from_seq_singleton() {
+    let seq = AVLTreeSeqStEphLit![42];
+    let set = AVLTreeSetStEph::from_seq(seq);
+    assert_eq!(set.size(), 1);
+    assert!(set.find(&42));
+}
+
+#[test]
+fn test_from_seq_all_duplicates() {
+    let seq = AVLTreeSeqStEphLit![5, 5, 5, 5, 5];
+    let set = AVLTreeSetStEph::from_seq(seq);
+    assert_eq!(set.size(), 1);
+    assert!(set.find(&5));
+}
+
+#[test]
+fn test_to_seq_empty() {
+    let empty: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+    let seq = empty.to_seq();
+    assert_eq!(seq.length(), 0);
+}
+
+#[test]
+fn test_to_seq_singleton() {
+    let set = AVLTreeSetStEph::singleton(42);
+    let seq = set.to_seq();
+    assert_eq!(seq.length(), 1);
+    assert_eq!(*seq.nth(0), 42);
+}
+
+#[test]
+fn test_delete_nonexistent() {
+    let mut set = AVLTreeSetStEphLit![1, 2, 3];
+    set.delete(&99);
+    assert_eq!(set.size(), 3); // Size unchanged
+}
+
+#[test]
+fn test_delete_all_elements() {
+    let mut set = AVLTreeSetStEphLit![1, 2, 3, 4, 5];
+    for i in 1..=5 {
+        set.delete(&i);
+    }
+    assert_eq!(set.size(), 0);
+}
+
+#[test]
+fn test_insert_duplicate() {
+    let mut set = AVLTreeSetStEph::empty();
+    set.insert(42);
+    set.insert(42);
+    set.insert(42);
+    assert_eq!(set.size(), 1); // Should only have one copy
+    assert!(set.find(&42));
+}
+
+#[test]
+fn test_equality() {
+    let set1 = AVLTreeSetStEphLit![1, 2, 3];
+    let set2 = AVLTreeSetStEphLit![1, 2, 3];
+    let set3 = AVLTreeSetStEphLit![1, 2, 4];
+
+    assert_eq!(set1, set2);
+    assert_ne!(set1, set3);
+}
+
+#[test]
+fn test_union_disjoint_sets() {
+    let set1 = AVLTreeSetStEphLit![1, 2, 3];
+    let set2 = AVLTreeSetStEphLit![4, 5, 6];
+    let result = set1.union(&set2);
+
+    assert_eq!(result.size(), 6);
+    for i in 1..=6 {
+        assert!(result.find(&i));
+    }
+}
+
+#[test]
+fn test_union_identical_sets() {
+    let set1 = AVLTreeSetStEphLit![1, 2, 3];
+    let set2 = AVLTreeSetStEphLit![1, 2, 3];
+    let result = set1.union(&set2);
+
+    assert_eq!(result.size(), 3);
+    for i in 1..=3 {
+        assert!(result.find(&i));
+    }
+}
+
+#[test]
+fn test_intersection_disjoint_sets() {
+    let set1 = AVLTreeSetStEphLit![1, 2, 3];
+    let set2 = AVLTreeSetStEphLit![4, 5, 6];
+    let result = set1.intersection(&set2);
+
+    assert_eq!(result.size(), 0);
+}
+
+#[test]
+fn test_intersection_identical_sets() {
+    let set1 = AVLTreeSetStEphLit![1, 2, 3];
+    let set2 = AVLTreeSetStEphLit![1, 2, 3];
+    let result = set1.intersection(&set2);
+
+    assert_eq!(result.size(), 3);
+    for i in 1..=3 {
+        assert!(result.find(&i));
+    }
+}
+
+#[test]
+fn test_difference_identical_sets() {
+    let set1 = AVLTreeSetStEphLit![1, 2, 3];
+    let set2 = AVLTreeSetStEphLit![1, 2, 3];
+    let result = set1.difference(&set2);
+
+    assert_eq!(result.size(), 0);
+}
+
+#[test]
+fn test_difference_disjoint_sets() {
+    let set1 = AVLTreeSetStEphLit![1, 2, 3];
+    let set2 = AVLTreeSetStEphLit![4, 5, 6];
+    let result = set1.difference(&set2);
+
+    assert_eq!(result.size(), 3);
+    for i in 1..=3 {
+        assert!(result.find(&i));
+    }
+}
+
+#[test]
+fn test_mixed_operations_comprehensive() {
+    let mut set1 = AVLTreeSetStEphLit![1, 2, 3, 4, 5];
+    let set2 = AVLTreeSetStEphLit![4, 5, 6, 7];
+
+    // Union
+    let union_result = set1.union(&set2);
+    assert_eq!(union_result.size(), 7);
+
+    // Delete from original
+    set1.delete(&3);
+    assert_eq!(set1.size(), 4);
+
+    // Insert new element
+    set1.insert(10);
+    assert_eq!(set1.size(), 5);
+
+    // Intersection after modification
+    let intersection_result = set1.intersection(&set2);
+    assert_eq!(intersection_result.size(), 2); // 4, 5
+    assert!(intersection_result.find(&4));
+    assert!(intersection_result.find(&5));
+}
+
+#[test]
+fn test_string_set() {
+    let mut set = AVLTreeSetStEph::empty();
+    set.insert("apple".to_string());
+    set.insert("banana".to_string());
+    set.insert("cherry".to_string());
+
+    assert_eq!(set.size(), 3);
+    assert!(set.find(&"apple".to_string()));
+    assert!(set.find(&"banana".to_string()));
+    assert!(set.find(&"cherry".to_string()));
+    assert!(!set.find(&"date".to_string()));
+
+    set.delete(&"banana".to_string());
+    assert_eq!(set.size(), 2);
+    assert!(!set.find(&"banana".to_string()));
+}

@@ -762,3 +762,362 @@ fn test_isolated_vertex() {
     assert_eq!(g.NPlus(&3).size(), 0);
     assert_eq!(g.NMinus(&3).size(), 0);
 }
+
+// Large graph tests to trigger parallel code paths (n > 8)
+
+#[test]
+fn test_ngofvertices_large_parallel() {
+    // Create a graph with 15 vertices and arcs to trigger parallel branch (>8 vertices)
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..14 {
+            let _ = s.insert(Edge(i, i + 1));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let query_set = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // 10 vertices
+    let ng_result = g.NGOfVertices(&query_set);
+    
+    // Each vertex i has neighbors {i-1, i+1} (if they exist)
+    // NG(0)={1}, NG(1)={0,2}, ..., NG(9)={8,10}
+    // Union should give {0,1,2,3,4,5,6,7,8,9,10}
+    assert!(ng_result.size() >= 10);
+    assert!(ng_result.mem(&10));
+}
+
+#[test]
+fn test_nplus_large_parallel() {
+    // Create a graph with 15 arcs to trigger parallel branch (>8 arcs)
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..15 {
+            let _ = s.insert(Edge(i, (i + 1) % 15));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let nplus_0 = g.NPlus(&0);
+    assert_eq!(nplus_0.size(), 1);
+    assert!(nplus_0.mem(&1));
+
+    let nplus_7 = g.NPlus(&7);
+    assert_eq!(nplus_7.size(), 1);
+    assert!(nplus_7.mem(&8));
+}
+
+#[test]
+fn test_nminus_large_parallel() {
+    // Create a graph with 15 arcs to trigger parallel branch (>8 arcs)
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..15 {
+            let _ = s.insert(Edge(i, (i + 1) % 15));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let nminus_1 = g.NMinus(&1);
+    assert_eq!(nminus_1.size(), 1);
+    assert!(nminus_1.mem(&0));
+
+    let nminus_0 = g.NMinus(&0);
+    assert_eq!(nminus_0.size(), 1);
+    assert!(nminus_0.mem(&14));
+}
+
+#[test]
+fn test_nplusofvertices_large_parallel() {
+    // Create a graph with 15 vertices to trigger parallel branch (>8 vertices)
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..14 {
+            let _ = s.insert(Edge(i, i + 1));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let query_set = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // 10 vertices
+    let nplus_result = g.NPlusOfVertices(&query_set);
+    
+    // NPlus(0)={1}, NPlus(1)={2}, ..., NPlus(9)={10}
+    // Union should give {1,2,3,4,5,6,7,8,9,10}
+    assert_eq!(nplus_result.size(), 10);
+    for i in 1..=10 {
+        assert!(nplus_result.mem(&i));
+    }
+}
+
+#[test]
+fn test_nminusofvertices_large_parallel() {
+    // Create a graph with 15 vertices to trigger parallel branch (>8 vertices)
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..14 {
+            let _ = s.insert(Edge(i, i + 1));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let query_set = SetLit![5, 6, 7, 8, 9, 10, 11, 12, 13, 14]; // 10 vertices
+    let nminus_result = g.NMinusOfVertices(&query_set);
+    
+    // NMinus(5)={4}, NMinus(6)={5}, ..., NMinus(14)={13}
+    // Union should give {4,5,6,7,8,9,10,11,12,13}
+    assert_eq!(nminus_result.size(), 10);
+    for i in 4..=13 {
+        assert!(nminus_result.mem(&i));
+    }
+}
+
+#[test]
+fn test_debug_trait() {
+    let vertices: Set<N> = SetLit![1, 2, 3];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+    
+    let debug_str = format!("{:?}", g);
+    assert!(debug_str.contains("DirGraphMtEph"));
+}
+
+#[test]
+fn test_display_trait() {
+    let vertices: Set<N> = SetLit![1, 2, 3];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+    
+    let display_str = format!("{}", g);
+    assert!(display_str.contains("V="));
+    assert!(display_str.contains("A="));
+}
+
+#[test]
+fn test_equality() {
+    let v1: Set<N> = SetLit![1, 2, 3];
+    let a1 = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+    let g1 = DirGraphMtEph::FromSets(v1.clone(), a1.clone());
+    let g2 = DirGraphMtEph::FromSets(v1, a1);
+    
+    assert_eq!(g1, g2);
+}
+
+#[test]
+fn test_inequality() {
+    let v1: Set<N> = SetLit![1, 2, 3];
+    let a1 = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+    let v2: Set<N> = SetLit![1, 2, 4];
+    let a2 = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+    let g1 = DirGraphMtEph::FromSets(v1, a1);
+    let g2 = DirGraphMtEph::FromSets(v2, a2);
+    
+    assert_ne!(g1, g2);
+}
+
+#[test]
+fn test_clone() {
+    let v: Set<N> = SetLit![1, 2, 3];
+    let a = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+    let g1 = DirGraphMtEph::FromSets(v, a);
+    let g2 = g1.clone();
+    
+    assert_eq!(g1, g2);
+    assert_eq!(g1.sizeV(), g2.sizeV());
+    assert_eq!(g1.sizeA(), g2.sizeA());
+}
+
+// Edge case tests for minimal parallel paths
+
+#[test]
+fn test_ngofvertices_empty_query() {
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..9 {
+            let _ = s.insert(Edge(i, i + 1));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let empty_set: Set<N> = SetLit![];
+    let result = g.NGOfVertices(&empty_set);
+    assert_eq!(result.size(), 0);
+}
+
+#[test]
+fn test_nplusofvertices_empty_query() {
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..9 {
+            let _ = s.insert(Edge(i, i + 1));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let empty_set: Set<N> = SetLit![];
+    let result = g.NPlusOfVertices(&empty_set);
+    assert_eq!(result.size(), 0);
+}
+
+#[test]
+fn test_nminusofvertices_empty_query() {
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..9 {
+            let _ = s.insert(Edge(i, i + 1));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let empty_set: Set<N> = SetLit![];
+    let result = g.NMinusOfVertices(&empty_set);
+    assert_eq!(result.size(), 0);
+}
+
+#[test]
+fn test_nplus_empty_arcs() {
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let edges: Set<Edge<N>> = Set::empty();
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let result = g.NPlus(&5);
+    assert_eq!(result.size(), 0);
+}
+
+#[test]
+fn test_nminus_empty_arcs() {
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let edges: Set<Edge<N>> = Set::empty();
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let result = g.NMinus(&5);
+    assert_eq!(result.size(), 0);
+}
+
+#[test]
+fn test_minimal_parallel_ngofvertices() {
+    // Exactly 9 vertices - minimal case to trigger parallel path
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..8 {
+            let _ = s.insert(Edge(i, i + 1));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let query_set = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8]; // 9 vertices
+    let result = g.NGOfVertices(&query_set);
+    assert!(result.size() >= 8);
+}
+
+#[test]
+fn test_minimal_parallel_nplusofvertices() {
+    // Exactly 9 vertices - minimal case to trigger parallel path
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..8 {
+            let _ = s.insert(Edge(i, i + 1));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let query_set = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8]; // 9 vertices
+    let result = g.NPlusOfVertices(&query_set);
+    assert_eq!(result.size(), 8);
+}
+
+#[test]
+fn test_minimal_parallel_nminusofvertices() {
+    // Exactly 9 vertices - minimal case to trigger parallel path
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..8 {
+            let _ = s.insert(Edge(i, i + 1));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let query_set = SetLit![1, 2, 3, 4, 5, 6, 7, 8]; // 8 vertices
+    let result = g.NMinusOfVertices(&query_set);
+    assert_eq!(result.size(), 8);
+}
+
+#[test]
+fn test_minimal_parallel_nplus() {
+    // Exactly 9 arcs - minimal case to trigger parallel path
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..9 {
+            let _ = s.insert(Edge(i, i + 1));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let result = g.NPlus(&0);
+    assert_eq!(result.size(), 1);
+    assert!(result.mem(&1));
+}
+
+#[test]
+fn test_minimal_parallel_nminus() {
+    // Exactly 9 arcs - minimal case to trigger parallel path
+    let vertices: Set<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8];
+    let edges = {
+        let mut s: Set<Edge<N>> = Set::empty();
+        for i in 0..9 {
+            let _ = s.insert(Edge(i, i + 1));
+        }
+        s
+    };
+    let g = DirGraphMtEph::FromSets(vertices, edges);
+
+    let result = g.NMinus(&8);
+    assert_eq!(result.size(), 1);
+    assert!(result.mem(&7));
+}

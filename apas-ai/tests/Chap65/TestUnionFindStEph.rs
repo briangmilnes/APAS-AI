@@ -1,6 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 65: Union-Find Tests (Sequential)
 
+use std::hash::Hash;
+
 use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
 use apas_ai::Types::Types::*;
 
@@ -260,4 +262,107 @@ fn test_star_pattern() {
             assert!(uf.equals(&i, &j));
         }
     }
+}
+
+#[test]
+fn test_rank_based_union_smaller_to_larger() {
+    let mut uf: UnionFind<N> = UnionFind::new();
+    
+    // Build tree with rank 2
+    uf.insert(0);
+    uf.insert(1);
+    uf.insert(2);
+    uf.insert(3);
+    uf.union(&0, &1);
+    uf.union(&2, &3);
+    uf.union(&0, &2); // Creates rank 2 tree
+    
+    // Build single node (rank 0)
+    uf.insert(4);
+    
+    // Union rank-0 tree to rank-2 tree (should attach 4 under larger tree)
+    uf.union(&4, &0);
+    
+    assert!(uf.equals(&0, &4));
+    assert_eq!(uf.num_sets(), 1);
+}
+
+#[test]
+fn test_default_trait() {
+    let mut uf: UnionFind<i32> = Default::default();
+    uf.insert(1);
+    assert_eq!(uf.num_sets(), 1);
+}
+
+// Trait-based tests
+
+use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFindStEphTrait;
+
+#[test]
+fn test_trait_new() {
+    let mut uf = <UnionFind<i32> as UnionFindStEphTrait<i32>>::new();
+    assert_eq!(uf.num_sets(), 0);
+}
+
+#[test]
+fn test_trait_insert() {
+    let mut uf = <UnionFind<i32> as UnionFindStEphTrait<i32>>::new();
+    <UnionFind<i32> as UnionFindStEphTrait<i32>>::insert(&mut uf, 1);
+    <UnionFind<i32> as UnionFindStEphTrait<i32>>::insert(&mut uf, 2);
+    assert_eq!(uf.num_sets(), 2);
+}
+
+#[test]
+fn test_trait_find() {
+    let mut uf = <UnionFind<i32> as UnionFindStEphTrait<i32>>::new();
+    uf.insert(1);
+    uf.insert(2);
+    uf.union(&1, &2);
+    
+    let root1 = <UnionFind<i32> as UnionFindStEphTrait<i32>>::find(&mut uf, &1);
+    let root2 = <UnionFind<i32> as UnionFindStEphTrait<i32>>::find(&mut uf, &2);
+    assert_eq!(root1, root2);
+}
+
+#[test]
+fn test_trait_union() {
+    let mut uf = <UnionFind<i32> as UnionFindStEphTrait<i32>>::new();
+    uf.insert(1);
+    uf.insert(2);
+    <UnionFind<i32> as UnionFindStEphTrait<i32>>::union(&mut uf, &1, &2);
+    assert!(uf.equals(&1, &2));
+}
+
+#[test]
+fn test_trait_equals() {
+    let mut uf = <UnionFind<i32> as UnionFindStEphTrait<i32>>::new();
+    uf.insert(1);
+    uf.insert(2);
+    uf.union(&1, &2);
+    assert!(<UnionFind<i32> as UnionFindStEphTrait<i32>>::equals(&mut uf, &1, &2));
+}
+
+#[test]
+fn test_trait_num_sets() {
+    let mut uf = <UnionFind<i32> as UnionFindStEphTrait<i32>>::new();
+    uf.insert(1);
+    uf.insert(2);
+    uf.insert(3);
+    assert_eq!(<UnionFind<i32> as UnionFindStEphTrait<i32>>::num_sets(&mut uf), 3);
+    uf.union(&1, &2);
+    assert_eq!(<UnionFind<i32> as UnionFindStEphTrait<i32>>::num_sets(&mut uf), 2);
+}
+
+fn generic_union_find_ops<V: StT + Hash, UF: UnionFindStEphTrait<V>>(uf: &mut UF, a: V, b: V) {
+    uf.insert(a.clone());
+    uf.insert(b.clone());
+    uf.union(&a, &b);
+    assert!(uf.equals(&a, &b));
+}
+
+#[test]
+fn test_generic_dispatch() {
+    let mut uf = UnionFind::<i32>::new();
+    generic_union_find_ops(&mut uf, 10, 20);
+    assert_eq!(uf.num_sets(), 1);
 }

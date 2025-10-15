@@ -455,3 +455,24 @@ fn test_comprehensive_clustering_integration() {
     let worst_strategy_name = &comparison.worst_strategy;
     assert_ne!(best_strategy_name, worst_strategy_name);
 }
+
+#[test]
+fn test_default_trait() {
+    let analyzer: ClusteringAnalyzer = Default::default();
+    assert!(analyzer.analysis_enabled);
+    assert!(analyzer.detailed_metrics);
+}
+
+#[test]
+fn test_clone_trait() {
+    let severity = ClusteringSeverity::Moderate;
+    let cloned = severity.clone();
+    assert_eq!(severity, cloned);
+}
+
+#[test]
+fn test_debug_trait() {
+    let severity = ClusteringSeverity::Severe;
+    let debug_str = format!("{:?}", severity);
+    assert!(debug_str.contains("Severe"));
+}

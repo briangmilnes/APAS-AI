@@ -239,3 +239,111 @@ fn test_labdirgraphmteph_arcs_conversion() {
     assert!(arcs.mem(&Edge(1, 2)));
     assert!(!arcs.mem(&Edge(0, 2)));
 }
+
+#[test]
+fn test_labdirgraphmteph_parallel_out_neighbors() {
+    // Create graph with >8 arcs to trigger parallel code path
+    let mut vertices = Set::empty();
+    for i in 0..20 {
+        vertices.insert(i);
+    }
+    
+    let mut arcs = Set::empty();
+    // Create 15 arcs from vertex 0 to vertices 1-15
+    for i in 1..16 {
+        arcs.insert(LabEdge(0, i, format!("arc{}", i)));
+    }
+    
+    let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(vertices, arcs);
+    
+    let out = g.out_neighbors(&0);
+    assert_eq!(out.size(), 15);
+    for i in 1..16 {
+        assert!(out.mem(&i));
+    }
+}
+
+#[test]
+fn test_labdirgraphmteph_parallel_in_neighbors() {
+    // Create graph with >8 arcs to trigger parallel code path
+    let mut vertices = Set::empty();
+    for i in 0..20 {
+        vertices.insert(i);
+    }
+    
+    let mut arcs = Set::empty();
+    // Create 15 arcs from vertices 1-15 to vertex 0
+    for i in 1..16 {
+        arcs.insert(LabEdge(i, 0, format!("arc{}", i)));
+    }
+    
+    let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(vertices, arcs);
+    
+    let in_n = g.in_neighbors(&0);
+    assert_eq!(in_n.size(), 15);
+    for i in 1..16 {
+        assert!(in_n.mem(&i));
+    }
+}
+
+#[test]
+fn test_labdirgraphmteph_parallel_mixed() {
+    // Create large graph with multiple sources/sinks
+    let mut vertices = Set::empty();
+    for i in 0..30 {
+        vertices.insert(i);
+    }
+    
+    let mut arcs = Set::empty();
+    // 10 arcs out from vertex 0
+    for i in 1..11 {
+        arcs.insert(LabEdge(0, i, format!("out{}", i)));
+    }
+    // 10 arcs in to vertex 29
+    for i in 19..29 {
+        arcs.insert(LabEdge(i, 29, format!("in{}", i)));
+    }
+    
+    let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(vertices, arcs);
+    
+    let out = g.out_neighbors(&0);
+    assert_eq!(out.size(), 10);
+    
+    let in_n = g.in_neighbors(&29);
+    assert_eq!(in_n.size(), 10);
+}
+
+#[test]
+fn test_labdirgraphmteph_display_trait() {
+    let v: Set<N> = SetLit![1, 2, 3];
+    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
+    let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v, a);
+    
+    let display_str = format!("{}", g);
+    assert!(display_str.contains("LabDirGraph"));
+}
+
+#[test]
+fn test_labdirgraphmteph_debug_trait() {
+    let v: Set<N> = SetLit![1, 2];
+    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
+    let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v, a);
+    
+    let debug_str = format!("{:?}", g);
+    assert!(debug_str.contains("LabDirGraph"));
+    assert!(debug_str.contains("vertices"));
+    assert!(debug_str.contains("labeled_arcs"));
+}
+
+#[test]
+fn test_labdirgraphmteph_clone() {
+    let v: Set<N> = SetLit![1, 2, 3];
+    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string()), LabEdge(2, 3, "test2".to_string())];
+    let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v, a);
+    
+    let g2 = g.clone();
+    assert_eq!(g2.vertices().size(), 3);
+    assert_eq!(g2.labeled_arcs().size(), 2);
+    assert!(g2.has_arc(&1, &2));
+    assert!(g2.has_arc(&2, &3));
+}

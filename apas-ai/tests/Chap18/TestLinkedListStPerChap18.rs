@@ -396,3 +396,117 @@ fn test_collect() {
 }
 
 // ========== Merged from TestLinkedListStPerChap18_Advanced.rs above ==========
+
+#[test]
+fn test_large_list_operations() {
+    let large = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::tabulate(&|i| i, 100);
+    assert_eq!(large.length(), 100);
+    assert_eq!(*large.nth(0), 0);
+    assert_eq!(*large.nth(50), 50);
+    assert_eq!(*large.nth(99), 99);
+    
+    // Test map on large list
+    let doubled = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::map(&large, &|x| x * 2);
+    assert_eq!(*doubled.nth(50), 100);
+}
+
+#[test]
+fn test_empty_list_operations() {
+    let empty: LinkedListStPerS<N> = LinkedListStPerSLit![];
+    
+    let mapped = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::map(&empty, &|x| x * 2);
+    assert_eq!(mapped.length(), 0);
+    
+    let filtered = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::filter(&empty, &|_| true);
+    assert_eq!(filtered.length(), 0);
+    
+    let reduced = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::reduce(&empty, &|a, b| a + b, 10);
+    assert_eq!(reduced, 10);
+}
+
+#[test]
+fn test_select_boundary_cases() {
+    let a = LinkedListStPerSLit![1, 2];
+    let b = LinkedListStPerSLit![3, 4];
+    
+    // First element
+    assert_eq!(<LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 0), Some(1));
+    
+    // Last element
+    assert_eq!(<LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 3), Some(4));
+    
+    // Just beyond
+    assert_eq!(<LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&a, &b, 4), None);
+    
+    // Empty first list
+    let empty: LinkedListStPerS<N> = LinkedListStPerSLit![];
+    assert_eq!(<LinkedListStPerS<N> as LinkedListStPerTrait<N>>::select(&empty, &b, 0), Some(3));
+}
+
+#[test]
+fn test_iteratePrefixes_empty() {
+    let empty: LinkedListStPerS<N> = LinkedListStPerSLit![];
+    let (prefixes, total) = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::iteratePrefixes(&empty, &|acc, x| acc + x, 5);
+    
+    assert_eq!(prefixes.length(), 0);
+    assert_eq!(total, 5); // Only initial value
+}
+
+#[test]
+fn test_scan_empty() {
+    let empty: LinkedListStPerS<N> = LinkedListStPerSLit![];
+    let (prefixes, total) = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::scan(&empty, &|a, b| a + b, 10);
+    
+    assert_eq!(prefixes.length(), 0);
+    assert_eq!(total, 10);
+}
+
+#[test]
+fn test_flatten_empty_sublists() {
+    let empty_sub: LinkedListStPerS<N> = LinkedListStPerSLit![];
+    let nested = LinkedListStPerSLit![empty_sub.clone(), empty_sub.clone()];
+    
+    let flattened = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::flatten(&nested);
+    assert_eq!(flattened.length(), 0);
+}
+
+#[test]
+fn test_collect_empty() {
+    let empty: LinkedListStPerS<Pair<N, N>> = LinkedListStPerSLit![];
+    let grouped = <LinkedListStPerS<Pair<N, N>> as LinkedListStPerTrait<Pair<N, N>>>::collect(&empty, |a, b| {
+        if a < b { O::Less } else if a > b { O::Greater } else { O::Equal }
+    });
+    
+    assert_eq!(grouped.length(), 0);
+}
+
+#[test]
+fn test_multiple_updates_persistence() {
+    let l = LinkedListStPerSLit![1, 2, 3, 4, 5];
+    
+    let u1 = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::update(&l, Pair(1, 10));
+    let u2 = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::update(&u1, Pair(3, 30));
+    
+    // Original unchanged
+    assert_eq!(*l.nth(1), 2);
+    assert_eq!(*l.nth(3), 4);
+    
+    // First update
+    assert_eq!(*u1.nth(1), 10);
+    assert_eq!(*u1.nth(3), 4);
+    
+    // Second update
+    assert_eq!(*u2.nth(1), 10);
+    assert_eq!(*u2.nth(3), 30);
+}
+
+#[test]
+fn test_inject_out_of_bounds_ignored() {
+    let l = LinkedListStPerSLit![1, 2, 3];
+    let updates = LinkedListStPerSLit![Pair(1, 10), Pair(10, 99)]; // Index 10 out of bounds
+    let result = <LinkedListStPerS<N> as LinkedListStPerTrait<N>>::inject(&l, &updates);
+    
+    assert_eq!(result.length(), 3);
+    assert_eq!(*result.nth(1), 10);
+}
+
