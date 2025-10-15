@@ -63,6 +63,12 @@ def run_review_script(script_path):
 def get_script_name(script_path):
     """Get human-readable name from script path."""
     name = script_path.stem.replace('review_', '').replace('_', ' ').title()
+    
+    # Fix common acronyms that should stay uppercase
+    acronyms = ['Ufcs', 'Apas', 'Bst', 'Id', 'Ids']
+    for acronym in acronyms:
+        name = name.replace(acronym, acronym.upper())
+    
     return name
 
 

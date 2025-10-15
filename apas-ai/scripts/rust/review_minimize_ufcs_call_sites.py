@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """
-Review: No UFCS at call sites.
+Review: Minimize UFCS at call sites.
 
 RustRules.md Lines 309-320: "Replace <Type as Trait>::method(...) at call sites
 with method-call syntax wherever possible. Keep UFCS inside impls/traits for
 disambiguation; minimize UFCS in callers."
 
 Checks src/, tests/, and benches/ for UFCS usage outside of impl/trait blocks.
+
+Note: Some UFCS usage may be legitimate (primitives, macros, disambiguation).
+This check identifies candidates for review, not automatic violations.
 """
 
 import re
@@ -88,10 +91,11 @@ def main():
         all_violations.extend(violations)
     
     if not all_violations:
-        print("✓ No UFCS usage at call sites")
+        print("✓ No minimizable UFCS call sites found")
         return 0
     
-    print(f"✗ Found UFCS at call sites (RustRules.md Lines 309-320):\n")
+    print(f"⚠ Found UFCS at call sites (RustRules.md Lines 309-320):\n")
+    print("Note: Review these - some may be legitimate (primitives, macros).\n")
     for violation in all_violations:
         print(violation)
     print(f"\nTotal violations: {len(all_violations)}")
