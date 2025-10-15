@@ -54,7 +54,7 @@ pub mod LinkedListStPer {
         fn select(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>, index: N) -> Option<T>;
         /// APAS: Work Θ(|a|), Span Θ(|a|)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn filter<F: Fn(&T) -> B>(a: &LinkedListStPerS<T>, pred: &F) -> LinkedListStPerS<T>;
+        fn filter<F: PredSt<T>>(a: &LinkedListStPerS<T>, pred: &F) -> LinkedListStPerS<T>;
         /// APAS: Work Θ(|a|), Span Θ(|a|)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
         fn update(a: &LinkedListStPerS<T>, item_at: Pair<N, T>) -> LinkedListStPerS<T>;
@@ -281,7 +281,7 @@ pub mod LinkedListStPer {
             }
         }
 
-        fn filter<F: Fn(&T) -> B>(a: &LinkedListStPerS<T>, pred: &F) -> LinkedListStPerS<T> {
+        fn filter<F: PredSt<T>>(a: &LinkedListStPerS<T>, pred: &F) -> LinkedListStPerS<T> {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);

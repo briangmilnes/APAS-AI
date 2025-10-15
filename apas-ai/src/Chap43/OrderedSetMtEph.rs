@@ -102,7 +102,7 @@ pub mod OrderedSetMtEph {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn filter<F: Fn(&T) -> B + Send + Sync + 'static>(&mut self, f: F) { self.elements.retain(|x| f(x)); }
+        fn filter<F: PredMt<T>>(&mut self, f: F) { self.elements.retain(|x| f(x)); }
 
         /// Claude Work: O(m + n), Span: O(log(m + n))
         fn intersection(&mut self, other: &Self) { self.elements.retain(|elem| other.find(elem)); }

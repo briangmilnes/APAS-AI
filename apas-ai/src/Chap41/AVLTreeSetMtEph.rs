@@ -32,7 +32,7 @@ pub mod AVLTreeSetMtEph {
         /// claude-4-sonet: Work Θ(n log n), Span Θ(log n), Parallelism Θ(n)
         fn from_seq(seq: AVLTreeSeqStEphS<T>) -> Self;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(&self, f: F) -> Self;
+        fn filter<F: PredMt<T> + Clone>(&self, f: F) -> Self;
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
         fn intersection(&self, other: &Self) -> Self;
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
@@ -78,7 +78,7 @@ pub mod AVLTreeSetMtEph {
 
         // PARALLEL: filter using extract-parallelize-rebuild pattern (unconditionally parallel)
         // Work: Θ(n), Span: Θ(log n)
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(&self, f: F) -> Self {
+        fn filter<F: PredMt<T> + Clone>(&self, f: F) -> Self {
             // Extract data from mutex
             let vals = {
                 let inner = self.inner.lock().unwrap();
@@ -92,7 +92,7 @@ pub mod AVLTreeSetMtEph {
             // Lock released here
 
             // Unconditionally parallel divide-and-conquer using ParaPair!
-            fn parallel_filter<T: StTInMtT + Ord + 'static, F: Fn(&T) -> B + Send + Sync + Clone + 'static>(
+            fn parallel_filter<T: StTInMtT + Ord + 'static, F: PredMt<T> + Clone>(
                 vals: Vec<T>,
                 f: F,
             ) -> Vec<T> {

@@ -42,10 +42,10 @@ pub mod ArraySeqStPer {
         fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> ArraySeqStPerS<T>;
+        fn deflate<F: PredSt<T>>(f: &F, x: &T) -> ArraySeqStPerS<T>;
         /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(1 + max i S(f(a[i])))
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(|a| + maxᵢ S(f(aᵢ))), Parallelism Θ(1)
-        fn filter<F: Fn(&T) -> B>(a: &ArraySeqStPerS<T>, pred: &F) -> ArraySeqStPerS<T>;
+        fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F) -> ArraySeqStPerS<T>;
         /// claude-4-sonet: Work Θ(|a| × W(f)), Span Θ(|a| × S(f)), Parallelism Θ(1)
         fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &ArraySeqStPerS<T>, f: &F, x: A) -> A;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
@@ -140,7 +140,7 @@ pub mod ArraySeqStPer {
             )
         }
 
-        fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> ArraySeqStPerS<T> {
+        fn deflate<F: PredSt<T>>(f: &F, x: &T) -> ArraySeqStPerS<T> {
             // Helper for filter: deflate f x = if f(x) then [x] else []
             if f(x) {
                 <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::singleton(x.clone())
@@ -149,7 +149,7 @@ pub mod ArraySeqStPer {
             }
         }
 
-        fn filter<F: Fn(&T) -> B>(a: &ArraySeqStPerS<T>, pred: &F) -> ArraySeqStPerS<T> {
+        fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F) -> ArraySeqStPerS<T> {
             // Algorithm 19.5: filter f a = flatten(map(deflate f, a))
             let deflated = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::map(a, &|x| {
                 <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::deflate(pred, x)

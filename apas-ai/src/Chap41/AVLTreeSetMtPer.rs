@@ -32,7 +32,7 @@ pub mod AVLTreeSetMtPer {
         /// claude-4-sonet: Work Θ(n log n), Span Θ(log n), Parallelism Θ(n)
         fn from_seq(seq: AVLTreeSeqMtPerS<T>) -> Self;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(&self, f: F) -> Self;
+        fn filter<F: PredMt<T> + Clone>(&self, f: F) -> Self;
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
         fn intersection(&self, other: &Self) -> Self;
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
@@ -108,7 +108,7 @@ pub mod AVLTreeSetMtPer {
 
         // PARALLEL: filter using divide-and-conquer (unconditionally parallel)
         // Work: Θ(n), Span: Θ(log n)
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(&self, f: F) -> Self {
+        fn filter<F: PredMt<T> + Clone>(&self, f: F) -> Self {
             let n = self.size();
 
             if n <= 8 {

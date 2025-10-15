@@ -61,7 +61,7 @@ pub mod ArraySeq {
 
         /// Definition 18.14 (filter). Keep elements satisfying `pred`. <br/>
         /// Work: Θ(|a|), Span: Θ(1).
-        fn filter<F: Fn(&T) -> B>(a: &ArraySeqS<T>, pred: &F) -> ArraySeqS<T>;
+        fn filter<F: PredSt<T>>(a: &ArraySeqS<T>, pred: &F) -> ArraySeqS<T>;
 
         /// Definition 18.15 (flatten). Concatenate a sequence of sequences. <br/>
         /// Work: Θ(total length), Span: Θ(1).
@@ -230,7 +230,7 @@ pub mod ArraySeq {
             ArraySeqS::from_vec(values)
         }
 
-        fn filter<F: Fn(&T) -> B>(a: &ArraySeqS<T>, pred: &F) -> ArraySeqS<T> {
+        fn filter<F: PredSt<T>>(a: &ArraySeqS<T>, pred: &F) -> ArraySeqS<T> {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);

@@ -61,7 +61,7 @@ pub mod ArraySeqMtEphSlice {
         /// claude-4-sonet: Work Θ(|a| + Σₓ W(f(x))), Span Θ(1 + maxₓ S(f(x))), Parallelism Θ(|a|)
         fn map<U: MtVal, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &Self, f: F) -> ArraySeqMtEphSliceS<U>;
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(1 + maxᵢ S(f(aᵢ))), Parallelism Θ(|a|)
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &Self, pred: F) -> Self;
+        fn filter<F: PredMt<T> + Clone>(a: &Self, pred: F) -> Self;
         fn append(a: &Self, b: &Self) -> Self;
         fn append_select(a: &Self, b: &Self) -> Self;
         fn flatten(sequences: &[ArraySeqMtEphSliceS<T>]) -> Self;
@@ -205,7 +205,7 @@ pub mod ArraySeqMtEphSlice {
             ArraySeqMtEphSliceS::<U>::from_vec(results)
         }
 
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &Self, pred: F) -> Self {
+        fn filter<F: PredMt<T> + Clone>(a: &Self, pred: F) -> Self {
             // Algorithm 19.5 with parallelism: fork thread per element + serial compaction
             if a.length() == 0 {
                 return <Self as ArraySeqMtEphSliceTrait<T>>::empty();

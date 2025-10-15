@@ -27,7 +27,7 @@ pub mod AVLTreeSetStEph {
         /// claude-4-sonet: Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
         fn from_seq(seq: AVLTreeSeqStEphS<T>) -> Self;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self;
+        fn filter<F: PredSt<T>>(&self, f: F) -> Self;
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
         fn intersection(&self, other: &Self) -> Self;
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
@@ -90,7 +90,7 @@ pub mod AVLTreeSetStEph {
             result
         }
 
-        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self {
+        fn filter<F: PredSt<T>>(&self, f: F) -> Self {
             let mut result = Self::empty();
             for i in 0..self.elements.length() {
                 let elem = self.elements.nth(i);

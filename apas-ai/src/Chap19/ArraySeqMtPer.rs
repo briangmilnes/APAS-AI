@@ -37,7 +37,7 @@ pub mod ArraySeqMtPer {
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(log(|a| + |b|)), Parallelism Θ((|a|+|b|)/log(|a|+|b|))
         fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(log |a| + maxᵢ S(f(aᵢ))), Parallelism Θ(|a|)
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T>;
+        fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(log |a|), Parallelism Θ(|a|/log |a|)
         fn update_single(a: &ArraySeqMtPerS<T>, index: N, item: T) -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(log |a| + log |updates|)
@@ -75,7 +75,7 @@ pub mod ArraySeqMtPer {
         fn isSingleton(a: &ArraySeqMtPerS<T>) -> bool;
         fn append_select(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
         fn select<'a>(a: &'a ArraySeqMtPerS<T>, b: &'a ArraySeqMtPerS<T>, i: N) -> Option<&'a T>;
-        fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtPerS<T>;
+        fn deflate<F: PredMt<T>>(f: &F, x: &T) -> ArraySeqMtPerS<T>;
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
@@ -148,7 +148,7 @@ pub mod ArraySeqMtPer {
             <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::flatten(&sequences)
         }
 
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T> {
+        fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T> {
             // Algorithm 19.5 with parallelism: fork thread per element + serial compaction
             if a.length() == 0 {
                 return <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::empty();
@@ -306,7 +306,7 @@ pub mod ArraySeqMtPer {
             if offset < len_b { Some(b.nth(offset)) } else { None }
         }
 
-        fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtPerS<T> {
+        fn deflate<F: PredMt<T>>(f: &F, x: &T) -> ArraySeqMtPerS<T> {
             // Helper for filter: deflate f x = if f(x) then [x] else []
             if f(x) {
                 <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::singleton(x.clone())

@@ -27,6 +27,10 @@ def main():
     redundant_static = re.compile(r'where.*T:\s*MtVal.*T:\s*\'static|where.*T:\s*\'static.*T:\s*MtVal')
     
     for src_file in src_dir.rglob("*.rs"):
+        # Skip Types.rs - it defines PredSt and PredMt
+        if src_file.name == "Types.rs":
+            continue
+            
         with open(src_file, 'r', encoding='utf-8') as f:
             for line_num, line in enumerate(f, start=1):
                 stripped = line.strip()

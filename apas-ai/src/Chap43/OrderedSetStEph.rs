@@ -32,7 +32,7 @@ pub mod OrderedSetStEph {
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn delete(&mut self, x: &T);
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn filter<F: Fn(&T) -> B>(&mut self, f: F);
+        fn filter<F: PredSt<T>>(&mut self, f: F);
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
         fn intersection(&mut self, other: &Self);
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
@@ -101,7 +101,7 @@ pub mod OrderedSetStEph {
         fn delete(&mut self, x: &T) { self.base_set.delete(x); }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn filter<F: Fn(&T) -> B>(&mut self, f: F) {
+        fn filter<F: PredSt<T>>(&mut self, f: F) {
             let result = self.base_set.filter(f);
             self.base_set = result;
         }

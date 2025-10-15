@@ -98,10 +98,18 @@ use std::hash::Hash;
     pub trait MtReduceFn<V>: Fn(&V, &V) -> V + Clone + Send + Sync + 'static {}
     impl<T, V> MtReduceFn<V> for T where T: Fn(&V, &V) -> V + Clone + Send + Sync + 'static {}
 
-    // Pred: Multi-threaded predicate function (boolean function)
+    // PredSt: Single-threaded predicate function (boolean function)
+    // Common pattern: Fn(&T) -> B (for St/Eph code without Send/Sync)
+    pub trait PredSt<T>: Fn(&T) -> B {}
+    impl<F, T> PredSt<T> for F where F: Fn(&T) -> B {}
+
+    // PredMt: Multi-threaded predicate function (boolean function)
     // Common pattern: Fn(&T) -> B + Send + Sync + 'static (appears 10+ times)
-    pub trait Pred<T>: Fn(&T) -> B + Send + Sync + 'static {}
-    impl<F, T> Pred<T> for F where F: Fn(&T) -> B + Send + Sync + 'static {}
+    pub trait PredMt<T>: Fn(&T) -> B + Send + Sync + 'static {}
+    impl<F, T> PredMt<T> for F where F: Fn(&T) -> B + Send + Sync + 'static {}
+
+    // Backward compatibility alias (many existing uses)
+    pub use PredMt as Pred;
 
     // PredVal: Multi-threaded predicate function taking values by value
     // Common pattern: Fn(T) -> B + Send + Sync + 'static (for Copy types like N)

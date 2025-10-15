@@ -25,7 +25,7 @@ pub mod ArraySetStEph {
         /// claude-4-sonet: Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
         fn from_seq(seq: ArraySeqStEphS<T>) -> Self;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self;
+        fn filter<F: PredSt<T>>(&self, f: F) -> Self;
         /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
         fn intersection(&self, other: &Self) -> Self;
         /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
@@ -74,7 +74,7 @@ pub mod ArraySetStEph {
             result
         }
 
-        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self {
+        fn filter<F: PredSt<T>>(&self, f: F) -> Self {
             let filtered = ArraySeqStEphS::filter(&self.elements, &f);
             ArraySetStEph { elements: filtered }
         }

@@ -31,7 +31,7 @@ pub mod OrderedSetStPer {
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn delete(&self, x: &T) -> Self;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self;
+        fn filter<F: PredSt<T>>(&self, f: F) -> Self;
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
         fn intersection(&self, other: &Self) -> Self;
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
@@ -108,7 +108,7 @@ pub mod OrderedSetStPer {
         }
 
         /// Claude Work: O(n), Span: O(log n)
-        fn filter<F: Fn(&T) -> B>(&self, f: F) -> Self {
+        fn filter<F: PredSt<T>>(&self, f: F) -> Self {
             OrderedSetStPer {
                 base_set: self.base_set.filter(f),
             }

@@ -141,7 +141,7 @@ pub mod ArraySeqStEph {
         fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn filter<F: Fn(&T) -> B>(a: &ArraySeqStEphS<T>, pred: &F) -> ArraySeqStEphS<T>;
+        fn filter<F: PredSt<T>>(a: &ArraySeqStEphS<T>, pred: &F) -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(Σ|a[i]|), Span Θ(1)
         /// claude-4-sonet: Work Θ(Σ|a[i]|), Span Θ(Σ|a[i]|), Parallelism Θ(1) - sequential
         fn flatten(a: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;
@@ -219,7 +219,7 @@ pub mod ArraySeqStEph {
             ArraySeqStEphS::from_vec(values)
         }
 
-        fn filter<F: Fn(&T) -> B>(a: &ArraySeqStEphS<T>, pred: &F) -> ArraySeqStEphS<T> {
+        fn filter<F: PredSt<T>>(a: &ArraySeqStEphS<T>, pred: &F) -> ArraySeqStEphS<T> {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);

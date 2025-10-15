@@ -41,9 +41,9 @@ pub mod ArraySeqMtEph {
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
         fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtEphS<T>;
+        fn deflate<F: PredMt<T>>(f: &F, x: &T) -> ArraySeqMtEphS<T>;
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(1 + maxᵢ S(f(aᵢ))), Parallelism Θ(|a|)
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, pred: F) -> ArraySeqMtEphS<T>;
+        fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtEphS<T>, pred: F) -> ArraySeqMtEphS<T>;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
         fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(log |a|), Parallelism Θ(|a|/log |a|)
@@ -157,7 +157,7 @@ pub mod ArraySeqMtEph {
             )
         }
 
-        fn deflate<F: Fn(&T) -> B + Send + Sync>(f: &F, x: &T) -> ArraySeqMtEphS<T> {
+        fn deflate<F: PredMt<T>>(f: &F, x: &T) -> ArraySeqMtEphS<T> {
             // Helper for filter: deflate f x = if f(x) then [x] else []
             if f(x) {
                 Self::singleton(x.clone())
@@ -166,7 +166,7 @@ pub mod ArraySeqMtEph {
             }
         }
 
-        fn filter<F: Fn(&T) -> B + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, pred: F) -> ArraySeqMtEphS<T> {
+        fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtEphS<T>, pred: F) -> ArraySeqMtEphS<T> {
             // Algorithm 19.5 with parallelism: fork thread per element + serial compaction
             if a.length() == 0 {
                 return <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::empty();

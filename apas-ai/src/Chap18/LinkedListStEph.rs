@@ -212,10 +212,10 @@ pub mod LinkedListStEph {
         fn append(a: &Self, b: &Self) -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn filter<F: Fn(&T) -> B>(a: &Self, pred: &F) -> Self;
+        fn filter<F: PredSt<T>>(a: &Self, pred: &F) -> Self;
         /// Helper for filter: deflate f x = if f(x) then [x] else []
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> Self;
+        fn deflate<F: PredSt<T>>(f: &F, x: &T) -> Self;
         /// APAS: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|)
         /// claude-4-sonet: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|), Parallelism Θ(1) - sequential
         fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T>;
@@ -297,7 +297,7 @@ pub mod LinkedListStEph {
             LinkedListStEphS::from_vec(values)
         }
 
-        fn filter<F: Fn(&T) -> B>(a: &Self, pred: &F) -> Self {
+        fn filter<F: PredSt<T>>(a: &Self, pred: &F) -> Self {
             let mut kept: Vec<T> = Vec::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
@@ -308,7 +308,7 @@ pub mod LinkedListStEph {
             LinkedListStEphS::from_vec(kept)
         }
 
-        fn deflate<F: Fn(&T) -> B>(f: &F, x: &T) -> Self {
+        fn deflate<F: PredSt<T>>(f: &F, x: &T) -> Self {
             // Helper for filter: deflate f x = if f(x) then [x] else []
             if f(x) {
                 LinkedListStEphS::from_vec(vec![x.clone()])
