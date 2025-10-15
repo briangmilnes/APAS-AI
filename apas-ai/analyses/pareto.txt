@@ -1,44 +1,57 @@
-Running 24 review scripts...
+Running 35 review scripts...
 
   review_cargo_bench_names.py... ✓
   review_duplicate_ids.py... ✓
   review_timing_params.py... ✓
+  review_apas_where_clauses.py... 52 violations
   review_conventions.py... ✓
-  review_duplicate_chap_imports.py... Error running review_duplicate_chap_imports.py: [Errno 13] Permission denied: '/home/milnes/APASVERUS/APAS-AI/apas-ai/scripts/APAS/src/review_duplicate_chap_imports.py'
-✗ (parsing failed)
-  review_duplicate_imports.py... Error running review_duplicate_imports.py: [Errno 13] Permission denied: '/home/milnes/APASVERUS/APAS-AI/apas-ai/scripts/APAS/src/review_duplicate_imports.py'
-✗ (parsing failed)
+  review_copyright_header.py... 100 violations
+  review_duplicate_chap_imports.py... ✓
+  review_duplicate_imports.py... ✓
+  review_functional_modules.py... 8 violations
+  review_graph_notation.py... ✓
   review_imports.py... ✓
-  review_missing_traits.py... Error running review_missing_traits.py: [Errno 13] Permission denied: '/home/milnes/APASVERUS/APAS-AI/apas-ai/scripts/APAS/src/review_missing_traits.py'
-✗ (parsing failed)
+  review_missing_traits.py... ✓
+  review_mt_discipline.py... 28 violations
   review_naming.py... ✓
-  review_remaining_alias_usage.py... Error running review_remaining_alias_usage.py: [Errno 13] Permission denied: '/home/milnes/APASVERUS/APAS-AI/apas-ai/scripts/APAS/src/review_remaining_alias_usage.py'
-✗ (parsing failed)
-  review_specific_imports.py... Error running review_specific_imports.py: [Errno 13] Permission denied: '/home/milnes/APASVERUS/APAS-AI/apas-ai/scripts/APAS/src/review_specific_imports.py'
-✗ (parsing failed)
+  review_no_factory_pattern.py... ✓
+  review_parallel_model.py... 14 violations
+  review_persistent_immutability.py... ✓
+  review_remaining_alias_usage.py... ✓
+  review_specific_imports.py... ✓
   review_structure.py... ✓
-  review_bench_modules.py... ✗ (parsing failed)
+  review_unit_structs.py... 5 violations
+  review_vec_usage.py... 521 violations
+  review_bench_modules.py... ✓
+  review_duplicate_bench_names.py... ✓
   review_camelcase.py... ✓
   review_import_order.py... ✓
+  review_minimize_ufcs_call_sites.py... 12 violations
   review_no_extern_crate.py... ✓
-  review_no_ufcs_call_sites.py... 12 violations
-  review_cargo.py... ✗ (parsing failed)
-  review_lib.py... ✗ (parsing failed)
+  review_cargo.py... ✓
+  review_lib.py... ✓
   review_module_encapsulation.py... ✓
-  review_variable_naming.py... 7 violations
-  review_where_clause_simplification.py... ✗ (parsing failed)
-  review_integration_test_structure.py... 51 violations
+  review_variable_naming.py... ✓
+  review_where_clause_simplification.py... 50 violations
+  review_integration_test_structure.py... ✓
   review_test_modules.py... ✓
 
 ======================================================================
-PARETO ANALYSIS: 70 total violations
+PARETO ANALYSIS: 790 total violations
 ======================================================================
 
- 1. Integration Test Structure       51 │█████████████████████████████           │  72.9% (cum:  72.9%)
- 2. No Ufcs Call Sites               12 │██████                                  │  17.1% (cum:  90.0%)
- 3. Variable Naming                   7 │████                                    │  10.0% (cum: 100.0%)
+ 1. Vec Usage                       521 │██████████████████████████              │  65.9% (cum:  65.9%)
+ 2. Copyright Header                100 │█████                                   │  12.7% (cum:  78.6%)
+ 3. APAS Where Clauses               52 │██                                      │   6.6% (cum:  85.2%)
+ 4. Where Clause Simplification      50 │██                                      │   6.3% (cum:  91.5%)
+ 5. Mt Discipline                    28 │█                                       │   3.5% (cum:  95.1%)
+ 6. Parallel Model                   14 │                                        │   1.8% (cum:  96.8%)
+ 7. Minimize UFCS Call Sites         12 │                                        │   1.5% (cum:  98.4%)
+ 8. Functional Modules                8 │                                        │   1.0% (cum:  99.4%)
+ 9. Unit Structs                      5 │                                        │   0.6% (cum: 100.0%)
 
 ──────────────────────────────────────────────────────────────────────
-📊 Pareto Principle: Fix top 2 issue(s) to resolve ~80% of violations
-   1. Integration Test Structure
-   2. No Ufcs Call Sites
+📊 Pareto Principle: Fix top 3 issue(s) to resolve ~80% of violations
+   1. Vec Usage
+   2. Copyright Header
+   3. APAS Where Clauses

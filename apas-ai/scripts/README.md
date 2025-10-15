@@ -41,6 +41,16 @@ Scripts for reviewing and fixing APAS source code conventions.
 - `review_naming.py` - Reviews naming conventions (Factory ban, CamelCase, prohibited variable names, file capitalization)
 - `review_remaining_alias_usage.py` - Reviews remaining type alias usage patterns
 - `review_structure.py` - Reviews code structure (code outside modules, cfg(test) in integration tests, pub fields, extern crate)
+- `review_no_factory_pattern.py` - Checks for banned 'Factory' pattern (APASRules.md Lines 176-181)
+- `review_copyright_header.py` - Checks for correct copyright on line 1 (APASRules.md Lines 190-195)
+- `review_persistent_immutability.py` - Checks *Per files for immutability (no &mut self, no set/update) (APASRules.md Lines 49-53)
+- `review_graph_notation.py` - Checks directed graphs use A:, undirected use E: (APASRules.md Lines 60-72)
+- `review_vec_usage.py` - Flags suspicious Vec usage for manual review (APASRules.md Lines 3-16)
+- `review_mt_discipline.py` - Checks *Mt* files use MtT not StT (APASRules.md Lines 44-47)
+- `review_parallel_model.py` - Checks for spawn/join (no rayon, no thresholds) (APASRules.md Lines 39-42)
+- `review_apas_where_clauses.py` - Checks Fn(&T)->B should be Pred<T> (APASRules.md Lines 96-101)
+- `review_functional_modules.py` - Checks functional modules have typeless traits (APASRules.md Lines 103-175)
+- `review_unit_structs.py` - Checks unit structs with algorithms (APASRules.md Lines 183-188)
 
 **Import Pattern Analysis (find_*):**
 - `find_and_fix_ufcs_aliases.py` - Finds and fixes UFCS type alias patterns

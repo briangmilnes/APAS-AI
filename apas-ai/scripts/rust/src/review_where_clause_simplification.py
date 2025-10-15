@@ -155,6 +155,7 @@ def main():
             print(f"    where {param}: {bound}  ← could be inlined as <{param}: {bound}>")
             print()
         print(f"Total simplifiable where clauses: {len(violations)}")
+        print(f"Total violations: {len(violations)}")
         print("\nSuggestion: Inline simple single-bound where clauses into generic parameters.")
         return 1
     else:
