@@ -26,6 +26,7 @@ Const Generic                  | compile-time constant parameter                
 Copy Trait                     | marker for implicit bitwise copy semantics           | implicit copy qualifier         
 Crate                          | primary compilation unit and package                 | top-level module artifact       
 Debug Trait                    | formatting for developer diagnostics                 | debug-print interface           
+Default Implementation         | method body provided in trait definition             | default method implementation           
 Deref Trait                    | overloads * to follow smart pointers                 | implicit dereference protocol   
 Display Trait                  | formatting as user-facing text                       | pretty-print interface          
 Drop                           | deterministic cleanup when scope ends                | RAII finalizer                  
@@ -33,6 +34,7 @@ Dynamic Dispatch               | runtime dyn Trait method dispatch              
 Enum                           | tagged union storing one of several variants         | algebraic sum type              
 Eq Trait                       | marks PartialEq as total equality                    | equivalence relation marker     
 Free Function                  | standalone function not tied to a type or impl       | top-level function definition   
+Function Signature             | declaration of function name, parameters, and return | function declaration header     
 Function Type Signature        | input and output type of a function                  | function type annotation        
 Future                         | value representing an asynchronous computation       | promise/future type             
 Generic Parameter              | type-level variable for polymorphism                 | parametric type variable        
@@ -48,6 +50,7 @@ Macro Definition               | macro rules block expanding to new syntax      
 Macro Rules                    | compile-time code expansion mechanism                | hygienic macro system           
 Match Expression               | branching by destructuring values                    | pattern matching expression     
 MaybeUninit<T>                 | wrapper allowing staged initialization of memory     | uninitialized memory guard      
+Method Signature               | declaration of method name, receiver, and parameters | method declaration header       
 Module                         | module declaration introducing a namespace           | module definition               
 Module                         | namespace grouping items                             | hierarchical module             
 Module Scope                   | visibility region of a module item                   | namespace scope extent          

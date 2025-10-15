@@ -133,6 +133,43 @@ Result guidance
 - Free functions may exist for composition, but core operations must be available via trait methods.
 - Tests: write at least one test per public trait item (see Tests Format).
 
+#### Default Trait Implementations (Pattern)
+- **One-line defaults in trait**: If a default implementation fits on one line (≤120 chars), provide it directly in the trait definition.
+- **Multi-line defaults in impl**: If a default implementation requires multiple lines, provide only the method signature in the trait and implement it in the impl block.
+- **Rationale**: Keeps trait definitions scannable and readable while isolating complex logic in impl blocks.
+- **Pattern**:
+  ```rust
+  pub trait FooTrait<T: StT>: Sized {
+      // Required primitives (no body)
+      fn primitive1() -> Self;
+      fn primitive2(&self) -> &[T];
+      
+      // One-line defaults (readable at a glance)
+      fn empty()            -> Self { Self::primitive1() }
+      fn length(&self)      -> N { self.primitive2().len() }
+      
+      // Multi-line defaults (signature only)
+      fn complex_operation(&mut self, data: T) -> Result<&mut Self, &'static str>;
+  }
+  
+  impl<T: StT> FooTrait<T> for FooS<T> {
+      fn primitive1() -> Self { /* ... */ }
+      fn primitive2(&self) -> &[T] { /* ... */ }
+      
+      // Complex default implementation
+      fn complex_operation(&mut self, data: T) -> Result<&mut Self, &'static str> {
+          // Multi-line logic here
+          if self.validate(data) {
+              self.update(data);
+              Ok(self)
+          } else {
+              Err("Invalid data")
+          }
+      }
+  }
+  ```
+- **Alignment encouraged**: Vertically align `->` in trait method signatures for improved readability (manual in Emacs; do not use `rustfmt`).
+
 #### No Trait Method Duplication (MANDATORY)
 - **NEVER** duplicate trait method implementations as inherent methods on the same type.
 - Trait methods are the single source of truth for behavior.

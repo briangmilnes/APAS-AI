@@ -118,12 +118,6 @@ pub mod MathSeq {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, T> { self.data.iter_mut() }
 
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn empty() -> Self { Self { data: Vec::new() } }
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn singleton(item: T) -> Self { Self { data: vec![item] } }
         /// APAS: Work Θ(|data|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|data|), Span Θ(1)
         pub fn from_vec(data: Vec<T>) -> Self { Self { data } }

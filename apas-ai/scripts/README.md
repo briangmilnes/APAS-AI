@@ -123,6 +123,7 @@ General Rust source code fixes and utilities.
 - `review_module_encapsulation.py` - Reviews that all code is within pub mod blocks (RustRules.md Lines 117-123)
 - `review_variable_naming.py` - Reviews for prohibited variable names: temp_, rock bands (RustRules.md Lines 22-26)
 - `review_where_clause_simplification.py` - Reviews for overly simple where clauses (RustRules.md Lines 322-329)
+- `review_trait_default_pattern.py` - Reviews trait default implementations: one-liners in trait, multi-line in impl (RustRules.md Lines 136-171)
 
 **Module Registration Reviews:**
 - `review_cargo.py` - Reviews Cargo.toml for missing test/benchmark registrations

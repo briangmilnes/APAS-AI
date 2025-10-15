@@ -69,8 +69,6 @@ pub mod BSTBBAlphaStEph {
     impl<T: StT + Ord> BSTBBAlphaStEph<T> {
         // Private helper methods only - no public delegation
 
-        pub fn is_empty(&self) -> B { self.size() == 0 }
-
         pub fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
                 match link {
@@ -88,14 +86,6 @@ pub mod BSTBBAlphaStEph {
                 Self::rebalance_if_needed(&mut self.root, total);
             }
         }
-
-        pub fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
-
-        pub fn contains(&self, target: &T) -> B { self.find(target).is_some() }
-
-        pub fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
-
-        pub fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
 
         pub fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());

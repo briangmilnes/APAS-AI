@@ -152,19 +152,6 @@ pub mod SetStEph {
             true
         }
 
-        pub fn CartesianProduct<U: StT + Hash + Clone>(&self, other: &Set<U>) -> Set<Pair<T, U>>
-        where
-            T: Clone,
-        {
-            let mut out: HashSet<Pair<T, U>> = HashSet::new();
-            for a in self.data.iter() {
-                for b in other.data.iter() {
-                    let _ = out.insert(Pair(a.clone(), b.clone()));
-                }
-            }
-            Set { data: out }
-        }
-
         pub fn insert(&mut self, x: T) -> &mut Self {
             let _ = self.data.insert(x);
             self
