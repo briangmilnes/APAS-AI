@@ -18,22 +18,22 @@ pub struct ArraySeqStEphMinimalS<T: StT> {
 
 pub trait ArraySeqStEphMinimalTrait<T: StT>: Sized {
     // REQUIRED: Implementer must provide these
-    fn from_vec(elts: Vec<T>) -> Self;
-    fn data(&self) -> &[T];
-    fn data_mut(&mut self) -> &mut [T];
+    fn from_vec(elts: Vec<T>)                -> Self;
+    fn data(&self)                           -> &[T];
+    fn data_mut(&mut self)                   -> &mut [T];
 
     // DEFAULT IMPLEMENTATIONS: Free for any implementer!
-    fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
+    fn new(length: N, init_value: T)         -> Self { Self::from_vec(vec![init_value; length]) }
 
-    fn empty() -> Self { Self::from_vec(Vec::new()) }
+    fn empty()                               -> Self { Self::from_vec(Vec::new()) }
 
-    fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
+    fn singleton(item: T)                    -> Self { Self::from_vec(vec![item]) }
 
-    fn length(&self) -> N { self.data().len() }
+    fn length(&self)                         -> N { self.data().len() }
 
-    fn nth(&self, index: N) -> &T { &self.data()[index] }
+    fn nth(&self, index: N)                  -> &T { &self.data()[index] }
 
-    fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
+    fn set(&mut self, index: N, item: T)     -> Result<&mut Self, &'static str> {
         let data = self.data_mut();
         if index < data.len() {
             data[index] = item;
@@ -49,7 +49,7 @@ pub trait ArraySeqStEphMinimalTrait<T: StT>: Sized {
         self
     }
 
-    fn iter(&self) -> std::slice::Iter<'_, T> { self.data().iter() }
+    fn iter(&self)                           -> std::slice::Iter<'_, T> { self.data().iter() }
 }
 
 // ============================================================================

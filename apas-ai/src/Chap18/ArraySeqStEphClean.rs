@@ -12,17 +12,17 @@ pub struct ArraySeqStEphCleanS<T: StT> {
 
 pub trait ArraySeqStEphCleanTrait<T: StT>: Sized {
     // REQUIRED PRIMITIVES: Implementer must provide these
-    fn from_vec(elts: Vec<T>) -> Self;
-    fn data(&self)            -> &[T];
-    fn data_mut(&mut self)    -> &mut [T];
+    fn from_vec(elts: Vec<T>)                -> Self;
+    fn data(&self)                           -> &[T];
+    fn data_mut(&mut self)                   -> &mut [T];
 
     // ONE-LINE DEFAULTS: Readable directly in trait
-    fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
-    fn empty()                       -> Self { Self::from_vec(Vec::new()) }
-    fn singleton(item: T)            -> Self { Self::from_vec(vec![item]) }
-    fn length(&self)                 -> N { self.data().len() }
-    fn nth(&self, index: N)          -> &T { &self.data()[index] }
-    fn iter(&self)                   -> std::slice::Iter<'_, T> { self.data().iter() }
+    fn new(length: N, init_value: T)         -> Self { Self::from_vec(vec![init_value; length]) }
+    fn empty()                               -> Self { Self::from_vec(Vec::new()) }
+    fn singleton(item: T)                    -> Self { Self::from_vec(vec![item]) }
+    fn length(&self)                         -> N { self.data().len() }
+    fn nth(&self, index: N)                  -> &T { &self.data()[index] }
+    fn iter(&self)                           -> std::slice::Iter<'_, T> { self.data().iter() }
 
     // MULTI-LINE DEFAULTS: Type signature here, implementation in impl block below
     fn set(&mut self, index: N, item: T)     -> Result<&mut Self, &'static str>;
