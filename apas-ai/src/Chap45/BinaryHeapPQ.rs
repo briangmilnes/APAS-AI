@@ -203,8 +203,8 @@ pub mod BinaryHeapPQ {
 
             // Bubble up from the last position
             let last_index = new_elements.length() - 1;
-            let temp_pq = BinaryHeapPQ { elements: new_elements };
-            let heapified = temp_pq.bubble_up(last_index);
+            let unheapified_pq = BinaryHeapPQ { elements: new_elements };
+            let heapified = unheapified_pq.bubble_up(last_index);
 
             BinaryHeapPQ { elements: heapified }
         }

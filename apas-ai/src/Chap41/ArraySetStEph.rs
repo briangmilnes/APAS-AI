@@ -131,13 +131,13 @@ pub mod ArraySetStEph {
             if !self.find(&x) {
                 // Element doesn't exist, add it
                 let new_len = self.elements.length() + 1;
-                let mut temp_vec = Vec::with_capacity(new_len);
+                let mut sorted_elements = Vec::with_capacity(new_len);
                 for i in 0..self.elements.length() {
-                    temp_vec.push(self.elements.nth(i).clone());
+                    sorted_elements.push(self.elements.nth(i).clone());
                 }
-                temp_vec.push(x);
-                temp_vec.sort();
-                self.elements = ArraySeqStEphS::from_vec(temp_vec);
+                sorted_elements.push(x);
+                sorted_elements.sort();
+                self.elements = ArraySeqStEphS::from_vec(sorted_elements);
             }
         }
     }
