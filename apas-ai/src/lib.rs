@@ -218,6 +218,12 @@ pub mod Chap47 {
     pub mod AdvancedQuadraticProbing;
     pub mod ClusteringAnalysis;
     pub mod DoubleHashing;
+    // pub mod Example47_1;  // TODO: Fix compilation errors
+    // pub mod Example47_2;  // TODO: Fix compilation errors
+    // pub mod Example47_4;  // TODO: Fix compilation errors
+    // pub mod Example47_5;  // TODO: Fix compilation errors
+    // pub mod Example47_6;  // TODO: Fix compilation errors
+    // pub mod Exercise47_1; // TODO: Fix compilation errors
     pub mod FlatHashTable;
     pub mod HashExamples;
     pub mod HashFunctionTraits;
@@ -278,19 +284,17 @@ pub mod Chap52 {
     pub mod EdgeSetGraphMtPer;
     pub mod EdgeSetGraphStEph;
     pub mod EdgeSetGraphStPer;
-    // pub mod EdgeSetGraphMtEph;
     pub mod AdjTableGraphMtPer;
     pub mod AdjTableGraphStEph;
     pub mod AdjTableGraphStPer;
-    // pub mod AdjTableGraphMtEph;
+    // pub mod AdjSeqGraphMtEph; // API mismatch - ArraySeqMtEphS lacks nth method
+    pub mod AdjSeqGraphMtPer;
     pub mod AdjSeqGraphStEph;
     pub mod AdjSeqGraphStPer;
-    // pub mod AdjSeqGraphMtPer; // API mismatch - ArraySeqMtPerS lacks full interface
-    // pub mod AdjSeqGraphMtEph; // API mismatch - ArraySeqMtEphS lacks nth method
+    // pub mod AdjMatrixGraphMtEph; // API mismatch - ArraySeqMtEphS lacks nth method
+    pub mod AdjMatrixGraphMtPer;
     pub mod AdjMatrixGraphStEph;
     pub mod AdjMatrixGraphStPer;
-    // pub mod AdjMatrixGraphMtPer; // API mismatch - ArraySeqMtPerS lacks full interface
-    // pub mod AdjMatrixGraphMtEph; // API mismatch - ArraySeqMtEphS lacks nth method
 }
 
 pub mod Chap53 {

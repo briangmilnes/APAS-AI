@@ -222,6 +222,9 @@ name = "BenchBSTSetSplayMtEph"
 path = "benches/Chap37/BenchBSTSetSplayMtEph.rs"
 harness = false
 
+# Note: BenchBSTParaMtEph and BenchBSTParaStEph in Chap37/ are misplaced
+# The modules are in Chap38, not Chap37. Already registered in Chap38 section.
+
 [[bench]]
 name = "BenchBSTParaTreapMtEph"
 path = "benches/Chap39/BenchBSTParaTreapMtEph.rs"
