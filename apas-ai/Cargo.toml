@@ -1921,12 +1921,20 @@ name = "TestAdjMatrixGraphStPer"
 path = "tests/Chap52/TestAdjMatrixGraphStPer.rs"
 
 [[test]]
+name = "TestAdjMatrixGraphMtPer"
+path = "tests/Chap52/TestAdjMatrixGraphMtPer.rs"
+
+[[test]]
 name = "TestAdjSeqGraphStEph"
 path = "tests/Chap52/TestAdjSeqGraphStEph.rs"
 
 [[test]]
 name = "TestAdjSeqGraphStPer"
 path = "tests/Chap52/TestAdjSeqGraphStPer.rs"
+
+[[test]]
+name = "TestAdjSeqGraphMtPer"
+path = "tests/Chap52/TestAdjSeqGraphMtPer.rs"
 
 [[test]]
 name = "TestEdgeContractionMtEph"

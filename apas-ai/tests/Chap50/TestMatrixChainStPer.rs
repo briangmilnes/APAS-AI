@@ -81,3 +81,41 @@ fn test_large_chain() {
     let cost = chain.optimal_cost();
     assert!(cost > 0);
 }
+
+#[test]
+fn test_memo_size() {
+    let chain = MatrixChainStPerLit![dims: [(10,20), (20,30)]];
+    assert_eq!(chain.memo_size(), 0);
+    let _ = chain.optimal_cost();
+    // Memo isn't preserved in persistent version by default
+}
+
+#[test]
+fn test_clone() {
+    let chain1 = MatrixChainStPerLit![dims: [(10,20), (20,30)]];
+    let chain2 = chain1.clone();
+    assert_eq!(chain1.num_matrices(), chain2.num_matrices());
+}
+
+#[test]
+fn test_debug() {
+    let chain = MatrixChainStPerLit![dims: [(10,20)]];
+    let debug_str = format!("{:?}", chain);
+    assert!(debug_str.contains("MatrixChainStPerS"));
+}
+
+#[test]
+fn test_equality() {
+    let chain1 = MatrixChainStPerLit![dims: [(10,20), (20,30)]];
+    let chain2 = MatrixChainStPerLit![dims: [(10,20), (20,30)]];
+    assert_eq!(chain1, chain2);
+}
+
+#[test]
+fn test_display() {
+    let chain = MatrixChainStPerLit![dims: [(10,20), (20,30)]];
+    let display_str = format!("{}", chain);
+    assert!(display_str.contains("MatrixChain") || display_str.contains("matrices"));
+    let cost = chain.optimal_cost();
+    assert!(cost > 0);
+}

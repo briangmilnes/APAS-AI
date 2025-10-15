@@ -106,3 +106,84 @@ fn test_infinity_operations() {
     let sum = p + p2;
     assert!(sum.value().is_infinite());
 }
+
+#[test]
+fn test_from_f64() {
+    let p: Probability = 0.75.into();
+    assert_eq!(p.value(), 0.75);
+}
+
+#[test]
+fn test_into_f64() {
+    let p = Probability::new(0.75);
+    let f: f64 = p.into();
+    assert_eq!(f, 0.75);
+}
+
+#[test]
+fn test_default() {
+    let p: Probability = Default::default();
+    assert_eq!(p.value(), 0.0);
+}
+
+#[test]
+fn test_partial_cmp() {
+    let p1 = Probability::new(0.3);
+    let p2 = Probability::new(0.5);
+    assert_eq!(p1.partial_cmp(&p2), Some(std::cmp::Ordering::Less));
+}
+
+#[test]
+fn test_copy_trait() {
+    let p1 = Probability::new(0.5);
+    let p2 = p1; // Copy, not move
+    assert_eq!(p1.value(), p2.value());
+    // p1 is still valid
+    assert_eq!(p1.value(), 0.5);
+}
+
+#[test]
+fn test_hash() {
+    use std::collections::hash_map::DefaultHasher;
+    use std::hash::{Hash, Hasher};
+    
+    let p1 = Probability::new(0.5);
+    let p2 = Probability::new(0.5);
+    
+    let mut hasher1 = DefaultHasher::new();
+    let mut hasher2 = DefaultHasher::new();
+    
+    p1.hash(&mut hasher1);
+    p2.hash(&mut hasher2);
+    
+    assert_eq!(hasher1.finish(), hasher2.finish());
+}
+
+#[test]
+fn test_prob_macro() {
+    use apas_ai::prob;
+    
+    let p = prob!(0.75);
+    assert_eq!(p.value(), 0.75);
+}
+
+#[test]
+fn test_ordering_less() {
+    let p1 = Probability::new(0.1);
+    let p2 = Probability::new(0.9);
+    assert_eq!(p1.cmp(&p2), std::cmp::Ordering::Less);
+}
+
+#[test]
+fn test_ordering_greater() {
+    let p1 = Probability::new(0.9);
+    let p2 = Probability::new(0.1);
+    assert_eq!(p1.cmp(&p2), std::cmp::Ordering::Greater);
+}
+
+#[test]
+fn test_ordering_equal() {
+    let p1 = Probability::new(0.5);
+    let p2 = Probability::new(0.5);
+    assert_eq!(p1.cmp(&p2), std::cmp::Ordering::Equal);
+}

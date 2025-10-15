@@ -88,9 +88,17 @@ fn test_undirgraphmteph_basic_operations() {
 fn test_undirgraphmteph_incident_operations() {
     let v: Set<N> = SetLit![0, 1, 2];
     let a: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(0, 2)];
-    let _g = UnDirGraphMtEph::FromSets(v, a);
+    let g = UnDirGraphMtEph::FromSets(v, a);
 
-    // Test incident edges (each edge is incident to both endpoints)
+    // Test incident edges
+    assert!(g.Incident(&Edge(0, 1), &0));
+    assert!(g.Incident(&Edge(0, 1), &1));
+    assert!(!g.Incident(&Edge(0, 1), &2));
+    
+    assert!(g.Incident(&Edge(1, 2), &1));
+    assert!(g.Incident(&Edge(1, 2), &2));
+    assert!(!g.Incident(&Edge(1, 2), &0));
+
     // let incident0 = g.Incident(&Edge(0, 1), &0); // TODO: fix incident edge tests
     // assert_eq!(incident0, true); // 0-1 incident to 0
 
@@ -99,6 +107,104 @@ fn test_undirgraphmteph_incident_operations() {
 
     // let incident2 = g.Incident(&Edge(0, 2), &2); // TODO: fix incident edge tests
     // assert_eq!(incident2, false); // 0-2 not in graph
+}
+
+#[test]
+fn test_ng_parallel_with_many_edges() {
+    // Force parallel path by having more than 8 edges
+    let mut vertices = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let mut edges = SetLit![];
+    
+    // Create many edges from vertex 0
+    for i in 1..=10 {
+        edges.insert(Edge(0, i));
+    }
+    
+    let g = UnDirGraphMtEph::FromSets(vertices, edges);
+    let ng = g.NG(&0);
+    
+    assert_eq!(ng.size(), 10); // 0 has 10 neighbors
+}
+
+#[test]
+fn test_ng_of_vertices_parallel() {
+    // Create graph with enough complexity to trigger parallel paths
+    let mut vertices = SetLit![];
+    for i in 0..15 {
+        vertices.insert(i);
+    }
+    
+    let mut edges = SetLit![];
+    for i in 0..10 {
+        edges.insert(Edge(i, i + 1));
+    }
+    
+    let g = UnDirGraphMtEph::FromSets(vertices.clone(), edges);
+    
+    let u_set = SetLit![0, 5, 10];
+    let ng = g.NGOfVertices(&u_set);
+    
+    // Each vertex in u_set has neighbors
+    assert!(ng.size() > 0);
+}
+
+#[test]
+fn test_ng_single_edge() {
+    let v: Set<N> = SetLit![0, 1];
+    let a: Set<Edge<N>> = SetLit![Edge(0, 1)];
+    let g = UnDirGraphMtEph::FromSets(v, a);
+    
+    let ng = g.NG(&0);
+    assert_eq!(ng.size(), 1);
+    assert!(ng.mem(&1));
+}
+
+#[test]
+fn test_ng_of_vertices_empty_set() {
+    let v: Set<N> = SetLit![0, 1, 2];
+    let a: Set<Edge<N>> = SetLit![Edge(0, 1)];
+    let g = UnDirGraphMtEph::FromSets(v, a);
+    
+    let empty_set: Set<N> = SetLit![];
+    let ng = g.NGOfVertices(&empty_set);
+    
+    assert_eq!(ng.size(), 0);
+}
+
+#[test]
+fn test_ng_of_vertices_large_set() {
+    // Force parallel path with > 8 vertices
+    let mut vertices = SetLit![];
+    for i in 0..20 {
+        vertices.insert(i);
+    }
+    
+    let mut edges = SetLit![];
+    for i in 0..15 {
+        edges.insert(Edge(i, i + 1));
+    }
+    
+    let g = UnDirGraphMtEph::FromSets(vertices, edges);
+    
+    // Query all vertices (> 8, triggers parallel)
+    let mut u_set = SetLit![];
+    for i in 0..20 {
+        u_set.insert(i);
+    }
+    
+    let ng = g.NGOfVertices(&u_set);
+    assert!(ng.size() > 0);
+}
+
+#[test]
+fn test_clone_graph() {
+    let v: Set<N> = SetLit![0, 1, 2];
+    let a: Set<Edge<N>> = SetLit![Edge(0, 1)];
+    let g = UnDirGraphMtEph::FromSets(v, a);
+    
+    let g2 = g.clone();
+    assert_eq!(g.sizeV(), g2.sizeV());
+    assert_eq!(g.sizeE(), g2.sizeE());
 }
 
 #[test]

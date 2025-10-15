@@ -487,3 +487,37 @@ fn balbintree_only_right_children() {
     assert_eq!(tree.height(), 4);
     assert_eq!(tree.in_order(), ArraySeqStPerSLit![1, 2, 3, 4]);
 }
+
+#[test]
+fn balbintree_trait_methods() {
+    use BalBinTreeStEphTrait;
+    
+    let leaf = <BalBinTree<N> as BalBinTreeStEphTrait<N>>::leaf();
+    assert!(<BalBinTree<N> as BalBinTreeStEphTrait<N>>::is_leaf(&leaf));
+    
+    let node = <BalBinTree<N> as BalBinTreeStEphTrait<N>>::node(
+        <BalBinTree<N> as BalBinTreeStEphTrait<N>>::leaf(),
+        42,
+        <BalBinTree<N> as BalBinTreeStEphTrait<N>>::leaf()
+    );
+    
+    assert!(!<BalBinTree<N> as BalBinTreeStEphTrait<N>>::is_leaf(&node));
+    assert_eq!(<BalBinTree<N> as BalBinTreeStEphTrait<N>>::size(&node), 1);
+    assert_eq!(<BalBinTree<N> as BalBinTreeStEphTrait<N>>::height(&node), 1);
+    assert_eq!(<BalBinTree<N> as BalBinTreeStEphTrait<N>>::in_order(&node), ArraySeqStPerSLit![42]);
+    assert_eq!(<BalBinTree<N> as BalBinTreeStEphTrait<N>>::pre_order(&node), ArraySeqStPerSLit![42]);
+}
+
+#[test]
+fn balbintree_clone() {
+    let tree = BalBinTree::node(BalBinTree::leaf(), 42, BalBinTree::leaf());
+    let tree2 = tree.clone();
+    assert_eq!(tree, tree2);
+}
+
+#[test]
+fn balbintree_debug() {
+    let tree = BalBinTree::node(BalBinTree::leaf(), 42, BalBinTree::leaf());
+    let debug_str = format!("{:?}", tree);
+    assert!(debug_str.contains("Node") || debug_str.contains("42"));
+}

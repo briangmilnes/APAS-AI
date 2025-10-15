@@ -84,3 +84,10 @@ fn test_empty_graph() {
     let graph: AdjMatrixGraphStEph = AdjMatrixGraphStEphTrait::new(5);
     assert_eq!(graph.num_edges(), 0);
 }
+
+#[test]
+fn test_display_graph() {
+    let graph: AdjMatrixGraphStEph = AdjMatrixGraphStEphTrait::new(2);
+    let display_str = format!("{}", graph);
+    assert!(!display_str.is_empty());
+}

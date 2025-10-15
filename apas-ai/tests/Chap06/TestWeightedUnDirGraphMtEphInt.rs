@@ -48,6 +48,7 @@ fn test_weightedundirgraphmtephint_basic_operations() {
     assert!(g.has_edge(&0, &1));
     assert!(g.has_edge(&1, &0)); // Undirected graph
     assert!(g.has_edge(&1, &2));
+    assert!(!g.has_edge(&0, &3)); // No edge
     assert!(g.has_edge(&2, &1));
     assert!(!g.has_edge(&0, &2)); // No direct edge
 
@@ -457,3 +458,25 @@ fn test_clone() {
     assert_eq!(g2.labeled_edges().size(), 2);
     assert!(g2.has_edge(&1, &2));
 }
+
+#[test]
+fn test_get_edge_weight_int() {
+    let vertices = SetLit![1, 2, 3];
+    let edges = SetLit![(1, 2, 15), (2, 3, 25)];
+    let g = WeightedUnDirGraphMtEphInt::from_weighted_edges(vertices, edges);
+    
+    assert_eq!(g.get_edge_weight(&1, &2), Some(15));
+    assert_eq!(g.get_edge_weight(&2, &1), Some(15));
+    assert_eq!(g.get_edge_weight(&1, &3), None);
+}
+
+#[test]
+fn test_weighted_edges_int() {
+    let vertices = SetLit![1, 2];
+    let edges = SetLit![(1, 2, 42)];
+    let g = WeightedUnDirGraphMtEphInt::from_weighted_edges(vertices, edges);
+    
+    let we = g.weighted_edges();
+    assert_eq!(we.size(), 1);
+}
+

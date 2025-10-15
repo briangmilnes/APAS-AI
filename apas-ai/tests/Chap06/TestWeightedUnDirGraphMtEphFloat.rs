@@ -436,7 +436,7 @@ fn test_display_debug_traits() {
 }
 
 #[test]
-fn test_clone() {
+fn test_clone_mteph() {
     let vertices = SetLit![1, 2, 3];
     let edges = SetLit![(1, 2, OrderedFloat(1.5)), (2, 3, OrderedFloat(2.5))];
     let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
@@ -445,4 +445,25 @@ fn test_clone() {
     assert_eq!(g2.vertices().size(), 3);
     assert_eq!(g2.labeled_edges().size(), 2);
     assert!(g2.has_edge(&1, &2));
+}
+
+#[test]
+fn test_get_edge_weight_mteph() {
+    let vertices = SetLit![1, 2, 3];
+    let edges = SetLit![(1, 2, OrderedFloat(1.5)), (2, 3, OrderedFloat(2.5))];
+    let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+    
+    assert_eq!(g.get_edge_weight(&1, &2), Some(OrderedFloat(1.5)));
+    assert_eq!(g.get_edge_weight(&2, &1), Some(OrderedFloat(1.5)));
+    assert_eq!(g.get_edge_weight(&1, &3), None);
+}
+
+#[test]
+fn test_weighted_edges_mteph() {
+    let vertices = SetLit![1, 2];
+    let edges = SetLit![(1, 2, OrderedFloat(3.14))];
+    let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
+    
+    let we = g.weighted_edges();
+    assert_eq!(we.size(), 1);
 }

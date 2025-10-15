@@ -11,3 +11,10 @@
  Chap23/BBTEph.rs should be renamed BBTStEph. Fix all test and benches file naming and
  and import paths. Rerun test and benches (on that file) and fix any errors.
  
+
+When test coverage work completes a batch:
+ 1. Run coverage analysis
+ 2. Identify next 30 lowest-coverage files
+ 3. Create new TODO list
+ 4. Execute it immediately
+ 5. Repeat until all modules have coverage >= 90% or I explicitly say stop.
