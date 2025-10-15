@@ -179,3 +179,4 @@ fn test_multiple_vertices_all_operations() {
     assert_eq!(gc.num_edges(), 90); // 10*9 = 90 edges
 }
 
+

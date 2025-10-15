@@ -18,3 +18,7 @@ When test coverage work completes a batch:
  3. Create new TODO list
  4. Execute it immediately
  5. Repeat until all modules have coverage >= 90% or I explicitly say stop.
+ 6. Expect diminishing returns as we are closing in on coverage.
+ 7. If you have to make a lot of test changes, don't worry about
+  reporting status early. These are non-destructive low costs changes.
+  

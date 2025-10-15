@@ -126,12 +126,35 @@ Result guidance
 ---
 
 ### Traits and Implementations (Mandatory Pattern)
-- For every new public API in `src/` modules, define a public trait inside the module and implement it for the module’s concrete type(s). Do not expose only free functions as the API surface.
+- For every new public API in `src/` modules, define a public trait inside the module and implement it for the module's concrete type(s). Do not expose only free functions as the API surface.
 - Hoist baseline bounds at the trait header (see Generalized lifting rule) and mirror them on the corresponding impl header.
-- Keep both the trait and its impl(s) inside the module’s single `pub mod` block (see Mandatory Encapsulation).
+- Keep both the trait and its impl(s) inside the module's single `pub mod` block (see Mandatory Encapsulation).
 - Name traits and impls consistently with the module (e.g., `Chapter36StTrait` implemented for `ArraySeqStEphS<T>`).
 - Free functions may exist for composition, but core operations must be available via trait methods.
 - Tests: write at least one test per public trait item (see Tests Format).
+
+#### No Trait Method Duplication (MANDATORY)
+- **NEVER** duplicate trait method implementations as inherent methods on the same type.
+- Trait methods are the single source of truth for behavior.
+- If a trait method has an implementation in the trait impl block, **DO NOT** create an inherent method with the same name and signature.
+- Rationale: Eliminates redundant code paths, ensures consistent behavior, improves test coverage, and follows DRY principle.
+- **Violating pattern** (WRONG):
+  ```rust
+  impl<T> MyType<T> {
+      pub fn empty() -> Self { Self { data: Vec::new() } }  // ❌ DELETE THIS
+  }
+  impl<T> MyTrait<T> for MyType<T> {
+      fn empty() -> Self { Self { data: Vec::new() } }      // ✓ KEEP ONLY THIS
+  }
+  ```
+- **Correct pattern**:
+  ```rust
+  impl<T> MyTrait<T> for MyType<T> {
+      fn empty() -> Self { Self { data: Vec::new() } }      // ✓ SINGLE SOURCE
+  }
+  // Call via trait: MyType::empty() or <MyType as MyTrait>::empty()
+  ```
+- Exceptions: Inherent methods are allowed only if they have **different signatures** or **different semantics** than trait methods.
 
 ### Types, Bounds, and Lifting
 
