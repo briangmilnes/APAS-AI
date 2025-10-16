@@ -112,7 +112,7 @@ fn test_undirgraphmteph_incident_operations() {
 #[test]
 fn test_ng_parallel_with_many_edges() {
     // Force parallel path by having more than 8 edges
-    let mut vertices = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let vertices = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     let mut edges = SetLit![];
     
     // Create many edges from vertex 0

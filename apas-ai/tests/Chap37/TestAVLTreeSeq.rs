@@ -336,7 +336,7 @@ fn test_avltreeseq_debug_display() {
 
     // Test empty tree formatting
     let empty: AVLTreeS<i32> = AVLTreeS::empty();
-    let empty_debug = format!("{:?}", empty);
+    let _empty_debug = format!("{:?}", empty);
     let empty_display = format!("{}", empty);
     assert_eq!(empty_display, "[]");
 }

@@ -74,7 +74,6 @@ fn test_points2d_ordering() {
         
         if x != prev_x {
             assert!(x > prev_x);
-            prev_y = 0; // Reset y when x changes
         } else {
             assert!(y > prev_y);
         }

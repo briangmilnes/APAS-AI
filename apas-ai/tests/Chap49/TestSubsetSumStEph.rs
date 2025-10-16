@@ -108,7 +108,7 @@ fn test_multiset_mut() {
     let mut ss = SubsetSumStEphS::from_multiset(multiset);
     
     let ms_mut = ss.multiset_mut();
-    ms_mut.set(0, 10);
+    let _ = ms_mut.set(0, 10);
     assert_eq!(*ss.multiset().nth(0), 10);
 }
 

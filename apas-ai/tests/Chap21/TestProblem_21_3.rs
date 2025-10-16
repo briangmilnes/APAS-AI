@@ -66,11 +66,8 @@ fn test_points3d_loops_ordering() {
         
         if x != prev_x {
             assert!(x > prev_x);
-            prev_y = 0;
-            prev_z = 0;
         } else if y != prev_y {
             assert!(y > prev_y);
-            prev_z = 0;
         } else {
             assert!(z > prev_z);
         }
