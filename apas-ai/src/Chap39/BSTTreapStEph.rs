@@ -5,8 +5,8 @@ pub mod BSTTreapStEph {
 
     use rand::*;
 
-    use crate::Types::Types::*;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
 
     type Link<T> = Option<Box<Node<T>>>;
 
@@ -40,26 +40,26 @@ pub mod BSTTreapStEph {
 
     pub trait BSTTreapStEphTrait<T: StT + Ord> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                       -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                 -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self) -> B;
+        fn is_empty(&self)             -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn height(&self) -> N;
+        fn height(&self)               -> N;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn insert(&mut self, value: T);
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn find(&self, target: &T) -> Option<&T>;
+        fn find(&self, target: &T)     -> Option<&T>;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn contains(&self, target: &T) -> B;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn minimum(&self) -> Option<&T>;
+        fn minimum(&self)              -> Option<&T>;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn maximum(&self) -> Option<&T>;
+        fn maximum(&self)              -> Option<&T>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn in_order(&self) -> ArraySeqStPerS<T>;
-        fn pre_order(&self) -> ArraySeqStPerS<T>;
+        fn in_order(&self)             -> ArraySeqStPerS<T>;
+        fn pre_order(&self)            -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT + Ord> Default for BSTreeTreap<T> {
@@ -110,11 +110,7 @@ pub mod BSTTreapStEph {
                     }
                 } else if value > node.key {
                     Self::insert_link(&mut node.right, value, rng);
-                    if node
-                        .right
-                        .as_ref()
-                        .is_some_and(|right| right.priority < node.priority)
-                    {
+                    if node.right.as_ref().is_some_and(|right| right.priority < node.priority) {
                         Self::rotate_left(link);
                     }
                 }
@@ -232,5 +228,4 @@ pub mod BSTTreapStEph {
             __tree
         }};
     }
-
 }

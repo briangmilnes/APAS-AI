@@ -15,7 +15,7 @@ pub mod MergeSortSt {
         /// Sort a sequence using merge sort.
         /// APAS: Work Θ(n log n), Span Θ(n log n)
         /// claude-4-sonet: Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
-        fn merge_sort(a: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T>;
+        fn merge_sort(a: &ArraySeqStPerS<T>)                          -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT + Ord> MergeSortStTrait<T> for ArraySeqStPerS<T> {

@@ -5,9 +5,9 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap17::MathSeq::MathSeq::*;
 use apas_ai::MathSeqSLit;
+use apas_ai::Types::Types::*;
 
 fn bench_mathseq_basics(c: &mut Criterion) {
     let mut group = c.benchmark_group("MathSeq_ops");

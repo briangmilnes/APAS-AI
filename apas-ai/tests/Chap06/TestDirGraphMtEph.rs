@@ -780,7 +780,7 @@ fn test_ngofvertices_large_parallel() {
 
     let query_set = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // 10 vertices
     let ng_result = g.NGOfVertices(&query_set);
-    
+
     // Each vertex i has neighbors {i-1, i+1} (if they exist)
     // NG(0)={1}, NG(1)={0,2}, ..., NG(9)={8,10}
     // Union should give {0,1,2,3,4,5,6,7,8,9,10}
@@ -847,7 +847,7 @@ fn test_nplusofvertices_large_parallel() {
 
     let query_set = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // 10 vertices
     let nplus_result = g.NPlusOfVertices(&query_set);
-    
+
     // NPlus(0)={1}, NPlus(1)={2}, ..., NPlus(9)={10}
     // Union should give {1,2,3,4,5,6,7,8,9,10}
     assert_eq!(nplus_result.size(), 10);
@@ -871,7 +871,7 @@ fn test_nminusofvertices_large_parallel() {
 
     let query_set = SetLit![5, 6, 7, 8, 9, 10, 11, 12, 13, 14]; // 10 vertices
     let nminus_result = g.NMinusOfVertices(&query_set);
-    
+
     // NMinus(5)={4}, NMinus(6)={5}, ..., NMinus(14)={13}
     // Union should give {4,5,6,7,8,9,10,11,12,13}
     assert_eq!(nminus_result.size(), 10);
@@ -889,7 +889,7 @@ fn test_debug_trait() {
         s
     };
     let g = DirGraphMtEph::FromSets(vertices, edges);
-    
+
     let debug_str = format!("{:?}", g);
     assert!(debug_str.contains("DirGraphMtEph"));
 }
@@ -903,7 +903,7 @@ fn test_display_trait() {
         s
     };
     let g = DirGraphMtEph::FromSets(vertices, edges);
-    
+
     let display_str = format!("{}", g);
     assert!(display_str.contains("V="));
     assert!(display_str.contains("A="));
@@ -919,7 +919,7 @@ fn test_equality() {
     };
     let g1 = DirGraphMtEph::FromSets(v1.clone(), a1.clone());
     let g2 = DirGraphMtEph::FromSets(v1, a1);
-    
+
     assert_eq!(g1, g2);
 }
 
@@ -939,7 +939,7 @@ fn test_inequality() {
     };
     let g1 = DirGraphMtEph::FromSets(v1, a1);
     let g2 = DirGraphMtEph::FromSets(v2, a2);
-    
+
     assert_ne!(g1, g2);
 }
 
@@ -953,7 +953,7 @@ fn test_clone() {
     };
     let g1 = DirGraphMtEph::FromSets(v, a);
     let g2 = g1.clone();
-    
+
     assert_eq!(g1, g2);
     assert_eq!(g1.sizeV(), g2.sizeV());
     assert_eq!(g1.sizeA(), g2.sizeA());

@@ -19,7 +19,7 @@ pub mod SubsetSumStEph {
     /// Trait for subset sum operations
     pub trait SubsetSumStEphTrait<T: StT> {
         /// Create new subset sum solver
-        fn new() -> Self
+        fn new()                                      -> Self
         where
             T: Default;
 
@@ -28,15 +28,15 @@ pub mod SubsetSumStEph {
 
         /// claude-4-sonet: Work Θ(k×|S|), Span Θ(|S|), Parallelism Θ(1)
         /// Solve subset sum problem where k=target, |S|=multiset size
-        fn subset_sum(&mut self, target: i32) -> bool
+        fn subset_sum(&mut self, target: i32)         -> bool
         where
             T: Into<i32> + Copy;
 
         /// Get the multiset
-        fn multiset(&self) -> &ArraySeqStEphS<T>;
+        fn multiset(&self)                            -> &ArraySeqStEphS<T>;
 
         /// Get mutable multiset (ephemeral allows mutation)
-        fn multiset_mut(&mut self) -> &mut ArraySeqStEphS<T>;
+        fn multiset_mut(&mut self)                    -> &mut ArraySeqStEphS<T>;
 
         /// Set element at index (ephemeral mutation)
         fn set(&mut self, index: usize, value: T);
@@ -45,7 +45,7 @@ pub mod SubsetSumStEph {
         fn clear_memo(&mut self);
 
         /// Get memoization table size
-        fn memo_size(&self) -> usize;
+        fn memo_size(&self)                           -> usize;
     }
 
     impl<T: StT> SubsetSumStEphS<T> {
@@ -161,7 +161,6 @@ pub mod SubsetSumStEph {
 
         fn into_iter(self) -> Self::IntoIter { self.multiset.clone().into_iter() }
     }
-
 }
 
 #[macro_export]

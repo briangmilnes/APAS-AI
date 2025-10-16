@@ -3,10 +3,10 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
 use apas_ai::Chap06::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::*;
+use apas_ai::Types::Types::*;
 
 fn bench_weighted_undir_graph_st_eph_float(c: &mut Criterion) {
     let mut group = c.benchmark_group("WeightedUnDirGraphStEphFloat");

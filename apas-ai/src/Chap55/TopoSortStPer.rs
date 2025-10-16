@@ -27,12 +27,12 @@ pub mod TopoSortStPer {
         for start in 0..n {
             if !visited.find(&start) {
                 match dfs_finish_order_cycle_detect(graph, visited, rec_stack, result, start) {
-                    Some((new_visited, new_rec_stack, new_result)) => {
+                    | Some((new_visited, new_rec_stack, new_result)) => {
                         visited = new_visited;
                         rec_stack = new_rec_stack;
                         result = new_result;
                     }
-                    None => return None, // Cycle detected
+                    | None => return None, // Cycle detected
                 }
             }
         }
@@ -79,12 +79,12 @@ pub mod TopoSortStPer {
         for i in 0..neighbors.length() {
             let neighbor = *neighbors.nth(i);
             match dfs_finish_order_cycle_detect(graph, visited, rec_stack, result, neighbor) {
-                Some((new_visited, new_rec_stack, new_result)) => {
+                | Some((new_visited, new_rec_stack, new_result)) => {
                     visited = new_visited;
                     rec_stack = new_rec_stack;
                     result = new_result;
                 }
-                None => return None, // Cycle detected
+                | None => return None, // Cycle detected
             }
         }
 

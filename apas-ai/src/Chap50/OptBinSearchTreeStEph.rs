@@ -3,16 +3,16 @@
 
 pub mod OptBinSearchTreeStEph {
 
+    use std::cmp::min;
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
-    use std::cmp::min;
     use std::iter::Cloned;
     use std::slice::Iter;
     use std::vec::IntoIter;
 
+    use crate::prob;
     use crate::Chap50::Probability::Probability::Probability;
     use crate::Types::Types::*;
-    use crate::prob;
 
     #[derive(Clone, Debug, PartialEq)]
     pub struct KeyProb<T: StT> {
@@ -30,23 +30,23 @@ pub mod OptBinSearchTreeStEph {
     /// Trait for optimal BST operations
     pub trait OBSTStEphTrait<T: StT> {
         /// Create new optimal BST solver
-        fn new() -> Self;
+        fn new()                                                  -> Self;
 
         /// Create from keys and probabilities
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self;
 
         /// Create from key-probability pairs
-        fn from_key_probs(key_probs: Vec<KeyProb<T>>) -> Self;
+        fn from_key_probs(key_probs: Vec<KeyProb<T>>)             -> Self;
 
         /// claude-4-sonet: Work Θ(n³), Span Θ(n²), Parallelism Θ(1)
         /// Compute optimal BST cost where n=number of keys
-        fn optimal_cost(&mut self) -> Probability;
+        fn optimal_cost(&mut self)                                -> Probability;
 
         /// Get the keys with probabilities
-        fn keys(&self) -> &Vec<KeyProb<T>>;
+        fn keys(&self)                                            -> &Vec<KeyProb<T>>;
 
         /// Get mutable keys (ephemeral allows mutation)
-        fn keys_mut(&mut self) -> &mut Vec<KeyProb<T>>;
+        fn keys_mut(&mut self)                                    -> &mut Vec<KeyProb<T>>;
 
         /// Set key-probability pair at index
         fn set_key_prob(&mut self, index: usize, key_prob: KeyProb<T>);
@@ -55,13 +55,13 @@ pub mod OptBinSearchTreeStEph {
         fn update_prob(&mut self, index: usize, prob: Probability);
 
         /// Get number of keys
-        fn num_keys(&self) -> usize;
+        fn num_keys(&self)                                        -> usize;
 
         /// Clear memoization table
         fn clear_memo(&mut self);
 
         /// Get memoization table size
-        fn memo_size(&self) -> usize;
+        fn memo_size(&self)                                       -> usize;
     }
 
     impl<T: StT> OBSTStEphS<T> {
@@ -204,7 +204,6 @@ pub mod OptBinSearchTreeStEph {
     }
 
     impl<T: StT> Eq for KeyProb<T> {}
-
 }
 
 #[macro_export]

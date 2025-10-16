@@ -14,10 +14,10 @@ pub mod BoruvkaMtEph {
     use rand::rngs::StdRng;
     use rand::*;
 
-    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::ParaPair;
     use crate::SetLit;
+    use crate::Types::Types::*;
 
     pub trait BoruvkaMtEphTrait {
         /// Find vertex bridges for parallel Borůvka's algorithm
@@ -337,7 +337,10 @@ pub mod BoruvkaMtEph {
     ///
     /// APAS: Work O(m), Span O(m)
     /// claude-4-sonet: Work O(m), Span O(m)
-    pub fn mst_weight<V: StT + Hash>(edges: &SetStEph<LabeledEdge<V>>, mst_labels: &SetStEph<usize>) -> OrderedFloat<f64> {
+    pub fn mst_weight<V: StT + Hash>(
+        edges: &SetStEph<LabeledEdge<V>>,
+        mst_labels: &SetStEph<usize>,
+    ) -> OrderedFloat<f64> {
         let mut total = OrderedFloat(0.0);
         for (_, _, w, label) in edges.iter() {
             if mst_labels.mem(label) {

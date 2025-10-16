@@ -5,9 +5,9 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::Chap53::GraphSearchStPer::GraphSearchStPer::*;
+use apas_ai::Types::Types::*;
 
 fn build_complete_graph(n: N) -> impl Fn(&N) -> AVLTreeSetStPer<N> {
     move |v: &N| {

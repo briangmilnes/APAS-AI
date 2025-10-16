@@ -394,5 +394,4 @@ pub mod AugOrderedTableStEph {
             $crate::Chap43::AugOrderedTableStEph::AugOrderedTableStEph::AugOrderedTableStEphTrait::empty($reducer, $identity)
         }};
     }
-
 }

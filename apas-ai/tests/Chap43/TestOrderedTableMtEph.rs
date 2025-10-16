@@ -4,10 +4,10 @@
 use std::sync::Arc;
 use std::thread;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::OrderedTableMtEph::OrderedTableMtEph::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_ordered_table_mt_eph_new() {

@@ -187,5 +187,4 @@ pub mod WeightedDirGraphStEphFloat {
             $crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::from_weighted_edges(vertices, arcs)
         }};
     }
-
 }

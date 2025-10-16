@@ -51,32 +51,32 @@ pub mod AVLTreeSeq {
         /// Construct an empty tree.
         /// APAS: Work Θ(1), Span Θ(1).
         /// claude-4-sonet: Work Θ(1), Span Θ(1).
-        fn empty() -> AVLTreeS<T>;
+        fn empty()                                 -> AVLTreeS<T>;
 
         /// Construct an empty tree (alias).
         /// APAS: Work Θ(1), Span Θ(1).
-        fn new() -> Self;
+        fn new()                                   -> Self;
 
         /// Return number of elements.
         /// APAS: Work Θ(1), Span Θ(1).
-        fn length(&self) -> N;
+        fn length(&self)                           -> N;
 
         /// Return a reference to the in-order `index`-th element. Panics if out of bounds.
         /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
-        fn nth(&self, index: N) -> &T;
+        fn nth(&self, index: N)                    -> &T;
 
         /// Set the in-order `index`-th element to `item`.
         /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
-        fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeS<T>, &'static str>;
+        fn set(&mut self, index: N, item: T)       -> Result<&mut AVLTreeS<T>, &'static str>;
 
         /// Construct a singleton sequence.
         /// APAS: Work Θ(1), Span Θ(1).
-        fn singleton(item: T) -> AVLTreeS<T>;
+        fn singleton(item: T)                      -> AVLTreeS<T>;
 
         /// Predicates.
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isEmpty(&self) -> B;
-        fn isSingleton(&self) -> B;
+        fn isEmpty(&self)                          -> B;
+        fn isSingleton(&self)                      -> B;
 
         /// Return subsequence [start, start+length) as a new tree.
         /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
@@ -86,9 +86,7 @@ pub mod AVLTreeSeq {
     }
 
     impl<T: Copy + Debug> Default for AVLTreeS<T> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     impl<T: Copy + Debug> AVLTreeS<T> {

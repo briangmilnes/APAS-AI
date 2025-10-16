@@ -19,7 +19,7 @@ pub mod RelationStEph {
     pub trait RelationStEphTrait<X: StT + Hash, Y: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> RelationStEph<X, Y>;
+        fn empty()                              -> RelationStEph<X, Y>;
 
         /// APAS: Work Θ(|pairs|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|pairs|), Span Θ(1)
@@ -27,32 +27,36 @@ pub mod RelationStEph {
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                          -> N;
 
         /// APAS: Work Θ(|R|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|R|), Span Θ(1)
-        fn domain(&self) -> SetStEph<X>
+        fn domain(&self)                        -> SetStEph<X>
         where
             X: Clone;
 
         /// APAS: Work Θ(|R|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|R|), Span Θ(1)
-        fn range(&self) -> SetStEph<Y>
+        fn range(&self)                         -> SetStEph<Y>
         where
             Y: Clone;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn mem(&self, a: &X, b: &Y) -> B
+        fn mem(&self, a: &X, b: &Y)             -> B
         where
             X: Clone,
             Y: Clone;
 
-        fn iter(&self) -> Iter<'_, Pair<X, Y>>;
+        fn iter(&self)                          -> Iter<'_, Pair<X, Y>>;
     }
 
     impl<A: StT + Hash, B: StT + Hash> RelationStEph<A, B> {
-        pub fn FromVec(v: Vec<Pair<A, B>>) -> RelationStEph<A, B> { RelationStEph { pairs: SetStEph::FromVec(v) } }
+        pub fn FromVec(v: Vec<Pair<A, B>>) -> RelationStEph<A, B> {
+            RelationStEph {
+                pairs: SetStEph::FromVec(v),
+            }
+        }
     }
 
     impl<X: StT + Hash, Y: StT + Hash> RelationStEphTrait<X, Y> for RelationStEph<X, Y> {
@@ -124,5 +128,4 @@ pub mod RelationStEph {
             < $crate::Chap05::RelationStEph::RelationStEph::RelationStEph<_, _> as $crate::Chap05::RelationStEph::RelationStEph::RelationStEphTrait<_, _> >::FromSet(__pairs)
         }};
     }
-
 }

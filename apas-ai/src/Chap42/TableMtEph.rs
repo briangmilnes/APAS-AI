@@ -7,8 +7,8 @@ pub mod TableMtEph {
     use std::sync::Arc;
     use std::thread;
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     use crate::Types::Types::*;
 
@@ -22,31 +22,31 @@ pub mod TableMtEph {
     /// Trait defining the Table ADT operations from Chapter 42
     pub trait TableMtEphTrait<K: MtKey, V: MtVal> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                 -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                     -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(key: K, value: V) -> Self;
         /// claude-4-sonet: Work Θ(n log n), Span Θ(log n), Parallelism Θ(n)
-        fn domain(&self) -> ArraySetStEph<K>;
+        fn domain(&self)               -> ArraySetStEph<K>;
         /// claude-4-sonet: Work Θ(|keys| × W(f)), Span Θ(log |keys| + S(f)), Parallelism Θ(|keys|/(log |keys| + S(f)))
-        fn tabulate<F: Fn(&K) -> V + Send + Sync + 'static>(f: F, keys: &ArraySetStEph<K>) -> Self;
+        fn tabulate<F: Fn(&K)          -> V + Send + Sync + 'static>(f: F, keys: &ArraySetStEph<K>) -> Self;
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(log n + S(f)), Parallelism Θ(n/(log n + S(f)))
-        fn map<F: Fn(&V) -> V + Send + Sync + 'static>(&mut self, f: F);
+        fn map<F: Fn(&V)               -> V + Send + Sync + 'static>(&mut self, f: F);
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(log n + S(f)), Parallelism Θ(n/(log n + S(f)))
-        fn filter<F: Fn(&K, &V) -> B + Send + Sync + 'static>(&mut self, f: F);
+        fn filter<F: Fn(&K, &V)        -> B + Send + Sync + 'static>(&mut self, f: F);
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
-        fn intersection<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, combine: F);
+        fn intersection<F: Fn(&V, &V)  -> V + Send + Sync + 'static>(&mut self, other: &Self, combine: F);
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
-        fn union<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, combine: F);
+        fn union<F: Fn(&V, &V)         -> V + Send + Sync + 'static>(&mut self, other: &Self, combine: F);
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
         fn difference(&mut self, other: &Self);
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn find(&self, key: &K) -> Option<V>;
+        fn find(&self, key: &K)        -> Option<V>;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn delete(&mut self, key: &K);
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn insert<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, key: K, value: V, combine: F);
+        fn insert<F: Fn(&V, &V)        -> V + Send + Sync + 'static>(&mut self, key: K, value: V, combine: F);
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
         fn restrict(&mut self, keys: &ArraySetStEph<K>);
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
@@ -54,7 +54,7 @@ pub mod TableMtEph {
 
         /// APAS: Work Θ(|a|), Span Θ(lg |a|)
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn collect(&self) -> ArraySeqMtEphS<Pair<K, V>>;
+        fn collect(&self)              -> ArraySeqMtEphS<Pair<K, V>>;
     }
 
     impl<K: MtKey, V: MtVal> TableMtEphTrait<K, V> for TableMtEph<K, V> {

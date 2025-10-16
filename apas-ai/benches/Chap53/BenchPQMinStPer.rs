@@ -5,9 +5,9 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::Chap53::PQMinStPer::PQMinStPer::*;
+use apas_ai::Types::Types::*;
 
 fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> { ClosurePriority::new(|v: &N| *v) }
 

@@ -1,9 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::marker::PhantomData;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
 use apas_ai::Chap47clean::VecChainedHashTableStEph::VecChainedHashTableStEph::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_createtable() {

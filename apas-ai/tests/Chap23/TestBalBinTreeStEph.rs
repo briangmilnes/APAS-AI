@@ -491,21 +491,27 @@ fn balbintree_only_right_children() {
 #[test]
 fn balbintree_trait_methods() {
     use BalBinTreeStEphTrait;
-    
+
     let leaf = <BalBinTree<N> as BalBinTreeStEphTrait<N>>::leaf();
     assert!(<BalBinTree<N> as BalBinTreeStEphTrait<N>>::is_leaf(&leaf));
-    
+
     let node = <BalBinTree<N> as BalBinTreeStEphTrait<N>>::node(
         <BalBinTree<N> as BalBinTreeStEphTrait<N>>::leaf(),
         42,
-        <BalBinTree<N> as BalBinTreeStEphTrait<N>>::leaf()
+        <BalBinTree<N> as BalBinTreeStEphTrait<N>>::leaf(),
     );
-    
+
     assert!(!<BalBinTree<N> as BalBinTreeStEphTrait<N>>::is_leaf(&node));
     assert_eq!(<BalBinTree<N> as BalBinTreeStEphTrait<N>>::size(&node), 1);
     assert_eq!(<BalBinTree<N> as BalBinTreeStEphTrait<N>>::height(&node), 1);
-    assert_eq!(<BalBinTree<N> as BalBinTreeStEphTrait<N>>::in_order(&node), ArraySeqStPerSLit![42]);
-    assert_eq!(<BalBinTree<N> as BalBinTreeStEphTrait<N>>::pre_order(&node), ArraySeqStPerSLit![42]);
+    assert_eq!(
+        <BalBinTree<N> as BalBinTreeStEphTrait<N>>::in_order(&node),
+        ArraySeqStPerSLit![42]
+    );
+    assert_eq!(
+        <BalBinTree<N> as BalBinTreeStEphTrait<N>>::pre_order(&node),
+        ArraySeqStPerSLit![42]
+    );
 }
 
 #[test]

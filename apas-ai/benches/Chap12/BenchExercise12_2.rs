@@ -1,14 +1,14 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use std::sync::Arc;
 use std::sync::atomic::AtomicUsize;
+use std::sync::atomic::Ordering::Relaxed;
+use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
-use std::sync::atomic::Ordering::Relaxed;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap12::Exercise12_2::Exercise12_2::*;
+use apas_ai::Types::Types::*;
 
 fn bench_exercise12_2(c: &mut Criterion) {
     let mut group = c.benchmark_group("Exercise12_2");

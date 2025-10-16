@@ -8,8 +8,6 @@ pub mod Exercise12_5 {
 
     use crate::Types::Types::*;
 
-    
-
     struct Node<T: StTInMtT> {
         value: T,
         next: *mut Node<T>,
@@ -22,13 +20,13 @@ pub mod Exercise12_5 {
     }
 
     pub trait ConcurrentStackMtTrait<T: StTInMtT> {
-        fn new() -> Self;
+        fn new()           -> Self;
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
         /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n concurrent pushes, Span Θ(1) - CAS retry loop
         fn push(&self, value: T);
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
         /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n concurrent pops, Span Θ(1) - CAS retry loop
-        fn pop(&self) -> Option<T>;
+        fn pop(&self)      -> Option<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - single atomic load
         fn is_empty(&self) -> bool;

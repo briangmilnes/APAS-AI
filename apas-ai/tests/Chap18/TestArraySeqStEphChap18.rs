@@ -72,14 +72,10 @@ fn test_sequence_literals_and_append() {
 #[test]
 fn test_filter_even() {
     let numbers = ArraySeqStEphSLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&numbers, &|&x| {
-        x % 2 == 0
-    });
+    let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&numbers, &|&x| x % 2 == 0);
     assert_eq!(evens, ArraySeqStEphSLit![2, 4, 6, 8, 10]);
     let odds_only = ArraySeqStEphSLit![1, 3, 5, 7];
-    let no_evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&odds_only, &|&x| {
-        x % 2 == 0
-    });
+    let no_evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&odds_only, &|&x| x % 2 == 0);
     assert_eq!(no_evens.length(), 0);
 }
 
@@ -254,20 +250,20 @@ fn test_iter_comprehensive() {
 #[test]
 fn test_subseq_edge_cases() {
     let seq = ArraySeqStEphSLit![1, 2, 3, 4, 5];
-    
+
     // Start beyond end
     let sub1 = seq.subseq(10, 5);
     assert_eq!(sub1.length(), 0);
-    
+
     // Length extends beyond end
     let sub2 = seq.subseq(3, 10);
     assert_eq!(sub2.length(), 2);
     assert_eq!(sub2, ArraySeqStEphSLit![4, 5]);
-    
+
     // Zero length
     let sub3 = seq.subseq(2, 0);
     assert_eq!(sub3.length(), 0);
-    
+
     // Full sequence
     let sub4 = seq.subseq(0, 5);
     assert_eq!(sub4, seq);
@@ -278,7 +274,7 @@ fn test_equality() {
     let seq1 = ArraySeqStEphSLit![1, 2, 3];
     let seq2 = ArraySeqStEphSLit![1, 2, 3];
     let seq3 = ArraySeqStEphSLit![1, 2, 4];
-    
+
     assert_eq!(seq1, seq2);
     assert_ne!(seq1, seq3);
 }
@@ -288,7 +284,7 @@ fn test_debug_display() {
     let seq = ArraySeqStEphSLit![1, 2, 3];
     let debug_str = format!("{:?}", seq);
     assert!(debug_str.contains("1"));
-    
+
     let display_str = format!("{}", seq);
     assert!(display_str.contains("1"));
 }
@@ -335,13 +331,13 @@ fn test_scan_empty() {
 fn test_append_empty() {
     let seq = ArraySeqStEphSLit![1, 2, 3];
     let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
-    
+
     let result1 = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&seq, &empty);
     assert_eq!(result1, seq);
-    
+
     let result2 = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&empty, &seq);
     assert_eq!(result2, seq);
-    
+
     let result3 = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&empty, &empty);
     assert_eq!(result3.length(), 0);
 }

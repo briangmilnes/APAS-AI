@@ -229,7 +229,8 @@ fn test_labdirgraphmteph_concurrent_access() {
 #[test]
 fn test_labdirgraphmteph_arcs_conversion() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(0, 1, "first".to_string()), LabEdge(1, 2, "second".to_string())];
+    let a: SetStEph<LabEdge<N, String>> =
+        SetLit![LabEdge(0, 1, "first".to_string()), LabEdge(1, 2, "second".to_string())];
     let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v, a);
 
     // Test arcs() method that converts labeled arcs to unlabeled edges
@@ -247,15 +248,15 @@ fn test_labdirgraphmteph_parallel_out_neighbors() {
     for i in 0..20 {
         vertices.insert(i);
     }
-    
+
     let mut arcs = SetStEph::empty();
     // Create 15 arcs from vertex 0 to vertices 1-15
     for i in 1..16 {
         arcs.insert(LabEdge(0, i, format!("arc{}", i)));
     }
-    
+
     let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(vertices, arcs);
-    
+
     let out = g.out_neighbors(&0);
     assert_eq!(out.size(), 15);
     for i in 1..16 {
@@ -270,15 +271,15 @@ fn test_labdirgraphmteph_parallel_in_neighbors() {
     for i in 0..20 {
         vertices.insert(i);
     }
-    
+
     let mut arcs = SetStEph::empty();
     // Create 15 arcs from vertices 1-15 to vertex 0
     for i in 1..16 {
         arcs.insert(LabEdge(i, 0, format!("arc{}", i)));
     }
-    
+
     let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(vertices, arcs);
-    
+
     let in_n = g.in_neighbors(&0);
     assert_eq!(in_n.size(), 15);
     for i in 1..16 {
@@ -293,7 +294,7 @@ fn test_labdirgraphmteph_parallel_mixed() {
     for i in 0..30 {
         vertices.insert(i);
     }
-    
+
     let mut arcs = SetStEph::empty();
     // 10 arcs out from vertex 0
     for i in 1..11 {
@@ -303,12 +304,12 @@ fn test_labdirgraphmteph_parallel_mixed() {
     for i in 19..29 {
         arcs.insert(LabEdge(i, 29, format!("in{}", i)));
     }
-    
+
     let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(vertices, arcs);
-    
+
     let out = g.out_neighbors(&0);
     assert_eq!(out.size(), 10);
-    
+
     let in_n = g.in_neighbors(&29);
     assert_eq!(in_n.size(), 10);
 }
@@ -318,7 +319,7 @@ fn test_labdirgraphmteph_display_trait() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
     let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v, a);
-    
+
     let display_str = format!("{}", g);
     assert!(display_str.contains("LabDirGraph"));
 }
@@ -328,7 +329,7 @@ fn test_labdirgraphmteph_debug_trait() {
     let v: SetStEph<N> = SetLit![1, 2];
     let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
     let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v, a);
-    
+
     let debug_str = format!("{:?}", g);
     assert!(debug_str.contains("LabDirGraph"));
     assert!(debug_str.contains("vertices"));
@@ -338,9 +339,10 @@ fn test_labdirgraphmteph_debug_trait() {
 #[test]
 fn test_labdirgraphmteph_clone() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string()), LabEdge(2, 3, "test2".to_string())];
+    let a: SetStEph<LabEdge<N, String>> =
+        SetLit![LabEdge(1, 2, "test".to_string()), LabEdge(2, 3, "test2".to_string())];
     let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v, a);
-    
+
     let g2 = g.clone();
     assert_eq!(g2.vertices().size(), 3);
     assert_eq!(g2.labeled_arcs().size(), 2);

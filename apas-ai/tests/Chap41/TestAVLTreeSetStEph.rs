@@ -2,8 +2,8 @@
 //! Tests for AVLTreeSetStEph
 
 use apas_ai::AVLTreeSetStEphLit;
-use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
 use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS;
+use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
 use apas_ai::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
 use apas_ai::Chap41::Example41_3::Example41_3::*;
 use apas_ai::*;

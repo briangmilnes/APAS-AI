@@ -29,19 +29,19 @@ pub mod DocumentIndex {
     pub trait DocumentIndexTrait {
         /// claude-4-sonet: Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log² n)
         /// Creates an index from a sequence of (id, contents) pairs
-        fn make_index(docs: &DocumentCollection) -> Self;
+        fn make_index(docs: &DocumentCollection)                     -> Self;
 
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Finds documents containing the given word
-        fn find(&self, word: &Word) -> DocumentSet;
+        fn find(&self, word: &Word)                                  -> DocumentSet;
 
         /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log n + log m)
         /// Logical AND: documents in both sets
-        fn query_and(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet;
+        fn query_and(docs_a: &DocumentSet, docs_b: &DocumentSet)     -> DocumentSet;
 
         /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log n + log m)
         /// Logical OR: documents in either set
-        fn query_or(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet;
+        fn query_or(docs_a: &DocumentSet, docs_b: &DocumentSet)      -> DocumentSet;
 
         /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log n + log m)
         /// Logical AND NOT: documents in first set but not second
@@ -49,11 +49,11 @@ pub mod DocumentIndex {
 
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         /// Returns the number of documents in the set
-        fn size(docs: &DocumentSet) -> N;
+        fn size(docs: &DocumentSet)                                  -> N;
 
         /// Claude Work: O(n), Span: O(log n)
         /// Converts document set to sequence
-        fn to_seq(docs: &DocumentSet) -> ArraySeqStPerS<DocumentId>;
+        fn to_seq(docs: &DocumentSet)                                -> ArraySeqStPerS<DocumentId>;
     }
 
     impl DocumentIndexTrait for DocumentIndex {

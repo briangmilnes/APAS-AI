@@ -19,7 +19,7 @@ pub mod SubsetSumStPer {
     /// Trait for subset sum operations
     pub trait SubsetSumStPerTrait<T: StT> {
         /// Create new subset sum solver
-        fn new() -> Self
+        fn new()                                      -> Self
         where
             T: Default;
 
@@ -28,15 +28,15 @@ pub mod SubsetSumStPer {
 
         /// Solve subset sum problem
         /// claude-4-sonet: Work Θ(k×|S|), Span Θ(|S|), Parallelism Θ(1)
-        fn subset_sum(&self, target: i32) -> bool
+        fn subset_sum(&self, target: i32)             -> bool
         where
             T: Into<i32> + Copy;
 
         /// Get the multiset
-        fn multiset(&self) -> &ArraySeqStPerS<T>;
+        fn multiset(&self)                            -> &ArraySeqStPerS<T>;
 
         /// Get memoization table size
-        fn memo_size(&self) -> usize;
+        fn memo_size(&self)                           -> usize;
     }
 
     impl<T: StT> SubsetSumStPerS<T> {
@@ -136,7 +136,6 @@ pub mod SubsetSumStPer {
 
         fn into_iter(self) -> Self::IntoIter { self.multiset.clone().into_iter() }
     }
-
 }
 
 #[macro_export]

@@ -25,11 +25,11 @@ pub mod SSSPResultStEphInt {
     pub trait SSSPResultStEphIntTrait {
         /// Create new SSSP result
         /// APAS: Work Θ(n), Span Θ(n)
-        fn new(n: N, source: N) -> Self;
+        fn new(n: N, source: N)      -> Self;
 
         /// Get distance to vertex
         /// APAS: Work Θ(1), Span Θ(1)
-        fn distance(&self, v: N) -> Option<i32>;
+        fn distance(&self, v: N)     -> Option<i32>;
 
         /// Check if vertex is reachable
         /// APAS: Work Θ(1), Span Θ(1)
@@ -82,7 +82,11 @@ pub mod SSSPResultStEphInt {
                 return None;
             }
             let pred = *self.predecessors.nth(v);
-            if pred == NO_PREDECESSOR { None } else { Some(pred) }
+            if pred == NO_PREDECESSOR {
+                None
+            } else {
+                Some(pred)
+            }
         }
 
         /// Sets the predecessor of vertex v in the shortest path from source.

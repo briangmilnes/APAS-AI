@@ -41,8 +41,7 @@ fn test_contract_with_base_expand_mt() {
     let base = |vertices: &SetStEph<N>| vertices.size();
 
     // Expand function that just returns the recursive result
-    let expand =
-        |_v: &SetStEph<N>, _e: &SetStEph<Edge<N>>, _centers: &SetStEph<N>, _part: &HashMap<N, N>, r: N| r;
+    let expand = |_v: &SetStEph<N>, _e: &SetStEph<Edge<N>>, _centers: &SetStEph<N>, _part: &HashMap<N, N>, r: N| r;
 
     let result = star_contract_mt(&graph, 456, &base, &expand);
 

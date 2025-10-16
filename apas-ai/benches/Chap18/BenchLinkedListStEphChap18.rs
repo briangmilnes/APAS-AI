@@ -3,8 +3,8 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap18::LinkedListStEph::LinkedListStEph::*;
+use apas_ai::Types::Types::*;
 
 fn bench_ll_eph_ch19(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchLinkedListEph");

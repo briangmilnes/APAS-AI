@@ -3,28 +3,28 @@
 
 pub mod HashExamples {
 
-use crate::Types::Types::*;
-use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
-use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-use crate::Chap47::LinearProbing::LinearProbing::*;
-use crate::Chap47::SeparateChaining::SeparateChaining::*;
+    use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::LinearProbing::LinearProbing::*;
+    use crate::Chap47::SeparateChaining::SeparateChaining::*;
+    use crate::Types::Types::*;
     pub trait HashExamplesTrait {
         /// Example 47.1: String hash function demonstration
         /// APAS: Work Θ(1), Span Θ(1)
         fn example_47_1_hash_function() -> StringPositionHashFunction;
-        
+
         /// Example 47.1: Demonstrate hash function on sample strings
         /// APAS: Work Θ(n), Span Θ(1)
         fn example_47_1_demonstration() -> Vec<(String, N)>;
-        
+
         /// Example 47.2: Linear probing hash table demonstration
         /// APAS: Work Θ(n), Span Θ(1)
         fn example_47_2_linear_probing();
-        
+
         /// Example 47.3: Separate chaining hash table demonstration
         /// APAS: Work Θ(n), Span Θ(1)
         fn example_47_3_separate_chaining();
-        
+
         /// Demonstrate various hash table operations
         /// APAS: Work Θ(n), Span Θ(1)
         fn demonstrate_hash_operations();

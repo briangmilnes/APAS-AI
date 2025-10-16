@@ -14,22 +14,19 @@ pub mod TSPApproxStEph {
 
     use ordered_float::OrderedFloat;
 
-    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::SetLit;
+    use crate::Types::Types::*;
 
     pub trait TSPApproxStEphTrait {
         /// Compute Euler tour of a tree
         /// APAS: Work O(|V|), Span O(|V|)
-        fn euler_tour<V: StT + Hash + Ord>(
-            tree: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
-            start: V,
-        ) -> Vec<V>;
+        fn euler_tour<V: StT + Hash + Ord>(tree: &LabUnDirGraphStEph<V, OrderedFloat<f64>>, start: V) -> Vec<V>;
 
         /// Shortcut Euler tour to avoid revisiting vertices
         /// APAS: Work O(|V|), Span O(|V|)
-        fn shortcut_tour<V: StT + Hash + Ord>(euler_tour: &[V]) -> Vec<V>;
+        fn shortcut_tour<V: StT + Hash + Ord>(euler_tour: &[V])                                       -> Vec<V>;
 
         /// Compute total weight of a tour
         /// APAS: Work O(|V|), Span O(|V|)

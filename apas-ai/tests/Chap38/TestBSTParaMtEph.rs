@@ -268,9 +268,7 @@ fn para_concurrent_operations_stress() {
         assert!(size >= 1); // At least some insertions should be visible
         assert!(!is_empty); // Tree should not be empty
         assert!(found_own >= 0); // Should find some of its own insertions
-        println!(
-            "Thread {thread_id}: size={size}, empty={is_empty:?}, found_own={found_own}"
-        );
+        println!("Thread {thread_id}: size={size}, empty={is_empty:?}, found_own={found_own}");
     }
 }
 

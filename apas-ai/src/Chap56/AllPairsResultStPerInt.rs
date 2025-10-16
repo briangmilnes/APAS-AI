@@ -24,7 +24,7 @@ pub mod AllPairsResultStPerInt {
     pub trait AllPairsResultStPerIntTrait {
         /// Create new all-pairs result
         /// APAS: Work Θ(n²), Span Θ(n²)
-        fn new(n: N) -> Self;
+        fn new(n: N)                   -> Self;
 
         /// Get distance between vertices
         /// APAS: Work Θ(1), Span Θ(1)
@@ -88,7 +88,11 @@ pub mod AllPairsResultStPerInt {
                 return None;
             }
             let pred = *self.predecessors.nth(u).nth(v);
-            if pred == NO_PREDECESSOR { None } else { Some(pred) }
+            if pred == NO_PREDECESSOR {
+                None
+            } else {
+                Some(pred)
+            }
         }
 
         /// Sets the predecessor of vertex v in the shortest path from u, returning a new structure.

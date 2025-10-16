@@ -304,19 +304,13 @@ fn test_isEmpty() {
 fn test_isSingleton() {
     let _e: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
     let e_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::empty();
-    assert!(
-        !<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&e_i32)
-    );
+    assert!(!<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&e_i32));
     let _s: ArraySeqStEphS<N> = ArraySeqStEphS::singleton(7);
     let s_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::singleton(7);
-    assert!(
-        <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&s_i32)
-    );
+    assert!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&s_i32));
     let _a: ArraySeqStEphS<N> = ArraySeqStEphS::tabulate(&|i| i, 2);
     let a_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| i as i32, 2);
-    assert!(
-        !<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&a_i32)
-    );
+    assert!(!<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&a_i32));
 }
 
 #[test]

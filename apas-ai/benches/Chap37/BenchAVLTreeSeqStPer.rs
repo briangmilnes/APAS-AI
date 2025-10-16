@@ -5,9 +5,9 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
+use apas_ai::Types::Types::*;
 
 fn bench_build_and_contains(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchAVLTreeSeqPer");

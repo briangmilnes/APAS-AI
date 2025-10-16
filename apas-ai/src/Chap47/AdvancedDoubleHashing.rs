@@ -4,13 +4,13 @@
 
 pub mod AdvancedDoubleHashing {
 
-use std::fmt::{Debug, Display};
-use std::fmt::Formatter;
-use std::marker::PhantomData;
+    use std::fmt::Formatter;
+    use std::fmt::{Debug, Display};
+    use std::marker::PhantomData;
 
-use crate::Types::Types::*;
-use crate::Chap47::FlatHashTable::FlatHashTable::*;
-use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Types::Types::*;
     #[derive(Clone, Debug)]
     pub struct AdvancedDoubleHashingStrategy<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> {
         hash1: H1,

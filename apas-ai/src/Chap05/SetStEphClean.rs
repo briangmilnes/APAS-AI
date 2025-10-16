@@ -3,12 +3,12 @@
 
 pub mod SetStEphClean {
 
-    use std::collections::HashSet;
-    use std::fmt::{Debug, Display};
-    use std::hash::{Hash, Hasher};
     use std::collections::hash_set::Iter;
+    use std::collections::HashSet;
     use std::fmt::Formatter;
     use std::fmt::Result;
+    use std::fmt::{Debug, Display};
+    use std::hash::{Hash, Hasher};
 
     use crate::Types::Types::*;
 
@@ -19,28 +19,43 @@ pub mod SetStEphClean {
 
     pub trait SetStEphCleanTrait<T: StT + Hash>: Sized {
         // Method signatures (implementation in impl block)
-        fn empty()                                                -> Self;
-        fn singleton(x: T)                                        -> Self;
-        fn size(&self)                                            -> N;
-        fn mem(&self, x: &T)                                      -> B;
-        fn iter(&self)                                            -> Iter<'_, T>;
-        fn insert(&mut self, x: T)                                -> &mut Self;
+        fn empty()                                                     -> Self;
+        fn singleton(x: T)                                             -> Self;
+        fn size(&self)                                                 -> N;
+        fn mem(&self, x: &T)                                           -> B;
+        fn iter(&self)                                                 -> Iter<'_, T>;
+        fn insert(&mut self, x: T)                                     -> &mut Self;
 
         // Multi-line methods (signature only, implementation in impl block)
-        fn union(&self, other: &Self)                             -> Self where T: Clone;
-        fn intersection(&self, other: &Self)                      -> Self where T: Clone;
-        fn partition(&self, parts: &SetStEph<SetStEph<T>>)                  -> B where T: Clone;
-        fn CartesianProduct<U: StT + Hash>(&self, other: &SetStEph<U>) -> SetStEph<Pair<T, U>> where T: Clone;
+        fn union(&self, other: &Self)                                  -> Self
+        where
+            T: Clone;
+        fn intersection(&self, other: &Self)                           -> Self
+        where
+            T: Clone;
+        fn partition(&self, parts: &SetStEph<SetStEph<T>>)             -> B
+        where
+            T: Clone;
+        fn CartesianProduct<U: StT + Hash>(&self, other: &SetStEph<U>) -> SetStEph<Pair<T, U>>
+        where
+            T: Clone;
     }
 
     impl<T: StT + Hash> SetStEphCleanTrait<T> for SetStEph<T> {
         // One-line implementations (≤120 chars)
-        fn empty()                                -> Self { SetStEph { data: HashSet::new() } }
-        fn singleton(x: T)                        -> Self { let mut s = HashSet::with_capacity(1); s.insert(x); SetStEph { data: s } }
-        fn size(&self)                            -> N    { self.data.len() }
-        fn mem(&self, x: &T)                      -> B    { self.data.contains(x) }
+        fn empty() -> Self { SetStEph { data: HashSet::new() } }
+        fn singleton(x: T) -> Self {
+            let mut s = HashSet::with_capacity(1);
+            s.insert(x);
+            SetStEph { data: s }
+        }
+        fn size(&self) -> N { self.data.len() }
+        fn mem(&self, x: &T) -> B { self.data.contains(x) }
         fn iter(&self) -> Iter<'_, T> { self.data.iter() }
-        fn insert(&mut self, x: T)                -> &mut Self { self.data.insert(x); self }
+        fn insert(&mut self, x: T) -> &mut Self {
+            self.data.insert(x);
+            self
+        }
 
         // Multi-line default implementations
         fn union(&self, other: &Self) -> Self
@@ -107,9 +122,7 @@ pub mod SetStEphClean {
     impl<T: Eq + Hash> Eq for SetStEph<T> {}
 
     impl<T: Eq + Hash + Debug> Debug for SetStEph<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            f.debug_set().entries(self.data.iter()).finish()
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { f.debug_set().entries(self.data.iter()).finish() }
     }
 
     impl<T: Eq + Hash + Display> Display for SetStEph<T> {
@@ -143,4 +156,3 @@ pub mod SetStEphClean {
         }
     }
 }
-

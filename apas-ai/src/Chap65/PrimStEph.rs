@@ -8,17 +8,17 @@ pub mod PrimStEph {
 
     use std::cmp::Ordering;
     use std::collections::HashMap;
+    use std::collections::HashSet;
     use std::fmt::{Display, Formatter, Result as FmtResult};
     use std::hash::Hash;
-    use std::collections::HashSet;
 
     use ordered_float::OrderedFloat;
 
-    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
     use crate::SetLit;
+    use crate::Types::Types::*;
 
     pub trait PrimStEphTrait {
         /// Prim's MST algorithm

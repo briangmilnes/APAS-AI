@@ -3,8 +3,8 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap19::ArraySeqMtPer::ArraySeqMtPer::*;
+use apas_ai::Types::Types::*;
 
 fn bench_tabulate_map_mtper_ch19(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtPerChap19");

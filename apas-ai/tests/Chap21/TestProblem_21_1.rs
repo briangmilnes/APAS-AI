@@ -28,15 +28,15 @@ fn test_points2d_two() {
 fn test_points2d_three() {
     let result = points2d(3);
     assert_eq!(result.length(), 6); // n=3: 3 * 2 = 6 points
-    
+
     // x=0: (0,1), (0,2)
     assert_eq!(*result.nth(0), Pair(0, 1));
     assert_eq!(*result.nth(1), Pair(0, 2));
-    
+
     // x=1: (1,1), (1,2)
     assert_eq!(*result.nth(2), Pair(1, 1));
     assert_eq!(*result.nth(3), Pair(1, 2));
-    
+
     // x=2: (2,1), (2,2)
     assert_eq!(*result.nth(4), Pair(2, 1));
     assert_eq!(*result.nth(5), Pair(2, 2));
@@ -46,13 +46,13 @@ fn test_points2d_three() {
 fn test_points2d_five() {
     let result = points2d(5);
     assert_eq!(result.length(), 20); // n=5: 5 * 4 = 20 points
-    
+
     // Check first row (x=0)
     for y in 1..5 {
         let idx = y - 1;
         assert_eq!(*result.nth(idx), Pair(0, y));
     }
-    
+
     // Check last row (x=4)
     for y in 1..5 {
         let idx = 4 * 4 + (y - 1);
@@ -64,20 +64,20 @@ fn test_points2d_five() {
 fn test_points2d_ordering() {
     let result = points2d(4);
     assert_eq!(result.length(), 12);
-    
+
     // Verify x-major ordering
     let mut prev_x = 0;
     let mut prev_y = 0;
-    
+
     for i in 0..result.length() {
         let Pair(x, y) = *result.nth(i);
-        
+
         if x != prev_x {
             assert!(x > prev_x);
         } else {
             assert!(y > prev_y);
         }
-        
+
         prev_x = x;
         prev_y = y;
     }
@@ -87,7 +87,7 @@ fn test_points2d_ordering() {
 fn test_points2d_bounds() {
     let n = 10;
     let result = points2d(n);
-    
+
     // Verify all points satisfy: 0 <= x < n and 1 <= y < n
     for i in 0..result.length() {
         let Pair(x, y) = *result.nth(i);
@@ -100,9 +100,8 @@ fn test_points2d_bounds() {
 fn test_points2d_large() {
     let result = points2d(100);
     assert_eq!(result.length(), 9900); // 100 * 99 = 9900
-    
+
     // Spot check first and last
     assert_eq!(*result.nth(0), Pair(0, 1));
     assert_eq!(*result.nth(9899), Pair(99, 99));
 }
-

@@ -4,8 +4,8 @@
 pub mod AVLTreeSeqStPer {
 
     use std::fmt::Debug;
-    use std::rc::Rc;
     use std::fmt::Formatter;
+    use std::rc::Rc;
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
@@ -140,29 +140,29 @@ pub mod AVLTreeSeqStPer {
     pub trait AVLTreeSeqStPerTrait<T: StT> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                                 -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                                   -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N;
+        fn length(&self)                           -> N;
         /// APAS: Work Θ(lg(n)), Span Θ(lg(n))
-        fn nth(&self, index: N) -> &T;
+        fn nth(&self, index: N)                    -> &T;
         /// APAS (ephemeral set Θ(lg n)); StPer path-copy Θ(lg n) allocations. Work Θ(lg n), Span Θ(lg n)
-        fn set(&self, index: N, item: T) -> Result<Self, &'static str>
+        fn set(&self, index: N, item: T)           -> Result<Self, &'static str>
         where
             Self: Sized;
         /// APAS: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> Self;
+        fn singleton(item: T)                      -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
-        fn isEmpty(&self) -> B;
+        fn isEmpty(&self)                          -> B;
         /// APAS: Work Θ(1), Span Θ(1)
-        fn isSingleton(&self) -> B;
+        fn isSingleton(&self)                      -> B;
         /// APAS: Work Θ(1 + lg|a|), Span Θ(1 + lg|a|)
         fn subseq_copy(&self, start: N, length: N) -> Self;
         /// Build balanced tree from values in in-order order.
-        fn from_vec(values: Vec<T>) -> Self;
+        fn from_vec(values: Vec<T>)                -> Self;
         /// Collect in-order values to Vec.
-        fn values_in_order(&self) -> Vec<T>;
+        fn values_in_order(&self)                  -> Vec<T>;
     }
 
     impl<T: StT> AVLTreeSeqStPerTrait<T> for AVLTreeSeqStPerS<T> {

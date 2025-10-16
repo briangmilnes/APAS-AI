@@ -3,9 +3,9 @@
 
 pub mod ArraySeqStEph {
 
+    use std::collections::HashMap;
     use std::collections::HashSet;
     use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
-    use std::collections::HashMap;
     use std::slice::Iter;
     use std::vec::IntoIter;
 
@@ -114,52 +114,52 @@ pub mod ArraySeqStEph {
     pub trait ArraySeqStEphTrait<T: StT> {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn new(length: N, init_value: T) -> Self;
+        fn new(length: N, init_value: T)                           -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqStEphS<T>, &'static str>;
+        fn set(&mut self, index: N, item: T)                       -> Result<&mut ArraySeqStEphS<T>, &'static str>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn length(&self) -> N;
+        fn length(&self)                                           -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn nth(&self, index: N) -> &T;
+        fn nth(&self, index: N)                                    -> &T;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn empty() -> ArraySeqStEphS<T>;
+        fn empty()                                                 -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn singleton(item: T) -> ArraySeqStEphS<T>;
+        fn singleton(item: T)                                      -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStEphS<T>;
+        fn tabulate<F: Fn(N)                                       -> T>(f: &F, length: N) -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStEphS<T>, f: &F) -> ArraySeqStEphS<U>;
+        fn map<U: StT, F: Fn(&T)                                   -> U>(a: &ArraySeqStEphS<T>, f: &F) -> ArraySeqStEphS<U>;
         /// APAS: Work Θ(len), Span Θ(1)
         /// claude-4-sonet: Work Θ(len), Span Θ(len), Parallelism Θ(1) - sequential copy
-        fn subseq(a: &ArraySeqStEphS<T>, start: N, length: N) -> ArraySeqStEphS<T>;
+        fn subseq(a: &ArraySeqStEphS<T>, start: N, length: N)      -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(|a|+|b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|+|b|), Span Θ(|a|+|b|), Parallelism Θ(1) - sequential
-        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;
+        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>)    -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn filter<F: PredSt<T>>(a: &ArraySeqStEphS<T>, pred: &F) -> ArraySeqStEphS<T>;
+        fn filter<F: PredSt<T>>(a: &ArraySeqStEphS<T>, pred: &F)   -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(Σ|a[i]|), Span Θ(1)
         /// claude-4-sonet: Work Θ(Σ|a[i]|), Span Θ(Σ|a[i]|), Parallelism Θ(1) - sequential
-        fn flatten(a: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;
+        fn flatten(a: &ArraySeqStEphS<ArraySeqStEphS<T>>)          -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - in-place mutation
-        fn update(&mut self, update: Pair<N, T>) -> &mut ArraySeqStEphS<T>;
+        fn update(&mut self, update: Pair<N, T>)                   -> &mut ArraySeqStEphS<T>;
         /// APAS: Work Θ(|updates|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|updates|), Span Θ(|updates|), Parallelism Θ(1) - sequential in-place
         fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut ArraySeqStEphS<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn isEmpty(&self) -> B;
+        fn isEmpty(&self)                                          -> B;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn isSingleton(&self) -> B;
+        fn isSingleton(&self)                                      -> B;
         /// APAS: Work Θ(|pairs|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|pairs|²), Span Θ(|pairs|²), Parallelism Θ(1) - sequential with linear search
         fn collect<K: StT, V: StT>(
@@ -168,13 +168,13 @@ pub mod ArraySeqStEph {
         ) -> ArraySeqStEphS<Pair<K, ArraySeqStEphS<V>>>;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
-        fn iterate<A, F: Fn(&A, &T) -> A>(a: &ArraySeqStEphS<T>, f: &F, seed: A) -> A;
+        fn iterate<A, F: Fn(&A, &T)                                -> A>(a: &ArraySeqStEphS<T>, f: &F, seed: A) -> A;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential reduction
-        fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> T;
+        fn reduce<F: Fn(&T, &T)                                    -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> T;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
-        fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T);
+        fn scan<F: Fn(&T, &T)                                      -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T);
     }
 
     impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {

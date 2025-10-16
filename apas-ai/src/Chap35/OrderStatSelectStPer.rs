@@ -7,8 +7,8 @@ pub mod OrderStatSelectStPer {
 
     use rand::Rng;
 
-    use crate::Types::Types::*;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
 
     pub trait OrderStatSelectStPerTrait<T: StT + Ord> {
         /// claude-4-sonet: Work Θ(n) expected, Θ(n²) worst case; Span Θ(n) (sequential), Parallelism Θ(1)

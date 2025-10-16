@@ -247,9 +247,7 @@ fn test_relation_maximum_size_boundary() {
     // Verify basic operations work on large relation
     assert_eq!(large_rel.size(), large_size);
     assert!(large_rel.mem(&0, &0));
-    assert!(
-        large_rel.mem(&((large_size - 1) as i32), &(((large_size - 1) * 2) as i32))
-    );
+    assert!(large_rel.mem(&((large_size - 1) as i32), &(((large_size - 1) * 2) as i32)));
     assert!(!large_rel.mem(&(large_size as i32), &0));
 
     // Test domain and range on large relation
@@ -304,10 +302,10 @@ fn test_relation_maximum_size_boundary() {
 #[test]
 fn test_relation_debug_display() {
     let rel = RelationLit![(1, 'a'), (2, 'b')];
-    
+
     let debug_str = format!("{:?}", rel);
     assert!(!debug_str.is_empty());
-    
+
     let display_str = format!("{}", rel);
     assert!(!display_str.is_empty());
 }
@@ -317,7 +315,7 @@ fn test_relation_equality() {
     let rel1 = RelationLit![(1, 'a'), (2, 'b')];
     let rel2 = RelationLit![(1, 'a'), (2, 'b')];
     let rel3 = RelationLit![(1, 'a'), (3, 'c')];
-    
+
     assert_eq!(rel1, rel2);
     assert_ne!(rel1, rel3);
 }
@@ -326,7 +324,7 @@ fn test_relation_equality() {
 fn test_relation_clone() {
     let rel1 = RelationLit![(1, 'a'), (2, 'b')];
     let rel2 = rel1.clone();
-    
+
     assert_eq!(rel1, rel2);
     assert_eq!(rel1.size(), rel2.size());
 }

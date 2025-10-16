@@ -17,9 +17,9 @@ pub mod AllPairsResultStEphFloat {
 
     use ordered_float::OrderedFloat;
 
-    use crate::Types::Types::*;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Types::Types::*;
 
     const UNREACHABLE: OrderedF64 = OrderedFloat(f64::INFINITY);
     const NO_PREDECESSOR: usize = usize::MAX;
@@ -28,7 +28,7 @@ pub mod AllPairsResultStEphFloat {
     pub trait AllPairsResultStEphFloatTrait {
         /// Create new all-pairs result
         /// APAS: Work Θ(n²), Span Θ(n²)
-        fn new(n: N) -> Self;
+        fn new(n: N)                   -> Self;
 
         /// Get distance between vertices
         /// APAS: Work Θ(1), Span Θ(1)
@@ -93,7 +93,11 @@ pub mod AllPairsResultStEphFloat {
                 return None;
             }
             let pred = *self.predecessors.nth(u).nth(v);
-            if pred == NO_PREDECESSOR { None } else { Some(pred) }
+            if pred == NO_PREDECESSOR {
+                None
+            } else {
+                Some(pred)
+            }
         }
 
         /// Sets the predecessor of vertex v in the shortest path from u.

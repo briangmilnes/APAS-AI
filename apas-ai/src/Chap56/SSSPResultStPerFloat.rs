@@ -17,8 +17,8 @@ pub mod SSSPResultStPerFloat {
 
     use ordered_float::OrderedFloat;
 
-    use crate::Types::Types::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Types::Types::*;
 
     const UNREACHABLE: OrderedF64 = OrderedFloat(f64::INFINITY);
     const NO_PREDECESSOR: usize = usize::MAX;
@@ -27,11 +27,11 @@ pub mod SSSPResultStPerFloat {
     pub trait SSSPResultStPerFloatTrait {
         /// Create new SSSP result
         /// APAS: Work Θ(n), Span Θ(n)
-        fn new(n: N, source: N) -> Self;
+        fn new(n: N, source: N)      -> Self;
 
         /// Get distance to vertex
         /// APAS: Work Θ(1), Span Θ(1)
-        fn distance(&self, v: N) -> Option<OrderedF64>;
+        fn distance(&self, v: N)     -> Option<OrderedF64>;
 
         /// Check if vertex is reachable
         /// APAS: Work Θ(1), Span Θ(1)
@@ -87,7 +87,11 @@ pub mod SSSPResultStPerFloat {
                 return None;
             }
             let pred = *self.predecessors.nth(v);
-            if pred == NO_PREDECESSOR { None } else { Some(pred) }
+            if pred == NO_PREDECESSOR {
+                None
+            } else {
+                Some(pred)
+            }
         }
 
         /// Sets the predecessor of vertex v, returning a new structure.

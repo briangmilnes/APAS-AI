@@ -5,9 +5,9 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap43::OrderedTableStEph::OrderedTableStEph::*;
+use apas_ai::Types::Types::*;
 
 fn bench_ordered_table_st_eph_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableStEph_insert");

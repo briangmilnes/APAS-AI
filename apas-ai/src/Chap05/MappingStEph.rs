@@ -3,10 +3,10 @@
 
 pub mod MappingStEph {
 
+    use std::collections::hash_set::Iter;
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
-    use std::collections::hash_set::Iter;
 
     use crate::Chap05::RelationStEph::RelationStEph::*;
     use crate::Chap05::SetStEph::SetStEph::*;
@@ -21,11 +21,11 @@ pub mod MappingStEph {
     pub trait MappingStEphTrait<X: StT + Hash, Y: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> MappingStEph<X, Y>;
+        fn empty()                               -> MappingStEph<X, Y>;
 
         /// APAS: Work Θ(|v|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
-        fn FromVec(v: Vec<Pair<X, Y>>) -> MappingStEph<X, Y>;
+        fn FromVec(v: Vec<Pair<X, Y>>)           -> MappingStEph<X, Y>;
 
         /// APAS: Work Θ(|r|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|r|), Span Θ(1)
@@ -33,21 +33,21 @@ pub mod MappingStEph {
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                           -> N;
 
         /// APAS: Work Θ(|m|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|m|), Span Θ(1)
-        fn domain(&self) -> SetStEph<X>;
+        fn domain(&self)                         -> SetStEph<X>;
 
         /// APAS: Work Θ(|m|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|m|), Span Θ(1)
-        fn range(&self) -> SetStEph<Y>;
+        fn range(&self)                          -> SetStEph<Y>;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn mem(&self, a: &X, b: &Y) -> B;
+        fn mem(&self, a: &X, b: &Y)              -> B;
 
-        fn iter(&self) -> Iter<'_, Pair<X, Y>>;
+        fn iter(&self)                           -> Iter<'_, Pair<X, Y>>;
     }
 
     impl<A: Eq + Hash, B: Eq + Hash> MappingStEph<A, B> {
@@ -125,5 +125,4 @@ pub mod MappingStEph {
             < $crate::Chap05::MappingStEph::MappingStEph::MappingStEph<_, _> as $crate::Chap05::MappingStEph::MappingStEph::MappingStEphTrait<_, _> >::FromVec(__pairs)
         }};
     }
-
 }

@@ -5,11 +5,11 @@ use std::f64::consts::PI;
 
 use ordered_float::OrderedFloat;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
 use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
 use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 use apas_ai::WeightedDirGraphStEphFloatLit;
 
 #[test]
@@ -201,7 +201,8 @@ fn test_weighteddirgraphstephfloat_nonexistent_vertex() {
 #[test]
 fn test_weighteddirgraphstephfloat_arcs_conversion() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<LabEdge<N, OrderedF64>> = SetLit![LabEdge(0, 1, OrderedFloat(1.1)), LabEdge(1, 2, OrderedFloat(2.2))];
+    let a: SetStEph<LabEdge<N, OrderedF64>> =
+        SetLit![LabEdge(0, 1, OrderedFloat(1.1)), LabEdge(1, 2, OrderedFloat(2.2))];
     let g = WeightedDirGraphStEphFloat::from_vertices_and_labeled_arcs(v, a);
 
     // Test arcs() method that converts weighted arcs to unlabeled edges

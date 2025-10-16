@@ -417,17 +417,17 @@ fn test_parallel_neighbors_weighted() {
     for i in 0..15 {
         vertices.insert(i);
     }
-    
+
     let mut edges = SetStEph::empty();
     for i in 1..13 {
         edges.insert((0, i, i * 10));
     }
-    
+
     let g = WeightedUnDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     let neighbors_weighted = g.neighbors_weighted(&0);
     assert_eq!(neighbors_weighted.size(), 12);
-    
+
     // Verify some specific neighbors and weights
     assert!(neighbors_weighted.mem(&(1, 10)));
     assert!(neighbors_weighted.mem(&(5, 50)));
@@ -439,10 +439,10 @@ fn test_display_debug_traits() {
     let vertices = SetLit![1, 2];
     let edges = SetLit![(1, 2, 42)];
     let g = WeightedUnDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     let display_str = format!("{}", g);
     assert!(display_str.contains("LabUnDirGraph"));
-    
+
     let debug_str = format!("{:?}", g);
     assert!(debug_str.contains("LabUnDirGraph"));
 }
@@ -452,7 +452,7 @@ fn test_clone() {
     let vertices = SetLit![1, 2, 3];
     let edges = SetLit![(1, 2, 10), (2, 3, 20)];
     let g = WeightedUnDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     let g2 = g.clone();
     assert_eq!(g2.vertices().size(), 3);
     assert_eq!(g2.labeled_edges().size(), 2);
@@ -464,7 +464,7 @@ fn test_get_edge_weight_int() {
     let vertices = SetLit![1, 2, 3];
     let edges = SetLit![(1, 2, 15), (2, 3, 25)];
     let g = WeightedUnDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     assert_eq!(g.get_edge_weight(&1, &2), Some(15));
     assert_eq!(g.get_edge_weight(&2, &1), Some(15));
     assert_eq!(g.get_edge_weight(&1, &3), None);
@@ -475,8 +475,7 @@ fn test_weighted_edges_int() {
     let vertices = SetLit![1, 2];
     let edges = SetLit![(1, 2, 42)];
     let g = WeightedUnDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     let we = g.weighted_edges();
     assert_eq!(we.size(), 1);
 }
-

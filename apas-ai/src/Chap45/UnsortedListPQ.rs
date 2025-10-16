@@ -16,37 +16,37 @@ pub mod UnsortedListPQ {
     /// Trait defining the Meldable Priority Queue ADT operations (Data Type 45.1)
     pub trait UnsortedListPQTrait<T: StT + Ord> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                           -> Self;
 
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(element: T) -> Self;
+        fn singleton(element: T)             -> Self;
 
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         /// Returns the minimum element, or None if empty
-        fn find_min(&self) -> Option<&T>;
+        fn find_min(&self)                   -> Option<&T>;
 
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         /// Inserts element into unsorted list
-        fn insert(&self, element: T) -> Self;
+        fn insert(&self, element: T)         -> Self;
 
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         /// Removes and returns minimum element with new queue
-        fn delete_min(&self) -> (Self, Option<T>)
+        fn delete_min(&self)                 -> (Self, Option<T>)
         where
             Self: Sized;
 
         /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
         /// Melds two priority queues by concatenating lists
-        fn meld(&self, other: &Self) -> Self;
+        fn meld(&self, other: &Self)         -> Self;
 
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         /// Creates priority queue from sequence
         fn from_seq(seq: &ArraySeqStPerS<T>) -> Self;
 
         /// Helper methods
-        fn size(&self) -> N;
-        fn is_empty(&self) -> bool;
-        fn to_seq(&self) -> ArraySeqStPerS<T>;
+        fn size(&self)                       -> N;
+        fn is_empty(&self)                   -> bool;
+        fn to_seq(&self)                     -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT + Ord> UnsortedListPQTrait<T> for UnsortedListPQ<T> {

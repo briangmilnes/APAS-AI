@@ -5,9 +5,9 @@ pub mod LinearProbing {
 
     use std::marker::PhantomData;
 
-use crate::Types::Types::*;
-use crate::Chap47::FlatHashTable::FlatHashTable::*;
-use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Types::Types::*;
     #[derive(Clone, Debug)]
     pub struct LinearProbingStrategy<K: StT, H: HashFunClone<K>> {
         base_hash: H,

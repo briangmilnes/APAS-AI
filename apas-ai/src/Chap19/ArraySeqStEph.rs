@@ -13,58 +13,58 @@ pub mod ArraySeqStEph {
 
     pub trait ArraySeqStEphTrait<T: StT> {
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn new(length: N, init_value: T) -> Self;
+        fn new(length: N, init_value: T)                                  -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> ArraySeqStEphS<T>;
+        fn empty()                                                        -> ArraySeqStEphS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> ArraySeqStEphS<T>;
+        fn singleton(item: T)                                             -> ArraySeqStEphS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N;
+        fn length(&self)                                                  -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn nth(&self, index: N) -> &T;
+        fn nth(&self, index: N)                                           -> &T;
         /// claude-4-sonet: Work Θ(length), Span Θ(length), Parallelism Θ(1)
-        fn subseq_copy(&self, start: N, length: N) -> ArraySeqStEphS<T>;
+        fn subseq_copy(&self, start: N, length: N)                        -> ArraySeqStEphS<T>;
 
         /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
         /// claude-4-sonet: Work Θ(n + Σᵢ W(f(i))), Span Θ(n + maxᵢ S(f(i))), Parallelism Θ(1)
-        fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> ArraySeqStEphS<T>;
+        fn tabulate<F: Fn(N)                                              -> T>(f: &F, n: N) -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x)))
         /// claude-4-sonet: Work Θ(|a| + Σₓ W(f(x))), Span Θ(|a| + maxₓ S(f(x))), Parallelism Θ(1)
-        fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStEphS<T>, f: &F) -> ArraySeqStEphS<U>;
+        fn map<U: StT, F: Fn(&T)                                          -> U>(a: &ArraySeqStEphS<T>, f: &F) -> ArraySeqStEphS<U>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn select(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>, index: N) -> Option<T>;
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1)
-        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;
+        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>)           -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1)
-        fn append_select(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T>;
+        fn append_select(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>)    -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn deflate<F: PredSt<T>>(f: &F, x: &T) -> ArraySeqStEphS<T>;
+        fn deflate<F: PredSt<T>>(f: &F, x: &T)                            -> ArraySeqStEphS<T>;
         /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(1 + max i S(f(a[i])))
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(|a| + maxᵢ S(f(aᵢ))), Parallelism Θ(1)
-        fn filter<F: PredSt<T>>(a: &ArraySeqStEphS<T>, pred: &F) -> ArraySeqStEphS<T>;
+        fn filter<F: PredSt<T>>(a: &ArraySeqStEphS<T>, pred: &F)          -> ArraySeqStEphS<T>;
         /// claude-4-sonet: Work Θ(|a| × W(f)), Span Θ(|a| × S(f)), Parallelism Θ(1)
-        fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &ArraySeqStEphS<T>, f: &F, x: A) -> A;
+        fn iterate<A: StT, F: Fn(&A, &T)                                  -> A>(a: &ArraySeqStEphS<T>, f: &F, x: A) -> A;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
-        fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> T;
+        fn reduce<F: Fn(&T, &T)                                           -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> T;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
-        fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T);
+        fn scan<F: Fn(&T, &T)                                             -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T);
         /// claude-4-sonet: Work Θ(Σᵢ |sᵢ|), Span Θ(Σᵢ |sᵢ|), Parallelism Θ(1)
-        fn flatten(s: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T>;
+        fn flatten(s: &ArraySeqStEphS<ArraySeqStEphS<T>>)                 -> ArraySeqStEphS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(a: &ArraySeqStEphS<T>) -> bool;
+        fn isEmpty(a: &ArraySeqStEphS<T>)                                 -> bool;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isSingleton(a: &ArraySeqStEphS<T>) -> bool;
+        fn isSingleton(a: &ArraySeqStEphS<T>)                             -> bool;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn update(a: &ArraySeqStEphS<T>, index: N, item: T) -> ArraySeqStEphS<T>;
+        fn update(a: &ArraySeqStEphS<T>, index: N, item: T)               -> ArraySeqStEphS<T>;
         /// Inject updates into base sequence. Updates is a vector of (index, value) pairs.
         /// If multiple updates target the same index, the last update wins.
         /// APAS: Work Θ(|base| + |updates|), Span Θ(|base| + |updates|)
         /// claude-4-sonet: Work Θ(|base| + |updates|), Span Θ(|base| + |updates|), Parallelism Θ(1)
-        fn inject(base: &ArraySeqStEphS<T>, updates: &[(N, T)]) -> ArraySeqStEphS<T>;
+        fn inject(base: &ArraySeqStEphS<T>, updates: &[(N, T)])           -> ArraySeqStEphS<T>;
     }
 
     impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {

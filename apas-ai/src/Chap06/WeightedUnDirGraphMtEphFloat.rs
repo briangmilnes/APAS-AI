@@ -145,5 +145,4 @@ pub mod WeightedUnDirGraphMtEphFloat {
             $crate::Chap06::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges)
         }};
     }
-
 }

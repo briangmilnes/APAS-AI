@@ -6,9 +6,9 @@ pub mod LinkedListChainedHashTableStEph {
 
     use std::collections::LinkedList;
 
-    use crate::Types::Types::*;
-    use crate::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
     use crate::Chap47clean::ChainedHashTable::ChainedHashTable::*;
+    use crate::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
+    use crate::Types::Types::*;
 
     impl<Key: PartialEq + Clone, Value: Clone> EntryTrait<Key, Value> for LinkedList<(Key, Value)> {
         fn new() -> Self { LinkedList::new() }
@@ -55,8 +55,7 @@ pub mod LinkedListChainedHashTableStEph {
     /// LinkedList Chained Hash Table implementation.
     pub struct LinkedListChainedHashTableStEph;
 
-    impl<Key: StT, Value: StT, Metrics: Default> 
-        ParaHashTableStEphTrait<Key, Value, LinkedList<(Key, Value)>, Metrics> 
+    impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, LinkedList<(Key, Value)>, Metrics>
         for LinkedListChainedHashTableStEph
     {
         fn insert(table: &mut HashTable<Key, Value, LinkedList<(Key, Value)>, Metrics>, key: Key, value: Value) {
@@ -72,8 +71,7 @@ pub mod LinkedListChainedHashTableStEph {
         }
     }
 
-    impl<Key: StT, Value: StT, Metrics: Default> 
-        ChainedHashTable<Key, Value, LinkedList<(Key, Value)>, Metrics> 
+    impl<Key: StT, Value: StT, Metrics: Default> ChainedHashTable<Key, Value, LinkedList<(Key, Value)>, Metrics>
         for LinkedListChainedHashTableStEph
     {
         fn hash_index(table: &HashTable<Key, Value, LinkedList<(Key, Value)>, Metrics>, _key: &Key) -> N {
@@ -83,4 +81,3 @@ pub mod LinkedListChainedHashTableStEph {
         }
     }
 }
-

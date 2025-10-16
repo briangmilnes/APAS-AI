@@ -5,10 +5,10 @@ pub mod OptBinSearchTreeMtPer {
 
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
-    use std::sync::{Arc, Mutex};
-    use std::thread;
     use std::iter::Cloned;
     use std::slice::Iter;
+    use std::sync::{Arc, Mutex};
+    use std::thread;
     use std::vec::IntoIter;
 
     use crate::Chap50::Probability::Probability::Probability;
@@ -30,28 +30,28 @@ pub mod OptBinSearchTreeMtPer {
     /// Trait for parallel optimal BST operations
     pub trait OBSTMtPerTrait<T: MtVal> {
         /// Create new optimal BST solver
-        fn new() -> Self;
+        fn new()                                                  -> Self;
 
         /// Create from keys and probabilities
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self;
 
         /// Create from key-probability pairs
-        fn from_key_probs(key_probs: Vec<KeyProb<T>>) -> Self;
+        fn from_key_probs(key_probs: Vec<KeyProb<T>>)             -> Self;
 
         /// claude-4-sonet: Work Θ(n³), Span Θ(n log n), Parallelism Θ(n²/log n)
         /// Compute optimal BST cost where n=number of keys
-        fn optimal_cost(&self) -> Probability
+        fn optimal_cost(&self)                                    -> Probability
         where
             T: Send + Sync + 'static;
 
         /// Get the keys with probabilities
-        fn keys(&self) -> &Arc<Vec<KeyProb<T>>>;
+        fn keys(&self)                                            -> &Arc<Vec<KeyProb<T>>>;
 
         /// Get number of keys
-        fn num_keys(&self) -> usize;
+        fn num_keys(&self)                                        -> usize;
 
         /// Get memoization table size
-        fn memo_size(&self) -> usize;
+        fn memo_size(&self)                                       -> usize;
     }
 
     impl<T: MtVal> OBSTMtPerS<T> {
@@ -234,7 +234,6 @@ pub mod OptBinSearchTreeMtPer {
     impl<T: MtVal + Display> Display for KeyProb<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "({}: {:.3})", self.key, self.prob) }
     }
-
 }
 
 #[macro_export]

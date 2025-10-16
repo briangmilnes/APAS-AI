@@ -50,13 +50,10 @@ fn test_tabulate_map_select_append_ch19() {
 
 #[test]
 fn test_deflate_filter_iterate_reduce_scan_flatten_inject_ch19() {
-    let one =
-        <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x: &N| *x == 1, &1);
+    let one = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x: &N| *x == 1, &1);
     expect_list(&one, &[1]);
     let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
-    let even = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&a, &|x: &N| {
-        *x % 2 == 0
-    });
+    let even = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&a, &|x: &N| *x % 2 == 0);
     expect_list(&even, &[2, 4]);
     let sum = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::reduce(&a, &|x, y| x + y, 0);
     assert_eq!(sum, 10);

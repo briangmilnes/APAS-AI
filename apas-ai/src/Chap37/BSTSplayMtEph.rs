@@ -39,27 +39,27 @@ pub mod BSTSplayMtEph {
 
     pub trait BSTSplayMtEphTrait<T: StTInMtT + Ord>: Sized {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                       -> Self;
         /// claude-4-sonet: Work Θ(log n) amortized, Θ(n) worst case; Span Θ(log n) amortized with locking
         fn insert(&self, value: T);
         /// claude-4-sonet: Work Θ(log n) amortized, Θ(n) worst case; Span Θ(log n) amortized with locking
-        fn find(&self, target: &T) -> Option<T>;
+        fn find(&self, target: &T)     -> Option<T>;
         /// claude-4-sonet: Work Θ(log n) amortized, Θ(n) worst case; Span Θ(log n) amortized with locking
         fn contains(&self, target: &T) -> B;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                 -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self) -> B;
+        fn is_empty(&self)             -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn height(&self) -> N;
+        fn height(&self)               -> N;
         /// claude-4-sonet: Work Θ(log n) amortized, Θ(n) worst case; Span Θ(log n) amortized with locking
-        fn minimum(&self) -> Option<T>;
+        fn minimum(&self)              -> Option<T>;
         /// claude-4-sonet: Work Θ(log n) amortized, Θ(n) worst case; Span Θ(log n) amortized with locking
-        fn maximum(&self) -> Option<T>;
+        fn maximum(&self)              -> Option<T>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn in_order(&self)             -> ArraySeqStPerS<T>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn pre_order(&self) -> ArraySeqStPerS<T>;
+        fn pre_order(&self)            -> ArraySeqStPerS<T>;
     }
 
     impl<T: StTInMtT + Ord> Default for BSTSplayMtEph<T> {
@@ -220,5 +220,4 @@ pub mod BSTSplayMtEph {
             __tree
         }};
     }
-
 }

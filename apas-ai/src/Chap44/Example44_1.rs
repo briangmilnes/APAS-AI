@@ -39,9 +39,7 @@ pub mod Example44_1 {
     }
 
     impl Default for TweetQueryExamples {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     impl TweetQueryExamples {

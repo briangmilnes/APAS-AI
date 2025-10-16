@@ -6,11 +6,11 @@
 pub mod ArraySeqMtPer {
 
     use std::collections::HashSet;
-    use std::sync::Arc;
-    use std::thread;
     use std::fmt::Display;
     use std::fmt::Formatter;
     use std::slice::Iter;
+    use std::sync::Arc;
+    use std::thread;
     use std::vec::IntoIter;
 
     use crate::ParaPair;
@@ -117,31 +117,31 @@ pub mod ArraySeqMtPer {
     pub trait ArraySeqMtPerTrait<T: StTInMtT> {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn new(length: N, init_value: T) -> Self;
+        fn new(length: N, init_value: T)                                        -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn empty() -> ArraySeqMtPerS<T>;
+        fn empty()                                                              -> ArraySeqMtPerS<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn singleton(item: T) -> ArraySeqMtPerS<T>;
+        fn singleton(item: T)                                                   -> ArraySeqMtPerS<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn length(&self) -> N;
+        fn length(&self)                                                        -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn nth(&self, index: N) -> &T;
+        fn nth(&self, index: N)                                                 -> &T;
         /// APAS: Work Θ(len), Span Θ(1)
         /// claude-4-sonet: Work Θ(len), Span Θ(len), Parallelism Θ(1) - sequential copy
-        fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T>;
+        fn subseq_copy(&self, start: N, length: N)                              -> ArraySeqMtPerS<T>;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - copies entire array
-        fn set(&self, index: N, item: T) -> Result<ArraySeqMtPerS<T>, &'static str>;
+        fn set(&self, index: N, item: T)                                        -> Result<ArraySeqMtPerS<T>, &'static str>;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
+        fn tabulate<F: Fn(N)                                                    -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
         /// APAS: Work Θ(|a|), Span Θ(log|a|)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) when F is cheap, better when F is expensive - asymmetric fork-join recursion
-        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(
+        fn map<W: StTInMtT + 'static, F: Fn(&T)                                 -> W + Send + Sync + Clone + 'static>(
             a: &ArraySeqMtPerS<T>,
             f: F,
         ) -> ArraySeqMtPerS<W>
@@ -149,43 +149,46 @@ pub mod ArraySeqMtPer {
             T: 'static;
         /// APAS: Work Θ(|a|+|b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|+|b|), Span Θ(|a|+|b|), Parallelism Θ(1) - sequential
-        fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
+        fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>)                 -> ArraySeqMtPerS<T>;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn filter<F: PredMt<T>>(a: &ArraySeqMtPerS<T>, pred: &F) -> ArraySeqMtPerS<T>;
+        fn filter<F: PredMt<T>>(a: &ArraySeqMtPerS<T>, pred: &F)                -> ArraySeqMtPerS<T>;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - copies entire array
-        fn update(a: &ArraySeqMtPerS<T>, item_at: Pair<N, T>) -> ArraySeqMtPerS<T>;
+        fn update(a: &ArraySeqMtPerS<T>, item_at: Pair<N, T>)                   -> ArraySeqMtPerS<T>;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
         fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T>;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
-        fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A;
+        fn iterate<A: StTInMtT, F: Fn(&A, &T)                                   -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
-        fn iteratePrefixes<A: StTInMtT + 'static, F: Fn(&A, &T) -> A + Send + Sync>(
+        fn iteratePrefixes<A: StTInMtT + 'static, F: Fn(&A, &T)                 -> A + Send + Sync>(
             a: &ArraySeqMtPerS<T>,
             f: &F,
             x: A,
         ) -> (ArraySeqMtPerS<A>, A);
         /// APAS: Work Θ(|a|), Span Θ(log|a|)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(log|a|), Parallelism Θ(|a|/log|a|) - parallel via ParaPair! divide-and-conquer
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T
+        fn reduce<F: Fn(&T, &T)                                                 -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T
         where
             T: 'static;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
-        fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T);
+        fn scan<F: Fn(&T, &T)                                                   -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T);
         /// APAS: Work Θ(Σ|ss[i]|), Span Θ(1)
         /// claude-4-sonet: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|), Parallelism Θ(1) - sequential
-        fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T>;
+        fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>)                      -> ArraySeqMtPerS<T>;
         /// APAS: Work Θ(|a|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - sequential with linear search
-        fn collect<K: StTInMtT, V: StTInMtT>(a: &ArraySeqMtPerS<Pair<K, V>>, cmp: fn(&K, &K) -> O) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>>;
-        fn inject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T>;
-        fn isEmpty(&self) -> B;
-        fn isSingleton(&self) -> B;
+        fn collect<K: StTInMtT, V: StTInMtT>(
+            a: &ArraySeqMtPerS<Pair<K, V>>,
+            cmp: fn(&K, &K) -> O,
+        ) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>>;
+        fn inject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>)  -> ArraySeqMtPerS<T>;
+        fn isEmpty(&self)                                                       -> B;
+        fn isSingleton(&self)                                                   -> B;
     }
 
     impl<T: StTInMtT> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
@@ -353,7 +356,10 @@ pub mod ArraySeqMtPer {
             ArraySeqMtPerS::from_vec(values)
         }
 
-        fn collect<K: StTInMtT, V: StTInMtT>(a: &ArraySeqMtPerS<Pair<K, V>>, cmp: fn(&K, &K) -> O) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>> {
+        fn collect<K: StTInMtT, V: StTInMtT>(
+            a: &ArraySeqMtPerS<Pair<K, V>>,
+            cmp: fn(&K, &K) -> O,
+        ) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>> {
             if a.length() == 0 {
                 return ArraySeqMtPerS::from_vec(vec![]);
             }

@@ -168,7 +168,7 @@ fn test_large_tree_rotations() {
     // Insert many elements to trigger various rotations
     let tree = AVLTreeSeqMtPerS::from_vec((0..200).collect());
     assert_eq!(tree.length(), 200);
-    
+
     // Spot check various elements
     assert_eq!(*tree.nth(0), 0);
     assert_eq!(*tree.nth(50), 50);
@@ -180,7 +180,7 @@ fn test_large_tree_rotations() {
 fn test_reverse_insertion_order() {
     let tree = AVLTreeSeqMtPerS::from_vec((0..50).rev().collect());
     assert_eq!(tree.length(), 50);
-    
+
     // Elements are in the order they were inserted (reversed)
     for i in 0..50 {
         assert_eq!(*tree.nth(i), 49 - i);
@@ -190,30 +190,30 @@ fn test_reverse_insertion_order() {
 #[test]
 fn test_subseq_copy_comprehensive() {
     let tree = AVLTreeSeqMtPerS::from_vec((0..20).collect());
-    
+
     // Middle slice
     let sub1 = tree.subseq_copy(5, 10);
     assert_eq!(sub1.length(), 10);
     for i in 0..10 {
         assert_eq!(*sub1.nth(i), i + 5);
     }
-    
+
     // From start
     let sub2 = tree.subseq_copy(0, 5);
     assert_eq!(sub2.length(), 5);
     assert_eq!(*sub2.nth(0), 0);
     assert_eq!(*sub2.nth(4), 4);
-    
+
     // To end
     let sub3 = tree.subseq_copy(15, 10);
     assert_eq!(sub3.length(), 5);
     assert_eq!(*sub3.nth(0), 15);
     assert_eq!(*sub3.nth(4), 19);
-    
+
     // Out of bounds
     let sub4 = tree.subseq_copy(100, 10);
     assert_eq!(sub4.length(), 0);
-    
+
     // Zero length
     let sub5 = tree.subseq_copy(5, 0);
     assert_eq!(sub5.length(), 0);
@@ -222,15 +222,15 @@ fn test_subseq_copy_comprehensive() {
 #[test]
 fn test_iterator_comprehensive() {
     let tree = AVLTreeSeqMtPerS::from_vec(vec![10, 20, 30, 40, 50]);
-    
+
     // Collect values
     let collected: Vec<i32> = tree.clone().into_iter().collect();
     assert_eq!(collected, vec![10, 20, 30, 40, 50]);
-    
+
     // Count
     let count = tree.clone().into_iter().count();
     assert_eq!(count, 5);
-    
+
     // Empty iterator
     let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
     let empty_count = empty.into_iter().count();
@@ -256,19 +256,19 @@ fn test_set_out_of_bounds() {
 #[test]
 fn test_multiple_structural_sharing() {
     let tree1 = AVLTreeSeqMtPerS::from_vec((0..10).collect());
-    
+
     // Create multiple versions sharing structure
     let tree2 = tree1.set(0, 100).unwrap();
     let tree3 = tree1.set(5, 500).unwrap();
     let tree4 = tree2.set(9, 900).unwrap();
-    
+
     // All should have different values at modified positions
     assert_eq!(*tree1.nth(0), 0);
     assert_eq!(*tree2.nth(0), 100);
     assert_eq!(*tree3.nth(5), 500);
     assert_eq!(*tree4.nth(0), 100);
     assert_eq!(*tree4.nth(9), 900);
-    
+
     // Unmodified positions share structure
     assert_eq!(*tree1.nth(1), 1);
     assert_eq!(*tree2.nth(1), 1);
@@ -280,7 +280,7 @@ fn test_values_in_order_comprehensive() {
     let tree = AVLTreeSeqMtPerS::from_vec(vec![5, 3, 7, 1, 9]);
     let values = tree.values_in_order();
     assert_eq!(values, vec![5, 3, 7, 1, 9]);
-    
+
     let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
     let empty_values = empty.values_in_order();
     assert_eq!(empty_values, Vec::<i32>::new());
@@ -296,23 +296,23 @@ fn test_default_trait() {
 #[test]
 fn test_alternating_sets() {
     let tree = AVLTreeSeqMtPerS::from_vec((0..20).collect());
-    
+
     // Set alternating indices
     let mut modified = tree.clone();
     for i in (0..20).step_by(2) {
         modified = modified.set(i, i * 100).unwrap();
     }
-    
+
     // Check modified positions
     for i in (0..20).step_by(2) {
         assert_eq!(*modified.nth(i), i * 100);
     }
-    
+
     // Check unmodified positions
     for i in (1..20).step_by(2) {
         assert_eq!(*modified.nth(i), i);
     }
-    
+
     // Original unchanged
     for i in 0..20 {
         assert_eq!(*tree.nth(i), i);
@@ -323,12 +323,12 @@ fn test_alternating_sets() {
 fn test_very_large_sequence() {
     let tree = AVLTreeSeqMtPerS::from_vec((0..1000).collect());
     assert_eq!(tree.length(), 1000);
-    
+
     // Spot check
     assert_eq!(*tree.nth(0), 0);
     assert_eq!(*tree.nth(500), 500);
     assert_eq!(*tree.nth(999), 999);
-    
+
     // Modify and check persistence
     let modified = tree.set(500, 9999).unwrap();
     assert_eq!(*modified.nth(500), 9999);
@@ -339,9 +339,9 @@ fn test_very_large_sequence() {
 fn test_subseq_then_modify() {
     let tree = AVLTreeSeqMtPerS::from_vec((0..10).collect());
     let sub = tree.subseq_copy(3, 5);
-    
+
     assert_eq!(sub.length(), 5);
-    
+
     // Modify subsequence
     let modified_sub = sub.set(2, 999).unwrap();
     assert_eq!(*modified_sub.nth(2), 999);
@@ -351,14 +351,14 @@ fn test_subseq_then_modify() {
 #[test]
 fn test_empty_operations() {
     let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
-    
+
     assert_eq!(empty.length(), 0);
     assert!(empty.isEmpty());
     assert!(!empty.isSingleton());
-    
+
     let values = empty.values_in_order();
     assert_eq!(values.len(), 0);
-    
+
     let sub = empty.subseq_copy(0, 10);
     assert_eq!(sub.length(), 0);
 }
@@ -366,16 +366,16 @@ fn test_empty_operations() {
 #[test]
 fn test_singleton_operations() {
     let single = AVLTreeSeqMtPerS::singleton(42);
-    
+
     assert_eq!(single.length(), 1);
     assert!(!single.isEmpty());
     assert!(single.isSingleton());
     assert_eq!(*single.nth(0), 42);
-    
+
     let modified = single.set(0, 100).unwrap();
     assert_eq!(*modified.nth(0), 100);
     assert_eq!(*single.nth(0), 42);
-    
+
     let sub = single.subseq_copy(0, 1);
     assert_eq!(sub.length(), 1);
     assert_eq!(*sub.nth(0), 42);
@@ -387,11 +387,11 @@ fn test_equality_comprehensive() {
     let tree2 = AVLTreeSeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
     let tree3 = AVLTreeSeqMtPerS::from_vec(vec![1, 2, 3, 4, 6]);
     let tree4 = AVLTreeSeqMtPerS::from_vec(vec![1, 2, 3, 4]);
-    
+
     assert_eq!(tree1, tree2);
     assert_ne!(tree1, tree3);
     assert_ne!(tree1, tree4);
-    
+
     let empty1: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
     let empty2: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
     assert_eq!(empty1, empty2);
@@ -405,19 +405,19 @@ fn test_trigger_rotations() {
     tree = tree.set(0, 5).unwrap(); // Will cause left-left case
     tree = tree.set(0, 1).unwrap(); // Triggers right rotation
     assert_eq!(tree.length(), 1);
-    
+
     // Trigger left rotation: insert right-heavy via sets
     let mut tree2 = AVLTreeSeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
     for i in 0..5 {
         tree2 = tree2.set(i, i * 10).unwrap();
     }
     assert_eq!(tree2.length(), 5);
-    
+
     // Trigger left-right rotation
     let mut tree3 = AVLTreeSeqMtPerS::from_vec(vec![10, 5, 15]);
     tree3 = tree3.set(1, 7).unwrap(); // Modifying middle
     assert_eq!(*tree3.nth(1), 7);
-    
+
     // Trigger right-left rotation
     let mut tree4 = AVLTreeSeqMtPerS::from_vec(vec![10, 20, 30]);
     tree4 = tree4.set(1, 25).unwrap(); // Modifying middle

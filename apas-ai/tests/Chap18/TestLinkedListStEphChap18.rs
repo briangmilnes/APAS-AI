@@ -109,8 +109,7 @@ fn test_append_concatenation() {
 #[test]
 fn test_filter_predicate() {
     let l = LinkedListStEphSLit![1, 2, 3, 4, 5];
-    let evens =
-        <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&l, &|x| *x % 2 == 0);
+    let evens = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&l, &|x| *x % 2 == 0);
     assert_eq!(evens.length(), 2);
     assert_eq!(*evens.nth(0), 2);
     assert_eq!(*evens.nth(1), 4);
@@ -118,13 +117,11 @@ fn test_filter_predicate() {
 
 #[test]
 fn test_deflate_helper() {
-    let result_true =
-        <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| *x > 5, &10);
+    let result_true = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| *x > 5, &10);
     assert_eq!(result_true.length(), 1);
     assert_eq!(*result_true.nth(0), 10);
 
-    let result_false =
-        <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| *x > 5, &3);
+    let result_false = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| *x > 5, &3);
     assert_eq!(result_false.length(), 0);
 }
 
@@ -347,9 +344,7 @@ fn test_append_ch18() {
 #[test]
 fn test_filter_ch18() {
     let a: LinkedListStEphS<N> = LinkedListStEphSLit![1, 2, 3, 4];
-    let b = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&a, &|x: &N| {
-        *x % 2 == 0
-    });
+    let b = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::filter(&a, &|x: &N| *x % 2 == 0);
     expect_list(&b, &[2, 4]);
 }
 

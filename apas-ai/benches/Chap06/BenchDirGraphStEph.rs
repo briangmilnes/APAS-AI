@@ -3,10 +3,10 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::DirGraphStEph::DirGraphStEph::*;
 use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 fn bench_dirgraph_build(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchDirGraphStEphChap6_1");

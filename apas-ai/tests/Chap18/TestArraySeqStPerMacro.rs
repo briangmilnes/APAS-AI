@@ -29,9 +29,7 @@ fn arrayseq_stper_macro_repeat() {
         <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::nth(&seq, 1),
         &"rust"
     );
-    assert!(
-        !<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::isSingleton(&seq)
-    );
+    assert!(!<ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::isSingleton(&seq));
 }
 
 #[test]
@@ -66,9 +64,7 @@ fn arrayseq_stper_operations() {
     );
 
     let a = ArraySeqStPerSLit![1, 2, 3, 4, 5];
-    let filtered = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::filter(&a, &|value| {
-        *value % 2 == 0
-    });
+    let filtered = <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::filter(&a, &|value| *value % 2 == 0);
     assert_eq!(
         <ArraySeqStPerS<usize> as ArraySeqStPerTrait<usize>>::length(&filtered),
         2

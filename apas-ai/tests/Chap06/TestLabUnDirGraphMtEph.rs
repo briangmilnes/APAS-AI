@@ -268,7 +268,8 @@ fn test_sizea() {
 #[test]
 fn test_arcs() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "edge1".to_string()), LabEdge(2, 3, "edge2".to_string())];
+    let a: SetStEph<LabEdge<N, String>> =
+        SetLit![LabEdge(1, 2, "edge1".to_string()), LabEdge(2, 3, "edge2".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
     let arcs = g.arcs();
     assert_eq!(arcs.size(), 2);
@@ -362,7 +363,8 @@ fn test_add_labeled_edge() {
 #[test]
 fn test_get_edge_label() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "first".to_string()), LabEdge(2, 3, "second".to_string())];
+    let a: SetStEph<LabEdge<N, String>> =
+        SetLit![LabEdge(1, 2, "first".to_string()), LabEdge(2, 3, "second".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
 
     assert_eq!(g.get_edge_label(&1, &2), Some(&"first".to_string()));
@@ -435,12 +437,12 @@ fn test_parallel_neighbors() {
     for i in 0..16 {
         vertices.insert(i);
     }
-    
+
     let mut edges = SetStEph::empty();
     for i in 1..13 {
         edges.insert(LabEdge(0, i, format!("edge_{i}")));
     }
-    
+
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(vertices, edges);
     let neighbors = g.neighbors(&0);
     assert_eq!(neighbors.size(), 12);

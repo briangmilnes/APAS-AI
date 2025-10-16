@@ -47,18 +47,18 @@ pub mod BSTPlainMtEph {
 
     pub trait BSTPlainMtEphTrait<T: StTInMtT + Ord>: Sized {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                       -> Self;
         /// claude-4-sonet: Work Θ(log n) average, Θ(n) worst case; Span Θ(log n) average with locking
         fn insert(&self, value: T);
         /// claude-4-sonet: Work Θ(log n) average, Θ(n) worst case; Span Θ(log n) average with locking
-        fn find(&self, target: &T) -> Option<T>;
+        fn find(&self, target: &T)     -> Option<T>;
         fn contains(&self, target: &T) -> B;
-        fn size(&self) -> N;
-        fn is_empty(&self) -> B;
-        fn height(&self) -> N;
-        fn minimum(&self) -> Option<T>;
-        fn maximum(&self) -> Option<T>;
-        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn size(&self)                 -> N;
+        fn is_empty(&self)             -> B;
+        fn height(&self)               -> N;
+        fn minimum(&self)              -> Option<T>;
+        fn maximum(&self)              -> Option<T>;
+        fn in_order(&self)             -> ArraySeqStPerS<T>;
     }
 
     impl<T: StTInMtT + Ord> BSTPlainMtEph<T> {
@@ -223,5 +223,4 @@ pub mod BSTPlainMtEph {
             __tree
         }};
     }
-
 }

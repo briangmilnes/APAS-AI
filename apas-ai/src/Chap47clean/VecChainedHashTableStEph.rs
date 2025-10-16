@@ -4,8 +4,8 @@
 
 pub mod VecChainedHashTableStEph {
 
-    use crate::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
     use crate::Chap47clean::ChainedHashTable::ChainedHashTable::*;
+    use crate::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
     use crate::Types::Types::*;
 
     impl<Key: PartialEq + Clone, Value: Clone> EntryTrait<Key, Value> for Vec<(Key, Value)> {
@@ -44,8 +44,7 @@ pub mod VecChainedHashTableStEph {
     /// Vec Chained Hash Table implementation.
     pub struct VecChainedHashTableStEph;
 
-    impl<Key: StT, Value: StT, Metrics: Default> 
-        ParaHashTableStEphTrait<Key, Value, Vec<(Key, Value)>, Metrics> 
+    impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, Vec<(Key, Value)>, Metrics>
         for VecChainedHashTableStEph
     {
         fn insert(table: &mut HashTable<Key, Value, Vec<(Key, Value)>, Metrics>, key: Key, value: Value) {
@@ -61,8 +60,7 @@ pub mod VecChainedHashTableStEph {
         }
     }
 
-    impl<Key: StT, Value: StT, Metrics: Default> 
-        ChainedHashTable<Key, Value, Vec<(Key, Value)>, Metrics> 
+    impl<Key: StT, Value: StT, Metrics: Default> ChainedHashTable<Key, Value, Vec<(Key, Value)>, Metrics>
         for VecChainedHashTableStEph
     {
         fn hash_index(table: &HashTable<Key, Value, Vec<(Key, Value)>, Metrics>, _key: &Key) -> N {
@@ -72,4 +70,3 @@ pub mod VecChainedHashTableStEph {
         }
     }
 }
-

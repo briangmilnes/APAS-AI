@@ -1,18 +1,18 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-use std::sync::{Arc, Barrier};
-use std::thread;
 use std::f64::consts::E;
 use std::f64::consts::PI;
 use std::f64::consts::SQRT_2;
+use std::sync::{Arc, Barrier};
+use std::thread;
 
 use ordered_float::OrderedFloat;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::LabDirGraphMtEphTrait;
 use apas_ai::Chap06::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::*;
 use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 use apas_ai::WeightedDirGraphMtEphFloatLit;
 
 #[test]
@@ -340,25 +340,29 @@ fn test_add_weighted_edge() {
     let vertices = SetLit![1, 2, 3];
     let edges = SetLit![];
     let mut g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     g.add_weighted_edge(1, 2, OrderedFloat(1.5));
     assert!(g.has_arc(&1, &2));
-    
+
     g.add_weighted_edge(2, 3, OrderedFloat(2.7));
     assert!(g.has_arc(&2, &3));
-    
+
     assert_eq!(g.labeled_arcs().size(), 2);
 }
 
 #[test]
 fn test_weighted_edges() {
     let vertices = SetLit![1, 2, 3];
-    let edges = SetLit![(1, 2, OrderedFloat(1.5)), (2, 3, OrderedFloat(2.7)), (3, 1, OrderedFloat(3.14))];
+    let edges = SetLit![
+        (1, 2, OrderedFloat(1.5)),
+        (2, 3, OrderedFloat(2.7)),
+        (3, 1, OrderedFloat(3.14))
+    ];
     let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices.clone(), edges.clone());
-    
+
     let weighted_edges = g.weighted_edges();
     assert_eq!(weighted_edges.size(), 3);
-    
+
     assert!(weighted_edges.mem(&(1, 2, OrderedFloat(1.5))));
     assert!(weighted_edges.mem(&(2, 3, OrderedFloat(2.7))));
     assert!(weighted_edges.mem(&(3, 1, OrderedFloat(3.14))));
@@ -369,7 +373,7 @@ fn test_get_edge_weight() {
     let vertices = SetLit![1, 2, 3];
     let edges = SetLit![(1, 2, OrderedFloat(10.5)), (2, 3, OrderedFloat(20.3))];
     let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     assert_eq!(g.get_edge_weight(&1, &2), Some(OrderedFloat(10.5)));
     assert_eq!(g.get_edge_weight(&2, &3), Some(OrderedFloat(20.3)));
     assert_eq!(g.get_edge_weight(&3, &1), None);
@@ -378,9 +382,14 @@ fn test_get_edge_weight() {
 #[test]
 fn test_out_neighbors_weighted() {
     let vertices = SetLit![1, 2, 3, 4];
-    let edges = SetLit![(1, 2, OrderedFloat(1.1)), (1, 3, OrderedFloat(2.2)), (1, 4, OrderedFloat(3.3)), (2, 3, OrderedFloat(4.4))];
+    let edges = SetLit![
+        (1, 2, OrderedFloat(1.1)),
+        (1, 3, OrderedFloat(2.2)),
+        (1, 4, OrderedFloat(3.3)),
+        (2, 3, OrderedFloat(4.4))
+    ];
     let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     let out_1 = g.out_neighbors_weighted(&1);
     assert_eq!(out_1.size(), 3);
     assert!(out_1.mem(&(2, OrderedFloat(1.1))));
@@ -397,11 +406,11 @@ fn test_out_neighbors_weighted_large_parallel() {
         edges.insert((i, i + 1, OrderedFloat(i as f64 * 1.5)));
     }
     let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     let out_0 = g.out_neighbors_weighted(&0);
     assert_eq!(out_0.size(), 1);
     assert!(out_0.mem(&(1, OrderedFloat(0.0))));
-    
+
     let out_5 = g.out_neighbors_weighted(&5);
     assert_eq!(out_5.size(), 1);
     assert!(out_5.mem(&(6, OrderedFloat(7.5))));
@@ -416,11 +425,11 @@ fn test_in_neighbors_weighted_large_parallel() {
         edges.insert((i, i + 1, OrderedFloat(i as f64 * 0.1)));
     }
     let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     let in_1 = g.in_neighbors_weighted(&1);
     assert_eq!(in_1.size(), 1);
     assert!(in_1.mem(&(0, OrderedFloat(0.0))));
-    
+
     let in_10 = g.in_neighbors_weighted(&10);
     assert_eq!(in_10.size(), 1);
     assert!(in_10.mem(&(9, OrderedFloat(0.9))));
@@ -429,7 +438,11 @@ fn test_in_neighbors_weighted_large_parallel() {
 #[test]
 fn test_total_weight_multiple_edges() {
     let vertices = SetLit![1, 2, 3];
-    let edges = SetLit![(1, 2, OrderedFloat(1.5)), (2, 3, OrderedFloat(2.5)), (3, 1, OrderedFloat(3.0))];
+    let edges = SetLit![
+        (1, 2, OrderedFloat(1.5)),
+        (2, 3, OrderedFloat(2.5)),
+        (3, 1, OrderedFloat(3.0))
+    ];
     let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
     assert_eq!(g.total_weight(), OrderedFloat(7.0));
 }
@@ -447,7 +460,7 @@ fn test_out_neighbors_weighted_no_outgoing() {
     let vertices = SetLit![1, 2, 3];
     let edges = SetLit![(1, 2, OrderedFloat(1.0)), (2, 3, OrderedFloat(2.0))];
     let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     let out_3 = g.out_neighbors_weighted(&3);
     assert_eq!(out_3.size(), 0);
 }
@@ -455,9 +468,13 @@ fn test_out_neighbors_weighted_no_outgoing() {
 #[test]
 fn test_in_neighbors_weighted_multiple() {
     let vertices = SetLit![1, 2, 3, 4];
-    let edges = SetLit![(1, 2, OrderedFloat(1.1)), (3, 2, OrderedFloat(2.2)), (4, 2, OrderedFloat(3.3))];
+    let edges = SetLit![
+        (1, 2, OrderedFloat(1.1)),
+        (3, 2, OrderedFloat(2.2)),
+        (4, 2, OrderedFloat(3.3))
+    ];
     let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     let in_2 = g.in_neighbors_weighted(&2);
     assert_eq!(in_2.size(), 3);
     assert!(in_2.mem(&(1, OrderedFloat(1.1))));
@@ -474,7 +491,7 @@ fn test_minimal_parallel_out_neighbors() {
         edges.insert((i, i + 1, OrderedFloat(i as f64)));
     }
     let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     let out_0 = g.out_neighbors_weighted(&0);
     assert_eq!(out_0.size(), 1);
     assert!(out_0.mem(&(1, OrderedFloat(0.0))));
@@ -489,7 +506,7 @@ fn test_minimal_parallel_in_neighbors() {
         edges.insert((i, i + 1, OrderedFloat(i as f64 * 0.5)));
     }
     let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     let in_5 = g.in_neighbors_weighted(&5);
     assert_eq!(in_5.size(), 1);
     assert!(in_5.mem(&(4, OrderedFloat(2.0))));

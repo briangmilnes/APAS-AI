@@ -31,7 +31,7 @@ fn test_insert() {
     s.insert(1);
     s.insert(2);
     s.insert(3);
-    
+
     assert_eq!(s.size(), 3);
     assert!(s.mem(&1));
     assert!(s.mem(&2));
@@ -43,12 +43,12 @@ fn test_insert() {
 fn test_union() {
     let mut s1: SetStEph<i32> = SetStEphCleanTrait::empty();
     s1.insert(1).insert(2).insert(3);
-    
+
     let mut s2: SetStEph<i32> = SetStEphCleanTrait::empty();
     s2.insert(3).insert(4).insert(5);
-    
+
     let s3 = s1.union(&s2);
-    
+
     assert_eq!(s3.size(), 5);
     assert!(s3.mem(&1));
     assert!(s3.mem(&2));
@@ -61,12 +61,12 @@ fn test_union() {
 fn test_intersection() {
     let mut s1: SetStEph<i32> = SetStEphCleanTrait::empty();
     s1.insert(1).insert(2).insert(3).insert(4);
-    
+
     let mut s2: SetStEph<i32> = SetStEphCleanTrait::empty();
     s2.insert(3).insert(4).insert(5).insert(6);
-    
+
     let s3 = s1.intersection(&s2);
-    
+
     assert_eq!(s3.size(), 2);
     assert!(s3.mem(&3));
     assert!(s3.mem(&4));
@@ -78,12 +78,12 @@ fn test_intersection() {
 fn test_cartesian_product() {
     let mut s1: SetStEph<i32> = SetStEphCleanTrait::empty();
     s1.insert(1).insert(2);
-    
+
     let mut s2: SetStEph<char> = SetStEphCleanTrait::empty();
     s2.insert('a').insert('b');
-    
+
     let product = s1.CartesianProduct(&s2);
-    
+
     assert_eq!(product.size(), 4);
     assert!(product.mem(&Pair(1, 'a')));
     assert!(product.mem(&Pair(1, 'b')));
@@ -95,12 +95,12 @@ fn test_cartesian_product() {
 fn test_iter() {
     let mut s: SetStEph<i32> = SetStEphCleanTrait::empty();
     s.insert(1).insert(2).insert(3);
-    
+
     let mut count = 0;
     for _ in s.iter() {
         count += 1;
     }
-    
+
     assert_eq!(count, 3);
 }
 
@@ -108,9 +108,9 @@ fn test_iter() {
 fn test_clone() {
     let mut s1: SetStEph<i32> = SetStEphCleanTrait::empty();
     s1.insert(1).insert(2).insert(3);
-    
+
     let s2 = s1.clone();
-    
+
     assert_eq!(s1.size(), s2.size());
     assert!(s2.mem(&1));
     assert!(s2.mem(&2));
@@ -119,13 +119,10 @@ fn test_clone() {
 
 #[test]
 fn test_generic_function() {
-    fn process_set<S: SetStEphCleanTrait<i32>>(s: &S) -> N {
-        s.size()
-    }
-    
+    fn process_set<S: SetStEphCleanTrait<i32>>(s: &S) -> N { s.size() }
+
     let mut s: SetStEph<i32> = SetStEphCleanTrait::empty();
     s.insert(10).insert(20).insert(30);
-    
+
     assert_eq!(process_set(&s), 3);
 }
-

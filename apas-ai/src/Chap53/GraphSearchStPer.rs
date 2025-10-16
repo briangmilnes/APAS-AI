@@ -47,7 +47,7 @@ pub mod GraphSearchStPer {
     pub trait GraphSearchStPerTrait<V: StT + Ord> {
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
         /// Generic graph search starting from single source.
-        fn graph_search<G, S>(graph: &G, source: V, strategy: &S) -> SearchResult<V>
+        fn graph_search<G, S>(graph: &G, source: V, strategy: &S)                         -> SearchResult<V>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>,
             S: SelectionStrategy<V>;
@@ -61,7 +61,7 @@ pub mod GraphSearchStPer {
 
         /// Reachability: find all vertices reachable from source.
         /// Work: O(|V| + |E|), Span: O(|V|).
-        fn reachable<G>(graph: &G, source: V) -> AVLTreeSetStPer<V>
+        fn reachable<G>(graph: &G, source: V)                                             -> AVLTreeSetStPer<V>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>;
     }
@@ -79,56 +79,60 @@ pub mod GraphSearchStPer {
 
     /// Generic graph search starting from multiple sources.
     /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
-    pub fn graph_search_multi<V: StT + Ord, G, S>(graph: &G, sources: AVLTreeSetStPer<V>, strategy: &S) -> SearchResult<V>
+    pub fn graph_search_multi<V: StT + Ord, G, S>(
+        graph: &G,
+        sources: AVLTreeSetStPer<V>,
+        strategy: &S,
+    ) -> SearchResult<V>
     where
         G: Fn(&V) -> AVLTreeSetStPer<V>,
         S: SelectionStrategy<V>,
     {
-            // Algorithm 53.4: Generic Graph Search
-            fn explore<V, G, S>(
-                graph: &G,
-                strategy: &S,
-                visited: AVLTreeSetStPer<V>,
-                frontier: AVLTreeSetStPer<V>,
-            ) -> AVLTreeSetStPer<V>
-            where
-                V: StT + Ord,
-                G: Fn(&V) -> AVLTreeSetStPer<V>,
-                S: SelectionStrategy<V>,
-            {
-                // Line 4: if |F| = 0 then X
-                if frontier.size() == 0 {
-                    return visited;
-                }
-
-                // Line 7: choose U ⊆ F such that |U| ≥ 1
-                let (selected, _) = strategy.select(&frontier);
-
-                // Line 9: X' = X ∪ U
-                let visited_new = visited.union(&selected);
-
-                // Line 10: F' = N+(X') \ X'
-                // Compute out-neighbors of all newly visited vertices
-                let mut new_neighbors = AVLTreeSetStPer::empty();
-                let selected_seq = selected.to_seq();
-                for i in 0..selected_seq.length() {
-                    let v = selected_seq.nth(i);
-                    let neighbors = graph(v);
-                    new_neighbors = new_neighbors.union(&neighbors);
-                }
-
-                // Remove already visited vertices
-                let frontier_new = new_neighbors.difference(&visited_new);
-
-                // Line 11: explore X' F'
-                explore(graph, strategy, visited_new, frontier_new)
+        // Algorithm 53.4: Generic Graph Search
+        fn explore<V, G, S>(
+            graph: &G,
+            strategy: &S,
+            visited: AVLTreeSetStPer<V>,
+            frontier: AVLTreeSetStPer<V>,
+        ) -> AVLTreeSetStPer<V>
+        where
+            V: StT + Ord,
+            G: Fn(&V) -> AVLTreeSetStPer<V>,
+            S: SelectionStrategy<V>,
+        {
+            // Line 4: if |F| = 0 then X
+            if frontier.size() == 0 {
+                return visited;
             }
 
-            // Line 13: explore {} {s}
-            let visited = explore(graph, strategy, AVLTreeSetStPer::empty(), sources);
+            // Line 7: choose U ⊆ F such that |U| ≥ 1
+            let (selected, _) = strategy.select(&frontier);
 
-            SearchResult { visited, parent: None }
+            // Line 9: X' = X ∪ U
+            let visited_new = visited.union(&selected);
+
+            // Line 10: F' = N+(X') \ X'
+            // Compute out-neighbors of all newly visited vertices
+            let mut new_neighbors = AVLTreeSetStPer::empty();
+            let selected_seq = selected.to_seq();
+            for i in 0..selected_seq.length() {
+                let v = selected_seq.nth(i);
+                let neighbors = graph(v);
+                new_neighbors = new_neighbors.union(&neighbors);
+            }
+
+            // Remove already visited vertices
+            let frontier_new = new_neighbors.difference(&visited_new);
+
+            // Line 11: explore X' F'
+            explore(graph, strategy, visited_new, frontier_new)
         }
+
+        // Line 13: explore {} {s}
+        let visited = explore(graph, strategy, AVLTreeSetStPer::empty(), sources);
+
+        SearchResult { visited, parent: None }
+    }
 
     /// Find all vertices reachable from source using breadth-first search.
     /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)

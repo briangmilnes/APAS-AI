@@ -3,8 +3,8 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap23::BalBinTreeStEph::BalBinTreeStEph::*;
+use apas_ai::Types::Types::*;
 
 fn bench_balbintree_st_eph(c: &mut Criterion) {
     let mut group = c.benchmark_group("BalBinTreeStEph");

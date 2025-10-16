@@ -3,10 +3,10 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
+use apas_ai::Types::Types::*;
 
 fn bench_tabulate_map(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqStEphChap18");
@@ -44,8 +44,7 @@ fn bench_tabulate_map(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("filter", n), &n, |b, &len| {
         let s: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::tabulate(&|i| i, len);
         b.iter(|| {
-            let evens =
-                <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&s, &|x| *x % 2 == 0);
+            let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&s, &|x| *x % 2 == 0);
             black_box(evens)
         })
     });

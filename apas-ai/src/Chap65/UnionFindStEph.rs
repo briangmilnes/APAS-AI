@@ -14,7 +14,7 @@ pub mod UnionFindStEph {
     pub trait UnionFindStEphTrait<V: StT + Hash> {
         /// Create a new empty Union-Find structure
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                           -> Self;
 
         /// Insert a new element into the Union-Find structure
         /// APAS: Work Θ(1), Span Θ(1)
@@ -22,7 +22,7 @@ pub mod UnionFindStEph {
 
         /// Find the representative (root) of the set containing v with path compression
         /// APAS: Work O(α(n)), Span O(α(n)) amortized (inverse Ackermann)
-        fn find(&mut self, v: &V) -> V;
+        fn find(&mut self, v: &V)          -> V;
 
         /// Union two sets containing u and v using union by rank
         /// APAS: Work O(α(n)), Span O(α(n)) amortized
@@ -34,7 +34,7 @@ pub mod UnionFindStEph {
 
         /// Get the number of distinct sets
         /// APAS: Work O(n α(n)), Span O(n α(n))
-        fn num_sets(&mut self) -> usize;
+        fn num_sets(&mut self)             -> usize;
     }
 
     pub struct UnionFindStEph<V: StT + Hash> {

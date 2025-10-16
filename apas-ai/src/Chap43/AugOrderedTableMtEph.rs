@@ -31,59 +31,59 @@ pub mod AugOrderedTableMtEph {
     /// Extends ordered table operations with efficient reduction and thread-safe operations
     pub trait AugOrderedTableMtEphTrait<K: MtKey, V: MtVal, F: MtReduceFn<V>> {
         // Base table operations (ADT 42.1) - ephemeral semantics with parallelism
-        fn size(&self) -> N;
-        fn empty(reducer: F, identity: V) -> Self;
+        fn size(&self)                                    -> N;
+        fn empty(reducer: F, identity: V)                 -> Self;
         fn singleton(k: K, v: V, reducer: F, identity: V) -> Self;
-        fn find(&self, k: &K) -> Option<V>;
-        fn lookup(&self, k: &K) -> Option<V>;
-        fn is_empty(&self) -> B;
-        fn insert<G: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, k: K, v: V, combine: G);
-        fn delete(&mut self, k: &K) -> Option<V>;
-        fn domain(&self) -> ArraySetStEph<K>;
-        fn tabulate<G: Fn(&K) -> V + Send + Sync + 'static>(
+        fn find(&self, k: &K)                             -> Option<V>;
+        fn lookup(&self, k: &K)                           -> Option<V>;
+        fn is_empty(&self)                                -> B;
+        fn insert<G: Fn(&V, &V)                           -> V + Send + Sync + 'static>(&mut self, k: K, v: V, combine: G);
+        fn delete(&mut self, k: &K)                       -> Option<V>;
+        fn domain(&self)                                  -> ArraySetStEph<K>;
+        fn tabulate<G: Fn(&K)                             -> V + Send + Sync + 'static>(
             f: G,
             keys: &ArraySetStEph<K>,
             reducer: F,
             identity: V,
         ) -> Self;
-        fn map<G: Fn(&K, &V) -> V + Send + Sync + 'static>(&self, f: G) -> Self;
-        fn filter<G: Fn(&K, &V) -> B + Send + Sync + 'static>(&self, f: G) -> Self;
-        fn intersection<G: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, f: G);
-        fn union<G: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, other: &Self, f: G);
+        fn map<G: Fn(&K, &V)                              -> V + Send + Sync + 'static>(&self, f: G) -> Self;
+        fn filter<G: Fn(&K, &V)                           -> B + Send + Sync + 'static>(&self, f: G) -> Self;
+        fn intersection<G: Fn(&V, &V)                     -> V + Send + Sync + 'static>(&mut self, other: &Self, f: G);
+        fn union<G: Fn(&V, &V)                            -> V + Send + Sync + 'static>(&mut self, other: &Self, f: G);
         fn difference(&mut self, other: &Self);
         fn restrict(&mut self, keys: &ArraySetStEph<K>);
         fn subtract(&mut self, keys: &ArraySetStEph<K>);
         fn reduce<R: StTInMtT + 'static, G: Fn(R, &K, &V) -> R + Send + Sync + 'static>(&self, init: R, f: G) -> R;
-        fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>>;
+        fn collect(&self)                                 -> AVLTreeSeqStPerS<Pair<K, V>>;
 
         // Key ordering operations (ADT 43.1 adapted for tables) - sequential (inherently sequential on trees)
-        fn first_key(&self) -> Option<K>;
-        fn last_key(&self) -> Option<K>;
-        fn previous_key(&self, k: &K) -> Option<K>;
-        fn next_key(&self, k: &K) -> Option<K>;
-        fn split_key(&mut self, k: &K) -> (Self, Self)
+        fn first_key(&self)                               -> Option<K>;
+        fn last_key(&self)                                -> Option<K>;
+        fn previous_key(&self, k: &K)                     -> Option<K>;
+        fn next_key(&self, k: &K)                         -> Option<K>;
+        fn split_key(&mut self, k: &K)                    -> (Self, Self)
         where
             Self: Sized;
         fn join_key(&mut self, other: Self);
-        fn get_key_range(&self, k1: &K, k2: &K) -> Self;
-        fn rank_key(&self, k: &K) -> N;
-        fn select_key(&self, i: N) -> Option<K>;
-        fn split_rank_key(&mut self, i: N) -> (Self, Self)
+        fn get_key_range(&self, k1: &K, k2: &K)           -> Self;
+        fn rank_key(&self, k: &K)                         -> N;
+        fn select_key(&self, i: N)                        -> Option<K>;
+        fn split_rank_key(&mut self, i: N)                -> (Self, Self)
         where
             Self: Sized;
 
         // Augmented operations (ADT 43.3) - the key innovation with parallelism
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         /// Returns the cached reduction of all values using the reducer function
-        fn reduce_val(&self) -> V;
+        fn reduce_val(&self)                              -> V;
 
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Efficient range reduction for TRAMLAW/QADSAN scenarios
-        fn reduce_range(&self, k1: &K, k2: &K) -> V;
+        fn reduce_range(&self, k1: &K, k2: &K)            -> V;
 
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with parallel reduce_val, Parallelism Θ(n/log n)
         /// Parallel range reduction using spawn/join
-        fn reduce_range_parallel(&self, k1: &K, k2: &K) -> V;
+        fn reduce_range_parallel(&self, k1: &K, k2: &K)   -> V;
     }
 
     impl<K: MtKey, V: MtVal, F: MtReduceFn<V>> AugOrderedTableMtEphTrait<K, V, F> for AugOrderedTableMtEph<K, V, F> {
@@ -427,5 +427,4 @@ pub mod AugOrderedTableMtEph {
             $crate::Chap43::AugOrderedTableMtEph::AugOrderedTableMtEph::AugOrderedTableMtEphTrait::empty($reducer, $identity)
         }};
     }
-
 }

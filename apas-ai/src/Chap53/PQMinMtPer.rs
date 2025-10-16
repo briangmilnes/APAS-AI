@@ -48,7 +48,7 @@ pub mod PQMinMtPer {
         /// claude-4-sonet: Work Θ((|V| + |E|) log |V|), Span Θ(|V| log |V|), Parallelism Θ(1)
         /// Priority-First Search using thread-safe persistent sets.
         /// Set operations (union, difference, filter) use parallel implementations.
-        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
+        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF)                         -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             PF: PriorityFn<V, P>;
@@ -61,7 +61,11 @@ pub mod PQMinMtPer {
 
     /// Priority queue minimum search starting from single source.
     /// claude-4-sonet: Work Θ(|V| log |V| + |E|), Span Θ(|V| log |V|), Parallelism Θ(1)
-    pub fn pq_min<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
+    pub fn pq_min<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, G, PF>(
+        graph: &G,
+        source: V,
+        priority_fn: &PF,
+    ) -> PQMinResult<V, P>
     where
         G: Fn(&V) -> AVLTreeSetMtPer<V>,
         PF: PriorityFn<V, P>,
@@ -72,86 +76,90 @@ pub mod PQMinMtPer {
 
     /// Priority queue minimum search starting from multiple sources.
     /// claude-4-sonet: Work Θ(|V| log |V| + |E|), Span Θ(|V| log |V|), Parallelism Θ(1)
-    pub fn pq_min_multi<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, G, PF>(graph: &G, sources: AVLTreeSetMtPer<V>, priority_fn: &PF) -> PQMinResult<V, P>
+    pub fn pq_min_multi<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, G, PF>(
+        graph: &G,
+        sources: AVLTreeSetMtPer<V>,
+        priority_fn: &PF,
+    ) -> PQMinResult<V, P>
     where
         G: Fn(&V) -> AVLTreeSetMtPer<V>,
         PF: PriorityFn<V, P>,
     {
-            fn find_min_priority<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static>(
-                frontier: &AVLTreeSetMtPer<Pair<Pair<P, V>, V>>,
-            ) -> Option<V> {
-                if frontier.size() == 0 {
-                    None
-                } else {
-                    let seq = frontier.to_seq();
-                    Some(seq.nth(0).1.clone())
-                }
-            }
-
-            fn explore<V, P, G, PF>(
-                graph: &G,
-                priority_fn: &PF,
-                visited: AVLTreeSetMtPer<V>,
-                frontier: AVLTreeSetMtPer<Pair<Pair<P, V>, V>>,
-            ) -> (AVLTreeSetMtPer<V>, AVLTreeSetMtPer<Pair<V, P>>)
-            where
-                V: StTInMtT + Ord + 'static,
-                P: StTInMtT + Ord + 'static,
-                G: Fn(&V) -> AVLTreeSetMtPer<V>,
-                PF: PriorityFn<V, P>,
-            {
-                if let Some(v) = find_min_priority(&frontier) {
-                    let p = priority_fn.priority(&v);
-                    let entry = Pair(Pair(p.clone(), v.clone()), v.clone());
-                    // Parallel difference operation
-                    let frontier_new = frontier.difference(&AVLTreeSetMtPer::singleton(entry));
-
-                    // Parallel union operation
-                    let visited_new = visited.union(&AVLTreeSetMtPer::singleton(v.clone()));
-
-                    let neighbors = graph(&v);
-                    let mut frontier_updated = frontier_new;
-                    let neighbors_seq = neighbors.to_seq();
-
-                    for i in 0..neighbors_seq.length() {
-                        let neighbor = neighbors_seq.nth(i);
-                        if !visited_new.find(neighbor) {
-                            let neighbor_p = priority_fn.priority(neighbor);
-                            let neighbor_entry = Pair(Pair(neighbor_p.clone(), neighbor.clone()), neighbor.clone());
-                            // Parallel union for each new frontier element
-                            frontier_updated = frontier_updated.union(&AVLTreeSetMtPer::singleton(neighbor_entry));
-                        }
-                    }
-
-                    explore(graph, priority_fn, visited_new, frontier_updated)
-                } else {
-                    let mut priorities = AVLTreeSetMtPer::empty();
-                    let visited_seq = visited.to_seq();
-                    for i in 0..visited_seq.length() {
-                        let v = visited_seq.nth(i);
-                        let p = priority_fn.priority(v);
-                        // Parallel union for priority set construction
-                        priorities = priorities.union(&AVLTreeSetMtPer::singleton(Pair(v.clone(), p)));
-                    }
-                    (visited, priorities)
-                }
-            }
-
-            let mut initial_frontier = AVLTreeSetMtPer::empty();
-            let sources_seq = sources.to_seq();
-            for i in 0..sources_seq.length() {
-                let v = sources_seq.nth(i);
-                let p = priority_fn.priority(v);
-                let entry = Pair(Pair(p.clone(), v.clone()), v.clone());
-                initial_frontier = initial_frontier.union(&AVLTreeSetMtPer::singleton(entry));
-            }
-
-            let (visited, priorities) = explore(graph, priority_fn, AVLTreeSetMtPer::empty(), initial_frontier);
-
-            PQMinResult {
-                visited,
-                priorities,
-                parent: None,
+        fn find_min_priority<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static>(
+            frontier: &AVLTreeSetMtPer<Pair<Pair<P, V>, V>>,
+        ) -> Option<V> {
+            if frontier.size() == 0 {
+                None
+            } else {
+                let seq = frontier.to_seq();
+                Some(seq.nth(0).1.clone())
             }
         }
+
+        fn explore<V, P, G, PF>(
+            graph: &G,
+            priority_fn: &PF,
+            visited: AVLTreeSetMtPer<V>,
+            frontier: AVLTreeSetMtPer<Pair<Pair<P, V>, V>>,
+        ) -> (AVLTreeSetMtPer<V>, AVLTreeSetMtPer<Pair<V, P>>)
+        where
+            V: StTInMtT + Ord + 'static,
+            P: StTInMtT + Ord + 'static,
+            G: Fn(&V) -> AVLTreeSetMtPer<V>,
+            PF: PriorityFn<V, P>,
+        {
+            if let Some(v) = find_min_priority(&frontier) {
+                let p = priority_fn.priority(&v);
+                let entry = Pair(Pair(p.clone(), v.clone()), v.clone());
+                // Parallel difference operation
+                let frontier_new = frontier.difference(&AVLTreeSetMtPer::singleton(entry));
+
+                // Parallel union operation
+                let visited_new = visited.union(&AVLTreeSetMtPer::singleton(v.clone()));
+
+                let neighbors = graph(&v);
+                let mut frontier_updated = frontier_new;
+                let neighbors_seq = neighbors.to_seq();
+
+                for i in 0..neighbors_seq.length() {
+                    let neighbor = neighbors_seq.nth(i);
+                    if !visited_new.find(neighbor) {
+                        let neighbor_p = priority_fn.priority(neighbor);
+                        let neighbor_entry = Pair(Pair(neighbor_p.clone(), neighbor.clone()), neighbor.clone());
+                        // Parallel union for each new frontier element
+                        frontier_updated = frontier_updated.union(&AVLTreeSetMtPer::singleton(neighbor_entry));
+                    }
+                }
+
+                explore(graph, priority_fn, visited_new, frontier_updated)
+            } else {
+                let mut priorities = AVLTreeSetMtPer::empty();
+                let visited_seq = visited.to_seq();
+                for i in 0..visited_seq.length() {
+                    let v = visited_seq.nth(i);
+                    let p = priority_fn.priority(v);
+                    // Parallel union for priority set construction
+                    priorities = priorities.union(&AVLTreeSetMtPer::singleton(Pair(v.clone(), p)));
+                }
+                (visited, priorities)
+            }
+        }
+
+        let mut initial_frontier = AVLTreeSetMtPer::empty();
+        let sources_seq = sources.to_seq();
+        for i in 0..sources_seq.length() {
+            let v = sources_seq.nth(i);
+            let p = priority_fn.priority(v);
+            let entry = Pair(Pair(p.clone(), v.clone()), v.clone());
+            initial_frontier = initial_frontier.union(&AVLTreeSetMtPer::singleton(entry));
+        }
+
+        let (visited, priorities) = explore(graph, priority_fn, AVLTreeSetMtPer::empty(), initial_frontier);
+
+        PQMinResult {
+            visited,
+            priorities,
+            parent: None,
+        }
+    }
 }

@@ -6,11 +6,11 @@
 
 pub mod DirGraphMtEph {
 
-    use std::hash::Hash;
     use std::fmt::Debug;
     use std::fmt::Display;
     use std::fmt::Formatter;
     use std::fmt::Result;
+    use std::hash::Hash;
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::ParaPair;
@@ -26,55 +26,55 @@ pub mod DirGraphMtEph {
     pub trait DirGraphMtEphTrait<V: StT + MtT + Hash + 'static> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> DirGraphMtEph<V>;
+        fn empty()                                        -> DirGraphMtEph<V>;
         /// APAS: Work Θ(|V| + |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |A|), Span Θ(1)
         fn FromSets(V: SetStEph<V>, A: SetStEph<Edge<V>>) -> DirGraphMtEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn vertices(&self) -> &SetStEph<V>;
+        fn vertices(&self)                                -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn arcs(&self) -> &SetStEph<Edge<V>>;
+        fn arcs(&self)                                    -> &SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn sizeV(&self) -> N;
+        fn sizeV(&self)                                   -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn sizeA(&self) -> N;
+        fn sizeA(&self)                                   -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn Neighbor(&self, u: &V, v: &V) -> B;
+        fn Neighbor(&self, u: &V, v: &V)                  -> B;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer in NPlus+NMinus
-        fn NG(&self, v: &V) -> SetStEph<V>;
+        fn NG(&self, v: &V)                               -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(log |u_set| + log |A|), Parallelism Θ((|u_set| × |A|)/(log |u_set| + log |A|)) - parallel map-reduce
-        fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
+        fn NGOfVertices(&self, u_set: &SetStEph<V>)       -> SetStEph<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
-        fn NPlus(&self, v: &V) -> SetStEph<V>;
+        fn NPlus(&self, v: &V)                            -> SetStEph<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
-        fn NMinus(&self, v: &V) -> SetStEph<V>;
+        fn NMinus(&self, v: &V)                           -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(log |u_set| + log |A|), Parallelism Θ((|u_set| × |A|)/(log |u_set| + log |A|)) - parallel map-reduce
-        fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
+        fn NPlusOfVertices(&self, u_set: &SetStEph<V>)    -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(log |u_set| + log |A|), Parallelism Θ((|u_set| × |A|)/(log |u_set| + log |A|)) - parallel map-reduce
-        fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
+        fn NMinusOfVertices(&self, u_set: &SetStEph<V>)   -> SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B;
+        fn Incident(&self, e: &Edge<V>, v: &V)            -> B;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - calls parallel InDegree + OutDegree
-        fn Degree(&self, v: &V) -> N;
+        fn Degree(&self, v: &V)                           -> N;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - calls parallel NMinus
-        fn InDegree(&self, v: &V) -> N;
+        fn InDegree(&self, v: &V)                         -> N;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - calls parallel NPlus
-        fn OutDegree(&self, v: &V) -> N;
+        fn OutDegree(&self, v: &V)                        -> N;
     }
 
     impl<V: StT + MtT + Hash + 'static> DirGraphMtEphTrait<V> for DirGraphMtEph<V> {
@@ -373,5 +373,4 @@ pub mod DirGraphMtEph {
             };
             < $crate::Chap06::DirGraphMtEph::DirGraphMtEph::DirGraphMtEph<_> as $crate::Chap06::DirGraphMtEph::DirGraphMtEph::DirGraphMtEphTrait<_> >::FromSets(__V, __A)
         }}}
-
 }

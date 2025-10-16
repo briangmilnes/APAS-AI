@@ -209,10 +209,10 @@ fn test_mapping_large_dataset_stress() {
 #[test]
 fn test_mapping_debug_display() {
     let m = MappingLit![(1, "one"), (2, "two")];
-    
+
     let debug_str = format!("{:?}", m);
     assert!(!debug_str.is_empty());
-    
+
     let display_str = format!("{}", m);
     assert!(!display_str.is_empty());
 }
@@ -222,7 +222,7 @@ fn test_mapping_equality() {
     let m1 = MappingLit![(1, "one"), (2, "two")];
     let m2 = MappingLit![(1, "one"), (2, "two")];
     let m3 = MappingLit![(1, "one"), (3, "three")];
-    
+
     assert_eq!(m1, m2);
     assert_ne!(m1, m3);
 }
@@ -231,7 +231,7 @@ fn test_mapping_equality() {
 fn test_mapping_clone() {
     let m1 = MappingLit![(1, "one"), (2, "two")];
     let m2 = m1.clone();
-    
+
     assert_eq!(m1, m2);
     assert_eq!(m1.size(), m2.size());
     assert!(m2.mem(&1, &"one"));

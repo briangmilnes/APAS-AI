@@ -28,9 +28,7 @@ fn bench_contract_to_vertices_cycle(c: &mut Criterion) {
 
     for &n in &[8, 12, 16] {
         let graph = create_cycle_graph(n);
-        group.bench_function(format!("n={n}"), |b| {
-            b.iter(|| contract_to_vertices(black_box(&graph)))
-        });
+        group.bench_function(format!("n={n}"), |b| b.iter(|| contract_to_vertices(black_box(&graph))));
     }
     group.finish();
 }

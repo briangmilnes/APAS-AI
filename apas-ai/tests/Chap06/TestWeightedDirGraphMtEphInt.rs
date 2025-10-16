@@ -369,13 +369,13 @@ fn test_add_weighted_edge() {
     let vertices = SetLit![1, 2, 3];
     let edges = SetLit![];
     let mut g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     g.add_weighted_edge(1, 2, 100);
     assert!(g.has_arc(&1, &2));
-    
+
     g.add_weighted_edge(2, 3, 200);
     assert!(g.has_arc(&2, &3));
-    
+
     assert_eq!(g.labeled_arcs().size(), 2);
 }
 
@@ -384,10 +384,10 @@ fn test_weighted_edges() {
     let vertices = SetLit![1, 2, 3];
     let edges = SetLit![(1, 2, 10), (2, 3, 20), (3, 1, 30)];
     let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices.clone(), edges.clone());
-    
+
     let weighted_edges = g.weighted_edges();
     assert_eq!(weighted_edges.size(), 3);
-    
+
     // Verify all edges are present
     assert!(weighted_edges.mem(&(1, 2, 10)));
     assert!(weighted_edges.mem(&(2, 3, 20)));
@@ -399,7 +399,7 @@ fn test_get_edge_weight() {
     let vertices = SetLit![1, 2, 3];
     let edges = SetLit![(1, 2, 100), (2, 3, 200)];
     let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     assert_eq!(g.get_edge_weight(&1, &2), Some(100));
     assert_eq!(g.get_edge_weight(&2, &3), Some(200));
     assert_eq!(g.get_edge_weight(&3, &1), None);
@@ -410,13 +410,13 @@ fn test_out_neighbors_weighted() {
     let vertices = SetLit![1, 2, 3, 4];
     let edges = SetLit![(1, 2, 10), (1, 3, 20), (1, 4, 30), (2, 3, 40)];
     let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     let out_1 = g.out_neighbors_weighted(&1);
     assert_eq!(out_1.size(), 3);
     assert!(out_1.mem(&(2, 10)));
     assert!(out_1.mem(&(3, 20)));
     assert!(out_1.mem(&(4, 30)));
-    
+
     let out_2 = g.out_neighbors_weighted(&2);
     assert_eq!(out_2.size(), 1);
     assert!(out_2.mem(&(3, 40)));
@@ -431,11 +431,11 @@ fn test_out_neighbors_weighted_large_parallel() {
         edges.insert((i, i + 1, i as i32 * 10));
     }
     let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     let out_0 = g.out_neighbors_weighted(&0);
     assert_eq!(out_0.size(), 1);
     assert!(out_0.mem(&(1, 0)));
-    
+
     let out_5 = g.out_neighbors_weighted(&5);
     assert_eq!(out_5.size(), 1);
     assert!(out_5.mem(&(6, 50)));
@@ -450,11 +450,11 @@ fn test_in_neighbors_weighted_large_parallel() {
         edges.insert((i, i + 1, i as i32 * 10));
     }
     let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     let in_1 = g.in_neighbors_weighted(&1);
     assert_eq!(in_1.size(), 1);
     assert!(in_1.mem(&(0, 0)));
-    
+
     let in_10 = g.in_neighbors_weighted(&10);
     assert_eq!(in_10.size(), 1);
     assert!(in_10.mem(&(9, 90)));
@@ -481,7 +481,7 @@ fn test_out_neighbors_weighted_no_outgoing() {
     let vertices = SetLit![1, 2, 3];
     let edges = SetLit![(1, 2, 10), (2, 3, 20)];
     let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     let out_3 = g.out_neighbors_weighted(&3);
     assert_eq!(out_3.size(), 0);
 }
@@ -491,7 +491,7 @@ fn test_in_neighbors_weighted_multiple() {
     let vertices = SetLit![1, 2, 3, 4];
     let edges = SetLit![(1, 2, 10), (3, 2, 20), (4, 2, 30)];
     let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     let in_2 = g.in_neighbors_weighted(&2);
     assert_eq!(in_2.size(), 3);
     assert!(in_2.mem(&(1, 10)));
@@ -508,7 +508,7 @@ fn test_minimal_parallel_out_neighbors() {
         edges.insert((i, i + 1, i as i32));
     }
     let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     let out_0 = g.out_neighbors_weighted(&0);
     assert_eq!(out_0.size(), 1);
     assert!(out_0.mem(&(1, 0)));
@@ -523,7 +523,7 @@ fn test_minimal_parallel_in_neighbors() {
         edges.insert((i, i + 1, i as i32 * 5));
     }
     let g = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
-    
+
     let in_5 = g.in_neighbors_weighted(&5);
     assert_eq!(in_5.size(), 1);
     assert!(in_5.mem(&(4, 20)));

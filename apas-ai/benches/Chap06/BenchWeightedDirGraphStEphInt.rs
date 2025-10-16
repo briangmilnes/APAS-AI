@@ -3,10 +3,10 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
+use apas_ai::Types::Types::*;
 
 fn bench_weighted_dir_graph_st_eph_int(c: &mut Criterion) {
     let mut group = c.benchmark_group("WeightedDirGraphStEphInt");

@@ -429,5 +429,4 @@ pub mod AugOrderedTableStPer {
             $crate::Chap43::AugOrderedTableStPer::AugOrderedTableStPer::AugOrderedTableStPerTrait::empty($reducer, $identity)
         }};
     }
-
 }

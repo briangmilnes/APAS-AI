@@ -4,17 +4,17 @@
 
 pub mod ClusteringAnalysis {
 
-use std::collections::HashMap;
-use std::fmt::{Debug, Display};
-use std::cmp::Ordering::Equal;
-use std::fmt::Formatter;
+    use std::cmp::Ordering::Equal;
+    use std::collections::HashMap;
+    use std::fmt::Formatter;
+    use std::fmt::{Debug, Display};
 
-use crate::Types::Types::*;
-use crate::Chap47::AdvancedDoubleHashing::AdvancedDoubleHashing::*;
-use crate::Chap47::AdvancedLinearProbing::AdvancedLinearProbing::*;
-use crate::Chap47::AdvancedQuadraticProbing::AdvancedQuadraticProbing::*;
-use crate::Chap47::FlatHashTable::FlatHashTable::*;
-use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::AdvancedDoubleHashing::AdvancedDoubleHashing::*;
+    use crate::Chap47::AdvancedLinearProbing::AdvancedLinearProbing::*;
+    use crate::Chap47::AdvancedQuadraticProbing::AdvancedQuadraticProbing::*;
+    use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Types::Types::*;
     #[derive(Clone, Debug, PartialEq)]
     pub struct ComprehensiveClusteringAnalysis {
         pub strategy_name: String,
@@ -68,9 +68,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     }
 
     impl Default for ClusteringAnalyzer {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     impl ClusteringAnalyzer {

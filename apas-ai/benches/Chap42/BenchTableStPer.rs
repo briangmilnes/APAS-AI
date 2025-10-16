@@ -5,9 +5,9 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap42::TableStPer::TableStPer::*;
+use apas_ai::Types::Types::*;
 
 fn build_table(size: usize) -> TableStPer<i32, String> {
     let mut table = TableStPer::empty();

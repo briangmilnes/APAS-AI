@@ -6,8 +6,8 @@
 
 pub mod VertexMatchingMtEph {
 
-    use std::hash::Hash;
     use std::collections::HashMap;
+    use std::hash::Hash;
     use std::sync::Arc;
     use std::vec::Vec;
 
@@ -44,7 +44,10 @@ pub mod VertexMatchingMtEph {
     ///
     /// Returns:
     /// - A set of edges forming a vertex matching
-    pub fn parallel_matching_mt<V: StT + MtT + Hash + 'static>(graph: &UnDirGraphMtEph<V>, seed: u64) -> SetStEph<Edge<V>> {
+    pub fn parallel_matching_mt<V: StT + MtT + Hash + 'static>(
+        graph: &UnDirGraphMtEph<V>,
+        seed: u64,
+    ) -> SetStEph<Edge<V>> {
         use rand::rngs::StdRng;
         use rand::{Rng, SeedableRng};
         use std::sync::{Arc, Mutex};
@@ -64,7 +67,6 @@ pub mod VertexMatchingMtEph {
         let coins = flip_coins_parallel(&edges_seq, &mut rng);
 
         // Phase 2: Select edges where coin is heads and all adjacent edges are tails
-        
 
         select_edges_parallel(graph, &edges_seq, &coins)
     }
@@ -200,9 +202,10 @@ pub mod VertexMatchingMtEph {
 
             // Check if adjacent edge is incident on u or v
             if (graph.Incident(adj_edge, u) || graph.Incident(adj_edge, v))
-                && edge_coins.get(adj_edge).copied().unwrap_or(false) {
-                    return false; // Adjacent edge flipped heads
-                }
+                && edge_coins.get(adj_edge).copied().unwrap_or(false)
+            {
+                return false; // Adjacent edge flipped heads
+            }
         }
 
         true

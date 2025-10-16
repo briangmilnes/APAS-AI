@@ -9,27 +9,27 @@ pub mod Exercise47_1 {
     pub trait Exercise47_1Trait {
         /// Exercise 47.1: Nested table implementation using Table ADT
         /// APAS: Work Θ(1), Span Θ(1) - theoretical analysis
-        fn exercise_47_1_nested_implementation() -> String;
-        
+        fn exercise_47_1_nested_implementation()   -> String;
+
         /// Exercise 47.2: Table size reduction analysis
         /// APAS: Work Θ(1), Span Θ(1) - theoretical analysis
-        fn exercise_47_2_size_reduction() -> String;
-        
+        fn exercise_47_2_size_reduction()          -> String;
+
         /// Exercise 47.3: Resize operation implementation and cost analysis
         /// APAS: Work Θ(1), Span Θ(1) - theoretical analysis
-        fn exercise_47_3_resize_implementation() -> String;
-        
+        fn exercise_47_3_resize_implementation()   -> String;
+
         /// Exercise 47.6: Higher-order function implementation
         /// APAS: Work Θ(1), Span Θ(1) - theoretical analysis
-        fn exercise_47_6_higher_order() -> String;
-        
+        fn exercise_47_6_higher_order()            -> String;
+
         /// Exercise 47.7: Complete flat hash table implementation
         /// APAS: Work Θ(1), Span Θ(1) - theoretical analysis
         fn exercise_47_7_complete_implementation() -> String;
-        
+
         /// Run all exercise solutions
         /// APAS: Work Θ(1), Span Θ(1) - combines all solutions
-        fn run_all_exercises() -> String;
+        fn run_all_exercises()                     -> String;
     }
 
     /// Exercise 47.1: Nested table implementation using Table ADT
@@ -226,24 +226,24 @@ with support for different probing strategies.
     /// APAS: Work Θ(1), Span Θ(1) - combines all solutions
     pub fn run_all_exercises() -> String {
         let mut output = String::new();
-        
+
         output.push_str("=== Chapter 47 Exercise Solutions ===\n\n");
-        
+
         output.push_str(&exercise_47_1_nested_implementation());
         output.push_str("\n");
-        
+
         output.push_str(&exercise_47_2_size_reduction());
         output.push_str("\n");
-        
+
         output.push_str(&exercise_47_3_resize_implementation());
         output.push_str("\n");
-        
+
         output.push_str(&exercise_47_6_higher_order());
         output.push_str("\n");
-        
+
         output.push_str(&exercise_47_7_complete_implementation());
         output.push_str("\n");
-        
+
         output.push_str("=== Summary ===\n");
         output.push_str("These exercises cover the theoretical foundations of hash tables:\n");
         output.push_str("- Nested hash table design and implementation\n");
@@ -251,9 +251,9 @@ with support for different probing strategies.
         output.push_str("- Higher-order function design patterns\n");
         output.push_str("- Complete implementation considerations\n");
         output.push_str("- Performance optimization techniques\n\n");
-        
+
         output.push_str("All concepts are implemented in the APAS hash table modules.\n");
-        
+
         output
     }
 }

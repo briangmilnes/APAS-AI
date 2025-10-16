@@ -59,4 +59,3 @@ pub mod ChainedHashTable {
         }
     }
 }
-

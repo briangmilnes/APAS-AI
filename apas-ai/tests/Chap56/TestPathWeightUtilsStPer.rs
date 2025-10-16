@@ -4,9 +4,9 @@
 
 use ordered_float::OrderedFloat;
 
-use apas_ai::Types::Types::OrderedF64;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
 use apas_ai::Chap56::PathWeightUtilsStPer::PathWeightUtilsStPer::*;
+use apas_ai::Types::Types::OrderedF64;
 
 #[test]
 fn test_path_weight_int_simple() {

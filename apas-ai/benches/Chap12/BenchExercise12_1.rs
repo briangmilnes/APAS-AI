@@ -5,8 +5,8 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap12::Exercise12_1::Exercise12_1::*;
+use apas_ai::Types::Types::*;
 
 fn bench_exercise12_1(c: &mut Criterion) {
     let mut group = c.benchmark_group("Exercise12_1");

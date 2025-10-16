@@ -1,18 +1,18 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-use std::sync::{Arc, Barrier};
-use std::thread;
 use std::f64::consts::E;
 use std::f64::consts::PI;
 use std::f64::consts::SQRT_2;
+use std::sync::{Arc, Barrier};
+use std::thread;
 
 use ordered_float::OrderedFloat;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::LabUnDirGraphMtEphTrait;
 use apas_ai::Chap06::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::*;
 use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 use apas_ai::WeightedUnDirGraphMtEphFloatLit;
 
 #[test]
@@ -409,17 +409,17 @@ fn test_parallel_neighbors_weighted() {
     for i in 0..15 {
         vertices.insert(i);
     }
-    
+
     let mut edges = SetStEph::empty();
     for i in 1..13 {
         edges.insert((0, i, OrderedFloat(i as f64 * 1.5)));
     }
-    
+
     let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     let neighbors_weighted = g.neighbors_weighted(&0);
     assert_eq!(neighbors_weighted.size(), 12);
-    
+
     assert!(neighbors_weighted.mem(&(1, OrderedFloat(1.5))));
     assert!(neighbors_weighted.mem(&(5, OrderedFloat(7.5))));
     assert!(neighbors_weighted.mem(&(12, OrderedFloat(18.0))));
@@ -430,10 +430,10 @@ fn test_display_debug_traits() {
     let vertices = SetLit![1, 2];
     let edges = SetLit![(1, 2, OrderedFloat(3.14))];
     let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     let display_str = format!("{}", g);
     assert!(display_str.contains("LabUnDirGraph"));
-    
+
     let debug_str = format!("{:?}", g);
     assert!(debug_str.contains("LabUnDirGraph"));
 }
@@ -443,7 +443,7 @@ fn test_clone_mteph() {
     let vertices = SetLit![1, 2, 3];
     let edges = SetLit![(1, 2, OrderedFloat(1.5)), (2, 3, OrderedFloat(2.5))];
     let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     let g2 = g.clone();
     assert_eq!(g2.vertices().size(), 3);
     assert_eq!(g2.labeled_edges().size(), 2);
@@ -455,7 +455,7 @@ fn test_get_edge_weight_mteph() {
     let vertices = SetLit![1, 2, 3];
     let edges = SetLit![(1, 2, OrderedFloat(1.5)), (2, 3, OrderedFloat(2.5))];
     let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     assert_eq!(g.get_edge_weight(&1, &2), Some(OrderedFloat(1.5)));
     assert_eq!(g.get_edge_weight(&2, &1), Some(OrderedFloat(1.5)));
     assert_eq!(g.get_edge_weight(&1, &3), None);
@@ -466,7 +466,7 @@ fn test_weighted_edges_mteph() {
     let vertices = SetLit![1, 2];
     let edges = SetLit![(1, 2, OrderedFloat(3.14))];
     let g = WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
-    
+
     let we = g.weighted_edges();
     assert_eq!(we.size(), 1);
 }

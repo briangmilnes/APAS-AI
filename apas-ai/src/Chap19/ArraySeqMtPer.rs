@@ -5,7 +5,9 @@ pub mod ArraySeqMtPer {
 
     use std::sync::Mutex;
 
-    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS as ArraySeqMtPerSChap18, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18};
+    use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{
+        ArraySeqMtPerS as ArraySeqMtPerSChap18, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18,
+    };
     use crate::Types::Types::*;
 
     pub type ArraySeqMtPerS<T> = ArraySeqMtPerSChap18<T>;
@@ -13,53 +15,56 @@ pub mod ArraySeqMtPer {
     pub trait ArraySeqMtPerTrait<T: StTInMtT> {
         // Chapter 18 wrappers
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn new(length: N, init_value: T) -> Self;
+        fn new(length: N, init_value: T)                                            -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> ArraySeqMtPerS<T>;
+        fn empty()                                                                  -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> ArraySeqMtPerS<T>;
+        fn singleton(item: T)                                                       -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N;
+        fn length(&self)                                                            -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn nth(&self, index: N) -> &T;
+        fn nth(&self, index: N)                                                     -> &T;
         /// claude-4-sonet: Work Θ(length), Span Θ(log length), Parallelism Θ(length/log length)
-        fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T>;
+        fn subseq_copy(&self, start: N, length: N)                                  -> ArraySeqMtPerS<T>;
 
         /// claude-4-sonet: Work Θ(n + Σᵢ W(f(i))), Span Θ(log n + maxᵢ S(f(i))), Parallelism Θ(n)
-        fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
+        fn tabulate<F: Fn(N)                                                        -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(|a| + Σₓ W(f(x))), Span Θ(log |a| + maxₓ S(f(x))), Parallelism Θ(|a|)
-        fn map<W: StTInMtT + 'static, F: Fn(&T) -> W + Send + Sync + Clone + 'static>(
+        fn map<W: StTInMtT + 'static, F: Fn(&T)                                     -> W + Send + Sync + Clone + 'static>(
             a: &ArraySeqMtPerS<T>,
             f: F,
         ) -> ArraySeqMtPerS<W>
         where
             T: 'static;
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(log(|a| + |b|)), Parallelism Θ((|a|+|b|)/log(|a|+|b|))
-        fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
+        fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>)                     -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(log |a| + maxᵢ S(f(aᵢ))), Parallelism Θ(|a|)
-        fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T>;
+        fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtPerS<T>, pred: F)             -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(log |a|), Parallelism Θ(|a|/log |a|)
-        fn update_single(a: &ArraySeqMtPerS<T>, index: N, item: T) -> ArraySeqMtPerS<T>;
+        fn update_single(a: &ArraySeqMtPerS<T>, index: N, item: T)                  -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(log |a| + log |updates|)
-        fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T>;
+        fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>)     -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
-        fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A;
+        fn iterate<A: StTInMtT, F: Fn(&A, &T)                                       -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
-        fn iteratePrefixes<A: StTInMtT + 'static, F: Fn(&A, &T) -> A + Send + Sync>(
+        fn iteratePrefixes<A: StTInMtT + 'static, F: Fn(&A, &T)                     -> A + Send + Sync>(
             a: &ArraySeqMtPerS<T>,
             f: &F,
             x: A,
         ) -> (ArraySeqMtPerS<A>, A);
         /// claude-4-sonet: Work Θ(|a|), Span Θ(log |a|), Parallelism Θ(|a|/log |a|)
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T
+        fn reduce<F: Fn(&T, &T)                                                     -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtPerS<T>, f: F, id: T) -> T
         where
             T: 'static;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(log |a|), Parallelism Θ(|a|/log |a|)
-        fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T);
+        fn scan<F: Fn(&T, &T)                                                       -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T);
         /// claude-4-sonet: Work Θ(Σ |sᵢ|), Span Θ(log(Σ |sᵢ|))
-        fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T>;
+        fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>)                          -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(|a|²) worst case, Span Θ(|a|²) worst case
-        fn collect<K: StTInMtT, V: StTInMtT>(a: &ArraySeqMtPerS<Pair<K, V>>, cmp: fn(&K, &K) -> O) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>>;
+        fn collect<K: StTInMtT, V: StTInMtT>(
+            a: &ArraySeqMtPerS<Pair<K, V>>,
+            cmp: fn(&K, &K) -> O,
+        ) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>>;
 
         // Chapter 19 specific functions
         /// claude-4-sonet: Work Θ(|values| + |changes|), Span Θ(log |values| + log |changes|)
@@ -71,11 +76,11 @@ pub mod ArraySeqMtPer {
             change_index: N,
         );
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(a: &ArraySeqMtPerS<T>) -> bool;
-        fn isSingleton(a: &ArraySeqMtPerS<T>) -> bool;
-        fn append_select(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
-        fn select<'a>(a: &'a ArraySeqMtPerS<T>, b: &'a ArraySeqMtPerS<T>, i: N) -> Option<&'a T>;
-        fn deflate<F: PredMt<T>>(f: &F, x: &T) -> ArraySeqMtPerS<T>;
+        fn isEmpty(a: &ArraySeqMtPerS<T>)                                           -> bool;
+        fn isSingleton(a: &ArraySeqMtPerS<T>)                                       -> bool;
+        fn append_select(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>)              -> ArraySeqMtPerS<T>;
+        fn select<'a>(a: &'a ArraySeqMtPerS<T>, b: &'a ArraySeqMtPerS<T>, i: N)     -> Option<&'a T>;
+        fn deflate<F: PredMt<T>>(f: &F, x: &T)                                      -> ArraySeqMtPerS<T>;
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
@@ -258,7 +263,10 @@ pub mod ArraySeqMtPer {
             <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::flatten(ss)
         }
 
-        fn collect<K: StTInMtT, V: StTInMtT>(a: &ArraySeqMtPerS<Pair<K, V>>, cmp: fn(&K, &K) -> O) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>> {
+        fn collect<K: StTInMtT, V: StTInMtT>(
+            a: &ArraySeqMtPerS<Pair<K, V>>,
+            cmp: fn(&K, &K) -> O,
+        ) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>> {
             <ArraySeqMtPerS<Pair<K, V>> as ArraySeqMtPerTraitChap18<Pair<K, V>>>::collect(a, cmp)
         }
 
@@ -303,7 +311,11 @@ pub mod ArraySeqMtPer {
             }
             let offset = i - len_a;
             let len_b = b.length();
-            if offset < len_b { Some(b.nth(offset)) } else { None }
+            if offset < len_b {
+                Some(b.nth(offset))
+            } else {
+                None
+            }
         }
 
         fn deflate<F: PredMt<T>>(f: &F, x: &T) -> ArraySeqMtPerS<T> {

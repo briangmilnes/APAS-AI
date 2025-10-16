@@ -7,8 +7,8 @@
 
 pub mod EdgeContractionStEph {
 
-    use std::hash::Hash;
     use std::collections::HashMap;
+    use std::hash::Hash;
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;

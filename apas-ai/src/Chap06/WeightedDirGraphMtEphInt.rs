@@ -177,5 +177,4 @@ pub mod WeightedDirGraphMtEphInt {
             $crate::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges)
         }};
     }
-
 }

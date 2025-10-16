@@ -156,7 +156,7 @@ fn test_height_balanced() {
     bst.insert(30);
     bst.insert(60);
     bst.insert(80);
-    
+
     assert_eq!(bst.size(), 7);
     let h = bst.height();
     assert!(h >= 3 && h <= 4, "height should be 3 or 4, got {}", h);
@@ -185,10 +185,10 @@ fn test_in_order_multiple() {
     for &v in &values {
         bst.insert(v);
     }
-    
+
     let result = bst.in_order();
     assert_eq!(result.length(), 9);
-    
+
     // Verify sorted order
     let expected = vec![1, 2, 3, 4, 5, 6, 7, 8, 9];
     for (i, &expected_val) in expected.iter().enumerate() {
@@ -223,7 +223,7 @@ fn test_pre_order_multiple() {
     bst.insert(30);
     bst.insert(60);
     bst.insert(80);
-    
+
     let result = bst.pre_order();
     assert_eq!(result.length(), 7);
     // First element should be root-like value
@@ -244,12 +244,12 @@ fn test_insert_ascending_rebalancing() {
     for i in 1..=100 {
         bst.insert(i);
     }
-    
+
     assert_eq!(bst.size(), 100);
     let h = bst.height();
     // BB[α] should keep height bounded (not degenerate to n)
     assert!(h <= 50, "height {} should not be degenerate", h);
-    
+
     // Verify order preserved
     let inorder = bst.in_order();
     for i in 1..=100 {
@@ -264,12 +264,12 @@ fn test_insert_descending_rebalancing() {
     for i in (1..=100).rev() {
         bst.insert(i);
     }
-    
+
     assert_eq!(bst.size(), 100);
     let h = bst.height();
     // BB[α] should keep height bounded (not degenerate to n)
     assert!(h <= 50, "height {} should not be degenerate", h);
-    
+
     // Verify order preserved
     let inorder = bst.in_order();
     for i in 1..=100 {
@@ -288,7 +288,7 @@ fn test_insert_alternating_pattern() {
             bst.insert(100 - i);
         }
     }
-    
+
     assert_eq!(bst.size(), 50);
     let h = bst.height();
     assert!(h <= 40, "height {} should not be degenerate", h);
@@ -298,17 +298,17 @@ fn test_insert_alternating_pattern() {
 fn test_find_all_inserted() {
     let mut bst = BSTreeBBAlpha::new();
     let values = vec![15, 10, 20, 8, 12, 17, 25, 6, 11, 16, 27];
-    
+
     for &v in &values {
         bst.insert(v);
     }
-    
+
     // Find all inserted values
     for &v in &values {
         assert_eq!(bst.find(&v), Some(&v));
         assert!(bst.contains(&v));
     }
-    
+
     // Find non-existent values
     for &v in &[1, 2, 3, 4, 5, 7, 9, 13, 14, 18, 19, 21, 22, 23, 24, 26, 28, 100] {
         assert_eq!(bst.find(&v), None);
@@ -320,11 +320,11 @@ fn test_find_all_inserted() {
 fn test_minimum_maximum_comprehensive() {
     let mut bst = BSTreeBBAlpha::new();
     let values = vec![50, 25, 75, 10, 30, 60, 80, 5, 15, 27, 35, 55, 65, 77, 85];
-    
+
     for &v in &values {
         bst.insert(v);
     }
-    
+
     assert_eq!(bst.minimum().copied(), Some(5));
     assert_eq!(bst.maximum().copied(), Some(85));
 }
@@ -332,18 +332,18 @@ fn test_minimum_maximum_comprehensive() {
 #[test]
 fn test_very_large_tree() {
     let mut bst = BSTreeBBAlpha::new();
-    
+
     // Insert 500 elements
     for i in 0..500 {
         bst.insert(i);
     }
-    
+
     assert_eq!(bst.size(), 500);
-    
+
     // Height should be bounded (not fully degenerate to n=500)
     let h = bst.height();
     assert!(h <= 400, "height {} should not be fully degenerate", h);
-    
+
     // Spot check some values
     assert!(bst.contains(&0));
     assert!(bst.contains(&250));
@@ -354,17 +354,17 @@ fn test_very_large_tree() {
 #[test]
 fn test_duplicate_insertions_comprehensive() {
     let mut bst = BSTreeBBAlpha::new();
-    
+
     // Insert same values multiple times
     for _ in 0..5 {
         for i in 0..10 {
             bst.insert(i);
         }
     }
-    
+
     // Size should still be 10 (duplicates ignored)
     assert_eq!(bst.size(), 10);
-    
+
     // Verify all present
     for i in 0..10 {
         assert!(bst.contains(&i));
@@ -374,23 +374,23 @@ fn test_duplicate_insertions_comprehensive() {
 #[test]
 fn test_mixed_operations_comprehensive() {
     let mut bst = BSTreeBBAlpha::new();
-    
+
     // Complex sequence of operations
     bst.insert(50);
     assert_eq!(bst.size(), 1);
-    
+
     bst.insert(25);
     bst.insert(75);
     assert_eq!(bst.size(), 3);
     assert_eq!(bst.minimum().copied(), Some(25));
     assert_eq!(bst.maximum().copied(), Some(75));
-    
+
     bst.insert(10);
     bst.insert(30);
     bst.insert(60);
     bst.insert(80);
     assert_eq!(bst.size(), 7);
-    
+
     let inorder = bst.in_order();
     let expected = vec![10, 25, 30, 50, 60, 75, 80];
     for (i, &exp) in expected.iter().enumerate() {
@@ -405,11 +405,11 @@ fn test_string_type() {
     bst.insert("cat".to_string());
     bst.insert("elephant".to_string());
     bst.insert("ant".to_string());
-    
+
     assert_eq!(bst.size(), 4);
     assert!(bst.contains(&"cat".to_string()));
     assert!(!bst.contains(&"zebra".to_string()));
-    
+
     assert_eq!(bst.minimum().map(|s| s.as_str()), Some("ant"));
     assert_eq!(bst.maximum().map(|s| s.as_str()), Some("elephant"));
 }
@@ -420,7 +420,7 @@ fn test_clone_trait() {
     bst1.insert(1);
     bst1.insert(2);
     bst1.insert(3);
-    
+
     let bst2 = bst1.clone();
     assert_eq!(bst2.size(), 3);
     assert!(bst2.contains(&1));
@@ -434,16 +434,16 @@ fn test_pre_order_vs_in_order() {
     bst.insert(50);
     bst.insert(25);
     bst.insert(75);
-    
+
     let pre = bst.pre_order();
     let ino = bst.in_order();
-    
+
     assert_eq!(pre.length(), 3);
     assert_eq!(ino.length(), 3);
-    
+
     // Pre-order should visit root first
     assert_eq!(*pre.nth(0), 50);
-    
+
     // In-order should be sorted
     assert_eq!(*ino.nth(0), 25);
     assert_eq!(*ino.nth(1), 50);

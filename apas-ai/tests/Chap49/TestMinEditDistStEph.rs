@@ -371,7 +371,7 @@ fn test_display_formatting() {
     let source = ArraySeqStEphS::from_vec(vec!['a', 'b']);
     let target = ArraySeqStEphS::from_vec(vec!['c', 'd']);
     let med = MinEditDistStEphS::from_sequences(source, target);
-    
+
     let display = format!("{}", med);
     assert!(display.contains("MinEditDist"));
 }
@@ -381,7 +381,7 @@ fn test_debug_formatting() {
     let source = ArraySeqStEphS::from_vec(vec![1, 2]);
     let target = ArraySeqStEphS::from_vec(vec![3, 4]);
     let med = MinEditDistStEphS::from_sequences(source, target);
-    
+
     let debug = format!("{:?}", med);
     assert!(debug.contains("MinEditDistStEphS"));
 }
@@ -391,7 +391,7 @@ fn test_clone() {
     let source = ArraySeqStEphS::from_vec(vec![1, 2, 3]);
     let target = ArraySeqStEphS::from_vec(vec![4, 5, 6]);
     let med = MinEditDistStEphS::from_sequences(source, target);
-    
+
     let cloned = med.clone();
     assert_eq!(cloned.source().length(), 3);
     assert_eq!(cloned.target().length(), 3);
@@ -402,11 +402,11 @@ fn test_equality() {
     let source1 = ArraySeqStEphS::from_vec(vec![1, 2]);
     let target1 = ArraySeqStEphS::from_vec(vec![3, 4]);
     let med1 = MinEditDistStEphS::from_sequences(source1, target1);
-    
+
     let source2 = ArraySeqStEphS::from_vec(vec![1, 2]);
     let target2 = ArraySeqStEphS::from_vec(vec![3, 4]);
     let med2 = MinEditDistStEphS::from_sequences(source2, target2);
-    
+
     assert_eq!(med1, med2);
 }
 
@@ -415,11 +415,11 @@ fn test_repeated_computation() {
     let source = ArraySeqStEphS::from_vec(vec![1, 2, 3]);
     let target = ArraySeqStEphS::from_vec(vec![4, 5, 6]);
     let mut med = MinEditDistStEphS::from_sequences(source, target);
-    
+
     let dist1 = med.min_edit_distance();
     let dist2 = med.min_edit_distance();
     let dist3 = med.min_edit_distance();
-    
+
     assert_eq!(dist1, dist2);
     assert_eq!(dist2, dist3);
 }
@@ -429,7 +429,7 @@ fn test_into_iter_owned() {
     let source = ArraySeqStEphS::from_vec(vec![1, 2]);
     let target = ArraySeqStEphS::from_vec(vec![3, 4]);
     let med = MinEditDistStEphS::from_sequences(source, target);
-    
+
     let pairs: Vec<_> = med.into_iter().collect();
     assert_eq!(pairs.len(), 2);
 }
@@ -439,10 +439,10 @@ fn test_into_iter_borrowed() {
     let source = ArraySeqStEphS::from_vec(vec![1, 2]);
     let target = ArraySeqStEphS::from_vec(vec![3, 4]);
     let med = MinEditDistStEphS::from_sequences(source, target);
-    
+
     let pairs: Vec<_> = (&med).into_iter().collect();
     assert_eq!(pairs.len(), 2);
-    
+
     // med should still be valid
     assert_eq!(med.source().length(), 2);
 }
@@ -452,10 +452,10 @@ fn test_into_iter_mut() {
     let source = ArraySeqStEphS::from_vec(vec![1, 2]);
     let target = ArraySeqStEphS::from_vec(vec![3, 4]);
     let mut med = MinEditDistStEphS::from_sequences(source, target);
-    
+
     let pairs: Vec<_> = (&mut med).into_iter().collect();
     assert_eq!(pairs.len(), 2);
-    
+
     // med should still be valid
     assert_eq!(med.source().length(), 2);
 }
@@ -463,7 +463,7 @@ fn test_into_iter_mut() {
 #[test]
 fn test_macro_lit_with_source_and_target() {
     use apas_ai::MinEditDistStEphLit;
-    
+
     let med = MinEditDistStEphLit!(source: ['a', 'b'], target: ['c', 'd']);
     assert_eq!(med.source().length(), 2);
     assert_eq!(med.target().length(), 2);
@@ -472,7 +472,7 @@ fn test_macro_lit_with_source_and_target() {
 #[test]
 fn test_macro_lit_empty() {
     use apas_ai::MinEditDistStEphLit;
-    
+
     let med: MinEditDistStEphS<i32> = MinEditDistStEphLit!();
     assert_eq!(med.source().length(), 0);
     assert_eq!(med.target().length(), 0);
@@ -483,10 +483,10 @@ fn test_set_source_clears_memo() {
     let source = ArraySeqStEphS::from_vec(vec![1, 2, 3]);
     let target = ArraySeqStEphS::from_vec(vec![4, 5, 6]);
     let mut med = MinEditDistStEphS::from_sequences(source, target);
-    
+
     let _ = med.min_edit_distance();
     assert!(med.memo_size() > 0);
-    
+
     // set_source should clear memo
     med.set_source(0, 99);
     assert_eq!(med.memo_size(), 0);
@@ -497,10 +497,10 @@ fn test_set_target_clears_memo() {
     let source = ArraySeqStEphS::from_vec(vec![1, 2, 3]);
     let target = ArraySeqStEphS::from_vec(vec![4, 5, 6]);
     let mut med = MinEditDistStEphS::from_sequences(source, target);
-    
+
     let _ = med.min_edit_distance();
     assert!(med.memo_size() > 0);
-    
+
     // set_target should clear memo
     med.set_target(0, 88);
     assert_eq!(med.memo_size(), 0);
@@ -511,10 +511,10 @@ fn test_min_edit_distance_clears_memo_first() {
     let source = ArraySeqStEphS::from_vec(vec![1, 2, 3]);
     let target = ArraySeqStEphS::from_vec(vec![4, 5, 6]);
     let mut med = MinEditDistStEphS::from_sequences(source, target);
-    
+
     // Manually add something to memo
     med.clear_memo();
-    
+
     // min_edit_distance should clear it anyway
     let _ = med.min_edit_distance();
     assert!(med.memo_size() > 0);

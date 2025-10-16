@@ -33,18 +33,17 @@ pub mod ParaHashTableStEph {
     /// Trait for parametric nested hash tables.
     /// Entry type must implement this trait to define how Key and Value are stored.
     pub trait EntryTrait<Key, Value> {
-        fn new() -> Self;
+        fn new()                        -> Self;
         fn insert(&mut self, key: Key, value: Value);
-        fn lookup(&self, key: &Key) -> Option<Value>;
+        fn lookup(&self, key: &Key)     -> Option<Value>;
         fn delete(&mut self, key: &Key) -> B;
     }
 
     /// Trait for parametric nested hash tables.
-    pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>
-    {
+    pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
         /// Creates an empty hash table with the given initial size.
         /// APAS: Work O(m), Span O(m) where m is initial size.
-        fn createTable(hash_fn: HashFun<Key>, initial_size: N) -> HashTable<Key, Value, Entry, Metrics> {
+        fn createTable(hash_fn: HashFun<Key>, initial_size: N)                  -> HashTable<Key, Value, Entry, Metrics> {
             HashTable {
                 table: Vec::<Entry>::with_capacity(initial_size),
                 hash_fn,
@@ -62,19 +61,19 @@ pub mod ParaHashTableStEph {
 
         /// Looks up a key in the hash table, returning its value if found.
         /// APAS: Work O(1) expected, Span O(1).
-        fn lookup(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key) -> Option<Value>;
+        fn lookup(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key)     -> Option<Value>;
 
         /// Deletes a key from the hash table if it exists.
         /// APAS: Work O(1) expected, Span O(1).
         fn delete(table: &mut HashTable<Key, Value, Entry, Metrics>, key: &Key) -> B;
 
         /// Accessor for metrics field.
-        fn metrics(table: &HashTable<Key, Value, Entry, Metrics>) -> &Metrics { &table.metrics }
+        fn metrics(table: &HashTable<Key, Value, Entry, Metrics>)               -> &Metrics { &table.metrics }
 
         /// Returns the load (number of entries) and size (table capacity).
         /// APAS: Work O(1), Span O(1).
         /// Load factor α = load/size = num_elements/size
-        fn loadAndSize(table: &HashTable<Key, Value, Entry, Metrics>) -> LoadAndSize {
+        fn loadAndSize(table: &HashTable<Key, Value, Entry, Metrics>)           -> LoadAndSize {
             let load_factor = if table.current_size == 0 {
                 0.0
             } else {
@@ -87,4 +86,3 @@ pub mod ParaHashTableStEph {
         }
     }
 }
- 

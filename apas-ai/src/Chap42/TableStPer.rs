@@ -20,53 +20,53 @@ pub mod TableStPer {
     pub trait TableStPerTrait<K: StT + Ord, V: StT> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                              -> N;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                                  -> Self;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(key: K, value: V) -> Self;
+        fn singleton(key: K, value: V)              -> Self;
 
         /// APAS: Work Θ(|a|), Span Θ(lg |a|)
         /// claude-4-sonet: Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
-        fn domain(&self) -> ArraySetStEph<K>;
+        fn domain(&self)                            -> ArraySetStEph<K>;
 
         /// APAS: Work Θ(|s| * W(f)), Span Θ(lg |s| + S(f))
         /// claude-4-sonet: Work Θ(|keys| × W(f)), Span Θ(log |keys| + S(f)), Parallelism Θ(|keys|/(log |keys| + S(f)))
-        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self;
+        fn tabulate<F: Fn(&K)                       -> V>(f: F, keys: &ArraySetStEph<K>) -> Self;
 
         /// APAS: Work Θ(|a| * W(f)), Span Θ(lg |a| + S(f))
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(log n + S(f)), Parallelism Θ(n/(log n + S(f)))
-        fn map<F: Fn(&V) -> V>(&self, f: F) -> Self;
+        fn map<F: Fn(&V)                            -> V>(&self, f: F) -> Self;
 
         /// APAS: Work Θ(|a| * W(f)), Span Θ(lg |a| + S(f))
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(log n + S(f)), Parallelism Θ(n/(log n + S(f)))
-        fn filter<F: Fn(&K, &V) -> B>(&self, f: F) -> Self;
+        fn filter<F: Fn(&K, &V)                     -> B>(&self, f: F) -> Self;
 
         /// APAS: Work Θ(m * lg(1 + n/m)), Span Θ(lg(n + m))
         /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log(n + m)), Parallelism Θ(m/log(n + m))
-        fn intersection<F: Fn(&V, &V) -> V>(&self, other: &Self, combine: F) -> Self;
+        fn intersection<F: Fn(&V, &V)               -> V>(&self, other: &Self, combine: F) -> Self;
 
         /// APAS: Work Θ(m * lg(1 + n/m)), Span Θ(lg(n + m))
         /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log(n + m)), Parallelism Θ(m/log(n + m))
-        fn union<F: Fn(&V, &V) -> V>(&self, other: &Self, combine: F) -> Self;
+        fn union<F: Fn(&V, &V)                      -> V>(&self, other: &Self, combine: F) -> Self;
 
         /// APAS: Work Θ(m * lg(1 + n/m)), Span Θ(lg(n + m))
         /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log(n + m)), Parallelism Θ(m/log(n + m))
-        fn difference(&self, other: &Self) -> Self;
+        fn difference(&self, other: &Self)          -> Self;
 
         /// APAS: Work Θ(lg |a|), Span Θ(lg |a|)
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn find(&self, key: &K) -> Option<V>;
+        fn find(&self, key: &K)                     -> Option<V>;
 
         /// APAS: Work Θ(lg |a|), Span Θ(lg |a|)
-        fn delete(&self, key: &K) -> Self;
+        fn delete(&self, key: &K)                   -> Self;
 
         /// APAS: Work Θ(lg |a|), Span Θ(lg |a|)
-        fn insert<F: Fn(&V, &V) -> V>(&self, key: K, value: V, combine: F) -> Self;
+        fn insert<F: Fn(&V, &V)                     -> V>(&self, key: K, value: V, combine: F) -> Self;
 
         /// APAS: Work Θ(m * lg(1 + n/m)), Span Θ(lg(n + m))
         fn restrict(&self, keys: &ArraySetStEph<K>) -> Self;
@@ -75,7 +75,7 @@ pub mod TableStPer {
         fn subtract(&self, keys: &ArraySetStEph<K>) -> Self;
 
         /// APAS: Work Θ(|a|), Span Θ(lg |a|)
-        fn collect(&self) -> ArraySeqStPerS<Pair<K, V>>;
+        fn collect(&self)                           -> ArraySeqStPerS<Pair<K, V>>;
     }
 
     impl<K: StT + Ord, V: StT> TableStPerTrait<K, V> for TableStPer<K, V> {

@@ -92,7 +92,10 @@ pub mod SpanTreeMtEph {
     }
 
     /// Verify that result is a valid spanning tree
-    pub fn verify_spanning_tree<V: StT + MtT + Hash + Ord>(graph: &UnDirGraphMtEph<V>, tree_edges: &SetStEph<Edge<V>>) -> B {
+    pub fn verify_spanning_tree<V: StT + MtT + Hash + Ord>(
+        graph: &UnDirGraphMtEph<V>,
+        tree_edges: &SetStEph<Edge<V>>,
+    ) -> B {
         let n = graph.sizeV();
         let expected_edges = if n > 0 { n - 1 } else { 0 };
 

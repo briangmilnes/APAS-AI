@@ -4,8 +4,8 @@
 
 pub mod StructChainedHashTable {
 
-    use crate::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
     use crate::Chap47clean::ChainedHashTable::ChainedHashTable::*;
+    use crate::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
     use crate::Types::Types::*;
 
     /// Custom linked list node.
@@ -63,12 +63,12 @@ pub mod StructChainedHashTable {
             let mut current = &mut self.head;
             loop {
                 match current {
-                    None => return false,
-                    Some(node) if &node.key == key => {
+                    | None => return false,
+                    | Some(node) if &node.key == key => {
                         *current = node.next.take();
                         return true;
                     }
-                    Some(node) => {
+                    | Some(node) => {
                         current = &mut node.next;
                     }
                 }
@@ -77,16 +77,13 @@ pub mod StructChainedHashTable {
     }
 
     impl<Key, Value> Default for ChainList<Key, Value> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     /// Struct Chained Hash Table implementation.
     pub struct StructChainedHashTableStEph;
 
-    impl<Key: StT, Value: StT, Metrics: Default> 
-        ParaHashTableStEphTrait<Key, Value, ChainList<Key, Value>, Metrics> 
+    impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, ChainList<Key, Value>, Metrics>
         for StructChainedHashTableStEph
     {
         fn insert(table: &mut HashTable<Key, Value, ChainList<Key, Value>, Metrics>, key: Key, value: Value) {
@@ -102,8 +99,7 @@ pub mod StructChainedHashTable {
         }
     }
 
-    impl<Key: StT, Value: StT, Metrics: Default> 
-        ChainedHashTable<Key, Value, ChainList<Key, Value>, Metrics> 
+    impl<Key: StT, Value: StT, Metrics: Default> ChainedHashTable<Key, Value, ChainList<Key, Value>, Metrics>
         for StructChainedHashTableStEph
     {
         fn hash_index(table: &HashTable<Key, Value, ChainList<Key, Value>, Metrics>, _key: &Key) -> N {
@@ -113,4 +109,3 @@ pub mod StructChainedHashTable {
         }
     }
 }
-

@@ -16,29 +16,29 @@ pub mod AdjTableGraphStPer {
 
     pub trait AdjTableGraphStPerTrait<V: StT + Ord> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                                                     -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn from_table(table: OrderedTableStPer<V, AVLTreeSetStPer<V>>) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn num_vertices(&self) -> N;
+        fn num_vertices(&self)                                         -> N;
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1)
-        fn num_edges(&self) -> N;
+        fn num_edges(&self)                                            -> N;
         /// claude-4-sonet: Work Θ(|V|), Span Θ(|V|), Parallelism Θ(1)
-        fn vertices(&self) -> AVLTreeSetStPer<V>;
+        fn vertices(&self)                                             -> AVLTreeSetStPer<V>;
         /// claude-4-sonet: Work Θ(log |V| + log |E|), Span Θ(log |V| + log |E|), Parallelism Θ(1)
-        fn has_edge(&self, u: &V, v: &V) -> B;
+        fn has_edge(&self, u: &V, v: &V)                               -> B;
         /// claude-4-sonet: Work Θ(log |V|), Span Θ(log |V|), Parallelism Θ(1)
-        fn out_neighbors(&self, u: &V) -> AVLTreeSetStPer<V>;
+        fn out_neighbors(&self, u: &V)                                 -> AVLTreeSetStPer<V>;
         /// claude-4-sonet: Work Θ(log |V|), Span Θ(log |V|), Parallelism Θ(1)
-        fn out_degree(&self, u: &V) -> N;
+        fn out_degree(&self, u: &V)                                    -> N;
         /// claude-4-sonet: Work Θ(log |V|), Span Θ(log |V|), Parallelism Θ(1)
-        fn insert_vertex(&self, v: V) -> Self;
+        fn insert_vertex(&self, v: V)                                  -> Self;
         /// claude-4-sonet: Work Θ((|V| + |E|) log |V|), Span Θ((|V| + |E|) log |V|), Parallelism Θ(1)
-        fn delete_vertex(&self, v: &V) -> Self;
+        fn delete_vertex(&self, v: &V)                                 -> Self;
         /// claude-4-sonet: Work Θ(log |V| + log |E|), Span Θ(log |V| + log |E|), Parallelism Θ(1)
-        fn insert_edge(&self, u: V, v: V) -> Self;
+        fn insert_edge(&self, u: V, v: V)                              -> Self;
         /// claude-4-sonet: Work Θ(log |V| + log |E|), Span Θ(log |V| + log |E|), Parallelism Θ(1)
-        fn delete_edge(&self, u: &V, v: &V) -> Self;
+        fn delete_edge(&self, u: &V, v: &V)                            -> Self;
     }
 
     impl<V: StT + Ord> AdjTableGraphStPerTrait<V> for AdjTableGraphStPer<V> {

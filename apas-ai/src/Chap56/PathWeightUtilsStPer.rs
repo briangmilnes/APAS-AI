@@ -15,8 +15,8 @@ pub mod PathWeightUtilsStPer {
 
     use ordered_float::OrderedFloat;
 
-    use crate::Types::Types::*;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Types::Types::*;
 
     pub trait PathWeightUtilsStPerTrait {
         /// Claude Work: O(k), Span: O(k) where k is path length

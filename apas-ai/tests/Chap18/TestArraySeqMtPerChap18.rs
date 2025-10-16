@@ -13,9 +13,7 @@ fn square(i: N) -> N { i * i }
 fn add_100(i: N) -> N { i + 100 }
 fn const_42(_i: N) -> N { 42 }
 fn format_item(i: N) -> String { format!("item_{i}") }
-fn is_even_bool(i: N) -> B {
-    i % 2 == 0
-}
+fn is_even_bool(i: N) -> B { i % 2 == 0 }
 
 // Helper function for set equality comparison
 fn assert_set_eq<T: PartialEq + Debug>(actual: &[T], expected: &[T]) {
@@ -446,9 +444,7 @@ fn test_isSingleton_trait() {
     assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&single));
 
     let multiple = ArraySeqMtPerS::from_vec(vec![1, 2]);
-    assert!(
-        !<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&multiple)
-    );
+    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&multiple));
 
     let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
     assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&empty));

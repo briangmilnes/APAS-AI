@@ -16,21 +16,21 @@ pub mod AdjMatrixGraphMtEph {
 
     pub trait AdjMatrixGraphMtEphTrait {
         /// claude-4-sonet: Work Θ(n²), Span Θ(1)
-        fn new(n: N) -> Self;
+        fn new(n: N)                   -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn num_vertices(&self) -> N;
+        fn num_vertices(&self)         -> N;
         /// claude-4-sonet: Work Θ(n²), Span Θ(n²), Parallelism Θ(1)
-        fn num_edges(&self) -> N;
+        fn num_edges(&self)            -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn has_edge(&self, u: N, v: N) -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn out_neighbors(&self, u: N) -> ArraySeqMtEphS<N>;
+        fn out_neighbors(&self, u: N)  -> ArraySeqMtEphS<N>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn out_degree(&self, u: N) -> N;
+        fn out_degree(&self, u: N)     -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1) with locking
         fn set_edge(&self, u: N, v: N, exists: B);
         /// claude-4-sonet: Work Θ(n²), Span Θ(1)
-        fn complement(&self) -> Self;
+        fn complement(&self)           -> Self;
     }
 
     impl AdjMatrixGraphMtEphTrait for AdjMatrixGraphMtEph {

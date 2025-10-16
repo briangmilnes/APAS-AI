@@ -3,12 +3,12 @@
 
 pub mod SetStEph {
 
-    use std::collections::HashSet;
-    use std::fmt::{Debug, Display};
-    use std::hash::{Hash, Hasher};
     use std::collections::hash_set::Iter;
+    use std::collections::HashSet;
     use std::fmt::Formatter;
     use std::fmt::Result;
+    use std::fmt::{Debug, Display};
+    use std::hash::{Hash, Hasher};
 
     use crate::Types::Types::*;
 
@@ -20,25 +20,25 @@ pub mod SetStEph {
     pub trait SetStEphTrait<T: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> SetStEph<T>;
+        fn empty()                                                     -> SetStEph<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(x: T) -> SetStEph<T>;
+        fn singleton(x: T)                                             -> SetStEph<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                                                 -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn mem(&self, x: &T) -> B;
+        fn mem(&self, x: &T)                                           -> B;
         /// APAS: Work Θ(|a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn union(&self, other: &SetStEph<T>) -> SetStEph<T>;
+        fn union(&self, other: &SetStEph<T>)                           -> SetStEph<T>;
         /// APAS: Work Θ(|a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn intersection(&self, other: &SetStEph<T>) -> SetStEph<T>;
+        fn intersection(&self, other: &SetStEph<T>)                    -> SetStEph<T>;
         /// APAS: Work Θ(|parts| × |a|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|parts| × |a|²), Span Θ(1)
-        fn partition(&self, parts: &SetStEph<SetStEph<T>>) -> B;
+        fn partition(&self, parts: &SetStEph<SetStEph<T>>)             -> B;
 
         /// APAS: Work Θ(|a| × |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| × |b|), Span Θ(1)
@@ -46,14 +46,14 @@ pub mod SetStEph {
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn insert(&mut self, x: T) -> &mut Self;
+        fn insert(&mut self, x: T)                                     -> &mut Self;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn iter(&self) -> Iter<'_, T>;
+        fn iter(&self)                                                 -> Iter<'_, T>;
         /// APAS: Work Θ(|v|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
-        fn FromVec(v: Vec<T>) -> SetStEph<T>;
+        fn FromVec(v: Vec<T>)                                          -> SetStEph<T>;
     }
 
     impl<T: Eq + Hash> PartialEq for SetStEph<T> {
@@ -63,9 +63,7 @@ pub mod SetStEph {
     impl<T: Eq + Hash> Eq for SetStEph<T> {}
 
     impl<T: Eq + Hash + Debug> Debug for SetStEph<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            f.debug_set().entries(self.data.iter()).finish()
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { f.debug_set().entries(self.data.iter()).finish() }
     }
 
     impl<T: Eq + Hash + Display> Display for SetStEph<T> {
@@ -264,5 +262,4 @@ pub mod SetStEph {
             __s
         }};
     }
-
 }

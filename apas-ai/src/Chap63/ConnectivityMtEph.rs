@@ -26,11 +26,13 @@ pub mod ConnectivityMtEph {
     pub trait ConnectivityMtEphTrait {
         /// Count connected components using parallel star contraction
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
-        fn count_components_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> N;
+        fn count_components_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>)  -> N;
 
         /// Find connected components using parallel star contraction
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
-        fn connected_components_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> SetStEph<SetStEph<V>>;
+        fn connected_components_mt<V: StT + MtT + Hash + Ord + 'static>(
+            graph: &UnDirGraphMtEph<V>,
+        ) -> SetStEph<SetStEph<V>>;
 
         /// Count components using higher-order function approach
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
@@ -38,7 +40,9 @@ pub mod ConnectivityMtEph {
 
         /// Find components using higher-order function approach
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
-        fn connected_components_hof<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> SetStEph<SetStEph<V>>;
+        fn connected_components_hof<V: StT + MtT + Hash + Ord + 'static>(
+            graph: &UnDirGraphMtEph<V>,
+        ) -> SetStEph<SetStEph<V>>;
     }
 
     /// Algorithm 63.2: Count Connected Components (Parallel)

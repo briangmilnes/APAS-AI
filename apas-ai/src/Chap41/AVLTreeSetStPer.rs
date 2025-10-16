@@ -18,29 +18,29 @@ pub mod AVLTreeSetStPer {
 
     pub trait AVLTreeSetStPerTrait<T: StT + Ord> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                        -> N;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn to_seq(&self) -> AVLTreeSeqStPerS<T>;
+        fn to_seq(&self)                      -> AVLTreeSeqStPerS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                            -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(x: T) -> Self;
+        fn singleton(x: T)                    -> Self;
         /// claude-4-sonet: Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
         fn from_seq(seq: AVLTreeSeqStPerS<T>) -> Self;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn filter<F: PredSt<T>>(&self, f: F) -> Self;
+        fn filter<F: PredSt<T>>(&self, f: F)  -> Self;
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
-        fn intersection(&self, other: &Self) -> Self;
+        fn intersection(&self, other: &Self)  -> Self;
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
-        fn difference(&self, other: &Self) -> Self;
+        fn difference(&self, other: &Self)    -> Self;
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
-        fn union(&self, other: &Self) -> Self;
+        fn union(&self, other: &Self)         -> Self;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn find(&self, x: &T) -> B;
+        fn find(&self, x: &T)                 -> B;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn delete(&self, x: &T) -> Self;
+        fn delete(&self, x: &T)               -> Self;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn insert(&self, x: T) -> Self;
+        fn insert(&self, x: T)                -> Self;
     }
 
     impl<T: StT + Ord> AVLTreeSetStPerTrait<T> for AVLTreeSetStPer<T> {
@@ -221,5 +221,4 @@ pub mod AVLTreeSetStPer {
             __set
         }};
     }
-
 }

@@ -3,8 +3,8 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+use apas_ai::Types::Types::*;
 
 fn bench_arrayseqmteph_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySeqMtEph");

@@ -10,11 +10,11 @@ pub mod KruskalStEph {
 
     use ordered_float::OrderedFloat;
 
-    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFindStEph;
     use crate::SetLit;
+    use crate::Types::Types::*;
 
     pub trait KruskalStEphTrait {
         /// Kruskal's MST algorithm
@@ -106,7 +106,10 @@ pub mod KruskalStEph {
     /// Verify MST has correct number of edges
     ///
     /// A valid MST of n vertices should have n-1 edges.
-    pub fn verify_mst_size<V: StT + Hash + Ord>(n_vertices: N, mst_edges: &SetStEph<LabEdge<V, OrderedFloat<f64>>>) -> B {
+    pub fn verify_mst_size<V: StT + Hash + Ord>(
+        n_vertices: N,
+        mst_edges: &SetStEph<LabEdge<V, OrderedFloat<f64>>>,
+    ) -> B {
         let expected_edges = if n_vertices > 0 { n_vertices - 1 } else { 0 };
         mst_edges.size() == expected_edges
     }

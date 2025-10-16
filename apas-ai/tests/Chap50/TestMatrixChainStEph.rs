@@ -141,8 +141,14 @@ fn test_classic_example() {
 #[test]
 fn test_large_chain() {
     let pairs = vec![
-        Pair(10, 15), Pair(15, 20), Pair(20, 25), Pair(25, 30),
-        Pair(30, 35), Pair(35, 40), Pair(40, 45), Pair(45, 50)
+        Pair(10, 15),
+        Pair(15, 20),
+        Pair(20, 25),
+        Pair(25, 30),
+        Pair(30, 35),
+        Pair(35, 40),
+        Pair(40, 45),
+        Pair(45, 50),
     ];
     let mut chain = MatrixChainStEphS::from_dim_pairs(pairs);
     let cost = chain.optimal_cost();
@@ -153,13 +159,13 @@ fn test_large_chain() {
 fn test_memo_reuse() {
     let pairs = vec![Pair(10, 20), Pair(20, 30), Pair(30, 40)];
     let mut chain = MatrixChainStEphS::from_dim_pairs(pairs);
-    
+
     let cost1 = chain.optimal_cost();
     let memo_size1 = chain.memo_size();
-    
+
     let cost2 = chain.optimal_cost();
     let memo_size2 = chain.memo_size();
-    
+
     assert_eq!(cost1, cost2);
     assert_eq!(memo_size1, memo_size2);
 }
@@ -168,14 +174,14 @@ fn test_memo_reuse() {
 fn test_update_and_recompute() {
     let pairs = vec![Pair(10, 20), Pair(20, 30)];
     let mut chain = MatrixChainStEphS::from_dim_pairs(pairs);
-    
+
     let cost1 = chain.optimal_cost();
-    
+
     chain.update_dimension(0, 5, 10);
     chain.clear_memo();
-    
+
     let cost2 = chain.optimal_cost();
-    
+
     assert_ne!(cost1, cost2);
 }
 
@@ -183,7 +189,7 @@ fn test_update_and_recompute() {
 fn test_display_formatting() {
     let pairs = vec![Pair(10, 20), Pair(20, 30)];
     let chain = MatrixChainStEphS::from_dim_pairs(pairs);
-    
+
     let display = format!("{}", chain);
     assert!(display.contains("MatrixChain"));
 }
@@ -192,7 +198,7 @@ fn test_display_formatting() {
 fn test_debug_formatting() {
     let pairs = vec![Pair(10, 20), Pair(20, 30)];
     let chain = MatrixChainStEphS::from_dim_pairs(pairs);
-    
+
     let debug = format!("{:?}", chain);
     assert!(debug.contains("MatrixChainStEphS"));
 }
@@ -201,7 +207,7 @@ fn test_debug_formatting() {
 fn test_clone() {
     let pairs = vec![Pair(10, 20), Pair(20, 30)];
     let chain = MatrixChainStEphS::from_dim_pairs(pairs);
-    
+
     let cloned = chain.clone();
     assert_eq!(cloned.num_matrices(), 2);
 }
@@ -210,10 +216,10 @@ fn test_clone() {
 fn test_equality() {
     let pairs1 = vec![Pair(10, 20), Pair(20, 30)];
     let chain1 = MatrixChainStEphS::from_dim_pairs(pairs1);
-    
+
     let pairs2 = vec![Pair(10, 20), Pair(20, 30)];
     let chain2 = MatrixChainStEphS::from_dim_pairs(pairs2);
-    
+
     assert_eq!(chain1, chain2);
 }
 

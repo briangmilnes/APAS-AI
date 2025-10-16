@@ -3,8 +3,8 @@
 
 pub mod Example47_1 {
 
-    use crate::Types::Types::*;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Types::Types::*;
 
     pub trait Example47_1Trait {
         /// Example 47.1: String hash function demonstration

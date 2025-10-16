@@ -21,7 +21,7 @@ pub mod SubsetSumMtEph {
     /// Trait for parallel subset sum operations
     pub trait SubsetSumMtEphTrait<T: MtVal> {
         /// Create new subset sum solver
-        fn new() -> Self
+        fn new()                                      -> Self
         where
             T: Default;
 
@@ -30,15 +30,15 @@ pub mod SubsetSumMtEph {
 
         /// claude-4-sonet: Work Θ(k×|S|), Span Θ(|S|), Parallelism Θ(k)
         /// Solve subset sum problem with parallel DP where k=target, |S|=multiset size
-        fn subset_sum(&mut self, target: i32) -> bool
+        fn subset_sum(&mut self, target: i32)         -> bool
         where
             T: Into<i32> + Copy + Send + Sync + 'static;
 
         /// Get the multiset
-        fn multiset(&self) -> &ArraySeqMtEphS<T>;
+        fn multiset(&self)                            -> &ArraySeqMtEphS<T>;
 
         /// Get mutable multiset (ephemeral allows mutation)
-        fn multiset_mut(&mut self) -> &mut ArraySeqMtEphS<T>;
+        fn multiset_mut(&mut self)                    -> &mut ArraySeqMtEphS<T>;
 
         /// Set element at index (ephemeral mutation)
         fn set(&mut self, index: usize, value: T);
@@ -47,7 +47,7 @@ pub mod SubsetSumMtEph {
         fn clear_memo(&mut self);
 
         /// Get memoization table size
-        fn memo_size(&self) -> usize;
+        fn memo_size(&self)                           -> usize;
     }
 
     impl<T: MtVal> SubsetSumMtEphS<T> {
@@ -180,7 +180,6 @@ pub mod SubsetSumMtEph {
     }
 
     // Note: IntoIterator not implemented for ArraySeqMtEphS, so we don't provide it here
-
 }
 
 #[macro_export]

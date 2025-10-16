@@ -20,13 +20,13 @@ pub mod OrderedSetMtEph {
     pub trait OrderedSetMtEphTrait<T: MtKey> {
         // Base set operations (ADT 41.1) - ephemeral semantics with parallelism
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                        -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                            -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(x: T) -> Self;
+        fn singleton(x: T)                    -> Self;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn find(&self, x: &T) -> B;
+        fn find(&self, x: &T)                 -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn insert(&mut self, x: T);
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
@@ -40,33 +40,33 @@ pub mod OrderedSetMtEph {
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
         fn difference(&mut self, other: &Self);
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn to_seq(&self) -> AVLTreeSeqStPerS<T>;
+        fn to_seq(&self)                      -> AVLTreeSeqStPerS<T>;
         /// claude-4-sonet: Work Θ(n log n), Span Θ(log n), Parallelism Θ(n)
         fn from_seq(seq: AVLTreeSeqStPerS<T>) -> Self;
 
         // Ordering operations (ADT 43.1) - sequential (inherently sequential on trees)
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn first(&self) -> Option<T>;
+        fn first(&self)                       -> Option<T>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn last(&self) -> Option<T>;
+        fn last(&self)                        -> Option<T>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn previous(&self, k: &T) -> Option<T>;
+        fn previous(&self, k: &T)             -> Option<T>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn next(&self, k: &T) -> Option<T>;
+        fn next(&self, k: &T)                 -> Option<T>;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn split(&mut self, k: &T) -> (Self, B, Self)
+        fn split(&mut self, k: &T)            -> (Self, B, Self)
         where
             Self: Sized;
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
         fn join(&mut self, other: Self);
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn get_range(&self, k1: &T, k2: &T) -> Self;
+        fn get_range(&self, k1: &T, k2: &T)   -> Self;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn rank(&self, k: &T) -> N;
+        fn rank(&self, k: &T)                 -> N;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn select(&self, i: N) -> Option<T>;
+        fn select(&self, i: N)                -> Option<T>;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn split_rank(&mut self, i: N) -> (Self, Self)
+        fn split_rank(&mut self, i: N)        -> (Self, Self)
         where
             Self: Sized;
     }

@@ -3,12 +3,12 @@
 
 pub mod FlatHashTable {
 
-use std::fmt::{Debug, Display};
-use std::fmt::Formatter;
+    use std::fmt::Formatter;
+    use std::fmt::{Debug, Display};
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Types::Types::*;
     #[derive(Clone, Debug, PartialEq, Eq)]
     pub enum Entry<K: StT, V: StT> {
         Empty,
@@ -33,7 +33,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
         fn probe_hash(&self, key: &K, probe_index: N, table_size: N) -> N;
 
         /// Get description of probing strategy
-        fn strategy_name(&self) -> String;
+        fn strategy_name(&self)                                      -> String;
     }
 
     /// Data Structure 47.6: Parametric Flat Hash Table
@@ -71,14 +71,14 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
         /// Algorithm from Data Structure 47.6
         pub fn insert(&self, key: K, value: V) -> Self {
             let table_size = self.table.length();
-            
+
             // Preemptive resize check: if inserting a new key would exceed threshold, resize first
             let total_occupied = self.num_elements + self.num_deleted;
             if self.load_factor_manager.should_grow(total_occupied + 1, table_size) {
                 let new_size = self.load_factor_manager.grow_size(table_size);
                 return self.resize(new_size).insert(key, value);
             }
-            
+
             let mut probe_index = 0;
 
             // Find insertion position

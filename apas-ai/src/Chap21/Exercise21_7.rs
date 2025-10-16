@@ -9,11 +9,11 @@ pub mod Exercise21_7 {
     pub trait Exercise21_7Trait {
         /// Check if a number is even
         /// APAS: Work Θ(1), Span Θ(1)
-        fn is_even(x: &N) -> B;
+        fn is_even(x: &N)                                                         -> B;
 
         /// Check if a character is a vowel (case-insensitive)
         /// APAS: Work Θ(1), Span Θ(1)
-        fn is_vowel(c: &char) -> B;
+        fn is_vowel(c: &char)                                                     -> B;
 
         /// Exercise 21.7: Comprehension with conditionals
         /// APAS: Work Θ(|a|·|b|), Span Θ(lg |a|)

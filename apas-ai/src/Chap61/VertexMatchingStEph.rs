@@ -7,8 +7,8 @@
 
 pub mod VertexMatchingStEph {
 
-    use std::hash::Hash;
     use std::collections::HashMap;
+    use std::hash::Hash;
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
@@ -18,7 +18,7 @@ pub mod VertexMatchingStEph {
     pub trait VertexMatchingStEphTrait {
         /// Greedy vertex matching algorithm
         /// APAS: Work Θ(|E|), Span Θ(|E|)
-        fn greedy_matching<V: StT + Hash>(graph: &UnDirGraphStEph<V>) -> SetStEph<Edge<V>>;
+        fn greedy_matching<V: StT + Hash>(graph: &UnDirGraphStEph<V>)      -> SetStEph<Edge<V>>;
 
         /// Sequential version of parallel matching
         /// APAS: Work Θ(|E|), Span Θ(|E|)
@@ -106,10 +106,11 @@ pub mod VertexMatchingStEph {
 
                 // Check if adjacent edge is incident on u or v
                 if (graph.Incident(adj_edge, u) || graph.Incident(adj_edge, v))
-                    && edge_coins.get(adj_edge).copied().unwrap_or(false) {
-                        all_adjacent_tails = false;
-                        break;
-                    }
+                    && edge_coins.get(adj_edge).copied().unwrap_or(false)
+                {
+                    all_adjacent_tails = false;
+                    break;
+                }
             }
 
             if all_adjacent_tails {

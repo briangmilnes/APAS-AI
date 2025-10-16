@@ -3,11 +3,11 @@
 
 pub mod SeparateChaining {
 
-use std::fmt::{Debug, Display};
+    use std::fmt::{Debug, Display};
 
-use crate::Types::Types::*;
-use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Types::Types::*;
     #[derive(Clone, Debug)]
     pub struct SeparateChainingHashTable<K, V, H, E>
     where

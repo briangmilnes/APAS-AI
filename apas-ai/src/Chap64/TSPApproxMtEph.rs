@@ -12,10 +12,10 @@ pub mod TSPApproxMtEph {
 
     use ordered_float::OrderedFloat;
 
-    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
     use crate::SetLit;
+    use crate::Types::Types::*;
 
     pub trait TSPApproxMtEphTrait {
         /// Parallel Euler tour of a tree
@@ -166,7 +166,10 @@ pub mod TSPApproxMtEph {
     }
 
     /// Helper to get neighbors of a vertex
-    fn get_neighbors<V: StT + MtT + Hash + Ord>(graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>, v: &V) -> SetStEph<V> {
+    fn get_neighbors<V: StT + MtT + Hash + Ord>(
+        graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>,
+        v: &V,
+    ) -> SetStEph<V> {
         let mut neighbors = SetLit![];
         for edge in graph.labeled_edges().iter() {
             let LabEdge(a, b, _) = edge;

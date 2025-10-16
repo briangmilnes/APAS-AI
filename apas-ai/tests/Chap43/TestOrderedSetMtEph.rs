@@ -4,9 +4,9 @@
 use std::sync::Arc;
 use std::thread;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap43::OrderedSetMtEph::OrderedSetMtEph::*;
 use apas_ai::OrderedSetMtEphLit;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_empty() {

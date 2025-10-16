@@ -20,7 +20,7 @@ pub mod StackStEph {
     pub trait StackStEphTrait<T: StT> {
         /// Create new empty stack
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()           -> Self;
 
         /// Push element onto stack
         /// APAS: Work Θ(1), Span Θ(1)
@@ -28,7 +28,7 @@ pub mod StackStEph {
 
         /// Pop element from stack
         /// APAS: Work Θ(1), Span Θ(1)
-        fn pop(&mut self) -> Option<T>;
+        fn pop(&mut self)  -> Option<T>;
 
         /// Check if stack is empty
         /// APAS: Work Θ(1), Span Θ(1)

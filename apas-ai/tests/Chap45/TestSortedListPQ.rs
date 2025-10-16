@@ -479,7 +479,7 @@ fn test_insert_all() {
     let pq: SortedListPQ<i32> = SortedListPQTrait::empty();
     let seq = ArraySeqStPerS::from_vec(vec![5, 3, 7, 1]);
     let pq = pq.insert_all(&seq);
-    
+
     assert_eq!(pq.size(), 4);
     assert_eq!(pq.find_min(), Some(&1));
 }
@@ -490,7 +490,7 @@ fn test_extract_all_sorted() {
     pq = pq.insert(5);
     pq = pq.insert(2);
     pq = pq.insert(8);
-    
+
     let sorted = pq.extract_all_sorted();
     assert_eq!(sorted.length(), 3);
     assert_eq!(sorted.nth(0), &2);
@@ -502,13 +502,13 @@ fn test_extract_all_sorted() {
 fn test_find_max() {
     let pq: SortedListPQ<i32> = SortedListPQTrait::empty();
     assert_eq!(pq.find_max(), None);
-    
+
     let pq = pq.insert(5);
     assert_eq!(pq.find_max(), Some(&5));
-    
+
     let pq = pq.insert(10);
     assert_eq!(pq.find_max(), Some(&10));
-    
+
     let pq = pq.insert(3);
     assert_eq!(pq.find_max(), Some(&10));
 }
@@ -519,12 +519,12 @@ fn test_delete_max() {
     let (pq2, max) = pq.delete_max();
     assert_eq!(max, None);
     assert!(pq2.is_empty());
-    
+
     let mut pq: SortedListPQ<i32> = SortedListPQTrait::empty();
     pq = pq.insert(5);
     pq = pq.insert(10);
     pq = pq.insert(3);
-    
+
     let (pq2, max) = pq.delete_max();
     assert_eq!(max, Some(10));
     assert_eq!(pq2.size(), 2);
@@ -558,7 +558,7 @@ fn test_equality() {
     let pq1 = SortedListPQLit![1, 2, 3];
     let pq2 = SortedListPQLit![1, 2, 3];
     let pq3 = SortedListPQLit![1, 2, 4];
-    
+
     assert_eq!(pq1, pq2);
     assert_ne!(pq1, pq3);
 }
@@ -588,7 +588,7 @@ fn test_to_sorted_vec_helper() {
 fn test_is_sorted_helper() {
     let pq = SortedListPQLit![3, 1, 2];
     assert!(pq.is_sorted());
-    
+
     let pq_empty: SortedListPQ<i32> = SortedListPQTrait::empty();
     assert!(pq_empty.is_sorted());
 }

@@ -427,7 +427,7 @@ fn test_dirgraph_clone() {
     };
     let g = DirGraphStEph::FromSets(v, a);
     let g2 = g.clone();
-    
+
     assert_eq!(g.sizeV(), g2.sizeV());
     assert_eq!(g.sizeA(), g2.sizeA());
     assert!(g2.Neighbor(&1, &2));
@@ -443,10 +443,10 @@ fn test_dirgraph_debug_display() {
         s
     };
     let g = DirGraphStEph::FromSets(v, a);
-    
+
     let debug_str = format!("{:?}", g);
     assert!(!debug_str.is_empty());
-    
+
     let display_str = format!("{}", g);
     assert!(!display_str.is_empty());
 }
@@ -460,10 +460,10 @@ fn test_dirgraph_equality() {
         s
     };
     let g1 = DirGraphStEph::FromSets(v1.clone(), a1.clone());
-    
+
     let g2 = DirGraphStEph::FromSets(v1, a1);
     assert_eq!(g1, g2);
-    
+
     let v3: SetStEph<N> = SetLit![1, 2, 3];
     let g3 = DirGraphStEph::FromSets(v3, SetStEph::empty());
     assert_ne!(g1, g3);

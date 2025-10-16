@@ -25,18 +25,18 @@ pub mod FlatHashTable {
 
         fn lookup(&self, key: &Key) -> Option<Value> {
             match self {
-                FlatEntry::Occupied(k, v) if k == key => Some(v.clone()),
-                _ => None,
+                | FlatEntry::Occupied(k, v) if k == key => Some(v.clone()),
+                | _ => None,
             }
         }
 
         fn delete(&mut self, key: &Key) -> B {
             match self {
-                FlatEntry::Occupied(k, _) if k == key => {
+                | FlatEntry::Occupied(k, _) if k == key => {
                     *self = FlatEntry::Deleted;
                     true
                 }
-                _ => false,
+                | _ => false,
             }
         }
     }
@@ -79,4 +79,3 @@ pub mod FlatHashTable {
         }
     }
 }
-

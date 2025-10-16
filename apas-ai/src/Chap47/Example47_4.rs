@@ -3,31 +3,31 @@
 
 pub mod Example47_4 {
 
-    use crate::Types::Types::*;
+    use crate::ArraySeqStPerSLit;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap47::FlatHashTable::FlatHashTable::*;
     use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     use crate::Chap47::LinearProbing::LinearProbing::*;
     use crate::Chap47::ProbeSequenceExamples::ProbeSequenceExamples::*;
-    use crate::ArraySeqStPerSLit;
+    use crate::Types::Types::*;
 
     /// Trait for Example 47.4 operations
     pub trait Example47_4Trait {
         /// Example 47.4: Linear probing clustering demonstration
         /// APAS: Work Θ(k * m), Span Θ(k * m) where k is number of keys
         fn example_47_4_linear_probing_clustering() -> TextbookExampleResults;
-        
+
         /// Generate probe sequence for linear probing demonstration
         /// APAS: Work Θ(m), Span Θ(m) where m is table size
-        fn example_47_4_probe_sequence() -> ArraySeqStPerS<Pair<String, ArraySeqStPerS<N>>>;
-        
+        fn example_47_4_probe_sequence()            -> ArraySeqStPerS<Pair<String, ArraySeqStPerS<N>>>;
+
         /// Run comprehensive demonstration of Example 47.4
         /// APAS: Work Θ(k * m), Span Θ(k * m) where k is number of keys
-        fn run_example_47_4() -> String;
-        
+        fn run_example_47_4()                       -> String;
+
         /// Analyze primary clustering effects
         /// APAS: Work Θ(k * m), Span Θ(k * m) where k is number of keys
-        fn analyze_primary_clustering() -> String;
+        fn analyze_primary_clustering()             -> String;
     }
 
     /// Example 47.4: Linear probing clustering demonstration
@@ -100,34 +100,36 @@ pub mod Example47_4 {
     /// APAS: Work Θ(k * m), Span Θ(k * m) where k is number of keys
     pub fn run_example_47_4() -> String {
         let mut output = String::new();
-        
+
         output.push_str("=== Example 47.4: Linear Probing Primary Clustering ===\n\n");
         output.push_str("Hash Function: h(x) = (Σ pos(x[i])) mod m\n");
         output.push_str("Collision Resolution: Linear Probing h_i(k) = (h(k) + i) mod m\n\n");
-        
+
         let example_results = example_47_4_linear_probing_clustering();
         output.push_str(&format!("Table Size: {}\n", example_results.table_size));
         output.push_str(&format!("Test Keys: {:?}\n\n", example_results.keys));
-        
+
         output.push_str("Probe Sequences:\n");
         let probe_demo = example_47_4_probe_sequence();
         for i in 0..probe_demo.length() {
             let Pair(key, sequence) = probe_demo.nth(i);
             output.push_str(&format!("  '{}': ", key));
             for j in 0..sequence.length() {
-                if j > 0 { output.push_str(", "); }
+                if j > 0 {
+                    output.push_str(", ");
+                }
                 output.push_str(&format!("{}", sequence.nth(j)));
             }
             output.push_str("\n");
         }
         output.push_str("\n");
-        
+
         output.push_str(&analyze_primary_clustering());
-        
+
         output.push_str("\nPerformance Analysis:\n");
         output.push_str(&example_results.performance_summary);
         output.push_str("\n");
-        
+
         output
     }
 
@@ -136,20 +138,20 @@ pub mod Example47_4 {
     /// APAS: Work Θ(k * m), Span Θ(k * m) where k is number of keys
     pub fn analyze_primary_clustering() -> String {
         let mut output = String::new();
-        
+
         output.push_str("Primary Clustering Analysis:\n");
         output.push_str("- Linear probing uses h_i(k) = (h(k) + i) mod m\n");
         output.push_str("- Keys with same h(k) follow identical probe sequences\n");
         output.push_str("- Adjacent occupied slots create contiguous clusters\n");
         output.push_str("- Clusters grow as more keys hash to nearby positions\n");
         output.push_str("- Longer clusters → longer probe sequences → worse performance\n\n");
-        
+
         output.push_str("Load Factor Impact:\n");
         output.push_str("- α = 0.5: Average 1.5 probes for successful search\n");
         output.push_str("- α = 0.75: Average 2.5 probes for successful search\n");
         output.push_str("- α = 0.9: Average 5.5 probes for successful search\n");
         output.push_str("- Performance degrades rapidly as α approaches 1.0\n");
-        
+
         output
     }
 }

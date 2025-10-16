@@ -3,8 +3,8 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap18::ArraySeq::ArraySeq::*;
+use apas_ai::Types::Types::*;
 
 fn bench_arrayseq_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySeq");

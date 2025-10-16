@@ -150,23 +150,23 @@ fn test_copy_trait() {
 fn test_hash() {
     use std::collections::hash_map::DefaultHasher;
     use std::hash::{Hash, Hasher};
-    
+
     let p1 = Probability::new(0.5);
     let p2 = Probability::new(0.5);
-    
+
     let mut hasher1 = DefaultHasher::new();
     let mut hasher2 = DefaultHasher::new();
-    
+
     p1.hash(&mut hasher1);
     p2.hash(&mut hasher2);
-    
+
     assert_eq!(hasher1.finish(), hasher2.finish());
 }
 
 #[test]
 fn test_prob_macro() {
     use apas_ai::prob;
-    
+
     let p = prob!(0.75);
     assert_eq!(p.value(), 0.75);
 }

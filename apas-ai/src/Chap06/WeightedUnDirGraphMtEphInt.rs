@@ -133,5 +133,4 @@ pub mod WeightedUnDirGraphMtEphInt {
             $crate::Chap06::WeightedUnDirGraphMtEphInt::WeightedUnDirGraphMtEphInt::WeightedUnDirGraphMtEphInt::from_weighted_edges(vertices, edges)
         }};
     }
-
 }

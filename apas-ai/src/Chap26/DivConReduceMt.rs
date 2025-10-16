@@ -18,25 +18,25 @@ pub mod DivConReduceMt {
         /// Pattern: reduce (+) 0 identity (parallel)
         /// APAS: Work Θ(n), Span Θ(log n)
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn sum_parallel(a: &ArraySeqMtPerS<N>) -> N;
+        fn sum_parallel(a: &ArraySeqMtPerS<N>)         -> N;
 
         /// Product of all elements via parallel reduce.
         /// Pattern: reduce (*) 1 identity (parallel)
         /// APAS: Work Θ(n), Span Θ(log n)
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn product_parallel(a: &ArraySeqMtPerS<N>) -> N;
+        fn product_parallel(a: &ArraySeqMtPerS<N>)     -> N;
 
         /// Logical OR of all elements via parallel reduce.
         /// Pattern: reduce (||) false identity (parallel)
         /// APAS: Work Θ(n), Span Θ(log n)
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn any_parallel(a: &ArraySeqMtPerS<B>) -> B;
+        fn any_parallel(a: &ArraySeqMtPerS<B>)         -> B;
 
         /// Logical AND of all elements via parallel reduce.
         /// Pattern: reduce (&&) true identity (parallel)
         /// APAS: Work Θ(n), Span Θ(log n)
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn all_parallel(a: &ArraySeqMtPerS<B>) -> B;
+        fn all_parallel(a: &ArraySeqMtPerS<B>)         -> B;
     }
 
     impl DivConReduceMtTrait for ArraySeqMtPerS<N> {

@@ -20,7 +20,7 @@ pub mod SubsetSumMtPer {
     /// Trait for parallel subset sum operations
     pub trait SubsetSumMtPerTrait<T: MtVal> {
         /// Create new subset sum solver
-        fn new() -> Self
+        fn new()                                      -> Self
         where
             T: Default;
 
@@ -29,15 +29,15 @@ pub mod SubsetSumMtPer {
 
         /// claude-4-sonet: Work Θ(k×|S|), Span Θ(|S|), Parallelism Θ(k)
         /// Solve subset sum problem with parallel DP where k=target, |S|=multiset size
-        fn subset_sum(&self, target: i32) -> bool
+        fn subset_sum(&self, target: i32)             -> bool
         where
             T: Into<i32> + Copy + Send + Sync + 'static;
 
         /// Get the multiset
-        fn multiset(&self) -> &ArraySeqMtPerS<T>;
+        fn multiset(&self)                            -> &ArraySeqMtPerS<T>;
 
         /// Get memoization table size
-        fn memo_size(&self) -> usize;
+        fn memo_size(&self)                           -> usize;
     }
 
     impl<T: MtVal> SubsetSumMtPerS<T> {
@@ -156,7 +156,6 @@ pub mod SubsetSumMtPer {
     }
 
     // Note: IntoIterator not implemented for ArraySeqMtPerS, so we don't provide it here
-
 }
 
 #[macro_export]

@@ -1,10 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use std::collections::LinkedList;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap47clean::ChainedHashTable::ChainedHashTable::*;
 use apas_ai::Chap47clean::LinkedListChainedHashTableStEph::LinkedListChainedHashTableStEph::*;
 use apas_ai::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
+use apas_ai::Types::Types::*;
 
 type LLChainTable = HashTable<i32, String, LinkedList<(i32, String)>, ()>;
 

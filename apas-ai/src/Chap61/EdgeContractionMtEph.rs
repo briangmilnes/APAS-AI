@@ -6,9 +6,9 @@
 
 pub mod EdgeContractionMtEph {
 
+    use std::collections::HashMap;
     use std::hash::Hash;
     use std::sync::Arc;
-    use std::collections::HashMap;
     use std::vec::Vec;
 
     use crate::Chap05::SetStEph::SetStEph::*;

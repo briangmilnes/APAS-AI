@@ -7,8 +7,8 @@
 pub mod TopDownDPStPer {
 
     use std::collections::HashMap;
-    use std::fmt::{Debug, Display};
     use std::fmt::Formatter;
+    use std::fmt::{Debug, Display};
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
@@ -17,7 +17,7 @@ pub mod TopDownDPStPer {
     pub trait TopDownDPStPerTrait<T: StT> {
         /// Create new top-down DP solver
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                     -> Self;
 
         /// Solve DP problem with memoization
         /// APAS: Work O(n²), Span O(n²)

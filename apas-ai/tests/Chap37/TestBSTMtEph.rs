@@ -528,9 +528,7 @@ fn mt_concurrent_avl_bst_operations() {
         assert!(size >= 10); // At least the thread's own insertions
         assert!(height > 0); // Tree has some height
                              // Min/max depend on insertion order across threads
-        println!(
-            "Thread {thread_id}: size={size}, height={height}, min={min:?}, max={max:?}"
-        );
+        println!("Thread {thread_id}: size={size}, height={height}, min={min:?}, max={max:?}");
     }
 }
 
@@ -666,9 +664,7 @@ fn mt_concurrent_treap_operations() {
     for (i, (size, height, min, max)) in results.iter().enumerate() {
         assert!(*size >= 20); // At least the thread's own insertions
         assert!(*height > 0);
-        println!(
-            "Thread {i}: size={size}, height={height}, min={min:?}, max={max:?}"
-        );
+        println!("Thread {i}: size={size}, height={height}, min={min:?}, max={max:?}");
     }
 }
 

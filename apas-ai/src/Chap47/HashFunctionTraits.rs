@@ -3,21 +3,21 @@
 
 pub mod HashFunctionTraits {
 
-use std::collections::hash_map::DefaultHasher;
-use std::fmt::{Debug, Display};
-use std::hash::{Hash, Hasher};
-use std::fmt::Formatter;
-use std::marker::PhantomData;
-use std::time::Duration;
+    use std::collections::hash_map::DefaultHasher;
+    use std::fmt::Formatter;
+    use std::fmt::{Debug, Display};
+    use std::hash::{Hash, Hasher};
+    use std::marker::PhantomData;
+    use std::time::Duration;
 
-use crate::Types::Types::*;
+    use crate::Types::Types::*;
     pub trait HashFunction<K> {
         /// claude-4-sonet: Work Θ(|key|), Span Θ(|key|), Parallelism Θ(1)
         /// Maps a key to a hash code in range [0, table_size)
         fn hash(&self, key: &K, table_size: N) -> N;
 
         /// Get a description of this hash function
-        fn description(&self) -> String;
+        fn description(&self)                  -> String;
     }
 
     /// Trait for key equality testing
@@ -37,7 +37,7 @@ use crate::Types::Types::*;
         fn generate(&self, seed: u64) -> Self::HashFn;
 
         /// Get the family description
-        fn family_description(&self) -> String;
+        fn family_description(&self)  -> String;
     }
 
     /// Simple hash function using Rust's built-in hasher
@@ -161,9 +161,7 @@ use crate::Types::Types::*;
     }
 
     impl Default for UniversalIntegerHashFamily {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     impl UniversalIntegerHashFamily {
@@ -413,11 +411,7 @@ use crate::Types::Types::*;
         }
 
         /// Measure hash function performance
-        pub fn benchmark_hash_function<K, H: HashFunction<K>>(
-            hash_fn: &H,
-            keys: &[K],
-            table_size: N,
-        ) -> Duration {
+        pub fn benchmark_hash_function<K, H: HashFunction<K>>(hash_fn: &H, keys: &[K], table_size: N) -> Duration {
             let start = std::time::Instant::now();
             for key in keys {
                 let _ = hash_fn.hash(key, table_size);

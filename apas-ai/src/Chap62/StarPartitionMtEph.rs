@@ -10,19 +10,21 @@ pub mod StarPartitionMtEph {
     use std::hash::Hash;
     use std::vec::Vec;
 
-    use rand::*;
     use rand::rngs::StdRng;
+    use rand::*;
 
-    use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::SetLit;
+    use crate::Types::Types::*;
 
     pub trait StarPartitionMtEphTrait {
         /// Parallel star partition using randomized coin flips
         /// APAS: Work O(|V| + |E|), Span O(lg |V|)
-        fn parallel_star_partition<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> SetStEph<SetStEph<V>>;
+        fn parallel_star_partition<V: StT + MtT + Hash + Ord + 'static>(
+            graph: &UnDirGraphMtEph<V>,
+        ) -> SetStEph<SetStEph<V>>;
     }
 
     /// Algorithm 62.3: Parallel Star Partition
@@ -88,9 +90,8 @@ pub mod StarPartitionMtEph {
         let mut base_seq = <ArraySeqStEphS<V> as ArraySeqStEphTrait<V>>::tabulate(&|i| vertices_vec[i].clone(), n);
 
         // Phase 4: Convert th_edges to ArraySeqStEphS<Pair<usize, V>>
-        let updates_seq = ArraySeqStEphS::from_vec(
-            th_edges.into_iter().map(|(idx, vertex)| Pair(idx, vertex)).collect()
-        );
+        let updates_seq =
+            ArraySeqStEphS::from_vec(th_edges.into_iter().map(|(idx, vertex)| Pair(idx, vertex)).collect());
 
         // Phase 5: Apply inject to get partition map P
         let p_seq = base_seq.inject(&updates_seq);

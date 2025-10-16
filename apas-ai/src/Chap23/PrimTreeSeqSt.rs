@@ -15,31 +15,31 @@ pub mod PrimTreeSeqSt {
     pub trait PrimTreeSeqStTrait<T: StT> {
         /// Creates an empty sequence
         /// APAS: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                          -> Self;
 
         /// Builds a sequence containing a single element
         /// APAS: Work Θ(1), Span Θ(1)
-        fn singleton(value: T) -> Self;
+        fn singleton(value: T)              -> Self;
 
         /// Constructs a sequence from the provided vector
         /// APAS: Work Θ(1), Span Θ(1)
-        fn from_vec(vec: Vec<T>) -> Self;
+        fn from_vec(vec: Vec<T>)            -> Self;
 
         /// Converts this sequence into its backing vector
         /// APAS: Work Θ(1), Span Θ(1)
-        fn into_vec(self) -> Vec<T>;
+        fn into_vec(self)                   -> Vec<T>;
 
         /// Provides a shared view of the underlying elements
         /// APAS: Work Θ(1), Span Θ(1)
-        fn as_slice(&self) -> &[T];
+        fn as_slice(&self)                  -> &[T];
 
         /// Returns the number of elements in the sequence
         /// APAS: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N;
+        fn length(&self)                    -> N;
 
         /// Exposes the internal structure as Zero, One, or Two parts
         /// APAS: Work Θ(n), Span Θ(n)
-        fn expose(&self) -> PrimTreeSeqStTree<T>;
+        fn expose(&self)                    -> PrimTreeSeqStTree<T>;
 
         /// Reassembles a primitive tree sequence from an exposed tree
         /// APAS: Work Θ(n), Span Θ(n)

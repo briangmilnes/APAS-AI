@@ -3,9 +3,9 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::AVLTreeSeqStEphLit;
 use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
+use apas_ai::Types::Types::*;
 
 fn bench_avl_eph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchAVLTreeSeqEph");

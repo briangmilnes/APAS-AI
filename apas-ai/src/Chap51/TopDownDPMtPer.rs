@@ -7,10 +7,10 @@
 pub mod TopDownDPMtPer {
 
     use std::collections::HashMap;
+    use std::fmt::Formatter;
     use std::fmt::{Debug, Display};
     use std::sync::{Arc, Mutex};
     use std::thread;
-    use std::fmt::Formatter;
 
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use crate::Types::Types::*;
@@ -19,7 +19,7 @@ pub mod TopDownDPMtPer {
     pub trait TopDownDPMtPerTrait<T: MtVal> {
         /// Create new top-down DP solver
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                     -> Self;
 
         /// Solve DP problem with memoization
         /// APAS: Work O(n²), Span O(lg n)

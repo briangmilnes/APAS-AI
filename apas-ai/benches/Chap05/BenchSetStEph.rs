@@ -3,9 +3,9 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 fn bench_set_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("SetStEph");

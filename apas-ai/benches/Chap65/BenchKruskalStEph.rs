@@ -6,11 +6,11 @@ use std::time::Duration;
 use criterion::*;
 use ordered_float::OrderedFloat;
 
-use apas_ai::Types::Types::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
 use apas_ai::Chap65::KruskalStEph::KruskalStEph::*;
 use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 fn create_complete_graph(n: N) -> LabUnDirGraphStEph<N, OrderedFloat<f64>> {
     let mut vertices = SetLit![];

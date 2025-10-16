@@ -20,35 +20,35 @@ pub mod OrderedTableStEph {
     pub trait OrderedTableStEphTrait<K: StT + Ord, V: StT> {
         // Base table operations (ADT 42.1) - ephemeral semantics
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                          -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                              -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(k: K, v: V) -> Self;
+        fn singleton(k: K, v: V)                -> Self;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn find(&self, k: &K) -> Option<V>;
+        fn find(&self, k: &K)                   -> Option<V>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn lookup(&self, k: &K) -> Option<V>; // Alias for find
+        fn lookup(&self, k: &K)                 -> Option<V>; // Alias for find
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self) -> B;
+        fn is_empty(&self)                      -> B;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn insert<F: Fn(&V, &V) -> V>(&mut self, k: K, v: V, combine: F);
+        fn insert<F: Fn(&V, &V)                 -> V>(&mut self, k: K, v: V, combine: F);
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn delete(&mut self, k: &K) -> Option<V>;
+        fn delete(&mut self, k: &K)             -> Option<V>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn domain(&self) -> ArraySetStEph<K>;
+        fn domain(&self)                        -> ArraySetStEph<K>;
         /// claude-4-sonet: Work Θ(|keys| × W(f)), Span Θ(|keys| × S(f)), Parallelism Θ(1)
-        fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self;
+        fn tabulate<F: Fn(&K)                   -> V>(f: F, keys: &ArraySetStEph<K>) -> Self;
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(n × S(f)), Parallelism Θ(1)
-        fn map<F: Fn(&K, &V) -> V>(&self, f: F) -> Self;
+        fn map<F: Fn(&K, &V)                    -> V>(&self, f: F) -> Self;
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(n × S(f)), Parallelism Θ(1)
-        fn filter<F: Fn(&K, &V) -> B>(&self, f: F) -> Self;
+        fn filter<F: Fn(&K, &V)                 -> B>(&self, f: F) -> Self;
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(n × S(f)), Parallelism Θ(1)
-        fn reduce<R, F: Fn(R, &K, &V) -> R>(&self, init: R, f: F) -> R;
+        fn reduce<R, F: Fn(R, &K, &V)           -> R>(&self, init: R, f: F) -> R;
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
-        fn intersection<F: Fn(&V, &V) -> V>(&mut self, other: &Self, f: F);
+        fn intersection<F: Fn(&V, &V)           -> V>(&mut self, other: &Self, f: F);
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
-        fn union<F: Fn(&V, &V) -> V>(&mut self, other: &Self, f: F);
+        fn union<F: Fn(&V, &V)                  -> V>(&mut self, other: &Self, f: F);
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
         fn difference(&mut self, other: &Self);
         /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
@@ -56,27 +56,27 @@ pub mod OrderedTableStEph {
         /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
         fn subtract(&mut self, keys: &ArraySetStEph<K>);
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>>;
+        fn collect(&self)                       -> AVLTreeSeqStPerS<Pair<K, V>>;
 
         // Key ordering operations (ADT 43.1 adapted for tables)
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn first_key(&self) -> Option<K>;
+        fn first_key(&self)                     -> Option<K>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn last_key(&self) -> Option<K>;
+        fn last_key(&self)                      -> Option<K>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn previous_key(&self, k: &K) -> Option<K>;
+        fn previous_key(&self, k: &K)           -> Option<K>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn next_key(&self, k: &K) -> Option<K>;
+        fn next_key(&self, k: &K)               -> Option<K>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn split_key(&mut self, k: &K) -> (Self, Self)
+        fn split_key(&mut self, k: &K)          -> (Self, Self)
         where
             Self: Sized;
         /// claude-4-sonet: Work Θ(log(|self| + |other|)), Span Θ(log(|self| + |other|)), Parallelism Θ(1)
         fn join_key(&mut self, other: Self);
         fn get_key_range(&self, k1: &K, k2: &K) -> Self;
-        fn rank_key(&self, k: &K) -> N;
-        fn select_key(&self, i: N) -> Option<K>;
-        fn split_rank_key(&mut self, i: N) -> (Self, Self)
+        fn rank_key(&self, k: &K)               -> N;
+        fn select_key(&self, i: N)              -> Option<K>;
+        fn split_rank_key(&mut self, i: N)      -> (Self, Self)
         where
             Self: Sized;
     }

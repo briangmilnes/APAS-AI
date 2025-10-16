@@ -4,13 +4,13 @@
 
 pub mod AdvancedQuadraticProbing {
 
-use std::fmt::{Debug, Display};
-use std::fmt::Formatter;
-use std::marker::PhantomData;
+    use std::fmt::Formatter;
+    use std::fmt::{Debug, Display};
+    use std::marker::PhantomData;
 
-use crate::Types::Types::*;
-use crate::Chap47::FlatHashTable::FlatHashTable::*;
-use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Chap47::FlatHashTable::FlatHashTable::*;
+    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
+    use crate::Types::Types::*;
     #[derive(Clone, Debug)]
     pub struct AdvancedQuadraticProbingStrategy<K: StT, H: HashFunClone<K>> {
         base_hash: H,
@@ -187,7 +187,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             let table_size_is_prime = PrimeValidator::is_prime(size);
 
             // Analyze collision chains by tracking probe sequences
-            
+
             let mut probe_sequences = std::collections::HashSet::new();
 
             // Simulate probe sequences for different keys to measure diversity

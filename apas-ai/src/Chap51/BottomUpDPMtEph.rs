@@ -7,10 +7,10 @@
 pub mod BottomUpDPMtEph {
 
     use std::cmp::{max, min};
+    use std::fmt::Formatter;
     use std::fmt::{Debug, Display};
     use std::sync::{Arc, Mutex};
     use std::thread;
-    use std::fmt::Formatter;
 
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
@@ -19,7 +19,7 @@ pub mod BottomUpDPMtEph {
     pub trait BottomUpDPMtEphTrait<T: MtVal> {
         /// Create new bottom-up DP solver
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                     -> Self;
 
         /// Solve DP problem
         /// APAS: Work O(n³), Span O(n)
@@ -90,7 +90,11 @@ pub mod BottomUpDPMtEph {
             let positions: Vec<(usize, usize)> = (start..=end)
                 .filter_map(|i| {
                     let j = k - i;
-                    if j > 0 && j <= t_len { Some((i, j)) } else { None }
+                    if j > 0 && j <= t_len {
+                        Some((i, j))
+                    } else {
+                        None
+                    }
                 })
                 .collect();
 

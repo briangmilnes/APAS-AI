@@ -25,9 +25,10 @@ pub mod TopoSortStEph {
 
         for start in 0..n {
             if !*visited.nth(start)
-                && !dfs_finish_order_cycle_detect(graph, &mut visited, &mut rec_stack, &mut result, start) {
-                    return None; // Cycle detected
-                }
+                && !dfs_finish_order_cycle_detect(graph, &mut visited, &mut rec_stack, &mut result, start)
+            {
+                return None; // Cycle detected
+            }
         }
         Some(AVLTreeSeqStEphS::from_vec(result))
     }
