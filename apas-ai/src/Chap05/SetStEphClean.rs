@@ -33,49 +33,6 @@ pub mod SetStEphClean {
         fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>> where T: Clone;
     }
 
-    impl<T: Eq + Hash> PartialEq for Set<T> {
-        fn eq(&self, other: &Self) -> bool { self.data == other.data }
-    }
-
-    impl<T: Eq + Hash> Eq for Set<T> {}
-
-    impl<T: Eq + Hash + Debug> Debug for Set<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            f.debug_set().entries(self.data.iter()).finish()
-        }
-    }
-
-    impl<T: Eq + Hash + Display> Display for Set<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "{{")?;
-            let mut first = true;
-            for x in self.data.iter() {
-                if !first {
-                    write!(f, ", ")?;
-                }
-                write!(f, "{}", x)?;
-                first = false;
-            }
-            write!(f, "}}")
-        }
-    }
-
-    impl<T: Eq + Hash> Hash for Set<T> {
-        fn hash<H: Hasher>(&self, state: &mut H) {
-            use std::collections::hash_map::DefaultHasher;
-            let mut element_hashes: Vec<u64> = Vec::with_capacity(self.data.len());
-            for e in self.data.iter() {
-                let mut h = DefaultHasher::new();
-                e.hash(&mut h);
-                element_hashes.push(h.finish());
-            }
-            element_hashes.sort_unstable();
-            for hash in element_hashes {
-                hash.hash(state);
-            }
-        }
-    }
-
     impl<T: StT + Hash> SetStEphCleanTrait<T> for Set<T> {
         // One-line implementations (≤120 chars)
         fn empty()                                -> Self { Set { data: HashSet::new() } }
@@ -140,6 +97,49 @@ pub mod SetStEphClean {
                 }
             }
             Set { data: out }
+        }
+    }
+
+    impl<T: Eq + Hash> PartialEq for Set<T> {
+        fn eq(&self, other: &Self) -> bool { self.data == other.data }
+    }
+
+    impl<T: Eq + Hash> Eq for Set<T> {}
+
+    impl<T: Eq + Hash + Debug> Debug for Set<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            f.debug_set().entries(self.data.iter()).finish()
+        }
+    }
+
+    impl<T: Eq + Hash + Display> Display for Set<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            write!(f, "{{")?;
+            let mut first = true;
+            for x in self.data.iter() {
+                if !first {
+                    write!(f, ", ")?;
+                }
+                write!(f, "{}", x)?;
+                first = false;
+            }
+            write!(f, "}}")
+        }
+    }
+
+    impl<T: Eq + Hash> Hash for Set<T> {
+        fn hash<H: Hasher>(&self, state: &mut H) {
+            use std::collections::hash_map::DefaultHasher;
+            let mut element_hashes: Vec<u64> = Vec::with_capacity(self.data.len());
+            for e in self.data.iter() {
+                let mut h = DefaultHasher::new();
+                e.hash(&mut h);
+                element_hashes.push(h.finish());
+            }
+            element_hashes.sort_unstable();
+            for hash in element_hashes {
+                hash.hash(state);
+            }
         }
     }
 }

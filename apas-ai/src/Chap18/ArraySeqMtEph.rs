@@ -165,20 +165,6 @@ pub mod ArraySeqMtEph {
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T>;
     }
 
-    impl<T: StTInMtT> Display for ArraySeqMtEphS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            write!(f, "ArraySeqMtEphS[")?;
-            let guard = self.data.lock().unwrap();
-            for (i, item) in guard.iter().enumerate() {
-                if i > 0 {
-                    write!(f, ", ")?;
-                }
-                write!(f, "{item}")?;
-            }
-            write!(f, "]")
-        }
-    }
-
     impl<T: StTInMtT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
         fn new(length: N, init_value: T) -> ArraySeqMtEphS<T> { ArraySeqMtEphS::new(length, init_value) }
 
@@ -373,6 +359,20 @@ pub mod ArraySeqMtEph {
                 let _ = out.set(idx, val);
             }
             out
+        }
+    }
+
+    impl<T: StTInMtT> Display for ArraySeqMtEphS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "ArraySeqMtEphS[")?;
+            let guard = self.data.lock().unwrap();
+            for (i, item) in guard.iter().enumerate() {
+                if i > 0 {
+                    write!(f, ", ")?;
+                }
+                write!(f, "{item}")?;
+            }
+            write!(f, "]")
         }
     }
 

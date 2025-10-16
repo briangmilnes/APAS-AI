@@ -133,24 +133,6 @@ pub mod MathSeq {
         }
     }
 
-    impl<'a, T: StT> IntoIterator for &'a MathSeqS<T> {
-        type Item = &'a T;
-        type IntoIter = Iter<'a, T>;
-        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
-    }
-
-    impl<'a, T: StT> IntoIterator for &'a mut MathSeqS<T> {
-        type Item = &'a mut T;
-        type IntoIter = IterMut<'a, T>;
-        fn into_iter(self) -> Self::IntoIter { self.data.iter_mut() }
-    }
-
-    impl<T: StT> IntoIterator for MathSeqS<T> {
-        type Item = T;
-        type IntoIter = IntoIter<T>;
-        fn into_iter(self) -> Self::IntoIter { self.data.into_iter() }
-    }
-
     impl<T: StT + Hash> MathSeqTrait<T> for MathSeqS<T> {
         fn new(length: N, init_value: T) -> Self {
             MathSeqS {
@@ -234,6 +216,24 @@ pub mod MathSeq {
             }
             order.into_iter().map(|x| (*counts.get(&x).unwrap(), x)).collect()
         }
+    }
+
+    impl<'a, T: StT> IntoIterator for &'a MathSeqS<T> {
+        type Item = &'a T;
+        type IntoIter = Iter<'a, T>;
+        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
+    }
+
+    impl<'a, T: StT> IntoIterator for &'a mut MathSeqS<T> {
+        type Item = &'a mut T;
+        type IntoIter = IterMut<'a, T>;
+        fn into_iter(self) -> Self::IntoIter { self.data.iter_mut() }
+    }
+
+    impl<T: StT> IntoIterator for MathSeqS<T> {
+        type Item = T;
+        type IntoIter = IntoIter<T>;
+        fn into_iter(self) -> Self::IntoIter { self.data.into_iter() }
     }
 
     #[macro_export]

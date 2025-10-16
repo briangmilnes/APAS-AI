@@ -22,12 +22,6 @@ pub mod StructChainedHashTable {
         pub head: Option<Box<Node<Key, Value>>>,
     }
 
-    impl<Key, Value> Default for ChainList<Key, Value> {
-        fn default() -> Self {
-            Self::new()
-        }
-    }
-
     impl<Key, Value> ChainList<Key, Value> {
         pub fn new() -> Self { ChainList { head: None } }
     }
@@ -79,6 +73,12 @@ pub mod StructChainedHashTable {
                     }
                 }
             }
+        }
+    }
+
+    impl<Key, Value> Default for ChainList<Key, Value> {
+        fn default() -> Self {
+            Self::new()
         }
     }
 

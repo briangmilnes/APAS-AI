@@ -55,20 +55,6 @@ pub mod RelationStEph {
         pub fn FromVec(v: Vec<Pair<A, B>>) -> Relation<A, B> { Relation { pairs: Set::FromVec(v) } }
     }
 
-    impl<A: StT + Hash, B: StT + Hash> PartialEq for Relation<A, B> {
-        fn eq(&self, other: &Self) -> bool { self.pairs == other.pairs }
-    }
-
-    impl<A: StT + Hash, B: StT + Hash> Eq for Relation<A, B> {}
-
-    impl<A: StT + Hash, B: StT + Hash> Debug for Relation<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Debug::fmt(&self.pairs, f) }
-    }
-
-    impl<A: StT + Hash, B: StT + Hash> Display for Relation<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Display::fmt(&self.pairs, f) }
-    }
-
     impl<X: StT + Hash, Y: StT + Hash> RelationStEphTrait<X, Y> for Relation<X, Y> {
         fn empty() -> Relation<X, Y> { Relation { pairs: SetLit![] } }
 
@@ -107,6 +93,20 @@ pub mod RelationStEph {
         }
 
         fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.pairs.iter() }
+    }
+
+    impl<A: StT + Hash, B: StT + Hash> PartialEq for Relation<A, B> {
+        fn eq(&self, other: &Self) -> bool { self.pairs == other.pairs }
+    }
+
+    impl<A: StT + Hash, B: StT + Hash> Eq for Relation<A, B> {}
+
+    impl<A: StT + Hash, B: StT + Hash> Debug for Relation<A, B> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Debug::fmt(&self.pairs, f) }
+    }
+
+    impl<A: StT + Hash, B: StT + Hash> Display for Relation<A, B> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Display::fmt(&self.pairs, f) }
     }
 
     #[macro_export]

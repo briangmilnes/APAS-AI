@@ -285,7 +285,7 @@ This implementation accompanies *"Algorithms: Parallel and Sequential"*. All rig
 This project implements algorithms and data structures from:
 
 **"Algorithms: Parallel and Sequential"**  
-by Umut A. Acar, Guy E. Blelloch, and Robert Harper Milnes
+by Umut A. Acar, Guy E. Blelloch. 
 
 The implementations aim to be faithful to the textbook while leveraging Rust's type system and performance characteristics.
 

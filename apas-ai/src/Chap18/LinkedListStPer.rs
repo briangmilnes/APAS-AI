@@ -171,62 +171,6 @@ pub mod LinkedListStPer {
         }
     }
 
-    impl<T: StT> Display for LinkedListStPerS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            write!(f, "[")?;
-            let mut first = true;
-            let mut current = self.head.as_deref();
-            while let Some(node) = current {
-                if !first {
-                    write!(f, ", ")?;
-                } else {
-                    first = false;
-                }
-                write!(f, "{}", node.value)?;
-                current = node.next.as_deref();
-            }
-            write!(f, "]")
-        }
-    }
-
-    impl<T: StT> Debug for LinkedListStPerS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            write!(f, "[")?;
-            let mut first = true;
-            let mut current = self.head.as_deref();
-            while let Some(node) = current {
-                if !first {
-                    write!(f, ", ")?;
-                } else {
-                    first = false;
-                }
-                write!(f, "{}", node.value)?;
-                current = node.next.as_deref();
-            }
-            write!(f, "]")
-        }
-    }
-
-    impl<T: StT> PartialEq for LinkedListStPerS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            if self.len != other.len {
-                return false;
-            }
-            let mut left = self.head.as_deref();
-            let mut right = other.head.as_deref();
-            while let (Some(a), Some(b)) = (left, right) {
-                if a.value != b.value {
-                    return false;
-                }
-                left = a.next.as_deref();
-                right = b.next.as_deref();
-            }
-            true
-        }
-    }
-
-    impl<T: StT> Eq for LinkedListStPerS<T> {}
-
     impl<T: StT> LinkedListStPerTrait<T> for LinkedListStPerS<T> {
         fn new(length: N, init_value: T) -> LinkedListStPerS<T>
         where
@@ -416,6 +360,62 @@ pub mod LinkedListStPer {
             LinkedListStPerS::from_vec(pairs)
         }
     }
+
+    impl<T: StT> Display for LinkedListStPerS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "[")?;
+            let mut first = true;
+            let mut current = self.head.as_deref();
+            while let Some(node) = current {
+                if !first {
+                    write!(f, ", ")?;
+                } else {
+                    first = false;
+                }
+                write!(f, "{}", node.value)?;
+                current = node.next.as_deref();
+            }
+            write!(f, "]")
+        }
+    }
+
+    impl<T: StT> Debug for LinkedListStPerS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "[")?;
+            let mut first = true;
+            let mut current = self.head.as_deref();
+            while let Some(node) = current {
+                if !first {
+                    write!(f, ", ")?;
+                } else {
+                    first = false;
+                }
+                write!(f, "{}", node.value)?;
+                current = node.next.as_deref();
+            }
+            write!(f, "]")
+        }
+    }
+
+    impl<T: StT> PartialEq for LinkedListStPerS<T> {
+        fn eq(&self, other: &Self) -> bool {
+            if self.len != other.len {
+                return false;
+            }
+            let mut left = self.head.as_deref();
+            let mut right = other.head.as_deref();
+            while let (Some(a), Some(b)) = (left, right) {
+                if a.value != b.value {
+                    return false;
+                }
+                left = a.next.as_deref();
+                right = b.next.as_deref();
+            }
+            true
+        }
+    }
+
+    impl<T: StT> Eq for LinkedListStPerS<T> {}
 
     #[macro_export]
     macro_rules! LinkedListStPerSLit {
