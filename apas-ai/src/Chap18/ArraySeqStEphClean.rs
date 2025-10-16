@@ -17,12 +17,24 @@ pub trait ArraySeqStEphCleanTrait<T: StT>: Sized {
     fn data_mut(&mut self)                   -> &mut [T];
 
     // ONE-LINE DEFAULTS: Readable directly in trait
-    fn new(length: N, init_value: T)         -> Self { Self::from_vec(vec![init_value; length]) }
-    fn empty()                               -> Self { Self::from_vec(Vec::new()) }
-    fn singleton(item: T)                    -> Self { Self::from_vec(vec![item]) }
-    fn length(&self)                         -> N { self.data().len() }
-    fn nth(&self, index: N)                  -> &T { &self.data()[index] }
-    fn iter(&self)                           -> std::slice::Iter<'_, T> { self.data().iter() }
+    fn new(length: N, init_value: T)         -> Self {
+        Self::from_vec(vec![init_value; length])
+    }
+    fn empty()                               -> Self {
+        Self::from_vec(Vec::new())
+    }
+    fn singleton(item: T)                    -> Self {
+        Self::from_vec(vec![item])
+    }
+    fn length(&self)                         -> N {
+        self.data().len()
+    }
+    fn nth(&self, index: N)                  -> &T {
+        &self.data()[index]
+    }
+    fn iter(&self)                           -> std::slice::Iter<'_, T> {
+        self.data().iter()
+    }
 
     // MULTI-LINE DEFAULTS: Type signature here, implementation in impl block below
     fn set(&mut self, index: N, item: T)     -> Result<&mut Self, &'static str>;
@@ -65,7 +77,9 @@ impl<T: StT> ArraySeqStEphCleanTrait<T> for ArraySeqStEphCleanS<T> {
 
 // Standard trait impls
 impl<T: StT> PartialEq for ArraySeqStEphCleanS<T> {
-    fn eq(&self, other: &Self) -> bool { self.data[..] == other.data[..] }
+    fn eq(&self, other: &Self) -> bool {
+        self.data[..] == other.data[..]
+    }
 }
 
 impl<T: StT> Eq for ArraySeqStEphCleanS<T> {}
@@ -92,12 +106,15 @@ impl<T: StT> Display for ArraySeqStEphCleanS<T> {
 impl<'a, T: StT> IntoIterator for &'a ArraySeqStEphCleanS<T> {
     type Item = &'a T;
     type IntoIter = std::slice::Iter<'a, T>;
-    fn into_iter(self) -> Self::IntoIter { self.data.iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.data.iter()
+    }
 }
 
 impl<T: StT> IntoIterator for ArraySeqStEphCleanS<T> {
     type Item = T;
     type IntoIter = std::vec::IntoIter<T>;
-    fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
+    fn into_iter(self) -> Self::IntoIter {
+        self.data.into_vec().into_iter()
+    }
 }
-

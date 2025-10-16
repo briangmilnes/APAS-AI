@@ -135,6 +135,10 @@ General Rust source code fixes and utilities.
 - `fix_dereference_issues.py` - Fixes dereference operator issues
 - `fix_remaining_compilation_errors.py` - Fixes remaining general compilation errors
 
+**Trait Pattern Fixes:**
+- `fix_trait_method_duplication.py` - Removes inherent methods that duplicate trait methods (RustRules.md Lines 136-171)
+- `align_trait_arrows.py` - Aligns -> arrows in trait method signatures for readability
+
 #### rust/tests/
 General Rust test running utilities.
 
