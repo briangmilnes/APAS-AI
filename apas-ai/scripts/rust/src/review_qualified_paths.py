@@ -97,18 +97,24 @@ def main():
     args = parser.parse_args()
     context = ReviewContext(args)
     
-    src_dir = context.repo_root / "src"
-    if not src_dir.exists():
-        print("✓ No src/ directory found")
+    # Check all three directories: src, tests, benches
+    dirs_to_check = []
+    for dir_name in ["src", "tests", "benches"]:
+        dir_path = context.repo_root / dir_name
+        if dir_path.exists():
+            dirs_to_check.append(dir_path)
+    
+    if not dirs_to_check:
+        print("✓ No src/, tests/, or benches/ directories found")
         return 0
     
     if context.dry_run:
-        files = context.find_files([src_dir])
-        print(f"Would check {len(files)} file(s) for qualified paths")
+        files = context.find_files(dirs_to_check)
+        print(f"Would check {len(files)} file(s) for qualified paths in {len(dirs_to_check)} directories")
         return 0
     
     all_violations = []
-    files = context.find_files([src_dir])
+    files = context.find_files(dirs_to_check)
     
     for file_path in files:
         violations = check_file(file_path, context)
