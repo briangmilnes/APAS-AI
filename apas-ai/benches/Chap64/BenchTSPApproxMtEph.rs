@@ -13,7 +13,7 @@ fn create_complete_graph(
     n: N,
 ) -> (
     LabUnDirGraphMtEph<N, OrderedFloat<f64>>,
-    Set<LabEdge<N, OrderedFloat<f64>>>,
+    SetStEph<LabEdge<N, OrderedFloat<f64>>>,
 ) {
     let mut vertices = SetLit![];
     for i in 0..n {

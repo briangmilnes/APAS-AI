@@ -30,7 +30,7 @@ pub mod ConnectivityMtEph {
 
         /// Find connected components using parallel star contraction
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
-        fn connected_components_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> Set<Set<V>>;
+        fn connected_components_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> SetStEph<SetStEph<V>>;
 
         /// Count components using higher-order function approach
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
@@ -38,7 +38,7 @@ pub mod ConnectivityMtEph {
 
         /// Find components using higher-order function approach
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
-        fn connected_components_hof<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> Set<Set<V>>;
+        fn connected_components_hof<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> SetStEph<SetStEph<V>>;
     }
 
     /// Algorithm 63.2: Count Connected Components (Parallel)
@@ -88,7 +88,7 @@ pub mod ConnectivityMtEph {
     pub fn connected_components_mt<V: StT + MtT + Hash + Ord + 'static>(
         graph: &UnDirGraphMtEph<V>,
         seed: u64,
-    ) -> (Set<V>, HashMap<V, V>) {
+    ) -> (SetStEph<V>, HashMap<V, V>) {
         // Base case: no edges, each vertex maps to itself
         if graph.sizeE() == 0 {
             let mut component_map = HashMap::new();
@@ -120,7 +120,7 @@ pub mod ConnectivityMtEph {
     fn build_quotient_edges_parallel<V: StT + MtT + Hash + Ord + 'static>(
         graph: &UnDirGraphMtEph<V>,
         partition_map: &HashMap<V, V>,
-    ) -> Set<Edge<V>> {
+    ) -> SetStEph<Edge<V>> {
         let edges_vec: Vec<Edge<V>> = graph.edges().iter().cloned().collect();
         let edges_seq = ArraySeqStEphS::from_vec(edges_vec);
         let n_edges = edges_seq.length();
@@ -138,7 +138,7 @@ pub mod ConnectivityMtEph {
         partition_map: Arc<HashMap<V, V>>,
         start: usize,
         end: usize,
-    ) -> Set<Edge<V>> {
+    ) -> SetStEph<Edge<V>> {
         let size = end - start;
 
         if size == 0 {
@@ -209,10 +209,10 @@ pub mod ConnectivityMtEph {
     /// claude-4-sonet: Work O((n+m) lg n), Span O(lg² n), Parallelism Θ((n+m)/lg² n)
     pub fn count_components_hof<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>, seed: u64) -> N {
         // Base: when no edges, return number of vertices
-        let base = |vertices: &Set<V>| vertices.size();
+        let base = |vertices: &SetStEph<V>| vertices.size();
 
         // Expand: just return the recursive result
-        let expand = |_v: &Set<V>, _e: &Set<Edge<V>>, _centers: &Set<V>, _part: &HashMap<V, V>, r: N| r;
+        let expand = |_v: &SetStEph<V>, _e: &SetStEph<Edge<V>>, _centers: &SetStEph<V>, _part: &HashMap<V, V>, r: N| r;
 
         star_contract_mt(graph, seed, &base, &expand)
     }
@@ -224,9 +224,9 @@ pub mod ConnectivityMtEph {
     pub fn connected_components_hof<V: StT + MtT + Hash + Ord + 'static>(
         graph: &UnDirGraphMtEph<V>,
         seed: u64,
-    ) -> (Set<V>, HashMap<V, V>) {
+    ) -> (SetStEph<V>, HashMap<V, V>) {
         // Base: when no edges, each vertex maps to itself
-        let base = |vertices: &Set<V>| {
+        let base = |vertices: &SetStEph<V>| {
             let mut map = HashMap::new();
             for v in vertices.iter() {
                 let _ = map.insert(v.clone(), v.clone());
@@ -235,11 +235,11 @@ pub mod ConnectivityMtEph {
         };
 
         // Expand: compose partition map P with component map C
-        let expand = |_v: &Set<V>,
-                      _e: &Set<Edge<V>>,
-                      _centers: &Set<V>,
+        let expand = |_v: &SetStEph<V>,
+                      _e: &SetStEph<Edge<V>>,
+                      _centers: &SetStEph<V>,
                       partition_map: &HashMap<V, V>,
-                      (reps, component_map): (Set<V>, HashMap<V, V>)| {
+                      (reps, component_map): (SetStEph<V>, HashMap<V, V>)| {
             let mut result_map = HashMap::new();
             for (u, v) in partition_map.iter() {
                 let component = component_map.get(v).unwrap_or(v);

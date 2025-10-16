@@ -22,8 +22,8 @@ pub mod EdgeContractionStEph {
         /// APAS: Work O(|E|), Span O(|E|)
         fn edge_contract<V: StT + Hash + Ord>(
             graph: &UnDirGraphStEph<V>,
-            matching: &Set<Edge<V>>,
-        ) -> UnDirGraphStEph<Set<V>>;
+            matching: &SetStEph<Edge<V>>,
+        ) -> UnDirGraphStEph<SetStEph<V>>;
 
         /// Single round of sequential edge contraction
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
@@ -47,7 +47,7 @@ pub mod EdgeContractionStEph {
     /// - Contracted graph where matched edges are merged into single vertices
     pub fn edge_contract<V: StT + Hash + Ord>(
         graph: &UnDirGraphStEph<V>,
-        matching: &Set<Edge<V>>,
+        matching: &SetStEph<Edge<V>>,
     ) -> UnDirGraphStEph<V> {
         // Create a mapping from original vertices to their block representatives
         let mut vertex_to_block: HashMap<V, V> = HashMap::new();
@@ -68,8 +68,8 @@ pub mod EdgeContractionStEph {
         }
 
         // Build the new contracted graph
-        let mut new_vertices: Set<V> = SetLit![];
-        let mut new_edges: Set<Edge<V>> = SetLit![];
+        let mut new_vertices: SetStEph<V> = SetLit![];
+        let mut new_edges: SetStEph<Edge<V>> = SetLit![];
 
         // Add all block representatives as vertices
         for representative in vertex_to_block.values() {

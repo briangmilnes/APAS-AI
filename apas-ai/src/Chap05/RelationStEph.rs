@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-//! Chapter 5.2 ephemeral Relation built on `Set<Pair<A,B>>`.
+//! Chapter 5.2 ephemeral Relation built on `SetStEph<Pair<A,B>>`.
 
 pub mod RelationStEph {
 
@@ -12,18 +12,18 @@ pub mod RelationStEph {
     use crate::Types::Types::*;
 
     #[derive(Clone)]
-    pub struct Relation<A, B> {
-        pairs: Set<Pair<A, B>>,
+    pub struct RelationStEph<A, B> {
+        pairs: SetStEph<Pair<A, B>>,
     }
 
     pub trait RelationStEphTrait<X: StT + Hash, Y: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Relation<X, Y>;
+        fn empty() -> RelationStEph<X, Y>;
 
         /// APAS: Work Θ(|pairs|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|pairs|), Span Θ(1)
-        fn FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y>;
+        fn FromSet(pairs: SetStEph<Pair<X, Y>>) -> RelationStEph<X, Y>;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
@@ -31,13 +31,13 @@ pub mod RelationStEph {
 
         /// APAS: Work Θ(|R|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|R|), Span Θ(1)
-        fn domain(&self) -> Set<X>
+        fn domain(&self) -> SetStEph<X>
         where
             X: Clone;
 
         /// APAS: Work Θ(|R|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|R|), Span Θ(1)
-        fn range(&self) -> Set<Y>
+        fn range(&self) -> SetStEph<Y>
         where
             Y: Clone;
 
@@ -51,33 +51,33 @@ pub mod RelationStEph {
         fn iter(&self) -> Iter<'_, Pair<X, Y>>;
     }
 
-    impl<A: StT + Hash, B: StT + Hash> Relation<A, B> {
-        pub fn FromVec(v: Vec<Pair<A, B>>) -> Relation<A, B> { Relation { pairs: Set::FromVec(v) } }
+    impl<A: StT + Hash, B: StT + Hash> RelationStEph<A, B> {
+        pub fn FromVec(v: Vec<Pair<A, B>>) -> RelationStEph<A, B> { RelationStEph { pairs: SetStEph::FromVec(v) } }
     }
 
-    impl<X: StT + Hash, Y: StT + Hash> RelationStEphTrait<X, Y> for Relation<X, Y> {
-        fn empty() -> Relation<X, Y> { Relation { pairs: SetLit![] } }
+    impl<X: StT + Hash, Y: StT + Hash> RelationStEphTrait<X, Y> for RelationStEph<X, Y> {
+        fn empty() -> RelationStEph<X, Y> { RelationStEph { pairs: SetLit![] } }
 
-        fn FromSet(pairs: Set<Pair<X, Y>>) -> Relation<X, Y> { Relation { pairs } }
+        fn FromSet(pairs: SetStEph<Pair<X, Y>>) -> RelationStEph<X, Y> { RelationStEph { pairs } }
 
         fn size(&self) -> N { self.pairs.size() }
 
-        fn domain(&self) -> Set<X>
+        fn domain(&self) -> SetStEph<X>
         where
             X: Clone,
         {
-            let mut out: Set<X> = Set::empty();
+            let mut out: SetStEph<X> = SetStEph::empty();
             for Pair(a, _) in self.pairs.iter() {
                 let _ = out.insert(a.clone());
             }
             out
         }
 
-        fn range(&self) -> Set<Y>
+        fn range(&self) -> SetStEph<Y>
         where
             Y: Clone,
         {
-            let mut out: Set<Y> = Set::empty();
+            let mut out: SetStEph<Y> = SetStEph::empty();
             for Pair(_, b) in self.pairs.iter() {
                 let _ = out.insert(b.clone());
             }
@@ -95,33 +95,33 @@ pub mod RelationStEph {
         fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.pairs.iter() }
     }
 
-    impl<A: StT + Hash, B: StT + Hash> PartialEq for Relation<A, B> {
+    impl<A: StT + Hash, B: StT + Hash> PartialEq for RelationStEph<A, B> {
         fn eq(&self, other: &Self) -> bool { self.pairs == other.pairs }
     }
 
-    impl<A: StT + Hash, B: StT + Hash> Eq for Relation<A, B> {}
+    impl<A: StT + Hash, B: StT + Hash> Eq for RelationStEph<A, B> {}
 
-    impl<A: StT + Hash, B: StT + Hash> Debug for Relation<A, B> {
+    impl<A: StT + Hash, B: StT + Hash> Debug for RelationStEph<A, B> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Debug::fmt(&self.pairs, f) }
     }
 
-    impl<A: StT + Hash, B: StT + Hash> Display for Relation<A, B> {
+    impl<A: StT + Hash, B: StT + Hash> Display for RelationStEph<A, B> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Display::fmt(&self.pairs, f) }
     }
 
     #[macro_export]
     macro_rules! RelationLit {
         () => {{
-            let __pairs: $crate::Chap05::SetStEph::SetStEph::Set<$crate::Types::Types::Pair<_, _>> = < $crate::Chap05::SetStEph::SetStEph::Set<_> >::empty();
-            < $crate::Chap05::RelationStEph::RelationStEph::Relation<_, _> as $crate::Chap05::RelationStEph::RelationStEph::RelationStEphTrait<_, _> >::FromSet(__pairs)
+            let __pairs: $crate::Chap05::SetStEph::SetStEph::SetStEph<$crate::Types::Types::Pair<_, _>> = < $crate::Chap05::SetStEph::SetStEph::SetStEph<_> >::empty();
+            < $crate::Chap05::RelationStEph::RelationStEph::RelationStEph<_, _> as $crate::Chap05::RelationStEph::RelationStEph::RelationStEphTrait<_, _> >::FromSet(__pairs)
         }};
         ( $( ($a:expr, $b:expr) ),* $(,)? ) => {{
             let __pairs = {
-                let mut __s = < $crate::Chap05::SetStEph::SetStEph::Set<_> >::empty();
+                let mut __s = < $crate::Chap05::SetStEph::SetStEph::SetStEph<_> >::empty();
                 $( let _ = __s.insert($crate::Types::Types::Pair($a, $b)); )*
                 __s
             };
-            < $crate::Chap05::RelationStEph::RelationStEph::Relation<_, _> as $crate::Chap05::RelationStEph::RelationStEph::RelationStEphTrait<_, _> >::FromSet(__pairs)
+            < $crate::Chap05::RelationStEph::RelationStEph::RelationStEph<_, _> as $crate::Chap05::RelationStEph::RelationStEph::RelationStEphTrait<_, _> >::FromSet(__pairs)
         }};
     }
 

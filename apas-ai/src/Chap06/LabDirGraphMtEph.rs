@@ -16,8 +16,8 @@ pub mod LabDirGraphMtEph {
 
     #[derive(Clone)]
     pub struct LabDirGraphMtEph<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> {
-        vertices: Set<V>,
-        labeled_arcs: Set<LabEdge<V, L>>,
+        vertices: SetStEph<V>,
+        labeled_arcs: SetStEph<LabEdge<V, L>>,
     }
 
     pub trait LabDirGraphMtEphTrait<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> {
@@ -26,16 +26,16 @@ pub mod LabDirGraphMtEph {
         fn empty() -> Self;
         /// APAS: Work Θ(|V| + |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |A|), Span Θ(|V| + |A|), Parallelism Θ(1) - sequential
-        fn from_vertices_and_labeled_arcs(vertices: Set<V>, labeled_arcs: Set<LabEdge<V, L>>) -> Self;
+        fn from_vertices_and_labeled_arcs(vertices: SetStEph<V>, labeled_arcs: SetStEph<LabEdge<V, L>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn vertices(&self) -> &Set<V>;
+        fn vertices(&self) -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn labeled_arcs(&self) -> &Set<LabEdge<V, L>>;
+        fn labeled_arcs(&self) -> &SetStEph<LabEdge<V, L>>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential map
-        fn arcs(&self) -> Set<Edge<V>>;
+        fn arcs(&self) -> SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn add_vertex(&mut self, v: V);
@@ -50,10 +50,10 @@ pub mod LabDirGraphMtEph {
         fn has_arc(&self, from: &V, to: &V) -> bool;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
-        fn out_neighbors(&self, v: &V) -> Set<V>;
+        fn out_neighbors(&self, v: &V) -> SetStEph<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
-        fn in_neighbors(&self, v: &V) -> Set<V>;
+        fn in_neighbors(&self, v: &V) -> SetStEph<V>;
     }
 
     impl<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> LabDirGraphMtEphTrait<V, L>
@@ -61,21 +61,21 @@ pub mod LabDirGraphMtEph {
     {
         fn empty() -> Self {
             LabDirGraphMtEph {
-                vertices: Set::empty(),
-                labeled_arcs: Set::empty(),
+                vertices: SetStEph::empty(),
+                labeled_arcs: SetStEph::empty(),
             }
         }
 
-        fn from_vertices_and_labeled_arcs(vertices: Set<V>, labeled_arcs: Set<LabEdge<V, L>>) -> Self {
+        fn from_vertices_and_labeled_arcs(vertices: SetStEph<V>, labeled_arcs: SetStEph<LabEdge<V, L>>) -> Self {
             LabDirGraphMtEph { vertices, labeled_arcs }
         }
 
-        fn vertices(&self) -> &Set<V> { &self.vertices }
+        fn vertices(&self) -> &SetStEph<V> { &self.vertices }
 
-        fn labeled_arcs(&self) -> &Set<LabEdge<V, L>> { &self.labeled_arcs }
+        fn labeled_arcs(&self) -> &SetStEph<LabEdge<V, L>> { &self.labeled_arcs }
 
-        fn arcs(&self) -> Set<Edge<V>> {
-            let mut arcs = Set::empty();
+        fn arcs(&self) -> SetStEph<Edge<V>> {
+            let mut arcs = SetStEph::empty();
             for labeled_arc in self.labeled_arcs.iter() {
                 arcs.insert(Edge(labeled_arc.0.clone_mt(), labeled_arc.1.clone_mt()));
             }
@@ -108,13 +108,13 @@ pub mod LabDirGraphMtEph {
             false
         }
 
-        fn out_neighbors(&self, v: &V) -> Set<V> {
+        fn out_neighbors(&self, v: &V) -> SetStEph<V> {
             // PARALLEL: filter labeled arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, L>> = self.labeled_arcs.iter().cloned().collect();
             let n = arcs.len();
 
             if n <= 8 {
-                let mut neighbors = Set::empty();
+                let mut neighbors = SetStEph::empty();
                 for labeled_arc in arcs {
                     if labeled_arc.0 == *v {
                         neighbors.insert(labeled_arc.1.clone_mt());
@@ -127,18 +127,18 @@ pub mod LabDirGraphMtEph {
             fn parallel_out<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static>(
                 arcs: Vec<LabEdge<V, L>>,
                 v: V,
-            ) -> Set<V> {
+            ) -> SetStEph<V> {
                 let n = arcs.len();
                 if n == 0 {
-                    return Set::empty();
+                    return SetStEph::empty();
                 }
                 if n == 1 {
                     return if arcs[0].0 == v {
-                        let mut s = Set::empty();
+                        let mut s = SetStEph::empty();
                         s.insert(arcs[0].1.clone_mt());
                         s
                     } else {
-                        Set::empty()
+                        SetStEph::empty()
                     };
                 }
 
@@ -160,13 +160,13 @@ pub mod LabDirGraphMtEph {
             parallel_out(arcs, v.clone_mt())
         }
 
-        fn in_neighbors(&self, v: &V) -> Set<V> {
+        fn in_neighbors(&self, v: &V) -> SetStEph<V> {
             // PARALLEL: filter labeled arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, L>> = self.labeled_arcs.iter().cloned().collect();
             let n = arcs.len();
 
             if n <= 8 {
-                let mut neighbors = Set::empty();
+                let mut neighbors = SetStEph::empty();
                 for labeled_arc in arcs {
                     if labeled_arc.1 == *v {
                         neighbors.insert(labeled_arc.0.clone_mt());
@@ -179,18 +179,18 @@ pub mod LabDirGraphMtEph {
             fn parallel_in<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static>(
                 arcs: Vec<LabEdge<V, L>>,
                 v: V,
-            ) -> Set<V> {
+            ) -> SetStEph<V> {
                 let n = arcs.len();
                 if n == 0 {
-                    return Set::empty();
+                    return SetStEph::empty();
                 }
                 if n == 1 {
                     return if arcs[0].1 == v {
-                        let mut s = Set::empty();
+                        let mut s = SetStEph::empty();
                         s.insert(arcs[0].0.clone_mt());
                         s
                     } else {
-                        Set::empty()
+                        SetStEph::empty()
                     };
                 }
 

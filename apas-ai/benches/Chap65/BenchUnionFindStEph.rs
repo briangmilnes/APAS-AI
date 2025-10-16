@@ -6,7 +6,7 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::Types::Types::*;
-use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
+use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFindStEph;
 
 fn bench_union_find_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("UnionFind_Operations");
@@ -17,7 +17,7 @@ fn bench_union_find_operations(c: &mut Criterion) {
     // Benchmark: insert n elements
     group.bench_function("insert_100", |b| {
         b.iter(|| {
-            let mut uf: UnionFind<N> = UnionFind::new();
+            let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
             for i in 0..100 {
                 uf.insert(i);
             }
@@ -27,7 +27,7 @@ fn bench_union_find_operations(c: &mut Criterion) {
     // Benchmark: union operations (sequential chain)
     group.bench_function("union_chain_100", |b| {
         b.iter(|| {
-            let mut uf: UnionFind<N> = UnionFind::new();
+            let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
             for i in 0..100 {
                 uf.insert(i);
             }
@@ -39,7 +39,7 @@ fn bench_union_find_operations(c: &mut Criterion) {
 
     // Benchmark: find operations
     group.bench_function("find_100", |b| {
-        let mut uf: UnionFind<N> = UnionFind::new();
+        let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
         for i in 0..100 {
             uf.insert(i);
         }
@@ -55,7 +55,7 @@ fn bench_union_find_operations(c: &mut Criterion) {
 
     // Benchmark: equals operations
     group.bench_function("equals_100", |b| {
-        let mut uf: UnionFind<N> = UnionFind::new();
+        let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
         for i in 0..100 {
             uf.insert(i);
         }
@@ -72,7 +72,7 @@ fn bench_union_find_operations(c: &mut Criterion) {
     // Benchmark: mixed operations (realistic workload)
     group.bench_function("mixed_operations_100", |b| {
         b.iter(|| {
-            let mut uf: UnionFind<N> = UnionFind::new();
+            let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
             for i in 0..100 {
                 uf.insert(i);
             }

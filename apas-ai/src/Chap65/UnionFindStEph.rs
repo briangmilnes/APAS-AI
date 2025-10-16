@@ -37,18 +37,18 @@ pub mod UnionFindStEph {
         fn num_sets(&mut self) -> usize;
     }
 
-    pub struct UnionFind<V: StT + Hash> {
+    pub struct UnionFindStEph<V: StT + Hash> {
         parent: HashMap<V, V>,
         rank: HashMap<V, usize>,
     }
 
-    impl<V: StT + Hash> UnionFind<V> {
+    impl<V: StT + Hash> UnionFindStEph<V> {
         /// Create a new empty Union-Find structure
         ///
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         pub fn new() -> Self {
-            UnionFind {
+            UnionFindStEph {
                 parent: HashMap::new(),
                 rank: HashMap::new(),
             }
@@ -162,9 +162,9 @@ pub mod UnionFindStEph {
         }
     }
 
-    impl<V: StT + Hash> UnionFindStEphTrait<V> for UnionFind<V> {
+    impl<V: StT + Hash> UnionFindStEphTrait<V> for UnionFindStEph<V> {
         fn new() -> Self {
-            UnionFind {
+            UnionFindStEph {
                 parent: HashMap::new(),
                 rank: HashMap::new(),
             }
@@ -223,7 +223,7 @@ pub mod UnionFindStEph {
         }
     }
 
-    impl<V: StT + Hash> Default for UnionFind<V> {
+    impl<V: StT + Hash> Default for UnionFindStEph<V> {
         fn default() -> Self { Self::new() }
     }
 }

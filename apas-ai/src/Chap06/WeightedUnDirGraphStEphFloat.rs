@@ -26,7 +26,7 @@
 //! // Query operations
 //! let weight = graph.get_edge_weight(&"A", &"B"); // Returns Option<OrderedFloat<f64>>
 //! let total = graph.total_weight(); // Returns OrderedFloat<f64>
-//! let neighbors = graph.neighbors_weighted(&"A"); // Returns Set<(V, OrderedFloat<f64>)>
+//! let neighbors = graph.neighbors_weighted(&"A"); // Returns SetStEph<(V, OrderedFloat<f64>)>
 //! ```
 
 pub mod WeightedUnDirGraphStEphFloat {
@@ -45,13 +45,13 @@ pub mod WeightedUnDirGraphStEphFloat {
         /// Create from vertices and weighted edges
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
-        pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, OrderedFloat<f64>)>) -> Self {
+        pub fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<(V, V, OrderedFloat<f64>)>) -> Self {
             let labeled_edges = edges
                 .iter()
                 .map(|(v1, v2, weight)| LabEdge(v1.clone(), v2.clone(), *weight))
                 .collect::<Vec<_>>();
 
-            let mut edge_set = Set::empty();
+            let mut edge_set = SetStEph::empty();
             for edge in labeled_edges {
                 edge_set.insert(edge);
             }
@@ -76,8 +76,8 @@ pub mod WeightedUnDirGraphStEphFloat {
         /// Get all weighted edges as (v1, v2, weight) tuples
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential map
-        pub fn weighted_edges(&self) -> Set<(V, V, OrderedFloat<f64>)> {
-            let mut edges = Set::empty();
+        pub fn weighted_edges(&self) -> SetStEph<(V, V, OrderedFloat<f64>)> {
+            let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_edges().iter() {
                 edges.insert((labeled_edge.0.clone(), labeled_edge.1.clone(), labeled_edge.2));
             }
@@ -87,8 +87,8 @@ pub mod WeightedUnDirGraphStEphFloat {
         /// Get neighbors with weights
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential filter
-        pub fn neighbors_weighted(&self, v: &V) -> Set<(V, OrderedFloat<f64>)> {
-            let mut neighbors = Set::empty();
+        pub fn neighbors_weighted(&self, v: &V) -> SetStEph<(V, OrderedFloat<f64>)> {
+            let mut neighbors = SetStEph::empty();
             for labeled_edge in self.labeled_edges().iter() {
                 if labeled_edge.0 == *v {
                     neighbors.insert((labeled_edge.1.clone(), labeled_edge.2));
@@ -119,7 +119,7 @@ pub mod WeightedUnDirGraphStEphFloat {
             }
 
             // Simple connectivity check using DFS from first vertex
-            let mut visited = Set::empty();
+            let mut visited = SetStEph::empty();
             let mut stack = Vec::new();
 
             if let Some(start) = self.vertices().iter().next() {

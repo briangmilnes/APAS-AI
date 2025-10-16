@@ -40,7 +40,7 @@ pub mod TSPApproxMtEph {
         /// APAS: Work O(|V|² log |V|), Span O(|V| log |V|)
         fn approx_metric_tsp_mt<V: StT + MtT + Hash + Ord + 'static>(
             distances: &HashMap<(V, V), OrderedFloat<f64>>,
-            vertices: &Set<V>,
+            vertices: &SetStEph<V>,
         ) -> Vec<V>;
     }
 
@@ -59,7 +59,7 @@ pub mod TSPApproxMtEph {
     pub fn euler_tour_mt<V: StT + MtT + Hash + Ord + 'static>(
         graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>,
         start: &V,
-        tree_edges: &Set<LabEdge<V, OrderedFloat<f64>>>,
+        tree_edges: &SetStEph<LabEdge<V, OrderedFloat<f64>>>,
     ) -> Vec<V> {
         let mut tour = Vec::new();
         let mut visited_edges: HashSet<(V, V)> = HashSet::new();
@@ -74,7 +74,7 @@ pub mod TSPApproxMtEph {
         graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>,
         current: &V,
         parent: Option<&V>,
-        tree_edges: &Set<LabEdge<V, OrderedFloat<f64>>>,
+        tree_edges: &SetStEph<LabEdge<V, OrderedFloat<f64>>>,
         tour: &mut Vec<V>,
         visited_edges: &mut HashSet<(V, V)>,
     ) {
@@ -166,7 +166,7 @@ pub mod TSPApproxMtEph {
     }
 
     /// Helper to get neighbors of a vertex
-    fn get_neighbors<V: StT + MtT + Hash + Ord>(graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>, v: &V) -> Set<V> {
+    fn get_neighbors<V: StT + MtT + Hash + Ord>(graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>, v: &V) -> SetStEph<V> {
         let mut neighbors = SetLit![];
         for edge in graph.labeled_edges().iter() {
             let LabEdge(a, b, _) = edge;
@@ -208,7 +208,7 @@ pub mod TSPApproxMtEph {
     /// - (tour, weight): Hamiltonian cycle and its total weight
     pub fn approx_metric_tsp_mt<V: StT + MtT + Hash + Ord + 'static>(
         graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>,
-        spanning_tree: &Set<LabEdge<V, OrderedFloat<f64>>>,
+        spanning_tree: &SetStEph<LabEdge<V, OrderedFloat<f64>>>,
         start: &V,
     ) -> (Vec<V>, OrderedFloat<f64>) {
         let euler = euler_tour_mt(graph, start, spanning_tree);

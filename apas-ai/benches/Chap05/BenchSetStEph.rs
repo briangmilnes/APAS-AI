@@ -16,8 +16,8 @@ fn bench_set_operations(c: &mut Criterion) {
     let n: N = 500;
 
     group.bench_with_input(BenchmarkId::new("union", n), &n, |b, &len| {
-        let set_a: Set<N> = Set::FromVec((0..len).collect());
-        let set_b: Set<N> = Set::FromVec((len / 2..len + len / 2).collect());
+        let set_a: SetStEph<N> = SetStEph::FromVec((0..len).collect());
+        let set_b: SetStEph<N> = SetStEph::FromVec((len / 2..len + len / 2).collect());
         b.iter(|| {
             let result = set_a.union(&set_b);
             black_box(result)
@@ -25,8 +25,8 @@ fn bench_set_operations(c: &mut Criterion) {
     });
 
     group.bench_with_input(BenchmarkId::new("intersection", n), &n, |b, &len| {
-        let set_a: Set<N> = Set::FromVec((0..len).collect());
-        let set_b: Set<N> = Set::FromVec((len / 2..len + len / 2).collect());
+        let set_a: SetStEph<N> = SetStEph::FromVec((0..len).collect());
+        let set_b: SetStEph<N> = SetStEph::FromVec((len / 2..len + len / 2).collect());
         b.iter(|| {
             let result = set_a.intersection(&set_b);
             black_box(result)
@@ -34,8 +34,8 @@ fn bench_set_operations(c: &mut Criterion) {
     });
 
     group.bench_with_input(BenchmarkId::new("CartesianProduct", n / 10), &(n / 10), |b, &len| {
-        let set_a: Set<N> = Set::FromVec((0..len).collect());
-        let set_b: Set<N> = Set::FromVec((0..len).collect());
+        let set_a: SetStEph<N> = SetStEph::FromVec((0..len).collect());
+        let set_b: SetStEph<N> = SetStEph::FromVec((0..len).collect());
         b.iter(|| {
             let result = set_a.CartesianProduct(&set_b);
             black_box(result)
@@ -43,10 +43,10 @@ fn bench_set_operations(c: &mut Criterion) {
     });
 
     group.bench_with_input(BenchmarkId::new("partition", n / 20), &(n / 20), |b, &len| {
-        let main_set: Set<N> = Set::FromVec((0..len * 4).collect());
-        let mut parts: Set<Set<N>> = SetLit![];
+        let main_set: SetStEph<N> = SetStEph::FromVec((0..len * 4).collect());
+        let mut parts: SetStEph<SetStEph<N>> = SetLit![];
         for i in 0..4 {
-            let subset: Set<N> = Set::FromVec((i * len..(i + 1) * len).collect());
+            let subset: SetStEph<N> = SetStEph::FromVec((i * len..(i + 1) * len).collect());
             let _ = parts.insert(subset);
         }
         b.iter(|| {
@@ -58,13 +58,13 @@ fn bench_set_operations(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("FromVec", n), &n, |b, &len| {
         let vec_data: Vec<N> = (0..len).collect();
         b.iter(|| {
-            let result = Set::FromVec(vec_data.clone());
+            let result = SetStEph::FromVec(vec_data.clone());
             black_box(result)
         })
     });
 
     group.bench_with_input(BenchmarkId::new("mem", n), &n, |b, &len| {
-        let set: Set<N> = Set::FromVec((0..len).collect());
+        let set: SetStEph<N> = SetStEph::FromVec((0..len).collect());
         b.iter(|| {
             let mut found = 0;
             for i in 0..len {

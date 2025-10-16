@@ -10,8 +10,8 @@ use apas_ai::{
 
 /// Helper: Create a cycle graph with n vertices
 fn create_cycle_graph(n: usize) -> UnDirGraphStEph<usize> {
-    let mut vertices: Set<usize> = SetLit![];
-    let mut edges: Set<Edge<usize>> = SetLit![];
+    let mut vertices: SetStEph<usize> = SetLit![];
+    let mut edges: SetStEph<Edge<usize>> = SetLit![];
 
     for i in 0..n {
         let _ = vertices.insert(i);
@@ -28,8 +28,8 @@ fn create_cycle_graph(n: usize) -> UnDirGraphStEph<usize> {
 
 /// Helper: Create a star graph with n satellites
 fn create_star_graph(n: usize) -> UnDirGraphStEph<usize> {
-    let mut vertices: Set<usize> = SetLit![];
-    let mut edges: Set<Edge<usize>> = SetLit![];
+    let mut vertices: SetStEph<usize> = SetLit![];
+    let mut edges: SetStEph<Edge<usize>> = SetLit![];
 
     let _ = vertices.insert(0); // Center
     for i in 1..=n {
@@ -49,7 +49,7 @@ fn test_greedy_matching_cycle() {
     assert!(matching.size() >= 2);
 
     // Verify matching property: no two edges share an endpoint
-    let mut matched_vertices: Set<usize> = SetLit![];
+    let mut matched_vertices: SetStEph<usize> = SetLit![];
     for edge in matching.iter() {
         let Edge(u, v) = edge;
         assert!(!matched_vertices.mem(u), "Vertex {u} already matched");
@@ -80,7 +80,7 @@ fn test_parallel_matching_st_cycle() {
     let matching = parallel_matching_st(&graph, 42);
 
     // Verify matching property: no two edges share an endpoint
-    let mut matched_vertices: Set<usize> = SetLit![];
+    let mut matched_vertices: SetStEph<usize> = SetLit![];
     for edge in matching.iter() {
         let Edge(u, v) = edge;
         assert!(!matched_vertices.mem(u), "Vertex {u} already matched");
@@ -99,7 +99,7 @@ fn test_parallel_matching_st_star() {
     let matching = parallel_matching_st(&graph, 123);
 
     // Verify matching property
-    let mut matched_vertices: Set<usize> = SetLit![];
+    let mut matched_vertices: SetStEph<usize> = SetLit![];
     for edge in matching.iter() {
         let Edge(u, v) = edge;
         assert!(!matched_vertices.mem(u));

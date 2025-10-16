@@ -19,8 +19,8 @@ pub mod UnDirGraphMtEph {
 
     #[derive(Clone)]
     pub struct UnDirGraphMtEph<V: StT + MtT + Hash + 'static> {
-        V: Set<V>,
-        E: Set<Edge<V>>,
+        V: SetStEph<V>,
+        E: SetStEph<Edge<V>>,
     }
 
     pub trait UnDirGraphMtEphTrait<V: StT + MtT + Hash + 'static> {
@@ -29,13 +29,13 @@ pub mod UnDirGraphMtEph {
         fn empty() -> UnDirGraphMtEph<V>;
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(1)
-        fn FromSets(V: Set<V>, E: Set<Edge<V>>) -> UnDirGraphMtEph<V>;
+        fn FromSets(V: SetStEph<V>, E: SetStEph<Edge<V>>) -> UnDirGraphMtEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn vertices(&self) -> &Set<V>;
+        fn vertices(&self) -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn edges(&self) -> &Set<Edge<V>>;
+        fn edges(&self) -> &SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn sizeV(&self) -> N;
@@ -47,10 +47,10 @@ pub mod UnDirGraphMtEph {
         fn Neighbor(&self, u: &V, v: &V) -> B;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|), Parallelism Θ(|E|/log |E|) - parallel divide-and-conquer filter
-        fn NG(&self, v: &V) -> Set<V>;
+        fn NG(&self, v: &V) -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |E|), Span Θ(log |u_set| + log |E|), Parallelism Θ((|u_set| × |E|)/(log |u_set| + log |E|)) - parallel map-reduce
-        fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V>;
+        fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn Incident(&self, e: &Edge<V>, v: &V) -> B;
@@ -66,9 +66,9 @@ pub mod UnDirGraphMtEph {
                 E: SetLit![],
             }
         }
-        fn FromSets(V: Set<V>, E: Set<Edge<V>>) -> UnDirGraphMtEph<V> { UnDirGraphMtEph { V, E } }
-        fn vertices(&self) -> &Set<V> { &self.V }
-        fn edges(&self) -> &Set<Edge<V>> { &self.E }
+        fn FromSets(V: SetStEph<V>, E: SetStEph<Edge<V>>) -> UnDirGraphMtEph<V> { UnDirGraphMtEph { V, E } }
+        fn vertices(&self) -> &SetStEph<V> { &self.V }
+        fn edges(&self) -> &SetStEph<Edge<V>> { &self.E }
         fn sizeV(&self) -> N { self.V.size() }
         fn sizeE(&self) -> N { self.E.size() }
 
@@ -77,13 +77,13 @@ pub mod UnDirGraphMtEph {
             self.E.mem(&Edge(u.clone_mt(), v.clone_mt())) || self.E.mem(&Edge(v.clone_mt(), u.clone_mt()))
         }
 
-        fn NG(&self, v: &V) -> Set<V> {
+        fn NG(&self, v: &V) -> SetStEph<V> {
             // PARALLEL: filter edges using divide-and-conquer
             let edges: Vec<Edge<V>> = self.E.iter().cloned().collect();
             let n = edges.len();
 
             if n <= 8 {
-                let mut ng: Set<V> = SetLit![];
+                let mut ng: SetStEph<V> = SetLit![];
                 for Edge(a, b) in edges {
                     if a == *v {
                         let _ = ng.insert(b.clone_mt());
@@ -95,7 +95,7 @@ pub mod UnDirGraphMtEph {
             }
 
             // Parallel divide-and-conquer
-            fn parallel_ng<V: StT + MtT + Hash + 'static>(edges: Vec<Edge<V>>, v: V) -> Set<V> {
+            fn parallel_ng<V: StT + MtT + Hash + 'static>(edges: Vec<Edge<V>>, v: V) -> SetStEph<V> {
                 let n = edges.len();
                 if n == 0 {
                     return SetLit![];
@@ -133,13 +133,13 @@ pub mod UnDirGraphMtEph {
             parallel_ng(edges, v.clone_mt())
         }
 
-        fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V> {
+        fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
             // PARALLEL: map-reduce over vertices using divide-and-conquer
             let vertices: Vec<V> = u_set.iter().cloned().collect();
             let n = vertices.len();
 
             if n <= 8 {
-                let mut result: Set<V> = SetLit![];
+                let mut result: SetStEph<V> = SetLit![];
                 for u in vertices {
                     let ng_u = self.NG(&u);
                     result = result.union(&ng_u);
@@ -151,7 +151,7 @@ pub mod UnDirGraphMtEph {
             fn parallel_ng_of_vertices<V: StT + MtT + Hash + 'static>(
                 vertices: Vec<V>,
                 graph: UnDirGraphMtEph<V>,
-            ) -> Set<V> {
+            ) -> SetStEph<V> {
                 let n = vertices.len();
                 if n == 0 {
                     return SetLit![];
@@ -189,19 +189,19 @@ pub mod UnDirGraphMtEph {
         pub fn sizeA(&self) -> N { self.sizeE() }
 
         /// Arcs (alias for edges in undirected graphs)
-        pub fn arcs(&self) -> &Set<Edge<V>> { self.edges() }
+        pub fn arcs(&self) -> &SetStEph<Edge<V>> { self.edges() }
 
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NPlus(&self, v: &V) -> Set<V> { self.NG(v) }
+        pub fn NPlus(&self, v: &V) -> SetStEph<V> { self.NG(v) }
 
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NMinus(&self, v: &V) -> Set<V> { self.NG(v) }
+        pub fn NMinus(&self, v: &V) -> SetStEph<V> { self.NG(v) }
 
         /// Neighbors of vertex set
-        pub fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V> { self.NGOfVertices(u_set) }
+        pub fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> { self.NGOfVertices(u_set) }
 
         /// Neighbors of vertex set
-        pub fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V> { self.NGOfVertices(u_set) }
+        pub fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> { self.NGOfVertices(u_set) }
 
         /// Degree (in undirected graphs, in-degree equals total degree)
         pub fn InDegree(&self, v: &V) -> N { self.Degree(v) }
@@ -231,14 +231,14 @@ pub mod UnDirGraphMtEph {
     #[macro_export]
     macro_rules! UnDirGraphMtEphLit {
         () => {{
-            let __V: $crate::Chap05::SetStEph::SetStEph::Set<_> = $crate::SetLit![];
-            let __E: $crate::Chap05::SetStEph::SetStEph::Set<$crate::Types::Types::Edge<_>> = $crate::SetLit![];
+            let __V: $crate::Chap05::SetStEph::SetStEph::SetStEph<_> = $crate::SetLit![];
+            let __E: $crate::Chap05::SetStEph::SetStEph::SetStEph<$crate::Types::Types::Edge<_>> = $crate::SetLit![];
             < $crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::UnDirGraphMtEph<_> as $crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::UnDirGraphMtEphTrait<_> >::FromSets(__V, __E)
         }};
         ( V: [ $( $v:expr ),* $(,)? ], E: [ $( ( $u:expr , $w:expr ) ),* $(,)? ] ) => {{
-            let __V: $crate::Chap05::SetStEph::SetStEph::Set<_> = $crate::SetLit![ $( $v ),* ];
-            let __E: $crate::Chap05::SetStEph::SetStEph::Set<_> = {
-                let mut __s = < $crate::Chap05::SetStEph::SetStEph::Set<_> >::empty();
+            let __V: $crate::Chap05::SetStEph::SetStEph::SetStEph<_> = $crate::SetLit![ $( $v ),* ];
+            let __E: $crate::Chap05::SetStEph::SetStEph::SetStEph<_> = {
+                let mut __s = < $crate::Chap05::SetStEph::SetStEph::SetStEph<_> >::empty();
                 $( let _ = __s.insert($crate::Types::Types::Edge($u, $w)); )*
                 __s
             };

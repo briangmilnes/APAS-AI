@@ -21,7 +21,7 @@ pub mod VertexMatchingMtEph {
     pub trait VertexMatchingMtEphTrait {
         /// Parallel vertex matching using randomized symmetry breaking
         /// APAS: Work O(|E|), Span O(lg |V|)
-        fn parallel_matching_mt<V: StT + MtT + Hash + 'static>(graph: &UnDirGraphMtEph<V>) -> Set<Edge<V>>;
+        fn parallel_matching_mt<V: StT + MtT + Hash + 'static>(graph: &UnDirGraphMtEph<V>) -> SetStEph<Edge<V>>;
     }
 
     /// Algorithm 61.4: Parallel Vertex Matching
@@ -44,7 +44,7 @@ pub mod VertexMatchingMtEph {
     ///
     /// Returns:
     /// - A set of edges forming a vertex matching
-    pub fn parallel_matching_mt<V: StT + MtT + Hash + 'static>(graph: &UnDirGraphMtEph<V>, seed: u64) -> Set<Edge<V>> {
+    pub fn parallel_matching_mt<V: StT + MtT + Hash + 'static>(graph: &UnDirGraphMtEph<V>, seed: u64) -> SetStEph<Edge<V>> {
         use rand::rngs::StdRng;
         use rand::{Rng, SeedableRng};
         use std::sync::{Arc, Mutex};
@@ -100,7 +100,7 @@ pub mod VertexMatchingMtEph {
         graph: &UnDirGraphMtEph<V>,
         edges: &ArraySeqStEphS<Edge<V>>,
         coins: &ArraySeqStEphS<B>,
-    ) -> Set<Edge<V>> {
+    ) -> SetStEph<Edge<V>> {
         use std::sync::Arc;
 
         let n = edges.length();
@@ -121,7 +121,7 @@ pub mod VertexMatchingMtEph {
         let selected = select_edges_recursive(graph_arc, edges_arc, map_arc, 0, n);
 
         // Convert sequence to set
-        let mut result: Set<Edge<V>> = SetLit![];
+        let mut result: SetStEph<Edge<V>> = SetLit![];
         for edge in selected.iter() {
             let _ = result.insert(edge.clone());
         }

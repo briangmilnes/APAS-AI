@@ -12,7 +12,7 @@ fn test_module_accessibility() {
     use apas_ai::Types::Types::*;
 
     // Verify we can create instances through the module paths
-    let _set: Set<i32> = Set::empty();
+    let _set: SetStEph<i32> = SetStEph::empty();
     let _seq: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
     let _pair = Pair(1, 2);
     let _bool = true;

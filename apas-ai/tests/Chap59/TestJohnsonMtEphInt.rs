@@ -71,7 +71,7 @@ fn test_negative_weights() {
 #[test]
 fn test_single_vertex() {
     let vertices = SetLit![0];
-    let edges = Set::empty();
+    let edges = SetStEph::empty();
 
     let graph = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);

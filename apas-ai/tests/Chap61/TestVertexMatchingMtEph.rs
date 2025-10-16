@@ -10,8 +10,8 @@ use apas_ai::{
 
 /// Helper: Create a cycle graph
 fn create_cycle_graph(n: usize) -> UnDirGraphMtEph<usize> {
-    let mut vertices: Set<usize> = SetLit![];
-    let mut edges: Set<Edge<usize>> = SetLit![];
+    let mut vertices: SetStEph<usize> = SetLit![];
+    let mut edges: SetStEph<Edge<usize>> = SetLit![];
 
     for i in 0..n {
         let _ = vertices.insert(i);
@@ -28,8 +28,8 @@ fn create_cycle_graph(n: usize) -> UnDirGraphMtEph<usize> {
 
 /// Helper: Create a star graph
 fn create_star_graph(n: usize) -> UnDirGraphMtEph<usize> {
-    let mut vertices: Set<usize> = SetLit![];
-    let mut edges: Set<Edge<usize>> = SetLit![];
+    let mut vertices: SetStEph<usize> = SetLit![];
+    let mut edges: SetStEph<Edge<usize>> = SetLit![];
 
     let _ = vertices.insert(0);
     for i in 1..=n {
@@ -46,7 +46,7 @@ fn test_parallel_matching_mt_cycle() {
     let matching = parallel_matching_mt(&graph, 789);
 
     // Verify matching property
-    let mut matched_vertices: Set<usize> = SetLit![];
+    let mut matched_vertices: SetStEph<usize> = SetLit![];
     for edge in matching.iter() {
         let Edge(u, v) = edge;
         assert!(!matched_vertices.mem(u));
@@ -62,7 +62,7 @@ fn test_parallel_matching_mt_star() {
     let matching = parallel_matching_mt(&graph, 456);
 
     // Verify matching property
-    let mut matched_vertices: Set<usize> = SetLit![];
+    let mut matched_vertices: SetStEph<usize> = SetLit![];
     for edge in matching.iter() {
         let Edge(u, v) = edge;
         assert!(!matched_vertices.mem(u));

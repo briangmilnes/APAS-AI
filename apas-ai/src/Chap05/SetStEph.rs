@@ -13,17 +13,17 @@ pub mod SetStEph {
     use crate::Types::Types::*;
 
     #[derive(Clone)]
-    pub struct Set<T> {
+    pub struct SetStEph<T> {
         data: HashSet<T>,
     }
 
     pub trait SetStEphTrait<T: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Set<T>;
+        fn empty() -> SetStEph<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(x: T) -> Set<T>;
+        fn singleton(x: T) -> SetStEph<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn size(&self) -> N;
@@ -32,17 +32,17 @@ pub mod SetStEph {
         fn mem(&self, x: &T) -> B;
         /// APAS: Work Θ(|a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn union(&self, other: &Set<T>) -> Set<T>;
+        fn union(&self, other: &SetStEph<T>) -> SetStEph<T>;
         /// APAS: Work Θ(|a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn intersection(&self, other: &Set<T>) -> Set<T>;
+        fn intersection(&self, other: &SetStEph<T>) -> SetStEph<T>;
         /// APAS: Work Θ(|parts| × |a|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|parts| × |a|²), Span Θ(1)
-        fn partition(&self, parts: &Set<Set<T>>) -> B;
+        fn partition(&self, parts: &SetStEph<SetStEph<T>>) -> B;
 
         /// APAS: Work Θ(|a| × |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| × |b|), Span Θ(1)
-        fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>>;
+        fn CartesianProduct<U: StT + Hash>(&self, other: &SetStEph<U>) -> SetStEph<Pair<T, U>>;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
@@ -53,22 +53,22 @@ pub mod SetStEph {
         fn iter(&self) -> Iter<'_, T>;
         /// APAS: Work Θ(|v|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
-        fn FromVec(v: Vec<T>) -> Set<T>;
+        fn FromVec(v: Vec<T>) -> SetStEph<T>;
     }
 
-    impl<T: Eq + Hash> PartialEq for Set<T> {
+    impl<T: Eq + Hash> PartialEq for SetStEph<T> {
         fn eq(&self, other: &Self) -> bool { self.data == other.data }
     }
 
-    impl<T: Eq + Hash> Eq for Set<T> {}
+    impl<T: Eq + Hash> Eq for SetStEph<T> {}
 
-    impl<T: Eq + Hash + Debug> Debug for Set<T> {
+    impl<T: Eq + Hash + Debug> Debug for SetStEph<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             f.debug_set().entries(self.data.iter()).finish()
         }
     }
 
-    impl<T: Eq + Hash + Display> Display for Set<T> {
+    impl<T: Eq + Hash + Display> Display for SetStEph<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "{{")?;
             let mut first = true;
@@ -85,7 +85,7 @@ pub mod SetStEph {
     }
 
     // Provide an order-independent Hash so sets of sets can be placed in a HashSet.
-    impl<T: Eq + Hash> Hash for Set<T> {
+    impl<T: Eq + Hash> Hash for SetStEph<T> {
         fn hash<H: Hasher>(&self, state: &mut H) {
             use std::collections::hash_map::DefaultHasher;
             let mut element_hashes: Vec<u64> = Vec::with_capacity(self.data.len());
@@ -102,20 +102,20 @@ pub mod SetStEph {
         }
     }
 
-    impl<T: Eq + Hash> Set<T> {
-        pub fn empty() -> Set<T> { Set { data: HashSet::new() } }
+    impl<T: Eq + Hash> SetStEph<T> {
+        pub fn empty() -> SetStEph<T> { SetStEph { data: HashSet::new() } }
 
-        pub fn singleton(x: T) -> Set<T> {
+        pub fn singleton(x: T) -> SetStEph<T> {
             let mut s = HashSet::with_capacity(1);
             let _ = s.insert(x);
-            Set { data: s }
+            SetStEph { data: s }
         }
 
         pub fn size(&self) -> N { self.data.len() }
 
         pub fn mem(&self, x: &T) -> B { self.data.contains(x) }
 
-        pub fn union(&self, other: &Set<T>) -> Set<T>
+        pub fn union(&self, other: &SetStEph<T>) -> SetStEph<T>
         where
             T: Clone,
         {
@@ -126,7 +126,7 @@ pub mod SetStEph {
             out
         }
 
-        pub fn intersection(&self, other: &Set<T>) -> Set<T>
+        pub fn intersection(&self, other: &SetStEph<T>) -> SetStEph<T>
         where
             T: Clone,
         {
@@ -134,10 +134,10 @@ pub mod SetStEph {
             for x in self.data.intersection(&other.data) {
                 let _ = out.insert(x.clone());
             }
-            Set { data: out }
+            SetStEph { data: out }
         }
 
-        pub fn partition(&self, parts: &Set<Set<T>>) -> B {
+        pub fn partition(&self, parts: &SetStEph<SetStEph<T>>) -> B {
             for x in self.data.iter() {
                 let mut count: N = 0;
                 for subset in parts.data.iter() {
@@ -162,29 +162,29 @@ pub mod SetStEph {
 
         pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
 
-        pub fn FromVec(v: Vec<T>) -> Set<T> {
+        pub fn FromVec(v: Vec<T>) -> SetStEph<T> {
             let mut s = HashSet::with_capacity(v.len());
             for x in v {
                 let _ = s.insert(x);
             }
-            Set { data: s }
+            SetStEph { data: s }
         }
     }
 
-    impl<T: StT + Hash> SetStEphTrait<T> for Set<T> {
-        fn empty() -> Set<T> { Set { data: HashSet::new() } }
+    impl<T: StT + Hash> SetStEphTrait<T> for SetStEph<T> {
+        fn empty() -> SetStEph<T> { SetStEph { data: HashSet::new() } }
 
-        fn singleton(x: T) -> Set<T> {
+        fn singleton(x: T) -> SetStEph<T> {
             let mut s = HashSet::with_capacity(1);
             let _ = s.insert(x);
-            Set { data: s }
+            SetStEph { data: s }
         }
 
         fn size(&self) -> N { self.data.len() }
 
         fn mem(&self, x: &T) -> B { self.data.contains(x) }
 
-        fn union(&self, other: &Set<T>) -> Set<T>
+        fn union(&self, other: &SetStEph<T>) -> SetStEph<T>
         where
             T: Clone,
         {
@@ -195,7 +195,7 @@ pub mod SetStEph {
             out
         }
 
-        fn intersection(&self, other: &Set<T>) -> Set<T>
+        fn intersection(&self, other: &SetStEph<T>) -> SetStEph<T>
         where
             T: Clone,
         {
@@ -203,10 +203,10 @@ pub mod SetStEph {
             for x in self.data.intersection(&other.data) {
                 let _ = out.insert(x.clone());
             }
-            Set { data: out }
+            SetStEph { data: out }
         }
 
-        fn partition(&self, parts: &Set<Set<T>>) -> B {
+        fn partition(&self, parts: &SetStEph<SetStEph<T>>) -> B {
             for x in self.data.iter() {
                 let mut count: N = 0;
                 for subset in parts.data.iter() {
@@ -224,7 +224,7 @@ pub mod SetStEph {
             true
         }
 
-        fn CartesianProduct<U: StT + Hash + Clone>(&self, other: &Set<U>) -> Set<Pair<T, U>>
+        fn CartesianProduct<U: StT + Hash + Clone>(&self, other: &SetStEph<U>) -> SetStEph<Pair<T, U>>
         where
             T: Clone,
         {
@@ -234,7 +234,7 @@ pub mod SetStEph {
                     let _ = out.insert(Pair(a.clone(), b.clone()));
                 }
             }
-            Set { data: out }
+            SetStEph { data: out }
         }
 
         fn insert(&mut self, x: T) -> &mut Self {
@@ -244,22 +244,22 @@ pub mod SetStEph {
 
         fn iter(&self) -> Iter<'_, T> { self.data.iter() }
 
-        fn FromVec(v: Vec<T>) -> Set<T> {
+        fn FromVec(v: Vec<T>) -> SetStEph<T> {
             let mut s = HashSet::with_capacity(v.len());
             for x in v {
                 let _ = s.insert(x);
             }
-            Set { data: s }
+            SetStEph { data: s }
         }
     }
 
     #[macro_export]
     macro_rules! SetLit {
         () => {{
-            < $crate::Chap05::SetStEph::SetStEph::Set<_> >::empty()
+            < $crate::Chap05::SetStEph::SetStEph::SetStEph<_> >::empty()
         }};
         ($($x:expr),* $(,)?) => {{
-            let mut __s = < $crate::Chap05::SetStEph::SetStEph::Set<_> >::empty();
+            let mut __s = < $crate::Chap05::SetStEph::SetStEph::SetStEph<_> >::empty();
             $( let _ = __s.insert($x); )*
             __s
         }};

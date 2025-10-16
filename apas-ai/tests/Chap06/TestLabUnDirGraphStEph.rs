@@ -260,8 +260,8 @@ fn test_outdegree() {
 fn test_from_vertices_and_labeled_edges() {
     use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEphTrait;
 
-    let v: Set<i32> = SetLit![1, 2, 3];
-    let e: Set<LabEdge<i32, &str>> = SetLit![LabEdge(1, 2, "edge")];
+    let v: SetStEph<i32> = SetLit![1, 2, 3];
+    let e: SetStEph<LabEdge<i32, &str>> = SetLit![LabEdge(1, 2, "edge")];
     let g =
         <LabUnDirGraphStEph<i32, &str> as LabUnDirGraphStEphTrait<i32, &str>>::from_vertices_and_labeled_edges(v, e);
 

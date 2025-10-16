@@ -22,7 +22,7 @@ pub mod StarPartitionMtEph {
     pub trait StarPartitionMtEphTrait {
         /// Parallel star partition using randomized coin flips
         /// APAS: Work O(|V| + |E|), Span O(lg |V|)
-        fn parallel_star_partition<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> Set<Set<V>>;
+        fn parallel_star_partition<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> SetStEph<SetStEph<V>>;
     }
 
     /// Algorithm 62.3: Parallel Star Partition
@@ -45,7 +45,7 @@ pub mod StarPartitionMtEph {
     pub fn parallel_star_partition<V: StT + MtT + Hash + Ord + 'static>(
         graph: &UnDirGraphMtEph<V>,
         seed: u64,
-    ) -> (Set<V>, HashMap<V, V>) {
+    ) -> (SetStEph<V>, HashMap<V, V>) {
         let mut rng = StdRng::seed_from_u64(seed);
 
         // Create vertex to index mapping for inject operation
@@ -96,7 +96,7 @@ pub mod StarPartitionMtEph {
         let p_seq = base_seq.inject(&updates_seq);
 
         // Phase 6: Extract centers (vertices where P[v] = v)
-        let mut centers: Set<V> = SetLit![];
+        let mut centers: SetStEph<V> = SetLit![];
         let mut partition_map: HashMap<V, V> = HashMap::new();
 
         for (i, vertex) in vertices_vec.iter().enumerate() {

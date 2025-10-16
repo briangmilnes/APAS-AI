@@ -26,11 +26,11 @@ pub mod PrimStEph {
         fn prim_mst<V: StT + Hash + Ord + Display>(
             graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
             start: V,
-        ) -> Set<LabEdge<V, OrderedFloat<f64>>>;
+        ) -> SetStEph<LabEdge<V, OrderedFloat<f64>>>;
 
         /// Compute total weight of MST
         /// APAS: Work O(m), Span O(1)
-        fn mst_weight<V: StT + Hash>(mst: &Set<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64>;
+        fn mst_weight<V: StT + Hash>(mst: &SetStEph<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64>;
     }
 
     /// Priority queue entry for Prim's algorithm
@@ -82,7 +82,7 @@ pub mod PrimStEph {
     pub fn prim_mst<V: StT + Hash + Ord + Display>(
         graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
         start: &V,
-    ) -> Set<LabEdge<V, OrderedFloat<f64>>> {
+    ) -> SetStEph<LabEdge<V, OrderedFloat<f64>>> {
         let mut mst_edges = SetLit![];
         let mut visited: HashSet<V> = HashSet::new();
 
@@ -135,7 +135,7 @@ pub mod PrimStEph {
     }
 
     /// Helper: Get neighbors of a vertex
-    fn get_neighbors<V: StT + Hash + Ord>(graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>, v: &V) -> Set<V> {
+    fn get_neighbors<V: StT + Hash + Ord>(graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>, v: &V) -> SetStEph<V> {
         let mut neighbors = SetLit![];
         for edge in graph.labeled_edges().iter() {
             let LabEdge(a, b, _) = edge;
@@ -167,7 +167,7 @@ pub mod PrimStEph {
     ///
     /// APAS: Work O(|MST|), Span O(|MST|)
     /// claude-4-sonet: Work O(|MST|), Span O(|MST|)
-    pub fn mst_weight<V: StT + Hash>(mst_edges: &Set<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64> {
+    pub fn mst_weight<V: StT + Hash>(mst_edges: &SetStEph<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64> {
         let mut total = OrderedFloat(0.0);
         for edge in mst_edges.iter() {
             let LabEdge(_u, _v, w) = edge;

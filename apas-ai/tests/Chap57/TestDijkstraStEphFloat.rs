@@ -9,12 +9,12 @@ use apas_ai::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::dijkstra;
 
 #[test]
 fn test_simple_path() {
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for v in 0..3 {
         vertices.insert(v);
     }
 
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     edges.insert((0, 1, OrderedFloat(1.0)));
     edges.insert((0, 2, OrderedFloat(3.0)));
     edges.insert((1, 2, OrderedFloat(1.0)));
@@ -29,12 +29,12 @@ fn test_simple_path() {
 
 #[test]
 fn test_complex_graph() {
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for v in 0..6 {
         vertices.insert(v);
     }
 
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     edges.insert((0, 1, OrderedFloat(1.0)));
     edges.insert((0, 2, OrderedFloat(5.0)));
     edges.insert((1, 2, OrderedFloat(2.0)));
@@ -56,10 +56,10 @@ fn test_complex_graph() {
 
 #[test]
 fn test_single_vertex() {
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     vertices.insert(0);
 
-    let edges = Set::empty();
+    let edges = SetStEph::empty();
 
     let graph = WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges);
     let result = dijkstra(&graph, 0);
@@ -69,12 +69,12 @@ fn test_single_vertex() {
 
 #[test]
 fn test_disconnected_graph() {
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for v in 0..4 {
         vertices.insert(v);
     }
 
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     edges.insert((0, 1, OrderedFloat(1.0)));
     edges.insert((2, 3, OrderedFloat(1.0)));
 

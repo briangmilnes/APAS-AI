@@ -106,13 +106,13 @@ pub mod JohnsonStEphInt {
         let dummy_idx = n;
 
         // Create vertices including dummy
-        let mut vertices = Set::empty();
+        let mut vertices = SetStEph::empty();
         for i in 0..=n {
             vertices.insert(i);
         }
 
         // Copy all original edges
-        let mut edges = Set::empty();
+        let mut edges = SetStEph::empty();
         for LabEdge(from, to, weight) in graph.labeled_arcs().iter() {
             edges.insert((*from, *to, *weight));
         }
@@ -134,12 +134,12 @@ pub mod JohnsonStEphInt {
         potentials: &ArraySeqStEphS<i64>,
         n: usize,
     ) -> WeightedDirGraphStEphInt<usize> {
-        let mut vertices = Set::empty();
+        let mut vertices = SetStEph::empty();
         for i in 0..n {
             vertices.insert(i);
         }
 
-        let mut edges = Set::empty();
+        let mut edges = SetStEph::empty();
         for LabEdge(from, to, weight) in graph.labeled_arcs().iter() {
             let p_from = *potentials.nth(*from);
             let p_to = *potentials.nth(*to);

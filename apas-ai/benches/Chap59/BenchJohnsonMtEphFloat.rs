@@ -10,12 +10,12 @@ use apas_ai::Chap59::JohnsonMtEphFloat::JohnsonMtEphFloat::johnson_apsp;
 use apas_ai::SetLit;
 
 fn generate_sparse_graph_negative(n: usize) -> WeightedDirGraphMtEphFloat<usize> {
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for i in 0..n {
         vertices.insert(i);
     }
 
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     for i in 0..n {
         let j = (i + 1) % n;
         let weight = if i % 3 == 0 {
@@ -35,12 +35,12 @@ fn generate_sparse_graph_negative(n: usize) -> WeightedDirGraphMtEphFloat<usize>
 }
 
 fn generate_dense_graph_negative(n: usize) -> WeightedDirGraphMtEphFloat<usize> {
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for i in 0..n {
         vertices.insert(i);
     }
 
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     for i in 0..n {
         for j in 0..n {
             if i != j && (i * 7 + j * 11) % 2 == 0 {

@@ -21,12 +21,12 @@ pub mod StarContractionStEph {
         fn star_contract<V, R, F, G>(graph: &UnDirGraphStEph<V>, base: F, expand: G) -> R
         where
             V: StT + Hash + Ord,
-            F: Fn(&Set<V>) -> R,
-            G: Fn(&Set<V>, &R) -> R;
+            F: Fn(&SetStEph<V>) -> R,
+            G: Fn(&SetStEph<V>, &R) -> R;
 
         /// Contract graph to just vertices (no edges)
         /// APAS: Work O((n + m) lg n), Span O((n + m) lg n)
-        fn contract_to_vertices<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<V>;
+        fn contract_to_vertices<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> SetStEph<V>;
     }
 
     /// Algorithm 62.5: Star Contraction (Sequential)
@@ -48,8 +48,8 @@ pub mod StarContractionStEph {
     pub fn star_contract<V, R, F, G>(graph: &UnDirGraphStEph<V>, base: &F, expand: &G) -> R
     where
         V: StT + Hash + Ord,
-        F: Fn(&Set<V>) -> R,
-        G: Fn(&Set<V>, &Set<Edge<V>>, &Set<V>, &HashMap<V, V>, R) -> R,
+        F: Fn(&SetStEph<V>) -> R,
+        G: Fn(&SetStEph<V>, &SetStEph<Edge<V>>, &SetStEph<V>, &HashMap<V, V>, R) -> R,
     {
         // Base case: no edges
         if graph.sizeE() == 0 {
@@ -78,10 +78,10 @@ pub mod StarContractionStEph {
     /// claude-4-sonet: Work O(m), Span O(m)
     fn build_quotient_graph<V: StT + Hash + Ord>(
         graph: &UnDirGraphStEph<V>,
-        centers: &Set<V>,
+        centers: &SetStEph<V>,
         partition_map: &HashMap<V, V>,
     ) -> UnDirGraphStEph<V> {
-        let mut quotient_edges: Set<Edge<V>> = SetLit![];
+        let mut quotient_edges: SetStEph<Edge<V>> = SetLit![];
 
         for edge in graph.edges().iter() {
             let Edge(u, v) = edge;
@@ -111,7 +111,7 @@ pub mod StarContractionStEph {
     ///
     /// APAS: Work O((n + m) lg n), Span O((n + m) lg n)
     /// claude-4-sonet: Work O((n + m) lg n), Span O((n + m) lg n)
-    pub fn contract_to_vertices<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<V> {
+    pub fn contract_to_vertices<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> SetStEph<V> {
         star_contract(
             graph,
             &|vertices| vertices.clone(),

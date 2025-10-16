@@ -34,8 +34,8 @@ fn test_labdirgraphmteph_empty() {
 
 #[test]
 fn test_labdirgraphmteph_basic_operations() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![
         LabEdge(0, 1, "edge01".to_string()),
         LabEdge(1, 2, "edge12".to_string()),
         LabEdge(2, 3, "edge23".to_string())
@@ -106,8 +106,8 @@ fn test_labdirgraphmteph_mutable_operations() {
 
 #[test]
 fn test_labdirgraphmteph_neighbors() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![
         LabEdge(0, 1, "a".to_string()),
         LabEdge(1, 2, "b".to_string()),
         LabEdge(2, 3, "c".to_string()),
@@ -152,8 +152,8 @@ fn test_labdirgraphmteph_edge_cases() {
     assert_eq!(empty.get_arc_label(&0, &1), None);
 
     // Test single vertex
-    let v_single: Set<N> = SetLit![42];
-    let a_empty: Set<LabEdge<N, String>> = SetLit![];
+    let v_single: SetStEph<N> = SetLit![42];
+    let a_empty: SetStEph<LabEdge<N, String>> = SetLit![];
     let g_single = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v_single, a_empty);
 
     assert_eq!(g_single.vertices().size(), 1);
@@ -162,8 +162,8 @@ fn test_labdirgraphmteph_edge_cases() {
     assert_eq!(g_single.in_neighbors(&42).size(), 0);
 
     // Test self-loop
-    let v_self: Set<N> = SetLit![1];
-    let a_self: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 1, "self".to_string())];
+    let v_self: SetStEph<N> = SetLit![1];
+    let a_self: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 1, "self".to_string())];
     let g_self = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v_self, a_self);
 
     assert!(g_self.has_arc(&1, &1));
@@ -174,8 +174,8 @@ fn test_labdirgraphmteph_edge_cases() {
 
 #[test]
 fn test_labdirgraphmteph_nonexistent_vertex() {
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(0, 1, "test".to_string())];
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(0, 1, "test".to_string())];
     let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v, a);
 
     // Query non-existent vertex
@@ -187,8 +187,8 @@ fn test_labdirgraphmteph_nonexistent_vertex() {
 
 #[test]
 fn test_labdirgraphmteph_concurrent_access() {
-    let v: Set<N> = SetLit![0, 1, 2, 3, 4];
-    let a: Set<LabEdge<N, String>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3, 4];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![
         LabEdge(0, 1, "a".to_string()),
         LabEdge(1, 2, "b".to_string()),
         LabEdge(2, 3, "c".to_string()),
@@ -228,8 +228,8 @@ fn test_labdirgraphmteph_concurrent_access() {
 
 #[test]
 fn test_labdirgraphmteph_arcs_conversion() {
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(0, 1, "first".to_string()), LabEdge(1, 2, "second".to_string())];
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(0, 1, "first".to_string()), LabEdge(1, 2, "second".to_string())];
     let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v, a);
 
     // Test arcs() method that converts labeled arcs to unlabeled edges
@@ -243,12 +243,12 @@ fn test_labdirgraphmteph_arcs_conversion() {
 #[test]
 fn test_labdirgraphmteph_parallel_out_neighbors() {
     // Create graph with >8 arcs to trigger parallel code path
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for i in 0..20 {
         vertices.insert(i);
     }
     
-    let mut arcs = Set::empty();
+    let mut arcs = SetStEph::empty();
     // Create 15 arcs from vertex 0 to vertices 1-15
     for i in 1..16 {
         arcs.insert(LabEdge(0, i, format!("arc{}", i)));
@@ -266,12 +266,12 @@ fn test_labdirgraphmteph_parallel_out_neighbors() {
 #[test]
 fn test_labdirgraphmteph_parallel_in_neighbors() {
     // Create graph with >8 arcs to trigger parallel code path
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for i in 0..20 {
         vertices.insert(i);
     }
     
-    let mut arcs = Set::empty();
+    let mut arcs = SetStEph::empty();
     // Create 15 arcs from vertices 1-15 to vertex 0
     for i in 1..16 {
         arcs.insert(LabEdge(i, 0, format!("arc{}", i)));
@@ -289,12 +289,12 @@ fn test_labdirgraphmteph_parallel_in_neighbors() {
 #[test]
 fn test_labdirgraphmteph_parallel_mixed() {
     // Create large graph with multiple sources/sinks
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for i in 0..30 {
         vertices.insert(i);
     }
     
-    let mut arcs = Set::empty();
+    let mut arcs = SetStEph::empty();
     // 10 arcs out from vertex 0
     for i in 1..11 {
         arcs.insert(LabEdge(0, i, format!("out{}", i)));
@@ -315,8 +315,8 @@ fn test_labdirgraphmteph_parallel_mixed() {
 
 #[test]
 fn test_labdirgraphmteph_display_trait() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
     let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v, a);
     
     let display_str = format!("{}", g);
@@ -325,8 +325,8 @@ fn test_labdirgraphmteph_display_trait() {
 
 #[test]
 fn test_labdirgraphmteph_debug_trait() {
-    let v: Set<N> = SetLit![1, 2];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
     let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v, a);
     
     let debug_str = format!("{:?}", g);
@@ -337,8 +337,8 @@ fn test_labdirgraphmteph_debug_trait() {
 
 #[test]
 fn test_labdirgraphmteph_clone() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string()), LabEdge(2, 3, "test2".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string()), LabEdge(2, 3, "test2".to_string())];
     let g = LabDirGraphMtEph::from_vertices_and_labeled_arcs(v, a);
     
     let g2 = g.clone();

@@ -21,13 +21,13 @@ pub mod WeightedUnDirGraphMtEphInt {
         /// Create from vertices and weighted edges
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
-        pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, i32)>) -> Self {
+        pub fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<(V, V, i32)>) -> Self {
             let labeled_edges = edges
                 .iter()
                 .map(|(v1, v2, weight)| LabEdge(v1.clone(), v2.clone(), *weight))
                 .collect::<Vec<_>>();
 
-            let mut edge_set = Set::empty();
+            let mut edge_set = SetStEph::empty();
             for edge in labeled_edges {
                 edge_set.insert(edge);
             }
@@ -48,8 +48,8 @@ pub mod WeightedUnDirGraphMtEphInt {
         /// Get all weighted edges as (v1, v2, weight) tuples
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential map
-        pub fn weighted_edges(&self) -> Set<(V, V, i32)> {
-            let mut edges = Set::empty();
+        pub fn weighted_edges(&self) -> SetStEph<(V, V, i32)> {
+            let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_edges().iter() {
                 edges.insert((labeled_edge.0.clone_mt(), labeled_edge.1.clone_mt(), labeled_edge.2));
             }
@@ -59,13 +59,13 @@ pub mod WeightedUnDirGraphMtEphInt {
         /// Get neighbors with weights
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|), Parallelism Θ(|E|/log |E|) - parallel divide-and-conquer filter
-        pub fn neighbors_weighted(&self, v: &V) -> Set<(V, i32)> {
+        pub fn neighbors_weighted(&self, v: &V) -> SetStEph<(V, i32)> {
             // PARALLEL: filter weighted edges using divide-and-conquer
             let edges: Vec<LabEdge<V, i32>> = self.labeled_edges().iter().cloned().collect();
             let n = edges.len();
 
             if n <= 8 {
-                let mut neighbors = Set::empty();
+                let mut neighbors = SetStEph::empty();
                 for labeled_edge in edges {
                     if labeled_edge.0 == *v {
                         neighbors.insert((labeled_edge.1.clone_mt(), labeled_edge.2));
@@ -77,22 +77,22 @@ pub mod WeightedUnDirGraphMtEphInt {
             }
 
             // Parallel divide-and-conquer
-            fn parallel_neighbors<V: HashOrd + MtT + 'static>(edges: Vec<LabEdge<V, i32>>, v: V) -> Set<(V, i32)> {
+            fn parallel_neighbors<V: HashOrd + MtT + 'static>(edges: Vec<LabEdge<V, i32>>, v: V) -> SetStEph<(V, i32)> {
                 let n = edges.len();
                 if n == 0 {
-                    return Set::empty();
+                    return SetStEph::empty();
                 }
                 if n == 1 {
                     if edges[0].0 == v {
-                        let mut s = Set::empty();
+                        let mut s = SetStEph::empty();
                         s.insert((edges[0].1.clone_mt(), edges[0].2));
                         return s;
                     } else if edges[0].1 == v {
-                        let mut s = Set::empty();
+                        let mut s = SetStEph::empty();
                         s.insert((edges[0].0.clone_mt(), edges[0].2));
                         return s;
                     }
-                    return Set::empty();
+                    return SetStEph::empty();
                 }
 
                 let mid = n / 2;

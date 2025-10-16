@@ -98,11 +98,11 @@ pub mod JohnsonStEphFloat {
         n: usize,
     ) -> (WeightedDirGraphStEphFloat<usize>, usize) {
         let dummy_idx = n;
-        let mut vertices = Set::empty();
+        let mut vertices = SetStEph::empty();
         for i in 0..=n {
             vertices.insert(i);
         }
-        let mut edges = Set::empty();
+        let mut edges = SetStEph::empty();
         for LabEdge(from, to, weight) in graph.labeled_arcs().iter() {
             edges.insert((*from, *to, *weight));
         }
@@ -120,11 +120,11 @@ pub mod JohnsonStEphFloat {
         potentials: &ArraySeqStEphS<OrderedF64>,
         n: usize,
     ) -> WeightedDirGraphStEphFloat<usize> {
-        let mut vertices = Set::empty();
+        let mut vertices = SetStEph::empty();
         for i in 0..n {
             vertices.insert(i);
         }
-        let mut edges = Set::empty();
+        let mut edges = SetStEph::empty();
         for LabEdge(from, to, weight) in graph.labeled_arcs().iter() {
             let p_from = *potentials.nth(*from);
             let p_to = *potentials.nth(*to);

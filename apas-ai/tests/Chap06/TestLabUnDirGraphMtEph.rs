@@ -35,8 +35,8 @@ fn test_labundirgraphmteph_empty() {
 
 #[test]
 fn test_labundirgraphmteph_basic_operations() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![
         LabEdge(0, 1, "edge01".to_string()),
         LabEdge(1, 2, "edge12".to_string()),
         LabEdge(2, 3, "edge23".to_string())
@@ -88,8 +88,8 @@ fn test_labundirgraphmteph_basic_operations() {
 
 #[test]
 fn test_labundirgraphmteph_incident_operations() {
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<LabEdge<N, String>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![
         LabEdge(0, 1, "first".to_string()),
         LabEdge(1, 2, "second".to_string()),
         LabEdge(0, 2, "direct".to_string())
@@ -109,8 +109,8 @@ fn test_labundirgraphmteph_incident_operations() {
 
 #[test]
 fn test_labundirgraphmteph_ngofvertices() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![
         LabEdge(0, 1, "a".to_string()),
         LabEdge(1, 2, "b".to_string()),
         LabEdge(2, 3, "c".to_string()),
@@ -118,7 +118,7 @@ fn test_labundirgraphmteph_ngofvertices() {
     ];
     let _g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
 
-    let _vertices_subset: Set<N> = SetLit![0, 1];
+    let _vertices_subset: SetStEph<N> = SetLit![0, 1];
     // let ng_subset = g.NGOfVertices(&vertices_subset); // TODO: method not available
 
     // Neighbors of {0, 1} should include all vertices connected to 0 or 1
@@ -130,8 +130,8 @@ fn test_labundirgraphmteph_ngofvertices() {
 
 #[test]
 fn test_labundirgraphmteph_nplusminusofvertices() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![
         LabEdge(0, 1, "a".to_string()),
         LabEdge(1, 2, "b".to_string()),
         LabEdge(2, 0, "c".to_string()),
@@ -139,7 +139,7 @@ fn test_labundirgraphmteph_nplusminusofvertices() {
     ];
     let _g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
 
-    let _vertices_subset: Set<N> = SetLit![0, 1];
+    let _vertices_subset: SetStEph<N> = SetLit![0, 1];
 
     // In undirected graphs, NPlus and NMinus should be the same as NG
     // let nplus_subset = g.NPlusOfVertices(&vertices_subset); // TODO: method not available
@@ -166,8 +166,8 @@ fn test_labundirgraphmteph_edge_cases() {
     assert_eq!(empty.neighbors(&0).size(), 0);
 
     // Test single vertex
-    let v_single: Set<N> = SetLit![42];
-    let a_empty: Set<LabEdge<N, String>> = SetLit![];
+    let v_single: SetStEph<N> = SetLit![42];
+    let a_empty: SetStEph<LabEdge<N, String>> = SetLit![];
     let g_single = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v_single, a_empty);
 
     assert_eq!(g_single.vertices().size(), 1);
@@ -176,8 +176,8 @@ fn test_labundirgraphmteph_edge_cases() {
     assert_eq!(g_single.neighbors(&42).size(), 0);
 
     // Test self-loop
-    let v_self: Set<N> = SetLit![1];
-    let a_self: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 1, "self".to_string())];
+    let v_self: SetStEph<N> = SetLit![1];
+    let a_self: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 1, "self".to_string())];
     let g_self = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v_self, a_self);
 
     assert!(g_self.has_edge(&1, &1));
@@ -189,8 +189,8 @@ fn test_labundirgraphmteph_edge_cases() {
 
 #[test]
 fn test_labundirgraphmteph_nonexistent_vertex() {
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(0, 1, "test".to_string())];
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(0, 1, "test".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
 
     // Query non-existent vertex
@@ -203,8 +203,8 @@ fn test_labundirgraphmteph_nonexistent_vertex() {
 
 #[test]
 fn test_labundirgraphmteph_concurrent_access() {
-    let v: Set<N> = SetLit![0, 1, 2, 3, 4];
-    let a: Set<LabEdge<N, String>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3, 4];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![
         LabEdge(0, 1, "a".to_string()),
         LabEdge(1, 2, "b".to_string()),
         LabEdge(2, 3, "c".to_string()),
@@ -259,16 +259,16 @@ fn test_labundirgraphmteph_concurrent_access() {
 
 #[test]
 fn test_sizea() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
     assert_eq!(g.sizeA(), 2);
 }
 
 #[test]
 fn test_arcs() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "edge1".to_string()), LabEdge(2, 3, "edge2".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "edge1".to_string()), LabEdge(2, 3, "edge2".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
     let arcs = g.arcs();
     assert_eq!(arcs.size(), 2);
@@ -276,8 +276,8 @@ fn test_arcs() {
 
 #[test]
 fn test_nplus() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
     let nplus = g.NPlus(&1);
     assert_eq!(nplus.size(), 1);
@@ -286,8 +286,8 @@ fn test_nplus() {
 
 #[test]
 fn test_nminus() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
     let nminus = g.NMinus(&2);
     assert_eq!(nminus.size(), 1);
@@ -296,24 +296,24 @@ fn test_nminus() {
 
 #[test]
 fn test_indegree() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
     assert_eq!(g.InDegree(&2), 2);
 }
 
 #[test]
 fn test_outdegree() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
     assert_eq!(g.OutDegree(&2), 2);
 }
 
 #[test]
 fn test_edges() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
     let edges = g.edges();
     assert_eq!(edges.size(), 2);
@@ -361,8 +361,8 @@ fn test_add_labeled_edge() {
 
 #[test]
 fn test_get_edge_label() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "first".to_string()), LabEdge(2, 3, "second".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "first".to_string()), LabEdge(2, 3, "second".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
 
     assert_eq!(g.get_edge_label(&1, &2), Some(&"first".to_string()));
@@ -374,8 +374,8 @@ fn test_get_edge_label() {
 
 #[test]
 fn test_vertices_accessor() {
-    let v: Set<N> = SetLit![1, 2, 3, 4];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3, 4];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v.clone(), a);
 
     assert_eq!(g.vertices().size(), 4);
@@ -386,8 +386,8 @@ fn test_vertices_accessor() {
 
 #[test]
 fn test_labeled_edges_accessor() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
 
     assert_eq!(g.labeled_edges().size(), 2);
@@ -397,8 +397,8 @@ fn test_labeled_edges_accessor() {
 
 #[test]
 fn test_display() {
-    let v: Set<N> = SetLit![1, 2];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
 
     let display_str = format!("{g}");
@@ -407,8 +407,8 @@ fn test_display() {
 
 #[test]
 fn test_debug() {
-    let v: Set<N> = SetLit![1, 2];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
 
     let debug_str = format!("{g:?}");
@@ -419,8 +419,8 @@ fn test_debug() {
 
 #[test]
 fn test_clone() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let a: Set<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
     let g1 = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
 
     let g2 = g1.clone();
@@ -431,12 +431,12 @@ fn test_clone() {
 
 #[test]
 fn test_parallel_neighbors() {
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for i in 0..16 {
         vertices.insert(i);
     }
     
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     for i in 1..13 {
         edges.insert(LabEdge(0, i, format!("edge_{i}")));
     }

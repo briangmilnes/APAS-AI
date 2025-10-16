@@ -12,8 +12,8 @@ pub mod DirGraphStEph {
 
     #[derive(Clone)]
     pub struct DirGraphStEph<V: StT + Hash> {
-        V: Set<V>,
-        A: Set<Edge<V>>,
+        V: SetStEph<V>,
+        A: SetStEph<Edge<V>>,
     }
 
     pub trait DirGraphStEphTrait<V: StT + Hash> {
@@ -22,13 +22,13 @@ pub mod DirGraphStEph {
         fn empty() -> DirGraphStEph<V>;
         /// APAS: Work Θ(|V| + |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |A|), Span Θ(1)
-        fn FromSets(V: Set<V>, A: Set<Edge<V>>) -> DirGraphStEph<V>;
+        fn FromSets(V: SetStEph<V>, A: SetStEph<Edge<V>>) -> DirGraphStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn vertices(&self) -> &Set<V>;
+        fn vertices(&self) -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn arcs(&self) -> &Set<Edge<V>>;
+        fn arcs(&self) -> &SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn sizeV(&self) -> N;
@@ -40,22 +40,22 @@ pub mod DirGraphStEph {
         fn Neighbor(&self, u: &V, v: &V) -> B;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn NG(&self, v: &V) -> Set<V>;
+        fn NG(&self, v: &V) -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(1)
-        fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V>;
+        fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn NPlus(&self, v: &V) -> Set<V>;
+        fn NPlus(&self, v: &V) -> SetStEph<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn NMinus(&self, v: &V) -> Set<V>;
+        fn NMinus(&self, v: &V) -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(1)
-        fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V>;
+        fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(1)
-        fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V>;
+        fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn Incident(&self, e: &Edge<V>, v: &V) -> B;
@@ -77,9 +77,9 @@ pub mod DirGraphStEph {
                 A: SetLit![],
             }
         }
-        fn FromSets(V: Set<V>, A: Set<Edge<V>>) -> DirGraphStEph<V> { DirGraphStEph { V, A } }
-        fn vertices(&self) -> &Set<V> { &self.V }
-        fn arcs(&self) -> &Set<Edge<V>> { &self.A }
+        fn FromSets(V: SetStEph<V>, A: SetStEph<Edge<V>>) -> DirGraphStEph<V> { DirGraphStEph { V, A } }
+        fn vertices(&self) -> &SetStEph<V> { &self.V }
+        fn arcs(&self) -> &SetStEph<Edge<V>> { &self.A }
         fn sizeV(&self) -> N { self.V.size() }
         fn sizeA(&self) -> N { self.A.size() }
 
@@ -88,10 +88,10 @@ pub mod DirGraphStEph {
             self.A.mem(&Edge(u.clone(), v.clone()))
         }
 
-        fn NG(&self, v: &V) -> Set<V> { self.NPlus(v).union(&self.NMinus(v)) }
+        fn NG(&self, v: &V) -> SetStEph<V> { self.NPlus(v).union(&self.NMinus(v)) }
 
-        fn NGOfVertices(&self, u_set: &Set<V>) -> Set<V> {
-            let mut result: Set<V> = SetLit![];
+        fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
+            let mut result: SetStEph<V> = SetLit![];
             for u in u_set.iter() {
                 let ng_u = self.NG(u);
                 result = result.union(&ng_u);
@@ -99,8 +99,8 @@ pub mod DirGraphStEph {
             result
         }
 
-        fn NPlus(&self, v: &V) -> Set<V> {
-            let mut out: Set<V> = SetLit![];
+        fn NPlus(&self, v: &V) -> SetStEph<V> {
+            let mut out: SetStEph<V> = SetLit![];
             for Edge(x, y) in self.A.iter().cloned() {
                 if x == *v {
                     let _ = out.insert(y.clone());
@@ -109,8 +109,8 @@ pub mod DirGraphStEph {
             out
         }
 
-        fn NMinus(&self, v: &V) -> Set<V> {
-            let mut inn: Set<V> = SetLit![];
+        fn NMinus(&self, v: &V) -> SetStEph<V> {
+            let mut inn: SetStEph<V> = SetLit![];
             for Edge(x, y) in self.A.iter().cloned() {
                 if y == *v {
                     let _ = inn.insert(x.clone());
@@ -119,8 +119,8 @@ pub mod DirGraphStEph {
             inn
         }
 
-        fn NPlusOfVertices(&self, u_set: &Set<V>) -> Set<V> {
-            let mut result: Set<V> = SetLit![];
+        fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
+            let mut result: SetStEph<V> = SetLit![];
             for u in u_set.iter() {
                 let plus_u = self.NPlus(u);
                 result = result.union(&plus_u);
@@ -128,8 +128,8 @@ pub mod DirGraphStEph {
             result
         }
 
-        fn NMinusOfVertices(&self, u_set: &Set<V>) -> Set<V> {
-            let mut result: Set<V> = SetLit![];
+        fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
+            let mut result: SetStEph<V> = SetLit![];
             for u in u_set.iter() {
                 let minus_u = self.NMinus(u);
                 result = result.union(&minus_u);
@@ -165,14 +165,14 @@ pub mod DirGraphStEph {
     #[macro_export]
     macro_rules! DirGraphStEphLit {
         () => {{
-            let __V: $crate::Chap05::SetStEph::SetStEph::Set<_> = $crate::SetLit![];
-            let __A: $crate::Chap05::SetStEph::SetStEph::Set<$crate::Types::Types::Edge<_>> = $crate::SetLit![];
+            let __V: $crate::Chap05::SetStEph::SetStEph::SetStEph<_> = $crate::SetLit![];
+            let __A: $crate::Chap05::SetStEph::SetStEph::SetStEph<$crate::Types::Types::Edge<_>> = $crate::SetLit![];
             < $crate::Chap06::DirGraphStEph::DirGraphStEph::DirGraphStEph<_> as $crate::Chap06::DirGraphStEph::DirGraphStEph::DirGraphStEphTrait<_> >::FromSets(__V, __A)
         }};
         ( V: [ $( $v:expr ),* $(,)? ], A: [ $( ( $u:expr , $w:expr ) ),* $(,)? ] ) => {{
-            let __V: $crate::Chap05::SetStEph::SetStEph::Set<_> = $crate::SetLit![ $( $v ),* ];
-            let __A: $crate::Chap05::SetStEph::SetStEph::Set<_> = {
-                let mut __s = < $crate::Chap05::SetStEph::SetStEph::Set<_> >::empty();
+            let __V: $crate::Chap05::SetStEph::SetStEph::SetStEph<_> = $crate::SetLit![ $( $v ),* ];
+            let __A: $crate::Chap05::SetStEph::SetStEph::SetStEph<_> = {
+                let mut __s = < $crate::Chap05::SetStEph::SetStEph::SetStEph<_> >::empty();
                 $( let _ = __s.insert($crate::Types::Types::Edge($u, $w)); )*
                 __s
             };

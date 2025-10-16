@@ -18,11 +18,11 @@ pub mod VertexMatchingStEph {
     pub trait VertexMatchingStEphTrait {
         /// Greedy vertex matching algorithm
         /// APAS: Work Θ(|E|), Span Θ(|E|)
-        fn greedy_matching<V: StT + Hash>(graph: &UnDirGraphStEph<V>) -> Set<Edge<V>>;
+        fn greedy_matching<V: StT + Hash>(graph: &UnDirGraphStEph<V>) -> SetStEph<Edge<V>>;
 
         /// Sequential version of parallel matching
         /// APAS: Work Θ(|E|), Span Θ(|E|)
-        fn parallel_matching_st<V: StT + Hash>(graph: &UnDirGraphStEph<V>) -> Set<Edge<V>>;
+        fn parallel_matching_st<V: StT + Hash>(graph: &UnDirGraphStEph<V>) -> SetStEph<Edge<V>>;
     }
 
     /// Algorithm 61.3: Greedy Vertex Matching
@@ -38,9 +38,9 @@ pub mod VertexMatchingStEph {
     ///
     /// Returns:
     /// - A set of edges forming a vertex matching (no two edges share an endpoint)
-    pub fn greedy_matching<V: StT + Hash>(graph: &UnDirGraphStEph<V>) -> Set<Edge<V>> {
-        let mut matching: Set<Edge<V>> = SetLit![];
-        let mut matched_vertices: Set<V> = SetLit![];
+    pub fn greedy_matching<V: StT + Hash>(graph: &UnDirGraphStEph<V>) -> SetStEph<Edge<V>> {
+        let mut matching: SetStEph<Edge<V>> = SetLit![];
+        let mut matched_vertices: SetStEph<V> = SetLit![];
 
         // Iterate over all edges
         for edge in graph.edges().iter() {
@@ -73,12 +73,12 @@ pub mod VertexMatchingStEph {
     ///
     /// Returns:
     /// - A set of edges forming a vertex matching
-    pub fn parallel_matching_st<V: StT + Hash>(graph: &UnDirGraphStEph<V>, seed: u64) -> Set<Edge<V>> {
+    pub fn parallel_matching_st<V: StT + Hash>(graph: &UnDirGraphStEph<V>, seed: u64) -> SetStEph<Edge<V>> {
         use rand::rngs::StdRng;
         use rand::{Rng, SeedableRng};
 
         let mut rng = StdRng::seed_from_u64(seed);
-        let mut matching: Set<Edge<V>> = SetLit![];
+        let mut matching: SetStEph<Edge<V>> = SetLit![];
 
         // Create a map from edges to their coin flips (heads = true, tails = false)
         let mut edge_coins: HashMap<Edge<V>, bool> = HashMap::new();

@@ -38,11 +38,11 @@ fn test_contract_with_base_expand_mt() {
     let graph = create_cycle_graph(6);
 
     // Simple base function that counts vertices
-    let base = |vertices: &Set<N>| vertices.size();
+    let base = |vertices: &SetStEph<N>| vertices.size();
 
     // Expand function that just returns the recursive result
     let expand =
-        |_v: &Set<N>, _e: &Set<Edge<N>>, _centers: &Set<N>, _part: &HashMap<N, N>, r: N| r;
+        |_v: &SetStEph<N>, _e: &SetStEph<Edge<N>>, _centers: &SetStEph<N>, _part: &HashMap<N, N>, r: N| r;
 
     let result = star_contract_mt(&graph, 456, &base, &expand);
 

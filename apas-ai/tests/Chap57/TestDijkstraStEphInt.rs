@@ -13,12 +13,12 @@ fn test_example_57_1() {
     // Shortest path to b is s -> a -> b (weight 2), not s -> b (weight 2)
     // Actually both have same weight, but example shows BFS might visit b first
 
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for v in 0..3 {
         vertices.insert(v);
     }
 
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     edges.insert((0, 1, 1)); // s=0 -> a=1 weight 1
     edges.insert((0, 2, 3)); // s=0 -> b=2 weight 3
     edges.insert((1, 2, 1)); // a=1 -> b=2 weight 1
@@ -42,12 +42,12 @@ fn test_example_57_3() {
     // d (no outgoing)
     // e (isolated vertex)
 
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for v in 0..6 {
         vertices.insert(v);
     }
 
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     edges.insert((0, 1, 1)); // s -> a
     edges.insert((0, 2, 5)); // s -> b
     edges.insert((1, 2, 2)); // a -> b
@@ -69,10 +69,10 @@ fn test_example_57_3() {
 
 #[test]
 fn test_single_vertex() {
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     vertices.insert(0);
 
-    let edges = Set::empty();
+    let edges = SetStEph::empty();
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
     let result = dijkstra(&graph, 0);
 
@@ -81,12 +81,12 @@ fn test_single_vertex() {
 
 #[test]
 fn test_unreachable_vertices() {
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for v in 0..3 {
         vertices.insert(v);
     }
 
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     edges.insert((0, 1, 1)); // s -> a
                              // vertex 2 is unreachable
 
@@ -101,12 +101,12 @@ fn test_unreachable_vertices() {
 
 #[test]
 fn test_path_extraction() {
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for v in 0..4 {
         vertices.insert(v);
     }
 
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     edges.insert((0, 1, 1));
     edges.insert((1, 2, 2));
     edges.insert((2, 3, 3));
@@ -125,12 +125,12 @@ fn test_path_extraction() {
 #[test]
 fn test_multiple_paths_same_weight() {
     // Multiple paths with same total weight
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for v in 0..4 {
         vertices.insert(v);
     }
 
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     edges.insert((0, 1, 5));
     edges.insert((0, 2, 3));
     edges.insert((2, 1, 2));
@@ -146,12 +146,12 @@ fn test_multiple_paths_same_weight() {
 #[test]
 fn test_larger_graph() {
     // Larger test graph
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for v in 0..10 {
         vertices.insert(v);
     }
 
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     for i in 0..9 {
         edges.insert((i, i + 1, 1));
     }

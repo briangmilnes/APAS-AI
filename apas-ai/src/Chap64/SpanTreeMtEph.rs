@@ -19,11 +19,11 @@ pub mod SpanTreeMtEph {
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
         fn spanning_tree_star_contraction_mt<V: StT + MtT + Hash + Ord + 'static>(
             graph: &UnDirGraphMtEph<V>,
-        ) -> Set<Edge<V>>;
+        ) -> SetStEph<Edge<V>>;
 
         /// Verify spanning tree properties
         /// APAS: Work O(|V| + |E|), Span O(lg |V|)
-        fn verify_spanning_tree<V: StT + MtT + Hash + Ord>(graph: &UnDirGraphMtEph<V>, tree: &Set<Edge<V>>) -> B;
+        fn verify_spanning_tree<V: StT + MtT + Hash + Ord>(graph: &UnDirGraphMtEph<V>, tree: &SetStEph<Edge<V>>) -> B;
     }
 
     /// Exercise 64.2: Spanning Tree via Star Contraction (Parallel)
@@ -42,16 +42,16 @@ pub mod SpanTreeMtEph {
     pub fn spanning_tree_star_contraction_mt<V: StT + MtT + Hash + Ord + 'static>(
         graph: &UnDirGraphMtEph<V>,
         seed: u64,
-    ) -> Set<Edge<V>> {
+    ) -> SetStEph<Edge<V>> {
         // Base: no edges means no spanning tree edges
-        let base = |_vertices: &Set<V>| SetLit![];
+        let base = |_vertices: &SetStEph<V>| SetLit![];
 
         // Expand: add star partition edges and map quotient tree edges back
-        let expand = |_v: &Set<V>,
-                      original_edges: &Set<Edge<V>>,
-                      _centers: &Set<V>,
+        let expand = |_v: &SetStEph<V>,
+                      original_edges: &SetStEph<Edge<V>>,
+                      _centers: &SetStEph<V>,
                       partition_map: &HashMap<V, V>,
-                      quotient_tree: Set<Edge<V>>| {
+                      quotient_tree: SetStEph<Edge<V>>| {
             let mut spanning_edges = SetLit![];
 
             // Add edges from vertices to their centers (star edges)
@@ -92,7 +92,7 @@ pub mod SpanTreeMtEph {
     }
 
     /// Verify that result is a valid spanning tree
-    pub fn verify_spanning_tree<V: StT + MtT + Hash + Ord>(graph: &UnDirGraphMtEph<V>, tree_edges: &Set<Edge<V>>) -> B {
+    pub fn verify_spanning_tree<V: StT + MtT + Hash + Ord>(graph: &UnDirGraphMtEph<V>, tree_edges: &SetStEph<Edge<V>>) -> B {
         let n = graph.sizeV();
         let expected_edges = if n > 0 { n - 1 } else { 0 };
 

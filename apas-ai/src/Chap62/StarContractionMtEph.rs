@@ -26,12 +26,12 @@ pub mod StarContractionMtEph {
         where
             V: StT + MtT + Hash + Ord + 'static,
             R: StT + MtT + 'static,
-            F: Fn(&Set<V>) -> R + Send + Sync + 'static,
-            G: Fn(&Set<V>, &R) -> R + Send + Sync + 'static;
+            F: Fn(&SetStEph<V>) -> R + Send + Sync + 'static,
+            G: Fn(&SetStEph<V>, &R) -> R + Send + Sync + 'static;
 
         /// Contract graph to just vertices (no edges)
         /// APAS: Work O((n + m) lg n), Span O(lg² n)
-        fn contract_to_vertices_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> Set<V>;
+        fn contract_to_vertices_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> SetStEph<V>;
     }
 
     /// Algorithm 62.5: Star Contraction (Parallel)
@@ -54,8 +54,8 @@ pub mod StarContractionMtEph {
     pub fn star_contract_mt<V, R, F, G>(graph: &UnDirGraphMtEph<V>, seed: u64, base: &F, expand: &G) -> R
     where
         V: StT + MtT + Hash + Ord + 'static,
-        F: Fn(&Set<V>) -> R,
-        G: Fn(&Set<V>, &Set<Edge<V>>, &Set<V>, &HashMap<V, V>, R) -> R,
+        F: Fn(&SetStEph<V>) -> R,
+        G: Fn(&SetStEph<V>, &SetStEph<Edge<V>>, &SetStEph<V>, &HashMap<V, V>, R) -> R,
     {
         // Base case: no edges
         if graph.sizeE() == 0 {
@@ -84,7 +84,7 @@ pub mod StarContractionMtEph {
     /// claude-4-sonet: Work O(m), Span O(lg m), Parallelism Θ(m/lg m)
     fn build_quotient_graph_parallel<V: StT + MtT + Hash + Ord + 'static>(
         graph: &UnDirGraphMtEph<V>,
-        centers: &Set<V>,
+        centers: &SetStEph<V>,
         partition_map: &HashMap<V, V>,
     ) -> UnDirGraphMtEph<V> {
         // Convert edges to sequence for parallel processing
@@ -109,7 +109,7 @@ pub mod StarContractionMtEph {
         partition_map: Arc<HashMap<V, V>>,
         start: usize,
         end: usize,
-    ) -> Set<Edge<V>> {
+    ) -> SetStEph<Edge<V>> {
         let size = end - start;
 
         if size == 0 {
@@ -164,7 +164,7 @@ pub mod StarContractionMtEph {
     pub fn contract_to_vertices_mt<V: StT + MtT + Hash + Ord + 'static>(
         graph: &UnDirGraphMtEph<V>,
         seed: u64,
-    ) -> Set<V> {
+    ) -> SetStEph<V> {
         star_contract_mt(
             graph,
             seed,

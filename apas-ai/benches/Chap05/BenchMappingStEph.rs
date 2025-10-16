@@ -18,12 +18,12 @@ fn bench_mapping_build(c: &mut Criterion) {
     let n: N = 50_000;
     group.bench_with_input(BenchmarkId::new("from_relation_overwrite_dups", n), &n, |b, &len| {
         b.iter(|| {
-            let mut pairs: Set<Pair<N, N>> = SetLit![]; // Set: empty constructor
+            let mut pairs: SetStEph<Pair<N, N>> = SetLit![]; // Set: empty constructor
             for i in 0..len {
-                let _ = Set::insert(&mut pairs, PairLit!(i % 10_000, i));
+                let _ = SetStEph::insert(&mut pairs, PairLit!(i % 10_000, i));
             }
-            let r = Relation::FromSet(pairs);
-            let m = Mapping::FromRelation(&r);
+            let r = RelationStEph::FromSet(pairs);
+            let m = MappingStEph::FromRelation(&r);
             black_box((r, m))
         })
     });
@@ -31,12 +31,12 @@ fn bench_mapping_build(c: &mut Criterion) {
     // Add domain() benchmark - O(|m|) operation
     group.bench_with_input(BenchmarkId::new("domain", n), &n, |b, &len| {
         b.iter(|| {
-            let mut pairs: Set<Pair<N, N>> = SetLit![];
+            let mut pairs: SetStEph<Pair<N, N>> = SetLit![];
             for i in 0..len {
-                let _ = Set::insert(&mut pairs, PairLit!(i % 10_000, i));
+                let _ = SetStEph::insert(&mut pairs, PairLit!(i % 10_000, i));
             }
-            let r = Relation::FromSet(pairs);
-            let m = Mapping::FromRelation(&r);
+            let r = RelationStEph::FromSet(pairs);
+            let m = MappingStEph::FromRelation(&r);
             let domain_set = m.domain();
             black_box(domain_set)
         })
@@ -45,12 +45,12 @@ fn bench_mapping_build(c: &mut Criterion) {
     // Add range() benchmark - O(|m|) operation
     group.bench_with_input(BenchmarkId::new("range", n), &n, |b, &len| {
         b.iter(|| {
-            let mut pairs: Set<Pair<N, N>> = SetLit![];
+            let mut pairs: SetStEph<Pair<N, N>> = SetLit![];
             for i in 0..len {
-                let _ = Set::insert(&mut pairs, PairLit!(i % 10_000, i));
+                let _ = SetStEph::insert(&mut pairs, PairLit!(i % 10_000, i));
             }
-            let r = Relation::FromSet(pairs);
-            let m = Mapping::FromRelation(&r);
+            let r = RelationStEph::FromSet(pairs);
+            let m = MappingStEph::FromRelation(&r);
             let range_set = m.range();
             black_box(range_set)
         })
@@ -59,12 +59,12 @@ fn bench_mapping_build(c: &mut Criterion) {
     // Add mem() benchmark - O(1) but worth testing for hash performance
     group.bench_with_input(BenchmarkId::new("mem", n), &n, |b, &len| {
         b.iter(|| {
-            let mut pairs: Set<Pair<N, N>> = SetLit![];
+            let mut pairs: SetStEph<Pair<N, N>> = SetLit![];
             for i in 0..len {
-                let _ = Set::insert(&mut pairs, PairLit!(i % 10_000, i));
+                let _ = SetStEph::insert(&mut pairs, PairLit!(i % 10_000, i));
             }
-            let r = Relation::FromSet(pairs);
-            let m = Mapping::FromRelation(&r);
+            let r = RelationStEph::FromSet(pairs);
+            let m = MappingStEph::FromRelation(&r);
             let hit = m.mem(&(len / 2), &(len / 2));
             black_box(hit)
         })
@@ -73,12 +73,12 @@ fn bench_mapping_build(c: &mut Criterion) {
     // Add iter() benchmark - O(|m|) operation
     group.bench_with_input(BenchmarkId::new("iter", n), &n, |b, &len| {
         b.iter(|| {
-            let mut pairs: Set<Pair<N, N>> = SetLit![];
+            let mut pairs: SetStEph<Pair<N, N>> = SetLit![];
             for i in 0..len {
-                let _ = Set::insert(&mut pairs, PairLit!(i % 10_000, i));
+                let _ = SetStEph::insert(&mut pairs, PairLit!(i % 10_000, i));
             }
-            let r = Relation::FromSet(pairs);
-            let m = Mapping::FromRelation(&r);
+            let r = RelationStEph::FromSet(pairs);
+            let m = MappingStEph::FromRelation(&r);
             let count = m.iter().count();
             black_box(count)
         })

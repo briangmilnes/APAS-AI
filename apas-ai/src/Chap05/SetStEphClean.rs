@@ -13,7 +13,7 @@ pub mod SetStEphClean {
     use crate::Types::Types::*;
 
     #[derive(Clone)]
-    pub struct Set<T> {
+    pub struct SetStEph<T> {
         data: HashSet<T>,
     }
 
@@ -29,14 +29,14 @@ pub mod SetStEphClean {
         // Multi-line methods (signature only, implementation in impl block)
         fn union(&self, other: &Self)                             -> Self where T: Clone;
         fn intersection(&self, other: &Self)                      -> Self where T: Clone;
-        fn partition(&self, parts: &Set<Set<T>>)                  -> B where T: Clone;
-        fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>> where T: Clone;
+        fn partition(&self, parts: &SetStEph<SetStEph<T>>)                  -> B where T: Clone;
+        fn CartesianProduct<U: StT + Hash>(&self, other: &SetStEph<U>) -> SetStEph<Pair<T, U>> where T: Clone;
     }
 
-    impl<T: StT + Hash> SetStEphCleanTrait<T> for Set<T> {
+    impl<T: StT + Hash> SetStEphCleanTrait<T> for SetStEph<T> {
         // One-line implementations (≤120 chars)
-        fn empty()                                -> Self { Set { data: HashSet::new() } }
-        fn singleton(x: T)                        -> Self { let mut s = HashSet::with_capacity(1); s.insert(x); Set { data: s } }
+        fn empty()                                -> Self { SetStEph { data: HashSet::new() } }
+        fn singleton(x: T)                        -> Self { let mut s = HashSet::with_capacity(1); s.insert(x); SetStEph { data: s } }
         fn size(&self)                            -> N    { self.data.len() }
         fn mem(&self, x: &T)                      -> B    { self.data.contains(x) }
         fn iter(&self) -> Iter<'_, T> { self.data.iter() }
@@ -62,10 +62,10 @@ pub mod SetStEphClean {
             for x in self.data.intersection(&other.data) {
                 out.insert(x.clone());
             }
-            Set { data: out }
+            SetStEph { data: out }
         }
 
-        fn partition(&self, parts: &Set<Set<T>>) -> B
+        fn partition(&self, parts: &SetStEph<SetStEph<T>>) -> B
         where
             T: Clone,
         {
@@ -86,7 +86,7 @@ pub mod SetStEphClean {
             true
         }
 
-        fn CartesianProduct<U: StT + Hash>(&self, other: &Set<U>) -> Set<Pair<T, U>>
+        fn CartesianProduct<U: StT + Hash>(&self, other: &SetStEph<U>) -> SetStEph<Pair<T, U>>
         where
             T: Clone,
         {
@@ -96,23 +96,23 @@ pub mod SetStEphClean {
                     out.insert(Pair(x.clone(), y.clone()));
                 }
             }
-            Set { data: out }
+            SetStEph { data: out }
         }
     }
 
-    impl<T: Eq + Hash> PartialEq for Set<T> {
+    impl<T: Eq + Hash> PartialEq for SetStEph<T> {
         fn eq(&self, other: &Self) -> bool { self.data == other.data }
     }
 
-    impl<T: Eq + Hash> Eq for Set<T> {}
+    impl<T: Eq + Hash> Eq for SetStEph<T> {}
 
-    impl<T: Eq + Hash + Debug> Debug for Set<T> {
+    impl<T: Eq + Hash + Debug> Debug for SetStEph<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             f.debug_set().entries(self.data.iter()).finish()
         }
     }
 
-    impl<T: Eq + Hash + Display> Display for Set<T> {
+    impl<T: Eq + Hash + Display> Display for SetStEph<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "{{")?;
             let mut first = true;
@@ -127,7 +127,7 @@ pub mod SetStEphClean {
         }
     }
 
-    impl<T: Eq + Hash> Hash for Set<T> {
+    impl<T: Eq + Hash> Hash for SetStEph<T> {
         fn hash<H: Hasher>(&self, state: &mut H) {
             use std::collections::hash_map::DefaultHasher;
             let mut element_hashes: Vec<u64> = Vec::with_capacity(self.data.len());

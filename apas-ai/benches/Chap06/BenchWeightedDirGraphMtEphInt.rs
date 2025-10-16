@@ -17,11 +17,11 @@ fn bench_weighted_dir_graph_mt_eph_int(c: &mut Criterion) {
     let n: N = 500;
     group.bench_with_input(BenchmarkId::new("build_graph", n), &n, |b, &len| {
         b.iter(|| {
-            let mut vertices = Set::empty();
+            let mut vertices = SetStEph::empty();
             for i in 0..len {
                 vertices.insert(i);
             }
-            let mut edges = Set::empty();
+            let mut edges = SetStEph::empty();
             for i in 0..len {
                 for j in 0..3 {
                     let target = (i + j + 1) % len;
@@ -34,11 +34,11 @@ fn bench_weighted_dir_graph_mt_eph_int(c: &mut Criterion) {
     });
 
     group.bench_with_input(BenchmarkId::new("edge_operations", n), &n, |b, &len| {
-        let mut vertices = Set::empty();
+        let mut vertices = SetStEph::empty();
         for i in 0..len {
             vertices.insert(i);
         }
-        let mut edges = Set::empty();
+        let mut edges = SetStEph::empty();
         for i in 0..len {
             let target = (i + 1) % len;
             edges.insert((i, target, i as i32));

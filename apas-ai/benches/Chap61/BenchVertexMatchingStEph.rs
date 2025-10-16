@@ -9,8 +9,8 @@ use criterion::*;
 use std::time::Duration;
 
 fn create_cycle_graph(n: usize) -> UnDirGraphStEph<usize> {
-    let mut vertices: Set<usize> = SetLit![];
-    let mut edges: Set<Edge<usize>> = SetLit![];
+    let mut vertices: SetStEph<usize> = SetLit![];
+    let mut edges: SetStEph<Edge<usize>> = SetLit![];
 
     for i in 0..n {
         let _ = vertices.insert(i);

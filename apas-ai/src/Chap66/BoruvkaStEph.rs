@@ -20,26 +20,26 @@ pub mod BoruvkaStEph {
     pub trait BoruvkaStEphTrait {
         /// Find vertex bridges for Borůvka's algorithm
         /// APAS: Work O(|E|), Span O(|E|)
-        fn vertex_bridges<V: StT + Hash + Ord>(edges: &Set<LabeledEdge<V>>) -> Set<(V, LabeledEdge<V>)>;
+        fn vertex_bridges<V: StT + Hash + Ord>(edges: &SetStEph<LabeledEdge<V>>) -> SetStEph<(V, LabeledEdge<V>)>;
 
         /// Bridge-based star partition
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
         fn bridge_star_partition<V: StT + Hash + Ord>(
-            vertices: &Set<V>,
-            bridges: &Set<(V, LabeledEdge<V>)>,
-        ) -> Set<Set<V>>;
+            vertices: &SetStEph<V>,
+            bridges: &SetStEph<(V, LabeledEdge<V>)>,
+        ) -> SetStEph<SetStEph<V>>;
 
         /// Borůvka's MST algorithm
         /// APAS: Work O(m log n), Span O(m log n)
-        fn boruvka_mst<V: StT + Hash + Ord>(edges: &Set<LabeledEdge<V>>) -> Set<LabeledEdge<V>>;
+        fn boruvka_mst<V: StT + Hash + Ord>(edges: &SetStEph<LabeledEdge<V>>) -> SetStEph<LabeledEdge<V>>;
 
         /// Borůvka's MST with random seed
         /// APAS: Work O(m log n), Span O(m log n)
-        fn boruvka_mst_with_seed<V: StT + Hash + Ord>(edges: &Set<LabeledEdge<V>>, seed: u64) -> Set<LabeledEdge<V>>;
+        fn boruvka_mst_with_seed<V: StT + Hash + Ord>(edges: &SetStEph<LabeledEdge<V>>, seed: u64) -> SetStEph<LabeledEdge<V>>;
 
         /// Compute total weight of MST
         /// APAS: Work O(m), Span O(1)
-        fn mst_weight<V: StT + Hash>(mst: &Set<LabeledEdge<V>>) -> OrderedFloat<f64>;
+        fn mst_weight<V: StT + Hash>(mst: &SetStEph<LabeledEdge<V>>) -> OrderedFloat<f64>;
     }
 
     /// Edge with label: (u, v, weight, label)
@@ -60,7 +60,7 @@ pub mod BoruvkaStEph {
     /// Returns:
     /// - HashMap mapping vertex → (neighbor, weight, label) for minimum edge
     pub fn vertex_bridges<V: StT + Hash + Ord>(
-        edges: &Set<LabeledEdge<V>>,
+        edges: &SetStEph<LabeledEdge<V>>,
     ) -> HashMap<V, (V, OrderedFloat<f64>, usize)> {
         let mut bridges: HashMap<V, (V, OrderedFloat<f64>, usize)> = HashMap::new();
 
@@ -111,10 +111,10 @@ pub mod BoruvkaStEph {
     /// Returns:
     /// - (remaining_vertices, partition_map) where partition_map: tail → (head, weight, label)
     pub fn bridge_star_partition<V: StT + Hash + Ord>(
-        vertices: &Set<V>,
+        vertices: &SetStEph<V>,
         bridges: &HashMap<V, (V, OrderedFloat<f64>, usize)>,
         rng: &mut StdRng,
-    ) -> (Set<V>, HashMap<V, (V, OrderedFloat<f64>, usize)>) {
+    ) -> (SetStEph<V>, HashMap<V, (V, OrderedFloat<f64>, usize)>) {
         // Coin flips for all vertices
         let mut flips: HashMap<V, bool> = HashMap::new();
         for v in vertices.iter() {
@@ -162,11 +162,11 @@ pub mod BoruvkaStEph {
     /// Returns:
     /// - Set of edge labels in the MST
     pub fn boruvka_mst<V: StT + Hash + Ord>(
-        vertices: &Set<V>,
-        edges: &Set<LabeledEdge<V>>,
-        mst_labels: Set<usize>,
+        vertices: &SetStEph<V>,
+        edges: &SetStEph<LabeledEdge<V>>,
+        mst_labels: SetStEph<usize>,
         rng: &mut StdRng,
-    ) -> Set<usize> {
+    ) -> SetStEph<usize> {
         // Base case: no edges remaining
         if edges.size() == 0 {
             return mst_labels;
@@ -222,10 +222,10 @@ pub mod BoruvkaStEph {
     /// Returns:
     /// - Set of edge labels in the MST
     pub fn boruvka_mst_with_seed<V: StT + Hash + Ord>(
-        vertices: &Set<V>,
-        edges: &Set<LabeledEdge<V>>,
+        vertices: &SetStEph<V>,
+        edges: &SetStEph<LabeledEdge<V>>,
         seed: u64,
-    ) -> Set<usize> {
+    ) -> SetStEph<usize> {
         let mut rng = StdRng::seed_from_u64(seed);
         boruvka_mst(vertices, edges, SetLit![], &mut rng)
     }
@@ -234,7 +234,7 @@ pub mod BoruvkaStEph {
     ///
     /// APAS: Work O(m), Span O(m)
     /// claude-4-sonet: Work O(m), Span O(m)
-    pub fn mst_weight<V: StT + Hash>(edges: &Set<LabeledEdge<V>>, mst_labels: &Set<usize>) -> OrderedFloat<f64> {
+    pub fn mst_weight<V: StT + Hash>(edges: &SetStEph<LabeledEdge<V>>, mst_labels: &SetStEph<usize>) -> OrderedFloat<f64> {
         let mut total = OrderedFloat(0.0);
         for (_, _, w, label) in edges.iter() {
             if mst_labels.mem(label) {

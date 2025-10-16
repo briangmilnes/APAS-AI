@@ -155,7 +155,7 @@ pub mod JohnsonMtEphFloat {
         n: usize,
     ) -> (WeightedDirGraphStEphFloat<usize>, usize) {
         // Convert MtEph graph to StEph for Bellman-Ford
-        let mut vertices = Set::empty();
+        let mut vertices = SetStEph::empty();
         for i in 0..n {
             vertices.insert(i);
         }
@@ -163,7 +163,7 @@ pub mod JohnsonMtEphFloat {
         // Add dummy vertex
         vertices.insert(n);
 
-        let mut edges = Set::empty();
+        let mut edges = SetStEph::empty();
 
         // Copy all original edges
         for u in 0..n {
@@ -187,12 +187,12 @@ pub mod JohnsonMtEphFloat {
         potentials: &ArraySeqStEphS<OrderedF64>,
         n: usize,
     ) -> WeightedDirGraphStEphFloat<usize> {
-        let mut vertices = Set::empty();
+        let mut vertices = SetStEph::empty();
         for i in 0..n {
             vertices.insert(i);
         }
 
-        let mut reweighted_edges = Set::empty();
+        let mut reweighted_edges = SetStEph::empty();
         for u in 0..n {
             let p_u = *potentials.nth(u);
             for v_w in graph.out_neighbors_weighted(&u).iter() {

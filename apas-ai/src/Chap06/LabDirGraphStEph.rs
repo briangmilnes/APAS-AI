@@ -12,8 +12,8 @@ pub mod LabDirGraphStEph {
 
     #[derive(Clone)]
     pub struct LabDirGraphStEph<V: StT + Hash, L: StT + Hash> {
-        vertices: Set<V>,
-        labeled_arcs: Set<LabEdge<V, L>>,
+        vertices: SetStEph<V>,
+        labeled_arcs: SetStEph<LabEdge<V, L>>,
     }
 
     pub trait LabDirGraphStEphTrait<V: StT + Hash, L: StT + Hash> {
@@ -22,16 +22,16 @@ pub mod LabDirGraphStEph {
         fn empty() -> Self;
         /// APAS: Work Θ(|V| + |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |A|), Span Θ(|V| + |A|), Parallelism Θ(1) - sequential
-        fn from_vertices_and_labeled_arcs(vertices: Set<V>, labeled_arcs: Set<LabEdge<V, L>>) -> Self;
+        fn from_vertices_and_labeled_arcs(vertices: SetStEph<V>, labeled_arcs: SetStEph<LabEdge<V, L>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn vertices(&self) -> &Set<V>;
+        fn vertices(&self) -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn labeled_arcs(&self) -> &Set<LabEdge<V, L>>;
+        fn labeled_arcs(&self) -> &SetStEph<LabEdge<V, L>>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential map
-        fn arcs(&self) -> Set<Edge<V>>;
+        fn arcs(&self) -> SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn add_vertex(&mut self, v: V);
@@ -46,30 +46,30 @@ pub mod LabDirGraphStEph {
         fn has_arc(&self, from: &V, to: &V) -> bool;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential filter
-        fn out_neighbors(&self, v: &V) -> Set<V>;
+        fn out_neighbors(&self, v: &V) -> SetStEph<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential filter
-        fn in_neighbors(&self, v: &V) -> Set<V>;
+        fn in_neighbors(&self, v: &V) -> SetStEph<V>;
     }
 
     impl<V: StT + Hash, L: StT + Hash> LabDirGraphStEphTrait<V, L> for LabDirGraphStEph<V, L> {
         fn empty() -> Self {
             LabDirGraphStEph {
-                vertices: Set::empty(),
-                labeled_arcs: Set::empty(),
+                vertices: SetStEph::empty(),
+                labeled_arcs: SetStEph::empty(),
             }
         }
 
-        fn from_vertices_and_labeled_arcs(vertices: Set<V>, labeled_arcs: Set<LabEdge<V, L>>) -> Self {
+        fn from_vertices_and_labeled_arcs(vertices: SetStEph<V>, labeled_arcs: SetStEph<LabEdge<V, L>>) -> Self {
             LabDirGraphStEph { vertices, labeled_arcs }
         }
 
-        fn vertices(&self) -> &Set<V> { &self.vertices }
+        fn vertices(&self) -> &SetStEph<V> { &self.vertices }
 
-        fn labeled_arcs(&self) -> &Set<LabEdge<V, L>> { &self.labeled_arcs }
+        fn labeled_arcs(&self) -> &SetStEph<LabEdge<V, L>> { &self.labeled_arcs }
 
-        fn arcs(&self) -> Set<Edge<V>> {
-            let mut arcs = Set::empty();
+        fn arcs(&self) -> SetStEph<Edge<V>> {
+            let mut arcs = SetStEph::empty();
             for labeled_arc in self.labeled_arcs.iter() {
                 arcs.insert(Edge(labeled_arc.0.clone(), labeled_arc.1.clone()));
             }
@@ -102,8 +102,8 @@ pub mod LabDirGraphStEph {
             false
         }
 
-        fn out_neighbors(&self, v: &V) -> Set<V> {
-            let mut neighbors = Set::empty();
+        fn out_neighbors(&self, v: &V) -> SetStEph<V> {
+            let mut neighbors = SetStEph::empty();
             for labeled_arc in self.labeled_arcs.iter() {
                 if labeled_arc.0 == *v {
                     neighbors.insert(labeled_arc.1.clone());
@@ -112,8 +112,8 @@ pub mod LabDirGraphStEph {
             neighbors
         }
 
-        fn in_neighbors(&self, v: &V) -> Set<V> {
-            let mut neighbors = Set::empty();
+        fn in_neighbors(&self, v: &V) -> SetStEph<V> {
+            let mut neighbors = SetStEph::empty();
             for labeled_arc in self.labeled_arcs.iter() {
                 if labeled_arc.1 == *v {
                     neighbors.insert(labeled_arc.0.clone());

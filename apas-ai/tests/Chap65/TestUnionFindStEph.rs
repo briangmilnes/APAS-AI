@@ -3,12 +3,12 @@
 
 use std::hash::Hash;
 
-use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
+use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFindStEph;
 use apas_ai::Types::Types::*;
 
 #[test]
 fn test_union_find_basic() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
 
     // Insert vertices
     uf.insert(0);
@@ -47,7 +47,7 @@ fn test_union_find_basic() {
 
 #[test]
 fn test_union_find_path_compression() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
 
     // Create a long chain: 0-1-2-3-4
     for i in 0..5 {
@@ -70,13 +70,13 @@ fn test_union_find_path_compression() {
 
 #[test]
 fn test_union_find_empty() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
     assert_eq!(uf.num_sets(), 0);
 }
 
 #[test]
 fn test_union_find_single() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
     uf.insert(42);
     assert_eq!(uf.num_sets(), 1);
     assert!(uf.equals(&42, &42));
@@ -84,7 +84,7 @@ fn test_union_find_single() {
 
 #[test]
 fn test_union_find_duplicate_insert() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
     uf.insert(1);
     uf.insert(1);
     uf.insert(2);
@@ -96,7 +96,7 @@ fn test_union_find_duplicate_insert() {
 
 #[test]
 fn test_union_find_string_vertices() {
-    let mut uf: UnionFind<String> = UnionFind::new();
+    let mut uf: UnionFindStEph<String> = UnionFindStEph::new();
 
     uf.insert("A".to_string());
     uf.insert("B".to_string());
@@ -112,7 +112,7 @@ fn test_union_find_string_vertices() {
 
 #[test]
 fn test_union_find_already_unioned() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
 
     uf.insert(1);
     uf.insert(2);
@@ -127,7 +127,7 @@ fn test_union_find_already_unioned() {
 
 #[test]
 fn test_find_root() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
     uf.insert(1);
     uf.insert(2);
     uf.insert(3);
@@ -143,7 +143,7 @@ fn test_find_root() {
 
 #[test]
 fn test_large_union_find() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
 
     for i in 0..100 {
         uf.insert(i);
@@ -180,7 +180,7 @@ fn test_large_union_find() {
 
 #[test]
 fn test_union_find_reflexive() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
     uf.insert(5);
 
     assert!(uf.equals(&5, &5));
@@ -188,7 +188,7 @@ fn test_union_find_reflexive() {
 
 #[test]
 fn test_union_find_symmetric() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
     uf.insert(1);
     uf.insert(2);
 
@@ -199,7 +199,7 @@ fn test_union_find_symmetric() {
 
 #[test]
 fn test_union_find_transitive() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
     uf.insert(1);
     uf.insert(2);
     uf.insert(3);
@@ -212,7 +212,7 @@ fn test_union_find_transitive() {
 
 #[test]
 fn test_multiple_components() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
 
     // Create 3 components
     for i in 0..9 {
@@ -244,7 +244,7 @@ fn test_multiple_components() {
 
 #[test]
 fn test_star_pattern() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
 
     // Create star with center 0
     for i in 0..10 {
@@ -266,7 +266,7 @@ fn test_star_pattern() {
 
 #[test]
 fn test_rank_based_union_smaller_to_larger() {
-    let mut uf: UnionFind<N> = UnionFind::new();
+    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
     
     // Build tree with rank 2
     uf.insert(0);
@@ -289,7 +289,7 @@ fn test_rank_based_union_smaller_to_larger() {
 
 #[test]
 fn test_default_trait() {
-    let mut uf: UnionFind<i32> = Default::default();
+    let mut uf: UnionFindStEph<i32> = Default::default();
     uf.insert(1);
     assert_eq!(uf.num_sets(), 1);
 }
@@ -300,57 +300,57 @@ use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFindStEphTrait;
 
 #[test]
 fn test_trait_new() {
-    let mut uf = <UnionFind<i32> as UnionFindStEphTrait<i32>>::new();
+    let mut uf = <UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::new();
     assert_eq!(uf.num_sets(), 0);
 }
 
 #[test]
 fn test_trait_insert() {
-    let mut uf = <UnionFind<i32> as UnionFindStEphTrait<i32>>::new();
-    <UnionFind<i32> as UnionFindStEphTrait<i32>>::insert(&mut uf, 1);
-    <UnionFind<i32> as UnionFindStEphTrait<i32>>::insert(&mut uf, 2);
+    let mut uf = <UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::new();
+    <UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::insert(&mut uf, 1);
+    <UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::insert(&mut uf, 2);
     assert_eq!(uf.num_sets(), 2);
 }
 
 #[test]
 fn test_trait_find() {
-    let mut uf = <UnionFind<i32> as UnionFindStEphTrait<i32>>::new();
+    let mut uf = <UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::new();
     uf.insert(1);
     uf.insert(2);
     uf.union(&1, &2);
     
-    let root1 = <UnionFind<i32> as UnionFindStEphTrait<i32>>::find(&mut uf, &1);
-    let root2 = <UnionFind<i32> as UnionFindStEphTrait<i32>>::find(&mut uf, &2);
+    let root1 = <UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::find(&mut uf, &1);
+    let root2 = <UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::find(&mut uf, &2);
     assert_eq!(root1, root2);
 }
 
 #[test]
 fn test_trait_union() {
-    let mut uf = <UnionFind<i32> as UnionFindStEphTrait<i32>>::new();
+    let mut uf = <UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::new();
     uf.insert(1);
     uf.insert(2);
-    <UnionFind<i32> as UnionFindStEphTrait<i32>>::union(&mut uf, &1, &2);
+    <UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::union(&mut uf, &1, &2);
     assert!(uf.equals(&1, &2));
 }
 
 #[test]
 fn test_trait_equals() {
-    let mut uf = <UnionFind<i32> as UnionFindStEphTrait<i32>>::new();
+    let mut uf = <UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::new();
     uf.insert(1);
     uf.insert(2);
     uf.union(&1, &2);
-    assert!(<UnionFind<i32> as UnionFindStEphTrait<i32>>::equals(&mut uf, &1, &2));
+    assert!(<UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::equals(&mut uf, &1, &2));
 }
 
 #[test]
 fn test_trait_num_sets() {
-    let mut uf = <UnionFind<i32> as UnionFindStEphTrait<i32>>::new();
+    let mut uf = <UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::new();
     uf.insert(1);
     uf.insert(2);
     uf.insert(3);
-    assert_eq!(<UnionFind<i32> as UnionFindStEphTrait<i32>>::num_sets(&mut uf), 3);
+    assert_eq!(<UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::num_sets(&mut uf), 3);
     uf.union(&1, &2);
-    assert_eq!(<UnionFind<i32> as UnionFindStEphTrait<i32>>::num_sets(&mut uf), 2);
+    assert_eq!(<UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::num_sets(&mut uf), 2);
 }
 
 fn generic_union_find_ops<V: StT + Hash, UF: UnionFindStEphTrait<V>>(uf: &mut UF, a: V, b: V) {
@@ -362,7 +362,7 @@ fn generic_union_find_ops<V: StT + Hash, UF: UnionFindStEphTrait<V>>(uf: &mut UF
 
 #[test]
 fn test_generic_dispatch() {
-    let mut uf = UnionFind::<i32>::new();
+    let mut uf = UnionFindStEph::<i32>::new();
     generic_union_find_ops(&mut uf, 10, 20);
     assert_eq!(uf.num_sets(), 1);
 }

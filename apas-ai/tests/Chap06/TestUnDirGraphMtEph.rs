@@ -37,8 +37,8 @@ fn test_undirgraphmteph_empty() {
 
 #[test]
 fn test_undirgraphmteph_basic_operations() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3)];
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphMtEph::FromSets(v, a);
 
     assert_eq!(g.sizeV(), 4);
@@ -86,8 +86,8 @@ fn test_undirgraphmteph_basic_operations() {
 
 #[test]
 fn test_undirgraphmteph_incident_operations() {
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(0, 2)];
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(0, 2)];
     let g = UnDirGraphMtEph::FromSets(v, a);
 
     // Test incident edges
@@ -150,8 +150,8 @@ fn test_ng_of_vertices_parallel() {
 
 #[test]
 fn test_ng_single_edge() {
-    let v: Set<N> = SetLit![0, 1];
-    let a: Set<Edge<N>> = SetLit![Edge(0, 1)];
+    let v: SetStEph<N> = SetLit![0, 1];
+    let a: SetStEph<Edge<N>> = SetLit![Edge(0, 1)];
     let g = UnDirGraphMtEph::FromSets(v, a);
     
     let ng = g.NG(&0);
@@ -161,11 +161,11 @@ fn test_ng_single_edge() {
 
 #[test]
 fn test_ng_of_vertices_empty_set() {
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<Edge<N>> = SetLit![Edge(0, 1)];
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<Edge<N>> = SetLit![Edge(0, 1)];
     let g = UnDirGraphMtEph::FromSets(v, a);
     
-    let empty_set: Set<N> = SetLit![];
+    let empty_set: SetStEph<N> = SetLit![];
     let ng = g.NGOfVertices(&empty_set);
     
     assert_eq!(ng.size(), 0);
@@ -198,8 +198,8 @@ fn test_ng_of_vertices_large_set() {
 
 #[test]
 fn test_clone_graph() {
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<Edge<N>> = SetLit![Edge(0, 1)];
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<Edge<N>> = SetLit![Edge(0, 1)];
     let g = UnDirGraphMtEph::FromSets(v, a);
     
     let g2 = g.clone();
@@ -209,11 +209,11 @@ fn test_clone_graph() {
 
 #[test]
 fn test_undirgraphmteph_ngofvertices() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3), Edge(0, 3)];
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3), Edge(0, 3)];
     let g = UnDirGraphMtEph::FromSets(v, a);
 
-    let vertices_subset: Set<N> = SetLit![0, 1];
+    let vertices_subset: SetStEph<N> = SetLit![0, 1];
     let ng_subset = g.NGOfVertices(&vertices_subset);
 
     // Neighbors of {0, 1} includes all vertices connected to 0 or 1 (including 0 and 1 themselves)
@@ -226,11 +226,11 @@ fn test_undirgraphmteph_ngofvertices() {
 
 #[test]
 fn test_undirgraphmteph_nplusminusofvertices() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 0), Edge(3, 1)];
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 0), Edge(3, 1)];
     let g = UnDirGraphMtEph::FromSets(v, a);
 
-    let vertices_subset: Set<N> = SetLit![0, 1];
+    let vertices_subset: SetStEph<N> = SetLit![0, 1];
 
     // In undirected graphs, NPlus and NMinus should be the same as NG
     let ng_subset = g.NGOfVertices(&vertices_subset);
@@ -254,8 +254,8 @@ fn test_undirgraphmteph_edge_cases() {
     assert_eq!(empty.Degree(&0), 0);
 
     // Test single vertex
-    let v_single: Set<N> = SetLit![42];
-    let a_empty: Set<Edge<N>> = SetLit![];
+    let v_single: SetStEph<N> = SetLit![42];
+    let a_empty: SetStEph<Edge<N>> = SetLit![];
     let g_single = UnDirGraphMtEph::FromSets(v_single, a_empty);
 
     assert_eq!(g_single.sizeV(), 1);
@@ -264,8 +264,8 @@ fn test_undirgraphmteph_edge_cases() {
     assert_eq!(g_single.NG(&42).size(), 0);
 
     // Test self-loop
-    let v_self: Set<N> = SetLit![1];
-    let a_self: Set<Edge<N>> = SetLit![Edge(1, 1)];
+    let v_self: SetStEph<N> = SetLit![1];
+    let a_self: SetStEph<Edge<N>> = SetLit![Edge(1, 1)];
     let g_self = UnDirGraphMtEph::FromSets(v_self, a_self);
 
     assert!(g_self.Neighbor(&1, &1));
@@ -277,8 +277,8 @@ fn test_undirgraphmteph_edge_cases() {
 
 #[test]
 fn test_undirgraphmteph_nonexistent_vertex() {
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<Edge<N>> = SetLit![Edge(0, 1)];
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<Edge<N>> = SetLit![Edge(0, 1)];
     let g = UnDirGraphMtEph::FromSets(v, a);
 
     // Query non-existent vertex
@@ -291,8 +291,8 @@ fn test_undirgraphmteph_nonexistent_vertex() {
 
 #[test]
 fn test_undirgraphmteph_concurrent_access() {
-    let v: Set<N> = SetLit![0, 1, 2, 3, 4];
-    let a: Set<Edge<N>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3, 4];
+    let a: SetStEph<Edge<N>> = SetLit![
         Edge(0, 1),
         Edge(1, 2),
         Edge(2, 3),
@@ -348,8 +348,8 @@ fn test_undirgraphmteph_concurrent_access() {
 #[test]
 fn test_undirgraphmteph_complete_graph() {
     // Test complete graph K4
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(0, 2), Edge(0, 3), Edge(1, 2), Edge(1, 3), Edge(2, 3)];
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<Edge<N>> = SetLit![Edge(0, 1), Edge(0, 2), Edge(0, 3), Edge(1, 2), Edge(1, 3), Edge(2, 3)];
     let g = UnDirGraphMtEph::FromSets(v, a);
 
     assert_eq!(g.sizeV(), 4);
@@ -373,48 +373,48 @@ fn test_undirgraphmteph_complete_graph() {
 
 #[test]
 fn test_sizea() {
-    let v: Set<N> = SetLit![1, 2];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+    let v: SetStEph<N> = SetLit![1, 2];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
     assert_eq!(g.sizeA(), 1);
 }
 
 #[test]
 fn test_nplus() {
-    let v: Set<N> = SetLit![1, 2];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+    let v: SetStEph<N> = SetLit![1, 2];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
     assert!(g.NPlus(&1).mem(&2));
 }
 
 #[test]
 fn test_nminus() {
-    let v: Set<N> = SetLit![1, 2];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+    let v: SetStEph<N> = SetLit![1, 2];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
     assert!(g.NMinus(&2).mem(&1));
 }
 
 #[test]
 fn test_indegree() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphMtEph::FromSets(v, e);
     assert_eq!(g.InDegree(&2), 2);
 }
 
 #[test]
 fn test_outdegree() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphMtEph::FromSets(v, e);
     assert_eq!(g.OutDegree(&2), 2);
 }
 
 #[test]
 fn test_arcs() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphMtEph::FromSets(v, e.clone());
     assert_eq!(g.arcs(), &e);
     assert_eq!(g.arcs().size(), 2);
@@ -422,11 +422,11 @@ fn test_arcs() {
 
 #[test]
 fn test_nplusofvertices() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let e: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3)];
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
-    let vertices_subset: Set<N> = SetLit![0, 1];
+    let vertices_subset: SetStEph<N> = SetLit![0, 1];
     let nplus = g.NPlusOfVertices(&vertices_subset);
 
     // Should include all neighbors of 0 and 1
@@ -437,11 +437,11 @@ fn test_nplusofvertices() {
 
 #[test]
 fn test_nminusofvertices() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let e: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3)];
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
-    let vertices_subset: Set<N> = SetLit![1, 2];
+    let vertices_subset: SetStEph<N> = SetLit![1, 2];
     let nminus = g.NMinusOfVertices(&vertices_subset);
 
     // In undirected graph, same as NPlusOfVertices
@@ -453,8 +453,8 @@ fn test_nminusofvertices() {
 
 #[test]
 fn test_incident() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
     // Edge(1, 2) is incident to both 1 and 2
@@ -485,7 +485,7 @@ fn test_empty_graph_all_operations() {
     assert_eq!(g.InDegree(&1), 0);
     assert_eq!(g.OutDegree(&1), 0);
 
-    let empty_set: Set<i32> = SetLit![];
+    let empty_set: SetStEph<i32> = SetLit![];
     assert_eq!(g.NGOfVertices(&empty_set).size(), 0);
     assert_eq!(g.NPlusOfVertices(&empty_set).size(), 0);
     assert_eq!(g.NMinusOfVertices(&empty_set).size(), 0);
@@ -493,8 +493,8 @@ fn test_empty_graph_all_operations() {
 
 #[test]
 fn test_isolated_vertices() {
-    let v: Set<N> = SetLit![1, 2, 3, 4, 5];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+    let v: SetStEph<N> = SetLit![1, 2, 3, 4, 5];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
     // Vertices 3, 4, 5 are isolated
@@ -514,8 +514,8 @@ fn test_isolated_vertices() {
 
 #[test]
 fn test_disconnected_components() {
-    let v: Set<N> = SetLit![1, 2, 3, 4];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(3, 4)];
+    let v: SetStEph<N> = SetLit![1, 2, 3, 4];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(3, 4)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
     // Component 1: {1, 2}
@@ -529,7 +529,7 @@ fn test_disconnected_components() {
     assert!(!g.Neighbor(&3, &2));
 
     // NGOfVertices across components
-    let component1: Set<N> = SetLit![1, 2];
+    let component1: SetStEph<N> = SetLit![1, 2];
     let ng1 = g.NGOfVertices(&component1);
     assert!(ng1.mem(&1));
     assert!(ng1.mem(&2));
@@ -540,8 +540,8 @@ fn test_disconnected_components() {
 #[test]
 fn test_star_graph() {
     // Star graph: one central vertex connected to all others
-    let v: Set<N> = SetLit![0, 1, 2, 3, 4];
-    let e: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(0, 2), Edge(0, 3), Edge(0, 4)];
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3, 4];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(0, 1), Edge(0, 2), Edge(0, 3), Edge(0, 4)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
     // Center has degree 4
@@ -561,8 +561,8 @@ fn test_star_graph() {
 #[test]
 fn test_cycle_graph() {
     // Cycle graph: 0-1-2-3-0
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let e: Set<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3), Edge(3, 0)];
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(0, 1), Edge(1, 2), Edge(2, 3), Edge(3, 0)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
     // All vertices have degree 2 in a cycle
@@ -584,8 +584,8 @@ fn test_cycle_graph() {
 #[test]
 fn test_path_graph() {
     // Path graph: 1-2-3-4-5
-    let v: Set<N> = SetLit![1, 2, 3, 4, 5];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3), Edge(3, 4), Edge(4, 5)];
+    let v: SetStEph<N> = SetLit![1, 2, 3, 4, 5];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3), Edge(3, 4), Edge(4, 5)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
     // End vertices have degree 1
@@ -601,8 +601,8 @@ fn test_path_graph() {
 #[test]
 fn test_large_parallel_graph() {
     // Create a larger graph to trigger parallel operations
-    let mut v: Set<N> = Set::empty();
-    let mut e: Set<Edge<N>> = Set::empty();
+    let mut v: SetStEph<N> = SetStEph::empty();
+    let mut e: SetStEph<Edge<N>> = SetStEph::empty();
 
     // Create a grid-like graph
     for i in 0..20 {
@@ -624,22 +624,22 @@ fn test_large_parallel_graph() {
     assert_eq!(g.Degree(&19), 1); // End vertex
 
     // Test parallel NGOfVertices
-    let subset: Set<N> = SetLit![5, 10, 15];
+    let subset: SetStEph<N> = SetLit![5, 10, 15];
     let ng = g.NGOfVertices(&subset);
     assert!(ng.size() >= 6); // At least neighbors of the 3 vertices
 }
 
 #[test]
 fn test_equality() {
-    let v1: Set<N> = SetLit![1, 2, 3];
-    let e1: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+    let v1: SetStEph<N> = SetLit![1, 2, 3];
+    let e1: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g1 = UnDirGraphMtEph::FromSets(v1.clone(), e1.clone());
     let g2 = UnDirGraphMtEph::FromSets(v1, e1);
 
     assert_eq!(g1, g2);
 
-    let v3: Set<N> = SetLit![1, 2, 3];
-    let e3: Set<Edge<N>> = SetLit![Edge(1, 2)];
+    let v3: SetStEph<N> = SetLit![1, 2, 3];
+    let e3: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g3 = UnDirGraphMtEph::FromSets(v3, e3);
 
     assert_ne!(g1, g3);
@@ -647,8 +647,8 @@ fn test_equality() {
 
 #[test]
 fn test_display_format() {
-    let v: Set<N> = SetLit![1, 2];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+    let v: SetStEph<N> = SetLit![1, 2];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
     let display_str = format!("{g}");
@@ -658,8 +658,8 @@ fn test_display_format() {
 
 #[test]
 fn test_debug_format() {
-    let v: Set<N> = SetLit![1, 2];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+    let v: SetStEph<N> = SetLit![1, 2];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
     let debug_str = format!("{g:?}");
@@ -669,8 +669,8 @@ fn test_debug_format() {
 #[test]
 fn test_edge_order_symmetry() {
     // In undirected graph, Edge(1,2) and Edge(2,1) should be treated as equivalent
-    let v: Set<N> = SetLit![1, 2, 3];
-    let e1: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let e1: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphMtEph::FromSets(v, e1);
 
     // Both orderings should return true
@@ -682,19 +682,19 @@ fn test_edge_order_symmetry() {
 
 #[test]
 fn test_ngofvertices_empty_subset() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2)];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
-    let empty_set: Set<N> = SetLit![];
+    let empty_set: SetStEph<N> = SetLit![];
     let result = g.NGOfVertices(&empty_set);
     assert_eq!(result.size(), 0);
 }
 
 #[test]
 fn test_multiple_self_loops() {
-    let v: Set<N> = SetLit![1, 2];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 1), Edge(2, 2)];
+    let v: SetStEph<N> = SetLit![1, 2];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 1), Edge(2, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
 
     assert!(g.Neighbor(&1, &1));
@@ -704,8 +704,8 @@ fn test_multiple_self_loops() {
 
 #[test]
 fn test_clone() {
-    let v: Set<N> = SetLit![1, 2, 3];
-    let e: Set<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
+    let v: SetStEph<N> = SetLit![1, 2, 3];
+    let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g1 = UnDirGraphMtEph::FromSets(v, e);
     let g2 = g1.clone();
 

@@ -10,11 +10,11 @@ use apas_ai::*;
 #[test]
 fn test_relationlit_macro_functionality() {
     // Test empty relation creation
-    let empty: Relation<i32, String> = RelationLit![];
+    let empty: RelationStEph<i32, String> = RelationLit![];
     assert_eq!(empty.size(), 0);
 
     // Test relation creation with pairs
-    let with_data: Relation<i32, String> = RelationLit![(1, "one".to_string()), (2, "two".to_string())];
+    let with_data: RelationStEph<i32, String> = RelationLit![(1, "one".to_string()), (2, "two".to_string())];
     assert_eq!(with_data.size(), 2);
     assert!(with_data.mem(&1, &"one".to_string()));
 }
@@ -23,7 +23,7 @@ fn test_relationlit_macro_functionality() {
 fn test_relation_domain_range_and_mem() {
     // R subset of A x B
     let pairs = SetLit![PairLit!(1usize, 'a'), PairLit!(2usize, 'b'), PairLit!(1usize, 'b')];
-    let r = Relation::FromSet(pairs);
+    let r = RelationStEph::FromSet(pairs);
 
     let d = r.domain();
     let e = SetLit![1usize, 2usize];
@@ -39,42 +39,42 @@ fn test_relation_domain_range_and_mem() {
 
 #[test]
 fn test_relation_empty() {
-    let empty_rel: Relation<i32, char> = Relation::empty();
+    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
     assert_eq!(empty_rel.size(), 0);
     assert!(!empty_rel.mem(&1, &'a'));
 }
 
 #[test]
 fn test_relation_size() {
-    let empty_rel: Relation<i32, char> = Relation::empty();
+    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
     assert_eq!(empty_rel.size(), 0);
 
     let single_pair = SetLit![PairLit!(1, 'a')];
-    let single_rel = Relation::FromSet(single_pair);
+    let single_rel = RelationStEph::FromSet(single_pair);
     assert_eq!(single_rel.size(), 1);
 
     let multi_pairs = SetLit![PairLit!(1, 'a'), PairLit!(2, 'b'), PairLit!(3, 'c')];
-    let multi_rel = Relation::FromSet(multi_pairs);
+    let multi_rel = RelationStEph::FromSet(multi_pairs);
     assert_eq!(multi_rel.size(), 3);
 }
 
 #[test]
 fn test_relation_domain_empty_edge() {
-    let empty_rel: Relation<i32, char> = Relation::empty();
+    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
     let empty_domain = empty_rel.domain();
     assert_eq!(empty_domain.size(), 0);
 }
 
 #[test]
 fn test_relation_range_empty_edge() {
-    let empty_rel: Relation<i32, char> = Relation::empty();
+    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
     let empty_range = empty_rel.range();
     assert_eq!(empty_range.size(), 0);
 }
 
 #[test]
 fn test_relation_mem_empty_edge() {
-    let empty_rel: Relation<i32, char> = Relation::empty();
+    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
     assert!(!empty_rel.mem(&1, &'a'));
     assert!(!empty_rel.mem(&0, &'z'));
 }
@@ -82,7 +82,7 @@ fn test_relation_mem_empty_edge() {
 #[test]
 fn test_relation_iter() {
     let pairs = SetLit![PairLit!(1, 'a'), PairLit!(2, 'b')];
-    let rel = Relation::FromSet(pairs);
+    let rel = RelationStEph::FromSet(pairs);
 
     let collected: Vec<_> = rel.iter().cloned().collect();
     assert_eq!(collected.len(), 2);
@@ -93,7 +93,7 @@ fn test_relation_iter() {
 #[test]
 fn test_relation_fromvec() {
     let vec_pairs = vec![PairLit!(1, 'a'), PairLit!(2, 'b'), PairLit!(1, 'c')];
-    let rel = Relation::FromVec(vec_pairs);
+    let rel = RelationStEph::FromVec(vec_pairs);
 
     assert_eq!(rel.size(), 3);
     assert!(rel.mem(&1, &'a'));
@@ -103,7 +103,7 @@ fn test_relation_fromvec() {
 
 #[test]
 fn test_relationlit_macro_direct() {
-    let empty_rel: Relation<i32, char> = RelationLit![];
+    let empty_rel: RelationStEph<i32, char> = RelationLit![];
     assert_eq!(empty_rel.size(), 0);
 
     let single_rel = RelationLit![(1, 'a')];
@@ -119,7 +119,7 @@ fn test_relationlit_macro_direct() {
 
 #[test]
 fn test_empty_relation_domain_range() {
-    let empty_rel: Relation<i32, String> = RelationLit![];
+    let empty_rel: RelationStEph<i32, String> = RelationLit![];
 
     let domain = empty_rel.domain();
     assert_eq!(domain.size(), 0);
@@ -158,7 +158,7 @@ fn test_relation_iterator_boundaries() {
     assert_eq!(single_iter.next(), None); // Past end
 
     // Test iterator on empty relation - no boundaries
-    let empty_rel: Relation<i32, char> = RelationLit![];
+    let empty_rel: RelationStEph<i32, char> = RelationLit![];
     let mut empty_iter = empty_rel.iter();
     assert_eq!(empty_iter.next(), None); // No beginning
 
@@ -221,7 +221,7 @@ fn test_relation_iterator_boundaries() {
     assert_eq!(collected_all.len(), 5);
 
     // Create new relation from collected elements and verify equality
-    let reconstructed = Relation::FromVec(collected_all);
+    let reconstructed = RelationStEph::FromVec(collected_all);
     assert_eq!(reconstructed.size(), original.size());
     for i in 1..=5 {
         let expected_char = match i {
@@ -242,7 +242,7 @@ fn test_relation_maximum_size_boundary() {
     // to verify graceful handling without causing memory issues
     let large_size = 50_000usize;
     let large_vec: Vec<Pair<i32, i32>> = (0..large_size as i32).map(|i| Pair(i, i * 2)).collect();
-    let large_rel = Relation::FromVec(large_vec);
+    let large_rel = RelationStEph::FromVec(large_vec);
 
     // Verify basic operations work on large relation
     assert_eq!(large_rel.size(), large_size);
@@ -282,7 +282,7 @@ fn test_relation_maximum_size_boundary() {
 
     // Test with another large relation (partial overlap)
     let large_vec2: Vec<Pair<i32, i32>> = (25_000..75_000).map(|i| Pair(i, i * 3)).collect();
-    let large_rel2 = Relation::FromVec(large_vec2);
+    let large_rel2 = RelationStEph::FromVec(large_vec2);
 
     // Verify the second relation
     assert_eq!(large_rel2.size(), 50_000);

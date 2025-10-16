@@ -24,7 +24,7 @@ pub mod EdgeContractionMtEph {
         /// APAS: Work O(|E|), Span O(lg |V|)
         fn edge_contract_mt<V: StT + MtT + Hash + Ord + 'static>(
             graph: &UnDirGraphMtEph<V>,
-            matching: &Set<Edge<V>>,
+            matching: &SetStEph<Edge<V>>,
         ) -> UnDirGraphMtEph<V>;
 
         /// Single round of parallel edge contraction
@@ -57,7 +57,7 @@ pub mod EdgeContractionMtEph {
     /// - Contracted graph where matched edges are merged into single vertices
     pub fn edge_contract_mt<V: StT + MtT + Hash + Ord + 'static>(
         graph: &UnDirGraphMtEph<V>,
-        matching: &Set<Edge<V>>,
+        matching: &SetStEph<Edge<V>>,
     ) -> UnDirGraphMtEph<V> {
         use std::sync::{Arc, Mutex};
 
@@ -84,7 +84,7 @@ pub mod EdgeContractionMtEph {
         let vertex_to_block = Arc::try_unwrap(vertex_to_block).unwrap().into_inner().unwrap();
 
         // Phase 2: Build new vertex set (representatives)
-        let mut new_vertices: Set<V> = SetLit![];
+        let mut new_vertices: SetStEph<V> = SetLit![];
         for representative in vertex_to_block.values() {
             let _ = new_vertices.insert(representative.clone());
         }
@@ -109,7 +109,7 @@ pub mod EdgeContractionMtEph {
         vertex_map: Arc<HashMap<V, V>>,
         start: usize,
         end: usize,
-    ) -> Set<Edge<V>> {
+    ) -> SetStEph<Edge<V>> {
         let size = end - start;
 
         if size == 0 {
@@ -129,7 +129,7 @@ pub mod EdgeContractionMtEph {
                 } else {
                     Edge(block_v, block_u)
                 };
-                let mut result: Set<Edge<V>> = SetLit![];
+                let mut result: SetStEph<Edge<V>> = SetLit![];
                 let _ = result.insert(new_edge);
                 return result;
             } else {

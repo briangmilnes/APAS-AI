@@ -36,8 +36,8 @@ fn test_weighteddirgraphmtephint_empty() {
 
 #[test]
 fn test_weighteddirgraphmtephint_basic_operations() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<LabEdge<N, i32>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<LabEdge<N, i32>> = SetLit![
         LabEdge(0, 1, 10),
         LabEdge(1, 2, 20),
         LabEdge(2, 3, 30),
@@ -97,8 +97,8 @@ fn test_weighteddirgraphmtephint_basic_operations() {
 
 #[test]
 fn test_weighteddirgraphmtephint_incident_operations() {
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<LabEdge<N, i32>> = SetLit![LabEdge(0, 1, 100), LabEdge(1, 2, 200), LabEdge(0, 2, 300)];
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<LabEdge<N, i32>> = SetLit![LabEdge(0, 1, 100), LabEdge(1, 2, 200), LabEdge(0, 2, 300)];
     let _g = WeightedDirGraphMtEphInt::from_vertices_and_labeled_arcs(v, a);
 
     // Test incident edges
@@ -114,11 +114,11 @@ fn test_weighteddirgraphmtephint_incident_operations() {
 
 #[test]
 fn test_weighteddirgraphmtephint_ngofvertices() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<LabEdge<N, i32>> = SetLit![LabEdge(0, 1, 1), LabEdge(1, 2, 2), LabEdge(2, 3, 3), LabEdge(0, 3, 4)];
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<LabEdge<N, i32>> = SetLit![LabEdge(0, 1, 1), LabEdge(1, 2, 2), LabEdge(2, 3, 3), LabEdge(0, 3, 4)];
     let _g = WeightedDirGraphMtEphInt::from_vertices_and_labeled_arcs(v, a);
 
-    let _vertices_subset: Set<N> = SetLit![0, 1];
+    let _vertices_subset: SetStEph<N> = SetLit![0, 1];
     // let _ng_subset = g.NGOfVertices(&vertices_subset); // TODO: method not available
 
     // Neighbors of {0, 1} should be {1, 2, 3}
@@ -130,8 +130,8 @@ fn test_weighteddirgraphmtephint_ngofvertices() {
 
 #[test]
 fn test_weighteddirgraphmtephint_nplusminusofvertices() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<LabEdge<N, i32>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<LabEdge<N, i32>> = SetLit![
         LabEdge(0, 1, 5),
         LabEdge(1, 2, 15),
         LabEdge(2, 0, 25),
@@ -139,7 +139,7 @@ fn test_weighteddirgraphmtephint_nplusminusofvertices() {
     ];
     let _g = WeightedDirGraphMtEphInt::from_vertices_and_labeled_arcs(v, a);
 
-    let _vertices_subset: Set<N> = SetLit![0, 1];
+    let _vertices_subset: SetStEph<N> = SetLit![0, 1];
 
     // Test NPlusOfVertices (out-neighbors)
     // let _nplus_subset = g.NPlusOfVertices(&vertices_subset); // TODO: method not available
@@ -163,8 +163,8 @@ fn test_weighteddirgraphmtephint_edge_cases() {
     assert_eq!(empty.out_neighbors(&0).size(), 0);
 
     // Test single vertex
-    let v_single: Set<N> = SetLit![42];
-    let a_empty: Set<LabEdge<N, i32>> = SetLit![];
+    let v_single: SetStEph<N> = SetLit![42];
+    let a_empty: SetStEph<LabEdge<N, i32>> = SetLit![];
     let g_single = WeightedDirGraphMtEphInt::from_vertices_and_labeled_arcs(v_single, a_empty);
 
     assert_eq!(g_single.vertices().size(), 1);
@@ -173,8 +173,8 @@ fn test_weighteddirgraphmtephint_edge_cases() {
     assert_eq!(g_single.out_neighbors(&42).size(), 0);
 
     // Test self-loop with weight
-    let v_self: Set<N> = SetLit![1];
-    let a_self: Set<LabEdge<N, i32>> = SetLit![LabEdge(1, 1, 999)];
+    let v_self: SetStEph<N> = SetLit![1];
+    let a_self: SetStEph<LabEdge<N, i32>> = SetLit![LabEdge(1, 1, 999)];
     let g_self = WeightedDirGraphMtEphInt::from_vertices_and_labeled_arcs(v_self, a_self);
 
     assert!(g_self.has_arc(&1, &1));
@@ -185,8 +185,8 @@ fn test_weighteddirgraphmtephint_edge_cases() {
 
 #[test]
 fn test_weighteddirgraphmtephint_nonexistent_vertex() {
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<LabEdge<N, i32>> = SetLit![LabEdge(0, 1, 777)];
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<LabEdge<N, i32>> = SetLit![LabEdge(0, 1, 777)];
     let g = WeightedDirGraphMtEphInt::from_vertices_and_labeled_arcs(v, a);
 
     // Query non-existent vertex
@@ -200,8 +200,8 @@ fn test_weighteddirgraphmtephint_nonexistent_vertex() {
 #[test]
 fn test_weighteddirgraphmtephint_weight_variations() {
     // Test with various integer weight values including negative, zero, and extremes
-    let v: Set<N> = SetLit![0, 1, 2, 3, 4];
-    let a: Set<LabEdge<N, i32>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3, 4];
+    let a: SetStEph<LabEdge<N, i32>> = SetLit![
         LabEdge(0, 1, 0),        // Zero weight
         LabEdge(1, 2, -100),     // Negative weight
         LabEdge(2, 3, 1),        // Small positive
@@ -231,8 +231,8 @@ fn test_weighteddirgraphmtephint_weight_variations() {
 #[test]
 fn test_weighteddirgraphmtephint_large_weights() {
     // Test with large integer weights to ensure no overflow issues
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<LabEdge<N, i32>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<LabEdge<N, i32>> = SetLit![
         LabEdge(0, 1, 1_000_000),
         LabEdge(1, 2, -1_000_000),
         LabEdge(2, 0, 999_999_999)
@@ -257,8 +257,8 @@ fn test_weighteddirgraphmtephint_large_weights() {
 
 #[test]
 fn test_weighteddirgraphmtephint_concurrent_access() {
-    let v: Set<N> = SetLit![0, 1, 2, 3, 4];
-    let a: Set<LabEdge<N, i32>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3, 4];
+    let a: SetStEph<LabEdge<N, i32>> = SetLit![
         LabEdge(0, 1, 11),
         LabEdge(1, 2, 22),
         LabEdge(2, 3, 33),
@@ -426,7 +426,7 @@ fn test_out_neighbors_weighted() {
 fn test_out_neighbors_weighted_large_parallel() {
     // Create graph with 15 edges to trigger parallel path (> 8)
     let vertices = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     for i in 0..15 {
         edges.insert((i, i + 1, i as i32 * 10));
     }
@@ -445,7 +445,7 @@ fn test_out_neighbors_weighted_large_parallel() {
 fn test_in_neighbors_weighted_large_parallel() {
     // Create graph with 15 edges to trigger parallel path (> 8)
     let vertices = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     for i in 0..15 {
         edges.insert((i, i + 1, i as i32 * 10));
     }
@@ -503,7 +503,7 @@ fn test_in_neighbors_weighted_multiple() {
 fn test_minimal_parallel_out_neighbors() {
     // Exactly 9 edges - minimal case to trigger parallel path
     let vertices = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     for i in 0..9 {
         edges.insert((i, i + 1, i as i32));
     }
@@ -518,7 +518,7 @@ fn test_minimal_parallel_out_neighbors() {
 fn test_minimal_parallel_in_neighbors() {
     // Exactly 9 edges - minimal case to trigger parallel path
     let vertices = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     for i in 0..9 {
         edges.insert((i, i + 1, i as i32 * 5));
     }

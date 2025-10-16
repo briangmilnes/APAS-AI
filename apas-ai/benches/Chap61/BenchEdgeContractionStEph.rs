@@ -9,8 +9,8 @@ use criterion::*;
 use std::time::Duration;
 
 fn create_cycle_graph(n: usize) -> UnDirGraphStEph<usize> {
-    let mut vertices: Set<usize> = SetLit![];
-    let mut edges: Set<Edge<usize>> = SetLit![];
+    let mut vertices: SetStEph<usize> = SetLit![];
+    let mut edges: SetStEph<Edge<usize>> = SetLit![];
 
     for i in 0..n {
         let _ = vertices.insert(i);
@@ -34,7 +34,7 @@ fn bench_edge_contract(c: &mut Criterion) {
     for n in [100, 200, 300] {
         let graph = create_cycle_graph(n);
         // Create a matching for 1/4 of edges
-        let mut matching: Set<Edge<usize>> = SetLit![];
+        let mut matching: SetStEph<Edge<usize>> = SetLit![];
         for i in (0..n).step_by(4) {
             let next = (i + 1) % n;
             let edge = if i < next { Edge(i, next) } else { Edge(next, i) };

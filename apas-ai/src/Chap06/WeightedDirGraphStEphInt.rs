@@ -17,13 +17,13 @@ pub mod WeightedDirGraphStEphInt {
         /// Create from vertices and weighted edges
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
-        pub fn from_weighted_edges(vertices: Set<V>, edges: Set<(V, V, i32)>) -> Self {
+        pub fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<(V, V, i32)>) -> Self {
             let labeled_edges = edges
                 .iter()
                 .map(|(from, to, weight)| LabEdge(from.clone(), to.clone(), *weight))
                 .collect::<Vec<_>>();
 
-            let mut edge_set = Set::empty();
+            let mut edge_set = SetStEph::empty();
             for edge in labeled_edges {
                 edge_set.insert(edge);
             }
@@ -44,8 +44,8 @@ pub mod WeightedDirGraphStEphInt {
         /// Get all weighted edges as (from, to, weight) tuples
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential map
-        pub fn weighted_edges(&self) -> Set<(V, V, i32)> {
-            let mut edges = Set::empty();
+        pub fn weighted_edges(&self) -> SetStEph<(V, V, i32)> {
+            let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_arcs().iter() {
                 edges.insert((labeled_edge.0.clone(), labeled_edge.1.clone(), labeled_edge.2));
             }
@@ -55,8 +55,8 @@ pub mod WeightedDirGraphStEphInt {
         /// Get outgoing neighbors with weights
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential filter
-        pub fn out_neighbors_weighted(&self, v: &V) -> Set<(V, i32)> {
-            let mut neighbors = Set::empty();
+        pub fn out_neighbors_weighted(&self, v: &V) -> SetStEph<(V, i32)> {
+            let mut neighbors = SetStEph::empty();
             for labeled_edge in self.labeled_arcs().iter() {
                 if labeled_edge.0 == *v {
                     neighbors.insert((labeled_edge.1.clone(), labeled_edge.2));
@@ -68,8 +68,8 @@ pub mod WeightedDirGraphStEphInt {
         /// Get incoming neighbors with weights
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential filter
-        pub fn in_neighbors_weighted(&self, v: &V) -> Set<(V, i32)> {
-            let mut neighbors = Set::empty();
+        pub fn in_neighbors_weighted(&self, v: &V) -> SetStEph<(V, i32)> {
+            let mut neighbors = SetStEph::empty();
             for labeled_edge in self.labeled_arcs().iter() {
                 if labeled_edge.1 == *v {
                     neighbors.insert((labeled_edge.0.clone(), labeled_edge.2));
@@ -84,8 +84,8 @@ pub mod WeightedDirGraphStEphInt {
         pub fn total_weight(&self) -> i32 { self.labeled_arcs().iter().map(|edge| edge.2).sum() }
 
         /// Get edges with weight greater than threshold
-        pub fn edges_above_weight(&self, threshold: i32) -> Set<(V, V, i32)> {
-            let mut edges = Set::empty();
+        pub fn edges_above_weight(&self, threshold: i32) -> SetStEph<(V, V, i32)> {
+            let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_arcs().iter() {
                 if labeled_edge.2 > threshold {
                     edges.insert((labeled_edge.0.clone(), labeled_edge.1.clone(), labeled_edge.2));
@@ -95,8 +95,8 @@ pub mod WeightedDirGraphStEphInt {
         }
 
         /// Get edges with weight less than threshold
-        pub fn edges_below_weight(&self, threshold: i32) -> Set<(V, V, i32)> {
-            let mut edges = Set::empty();
+        pub fn edges_below_weight(&self, threshold: i32) -> SetStEph<(V, V, i32)> {
+            let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_arcs().iter() {
                 if labeled_edge.2 < threshold {
                     edges.insert((labeled_edge.0.clone(), labeled_edge.1.clone(), labeled_edge.2));

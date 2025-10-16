@@ -42,8 +42,8 @@ fn test_weightedundirgraphmtephfloat_empty() {
 
 #[test]
 fn test_weightedundirgraphmtephfloat_basic_operations() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<LabEdge<N, OrderedFloat<f64>>> = SetLit![
         LabEdge(0, 1, OrderedFloat(1.5)),
         LabEdge(1, 2, OrderedFloat(2.7)),
         LabEdge(2, 3, OrderedFloat(0.8))
@@ -95,8 +95,8 @@ fn test_weightedundirgraphmtephfloat_basic_operations() {
 
 #[test]
 fn test_weightedundirgraphmtephfloat_incident_operations() {
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<LabEdge<N, OrderedFloat<f64>>> = SetLit![
         LabEdge(0, 1, OrderedFloat(PI)),
         LabEdge(1, 2, OrderedFloat(E)),
         LabEdge(0, 2, OrderedFloat(SQRT_2))
@@ -116,8 +116,8 @@ fn test_weightedundirgraphmtephfloat_incident_operations() {
 
 #[test]
 fn test_weightedundirgraphmtephfloat_ngofvertices() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<LabEdge<N, OrderedFloat<f64>>> = SetLit![
         LabEdge(0, 1, OrderedFloat(1.0)),
         LabEdge(1, 2, OrderedFloat(2.0)),
         LabEdge(2, 3, OrderedFloat(3.0)),
@@ -125,7 +125,7 @@ fn test_weightedundirgraphmtephfloat_ngofvertices() {
     ];
     let _g = WeightedUnDirGraphMtEphFloat::from_vertices_and_labeled_edges(v, a);
 
-    let _vertices_subset: Set<N> = SetLit![0, 1];
+    let _vertices_subset: SetStEph<N> = SetLit![0, 1];
     // let ng_subset = g.NGOfVertices(&vertices_subset); // TODO: method not available
 
     // Neighbors of {0, 1} should include all vertices connected to 0 or 1
@@ -137,8 +137,8 @@ fn test_weightedundirgraphmtephfloat_ngofvertices() {
 
 #[test]
 fn test_weightedundirgraphmtephfloat_nplusminusofvertices() {
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<LabEdge<N, OrderedFloat<f64>>> = SetLit![
         LabEdge(0, 1, OrderedFloat(0.5)),
         LabEdge(1, 2, OrderedFloat(1.5)),
         LabEdge(2, 0, OrderedFloat(2.5)),
@@ -146,7 +146,7 @@ fn test_weightedundirgraphmtephfloat_nplusminusofvertices() {
     ];
     let _g = WeightedUnDirGraphMtEphFloat::from_vertices_and_labeled_edges(v, a);
 
-    let _vertices_subset: Set<N> = SetLit![0, 1];
+    let _vertices_subset: SetStEph<N> = SetLit![0, 1];
 
     // In undirected graphs, NPlus and NMinus should be the same as NG
     // let nplus_subset = g.NPlusOfVertices(&vertices_subset); // TODO: method not available
@@ -173,8 +173,8 @@ fn test_weightedundirgraphmtephfloat_edge_cases() {
     assert_eq!(empty.vertex_degree(&0), 0);
 
     // Test single vertex
-    let v_single: Set<N> = SetLit![42];
-    let a_empty: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![];
+    let v_single: SetStEph<N> = SetLit![42];
+    let a_empty: SetStEph<LabEdge<N, OrderedFloat<f64>>> = SetLit![];
     let g_single = WeightedUnDirGraphMtEphFloat::from_vertices_and_labeled_edges(v_single, a_empty);
 
     assert_eq!(g_single.vertices().size(), 1);
@@ -183,8 +183,8 @@ fn test_weightedundirgraphmtephfloat_edge_cases() {
     assert_eq!(g_single.neighbors(&42).size(), 0);
 
     // Test self-loop with weight
-    let v_self: Set<N> = SetLit![1];
-    let a_self: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![LabEdge(1, 1, OrderedFloat(99.9))];
+    let v_self: SetStEph<N> = SetLit![1];
+    let a_self: SetStEph<LabEdge<N, OrderedFloat<f64>>> = SetLit![LabEdge(1, 1, OrderedFloat(99.9))];
     let g_self = WeightedUnDirGraphMtEphFloat::from_vertices_and_labeled_edges(v_self, a_self);
 
     assert!(g_self.has_edge(&1, &1));
@@ -194,8 +194,8 @@ fn test_weightedundirgraphmtephfloat_edge_cases() {
 
 #[test]
 fn test_weightedundirgraphmtephfloat_nonexistent_vertex() {
-    let v: Set<N> = SetLit![0, 1, 2];
-    let a: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![LabEdge(0, 1, OrderedFloat(7.77))];
+    let v: SetStEph<N> = SetLit![0, 1, 2];
+    let a: SetStEph<LabEdge<N, OrderedFloat<f64>>> = SetLit![LabEdge(0, 1, OrderedFloat(7.77))];
     let g = WeightedUnDirGraphMtEphFloat::from_vertices_and_labeled_edges(v, a);
 
     // Query non-existent vertex
@@ -209,8 +209,8 @@ fn test_weightedundirgraphmtephfloat_nonexistent_vertex() {
 #[test]
 fn test_weightedundirgraphmtephfloat_weight_variations() {
     // Test with various weight values including negative, zero, and very small/large
-    let v: Set<N> = SetLit![0, 1, 2, 3, 4];
-    let a: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3, 4];
+    let a: SetStEph<LabEdge<N, OrderedFloat<f64>>> = SetLit![
         LabEdge(0, 1, OrderedFloat(0.0)),           // Zero weight
         LabEdge(1, 2, OrderedFloat(-1.5)),          // Negative weight
         LabEdge(2, 3, OrderedFloat(1e-10)),         // Very small positive
@@ -244,8 +244,8 @@ fn test_weightedundirgraphmtephfloat_weight_variations() {
 
 #[test]
 fn test_weightedundirgraphmtephfloat_concurrent_access() {
-    let v: Set<N> = SetLit![0, 1, 2, 3, 4];
-    let a: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3, 4];
+    let a: SetStEph<LabEdge<N, OrderedFloat<f64>>> = SetLit![
         LabEdge(0, 1, OrderedFloat(1.1)),
         LabEdge(1, 2, OrderedFloat(2.2)),
         LabEdge(2, 3, OrderedFloat(3.3)),
@@ -301,8 +301,8 @@ fn test_weightedundirgraphmtephfloat_concurrent_access() {
 #[test]
 fn test_weightedundirgraphmtephfloat_complete_graph() {
     // Test complete graph K4 with weights
-    let v: Set<N> = SetLit![0, 1, 2, 3];
-    let a: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![
+    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let a: SetStEph<LabEdge<N, OrderedFloat<f64>>> = SetLit![
         LabEdge(0, 1, OrderedFloat(0.1)),
         LabEdge(0, 2, OrderedFloat(0.2)),
         LabEdge(0, 3, OrderedFloat(0.3)),
@@ -405,12 +405,12 @@ fn test_vertex_degree() {
 
 #[test]
 fn test_parallel_neighbors_weighted() {
-    let mut vertices = Set::empty();
+    let mut vertices = SetStEph::empty();
     for i in 0..15 {
         vertices.insert(i);
     }
     
-    let mut edges = Set::empty();
+    let mut edges = SetStEph::empty();
     for i in 1..13 {
         edges.insert((0, i, OrderedFloat(i as f64 * 1.5)));
     }

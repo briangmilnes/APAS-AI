@@ -17,11 +17,11 @@ fn bench_weighted_undir_graph_st_eph_int(c: &mut Criterion) {
     let n: N = 500;
     group.bench_with_input(BenchmarkId::new("build_graph", n), &n, |b, &len| {
         b.iter(|| {
-            let mut vertices = Set::empty();
+            let mut vertices = SetStEph::empty();
             for i in 0..len {
                 vertices.insert(i);
             }
-            let mut edges = Set::empty();
+            let mut edges = SetStEph::empty();
             for i in 0..len {
                 for j in 0..3 {
                     let target = (i + j + 1) % len;

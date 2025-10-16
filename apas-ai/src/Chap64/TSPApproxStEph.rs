@@ -42,7 +42,7 @@ pub mod TSPApproxStEph {
         /// APAS: Work O(|V|² log |V|), Span O(|V|² log |V|)
         fn approx_metric_tsp<V: StT + Hash + Ord>(
             distances: &HashMap<(V, V), OrderedFloat<f64>>,
-            vertices: &Set<V>,
+            vertices: &SetStEph<V>,
         ) -> Vec<V>;
     }
 
@@ -64,7 +64,7 @@ pub mod TSPApproxStEph {
     pub fn euler_tour<V: StT + Hash + Ord>(
         graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
         start: &V,
-        tree_edges: &Set<LabEdge<V, OrderedFloat<f64>>>,
+        tree_edges: &SetStEph<LabEdge<V, OrderedFloat<f64>>>,
     ) -> Vec<V> {
         let mut tour = Vec::new();
         let mut visited_edges: HashSet<(V, V)> = HashSet::new();
@@ -79,7 +79,7 @@ pub mod TSPApproxStEph {
         graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
         current: &V,
         parent: Option<&V>,
-        tree_edges: &Set<LabEdge<V, OrderedFloat<f64>>>,
+        tree_edges: &SetStEph<LabEdge<V, OrderedFloat<f64>>>,
         tour: &mut Vec<V>,
         visited_edges: &mut HashSet<(V, V)>,
     ) {
@@ -186,7 +186,7 @@ pub mod TSPApproxStEph {
     }
 
     /// Helper to get neighbors of a vertex
-    fn get_neighbors<V: StT + Hash + Ord>(graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>, v: &V) -> Set<V> {
+    fn get_neighbors<V: StT + Hash + Ord>(graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>, v: &V) -> SetStEph<V> {
         let mut neighbors = SetLit![];
         for edge in graph.labeled_edges().iter() {
             let LabEdge(a, b, _) = edge;
@@ -234,7 +234,7 @@ pub mod TSPApproxStEph {
     /// - (tour, weight): Hamiltonian cycle and its total weight
     pub fn approx_metric_tsp<V: StT + Hash + Ord>(
         graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
-        spanning_tree: &Set<LabEdge<V, OrderedFloat<f64>>>,
+        spanning_tree: &SetStEph<LabEdge<V, OrderedFloat<f64>>>,
         start: &V,
     ) -> (Vec<V>, OrderedFloat<f64>) {
         // Step 1: Compute Euler tour

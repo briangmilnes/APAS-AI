@@ -7,8 +7,8 @@ use apas_ai::{
 };
 
 fn create_cycle_graph(n: usize) -> UnDirGraphMtEph<usize> {
-    let mut vertices: Set<usize> = SetLit![];
-    let mut edges: Set<Edge<usize>> = SetLit![];
+    let mut vertices: SetStEph<usize> = SetLit![];
+    let mut edges: SetStEph<Edge<usize>> = SetLit![];
 
     for i in 0..n {
         let _ = vertices.insert(i);
@@ -24,8 +24,8 @@ fn create_cycle_graph(n: usize) -> UnDirGraphMtEph<usize> {
 }
 
 fn create_star_graph(n: usize) -> UnDirGraphMtEph<usize> {
-    let mut vertices: Set<usize> = SetLit![];
-    let mut edges: Set<Edge<usize>> = SetLit![];
+    let mut vertices: SetStEph<usize> = SetLit![];
+    let mut edges: SetStEph<Edge<usize>> = SetLit![];
 
     let _ = vertices.insert(0);
     for i in 1..=n {
@@ -40,7 +40,7 @@ fn create_star_graph(n: usize) -> UnDirGraphMtEph<usize> {
 fn test_edge_contract_mt_cycle() {
     let graph = create_cycle_graph(8);
 
-    let mut matching: Set<Edge<usize>> = SetLit![];
+    let mut matching: SetStEph<Edge<usize>> = SetLit![];
     let _ = matching.insert(Edge(0, 1));
     let _ = matching.insert(Edge(3, 4));
     let _ = matching.insert(Edge(6, 7));
@@ -55,7 +55,7 @@ fn test_edge_contract_mt_cycle() {
 fn test_edge_contract_mt_star() {
     let graph = create_star_graph(5);
 
-    let mut matching: Set<Edge<usize>> = SetLit![];
+    let mut matching: SetStEph<Edge<usize>> = SetLit![];
     let _ = matching.insert(Edge(0, 1));
 
     let contracted = edge_contract_mt(&graph, &matching);

@@ -8,11 +8,11 @@ use apas_ai::Types::Types::*; // macro import
 #[test]
 fn test_setlit_macro_functionality() {
     // Test empty set creation
-    let empty: Set<i32> = SetLit![];
+    let empty: SetStEph<i32> = SetLit![];
     assert_eq!(empty.size(), 0);
 
     // Test set creation with elements
-    let with_data: Set<i32> = SetLit![1, 2, 3];
+    let with_data: SetStEph<i32> = SetLit![1, 2, 3];
     assert_eq!(with_data.size(), 3);
     assert!(with_data.mem(&1));
     assert!(with_data.mem(&2));
@@ -23,7 +23,7 @@ fn test_setlit_macro_functionality() {
 #[test]
 fn test_setlit_macro_type_safety() {
     // Test empty set creation with explicit type
-    let empty: Set<&'static str> = SetLit![];
+    let empty: SetStEph<&'static str> = SetLit![];
     assert_eq!(empty.size(), 0);
     assert!(!empty.mem(&"any"));
 
@@ -44,11 +44,11 @@ fn test_setlit_macro_type_safety() {
 
 #[test]
 fn test_cartesian_product_example_5_1() {
-    let a: Set<N> = SetLit![0, 1, 2, 3];
-    let b: Set<char> = SetLit!['a', 'b'];
+    let a: SetStEph<N> = SetLit![0, 1, 2, 3];
+    let b: SetStEph<char> = SetLit!['a', 'b'];
     let prod = a.CartesianProduct(&b);
 
-    let expect: Set<Pair<N, char>> = SetLit![
+    let expect: SetStEph<Pair<N, char>> = SetLit![
         PairLit!(0, 'a'),
         PairLit!(0, 'b'),
         PairLit!(1, 'a'),
@@ -64,41 +64,41 @@ fn test_cartesian_product_example_5_1() {
 
 #[test]
 fn test_partition_example_5_2_true() {
-    let a: Set<N> = SetLit![1, 2, 3, 4, 5, 6];
-    let odd: Set<N> = SetLit![1, 3, 5];
-    let even: Set<N> = SetLit![2, 4, 6];
-    let p: Set<Set<N>> = SetLit![odd, even];
+    let a: SetStEph<N> = SetLit![1, 2, 3, 4, 5, 6];
+    let odd: SetStEph<N> = SetLit![1, 3, 5];
+    let even: SetStEph<N> = SetLit![2, 4, 6];
+    let p: SetStEph<SetStEph<N>> = SetLit![odd, even];
     assert!(a.partition(&p));
 }
 
 #[test]
 fn test_partition_example_5_2_false_due_to_overlap() {
-    let a: Set<N> = SetLit![1, 2, 3, 4, 5, 6];
-    let odd_with_6: Set<N> = SetLit![1, 3, 5, 6];
-    let even_with_6: Set<N> = SetLit![2, 4, 6];
-    let q: Set<Set<N>> = SetLit![odd_with_6, even_with_6];
+    let a: SetStEph<N> = SetLit![1, 2, 3, 4, 5, 6];
+    let odd_with_6: SetStEph<N> = SetLit![1, 3, 5, 6];
+    let even_with_6: SetStEph<N> = SetLit![2, 4, 6];
+    let q: SetStEph<SetStEph<N>> = SetLit![odd_with_6, even_with_6];
     assert!(!a.partition(&q));
 }
 
 #[test]
 fn test_partition_false_due_to_missing_element() {
-    let a: Set<N> = SetLit![1, 2, 3];
-    let s1: Set<N> = SetLit![1];
-    let s2: Set<N> = SetLit![2];
-    let parts: Set<Set<N>> = SetLit![s1, s2];
+    let a: SetStEph<N> = SetLit![1, 2, 3];
+    let s1: SetStEph<N> = SetLit![1];
+    let s2: SetStEph<N> = SetLit![2];
+    let parts: SetStEph<SetStEph<N>> = SetLit![s1, s2];
     assert!(!a.partition(&parts));
 }
 
 #[test]
 fn test_set_empty() {
-    let empty_set: Set<i32> = Set::empty();
+    let empty_set: SetStEph<i32> = SetStEph::empty();
     assert_eq!(empty_set.size(), 0);
     assert!(!empty_set.mem(&42));
 }
 
 #[test]
 fn test_set_singleton() {
-    let single_set = Set::singleton(42);
+    let single_set = SetStEph::singleton(42);
     assert_eq!(single_set.size(), 1);
     assert!(single_set.mem(&42));
     assert!(!single_set.mem(&99));
@@ -106,10 +106,10 @@ fn test_set_singleton() {
 
 #[test]
 fn test_set_size_comprehensive() {
-    let empty: Set<i32> = Set::empty();
+    let empty: SetStEph<i32> = SetStEph::empty();
     assert_eq!(empty.size(), 0);
 
-    let single = Set::singleton(1);
+    let single = SetStEph::singleton(1);
     assert_eq!(single.size(), 1);
 
     let multi = SetLit![1, 2, 3, 4, 5];
@@ -156,7 +156,7 @@ fn test_set_intersection() {
 
 #[test]
 fn test_set_insert() {
-    let mut set = Set::empty();
+    let mut set = SetStEph::empty();
     set.insert(1);
     set.insert(2);
     set.insert(1); // duplicate
@@ -178,7 +178,7 @@ fn test_set_iter() {
 #[test]
 fn test_set_fromvec() {
     let vec_data = vec![1, 2, 3, 2, 1]; // with duplicates
-    let set = Set::FromVec(vec_data);
+    let set = SetStEph::FromVec(vec_data);
 
     assert_eq!(set.size(), 3);
     assert!(set.mem(&1));
@@ -188,7 +188,7 @@ fn test_set_fromvec() {
 
 #[test]
 fn test_cartesian_product_empty_edge() {
-    let empty_set: Set<i32> = Set::empty();
+    let empty_set: SetStEph<i32> = SetStEph::empty();
     let normal_set = SetLit![1, 2];
 
     let prod1 = empty_set.CartesianProduct(&normal_set);
@@ -200,7 +200,7 @@ fn test_cartesian_product_empty_edge() {
 
 #[test]
 fn test_setlit_macro_direct() {
-    let empty: Set<i32> = SetLit![];
+    let empty: SetStEph<i32> = SetLit![];
     assert_eq!(empty.size(), 0);
 
     let single = SetLit![42];
@@ -213,7 +213,7 @@ fn test_setlit_macro_direct() {
 
 #[test]
 fn test_empty_set_union() {
-    let empty: Set<i32> = Set::empty();
+    let empty: SetStEph<i32> = SetStEph::empty();
     let normal = SetLit![1, 2, 3];
 
     let union1 = empty.union(&normal);
@@ -228,7 +228,7 @@ fn test_empty_set_union() {
 
 #[test]
 fn test_empty_set_intersection() {
-    let empty: Set<i32> = Set::empty();
+    let empty: SetStEph<i32> = SetStEph::empty();
     let normal = SetLit![1, 2, 3];
 
     let intersect1 = empty.intersection(&normal);
@@ -245,7 +245,7 @@ fn test_empty_set_intersection() {
 fn test_set_large_operations_stress() {
     // Test with large sets to verify no panics occur
     let large_vec: Vec<i32> = (0..10000).collect();
-    let large_set = Set::FromVec(large_vec);
+    let large_set = SetStEph::FromVec(large_vec);
 
     assert_eq!(large_set.size(), 10000);
     assert!(large_set.mem(&5000));
@@ -253,7 +253,7 @@ fn test_set_large_operations_stress() {
 
     // Test union with another large set
     let large_vec2: Vec<i32> = (5000..15000).collect();
-    let large_set2 = Set::FromVec(large_vec2);
+    let large_set2 = SetStEph::FromVec(large_vec2);
 
     let union_result = large_set.union(&large_set2);
     assert_eq!(union_result.size(), 15000); // 0-4999 + 5000-14999 = 15000 unique elements
@@ -263,7 +263,7 @@ fn test_set_large_operations_stress() {
     assert_eq!(intersection_result.size(), 5000); // 5000-9999 overlap
 
     // Verify no panics on extreme operations
-    let empty_set: Set<i32> = Set::empty();
+    let empty_set: SetStEph<i32> = SetStEph::empty();
     let union_with_empty = large_set.union(&empty_set);
     assert_eq!(union_with_empty.size(), 10000);
 
@@ -274,13 +274,13 @@ fn test_set_large_operations_stress() {
 #[test]
 fn test_set_single_element_boundary() {
     // Test single element set operations
-    let single = Set::singleton(42);
+    let single = SetStEph::singleton(42);
     assert_eq!(single.size(), 1);
     assert!(single.mem(&42));
     assert!(!single.mem(&43));
 
     // Operations with single element set
-    let empty: Set<i32> = Set::empty();
+    let empty: SetStEph<i32> = SetStEph::empty();
     let union_with_empty = single.union(&empty);
     assert_eq!(union_with_empty.size(), 1);
     assert!(union_with_empty.mem(&42));
@@ -289,14 +289,14 @@ fn test_set_single_element_boundary() {
     assert_eq!(intersection_with_empty.size(), 0);
 
     // Union with another single element
-    let single2 = Set::singleton(99);
+    let single2 = SetStEph::singleton(99);
     let union_singles = single.union(&single2);
     assert_eq!(union_singles.size(), 2);
     assert!(union_singles.mem(&42));
     assert!(union_singles.mem(&99));
 
     // Intersection with same element
-    let single_same = Set::singleton(42);
+    let single_same = SetStEph::singleton(42);
     let intersection_same = single.intersection(&single_same);
     assert_eq!(intersection_same.size(), 1);
     assert!(intersection_same.mem(&42));
@@ -306,7 +306,7 @@ fn test_set_single_element_boundary() {
     assert_eq!(intersection_diff.size(), 0);
 
     // Cartesian product with single element
-    let single_char = Set::singleton('a');
+    let single_char = SetStEph::singleton('a');
     let cartesian = single.CartesianProduct(&single_char);
     assert_eq!(cartesian.size(), 1);
     assert!(cartesian.mem(&Pair(42, 'a')));
@@ -339,13 +339,13 @@ fn test_set_iterator_boundaries() {
     }
 
     // Test iterator on single element - both beginning and end
-    let single = Set::singleton(99);
+    let single = SetStEph::singleton(99);
     let mut single_iter = single.iter();
     assert_eq!(single_iter.next(), Some(&99)); // Beginning = end
     assert_eq!(single_iter.next(), None); // Past end
 
     // Test iterator on empty set - no boundaries
-    let empty: Set<i32> = Set::empty();
+    let empty: SetStEph<i32> = SetStEph::empty();
     let mut empty_iter = empty.iter();
     assert_eq!(empty_iter.next(), None); // No beginning
 
@@ -408,7 +408,7 @@ fn test_set_iterator_boundaries() {
     assert_eq!(collected_all.len(), 5);
 
     // Create new set from collected elements and verify equality
-    let reconstructed = Set::FromVec(collected_all);
+    let reconstructed = SetStEph::FromVec(collected_all);
     assert_eq!(reconstructed.size(), original.size());
     for i in 1..=5 {
         assert_eq!(original.mem(&i), reconstructed.mem(&i));
@@ -420,7 +420,7 @@ fn test_set_maximum_size_boundary() {
     // Test large set boundary (reduced from 100k to 20k for faster testing)
     let large_size = 20_000usize;
     let large_vec: Vec<i32> = (0..large_size as i32).collect();
-    let large_set = Set::FromVec(large_vec);
+    let large_set = SetStEph::FromVec(large_vec);
 
     // Verify basic operations work on large set
     assert_eq!(large_set.size(), large_size);
@@ -429,7 +429,7 @@ fn test_set_maximum_size_boundary() {
     assert!(!large_set.mem(&(large_size as i32)));
 
     // Test operations on large set
-    let empty_set: Set<i32> = Set::empty();
+    let empty_set: SetStEph<i32> = SetStEph::empty();
     let union_with_empty = large_set.union(&empty_set);
     assert_eq!(union_with_empty.size(), large_size);
 
@@ -438,7 +438,7 @@ fn test_set_maximum_size_boundary() {
 
     // Test with another large set
     let large_vec2: Vec<i32> = (10_000..30_000).collect();
-    let large_set2 = Set::FromVec(large_vec2);
+    let large_set2 = SetStEph::FromVec(large_vec2);
 
     let union_large = large_set.union(&large_set2);
     assert_eq!(union_large.size(), 30_000); // 0-9999 + 10000-29999 = 30000 unique
@@ -461,7 +461,7 @@ fn test_set_maximum_size_boundary() {
     assert_eq!(count, large_size);
 
     // Test Cartesian product with small set to avoid explosion
-    let small_set = Set::singleton('a');
+    let small_set = SetStEph::singleton('a');
     let cartesian_large = large_set.CartesianProduct(&small_set);
     assert_eq!(cartesian_large.size(), large_size);
     assert!(cartesian_large.mem(&Pair(0, 'a')));
@@ -470,13 +470,13 @@ fn test_set_maximum_size_boundary() {
 
 #[test]
 fn test_trait_empty() {
-    let s: Set<i32> = <Set<i32> as SetStEphTrait<i32>>::empty();
+    let s: SetStEph<i32> = <SetStEph<i32> as SetStEphTrait<i32>>::empty();
     assert_eq!(s.size(), 0);
 }
 
 #[test]
 fn test_trait_singleton() {
-    let s: Set<i32> = <Set<i32> as SetStEphTrait<i32>>::singleton(42);
+    let s: SetStEph<i32> = <SetStEph<i32> as SetStEphTrait<i32>>::singleton(42);
     assert_eq!(s.size(), 1);
     assert!(s.mem(&42));
 }
@@ -485,7 +485,7 @@ fn test_trait_singleton() {
 fn test_trait_union() {
     let s1 = SetLit![1, 2];
     let s2 = SetLit![2, 3];
-    let u: Set<i32> = <Set<i32> as SetStEphTrait<i32>>::union(&s1, &s2);
+    let u: SetStEph<i32> = <SetStEph<i32> as SetStEphTrait<i32>>::union(&s1, &s2);
     assert_eq!(u.size(), 3);
 }
 
@@ -493,7 +493,7 @@ fn test_trait_union() {
 fn test_trait_intersection() {
     let s1 = SetLit![1, 2, 3];
     let s2 = SetLit![2, 3, 4];
-    let i: Set<i32> = <Set<i32> as SetStEphTrait<i32>>::intersection(&s1, &s2);
+    let i: SetStEph<i32> = <SetStEph<i32> as SetStEphTrait<i32>>::intersection(&s1, &s2);
     assert_eq!(i.size(), 2);
 }
 
@@ -503,27 +503,27 @@ fn test_trait_partition() {
     let part1 = SetLit![1, 2];
     let part2 = SetLit![3, 4];
     let parts = SetLit![part1, part2];
-    assert!(<Set<i32> as SetStEphTrait<i32>>::partition(&whole, &parts));
+    assert!(<SetStEph<i32> as SetStEphTrait<i32>>::partition(&whole, &parts));
 }
 
 #[test]
 fn test_trait_cartesian_product() {
     let s1 = SetLit![1, 2];
     let s2 = SetLit!['a', 'b'];
-    let cp = <Set<i32> as SetStEphTrait<i32>>::CartesianProduct(&s1, &s2);
+    let cp = <SetStEph<i32> as SetStEphTrait<i32>>::CartesianProduct(&s1, &s2);
     assert_eq!(cp.size(), 4);
 }
 
 #[test]
 fn test_trait_insert() {
-    let mut s: Set<i32> = Set::empty();
-    <Set<i32> as SetStEphTrait<i32>>::insert(&mut s, 42);
+    let mut s: SetStEph<i32> = SetStEph::empty();
+    <SetStEph<i32> as SetStEphTrait<i32>>::insert(&mut s, 42);
     assert_eq!(s.size(), 1);
 }
 
 #[test]
 fn test_trait_from_vec() {
-    let s = <Set<i32> as SetStEphTrait<i32>>::FromVec(vec![1, 2, 3]);
+    let s = <SetStEph<i32> as SetStEphTrait<i32>>::FromVec(vec![1, 2, 3]);
     assert_eq!(s.size(), 3);
 }
 

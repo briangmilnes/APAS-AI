@@ -13,7 +13,7 @@ pub mod KruskalStEph {
     use crate::Types::Types::*;
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
-    use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
+    use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFindStEph;
     use crate::SetLit;
 
     pub trait KruskalStEphTrait {
@@ -21,17 +21,17 @@ pub mod KruskalStEph {
         /// APAS: Work O(m log m), Span O(m log m) where m = |E|
         fn kruskal_mst<V: StT + Hash + Ord>(
             graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
-        ) -> Set<LabEdge<V, OrderedFloat<f64>>>;
+        ) -> SetStEph<LabEdge<V, OrderedFloat<f64>>>;
 
         /// Compute total weight of MST
         /// APAS: Work O(m), Span O(1)
-        fn mst_weight<V: StT + Hash>(mst: &Set<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64>;
+        fn mst_weight<V: StT + Hash>(mst: &SetStEph<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64>;
 
         /// Verify MST has correct size
         /// APAS: Work O(1), Span O(1)
         fn verify_mst_size<V: StT + Hash + Ord>(
             graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
-            mst: &Set<LabEdge<V, OrderedFloat<f64>>>,
+            mst: &SetStEph<LabEdge<V, OrderedFloat<f64>>>,
         ) -> B;
     }
 
@@ -56,11 +56,11 @@ pub mod KruskalStEph {
     /// - Set of edges forming the MST
     pub fn kruskal_mst<V: StT + Hash + Ord>(
         graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
-    ) -> Set<LabEdge<V, OrderedFloat<f64>>> {
+    ) -> SetStEph<LabEdge<V, OrderedFloat<f64>>> {
         let mut mst_edges = SetLit![];
 
         // Initialize Union-Find with all vertices
-        let mut uf = UnionFind::new();
+        let mut uf = UnionFindStEph::new();
         for vertex in graph.vertices().iter() {
             uf.insert(vertex.clone());
         }
@@ -94,7 +94,7 @@ pub mod KruskalStEph {
     ///
     /// APAS: Work O(|MST|), Span O(|MST|)
     /// claude-4-sonet: Work O(|MST|), Span O(|MST|)
-    pub fn mst_weight<V: StT + Hash>(mst_edges: &Set<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64> {
+    pub fn mst_weight<V: StT + Hash>(mst_edges: &SetStEph<LabEdge<V, OrderedFloat<f64>>>) -> OrderedFloat<f64> {
         let mut total = OrderedFloat(0.0);
         for edge in mst_edges.iter() {
             let LabEdge(_u, _v, w) = edge;
@@ -106,7 +106,7 @@ pub mod KruskalStEph {
     /// Verify MST has correct number of edges
     ///
     /// A valid MST of n vertices should have n-1 edges.
-    pub fn verify_mst_size<V: StT + Hash + Ord>(n_vertices: N, mst_edges: &Set<LabEdge<V, OrderedFloat<f64>>>) -> B {
+    pub fn verify_mst_size<V: StT + Hash + Ord>(n_vertices: N, mst_edges: &SetStEph<LabEdge<V, OrderedFloat<f64>>>) -> B {
         let expected_edges = if n_vertices > 0 { n_vertices - 1 } else { 0 };
         mst_edges.size() == expected_edges
     }

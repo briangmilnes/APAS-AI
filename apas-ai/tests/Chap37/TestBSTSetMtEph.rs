@@ -1262,14 +1262,14 @@ fn test_race_condition_verification_concurrent_modifications() {
             let size = set.size();
             // Each set should have been modified by 2 threads (6 threads, 3 sets)
             // Each thread inserts 50 values, so each set should have up to 100 elements
-            assert!(size <= 100, "Set {idx} has size {size} > 100");
+            assert!(size <= 100, "SetStEph {idx} has size {size} > 100");
 
             if size > 0 {
                 let min = set.minimum();
                 let max = set.maximum();
                 assert!(
                     min.is_some() && max.is_some(),
-                    "Set {idx} with size {size} missing min/max"
+                    "SetStEph {idx} with size {size} missing min/max"
                 );
             }
         }
@@ -1350,7 +1350,7 @@ fn test_deadlock_prevention_bst_sets() {
         for (idx, set) in final_sets.iter().enumerate() {
             let size = set.size();
             total_elements += size;
-            println!("Set {idx}: size = {size}");
+            println!("SetStEph {idx}: size = {size}");
         }
         // At least some operations should have completed across all sets
         assert!(

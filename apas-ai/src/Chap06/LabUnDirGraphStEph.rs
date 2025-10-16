@@ -12,8 +12,8 @@ pub mod LabUnDirGraphStEph {
 
     #[derive(Clone)]
     pub struct LabUnDirGraphStEph<V: HashOrd, L: StT + Hash> {
-        vertices: Set<V>,
-        labeled_edges: Set<LabEdge<V, L>>,
+        vertices: SetStEph<V>,
+        labeled_edges: SetStEph<LabEdge<V, L>>,
     }
 
     pub trait LabUnDirGraphStEphTrait<V: HashOrd, L: StT + Hash> {
@@ -22,16 +22,16 @@ pub mod LabUnDirGraphStEph {
         fn empty() -> Self;
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
-        fn from_vertices_and_labeled_edges(vertices: Set<V>, labeled_edges: Set<LabEdge<V, L>>) -> Self;
+        fn from_vertices_and_labeled_edges(vertices: SetStEph<V>, labeled_edges: SetStEph<LabEdge<V, L>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn vertices(&self) -> &Set<V>;
+        fn vertices(&self) -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn labeled_edges(&self) -> &Set<LabEdge<V, L>>;
+        fn labeled_edges(&self) -> &SetStEph<LabEdge<V, L>>;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential map
-        fn edges(&self) -> Set<Edge<V>>;
+        fn edges(&self) -> SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn add_vertex(&mut self, v: V);
@@ -46,7 +46,7 @@ pub mod LabUnDirGraphStEph {
         fn has_edge(&self, v1: &V, v2: &V) -> bool;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential filter
-        fn neighbors(&self, v: &V) -> Set<V>;
+        fn neighbors(&self, v: &V) -> SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn normalize_edge(v1: V, v2: V) -> LabEdge<V, L>;
@@ -55,24 +55,24 @@ pub mod LabUnDirGraphStEph {
     impl<V: HashOrd, L: StT + Hash> LabUnDirGraphStEphTrait<V, L> for LabUnDirGraphStEph<V, L> {
         fn empty() -> Self {
             LabUnDirGraphStEph {
-                vertices: Set::empty(),
-                labeled_edges: Set::empty(),
+                vertices: SetStEph::empty(),
+                labeled_edges: SetStEph::empty(),
             }
         }
 
-        fn from_vertices_and_labeled_edges(vertices: Set<V>, labeled_edges: Set<LabEdge<V, L>>) -> Self {
+        fn from_vertices_and_labeled_edges(vertices: SetStEph<V>, labeled_edges: SetStEph<LabEdge<V, L>>) -> Self {
             LabUnDirGraphStEph {
                 vertices,
                 labeled_edges,
             }
         }
 
-        fn vertices(&self) -> &Set<V> { &self.vertices }
+        fn vertices(&self) -> &SetStEph<V> { &self.vertices }
 
-        fn labeled_edges(&self) -> &Set<LabEdge<V, L>> { &self.labeled_edges }
+        fn labeled_edges(&self) -> &SetStEph<LabEdge<V, L>> { &self.labeled_edges }
 
-        fn edges(&self) -> Set<Edge<V>> {
-            let mut edges = Set::empty();
+        fn edges(&self) -> SetStEph<Edge<V>> {
+            let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_edges.iter() {
                 edges.insert(Edge(labeled_edge.0.clone(), labeled_edge.1.clone()));
             }
@@ -114,8 +114,8 @@ pub mod LabUnDirGraphStEph {
             false
         }
 
-        fn neighbors(&self, v: &V) -> Set<V> {
-            let mut neighbors = Set::empty();
+        fn neighbors(&self, v: &V) -> SetStEph<V> {
+            let mut neighbors = SetStEph::empty();
             for labeled_edge in self.labeled_edges.iter() {
                 if labeled_edge.0 == *v {
                     neighbors.insert(labeled_edge.1.clone());
@@ -140,13 +140,13 @@ pub mod LabUnDirGraphStEph {
         pub fn sizeA(&self) -> N { self.labeled_edges().size() }
 
         /// Arcs (alias for edges in undirected graphs)
-        pub fn arcs(&self) -> Set<LabEdge<V, L>> { self.labeled_edges().clone() }
+        pub fn arcs(&self) -> SetStEph<LabEdge<V, L>> { self.labeled_edges().clone() }
 
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NPlus(&self, v: &V) -> Set<V> { self.neighbors(v) }
+        pub fn NPlus(&self, v: &V) -> SetStEph<V> { self.neighbors(v) }
 
         /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NMinus(&self, v: &V) -> Set<V> { self.neighbors(v) }
+        pub fn NMinus(&self, v: &V) -> SetStEph<V> { self.neighbors(v) }
 
         /// Degree (in undirected graphs, in-degree equals total degree)
         pub fn InDegree(&self, v: &V) -> N { self.neighbors(v).size() }
@@ -179,7 +179,7 @@ pub mod LabUnDirGraphStEph {
         ( V: [ $( $v:expr ),* $(,)? ], E: [ $( ($v1:expr, $v2:expr, $label:expr) ),* $(,)? ] ) => {{
             let vertices = $crate::SetLit![ $( $v ),* ];
             let labeled_edges = {
-                let mut edges = $crate::Chap05::SetStEph::SetStEph::Set::empty();
+                let mut edges = $crate::Chap05::SetStEph::SetStEph::SetStEph::empty();
                 $(
                     let normalized_edge = if $v1 <= $v2 {
                         $crate::Types::Types::LabEdge($v1, $v2, $label)

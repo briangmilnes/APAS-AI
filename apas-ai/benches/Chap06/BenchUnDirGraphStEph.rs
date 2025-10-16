@@ -17,13 +17,13 @@ fn bench_undirgraph_build(c: &mut Criterion) {
     let n: N = 50_000;
     group.bench_with_input(BenchmarkId::new("build_vertices_edges", n), &n, |b, &len| {
         b.iter(|| {
-            let mut v: Set<N> = SetLit![]; // Set: empty constructor
+            let mut v: SetStEph<N> = SetLit![]; // Set: empty constructor
             for i in 0..len {
-                let _ = Set::insert(&mut v, i);
+                let _ = SetStEph::insert(&mut v, i);
             }
-            let mut e: Set<Edge<N>> = SetLit![]; // Set: empty constructor
+            let mut e: SetStEph<Edge<N>> = SetLit![]; // Set: empty constructor
             for i in 0..len {
-                let _ = Set::insert(&mut e, Edge(i.min((i + 1) % len), i.max((i + 1) % len)));
+                let _ = SetStEph::insert(&mut e, Edge(i.min((i + 1) % len), i.max((i + 1) % len)));
             }
             let g = <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(v, e);
             black_box(g)

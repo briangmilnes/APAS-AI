@@ -18,7 +18,7 @@ pub mod StarPartitionStEph {
     pub trait StarPartitionStEphTrait {
         /// Sequential star partition using greedy selection
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
-        fn sequential_star_partition<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<Set<V>>;
+        fn sequential_star_partition<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> SetStEph<SetStEph<V>>;
     }
 
     /// Sequential Star Partition using greedy selection
@@ -37,10 +37,10 @@ pub mod StarPartitionStEph {
     ///
     /// Returns:
     /// - (centers, partition_map): Set of center vertices and mapping from each vertex to its center
-    pub fn sequential_star_partition<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> (Set<V>, HashMap<V, V>) {
+    pub fn sequential_star_partition<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> (SetStEph<V>, HashMap<V, V>) {
         let mut partition_map: HashMap<V, V> = HashMap::new();
-        let mut centers: Set<V> = SetLit![];
-        let mut processed: Set<V> = SetLit![];
+        let mut centers: SetStEph<V> = SetLit![];
+        let mut processed: SetStEph<V> = SetLit![];
 
         // Iterate through all vertices
         for vertex in graph.vertices().iter() {

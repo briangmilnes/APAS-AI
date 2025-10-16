@@ -17,11 +17,11 @@ pub mod SpanTreeStEph {
     pub trait SpanTreeStEphTrait {
         /// Sequential spanning tree via star contraction
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
-        fn spanning_tree_star_contraction<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<Edge<V>>;
+        fn spanning_tree_star_contraction<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> SetStEph<Edge<V>>;
 
         /// Verify spanning tree properties
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
-        fn verify_spanning_tree<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>, tree: &Set<Edge<V>>) -> B;
+        fn verify_spanning_tree<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>, tree: &SetStEph<Edge<V>>) -> B;
     }
 
     /// Exercise 64.2: Spanning Tree via Star Contraction
@@ -45,16 +45,16 @@ pub mod SpanTreeStEph {
     ///
     /// Returns:
     /// - Set of edges forming a spanning tree
-    pub fn spanning_tree_star_contraction<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> Set<Edge<V>> {
+    pub fn spanning_tree_star_contraction<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> SetStEph<Edge<V>> {
         // Base: no edges means no spanning tree edges (isolated vertices)
-        let base = |_vertices: &Set<V>| SetLit![];
+        let base = |_vertices: &SetStEph<V>| SetLit![];
 
         // Expand: add star partition edges and map quotient tree edges back
-        let expand = |_v: &Set<V>,
-                      original_edges: &Set<Edge<V>>,
-                      _centers: &Set<V>,
+        let expand = |_v: &SetStEph<V>,
+                      original_edges: &SetStEph<Edge<V>>,
+                      _centers: &SetStEph<V>,
                       partition_map: &HashMap<V, V>,
-                      quotient_tree: Set<Edge<V>>| {
+                      quotient_tree: SetStEph<Edge<V>>| {
             // Collect edges from partition map (vertex → center edges)
             let mut spanning_edges = SetLit![];
 
@@ -104,7 +104,7 @@ pub mod SpanTreeStEph {
     /// 3. All edges are from original graph
     ///
     /// Returns true if valid spanning tree
-    pub fn verify_spanning_tree<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>, tree_edges: &Set<Edge<V>>) -> B {
+    pub fn verify_spanning_tree<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>, tree_edges: &SetStEph<Edge<V>>) -> B {
         let n = graph.sizeV();
         let expected_edges = if n > 0 { n - 1 } else { 0 };
 

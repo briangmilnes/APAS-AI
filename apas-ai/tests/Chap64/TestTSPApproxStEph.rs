@@ -9,7 +9,7 @@ use ordered_float::OrderedFloat;
 
 fn create_triangle_graph() -> (
     LabUnDirGraphStEph<N, OrderedFloat<f64>>,
-    Set<LabEdge<N, OrderedFloat<f64>>>,
+    SetStEph<LabEdge<N, OrderedFloat<f64>>>,
 ) {
     let vertices = SetLit![0, 1, 2];
     let edges = SetLit![

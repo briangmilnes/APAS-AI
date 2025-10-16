@@ -17,13 +17,13 @@ fn bench_dirgraph_build(c: &mut Criterion) {
     let n: N = 1_000;
     group.bench_with_input(BenchmarkId::new("build_vertices_arcs", n), &n, |b, &len| {
         b.iter(|| {
-            let mut v: Set<N> = SetLit![]; // Set: empty constructor
+            let mut v: SetStEph<N> = SetLit![]; // Set: empty constructor
             for i in 0..len {
-                let _ = Set::insert(&mut v, i);
+                let _ = SetStEph::insert(&mut v, i);
             }
-            let mut a: Set<Edge<N>> = SetLit![]; // Set: empty constructor
+            let mut a: SetStEph<Edge<N>> = SetLit![]; // Set: empty constructor
             for i in 0..len {
-                let _ = Set::insert(&mut a, Edge(i, (i + 1) % len));
+                let _ = SetStEph::insert(&mut a, Edge(i, (i + 1) % len));
             }
             let g = DirGraphStEph::FromSets(v, a);
             black_box(g)
@@ -33,13 +33,13 @@ fn bench_dirgraph_build(c: &mut Criterion) {
     // Add vertex operations benchmark - O(1) but worth testing
     group.bench_with_input(BenchmarkId::new("vertex_operations", n), &n, |b, &len| {
         b.iter(|| {
-            let mut v: Set<N> = SetLit![];
+            let mut v: SetStEph<N> = SetLit![];
             for i in 0..len {
-                let _ = Set::insert(&mut v, i);
+                let _ = SetStEph::insert(&mut v, i);
             }
-            let mut a: Set<Edge<N>> = SetLit![];
+            let mut a: SetStEph<Edge<N>> = SetLit![];
             for i in 0..len {
-                let _ = Set::insert(&mut a, Edge(i, (i + 1) % len));
+                let _ = SetStEph::insert(&mut a, Edge(i, (i + 1) % len));
             }
             let g = DirGraphStEph::FromSets(v, a);
             let vertex_count = g.sizeV();
@@ -51,13 +51,13 @@ fn bench_dirgraph_build(c: &mut Criterion) {
     // Add neighbor operations benchmark - O(|A|) operation
     group.bench_with_input(BenchmarkId::new("neighbor_operations", n), &n, |b, &len| {
         b.iter(|| {
-            let mut v: Set<N> = SetLit![];
+            let mut v: SetStEph<N> = SetLit![];
             for i in 0..len {
-                let _ = Set::insert(&mut v, i);
+                let _ = SetStEph::insert(&mut v, i);
             }
-            let mut a: Set<Edge<N>> = SetLit![];
+            let mut a: SetStEph<Edge<N>> = SetLit![];
             for i in 0..len {
-                let _ = Set::insert(&mut a, Edge(i, (i + 1) % len));
+                let _ = SetStEph::insert(&mut a, Edge(i, (i + 1) % len));
             }
             let g = DirGraphStEph::FromSets(v, a);
             let neighbors = g.NG(&(len / 2));
@@ -68,13 +68,13 @@ fn bench_dirgraph_build(c: &mut Criterion) {
     // Add edge checking benchmark - O(1) operation
     group.bench_with_input(BenchmarkId::new("edge_checking", n), &n, |b, &len| {
         b.iter(|| {
-            let mut v: Set<N> = SetLit![];
+            let mut v: SetStEph<N> = SetLit![];
             for i in 0..len {
-                let _ = Set::insert(&mut v, i);
+                let _ = SetStEph::insert(&mut v, i);
             }
-            let mut a: Set<Edge<N>> = SetLit![];
+            let mut a: SetStEph<Edge<N>> = SetLit![];
             for i in 0..len {
-                let _ = Set::insert(&mut a, Edge(i, (i + 1) % len));
+                let _ = SetStEph::insert(&mut a, Edge(i, (i + 1) % len));
             }
             let g = DirGraphStEph::FromSets(v, a);
             let mut edge_count = 0;

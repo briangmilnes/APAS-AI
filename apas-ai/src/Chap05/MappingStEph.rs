@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-//! Chapter 5.5 ephemeral Mapping (Function) built on `Relation<A,B>`.
+//! Chapter 5.5 ephemeral Mapping (Function) built on `RelationStEph<A,B>`.
 
 pub mod MappingStEph {
 
@@ -14,22 +14,22 @@ pub mod MappingStEph {
     use crate::Types::Types::*;
 
     #[derive(Clone)]
-    pub struct Mapping<A, B> {
-        rel: Relation<A, B>,
+    pub struct MappingStEph<A, B> {
+        rel: RelationStEph<A, B>,
     }
 
     pub trait MappingStEphTrait<X: StT + Hash, Y: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Mapping<X, Y>;
+        fn empty() -> MappingStEph<X, Y>;
 
         /// APAS: Work Θ(|v|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
-        fn FromVec(v: Vec<Pair<X, Y>>) -> Mapping<X, Y>;
+        fn FromVec(v: Vec<Pair<X, Y>>) -> MappingStEph<X, Y>;
 
         /// APAS: Work Θ(|r|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|r|), Span Θ(1)
-        fn FromRelation(r: &Relation<X, Y>) -> Mapping<X, Y>;
+        fn FromRelation(r: &RelationStEph<X, Y>) -> MappingStEph<X, Y>;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
@@ -37,11 +37,11 @@ pub mod MappingStEph {
 
         /// APAS: Work Θ(|m|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|m|), Span Θ(1)
-        fn domain(&self) -> Set<X>;
+        fn domain(&self) -> SetStEph<X>;
 
         /// APAS: Work Θ(|m|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|m|), Span Θ(1)
-        fn range(&self) -> Set<Y>;
+        fn range(&self) -> SetStEph<Y>;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
@@ -50,67 +50,67 @@ pub mod MappingStEph {
         fn iter(&self) -> Iter<'_, Pair<X, Y>>;
     }
 
-    impl<A: Eq + Hash, B: Eq + Hash> Mapping<A, B> {
-        fn unique_pairs_from_iter<I: IntoIterator<Item = Pair<A, B>>>(iter: I) -> Set<Pair<A, B>> {
+    impl<A: Eq + Hash, B: Eq + Hash> MappingStEph<A, B> {
+        fn unique_pairs_from_iter<I: IntoIterator<Item = Pair<A, B>>>(iter: I) -> SetStEph<Pair<A, B>> {
             let mut m: HashMap<A, B> = HashMap::new();
             for Pair(a, b) in iter {
                 m.insert(a, b);
             }
             let pairs: Vec<Pair<A, B>> = m.into_iter().map(|(a, b)| Pair(a, b)).collect();
-            Set::FromVec(pairs)
+            SetStEph::FromVec(pairs)
         }
     }
 
-    impl<X: StT + Hash, Y: StT + Hash> MappingStEphTrait<X, Y> for Mapping<X, Y> {
-        fn empty() -> Mapping<X, Y> {
-            Mapping {
-                rel: <Relation<X, Y> as RelationStEphTrait<X, Y>>::empty(),
+    impl<X: StT + Hash, Y: StT + Hash> MappingStEphTrait<X, Y> for MappingStEph<X, Y> {
+        fn empty() -> MappingStEph<X, Y> {
+            MappingStEph {
+                rel: <RelationStEph<X, Y> as RelationStEphTrait<X, Y>>::empty(),
             }
         }
 
-        fn FromVec(v: Vec<Pair<X, Y>>) -> Mapping<X, Y> {
+        fn FromVec(v: Vec<Pair<X, Y>>) -> MappingStEph<X, Y> {
             let pairs = Self::unique_pairs_from_iter(v);
-            Mapping {
-                rel: <Relation<X, Y> as RelationStEphTrait<X, Y>>::FromSet(pairs),
+            MappingStEph {
+                rel: <RelationStEph<X, Y> as RelationStEphTrait<X, Y>>::FromSet(pairs),
             }
         }
 
-        fn FromRelation(r: &Relation<X, Y>) -> Mapping<X, Y> {
+        fn FromRelation(r: &RelationStEph<X, Y>) -> MappingStEph<X, Y> {
             let pairs = Self::unique_pairs_from_iter(r.iter().cloned());
-            Mapping {
-                rel: <Relation<X, Y> as RelationStEphTrait<X, Y>>::FromSet(pairs),
+            MappingStEph {
+                rel: <RelationStEph<X, Y> as RelationStEphTrait<X, Y>>::FromSet(pairs),
             }
         }
 
         fn size(&self) -> N { self.rel.size() }
 
-        fn domain(&self) -> Set<X> { self.rel.domain() }
+        fn domain(&self) -> SetStEph<X> { self.rel.domain() }
 
-        fn range(&self) -> Set<Y> { self.rel.range() }
+        fn range(&self) -> SetStEph<Y> { self.rel.range() }
 
         fn mem(&self, a: &X, b: &Y) -> B { self.rel.mem(a, b) }
 
         fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.rel.iter() }
     }
 
-    impl<A: StT + Hash, B: StT + Hash> PartialEq for Mapping<A, B> {
+    impl<A: StT + Hash, B: StT + Hash> PartialEq for MappingStEph<A, B> {
         fn eq(&self, other: &Self) -> bool { self.rel == other.rel }
     }
 
-    impl<A: StT + Hash, B: StT + Hash> Eq for Mapping<A, B> {}
+    impl<A: StT + Hash, B: StT + Hash> Eq for MappingStEph<A, B> {}
 
-    impl<A: StT + Hash, B: StT + Hash> Debug for Mapping<A, B> {
+    impl<A: StT + Hash, B: StT + Hash> Debug for MappingStEph<A, B> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result { Debug::fmt(&self.rel, f) }
     }
 
-    impl<A: StT + Hash, B: StT + Hash> Display for Mapping<A, B> {
+    impl<A: StT + Hash, B: StT + Hash> Display for MappingStEph<A, B> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result { Display::fmt(&self.rel, f) }
     }
 
     #[macro_export]
     macro_rules! MappingLit {
         () => {{
-            < $crate::Chap05::MappingStEph::MappingStEph::Mapping<_, _> as $crate::Chap05::MappingStEph::MappingStEph::MappingStEphTrait<_, _> >::FromRelation(& $crate::RelationLit![])
+            < $crate::Chap05::MappingStEph::MappingStEph::MappingStEph<_, _> as $crate::Chap05::MappingStEph::MappingStEph::MappingStEphTrait<_, _> >::FromRelation(& $crate::RelationLit![])
         }};
         ( $( ($a:expr, $b:expr) ),* $(,)? ) => {{
             let __pairs = vec![ $( $crate::Types::Types::Pair($a, $b) ),* ];
@@ -122,7 +122,7 @@ pub mod MappingStEph {
                     panic!("MappingLit!: duplicate domain element {:?}", key);
                 }
             }
-            < $crate::Chap05::MappingStEph::MappingStEph::Mapping<_, _> as $crate::Chap05::MappingStEph::MappingStEph::MappingStEphTrait<_, _> >::FromVec(__pairs)
+            < $crate::Chap05::MappingStEph::MappingStEph::MappingStEph<_, _> as $crate::Chap05::MappingStEph::MappingStEph::MappingStEphTrait<_, _> >::FromVec(__pairs)
         }};
     }
 

@@ -11,18 +11,18 @@ use apas_ai::*;
 #[test]
 fn test_mappinglit_macro_functionality() {
     // Test empty mapping creation
-    let empty: Mapping<i32, String> = MappingLit![];
+    let empty: MappingStEph<i32, String> = MappingLit![];
     assert_eq!(empty.size(), 0);
 
     // Test mapping creation with key-value pairs
-    let with_data: Mapping<i32, String> = MappingLit![(1, "one".to_string()), (2, "two".to_string())];
+    let with_data: MappingStEph<i32, String> = MappingLit![(1, "one".to_string()), (2, "two".to_string())];
     assert_eq!(with_data.size(), 2);
     //        assert_eq!(with_data.apply(&1), Some("one".to_string()));
 }
 
 #[test]
 fn test_empty_mapping() {
-    let m: Mapping<N, &str> = MappingLit![];
+    let m: MappingStEph<N, &str> = MappingLit![];
     assert_eq!(m.size(), 0);
     assert_eq!(m.domain().size(), 0);
     assert_eq!(m.range().size(), 0);
@@ -31,7 +31,7 @@ fn test_empty_mapping() {
 #[test]
 fn test_empty_mapping_trait() {
     // Test calling empty() directly through the trait
-    let m: Mapping<N, &str> = <Mapping<N, &str> as MappingStEphTrait<N, &str>>::empty();
+    let m: MappingStEph<N, &str> = <MappingStEph<N, &str> as MappingStEphTrait<N, &str>>::empty();
     assert_eq!(m.size(), 0);
     assert_eq!(m.domain().size(), 0);
     assert_eq!(m.range().size(), 0);
@@ -58,8 +58,8 @@ fn test_from_vec_duplicate_keys() {
 #[test]
 fn test_from_relation() {
     let pairs_set = SetLit![PairLit!(1, "one"), PairLit!(2, "two"), PairLit!(1, "uno")];
-    let rel = <Relation<N, &str> as RelationStEphTrait<N, &str>>::FromSet(pairs_set);
-    let m = <Mapping<N, &str> as MappingStEphTrait<N, &str>>::FromRelation(&rel);
+    let rel = <RelationStEph<N, &str> as RelationStEphTrait<N, &str>>::FromSet(pairs_set);
+    let m = <MappingStEph<N, &str> as MappingStEphTrait<N, &str>>::FromRelation(&rel);
 
     // Mapping should convert relation to function (one value per key)
     assert!(m.size() <= 2); // At most 2 keys (1 and 2)
@@ -118,7 +118,7 @@ fn test_mem_comprehensive() {
 
 #[test]
 fn test_empty_mapping_operations() {
-    let m: Mapping<N, &str> = MappingLit![];
+    let m: MappingStEph<N, &str> = MappingLit![];
 
     assert_eq!(m.size(), 0);
     assert_eq!(m.domain().size(), 0);
@@ -132,8 +132,8 @@ fn test_empty_mapping_operations() {
 #[test]
 fn test_from_relation_empty_edge() {
     // Test FromRelation with empty relation
-    let empty_rel: Relation<i32, String> = Relation::empty();
-    let m = <Mapping<i32, String> as MappingStEphTrait<i32, String>>::FromRelation(&empty_rel);
+    let empty_rel: RelationStEph<i32, String> = RelationStEph::empty();
+    let m = <MappingStEph<i32, String> as MappingStEphTrait<i32, String>>::FromRelation(&empty_rel);
 
     assert_eq!(m.size(), 0);
     assert_eq!(m.domain().size(), 0);
@@ -177,7 +177,7 @@ fn test_mapping_large_dataset_stress() {
     // Test with large mapping to verify no panics occur
     let large_pairs: Vec<Pair<i32, String>> = (0..10000).map(|i| Pair(i, format!("value_{i}"))).collect();
 
-    let m = <Mapping<i32, String> as MappingStEphTrait<i32, String>>::FromVec(large_pairs);
+    let m = <MappingStEph<i32, String> as MappingStEphTrait<i32, String>>::FromVec(large_pairs);
 
     assert_eq!(m.size(), 10000);
     assert!(m.mem(&5000, &"value_5000".to_string()));
