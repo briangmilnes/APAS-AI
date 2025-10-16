@@ -125,6 +125,7 @@ General Rust source code fixes and utilities.
 - `review_where_clause_simplification.py` - Reviews for overly simple where clauses (RustRules.md Lines 322-329)
 - `review_trait_default_pattern.py` - Reviews trait default implementations: one-liners in trait, multi-line in impl (RustRules.md Lines 136-171)
 - `review_qualified_paths.py` - Reviews for fully-qualified paths (std::collections::HashMap) that should be imported
+- `review_struct_file_naming.py` - Reviews that struct names match file names (e.g., RelationStEph struct in RelationStEph.rs)
 
 **Module Registration Reviews:**
 - `review_cargo.py` - Reviews Cargo.toml for missing test/benchmark registrations
