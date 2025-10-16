@@ -126,6 +126,7 @@ General Rust source code fixes and utilities.
 - `review_trait_default_pattern.py` - Reviews trait default implementations: one-liners in trait, multi-line in impl (RustRules.md Lines 136-171)
 - `review_qualified_paths.py` - Reviews for fully-qualified paths (std::collections::HashMap) that should be imported
 - `review_struct_file_naming.py` - Reviews that struct names match file names (e.g., RelationStEph struct in RelationStEph.rs)
+- `review_trait_self_usage.py` - Reviews trait methods using concrete types (Set<T>) instead of Self in return types
 
 **Module Registration Reviews:**
 - `review_cargo.py` - Reviews Cargo.toml for missing test/benchmark registrations
