@@ -331,6 +331,86 @@ The `clone_mt` method exists because `Mutex<T>` cannot use regular `.clone()` - 
 
 **Impact:** This limitation leads to repetitive stub implementations whenever uniform behavior is needed across multiple primitive types, making the codebase more verbose and harder to maintain than languages with proper union types.
 
+### Wildcard Imports and Trait Ambiguity
+
+Rust's wildcard imports (`use Module::*`) import ALL public items including traits, but multiple traits with the same method names create ambiguity that Rust refuses to resolve automatically.
+
+**Problem:** Wildcard imports are additive, not overriding. When multiple traits define the same method name, ALL are in scope simultaneously, causing ambiguity errors.
+
+**Example Problem:**
+```rust
+// Module M1 defines Trait1 with method foo()
+use crate::M1::*;  // Brings Trait1 into scope
+
+// Module M2 defines Trait2 with method foo()
+use crate::M2::*;  // Brings Trait2 into scope (ADDS to scope, doesn't replace M1)
+
+fn test(obj: &SomeType) {
+    obj.foo();  // ERROR E0034: multiple applicable items in scope
+                //   - M1::Trait1::foo
+                //   - M2::Trait2::foo
+                // Neither "overwrites" the other - BOTH are in scope
+}
+```
+
+**Critical Semantic:** Unlike many languages where later imports shadow earlier ones, Rust keeps ALL imported traits in scope. The second `use` does NOT overwrite the first - it adds to the namespace, creating potential conflicts.
+
+**Inherent Methods as Workaround:** Inherent methods (methods defined directly on a type in an `impl Type` block) have **higher priority** than trait methods in method resolution. This provides a disambiguation mechanism:
+
+```rust
+struct SomeType;
+
+impl SomeType {
+    fn foo(&self) { }  // INHERENT method - ALWAYS wins
+}
+
+use M1::*;  // Trait1::foo now in scope
+use M2::*;  // Trait2::foo now in scope
+
+fn test(obj: &SomeType) {
+    obj.foo();  // ✓ Calls inherent method, ignores BOTH trait methods
+}
+```
+
+**Method Resolution Order:**
+1. Inherent methods on the type (highest priority - always chosen if present)
+2. Trait methods from traits in scope (only if no inherent method)
+3. If multiple traits match → compilation error (ambiguity)
+
+**Impact on APAS Codebase:** The widespread use of wildcard imports (`use Module::*`) combined with multiple sequence/collection traits defining common method names (length, nth, empty, etc.) makes inherent methods necessary for disambiguation. What appears to be "duplicate" code (inherent method + trait method with same signature) is actually an **intentional disambiguation pattern** - the inherent method shadows all trait methods to resolve ambiguity.
+
+**Example from APAS:**
+```rust
+// ArraySeqStEph defines both inherent and trait methods
+impl<T> ArraySeqStEphS<T> {
+    pub fn length(&self) -> N { self.data.len() }  // Inherent - for callers
+}
+
+impl<T> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {
+    fn length(&self) -> N { ArraySeqStEphS::length(self) }  // Trait - for generics
+}
+
+// In caller code with wildcard imports:
+use crate::Chap18::ArraySeq::ArraySeq::*;           // ArraySeq trait with length()
+use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*; // ArraySeqStEphTrait with length()
+
+let arr = ArraySeqStEphS::empty();
+arr.length();  // ✓ Calls inherent method, avoiding ambiguity between TWO trait methods
+```
+
+Without the inherent method, `arr.length()` would fail with `E0034: multiple applicable items in scope` because both `ArraySeq::length` and `ArraySeqStEphTrait::length` are in scope via wildcard imports.
+
+**Alternatives:**
+1. **Explicit trait imports:** Import specific traits instead of wildcards to avoid bringing multiple conflicting traits into scope
+2. **UFCS (Universal Function Call Syntax):** Explicitly disambiguate: `<Type as Trait>::method(&obj)`
+3. **Inherent method delegation pattern:** Current APAS approach - inherent methods shadow trait conflicts
+
+**Why This is Problematic:** This behavior is counterintuitive because:
+- Most languages allow later imports to shadow earlier ones
+- The "duplication" of inherent + trait methods appears redundant but is actually necessary for disambiguation
+- Code review tools flag this as a DRY violation when it's actually an architectural necessity
+- No explicit syntax indicates "this inherent method exists for disambiguation purposes"
+
 ### Trait Delegation and Module Composition Limitations
 
 Rust lacks elegant mechanisms for trait delegation and module composition, forcing verbose workarounds when one module wants to re-export and extend functionality from another module.
