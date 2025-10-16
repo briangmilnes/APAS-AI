@@ -2,7 +2,7 @@
 //! Vec Chained Hash Table - Sequential Ephemeral (Chapter 47).
 //! Uses Vec for separate chaining collision resolution.
 
-pub mod VecChainedHashTable {
+pub mod VecChainedHashTableStEph {
 
     use crate::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
     use crate::Chap47clean::ChainedHashTable::ChainedHashTable::*;

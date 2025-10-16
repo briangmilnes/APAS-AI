@@ -242,12 +242,12 @@ pub mod Chap47clean {
     pub mod ParaHashTableStEph;
     pub mod FlatHashTable;
     pub mod ChainedHashTable;
-    pub mod LinkedListChainedHashTable;
-    pub mod VecChainedHashTable;
+    pub mod LinkedListChainedHashTableStEph;
+    pub mod VecChainedHashTableStEph;
     pub mod StructChainedHashTable;
-    pub mod LinProbFlatHashTable;
-    pub mod QuadProbFlatHashTable;
-    pub mod DoubleHashFlatHashTable;
+    pub mod LinProbFlatHashTableStEph;
+    pub mod QuadProbFlatHashTableStEph;
+    pub mod DoubleHashFlatHashTableStEph;
 }
 
 pub mod Chap49 {

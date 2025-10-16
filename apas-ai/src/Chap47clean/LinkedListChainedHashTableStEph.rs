@@ -2,7 +2,7 @@
 //! LinkedList Chained Hash Table - Sequential Ephemeral (Chapter 47).
 //! Uses LinkedList for separate chaining collision resolution.
 
-pub mod LinkedListChainedHashTable {
+pub mod LinkedListChainedHashTableStEph {
 
     use std::collections::LinkedList;
 

@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap47clean::DoubleHashFlatHashTable::DoubleHashFlatHashTable::*;
+use apas_ai::Chap47clean::DoubleHashFlatHashTableStEph::DoubleHashFlatHashTableStEph::*;
 use apas_ai::Chap47clean::FlatHashTable::FlatHashTable::*;
 use apas_ai::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
 use apas_ai::Types::Types::*;
