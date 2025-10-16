@@ -14,6 +14,7 @@ pub mod Chap05 {
     pub mod MappingStEph;
     pub mod RelationStEph;
     pub mod SetStEph;
+    pub mod SetStEphClean;
 }
 
 pub mod Chap06 {

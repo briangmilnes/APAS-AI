@@ -366,6 +366,10 @@ name = "TestSetStEph"
 path = "tests/Chap05/TestSetStEph.rs"
 
 [[test]]
+name = "TestSetStEphClean"
+path = "tests/Chap05/TestSetStEphClean.rs"
+
+[[test]]
 name = "TestRelationStEph"
 path = "tests/Chap05/TestRelationStEph.rs"
 
