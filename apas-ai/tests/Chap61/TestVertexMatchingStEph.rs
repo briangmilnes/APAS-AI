@@ -1,6 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chapter 61 Vertex Matching (Sequential)
 
+use std::vec::Vec;
+
 use apas_ai::{
     Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
     Chap61::VertexMatchingStEph::VertexMatchingStEph::*, SetLit, Types::Types::*,
@@ -121,7 +123,7 @@ fn test_matching_properties() {
     }
 
     // Property 2: No two edges share an endpoint
-    let all_edges: std::vec::Vec<&Edge<usize>> = matching.iter().collect();
+    let all_edges: Vec<&Edge<usize>> = matching.iter().collect();
     for i in 0..all_edges.len() {
         for j in (i + 1)..all_edges.len() {
             let Edge(u1, v1) = all_edges[i];

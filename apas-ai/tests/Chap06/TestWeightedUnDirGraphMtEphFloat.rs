@@ -2,6 +2,9 @@
 
 use std::sync::{Arc, Barrier};
 use std::thread;
+use std::f64::consts::E;
+use std::f64::consts::PI;
+use std::f64::consts::SQRT_2;
 
 use ordered_float::OrderedFloat;
 
@@ -94,9 +97,9 @@ fn test_weightedundirgraphmtephfloat_basic_operations() {
 fn test_weightedundirgraphmtephfloat_incident_operations() {
     let v: Set<N> = SetLit![0, 1, 2];
     let a: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![
-        LabEdge(0, 1, OrderedFloat(std::f64::consts::PI)),
-        LabEdge(1, 2, OrderedFloat(std::f64::consts::E)),
-        LabEdge(0, 2, OrderedFloat(std::f64::consts::SQRT_2))
+        LabEdge(0, 1, OrderedFloat(PI)),
+        LabEdge(1, 2, OrderedFloat(E)),
+        LabEdge(0, 2, OrderedFloat(SQRT_2))
     ];
     let _g = WeightedUnDirGraphMtEphFloat::from_vertices_and_labeled_edges(v, a);
 
@@ -344,9 +347,9 @@ fn test_add_weighted_edge() {
     let mut g: WeightedUnDirGraphMtEphFloat<i32> = WeightedUnDirGraphMtEphFloat::empty();
     g.add_vertex(1);
     g.add_vertex(2);
-    g.add_weighted_edge(1, 2, OrderedFloat(std::f64::consts::PI));
+    g.add_weighted_edge(1, 2, OrderedFloat(PI));
     assert!(g.has_edge(&1, &2));
-    assert_eq!(g.get_edge_weight(&1, &2), Some(OrderedFloat(std::f64::consts::PI)));
+    assert_eq!(g.get_edge_weight(&1, &2), Some(OrderedFloat(PI)));
 }
 
 #[test]

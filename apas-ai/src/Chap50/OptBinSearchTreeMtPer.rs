@@ -7,6 +7,9 @@ pub mod OptBinSearchTreeMtPer {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::sync::{Arc, Mutex};
     use std::thread;
+    use std::iter::Cloned;
+    use std::slice::Iter;
+    use std::vec::IntoIter;
 
     use crate::Chap50::Probability::Probability::Probability;
     use crate::Types::Types::*;
@@ -202,7 +205,7 @@ pub mod OptBinSearchTreeMtPer {
 
     impl<T: MtVal> IntoIterator for OBSTMtPerS<T> {
         type Item = KeyProb<T>;
-        type IntoIter = std::vec::IntoIter<KeyProb<T>>;
+        type IntoIter = IntoIter<KeyProb<T>>;
 
         fn into_iter(self) -> Self::IntoIter {
             // Extract Vec from Arc - this consumes the Arc
@@ -215,7 +218,7 @@ pub mod OptBinSearchTreeMtPer {
 
     impl<'a, T: MtVal> IntoIterator for &'a OBSTMtPerS<T> {
         type Item = KeyProb<T>;
-        type IntoIter = std::iter::Cloned<std::slice::Iter<'a, KeyProb<T>>>;
+        type IntoIter = Cloned<Iter<'a, KeyProb<T>>>;
 
         fn into_iter(self) -> Self::IntoIter { self.keys.iter().cloned() }
     }

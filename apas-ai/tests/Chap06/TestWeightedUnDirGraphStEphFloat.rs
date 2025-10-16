@@ -1,6 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chap06 WeightedUnDirGraphStEphFloat.
 
+use std::f64::consts::E;
+use std::f64::consts::PI;
+
 use ordered_float::OrderedFloat;
 
 use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEphTrait;
@@ -38,8 +41,8 @@ fn test_add_vertices_and_edges() {
     graph.add_vertex(3);
     assert_eq!(graph.vertices().size(), 3);
 
-    graph.add_weighted_edge(1, 2, OrderedFloat(std::f64::consts::PI));
-    graph.add_weighted_edge(2, 3, OrderedFloat(std::f64::consts::E));
+    graph.add_weighted_edge(1, 2, OrderedFloat(PI));
+    graph.add_weighted_edge(2, 3, OrderedFloat(E));
     assert_eq!(graph.edges().size(), 2);
 }
 
@@ -178,10 +181,10 @@ fn test_fractional_weights() {
     let mut graph = WeightedUnDirGraphStEphFloat::empty();
     graph.add_vertex(1);
     graph.add_vertex(2);
-    graph.add_weighted_edge(1, 2, OrderedFloat(std::f64::consts::PI));
+    graph.add_weighted_edge(1, 2, OrderedFloat(PI));
 
     let weight = graph.get_edge_weight(&1, &2).unwrap();
-    assert!((weight.0 - std::f64::consts::PI).abs() < 0.00001);
+    assert!((weight.0 - PI).abs() < 0.00001);
 }
 
 #[test]
@@ -412,7 +415,7 @@ fn test_very_small_weight() {
 
 #[test]
 fn test_display_format() {
-    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [(1, 2, std::f64::consts::PI)]);
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [(1, 2, PI)]);
     let display_str = format!("{graph}");
     assert!(!display_str.is_empty());
 }

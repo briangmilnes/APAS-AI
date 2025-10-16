@@ -7,6 +7,7 @@ pub mod MatrixChainMtEph {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::sync::{Arc, Mutex};
     use std::thread;
+    use std::vec::IntoIter;
 
     use crate::Types::Types::*;
 
@@ -256,7 +257,7 @@ pub mod MatrixChainMtEph {
 
     impl IntoIterator for MatrixChainMtEphS {
         type Item = MatrixDim;
-        type IntoIter = std::vec::IntoIter<MatrixDim>;
+        type IntoIter = IntoIter<MatrixDim>;
 
         fn into_iter(self) -> Self::IntoIter {
             // Extract Vec from Arc<Mutex<Vec>> - this consumes the Arc
@@ -272,7 +273,7 @@ pub mod MatrixChainMtEph {
 
     impl IntoIterator for &MatrixChainMtEphS {
         type Item = MatrixDim;
-        type IntoIter = std::vec::IntoIter<MatrixDim>;
+        type IntoIter = IntoIter<MatrixDim>;
 
         fn into_iter(self) -> Self::IntoIter {
             let dimensions_guard = self.dimensions.lock().unwrap();
@@ -282,7 +283,7 @@ pub mod MatrixChainMtEph {
 
     impl IntoIterator for &mut MatrixChainMtEphS {
         type Item = MatrixDim;
-        type IntoIter = std::vec::IntoIter<MatrixDim>;
+        type IntoIter = IntoIter<MatrixDim>;
 
         fn into_iter(self) -> Self::IntoIter {
             let dimensions_guard = self.dimensions.lock().unwrap();

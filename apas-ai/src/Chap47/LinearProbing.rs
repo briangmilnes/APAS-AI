@@ -3,20 +3,22 @@
 
 pub mod LinearProbing {
 
+    use std::marker::PhantomData;
+
 use crate::Types::Types::*;
 use crate::Chap47::FlatHashTable::FlatHashTable::*;
 use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     #[derive(Clone, Debug)]
     pub struct LinearProbingStrategy<K: StT, H: HashFunClone<K>> {
         base_hash: H,
-        _phantom: std::marker::PhantomData<K>,
+        _phantom: PhantomData<K>,
     }
 
     impl<K: StT, H: HashFunClone<K>> LinearProbingStrategy<K, H> {
         pub fn new(hash_fn: H) -> Self {
             LinearProbingStrategy {
                 base_hash: hash_fn,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
     }

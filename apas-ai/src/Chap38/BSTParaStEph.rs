@@ -5,6 +5,9 @@ pub mod BSTParaStEph {
 
     use std::cell::RefCell;
     use std::rc::Rc;
+    use std::cmp::Ordering::Equal;
+    use std::cmp::Ordering::Greater;
+    use std::cmp::Ordering::Less;
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
@@ -81,17 +84,17 @@ pub mod BSTParaStEph {
             match tree.expose_internal() {
                 | Exposed::Leaf => (ParamBST::new(), false, ParamBST::new()),
                 | Exposed::Node(left, root_key, right) => match key.cmp(&root_key) {
-                    | std::cmp::Ordering::Less => {
+                    | Less => {
                         let (ll, found, lr) = ParamBST::split_inner(&left, key);
                         let rebuilt = ParamBST::join_mid(Exposed::Node(lr, root_key, right));
                         (ll, found, rebuilt)
                     }
-                    | std::cmp::Ordering::Greater => {
+                    | Greater => {
                         let (rl, found, rr) = ParamBST::split_inner(&right, key);
                         let rebuilt = ParamBST::join_mid(Exposed::Node(left, root_key, rl));
                         (rebuilt, found, rr)
                     }
-                    | std::cmp::Ordering::Equal => (left, true, right),
+                    | Equal => (left, true, right),
                 },
             }
         }
@@ -176,9 +179,9 @@ pub mod BSTParaStEph {
             match self.expose_internal() {
                 | Exposed::Leaf => None,
                 | Exposed::Node(left, root_key, right) => match key.cmp(&root_key) {
-                    | std::cmp::Ordering::Less => ParamBSTTrait::find(&left, key),
-                    | std::cmp::Ordering::Greater => ParamBSTTrait::find(&right, key),
-                    | std::cmp::Ordering::Equal => Some(root_key),
+                    | Less => ParamBSTTrait::find(&left, key),
+                    | Greater => ParamBSTTrait::find(&right, key),
+                    | Equal => Some(root_key),
                 },
             }
         }

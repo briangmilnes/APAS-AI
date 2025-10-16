@@ -11,6 +11,9 @@ pub mod MathSeq {
     use std::collections::{HashMap, HashSet};
     use std::fmt::{Debug, Display, Formatter};
     use std::hash::Hash;
+    use std::slice::Iter;
+    use std::slice::IterMut;
+    use std::vec::IntoIter;
 
     use crate::Types::Types::*;
 
@@ -88,14 +91,14 @@ pub mod MathSeq {
 
     impl<T: StT> Eq for MathSeqS<T> {}
 
-    impl<T: StT> std::fmt::Debug for MathSeqS<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: StT> Debug for MathSeqS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             f.debug_list().entries(self.data.iter()).finish()
         }
     }
 
-    impl<T: StT> std::fmt::Display for MathSeqS<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: StT> Display for MathSeqS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "[")?;
             let mut first = true;
             for x in &self.data {
@@ -113,10 +116,10 @@ pub mod MathSeq {
     impl<T: StT> MathSeqS<T> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, T> { self.data.iter_mut() }
+        pub fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }
 
         /// APAS: Work Θ(|data|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|data|), Span Θ(1)
@@ -132,19 +135,19 @@ pub mod MathSeq {
 
     impl<'a, T: StT> IntoIterator for &'a MathSeqS<T> {
         type Item = &'a T;
-        type IntoIter = std::slice::Iter<'a, T>;
+        type IntoIter = Iter<'a, T>;
         fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
 
     impl<'a, T: StT> IntoIterator for &'a mut MathSeqS<T> {
         type Item = &'a mut T;
-        type IntoIter = std::slice::IterMut<'a, T>;
+        type IntoIter = IterMut<'a, T>;
         fn into_iter(self) -> Self::IntoIter { self.data.iter_mut() }
     }
 
     impl<T: StT> IntoIterator for MathSeqS<T> {
         type Item = T;
-        type IntoIter = std::vec::IntoIter<T>;
+        type IntoIter = IntoIter<T>;
         fn into_iter(self) -> Self::IntoIter { self.data.into_iter() }
     }
 

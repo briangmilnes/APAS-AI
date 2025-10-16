@@ -10,6 +10,7 @@ pub mod BottomUpDPMtEph {
     use std::fmt::{Debug, Display};
     use std::sync::{Arc, Mutex};
     use std::thread;
+    use std::fmt::Formatter;
 
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
@@ -181,7 +182,7 @@ pub mod BottomUpDPMtEph {
     }
 
     impl Display for BottomUpDPMtEphS {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(
                 f,
                 "BottomUpDPMtEph(s_len={}, t_len={})",

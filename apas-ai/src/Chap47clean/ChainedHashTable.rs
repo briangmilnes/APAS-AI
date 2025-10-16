@@ -4,6 +4,8 @@
 
 pub mod ChainedHashTable {
 
+    use std::marker::PhantomData;
+
     use crate::Chap47clean::ParaHashTableStEph::ParaHashTableStEph::*;
     use crate::Types::Types::*;
 
@@ -12,7 +14,7 @@ pub mod ChainedHashTable {
     #[derive(Clone, Debug, PartialEq)]
     pub struct ChainEntry<Key, Value, Container> {
         pub chain: Container,
-        pub _phantom: std::marker::PhantomData<(Key, Value)>,
+        pub _phantom: PhantomData<(Key, Value)>,
     }
 
     /// Chained Hash Table trait - extends ParaHashTableStEphTrait.

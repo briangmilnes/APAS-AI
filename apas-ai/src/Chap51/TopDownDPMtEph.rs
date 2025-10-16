@@ -10,6 +10,7 @@ pub mod TopDownDPMtEph {
     use std::fmt::{Debug, Display};
     use std::sync::{Arc, Mutex};
     use std::thread;
+    use std::fmt::Formatter;
 
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
@@ -248,7 +249,7 @@ pub mod TopDownDPMtEph {
     }
 
     impl Display for TopDownDPMtEphS {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(
                 f,
                 "TopDownDPMtEph(s_len={}, t_len={}, memo_size={})",

@@ -5,6 +5,9 @@ pub mod ArraySeq {
 
     use std::collections::HashSet;
     use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
+    use std::slice::Iter;
+    use std::slice::IterMut;
+    use std::vec::IntoIter;
 
     use crate::Types::Types::*;
 
@@ -176,9 +179,9 @@ pub mod ArraySeq {
             }
         }
 
-        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
 
-        pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, T> { self.data.iter_mut() }
+        pub fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }
     }
 
     impl<T: Clone> ArraySeq<T> for ArraySeqS<T> {
@@ -349,21 +352,21 @@ pub mod ArraySeq {
 
     impl<'a, T> IntoIterator for &'a ArraySeqS<T> {
         type Item = &'a T;
-        type IntoIter = std::slice::Iter<'a, T>;
+        type IntoIter = Iter<'a, T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
 
     impl<'a, T> IntoIterator for &'a mut ArraySeqS<T> {
         type Item = &'a mut T;
-        type IntoIter = std::slice::IterMut<'a, T>;
+        type IntoIter = IterMut<'a, T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.iter_mut() }
     }
 
     impl<T> IntoIterator for ArraySeqS<T> {
         type Item = T;
-        type IntoIter = std::vec::IntoIter<T>;
+        type IntoIter = IntoIter<T>;
 
         fn into_iter(self) -> Self::IntoIter { Vec::from(self.data).into_iter() }
     }

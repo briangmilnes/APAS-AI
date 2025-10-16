@@ -8,6 +8,10 @@ pub mod ArraySeqMtPer {
     use std::collections::HashSet;
     use std::sync::Arc;
     use std::thread;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
+    use std::slice::Iter;
+    use std::vec::IntoIter;
 
     use crate::ParaPair;
     use crate::Types::Types::*;
@@ -57,7 +61,7 @@ pub mod ArraySeqMtPer {
         pub fn is_singleton(&self) -> B { self.data.len() == 1 }
 
         /// Iterator over references to elements
-        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
     }
 
     impl<T: StTInMtT> Clone for ArraySeqMtPerS<T> {
@@ -85,20 +89,20 @@ pub mod ArraySeqMtPer {
 
     impl<'a, T: StTInMtT> IntoIterator for &'a ArraySeqMtPerS<T> {
         type Item = &'a T;
-        type IntoIter = std::slice::Iter<'a, T>;
+        type IntoIter = Iter<'a, T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
 
     impl<T: StTInMtT> IntoIterator for ArraySeqMtPerS<T> {
         type Item = T;
-        type IntoIter = std::vec::IntoIter<T>;
+        type IntoIter = IntoIter<T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
     }
 
-    impl<T: StTInMtT> std::fmt::Display for ArraySeqMtPerS<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: StTInMtT> Display for ArraySeqMtPerS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "ArraySeqMtPerS[")?;
             for (i, item) in self.data.iter().enumerate() {
                 if i > 0 {

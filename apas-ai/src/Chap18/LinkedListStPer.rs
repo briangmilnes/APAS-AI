@@ -4,6 +4,9 @@
 pub mod LinkedListStPer {
 
     use std::collections::HashSet;
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
 
     use crate::Types::Types::*;
 
@@ -168,8 +171,8 @@ pub mod LinkedListStPer {
         }
     }
 
-    impl<T: StT> std::fmt::Display for LinkedListStPerS<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: StT> Display for LinkedListStPerS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "[")?;
             let mut first = true;
             let mut current = self.head.as_deref();
@@ -186,8 +189,8 @@ pub mod LinkedListStPer {
         }
     }
 
-    impl<T: StT> std::fmt::Debug for LinkedListStPerS<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: StT> Debug for LinkedListStPerS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "[")?;
             let mut first = true;
             let mut current = self.head.as_deref();

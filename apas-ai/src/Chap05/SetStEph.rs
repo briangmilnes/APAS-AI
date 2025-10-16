@@ -6,6 +6,9 @@ pub mod SetStEph {
     use std::collections::HashSet;
     use std::fmt::{Debug, Display};
     use std::hash::{Hash, Hasher};
+    use std::collections::hash_set::Iter;
+    use std::fmt::Formatter;
+    use std::fmt::Result;
 
     use crate::Types::Types::*;
 
@@ -47,7 +50,7 @@ pub mod SetStEph {
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn iter(&self) -> std::collections::hash_set::Iter<'_, T>;
+        fn iter(&self) -> Iter<'_, T>;
         /// APAS: Work Θ(|v|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
         fn FromVec(v: Vec<T>) -> Set<T>;
@@ -59,14 +62,14 @@ pub mod SetStEph {
 
     impl<T: Eq + Hash> Eq for Set<T> {}
 
-    impl<T: Eq + Hash + std::fmt::Debug> std::fmt::Debug for Set<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: Eq + Hash + Debug> Debug for Set<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             f.debug_set().entries(self.data.iter()).finish()
         }
     }
 
-    impl<T: Eq + Hash + std::fmt::Display> std::fmt::Display for Set<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: Eq + Hash + Display> Display for Set<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "{{")?;
             let mut first = true;
             for x in self.data.iter() {
@@ -157,7 +160,7 @@ pub mod SetStEph {
             self
         }
 
-        pub fn iter(&self) -> std::collections::hash_set::Iter<'_, T> { self.data.iter() }
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
 
         pub fn FromVec(v: Vec<T>) -> Set<T> {
             let mut s = HashSet::with_capacity(v.len());
@@ -239,7 +242,7 @@ pub mod SetStEph {
             self
         }
 
-        fn iter(&self) -> std::collections::hash_set::Iter<'_, T> { self.data.iter() }
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
 
         fn FromVec(v: Vec<T>) -> Set<T> {
             let mut s = HashSet::with_capacity(v.len());

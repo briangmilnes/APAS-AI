@@ -2,6 +2,8 @@
 //! Simplified single-threaded ephemeral array sequence - TRAIT ONLY, NO DELEGATION.
 
 use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
+use std::slice::Iter;
+use std::vec::IntoIter;
 
 use crate::Types::Types::*;
 
@@ -26,7 +28,7 @@ pub trait ArraySeqStEphSimpleTrait<T: StT> {
     fn nth(&self, index: N)                  -> &T;
     fn set(&mut self, index: N, item: T)     -> Result<&mut Self, &'static str>;
     fn update(&mut self, update: Pair<N, T>) -> &mut Self;
-    fn iter(&self)                           -> std::slice::Iter<'_, T>;
+    fn iter(&self)                           -> Iter<'_, T>;
 }
 
 impl<T: StT> ArraySeqStEphSimpleTrait<T> for ArraySeqStEphSimpleS<T> {
@@ -71,7 +73,7 @@ impl<T: StT> ArraySeqStEphSimpleTrait<T> for ArraySeqStEphSimpleS<T> {
         self
     }
 
-    fn iter(&self) -> std::slice::Iter<'_, T> {
+    fn iter(&self) -> Iter<'_, T> {
         self.data.iter()
     }
 }
@@ -106,7 +108,7 @@ impl<T: StT> Display for ArraySeqStEphSimpleS<T> {
 
 impl<'a, T: StT> IntoIterator for &'a ArraySeqStEphSimpleS<T> {
     type Item = &'a T;
-    type IntoIter = std::slice::Iter<'a, T>;
+    type IntoIter = Iter<'a, T>;
     fn into_iter(self) -> Self::IntoIter {
         self.data.iter()
     }
@@ -114,7 +116,7 @@ impl<'a, T: StT> IntoIterator for &'a ArraySeqStEphSimpleS<T> {
 
 impl<T: StT> IntoIterator for ArraySeqStEphSimpleS<T> {
     type Item = T;
-    type IntoIter = std::vec::IntoIter<T>;
+    type IntoIter = IntoIter<T>;
     fn into_iter(self) -> Self::IntoIter {
         self.data.into_vec().into_iter()
     }

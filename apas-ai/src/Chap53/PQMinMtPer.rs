@@ -7,6 +7,8 @@
 
 pub mod PQMinMtPer {
 
+    use std::marker::PhantomData;
+
     use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerTrait;
     use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
     use crate::Types::Types::*;
@@ -24,14 +26,14 @@ pub mod PQMinMtPer {
 
     pub struct ClosurePriority<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> {
         f: F,
-        _phantom: std::marker::PhantomData<(V, P)>,
+        _phantom: PhantomData<(V, P)>,
     }
 
     impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
         pub fn new(f: F) -> Self {
             Self {
                 f,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
     }

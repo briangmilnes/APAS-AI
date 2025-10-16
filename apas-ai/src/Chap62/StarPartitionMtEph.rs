@@ -8,6 +8,7 @@ pub mod StarPartitionMtEph {
 
     use std::collections::HashMap;
     use std::hash::Hash;
+    use std::vec::Vec;
 
     use rand::*;
     use rand::rngs::StdRng;
@@ -48,7 +49,7 @@ pub mod StarPartitionMtEph {
         let mut rng = StdRng::seed_from_u64(seed);
 
         // Create vertex to index mapping for inject operation
-        let vertices_vec: std::vec::Vec<V> = graph.vertices().iter().cloned().collect();
+        let vertices_vec: Vec<V> = graph.vertices().iter().cloned().collect();
         let n = vertices_vec.len() as N;
 
         let mut vertex_to_index: HashMap<V, N> = HashMap::new();
@@ -63,7 +64,7 @@ pub mod StarPartitionMtEph {
         }
 
         // Phase 2: Find edges from tails to heads (TH)
-        let mut th_edges: std::vec::Vec<(N, V)> = std::vec::Vec::new();
+        let mut th_edges: Vec<(N, V)> = Vec::new();
         for edge in graph.edges().iter() {
             let Edge(u, v) = edge;
             let u_heads = coin_flips.get(u).copied().unwrap_or(false);

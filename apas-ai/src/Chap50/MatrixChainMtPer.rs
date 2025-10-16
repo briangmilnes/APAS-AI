@@ -7,6 +7,9 @@ pub mod MatrixChainMtPer {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::sync::{Arc, Mutex};
     use std::thread;
+    use std::iter::Cloned;
+    use std::slice::Iter;
+    use std::vec::IntoIter;
 
     use crate::Types::Types::*;
 
@@ -203,7 +206,7 @@ pub mod MatrixChainMtPer {
 
     impl IntoIterator for MatrixChainMtPerS {
         type Item = MatrixDim;
-        type IntoIter = std::vec::IntoIter<MatrixDim>;
+        type IntoIter = IntoIter<MatrixDim>;
 
         fn into_iter(self) -> Self::IntoIter {
             // Extract Vec from Arc - this consumes the Arc
@@ -216,7 +219,7 @@ pub mod MatrixChainMtPer {
 
     impl<'a> IntoIterator for &'a MatrixChainMtPerS {
         type Item = MatrixDim;
-        type IntoIter = std::iter::Cloned<std::slice::Iter<'a, MatrixDim>>;
+        type IntoIter = Cloned<Iter<'a, MatrixDim>>;
 
         fn into_iter(self) -> Self::IntoIter { self.dimensions.iter().cloned() }
     }

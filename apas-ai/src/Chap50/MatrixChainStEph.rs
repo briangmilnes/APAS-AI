@@ -5,6 +5,9 @@ pub mod MatrixChainStEph {
 
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
+    use std::iter::Cloned;
+    use std::slice::Iter;
+    use std::vec::IntoIter;
 
     use crate::Types::Types::*;
 
@@ -181,21 +184,21 @@ pub mod MatrixChainStEph {
 
     impl IntoIterator for MatrixChainStEphS {
         type Item = MatrixDim;
-        type IntoIter = std::vec::IntoIter<MatrixDim>;
+        type IntoIter = IntoIter<MatrixDim>;
 
         fn into_iter(self) -> Self::IntoIter { self.dimensions.into_iter() }
     }
 
     impl<'a> IntoIterator for &'a MatrixChainStEphS {
         type Item = MatrixDim;
-        type IntoIter = std::iter::Cloned<std::slice::Iter<'a, MatrixDim>>;
+        type IntoIter = Cloned<Iter<'a, MatrixDim>>;
 
         fn into_iter(self) -> Self::IntoIter { self.dimensions.iter().cloned() }
     }
 
     impl<'a> IntoIterator for &'a mut MatrixChainStEphS {
         type Item = MatrixDim;
-        type IntoIter = std::iter::Cloned<std::slice::Iter<'a, MatrixDim>>;
+        type IntoIter = Cloned<Iter<'a, MatrixDim>>;
 
         fn into_iter(self) -> Self::IntoIter { self.dimensions.iter().cloned() }
     }

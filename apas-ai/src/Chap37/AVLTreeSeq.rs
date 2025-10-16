@@ -10,6 +10,8 @@
 pub mod AVLTreeSeq {
 
     use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
 
     use crate::Chap18::ArraySeq::ArraySeq::*;
     use crate::Types::Types::*;
@@ -264,15 +266,15 @@ pub mod AVLTreeSeq {
 
     impl<T: Eq + Copy + Debug> Eq for AVLTreeS<T> {}
 
-    impl<T: Debug + Copy> std::fmt::Debug for AVLTreeS<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: Debug + Copy> Debug for AVLTreeS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             let elts = (0..self.length()).map(|i| self.nth(i));
             f.debug_list().entries(elts).finish()
         }
     }
 
-    impl<T: std::fmt::Display + Copy + Debug> std::fmt::Display for AVLTreeS<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: Display + Copy + Debug> Display for AVLTreeS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "[")?;
             let mut first = true;
             for v in self.iter() {

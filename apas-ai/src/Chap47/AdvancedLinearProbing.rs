@@ -5,6 +5,8 @@
 pub mod AdvancedLinearProbing {
 
 use std::fmt::{Debug, Display};
+use std::fmt::Formatter;
+use std::marker::PhantomData;
 
 use crate::Types::Types::*;
 use crate::Chap47::FlatHashTable::FlatHashTable::*;
@@ -13,7 +15,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     pub struct AdvancedLinearProbingStrategy<K: StT, H: HashFunClone<K>> {
         base_hash: H,
         clustering_enabled: B,
-        _phantom: std::marker::PhantomData<K>,
+        _phantom: PhantomData<K>,
     }
 
     /// Primary Clustering Metrics
@@ -34,7 +36,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             AdvancedLinearProbingStrategy {
                 base_hash: hash_fn,
                 clustering_enabled: true,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
 
@@ -44,7 +46,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             AdvancedLinearProbingStrategy {
                 base_hash: hash_fn,
                 clustering_enabled: false,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
 
@@ -215,7 +217,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     }
 
     impl<K: StT, H: HashFunClone<K>> Display for AdvancedLinearProbingStrategy<K, H> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(
                 f,
                 "AdvancedLinearProbing(clustering_enabled: {})",
@@ -225,7 +227,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     }
 
     impl Display for PrimaryClusteringMetrics {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             writeln!(f, "Primary Clustering Metrics:")?;
             writeln!(f, "  Total clusters: {}", self.total_clusters)?;
             writeln!(f, "  Max cluster size: {}", self.max_cluster_size)?;

@@ -5,6 +5,8 @@ pub mod MinEditDistStEph {
 
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
+    use std::iter::Map;
+    use std::iter::Zip;
 
     use crate::ArraySeqStEphS;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
@@ -161,8 +163,8 @@ pub mod MinEditDistStEph {
 
     impl<T: StT> IntoIterator for MinEditDistStEphS<T> {
         type Item = Pair<T, T>;
-        type IntoIter = std::iter::Map<
-            std::iter::Zip<
+        type IntoIter = Map<
+            Zip<
                 <ArraySeqStEphS<T> as IntoIterator>::IntoIter,
                 <ArraySeqStEphS<T> as IntoIterator>::IntoIter,
             >,
@@ -179,8 +181,8 @@ pub mod MinEditDistStEph {
 
     impl<T: StT> IntoIterator for &MinEditDistStEphS<T> {
         type Item = Pair<T, T>;
-        type IntoIter = std::iter::Map<
-            std::iter::Zip<
+        type IntoIter = Map<
+            Zip<
                 <ArraySeqStEphS<T> as IntoIterator>::IntoIter,
                 <ArraySeqStEphS<T> as IntoIterator>::IntoIter,
             >,
@@ -198,8 +200,8 @@ pub mod MinEditDistStEph {
 
     impl<T: StT> IntoIterator for &mut MinEditDistStEphS<T> {
         type Item = Pair<T, T>;
-        type IntoIter = std::iter::Map<
-            std::iter::Zip<
+        type IntoIter = Map<
+            Zip<
                 <ArraySeqStEphS<T> as IntoIterator>::IntoIter,
                 <ArraySeqStEphS<T> as IntoIterator>::IntoIter,
             >,

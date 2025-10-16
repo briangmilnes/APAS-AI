@@ -2,6 +2,9 @@
 
 use std::sync::{Arc, Barrier};
 use std::thread;
+use std::f64::consts::E;
+use std::f64::consts::PI;
+use std::f64::consts::SQRT_2;
 
 use ordered_float::OrderedFloat;
 
@@ -102,9 +105,9 @@ fn test_weighteddirgraphmtephfloat_basic_operations() {
 fn test_weighteddirgraphmtephfloat_incident_operations() {
     let v: Set<N> = SetLit![0, 1, 2];
     let a: Set<LabEdge<N, OrderedFloat<f64>>> = SetLit![
-        LabEdge(0, 1, OrderedFloat(std::f64::consts::PI)),
-        LabEdge(1, 2, OrderedFloat(std::f64::consts::E)),
-        LabEdge(0, 2, OrderedFloat(std::f64::consts::SQRT_2))
+        LabEdge(0, 1, OrderedFloat(PI)),
+        LabEdge(1, 2, OrderedFloat(E)),
+        LabEdge(0, 2, OrderedFloat(SQRT_2))
     ];
     let _g = WeightedDirGraphMtEphFloat::from_vertices_and_labeled_arcs(v, a);
 

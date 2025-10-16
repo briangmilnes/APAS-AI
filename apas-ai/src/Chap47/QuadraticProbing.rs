@@ -3,6 +3,8 @@
 
 pub mod QuadraticProbing {
 
+    use std::marker::PhantomData;
+
 use crate::Types::Types::*;
 use crate::Chap47::FlatHashTable::FlatHashTable::*;
 use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
@@ -11,7 +13,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
         base_hash: H,
         c1: N,
         c2: N,
-        _phantom: std::marker::PhantomData<K>,
+        _phantom: PhantomData<K>,
     }
 
     impl<K: StT, H: HashFunClone<K>> QuadraticProbingStrategy<K, H> {
@@ -20,7 +22,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
                 base_hash: hash_fn,
                 c1,
                 c2,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
 

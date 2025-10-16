@@ -6,6 +6,7 @@ pub mod MappingStEph {
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
+    use std::collections::hash_set::Iter;
 
     use crate::Chap05::RelationStEph::RelationStEph::*;
     use crate::Chap05::SetStEph::SetStEph::*;
@@ -46,7 +47,7 @@ pub mod MappingStEph {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn mem(&self, a: &X, b: &Y) -> B;
 
-        fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>>;
+        fn iter(&self) -> Iter<'_, Pair<X, Y>>;
     }
 
     impl<A: Eq + Hash, B: Eq + Hash> Mapping<A, B> {
@@ -101,7 +102,7 @@ pub mod MappingStEph {
 
         fn mem(&self, a: &X, b: &Y) -> B { self.rel.mem(a, b) }
 
-        fn iter(&self) -> std::collections::hash_set::Iter<'_, Pair<X, Y>> { self.rel.iter() }
+        fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.rel.iter() }
     }
 
     #[macro_export]

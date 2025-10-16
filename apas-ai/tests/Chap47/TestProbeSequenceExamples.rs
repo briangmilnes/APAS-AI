@@ -10,6 +10,8 @@
 //! Work: O(m) per probe sequence test where m is table size
 //! Span: O(1) per probe sequence test
 
+use std::collections::HashSet;
+
 use apas_ai::Chap47::ProbeSequenceExamples::ProbeSequenceExamples::{
     comprehensive_probe_sequence_comparison, example_47_4_linear_probing_clustering,
     example_47_5_quadratic_probing_prime_table, example_47_6_double_hashing_optimal, load_factor_impact_analysis,
@@ -264,7 +266,7 @@ fn test_comprehensive_probe_sequence_comparison() {
     assert!(!comparison.performance_summary.is_empty());
 
     // Should have sequences from all three strategies
-    let mut strategies = std::collections::HashSet::new();
+    let mut strategies = HashSet::new();
     for sequence in &comparison.probe_sequences {
         strategies.insert(sequence.strategy_name.clone());
         assert_eq!(sequence.table_size, comparison.table_size);
@@ -302,7 +304,7 @@ fn test_load_factor_impact_analysis() {
         assert!(!visualizations.is_empty());
 
         // Should have all three strategies
-        let mut strategies = std::collections::HashSet::new();
+        let mut strategies = HashSet::new();
         for viz in visualizations {
             strategies.insert(viz.strategy_name.clone());
             assert!(!viz.probe_sequence.is_empty());
@@ -544,7 +546,7 @@ fn test_comprehensive_probe_sequence_integration() {
     assert_eq!(comparisons.len(), 3);
 
     // Verify all strategies are represented
-    let strategies: std::collections::HashSet<_> = comparisons.iter().map(|c| c.strategy_name.clone()).collect();
+    let strategies: HashSet<_> = comparisons.iter().map(|c| c.strategy_name.clone()).collect();
 
     // Check that we have all three strategy types
     let has_linear = strategies.iter().any(|s| s.contains("Linear"));

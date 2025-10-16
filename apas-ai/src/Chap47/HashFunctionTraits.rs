@@ -6,6 +6,9 @@ pub mod HashFunctionTraits {
 use std::collections::hash_map::DefaultHasher;
 use std::fmt::{Debug, Display};
 use std::hash::{Hash, Hasher};
+use std::fmt::Formatter;
+use std::marker::PhantomData;
+use std::time::Duration;
 
 use crate::Types::Types::*;
     pub trait HashFunction<K> {
@@ -188,7 +191,7 @@ use crate::Types::Types::*;
     pub struct ProbeSequenceGenerator<K, H1: HashFunction<K>, H2: HashFunction<K>> {
         hash1: H1,
         hash2: H2,
-        _phantom: std::marker::PhantomData<K>,
+        _phantom: PhantomData<K>,
     }
 
     impl<K, H1: HashFunction<K>, H2: HashFunction<K>> ProbeSequenceGenerator<K, H1, H2> {
@@ -196,7 +199,7 @@ use crate::Types::Types::*;
             ProbeSequenceGenerator {
                 hash1,
                 hash2,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
 
@@ -289,7 +292,7 @@ use crate::Types::Types::*;
     }
 
     impl Display for HashTableStats {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(
                 f,
                 "HashTableStats {{ elements: {}, size: {}, load_factor: {:.3}, collisions: {}, max_chain: {}, avg_chain: {:.2} }}",
@@ -414,7 +417,7 @@ use crate::Types::Types::*;
             hash_fn: &H,
             keys: &[K],
             table_size: N,
-        ) -> std::time::Duration {
+        ) -> Duration {
             let start = std::time::Instant::now();
             for key in keys {
                 let _ = hash_fn.hash(key, table_size);

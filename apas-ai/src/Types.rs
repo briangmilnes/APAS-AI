@@ -6,6 +6,9 @@ pub mod Types {
 
 use std::fmt::{Debug, Display};
 use std::hash::Hash;
+use std::fmt::Formatter;
+use std::ops::Add;
+use std::sync::Mutex;
 
     pub type N = usize;
 
@@ -25,7 +28,7 @@ use std::hash::Hash;
     pub struct Pair<K, V>(pub K, pub V);
 
     impl<K: Display, V: Display> Display for Pair<K, V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "({} -> {})", self.0, self.1) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result { write!(f, "({} -> {})", self.0, self.1) }
     }
 
     // Triple wrapper for three-element tuples
@@ -33,7 +36,7 @@ use std::hash::Hash;
     pub struct Triple<A, B, C>(pub A, pub B, pub C);
 
     impl<A: Display, B: Display, C: Display> Display for Triple<A, B, C> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "({}, {}, {})", self.0, self.1, self.2)
         }
     }
@@ -46,7 +49,7 @@ use std::hash::Hash;
     }
 
     impl<K: Display, V: Display> Display for KeyVal<K, V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "{{key: {}, val: {}}}", self.key, self.val)
         }
     }
@@ -125,17 +128,17 @@ use std::hash::Hash;
     impl<T> HashOrd for T where T: StT + Hash + Ord {}
 
     // ArithmeticT: Type supporting arithmetic operations (for reductions)
-    // Common pattern: StT + std::ops::Add<Output = T> + Default + Copy
-    pub trait ArithmeticT: StT + std::ops::Add<Output = Self> + Default + Copy {}
-    impl<T> ArithmeticT for T where T: StT + std::ops::Add<Output = T> + Default + Copy {}
+    // Common pattern: StT + Add<Output = T> + Default + Copy
+    pub trait ArithmeticT: StT + Add<Output = Self> + Default + Copy {}
+    impl<T> ArithmeticT for T where T: StT + Add<Output = T> + Default + Copy {}
 
-    impl<T: StT + Send> MtT for std::sync::Mutex<T> {
+    impl<T: StT + Send> MtT for Mutex<T> {
         type Inner = T;
         fn clone_mt(&self) -> Self {
             let inner = self.lock().unwrap().clone();
-            std::sync::Mutex::new(inner)
+            Mutex::new(inner)
         }
-        fn new_mt(inner: Self::Inner) -> Self { std::sync::Mutex::new(inner) }
+        fn new_mt(inner: Self::Inner) -> Self { Mutex::new(inner) }
     }
 
     impl<A: StT + Send + Sync, B: StT + Send + Sync> MtT for Pair<A, B> {
@@ -214,8 +217,8 @@ use std::hash::Hash;
     #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
     pub struct Edge<V: StT>(pub V, pub V);
 
-    impl<V: StT> std::fmt::Display for Edge<V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "({}, {})", self.0, self.1) }
+    impl<V: StT> Display for Edge<V> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result { write!(f, "({}, {})", self.0, self.1) }
     }
 
     impl<V: StT> From<(V, V)> for Edge<V> {
@@ -230,8 +233,8 @@ use std::hash::Hash;
     #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
     pub struct LabEdge<V: StT, L: StT + Hash>(pub V, pub V, pub L);
 
-    impl<V: StT, L: StT + Hash> std::fmt::Display for LabEdge<V, L> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<V: StT, L: StT + Hash> Display for LabEdge<V, L> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "({}, {}, {})", self.0, self.1, self.2)
         }
     }

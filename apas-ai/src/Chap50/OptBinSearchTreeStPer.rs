@@ -5,6 +5,10 @@ pub mod OptBinSearchTreeStPer {
 
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
+    use std::cmp::min;
+    use std::iter::Cloned;
+    use std::slice::Iter;
+    use std::vec::IntoIter;
 
     use crate::Chap50::Probability::Probability::Probability;
     use crate::Types::Types::*;
@@ -73,7 +77,7 @@ pub mod OptBinSearchTreeStPer {
                         let right_cost = self.obst_rec(i + k + 1, l - k - 1);
                         left_cost + right_cost
                     })
-                    .fold(Probability::infinity(), std::cmp::min);
+                    .fold(Probability::infinity(), min);
 
                 prob_sum + min_cost
             };
@@ -145,14 +149,14 @@ pub mod OptBinSearchTreeStPer {
 
     impl<T: StT> IntoIterator for OBSTStPerS<T> {
         type Item = KeyProb<T>;
-        type IntoIter = std::vec::IntoIter<KeyProb<T>>;
+        type IntoIter = IntoIter<KeyProb<T>>;
 
         fn into_iter(self) -> Self::IntoIter { self.keys.into_iter() }
     }
 
     impl<'a, T: StT> IntoIterator for &'a OBSTStPerS<T> {
         type Item = KeyProb<T>;
-        type IntoIter = std::iter::Cloned<std::slice::Iter<'a, KeyProb<T>>>;
+        type IntoIter = Cloned<Iter<'a, KeyProb<T>>>;
 
         fn into_iter(self) -> Self::IntoIter { self.keys.iter().cloned() }
     }

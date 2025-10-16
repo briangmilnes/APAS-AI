@@ -33,6 +33,7 @@ def extract_qualified_paths(content: str) -> dict[str, list[tuple[int, str]]]:
     )
     
     in_comment = False
+    in_macro = False
     
     for line_num, line in enumerate(lines, 1):
         stripped = line.strip()
@@ -48,8 +49,17 @@ def extract_qualified_paths(content: str) -> dict[str, list[tuple[int, str]]]:
         if in_comment:
             continue
         
-        # Skip use statements (these are imports, not usage)
-        if stripped.startswith('use '):
+        # Track macro_rules! blocks
+        if 'macro_rules!' in stripped:
+            in_macro = True
+        if in_macro and stripped == '}':
+            in_macro = False
+            continue
+        if in_macro:
+            continue
+        
+        # Skip use and pub use statements (these are imports/re-exports, not usage)
+        if stripped.startswith('use ') or stripped.startswith('pub use '):
             continue
         
         # Skip pub mod and mod statements
@@ -64,6 +74,14 @@ def extract_qualified_paths(content: str) -> dict[str, list[tuple[int, str]]]:
             # Skip attribute macros
             if '#[' in line[:match.start()]:
                 continue
+            
+            # Skip function/method calls (path followed by :: or ( or ::<)
+            # This includes associated functions like HashSet::new() and UFCS like Debug::fmt(...)
+            end_pos = match.end()
+            if end_pos < len(line):
+                next_chars = line[end_pos:end_pos+3]
+                if next_chars.startswith('::') or next_chars.startswith('(') or next_chars.startswith('::<'):
+                    continue
             
             paths[full_path].append((line_num, line))
     
@@ -133,15 +151,65 @@ def fix_file(file_path: Path, context: ReviewContext, dry_run: bool = False) -> 
         if not paths:
             return False, "No qualified paths found"
         
-        # Check what's already imported
-        existing_imports = set()
+        # Check what's already imported - extract actual imported names
+        # Only consider module-level imports (indentation <= 4 spaces for modules, 0 for top-level)
+        existing_imports = {}  # {full_path: short_name or alias}
+        in_module = False
         for line in lines:
             stripped = line.strip()
+            
+            # Track if we're inside a module declaration
+            if stripped.startswith('pub mod '):
+                in_module = True
+                continue
+            
+            # Only process module-level use statements
             if stripped.startswith('use '):
-                # Extract imported items
-                # Handle: use std::fmt::{Debug, Display};
-                # and: use std::collections::HashSet;
-                existing_imports.add(stripped)
+                leading_spaces = len(line) - len(line.lstrip())
+                
+                # Skip function-level imports (indentation > 4 for modules, > 0 for top-level)
+                if in_module and leading_spaces > 4:
+                    continue
+                if not in_module and leading_spaces > 0:
+                    continue
+                
+                # Extract the import statement
+                # Examples:
+                #   use std::fmt::Debug;  -> {"std::fmt::Debug": "Debug"}
+                #   use std::fmt::{Debug, Display};  -> {"std::fmt::Debug": "Debug", "std::fmt::Display": "Display"}
+                #   use std::fmt::Result as FmtResult;  -> {"std::fmt::Result": "FmtResult"}
+                #   use crate::Module::*;  -> skip (wildcard)
+                
+                # Remove "use " prefix and ";" suffix
+                import_str = stripped[4:].rstrip(';').strip()
+                
+                # Skip wildcard imports
+                if import_str.endswith('::*'):
+                    continue
+                
+                # Check for group imports: std::fmt::{Debug, Display}
+                if '{' in import_str:
+                    # Extract path and items
+                    path_part, items_part = import_str.split('{', 1)
+                    path_part = path_part.rstrip(':').strip()
+                    items_part = items_part.rstrip('}').strip()
+                    
+                    for item in items_part.split(','):
+                        item = item.strip()
+                        if ' as ' in item:
+                            name, alias = item.split(' as ')
+                            full_item_path = f"{path_part}::{name.strip()}"
+                            existing_imports[full_item_path] = alias.strip()
+                        else:
+                            full_item_path = f"{path_part}::{item}"
+                            existing_imports[full_item_path] = item
+                else:
+                    # Single import: std::fmt::Debug or std::fmt::Debug as DbgFmt
+                    if ' as ' in import_str:
+                        path, alias = import_str.split(' as ')
+                        existing_imports[path.strip()] = alias.strip()
+                    else:
+                        existing_imports[import_str] = import_str.split('::')[-1]
         
         # Determine what needs to be imported
         imports_to_add = set()
@@ -152,19 +220,19 @@ def fix_file(file_path: Path, context: ReviewContext, dry_run: bool = False) -> 
             parts = full_path.split('::')
             short_name = parts[-1]
             
-            # Check if already imported (exact match or in a group import)
-            already_imported = False
-            for existing in existing_imports:
-                if full_path in existing or short_name in existing:
-                    already_imported = True
-                    break
+            # Special case: std::fmt::Result conflicts with prelude Result<T, E>
+            # Skip it entirely - keep it qualified in code
+            if full_path == 'std::fmt::Result':
+                continue
             
-            if not already_imported:
-                # Store the import
+            # Check if already imported
+            if full_path in existing_imports:
+                # Already imported, use the existing name (could be aliased)
+                replacements[full_path] = existing_imports[full_path]
+            else:
+                # Not imported, need to add it
                 imports_to_add.add(full_path)
-            
-            # Always store replacement (even if already imported, we still want to shorten)
-            replacements[full_path] = short_name
+                replacements[full_path] = short_name
         
         # Find where to insert use statements (after last std import)
         use_insert_idx = find_std_import_end(lines)

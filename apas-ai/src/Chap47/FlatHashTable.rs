@@ -4,6 +4,7 @@
 pub mod FlatHashTable {
 
 use std::fmt::{Debug, Display};
+use std::fmt::Formatter;
 
 use crate::Types::Types::*;
 use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
@@ -16,7 +17,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     }
 
     impl<K: StT, V: StT> Display for Entry<K, V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             match self {
                 | Entry::Empty => write!(f, "Empty"),
                 | Entry::Dead => write!(f, "Dead"),
@@ -334,7 +335,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     }
 
     impl<K: StT + Display, V: StT + Display, P: ProbeSequence<K> + Clone> Display for FlatHashTable<K, V, P> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             writeln!(f, "FlatHashTable ({}) {{", self.probe_sequence.strategy_name())?;
             writeln!(
                 f,

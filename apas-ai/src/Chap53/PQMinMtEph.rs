@@ -6,6 +6,8 @@
 
 pub mod PQMinMtEph {
 
+    use std::marker::PhantomData;
+
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
     use crate::Chap41::AVLTreeSetMtEph::AVLTreeSetMtEph::*;
     use crate::Types::Types::*;
@@ -30,7 +32,7 @@ pub mod PQMinMtEph {
         F: Fn(&V) -> P + Send + Sync + 'static,
     > {
         f: F,
-        _phantom: std::marker::PhantomData<(V, P)>,
+        _phantom: PhantomData<(V, P)>,
     }
 
     impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P + Send + Sync + 'static>
@@ -39,7 +41,7 @@ pub mod PQMinMtEph {
         pub fn new(f: F) -> Self {
             Self {
                 f,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
     }

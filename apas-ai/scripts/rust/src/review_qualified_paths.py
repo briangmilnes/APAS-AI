@@ -43,6 +43,7 @@ def check_file(file_path: Path, context: ReviewContext) -> list:
         )
         
         in_comment = False
+        in_macro = False
         
         for line_num, line in enumerate(lines, 1):
             stripped = line.strip()
@@ -58,8 +59,17 @@ def check_file(file_path: Path, context: ReviewContext) -> list:
             if in_comment:
                 continue
             
-            # Skip use statements (these are imports, not usage)
-            if stripped.startswith('use '):
+            # Track macro_rules! blocks
+            if 'macro_rules!' in stripped:
+                in_macro = True
+            if in_macro and stripped == '}':
+                in_macro = False
+                continue
+            if in_macro:
+                continue
+            
+            # Skip use and pub use statements (these are imports/re-exports, not usage)
+            if stripped.startswith('use ') or stripped.startswith('pub use '):
                 continue
             
             # Skip pub mod and mod statements
@@ -74,6 +84,18 @@ def check_file(file_path: Path, context: ReviewContext) -> list:
                 # Skip some common acceptable cases:
                 # - Attribute macros like #[derive(...)]
                 if '#[' in line[:match.start()]:
+                    continue
+                
+                # - Function/method calls (path followed by :: or ( or ::<)
+                # This includes associated functions like HashSet::new() and UFCS like Debug::fmt(...)
+                end_pos = match.end()
+                if end_pos < len(line):
+                    next_chars = line[end_pos:end_pos+3]
+                    if next_chars.startswith('::') or next_chars.startswith('(') or next_chars.startswith('::<'):
+                        continue
+                
+                # - std::fmt::Result conflicts with prelude Result<T, E>, keep it qualified
+                if full_path == 'std::fmt::Result':
                     continue
                 
                 # Extract short context around the match

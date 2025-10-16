@@ -10,6 +10,9 @@ pub mod AVLTreeSetMtPer {
 
     use std::fmt;
     use std::thread;
+    use std::cmp::Ordering::Equal;
+    use std::cmp::Ordering::Greater;
+    use std::cmp::Ordering::Less;
 
     use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
     use crate::ParaPair;
@@ -238,9 +241,9 @@ pub mod AVLTreeSetMtPer {
                 let mid = (left + right) / 2;
                 let elem = self.elements.nth(mid);
                 match elem.cmp(x) {
-                    | std::cmp::Ordering::Less => left = mid + 1,
-                    | std::cmp::Ordering::Equal => return true,
-                    | std::cmp::Ordering::Greater => right = mid,
+                    | Less => left = mid + 1,
+                    | Equal => return true,
+                    | Greater => right = mid,
                 }
             }
             false

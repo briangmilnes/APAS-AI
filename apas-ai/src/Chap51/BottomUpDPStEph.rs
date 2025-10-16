@@ -8,6 +8,7 @@ pub mod BottomUpDPStEph {
 
     use std::cmp::{max, min};
     use std::fmt::{Debug, Display};
+    use std::fmt::Formatter;
 
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
@@ -145,7 +146,7 @@ pub mod BottomUpDPStEph {
     }
 
     impl Display for BottomUpDPStEphS {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(
                 f,
                 "BottomUpDPStEph(s_len={}, t_len={})",

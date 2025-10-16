@@ -8,6 +8,8 @@ pub mod ArraySeqMtEph {
     use std::collections::HashSet;
     use std::sync::{Arc, Mutex};
     use std::thread;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
 
     use crate::ParaPair;
     use crate::Types::Types::*;
@@ -163,8 +165,8 @@ pub mod ArraySeqMtEph {
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T>;
     }
 
-    impl<T: StTInMtT> std::fmt::Display for ArraySeqMtEphS<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: StTInMtT> Display for ArraySeqMtEphS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "ArraySeqMtEphS[")?;
             let guard = self.data.lock().unwrap();
             for (i, item) in guard.iter().enumerate() {

@@ -3,6 +3,7 @@ use std::sync::Arc;
 use std::sync::atomic::AtomicUsize;
 use std::thread;
 use std::time::Duration;
+use std::sync::atomic::Ordering::Relaxed;
 
 use criterion::*;
 
@@ -35,7 +36,7 @@ fn bench_exercise12_2(c: &mut Criterion) {
                 handle.join().unwrap();
             }
 
-            let final_value = counter.load(std::sync::atomic::Ordering::Relaxed);
+            let final_value = counter.load(Relaxed);
             black_box(final_value)
         })
     });

@@ -8,6 +8,7 @@ pub mod TopDownDPStEph {
 
     use std::collections::HashMap;
     use std::fmt::{Debug, Display};
+    use std::fmt::Formatter;
 
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
@@ -153,7 +154,7 @@ pub mod TopDownDPStEph {
     }
 
     impl Display for TopDownDPStEphS {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(
                 f,
                 "TopDownDPStEph(s_len={}, t_len={}, memo_size={})",

@@ -5,6 +5,8 @@ pub mod MinEditDistStPer {
 
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
+    use std::iter::Map;
+    use std::iter::Zip;
 
     use crate::ArraySeqStPerS;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
@@ -129,8 +131,8 @@ pub mod MinEditDistStPer {
 
     impl<T: StT> IntoIterator for MinEditDistStPerS<T> {
         type Item = Pair<T, T>;
-        type IntoIter = std::iter::Map<
-            std::iter::Zip<
+        type IntoIter = Map<
+            Zip<
                 <ArraySeqStPerS<T> as IntoIterator>::IntoIter,
                 <ArraySeqStPerS<T> as IntoIterator>::IntoIter,
             >,
@@ -147,8 +149,8 @@ pub mod MinEditDistStPer {
 
     impl<T: StT> IntoIterator for &MinEditDistStPerS<T> {
         type Item = Pair<T, T>;
-        type IntoIter = std::iter::Map<
-            std::iter::Zip<
+        type IntoIter = Map<
+            Zip<
                 <ArraySeqStPerS<T> as IntoIterator>::IntoIter,
                 <ArraySeqStPerS<T> as IntoIterator>::IntoIter,
             >,

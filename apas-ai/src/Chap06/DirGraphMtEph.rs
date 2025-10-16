@@ -7,6 +7,10 @@
 pub mod DirGraphMtEph {
 
     use std::hash::Hash;
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
+    use std::fmt::Result;
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::ParaPair;
@@ -335,8 +339,8 @@ pub mod DirGraphMtEph {
         fn OutDegree(&self, v: &V) -> N { self.NPlus(v).size() }
     }
 
-    impl<V: StT + MtT + Hash + 'static> std::fmt::Debug for DirGraphMtEph<V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<V: StT + MtT + Hash + 'static> Debug for DirGraphMtEph<V> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             f.debug_struct("DirGraphMtEph")
                 .field("V", &self.V)
                 .field("A", &self.A)
@@ -344,8 +348,8 @@ pub mod DirGraphMtEph {
         }
     }
 
-    impl<V: StT + MtT + Hash + 'static> std::fmt::Display for DirGraphMtEph<V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "V={} A={:?}", self.V, self.A) }
+    impl<V: StT + MtT + Hash + 'static> Display for DirGraphMtEph<V> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "V={} A={:?}", self.V, self.A) }
     }
 
     impl<V: StT + MtT + Hash + 'static> PartialEq for DirGraphMtEph<V> {

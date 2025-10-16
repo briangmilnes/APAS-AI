@@ -1,6 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Probability.
 
+use std::cmp::Ordering::Equal;
+use std::cmp::Ordering::Greater;
+use std::cmp::Ordering::Less;
+
 use apas_ai::Chap50::Probability::Probability::*;
 
 #[test]
@@ -130,7 +134,7 @@ fn test_default() {
 fn test_partial_cmp() {
     let p1 = Probability::new(0.3);
     let p2 = Probability::new(0.5);
-    assert_eq!(p1.partial_cmp(&p2), Some(std::cmp::Ordering::Less));
+    assert_eq!(p1.partial_cmp(&p2), Some(Less));
 }
 
 #[test]
@@ -171,19 +175,19 @@ fn test_prob_macro() {
 fn test_ordering_less() {
     let p1 = Probability::new(0.1);
     let p2 = Probability::new(0.9);
-    assert_eq!(p1.cmp(&p2), std::cmp::Ordering::Less);
+    assert_eq!(p1.cmp(&p2), Less);
 }
 
 #[test]
 fn test_ordering_greater() {
     let p1 = Probability::new(0.9);
     let p2 = Probability::new(0.1);
-    assert_eq!(p1.cmp(&p2), std::cmp::Ordering::Greater);
+    assert_eq!(p1.cmp(&p2), Greater);
 }
 
 #[test]
 fn test_ordering_equal() {
     let p1 = Probability::new(0.5);
     let p2 = Probability::new(0.5);
-    assert_eq!(p1.cmp(&p2), std::cmp::Ordering::Equal);
+    assert_eq!(p1.cmp(&p2), Equal);
 }

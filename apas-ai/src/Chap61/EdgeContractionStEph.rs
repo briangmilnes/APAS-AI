@@ -8,6 +8,7 @@
 pub mod EdgeContractionStEph {
 
     use std::hash::Hash;
+    use std::collections::HashMap;
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
@@ -49,7 +50,7 @@ pub mod EdgeContractionStEph {
         matching: &Set<Edge<V>>,
     ) -> UnDirGraphStEph<V> {
         // Create a mapping from original vertices to their block representatives
-        let mut vertex_to_block: std::collections::HashMap<V, V> = std::collections::HashMap::new();
+        let mut vertex_to_block: HashMap<V, V> = HashMap::new();
 
         // For each edge in the matching, assign both endpoints to the same representative
         for edge in matching.iter() {

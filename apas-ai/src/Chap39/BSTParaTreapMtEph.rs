@@ -6,6 +6,9 @@ pub mod BSTParaTreapMtEph {
     use std::fmt::Write;
     use std::hash::{Hash, Hasher};
     use std::sync::{Arc, RwLock};
+    use std::cmp::Ordering::Equal;
+    use std::cmp::Ordering::Greater;
+    use std::cmp::Ordering::Less;
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
@@ -122,17 +125,17 @@ pub mod BSTParaTreapMtEph {
             match tree.expose_with_priority() {
                 | None => (ParamTreap::new(), false, ParamTreap::new()),
                 | Some((left, root_key, priority, right)) => match key.cmp(&root_key) {
-                    | std::cmp::Ordering::Less => {
+                    | Less => {
                         let (ll, found, lr) = ParamTreap::split_inner(&left, key);
                         let rebuilt = ParamTreap::join_with_priority(lr, root_key, priority, right);
                         (ll, found, rebuilt)
                     }
-                    | std::cmp::Ordering::Greater => {
+                    | Greater => {
                         let (rl, found, rr) = ParamTreap::split_inner(&right, key);
                         let rebuilt = ParamTreap::join_with_priority(left, root_key, priority, rl);
                         (rebuilt, found, rr)
                     }
-                    | std::cmp::Ordering::Equal => (left, true, right),
+                    | Equal => (left, true, right),
                 },
             }
         }
@@ -388,9 +391,9 @@ pub mod BSTParaTreapMtEph {
             match self.expose_internal() {
                 | Exposed::Leaf => None,
                 | Exposed::Node(left, root_key, right) => match key.cmp(&root_key) {
-                    | std::cmp::Ordering::Less => ParamTreapTrait::find(&left, key),
-                    | std::cmp::Ordering::Greater => ParamTreapTrait::find(&right, key),
-                    | std::cmp::Ordering::Equal => Some(root_key),
+                    | Less => ParamTreapTrait::find(&left, key),
+                    | Greater => ParamTreapTrait::find(&right, key),
+                    | Equal => Some(root_key),
                 },
             }
         }

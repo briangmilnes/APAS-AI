@@ -10,6 +10,7 @@ pub mod PrimStEph {
     use std::collections::HashMap;
     use std::fmt::{Display, Formatter, Result as FmtResult};
     use std::hash::Hash;
+    use std::collections::HashSet;
 
     use ordered_float::OrderedFloat;
 
@@ -83,7 +84,7 @@ pub mod PrimStEph {
         start: &V,
     ) -> Set<LabEdge<V, OrderedFloat<f64>>> {
         let mut mst_edges = SetLit![];
-        let mut visited: std::collections::HashSet<V> = std::collections::HashSet::new();
+        let mut visited: HashSet<V> = HashSet::new();
 
         // Priority queue
         let mut pq = BinaryHeapPQ::<PQEntry<V>>::singleton(PQEntry::new(OrderedFloat(0.0), start.clone(), None));

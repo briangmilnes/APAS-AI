@@ -8,6 +8,7 @@
 pub mod VertexMatchingStEph {
 
     use std::hash::Hash;
+    use std::collections::HashMap;
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
@@ -80,7 +81,7 @@ pub mod VertexMatchingStEph {
         let mut matching: Set<Edge<V>> = SetLit![];
 
         // Create a map from edges to their coin flips (heads = true, tails = false)
-        let mut edge_coins: std::collections::HashMap<Edge<V>, bool> = std::collections::HashMap::new();
+        let mut edge_coins: HashMap<Edge<V>, bool> = HashMap::new();
 
         for edge in graph.edges().iter() {
             edge_coins.insert(edge.clone(), rng.random::<bool>());

@@ -3,6 +3,8 @@
 
 pub mod PQMinStEph {
 
+    use std::marker::PhantomData;
+
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
     use crate::Types::Types::*;
@@ -20,14 +22,14 @@ pub mod PQMinStEph {
 
     pub struct ClosurePriority<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> {
         f: F,
-        _phantom: std::marker::PhantomData<(V, P)>,
+        _phantom: PhantomData<(V, P)>,
     }
 
     impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
         pub fn new(f: F) -> Self {
             Self {
                 f,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
     }

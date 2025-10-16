@@ -6,6 +6,8 @@ pub mod ClusteringAnalysis {
 
 use std::collections::HashMap;
 use std::fmt::{Debug, Display};
+use std::cmp::Ordering::Equal;
+use std::fmt::Formatter;
 
 use crate::Types::Types::*;
 use crate::Chap47::AdvancedDoubleHashing::AdvancedDoubleHashing::*;
@@ -254,7 +256,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             ];
 
             // Sort by clustering score (lower is better)
-            performance_ranking.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal));
+            performance_ranking.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(Equal));
 
             let best_strategy = performance_ranking[0].0.clone();
             let worst_strategy = performance_ranking[2].0.clone();
@@ -383,7 +385,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     }
 
     impl Display for ComprehensiveClusteringAnalysis {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             writeln!(f, "=== Comprehensive Clustering Analysis ===")?;
             writeln!(f, "Strategy: {}", self.strategy_name)?;
             writeln!(
@@ -414,7 +416,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     }
 
     impl Display for ClusteringPerformanceImpact {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             writeln!(f, "Performance Impact Assessment:")?;
             writeln!(
                 f,
@@ -432,7 +434,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     }
 
     impl Display for ClusteringComparison {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             writeln!(f, "=== Probing Strategy Comparison ===")?;
             writeln!(f, "Best strategy: {}", self.best_strategy)?;
             writeln!(f, "Worst strategy: {}", self.worst_strategy)?;

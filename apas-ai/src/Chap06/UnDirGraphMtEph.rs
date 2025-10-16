@@ -7,6 +7,10 @@
 pub mod UnDirGraphMtEph {
 
     use std::hash::Hash;
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
+    use std::fmt::Result;
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::ParaPair;
@@ -206,8 +210,8 @@ pub mod UnDirGraphMtEph {
         pub fn OutDegree(&self, v: &V) -> N { self.Degree(v) }
     }
 
-    impl<V: StT + MtT + Hash + 'static> std::fmt::Debug for UnDirGraphMtEph<V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<V: StT + MtT + Hash + 'static> Debug for UnDirGraphMtEph<V> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             f.debug_struct("UnDirGraphMtEph")
                 .field("V", &self.V)
                 .field("E", &self.E)
@@ -215,8 +219,8 @@ pub mod UnDirGraphMtEph {
         }
     }
 
-    impl<V: StT + MtT + Hash + 'static> std::fmt::Display for UnDirGraphMtEph<V> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result { write!(f, "V={} E={:?}", self.V, self.E) }
+    impl<V: StT + MtT + Hash + 'static> Display for UnDirGraphMtEph<V> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "V={} E={:?}", self.V, self.E) }
     }
 
     impl<V: StT + MtT + Hash + 'static> PartialEq for UnDirGraphMtEph<V> {

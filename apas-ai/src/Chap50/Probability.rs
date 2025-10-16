@@ -9,6 +9,10 @@ pub mod Probability {
     use std::cmp::Ordering;
     use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
     use std::hash::{Hash, Hasher};
+    use std::ops::Add;
+    use std::ops::Div;
+    use std::ops::Mul;
+    use std::ops::Sub;
 
     use crate::Types::Types::*;
 
@@ -110,25 +114,25 @@ pub mod Probability {
     }
 
     // Arithmetic operations
-    impl std::ops::Add for Probability {
+    impl Add for Probability {
         type Output = Self;
 
         fn add(self, other: Self) -> Self { Probability(self.0 + other.0) }
     }
 
-    impl std::ops::Sub for Probability {
+    impl Sub for Probability {
         type Output = Self;
 
         fn sub(self, other: Self) -> Self { Probability(self.0 - other.0) }
     }
 
-    impl std::ops::Mul for Probability {
+    impl Mul for Probability {
         type Output = Self;
 
         fn mul(self, other: Self) -> Self { Probability(self.0 * other.0) }
     }
 
-    impl std::ops::Div for Probability {
+    impl Div for Probability {
         type Output = Self;
 
         fn div(self, other: Self) -> Self { Probability(self.0 / other.0) }

@@ -5,6 +5,8 @@ pub mod ArraySeqStPer {
 
     use std::collections::HashSet;
     use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
+    use std::slice::Iter;
+    use std::vec::IntoIter;
 
     use crate::Types::Types::*;
 
@@ -35,7 +37,7 @@ pub mod ArraySeqStPer {
         }
 
         /// Iterator over references to elements
-        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
     }
 
     impl<T: StT> PartialEq for ArraySeqStPerS<T> {
@@ -50,14 +52,14 @@ pub mod ArraySeqStPer {
 
     impl<'a, T: StT> IntoIterator for &'a ArraySeqStPerS<T> {
         type Item = &'a T;
-        type IntoIter = std::slice::Iter<'a, T>;
+        type IntoIter = Iter<'a, T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
 
     impl<T: StT> IntoIterator for ArraySeqStPerS<T> {
         type Item = T;
-        type IntoIter = std::vec::IntoIter<T>;
+        type IntoIter = IntoIter<T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
     }

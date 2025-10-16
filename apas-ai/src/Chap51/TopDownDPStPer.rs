@@ -8,6 +8,7 @@ pub mod TopDownDPStPer {
 
     use std::collections::HashMap;
     use std::fmt::{Debug, Display};
+    use std::fmt::Formatter;
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
@@ -152,7 +153,7 @@ pub mod TopDownDPStPer {
     }
 
     impl Display for TopDownDPStPerS {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(
                 f,
                 "TopDownDPStPer(s_len={}, t_len={}, memo_size={})",

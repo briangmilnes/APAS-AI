@@ -3,6 +3,9 @@
 
 pub mod AVLTreeSetStPer {
 
+    use std::fmt::Display;
+    use std::fmt::Formatter;
+
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Types::Types::*;
 
@@ -194,8 +197,8 @@ pub mod AVLTreeSetStPer {
         }
     }
 
-    impl<T: StT + Ord> std::fmt::Display for AVLTreeSetStPer<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: StT + Ord> Display for AVLTreeSetStPer<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(
                 f,
                 "{{{}}}",

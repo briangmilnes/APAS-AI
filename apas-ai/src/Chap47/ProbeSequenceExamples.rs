@@ -6,6 +6,8 @@ pub mod ProbeSequenceExamples {
 
 use std::collections::HashMap;
 use std::fmt::{Debug, Display};
+use std::collections::HashSet;
+use std::fmt::Formatter;
 
 use crate::Types::Types::*;
 use crate::Chap47::AdvancedDoubleHashing::AdvancedDoubleHashing::*;
@@ -78,7 +80,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
                 AdvancedLinearProbingStrategy::new(DefaultHashFunction);
 
             let mut probe_sequence = Vec::new();
-            let mut unique_positions = std::collections::HashSet::new();
+            let mut unique_positions = HashSet::new();
 
             for i in 0..self.max_probes.min(table_size) {
                 let pos = strategy.probe_hash(&key.to_string(), i, table_size);
@@ -113,7 +115,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
                 AdvancedQuadraticProbingStrategy::new_with_coefficients(DefaultHashFunction, c1, c2);
 
             let mut probe_sequence = Vec::new();
-            let mut unique_positions = std::collections::HashSet::new();
+            let mut unique_positions = HashSet::new();
             let mut period = 0;
 
             for i in 0..self.max_probes.min(table_size) {
@@ -152,7 +154,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
                 AdvancedDoubleHashingStrategy::new(DefaultHashFunction, DefaultHashFunction);
 
             let probe_sequence = strategy.generate_probe_sequence(&key.to_string(), table_size, self.max_probes);
-            let unique_positions: std::collections::HashSet<_> = probe_sequence.iter().cloned().collect();
+            let unique_positions: HashSet<_> = probe_sequence.iter().cloned().collect();
 
             // Calculate period for double hashing
             let (_h1_value, h2_value) = strategy.get_hash_values(&key.to_string(), table_size);
@@ -218,7 +220,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     }
 
     impl Display for ProbeSequenceVisualization {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             writeln!(f, "=== {} ===", self.strategy_name)?;
             writeln!(f, "Key: '{}', Table size: {}", self.key, self.table_size)?;
             writeln!(f, "Probe sequence: {:?}", self.probe_sequence)?;
@@ -232,7 +234,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     }
 
     impl Display for TextbookExampleResults {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             writeln!(f, "=== {} ===", self.example_name)?;
             writeln!(f, "{}", self.description)?;
             writeln!(f, "Table size: {}", self.table_size)?;

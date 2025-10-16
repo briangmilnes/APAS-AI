@@ -10,6 +10,7 @@ pub mod TSPApproxStEph {
 
     use std::collections::{HashMap, HashSet};
     use std::hash::Hash;
+    use std::vec::Vec;
 
     use ordered_float::OrderedFloat;
 
@@ -24,11 +25,11 @@ pub mod TSPApproxStEph {
         fn euler_tour<V: StT + Hash + Ord>(
             tree: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
             start: V,
-        ) -> std::vec::Vec<V>;
+        ) -> Vec<V>;
 
         /// Shortcut Euler tour to avoid revisiting vertices
         /// APAS: Work O(|V|), Span O(|V|)
-        fn shortcut_tour<V: StT + Hash + Ord>(euler_tour: &[V]) -> std::vec::Vec<V>;
+        fn shortcut_tour<V: StT + Hash + Ord>(euler_tour: &[V]) -> Vec<V>;
 
         /// Compute total weight of a tour
         /// APAS: Work O(|V|), Span O(|V|)
@@ -42,7 +43,7 @@ pub mod TSPApproxStEph {
         fn approx_metric_tsp<V: StT + Hash + Ord>(
             distances: &HashMap<(V, V), OrderedFloat<f64>>,
             vertices: &Set<V>,
-        ) -> std::vec::Vec<V>;
+        ) -> Vec<V>;
     }
 
     /// Euler Tour of a Tree
@@ -64,8 +65,8 @@ pub mod TSPApproxStEph {
         graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
         start: &V,
         tree_edges: &Set<LabEdge<V, OrderedFloat<f64>>>,
-    ) -> std::vec::Vec<V> {
-        let mut tour = std::vec::Vec::new();
+    ) -> Vec<V> {
+        let mut tour = Vec::new();
         let mut visited_edges: HashSet<(V, V)> = HashSet::new();
 
         euler_tour_dfs(graph, start, None, tree_edges, &mut tour, &mut visited_edges);
@@ -79,7 +80,7 @@ pub mod TSPApproxStEph {
         current: &V,
         parent: Option<&V>,
         tree_edges: &Set<LabEdge<V, OrderedFloat<f64>>>,
-        tour: &mut std::vec::Vec<V>,
+        tour: &mut Vec<V>,
         visited_edges: &mut HashSet<(V, V)>,
     ) {
         tour.push(current.clone());
@@ -136,12 +137,12 @@ pub mod TSPApproxStEph {
     ///
     /// Returns:
     /// - Vector of vertices with each vertex appearing exactly once (except start/end)
-    pub fn shortcut_tour<V: StT + Hash + Ord>(euler_tour: &[V]) -> std::vec::Vec<V> {
+    pub fn shortcut_tour<V: StT + Hash + Ord>(euler_tour: &[V]) -> Vec<V> {
         if euler_tour.is_empty() {
-            return std::vec::Vec::new();
+            return Vec::new();
         }
 
-        let mut shortcut = std::vec::Vec::new();
+        let mut shortcut = Vec::new();
         let mut visited: HashSet<V> = HashSet::new();
 
         for vertex in euler_tour.iter() {
@@ -235,7 +236,7 @@ pub mod TSPApproxStEph {
         graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
         spanning_tree: &Set<LabEdge<V, OrderedFloat<f64>>>,
         start: &V,
-    ) -> (std::vec::Vec<V>, OrderedFloat<f64>) {
+    ) -> (Vec<V>, OrderedFloat<f64>) {
         // Step 1: Compute Euler tour
         let euler = euler_tour(graph, start, spanning_tree);
 

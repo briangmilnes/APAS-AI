@@ -1,5 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use std::f64::consts::E;
+use std::f64::consts::PI;
+
 use ordered_float::OrderedFloat;
 
 use apas_ai::Types::Types::*;
@@ -91,8 +94,8 @@ fn test_weighteddirgraphstephfloat_mutable_operations() {
     assert!(g.vertices().mem(&2));
 
     // Add weighted arcs
-    g.add_labeled_arc(0, 1, OrderedFloat(std::f64::consts::PI));
-    g.add_labeled_arc(1, 2, OrderedFloat(std::f64::consts::E));
+    g.add_labeled_arc(0, 1, OrderedFloat(PI));
+    g.add_labeled_arc(1, 2, OrderedFloat(E));
 
     assert_eq!(g.labeled_arcs().size(), 2);
     assert!(g.has_arc(&0, &1));
@@ -100,8 +103,8 @@ fn test_weighteddirgraphstephfloat_mutable_operations() {
     assert!(!g.has_arc(&0, &2));
 
     // Test weights
-    assert_eq!(g.get_arc_label(&0, &1), Some(&OrderedFloat(std::f64::consts::PI)));
-    assert_eq!(g.get_arc_label(&1, &2), Some(&OrderedFloat(std::f64::consts::E)));
+    assert_eq!(g.get_arc_label(&0, &1), Some(&OrderedFloat(PI)));
+    assert_eq!(g.get_arc_label(&1, &2), Some(&OrderedFloat(E)));
 }
 
 #[test]

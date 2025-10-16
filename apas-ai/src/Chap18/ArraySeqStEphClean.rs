@@ -2,6 +2,8 @@
 //! CLEAN: One-line defaults in trait, multi-line implementations in impl block.
 
 use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
+use std::slice::Iter;
+use std::vec::IntoIter;
 
 use crate::Types::Types::*;
 
@@ -32,7 +34,7 @@ pub trait ArraySeqStEphCleanTrait<T: StT>: Sized {
     fn nth(&self, index: N)                  -> &T {
         &self.data()[index]
     }
-    fn iter(&self)                           -> std::slice::Iter<'_, T> {
+    fn iter(&self)                           -> Iter<'_, T> {
         self.data().iter()
     }
 
@@ -105,7 +107,7 @@ impl<T: StT> Display for ArraySeqStEphCleanS<T> {
 
 impl<'a, T: StT> IntoIterator for &'a ArraySeqStEphCleanS<T> {
     type Item = &'a T;
-    type IntoIter = std::slice::Iter<'a, T>;
+    type IntoIter = Iter<'a, T>;
     fn into_iter(self) -> Self::IntoIter {
         self.data.iter()
     }
@@ -113,7 +115,7 @@ impl<'a, T: StT> IntoIterator for &'a ArraySeqStEphCleanS<T> {
 
 impl<T: StT> IntoIterator for ArraySeqStEphCleanS<T> {
     type Item = T;
-    type IntoIter = std::vec::IntoIter<T>;
+    type IntoIter = IntoIter<T>;
     fn into_iter(self) -> Self::IntoIter {
         self.data.into_vec().into_iter()
     }

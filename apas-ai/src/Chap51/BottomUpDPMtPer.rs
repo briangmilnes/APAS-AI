@@ -10,6 +10,7 @@ pub mod BottomUpDPMtPer {
     use std::fmt::{Debug, Display};
     use std::sync::{Arc, Mutex};
     use std::thread;
+    use std::fmt::Formatter;
 
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use crate::Types::Types::*;
@@ -170,7 +171,7 @@ pub mod BottomUpDPMtPer {
     }
 
     impl Display for BottomUpDPMtPerS {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(
                 f,
                 "BottomUpDPMtPer(s_len={}, t_len={})",

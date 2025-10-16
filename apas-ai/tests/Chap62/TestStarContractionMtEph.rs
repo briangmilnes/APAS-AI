@@ -1,6 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 62: Star Contraction - Multi-threaded Ephemeral Tests
 
+use std::collections::HashMap;
+
 use apas_ai::{
     Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
     Chap62::StarContractionMtEph::StarContractionMtEph::*, SetLit, Types::Types::*,
@@ -40,7 +42,7 @@ fn test_contract_with_base_expand_mt() {
 
     // Expand function that just returns the recursive result
     let expand =
-        |_v: &Set<N>, _e: &Set<Edge<N>>, _centers: &Set<N>, _part: &std::collections::HashMap<N, N>, r: N| r;
+        |_v: &Set<N>, _e: &Set<Edge<N>>, _centers: &Set<N>, _part: &HashMap<N, N>, r: N| r;
 
     let result = star_contract_mt(&graph, 456, &base, &expand);
 

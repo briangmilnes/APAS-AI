@@ -1,6 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for ArraySeqMtPerChap18 multithreaded algorithms.
 
+use std::fmt::Debug;
+
 use apas_ai::ArrayMtPerSLit;
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Types::Types::*; // macro import
@@ -16,7 +18,7 @@ fn is_even_bool(i: N) -> B {
 }
 
 // Helper function for set equality comparison
-fn assert_set_eq<T: PartialEq + std::fmt::Debug>(actual: &[T], expected: &[T]) {
+fn assert_set_eq<T: PartialEq + Debug>(actual: &[T], expected: &[T]) {
     assert_eq!(actual.len(), expected.len());
     for val in actual {
         assert!(expected.contains(val), "Value {val:?} not found in expected");

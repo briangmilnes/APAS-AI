@@ -5,6 +5,8 @@
 pub mod AdvancedQuadraticProbing {
 
 use std::fmt::{Debug, Display};
+use std::fmt::Formatter;
+use std::marker::PhantomData;
 
 use crate::Types::Types::*;
 use crate::Chap47::FlatHashTable::FlatHashTable::*;
@@ -16,7 +18,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
         c2: N,
         clustering_enabled: B,
         prime_validation_enabled: B,
-        _phantom: std::marker::PhantomData<K>,
+        _phantom: PhantomData<K>,
     }
 
     /// Secondary Clustering Metrics
@@ -120,7 +122,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
                 c2: 1,
                 clustering_enabled: true,
                 prime_validation_enabled: true,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
 
@@ -133,7 +135,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
                 c2,
                 clustering_enabled: true,
                 prime_validation_enabled: true,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
 
@@ -146,7 +148,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
                 c2,
                 clustering_enabled: false,
                 prime_validation_enabled: false,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
 
@@ -307,7 +309,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     }
 
     impl<K: StT, H: HashFunClone<K>> Display for AdvancedQuadraticProbingStrategy<K, H> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(
                 f,
                 "AdvancedQuadraticProbing(c1={}, c2={}, clustering_enabled={}, prime_validation={})",
@@ -317,7 +319,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     }
 
     impl Display for SecondaryClusteringMetrics {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             writeln!(f, "Secondary Clustering Metrics:")?;
             writeln!(f, "  Collision chains: {}", self.collision_chains)?;
             writeln!(f, "  Max chain length: {}", self.max_chain_length)?;

@@ -5,6 +5,7 @@ pub mod AVLTreeSeqStPer {
 
     use std::fmt::Debug;
     use std::rc::Rc;
+    use std::fmt::Formatter;
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
@@ -228,8 +229,8 @@ pub mod AVLTreeSeqStPer {
         }
     }
 
-    impl<T: StT> std::fmt::Debug for AVLTreeSeqStPerS<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: StT> Debug for AVLTreeSeqStPerS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             let v = self.values_in_order();
             f.debug_list().entries(v.iter()).finish()
         }

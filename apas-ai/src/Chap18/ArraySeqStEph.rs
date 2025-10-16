@@ -5,6 +5,9 @@ pub mod ArraySeqStEph {
 
     use std::collections::HashSet;
     use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
+    use std::collections::HashMap;
+    use std::slice::Iter;
+    use std::vec::IntoIter;
 
     use crate::Types::Types::*;
 
@@ -33,7 +36,7 @@ pub mod ArraySeqStEph {
         pub fn nth(&self, index: N) -> &T { &self.data[index] }
 
         /// Iterator over references to elements
-        pub fn iter(&self) -> std::slice::Iter<'_, T> { self.data.iter() }
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
 
         pub fn subseq(&self, start: N, length: N) -> Self {
             let total = self.data.len();
@@ -57,7 +60,7 @@ pub mod ArraySeqStEph {
         }
 
         pub fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut Self {
-            let mut last_values: std::collections::HashMap<N, T> = std::collections::HashMap::new();
+            let mut last_values: HashMap<N, T> = HashMap::new();
             for i in 0..updates.length() {
                 let Pair(index, value) = updates.nth(i).clone();
                 if index < self.data.len() {
@@ -83,14 +86,14 @@ pub mod ArraySeqStEph {
 
     impl<'a, T: StT> IntoIterator for &'a ArraySeqStEphS<T> {
         type Item = &'a T;
-        type IntoIter = std::slice::Iter<'a, T>;
+        type IntoIter = Iter<'a, T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
 
     impl<T: StT> IntoIterator for ArraySeqStEphS<T> {
         type Item = T;
-        type IntoIter = std::vec::IntoIter<T>;
+        type IntoIter = IntoIter<T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
     }

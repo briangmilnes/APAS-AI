@@ -4,6 +4,9 @@
 pub mod LinkedListStEph {
 
     use std::collections::HashSet;
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
 
     use crate::Types::Types::*;
 
@@ -121,8 +124,8 @@ pub mod LinkedListStEph {
         }
     }
 
-    impl<T: StT> std::fmt::Display for LinkedListStEphS<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: StT> Display for LinkedListStEphS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "[")?;
             let mut first = true;
             let mut current = self.head.as_deref();
@@ -139,8 +142,8 @@ pub mod LinkedListStEph {
         }
     }
 
-    impl<T: StT> std::fmt::Debug for LinkedListStEphS<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: StT> Debug for LinkedListStEphS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "[")?;
             let mut first = true;
             let mut current = self.head.as_deref();

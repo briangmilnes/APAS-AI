@@ -2,6 +2,8 @@
 //! MINIMAL: Trait with default implementations - impl block is nearly empty!
 
 use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
+use std::slice::Iter;
+use std::vec::IntoIter;
 
 use crate::Types::Types::*;
 
@@ -59,7 +61,7 @@ pub trait ArraySeqStEphMinimalTrait<T: StT>: Sized {
         self
     }
 
-    fn iter(&self)                           -> std::slice::Iter<'_, T> {
+    fn iter(&self)                           -> Iter<'_, T> {
         self.data().iter()
     }
 }
@@ -118,7 +120,7 @@ impl<T: StT> Display for ArraySeqStEphMinimalS<T> {
 
 impl<'a, T: StT> IntoIterator for &'a ArraySeqStEphMinimalS<T> {
     type Item = &'a T;
-    type IntoIter = std::slice::Iter<'a, T>;
+    type IntoIter = Iter<'a, T>;
     fn into_iter(self) -> Self::IntoIter {
         self.data.iter()
     }
@@ -126,7 +128,7 @@ impl<'a, T: StT> IntoIterator for &'a ArraySeqStEphMinimalS<T> {
 
 impl<T: StT> IntoIterator for ArraySeqStEphMinimalS<T> {
     type Item = T;
-    type IntoIter = std::vec::IntoIter<T>;
+    type IntoIter = IntoIter<T>;
     fn into_iter(self) -> Self::IntoIter {
         self.data.into_vec().into_iter()
     }

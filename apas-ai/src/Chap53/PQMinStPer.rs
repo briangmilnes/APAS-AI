@@ -6,6 +6,8 @@
 
 pub mod PQMinStPer {
 
+    use std::marker::PhantomData;
+
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     use crate::Types::Types::*;
@@ -26,14 +28,14 @@ pub mod PQMinStPer {
     /// Simple wrapper for closure-based priority functions.
     pub struct ClosurePriority<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> {
         f: F,
-        _phantom: std::marker::PhantomData<(V, P)>,
+        _phantom: PhantomData<(V, P)>,
     }
 
     impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
         pub fn new(f: F) -> Self {
             Self {
                 f,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
     }

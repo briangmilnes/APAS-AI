@@ -8,6 +8,8 @@ pub mod EdgeContractionMtEph {
 
     use std::hash::Hash;
     use std::sync::Arc;
+    use std::collections::HashMap;
+    use std::vec::Vec;
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
@@ -60,7 +62,7 @@ pub mod EdgeContractionMtEph {
         use std::sync::{Arc, Mutex};
 
         // Create a mapping from original vertices to their block representatives
-        let vertex_to_block = Arc::new(Mutex::new(std::collections::HashMap::new()));
+        let vertex_to_block = Arc::new(Mutex::new(HashMap::new()));
 
         // Phase 1: Assign block representatives for matched edges (sequential for now)
         {
@@ -88,7 +90,7 @@ pub mod EdgeContractionMtEph {
         }
 
         // Phase 3: Build new edge set in parallel
-        let edges_vec: std::vec::Vec<Edge<V>> = graph.edges().iter().cloned().collect();
+        let edges_vec: Vec<Edge<V>> = graph.edges().iter().cloned().collect();
         let edges_seq = ArraySeqStEphS::from_vec(edges_vec);
         let n_edges = edges_seq.length();
         let edges_arc = Arc::new(edges_seq);
@@ -104,7 +106,7 @@ pub mod EdgeContractionMtEph {
     /// Work Θ(|E|), Span Θ(log |E|), Parallelism Θ(|E| / log |E|)
     fn build_edges_parallel<V: StT + MtT + Hash + Ord + 'static>(
         edges: Arc<ArraySeqStEphS<Edge<V>>>,
-        vertex_map: Arc<std::collections::HashMap<V, V>>,
+        vertex_map: Arc<HashMap<V, V>>,
         start: usize,
         end: usize,
     ) -> Set<Edge<V>> {

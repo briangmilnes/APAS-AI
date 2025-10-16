@@ -8,6 +8,7 @@ pub mod BottomUpDPStPer {
 
     use std::cmp::{max, min};
     use std::fmt::{Debug, Display};
+    use std::fmt::Formatter;
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
@@ -137,7 +138,7 @@ pub mod BottomUpDPStPer {
     }
 
     impl Display for BottomUpDPStPerS {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(
                 f,
                 "BottomUpDPStPer(s_len={}, t_len={})",

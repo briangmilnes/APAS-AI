@@ -1,6 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Test demonstrating: NO INHERENT METHODS NEEDED - trait methods work directly!
 
+use std::ops::Add;
+
 use apas_ai::Chap18::ArraySeqStEphSimple::*;
 use apas_ai::Types::Types::*;
 
@@ -41,7 +43,7 @@ fn test_generic_function() {
     // This is the REAL benefit of traits - generic functions!
     fn double_first<T, S>(seq: &mut S) 
     where 
-        T: StT + std::ops::Add<Output = T> + Copy,
+        T: StT + Add<Output = T> + Copy,
         S: ArraySeqStEphSimpleTrait<T>
     {
         if seq.length() > 0 {

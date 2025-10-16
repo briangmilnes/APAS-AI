@@ -8,6 +8,7 @@ pub mod TSPApproxMtEph {
 
     use std::collections::{HashMap, HashSet};
     use std::hash::Hash;
+    use std::vec::Vec;
 
     use ordered_float::OrderedFloat;
 
@@ -22,11 +23,11 @@ pub mod TSPApproxMtEph {
         fn euler_tour_mt<V: StT + MtT + Hash + Ord + 'static>(
             tree: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>,
             start: V,
-        ) -> std::vec::Vec<V>;
+        ) -> Vec<V>;
 
         /// Parallel shortcut Euler tour
         /// APAS: Work O(|V|), Span O(lg |V|)
-        fn shortcut_tour_mt<V: StT + MtT + Hash + Ord>(euler_tour: &[V]) -> std::vec::Vec<V>;
+        fn shortcut_tour_mt<V: StT + MtT + Hash + Ord>(euler_tour: &[V]) -> Vec<V>;
 
         /// Parallel tour weight computation
         /// APAS: Work O(|V|), Span O(lg |V|)
@@ -40,7 +41,7 @@ pub mod TSPApproxMtEph {
         fn approx_metric_tsp_mt<V: StT + MtT + Hash + Ord + 'static>(
             distances: &HashMap<(V, V), OrderedFloat<f64>>,
             vertices: &Set<V>,
-        ) -> std::vec::Vec<V>;
+        ) -> Vec<V>;
     }
 
     /// Euler Tour of a Tree (Parallel version, but DFS remains sequential)
@@ -59,8 +60,8 @@ pub mod TSPApproxMtEph {
         graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>,
         start: &V,
         tree_edges: &Set<LabEdge<V, OrderedFloat<f64>>>,
-    ) -> std::vec::Vec<V> {
-        let mut tour = std::vec::Vec::new();
+    ) -> Vec<V> {
+        let mut tour = Vec::new();
         let mut visited_edges: HashSet<(V, V)> = HashSet::new();
 
         euler_tour_dfs(graph, start, None, tree_edges, &mut tour, &mut visited_edges);
@@ -74,7 +75,7 @@ pub mod TSPApproxMtEph {
         current: &V,
         parent: Option<&V>,
         tree_edges: &Set<LabEdge<V, OrderedFloat<f64>>>,
-        tour: &mut std::vec::Vec<V>,
+        tour: &mut Vec<V>,
         visited_edges: &mut HashSet<(V, V)>,
     ) {
         tour.push(current.clone());
@@ -120,12 +121,12 @@ pub mod TSPApproxMtEph {
     /// claude-4-sonet: Work O(n), Span O(n)
     ///
     /// Note: Could be parallelized with filter operation, but overhead likely not worth it
-    pub fn shortcut_tour_mt<V: StT + MtT + Hash + Ord>(euler_tour: &[V]) -> std::vec::Vec<V> {
+    pub fn shortcut_tour_mt<V: StT + MtT + Hash + Ord>(euler_tour: &[V]) -> Vec<V> {
         if euler_tour.is_empty() {
-            return std::vec::Vec::new();
+            return Vec::new();
         }
 
-        let mut shortcut = std::vec::Vec::new();
+        let mut shortcut = Vec::new();
         let mut visited: HashSet<V> = HashSet::new();
 
         for vertex in euler_tour.iter() {
@@ -209,7 +210,7 @@ pub mod TSPApproxMtEph {
         graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>,
         spanning_tree: &Set<LabEdge<V, OrderedFloat<f64>>>,
         start: &V,
-    ) -> (std::vec::Vec<V>, OrderedFloat<f64>) {
+    ) -> (Vec<V>, OrderedFloat<f64>) {
         let euler = euler_tour_mt(graph, start, spanning_tree);
         let tour = shortcut_tour_mt(&euler);
         let weight = tour_weight_mt(graph, &tour);

@@ -1,6 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Types module.
 
+use std::f32::consts::PI;
+use std::f64::consts::E;
+
 use apas_ai::Types::Types::*;
 use apas_ai::{EdgeLit, PairLit, EdgeList, PairList, ParaPair};
 
@@ -141,14 +144,14 @@ fn test_pair_to_tuple() {
 
 #[test]
 fn test_ordered_float_f32() {
-    let f: OrderedF32 = OrderedFloat(std::f32::consts::PI);
-    assert_eq!(*f, std::f32::consts::PI);
+    let f: OrderedF32 = OrderedFloat(PI);
+    assert_eq!(*f, PI);
 }
 
 #[test]
 fn test_ordered_float_f64() {
-    let f: OrderedF64 = OrderedFloat(std::f64::consts::E);
-    assert_eq!(*f, std::f64::consts::E);
+    let f: OrderedF64 = OrderedFloat(E);
+    assert_eq!(*f, E);
 }
 
 #[test]

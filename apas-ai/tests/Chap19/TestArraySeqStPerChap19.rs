@@ -1,5 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use std::fmt::Display;
+use std::fmt::Formatter;
+
 use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Types::Types::*;
@@ -141,8 +144,8 @@ fn test_eq_vs_partial_eq_difference() {
         value: i32,
     } // Use i32 instead of f64 so Eq can be implemented
 
-    impl std::fmt::Display for PartialComparable {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl Display for PartialComparable {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "PartialComparable({})", self.value)
         }
     }
@@ -158,8 +161,8 @@ fn test_eq_vs_partial_eq_difference() {
         value: N,
     }
 
-    impl std::fmt::Display for TotalComparable {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl Display for TotalComparable {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "TotalComparable({})", self.value)
         }
     }

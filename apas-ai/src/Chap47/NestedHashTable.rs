@@ -4,6 +4,7 @@
 pub mod NestedHashTable {
 
 use std::fmt::{Debug, Display, Formatter, Result};
+use std::hash::Hash;
 
 use crate::Types::Types::*;
 use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
@@ -39,7 +40,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
         /// Insert key-value pair using default hash function
         pub fn insert(&self, key: K, value: V) -> Self
         where
-            K: std::hash::Hash,
+            K: Hash,
         {
             let hash_fn = DefaultHashFunction;
             let table_size = self.buckets.length();
@@ -102,7 +103,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
         /// Look up value for given key
         pub fn lookup(&self, key: &K) -> Option<&V>
         where
-            K: std::hash::Hash,
+            K: Hash,
         {
             let hash_fn = DefaultHashFunction;
             let table_size = self.buckets.length();
@@ -122,7 +123,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
         /// Claude Work: Θ(1 + α) expected, Span: Θ(1 + α) expected
         pub fn delete(&self, key: &K) -> (Self, bool)
         where
-            K: std::hash::Hash,
+            K: Hash,
         {
             let hash_fn = DefaultHashFunction;
             let table_size = self.buckets.length();
@@ -178,7 +179,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
         /// Claude Work: Θ(n), Span: Θ(n)
         pub fn resize(&self, new_size: N) -> Self
         where
-            K: std::hash::Hash,
+            K: Hash,
         {
             let actual_new_size = new_size.max(8);
             let mut new_table = Self::create_table(actual_new_size);
@@ -197,7 +198,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
 
         fn insert_without_resize(&self, key: K, value: V) -> Self
         where
-            K: std::hash::Hash,
+            K: Hash,
         {
             let hash_fn = DefaultHashFunction;
             let table_size = self.buckets.length();

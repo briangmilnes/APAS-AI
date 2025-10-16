@@ -334,6 +334,15 @@ General project utilities and cross-cutting tools.
 
 ---
 
+### onetime/
+One-time analysis scripts created during development. These are inline Python/shell scripts that were saved for documentation and future reference.
+
+- `count_qualified_paths_by_directory.py` - Counts files with qualified path violations by directory (src/tests/benches). Used for planning fix_qualified_paths batch processing.
+- `get_qualified_paths_files.py` - Extracts sorted list of files with qualified path violations by directory. Used for planning batch fix execution.
+- `fix_qualified_paths_batch.py` - Batch processes files with qualified path violations in groups of 5, compiling after each batch. Used for the qualified paths refactoring task.
+
+---
+
 ## See Also
 
 - `analyses/` - Output directory for analysis results

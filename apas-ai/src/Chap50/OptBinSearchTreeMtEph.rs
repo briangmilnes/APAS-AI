@@ -7,6 +7,7 @@ pub mod OptBinSearchTreeMtEph {
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::sync::{Arc, Mutex};
     use std::thread;
+    use std::vec::IntoIter;
 
     use crate::Chap50::Probability::Probability::Probability;
     use crate::Types::Types::*;
@@ -258,7 +259,7 @@ pub mod OptBinSearchTreeMtEph {
 
     impl<T: MtVal> IntoIterator for OBSTMtEphS<T> {
         type Item = KeyProb<T>;
-        type IntoIter = std::vec::IntoIter<KeyProb<T>>;
+        type IntoIter = IntoIter<KeyProb<T>>;
 
         fn into_iter(self) -> Self::IntoIter {
             // Extract Vec from Arc<Mutex<Vec>> - this consumes the Arc
@@ -274,7 +275,7 @@ pub mod OptBinSearchTreeMtEph {
 
     impl<T: MtVal> IntoIterator for &OBSTMtEphS<T> {
         type Item = KeyProb<T>;
-        type IntoIter = std::vec::IntoIter<KeyProb<T>>;
+        type IntoIter = IntoIter<KeyProb<T>>;
 
         fn into_iter(self) -> Self::IntoIter {
             let keys_guard = self.keys.lock().unwrap();
@@ -284,7 +285,7 @@ pub mod OptBinSearchTreeMtEph {
 
     impl<T: MtVal> IntoIterator for &mut OBSTMtEphS<T> {
         type Item = KeyProb<T>;
-        type IntoIter = std::vec::IntoIter<KeyProb<T>>;
+        type IntoIter = IntoIter<KeyProb<T>>;
 
         fn into_iter(self) -> Self::IntoIter {
             let keys_guard = self.keys.lock().unwrap();

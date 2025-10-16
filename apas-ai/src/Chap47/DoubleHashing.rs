@@ -3,6 +3,8 @@
 
 pub mod DoubleHashing {
 
+    use std::marker::PhantomData;
+
 use crate::Types::Types::*;
 use crate::Chap47::FlatHashTable::FlatHashTable::*;
 use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
@@ -10,7 +12,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
     pub struct DoubleHashingStrategy<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> {
         hash1: H1,
         hash2: H2,
-        _phantom: std::marker::PhantomData<K>,
+        _phantom: PhantomData<K>,
     }
 
     impl<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> DoubleHashingStrategy<K, H1, H2> {
@@ -18,7 +20,7 @@ use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
             DoubleHashingStrategy {
                 hash1,
                 hash2,
-                _phantom: std::marker::PhantomData,
+                _phantom: PhantomData,
             }
         }
     }
