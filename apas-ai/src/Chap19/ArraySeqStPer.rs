@@ -15,15 +15,15 @@ pub mod ArraySeqStPer {
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn new(length: N, init_value: T)                                        -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                                              -> ArraySeqStPerS<T>;
+        fn empty()                                                              -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T)                                                   -> ArraySeqStPerS<T>;
+        fn singleton(item: T)                                                   -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn length(&self)                                                        -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn nth(&self, index: N)                                                 -> &T;
         /// claude-4-sonet: Work Θ(length), Span Θ(length), Parallelism Θ(1)
-        fn subseq_copy(&self, start: N, length: N)                              -> ArraySeqStPerS<T>;
+        fn subseq_copy(&self, start: N, length: N)                              -> Self;
 
         /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
         /// claude-4-sonet: Work Θ(n + Σᵢ W(f(i))), Span Θ(n + maxᵢ S(f(i))), Parallelism Θ(1)
@@ -36,16 +36,16 @@ pub mod ArraySeqStPer {
         fn select<'a>(a: &'a ArraySeqStPerS<T>, b: &'a ArraySeqStPerS<T>, i: N) -> Option<&'a T>;
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1)
-        fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)                 -> ArraySeqStPerS<T>;
+        fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)                 -> Self;
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1)
-        fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)          -> ArraySeqStPerS<T>;
+        fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)          -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn deflate<F: PredSt<T>>(f: &F, x: &T)                                  -> ArraySeqStPerS<T>;
+        fn deflate<F: PredSt<T>>(f: &F, x: &T)                                  -> Self;
         /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(1 + max i S(f(a[i])))
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(|a| + maxᵢ S(f(aᵢ))), Parallelism Θ(1)
-        fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F)                -> ArraySeqStPerS<T>;
+        fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F)                -> Self;
         /// claude-4-sonet: Work Θ(|a| × W(f)), Span Θ(|a| × S(f)), Parallelism Θ(1)
         fn iterate<A: StT, F: Fn(&A, &T)                                        -> A>(a: &ArraySeqStPerS<T>, f: &F, x: A) -> A;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
@@ -53,17 +53,17 @@ pub mod ArraySeqStPer {
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
         fn scan<F: Fn(&T, &T)                                                   -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T);
         /// claude-4-sonet: Work Θ(Σᵢ |sᵢ|), Span Θ(Σᵢ |sᵢ|), Parallelism Θ(1)
-        fn flatten(s: &ArraySeqStPerS<ArraySeqStPerS<T>>)                       -> ArraySeqStPerS<T>;
+        fn flatten(s: &ArraySeqStPerS<ArraySeqStPerS<T>>)                       -> Self;
         /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(|a| + |updates|), Parallelism Θ(1)
-        fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>)  -> ArraySeqStPerS<T>;
+        fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>)  -> Self;
         /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(|a| + |updates|), Parallelism Θ(1)
-        fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T>;
+        fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(a: &ArraySeqStPerS<T>)                                       -> bool;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(a: &ArraySeqStPerS<T>)                                   -> bool;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn update(a: &ArraySeqStPerS<T>, index: N, item: T)                     -> ArraySeqStPerS<T>;
+        fn update(a: &ArraySeqStPerS<T>, index: N, item: T)                     -> Self;
     }
 
     impl<T: StT> ArraySeqStPerTrait<T> for ArraySeqStPerS<T> {

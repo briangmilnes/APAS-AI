@@ -21,15 +21,15 @@ pub mod MappingStEph {
     pub trait MappingStEphTrait<X: StT + Hash, Y: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                               -> MappingStEph<X, Y>;
+        fn empty()                               -> Self;
 
         /// APAS: Work Θ(|v|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
-        fn FromVec(v: Vec<Pair<X, Y>>)           -> MappingStEph<X, Y>;
+        fn FromVec(v: Vec<Pair<X, Y>>)           -> Self;
 
         /// APAS: Work Θ(|r|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|r|), Span Θ(1)
-        fn FromRelation(r: &RelationStEph<X, Y>) -> MappingStEph<X, Y>;
+        fn FromRelation(r: &RelationStEph<X, Y>) -> Self;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)

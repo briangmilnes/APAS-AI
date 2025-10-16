@@ -19,11 +19,11 @@ pub mod RelationStEph {
     pub trait RelationStEphTrait<X: StT + Hash, Y: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                              -> RelationStEph<X, Y>;
+        fn empty()                              -> Self;
 
         /// APAS: Work Θ(|pairs|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|pairs|), Span Θ(1)
-        fn FromSet(pairs: SetStEph<Pair<X, Y>>) -> RelationStEph<X, Y>;
+        fn FromSet(pairs: SetStEph<Pair<X, Y>>) -> Self;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)

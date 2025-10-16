@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Review script to detect trait methods using concrete types instead of Self in return types.
+Fix script to replace concrete types with Self in trait return types.
 
-This script finds traits where methods return Type<...> or &Type<...> or &mut Type<...>
-instead of Self, &Self, or &mut Self, which is more idiomatic and flexible.
+This script automatically changes trait method return types from concrete types
+(e.g., SetStEph<T>, MappingStEph<X,Y>) to Self when appropriate.
 
-Example violation:
+Example fix:
     pub trait SetTrait<T> {
-        fn empty() -> Set<T>;  // Should be: fn empty() -> Self;
-        fn insert(&mut self, x: T) -> &mut Set<T>;  // Should be: -> &mut Self;
+        fn empty() -> Set<T>;  // BEFORE
+        fn empty() -> Self;    // AFTER
     }
 """
 
@@ -23,7 +23,6 @@ from review_utils import ReviewContext, create_review_parser
 
 def extract_trait_name_from_signature(trait_line):
     """Extract trait name from trait definition line."""
-    # Handle: pub trait MyTrait<T> or trait MyTrait or trait MyTrait: Sized
     match = re.search(r'\btrait\s+(\w+)', trait_line)
     if match:
         return match.group(1)
@@ -32,7 +31,6 @@ def extract_trait_name_from_signature(trait_line):
 
 def find_impl_struct_name(lines, trait_name):
     """Find the struct name that implements this trait in the same file."""
-    # Look for: impl<...> TraitName<...> for StructName<...>
     impl_pattern = re.compile(rf'\bimpl.*\b{re.escape(trait_name)}\b.*\bfor\s+(\w+)')
     
     for line in lines:
@@ -52,18 +50,6 @@ def extract_trait_generic_params(trait_line):
         # Split by comma and clean up
         return [p.split(':')[0].strip() for p in params.split(',')]
     return []
-
-
-def extract_return_type(method_sig):
-    """Extract the return type from a method signature."""
-    # Handle: fn foo() -> Type or fn foo() -> &Type or fn foo() -> &mut Type
-    match = re.search(r'->\s*(&\s*mut\s+|&\s*)?(\w+)(<[^>]*>)?', method_sig)
-    if match:
-        ref_mut = (match.group(1) or '').strip()
-        type_name = match.group(2)
-        generics = match.group(3) or ''
-        return ref_mut, type_name, generics
-    return None, None, None
 
 
 def should_use_self(return_type_name, generics, struct_name, trait_name, trait_generics):
@@ -115,79 +101,26 @@ def should_use_self(return_type_name, generics, struct_name, trait_name, trait_g
     return False
 
 
-def main():
-    parser = create_review_parser(
-        description="Detect trait methods using concrete types instead of Self in return types"
-    )
-    args = parser.parse_args()
-    context = ReviewContext(args)
-
-    # Collect all Rust files
-    dirs_to_check = []
-    for dir_name in ['src', 'tests', 'benches']:
-        dir_path = context.repo_root / dir_name
-        if dir_path.exists():
-            dirs_to_check.append(dir_path)
-    
-    if not dirs_to_check:
-        print("✓ No src/, tests/, or benches/ directories found")
-        return 0
-    
-    if context.dry_run:
-        files = context.find_files(dirs_to_check)
-        print(f"Would check {len(files)} file(s) for trait Self usage in {len(dirs_to_check)} directories")
-        return 0
-    
-    files = context.find_files(dirs_to_check)
-    print(f"Reviewing {len(files)} Rust files for trait Self usage...")
-    
-    all_violations = []
-    files_with_violations = {}
-    
-    for filepath in files:
-        violations = review_file_with_count(filepath)
-        if violations:
-            all_violations.extend(violations)
-            files_with_violations[filepath] = violations
-    
-    if all_violations:
-        print(f"\n✗ Found {len(all_violations)} violation(s) in {len(files_with_violations)} file(s):\n")
-        
-        # Group by file and print details
-        for filepath, violations in sorted(files_with_violations.items()):
-            rel_path = context.relative_path(filepath)
-            print(f"\n{rel_path}: {len(violations)} violation(s)")
-            for v in violations:
-                print(f"  Line {v['line']}: {v['trait']}::{v['method']}() -> {v['current']}")
-                print(f"    Should be: -> {v['should_be']}")
-                if v['struct']:
-                    print(f"    Implemented for: {v['struct']}")
-        
-        return 1
-    else:
-        print("✓ Trait Self Usage: No violations found")
-        return 0
-
-
-def review_file_with_count(filepath):
-    """Review a file and return violations list."""
-    violations = []
-    
+def fix_file(filepath, context):
+    """Fix a single Rust file by replacing concrete types with Self in traits."""
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             lines = f.readlines()
-    except Exception:
-        return violations
+    except Exception as e:
+        print(f"Error reading {filepath}: {e}")
+        return 0
 
+    original_lines = lines[:]
     in_trait = False
     trait_name = None
-    trait_start_line = 0
     trait_line = None
     trait_generics = []
+    trait_start_line = 0
     brace_depth = 0
     struct_name = None
+    fixes_made = 0
     
-    for line_num, line in enumerate(lines, 1):
+    for line_num, line in enumerate(lines):
         stripped = line.strip()
         
         # Skip comments
@@ -199,9 +132,9 @@ def review_file_with_count(filepath):
             trait_name = extract_trait_name_from_signature(line)
             if trait_name:
                 in_trait = True
-                trait_start_line = line_num
                 trait_line = line
                 trait_generics = extract_trait_generic_params(line)
+                trait_start_line = line_num
                 brace_depth = line.count('{') - line.count('}')
                 # Find the implementing struct name
                 struct_name = find_impl_struct_name(lines, trait_name)
@@ -221,30 +154,80 @@ def review_file_with_count(filepath):
             
             # Look for method signatures with return types
             if 'fn ' in line and '->' in line and not stripped.startswith('//'):
-                # Extract method signature (might span multiple lines, but we'll handle simple cases)
-                ref_mut, return_type_name, generics = extract_return_type(line)
+                # Extract return type - handle various patterns
+                # Pattern: -> Type<...> or -> &Type<...> or -> &mut Type<...>
+                match = re.search(r'->\s*(&\s*mut\s+|&\s*)?(\w+)(<[^>]*>)?', line)
                 
-                if return_type_name and return_type_name != 'Self':
-                    # Check if this should be Self
-                    if should_use_self(return_type_name, generics, struct_name, trait_name, trait_generics):
-                        method_match = re.search(r'fn\s+(\w+)', line)
-                        method_name = method_match.group(1) if method_match else 'unknown'
+                if match:
+                    ref_mut = (match.group(1) or '').strip()
+                    return_type_name = match.group(2)
+                    generics = match.group(3) or ''
+                    
+                    if return_type_name != 'Self' and should_use_self(return_type_name, generics, struct_name, trait_name, trait_generics):
+                        # Build the replacement
+                        old_return = f"{ref_mut} {return_type_name}{generics}" if ref_mut else f"{return_type_name}{generics}"
+                        new_return = f"{ref_mut} Self" if ref_mut else "Self"
                         
-                        # Construct what it should be
-                        should_be = f"{ref_mut} Self" if ref_mut else "Self"
-                        current = f"{ref_mut} {return_type_name}{generics}" if ref_mut else f"{return_type_name}{generics}"
+                        # Replace in the line, preserving spacing
+                        new_line = line.replace(f"-> {old_return.strip()}", f"-> {new_return.strip()}")
                         
-                        violations.append({
-                            'line': line_num,
-                            'trait': trait_name,
-                            'method': method_name,
-                            'current': current.strip(),
-                            'should_be': should_be.strip(),
-                            'struct': struct_name,
-                            'filepath': filepath
-                        })
+                        if new_line != line:
+                            lines[line_num] = new_line
+                            fixes_made += 1
+                            
+                            method_match = re.search(r'fn\s+(\w+)', line)
+                            method_name = method_match.group(1) if method_match else 'unknown'
+                            print(f"  Line {line_num + 1}: {method_name}() -> {old_return.strip()} => -> {new_return.strip()}")
     
-    return violations
+    # Write back if changes were made
+    if fixes_made > 0:
+        try:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.writelines(lines)
+            print(f"✓ Fixed {fixes_made} return type(s) in {context.relative_path(filepath)}")
+        except Exception as e:
+            print(f"Error writing {filepath}: {e}")
+            return 0
+    
+    return fixes_made
+
+
+def main():
+    parser = create_review_parser(
+        description="Fix trait methods to use Self instead of concrete types in return types"
+    )
+    parser.add_argument(
+        'files',
+        nargs='*',
+        help='Specific files to fix (if not provided, will prompt)'
+    )
+    args = parser.parse_args()
+    context = ReviewContext(args)
+
+    if args.files:
+        # Fix specific files provided as arguments
+        files_to_fix = [Path(f) for f in args.files]
+    else:
+        print("No files specified. Use: fix_trait_self_usage.py file1.rs file2.rs ...")
+        return 1
+
+    total_fixes = 0
+    for filepath in files_to_fix:
+        if not filepath.exists():
+            # Try relative to repo root
+            filepath = context.repo_root / filepath
+        
+        if not filepath.exists():
+            print(f"✗ File not found: {filepath}")
+            continue
+        
+        print(f"\nFixing {context.relative_path(filepath)}...")
+        fixes = fix_file(filepath, context)
+        total_fixes += fixes
+
+    print(f"\n{'='*70}")
+    print(f"Total: Fixed {total_fixes} return type(s) in {len(files_to_fix)} file(s)")
+    return 0
 
 
 if __name__ == '__main__':

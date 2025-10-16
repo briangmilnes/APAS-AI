@@ -17,15 +17,15 @@ pub mod ArraySeqMtEph {
         /// claude-4-sonet: Work Θ(n), Span Θ(1)
         fn new(length: N, init_value: T)                                  -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                                        -> ArraySeqMtEphS<T>;
+        fn empty()                                                        -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T)                                             -> ArraySeqMtEphS<T>;
+        fn singleton(item: T)                                             -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn length(&self)                                                  -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn nth_cloned(&self, index: N)                                    -> T;
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn subseq_copy(&self, start: N, length: N)                        -> ArraySeqMtEphS<T>;
+        fn subseq_copy(&self, start: N, length: N)                        -> Self;
 
         /// claude-4-sonet: Work Θ(n + Σᵢ W(f(i))), Span Θ(1 + maxᵢ S(f(i))), Parallelism Θ(n) when f is Θ(1)
         fn tabulate<F: Fn(N)                                              -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T>;
@@ -37,13 +37,13 @@ pub mod ArraySeqMtEph {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>, index: N) -> Option<T>;
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)           -> ArraySeqMtEphS<T>;
+        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)           -> Self;
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)    -> ArraySeqMtEphS<T>;
+        fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)    -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn deflate<F: PredMt<T>>(f: &F, x: &T)                            -> ArraySeqMtEphS<T>;
+        fn deflate<F: PredMt<T>>(f: &F, x: &T)                            -> Self;
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(1 + maxᵢ S(f(aᵢ))), Parallelism Θ(|a|)
-        fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtEphS<T>, pred: F)   -> ArraySeqMtEphS<T>;
+        fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtEphS<T>, pred: F)   -> Self;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
         fn iterate<A: StTInMtT, F: Fn(&A, &T)                             -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(log |a|), Parallelism Θ(|a|/log |a|)
@@ -51,13 +51,13 @@ pub mod ArraySeqMtEph {
         /// claude-4-sonet: Work Θ(|a|), Span Θ(log |a|), Parallelism Θ(|a|/log |a|)
         fn scan<F: Fn(&T, &T)                                             -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T);
         /// claude-4-sonet: Work Θ(Σ |sᵢ|), Span Θ(1)
-        fn flatten(s: &ArraySeqMtEphS<ArraySeqMtEphS<T>>)                 -> ArraySeqMtEphS<T>;
+        fn flatten(s: &ArraySeqMtEphS<ArraySeqMtEphS<T>>)                 -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(a: &ArraySeqMtEphS<T>)                                 -> bool;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(a: &ArraySeqMtEphS<T>)                             -> bool;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
-        fn update(a: &ArraySeqMtEphS<T>, index: N, item: T)               -> ArraySeqMtEphS<T>;
+        fn update(a: &ArraySeqMtEphS<T>, index: N, item: T)               -> Self;
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {

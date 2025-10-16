@@ -26,10 +26,10 @@ pub mod UnDirGraphMtEph {
     pub trait UnDirGraphMtEphTrait<V: StT + MtT + Hash + 'static> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                        -> UnDirGraphMtEph<V>;
+        fn empty()                                        -> Self;
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(1)
-        fn FromSets(V: SetStEph<V>, E: SetStEph<Edge<V>>) -> UnDirGraphMtEph<V>;
+        fn FromSets(V: SetStEph<V>, E: SetStEph<Edge<V>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn vertices(&self)                                -> &SetStEph<V>;

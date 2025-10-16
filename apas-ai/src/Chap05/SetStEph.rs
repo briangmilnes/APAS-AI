@@ -20,10 +20,10 @@ pub mod SetStEph {
     pub trait SetStEphTrait<T: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                                     -> SetStEph<T>;
+        fn empty()                                                     -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(x: T)                                             -> SetStEph<T>;
+        fn singleton(x: T)                                             -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn size(&self)                                                 -> N;
@@ -32,10 +32,10 @@ pub mod SetStEph {
         fn mem(&self, x: &T)                                           -> B;
         /// APAS: Work Θ(|a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn union(&self, other: &SetStEph<T>)                           -> SetStEph<T>;
+        fn union(&self, other: &SetStEph<T>)                           -> Self;
         /// APAS: Work Θ(|a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn intersection(&self, other: &SetStEph<T>)                    -> SetStEph<T>;
+        fn intersection(&self, other: &SetStEph<T>)                    -> Self;
         /// APAS: Work Θ(|parts| × |a|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|parts| × |a|²), Span Θ(1)
         fn partition(&self, parts: &SetStEph<SetStEph<T>>)             -> B;
@@ -53,7 +53,7 @@ pub mod SetStEph {
         fn iter(&self)                                                 -> Iter<'_, T>;
         /// APAS: Work Θ(|v|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
-        fn FromVec(v: Vec<T>)                                          -> SetStEph<T>;
+        fn FromVec(v: Vec<T>)                                          -> Self;
     }
 
     impl<T: Eq + Hash> PartialEq for SetStEph<T> {

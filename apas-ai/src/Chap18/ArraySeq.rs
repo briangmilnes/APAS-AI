@@ -38,11 +38,11 @@ pub mod ArraySeq {
 
         /// Definition 18.1 (empty). Construct the empty sequence. <br/>
         /// Work: Θ(1), Span: Θ(1).
-        fn empty()                                                   -> ArraySeqS<T>;
+        fn empty()                                                   -> Self;
 
         /// Definition 18.1 (singleton). Construct a singleton sequence containing `item`. <br/>
         /// Work: Θ(1), Span: Θ(1).
-        fn singleton(item: T)                                        -> ArraySeqS<T>;
+        fn singleton(item: T)                                        -> Self;
 
         /// Algorithm 18.3 (tabulate). Build a sequence by applying `f` to each index. <br/>
         /// Work: Θ(length), Span: Θ(1).
@@ -54,29 +54,29 @@ pub mod ArraySeq {
 
         /// Definition 18.12 (subseq). Extract a contiguous subsequence, truncating out-of-bounds ranges. <br/>
         /// Work: Θ(length), Span: Θ(1).
-        fn subseq(a: &ArraySeqS<T>, start: N, length: N)             -> ArraySeqS<T>
+        fn subseq(a: &ArraySeqS<T>, start: N, length: N)             -> Self
         where
             T: Clone;
 
         /// Definition 18.13 (append). Concatenate two sequences. <br/>
         /// Work: Θ(|a| + |b|), Span: Θ(1).
-        fn append(a: &ArraySeqS<T>, b: &ArraySeqS<T>)                -> ArraySeqS<T>;
+        fn append(a: &ArraySeqS<T>, b: &ArraySeqS<T>)                -> Self;
 
         /// Definition 18.14 (filter). Keep elements satisfying `pred`. <br/>
         /// Work: Θ(|a|), Span: Θ(1).
-        fn filter<F: PredSt<T>>(a: &ArraySeqS<T>, pred: &F)          -> ArraySeqS<T>;
+        fn filter<F: PredSt<T>>(a: &ArraySeqS<T>, pred: &F)          -> Self;
 
         /// Definition 18.15 (flatten). Concatenate a sequence of sequences. <br/>
         /// Work: Θ(total length), Span: Θ(1).
-        fn flatten(a: &ArraySeqS<ArraySeqS<T>>)                      -> ArraySeqS<T>;
+        fn flatten(a: &ArraySeqS<ArraySeqS<T>>)                      -> Self;
 
         /// Definition 18.16 (update). Return a copy with the index replaced by the new value. <br/>
         /// Work: Θ(|a|), Span: Θ(1).
-        fn update(a: &ArraySeqS<T>, update: Pair<N, T>)              -> ArraySeqS<T>;
+        fn update(a: &ArraySeqS<T>, update: Pair<N, T>)              -> Self;
 
         /// Definition 18.17 (inject). Apply updates, keeping the first update per index. <br/>
         /// Work: Θ(|a| + |updates|), Span: Θ(1).
-        fn inject(a: &ArraySeqS<T>, updates: &ArraySeqS<Pair<N, T>>) -> ArraySeqS<T>;
+        fn inject(a: &ArraySeqS<T>, updates: &ArraySeqS<Pair<N, T>>) -> Self;
 
         /// Definition 18.5 (isEmpty). true iff the sequence has length zero. <br/>
         /// Work: Θ(1), Span: Θ(1).

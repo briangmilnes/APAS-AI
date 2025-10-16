@@ -15,12 +15,12 @@ pub mod MergeSortMt {
         /// Merge two sorted sequences in parallel using binary search.
         /// APAS: Work Θ(n), Span Θ(log n)
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn merge_parallel(left: &ArraySeqMtPerS<T>, right: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T>;
+        fn merge_parallel(left: &ArraySeqMtPerS<T>, right: &ArraySeqMtPerS<T>) -> Self;
 
         /// Sort a sequence using parallel merge sort.
         /// APAS: Work Θ(n log n), Span Θ(log² n)
         /// claude-4-sonet: Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log n)
-        fn merge_sort_parallel(a: &ArraySeqMtPerS<T>)                          -> ArraySeqMtPerS<T>;
+        fn merge_sort_parallel(a: &ArraySeqMtPerS<T>)                          -> Self;
     }
 
     impl<T: StTInMtT + Ord + 'static> MergeSortMtTrait<T> for ArraySeqMtPerS<T> {

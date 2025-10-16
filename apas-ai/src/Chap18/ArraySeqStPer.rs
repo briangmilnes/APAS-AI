@@ -89,10 +89,10 @@ pub mod ArraySeqStPer {
         fn nth(&self, index: N)                                                 -> &T;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn empty()                                                              -> ArraySeqStPerS<T>;
+        fn empty()                                                              -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn singleton(item: T)                                                   -> ArraySeqStPerS<T>;
+        fn singleton(item: T)                                                   -> Self;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
         fn tabulate<F: Fn(N)                                                    -> T>(f: &F, length: N) -> ArraySeqStPerS<T>;
@@ -101,19 +101,19 @@ pub mod ArraySeqStPer {
         fn map<U: StT, F: Fn(&T)                                                -> U>(a: &ArraySeqStPerS<T>, f: &F) -> ArraySeqStPerS<U>;
         /// APAS: Work Θ(len), Span Θ(1)
         /// claude-4-sonet: Work Θ(len), Span Θ(len), Parallelism Θ(1) - sequential copy
-        fn subseq_copy(a: &ArraySeqStPerS<T>, start: N, length: N)              -> ArraySeqStPerS<T>;
+        fn subseq_copy(a: &ArraySeqStPerS<T>, start: N, length: N)              -> Self;
         /// APAS: Work Θ(|a|+|b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|+|b|), Span Θ(|a|+|b|), Parallelism Θ(1) - sequential
-        fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)                 -> ArraySeqStPerS<T>;
+        fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)                 -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F)                -> ArraySeqStPerS<T>;
+        fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F)                -> Self;
         /// APAS: Work Θ(Σ|a[i]|), Span Θ(1)
         /// claude-4-sonet: Work Θ(Σ|a[i]|), Span Θ(Σ|a[i]|), Parallelism Θ(1) - sequential
-        fn flatten(a: &ArraySeqStPerS<ArraySeqStPerS<T>>)                       -> ArraySeqStPerS<T>;
+        fn flatten(a: &ArraySeqStPerS<ArraySeqStPerS<T>>)                       -> Self;
         /// APAS: Work Θ(|a|+|updates|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|+|updates|), Span Θ(|a|+|updates|), Parallelism Θ(1) - sequential with HashSet
-        fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>)  -> ArraySeqStPerS<T>;
+        fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>)  -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn isEmpty(&self)                                                       -> B;
@@ -136,7 +136,7 @@ pub mod ArraySeqStPer {
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
         fn scan<F: Fn(&T, &T)                                                   -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T);
         /// claude-4-sonet: Work Θ(|a|+|updates|), Span Θ(|a|+|updates|), Parallelism Θ(1) - sequential, overwrites on conflict
-        fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T>;
+        fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> Self;
     }
 
     impl<T: StT> ArraySeqStPerTrait<T> for ArraySeqStPerS<T> {

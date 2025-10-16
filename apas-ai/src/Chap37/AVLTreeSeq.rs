@@ -51,7 +51,7 @@ pub mod AVLTreeSeq {
         /// Construct an empty tree.
         /// APAS: Work Θ(1), Span Θ(1).
         /// claude-4-sonet: Work Θ(1), Span Θ(1).
-        fn empty()                                 -> AVLTreeS<T>;
+        fn empty()                                 -> Self;
 
         /// Construct an empty tree (alias).
         /// APAS: Work Θ(1), Span Θ(1).
@@ -71,7 +71,7 @@ pub mod AVLTreeSeq {
 
         /// Construct a singleton sequence.
         /// APAS: Work Θ(1), Span Θ(1).
-        fn singleton(item: T)                      -> AVLTreeS<T>;
+        fn singleton(item: T)                      -> Self;
 
         /// Predicates.
         /// APAS: Work Θ(1), Span Θ(1).
@@ -80,7 +80,7 @@ pub mod AVLTreeSeq {
 
         /// Return subsequence [start, start+length) as a new tree.
         /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
-        fn subseq_copy(&self, start: N, length: N) -> AVLTreeS<T>
+        fn subseq_copy(&self, start: N, length: N) -> Self
         where
             T: Clone + Eq;
     }

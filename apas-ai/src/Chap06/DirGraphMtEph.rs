@@ -26,10 +26,10 @@ pub mod DirGraphMtEph {
     pub trait DirGraphMtEphTrait<V: StT + MtT + Hash + 'static> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                        -> DirGraphMtEph<V>;
+        fn empty()                                        -> Self;
         /// APAS: Work Θ(|V| + |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |A|), Span Θ(1)
-        fn FromSets(V: SetStEph<V>, A: SetStEph<Edge<V>>) -> DirGraphMtEph<V>;
+        fn FromSets(V: SetStEph<V>, A: SetStEph<Edge<V>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn vertices(&self)                                -> &SetStEph<V>;

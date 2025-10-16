@@ -221,7 +221,7 @@ pub mod LinkedListStEph {
         fn deflate<F: PredSt<T>>(f: &F, x: &T)                       -> Self;
         /// APAS: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|)
         /// claude-4-sonet: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|), Parallelism Θ(1) - sequential
-        fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>)       -> LinkedListStEphS<T>;
+        fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>)       -> Self;
         /// APAS: Work Θ(index), Span Θ(index)
         /// claude-4-sonet: Work Θ(index), Span Θ(index), Parallelism Θ(1) - in-place, sequential traversal
         fn update(a: &mut Self, item_at: Pair<N, T>)                 -> &mut Self;

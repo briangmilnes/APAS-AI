@@ -19,10 +19,10 @@ pub mod UnDirGraphStEph {
     pub trait UnDirGraphStEphTrait<V: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                        -> UnDirGraphStEph<V>;
+        fn empty()                                        -> Self;
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(1)
-        fn FromSets(V: SetStEph<V>, E: SetStEph<Edge<V>>) -> UnDirGraphStEph<V>;
+        fn FromSets(V: SetStEph<V>, E: SetStEph<Edge<V>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn vertices(&self)                                -> &SetStEph<V>;

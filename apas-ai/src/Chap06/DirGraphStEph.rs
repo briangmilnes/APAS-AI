@@ -19,10 +19,10 @@ pub mod DirGraphStEph {
     pub trait DirGraphStEphTrait<V: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                        -> DirGraphStEph<V>;
+        fn empty()                                        -> Self;
         /// APAS: Work Θ(|V| + |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |A|), Span Θ(1)
-        fn FromSets(V: SetStEph<V>, A: SetStEph<Edge<V>>) -> DirGraphStEph<V>;
+        fn FromSets(V: SetStEph<V>, A: SetStEph<Edge<V>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn vertices(&self)                                -> &SetStEph<V>;

@@ -126,10 +126,10 @@ pub mod ArraySeqStEph {
         fn nth(&self, index: N)                                    -> &T;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn empty()                                                 -> ArraySeqStEphS<T>;
+        fn empty()                                                 -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn singleton(item: T)                                      -> ArraySeqStEphS<T>;
+        fn singleton(item: T)                                      -> Self;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
         fn tabulate<F: Fn(N)                                       -> T>(f: &F, length: N) -> ArraySeqStEphS<T>;
@@ -138,22 +138,22 @@ pub mod ArraySeqStEph {
         fn map<U: StT, F: Fn(&T)                                   -> U>(a: &ArraySeqStEphS<T>, f: &F) -> ArraySeqStEphS<U>;
         /// APAS: Work Θ(len), Span Θ(1)
         /// claude-4-sonet: Work Θ(len), Span Θ(len), Parallelism Θ(1) - sequential copy
-        fn subseq(a: &ArraySeqStEphS<T>, start: N, length: N)      -> ArraySeqStEphS<T>;
+        fn subseq(a: &ArraySeqStEphS<T>, start: N, length: N)      -> Self;
         /// APAS: Work Θ(|a|+|b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|+|b|), Span Θ(|a|+|b|), Parallelism Θ(1) - sequential
-        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>)    -> ArraySeqStEphS<T>;
+        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>)    -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn filter<F: PredSt<T>>(a: &ArraySeqStEphS<T>, pred: &F)   -> ArraySeqStEphS<T>;
+        fn filter<F: PredSt<T>>(a: &ArraySeqStEphS<T>, pred: &F)   -> Self;
         /// APAS: Work Θ(Σ|a[i]|), Span Θ(1)
         /// claude-4-sonet: Work Θ(Σ|a[i]|), Span Θ(Σ|a[i]|), Parallelism Θ(1) - sequential
-        fn flatten(a: &ArraySeqStEphS<ArraySeqStEphS<T>>)          -> ArraySeqStEphS<T>;
+        fn flatten(a: &ArraySeqStEphS<ArraySeqStEphS<T>>)          -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - in-place mutation
-        fn update(&mut self, update: Pair<N, T>)                   -> &mut ArraySeqStEphS<T>;
+        fn update(&mut self, update: Pair<N, T>)                   -> &mut Self;
         /// APAS: Work Θ(|updates|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|updates|), Span Θ(|updates|), Parallelism Θ(1) - sequential in-place
-        fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut ArraySeqStEphS<T>;
+        fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn isEmpty(&self)                                          -> B;
