@@ -6,6 +6,9 @@ pub mod SetStEphClean {
     use std::collections::HashSet;
     use std::fmt::{Debug, Display};
     use std::hash::{Hash, Hasher};
+    use std::collections::hash_set::Iter;
+    use std::fmt::Formatter;
+    use std::fmt::Result;
 
     use crate::Types::Types::*;
 
@@ -20,7 +23,7 @@ pub mod SetStEphClean {
         fn singleton(x: T)                                        -> Self;
         fn size(&self)                                            -> N;
         fn mem(&self, x: &T)                                      -> B;
-        fn iter(&self)                                            -> std::collections::hash_set::Iter<'_, T>;
+        fn iter(&self)                                            -> Iter<'_, T>;
         fn insert(&mut self, x: T)                                -> &mut Self;
 
         // Multi-line methods (signature only, implementation in impl block)
@@ -36,14 +39,14 @@ pub mod SetStEphClean {
 
     impl<T: Eq + Hash> Eq for Set<T> {}
 
-    impl<T: Eq + Hash + std::fmt::Debug> std::fmt::Debug for Set<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: Eq + Hash + Debug> Debug for Set<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             f.debug_set().entries(self.data.iter()).finish()
         }
     }
 
-    impl<T: Eq + Hash + std::fmt::Display> std::fmt::Display for Set<T> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    impl<T: Eq + Hash + Display> Display for Set<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "{{")?;
             let mut first = true;
             for x in self.data.iter() {
@@ -79,7 +82,7 @@ pub mod SetStEphClean {
         fn singleton(x: T)                        -> Self { let mut s = HashSet::with_capacity(1); s.insert(x); Set { data: s } }
         fn size(&self)                            -> N    { self.data.len() }
         fn mem(&self, x: &T)                      -> B    { self.data.contains(x) }
-        fn iter(&self) -> std::collections::hash_set::Iter<'_, T> { self.data.iter() }
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
         fn insert(&mut self, x: T)                -> &mut Self { self.data.insert(x); self }
 
         // Multi-line default implementations

@@ -70,13 +70,14 @@ def extract_qualified_paths(content: str) -> dict[str, list[tuple[int, str]]]:
     return paths
 
 
-def find_use_block_end(lines: list[str]) -> int:
+def find_std_import_end(lines: list[str]) -> int:
     """
-    Find the line index (0-based) where new use statements should be inserted.
-    Returns the index after the last existing use statement.
+    Find the line index (0-based) where new std:: imports should be inserted.
+    Returns the index after the last std/core import (before any blank line or crate imports).
     """
-    last_use_idx = -1
+    last_std_idx = -1
     inside_module = False
+    found_pub_mod = False
     
     for i, line in enumerate(lines):
         stripped = line.strip()
@@ -84,15 +85,36 @@ def find_use_block_end(lines: list[str]) -> int:
         # Find pub mod declaration
         if stripped.startswith('pub mod '):
             inside_module = True
+            found_pub_mod = True
             continue
         
-        # Track last use statement after module start
-        if inside_module and stripped.startswith('use '):
-            last_use_idx = i
+        # Track last std/core import
+        if stripped.startswith('use '):
+            leading_spaces = len(line) - len(line.lstrip())
+            
+            # Check if it's a std or core import
+            is_std_import = stripped.startswith('use std::') or stripped.startswith('use core::')
+            
+            if found_pub_mod:
+                # Inside a module - only count module-level uses (< 12 spaces)
+                if inside_module and leading_spaces < 12 and is_std_import:
+                    last_std_idx = i
+            else:
+                # Top-level file (tests/benches) - count top-level std imports
+                if leading_spaces == 0 and is_std_import:
+                    last_std_idx = i
+        
+        # Stop if we hit a blank line after finding std imports
+        if last_std_idx >= 0 and stripped == '':
+            break
+        
+        # Stop if we hit a crate:: or apas_ai:: import
+        if last_std_idx >= 0 and (stripped.startswith('use crate::') or stripped.startswith('use apas_ai::')):
+            break
     
-    # Return the index after the last use statement
-    # If no use statements found, return -1
-    return last_use_idx + 1 if last_use_idx >= 0 else -1
+    # Return the index after the last std import
+    # If no std imports found, return -1
+    return last_std_idx + 1 if last_std_idx >= 0 else -1
 
 
 def fix_file(file_path: Path, context: ReviewContext, dry_run: bool = False) -> tuple[bool, str]:
@@ -111,6 +133,16 @@ def fix_file(file_path: Path, context: ReviewContext, dry_run: bool = False) -> 
         if not paths:
             return False, "No qualified paths found"
         
+        # Check what's already imported
+        existing_imports = set()
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith('use '):
+                # Extract imported items
+                # Handle: use std::fmt::{Debug, Display};
+                # and: use std::collections::HashSet;
+                existing_imports.add(stripped)
+        
         # Determine what needs to be imported
         imports_to_add = set()
         replacements = {}  # {old_path: short_name}
@@ -120,24 +152,71 @@ def fix_file(file_path: Path, context: ReviewContext, dry_run: bool = False) -> 
             parts = full_path.split('::')
             short_name = parts[-1]
             
-            # Store the import and replacement
-            imports_to_add.add(full_path)
+            # Check if already imported (exact match or in a group import)
+            already_imported = False
+            for existing in existing_imports:
+                if full_path in existing or short_name in existing:
+                    already_imported = True
+                    break
+            
+            if not already_imported:
+                # Store the import
+                imports_to_add.add(full_path)
+            
+            # Always store replacement (even if already imported, we still want to shorten)
             replacements[full_path] = short_name
         
-        # Find where to insert use statements
-        use_insert_idx = find_use_block_end(lines)
+        # Find where to insert use statements (after last std import)
+        use_insert_idx = find_std_import_end(lines)
         
         if use_insert_idx < 0:
-            return False, "Could not find use block insertion point"
+            # No existing std imports - insert before first use statement or after pub mod
+            for i, line in enumerate(lines):
+                stripped = line.strip()
+                if stripped.startswith('pub mod '):
+                    # Insert after pub mod with blank line
+                    use_insert_idx = i + 1
+                    # Skip blank lines after pub mod
+                    while use_insert_idx < len(lines) and lines[use_insert_idx].strip() == '':
+                        use_insert_idx += 1
+                    break
+                elif stripped.startswith('use '):
+                    # Insert before first use statement
+                    use_insert_idx = i
+                    break
+            
+            if use_insert_idx < 0:
+                return False, "Could not find insertion point"
+        
+        # Detect indentation of existing use statements
+        indent = "    "  # Default 4 spaces for modules
+        
+        # Check if this is a top-level file (test/bench) or a module file
+        found_pub_mod = False
+        for line in lines[:20]:  # Check first 20 lines
+            if line.strip().startswith('pub mod '):
+                found_pub_mod = True
+                break
+        
+        if not found_pub_mod:
+            # Top-level file - no indentation
+            indent = ""
+        elif use_insert_idx > 0:
+            # Module file - check existing use statement indentation
+            prev_line = lines[use_insert_idx - 1]
+            if prev_line.strip().startswith('use '):
+                # Match the indentation of the previous use statement
+                indent = prev_line[:len(prev_line) - len(prev_line.lstrip())]
         
         if not dry_run:
             print(f"  DEBUG: Inserting at line index {use_insert_idx} (line {use_insert_idx + 1} in editor)")
             print(f"  DEBUG: Line before insert: {lines[use_insert_idx - 1] if use_insert_idx > 0 else 'N/A'}")
+            print(f"  DEBUG: Using indentation: '{indent}' ({len(indent)} spaces)")
         
         # Build new use statements
         new_use_lines = []
         for import_path in sorted(imports_to_add):
-            new_use_lines.append(f"    use {import_path};")
+            new_use_lines.append(f"{indent}use {import_path};")
         
         if not dry_run:
             print(f"  DEBUG: Adding {len(new_use_lines)} use statements:")
@@ -148,15 +227,34 @@ def fix_file(file_path: Path, context: ReviewContext, dry_run: bool = False) -> 
         if new_use_lines:
             for i, use_line in enumerate(new_use_lines):
                 lines.insert(use_insert_idx + i, use_line)
+            
+            # If we inserted before non-std imports, add a blank line separator
+            next_line_idx = use_insert_idx + len(new_use_lines)
+            if next_line_idx < len(lines):
+                next_line = lines[next_line_idx].strip()
+                if next_line.startswith('use ') and not (next_line.startswith('use std::') or next_line.startswith('use core::')):
+                    # Add blank line after std imports
+                    lines.insert(next_line_idx, '')
         
         # Rebuild content and apply replacements
         content = '\n'.join(lines)
         
         # Replace qualified paths with short names
-        for full_path, short_name in replacements.items():
-            # Use word boundaries to avoid partial matches
-            pattern = re.compile(r'\b' + re.escape(full_path) + r'\b')
-            content = pattern.sub(short_name, content)
+        # BUT: skip use statements (don't replace in lines that start with "use")
+        lines = content.split('\n')
+        for i, line in enumerate(lines):
+            stripped = line.strip()
+            # Skip replacement in use statements
+            if stripped.startswith('use '):
+                continue
+            
+            # Apply replacements to this line
+            for full_path, short_name in replacements.items():
+                # Use word boundaries to avoid partial matches
+                pattern = re.compile(r'\b' + re.escape(full_path) + r'\b')
+                lines[i] = pattern.sub(short_name, lines[i])
+        
+        content = '\n'.join(lines)
         
         if content == original_content:
             return False, "No changes needed"

@@ -2,6 +2,7 @@
 use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
+use std::hint::spin_loop;
 
 use criterion::*;
 
@@ -37,7 +38,7 @@ fn bench_exercise12_5(c: &mut Criterion) {
                 let handle = thread::spawn(move || {
                     for _ in 0..len {
                         while stack_clone.pop().is_none() {
-                            std::hint::spin_loop();
+                            spin_loop();
                         }
                     }
                 });
