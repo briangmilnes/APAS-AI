@@ -50,15 +50,14 @@ pub mod MappingStEph {
         fn iter(&self)                           -> Iter<'_, Pair<X, Y>>;
     }
 
-    impl<A: StT + Hash, B: StT + Hash> MappingStEph<A, B> {
-        fn unique_pairs_from_iter<I: IntoIterator<Item = Pair<A, B>>>(iter: I) -> SetStEph<Pair<A, B>> {
-            let mut m: HashMap<A, B> = HashMap::new();
-            for Pair(a, b) in iter {
-                m.insert(a, b);
-            }
-            let pairs: Vec<Pair<A, B>> = m.into_iter().map(|(a, b)| Pair(a, b)).collect();
-            SetStEph::FromVec(pairs)
+    // Helper function to ensure unique pairs (mapping property: each domain element maps to at most one range element)
+    fn unique_pairs_from_iter<A: StT + Hash, B: StT + Hash, I: IntoIterator<Item = Pair<A, B>>>(iter: I) -> SetStEph<Pair<A, B>> {
+        let mut m: HashMap<A, B> = HashMap::new();
+        for Pair(a, b) in iter {
+            m.insert(a, b);
         }
+        let pairs: Vec<Pair<A, B>> = m.into_iter().map(|(a, b)| Pair(a, b)).collect();
+        SetStEph::FromVec(pairs)
     }
 
     impl<X: StT + Hash, Y: StT + Hash> MappingStEphTrait<X, Y> for MappingStEph<X, Y> {
@@ -69,14 +68,14 @@ pub mod MappingStEph {
         }
 
         fn FromVec(v: Vec<Pair<X, Y>>) -> MappingStEph<X, Y> {
-            let pairs = Self::unique_pairs_from_iter(v);
+            let pairs = unique_pairs_from_iter(v);
             MappingStEph {
                 rel: <RelationStEph<X, Y> as RelationStEphTrait<X, Y>>::FromSet(pairs),
             }
         }
 
         fn FromRelation(r: &RelationStEph<X, Y>) -> MappingStEph<X, Y> {
-            let pairs = Self::unique_pairs_from_iter(r.iter().cloned());
+            let pairs = unique_pairs_from_iter(r.iter().cloned());
             MappingStEph {
                 rel: <RelationStEph<X, Y> as RelationStEphTrait<X, Y>>::FromSet(pairs),
             }
