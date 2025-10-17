@@ -39,6 +39,7 @@ Function Type Signature        | input and output type of a function            
 Future                         | value representing an asynchronous computation       | promise/future type             
 Generic Parameter              | type-level variable for polymorphism                 | parametric type variable        
 Impl Block                     | impl of trait or inherent methods                    | instance declaration            
+Inherent Implementation        | impl block adding methods without implementing trait | type extension                  
 Inner<T>                       | crate-internal struct housing shared storage         | backing container handle        
 Inherent Method                | method defined in an impl without a trait            | method definition               
 Iterator                       | object producing a sequence of items lazily          | iterator combinator             
@@ -102,6 +103,7 @@ std::thread::yield_now         | hint scheduler to run another thread           
 Struct                         | collection of named fields stored together           | product record type             
 Sync Trait                     | marker allowing shared references across threads     | thread-sharing capability       
 Trait                          | shared behavior specification for multiple types     | typeclass interface             
+Trait Implementation           | impl block implementing a trait for a type           | interface implementation        
 Trait Item                     | function/constant/type member in a trait             | interface member                
 Trait Object                   | dynamically-dispatched trait reference               | existential interface value     
 Triggerfish Syntax             | <Type as Trait>::method UFCS notation                | fully-qualified call syntax     
