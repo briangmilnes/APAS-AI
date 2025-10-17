@@ -6,27 +6,19 @@ pub mod ArraySeqMtPer {
     use std::sync::Mutex;
 
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{
-        ArraySeqMtPerS as ArraySeqMtPerSChap18, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18,
+        ArraySeqMtPerS as S,
+        ArraySeqMtPerTrait as Chap18Trait,
     };
     use crate::Types::Types::*;
 
-    pub type ArraySeqMtPerS<T> = ArraySeqMtPerSChap18<T>;
+    pub type ArraySeqMtPerS<T> = S<T>;
 
-    pub trait ArraySeqMtPerTrait<T: StTInMtT> {
-        // Chapter 18 wrappers
-        /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn new(length: N, init_value: T)                                            -> Self;
+    pub trait ArraySeqMtPerTrait<T: StTInMtT>: Chap18Trait<T> {
+        // Chapter 19 algorithmic implementations (override Chap18)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty()                                                                  -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(item: T)                                                       -> Self;
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self)                                                            -> N;
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn nth(&self, index: N)                                                     -> &T;
-        /// claude-4-sonet: Work Θ(length), Span Θ(log length), Parallelism Θ(length/log length)
-        fn subseq_copy(&self, start: N, length: N)                                  -> Self;
-
         /// claude-4-sonet: Work Θ(n + Σᵢ W(f(i))), Span Θ(log n + maxᵢ S(f(i))), Parallelism Θ(n)
         fn tabulate<F: Fn(N)                                                        -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(|a| + Σₓ W(f(x))), Span Θ(log |a| + maxₓ S(f(x))), Parallelism Θ(|a|)
@@ -42,8 +34,6 @@ pub mod ArraySeqMtPer {
         fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtPerS<T>, pred: F)             -> Self;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(log |a|), Parallelism Θ(|a|/log |a|)
         fn update_single(a: &ArraySeqMtPerS<T>, index: N, item: T)                  -> Self;
-        /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(log |a| + log |updates|)
-        fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>)     -> Self;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
         fn iterate<A: StTInMtT, F: Fn(&A, &T)                                       -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
@@ -58,17 +48,8 @@ pub mod ArraySeqMtPer {
             T: 'static;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(log |a|), Parallelism Θ(|a|/log |a|)
         fn scan<F: Fn(&T, &T)                                                       -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T);
-        /// claude-4-sonet: Work Θ(Σ |sᵢ|), Span Θ(log(Σ |sᵢ|))
-        fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>)                          -> Self;
-        /// claude-4-sonet: Work Θ(|a|²) worst case, Span Θ(|a|²) worst case
-        fn collect<K: StTInMtT, V: StTInMtT>(
-            a: &ArraySeqMtPerS<Pair<K, V>>,
-            cmp: fn(&K, &K) -> O,
-        ) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>>;
 
         // Chapter 19 specific functions
-        /// claude-4-sonet: Work Θ(|values| + |changes|), Span Θ(log |values| + log |changes|)
-        fn inject(values: &ArraySeqMtPerS<T>, changes: &ArraySeqMtPerS<Pair<N, T>>) -> Self;
         /// claude-4-sonet: Work Θ(|changes|), Span Θ(log |changes|)
         fn atomicWrite(
             values_with_change_number: &mut ArraySeqMtPerS<Pair<T, N>>,
@@ -84,11 +65,6 @@ pub mod ArraySeqMtPer {
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqMtPerS<T> {
-            // Keep as primitive - delegates to tabulate
-            <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::new(length, init_value)
-        }
-
         fn empty() -> ArraySeqMtPerS<T> {
             // Algorithm 19.1: empty = tabulate(lambda i.i, 0)
             <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::tabulate(
@@ -100,14 +76,6 @@ pub mod ArraySeqMtPer {
         fn singleton(item: T) -> ArraySeqMtPerS<T> {
             // Algorithm 19.2: singleton x = tabulate(lambda i.x, 1)
             <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::tabulate(&|_| item.clone(), 1)
-        }
-
-        fn length(&self) -> N { ArraySeqMtPerTraitChap18::length(self) }
-
-        fn nth(&self, index: N) -> &T { ArraySeqMtPerTraitChap18::nth(self, index) }
-
-        fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T> {
-            <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::subseq_copy(self, start, length)
         }
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T> {
@@ -150,7 +118,7 @@ pub mod ArraySeqMtPer {
                 &|i| if i == 0 { a.clone() } else { b.clone() },
                 2,
             );
-            <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::flatten(&sequences)
+            <ArraySeqMtPerS<T> as Chap18Trait<T>>::flatten(&sequences)
         }
 
         fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T> {
@@ -189,11 +157,6 @@ pub mod ArraySeqMtPer {
                 &|j| if j == index { item.clone() } else { a.nth(j).clone() },
                 a.length(),
             )
-        }
-
-        fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T> {
-            // Keep as primitive - ninject is one of the 7 APAS primitives
-            <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::ninject(a, updates)
         }
 
         fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A {
@@ -256,22 +219,6 @@ pub mod ArraySeqMtPer {
             // Implement directly since we can't capture with &F
             let result_seq = ArraySeqMtPerS::from_vec(results);
             (result_seq, acc)
-        }
-
-        fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T> {
-            // Keep as primitive - flatten is one of the 7 APAS primitives
-            <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::flatten(ss)
-        }
-
-        fn collect<K: StTInMtT, V: StTInMtT>(
-            a: &ArraySeqMtPerS<Pair<K, V>>,
-            cmp: fn(&K, &K) -> O,
-        ) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>> {
-            <ArraySeqMtPerS<Pair<K, V>> as ArraySeqMtPerTraitChap18<Pair<K, V>>>::collect(a, cmp)
-        }
-
-        fn inject(values: &ArraySeqMtPerS<T>, changes: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T> {
-            <ArraySeqMtPerS<T> as ArraySeqMtPerTraitChap18<T>>::inject(values, changes)
         }
 
         fn atomicWrite(

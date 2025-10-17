@@ -5,25 +5,19 @@ pub mod ArraySeqStPer {
 
     use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{
-        ArraySeqStPerS as ArraySeqStPerSChap18, ArraySeqStPerTrait as ArraySeqStPerTraitChap18,
+        ArraySeqStPerS as S,
+        ArraySeqStPerTrait as Chap18Trait,
     };
     use crate::Types::Types::*;
 
-    pub type ArraySeqStPerS<T> = ArraySeqStPerSChap18<T>;
+    pub type ArraySeqStPerS<T> = S<T>;
 
-    pub trait ArraySeqStPerTrait<T: StT> {
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn new(length: N, init_value: T)                                        -> Self;
+    pub trait ArraySeqStPerTrait<T: StT>: Chap18Trait<T> {
+        // Chapter 19 algorithmic implementations (override Chap18)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty()                                                              -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(item: T)                                                   -> Self;
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self)                                                        -> N;
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn nth(&self, index: N)                                                 -> &T;
-        /// claude-4-sonet: Work Θ(length), Span Θ(length), Parallelism Θ(1)
-        fn subseq_copy(&self, start: N, length: N)                              -> Self;
 
         /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
         /// claude-4-sonet: Work Θ(n + Σᵢ W(f(i))), Span Θ(n + maxᵢ S(f(i))), Parallelism Θ(1)

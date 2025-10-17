@@ -5,5 +5,10 @@
  Are we checking that tests for Per only include Per?
  Are we checking that tests for St only include St?
  Are we checking that tests for Mt only include Mt? There will be some exceptions here.
+
+ Adjust scripts to get rid of the Chap18/Chap19 duplicate uses.
+ They're needed.
+
+ Ask about crate:: UFCS usage in anything but macros.
  
  
