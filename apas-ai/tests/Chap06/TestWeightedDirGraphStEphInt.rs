@@ -10,7 +10,7 @@ use apas_ai::{SetLit, WeightedDirGraphStEphIntLit};
 #[test]
 fn test_from_weighted_edges() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, 10), (2, 3, 20)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10), Triple(2, 3, 20)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.vertices().size(), 3);
@@ -20,7 +20,7 @@ fn test_from_weighted_edges() {
 #[test]
 fn test_add_weighted_edge() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let edges: SetStEph<(N, N, i32)> = SetLit![];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![];
     let mut g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     g.add_weighted_edge(1, 2, 15);
@@ -33,7 +33,7 @@ fn test_add_weighted_edge() {
 #[test]
 fn test_get_edge_weight() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, 10), (2, 3, 20)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10), Triple(2, 3, 20)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.get_edge_weight(&1, &2), Some(10));
@@ -44,51 +44,51 @@ fn test_get_edge_weight() {
 #[test]
 fn test_weighted_edges() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, 10), (2, 3, 20)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10), Triple(2, 3, 20)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges.clone());
 
     let result = g.weighted_edges();
     assert_eq!(result.size(), 2);
-    assert!(result.mem(&(1, 2, 10)));
-    assert!(result.mem(&(2, 3, 20)));
+    assert!(result.mem(&Triple(1, 2, 10)));
+    assert!(result.mem(&Triple(2, 3, 20)));
 }
 
 #[test]
 fn test_out_neighbors_weighted() {
     let v: SetStEph<N> = SetLit![1, 2, 3, 4];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, 10), (1, 3, 15), (2, 4, 20)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10), Triple(1, 3, 15), Triple(2, 4, 20)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     let out1 = g.out_neighbors_weighted(&1);
     assert_eq!(out1.size(), 2);
-    assert!(out1.mem(&(2, 10)));
-    assert!(out1.mem(&(3, 15)));
+    assert!(out1.mem(&Pair(2, 10)));
+    assert!(out1.mem(&Pair(3, 15)));
 
     let out2 = g.out_neighbors_weighted(&2);
     assert_eq!(out2.size(), 1);
-    assert!(out2.mem(&(4, 20)));
+    assert!(out2.mem(&Pair(4, 20)));
 }
 
 #[test]
 fn test_in_neighbors_weighted() {
     let v: SetStEph<N> = SetLit![1, 2, 3, 4];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, 10), (3, 2, 15), (2, 4, 20)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10), Triple(3, 2, 15), Triple(2, 4, 20)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     let in2 = g.in_neighbors_weighted(&2);
     assert_eq!(in2.size(), 2);
-    assert!(in2.mem(&(1, 10)));
-    assert!(in2.mem(&(3, 15)));
+    assert!(in2.mem(&Pair(1, 10)));
+    assert!(in2.mem(&Pair(3, 15)));
 
     let in4 = g.in_neighbors_weighted(&4);
     assert_eq!(in4.size(), 1);
-    assert!(in4.mem(&(2, 20)));
+    assert!(in4.mem(&Pair(2, 20)));
 }
 
 #[test]
 fn test_total_weight() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, 10), (2, 3, 20), (1, 3, 5)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10), Triple(2, 3, 20), Triple(1, 3, 5)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.total_weight(), 35);
@@ -97,7 +97,7 @@ fn test_total_weight() {
 #[test]
 fn test_total_weight_empty() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let edges: SetStEph<(N, N, i32)> = SetLit![];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.total_weight(), 0);
@@ -106,31 +106,31 @@ fn test_total_weight_empty() {
 #[test]
 fn test_edges_above_weight() {
     let v: SetStEph<N> = SetLit![1, 2, 3, 4];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, 10), (2, 3, 25), (3, 4, 5), (1, 4, 30)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10), Triple(2, 3, 25), Triple(3, 4, 5), Triple(1, 4, 30)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     let above15 = g.edges_above_weight(15);
     assert_eq!(above15.size(), 2);
-    assert!(above15.mem(&(2, 3, 25)));
-    assert!(above15.mem(&(1, 4, 30)));
+    assert!(above15.mem(&Triple(2, 3, 25)));
+    assert!(above15.mem(&Triple(1, 4, 30)));
 }
 
 #[test]
 fn test_edges_below_weight() {
     let v: SetStEph<N> = SetLit![1, 2, 3, 4];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, 10), (2, 3, 25), (3, 4, 5), (1, 4, 30)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10), Triple(2, 3, 25), Triple(3, 4, 5), Triple(1, 4, 30)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     let below15 = g.edges_below_weight(15);
     assert_eq!(below15.size(), 2);
-    assert!(below15.mem(&(1, 2, 10)));
-    assert!(below15.mem(&(3, 4, 5)));
+    assert!(below15.mem(&Triple(1, 2, 10)));
+    assert!(below15.mem(&Triple(3, 4, 5)));
 }
 
 #[test]
 fn test_negative_weights() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, -10), (2, 3, 20), (1, 3, -5)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, -10), Triple(2, 3, 20), Triple(1, 3, -5)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.get_edge_weight(&1, &2), Some(-10));
@@ -140,7 +140,7 @@ fn test_negative_weights() {
 #[test]
 fn test_zero_weight() {
     let v: SetStEph<N> = SetLit![1, 2];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, 0)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 0)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.get_edge_weight(&1, &2), Some(0));
@@ -150,7 +150,7 @@ fn test_zero_weight() {
 #[test]
 fn test_isolated_vertex() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, 10)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     let out3 = g.out_neighbors_weighted(&3);
@@ -163,7 +163,7 @@ fn test_isolated_vertex() {
 #[test]
 fn test_self_loop() {
     let v: SetStEph<N> = SetLit![1, 2];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 1, 5), (1, 2, 10)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 1, 5), Triple(1, 2, 10)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.get_edge_weight(&1, &1), Some(5));
@@ -174,7 +174,7 @@ fn test_self_loop() {
 #[test]
 fn test_complete_graph_weighted() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, 10), (1, 3, 11), (2, 1, 20), (2, 3, 21), (3, 1, 30), (3, 2, 31)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10), Triple(1, 3, 11), Triple(2, 1, 20), Triple(2, 3, 21), Triple(3, 1, 30), Triple(3, 2, 31)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.labeled_arcs().size(), 6);
@@ -184,7 +184,7 @@ fn test_complete_graph_weighted() {
 #[test]
 fn test_large_weights() {
     let v: SetStEph<N> = SetLit![1, 2];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, i32::MAX), (2, 1, i32::MIN)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, i32::MAX), Triple(2, 1, i32::MIN)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.get_edge_weight(&1, &2), Some(i32::MAX));
@@ -194,7 +194,7 @@ fn test_large_weights() {
 #[test]
 fn test_empty_graph() {
     let v: SetStEph<N> = SetLit![];
-    let edges: SetStEph<(N, N, i32)> = SetLit![];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.vertices().size(), 0);
@@ -205,7 +205,7 @@ fn test_empty_graph() {
 #[test]
 fn test_no_edges_graph() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let edges: SetStEph<(N, N, i32)> = SetLit![];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.vertices().size(), 3);
@@ -216,7 +216,7 @@ fn test_no_edges_graph() {
 #[test]
 fn test_weighted_path() {
     let v: SetStEph<N> = SetLit![1, 2, 3, 4];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(1, 2, 5), (2, 3, 10), (3, 4, 15)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 5), Triple(2, 3, 10), Triple(3, 4, 15)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.total_weight(), 30);
@@ -227,7 +227,7 @@ fn test_weighted_path() {
 #[test]
 fn test_weighted_star() {
     let v: SetStEph<N> = SetLit![0, 1, 2, 3];
-    let edges: SetStEph<(N, N, i32)> = SetLit![(0, 1, 10), (0, 2, 20), (0, 3, 30)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(0, 1, 10), Triple(0, 2, 20), Triple(0, 3, 30)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     let out0 = g.out_neighbors_weighted(&0);

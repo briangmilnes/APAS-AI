@@ -3,19 +3,20 @@ use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
 use apas_ai::Chap59::JohnsonStEphInt::JohnsonStEphInt::johnson_apsp;
 use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_example_59_1() {
     // Example 59.1 from textbook
     let vertices = SetLit![0, 1, 2, 3];
     let edges = SetLit![
-        (0, 1, 3),  // s -> a: 3
-        (0, 2, 8),  // s -> b: 8
-        (1, 2, -2), // a -> b: -2
-        (1, 3, 1),  // a -> c: 1
-        (2, 0, 4),  // b -> s: 4
-        (2, 3, 7),  // b -> c: 7
-        (3, 1, 2)   // c -> a: 2
+        Triple(0, 1, 3),  // s -> a: 3
+        Triple(0, 2, 8),  // s -> b: 8
+        Triple(1, 2, -2), // a -> b: -2
+        Triple(1, 3, 1),  // a -> c: 1
+        Triple(2, 0, 4),  // b -> s: 4
+        Triple(2, 3, 7),  // b -> c: 7
+        Triple(3, 1, 2)   // c -> a: 2
     ];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
@@ -42,7 +43,7 @@ fn test_example_59_1() {
 fn test_simple_graph() {
     // Simple 3-vertex graph
     let vertices = SetLit![0, 1, 2];
-    let edges = SetLit![(0, 1, 5), (1, 2, 3), (0, 2, 10)];
+    let edges = SetLit![Triple(0, 1, 5), Triple(1, 2, 3), Triple(0, 2, 10)];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);
@@ -64,7 +65,7 @@ fn test_simple_graph() {
 fn test_negative_weights() {
     // Graph with negative weights but no negative cycles
     let vertices = SetLit![0, 1, 2];
-    let edges = SetLit![(0, 1, 1), (1, 2, -5), (0, 2, 3)];
+    let edges = SetLit![Triple(0, 1, 1), Triple(1, 2, -5), Triple(0, 2, 3)];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);
@@ -87,7 +88,7 @@ fn test_single_vertex() {
 fn test_disconnected_graph() {
     // Two disconnected components
     let vertices = SetLit![0, 1, 2, 3];
-    let edges = SetLit![(0, 1, 5), (2, 3, 3)];
+    let edges = SetLit![Triple(0, 1, 5), Triple(2, 3, 3)];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);

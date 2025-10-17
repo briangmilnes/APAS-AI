@@ -6,13 +6,13 @@ use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat;
 use apas_ai::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
 use apas_ai::SetLit;
-use apas_ai::Types::Types::OrderedF64;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_basic_path() {
     // Simple path s -> a -> b
     let vertices = SetLit![0, 1, 2];
-    let edges = SetLit![(0, 1, OrderedF64::from(1.5)), (1, 2, OrderedF64::from(2.5))];
+    let edges = SetLit![Triple(0, 1, OrderedF64::from(1.5)), Triple(1, 2, OrderedF64::from(2.5))];
 
     let graph = WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges);
     let result = bellman_ford(&graph, 0).unwrap();
@@ -27,9 +27,9 @@ fn test_negative_edges() {
     // Test with negative edge weights
     let vertices = SetLit![0, 1, 2];
     let edges = SetLit![
-        (0, 1, OrderedF64::from(5.0)),
-        (0, 2, OrderedF64::from(2.0)),
-        (1, 2, OrderedF64::from(-4.0))
+        Triple(0, 1, OrderedF64::from(5.0)),
+        Triple(0, 2, OrderedF64::from(2.0)),
+        Triple(1, 2, OrderedF64::from(-4.0))
     ];
 
     let graph = WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges);
@@ -45,9 +45,9 @@ fn test_negative_cycle() {
     // Cycle with negative total weight
     let vertices = SetLit![0, 1, 2];
     let edges = SetLit![
-        (0, 1, OrderedF64::from(1.0)),
-        (1, 2, OrderedF64::from(2.0)),
-        (2, 1, OrderedF64::from(-4.0))
+        Triple(0, 1, OrderedF64::from(1.0)),
+        Triple(1, 2, OrderedF64::from(2.0)),
+        Triple(2, 1, OrderedF64::from(-4.0))
     ];
 
     let graph = WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges);
@@ -62,9 +62,9 @@ fn test_fractional_weights() {
     // Test with fractional weights
     let vertices = SetLit![0, 1, 2, 3];
     let edges = SetLit![
-        (0, 1, OrderedF64::from(0.5)),
-        (1, 2, OrderedF64::from(1.25)),
-        (2, 3, OrderedF64::from(-0.75))
+        Triple(0, 1, OrderedF64::from(0.5)),
+        Triple(1, 2, OrderedF64::from(1.25)),
+        Triple(2, 3, OrderedF64::from(-0.75))
     ];
 
     let graph = WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges);
@@ -80,7 +80,7 @@ fn test_fractional_weights() {
 fn test_unreachable() {
     // Test with unreachable vertex
     let vertices = SetLit![0, 1, 2];
-    let edges = SetLit![(0, 1, OrderedF64::from(1.0))];
+    let edges = SetLit![Triple(0, 1, OrderedF64::from(1.0))];
 
     let graph = WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges);
     let result = bellman_ford(&graph, 0).unwrap();

@@ -165,14 +165,14 @@ pub mod JohnsonMtEphInt {
         // Copy all original edges
         for u in 0..n {
             for v_w in graph.out_neighbors_weighted(&u).iter() {
-                let (v, w) = v_w;
-                edges.insert((u, *v, *w));
+                let Pair(v, w) = v_w;
+                edges.insert(Triple(u, *v, *w));
             }
         }
 
         // Add edges from dummy source to all original vertices
         for v in 0..n {
-            edges.insert((n, v, 0));
+            edges.insert(Triple(n, v, 0));
         }
 
         (WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges), n)
@@ -193,10 +193,10 @@ pub mod JohnsonMtEphInt {
         for u in 0..n {
             let p_u = *potentials.nth(u);
             for v_w in graph.out_neighbors_weighted(&u).iter() {
-                let (v, w) = v_w;
+                let Pair(v, w) = v_w;
                 let p_v = *potentials.nth(*v);
                 let w_prime = (*w as i64) + p_u - p_v;
-                reweighted_edges.insert((u, *v, w_prime as i32));
+                reweighted_edges.insert(Triple(u, *v, w_prime as i32));
             }
         }
 

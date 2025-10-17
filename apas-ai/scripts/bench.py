@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Run project benchmarks using cargo bench."""
+# Git commit: ef6544404f3d736792e8825cd793f6c23c95accb
+# Date: 2025-10-14 14:41:17 -0700
+
 
 import subprocess
 import sys

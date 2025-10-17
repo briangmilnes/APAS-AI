@@ -5,6 +5,9 @@ Fix: MT module discipline - use MtT instead of StT + Send + Sync.
 APASRules.md Lines 44-47: Files with Mt in their name must use MtT for element types,
 not StT with threading bounds bolted on.
 """
+# Git commit: f7492988772c3fa1f57574a35bf2fed3fd19345c
+# Date: 2025-10-14 18:11:45 -0700
+
 
 import re
 import sys

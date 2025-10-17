@@ -5,6 +5,7 @@ use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEphT
 use apas_ai::Chap06::WeightedUnDirGraphStEphInt::WeightedUnDirGraphStEphInt::*;
 use apas_ai::SetLit;
 use apas_ai::WeightedUnDirGraphStEphIntLit;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_weightedundirgraphstephintlit_macro_functionality() {
@@ -117,7 +118,7 @@ fn test_is_connected_two_vertices() {
 #[test]
 fn test_is_connected_disconnected() {
     let vertices = SetLit![1, 2, 3, 4];
-    let edges = SetLit![(1, 2, 5), (3, 4, 10)];
+    let edges = SetLit![Triple(1, 2, 5), Triple(3, 4, 10)];
     let graph = WeightedUnDirGraphStEphInt::from_weighted_edges(vertices, edges);
     assert!(!graph.is_connected());
 }
@@ -140,7 +141,7 @@ fn test_is_connected_empty_graph() {
 #[test]
 fn test_from_weighted_edges() {
     let vertices = SetLit![1, 2, 3];
-    let edges = SetLit![(1, 2, 105), (2, 3, 205)];
+    let edges = SetLit![Triple(1, 2, 105), Triple(2, 3, 205)];
     let graph = WeightedUnDirGraphStEphInt::from_weighted_edges(vertices, edges);
 
     assert_eq!(graph.vertices().size(), 3);

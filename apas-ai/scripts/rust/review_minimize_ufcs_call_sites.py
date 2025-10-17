@@ -11,6 +11,9 @@ Checks src/, tests/, and benches/ for UFCS usage outside of impl/trait blocks.
 Note: Some UFCS usage may be legitimate (primitives, macros, disambiguation).
 This check identifies candidates for review, not automatic violations.
 """
+# Git commit: 5018eb6d5edcecf798d29df2fba75d33aeb3179d
+# Date: 2025-10-14 17:19:40 -0700
+
 
 import re
 import sys

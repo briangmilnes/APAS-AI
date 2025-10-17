@@ -4,6 +4,9 @@ Fix: APAS where clause simplification.
 
 APASRules.md Lines 96-101: Replace Fn(&T) -> B with Pred<T>.
 """
+# Git commit: 0bbac73555a70a1cb70f3b41e09ae5f2d11960ea
+# Date: 2025-10-14 18:03:09 -0700
+
 
 import re
 import sys

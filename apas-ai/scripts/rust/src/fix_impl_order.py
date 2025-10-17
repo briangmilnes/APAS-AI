@@ -5,6 +5,9 @@ Fix: Implementation order - move standard traits to the bottom.
 Automatically reorders trait implementations so that standard trait impls
 (Eq, PartialEq, Debug, Display, etc.) come after custom trait impls.
 """
+# Git commit: 2443dfee08db311c38759813c5c46c95be6cb00b
+# Date: 2025-10-16 11:39:02 -0700
+
 
 import re
 import sys
@@ -123,6 +126,59 @@ def count_braces_in_line(line):
     return (open_braces, close_braces)
 
 
+def find_macro_definitions(lines):
+    """
+    Find all macro definition blocks in the file.
+    Returns list of (start_line, end_line) for macro_rules! definitions.
+    """
+    macros = []
+    i = 0
+    
+    while i < len(lines):
+        line = lines[i]
+        stripped = line.strip()
+        
+        # Check if this is a macro definition
+        if 'macro_rules!' in stripped or '#[macro_export]' in stripped:
+            # Find the macro_rules! line
+            start_line = i
+            while i < len(lines) and 'macro_rules!' not in lines[i]:
+                i += 1
+            
+            if i >= len(lines):
+                break
+            
+            # Find the closing }; for the macro
+            # Macros end with }; (the outermost brace + semicolon)
+            brace_count = 0
+            started = False
+            
+            while i < len(lines):
+                line_content = lines[i]
+                
+                # Count braces
+                open_b, close_b = count_braces_in_line(line_content)
+                if open_b > 0:
+                    started = True
+                brace_count += open_b - close_b
+                
+                # Check if we've closed the macro
+                # The macro ends when we close the outermost brace with };
+                if started and brace_count == 1 and lines[i].strip().endswith('};'):
+                    macros.append({
+                        'start': start_line,
+                        'end': i + 1,
+                    })
+                    i += 1
+                    break
+                
+                i += 1
+        else:
+            i += 1
+    
+    return macros
+
+
 def find_impl_blocks(lines):
     """
     Find all trait impl blocks in the file.
@@ -188,102 +244,82 @@ def fix_file(file_path, dry_run=False):
         return False
     
     impl_blocks = find_impl_blocks(lines)
+    macros = find_macro_definitions(lines)
     
     if not impl_blocks:
         return False
     
-    # Group consecutive impl blocks that need reordering
-    # We need to find groups where standard impls come before custom impls
-    groups_to_fix = []
-    processed_blocks = set()  # Track blocks already in a group
+    # Find ALL standard trait impls that come before ANY custom trait impl
+    # Find the position of the last custom trait impl
+    last_custom_line = 0
+    for block in impl_blocks:
+        if not block['is_standard']:
+            last_custom_line = max(last_custom_line, block['end'])
     
-    for i in range(len(impl_blocks)):
-        current = impl_blocks[i]
-        
-        # Skip if this block is already in a group
-        if i in processed_blocks:
-            continue
-        
-        # Check if this standard impl is followed by any custom impl
-        if current['is_standard']:
-            # Find all consecutive impls (with possible blank lines between)
-            group = [current]
-            group_indices = [i]
-            needs_fix = False
-            
-            for j in range(i + 1, len(impl_blocks)):
-                if j in processed_blocks:
-                    continue
-                    
-                next_block = impl_blocks[j]
-                
-                # Check if blocks are consecutive (allowing for blank lines)
-                gap = next_block['start'] - group[-1]['end']
-                # Allow up to 5 lines of whitespace/comments between impls
-                if gap <= 5:
-                    group.append(next_block)
-                    group_indices.append(j)
-                    if not next_block['is_standard']:
-                        needs_fix = True
-                else:
-                    break
-            
-            if needs_fix and len(group) > 1:
-                groups_to_fix.append(group)
-                # Mark all blocks in this group as processed
-                for idx in group_indices:
-                    processed_blocks.add(idx)
-    
-    if not groups_to_fix:
+    if last_custom_line == 0:
+        # No custom traits found, nothing to do
         return False
     
+    # Collect all standard trait impls that come before the last custom impl
+    standard_impls_to_move = []
+    for block in impl_blocks:
+        if block['is_standard'] and block['start'] < last_custom_line:
+            standard_impls_to_move.append(block)
+    
+    if not standard_impls_to_move:
+        return False
+    
+    # Find insertion point: before first macro or at end of module
+    insertion_point = len(lines) - 1  # Default: before last line (module closing brace)
+    
+    # Look for #[macro_export] or macro_rules! after last custom impl
+    for i in range(last_custom_line, len(lines)):
+        stripped = lines[i].strip()
+        if stripped.startswith('#[macro_export]') or stripped.startswith('macro_rules!'):
+            insertion_point = i
+            break
+    
+    # If no macro found, insert before closing module brace
+    if insertion_point == len(lines) - 1:
+        # Find the last closing brace
+        for i in range(len(lines) - 1, last_custom_line, -1):
+            if lines[i].strip() == '}':
+                insertion_point = i
+                break
+    
     if dry_run:
-        print(f"Would fix {len(groups_to_fix)} impl block group(s) in {file_path}")
+        print(f"Would move {len(standard_impls_to_move)} standard trait impl(s) to bottom in {file_path}")
         return True
     
-    # Apply fixes from bottom to top to preserve line numbers
-    new_lines = lines[:]
+    # Extract all standard impl blocks
+    standard_impl_code = []
+    for impl_block in standard_impls_to_move:
+        standard_impl_code.extend(impl_block['lines'])
     
-    for group in reversed(groups_to_fix):
-        start = group[0]['start']
-        end = group[-1]['end']
-        
-        # Separate blocks into custom and standard
-        custom_blocks = []
-        standard_blocks = []
-        
-        for block in group:
-            if block['is_standard']:
-                standard_blocks.append(block)
-            else:
-                custom_blocks.append(block)
-        
-        # Build the reordered content by simply concatenating impl blocks
-        reordered = []
-        
-        # Add all custom impls first
-        for i, block in enumerate(custom_blocks):
-            reordered.extend(block['lines'])
-            # Add blank line between custom impls (but not after the last one)
-            if i < len(custom_blocks) - 1:
-                # Only add if next line isn't already blank
-                if block['lines'] and block['lines'][-1].strip() != '':
-                    reordered.append('\n')
-        
-        # Add blank line between custom and standard sections
-        if custom_blocks and standard_blocks:
-            reordered.append('\n')
-        
-        # Add all standard impls
-        for i, block in enumerate(standard_blocks):
-            reordered.extend(block['lines'])
-            # Add blank line between standard impls (but not after the last one)
-            if i < len(standard_blocks) - 1:
-                if block['lines'] and block['lines'][-1].strip() != '':
-                    reordered.append('\n')
-        
-        # Replace the lines
-        new_lines[start:end] = reordered
+    # Remove standard impls from original positions (work backwards to preserve indices)
+    new_lines = lines[:]
+    for impl_block in reversed(standard_impls_to_move):
+        del new_lines[impl_block['start']:impl_block['end']]
+    
+    # Recalculate insertion point after deletions
+    # Count how many lines were deleted before the original insertion point
+    deleted_before_insertion = sum(
+        impl_block['end'] - impl_block['start']
+        for impl_block in standard_impls_to_move
+        if impl_block['start'] < insertion_point
+    )
+    adjusted_insertion_point = insertion_point - deleted_before_insertion
+    
+    # Add blank line separator if needed
+    if adjusted_insertion_point > 0 and adjusted_insertion_point < len(new_lines):
+        if new_lines[adjusted_insertion_point - 1].strip():
+            standard_impl_code.insert(0, '\n')
+        # Also add blank line after if the next line isn't blank
+        if adjusted_insertion_point < len(new_lines) and new_lines[adjusted_insertion_point].strip():
+            standard_impl_code.append('\n')
+    
+    # Insert all standard impls at calculated position
+    new_lines[adjusted_insertion_point:adjusted_insertion_point] = standard_impl_code
     
     # Write back
     try:

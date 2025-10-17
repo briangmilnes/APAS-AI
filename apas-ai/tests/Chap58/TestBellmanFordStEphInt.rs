@@ -6,6 +6,7 @@ use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt;
 use apas_ai::Chap58::BellmanFordStEphInt::BellmanFordStEphInt::bellman_ford;
 use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_example_58_2_dijkstra_fails() {
@@ -14,9 +15,9 @@ fn test_example_58_2_dijkstra_fails() {
     // Shortest path to b should be 1 (via a), not 2 (direct)
     let vertices = SetLit![0, 1, 2]; // s=0, a=1, b=2
     let edges = SetLit![
-        (0, 2, 2),  // s -> b (2)
-        (0, 1, 3),  // s -> a (3)
-        (1, 2, -2)  // a -> b (-2)
+        Triple(0, 2, 2),  // s -> b (2)
+        Triple(0, 1, 3),  // s -> a (3)
+        Triple(1, 2, -2)  // a -> b (-2)
     ];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
@@ -41,12 +42,12 @@ fn test_example_58_3_k_hop_distances() {
     // Modified to remove negative cycle (changed c->b edge from 5 to 7)
     let vertices = SetLit![0, 1, 2, 3]; // s=0, a=1, b=2, c=3
     let edges = SetLit![
-        (0, 1, 1),  // s -> a (1)
-        (0, 2, 5),  // s -> b (5)
-        (1, 2, 3),  // a -> b (3)
-        (1, 3, 7),  // a -> c (7)
-        (2, 3, -6), // b -> c (-6)
-        (3, 2, 7)   // c -> b (7) - increased to avoid negative cycle
+        Triple(0, 1, 1),  // s -> a (1)
+        Triple(0, 2, 5),  // s -> b (5)
+        Triple(1, 2, 3),  // a -> b (3)
+        Triple(1, 3, 7),  // a -> c (7)
+        Triple(2, 3, -6), // b -> c (-6)
+        Triple(3, 2, 7)   // c -> b (7) - increased to avoid negative cycle
     ];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
@@ -63,16 +64,16 @@ fn test_example_58_4_algorithm_steps() {
     // Example 58.4: Multiple rounds of distance updates
     let vertices = SetLit![0, 1, 2, 3, 4]; // s=0, a=1, b=2, c=3, d=4
     let edges = SetLit![
-        (0, 1, 6),  // s -> a
-        (0, 3, 7),  // s -> c
-        (1, 2, 5),  // a -> b
-        (1, 3, 8),  // a -> c
-        (1, 4, -4), // a -> d
-        (2, 1, -2), // b -> a
-        (3, 2, -3), // c -> b
-        (3, 4, 9),  // c -> d
-        (4, 0, 2),  // d -> s
-        (4, 2, 7)   // d -> b
+        Triple(0, 1, 6),  // s -> a
+        Triple(0, 3, 7),  // s -> c
+        Triple(1, 2, 5),  // a -> b
+        Triple(1, 3, 8),  // a -> c
+        Triple(1, 4, -4), // a -> d
+        Triple(2, 1, -2), // b -> a
+        Triple(3, 2, -3), // c -> b
+        Triple(3, 4, 9),  // c -> d
+        Triple(4, 0, 2),  // d -> s
+        Triple(4, 2, 7)   // d -> b
     ];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
@@ -91,10 +92,10 @@ fn test_negative_cycle_detection() {
     // s -> a -> b -> c -> a (cycle with total weight -1)
     let vertices = SetLit![0, 1, 2, 3]; // s=0, a=1, b=2, c=3
     let edges = SetLit![
-        (0, 1, 1),  // s -> a
-        (1, 2, 2),  // a -> b
-        (2, 3, -4), // b -> c
-        (3, 1, 0)   // c -> a (completes negative cycle: 2 + (-4) + 0 = -2)
+        Triple(0, 1, 1),  // s -> a
+        Triple(1, 2, 2),  // a -> b
+        Triple(2, 3, -4), // b -> c
+        Triple(3, 1, 0)   // c -> a (completes negative cycle: 2 + (-4) + 0 = -2)
     ];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
@@ -118,12 +119,12 @@ fn test_currency_exchange_example_58_1() {
     // CNY->JPY: 16.0 => -lg(16) = -1.204  => -120
     let vertices = SetLit![0, 1, 2, 3, 4]; // EUR, USD, GBP, CNY, JPY
     let edges = SetLit![
-        (0, 1, -8),   // EUR -> USD
-        (1, 0, 9),    // USD -> EUR (reverse, worse rate)
-        (1, 3, -81),  // USD -> CNY
-        (3, 4, -120), // CNY -> JPY
-        (0, 2, -11),  // EUR -> GBP
-        (2, 4, -150)  // GBP -> JPY (direct, but less efficient)
+        Triple(0, 1, -8),   // EUR -> USD
+        Triple(1, 0, 9),    // USD -> EUR (reverse, worse rate)
+        Triple(1, 3, -81),  // USD -> CNY
+        Triple(3, 4, -120), // CNY -> JPY
+        Triple(0, 2, -11),  // EUR -> GBP
+        Triple(2, 4, -150)  // GBP -> JPY (direct, but less efficient)
     ];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
@@ -146,8 +147,8 @@ fn test_unreachable_vertices() {
     // Graph with some unreachable vertices
     let vertices = SetLit![0, 1, 2, 3];
     let edges = SetLit![
-        (0, 1, 5), // s -> a
-        (1, 2, 3)  // a -> b
+        Triple(0, 1, 5), // s -> a
+        Triple(1, 2, 3)  // a -> b
                    // c is unreachable
     ];
 
@@ -176,7 +177,7 @@ fn test_single_vertex() {
 fn test_convergence_early_termination() {
     // Simple path graph that should converge before |V| rounds
     let vertices = SetLit![0, 1, 2];
-    let edges = SetLit![(0, 1, 2), (1, 2, 3)];
+    let edges = SetLit![Triple(0, 1, 2), Triple(1, 2, 3)];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
     let result = bellman_ford(&graph, 0).unwrap();
@@ -190,7 +191,7 @@ fn test_convergence_early_termination() {
 fn test_zero_weight_edges() {
     // Graph with zero-weight edges
     let vertices = SetLit![0, 1, 2];
-    let edges = SetLit![(0, 1, 0), (1, 2, 0)];
+    let edges = SetLit![Triple(0, 1, 0), Triple(1, 2, 0)];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
     let result = bellman_ford(&graph, 0).unwrap();
@@ -204,7 +205,7 @@ fn test_zero_weight_edges() {
 fn test_all_negative_edges_no_cycle() {
     // All edges negative but no negative cycle
     let vertices = SetLit![0, 1, 2];
-    let edges = SetLit![(0, 1, -1), (1, 2, -2)];
+    let edges = SetLit![Triple(0, 1, -1), Triple(1, 2, -2)];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
     let result = bellman_ford(&graph, 0).unwrap();

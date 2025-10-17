@@ -12,6 +12,9 @@ Usage:
   ./fix_trait_method_duplication.py --execute    # Actually fix
   ./fix_trait_method_duplication.py --file src/Chap18/ArraySeqStEph.rs --execute
 """
+# Git commit: 448bc775435cc4a20db423097b00f9f351ac47f1
+# Date: 2025-10-15 17:28:24 -0700
+
 
 import re
 import sys

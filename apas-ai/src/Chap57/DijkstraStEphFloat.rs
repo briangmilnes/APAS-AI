@@ -101,7 +101,7 @@ pub mod DijkstraStEphFloat {
                 // Relax all out-neighbors: add PQEntry(d + w, u) to PQ
                 let neighbors = graph.out_neighbors_weighted(&v);
                 for neighbor in neighbors.iter() {
-                    let (u, weight) = neighbor;
+                    let Pair(u, weight) = neighbor;
                     let u_idx = *u;
 
                     // Skip if already visited

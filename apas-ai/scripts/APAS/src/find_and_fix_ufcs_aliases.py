@@ -3,6 +3,9 @@
 Script to find and fix `use ...{X as Y}` patterns where UFCS calls to Y should be changed to X.
 Finds alias imports and replaces UFCS calls from alias (Y) back to original name (X).
 """
+# Git commit: e519d659e4986214e6f7e12b82fb211edcf52bf7
+# Date: 2025-10-14 16:54:36 -0700
+
 
 import os
 import re

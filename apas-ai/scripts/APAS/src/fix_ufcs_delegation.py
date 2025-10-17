@@ -3,6 +3,9 @@
 Script to fix UFCS delegation calls that should call imported aliases, not current trait.
 This fixes the recursive call issue created by the previous script.
 """
+# Git commit: e519d659e4986214e6f7e12b82fb211edcf52bf7
+# Date: 2025-10-14 16:54:36 -0700
+
 
 import os
 import re

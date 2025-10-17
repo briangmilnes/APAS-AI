@@ -21,10 +21,10 @@ pub mod WeightedUnDirGraphMtEphFloat {
         /// Create from vertices and weighted edges
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
-        pub fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<(V, V, OrderedFloat<f64>)>) -> Self {
+        pub fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<Triple<V, V, OrderedFloat<f64>>>) -> Self {
             let labeled_edges = edges
                 .iter()
-                .map(|(v1, v2, weight)| LabEdge(v1.clone(), v2.clone(), *weight))
+                .map(|Triple(v1, v2, weight)| LabEdge(v1.clone(), v2.clone(), *weight))
                 .collect::<Vec<_>>();
 
             let mut edge_set = SetStEph::empty();
@@ -52,10 +52,10 @@ pub mod WeightedUnDirGraphMtEphFloat {
         /// Get all weighted edges as (v1, v2, weight) tuples
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential map
-        pub fn weighted_edges(&self) -> SetStEph<(V, V, OrderedFloat<f64>)> {
+        pub fn weighted_edges(&self) -> SetStEph<Triple<V, V, OrderedFloat<f64>>> {
             let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_edges().iter() {
-                edges.insert((labeled_edge.0.clone_mt(), labeled_edge.1.clone_mt(), labeled_edge.2));
+                edges.insert(Triple(labeled_edge.0.clone_mt(), labeled_edge.1.clone_mt(), labeled_edge.2));
             }
             edges
         }
@@ -63,7 +63,7 @@ pub mod WeightedUnDirGraphMtEphFloat {
         /// Get neighbors with weights
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|), Parallelism Θ(|E|/log |E|) - parallel divide-and-conquer filter
-        pub fn neighbors_weighted(&self, v: &V) -> SetStEph<(V, OrderedFloat<f64>)> {
+        pub fn neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>> {
             // PARALLEL: filter weighted edges using divide-and-conquer
             let edges: Vec<LabEdge<V, OrderedF64>> = self.labeled_edges().iter().cloned().collect();
             let n = edges.len();
@@ -72,9 +72,9 @@ pub mod WeightedUnDirGraphMtEphFloat {
                 let mut neighbors = SetStEph::empty();
                 for labeled_edge in edges {
                     if labeled_edge.0 == *v {
-                        neighbors.insert((labeled_edge.1.clone_mt(), labeled_edge.2));
+                        neighbors.insert(Pair(labeled_edge.1.clone_mt(), labeled_edge.2));
                     } else if labeled_edge.1 == *v {
-                        neighbors.insert((labeled_edge.0.clone_mt(), labeled_edge.2));
+                        neighbors.insert(Pair(labeled_edge.0.clone_mt(), labeled_edge.2));
                     }
                 }
                 return neighbors;
@@ -84,7 +84,7 @@ pub mod WeightedUnDirGraphMtEphFloat {
             fn parallel_neighbors<V: HashOrd + MtT + 'static>(
                 edges: Vec<LabEdge<V, OrderedF64>>,
                 v: V,
-            ) -> SetStEph<(V, OrderedFloat<f64>)> {
+            ) -> SetStEph<Pair<V, OrderedFloat<f64>>> {
                 let n = edges.len();
                 if n == 0 {
                     return SetStEph::empty();
@@ -92,11 +92,11 @@ pub mod WeightedUnDirGraphMtEphFloat {
                 if n == 1 {
                     if edges[0].0 == v {
                         let mut s = SetStEph::empty();
-                        s.insert((edges[0].1.clone_mt(), edges[0].2));
+                        s.insert(Pair(edges[0].1.clone_mt(), edges[0].2));
                         return s;
                     } else if edges[0].1 == v {
                         let mut s = SetStEph::empty();
-                        s.insert((edges[0].0.clone_mt(), edges[0].2));
+                        s.insert(Pair(edges[0].0.clone_mt(), edges[0].2));
                         return s;
                     }
                     return SetStEph::empty();
@@ -134,6 +134,8 @@ pub mod WeightedUnDirGraphMtEphFloat {
         pub fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
     }
 
+    /// Macro accepts raw tuple syntax: `E: [(v1, v2, weight), ...]`
+    /// Internally wraps each edge as `Triple(v1, v2, OrderedFloat(weight))` for StT compliance.
     #[macro_export]
     macro_rules! WeightedUnDirGraphMtEphFloatLit {
         () => {{
@@ -141,7 +143,7 @@ pub mod WeightedUnDirGraphMtEphFloat {
         }};
         ( V: [ $( $v:expr ),* $(,)? ], E: [ $( ($v1:expr, $v2:expr, $weight:expr) ),* $(,)? ] ) => {{
             let vertices = $crate::SetLit![ $( $v ),* ];
-            let edges = $crate::SetLit![ $( ($v1, $v2, OrderedFloat($weight as f64)) ),* ];
+            let edges = $crate::SetLit![ $( Triple($v1, $v2, OrderedFloat($weight as f64)) ),* ];
             $crate::Chap06::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges)
         }};
     }

@@ -191,7 +191,57 @@ Result guidance
   }
   // Call via trait: MyType::empty() or <MyType as MyTrait>::empty()
   ```
-- Exceptions: Inherent methods are allowed only if they have **different signatures** or **different semantics** than trait methods.
+
+#### Single Implementation Pattern (MANDATORY)
+- **Data structures with custom traits MUST have ONLY trait implementations.**
+- **NO inherent impl blocks alongside trait impl blocks for the same type.**
+- When a struct has an associated trait (e.g., `SetStEph` with `SetStEphTrait`), **all functionality belongs exclusively in the trait impl**.
+- **Rationale**: 
+  - Eliminates code duplication: one code path instead of two
+  - Achieves 100% test coverage without testing duplicate implementations
+  - Prevents confusion about which impl to call (inherent vs trait method resolution)
+  - Forces clear API boundaries through traits
+  - Makes refactoring and maintenance simpler
+  - In APAS, all types use consistent trait bounds (StT/MtT/StTInMtT), so no weaker-bound variants are needed
+  
+- **Violating pattern** (WRONG - found in 72 files):
+  ```rust
+  pub struct SetStEph<T> { data: HashSet<T> }
+  
+  impl<T: Eq + Hash> SetStEph<T> {  // ❌ DELETE THIS ENTIRE BLOCK
+      pub fn empty() -> Self { SetStEph { data: HashSet::new() } }
+      pub fn insert(&mut self, x: T) -> bool { self.data.insert(x) }
+      pub fn union(&self, other: &Self) -> Self { /* ... */ }
+      // ... 20 more methods duplicating trait impl
+  }
+  
+  impl<T: StT + Hash> SetStEphTrait<T> for SetStEph<T> {
+      fn empty() -> Self { SetStEph { data: HashSet::new() } }
+      fn insert(&mut self, x: T) -> bool { self.data.insert(x) }
+      fn union(&self, other: &Self) -> Self { /* ... */ }
+      // ... same 20 methods (duplicate code path, untested)
+  }
+  ```
+
+- **Correct pattern** (ONE implementation location):
+  ```rust
+  pub struct SetStEph<T> { data: HashSet<T> }
+  
+  // No inherent impl block at all!
+  
+  impl<T: StT + Hash> SetStEphTrait<T> for SetStEph<T> {  // ✓ SINGLE SOURCE
+      fn empty() -> Self { SetStEph { data: HashSet::new() } }
+      fn insert(&mut self, x: T) -> bool { self.data.insert(x) }
+      fn union(&self, other: &Self) -> Self { /* ... */ }
+      // ... all methods here, tested once, used everywhere
+  }
+  ```
+
+- **Standard library trait impls ARE allowed**: Inherent impls should be deleted, but standard trait impls (Debug, Display, Clone, Eq, Hash, etc.) remain and go at the bottom of the file.
+
+- **Detection script**: `scripts/rust/src/review_inherent_and_trait_impl.py` identifies all violations.
+
+- **Current status**: 72 structs violate this rule and need refactoring.
 
 ### Types, Bounds, and Lifting
 
@@ -389,5 +439,28 @@ fn _MyMacro_type_checks() {
 - **Apply Function Abbreviations**: Replace verbose function trait bounds with appropriate abbreviations
 - **Use Type Abbreviations**: Apply consistent type abbreviations to reduce repetitive bounds
 - **Target**: Minimize where clauses across codebase by inlining bounds and using abbreviations
+
+### Script Metadata and Version Control (MANDATORY)
+
+#### Git Commit ID in Scripts
+- **ALL Python scripts** (especially in `scripts/` directories) MUST include a header comment with the git commit ID from when they were created/last modified
+- **Format**: Add at the top of the file after the shebang and module docstring:
+  ```python
+  #!/usr/bin/env python3
+  """
+  Script description here.
+  """
+  # Git commit: <commit-hash>
+  # Date: <commit-date>
+  ```
+- **Purpose**: Enable rollback and reapplication of scripts during research and debugging
+- **Rationale**: Scripts are often generated during complex refactoring sessions. Having the exact commit ID allows:
+  - Rolling back to the state before the script was applied
+  - Understanding the context in which the script was created
+  - Reapplying scripts in different branches or after rebases
+  - Documenting the evolution of automated refactoring tools
+- **Automation**: Use `scripts/add_git_metadata.py` to add/update metadata for all Python scripts
+- **When to Update**: Update the commit ID whenever the script's logic is modified
+- **Exception**: Scripts in `scripts/onetime/` are one-time use and may have stale commit IDs after application
 
 ---

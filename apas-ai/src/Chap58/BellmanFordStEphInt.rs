@@ -68,7 +68,7 @@ pub mod BellmanFordStEphInt {
 
                 // Compute Din(v) = min over u in N⁻(v) of (d[u] + w(u,v))
                 let in_neighbors = graph.in_neighbors_weighted(&v);
-                for (u, weight) in in_neighbors.iter() {
+                for Pair(u, weight) in in_neighbors.iter() {
                     let u_dist = *distances.get(u).unwrap_or(&i64::MAX);
                     if u_dist != i64::MAX {
                         // Check for overflow before adding
@@ -135,7 +135,7 @@ pub mod BellmanFordStEphInt {
 
             // Find which in-neighbor u gave us the shortest path
             let in_neighbors = graph.in_neighbors_weighted(&v);
-            for (u, weight) in in_neighbors.iter() {
+            for Pair(u, weight) in in_neighbors.iter() {
                 let u_dist = *distances.get(u).unwrap_or(&i64::MAX);
                 if u_dist != i64::MAX {
                     let path_dist = u_dist.saturating_add(*weight as i64);

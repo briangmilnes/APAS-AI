@@ -4,6 +4,9 @@ One-time script to refactor review scripts to use review_utils.
 
 Adds standardized --file and --dry-run support to all review scripts.
 """
+# Git commit: 8c0c50970af095f5e8e6aeef93a104968befdc96
+# Date: 2025-10-14 16:47:43 -0700
+
 
 import re
 from pathlib import Path

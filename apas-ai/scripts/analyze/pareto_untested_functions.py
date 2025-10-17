@@ -3,6 +3,9 @@
 Generates a Pareto analysis of untested functions from llvm-cov coverage data.
 Identifies functions with zero test coverage and ranks them by impact (number of lines).
 """
+# Git commit: 2dc0ba3f9f83e0b0333d29bbf27bb25509ad477b
+# Date: 2025-10-15 12:01:24 -0700
+
 
 import json
 import re

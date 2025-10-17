@@ -3,6 +3,9 @@
 
 Runs all review suites and outputs to both stdout and analyses/review.txt.
 """
+# Git commit: a907d08bf789540a316685f712691a179b818996
+# Date: 2025-10-14 16:51:05 -0700
+
 
 import subprocess
 import sys

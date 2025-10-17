@@ -5,6 +5,9 @@ Extract list of files with qualified path violations.
 Runs review_qualified_paths.py and extracts unique file paths,
 sorted by directory (src, tests, benches) for batch processing.
 """
+# Git commit: 36369123a0ba7c655eae6bf92acf6645f75a8ee6
+# Date: 2025-10-16 10:25:14 -0700
+
 
 import subprocess
 

@@ -3,15 +3,15 @@ use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::*;
 use apas_ai::Chap59::JohnsonMtEphFloat::JohnsonMtEphFloat::johnson_apsp;
 use apas_ai::SetLit;
-use apas_ai::Types::Types::OrderedF64;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_simple_graph() {
     let vertices = SetLit![0, 1, 2];
     let edges = SetLit![
-        (0, 1, OrderedF64::from(5.5)),
-        (1, 2, OrderedF64::from(3.2)),
-        (0, 2, OrderedF64::from(10.0))
+        Triple(0, 1, OrderedF64::from(5.5)),
+        Triple(1, 2, OrderedF64::from(3.2)),
+        Triple(0, 2, OrderedF64::from(10.0))
     ];
 
     let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
@@ -30,9 +30,9 @@ fn test_simple_graph() {
 fn test_negative_weights() {
     let vertices = SetLit![0, 1, 2];
     let edges = SetLit![
-        (0, 1, OrderedF64::from(1.5)),
-        (1, 2, OrderedF64::from(-0.8)),
-        (0, 2, OrderedF64::from(1.0))
+        Triple(0, 1, OrderedF64::from(1.5)),
+        Triple(1, 2, OrderedF64::from(-0.8)),
+        Triple(0, 2, OrderedF64::from(1.0))
     ];
 
     let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
@@ -56,11 +56,11 @@ fn test_single_vertex() {
 fn test_fractional_weights() {
     let vertices = SetLit![0, 1, 2, 3];
     let edges = SetLit![
-        (0, 1, OrderedF64::from(0.5)),
-        (0, 2, OrderedF64::from(1.5)),
-        (1, 2, OrderedF64::from(-0.25)),
-        (1, 3, OrderedF64::from(1.0)),
-        (2, 3, OrderedF64::from(0.5))
+        Triple(0, 1, OrderedF64::from(0.5)),
+        Triple(0, 2, OrderedF64::from(1.5)),
+        Triple(1, 2, OrderedF64::from(-0.25)),
+        Triple(1, 3, OrderedF64::from(1.0)),
+        Triple(2, 3, OrderedF64::from(0.5))
     ];
 
     let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
@@ -75,7 +75,7 @@ fn test_fractional_weights() {
 #[test]
 fn test_disconnected_graph() {
     let vertices = SetLit![0, 1, 2, 3];
-    let edges = SetLit![(0, 1, OrderedF64::from(2.5)), (2, 3, OrderedF64::from(1.8))];
+    let edges = SetLit![Triple(0, 1, OrderedF64::from(2.5)), Triple(2, 3, OrderedF64::from(1.8))];
 
     let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);
@@ -89,7 +89,7 @@ fn test_disconnected_graph() {
 #[test]
 fn test_two_vertex_cycle() {
     let vertices = SetLit![0, 1];
-    let edges = SetLit![(0, 1, OrderedF64::from(1.0)), (1, 0, OrderedF64::from(2.0))];
+    let edges = SetLit![Triple(0, 1, OrderedF64::from(1.0)), Triple(1, 0, OrderedF64::from(2.0))];
 
     let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);
@@ -102,9 +102,9 @@ fn test_two_vertex_cycle() {
 fn test_triangle() {
     let vertices = SetLit![0, 1, 2];
     let edges = SetLit![
-        (0, 1, OrderedF64::from(1.0)),
-        (1, 2, OrderedF64::from(1.0)),
-        (2, 0, OrderedF64::from(1.0))
+        Triple(0, 1, OrderedF64::from(1.0)),
+        Triple(1, 2, OrderedF64::from(1.0)),
+        Triple(2, 0, OrderedF64::from(1.0))
     ];
 
     let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
@@ -117,7 +117,7 @@ fn test_triangle() {
 #[test]
 fn test_zero_weights() {
     let vertices = SetLit![0, 1, 2];
-    let edges = SetLit![(0, 1, OrderedF64::from(0.0)), (1, 2, OrderedF64::from(0.0))];
+    let edges = SetLit![Triple(0, 1, OrderedF64::from(0.0)), Triple(1, 2, OrderedF64::from(0.0))];
 
     let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);
@@ -128,7 +128,7 @@ fn test_zero_weights() {
 #[test]
 fn test_large_weights() {
     let vertices = SetLit![0, 1, 2];
-    let edges = SetLit![(0, 1, OrderedF64::from(1000.5)), (1, 2, OrderedF64::from(2000.3))];
+    let edges = SetLit![Triple(0, 1, OrderedF64::from(1000.5)), Triple(1, 2, OrderedF64::from(2000.3))];
 
     let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);
@@ -139,7 +139,7 @@ fn test_large_weights() {
 #[test]
 fn test_self_loop() {
     let vertices = SetLit![0, 1];
-    let edges = SetLit![(0, 0, OrderedF64::from(1.0)), (0, 1, OrderedF64::from(2.0))];
+    let edges = SetLit![Triple(0, 0, OrderedF64::from(1.0)), Triple(0, 1, OrderedF64::from(2.0))];
 
     let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);

@@ -4,6 +4,9 @@ Review: Parallel spawn/join model (no rayon, no thresholds).
 
 APASRules.md Lines 39-42: "Use std::thread::spawn, avoid rayon, no PARALLEL_THRESHOLD."
 """
+# Git commit: 27d5172c6a7bdef7ac1403a7f853f3de2d11fc1b
+# Date: 2025-10-14 17:37:55 -0700
+
 
 import re
 import sys

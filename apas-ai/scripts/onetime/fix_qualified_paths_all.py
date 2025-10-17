@@ -4,6 +4,9 @@ Batch process all files with qualified path violations (src, tests, benches).
 
 Applies fix_qualified_paths.py to files in batches, compiling after each batch.
 """
+# Git commit: 36369123a0ba7c655eae6bf92acf6645f75a8ee6
+# Date: 2025-10-16 10:25:14 -0700
+
 
 import subprocess
 import sys

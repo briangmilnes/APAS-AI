@@ -10,6 +10,7 @@ use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEphT
 use apas_ai::Chap06::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::*;
 use apas_ai::SetLit;
 use apas_ai::WeightedUnDirGraphStEphFloatLit;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_weightedundirgraphstephfloatlit_macro_functionality() {
@@ -124,7 +125,7 @@ fn test_is_connected_two_vertices() {
 #[test]
 fn test_is_connected_disconnected() {
     let vertices = SetLit![1, 2, 3, 4];
-    let edges = SetLit![(1, 2, OrderedFloat(5.0)), (3, 4, OrderedFloat(10.0))];
+    let edges = SetLit![Triple(1, 2, OrderedFloat(5.0)), Triple(3, 4, OrderedFloat(10.0))];
     let graph = WeightedUnDirGraphStEphFloat::from_weighted_edges(vertices, edges);
     assert!(!graph.is_connected());
 }
@@ -147,7 +148,7 @@ fn test_is_connected_empty_graph() {
 #[test]
 fn test_from_weighted_edges() {
     let vertices = SetLit![1, 2, 3];
-    let edges = SetLit![(1, 2, OrderedFloat(10.5)), (2, 3, OrderedFloat(20.5))];
+    let edges = SetLit![Triple(1, 2, OrderedFloat(10.5)), Triple(2, 3, OrderedFloat(20.5))];
     let graph = WeightedUnDirGraphStEphFloat::from_weighted_edges(vertices, edges);
 
     assert_eq!(graph.vertices().size(), 3);

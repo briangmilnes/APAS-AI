@@ -7,6 +7,7 @@ use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
 use apas_ai::Chap59::JohnsonStEphInt::JohnsonStEphInt::johnson_apsp;
 use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 fn generate_sparse_graph_negative(n: usize) -> WeightedDirGraphStEphInt<usize> {
     let mut vertices = SetStEph::empty();
@@ -18,11 +19,11 @@ fn generate_sparse_graph_negative(n: usize) -> WeightedDirGraphStEphInt<usize> {
     for i in 0..n {
         let j = (i + 1) % n;
         let weight = if i % 3 == 0 { -2 } else { 5 };
-        edges.insert((i, j, weight));
+        edges.insert(Triple(i, j, weight));
 
         if i < n - 1 {
             let k = (i + 2) % n;
-            edges.insert((i, k, 8));
+            edges.insert(Triple(i, k, 8));
         }
     }
 
@@ -40,7 +41,7 @@ fn generate_dense_graph_negative(n: usize) -> WeightedDirGraphStEphInt<usize> {
         for j in 0..n {
             if i != j && (i * 7 + j * 11) % 2 == 0 {
                 let weight = if (i + j) % 3 == 0 { -1 } else { 3 };
-                edges.insert((i, j, weight));
+                edges.insert(Triple(i, j, weight));
             }
         }
     }

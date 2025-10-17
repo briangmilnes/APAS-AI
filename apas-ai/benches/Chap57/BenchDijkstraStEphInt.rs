@@ -9,6 +9,7 @@ use apas_ai::Chap05::SetStEph::SetStEph;
 use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt;
 use apas_ai::Chap57::DijkstraStEphInt::DijkstraStEphInt::dijkstra;
 use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 fn create_sparse_graph(n: usize) -> WeightedDirGraphStEphInt<usize> {
     let mut vertices = SetLit![];
@@ -19,9 +20,9 @@ fn create_sparse_graph(n: usize) -> WeightedDirGraphStEphInt<usize> {
     let mut edges = SetLit![];
     for i in 0..n {
         let j = (i + 1) % n;
-        edges.insert((i, j, 1));
+        edges.insert(Triple(i, j, 1));
         if i + 2 < n {
-            edges.insert((i, i + 2, 2));
+            edges.insert(Triple(i, i + 2, 2));
         }
     }
 
@@ -38,7 +39,7 @@ fn create_dense_graph(n: usize) -> WeightedDirGraphStEphInt<usize> {
     for i in 0..n {
         for j in 0..n {
             if i != j && (i + j) % 2 == 0 {
-                edges.insert((i, j, ((i + j) % 10 + 1) as i32));
+                edges.insert(Triple(i, j, ((i + j) % 10 + 1) as i32));
             }
         }
     }

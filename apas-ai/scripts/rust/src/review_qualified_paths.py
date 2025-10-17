@@ -16,6 +16,9 @@ Examples:
   GOOD: use std::collections::HashMap;
         let map: HashMap<K, V> = ...;
 """
+# Git commit: 36369123a0ba7c655eae6bf92acf6645f75a8ee6
+# Date: 2025-10-16 10:25:14 -0700
+
 
 import re
 import sys

@@ -8,6 +8,7 @@ use apas_ai::Chap06::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::*;
 use apas_ai::Chap59::JohnsonMtEphFloat::JohnsonMtEphFloat::johnson_apsp;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::OrderedF64;
+use apas_ai::Types::Types::*;
 
 fn generate_sparse_graph_negative(n: usize) -> WeightedDirGraphMtEphFloat<usize> {
     let mut vertices = SetStEph::empty();
@@ -23,11 +24,11 @@ fn generate_sparse_graph_negative(n: usize) -> WeightedDirGraphMtEphFloat<usize>
         } else {
             OrderedF64::from(5.2)
         };
-        edges.insert((i, j, weight));
+        edges.insert(Triple(i, j, weight));
 
         if i < n - 1 {
             let k = (i + 2) % n;
-            edges.insert((i, k, OrderedF64::from(8.3)));
+            edges.insert(Triple(i, k, OrderedF64::from(8.3)));
         }
     }
 
@@ -49,7 +50,7 @@ fn generate_dense_graph_negative(n: usize) -> WeightedDirGraphMtEphFloat<usize> 
                 } else {
                     OrderedF64::from(3.7)
                 };
-                edges.insert((i, j, weight));
+                edges.insert(Triple(i, j, weight));
             }
         }
     }

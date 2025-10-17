@@ -3,6 +3,7 @@
 //! Tests for StackStEph
 
 use apas_ai::Chap57::StackStEph::StackStEph::StackStEph;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new_stack_is_empty() {

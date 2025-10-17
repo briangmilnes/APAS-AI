@@ -104,10 +104,10 @@ pub mod JohnsonStEphFloat {
         }
         let mut edges = SetStEph::empty();
         for LabEdge(from, to, weight) in graph.labeled_arcs().iter() {
-            edges.insert((*from, *to, *weight));
+            edges.insert(Triple(*from, *to, *weight));
         }
         for i in 0..n {
-            edges.insert((dummy_idx, i, OrderedFloat(0.0)));
+            edges.insert(Triple(dummy_idx, i, OrderedFloat(0.0)));
         }
         (
             WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges),
@@ -129,7 +129,7 @@ pub mod JohnsonStEphFloat {
             let p_from = *potentials.nth(*from);
             let p_to = *potentials.nth(*to);
             let new_weight = OrderedFloat(weight.0 + p_from.0 - p_to.0);
-            edges.insert((*from, *to, new_weight));
+            edges.insert(Triple(*from, *to, new_weight));
         }
         WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges)
     }

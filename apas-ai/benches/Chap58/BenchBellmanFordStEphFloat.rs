@@ -10,6 +10,7 @@ use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::Wei
 use apas_ai::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::OrderedF64;
+use apas_ai::Types::Types::*;
 
 fn create_sparse_graph(n: usize) -> WeightedDirGraphStEphFloat<usize> {
     let mut vertices = SetLit![];
@@ -20,9 +21,9 @@ fn create_sparse_graph(n: usize) -> WeightedDirGraphStEphFloat<usize> {
     let mut edges = SetLit![];
     for i in 0..n {
         let j = (i + 1) % n;
-        edges.insert((i, j, OrderedF64::from(1.0)));
+        edges.insert(Triple(i, j, OrderedF64::from(1.0)));
         if i + 2 < n {
-            edges.insert((i, i + 2, OrderedF64::from(2.5)));
+            edges.insert(Triple(i, i + 2, OrderedF64::from(2.5)));
         }
     }
 
@@ -39,7 +40,7 @@ fn create_dense_graph(n: usize) -> WeightedDirGraphStEphFloat<usize> {
     for i in 0..n {
         for j in 0..n {
             if i != j && (i + j) % 2 == 0 {
-                edges.insert((i, j, OrderedF64::from(((i + j) % 10 + 1) as f64 + 0.5)));
+                edges.insert(Triple(i, j, OrderedF64::from(((i + j) % 10 + 1) as f64 + 0.5)));
             }
         }
     }
@@ -57,7 +58,7 @@ fn create_negative_edges_graph(n: usize) -> WeightedDirGraphStEphFloat<usize> {
     for i in 0..n {
         let j = (i + 1) % n;
         let weight = if i % 2 == 0 { 2.5 } else { -1.0 };
-        edges.insert((i, j, OrderedF64::from(weight)));
+        edges.insert(Triple(i, j, OrderedF64::from(weight)));
     }
 
     WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges)

@@ -5,6 +5,9 @@ Align -> arrows in trait method signatures for improved readability.
 Finds trait blocks and aligns all method signature arrows vertically.
 Only aligns within each trait block independently.
 """
+# Git commit: e3c773189cea7256c4a509dbfa546f79f451064c
+# Date: 2025-10-15 16:57:13 -0700
+
 
 import re
 import sys

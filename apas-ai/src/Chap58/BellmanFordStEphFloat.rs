@@ -78,7 +78,7 @@ pub mod BellmanFordStEphFloat {
 
                 // Compute Din(v) = min over u in N⁻(v) of (d[u] + w(u,v))
                 let in_neighbors = graph.in_neighbors_weighted(&v);
-                for (u, weight) in in_neighbors.iter() {
+                for Pair(u, weight) in in_neighbors.iter() {
                     let u_dist = *distances.get(u).unwrap_or(&OrderedF64::from(f64::INFINITY));
                     if u_dist.0 != f64::INFINITY {
                         let new_dist = OrderedF64::from(u_dist.0 + weight.0);
@@ -144,7 +144,7 @@ pub mod BellmanFordStEphFloat {
 
             // Find which in-neighbor u gave us the shortest path
             let in_neighbors = graph.in_neighbors_weighted(&v);
-            for (u, weight) in in_neighbors.iter() {
+            for Pair(u, weight) in in_neighbors.iter() {
                 let u_dist = *distances.get(u).unwrap_or(&OrderedF64::from(f64::INFINITY));
                 if u_dist.0 != f64::INFINITY {
                     let path_dist = OrderedF64::from(u_dist.0 + weight.0);

@@ -9,6 +9,9 @@ RustRules.md Lines 303-306:
 
 Checks file names in src/, tests/, and benches/ for CamelCase convention.
 """
+# Git commit: 8c0c50970af095f5e8e6aeef93a104968befdc96
+# Date: 2025-10-14 16:47:43 -0700
+
 
 import sys
 from pathlib import Path

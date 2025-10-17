@@ -21,10 +21,10 @@ pub mod WeightedDirGraphMtEphInt {
         /// Create from vertices and weighted edges
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
-        pub fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<(V, V, i32)>) -> Self {
+        pub fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<Triple<V, V, i32>>) -> Self {
             let labeled_edges = edges
                 .iter()
-                .map(|(from, to, weight)| LabEdge(from.clone(), to.clone(), *weight))
+                .map(|Triple(from, to, weight)| LabEdge(from.clone(), to.clone(), *weight))
                 .collect::<Vec<_>>();
 
             let mut edge_set = SetStEph::empty();
@@ -48,10 +48,10 @@ pub mod WeightedDirGraphMtEphInt {
         /// Get all weighted edges as (from, to, weight) tuples
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential map
-        pub fn weighted_edges(&self) -> SetStEph<(V, V, i32)> {
+        pub fn weighted_edges(&self) -> SetStEph<Triple<V, V, i32>> {
             let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_arcs().iter() {
-                edges.insert((labeled_edge.0.clone_mt(), labeled_edge.1.clone_mt(), labeled_edge.2));
+                edges.insert(Triple(labeled_edge.0.clone_mt(), labeled_edge.1.clone_mt(), labeled_edge.2));
             }
             edges
         }
@@ -59,7 +59,7 @@ pub mod WeightedDirGraphMtEphInt {
         /// Get outgoing neighbors with weights
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
-        pub fn out_neighbors_weighted(&self, v: &V) -> SetStEph<(V, i32)> {
+        pub fn out_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, i32>> {
             // PARALLEL: filter weighted arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, i32>> = self.labeled_arcs().iter().cloned().collect();
             let n = arcs.len();
@@ -68,14 +68,14 @@ pub mod WeightedDirGraphMtEphInt {
                 let mut neighbors = SetStEph::empty();
                 for labeled_edge in arcs {
                     if labeled_edge.0 == *v {
-                        neighbors.insert((labeled_edge.1.clone_mt(), labeled_edge.2));
+                        neighbors.insert(Pair(labeled_edge.1.clone_mt(), labeled_edge.2));
                     }
                 }
                 return neighbors;
             }
 
             // Parallel divide-and-conquer
-            fn parallel_out<V: StT + MtT + Hash + 'static>(arcs: Vec<LabEdge<V, i32>>, v: V) -> SetStEph<(V, i32)> {
+            fn parallel_out<V: StT + MtT + Hash + 'static>(arcs: Vec<LabEdge<V, i32>>, v: V) -> SetStEph<Pair<V, i32>> {
                 let n = arcs.len();
                 if n == 0 {
                     return SetStEph::empty();
@@ -83,7 +83,7 @@ pub mod WeightedDirGraphMtEphInt {
                 if n == 1 {
                     return if arcs[0].0 == v {
                         let mut s = SetStEph::empty();
-                        s.insert((arcs[0].1.clone_mt(), arcs[0].2));
+                        s.insert(Pair(arcs[0].1.clone_mt(), arcs[0].2));
                         s
                     } else {
                         SetStEph::empty()
@@ -111,7 +111,7 @@ pub mod WeightedDirGraphMtEphInt {
         /// Get incoming neighbors with weights
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
-        pub fn in_neighbors_weighted(&self, v: &V) -> SetStEph<(V, i32)> {
+        pub fn in_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, i32>> {
             // PARALLEL: filter weighted arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, i32>> = self.labeled_arcs().iter().cloned().collect();
             let n = arcs.len();
@@ -120,14 +120,14 @@ pub mod WeightedDirGraphMtEphInt {
                 let mut neighbors = SetStEph::empty();
                 for labeled_edge in arcs {
                     if labeled_edge.1 == *v {
-                        neighbors.insert((labeled_edge.0.clone_mt(), labeled_edge.2));
+                        neighbors.insert(Pair(labeled_edge.0.clone_mt(), labeled_edge.2));
                     }
                 }
                 return neighbors;
             }
 
             // Parallel divide-and-conquer
-            fn parallel_in<V: StT + MtT + Hash + 'static>(arcs: Vec<LabEdge<V, i32>>, v: V) -> SetStEph<(V, i32)> {
+            fn parallel_in<V: StT + MtT + Hash + 'static>(arcs: Vec<LabEdge<V, i32>>, v: V) -> SetStEph<Pair<V, i32>> {
                 let n = arcs.len();
                 if n == 0 {
                     return SetStEph::empty();
@@ -135,7 +135,7 @@ pub mod WeightedDirGraphMtEphInt {
                 if n == 1 {
                     return if arcs[0].1 == v {
                         let mut s = SetStEph::empty();
-                        s.insert((arcs[0].0.clone_mt(), arcs[0].2));
+                        s.insert(Pair(arcs[0].0.clone_mt(), arcs[0].2));
                         s
                     } else {
                         SetStEph::empty()
@@ -166,6 +166,8 @@ pub mod WeightedDirGraphMtEphInt {
         pub fn total_weight(&self) -> i32 { self.labeled_arcs().iter().map(|edge| edge.2).sum() }
     }
 
+    /// Macro accepts raw tuple syntax: `E: [(from, to, weight), ...]`
+    /// Internally wraps each edge as `Triple(from, to, weight)` for StT compliance.
     #[macro_export]
     macro_rules! WeightedDirGraphMtEphIntLit {
         () => {{
@@ -173,7 +175,7 @@ pub mod WeightedDirGraphMtEphInt {
         }};
         ( V: [ $( $v:expr ),* $(,)? ], E: [ $( ($from:expr, $to:expr, $weight:expr) ),* $(,)? ] ) => {{
             let vertices = $crate::SetLit![ $( $v ),* ];
-            let edges = $crate::SetLit![ $( ($from, $to, $weight) ),* ];
+            let edges = $crate::SetLit![ $( Triple($from, $to, $weight) ),* ];
             $crate::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges)
         }};
     }

@@ -3,18 +3,19 @@ use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
 use apas_ai::Chap59::JohnsonMtEphInt::JohnsonMtEphInt::johnson_apsp;
 use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_example_59_1() {
     let vertices = SetLit![0, 1, 2, 3];
     let edges = SetLit![
-        (0, 1, 3),
-        (0, 2, 8),
-        (1, 2, -2),
-        (1, 3, 1),
-        (2, 0, 4),
-        (2, 3, 7),
-        (3, 1, 2)
+        Triple(0, 1, 3),
+        Triple(0, 2, 8),
+        Triple(1, 2, -2),
+        Triple(1, 3, 1),
+        Triple(2, 0, 4),
+        Triple(2, 3, 7),
+        Triple(3, 1, 2)
     ];
 
     let graph = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
@@ -39,7 +40,7 @@ fn test_example_59_1() {
 #[test]
 fn test_simple_graph() {
     let vertices = SetLit![0, 1, 2];
-    let edges = SetLit![(0, 1, 5), (1, 2, 3), (0, 2, 10)];
+    let edges = SetLit![Triple(0, 1, 5), Triple(1, 2, 3), Triple(0, 2, 10)];
 
     let graph = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);
@@ -60,7 +61,7 @@ fn test_simple_graph() {
 #[test]
 fn test_negative_weights() {
     let vertices = SetLit![0, 1, 2];
-    let edges = SetLit![(0, 1, 1), (1, 2, -5), (0, 2, 3)];
+    let edges = SetLit![Triple(0, 1, 1), Triple(1, 2, -5), Triple(0, 2, 3)];
 
     let graph = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);
@@ -82,7 +83,7 @@ fn test_single_vertex() {
 #[test]
 fn test_disconnected_graph() {
     let vertices = SetLit![0, 1, 2, 3];
-    let edges = SetLit![(0, 1, 5), (2, 3, 3)];
+    let edges = SetLit![Triple(0, 1, 5), Triple(2, 3, 3)];
 
     let graph = WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);

@@ -7,6 +7,9 @@ Vec only for temporary builders or internal scratch space."
 
 Note: This check identifies candidates for review, not automatic violations.
 """
+# Git commit: 27d5172c6a7bdef7ac1403a7f853f3de2d11fc1b
+# Date: 2025-10-14 17:37:55 -0700
+
 
 import re
 import sys

@@ -168,14 +168,14 @@ pub mod JohnsonMtEphFloat {
         // Copy all original edges
         for u in 0..n {
             for v_w in graph.out_neighbors_weighted(&u).iter() {
-                let (v, w) = v_w;
-                edges.insert((u, *v, *w));
+                let Pair(v, w) = v_w;
+                edges.insert(Triple(u, *v, *w));
             }
         }
 
         // Add edges from dummy source to all original vertices
         for v in 0..n {
-            edges.insert((n, v, OrderedF64::from(0.0)));
+            edges.insert(Triple(n, v, OrderedF64::from(0.0)));
         }
 
         (WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges), n)
@@ -196,10 +196,10 @@ pub mod JohnsonMtEphFloat {
         for u in 0..n {
             let p_u = *potentials.nth(u);
             for v_w in graph.out_neighbors_weighted(&u).iter() {
-                let (v, w) = v_w;
+                let Pair(v, w) = v_w;
                 let p_v = *potentials.nth(*v);
                 let w_prime = OrderedF64::from(w.0 + p_u.0 - p_v.0);
-                reweighted_edges.insert((u, *v, w_prime));
+                reweighted_edges.insert(Triple(u, *v, w_prime));
             }
         }
 

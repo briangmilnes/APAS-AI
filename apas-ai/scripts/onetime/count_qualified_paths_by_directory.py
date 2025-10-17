@@ -5,6 +5,9 @@ Count files with qualified path violations by directory.
 Runs review_qualified_paths.py and counts unique files per directory.
 Used to plan the fix_qualified_paths batch processing.
 """
+# Git commit: 36369123a0ba7c655eae6bf92acf6645f75a8ee6
+# Date: 2025-10-16 10:25:14 -0700
+
 
 import subprocess
 

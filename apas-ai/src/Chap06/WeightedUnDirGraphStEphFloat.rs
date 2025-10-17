@@ -26,7 +26,7 @@
 //! // Query operations
 //! let weight = graph.get_edge_weight(&"A", &"B"); // Returns Option<OrderedFloat<f64>>
 //! let total = graph.total_weight(); // Returns OrderedFloat<f64>
-//! let neighbors = graph.neighbors_weighted(&"A"); // Returns SetStEph<(V, OrderedFloat<f64>)>
+//! let neighbors = graph.neighbors_weighted(&"A"); // Returns SetStEph<Pair<V, OrderedFloat<f64>>>
 //! ```
 
 pub mod WeightedUnDirGraphStEphFloat {
@@ -45,10 +45,10 @@ pub mod WeightedUnDirGraphStEphFloat {
         /// Create from vertices and weighted edges
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
-        pub fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<(V, V, OrderedFloat<f64>)>) -> Self {
+        pub fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<Triple<V, V, OrderedFloat<f64>>>) -> Self {
             let labeled_edges = edges
                 .iter()
-                .map(|(v1, v2, weight)| LabEdge(v1.clone(), v2.clone(), *weight))
+                .map(|Triple(v1, v2, weight)| LabEdge(v1.clone(), v2.clone(), *weight))
                 .collect::<Vec<_>>();
 
             let mut edge_set = SetStEph::empty();
@@ -76,10 +76,10 @@ pub mod WeightedUnDirGraphStEphFloat {
         /// Get all weighted edges as (v1, v2, weight) tuples
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential map
-        pub fn weighted_edges(&self) -> SetStEph<(V, V, OrderedFloat<f64>)> {
+        pub fn weighted_edges(&self) -> SetStEph<Triple<V, V, OrderedFloat<f64>>> {
             let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_edges().iter() {
-                edges.insert((labeled_edge.0.clone(), labeled_edge.1.clone(), labeled_edge.2));
+                edges.insert(Triple(labeled_edge.0.clone(), labeled_edge.1.clone(), labeled_edge.2));
             }
             edges
         }
@@ -87,13 +87,13 @@ pub mod WeightedUnDirGraphStEphFloat {
         /// Get neighbors with weights
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential filter
-        pub fn neighbors_weighted(&self, v: &V) -> SetStEph<(V, OrderedFloat<f64>)> {
+        pub fn neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>> {
             let mut neighbors = SetStEph::empty();
             for labeled_edge in self.labeled_edges().iter() {
                 if labeled_edge.0 == *v {
-                    neighbors.insert((labeled_edge.1.clone(), labeled_edge.2));
+                    neighbors.insert(Pair(labeled_edge.1.clone(), labeled_edge.2));
                 } else if labeled_edge.1 == *v {
-                    neighbors.insert((labeled_edge.0.clone(), labeled_edge.2));
+                    neighbors.insert(Pair(labeled_edge.0.clone(), labeled_edge.2));
                 }
             }
             neighbors
@@ -157,6 +157,8 @@ pub mod WeightedUnDirGraphStEphFloat {
         }
     }
 
+    /// Macro accepts raw tuple syntax: `E: [(v1, v2, weight), ...]`
+    /// Internally wraps each edge as `Triple(v1, v2, OrderedFloat(weight))` for StT compliance.
     #[macro_export]
     macro_rules! WeightedUnDirGraphStEphFloatLit {
         () => {{
@@ -164,7 +166,7 @@ pub mod WeightedUnDirGraphStEphFloat {
         }};
         ( V: [ $( $v:expr ),* $(,)? ], E: [ $( ($v1:expr, $v2:expr, $weight:expr) ),* $(,)? ] ) => {{
             let vertices = $crate::SetLit![ $( $v ),* ];
-            let edges = $crate::SetLit![ $( ($v1, $v2, OrderedFloat($weight as f64)) ),* ];
+            let edges = $crate::SetLit![ $( Triple($v1, $v2, OrderedFloat($weight as f64)) ),* ];
             $crate::Chap06::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::from_weighted_edges(vertices, edges)
         }};
     }

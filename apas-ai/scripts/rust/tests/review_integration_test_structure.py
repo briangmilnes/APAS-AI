@@ -8,6 +8,9 @@ root level of the file. NEVER use #[cfg(test)] modules in integration test files
 
 Checks all files in tests/ directory for #[cfg(test)] module usage.
 """
+# Git commit: d60f4ab6c5f3dcbb5e3df3c0f84a194c90789507
+# Date: 2025-10-14 16:49:48 -0700
+
 
 import sys
 from pathlib import Path

@@ -25,7 +25,7 @@ fn bench_weighted_dir_graph_mt_eph_float(c: &mut Criterion) {
             for i in 0..len {
                 for j in 0..3 {
                     let target = (i + j + 1) % len;
-                    edges.insert((i, target, OrderedF64::from(i as f64 * 0.5)));
+                    edges.insert(Triple(i, target, OrderedF64::from(i as f64 * 0.5)));
                 }
             }
             let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
@@ -41,7 +41,7 @@ fn bench_weighted_dir_graph_mt_eph_float(c: &mut Criterion) {
         let mut edges = SetStEph::empty();
         for i in 0..len {
             let target = (i + 1) % len;
-            edges.insert((i, target, OrderedF64::from(i as f64 * 0.1)));
+            edges.insert(Triple(i, target, OrderedF64::from(i as f64 * 0.1)));
         }
         let g = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
 

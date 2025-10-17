@@ -114,12 +114,12 @@ pub mod JohnsonStEphInt {
         // Copy all original edges
         let mut edges = SetStEph::empty();
         for LabEdge(from, to, weight) in graph.labeled_arcs().iter() {
-            edges.insert((*from, *to, *weight));
+            edges.insert(Triple(*from, *to, *weight));
         }
 
         // Add zero-weight edges from dummy to all original vertices
         for i in 0..n {
-            edges.insert((dummy_idx, i, 0));
+            edges.insert(Triple(dummy_idx, i, 0));
         }
 
         (
@@ -144,7 +144,7 @@ pub mod JohnsonStEphInt {
             let p_from = *potentials.nth(*from);
             let p_to = *potentials.nth(*to);
             let new_weight = (*weight as i64 + p_from - p_to) as i32;
-            edges.insert((*from, *to, new_weight));
+            edges.insert(Triple(*from, *to, new_weight));
         }
 
         WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges)

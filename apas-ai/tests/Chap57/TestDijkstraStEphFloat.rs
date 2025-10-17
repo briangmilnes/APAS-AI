@@ -6,6 +6,7 @@ use ordered_float::OrderedFloat;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat;
 use apas_ai::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::dijkstra;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_simple_path() {
@@ -15,9 +16,9 @@ fn test_simple_path() {
     }
 
     let mut edges = SetStEph::empty();
-    edges.insert((0, 1, OrderedFloat(1.0)));
-    edges.insert((0, 2, OrderedFloat(3.0)));
-    edges.insert((1, 2, OrderedFloat(1.0)));
+    edges.insert(Triple(0, 1, OrderedFloat(1.0)));
+    edges.insert(Triple(0, 2, OrderedFloat(3.0)));
+    edges.insert(Triple(1, 2, OrderedFloat(1.0)));
 
     let graph = WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges);
     let result = dijkstra(&graph, 0);
@@ -35,13 +36,13 @@ fn test_complex_graph() {
     }
 
     let mut edges = SetStEph::empty();
-    edges.insert((0, 1, OrderedFloat(1.0)));
-    edges.insert((0, 2, OrderedFloat(5.0)));
-    edges.insert((1, 2, OrderedFloat(2.0)));
-    edges.insert((1, 3, OrderedFloat(12.0)));
-    edges.insert((2, 3, OrderedFloat(2.0)));
-    edges.insert((2, 4, OrderedFloat(3.0)));
-    edges.insert((3, 4, OrderedFloat(1.0)));
+    edges.insert(Triple(0, 1, OrderedFloat(1.0)));
+    edges.insert(Triple(0, 2, OrderedFloat(5.0)));
+    edges.insert(Triple(1, 2, OrderedFloat(2.0)));
+    edges.insert(Triple(1, 3, OrderedFloat(12.0)));
+    edges.insert(Triple(2, 3, OrderedFloat(2.0)));
+    edges.insert(Triple(2, 4, OrderedFloat(3.0)));
+    edges.insert(Triple(3, 4, OrderedFloat(1.0)));
 
     let graph = WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges);
     let result = dijkstra(&graph, 0);
@@ -75,8 +76,8 @@ fn test_disconnected_graph() {
     }
 
     let mut edges = SetStEph::empty();
-    edges.insert((0, 1, OrderedFloat(1.0)));
-    edges.insert((2, 3, OrderedFloat(1.0)));
+    edges.insert(Triple(0, 1, OrderedFloat(1.0)));
+    edges.insert(Triple(2, 3, OrderedFloat(1.0)));
 
     let graph = WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges);
     let result = dijkstra(&graph, 0);
