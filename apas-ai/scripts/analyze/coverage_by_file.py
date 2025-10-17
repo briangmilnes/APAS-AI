@@ -3,8 +3,8 @@
 Generate coverage report by source file showing line coverage.
 This is more accurate than function counts.
 """
-# Git commit: 2dc0ba3f9f83e0b0333d29bbf27bb25509ad477b
-# Date: 2025-10-15 12:01:24 -0700
+# Git commit: 143f8b97182512ad358b60e1842552c21e868167
+# Date: 2025-10-17 05:14:32 -0700
 
 
 import sys

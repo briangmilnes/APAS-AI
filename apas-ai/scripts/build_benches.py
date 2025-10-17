@@ -2,8 +2,8 @@
 """
 Builds all benchmarks without running them using cargo bench --no-run.
 """
-# Git commit: bbb60b54de5c4f85b06c43d0b4173e9d4a66bbad
-# Date: 2025-10-14 15:17:28 -0700
+# Git commit: 143f8b97182512ad358b60e1842552c21e868167
+# Date: 2025-10-17 05:14:32 -0700
 
 
 import subprocess

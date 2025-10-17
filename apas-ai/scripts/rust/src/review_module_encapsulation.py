@@ -8,8 +8,8 @@ block. Exceptions: src/main.rs (fn main), src/lib.rs (module declarations)."
 
 Checks src/ for code outside module blocks.
 """
-# Git commit: d60f4ab6c5f3dcbb5e3df3c0f84a194c90789507
-# Date: 2025-10-14 16:49:48 -0700
+# Git commit: 143f8b97182512ad358b60e1842552c21e868167
+# Date: 2025-10-17 05:14:32 -0700
 
 
 import sys

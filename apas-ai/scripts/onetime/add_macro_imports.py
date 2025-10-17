@@ -3,6 +3,9 @@
 Script to add macro imports to test files for modules that have macros.
 Usage: python3 add_macro_imports.py <src_file>
 """
+# Git commit: cbe3b405b7a8de0ade877822c22c92a46baf9a90
+# Date: 2025-10-17 05:14:50 -0700
+
 
 import sys
 import re

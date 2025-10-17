@@ -5,8 +5,8 @@ Review: Copyright header on line 1.
 APASRules.md Lines 190-195: "Always put this copyright in on line 1:
 '//! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.'"
 """
-# Git commit: 27d5172c6a7bdef7ac1403a7f853f3de2d11fc1b
-# Date: 2025-10-14 17:37:55 -0700
+# Git commit: 143f8b97182512ad358b60e1842552c21e868167
+# Date: 2025-10-17 05:14:32 -0700
 
 
 import sys
