@@ -13,6 +13,7 @@ pub mod DijkstraStEphFloat {
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
 
+    use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
     use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat;
     use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;

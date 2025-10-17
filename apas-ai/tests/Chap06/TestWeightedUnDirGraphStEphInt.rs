@@ -1,6 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chap06 WeightedUnDirGraphStEphInt.
 
+use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEphTrait;
 use apas_ai::Chap06::WeightedUnDirGraphStEphInt::WeightedUnDirGraphStEphInt::*;
 use apas_ai::SetLit;

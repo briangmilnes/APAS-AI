@@ -50,7 +50,7 @@ pub mod MappingStEph {
         fn iter(&self)                           -> Iter<'_, Pair<X, Y>>;
     }
 
-    impl<A: Eq + Hash, B: Eq + Hash> MappingStEph<A, B> {
+    impl<A: StT + Hash, B: StT + Hash> MappingStEph<A, B> {
         fn unique_pairs_from_iter<I: IntoIterator<Item = Pair<A, B>>>(iter: I) -> SetStEph<Pair<A, B>> {
             let mut m: HashMap<A, B> = HashMap::new();
             for Pair(a, b) in iter {

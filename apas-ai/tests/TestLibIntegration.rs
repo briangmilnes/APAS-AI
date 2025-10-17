@@ -1,6 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Integration tests for lib.rs module structure and exports.
 
+use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::{ArraySeqStPerSLit};
 
 #[test]
