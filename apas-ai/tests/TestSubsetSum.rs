@@ -2,7 +2,9 @@
 //! Tests for Subset Sum.
 
 use apas_ai::{
-    ArraySeqMtEphSLit, ArraySeqStEphS, ArraySeqStPerS, Chap49::SubsetSumMtEph::SubsetSumMtEph::*,
+    ArraySeqMtEphSLit, ArraySeqStEphS, ArraySeqStPerS,
+    Chap18::ArraySeqMtEph::ArraySeqMtEph::*,
+    Chap49::SubsetSumMtEph::SubsetSumMtEph::*,
     Chap49::SubsetSumMtPer::SubsetSumMtPer::*, Chap49::SubsetSumStEph::SubsetSumStEph::*,
     Chap49::SubsetSumStPer::SubsetSumStPer::*, SubsetSumMtEphLit, SubsetSumMtPerLit, SubsetSumStEphLit,
     SubsetSumStPerLit, Types::Types::*

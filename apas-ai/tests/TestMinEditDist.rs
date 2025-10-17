@@ -2,7 +2,9 @@
 //! Tests for Minimum Edit Distance.
 
 use apas_ai::{
-    ArraySeqMtEphSLit, ArraySeqStEphS, ArraySeqStPerS, Chap49::MinEditDistMtEph::MinEditDistMtEph::*,
+    ArraySeqMtEphSLit, ArraySeqStEphS, ArraySeqStPerS,
+    Chap18::ArraySeqMtEph::ArraySeqMtEph::*,
+    Chap49::MinEditDistMtEph::MinEditDistMtEph::*,
     Chap49::MinEditDistMtPer::MinEditDistMtPer::*, Chap49::MinEditDistStEph::MinEditDistStEph::*,
     Chap49::MinEditDistStPer::MinEditDistStPer::*, MinEditDistMtEphLit, MinEditDistMtPerLit, MinEditDistStEphLit,
     MinEditDistStPerLit, Types::Types::*
