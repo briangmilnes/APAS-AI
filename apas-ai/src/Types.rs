@@ -41,6 +41,16 @@ use std::sync::Mutex;
         }
     }
 
+    // Quadruple wrapper for four-element tuples
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct Quadruple<A, B, C, D>(pub A, pub B, pub C, pub D);
+
+    impl<A: Display, B: Display, C: Display, D: Display> Display for Quadruple<A, B, C, D> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "({}, {}, {}, {})", self.0, self.1, self.2, self.3)
+        }
+    }
+
     // Key-value struct with named fields
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct KeyVal<K, V> {

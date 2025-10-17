@@ -21,7 +21,7 @@ fn test_weightedundirgraphstephfloatlit_macro_functionality() {
     // Test graph creation with weighted edges
     let with_data = WeightedUnDirGraphStEphFloatLit!(
         V: [1, 2, 3],
-        E: [(1, 2, 1.5), (2, 3, 2.5), (3, 1, 3.5)]
+        E: [Triple(1, 2, OrderedFloat(1.5)), Triple(2, 3, OrderedFloat(2.5)), Triple(3, 1, OrderedFloat(3.5))]
     );
     assert_eq!(with_data.vertices().size(), 3);
     assert_eq!(with_data.edges().size(), 3);
@@ -63,7 +63,7 @@ fn test_get_edge_weight() {
 fn test_weighted_edges() {
     let graph = WeightedUnDirGraphStEphFloatLit!(
         V: [1, 2, 3],
-        E: [(1, 2, 5.5), (2, 3, 10.5)]
+        E: [Triple(1, 2, OrderedFloat(5.5)), Triple(2, 3, OrderedFloat(10.5))]
     );
 
     let edges = graph.weighted_edges();
@@ -74,7 +74,7 @@ fn test_weighted_edges() {
 fn test_neighbors_weighted() {
     let graph = WeightedUnDirGraphStEphFloatLit!(
         V: [1, 2, 3, 4],
-        E: [(1, 2, 5.5), (1, 3, 10.5), (2, 4, 15.5)]
+        E: [Triple(1, 2, OrderedFloat(5.5)), Triple(1, 3, OrderedFloat(10.5)), Triple(2, 4, OrderedFloat(15.5))]
     );
 
     let neighbors_1 = graph.neighbors_weighted(&1);
@@ -91,7 +91,7 @@ fn test_neighbors_weighted() {
 fn test_total_weight() {
     let graph = WeightedUnDirGraphStEphFloatLit!(
         V: [1, 2, 3],
-        E: [(1, 2, 10.0), (2, 3, 20.0), (3, 1, 30.0)]
+        E: [Triple(1, 2, OrderedFloat(10.0)), Triple(2, 3, OrderedFloat(20.0)), Triple(3, 1, OrderedFloat(30.0))]
     );
 
     assert!((graph.total_weight().0 - 60.0).abs() < 0.001);
@@ -101,7 +101,7 @@ fn test_total_weight() {
 fn test_vertex_degree() {
     let graph = WeightedUnDirGraphStEphFloatLit!(
         V: [1, 2, 3, 4],
-        E: [(1, 2, 5.0), (1, 3, 10.0), (1, 4, 15.0)]
+        E: [Triple(1, 2, OrderedFloat(5.0)), Triple(1, 3, OrderedFloat(10.0)), Triple(1, 4, OrderedFloat(15.0))]
     );
 
     assert_eq!(graph.vertex_degree(&1), 3);
@@ -118,7 +118,7 @@ fn test_is_connected_single_vertex() {
 
 #[test]
 fn test_is_connected_two_vertices() {
-    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [(1, 2, 10.0)]);
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [Triple(1, 2, OrderedFloat(10.0))]);
     assert!(graph.is_connected());
 }
 
@@ -134,7 +134,7 @@ fn test_is_connected_disconnected() {
 fn test_is_connected_fully_connected() {
     let graph = WeightedUnDirGraphStEphFloatLit!(
         V: [1, 2, 3],
-        E: [(1, 2, 5.0), (2, 3, 10.0), (3, 1, 15.0)]
+        E: [Triple(1, 2, OrderedFloat(5.0)), Triple(2, 3, OrderedFloat(10.0)), Triple(3, 1, OrderedFloat(15.0))]
     );
     assert!(graph.is_connected());
 }
@@ -192,7 +192,7 @@ fn test_fractional_weights() {
 fn test_min_weight_edge() {
     let graph = WeightedUnDirGraphStEphFloatLit!(
         V: [1, 2, 3, 4],
-        E: [(1, 2, 5.0), (2, 3, 2.0), (3, 4, 8.0)]
+        E: [Triple(1, 2, OrderedFloat(5.0)), Triple(2, 3, OrderedFloat(2.0)), Triple(3, 4, OrderedFloat(8.0))]
     );
 
     let min_edge = graph.min_weight_edge().unwrap();
@@ -203,7 +203,7 @@ fn test_min_weight_edge() {
 fn test_max_weight_edge() {
     let graph = WeightedUnDirGraphStEphFloatLit!(
         V: [1, 2, 3, 4],
-        E: [(1, 2, 5.0), (2, 3, 2.0), (3, 4, 8.0)]
+        E: [Triple(1, 2, OrderedFloat(5.0)), Triple(2, 3, OrderedFloat(2.0)), Triple(3, 4, OrderedFloat(8.0))]
     );
 
     let max_edge = graph.max_weight_edge().unwrap();
@@ -230,7 +230,7 @@ fn test_undirected_edge_symmetry() {
 
 #[test]
 fn test_vertices_method() {
-    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3, 4], E: [(1, 2, 1.0), (3, 4, 2.0)]);
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3, 4], E: [Triple(1, 2, OrderedFloat(1.0)), Triple(3, 4, OrderedFloat(2.0))]);
     let verts = graph.vertices();
     assert_eq!(verts.size(), 4);
     assert!(verts.mem(&1));
@@ -239,14 +239,14 @@ fn test_vertices_method() {
 
 #[test]
 fn test_edges_method() {
-    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3], E: [(1, 2, 5.0), (2, 3, 10.0)]);
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3], E: [Triple(1, 2, OrderedFloat(5.0)), Triple(2, 3, OrderedFloat(10.0))]);
     let edges = graph.edges();
     assert_eq!(edges.size(), 2);
 }
 
 #[test]
 fn test_neighbors_method() {
-    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3, 4], E: [(1, 2, 1.0), (1, 3, 2.0), (1, 4, 3.0)]);
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3, 4], E: [Triple(1, 2, OrderedFloat(1.0)), Triple(1, 3, OrderedFloat(2.0)), Triple(1, 4, OrderedFloat(3.0))]);
     let neighbors = graph.neighbors(&1);
     assert_eq!(neighbors.size(), 3);
     assert!(neighbors.mem(&2));
@@ -256,7 +256,7 @@ fn test_neighbors_method() {
 
 #[test]
 fn test_has_vertex() {
-    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3], E: [(1, 2, 1.0)]);
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3], E: [Triple(1, 2, OrderedFloat(1.0))]);
     assert!(graph.vertices().mem(&1));
     assert!(graph.vertices().mem(&2));
     assert!(!graph.vertices().mem(&99));
@@ -264,7 +264,7 @@ fn test_has_vertex() {
 
 #[test]
 fn test_has_edge() {
-    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3], E: [(1, 2, 1.0), (2, 3, 2.0)]);
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2, 3], E: [Triple(1, 2, OrderedFloat(1.0)), Triple(2, 3, OrderedFloat(2.0))]);
     assert!(graph.get_edge_weight(&1, &2).is_some());
     assert!(graph.get_edge_weight(&2, &1).is_some()); // Undirected
     assert!(graph.get_edge_weight(&2, &3).is_some());
@@ -289,7 +289,7 @@ fn test_large_graph() {
 fn test_cycle_graph() {
     let graph = WeightedUnDirGraphStEphFloatLit!(
         V: [1, 2, 3, 4],
-        E: [(1,2,1.0), (2,3,1.0), (3,4,1.0), (4,1,1.0)]
+        E: [Triple(1, 2, OrderedFloat(1.0)), Triple(2, 3, OrderedFloat(1.0)), Triple(3, 4, OrderedFloat(1.0)), Triple(4, 1, OrderedFloat(1.0))]
     );
     assert_eq!(graph.edges().size(), 4);
     for i in 1..=4 {
@@ -331,7 +331,7 @@ fn test_duplicate_edge_addition() {
 fn test_string_vertices() {
     let graph = WeightedUnDirGraphStEphFloatLit!(
         V: ["New York", "Boston", "Philadelphia"],
-        E: [("New York", "Boston", 215.0), ("Boston", "Philadelphia", 305.0)]
+        E: [Triple("New York", "Boston", OrderedFloat(215.0)), Triple("Boston", "Philadelphia", OrderedFloat(305.0))]
     );
     assert_eq!(graph.vertices().size(), 3);
     assert_eq!(graph.edges().size(), 2);
@@ -363,7 +363,7 @@ fn test_vertex_degree_zero() {
 fn test_complete_graph_k4() {
     let graph = WeightedUnDirGraphStEphFloatLit!(
         V: [1, 2, 3, 4],
-        E: [(1,2,1.0), (1,3,1.0), (1,4,1.0), (2,3,1.0), (2,4,1.0), (3,4,1.0)]
+        E: [Triple(1, 2, OrderedFloat(1.0)), Triple(1, 3, OrderedFloat(1.0)), Triple(1, 4, OrderedFloat(1.0)), Triple(2, 3, OrderedFloat(1.0)), Triple(2, 4, OrderedFloat(1.0)), Triple(3, 4, OrderedFloat(1.0))]
     );
     assert_eq!(graph.edges().size(), 6);
     for i in 1..=4 {
@@ -376,7 +376,7 @@ fn test_complete_graph_k4() {
 fn test_path_graph() {
     let graph = WeightedUnDirGraphStEphFloatLit!(
         V: [1, 2, 3, 4, 5],
-        E: [(1,2,1.0), (2,3,2.0), (3,4,3.0), (4,5,4.0)]
+        E: [Triple(1, 2, OrderedFloat(1.0)), Triple(2, 3, OrderedFloat(2.0)), Triple(3, 4, OrderedFloat(3.0)), Triple(4, 5, OrderedFloat(4.0))]
     );
     assert!(graph.is_connected());
     assert_eq!(graph.vertex_degree(&1), 1);
@@ -387,7 +387,7 @@ fn test_path_graph() {
 fn test_star_graph() {
     let graph = WeightedUnDirGraphStEphFloatLit!(
         V: [0, 1, 2, 3, 4],
-        E: [(0,1,1.0), (0,2,2.0), (0,3,3.0), (0,4,4.0)]
+        E: [Triple(0, 1, OrderedFloat(1.0)), Triple(0, 2, OrderedFloat(2.0)), Triple(0, 3, OrderedFloat(3.0)), Triple(0, 4, OrderedFloat(4.0))]
     );
     assert_eq!(graph.vertex_degree(&0), 4);
     for i in 1..=4 {
@@ -416,7 +416,7 @@ fn test_very_small_weight() {
 
 #[test]
 fn test_display_format() {
-    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [(1, 2, PI)]);
+    let graph = WeightedUnDirGraphStEphFloatLit!(V: [1, 2], E: [Triple(1, 2, OrderedFloat(PI))]);
     let display_str = format!("{graph}");
     assert!(!display_str.is_empty());
 }

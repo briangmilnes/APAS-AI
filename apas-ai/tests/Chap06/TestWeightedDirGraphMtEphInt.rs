@@ -19,7 +19,7 @@ fn test_weighteddirgraphmtephintlit_macro_functionality() {
     // Test graph creation with weighted edges
     let with_data = WeightedDirGraphMtEphIntLit!(
         V: [1, 2, 3],
-        E: [(1, 2, 10), (2, 3, 20), (3, 1, 30)]
+        E: [Triple(1, 2, 10), Triple(2, 3, 20), Triple(3, 1, 30)]
     );
     assert_eq!(with_data.vertices().size(), 3);
     assert_eq!(with_data.arcs().size(), 3);

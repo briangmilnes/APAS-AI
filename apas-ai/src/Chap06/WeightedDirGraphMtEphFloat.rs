@@ -181,16 +181,16 @@ pub mod WeightedDirGraphMtEphFloat {
         }
     }
 
-    /// Macro accepts raw tuple syntax: `A: [(from, to, weight), ...]`
-    /// Internally wraps each arc as `Triple(from, to, OrderedFloat(weight))` for StT compliance.
+    /// Macro requires explicit Triple wrappers: `A: [Triple(from, to, OrderedFloat(weight)), ...]`
+    /// No automatic wrapping - enforces type safety at call site.
     #[macro_export]
     macro_rules! WeightedDirGraphMtEphFloatLit {
         () => {{
             $crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::LabDirGraphMtEph::empty()
         }};
-        ( V: [ $( $v:expr ),* $(,)? ], A: [ $( ($from:expr, $to:expr, $weight:expr) ),* $(,)? ] ) => {{
+        ( V: [ $( $v:expr ),* $(,)? ], A: [ $( $arc:expr ),* $(,)? ] ) => {{
             let vertices = $crate::SetLit![ $( $v ),* ];
-            let arcs = $crate::SetLit![ $( Triple($from, $to, OrderedFloat($weight as f64)) ),* ];
+            let arcs = $crate::SetLit![ $( $arc ),* ];
             $crate::Chap06::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, arcs)
         }};
     }

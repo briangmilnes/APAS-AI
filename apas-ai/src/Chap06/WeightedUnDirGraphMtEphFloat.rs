@@ -134,16 +134,16 @@ pub mod WeightedUnDirGraphMtEphFloat {
         pub fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
     }
 
-    /// Macro accepts raw tuple syntax: `E: [(v1, v2, weight), ...]`
-    /// Internally wraps each edge as `Triple(v1, v2, OrderedFloat(weight))` for StT compliance.
+    /// Macro requires explicit Triple wrappers: `E: [Triple(v1, v2, OrderedFloat(weight)), ...]`
+    /// No automatic wrapping - enforces type safety at call site.
     #[macro_export]
     macro_rules! WeightedUnDirGraphMtEphFloatLit {
         () => {{
             $crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::LabUnDirGraphMtEph::empty()
         }};
-        ( V: [ $( $v:expr ),* $(,)? ], E: [ $( ($v1:expr, $v2:expr, $weight:expr) ),* $(,)? ] ) => {{
+        ( V: [ $( $v:expr ),* $(,)? ], E: [ $( $edge:expr ),* $(,)? ] ) => {{
             let vertices = $crate::SetLit![ $( $v ),* ];
-            let edges = $crate::SetLit![ $( Triple($v1, $v2, OrderedFloat($weight as f64)) ),* ];
+            let edges = $crate::SetLit![ $( $edge ),* ];
             $crate::Chap06::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::from_weighted_edges(vertices, edges)
         }};
     }

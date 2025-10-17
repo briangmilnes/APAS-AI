@@ -24,7 +24,7 @@ fn bench_boruvka_complete(c: &mut Criterion) {
         for i in 0..n {
             for j in (i + 1)..n {
                 let weight = OrderedFloat(((i * 7 + j * 11) % 20 + 1) as f64);
-                let _ = edges.insert((i, j, weight, label));
+                let _ = edges.insert(LabeledEdge(i, j, weight, label));
                 label += 1;
             }
         }
@@ -62,9 +62,9 @@ fn bench_boruvka_sparse(c: &mut Criterion) {
             let k = (i + 2) % n;
             let w1 = OrderedFloat(((i * 7) % 10 + 1) as f64);
             let w2 = OrderedFloat(((i * 11) % 10 + 1) as f64);
-            let _ = edges.insert((i, j, w1, label));
+            let _ = edges.insert(LabeledEdge(i, j, w1, label));
             label += 1;
-            let _ = edges.insert((i, k, w2, label));
+            let _ = edges.insert(LabeledEdge(i, k, w2, label));
             label += 1;
         }
 
@@ -97,7 +97,7 @@ fn bench_boruvka_path(c: &mut Criterion) {
         // Path graph
         for i in 0..(n - 1) {
             let weight = OrderedFloat((i % 10 + 1) as f64);
-            let _ = edges.insert((i, i + 1, weight, i));
+            let _ = edges.insert(LabeledEdge(i, i + 1, weight, i));
         }
 
         let mut vertices_set = SetLit![];
@@ -129,7 +129,7 @@ fn bench_boruvka_star(c: &mut Criterion) {
         // Star graph: center 0 connected to all others
         for i in 1..n {
             let weight = OrderedFloat((i % 10 + 1) as f64);
-            let _ = edges.insert((0, i, weight, i - 1));
+            let _ = edges.insert(LabeledEdge(0, i, weight, i - 1));
         }
 
         let mut vertices_set = SetLit![];
@@ -163,7 +163,7 @@ fn bench_mst_weight_st(c: &mut Criterion) {
     for i in 0..n {
         for j in (i + 1)..n {
             let weight = OrderedFloat(((i * 7 + j * 11) % 20 + 1) as f64);
-            let _ = edges.insert((i, j, weight, label));
+            let _ = edges.insert(LabeledEdge(i, j, weight, label));
             label += 1;
         }
     }

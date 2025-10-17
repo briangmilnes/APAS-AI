@@ -3,8 +3,8 @@
 Script to move #[allow(dead_code)] fn _*_type_checks() functions from src files to test files.
 Usage: python3 move_macro_deadcode_tests.py <src_file>
 """
-# Git commit: cbe3b405b7a8de0ade877822c22c92a46baf9a90
-# Date: 2025-10-17 05:14:50 -0700
+# Git commit: 584a672b6a34782766863c5f76a461d3297a741a
+# Date: 2025-10-17 05:17:36 -0700
 
 
 import sys

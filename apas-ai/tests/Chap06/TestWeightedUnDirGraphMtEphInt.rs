@@ -20,7 +20,7 @@ fn test_weightedundirgraphmtephintlit_macro_functionality() {
     // Test graph creation with vertices and edges
     let with_data: WeightedUnDirGraphMtEphInt<i32> = WeightedUnDirGraphMtEphIntLit!(
         V: [1, 2, 3],
-        E: [(1, 2, 10), (2, 3, 20)]
+        E: [Triple(1, 2, 10), Triple(2, 3, 20)]
     );
     assert_eq!(with_data.vertices().size(), 3);
     assert_eq!(with_data.labeled_edges().size(), 2);

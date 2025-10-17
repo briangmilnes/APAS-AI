@@ -3,8 +3,8 @@
 Script to rename ArraySeqS! macro calls to ArraySeqSLit! for consistency.
 Usage: python3 fix_arrayseq_macro.py <file1> <file2> ...
 """
-# Git commit: cbe3b405b7a8de0ade877822c22c92a46baf9a90
-# Date: 2025-10-17 05:14:50 -0700
+# Git commit: 584a672b6a34782766863c5f76a461d3297a741a
+# Date: 2025-10-17 05:17:36 -0700
 
 
 import sys

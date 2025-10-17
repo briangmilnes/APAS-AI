@@ -21,7 +21,7 @@ fn test_weighteddirgraphstephfloatlit_macro_functionality() {
     // Test graph creation with weighted edges
     let with_data = WeightedDirGraphStEphFloatLit!(
         V: [1, 2, 3],
-        A: [(1, 2, 1.5), (2, 3, 2.5), (3, 1, 3.5)]
+        A: [Triple(1, 2, OrderedFloat(1.5)), Triple(2, 3, OrderedFloat(2.5)), Triple(3, 1, OrderedFloat(3.5))]
     );
     assert_eq!(with_data.vertices().size(), 3);
     assert_eq!(with_data.arcs().size(), 3);

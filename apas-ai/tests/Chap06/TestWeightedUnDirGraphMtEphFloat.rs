@@ -25,7 +25,7 @@ fn test_weightedundirgraphmtephfloatlit_macro_functionality() {
     // Test graph creation with vertices and edges
     let with_data: WeightedUnDirGraphMtEphFloat<i32> = WeightedUnDirGraphMtEphFloatLit!(
         V: [1, 2, 3],
-        E: [(1, 2, 1.5), (2, 3, 2.0)]
+        E: [Triple(1, 2, OrderedFloat(1.5)), Triple(2, 3, OrderedFloat(2.0))]
     );
     assert_eq!(with_data.vertices().size(), 3);
     assert_eq!(with_data.labeled_edges().size(), 2);

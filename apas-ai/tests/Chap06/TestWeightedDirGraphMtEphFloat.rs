@@ -25,7 +25,7 @@ fn test_weighteddirgraphmtephfloatlit_macro_functionality() {
     // Test graph creation with vertices and arcs
     let with_data: WeightedDirGraphMtEphFloat<i32> = WeightedDirGraphMtEphFloatLit!(
         V: [1, 2, 3],
-        A: [(1, 2, 1.5), (2, 3, 2.0)]
+        A: [Triple(1, 2, OrderedFloat(1.5)), Triple(2, 3, OrderedFloat(2.0))]
     );
     assert_eq!(with_data.vertices().size(), 3);
     assert_eq!(with_data.labeled_arcs().size(), 2);

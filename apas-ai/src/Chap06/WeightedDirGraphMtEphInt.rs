@@ -166,16 +166,16 @@ pub mod WeightedDirGraphMtEphInt {
         pub fn total_weight(&self) -> i32 { self.labeled_arcs().iter().map(|edge| edge.2).sum() }
     }
 
-    /// Macro accepts raw tuple syntax: `E: [(from, to, weight), ...]`
-    /// Internally wraps each edge as `Triple(from, to, weight)` for StT compliance.
+    /// Macro requires explicit Triple wrappers: `E: [Triple(from, to, weight), ...]`
+    /// No automatic wrapping - enforces type safety at call site.
     #[macro_export]
     macro_rules! WeightedDirGraphMtEphIntLit {
         () => {{
             $crate::Chap06::LabDirGraphMtEph::LabDirGraphMtEph::LabDirGraphMtEph::empty()
         }};
-        ( V: [ $( $v:expr ),* $(,)? ], E: [ $( ($from:expr, $to:expr, $weight:expr) ),* $(,)? ] ) => {{
+        ( V: [ $( $v:expr ),* $(,)? ], E: [ $( $edge:expr ),* $(,)? ] ) => {{
             let vertices = $crate::SetLit![ $( $v ),* ];
-            let edges = $crate::SetLit![ $( Triple($from, $to, $weight) ),* ];
+            let edges = $crate::SetLit![ $( $edge ),* ];
             $crate::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::from_weighted_edges(vertices, edges)
         }};
     }

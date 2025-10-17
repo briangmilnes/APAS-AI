@@ -47,7 +47,16 @@ pub mod BoruvkaStEph {
 
     /// Edge with label: (u, v, weight, label)
     /// Vertices u,v change during contraction, but weight and label are immutable
-    pub type LabeledEdge<V> = (V, V, OrderedFloat<f64>, usize);
+    /// Labeled edge for Borůvka's algorithm: (from, to, weight, label_id)
+    /// Tuple struct wrapper to implement Display trait for StT compliance
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct LabeledEdge<V>(pub V, pub V, pub OrderedFloat<f64>, pub usize);
+
+    impl<V: std::fmt::Display> std::fmt::Display for LabeledEdge<V> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "({}, {}, {}, {})", self.0, self.1, self.2, self.3)
+        }
+    }
 
     /// Algorithm 66.3: Find vertex bridges
     ///
@@ -68,7 +77,7 @@ pub mod BoruvkaStEph {
         let mut bridges: HashMap<V, (V, OrderedFloat<f64>, usize)> = HashMap::new();
 
         for edge in edges.iter() {
-            let (u, v, w, label) = edge.clone();
+            let LabeledEdge(u, v, w, label) = edge.clone();
 
             // Update bridge for u
             match bridges.get(&u) {
@@ -198,13 +207,13 @@ pub mod BoruvkaStEph {
 
         // Re-route edges to new endpoints, removing self-edges
         let mut new_edges = SetLit![];
-        for (u, v, w, label) in edges.iter() {
+        for LabeledEdge(u, v, w, label) in edges.iter() {
             let new_u = full_partition.get(u).cloned().unwrap_or_else(|| u.clone());
             let new_v = full_partition.get(v).cloned().unwrap_or_else(|| v.clone());
 
             // Skip self-edges
             if new_u != new_v {
-                let _ = new_edges.insert((new_u, new_v, *w, *label));
+                let _ = new_edges.insert(LabeledEdge(new_u, new_v, *w, *label));
             }
         }
 
@@ -242,7 +251,7 @@ pub mod BoruvkaStEph {
         mst_labels: &SetStEph<usize>,
     ) -> OrderedFloat<f64> {
         let mut total = OrderedFloat(0.0);
-        for (_, _, w, label) in edges.iter() {
+        for LabeledEdge(_, _, w, label) in edges.iter() {
             if mst_labels.mem(label) {
                 total += *w;
             }

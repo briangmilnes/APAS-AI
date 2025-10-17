@@ -245,7 +245,7 @@ fn test_weighteddirgraphstephintlit_macro_empty() {
 fn test_weighteddirgraphstephintlit_macro_simple() {
     let g = WeightedDirGraphStEphIntLit!(
         V: [1, 2, 3],
-        E: [(1, 2, 10), (2, 3, 20)]
+        E: [Triple(1, 2, 10), Triple(2, 3, 20)]
     );
     assert_eq!(g.vertices().size(), 3);
     assert_eq!(g.arcs().size(), 2);
@@ -256,7 +256,7 @@ fn test_weighteddirgraphstephintlit_macro_simple() {
 fn test_weighteddirgraphstephintlit_macro_star() {
     let g = WeightedDirGraphStEphIntLit!(
         V: [0, 1, 2, 3],
-        E: [(0, 1, 5), (0, 2, 10), (0, 3, 15)]
+        E: [Triple(0, 1, 5), Triple(0, 2, 10), Triple(0, 3, 15)]
     );
     assert_eq!(g.vertices().size(), 4);
     assert_eq!(g.out_neighbors_weighted(&0).size(), 3);
@@ -267,7 +267,7 @@ fn test_weighteddirgraphstephintlit_macro_star() {
 fn test_weighteddirgraphstephintlit_macro_trailing_comma() {
     let g = WeightedDirGraphStEphIntLit!(
         V: [1, 2, 3,],
-        E: [(1, 2, 100), (2, 3, 200),]
+        E: [Triple(1, 2, 100), Triple(2, 3, 200),]
     );
     assert_eq!(g.vertices().size(), 3);
     assert_eq!(g.total_weight(), 300);

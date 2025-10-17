@@ -106,16 +106,16 @@ pub mod WeightedDirGraphStEphInt {
         }
     }
 
-    /// Macro accepts raw tuple syntax: `E: [(from, to, weight), ...]`
-    /// Internally wraps each edge as `Triple(from, to, weight)` for StT compliance.
+    /// Macro requires explicit Triple wrappers: `E: [Triple(from, to, weight), ...]`
+    /// No automatic wrapping - enforces type safety at call site.
     #[macro_export]
     macro_rules! WeightedDirGraphStEphIntLit {
         () => {{
             $crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEph::empty()
         }};
-        ( V: [ $( $v:expr ),* $(,)? ], E: [ $( ($from:expr, $to:expr, $weight:expr) ),* $(,)? ] ) => {{
+        ( V: [ $( $v:expr ),* $(,)? ], E: [ $( $edge:expr ),* $(,)? ] ) => {{
             let vertices = $crate::SetLit![ $( $v ),* ];
-            let edges = $crate::SetLit![ $( Triple($from, $to, $weight) ),* ];
+            let edges = $crate::SetLit![ $( $edge ),* ];
             $crate::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges)
         }};
     }

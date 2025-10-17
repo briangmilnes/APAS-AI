@@ -157,16 +157,16 @@ pub mod WeightedUnDirGraphStEphFloat {
         }
     }
 
-    /// Macro accepts raw tuple syntax: `E: [(v1, v2, weight), ...]`
-    /// Internally wraps each edge as `Triple(v1, v2, OrderedFloat(weight))` for StT compliance.
+    /// Macro requires explicit Triple wrappers: `E: [Triple(v1, v2, OrderedFloat(weight)), ...]`
+    /// No automatic wrapping - enforces type safety at call site.
     #[macro_export]
     macro_rules! WeightedUnDirGraphStEphFloatLit {
         () => {{
             $crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEph::empty()
         }};
-        ( V: [ $( $v:expr ),* $(,)? ], E: [ $( ($v1:expr, $v2:expr, $weight:expr) ),* $(,)? ] ) => {{
+        ( V: [ $( $v:expr ),* $(,)? ], E: [ $( $edge:expr ),* $(,)? ] ) => {{
             let vertices = $crate::SetLit![ $( $v ),* ];
-            let edges = $crate::SetLit![ $( Triple($v1, $v2, OrderedFloat($weight as f64)) ),* ];
+            let edges = $crate::SetLit![ $( $edge ),* ];
             $crate::Chap06::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::from_weighted_edges(vertices, edges)
         }};
     }
