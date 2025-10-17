@@ -21,55 +21,6 @@ pub mod ArraySeqMtPer {
         data: Box<[T]>,
     }
 
-    impl<T: StTInMtT> ArraySeqMtPerS<T> {
-        pub fn empty() -> Self {
-            ArraySeqMtPerS {
-                data: Vec::new().into_boxed_slice(),
-            }
-        }
-
-        pub fn new(length: N, init_value: T) -> Self {
-            let mut values: Vec<T> = Vec::with_capacity(length);
-            for _ in 0..length {
-                values.push(init_value.clone());
-            }
-            ArraySeqMtPerS::from_vec(values)
-        }
-
-        pub fn singleton(item: T) -> Self { ArraySeqMtPerS::from_vec(vec![item]) }
-
-        pub fn from_vec(values: Vec<T>) -> Self {
-            ArraySeqMtPerS {
-                data: values.into_boxed_slice(),
-            }
-        }
-
-        pub fn length(&self) -> N { self.data.len() }
-
-        pub fn nth(&self, index: N) -> &T { &self.data[index] }
-
-        pub fn subseq_copy(&self, start: N, length: N) -> Self {
-            let n = self.data.len();
-            let s = start.min(n);
-            let e = start.saturating_add(length).min(n);
-            let values: Vec<T> = self.data[s..e].to_vec();
-            ArraySeqMtPerS::from_vec(values)
-        }
-
-        pub fn is_empty(&self) -> B { self.data.is_empty() }
-
-        pub fn is_singleton(&self) -> B { self.data.len() == 1 }
-
-        /// Iterator over references to elements
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
-    }
-
-
-
-
-
-
-
     pub trait ArraySeqMtPerTrait<T: StTInMtT> {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
@@ -158,6 +109,56 @@ pub mod ArraySeqMtPer {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn iter(&self) -> Iter<'_, T>;
     }
+
+
+    impl<T: StTInMtT> ArraySeqMtPerS<T> {
+        pub fn empty() -> Self {
+            ArraySeqMtPerS {
+                data: Vec::new().into_boxed_slice(),
+            }
+        }
+
+        pub fn new(length: N, init_value: T) -> Self {
+            let mut values: Vec<T> = Vec::with_capacity(length);
+            for _ in 0..length {
+                values.push(init_value.clone());
+            }
+            ArraySeqMtPerS::from_vec(values)
+        }
+
+        pub fn singleton(item: T) -> Self { ArraySeqMtPerS::from_vec(vec![item]) }
+
+        pub fn from_vec(values: Vec<T>) -> Self {
+            ArraySeqMtPerS {
+                data: values.into_boxed_slice(),
+            }
+        }
+
+        pub fn length(&self) -> N { self.data.len() }
+
+        pub fn nth(&self, index: N) -> &T { &self.data[index] }
+
+        pub fn subseq_copy(&self, start: N, length: N) -> Self {
+            let n = self.data.len();
+            let s = start.min(n);
+            let e = start.saturating_add(length).min(n);
+            let values: Vec<T> = self.data[s..e].to_vec();
+            ArraySeqMtPerS::from_vec(values)
+        }
+
+        pub fn is_empty(&self) -> B { self.data.is_empty() }
+
+        pub fn is_singleton(&self) -> B { self.data.len() == 1 }
+
+        /// Iterator over references to elements
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+    }
+
+
+
+
+
+
 
     impl<T: StTInMtT> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
         fn new(length: N, init_value: T) -> ArraySeqMtPerS<T> { ArraySeqMtPerS::new(length, init_value) }

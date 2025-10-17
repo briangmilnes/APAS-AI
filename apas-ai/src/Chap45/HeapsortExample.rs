@@ -152,6 +152,46 @@ pub mod HeapsortExample {
         pub leftist_heap_result: Vec<T>,
     }
 
+    pub trait HeapsortExamplesTrait {
+        /// Example from textbook - demonstrate heapsort on a small dataset
+        fn textbook_example()         -> HeapsortComparison<i32>;
+        /// Demonstrate heapsort on reverse-sorted input (worst case for some algorithms)
+        fn reverse_sorted_example()   -> HeapsortComparison<i32>;
+        /// Demonstrate heapsort on already-sorted input
+        fn already_sorted_example()   -> HeapsortComparison<i32>;
+        /// Demonstrate heapsort on input with duplicates
+        fn duplicates_example()       -> HeapsortComparison<i32>;
+        /// Demonstrate heapsort on single element
+        fn single_element_example()   -> HeapsortComparison<i32>;
+        /// Demonstrate heapsort on empty input
+        fn empty_example()            -> HeapsortComparison<i32>;
+        /// Generate large example for performance testing
+        fn large_example(size: usize) -> Vec<i32>;
+        /// Demonstrate the efficiency difference between implementations
+        fn efficiency_demonstration() -> Vec<(String, Vec<i32>)>;
+    }
+
+
+    pub trait HeapsortAnalysisTrait {
+        /// Analyze the theoretical complexity of each heapsort variant
+        fn complexity_analysis()      -> Vec<(String, String, String)>;
+        /// Verify that all heapsort implementations produce correct results
+        fn correctness_verification() -> bool;
+    }
+
+
+    pub trait SequenceUtilsTrait {
+        /// Convert Vec to ArraySeqStPerS for use with APAS sequence types
+        fn vec_to_array_seq<T: StT>(vec: &[T])  -> ArraySeqStPerS<T>;
+        /// Convert Vec to AVLTreeSeqStPerS for use with balanced tree operations
+        fn vec_to_avl_seq<T: StT>(vec: &[T])    -> AVLTreeSeqStPerS<T>;
+        /// Check if a sequence is sorted
+        fn is_sorted<T: Ord>(vec: &[T])         -> bool;
+        /// Generate test sequences of various patterns
+        fn generate_test_sequences(size: usize) -> Vec<(String, Vec<i32>)>;
+    }
+
+
     impl<T: StT + Ord> HeapsortComparison<T> {
         /// Verify that all implementations produce the same sorted result
         pub fn all_results_match(&self) -> bool {
@@ -175,25 +215,6 @@ pub mod HeapsortExample {
     }
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
-    pub trait HeapsortExamplesTrait {
-        /// Example from textbook - demonstrate heapsort on a small dataset
-        fn textbook_example()         -> HeapsortComparison<i32>;
-        /// Demonstrate heapsort on reverse-sorted input (worst case for some algorithms)
-        fn reverse_sorted_example()   -> HeapsortComparison<i32>;
-        /// Demonstrate heapsort on already-sorted input
-        fn already_sorted_example()   -> HeapsortComparison<i32>;
-        /// Demonstrate heapsort on input with duplicates
-        fn duplicates_example()       -> HeapsortComparison<i32>;
-        /// Demonstrate heapsort on single element
-        fn single_element_example()   -> HeapsortComparison<i32>;
-        /// Demonstrate heapsort on empty input
-        fn empty_example()            -> HeapsortComparison<i32>;
-        /// Generate large example for performance testing
-        fn large_example(size: usize) -> Vec<i32>;
-        /// Demonstrate the efficiency difference between implementations
-        fn efficiency_demonstration() -> Vec<(String, Vec<i32>)>;
-    }
-
     /// Example from textbook - demonstrate heapsort on a small dataset
     pub fn textbook_example() -> HeapsortComparison<i32> {
         let input = vec![64, 34, 25, 12, 22, 11, 90];
@@ -254,13 +275,6 @@ pub mod HeapsortExample {
     }
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
-    pub trait HeapsortAnalysisTrait {
-        /// Analyze the theoretical complexity of each heapsort variant
-        fn complexity_analysis()      -> Vec<(String, String, String)>;
-        /// Verify that all heapsort implementations produce correct results
-        fn correctness_verification() -> bool;
-    }
-
     /// Analyze the theoretical complexity of each heapsort variant
     pub fn complexity_analysis() -> Vec<(String, String, String)> {
         vec![
@@ -309,17 +323,6 @@ pub mod HeapsortExample {
     }
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
-    pub trait SequenceUtilsTrait {
-        /// Convert Vec to ArraySeqStPerS for use with APAS sequence types
-        fn vec_to_array_seq<T: StT>(vec: &[T])  -> ArraySeqStPerS<T>;
-        /// Convert Vec to AVLTreeSeqStPerS for use with balanced tree operations
-        fn vec_to_avl_seq<T: StT>(vec: &[T])    -> AVLTreeSeqStPerS<T>;
-        /// Check if a sequence is sorted
-        fn is_sorted<T: Ord>(vec: &[T])         -> bool;
-        /// Generate test sequences of various patterns
-        fn generate_test_sequences(size: usize) -> Vec<(String, Vec<i32>)>;
-    }
-
     /// Convert Vec to ArraySeqStPerS for use with APAS sequence types
     pub fn vec_to_array_seq<T: StT>(vec: &[T]) -> ArraySeqStPerS<T> {
         let mut result = ArraySeqStPerS::empty();

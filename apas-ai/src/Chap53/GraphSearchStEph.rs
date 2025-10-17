@@ -23,17 +23,6 @@ pub mod GraphSearchStEph {
     }
 
     pub struct SelectOne;
-    impl<V: StT + Ord> SelectionStrategy<V> for SelectOne {
-        fn select(&self, frontier: &AVLTreeSetStEph<V>) -> (AVLTreeSetStEph<V>, B) {
-            if frontier.size() == 0 {
-                (AVLTreeSetStEph::empty(), false)
-            } else {
-                let seq = frontier.to_seq();
-                let first = seq.nth(0).clone();
-                (AVLTreeSetStEph::singleton(first), false)
-            }
-        }
-    }
 
     pub trait GraphSearchStEphTrait<V: StT + Ord> {
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
@@ -52,6 +41,19 @@ pub mod GraphSearchStEph {
         fn reachable<G>(graph: &G, source: V)                                             -> AVLTreeSetStEph<V>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>;
+    }
+
+
+    impl<V: StT + Ord> SelectionStrategy<V> for SelectOne {
+        fn select(&self, frontier: &AVLTreeSetStEph<V>) -> (AVLTreeSetStEph<V>, B) {
+            if frontier.size() == 0 {
+                (AVLTreeSetStEph::empty(), false)
+            } else {
+                let seq = frontier.to_seq();
+                let first = seq.nth(0).clone();
+                (AVLTreeSetStEph::singleton(first), false)
+            }
+        }
     }
 
     /// Generic graph search starting from single source.

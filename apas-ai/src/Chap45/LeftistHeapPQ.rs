@@ -69,6 +69,15 @@ pub mod LeftistHeapPQ {
         fn split(&self, key: &T) -> (Self, Self) where Self: Sized;
     }
 
+    pub trait LeftistHeapDemoTrait {
+        /// Demonstrate the power of O(log n) meld operations
+        /// This would be much slower with other priority queue implementations!
+        fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T>;
+        /// Demonstrate parallel heap construction
+        fn parallel_heap_construction<T: StT + Ord>(elements: Vec<T>)      -> LeftistHeapPQ<T>;
+    }
+
+
     impl<T: StT + Ord> LeftistHeapNode<T> {
         /// Get the rank (distance to nearest leaf) of a node
         fn rank(&self) -> N {
@@ -449,14 +458,6 @@ pub mod LeftistHeapPQ {
     }
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
-    pub trait LeftistHeapDemoTrait {
-        /// Demonstrate the power of O(log n) meld operations
-        /// This would be much slower with other priority queue implementations!
-        fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T>;
-        /// Demonstrate parallel heap construction
-        fn parallel_heap_construction<T: StT + Ord>(elements: Vec<T>)      -> LeftistHeapPQ<T>;
-    }
-
     /// Demonstrate the power of O(log n) meld operations
     /// This would be much slower with other priority queue implementations!
     pub fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T> {

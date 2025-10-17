@@ -22,6 +22,81 @@ pub mod LinkedListStEph {
         len: N,
     }
 
+    pub trait LinkedListStEphTrait<T: StT> {
+        /// APAS: Work Θ(n), Span Θ(1)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
+        fn new(length: N, init_value: T)                             -> Self
+        where
+            T: Clone;
+        /// APAS: Work Θ(index), Span Θ(index)
+        /// claude-4-sonet: Work Θ(index), Span Θ(index), Parallelism Θ(1) - sequential traversal and in-place
+        fn set(&mut self, index: N, item: T)                         -> Result<&mut Self, &'static str>;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - cached length
+        fn length(&self)                                             -> N;
+        /// APAS: Work Θ(index), Span Θ(index)
+        /// claude-4-sonet: Work Θ(index), Span Θ(index), Parallelism Θ(1) - sequential traversal
+        fn nth(&self, index: N)                                      -> &T;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
+        fn empty()                                                   -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
+        fn singleton(item: T)                                        -> Self;
+        /// APAS: Work Θ(n), Span Θ(1)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
+        fn tabulate<F: Fn(N)                                         -> T>(f: &F, n: N) -> Self;
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
+        fn map<U: StT, F: Fn(&T)                                     -> U>(a: &Self, f: &F) -> LinkedListStEphS<U>;
+        /// APAS: Work Θ(start+length), Span Θ(start+length)
+        /// claude-4-sonet: Work Θ(start+length), Span Θ(start+length), Parallelism Θ(1) - sequential traversal and copy
+        fn subseq_copy(&self, start: N, length: N)                   -> Self;
+        /// APAS: Work Θ(|a| + |b|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1) - sequential
+        fn append(a: &Self, b: &Self)                                -> Self;
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
+        fn filter<F: PredSt<T>>(a: &Self, pred: &F)                  -> Self;
+        /// Helper for filter: deflate f x = if f(x) then [x] else []
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
+        fn deflate<F: PredSt<T>>(f: &F, x: &T)                       -> Self;
+        /// APAS: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|)
+        /// claude-4-sonet: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|), Parallelism Θ(1) - sequential
+        fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>)       -> Self;
+        /// APAS: Work Θ(index), Span Θ(index)
+        /// claude-4-sonet: Work Θ(index), Span Θ(index), Parallelism Θ(1) - in-place, sequential traversal
+        fn update(a: &mut Self, item_at: Pair<N, T>)                 -> &mut Self;
+        /// APAS: Work Θ(|a| + |updates|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(|a| + |updates|), Parallelism Θ(1) - sequential with HashSet
+        fn inject(a: &Self, updates: &LinkedListStEphS<Pair<N, T>>)  -> Self;
+        /// APAS: Work Θ(|a| + |updates|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(|a| + |updates|), Parallelism Θ(1) - sequential, overwrites on conflict
+        fn ninject(a: &Self, updates: &LinkedListStEphS<Pair<N, T>>) -> Self;
+        /// APAS: Work Θ(|a|²), Span Θ(|a|²)
+        /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - sequential with linear search
+        fn collect<A: StT, Bv: StT>(
+            a: &LinkedListStEphS<Pair<A, Bv>>,
+            cmp: fn(&A, &A) -> O,
+        ) -> LinkedListStEphS<Pair<A, LinkedListStEphS<Bv>>>;
+        /// APAS: Work Θ(|a|), Span Θ(|a|)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
+        fn iterate<A: StT, F: Fn(&A, &T)                             -> A>(a: &Self, f: &F, x: A) -> A;
+        /// APAS: Work Θ(|a|), Span Θ(|a|)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix computation
+        fn iteratePrefixes<A: StT, F: Fn(&A, &T)                     -> A>(a: &Self, f: &F, x: A) -> (LinkedListStEphS<A>, A);
+        /// APAS: Work Θ(|a|), Span Θ(|a|)
+        /// claude-4-sonet: Work Θ(|a|log|a|), Span Θ(|a|log|a|), Parallelism Θ(1) - sequential divide-and-conquer (no parallelism)
+        fn reduce<F: Fn(&T, &T)                                      -> T>(a: &Self, f: &F, id: T) -> T;
+        /// APAS: Work Θ(|a|²), Span Θ(|a|²)
+        /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - naive scan calling reduce repeatedly
+        fn scan<F: Fn(&T, &T)                                        -> T>(a: &Self, f: &F, id: T) -> (LinkedListStEphS<T>, T);
+        /// APAS: Work Θ(n), Span Θ(n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n)
+        fn from_vec(elts: Vec<T>) -> Self;
+    }
+
+
     impl<T: StT> LinkedListStEphS<T> {
         pub fn empty() -> Self { LinkedListStEphS { head: None, len: 0 } }
 
@@ -127,80 +202,6 @@ pub mod LinkedListStEph {
 
 
 
-
-    pub trait LinkedListStEphTrait<T: StT> {
-        /// APAS: Work Θ(n), Span Θ(1)
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn new(length: N, init_value: T)                             -> Self
-        where
-            T: Clone;
-        /// APAS: Work Θ(index), Span Θ(index)
-        /// claude-4-sonet: Work Θ(index), Span Θ(index), Parallelism Θ(1) - sequential traversal and in-place
-        fn set(&mut self, index: N, item: T)                         -> Result<&mut Self, &'static str>;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - cached length
-        fn length(&self)                                             -> N;
-        /// APAS: Work Θ(index), Span Θ(index)
-        /// claude-4-sonet: Work Θ(index), Span Θ(index), Parallelism Θ(1) - sequential traversal
-        fn nth(&self, index: N)                                      -> &T;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn empty()                                                   -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn singleton(item: T)                                        -> Self;
-        /// APAS: Work Θ(n), Span Θ(1)
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn tabulate<F: Fn(N)                                         -> T>(f: &F, n: N) -> Self;
-        /// APAS: Work Θ(|a|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn map<U: StT, F: Fn(&T)                                     -> U>(a: &Self, f: &F) -> LinkedListStEphS<U>;
-        /// APAS: Work Θ(start+length), Span Θ(start+length)
-        /// claude-4-sonet: Work Θ(start+length), Span Θ(start+length), Parallelism Θ(1) - sequential traversal and copy
-        fn subseq_copy(&self, start: N, length: N)                   -> Self;
-        /// APAS: Work Θ(|a| + |b|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1) - sequential
-        fn append(a: &Self, b: &Self)                                -> Self;
-        /// APAS: Work Θ(|a|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn filter<F: PredSt<T>>(a: &Self, pred: &F)                  -> Self;
-        /// Helper for filter: deflate f x = if f(x) then [x] else []
-        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn deflate<F: PredSt<T>>(f: &F, x: &T)                       -> Self;
-        /// APAS: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|)
-        /// claude-4-sonet: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|), Parallelism Θ(1) - sequential
-        fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>)       -> Self;
-        /// APAS: Work Θ(index), Span Θ(index)
-        /// claude-4-sonet: Work Θ(index), Span Θ(index), Parallelism Θ(1) - in-place, sequential traversal
-        fn update(a: &mut Self, item_at: Pair<N, T>)                 -> &mut Self;
-        /// APAS: Work Θ(|a| + |updates|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(|a| + |updates|), Parallelism Θ(1) - sequential with HashSet
-        fn inject(a: &Self, updates: &LinkedListStEphS<Pair<N, T>>)  -> Self;
-        /// APAS: Work Θ(|a| + |updates|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(|a| + |updates|), Parallelism Θ(1) - sequential, overwrites on conflict
-        fn ninject(a: &Self, updates: &LinkedListStEphS<Pair<N, T>>) -> Self;
-        /// APAS: Work Θ(|a|²), Span Θ(|a|²)
-        /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - sequential with linear search
-        fn collect<A: StT, Bv: StT>(
-            a: &LinkedListStEphS<Pair<A, Bv>>,
-            cmp: fn(&A, &A) -> O,
-        ) -> LinkedListStEphS<Pair<A, LinkedListStEphS<Bv>>>;
-        /// APAS: Work Θ(|a|), Span Θ(|a|)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
-        fn iterate<A: StT, F: Fn(&A, &T)                             -> A>(a: &Self, f: &F, x: A) -> A;
-        /// APAS: Work Θ(|a|), Span Θ(|a|)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix computation
-        fn iteratePrefixes<A: StT, F: Fn(&A, &T)                     -> A>(a: &Self, f: &F, x: A) -> (LinkedListStEphS<A>, A);
-        /// APAS: Work Θ(|a|), Span Θ(|a|)
-        /// claude-4-sonet: Work Θ(|a|log|a|), Span Θ(|a|log|a|), Parallelism Θ(1) - sequential divide-and-conquer (no parallelism)
-        fn reduce<F: Fn(&T, &T)                                      -> T>(a: &Self, f: &F, id: T) -> T;
-        /// APAS: Work Θ(|a|²), Span Θ(|a|²)
-        /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - naive scan calling reduce repeatedly
-        fn scan<F: Fn(&T, &T)                                        -> T>(a: &Self, f: &F, id: T) -> (LinkedListStEphS<T>, T);
-        /// APAS: Work Θ(n), Span Θ(n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn from_vec(elts: Vec<T>) -> Self;
-    }
 
     impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
         fn new(length: N, init_value: T) -> Self

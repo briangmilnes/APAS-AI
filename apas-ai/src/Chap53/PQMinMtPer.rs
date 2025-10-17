@@ -29,21 +29,6 @@ pub mod PQMinMtPer {
         _phantom: PhantomData<(V, P)>,
     }
 
-    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
-        pub fn new(f: F) -> Self {
-            Self {
-                f,
-                _phantom: PhantomData,
-            }
-        }
-    }
-
-    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> PriorityFn<V, P>
-        for ClosurePriority<V, P, F>
-    {
-        fn priority(&self, v: &V) -> P { (self.f)(v) }
-    }
-
     pub trait PQMinMtPerTrait<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static> {
         /// claude-4-sonet: Work Θ((|V| + |E|) log |V|), Span Θ(|V| log |V|), Parallelism Θ(1)
         /// Priority-First Search using thread-safe persistent sets.
@@ -57,6 +42,22 @@ pub mod PQMinMtPer {
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             PF: PriorityFn<V, P>;
+    }
+
+
+    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
+        pub fn new(f: F) -> Self {
+            Self {
+                f,
+                _phantom: PhantomData,
+            }
+        }
+    }
+
+    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> PriorityFn<V, P>
+        for ClosurePriority<V, P, F>
+    {
+        fn priority(&self, v: &V) -> P { (self.f)(v) }
     }
 
     /// Priority queue minimum search starting from single source.

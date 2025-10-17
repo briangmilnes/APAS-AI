@@ -32,18 +32,6 @@ pub mod GraphSearchStPer {
     /// Select single arbitrary vertex (depth-first style).
     pub struct SelectOne;
 
-    impl<V: StT + Ord> SelectionStrategy<V> for SelectOne {
-        fn select(&self, frontier: &AVLTreeSetStPer<V>) -> (AVLTreeSetStPer<V>, B) {
-            if frontier.size() == 0 {
-                (AVLTreeSetStPer::empty(), false)
-            } else {
-                let seq = frontier.to_seq();
-                let first = seq.nth(0).clone();
-                (AVLTreeSetStPer::singleton(first), false)
-            }
-        }
-    }
-
     pub trait GraphSearchStPerTrait<V: StT + Ord> {
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
         /// Generic graph search starting from single source.
@@ -64,6 +52,19 @@ pub mod GraphSearchStPer {
         fn reachable<G>(graph: &G, source: V)                                             -> AVLTreeSetStPer<V>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>;
+    }
+
+
+    impl<V: StT + Ord> SelectionStrategy<V> for SelectOne {
+        fn select(&self, frontier: &AVLTreeSetStPer<V>) -> (AVLTreeSetStPer<V>, B) {
+            if frontier.size() == 0 {
+                (AVLTreeSetStPer::empty(), false)
+            } else {
+                let seq = frontier.to_seq();
+                let first = seq.nth(0).clone();
+                (AVLTreeSetStPer::singleton(first), false)
+            }
+        }
     }
 
     /// Generic graph search starting from single source.

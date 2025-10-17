@@ -19,10 +19,6 @@ pub mod BalBinTreeStEph {
         pub(crate) right: BalBinTree<T>,
     }
 
-    impl<T: StT> BalBinNode<T> {
-        fn new(left: BalBinTree<T>, value: T, right: BalBinTree<T>) -> Self { BalBinNode { left, value, right } }
-    }
-
     pub trait BalBinTreeStEphTrait<T: StT> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
@@ -45,6 +41,11 @@ pub mod BalBinTreeStEph {
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential tree traversal
         fn size(&self)                             -> N;
+    }
+
+
+    impl<T: StT> BalBinNode<T> {
+        fn new(left: BalBinTree<T>, value: T, right: BalBinTree<T>) -> Self { BalBinNode { left, value, right } }
     }
 
     impl<T: StT> BalBinTree<T> {

@@ -18,68 +18,6 @@ pub mod ArraySeqStEph {
 
     pub type ArrayStEph<T> = ArraySeqStEphS<T>;
 
-    impl<T: StT> ArraySeqStEphS<T> {
-        pub fn from_vec(elts: Vec<T>) -> Self {
-            Self {
-                data: elts.into_boxed_slice(),
-            }
-        }
-
-        pub fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
-
-        pub fn empty() -> Self { Self::from_vec(Vec::new()) }
-
-        pub fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
-
-        pub fn length(&self) -> N { self.data.len() }
-
-        pub fn nth(&self, index: N) -> &T { &self.data[index] }
-
-        /// Iterator over references to elements
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
-
-        pub fn subseq(&self, start: N, length: N) -> Self {
-            let total = self.data.len();
-            let begin = start.min(total);
-            let end = start.saturating_add(length).min(total);
-            Self::from_vec(self.data[begin..end].to_vec())
-        }
-
-        pub fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
-            if index < self.data.len() {
-                self.data[index] = item;
-                Ok(self)
-            } else {
-                Err("Index out of bounds")
-            }
-        }
-
-        pub fn update(&mut self, Pair(index, item): Pair<N, T>) -> &mut Self {
-            let _ = self.set(index, item);
-            self
-        }
-
-        pub fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut Self {
-            let mut last_values: HashMap<N, T> = HashMap::new();
-            for i in 0..updates.length() {
-                let Pair(index, value) = updates.nth(i).clone();
-                if index < self.data.len() {
-                    last_values.insert(index, value);
-                }
-            }
-            for (index, value) in last_values {
-                let _ = self.set(index, value);
-            }
-            self
-        }
-    }
-
-
-
-
-
-
-
     pub trait ArraySeqStEphTrait<T: StT> {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
@@ -151,6 +89,69 @@ pub mod ArraySeqStEph {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn iter(&self) -> Iter<'_, T>;
     }
+
+
+    impl<T: StT> ArraySeqStEphS<T> {
+        pub fn from_vec(elts: Vec<T>) -> Self {
+            Self {
+                data: elts.into_boxed_slice(),
+            }
+        }
+
+        pub fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
+
+        pub fn empty() -> Self { Self::from_vec(Vec::new()) }
+
+        pub fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
+
+        pub fn length(&self) -> N { self.data.len() }
+
+        pub fn nth(&self, index: N) -> &T { &self.data[index] }
+
+        /// Iterator over references to elements
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+
+        pub fn subseq(&self, start: N, length: N) -> Self {
+            let total = self.data.len();
+            let begin = start.min(total);
+            let end = start.saturating_add(length).min(total);
+            Self::from_vec(self.data[begin..end].to_vec())
+        }
+
+        pub fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
+            if index < self.data.len() {
+                self.data[index] = item;
+                Ok(self)
+            } else {
+                Err("Index out of bounds")
+            }
+        }
+
+        pub fn update(&mut self, Pair(index, item): Pair<N, T>) -> &mut Self {
+            let _ = self.set(index, item);
+            self
+        }
+
+        pub fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut Self {
+            let mut last_values: HashMap<N, T> = HashMap::new();
+            for i in 0..updates.length() {
+                let Pair(index, value) = updates.nth(i).clone();
+                if index < self.data.len() {
+                    last_values.insert(index, value);
+                }
+            }
+            for (index, value) in last_values {
+                let _ = self.set(index, value);
+            }
+            self
+        }
+    }
+
+
+
+
+
+
 
     impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {
         fn new(length: N, init_value: T) -> ArraySeqStEphS<T> { ArraySeqStEphS::new(length, init_value) }

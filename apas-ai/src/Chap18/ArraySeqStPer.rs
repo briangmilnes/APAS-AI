@@ -17,35 +17,6 @@ pub mod ArraySeqStPer {
 
     pub type ArrayStPer<T> = ArraySeqStPerS<T>;
 
-    impl<T: StT> ArraySeqStPerS<T> {
-        pub fn from_vec(elts: Vec<T>) -> Self {
-            Self {
-                data: elts.into_boxed_slice(),
-            }
-        }
-        pub fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
-        pub fn empty() -> Self { Self::from_vec(Vec::new()) }
-        pub fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
-        pub fn length(&self) -> N { self.data.len() }
-        pub fn nth(&self, index: N) -> &T { &self.data[index] }
-        pub fn subseq_copy(&self, start: N, length: N) -> Self {
-            let total = self.data.len();
-            let begin = start.min(total);
-            let end = start.saturating_add(length).min(total);
-            let slice: Vec<T> = self.data[begin..end].to_vec();
-            Self::from_vec(slice)
-        }
-
-        /// Iterator over references to elements
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
-    }
-
-
-
-
-
-
-
     pub trait ArraySeqStPerTrait<T: StT> {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
@@ -113,6 +84,36 @@ pub mod ArraySeqStPer {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn iter(&self) -> Iter<'_, T>;
     }
+
+
+    impl<T: StT> ArraySeqStPerS<T> {
+        pub fn from_vec(elts: Vec<T>) -> Self {
+            Self {
+                data: elts.into_boxed_slice(),
+            }
+        }
+        pub fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
+        pub fn empty() -> Self { Self::from_vec(Vec::new()) }
+        pub fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
+        pub fn length(&self) -> N { self.data.len() }
+        pub fn nth(&self, index: N) -> &T { &self.data[index] }
+        pub fn subseq_copy(&self, start: N, length: N) -> Self {
+            let total = self.data.len();
+            let begin = start.min(total);
+            let end = start.saturating_add(length).min(total);
+            let slice: Vec<T> = self.data[begin..end].to_vec();
+            Self::from_vec(slice)
+        }
+
+        /// Iterator over references to elements
+        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+    }
+
+
+
+
+
+
 
     impl<T: StT> ArraySeqStPerTrait<T> for ArraySeqStPerS<T> {
         fn new(length: N, init_value: T) -> ArraySeqStPerS<T> { ArraySeqStPerS::new(length, init_value) }

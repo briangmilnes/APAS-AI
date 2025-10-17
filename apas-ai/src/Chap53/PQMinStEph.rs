@@ -25,19 +25,6 @@ pub mod PQMinStEph {
         _phantom: PhantomData<(V, P)>,
     }
 
-    impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
-        pub fn new(f: F) -> Self {
-            Self {
-                f,
-                _phantom: PhantomData,
-            }
-        }
-    }
-
-    impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> PriorityFn<V, P> for ClosurePriority<V, P, F> {
-        fn priority(&self, v: &V) -> P { (self.f)(v) }
-    }
-
     pub trait PQMinStEphTrait<V: StT + Ord, P: StT + Ord> {
         /// claude-4-sonet: Work Θ((|V| + |E|) log |V|), Span Θ(|V| log |V|), Parallelism Θ(1)
         fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF)                         -> PQMinResult<V, P>
@@ -50,6 +37,20 @@ pub mod PQMinStEph {
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             PF: PriorityFn<V, P>;
+    }
+
+
+    impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
+        pub fn new(f: F) -> Self {
+            Self {
+                f,
+                _phantom: PhantomData,
+            }
+        }
+    }
+
+    impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> PriorityFn<V, P> for ClosurePriority<V, P, F> {
+        fn priority(&self, v: &V) -> P { (self.f)(v) }
     }
 
     /// Priority queue minimum search starting from single source.

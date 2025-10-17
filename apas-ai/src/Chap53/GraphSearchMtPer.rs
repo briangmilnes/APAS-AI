@@ -28,17 +28,6 @@ pub mod GraphSearchMtPer {
     }
 
     pub struct SelectOne;
-    impl<V: StTInMtT + Ord + 'static> SelectionStrategy<V> for SelectOne {
-        fn select(&self, frontier: &AVLTreeSetMtPer<V>) -> (AVLTreeSetMtPer<V>, B) {
-            if frontier.size() == 0 {
-                (AVLTreeSetMtPer::empty(), false)
-            } else {
-                let seq = frontier.to_seq();
-                let first = seq.nth(0).clone();
-                (AVLTreeSetMtPer::singleton(first), false)
-            }
-        }
-    }
 
     pub trait GraphSearchMtPerTrait<V: StTInMtT + Ord + 'static> {
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| × log |V|), Parallelism Θ(|E|/|V|)
@@ -56,6 +45,19 @@ pub mod GraphSearchMtPer {
         fn reachable<G>(graph: &G, source: V)                                             -> AVLTreeSetMtPer<V>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>;
+    }
+
+
+    impl<V: StTInMtT + Ord + 'static> SelectionStrategy<V> for SelectOne {
+        fn select(&self, frontier: &AVLTreeSetMtPer<V>) -> (AVLTreeSetMtPer<V>, B) {
+            if frontier.size() == 0 {
+                (AVLTreeSetMtPer::empty(), false)
+            } else {
+                let seq = frontier.to_seq();
+                let first = seq.nth(0).clone();
+                (AVLTreeSetMtPer::singleton(first), false)
+            }
+        }
     }
 
     /// Generic graph search starting from single source.

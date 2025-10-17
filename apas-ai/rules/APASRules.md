@@ -21,8 +21,12 @@
 - Prefer `Pair` from `crate::Types::Types` over raw tuples in public APIs.
 - Maintain chapter delegation rules: Chap.19 ST traits delegate to Chap.18 ST traits; Chap.19 MT traits delegate to Chap.18 MT traits. Never mix ST and MT traits in delegation paths because their bounds differ.
 
-### APAS Naming Fidelity
-- When the APAS text specifies function, trait, or constructor names, mirror those identifiers exactly in the Rust code. Do not rename (e.g., keep `fib` if the example uses `fib`).
+### APAS Naming Conventions
+- **Function and Method Names**: Use `snake_case` for all function and method names, following Rust conventions.
+  - Examples: `from_vec`, `from_set`, `cartesian_product`, `is_empty`, `is_singleton`
+  - Convert textbook notation to snake_case: N⁺(v) → `n_plus`, N⁻(v) → `n_minus`
+- **Struct and Trait Names**: Use `PascalCase` for types, following Rust conventions.
+- **APAS Text Fidelity**: When the APAS textbook specifies algorithm names, mirror the semantics exactly but apply Rust naming conventions (e.g., if textbook has `Fib`, use `fib` function in Rust).
 ### Iterator-based Assertions
 - Validate sequence contents via `iter()`, `iter_mut()`, or `into_iter()` instead of exposing backing storage so tests stay aligned with the APAS abstractions.
 
