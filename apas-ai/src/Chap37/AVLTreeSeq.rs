@@ -83,11 +83,19 @@ pub mod AVLTreeSeq {
         fn subseq_copy(&self, start: N, length: N) -> Self
         where
             T: Clone + Eq;
+        fn new_root() -> Self;
+        fn update(&mut self, item_at: (N, T)) -> &mut AVLTreeS<T>;
+        fn from_vec(values: Vec<T>) -> AVLTreeS<T> where T: Clone;
+        fn to_arrayseq(&self) -> ArraySeqS<T> where T: Clone;
+        fn iter<'a>(&'a self) -> AVLTreeSeqIter<'a, T>;
+        fn push_back(&mut self, value: T);
+        fn contains_value(&self, target: &T) -> B where T: PartialEq;
+        fn insert_value(&mut self, value: T);
+        fn delete_value(&mut self, target: &T) -> bool where T: Clone + PartialEq;
+        fn is_tree_empty(&self) -> bool;
+        fn values_in_order(&self) -> Vec<T> where T: Clone;
     }
 
-    impl<T: Copy + Debug> Default for AVLTreeS<T> {
-        fn default() -> Self { Self::new() }
-    }
 
     impl<T: Copy + Debug> AVLTreeS<T> {
         pub fn new_root() -> Self {
@@ -245,6 +253,50 @@ pub mod AVLTreeSeq {
                 vals.push(*self.nth(i));
             }
             AVLTreeS::from_vec(vals)
+        }
+
+        fn new_root() -> Self {
+            AVLTreeS::new_root()
+        }
+
+        fn update(&mut self, item_at: (N, T)) -> &mut AVLTreeS<T> {
+            AVLTreeS::update(self, item_at)
+        }
+
+        fn from_vec(values: Vec<T>) -> AVLTreeS<T> where T: Clone {
+            AVLTreeS::from_vec(values)
+        }
+
+        fn to_arrayseq(&self) -> ArraySeqS<T> where T: Clone {
+            AVLTreeS::to_arrayseq(self)
+        }
+
+        fn iter<'a>(&'a self) -> AVLTreeSeqIter<'a, T> {
+            AVLTreeS::iter(self)
+        }
+
+        fn push_back(&mut self, value: T) {
+            AVLTreeS::push_back(self, value)
+        }
+
+        fn contains_value(&self, target: &T) -> B where T: PartialEq {
+            AVLTreeS::contains_value(self, target)
+        }
+
+        fn insert_value(&mut self, value: T) {
+            AVLTreeS::insert_value(self, value)
+        }
+
+        fn delete_value(&mut self, target: &T) -> bool where T: Clone + PartialEq {
+            AVLTreeS::delete_value(self, target)
+        }
+
+        fn is_tree_empty(&self) -> bool {
+            AVLTreeS::is_tree_empty(self)
+        }
+
+        fn values_in_order(&self) -> Vec<T> where T: Clone {
+            AVLTreeS::values_in_order(self)
         }
     }
 
@@ -447,4 +499,9 @@ pub mod AVLTreeSeq {
             push_inorder(&n.right, out);
         }
     }
+
+    impl<T: Copy + Debug> Default for AVLTreeS<T> {
+        fn default() -> Self { Self::new() }
+    }
+
 }

@@ -40,42 +40,11 @@ pub mod ArraySeqStPer {
         pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
     }
 
-    impl<T: StT> PartialEq for ArraySeqStPerS<T> {
-        fn eq(&self, other: &Self) -> bool { self.data[..] == other.data[..] }
-    }
 
-    impl<T: StT> Eq for ArraySeqStPerS<T> {}
 
-    impl<T: StT> Debug for ArraySeqStPerS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { f.debug_list().entries(self.data.iter()).finish() }
-    }
 
-    impl<'a, T: StT> IntoIterator for &'a ArraySeqStPerS<T> {
-        type Item = &'a T;
-        type IntoIter = Iter<'a, T>;
 
-        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
-    }
 
-    impl<T: StT> IntoIterator for ArraySeqStPerS<T> {
-        type Item = T;
-        type IntoIter = IntoIter<T>;
-
-        fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
-    }
-
-    impl<T: StT> Display for ArraySeqStPerS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-            write!(f, "[")?;
-            for (i, item) in self.data.iter().enumerate() {
-                if i > 0 {
-                    write!(f, ", ")?;
-                }
-                write!(f, "{item}")?;
-            }
-            write!(f, "]")
-        }
-    }
 
     pub trait ArraySeqStPerTrait<T: StT> {
         /// APAS: Work Θ(n), Span Θ(1)
@@ -137,6 +106,12 @@ pub mod ArraySeqStPer {
         fn scan<F: Fn(&T, &T)                                                   -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T);
         /// claude-4-sonet: Work Θ(|a|+|updates|), Span Θ(|a|+|updates|), Parallelism Θ(1) - sequential, overwrites on conflict
         fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> Self;
+        /// APAS: Work Θ(n), Span Θ(1)
+        /// claude-4-sonet: Work Θ(n), Span Θ(1)
+        fn from_vec(elts: Vec<T>) -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn iter(&self) -> Iter<'_, T>;
     }
 
     impl<T: StT> ArraySeqStPerTrait<T> for ArraySeqStPerS<T> {
@@ -294,6 +269,46 @@ pub mod ArraySeqStPer {
                 }
             }
             result
+        }
+
+        fn from_vec(elts: Vec<T>) -> Self {
+            ArraySeqStPerS::from_vec(elts)
+        }
+
+        fn iter(&self) -> Iter<'_, T> {
+            ArraySeqStPerS::iter(self)
+        }
+    }
+
+    impl<T: StT> PartialEq for ArraySeqStPerS<T> {
+        fn eq(&self, other: &Self) -> bool { self.data[..] == other.data[..] }
+    }
+    impl<T: StT> Eq for ArraySeqStPerS<T> {}
+    impl<T: StT> Debug for ArraySeqStPerS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { f.debug_list().entries(self.data.iter()).finish() }
+    }
+    impl<'a, T: StT> IntoIterator for &'a ArraySeqStPerS<T> {
+        type Item = &'a T;
+        type IntoIter = Iter<'a, T>;
+
+        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
+    }
+    impl<T: StT> IntoIterator for ArraySeqStPerS<T> {
+        type Item = T;
+        type IntoIter = IntoIter<T>;
+
+        fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
+    }
+    impl<T: StT> Display for ArraySeqStPerS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+            write!(f, "[")?;
+            for (i, item) in self.data.iter().enumerate() {
+                if i > 0 {
+                    write!(f, ", ")?;
+                }
+                write!(f, "{item}")?;
+            }
+            write!(f, "]")
         }
     }
 

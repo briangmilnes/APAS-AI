@@ -58,6 +58,15 @@ pub mod LeftistHeapPQ {
         /// Helper methods
         fn size(&self)               -> N;
         fn is_empty(&self)           -> bool;
+        fn extract_all_sorted(&self) -> Vec<T>;
+        fn height(&self) -> N;
+        fn root_rank(&self) -> N;
+        fn is_valid_leftist_heap(&self) -> bool;
+        fn from_vec(vec: Vec<T>) -> Self;
+        fn to_vec(&self) -> Vec<T>;
+        fn to_sorted_vec(&self) -> Vec<T>;
+        fn meld_multiple(heaps: &[Self]) -> Self where Self: Sized;
+        fn split(&self, key: &T) -> (Self, Self) where Self: Sized;
     }
 
     impl<T: StT + Ord> LeftistHeapNode<T> {
@@ -293,6 +302,42 @@ pub mod LeftistHeapPQ {
 
         /// Claude Work: Θ(1), Span: Θ(1)
         fn is_empty(&self) -> bool { matches!(self.root, LeftistHeapNode::Leaf) }
+
+        fn extract_all_sorted(&self) -> Vec<T> {
+            LeftistHeapPQ::extract_all_sorted(self)
+        }
+
+        fn height(&self) -> N {
+            LeftistHeapPQ::height(self)
+        }
+
+        fn root_rank(&self) -> N {
+            LeftistHeapPQ::root_rank(self)
+        }
+
+        fn is_valid_leftist_heap(&self) -> bool {
+            LeftistHeapPQ::is_valid_leftist_heap(self)
+        }
+
+        fn from_vec(vec: Vec<T>) -> Self {
+            LeftistHeapPQ::from_vec(vec)
+        }
+
+        fn to_vec(&self) -> Vec<T> {
+            LeftistHeapPQ::to_vec(self)
+        }
+
+        fn to_sorted_vec(&self) -> Vec<T> {
+            LeftistHeapPQ::to_sorted_vec(self)
+        }
+
+        fn meld_multiple(heaps: &[Self]) -> Self {
+            LeftistHeapPQ::meld_multiple(heaps)
+        }
+
+        fn split(&self, key: &T) -> (Self, Self) {
+            LeftistHeapPQ::split(self, key)
+        }
     }
 
     impl<T: StT + Ord> LeftistHeapPQ<T> {

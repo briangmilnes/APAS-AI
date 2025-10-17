@@ -124,61 +124,9 @@ pub mod LinkedListStEph {
         }
     }
 
-    impl<T: StT> Display for LinkedListStEphS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            write!(f, "[")?;
-            let mut first = true;
-            let mut current = self.head.as_deref();
-            while let Some(node) = current {
-                if !first {
-                    write!(f, ", ")?;
-                } else {
-                    first = false;
-                }
-                write!(f, "{}", node.value)?;
-                current = node.next.as_deref();
-            }
-            write!(f, "]")
-        }
-    }
 
-    impl<T: StT> Debug for LinkedListStEphS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            write!(f, "[")?;
-            let mut first = true;
-            let mut current = self.head.as_deref();
-            while let Some(node) = current {
-                if !first {
-                    write!(f, ", ")?;
-                } else {
-                    first = false;
-                }
-                write!(f, "{}", node.value)?;
-                current = node.next.as_deref();
-            }
-            write!(f, "]")
-        }
-    }
 
-    impl<T: StT> PartialEq for LinkedListStEphS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            if self.len != other.len {
-                return false;
-            }
-            let mut left = self.head.as_deref();
-            let mut right = other.head.as_deref();
-            while let (Some(a), Some(b)) = (left, right) {
-                if a.value != b.value {
-                    return false;
-                }
-                left = a.next.as_deref();
-                right = b.next.as_deref();
-            }
-            true
-        }
-    }
 
-    impl<T: StT> Eq for LinkedListStEphS<T> {}
 
     pub trait LinkedListStEphTrait<T: StT> {
         /// APAS: Work Θ(n), Span Θ(1)
@@ -249,6 +197,9 @@ pub mod LinkedListStEph {
         /// APAS: Work Θ(|a|²), Span Θ(|a|²)
         /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - naive scan calling reduce repeatedly
         fn scan<F: Fn(&T, &T)                                        -> T>(a: &Self, f: &F, id: T) -> (LinkedListStEphS<T>, T);
+        /// APAS: Work Θ(n), Span Θ(n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n)
+        fn from_vec(elts: Vec<T>) -> Self;
     }
 
     impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
@@ -425,7 +376,64 @@ pub mod LinkedListStEph {
             let total = <LinkedListStEphS<T> as LinkedListStEphTrait<T>>::reduce(a, f, id);
             (LinkedListStEphS::from_vec(prefixes), total)
         }
+
+        fn from_vec(elts: Vec<T>) -> Self {
+            LinkedListStEphS::from_vec(elts)
+        }
     }
+
+    impl<T: StT> Display for LinkedListStEphS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "[")?;
+            let mut first = true;
+            let mut current = self.head.as_deref();
+            while let Some(node) = current {
+                if !first {
+                    write!(f, ", ")?;
+                } else {
+                    first = false;
+                }
+                write!(f, "{}", node.value)?;
+                current = node.next.as_deref();
+            }
+            write!(f, "]")
+        }
+    }
+    impl<T: StT> Debug for LinkedListStEphS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "[")?;
+            let mut first = true;
+            let mut current = self.head.as_deref();
+            while let Some(node) = current {
+                if !first {
+                    write!(f, ", ")?;
+                } else {
+                    first = false;
+                }
+                write!(f, "{}", node.value)?;
+                current = node.next.as_deref();
+            }
+            write!(f, "]")
+        }
+    }
+    impl<T: StT> PartialEq for LinkedListStEphS<T> {
+        fn eq(&self, other: &Self) -> bool {
+            if self.len != other.len {
+                return false;
+            }
+            let mut left = self.head.as_deref();
+            let mut right = other.head.as_deref();
+            while let (Some(a), Some(b)) = (left, right) {
+                if a.value != b.value {
+                    return false;
+                }
+                left = a.next.as_deref();
+                right = b.next.as_deref();
+            }
+            true
+        }
+    }
+    impl<T: StT> Eq for LinkedListStEphS<T> {}
 
     #[macro_export]
     macro_rules! LinkedListStEphSLit {

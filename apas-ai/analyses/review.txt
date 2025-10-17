@@ -2,13 +2,15 @@
 APAS Project Code Review
 ============================================================
 
+✓ No APAS where clause simplification opportunities found
 Running APAS Convention Checks...
 Project root: /home/milnes/APASVERUS/APAS-AI/apas-ai/scripts
 
 ✓ All convention checks passed
+✓ All files have correct copyright header
 🔍 CHECKING FOR REMAINING DUPLICATE CHAPTER IMPORTS
 ============================================================
-Files checked: 713
+Files checked: 719
 Files with Chap18 + Chap19 imports: 0
 
 ✅ NO DUPLICATE CHAPTER IMPORTS FOUND!
@@ -109,6 +111,40 @@ All files import from either Chap18 OR Chap19, not both.
 ✅ No duplicate datastructure imports found within individual files.
 
 ⚠️  Found 1 datastructures imported from multiple chapters.
+⚠ Functional modules without typeless traits (APASRules.md Lines 103-175):
+
+Note: These modules contain only free functions and should have a trait.
+
+  src/Chap06/WeightedUnDirGraphMtEphFloat.rs
+    7 public function(s)
+
+  src/Chap06/WeightedUnDirGraphStEphInt.rs
+    8 public function(s)
+
+  src/Chap06/WeightedDirGraphStEphInt.rs
+    9 public function(s)
+
+  src/Chap06/WeightedUnDirGraphStEphFloat.rs
+    10 public function(s)
+
+  src/Chap06/WeightedUnDirGraphMtEphInt.rs
+    7 public function(s)
+
+  src/Chap06/WeightedDirGraphMtEphFloat.rs
+    7 public function(s)
+
+  src/Chap06/WeightedDirGraphStEphFloat.rs
+    12 public function(s)
+
+  src/Chap06/WeightedDirGraphMtEphInt.rs
+    7 public function(s)
+
+Total candidates: 8
+Total violations: 8
+
+Required: Add trait with signatures matching all public functions.
+Comment: // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
+✓ All graph macros use correct notation (A: for directed, E: for undirected)
 Running APAS Import Checks...
 Project root: /home/milnes/APASVERUS/APAS-AI/apas-ai/scripts
 
@@ -128,16 +164,67 @@ DATA STRUCTURES (12 files):
   src/Chap47/LinearProbing.rs
   src/Chap47/NestedHashTable.rs
   src/Chap47/QuadraticProbing.rs
-  src/Chap47clean/DoubleHashFlatHashTable.rs
-  src/Chap47clean/LinkedListChainedHashTable.rs
+  src/Chap47clean/DoubleHashFlatHashTableStEph.rs
+  src/Chap47clean/LinkedListChainedHashTableStEph.rs
   src/Chap47clean/StructChainedHashTable.rs
-  src/Chap47clean/VecChainedHashTable.rs
+  src/Chap47clean/VecChainedHashTableStEph.rs
 
 TOTAL: 14 files with data structures missing traits
+✓ All 81 *Mt* files properly use MtT
 Running APAS Naming Convention Checks...
 Project root: /home/milnes/APASVERUS/APAS-AI/apas-ai/scripts
 
 ✓ All naming convention checks passed
+✓ No 'Factory' pattern found
+✗ Found parallel model violations (APASRules.md Lines 39-42):
+
+  src/Chap06/WeightedDirGraphStEphInt.rs:87 - threshold check
+    pub fn edges_above_weight(&self, threshold: i32) -> SetStEph<Triple<V, V, i32>> 
+
+  src/Chap06/WeightedDirGraphStEphInt.rs:90 - threshold check
+    if labeled_edge.2 > threshold {
+
+  src/Chap06/WeightedDirGraphStEphInt.rs:98 - threshold check
+    pub fn edges_below_weight(&self, threshold: i32) -> SetStEph<Triple<V, V, i32>> 
+
+  src/Chap06/WeightedDirGraphStEphInt.rs:101 - threshold check
+    if labeled_edge.2 < threshold {
+
+  src/Chap06/WeightedDirGraphStEphFloat.rs:126 - threshold check
+    pub fn edges_above_weight(&self, threshold: OrderedFloat<f64>) -> SetStEph<Tripl
+
+  src/Chap06/WeightedDirGraphStEphFloat.rs:129 - threshold check
+    if labeled_edge.2 > threshold {
+
+  src/Chap06/WeightedDirGraphStEphFloat.rs:137 - threshold check
+    pub fn edges_below_weight(&self, threshold: OrderedFloat<f64>) -> SetStEph<Tripl
+
+  src/Chap06/WeightedDirGraphStEphFloat.rs:140 - threshold check
+    if labeled_edge.2 < threshold {
+
+  src/Chap47/HashExamples.rs:163 - threshold check
+    1. Load factor α falls below a threshold (e.g., α < 0.25)
+
+  src/Chap47/HashExamples.rs:213 - threshold check
+    - Double when α > threshold (e.g., 0.75)
+
+  src/Chap47/HashExamples.rs:283 - threshold check
+    - resize when threshold exceeded
+
+  src/Chap47/Exercise47_1.rs:74 - threshold check
+    1. Load factor α falls below a threshold (e.g., α < 0.25)
+
+  src/Chap47/Exercise47_1.rs:126 - threshold check
+    - Double when α > threshold (e.g., 0.75)
+
+  src/Chap47/Exercise47_1.rs:200 - threshold check
+    - Resize when threshold exceeded
+
+Total violations: 14
+
+Fix: Use std::thread::spawn/join, no rayon, no thresholds.
+APAS parallel algorithms should always use parallel structure.
+✓ All 47 *Per files are properly immutable
 🔍 CHECKING FOR REMAINING ALIAS UFCS USAGE
 ==================================================
 
@@ -152,9 +239,9 @@ Project root: /home/milnes/APASVERUS/APAS-AI/apas-ai/scripts
 
 ⚠️  src/Chap19/ArraySeqMtPer.rs
    Aliases found: {'ArraySeqMtPerTraitChap18': 'ArraySeqMtPerTrait'}
-   Line 100: fn length(&self) -> N { ArraySeqMtPerTraitChap18::length(self) }
+   Line 105: fn length(&self) -> N { ArraySeqMtPerTraitChap18::length(self) }
       → Using alias 'ArraySeqMtPerTraitChap18' (original: 'ArraySeqMtPerTrait')
-   Line 102: fn nth(&self, index: N) -> &T { ArraySeqMtPerTraitChap18::nth(self, index) }
+   Line 107: fn nth(&self, index: N) -> &T { ArraySeqMtPerTraitChap18::nth(self, index) }
       → Using alias 'ArraySeqMtPerTraitChap18' (original: 'ArraySeqMtPerTrait')
 
 ⚠️  src/Chap19/ArraySeqMtEph.rs
@@ -195,7 +282,7 @@ These may need manual inspection to determine if they should be changed.
 📋 SPECIFIC IMPORT PATTERNS ANALYSIS
 ============================================================
 
-🎯 TYPES MODULE IMPORTS (21 found)
+🎯 TYPES MODULE IMPORTS (2 found)
 ----------------------------------------
 📁 src/Chap35/OrderStatSelectMtEph.rs
    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
@@ -205,152 +292,13 @@ These may need manual inspection to determine if they should be changed.
     use rand::Rng;
    Items: Rng
 
-📁 src/Chap41/ArraySetEnumMtEph.rs
-   use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
-   Items: ArraySeqMtEphS
-
-📁 src/Chap62/StarPartitionMtEph.rs
-   use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::SetLit;
-   Items: SetLit
-
-📁 src/Chap47/Example47_4.rs
-   use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap47::FlatHashTable::FlatHashTable::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Chap47::LinearProbing::LinearProbing::*;
-    use crate::Chap47::ProbeSequenceExamples::ProbeSequenceExamples::*;
-    use crate::ArraySeqStPerSLit;
-   Items: ArraySeqStPerSLit
-
-📁 src/Chap47/Example47_6.rs
-   use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap47::AdvancedDoubleHashing::AdvancedDoubleHashing::*;
-    use crate::Chap47::FlatHashTable::FlatHashTable::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Chap47::LinearProbing::LinearProbing::*;
-    use crate::Chap47::ProbeSequenceExamples::ProbeSequenceExamples::*;
-    use crate::ArraySeqStPerSLit;
-   Items: ArraySeqStPerSLit
-
-📁 src/Chap47/Example47_2.rs
-   use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Chap47::SeparateChaining::SeparateChaining::*;
-    use crate::ArraySeqStPerSLit;
-   Items: ArraySeqStPerSLit
-
-📁 src/Chap47/HashExamples.rs
-   use crate::Types::Types::*;
-use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
-   Items: ProbeSequence
-
-📁 src/Chap47/Example47_5.rs
-   use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap47::AdvancedQuadraticProbing::AdvancedQuadraticProbing::*;
-    use crate::Chap47::FlatHashTable::FlatHashTable::*;
-    use crate::Chap47::HashFunctionTraits::HashFunctionTraits::*;
-    use crate::Chap47::LinearProbing::LinearProbing::*;
-    use crate::Chap47::ProbeSequenceExamples::ProbeSequenceExamples::*;
-    use crate::ArraySeqStPerSLit;
-   Items: ArraySeqStPerSLit
-
-📁 src/Chap65/KruskalStEph.rs
-   use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
-    use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFind;
-    use crate::SetLit;
-   Items: SetLit
-
-📁 src/Chap65/PrimStEph.rs
-   use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
-    use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
-    use crate::SetLit;
-   Items: SetLit
-
-📁 src/Chap50/OptBinSearchTreeStPer.rs
-   use crate::Chap50::Probability::Probability::Probability;
-    use crate::Types::Types::*;
-    use crate::prob;
-   Items: prob
-
-📁 src/Chap50/OptBinSearchTreeStEph.rs
-   use crate::Chap50::Probability::Probability::Probability;
-    use crate::Types::Types::*;
-    use crate::prob;
-   Items: prob
-
-📁 src/Chap56/SSSPResultStEphFloat.rs
-   use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
-   Items: ArraySeqStPerS
-
-📁 src/Chap56/PathWeightUtilsStEph.rs
-   use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
-   Items: ArraySeqStPerS
-
-📁 src/Chap56/PathWeightUtilsStPer.rs
-   use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
-   Items: ArraySeqStPerS
-
-📁 src/Chap56/AllPairsResultStEphFloat.rs
-   use crate::Types::Types::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
-   Items: ArraySeqStPerS
-
-📁 src/Chap66/BoruvkaMtEph.rs
-   use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::ParaPair;
-    use crate::SetLit;
-   Items: SetLit
-
-📁 src/Chap66/BoruvkaStEph.rs
-   use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::SetLit;
-   Items: SetLit
-
-📁 src/Chap64/TSPApproxStEph.rs
-   use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
-    use crate::SetLit;
-   Items: SetLit
-
-📁 src/Chap64/TSPApproxMtEph.rs
-   use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
-    use crate::SetLit;
-   Items: SetLit
-
-📁 src/Chap59/JohnsonStEphFloat.rs
-   use crate::Types::Types::*;
-    use crate::Chap05::SetStEph::SetStEph::*;
+📁 src/Chap06/WeightedDirGraphStEphFloat.rs
+   use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
-    use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Chap56::AllPairsResultStEphFloat::AllPairsResultStEphFloat::AllPairsResultStEphFloat;
-    use crate::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::dijkstra;
-    use crate::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
-   Items: bellman_ford
+    use crate::Types::Types::*;
+
+    use ordered_float::OrderedFloat;
+   Items: OrderedFloat
 
 
 🏷️  TRAIT IMPORTS (28 found)
@@ -404,7 +352,8 @@ use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
    Traits: AVLTreeSeqStEphTrait
 
 📁 src/Chap42/TableMtEph.rs
-   use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
+   use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
    Traits: ArraySeqStEphTrait
 
 📁 src/Chap52/EdgeSetGraphStEph.rs
@@ -474,11 +423,15 @@ use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
    Traits: AVLTreeSeqStEphTrait
 
 
-🏗️  STRUCT IMPORTS (49 found)
+🏗️  STRUCT IMPORTS (62 found)
 ----------------------------------------
 📁 src/Chap35/OrderStatSelectMtEph.rs
    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait as ArraySeqMtEphTraitImported, };
    Structs: ArraySeqMtEphS, ArraySeqMtEphTrait as ArraySeqMtEphTraitImported
+
+📁 src/Chap41/ArraySetEnumMtEph.rs
+   use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
+   Structs: ArraySeqMtEphS
 
 📁 src/Chap41/AVLTreeSetMtPer.rs
    use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
@@ -511,20 +464,16 @@ use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
    Structs: ArraySeqStEphS as ArraySeqStEphSChap18, ArraySeqStEphTrait as ArraySeqStEphTraitChap18
 
 📁 src/Chap19/ArraySeqMtPer.rs
-   use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS as ArraySeqMtPerSChap18, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18};
+   use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerS as ArraySeqMtPerSChap18, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18, };
    Structs: ArraySeqMtPerS as ArraySeqMtPerSChap18, ArraySeqMtPerTrait as ArraySeqMtPerTraitChap18
 
 📁 src/Chap19/ArraySeqMtEph.rs
    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS as ArraySeqMtEphSChap18, ArraySeqMtEphTrait as ArraySeqMtEphTraitChap18, };
    Structs: ArraySeqMtEphS as ArraySeqMtEphSChap18, ArraySeqMtEphTrait as ArraySeqMtEphTraitChap18
 
-📁 src/Chap19/ArraySeqStPer.rs
-   use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS as ArraySeqStPerSChap18, ArraySeqStPerTrait as ArraySeqStPerTraitChap18, };
-   Structs: ArraySeqStPerS as ArraySeqStPerSChap18, ArraySeqStPerTrait as ArraySeqStPerTraitChap18
+   ... and 52 more struct imports
 
-   ... and 39 more struct imports
-
-⚙️  FUNCTION IMPORTS (5 found)
+⚙️  FUNCTION IMPORTS (6 found)
 ----------------------------------------
 📁 src/Chap21/Algorithm21_5.rs
    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
@@ -571,33 +520,1647 @@ use crate::Chap47::FlatHashTable::FlatHashTable::ProbeSequence;
     use crate::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
    Functions: bellman_ford
 
+📁 src/Chap59/JohnsonStEphFloat.rs
+   use crate::Chap05::SetStEph::SetStEph::*;
+    use crate::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
+    use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap56::AllPairsResultStEphFloat::AllPairsResultStEphFloat::AllPairsResultStEphFloat;
+    use crate::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::dijkstra;
+    use crate::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
+   Functions: bellman_ford
+
 
 📊 SUMMARY
 ==============================
-Types module imports: 21
+Types module imports: 2
 Single letter imports: 0
 Trait imports: 28
-Struct imports: 49
-Function imports: 5
+Struct imports: 62
+Function imports: 6
 Other imports: 0
-Total specific imports: 103
+Total specific imports: 98
 Running APAS Structure Checks...
 Project root: /home/milnes/APASVERUS/APAS-AI/apas-ai/scripts
 
 ✓ All structure checks passed
-Running 9 APAS src review(s)
+⚠ Unit structs with algorithmic impl blocks (APASRules.md Lines 183-188):
+
+Note: Consider converting to free functions with documentary traits.
+
+  src/Chap47clean/DoubleHashFlatHashTableStEph.rs
+    struct DoubleHashFlatHashTableStEph; - 1 method(s)
+
+  src/Chap47/AdvancedDoubleHashing.rs
+    struct RelativePrimeValidator; - 15 method(s)
+
+  src/Chap47/HashFunctionTraits.rs
+    struct HashTableUtils; - 5 method(s)
+
+  src/Chap47/HashFunctionTraits.rs
+    struct HashFunctionTester; - 2 method(s)
+
+  src/Chap47/AdvancedQuadraticProbing.rs
+    struct PrimeValidator; - 14 method(s)
+
+Total candidates: 5
+Total violations: 5
+
+Consider: Convert to module with documentary trait + free functions.
+Keep unit structs for: type markers, strategies, data containers.
+⚠ Found Vec usage candidates for review (APASRules.md Lines 3-16):
+
+Note: These need manual review - some may be legitimate.
+
+  src/Types.rs:357 - Vec construction/conversion
+    Vec::new()
+
+  src/Types.rs:360 - Vec construction/conversion
+    vec![ $( $crate::EdgeLit!($a, $b) ),* ]
+
+  src/Types.rs:367 - Vec construction/conversion
+    Vec::new()
+
+  src/Types.rs:370 - Vec construction/conversion
+    vec![ $( $crate::PairLit!($a, $b) ),* ]
+
+  src/Chap55/TopoSortStPer.rs:25 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap55/TopoSortStPer.rs:47 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap55/TopoSortStEph.rs:24 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap55/TopoSortStEph.rs:41 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap55/SCCStEph.rs:35 - Vec construction/conversion
+    let mut vec = Vec::new();
+
+  src/Chap55/SCCStEph.rs:50 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap55/SCCStEph.rs:83 - Vec construction/conversion
+    let mut adj_vecs: Vec<Vec<N>> = vec![Vec::new(); n];
+
+  src/Chap55/SCCStPer.rs:46 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap55/SCCStPer.rs:85 - Vec construction/conversion
+    let mut adj_vecs: Vec<Vec<N>> = vec![Vec::new(); n];
+
+  src/Chap47clean/VecChainedHashTableStEph.rs:12 - Vec construction/conversion
+    fn new() -> Self { Vec::new() }
+
+  src/Chap41/ArraySetEnumMtEph.rs:66 - Vec construction/conversion
+    let mut result = Vec::with_capacity(set_size);
+
+  src/Chap41/AVLTreeSetMtPer.rs:88 - Vec construction/conversion
+    let mut result = Vec::with_capacity(n);
+
+  src/Chap41/AVLTreeSetMtPer.rs:118 - Vec construction/conversion
+    let mut vals = Vec::new();
+
+  src/Chap41/AVLTreeSetMtPer.rs:159 - Vec construction/conversion
+    let mut vals = Vec::new();
+
+  src/Chap41/ArraySetStEph.rs:95 - Vec construction/conversion
+    let mut result = Vec::with_capacity(self_len + other_len);
+
+  src/Chap41/ArraySetStEph.rs:134 - Vec construction/conversion
+    let mut sorted_elements = Vec::with_capacity(new_len);
+
+  src/Chap41/AVLTreeSetStPer.rs:52 - Vec construction/conversion
+    let mut vec_elements = Vec::with_capacity(size);
+
+  src/Chap41/AVLTreeSetStPer.rs:80 - Vec construction/conversion
+    let mut singleton_sets = Vec::with_capacity(seq_len);
+
+  src/Chap41/AVLTreeSetStPer.rs:166 - Vec construction/conversion
+    let mut vec_elements = Vec::with_capacity(size);
+
+  src/Chap41/AVLTreeSetStPer.rs:175 - Vec construction/conversion
+    let mut vec_elements = Vec::with_capacity(size + 1);
+
+  src/Chap41/AVLTreeSetStEph.rs:51 - Vec construction/conversion
+    let mut vec_elements = Vec::with_capacity(size);
+
+  src/Chap41/AVLTreeSetStEph.rs:79 - Vec construction/conversion
+    let mut singleton_sets = Vec::with_capacity(seq_len);
+
+  src/Chap41/AVLTreeSetStEph.rs:152 - Vec construction/conversion
+    let mut vec_elements = Vec::with_capacity(size);
+
+  src/Chap41/AVLTreeSetStEph.rs:166 - Vec construction/conversion
+    let mut vec_elements = Vec::with_capacity(size + 1);
+
+  src/Chap41/AVLTreeSetMtEph.rs:86 - Vec construction/conversion
+    let mut vals = Vec::with_capacity(seq.length());
+
+  src/Chap41/AVLTreeSetMtEph.rs:98 - Vec construction/conversion
+    return Vec::new();
+
+  src/Chap41/AVLTreeSetMtEph.rs:101 - Vec construction/conversion
+    return if f(&vals[0]) { vals } else { Vec::new() };
+
+  src/Chap41/AVLTreeSetMtEph.rs:137 - Vec construction/conversion
+    let mut sv = Vec::with_capacity(self_seq.length());
+
+  src/Chap41/AVLTreeSetMtEph.rs:142 - Vec construction/conversion
+    let mut ov = Vec::with_capacity(other_seq.length());
+
+  src/Chap41/AVLTreeSetMtEph.rs:155 - Vec construction/conversion
+    return Vec::new();
+
+  src/Chap41/AVLTreeSetMtEph.rs:162 - Vec construction/conversion
+    Vec::new()
+
+  src/Chap41/AVLTreeSetMtEph.rs:206 - Vec construction/conversion
+    let mut sv = Vec::with_capacity(self_seq.length());
+
+  src/Chap41/AVLTreeSetMtEph.rs:211 - Vec construction/conversion
+    let mut ov = Vec::with_capacity(other_seq.length());
+
+  src/Chap38/BSTParaStEph.rs:196 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap38/BSTParaMtEph.rs:382 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap42/TableStEph.rs:88 - Vec construction/conversion
+    let mut entries = Vec::with_capacity(key_seq.length());
+
+  src/Chap42/TableStEph.rs:122 - Vec construction/conversion
+    let mut intersection_entries = Vec::new();
+
+  src/Chap42/TableStEph.rs:147 - Vec construction/conversion
+    let mut union_entries = Vec::new();
+
+  src/Chap42/TableStEph.rs:190 - Vec construction/conversion
+    let mut difference_entries = Vec::new();
+
+  src/Chap42/TableStEph.rs:255 - Vec construction/conversion
+    let mut updated_entries = Vec::with_capacity(filtered.length() + 1);
+
+  src/Chap42/TableStEph.rs:264 - Vec construction/conversion
+    let mut new_entries = Vec::with_capacity(self.entries.length() + 1);
+
+  src/Chap42/TableStEph.rs:290 - Vec in public API
+    pub fn from_sorted_entries<K: StT + Ord, V: StT>(entries: Vec<Pair<K, V>>) -> Ta
+
+  src/Chap42/TableStEph.rs:303 - Vec construction/conversion
+    let mut entries = vec![$($crate::Types::Types::Pair($key, $value)),+];
+
+  src/Chap42/TableMtEph.rs:160 - Vec construction/conversion
+    let mut entries = Vec::with_capacity(total_len);
+
+  src/Chap42/TableMtEph.rs:217 - Vec construction/conversion
+    let mut mapped_entries = Vec::with_capacity(len);
+
+  src/Chap42/TableMtEph.rs:252 - Vec construction/conversion
+    let mut left_filtered = Vec::new();
+
+  src/Chap42/TableMtEph.rs:262 - Vec construction/conversion
+    let mut right_filtered = Vec::new();
+
+  src/Chap42/TableMtEph.rs:273 - Vec construction/conversion
+    let mut filtered_entries = Vec::with_capacity(left_filtered.len() + right_filter
+
+  src/Chap42/TableMtEph.rs:283 - Vec construction/conversion
+    let mut intersection_entries = Vec::new();
+
+  src/Chap42/TableMtEph.rs:310 - Vec construction/conversion
+    let mut union_entries = Vec::new();
+
+  src/Chap42/TableMtEph.rs:354 - Vec construction/conversion
+    let mut difference_entries = Vec::new();
+
+  src/Chap42/TableMtEph.rs:430 - Vec construction/conversion
+    let mut left_filtered = Vec::new();
+
+  src/Chap42/TableMtEph.rs:441 - Vec construction/conversion
+    let mut right_filtered = Vec::new();
+
+  src/Chap42/TableMtEph.rs:452 - Vec construction/conversion
+    let mut filtered_entries = Vec::with_capacity(left_filtered.len() + right_filter
+
+  src/Chap42/TableMtEph.rs:508 - Vec construction/conversion
+    let mut updated_entries = Vec::with_capacity(len);
+
+  src/Chap42/TableMtEph.rs:530 - Vec construction/conversion
+    let mut entries_vec = Vec::with_capacity(new_entries.length());
+
+  src/Chap42/TableMtEph.rs:562 - Vec construction/conversion
+    let mut left_filtered = Vec::new();
+
+  src/Chap42/TableMtEph.rs:573 - Vec construction/conversion
+    let mut right_filtered = Vec::new();
+
+  src/Chap42/TableMtEph.rs:584 - Vec construction/conversion
+    let mut filtered_entries = Vec::with_capacity(left_filtered.len() + right_filter
+
+  src/Chap42/TableMtEph.rs:614 - Vec construction/conversion
+    let mut left_filtered = Vec::new();
+
+  src/Chap42/TableMtEph.rs:625 - Vec construction/conversion
+    let mut right_filtered = Vec::new();
+
+  src/Chap42/TableMtEph.rs:636 - Vec construction/conversion
+    let mut filtered_entries = Vec::with_capacity(left_filtered.len() + right_filter
+
+  src/Chap42/TableMtEph.rs:647 - Vec in public API
+    pub fn from_sorted_entries<K: MtKey, V: MtVal>(entries: Vec<Pair<K, V>>) -> Tabl
+
+  src/Chap42/TableMtEph.rs:660 - Vec construction/conversion
+    let mut entries = vec![$($crate::Types::Types::Pair($key, $value)),+];
+
+  src/Chap42/TableStPer.rs:138 - Vec construction/conversion
+    let mut result_entries = Vec::new();
+
+  src/Chap42/TableStPer.rs:169 - Vec construction/conversion
+    let mut all_entries = Vec::new();
+
+  src/Chap42/TableStPer.rs:195 - Vec construction/conversion
+    let mut result_entries = Vec::new();
+
+  src/Chap42/TableStPer.rs:326 - Vec in public API
+    pub fn from_sorted_entries<K: StT + Ord, V: StT>(entries: Vec<Pair<K, V>>) -> Ta
+
+  src/Chap42/TableStPer.rs:339 - Vec construction/conversion
+    let mut entries = vec![$($crate::Types::Types::Pair($key, $value)),+];
+
+  src/Chap19/ArraySeqMtEphSlice.rs:91 - Vec in public API
+    pub fn from_vec(data: Vec<T>) -> Self { Self::from_box(data.into_boxed_slice()) 
+
+  src/Chap19/ArraySeqMtEphSlice.rs:94 - Vec in public API
+    pub fn to_vec(&self) -> Vec<T> {
+
+  src/Chap19/ArraySeqMtEphSlice.rs:96 - Vec construction/conversion
+    guard[self.range.start..self.range.end].to_vec()
+
+  src/Chap19/ArraySeqMtEphSlice.rs:155 - Vec construction/conversion
+    let data = vec![item];
+
+  src/Chap19/ArraySeqMtEphSlice.rs:169 - Vec construction/conversion
+    let data: Vec<T> = guard[sub.start..sub.end].to_vec();
+
+  src/Chap19/ArraySeqMtEphSlice.rs:182 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(n);
+
+  src/Chap19/ArraySeqMtEphSlice.rs:196 - Vec construction/conversion
+    let mut handles = Vec::with_capacity(a.length());
+
+  src/Chap19/ArraySeqMtEphSlice.rs:205 - Vec construction/conversion
+    let mut results = Vec::with_capacity(a.length());
+
+  src/Chap19/ArraySeqMtEphSlice.rs:220 - Vec construction/conversion
+    let mut keep_results = Vec::with_capacity(a.length());
+
+  src/Chap19/ArraySeqMtEphSlice.rs:232 - Vec construction/conversion
+    let mut kept_values = Vec::new();
+
+  src/Chap19/ArraySeqMtEphSlice.rs:248 - Vec construction/conversion
+    let sequences = vec![a.clone(), b.clone()];
+
+  src/Chap19/ArraySeqMtEphSlice.rs:279 - Vec construction/conversion
+    let mut result = Vec::with_capacity(total_len);
+
+  src/Chap19/ArraySeqMtEphSlice.rs:327 - Vec construction/conversion
+    let mut results = Vec::with_capacity(a.length());
+
+  src/Chap19/ArraySeqMtEphSlice.rs:410 - Vec construction/conversion
+    let left = self.to_vec();
+
+  src/Chap19/ArraySeqMtEphSlice.rs:411 - Vec construction/conversion
+    let right = other.to_vec();
+
+  src/Chap19/ArraySeqMtEphSlice.rs:444 - Vec construction/conversion
+    let mut data = Vec::with_capacity(length);
+
+  src/Chap19/ArraySeqMtPer.rs:116 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(n);
+
+  src/Chap19/ArraySeqMtPer.rs:130 - Vec construction/conversion
+    let mut values: Vec<W> = Vec::with_capacity(a.length());
+
+  src/Chap19/ArraySeqMtPer.rs:163 - Vec construction/conversion
+    let mut handles = Vec::with_capacity(a.length());
+
+  src/Chap19/ArraySeqMtPer.rs:172 - Vec construction/conversion
+    let mut kept: Vec<T> = Vec::new();
+
+  src/Chap19/ArraySeqMtPer.rs:215 - Vec construction/conversion
+    let mut result_vec = Vec::with_capacity(a.length());
+
+  src/Chap19/ArraySeqMtPer.rs:251 - Vec construction/conversion
+    let mut results = Vec::with_capacity(a.length());
+
+  src/Chap19/ArraySeqMtEph.rs:110 - Vec construction/conversion
+    let mut values: Vec<U> = Vec::with_capacity(a.length());
+
+  src/Chap19/ArraySeqStPer.rs:100 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(n);
+
+  src/Chap19/ArraySeqStPer.rs:192 - Vec construction/conversion
+    let mut results = Vec::with_capacity(a.length());
+
+  src/Chap06/WeightedUnDirGraphStEphInt.rs:86 - Vec construction/conversion
+    let mut stack = Vec::new();
+
+  src/Chap06/WeightedUnDirGraphStEphFloat.rs:123 - Vec construction/conversion
+    let mut stack = Vec::new();
+
+  src/Chap62/StarPartitionMtEph.rs:69 - Vec construction/conversion
+    let mut th_edges: Vec<(N, V)> = Vec::new();
+
+  src/Chap44/DocumentIndex.rs:117 - Vec construction/conversion
+    let mut doc_vec = Vec::new();
+
+  src/Chap44/Example44_1.rs:130 - Vec in public API
+    pub fn doc_set_to_sorted_vec(docs: &DocumentSet) -> Vec<DocumentId> {
+
+  src/Chap44/Example44_1.rs:132 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap44/Example44_1.rs:149 - Vec construction/conversion
+    let expected_fun = vec!["jack".to_string(), "mary".to_string(), "peter".to_strin
+
+  src/Chap44/Example44_1.rs:156 - Vec construction/conversion
+    let expected_club = vec!["mary".to_string()];
+
+  src/Chap44/Example44_1.rs:163 - Vec construction/conversion
+    let mut complex_vec = Vec::new();
+
+  src/Chap44/Example44_1.rs:169 - Vec construction/conversion
+    let expected_complex = vec!["jack".to_string(), "peter".to_string()];
+
+  src/Chap47/ClusteringAnalysis.rs:247 - Vec construction/conversion
+    let mut performance_ranking = vec![
+
+  src/Chap47/ClusteringAnalysis.rs:469 - Vec in public API
+    pub fn example_load_factor_impact_analysis() -> Vec<(f64, ClusteringComparison)>
+
+  src/Chap47/ClusteringAnalysis.rs:471 - Vec construction/conversion
+    let load_factors = vec![0.25, 0.5, 0.75, 0.9];
+
+  src/Chap47/Example47_1.rs:23 - Vec in public API
+    pub fn example_47_1_demonstration() -> Vec<(String, N)> {
+
+  src/Chap47/Example47_1.rs:27 - Vec construction/conversion
+    let test_strings = vec![
+
+  src/Chap47/AdvancedDoubleHashing.rs:94 - Vec in public API
+    pub fn generate_valid_h2_values(table_size: N, max_count: N) -> Vec<N> {
+
+  src/Chap47/AdvancedDoubleHashing.rs:95 - Vec construction/conversion
+    let mut valid_values = Vec::new();
+
+  src/Chap47/AdvancedDoubleHashing.rs:247 - Vec in public API
+    pub fn generate_probe_sequence(&self, key: &K, table_size: N, max_probes: N) -> 
+
+  src/Chap47/AdvancedDoubleHashing.rs:252 - Vec construction/conversion
+    let mut sequence = Vec::new();
+
+  src/Chap47/ProbeSequenceExamples.rs:80 - Vec construction/conversion
+    let mut probe_sequence = Vec::new();
+
+  src/Chap47/ProbeSequenceExamples.rs:115 - Vec construction/conversion
+    let mut probe_sequence = Vec::new();
+
+  src/Chap47/ProbeSequenceExamples.rs:211 - Vec in public API
+    pub fn compare_probing_strategies(&self, key: &str, table_size: N) -> Vec<ProbeS
+
+  src/Chap47/ProbeSequenceExamples.rs:212 - Vec construction/conversion
+    vec![
+
+  src/Chap47/ProbeSequenceExamples.rs:261 - Vec construction/conversion
+    let keys = vec!["key1".to_string(), "key2".to_string(), "key3".to_string()];
+
+  src/Chap47/ProbeSequenceExamples.rs:263 - Vec construction/conversion
+    let mut probe_sequences = Vec::new();
+
+  src/Chap47/ProbeSequenceExamples.rs:295 - Vec construction/conversion
+    let keys = vec!["alpha".to_string(), "beta".to_string(), "gamma".to_string()];
+
+  src/Chap47/ProbeSequenceExamples.rs:297 - Vec construction/conversion
+    let mut probe_sequences = Vec::new();
+
+  src/Chap47/ProbeSequenceExamples.rs:330 - Vec construction/conversion
+    let keys = vec!["hash1".to_string(), "hash2".to_string(), "hash3".to_string()];
+
+  src/Chap47/ProbeSequenceExamples.rs:332 - Vec construction/conversion
+    let mut probe_sequences = Vec::new();
+
+  src/Chap47/ProbeSequenceExamples.rs:384 - Vec construction/conversion
+    keys: vec![test_key.to_string()],
+
+  src/Chap47/ProbeSequenceExamples.rs:394 - Vec in public API
+    pub fn load_factor_impact_analysis() -> Vec<(f64, Vec<ProbeSequenceVisualization
+
+  src/Chap47/ProbeSequenceExamples.rs:396 - Vec construction/conversion
+    let load_factors = vec![0.25, 0.5, 0.75, 0.9];
+
+  src/Chap47/ProbeSequenceExamples.rs:418 - Vec construction/conversion
+    let prime_sequences = vec![analyzer.analyze_quadratic_probing(test_key, prime_si
+
+  src/Chap47/ProbeSequenceExamples.rs:424 - Vec construction/conversion
+    keys: vec![test_key.to_string()],
+
+  src/Chap47/ProbeSequenceExamples.rs:432 - Vec construction/conversion
+    let composite_sequences = vec![analyzer.analyze_quadratic_probing(test_key, comp
+
+  src/Chap47/ProbeSequenceExamples.rs:438 - Vec construction/conversion
+    keys: vec![test_key.to_string()],
+
+  src/Chap47/HashFunctionTraits.rs:395 - Vec construction/conversion
+    let mut bucket_counts = vec![0; table_size];
+
+  src/Chap47/HashExamples.rs:37 - Vec in public API
+    pub fn example_47_1_demonstration() -> Vec<(String, N)> {
+
+  src/Chap47/HashExamples.rs:41 - Vec construction/conversion
+    let test_strings = vec![
+
+  src/Chap47/HashExamples.rs:67 - Vec in public API
+    pub fn example_47_4_probe_sequence() -> Vec<(String, Vec<N>)> {
+
+  src/Chap47/HashExamples.rs:72 - Vec construction/conversion
+    let keys = vec![
+
+  src/Chap47/HashExamples.rs:82 - Vec construction/conversion
+    let mut probe_sequence = Vec::new();
+
+  src/Chap47/AdvancedLinearProbing.rs:80 - Vec construction/conversion
+    let mut clusters = Vec::new();
+
+  src/Chap47/AdvancedQuadraticProbing.rs:78 - Vec construction/conversion
+    let mut issues = Vec::new();
+
+  src/Chap47/AdvancedQuadraticProbing.rs:196 - Vec construction/conversion
+    let mut sequence = Vec::new();
+
+  src/Chap52/AdjMatrixGraphMtPer.rs:40 - Vec construction/conversion
+    let mut matrix_rows = Vec::with_capacity(n);
+
+  src/Chap52/AdjMatrixGraphMtPer.rs:77 - Vec construction/conversion
+    let mut neighbors = Vec::new();
+
+  src/Chap52/AdjMatrixGraphMtPer.rs:106 - Vec construction/conversion
+    let mut new_matrix_vec = Vec::with_capacity(n);
+
+  src/Chap52/AdjMatrixGraphMtPer.rs:109 - Vec construction/conversion
+    let mut new_row_vec = Vec::with_capacity(n);
+
+  src/Chap52/EdgeSetGraphStEph.rs:88 - Vec construction/conversion
+    let mut to_remove = Vec::new();
+
+  src/Chap52/AdjSeqGraphStEph.rs:38 - Vec construction/conversion
+    let mut adj_lists = Vec::with_capacity(n);
+
+  src/Chap52/AdjSeqGraphStEph.rs:98 - Vec construction/conversion
+    let mut new_neighbors_vec: Vec<N> = Vec::with_capacity(old_neighbors.length() + 
+
+  src/Chap52/AdjSeqGraphStEph.rs:107 - Vec construction/conversion
+    let mut new_neighbors_vec: Vec<N> = Vec::new();
+
+  src/Chap52/AdjSeqGraphStPer.rs:40 - Vec construction/conversion
+    let mut adj_lists = Vec::with_capacity(n);
+
+  src/Chap52/AdjSeqGraphStPer.rs:97 - Vec construction/conversion
+    let mut new_neighbors_vec: Vec<N> = Vec::with_capacity(old_neighbors.length() + 
+
+  src/Chap52/AdjSeqGraphStPer.rs:105 - Vec construction/conversion
+    let mut new_adj_vec = Vec::with_capacity(self.adj.length());
+
+  src/Chap52/AdjSeqGraphStPer.rs:124 - Vec construction/conversion
+    let mut new_neighbors_vec: Vec<N> = Vec::new();
+
+  src/Chap52/AdjSeqGraphStPer.rs:133 - Vec construction/conversion
+    let mut new_adj_vec = Vec::with_capacity(self.adj.length());
+
+  src/Chap52/AdjMatrixGraphStPer.rs:41 - Vec construction/conversion
+    let mut matrix_rows = Vec::with_capacity(n);
+
+  src/Chap52/AdjMatrixGraphStPer.rs:87 - Vec construction/conversion
+    let mut neighbors = Vec::new();
+
+  src/Chap52/AdjMatrixGraphStPer.rs:117 - Vec construction/conversion
+    let mut new_row_vec = Vec::with_capacity(self.n);
+
+  src/Chap52/AdjMatrixGraphStPer.rs:127 - Vec construction/conversion
+    let mut new_matrix_vec = Vec::with_capacity(self.n);
+
+  src/Chap52/AdjMatrixGraphStPer.rs:143 - Vec construction/conversion
+    let mut new_matrix_vec = Vec::with_capacity(self.n);
+
+  src/Chap52/AdjMatrixGraphStPer.rs:146 - Vec construction/conversion
+    let mut new_row_vec = Vec::with_capacity(self.n);
+
+  src/Chap52/AdjSeqGraphMtPer.rs:39 - Vec construction/conversion
+    let mut adj_lists = Vec::with_capacity(n);
+
+  src/Chap52/AdjSeqGraphMtPer.rs:83 - Vec construction/conversion
+    let mut new_rows = Vec::with_capacity(n);
+
+  src/Chap52/AdjSeqGraphMtPer.rs:87 - Vec construction/conversion
+    let mut new_row = Vec::with_capacity(m);
+
+  src/Chap52/AdjMatrixGraphMtEph.rs:39 - Vec construction/conversion
+    let mut matrix_rows = Vec::with_capacity(n);
+
+  src/Chap52/AdjMatrixGraphMtEph.rs:76 - Vec construction/conversion
+    let mut neighbors = Vec::new();
+
+  src/Chap52/AdjMatrixGraphMtEph.rs:108 - Vec construction/conversion
+    let mut new_matrix_vec = Vec::with_capacity(self.n);
+
+  src/Chap52/AdjMatrixGraphMtEph.rs:111 - Vec construction/conversion
+    let mut new_row_vec = Vec::with_capacity(self.n);
+
+  src/Chap52/AdjMatrixGraphStEph.rs:39 - Vec construction/conversion
+    let mut matrix_rows = Vec::with_capacity(n);
+
+  src/Chap52/AdjMatrixGraphStEph.rs:81 - Vec construction/conversion
+    let mut neighbors = Vec::new();
+
+  src/Chap52/AdjMatrixGraphStEph.rs:114 - Vec construction/conversion
+    let mut new_matrix_vec = Vec::with_capacity(self.n);
+
+  src/Chap52/AdjMatrixGraphStEph.rs:117 - Vec construction/conversion
+    let mut new_row_vec = Vec::with_capacity(self.n);
+
+  src/Chap52/AdjSeqGraphMtEph.rs:36 - Vec construction/conversion
+    let mut adj_lists = Vec::with_capacity(n);
+
+  src/Chap52/AdjSeqGraphMtEph.rs:87 - Vec construction/conversion
+    let mut new_neighbors_vec: Vec<N> = Vec::with_capacity(old_neighbors.length() + 
+
+  src/Chap52/AdjSeqGraphMtEph.rs:95 - Vec construction/conversion
+    let mut new_neighbors_vec: Vec<N> = Vec::new();
+
+  src/Chap17/MathSeq.rs:131 - Vec construction/conversion
+    data: vec![init_value; length],
+
+  src/Chap17/MathSeq.rs:148 - Vec construction/conversion
+    fn empty() -> Self { MathSeqS { data: Vec::new() } }
+
+  src/Chap17/MathSeq.rs:150 - Vec construction/conversion
+    fn singleton(item: T) -> Self { MathSeqS { data: vec![item] } }
+
+  src/Chap17/MathSeq.rs:164 - Vec construction/conversion
+    return MathSeqS { data: Vec::new() };
+
+  src/Chap17/MathSeq.rs:167 - Vec construction/conversion
+    data: self.data[s..e].to_vec(),
+
+  src/Chap17/MathSeq.rs:186 - Vec construction/conversion
+    let mut out: Vec<T> = Vec::with_capacity(self.data.len());
+
+  src/Chap17/MathSeq.rs:197 - Vec construction/conversion
+    let mut order: Vec<T> = Vec::new();
+
+  src/Chap17/MathSeq.rs:220 - Vec construction/conversion
+    data: vec![init_value; length],
+
+  src/Chap21/Problem21_1.rs:26 - Vec construction/conversion
+    let mut v: Vec<Pair<N, N>> = Vec::with_capacity(len);
+
+  src/Chap21/Problem21_3.rs:27 - Vec construction/conversion
+    let mut v: Vec<Pair<N, Pair<N, N>>> = Vec::with_capacity(len);
+
+  src/Chap21/Problem21_4.rs:35 - Vec construction/conversion
+    let mut v: Vec<Pair<N, &'static str>> = Vec::with_capacity(a.length() * b.length
+
+  src/Chap39/BSTTreapMtEph.rs:229 - Vec construction/conversion
+    let mut out = Vec::with_capacity(Self::size_link(&*guard));
+
+  src/Chap39/BSTTreapMtEph.rs:236 - Vec construction/conversion
+    let mut out = Vec::with_capacity(Self::size_link(&*guard));
+
+  src/Chap39/BSTSetTreapMtEph.rs:140 - Vec construction/conversion
+    let mut left: Vec<T> = Vec::new();
+
+  src/Chap39/BSTSetTreapMtEph.rs:141 - Vec construction/conversion
+    let mut right: Vec<T> = Vec::new();
+
+  src/Chap39/BSTParaTreapMtEph.rs:437 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap39/BSTTreapStEph.rs:208 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap39/BSTTreapStEph.rs:214 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap51/BottomUpDPStPer.rs:64 - Vec construction/conversion
+    let mut table = vec![vec![0usize; t_len + 1]; s_len + 1];
+
+  src/Chap51/BottomUpDPMtPer.rs:67 - Vec construction/conversion
+    let mut table = vec![vec![0usize; t_len + 1]; s_len + 1];
+
+  src/Chap51/BottomUpDPMtEph.rs:67 - Vec construction/conversion
+    let mut table = vec![vec![0usize; t_len + 1]; s_len + 1];
+
+  src/Chap51/BottomUpDPStEph.rs:64 - Vec construction/conversion
+    let mut table = vec![vec![0usize; t_len + 1]; s_len + 1];
+
+  src/Chap50/OptBinSearchTreeMtEph.rs:77 - Vec construction/conversion
+    let left_costs = costs[..mid].to_vec();
+
+  src/Chap50/OptBinSearchTreeMtEph.rs:78 - Vec construction/conversion
+    let right_costs = costs[mid..].to_vec();
+
+  src/Chap50/OptBinSearchTreeMtEph.rs:147 - Vec construction/conversion
+    keys: Arc::new(Mutex::new(Vec::new())),
+
+  src/Chap50/OptBinSearchTreeMtEph.rs:312 - Vec construction/conversion
+    vec![$($k),*],
+
+  src/Chap50/OptBinSearchTreeMtEph.rs:313 - Vec construction/conversion
+    vec![$($crate::Chap50::Probability::Probability::Probability::new($p)),*]
+
+  src/Chap50/MatrixChainMtPer.rs:76 - Vec construction/conversion
+    let left_costs = costs[..mid].to_vec();
+
+  src/Chap50/MatrixChainMtPer.rs:77 - Vec construction/conversion
+    let right_costs = costs[mid..].to_vec();
+
+  src/Chap50/MatrixChainMtPer.rs:134 - Vec construction/conversion
+    dimensions: Arc::new(Vec::new()),
+
+  src/Chap50/MatrixChainMtPer.rs:235 - Vec construction/conversion
+    vec![$($crate::Types::Types::Pair($r, $c)),*]
+
+  src/Chap50/OptBinSearchTreeMtPer.rs:70 - Vec construction/conversion
+    let left_costs = costs[..mid].to_vec();
+
+  src/Chap50/OptBinSearchTreeMtPer.rs:71 - Vec construction/conversion
+    let right_costs = costs[mid..].to_vec();
+
+  src/Chap50/OptBinSearchTreeMtPer.rs:137 - Vec construction/conversion
+    keys: Arc::new(Vec::new()),
+
+  src/Chap50/OptBinSearchTreeMtPer.rs:243 - Vec construction/conversion
+    vec![$($k),*],
+
+  src/Chap50/OptBinSearchTreeMtPer.rs:244 - Vec construction/conversion
+    vec![$($crate::Chap50::Probability::Probability::Probability::new($p)),*]
+
+  src/Chap50/OptBinSearchTreeStPer.rs:94 - Vec construction/conversion
+    keys: Vec::new(),
+
+  src/Chap50/OptBinSearchTreeStPer.rs:175 - Vec construction/conversion
+    vec![$($k),*],
+
+  src/Chap50/OptBinSearchTreeStPer.rs:176 - Vec construction/conversion
+    vec![$(prob!($p)),*]
+
+  src/Chap50/OptBinSearchTreeStEph.rs:106 - Vec construction/conversion
+    keys: Vec::new(),
+
+  src/Chap50/OptBinSearchTreeStEph.rs:213 - Vec construction/conversion
+    vec![$($k),*],
+
+  src/Chap50/OptBinSearchTreeStEph.rs:214 - Vec construction/conversion
+    vec![$(prob!($p)),*]
+
+  src/Chap50/MatrixChainStEph.rs:107 - Vec construction/conversion
+    dimensions: Vec::new(),
+
+  src/Chap50/MatrixChainStEph.rs:214 - Vec construction/conversion
+    vec![$($crate::Types::Types::Pair($r, $c)),*]
+
+  src/Chap50/MatrixChainStPer.rs:95 - Vec construction/conversion
+    dimensions: Vec::new(),
+
+  src/Chap50/MatrixChainStPer.rs:176 - Vec construction/conversion
+    vec![$($crate::Types::Types::Pair($r, $c)),*]
+
+  src/Chap50/MatrixChainMtEph.rs:84 - Vec construction/conversion
+    let left_costs = costs[..mid].to_vec();
+
+  src/Chap50/MatrixChainMtEph.rs:85 - Vec construction/conversion
+    let right_costs = costs[mid..].to_vec();
+
+  src/Chap50/MatrixChainMtEph.rs:142 - Vec construction/conversion
+    dimensions: Arc::new(Mutex::new(Vec::new())),
+
+  src/Chap50/MatrixChainMtEph.rs:302 - Vec construction/conversion
+    vec![$($crate::Types::Types::Pair($r, $c)),*]
+
+  src/Chap45/UnsortedListPQ.rs:219 - Vec in public API
+    pub fn from_vec(vec: Vec<T>) -> Self {
+
+  src/Chap45/UnsortedListPQ.rs:228 - Vec in public API
+    pub fn to_vec(&self) -> Vec<T> {
+
+  src/Chap45/UnsortedListPQ.rs:229 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap45/UnsortedListPQ.rs:237 - Vec in public API
+    pub fn to_sorted_vec(&self) -> Vec<T> {
+
+  src/Chap45/UnsortedListPQ.rs:239 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap45/LeftistHeapPQ.rs:192 - Vec construction/conversion
+    | LeftistHeapNode::Leaf => Vec::new(),
+
+  src/Chap45/LeftistHeapPQ.rs:194 - Vec construction/conversion
+    let mut result = left.to_vec();
+
+  src/Chap45/LeftistHeapPQ.rs:196 - Vec construction/conversion
+    result.extend(right.to_vec());
+
+  src/Chap45/LeftistHeapPQ.rs:274 - Vec construction/conversion
+    let mut next_level = Vec::new();
+
+  src/Chap45/LeftistHeapPQ.rs:300 - Vec in public API
+    pub fn extract_all_sorted(&self) -> Vec<T> {
+
+  src/Chap45/LeftistHeapPQ.rs:301 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap45/LeftistHeapPQ.rs:325 - Vec in public API
+    pub fn from_vec(vec: Vec<T>) -> Self { Self::from_seq(&vec) }
+
+  src/Chap45/LeftistHeapPQ.rs:328 - Vec construction/conversion
+    pub fn to_vec(&self) -> Vec<T> { self.root.to_vec() }
+
+  src/Chap45/LeftistHeapPQ.rs:328 - Vec in public API
+    pub fn to_vec(&self) -> Vec<T> { self.root.to_vec() }
+
+  src/Chap45/LeftistHeapPQ.rs:331 - Vec in public API
+    pub fn to_sorted_vec(&self) -> Vec<T> { self.extract_all_sorted() }
+
+  src/Chap45/LeftistHeapPQ.rs:351 - Vec construction/conversion
+    let all_elements = self.to_vec();
+
+  src/Chap45/LeftistHeapPQ.rs:395 - Vec construction/conversion
+    let elements = vec![$($x),*];
+
+  src/Chap45/LeftistHeapPQ.rs:417 - Vec in public API
+    pub fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T>
+
+  src/Chap45/LeftistHeapPQ.rs:429 - Vec in public API
+    pub fn parallel_heap_construction<T: StT + Ord>(elements: Vec<T>) -> LeftistHeap
+
+  src/Chap45/Example45_2.rs:77 - Vec in public API
+    pub fn example_45_2_efficiency_demonstration() -> Vec<(String, Vec<i32>)> { effi
+
+  src/Chap45/HeapsortExample.rs:44 - Vec in public API
+    pub fn heapsort_unsorted_list<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
+
+  src/Chap45/HeapsortExample.rs:49 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap45/HeapsortExample.rs:62 - Vec in public API
+    pub fn heapsort_sorted_list<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
+
+  src/Chap45/HeapsortExample.rs:67 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap45/HeapsortExample.rs:80 - Vec in public API
+    pub fn heapsort_balanced_tree<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
+
+  src/Chap45/HeapsortExample.rs:85 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap45/HeapsortExample.rs:98 - Vec in public API
+    pub fn heapsort_binary_heap<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
+
+  src/Chap45/HeapsortExample.rs:103 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap45/HeapsortExample.rs:116 - Vec in public API
+    pub fn heapsort_leftist_heap<T: StT + Ord>(sequence: &[T]) -> Vec<T> {
+
+  src/Chap45/HeapsortExample.rs:121 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap45/HeapsortExample.rs:135 - Vec construction/conversion
+    input: sequence.to_vec(),
+
+  src/Chap45/HeapsortExample.rs:199 - Vec construction/conversion
+    let input = vec![64, 34, 25, 12, 22, 11, 90];
+
+  src/Chap45/HeapsortExample.rs:205 - Vec construction/conversion
+    let input = vec![10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+
+  src/Chap45/HeapsortExample.rs:211 - Vec construction/conversion
+    let input = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  src/Chap45/HeapsortExample.rs:217 - Vec construction/conversion
+    let input = vec![5, 2, 8, 2, 9, 1, 5, 5];
+
+  src/Chap45/HeapsortExample.rs:223 - Vec construction/conversion
+    let input = vec![42];
+
+  src/Chap45/HeapsortExample.rs:229 - Vec construction/conversion
+    let input = vec![];
+
+  src/Chap45/HeapsortExample.rs:234 - Vec in public API
+    pub fn large_example(size: usize) -> Vec<i32> {
+
+  src/Chap45/HeapsortExample.rs:236 - Vec construction/conversion
+    let mut result = Vec::with_capacity(size);
+
+  src/Chap45/HeapsortExample.rs:246 - Vec in public API
+    pub fn efficiency_demonstration() -> Vec<(String, Vec<i32>)> {
+
+  src/Chap45/HeapsortExample.rs:247 - Vec construction/conversion
+    let inputs = vec![
+
+  src/Chap45/HeapsortExample.rs:248 - Vec construction/conversion
+    ("Small (7 elements)".to_string(), vec![64, 34, 25, 12, 22, 11, 90]),
+
+  src/Chap45/HeapsortExample.rs:265 - Vec in public API
+    pub fn complexity_analysis() -> Vec<(String, String, String)> {
+
+  src/Chap45/HeapsortExample.rs:266 - Vec construction/conversion
+    vec![
+
+  src/Chap45/HeapsortExample.rs:297 - Vec construction/conversion
+    let test_cases = vec![
+
+  src/Chap45/HeapsortExample.rs:340 - Vec in public API
+    pub fn generate_test_sequences(size: usize) -> Vec<(String, Vec<i32>)> {
+
+  src/Chap45/HeapsortExample.rs:341 - Vec construction/conversion
+    vec![
+
+  src/Chap45/HeapsortExample.rs:345 - Vec construction/conversion
+    ("AllSame".to_string(), vec![42; size]),
+
+  src/Chap45/SortedListPQ.rs:285 - Vec in public API
+    pub fn from_vec(vec: Vec<T>) -> Self {
+
+  src/Chap45/SortedListPQ.rs:294 - Vec in public API
+    pub fn to_vec(&self) -> Vec<T> {
+
+  src/Chap45/SortedListPQ.rs:295 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap45/SortedListPQ.rs:303 - Vec in public API
+    pub fn to_sorted_vec(&self) -> Vec<T> {
+
+  src/Chap45/SortedListPQ.rs:305 - Vec construction/conversion
+    self.to_vec()
+
+  src/Chap45/BinaryHeapPQ.rs:374 - Vec in public API
+    pub fn from_vec(vec: Vec<T>) -> Self {
+
+  src/Chap45/BinaryHeapPQ.rs:384 - Vec in public API
+    pub fn to_vec(&self) -> Vec<T> {
+
+  src/Chap45/BinaryHeapPQ.rs:385 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap45/BinaryHeapPQ.rs:393 - Vec in public API
+    pub fn to_sorted_vec(&self) -> Vec<T> {
+
+  src/Chap45/BinaryHeapPQ.rs:395 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap45/BalancedTreePQ.rs:129 - Vec construction/conversion
+    let mut merged = Vec::with_capacity(values1.len() + values2.len());
+
+  src/Chap45/BalancedTreePQ.rs:260 - Vec construction/conversion
+    let mut range_values = Vec::new();
+
+  src/Chap45/BalancedTreePQ.rs:316 - Vec in public API
+    pub fn from_vec(vec: Vec<T>) -> Self {
+
+  src/Chap45/BalancedTreePQ.rs:325 - Vec in public API
+    pub fn to_vec(&self) -> Vec<T> {
+
+  src/Chap45/BalancedTreePQ.rs:326 - Vec construction/conversion
+    let mut result = Vec::new();
+
+  src/Chap45/BalancedTreePQ.rs:334 - Vec in public API
+    pub fn to_sorted_vec(&self) -> Vec<T> {
+
+  src/Chap45/BalancedTreePQ.rs:336 - Vec construction/conversion
+    self.to_vec()
+
+  src/Chap12/Exercise12_5.rs:109 - Vec construction/conversion
+    let mut items = Vec::new();
+
+  src/Chap12/Exercise12_1.rs:85 - Vec construction/conversion
+    let mut handles = Vec::new();
+
+  src/Chap57/StackStEph.rs:47 - Vec construction/conversion
+    pub fn new() -> Self { StackStEph { elements: Vec::new() } }
+
+  src/Chap61/VertexMatchingMtEph.rs:89 - Vec construction/conversion
+    let mut coins_vec = Vec::with_capacity(n);
+
+  src/Chap36/QuickSortMt.rs:90 - Vec construction/conversion
+    let mut data = self.to_vec();
+
+  src/Chap36/QuickSortMt.rs:141 - Vec construction/conversion
+    let mut data = self.to_vec();
+
+  src/Chap36/QuickSortMt.rs:182 - Vec construction/conversion
+    let mut data = self.to_vec();
+
+  src/Chap28/MaxContigSubSumOptStEph.rs:29 - Vec construction/conversion
+    let mut all_prefixes_vec = Vec::with_capacity(n + 1);
+
+  src/Chap28/MaxContigSubSumOptStEph.rs:39 - Vec construction/conversion
+    let mut min_prefixes_vec = Vec::with_capacity(n + 1);
+
+  src/Chap28/MaxContigSubSumOptMtEph.rs:32 - Vec construction/conversion
+    let mut all_prefixes_vec = Vec::with_capacity(n + 1);
+
+  src/Chap28/MaxContigSubSumOptMtEph.rs:42 - Vec construction/conversion
+    let mut min_prefixes_vec = Vec::with_capacity(n + 1);
+
+  src/Chap05/MappingStEph.rs:115 - Vec construction/conversion
+    let __pairs = vec![ $( $crate::Types::Types::Pair($a, $b) ),* ];
+
+  src/Chap05/SetStEphClean.rs:146 - Vec construction/conversion
+    let mut element_hashes: Vec<u64> = Vec::with_capacity(self.data.len());
+
+  src/Chap05/SetStEph.rs:89 - Vec construction/conversion
+    let mut element_hashes: Vec<u64> = Vec::with_capacity(self.data.len());
+
+  src/Chap40/BSTSizeStEph.rs:263 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap40/BSTReducedStEph.rs:310 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap40/BSTReducedStEph.rs:316 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap40/BSTKeyValueStEph.rs:207 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size);
+
+  src/Chap40/BSTKeyValueStEph.rs:213 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size);
+
+  src/Chap23/PrimTreeSeqSt.rs:66 - Vec construction/conversion
+    pub fn empty() -> Self { Self { data: Vec::new() } }
+
+  src/Chap23/PrimTreeSeqSt.rs:71 - Vec construction/conversion
+    pub fn singleton(value: T) -> Self { Self { data: vec![value] } }
+
+  src/Chap23/PrimTreeSeqSt.rs:76 - Vec in public API
+    pub fn from_vec(vec: Vec<T>) -> Self { Self { data: vec } }
+
+  src/Chap23/PrimTreeSeqSt.rs:81 - Vec in public API
+    pub fn into_vec(self) -> Vec<T> { self.data }
+
+  src/Chap23/PrimTreeSeqSt.rs:102 - Vec construction/conversion
+    let left = self.data[..mid].to_vec();
+
+  src/Chap23/PrimTreeSeqSt.rs:103 - Vec construction/conversion
+    let right = self.data[mid..].to_vec();
+
+  src/Chap23/PrimTreeSeqSt.rs:117 - Vec construction/conversion
+    let mut combined = left.into_vec();
+
+  src/Chap23/PrimTreeSeqSt.rs:118 - Vec construction/conversion
+    combined.extend(right.into_vec());
+
+  src/Chap23/PrimTreeSeqSt.rs:126 - Vec construction/conversion
+    fn empty() -> Self { Self { data: Vec::new() } }
+
+  src/Chap23/PrimTreeSeqSt.rs:128 - Vec construction/conversion
+    fn singleton(value: T) -> Self { Self { data: vec![value] } }
+
+  src/Chap23/PrimTreeSeqSt.rs:144 - Vec construction/conversion
+    let left = self.data[..mid].to_vec();
+
+  src/Chap23/PrimTreeSeqSt.rs:145 - Vec construction/conversion
+    let right = self.data[mid..].to_vec();
+
+  src/Chap23/PrimTreeSeqSt.rs:156 - Vec construction/conversion
+    let mut combined = left.into_vec();
+
+  src/Chap23/PrimTreeSeqSt.rs:157 - Vec construction/conversion
+    combined.extend(right.into_vec());
+
+  src/Chap56/SSSPResultStPerFloat.rs:119 - Vec construction/conversion
+    let mut path = Vec::new();
+
+  src/Chap56/SSSPResultStEphInt.rs:53 - Vec construction/conversion
+    let mut dist_vec = vec![UNREACHABLE; n];
+
+  src/Chap56/SSSPResultStEphInt.rs:109 - Vec construction/conversion
+    let mut path = Vec::new();
+
+  src/Chap56/SSSPResultStEphFloat.rs:56 - Vec construction/conversion
+    let mut dist_vec = vec![UNREACHABLE; n];
+
+  src/Chap56/SSSPResultStEphFloat.rs:112 - Vec construction/conversion
+    let mut path = Vec::new();
+
+  src/Chap56/AllPairsResultStPerInt.rs:124 - Vec construction/conversion
+    let mut path = Vec::new();
+
+  src/Chap56/SSSPResultStPerInt.rs:116 - Vec construction/conversion
+    let mut path = Vec::new();
+
+  src/Chap56/AllPairsResultStEphInt.rs:53 - Vec construction/conversion
+    let mut dist_matrix = Vec::with_capacity(n);
+
+  src/Chap56/AllPairsResultStEphInt.rs:55 - Vec construction/conversion
+    let mut row = vec![UNREACHABLE; n];
+
+  src/Chap56/AllPairsResultStEphInt.rs:122 - Vec construction/conversion
+    let mut path = Vec::new();
+
+  src/Chap56/AllPairsResultStPerFloat.rs:127 - Vec construction/conversion
+    let mut path = Vec::new();
+
+  src/Chap56/AllPairsResultStEphFloat.rs:56 - Vec construction/conversion
+    let mut dist_matrix = Vec::with_capacity(n);
+
+  src/Chap56/AllPairsResultStEphFloat.rs:58 - Vec construction/conversion
+    let mut row = vec![UNREACHABLE; n];
+
+  src/Chap56/AllPairsResultStEphFloat.rs:125 - Vec construction/conversion
+    let mut path = Vec::new();
+
+  src/Chap43/OrderedSetStPer.rs:289 - Vec in public API
+    pub fn from_sorted_elements<T: StT + Ord>(elements: Vec<T>) -> OrderedSetStPer<T
+
+  src/Chap43/OrderedSetStPer.rs:301 - Vec construction/conversion
+    $crate::Chap43::OrderedSetStPer::OrderedSetStPer::from_sorted_elements(vec![$($e
+
+  src/Chap43/OrderedSetStEph.rs:132 - Vec construction/conversion
+    let mut elements = Vec::new();
+
+  src/Chap43/OrderedSetStEph.rs:143 - Vec construction/conversion
+    let mut elements = Vec::new();
+
+  src/Chap43/OrderedSetStEph.rs:282 - Vec construction/conversion
+    let mut left_elements = Vec::new();
+
+  src/Chap43/OrderedSetStEph.rs:283 - Vec construction/conversion
+    let mut right_elements = Vec::new();
+
+  src/Chap43/OrderedSetStEph.rs:311 - Vec in public API
+    pub fn from_sorted_elements<T: StT + Ord>(elements: Vec<T>) -> OrderedSetStEph<T
+
+  src/Chap43/OrderedSetStEph.rs:323 - Vec construction/conversion
+    $crate::Chap43::OrderedSetStEph::OrderedSetStEph::from_sorted_elements(vec![$($e
+
+  src/Chap43/OrderedSetMtEph.rs:79 - Vec construction/conversion
+    fn empty() -> Self { OrderedSetMtEph { elements: Vec::new() } }
+
+  src/Chap43/OrderedSetMtEph.rs:82 - Vec construction/conversion
+    fn singleton(x: T) -> Self { OrderedSetMtEph { elements: vec![x] } }
+
+  src/Chap43/OrderedSetMtEph.rs:132 - Vec construction/conversion
+    let mut elements = Vec::new();
+
+  src/Chap43/OrderedSetMtEph.rs:231 - Vec construction/conversion
+    let range_elements = self.elements[start_pos..end_pos].to_vec();
+
+  src/Chap43/OrderedTableStPer.rs:182 - Vec construction/conversion
+    let mut elements = Vec::new();
+
+  src/Chap43/OrderedTableStPer.rs:244 - Vec construction/conversion
+    let mut left_entries = Vec::new();
+
+  src/Chap43/OrderedTableStPer.rs:245 - Vec construction/conversion
+    let mut right_entries = Vec::new();
+
+  src/Chap43/OrderedTableStPer.rs:276 - Vec construction/conversion
+    let mut range_entries = Vec::new();
+
+  src/Chap43/OrderedTableStPer.rs:325 - Vec construction/conversion
+    let mut left_entries = Vec::new();
+
+  src/Chap43/OrderedTableStPer.rs:326 - Vec construction/conversion
+    let mut right_entries = Vec::new();
+
+  src/Chap43/OrderedTableStPer.rs:354 - Vec construction/conversion
+    let mut elements = Vec::new();
+
+  src/Chap43/OrderedTableStPer.rs:370 - Vec construction/conversion
+    let pairs = vec![$($crate::Types::Types::Pair($key, $val)),+];
+
+  src/Chap43/OrderedTableMtEph.rs:224 - Vec construction/conversion
+    let mut elements = Vec::new();
+
+  src/Chap43/OrderedTableMtEph.rs:286 - Vec construction/conversion
+    let mut left_entries = Vec::new();
+
+  src/Chap43/OrderedTableMtEph.rs:287 - Vec construction/conversion
+    let mut right_entries = Vec::new();
+
+  src/Chap43/OrderedTableMtEph.rs:317 - Vec construction/conversion
+    let mut range_entries = Vec::new();
+
+  src/Chap43/OrderedTableMtEph.rs:368 - Vec construction/conversion
+    let mut left_entries = Vec::new();
+
+  src/Chap43/OrderedTableMtEph.rs:369 - Vec construction/conversion
+    let mut right_entries = Vec::new();
+
+  src/Chap43/OrderedTableMtEph.rs:398 - Vec construction/conversion
+    let mut elements = Vec::new();
+
+  src/Chap43/OrderedTableMtEph.rs:414 - Vec construction/conversion
+    let pairs = vec![$($crate::Types::Types::Pair($key, $val)),+];
+
+  src/Chap43/OrderedTableStEph.rs:195 - Vec construction/conversion
+    let mut elements = Vec::new();
+
+  src/Chap43/OrderedTableStEph.rs:257 - Vec construction/conversion
+    let mut left_entries = Vec::new();
+
+  src/Chap43/OrderedTableStEph.rs:258 - Vec construction/conversion
+    let mut right_entries = Vec::new();
+
+  src/Chap43/OrderedTableStEph.rs:287 - Vec construction/conversion
+    let mut range_entries = Vec::new();
+
+  src/Chap43/OrderedTableStEph.rs:338 - Vec construction/conversion
+    let mut left_entries = Vec::new();
+
+  src/Chap43/OrderedTableStEph.rs:339 - Vec construction/conversion
+    let mut right_entries = Vec::new();
+
+  src/Chap43/OrderedTableStEph.rs:370 - Vec construction/conversion
+    let mut elements = Vec::new();
+
+  src/Chap43/OrderedTableStEph.rs:386 - Vec construction/conversion
+    let pairs = vec![$($crate::Types::Types::Pair($key, $val)),+];
+
+  src/Chap18/ArraySeq.rs:128 - Vec construction/conversion
+    let mut data = Vec::with_capacity(length);
+
+  src/Chap18/ArraySeq.rs:180 - Vec construction/conversion
+    let segment: Vec<T> = self.data[start_index..end_exclusive].to_vec();
+
+  src/Chap18/ArraySeq.rs:211 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(length);
+
+  src/Chap18/ArraySeq.rs:220 - Vec construction/conversion
+    let mut values: Vec<U> = Vec::with_capacity(len);
+
+  src/Chap18/ArraySeq.rs:234 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(total);
+
+  src/Chap18/ArraySeq.rs:245 - Vec construction/conversion
+    let mut kept: Vec<T> = Vec::new();
+
+  src/Chap18/ArraySeq.rs:256 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::new();
+
+  src/Chap18/ArraySeq.rs:294 - Vec construction/conversion
+    let mut groups: Vec<Pair<K, Vec<V>>> = Vec::new();
+
+  src/Chap18/ArraySeq.rs:300 - Vec construction/conversion
+    groups.push(Pair(key, vec![value]));
+
+  src/Chap18/ArraySeq.rs:328 - Vec construction/conversion
+    let mut prefixes: Vec<T> = Vec::with_capacity(len);
+
+  src/Chap18/LinkedListStPer.rs:112 - Vec in public API
+    pub fn from_vec(elts: Vec<T>) -> Self {
+
+  src/Chap18/LinkedListStPer.rs:145 - Vec construction/conversion
+    let mut out: Vec<T> = Vec::with_capacity(length);
+
+  src/Chap18/LinkedListStPer.rs:194 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(n);
+
+  src/Chap18/LinkedListStPer.rs:202 - Vec construction/conversion
+    let mut values: Vec<U> = Vec::with_capacity(a.length());
+
+  src/Chap18/LinkedListStPer.rs:210 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+
+  src/Chap18/LinkedListStPer.rs:235 - Vec construction/conversion
+    let mut kept: Vec<T> = Vec::new();
+
+  src/Chap18/LinkedListStPer.rs:246 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(a.length());
+
+  src/Chap18/LinkedListStPer.rs:296 - Vec construction/conversion
+    let mut prefixes: Vec<A> = Vec::with_capacity(a.length());
+
+  src/Chap18/LinkedListStPer.rs:325 - Vec construction/conversion
+    let mut prefixes: Vec<T> = Vec::with_capacity(len);
+
+  src/Chap18/LinkedListStPer.rs:340 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::new();
+
+  src/Chap18/LinkedListStPer.rs:354 - Vec construction/conversion
+    let mut groups: Vec<Pair<A, Vec<Bv>>> = Vec::new();
+
+  src/Chap18/LinkedListStPer.rs:360 - Vec construction/conversion
+    groups.push(Pair(k, vec![v]));
+
+  src/Chap18/ArraySeqStEphSimple.rs:102 - Vec construction/conversion
+    fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
+
+  src/Chap18/ArraySeqStEphClean.rs:97 - Vec construction/conversion
+    fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
+
+  src/Chap18/ArraySeqStEph.rs:22 - Vec in public API
+    pub fn from_vec(elts: Vec<T>) -> Self {
+
+  src/Chap18/ArraySeqStEph.rs:98 - Vec construction/conversion
+    fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
+
+  src/Chap18/ArraySeqStEph.rs:202 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(length);
+
+  src/Chap18/ArraySeqStEph.rs:210 - Vec construction/conversion
+    let mut values: Vec<U> = Vec::with_capacity(a.length());
+
+  src/Chap18/ArraySeqStEph.rs:221 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(total);
+
+  src/Chap18/ArraySeqStEph.rs:232 - Vec construction/conversion
+    let mut kept: Vec<T> = Vec::new();
+
+  src/Chap18/ArraySeqStEph.rs:243 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::new();
+
+  src/Chap18/ArraySeqStEph.rs:267 - Vec construction/conversion
+    let mut groups: Vec<Pair<K, Vec<V>>> = Vec::new();
+
+  src/Chap18/ArraySeqStEph.rs:276 - Vec construction/conversion
+    groups.push(Pair(key, vec![value]));
+
+  src/Chap18/ArraySeqStEph.rs:302 - Vec construction/conversion
+    let mut prefixes: Vec<T> = Vec::with_capacity(a.length());
+
+  src/Chap18/ArraySeqMtPer.rs:27 - Vec construction/conversion
+    data: Vec::new().into_boxed_slice(),
+
+  src/Chap18/ArraySeqMtPer.rs:32 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(length);
+
+  src/Chap18/ArraySeqMtPer.rs:41 - Vec in public API
+    pub fn from_vec(values: Vec<T>) -> Self {
+
+  src/Chap18/ArraySeqMtPer.rs:55 - Vec construction/conversion
+    let values: Vec<T> = self.data[s..e].to_vec();
+
+  src/Chap18/ArraySeqMtPer.rs:69 - Vec construction/conversion
+    let values: Vec<T> = self.data.to_vec();
+
+  src/Chap18/ArraySeqMtPer.rs:101 - Vec construction/conversion
+    fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
+
+  src/Chap18/ArraySeqMtPer.rs:220 - Vec construction/conversion
+    let mut new_data: Vec<T> = self.data.to_vec();
+
+  src/Chap18/ArraySeqMtPer.rs:226 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(n);
+
+  src/Chap18/ArraySeqMtPer.rs:260 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+
+  src/Chap18/ArraySeqMtPer.rs:271 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::new();
+
+  src/Chap18/ArraySeqMtPer.rs:286 - Vec construction/conversion
+    let mut new_data: Vec<T> = a.data.to_vec();
+
+  src/Chap18/ArraySeqMtPer.rs:316 - Vec construction/conversion
+    let mut values: Vec<A> = Vec::with_capacity(a.length());
+
+  src/Chap18/ArraySeqMtPer.rs:352 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(a.length());
+
+  src/Chap18/ArraySeqMtPer.rs:361 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::new();
+
+  src/Chap18/ArraySeqStEphMinimal.rs:110 - Vec construction/conversion
+    fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
+
+  src/Chap18/ArraySeqMtEph.rs:25 - Vec construction/conversion
+    data: Mutex::new(Vec::new().into_boxed_slice()),
+
+  src/Chap18/ArraySeqMtEph.rs:38 - Vec in public API
+    pub fn from_vec(values: Vec<T>) -> Self {
+
+  src/Chap18/ArraySeqMtEph.rs:67 - Vec in public API
+    pub fn iter_cloned(&self) -> Vec<T> {
+
+  src/Chap18/ArraySeqMtEph.rs:77 - Vec construction/conversion
+    let values: Vec<T> = guard[s..e].to_vec();
+
+  src/Chap18/ArraySeqMtEph.rs:81 - Vec in public API
+    pub fn to_vec(&self) -> Vec<T> {
+
+  src/Chap18/ArraySeqMtEph.rs:92 - Vec construction/conversion
+    fn eq(&self, other: &Self) -> bool { self.to_vec() == other.to_vec() }
+
+  src/Chap18/ArraySeqMtEph.rs:192 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(n);
+
+  src/Chap18/ArraySeqMtEph.rs:236 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(na + nb);
+
+  src/Chap18/ArraySeqMtEph.rs:247 - Vec construction/conversion
+    let mut kept: Vec<T> = Vec::new();
+
+  src/Chap18/ArraySeqMtEph.rs:280 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::new();
+
+  src/Chap18/ArraySeqMtEph.rs:303 - Vec construction/conversion
+    let mut values: Vec<V> = Vec::with_capacity(group.1.length() + 1);
+
+  src/Chap18/ArraySeqMtEph.rs:357 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(a.length());
+
+  src/Chap18/LinkedListStEph.rs:37 - Vec in public API
+    pub fn from_vec(mut elts: Vec<T>) -> Self {
+
+  src/Chap18/LinkedListStEph.rs:79 - Vec construction/conversion
+    let mut out: Vec<T> = Vec::with_capacity(length);
+
+  src/Chap18/LinkedListStEph.rs:278 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(n);
+
+  src/Chap18/LinkedListStEph.rs:286 - Vec construction/conversion
+    let mut values: Vec<U> = Vec::with_capacity(a.length());
+
+  src/Chap18/LinkedListStEph.rs:296 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+
+  src/Chap18/LinkedListStEph.rs:307 - Vec construction/conversion
+    let mut kept: Vec<T> = Vec::new();
+
+  src/Chap18/LinkedListStEph.rs:327 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::new();
+
+  src/Chap18/LinkedListStEph.rs:367 - Vec construction/conversion
+    let mut groups: Vec<Pair<A, Vec<Bv>>> = Vec::new();
+
+  src/Chap18/LinkedListStEph.rs:373 - Vec construction/conversion
+    groups.push(Pair(k, vec![v]));
+
+  src/Chap18/LinkedListStEph.rs:393 - Vec construction/conversion
+    let mut prefixes: Vec<A> = Vec::with_capacity(a.length());
+
+  src/Chap18/LinkedListStEph.rs:422 - Vec construction/conversion
+    let mut prefixes: Vec<T> = Vec::with_capacity(len);
+
+  src/Chap18/ArraySeqStPer.rs:21 - Vec in public API
+    pub fn from_vec(elts: Vec<T>) -> Self {
+
+  src/Chap18/ArraySeqStPer.rs:35 - Vec construction/conversion
+    let slice: Vec<T> = self.data[begin..end].to_vec();
+
+  src/Chap18/ArraySeqStPer.rs:64 - Vec construction/conversion
+    fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
+
+  src/Chap18/ArraySeqStPer.rs:156 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(length);
+
+  src/Chap18/ArraySeqStPer.rs:164 - Vec construction/conversion
+    let mut values: Vec<U> = Vec::with_capacity(a.length());
+
+  src/Chap18/ArraySeqStPer.rs:174 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+
+  src/Chap18/ArraySeqStPer.rs:185 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::new();
+
+  src/Chap18/ArraySeqStPer.rs:196 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::new();
+
+  src/Chap18/ArraySeqStPer.rs:216 - Vec construction/conversion
+    let mut new_data: Vec<T> = result.data.to_vec();
+
+  src/Chap18/ArraySeqStPer.rs:280 - Vec construction/conversion
+    let mut values: Vec<T> = Vec::with_capacity(a.length());
+
+  src/Chap18/ArraySeqStPer.rs:297 - Vec construction/conversion
+    let mut new_data: Vec<T> = result.data.to_vec();
+
+  src/Chap66/BoruvkaMtEph.rs:290 - Vec construction/conversion
+    return Vec::new();
+
+  src/Chap66/BoruvkaMtEph.rs:299 - Vec construction/conversion
+    return vec![LabeledEdge(new_u, new_v, *w, *label)];
+
+  src/Chap66/BoruvkaMtEph.rs:301 - Vec construction/conversion
+    return Vec::new();
+
+  src/Chap64/TSPApproxStEph.rs:66 - Vec construction/conversion
+    let mut tour = Vec::new();
+
+  src/Chap64/TSPApproxStEph.rs:137 - Vec in public API
+    pub fn shortcut_tour<V: StT + Hash + Ord>(euler_tour: &[V]) -> Vec<V> {
+
+  src/Chap64/TSPApproxStEph.rs:139 - Vec construction/conversion
+    return Vec::new();
+
+  src/Chap64/TSPApproxStEph.rs:142 - Vec construction/conversion
+    let mut shortcut = Vec::new();
+
+  src/Chap64/TSPApproxMtEph.rs:64 - Vec construction/conversion
+    let mut tour = Vec::new();
+
+  src/Chap64/TSPApproxMtEph.rs:124 - Vec in public API
+    pub fn shortcut_tour_mt<V: StT + MtT + Hash + Ord>(euler_tour: &[V]) -> Vec<V> {
+
+  src/Chap64/TSPApproxMtEph.rs:126 - Vec construction/conversion
+    return Vec::new();
+
+  src/Chap64/TSPApproxMtEph.rs:129 - Vec construction/conversion
+    let mut shortcut = Vec::new();
+
+  src/Chap37/BSTSetAVLMtEph.rs:140 - Vec construction/conversion
+    let mut left: Vec<T> = Vec::new();
+
+  src/Chap37/BSTSetAVLMtEph.rs:141 - Vec construction/conversion
+    let mut right: Vec<T> = Vec::new();
+
+  src/Chap37/AVLTreeSeqStPer.rs:192 - Vec construction/conversion
+    let mut vals: Vec<T> = Vec::with_capacity(e - s);
+
+  src/Chap37/AVLTreeSeqStPer.rs:203 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.length());
+
+  src/Chap37/AVLTreeSeqStPer.rs:247 - Vec construction/conversion
+    stack: Vec::new(),
+
+  src/Chap37/AVLTreeSeqStPer.rs:287 - Vec construction/conversion
+    let __vals = vec![$x; $n];
+
+  src/Chap37/AVLTreeSeqStPer.rs:292 - Vec construction/conversion
+    let __vals = vec![$($x),*];
+
+  src/Chap37/AVLTreeSeqMtPer.rs:191 - Vec construction/conversion
+    let mut vals = Vec::with_capacity(e - s);
+
+  src/Chap37/AVLTreeSeqMtPer.rs:203 - Vec construction/conversion
+    let mut out = Vec::new();
+
+  src/Chap37/BSTSetPlainMtEph.rs:140 - Vec construction/conversion
+    let mut left: Vec<T> = Vec::new();
+
+  src/Chap37/BSTSetPlainMtEph.rs:141 - Vec construction/conversion
+    let mut right: Vec<T> = Vec::new();
+
+  src/Chap37/BSTSetPlainMtEph.rs:291 - Vec construction/conversion
+    let mut left: Vec<T> = Vec::new();
+
+  src/Chap37/BSTSetPlainMtEph.rs:292 - Vec construction/conversion
+    let mut right: Vec<T> = Vec::new();
+
+  src/Chap37/BSTRBStEph.rs:257 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap37/BSTRBStEph.rs:263 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap37/AVLTreeSeq.rs:106 - Vec in public API
+    pub fn from_vec(values: Vec<T>) -> AVLTreeS<T>
+
+  src/Chap37/AVLTreeSeq.rs:175 - Vec construction/conversion
+    let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
+
+  src/Chap37/AVLTreeSeq.rs:191 - Vec in public API
+    pub fn values_in_order(&self) -> Vec<T>
+
+  src/Chap37/AVLTreeSeq.rs:195 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.length());
+
+  src/Chap37/AVLTreeSeq.rs:243 - Vec construction/conversion
+    let mut vals: Vec<T> = Vec::with_capacity(e - s);
+
+  src/Chap37/AVLTreeSeq.rs:299 - Vec construction/conversion
+    stack: Vec::new(),
+
+  src/Chap37/BSTSetSplayMtEph.rs:140 - Vec construction/conversion
+    let mut left: Vec<T> = Vec::new();
+
+  src/Chap37/BSTSetSplayMtEph.rs:141 - Vec construction/conversion
+    let mut right: Vec<T> = Vec::new();
+
+  src/Chap37/BSTBBAlphaMtEph.rs:106 - Vec construction/conversion
+    let mut values = Vec::with_capacity(total_size);
+
+  src/Chap37/BSTBBAlphaMtEph.rs:239 - Vec construction/conversion
+    let mut out = Vec::with_capacity(Self::size_link(&*guard));
+
+  src/Chap37/BSTBBAlphaMtEph.rs:246 - Vec construction/conversion
+    let mut out = Vec::with_capacity(Self::size_link(&*guard));
+
+  src/Chap37/BSTAVLStEph.rs:233 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap37/BSTAVLStEph.rs:239 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap37/BSTPlainMtEph.rs:202 - Vec construction/conversion
+    let mut values = Vec::new();
+
+  src/Chap37/BSTBBAlphaStEph.rs:91 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap37/BSTBBAlphaStEph.rs:97 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap37/BSTBBAlphaStEph.rs:138 - Vec construction/conversion
+    let mut values = Vec::with_capacity(total_size);
+
+  src/Chap37/BSTBBAlphaStEph.rs:245 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap37/BSTBBAlphaStEph.rs:251 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap37/BSTSplayMtEph.rs:199 - Vec construction/conversion
+    let mut out = Vec::with_capacity(Self::size_link(&*guard));
+
+  src/Chap37/BSTSplayMtEph.rs:206 - Vec construction/conversion
+    let mut out = Vec::with_capacity(Self::size_link(&*guard));
+
+  src/Chap37/BSTSetRBMtEph.rs:140 - Vec construction/conversion
+    let mut left: Vec<T> = Vec::new();
+
+  src/Chap37/BSTSetRBMtEph.rs:141 - Vec construction/conversion
+    let mut right: Vec<T> = Vec::new();
+
+  src/Chap37/AVLTreeSeqStEph.rs:81 - Vec in public API
+    pub fn from_vec(values: Vec<T>) -> AVLTreeSeqStEphS<T> {
+
+  src/Chap37/AVLTreeSeqStEph.rs:131 - Vec construction/conversion
+    let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
+
+  src/Chap37/AVLTreeSeqStEph.rs:177 - Vec construction/conversion
+    let mut vals: Vec<T> = Vec::with_capacity(e - s);
+
+  src/Chap37/AVLTreeSeqStEph.rs:193 - Vec construction/conversion
+    stack: Vec::new(),
+
+  src/Chap37/BSTRBMtEph.rs:293 - Vec construction/conversion
+    let mut out = Vec::with_capacity(Self::size_link(&*guard));
+
+  src/Chap37/BSTRBMtEph.rs:300 - Vec construction/conversion
+    let mut out = Vec::with_capacity(Self::size_link(&*guard));
+
+  src/Chap37/BSTSplayStEph.rs:176 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap37/BSTSplayStEph.rs:182 - Vec construction/conversion
+    let mut out = Vec::with_capacity(self.size());
+
+  src/Chap37/BSTAVLMtEph.rs:248 - Vec construction/conversion
+    let mut out = Vec::with_capacity(Self::size_link(&*guard));
+
+  src/Chap37/BSTAVLMtEph.rs:255 - Vec construction/conversion
+    let mut out = Vec::with_capacity(Self::size_link(&*guard));
+
+  src/Chap37/BSTSetBBAlphaMtEph.rs:140 - Vec construction/conversion
+    let mut left: Vec<T> = Vec::new();
+
+  src/Chap37/BSTSetBBAlphaMtEph.rs:141 - Vec construction/conversion
+    let mut right: Vec<T> = Vec::new();
+
+Total candidates: 518
+Total violations: 518
+
+Review: Vec allowed only for temporary builders or internal scratch space.
+Running 19 APAS src review(s)
+
+[Apas Where Clauses]
 
 [Conventions]
+
+[Copyright Header]
 
 [Duplicate Chap Imports]
 
 [Duplicate Imports]
 
+[Functional Modules]
+FAILED: Functional Modules
+
+[Graph Notation]
+
 [Imports]
 
 [Missing Traits]
 
+[Mt Discipline]
+
 [Naming]
+
+[No Factory Pattern]
+
+[Parallel Model]
+FAILED: Parallel Model
+
+[Persistent Immutability]
 
 [Remaining Alias Usage]
 
@@ -605,80 +2168,44 @@ Running 9 APAS src review(s)
 
 [Structure]
 
-✓ All APAS src checks passed (9/9)
-✓ No APAS test review scripts configured
-No mismatches found!
-✓ No duplicate benchmark IDs found!
-  Total files scanned: 187
-Running APAS Benchmark Timing Parameter Checks...
-Project root: /home/milnes/APASVERUS/APAS-AI/apas-ai/scripts/APAS
+[Unit Structs]
+FAILED: Unit Structs
 
-✓ All benchmark timing parameters are correct
-Running 3 APAS benchmark review(s)
+[Vec Usage]
+FAILED: Vec Usage
 
-[Cargo Bench Names]
-
-[Duplicate Ids]
-
-[Timing Params]
-
-✓ All APAS benchmark checks passed (3/3)
+✗ APAS src: 15 passed, 4 failed
 Running APAS Code Review
 
 [APAS src]
 
-[APAS tests]
+FAILED: APAS src
 
-[APAS benches]
-
-✓ All APAS reviews passed
+❌ FAILED: APAS review suite
 ✓ No 'extern crate' usage found
-✗ Found UFCS at call sites (RustRules.md Lines 309-320):
+✗ Found import order violations (RustRules.md Lines 50, 75-86):
 
-  src/Chap41/ArraySetEnumMtEph.rs:174
-    < $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEph as $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEphTrait >::empty($u)
-    UFCS: < $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEph as $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEphTrait >::empty
-  src/Chap41/ArraySetEnumMtEph.rs:177
-    let mut __set = < $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEph as $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEphTrait >::empty($u);
-    UFCS: < $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEph as $crate::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::ArraySetEnumMtEphTrait >::empty
-  tests/TestTypes.rs:362
-    let val = <usize as MtT>::new_mt(42usize);
-    UFCS: <usize as MtT>::new_mt
-  tests/TestTypes.rs:375
-    let val = <isize as MtT>::new_mt(-42isize);
-    UFCS: <isize as MtT>::new_mt
-  tests/TestTypes.rs:388
-    let val = <i32 as MtT>::new_mt(100i32);
-    UFCS: <i32 as MtT>::new_mt
-  tests/TestTypes.rs:401
-    let val = <u32 as MtT>::new_mt(200u32);
-    UFCS: <u32 as MtT>::new_mt
-  tests/TestTypes.rs:414
-    let val = <i64 as MtT>::new_mt(1000i64);
-    UFCS: <i64 as MtT>::new_mt
-  tests/TestTypes.rs:427
-    let val = <u64 as MtT>::new_mt(2000u64);
-    UFCS: <u64 as MtT>::new_mt
-  tests/TestTypes.rs:440
-    let val = <bool as MtT>::new_mt(true);
-    UFCS: <bool as MtT>::new_mt
-  tests/TestTypes.rs:453
-    let val = <char as MtT>::new_mt('Z');
-    UFCS: <char as MtT>::new_mt
-  tests/TestTypes.rs:466
-    let val = <String as MtT>::new_mt(String::from("hello"));
-    UFCS: <String as MtT>::new_mt
-  tests/TestTypes.rs:479
-    let val = <&str as MtT>::new_mt("world");
-    UFCS: <&str as MtT>::new_mt
+  src/Chap06/WeightedDirGraphStEphFloat.rs:
+    Line 41: external import after internal imports
+      use ordered_float::OrderedFloat;
 
-Total violations: 12
+Total violations: 1
 
-Fix: Use method-call syntax: value.method(...) instead of <Type as Trait>::method(value, ...)
+Expected:
+  - Order: std imports → [blank] → external imports → [blank] → internal imports
+  - In src/: use crate::
+  - In tests/benches/: use apas_ai::
 Running Rust Code Review
 
 [No extern crate]
 
-[No UFCS at call sites]
+[Import order]
 
-FAILED: No UFCS at call sites
+FAILED: Import order
+
+❌ FAILED: Rust review suite
+============================================================
+❌ FAILED: Some code reviews failed!
+============================================================
+
+Output saved to: analyses/review.txt

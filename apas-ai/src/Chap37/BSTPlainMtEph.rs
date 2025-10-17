@@ -61,10 +61,6 @@ pub mod BSTPlainMtEph {
         fn in_order(&self)             -> ArraySeqStPerS<T>;
     }
 
-    impl<T: StTInMtT + Ord> BSTPlainMtEph<T> {
-        // Private helper methods only - no public delegation
-    }
-
     fn height_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
 
     fn size_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> N { link.as_ref().map_or(0, |n| n.size) }

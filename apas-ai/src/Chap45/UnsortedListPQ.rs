@@ -47,6 +47,11 @@ pub mod UnsortedListPQ {
         fn size(&self)                       -> N;
         fn is_empty(&self)                   -> bool;
         fn to_seq(&self)                     -> ArraySeqStPerS<T>;
+        fn insert_all(&self, elements: &ArraySeqStPerS<T>) -> Self;
+        fn extract_all_sorted(&self) -> ArraySeqStPerS<T>;
+        fn from_vec(vec: Vec<T>) -> Self;
+        fn to_vec(&self) -> Vec<T>;
+        fn to_sorted_vec(&self) -> Vec<T>;
     }
 
     impl<T: StT + Ord> UnsortedListPQTrait<T> for UnsortedListPQ<T> {
@@ -144,6 +149,26 @@ pub mod UnsortedListPQ {
 
         /// Claude Work: Θ(1), Span: Θ(1)
         fn to_seq(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
+
+        fn insert_all(&self, elements: &ArraySeqStPerS<T>) -> Self {
+            UnsortedListPQ::insert_all(self, elements)
+        }
+
+        fn extract_all_sorted(&self) -> ArraySeqStPerS<T> {
+            UnsortedListPQ::extract_all_sorted(self)
+        }
+
+        fn from_vec(vec: Vec<T>) -> Self {
+            UnsortedListPQ::from_vec(vec)
+        }
+
+        fn to_vec(&self) -> Vec<T> {
+            UnsortedListPQ::to_vec(self)
+        }
+
+        fn to_sorted_vec(&self) -> Vec<T> {
+            UnsortedListPQ::to_sorted_vec(self)
+        }
     }
 
     impl<T: StT + Ord> UnsortedListPQ<T> {

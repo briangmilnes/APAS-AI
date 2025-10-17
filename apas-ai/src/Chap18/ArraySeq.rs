@@ -107,6 +107,20 @@ pub mod ArraySeq {
         fn scan<F: Fn(&T, &T)                                        -> T>(a: &ArraySeqS<T>, f: &F, id: T) -> (ArraySeqS<T>, T)
         where
             T: Clone;
+
+        // Additional methods
+        /// Definition 18.12 (subseq copy). Extract contiguous subsequence with allocation. <br/>
+        /// Work: Θ(length), Span: Θ(1).
+        fn subseq_copy(&self, start: N, length: N) -> ArraySeqS<T>;
+        /// Create sequence from Vec. <br/>
+        /// Work: Θ(n) worst case, Θ(1) best case, Span: Θ(1).
+        fn from_vec(elts: Vec<T>) -> Self;
+        /// Return iterator over elements. <br/>
+        /// Work: Θ(1), Span: Θ(1).
+        fn iter(&self) -> Iter<'_, T>;
+        /// Return mutable iterator over elements. <br/>
+        /// Work: Θ(1), Span: Θ(1).
+        fn iter_mut(&mut self) -> IterMut<'_, T>;
     }
 
     impl<T: Clone> ArraySeqS<T> {
@@ -146,19 +160,6 @@ pub mod ArraySeq {
             let end_exclusive = start.saturating_add(length).min(sequence_length);
             &self.data[start_index..end_exclusive]
         }
-        /// Definition 18.12 (subseq). Extract a contiguous subsequence starting at `start` with length `length`. <br/>
-        /// If out of bounds, returns only the in-bounds part. <br/>
-        /// Work: Θ(1) to compute bounds; allocation and cloning Θ(length) in this owning representation.
-        pub fn subseq_copy(&self, start: N, length: N) -> ArraySeqS<T> {
-            let sequence_length = self.data.len();
-            let start_index = start.min(sequence_length);
-            let end_exclusive = start.saturating_add(length).min(sequence_length);
-            if end_exclusive <= start_index {
-                return ArraySeqS::from_vec(Vec::new());
-            }
-            let segment: Vec<T> = self.data[start_index..end_exclusive].to_vec();
-            ArraySeqS::from_vec(segment)
-        }
 
         /// Update `self[index]` to `item` in place if in bounds, and return `self` for chaining. <br/>
         /// Work: Θ(1), Span: Θ(1).
@@ -169,19 +170,26 @@ pub mod ArraySeq {
             self
         }
 
-        /// Create sequence from a Vec (used by `arrayseq!` and tests). <br/>
-        /// Work: Θ(n) worst case (shrink-to-fit moves), Θ(1) best case (rebrand); Span: Θ(1). <br/>
-        /// Reason: `Vec<T>` owns a heap buffer; `into_boxed_slice()` reuses it when
-        /// capacity==len, else shrinks and moves elements.
-        pub fn from_vec(elts: Vec<T>) -> ArraySeqS<T> {
+        fn subseq_copy(&self, start: N, length: N) -> ArraySeqS<T> {
+            let sequence_length = self.data.len();
+            let start_index = start.min(sequence_length);
+            let end_exclusive = start.saturating_add(length).min(sequence_length);
+            if end_exclusive <= start_index {
+                return ArraySeqS::from_vec(Vec::new());
+            }
+            let segment: Vec<T> = self.data[start_index..end_exclusive].to_vec();
+            ArraySeqS::from_vec(segment)
+        }
+
+        fn from_vec(elts: Vec<T>) -> ArraySeqS<T> {
             ArraySeqS {
                 data: elts.into_boxed_slice(),
             }
         }
 
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
 
-        pub fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }
+        fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }
     }
 
     impl<T: Clone> ArraySeq<T> for ArraySeqS<T> {
@@ -324,6 +332,22 @@ pub mod ArraySeq {
                 prefixes.push(acc.clone());
             }
             (ArraySeqS::from_vec(prefixes), acc)
+        }
+
+        fn subseq_copy(&self, start: N, length: N) -> ArraySeqS<T> {
+            ArraySeqS::subseq_copy(self, start, length)
+        }
+
+        fn from_vec(elts: Vec<T>) -> Self {
+            ArraySeqS::from_vec(elts)
+        }
+
+        fn iter(&self) -> Iter<'_, T> {
+            ArraySeqS::iter(self)
+        }
+
+        fn iter_mut(&mut self) -> IterMut<'_, T> {
+            ArraySeqS::iter_mut(self)
         }
     }
 

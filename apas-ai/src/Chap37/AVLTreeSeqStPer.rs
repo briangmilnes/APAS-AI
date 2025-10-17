@@ -163,6 +163,8 @@ pub mod AVLTreeSeqStPer {
         fn from_vec(values: Vec<T>)                -> Self;
         /// Collect in-order values to Vec.
         fn values_in_order(&self)                  -> Vec<T>;
+        fn to_arrayseq(&self) -> ArraySeqStPerS<T>;
+        fn iter<'a>(&'a self) -> AVLTreeSeqStPerIter<'a, T>;
     }
 
     impl<T: StT> AVLTreeSeqStPerTrait<T> for AVLTreeSeqStPerS<T> {
@@ -203,6 +205,14 @@ pub mod AVLTreeSeqStPer {
             let mut out = Vec::with_capacity(self.length());
             inorder_collect(&self.root, &mut out);
             out
+        }
+
+        fn to_arrayseq(&self) -> ArraySeqStPerS<T> {
+            AVLTreeSeqStPerS::to_arrayseq(self)
+        }
+
+        fn iter<'a>(&'a self) -> AVLTreeSeqStPerIter<'a, T> {
+            AVLTreeSeqStPerS::iter(self)
         }
     }
 

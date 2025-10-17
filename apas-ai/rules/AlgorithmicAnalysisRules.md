@@ -36,6 +36,16 @@
   /// BUG: <AGENT-NAME>'s algorithmic analysis differs from APAS.
 - If a prompt contains APAS's algorithmic analysis mark each function and method with an /// APAS: Work: ... Span: .... .
 
+### Simplified Annotation Format
+- When both APAS and an AI agent have analyzed the same function, use simplified format:
+  - If they agree: `/// APAS: Work Θ(n), Span Θ(1), claude agrees`
+  - If they disagree: `/// APAS: Work Θ(n), Span Θ(1), claude disagrees: Work Θ(n log n), Span Θ(log n)`
+- **Parallelism annotations are ONLY allowed in `*Mt*` files** (mutable/parallel data structures)
+  - In `*Mt*` files: Abbreviate `Parallelism` as `Par` (e.g., `Par Θ(n/log n)`)
+  - In `*St*` files: Parallelism annotations are stripped entirely (sequential implementations have no parallelism)
+- Remove trailing explanatory comments (e.g., "- parallel divide-and-conquer", "- dominated by", "- sequential")
+- Use `scripts/rust/src/fix_complexity_annotations.py` to automatically convert double-line annotations to simplified format
+
 ### Algorithmic Analysis Process
 - **Source Files Only**: Algorithmic analysis should be performed on `src/` files, not test files.
 - **Consolidated Documentation**: Comprehensive algorithmic analysis should be documented in `chatlogs/AlgorithmicAnalysis.txt`.

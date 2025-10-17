@@ -47,6 +47,14 @@ pub mod SortedListPQ {
         fn size(&self)                       -> N;
         fn is_empty(&self)                   -> bool;
         fn to_seq(&self)                     -> ArraySeqStPerS<T>;
+        fn insert_all(&self, elements: &ArraySeqStPerS<T>) -> Self;
+        fn extract_all_sorted(&self) -> ArraySeqStPerS<T>;
+        fn find_max(&self) -> Option<&T>;
+        fn delete_max(&self) -> (Self, Option<T>) where Self: Sized;
+        fn from_vec(vec: Vec<T>) -> Self;
+        fn to_vec(&self) -> Vec<T>;
+        fn to_sorted_vec(&self) -> Vec<T>;
+        fn is_sorted(&self) -> bool;
     }
 
     impl<T: StT + Ord> SortedListPQTrait<T> for SortedListPQ<T> {
@@ -194,6 +202,38 @@ pub mod SortedListPQ {
 
         /// Claude Work: Θ(1), Span: Θ(1)
         fn to_seq(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
+
+        fn insert_all(&self, elements: &ArraySeqStPerS<T>) -> Self {
+            SortedListPQ::insert_all(self, elements)
+        }
+
+        fn extract_all_sorted(&self) -> ArraySeqStPerS<T> {
+            SortedListPQ::extract_all_sorted(self)
+        }
+
+        fn find_max(&self) -> Option<&T> {
+            SortedListPQ::find_max(self)
+        }
+
+        fn delete_max(&self) -> (Self, Option<T>) {
+            SortedListPQ::delete_max(self)
+        }
+
+        fn from_vec(vec: Vec<T>) -> Self {
+            SortedListPQ::from_vec(vec)
+        }
+
+        fn to_vec(&self) -> Vec<T> {
+            SortedListPQ::to_vec(self)
+        }
+
+        fn to_sorted_vec(&self) -> Vec<T> {
+            SortedListPQ::to_sorted_vec(self)
+        }
+
+        fn is_sorted(&self) -> bool {
+            SortedListPQ::is_sorted(self)
+        }
     }
 
     impl<T: StT + Ord> SortedListPQ<T> {

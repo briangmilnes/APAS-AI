@@ -60,11 +60,17 @@ pub mod AVLTreeSeqStEph {
         fn isSingleton(&self)                      -> B;
         /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
         fn subseq_copy(&self, start: N, length: N) -> Self;
+        fn new_root() -> Self;
+        fn update(&mut self, item_at: (N, T)) -> &mut AVLTreeSeqStEphS<T>;
+        fn from_vec(values: Vec<T>) -> AVLTreeSeqStEphS<T>;
+        fn to_arrayseq(&self) -> ArraySeqStEphS<T>;
+        fn iter<'a>(&'a self) -> AVLTreeSeqIterStEph<'a, T>;
+        fn push_back(&mut self, value: T);
+        fn contains_value(&self, target: &T) -> B;
+        fn insert_value(&mut self, value: T);
+        fn delete_value(&mut self, target: &T) -> bool;
     }
 
-    impl<T: StT> Default for AVLTreeSeqStEphS<T> {
-        fn default() -> Self { Self::new() }
-    }
 
     impl<T: StT> AVLTreeSeqStEphS<T> {
         pub fn new_root() -> Self {
@@ -179,6 +185,42 @@ pub mod AVLTreeSeqStEph {
                 vals.push(self.nth(i).clone());
             }
             AVLTreeSeqStEphS::from_vec(vals)
+        }
+
+        fn new_root() -> Self {
+            AVLTreeSeqStEphS::new_root()
+        }
+
+        fn update(&mut self, item_at: (N, T)) -> &mut AVLTreeSeqStEphS<T> {
+            AVLTreeSeqStEphS::update(self, item_at)
+        }
+
+        fn from_vec(values: Vec<T>) -> AVLTreeSeqStEphS<T> {
+            AVLTreeSeqStEphS::from_vec(values)
+        }
+
+        fn to_arrayseq(&self) -> ArraySeqStEphS<T> {
+            AVLTreeSeqStEphS::to_arrayseq(self)
+        }
+
+        fn iter<'a>(&'a self) -> AVLTreeSeqIterStEph<'a, T> {
+            AVLTreeSeqStEphS::iter(self)
+        }
+
+        fn push_back(&mut self, value: T) {
+            AVLTreeSeqStEphS::push_back(self, value)
+        }
+
+        fn contains_value(&self, target: &T) -> B {
+            AVLTreeSeqStEphS::contains_value(self, target)
+        }
+
+        fn insert_value(&mut self, value: T) {
+            AVLTreeSeqStEphS::insert_value(self, value)
+        }
+
+        fn delete_value(&mut self, target: &T) -> bool {
+            AVLTreeSeqStEphS::delete_value(self, target)
         }
     }
 
@@ -323,6 +365,10 @@ pub mod AVLTreeSeqStEph {
                 }
             }
         }
+    }
+
+    impl<T: StT> Default for AVLTreeSeqStEphS<T> {
+        fn default() -> Self { Self::new() }
     }
 
     #[macro_export]

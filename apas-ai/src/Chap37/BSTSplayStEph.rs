@@ -60,9 +60,6 @@ pub mod BSTSplayStEph {
         fn pre_order(&self)            -> ArraySeqStPerS<T>;
     }
 
-    impl<T: StT + Ord> Default for BSTSplayStEph<T> {
-        fn default() -> Self { Self::new() }
-    }
 
     impl<T: StT + Ord> BSTSplayStEph<T> {
         // Private helper methods only - no public delegation
@@ -183,6 +180,10 @@ pub mod BSTSplayStEph {
             Self::pre_order_collect(&self.root, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
+    }
+
+    impl<T: StT + Ord> Default for BSTSplayStEph<T> {
+        fn default() -> Self { Self::new() }
     }
 
     #[macro_export]

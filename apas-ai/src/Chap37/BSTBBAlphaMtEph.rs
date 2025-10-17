@@ -62,9 +62,6 @@ pub mod BSTBBAlphaMtEph {
         fn pre_order(&self)            -> ArraySeqStPerS<T>;
     }
 
-    impl<T: StTInMtT + Ord> Default for BSTBBAlphaMtEph<T> {
-        fn default() -> Self { Self::new() }
-    }
 
     impl<T: StTInMtT + Ord> BSTBBAlphaMtEph<T> {
         fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
@@ -247,6 +244,10 @@ pub mod BSTBBAlphaMtEph {
             Self::pre_order_collect(&*guard, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
+    }
+
+    impl<T: StTInMtT + Ord> Default for BSTBBAlphaMtEph<T> {
+        fn default() -> Self { Self::new() }
     }
 
     #[macro_export]

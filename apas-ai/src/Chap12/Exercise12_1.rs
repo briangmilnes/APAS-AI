@@ -24,6 +24,10 @@ pub mod Exercise12_1 {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - atomic increment releases next thread
         fn unlock(&self);
+        /// Execute action while holding the lock.
+        /// APAS: Work Θ(W_action), Span Θ(S_action)
+        /// claude-4-sonet: Work Θ(W_action + 1), Span Θ(S_action + 1), Parallelism Θ(W_action/S_action) - dominated by action complexity
+        fn with_lock<T>(&self, action: impl FnOnce() -> T) -> T;
     }
 
     impl SpinLock {
@@ -50,17 +54,6 @@ pub mod Exercise12_1 {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - atomic increment releases next thread
         pub fn unlock(&self) { self.turn.fetch_add(1, Ordering::Release); }
-
-        /// Execute action while holding the lock.
-        ///
-        /// APAS: Work Θ(W_action), Span Θ(S_action)
-        /// claude-4-sonet: Work Θ(W_action + 1), Span Θ(S_action + 1), Parallelism Θ(W_action/S_action) - dominated by action complexity
-        pub fn with_lock<T>(&self, action: impl FnOnce() -> T) -> T {
-            self.lock();
-            let result = action();
-            self.unlock();
-            result
-        }
     }
 
     impl SpinLockTrait for SpinLock {
@@ -69,6 +62,13 @@ pub mod Exercise12_1 {
         fn lock(&self) { SpinLock::lock(self) }
 
         fn unlock(&self) { SpinLock::unlock(self) }
+
+        fn with_lock<T>(&self, action: impl FnOnce() -> T) -> T {
+            self.lock();
+            let result = action();
+            self.unlock();
+            result
+        }
     }
 
     impl Default for SpinLock {

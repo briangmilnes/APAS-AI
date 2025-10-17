@@ -49,20 +49,21 @@ pub mod RelationStEph {
             Y: Clone;
 
         fn iter(&self)                          -> Iter<'_, Pair<X, Y>>;
-    }
 
-    impl<A: StT + Hash, B: StT + Hash> RelationStEph<A, B> {
-        pub fn FromVec(v: Vec<Pair<A, B>>) -> RelationStEph<A, B> {
-            RelationStEph {
-                pairs: SetStEph::FromVec(v),
-            }
-        }
+        // Methods added from inherent impl
+        fn FromVec(v: Vec<Pair<X, Y>>) -> RelationStEph<X, Y>;
     }
 
     impl<X: StT + Hash, Y: StT + Hash> RelationStEphTrait<X, Y> for RelationStEph<X, Y> {
         fn empty() -> RelationStEph<X, Y> { RelationStEph { pairs: SetLit![] } }
 
         fn FromSet(pairs: SetStEph<Pair<X, Y>>) -> RelationStEph<X, Y> { RelationStEph { pairs } }
+
+        fn FromVec(v: Vec<Pair<X, Y>>) -> RelationStEph<X, Y> {
+            RelationStEph {
+                pairs: SetStEph::FromVec(v),
+            }
+        }
 
         fn size(&self) -> N { self.pairs.size() }
 

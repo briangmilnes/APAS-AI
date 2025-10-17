@@ -39,10 +39,6 @@ pub mod BSTPlainStEph {
         fn pre_order(&self)            -> ArraySeqStPerS<T>;
     }
 
-    impl<T: StT + Ord> BSTPlainStEph<T> {
-        // Private helper methods only - no public delegation
-    }
-
     impl<T: StT + Ord> BSTPlainStEphTrait<T> for BSTPlainStEph<T> {
         fn new() -> Self {
             BSTPlainStEph {

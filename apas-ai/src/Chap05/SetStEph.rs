@@ -56,49 +56,11 @@ pub mod SetStEph {
         fn FromVec(v: Vec<T>)                                          -> Self;
     }
 
-    impl<T: Eq + Hash> PartialEq for SetStEph<T> {
-        fn eq(&self, other: &Self) -> bool { self.data == other.data }
-    }
 
-    impl<T: Eq + Hash> Eq for SetStEph<T> {}
 
-    impl<T: Eq + Hash + Debug> Debug for SetStEph<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { f.debug_set().entries(self.data.iter()).finish() }
-    }
 
-    impl<T: Eq + Hash + Display> Display for SetStEph<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "{{")?;
-            let mut first = true;
-            for x in self.data.iter() {
-                if !first {
-                    write!(f, ", ")?;
-                } else {
-                    first = false;
-                }
-                write!(f, "{x}")?;
-            }
-            write!(f, "}}")
-        }
-    }
 
     // Provide an order-independent Hash so sets of sets can be placed in a HashSet.
-    impl<T: Eq + Hash> Hash for SetStEph<T> {
-        fn hash<H: Hasher>(&self, state: &mut H) {
-            use std::collections::hash_map::DefaultHasher;
-            let mut element_hashes: Vec<u64> = Vec::with_capacity(self.data.len());
-            for e in self.data.iter() {
-                let mut h = DefaultHasher::new();
-                e.hash(&mut h);
-                element_hashes.push(h.finish());
-            }
-            element_hashes.sort_unstable();
-            self.data.len().hash(state);
-            for h in element_hashes {
-                h.hash(state);
-            }
-        }
-    }
 
     impl<T: StT + Hash> SetStEphTrait<T> for SetStEph<T> {
         fn empty() -> SetStEph<T> { SetStEph { data: HashSet::new() } }
@@ -179,6 +141,45 @@ pub mod SetStEph {
                 let _ = s.insert(x);
             }
             SetStEph { data: s }
+        }
+    }
+
+    impl<T: Eq + Hash> PartialEq for SetStEph<T> {
+        fn eq(&self, other: &Self) -> bool { self.data == other.data }
+    }
+    impl<T: Eq + Hash> Eq for SetStEph<T> {}
+    impl<T: Eq + Hash + Debug> Debug for SetStEph<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { f.debug_set().entries(self.data.iter()).finish() }
+    }
+    impl<T: Eq + Hash + Display> Display for SetStEph<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            write!(f, "{{")?;
+            let mut first = true;
+            for x in self.data.iter() {
+                if !first {
+                    write!(f, ", ")?;
+                } else {
+                    first = false;
+                }
+                write!(f, "{x}")?;
+            }
+            write!(f, "}}")
+        }
+    }
+    impl<T: Eq + Hash> Hash for SetStEph<T> {
+        fn hash<H: Hasher>(&self, state: &mut H) {
+            use std::collections::hash_map::DefaultHasher;
+            let mut element_hashes: Vec<u64> = Vec::with_capacity(self.data.len());
+            for e in self.data.iter() {
+                let mut h = DefaultHasher::new();
+                e.hash(&mut h);
+                element_hashes.push(h.finish());
+            }
+            element_hashes.sort_unstable();
+            self.data.len().hash(state);
+            for h in element_hashes {
+                h.hash(state);
+            }
         }
     }
 

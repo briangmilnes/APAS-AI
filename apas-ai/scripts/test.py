@@ -28,7 +28,7 @@ def main():
     
     # Run cargo nextest with --no-fail-fast, capture output for stripping
     result = subprocess.run(
-        ["cargo", "nextest", "run", "--no-fail-fast"],
+        ["cargo", "nextest", "run", "--no-fail-fast", "-j", "10"],
         cwd=project_root,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,

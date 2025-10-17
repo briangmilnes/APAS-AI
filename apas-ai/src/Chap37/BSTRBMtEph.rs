@@ -62,9 +62,6 @@ pub mod BSTRBMtEph {
         fn pre_order(&self)            -> ArraySeqStPerS<T>;
     }
 
-    impl<T: StTInMtT + Ord> Default for BSTRBMtEph<T> {
-        fn default() -> Self { Self::new() }
-    }
 
     impl<T: StTInMtT + Ord> BSTRBMtEph<T> {
         // Private helper methods only - no public delegation
@@ -301,6 +298,10 @@ pub mod BSTRBMtEph {
             Self::pre_order_collect(&*guard, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
+    }
+
+    impl<T: StTInMtT + Ord> Default for BSTRBMtEph<T> {
+        fn default() -> Self { Self::new() }
     }
 
     #[macro_export]

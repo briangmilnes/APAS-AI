@@ -9,6 +9,7 @@
 //! ```rust
 //! use apas_ai::Chap06::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::*;
 //! use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEphTrait;
+//! use apas_ai::Chap05::SetStEph::SetStEph::*;
 //! use apas_ai::WeightedUnDirGraphStEphFloatLit;
 //! use ordered_float::OrderedFloat;
 //!
@@ -18,9 +19,10 @@
 //! graph.add_weighted_edge("B", "C", OrderedFloat(2.71));
 //!
 //! // Create graph using macro with APAS notation (E: for undirected edges)
+//! use apas_ai::Types::Types::Triple;
 //! let graph_macro = WeightedUnDirGraphStEphFloatLit!(
 //!     V: ["A", "B", "C"],
-//!     E: [("A", "B", 3.14), ("B", "C", 2.71)]
+//!     E: [Triple("A", "B", OrderedFloat(3.14)), Triple("B", "C", OrderedFloat(2.71))]
 //! );
 //!
 //! // Query operations

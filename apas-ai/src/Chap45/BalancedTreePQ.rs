@@ -47,6 +47,16 @@ pub mod BalancedTreePQ {
         fn size(&self)                         -> N;
         fn is_empty(&self)                     -> bool;
         fn to_seq(&self)                       -> AVLTreeSeqStPerS<T>;
+        fn find_max(&self) -> Option<&T>;
+        fn delete_max(&self) -> (Self, Option<T>) where Self: Sized;
+        fn insert_all(&self, elements: &AVLTreeSeqStPerS<T>) -> Self;
+        fn extract_all_sorted(&self) -> AVLTreeSeqStPerS<T>;
+        fn contains(&self, element: &T) -> bool;
+        fn remove(&self, element: &T) -> (Self, bool) where Self: Sized;
+        fn range(&self, min_val: &T, max_val: &T) -> AVLTreeSeqStPerS<T>;
+        fn from_vec(elements: Vec<T>) -> Self;
+        fn to_vec(&self) -> Vec<T>;
+        fn to_sorted_vec(&self) -> Vec<T>;
     }
 
     impl<T: StT + Ord> BalancedTreePQTrait<T> for BalancedTreePQ<T> {
@@ -174,6 +184,46 @@ pub mod BalancedTreePQ {
 
         /// Claude Work: Θ(1), Span: Θ(1)
         fn to_seq(&self) -> AVLTreeSeqStPerS<T> { self.elements.clone() }
+
+        fn find_max(&self) -> Option<&T> {
+            BalancedTreePQ::find_max(self)
+        }
+
+        fn delete_max(&self) -> (Self, Option<T>) {
+            BalancedTreePQ::delete_max(self)
+        }
+
+        fn insert_all(&self, elements: &AVLTreeSeqStPerS<T>) -> Self {
+            BalancedTreePQ::insert_all(self, elements)
+        }
+
+        fn extract_all_sorted(&self) -> AVLTreeSeqStPerS<T> {
+            BalancedTreePQ::extract_all_sorted(self)
+        }
+
+        fn contains(&self, element: &T) -> bool {
+            BalancedTreePQ::contains(self, element)
+        }
+
+        fn remove(&self, element: &T) -> (Self, bool) {
+            BalancedTreePQ::remove(self, element)
+        }
+
+        fn range(&self, min_val: &T, max_val: &T) -> AVLTreeSeqStPerS<T> {
+            BalancedTreePQ::range(self, min_val, max_val)
+        }
+
+        fn from_vec(elements: Vec<T>) -> Self {
+            BalancedTreePQ::from_vec(elements)
+        }
+
+        fn to_vec(&self) -> Vec<T> {
+            BalancedTreePQ::to_vec(self)
+        }
+
+        fn to_sorted_vec(&self) -> Vec<T> {
+            BalancedTreePQ::to_sorted_vec(self)
+        }
     }
 
     impl<T: StT + Ord> BalancedTreePQ<T> {

@@ -92,6 +92,9 @@ pub mod LinkedListStPer {
             a: &LinkedListStPerS<Pair<A, Bv>>,
             cmp: fn(&A, &A) -> O,
         ) -> LinkedListStPerS<Pair<A, LinkedListStPerS<Bv>>>;
+        /// APAS: Work Θ(n), Span Θ(n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n)
+        fn from_vec(elts: Vec<T>) -> Self;
     }
 
     impl<T: StT> LinkedListStPerS<T> {
@@ -327,6 +330,10 @@ pub mod LinkedListStPer {
             }
             let total = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::reduce(a, f, id);
             (LinkedListStPerS::from_vec(prefixes), total)
+        }
+
+        fn from_vec(elts: Vec<T>) -> Self {
+            LinkedListStPerS::from_vec(elts)
         }
 
         fn flatten(ss: &LinkedListStPerS<LinkedListStPerS<T>>) -> LinkedListStPerS<T> {

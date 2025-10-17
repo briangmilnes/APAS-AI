@@ -65,9 +65,6 @@ pub mod BSTSizeStEph {
         fn split_rank(&self, rank: N)  -> (BSTSizeStEph<T>, BSTSizeStEph<T>);
     }
 
-    impl<T: StT + Ord> Default for BSTreeSize<T> {
-        fn default() -> Self { Self::new() }
-    }
 
     impl<T: StT + Ord> BSTSizeStEph<T> {
         // Private helper methods only - no public delegation
@@ -285,6 +282,10 @@ pub mod BSTSizeStEph {
                 (BSTSizeStEph { root: left_root }, BSTSizeStEph { root: right_root })
             }
         }
+    }
+
+    impl<T: StT + Ord> Default for BSTreeSize<T> {
+        fn default() -> Self { Self::new() }
     }
 
     #[macro_export]

@@ -83,53 +83,25 @@ pub mod MathSeq {
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
         fn multiset_range(&self)                   -> Vec<(N, T)>;
-    }
 
-    impl<T: StT> PartialEq for MathSeqS<T> {
-        fn eq(&self, other: &Self) -> bool { self.data == other.data }
-    }
-
-    impl<T: StT> Eq for MathSeqS<T> {}
-
-    impl<T: StT> Debug for MathSeqS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result { f.debug_list().entries(self.data.iter()).finish() }
-    }
-
-    impl<T: StT> Display for MathSeqS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            write!(f, "[")?;
-            let mut first = true;
-            for x in &self.data {
-                if !first {
-                    write!(f, ", ")?;
-                } else {
-                    first = false;
-                }
-                write!(f, "{x}")?;
-            }
-            write!(f, "]")
-        }
-    }
-
-    impl<T: StT> MathSeqS<T> {
+        // Iterator and construction methods
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+        fn iter(&self) -> Iter<'_, T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }
-
+        fn iter_mut(&mut self) -> IterMut<'_, T>;
         /// APAS: Work Θ(|data|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|data|), Span Θ(1)
-        pub fn from_vec(data: Vec<T>) -> Self { Self { data } }
+        fn from_vec(data: Vec<T>) -> Self;
         /// APAS: Work Θ(length), Span Θ(1)
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        pub fn with_len(length: N, init_value: T) -> Self {
-            Self {
-                data: vec![init_value; length],
-            }
-        }
+        fn with_len(length: N, init_value: T) -> Self;
     }
+
+
+
+
 
     impl<T: StT + Hash> MathSeqTrait<T> for MathSeqS<T> {
         fn new(length: N, init_value: T) -> Self {
@@ -214,6 +186,18 @@ pub mod MathSeq {
             }
             order.into_iter().map(|x| (*counts.get(&x).unwrap(), x)).collect()
         }
+
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+
+        fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }
+
+        fn from_vec(data: Vec<T>) -> Self { Self { data } }
+
+        fn with_len(length: N, init_value: T) -> Self {
+            Self {
+                data: vec![init_value; length],
+            }
+        }
     }
 
     impl<'a, T: StT> IntoIterator for &'a MathSeqS<T> {
@@ -232,6 +216,29 @@ pub mod MathSeq {
         type Item = T;
         type IntoIter = IntoIter<T>;
         fn into_iter(self) -> Self::IntoIter { self.data.into_iter() }
+    }
+
+    impl<T: StT> PartialEq for MathSeqS<T> {
+        fn eq(&self, other: &Self) -> bool { self.data == other.data }
+    }
+    impl<T: StT> Eq for MathSeqS<T> {}
+    impl<T: StT> Debug for MathSeqS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result { f.debug_list().entries(self.data.iter()).finish() }
+    }
+    impl<T: StT> Display for MathSeqS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "[")?;
+            let mut first = true;
+            for x in &self.data {
+                if !first {
+                    write!(f, ", ")?;
+                } else {
+                    first = false;
+                }
+                write!(f, "{x}")?;
+            }
+            write!(f, "]")
+        }
     }
 
     #[macro_export]

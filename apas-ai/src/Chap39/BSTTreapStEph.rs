@@ -62,9 +62,6 @@ pub mod BSTTreapStEph {
         fn pre_order(&self)            -> ArraySeqStPerS<T>;
     }
 
-    impl<T: StT + Ord> Default for BSTreeTreap<T> {
-        fn default() -> Self { Self::new() }
-    }
 
     impl<T: StT + Ord> BSTTreapStEph<T> {
         // Private helper methods only - no public delegation
@@ -215,6 +212,10 @@ pub mod BSTTreapStEph {
             Self::pre_order_collect(&self.root, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
+    }
+
+    impl<T: StT + Ord> Default for BSTreeTreap<T> {
+        fn default() -> Self { Self::new() }
     }
 
     #[macro_export]

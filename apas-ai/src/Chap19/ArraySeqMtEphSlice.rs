@@ -70,6 +70,11 @@ pub mod ArraySeqMtEphSlice {
         fn iterate<A: StTInMtT, F: Fn(&A, &T)              -> A + Send + Sync>(a: &Self, f: &F, seed: A) -> A;
         fn inject(a: &Self, updates: &[(N, T)])            -> Self;
         fn ninject(a: &Self, updates: &[(N, T)])           -> Self;
+        fn from_box(data: Box<[T]>) -> Self;
+        fn from_vec(data: Vec<T>) -> Self;
+        fn to_vec(&self) -> Vec<T>;
+        fn with_exclusive<F: FnOnce(&mut [T]) -> R, R>(&self, f: F) -> R;
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtEphSliceS<T> {
@@ -362,6 +367,26 @@ pub mod ArraySeqMtEphSlice {
                 }
             }
             result
+        }
+
+        fn from_box(data: Box<[T]>) -> Self {
+            ArraySeqMtEphSliceS::from_box(data)
+        }
+
+        fn from_vec(data: Vec<T>) -> Self {
+            ArraySeqMtEphSliceS::from_vec(data)
+        }
+
+        fn to_vec(&self) -> Vec<T> {
+            ArraySeqMtEphSliceS::to_vec(self)
+        }
+
+        fn with_exclusive<F: FnOnce(&mut [T]) -> R, R>(&self, f: F) -> R {
+            ArraySeqMtEphSliceS::with_exclusive(self, f)
+        }
+
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
+            ArraySeqMtEphSliceS::set(self, index, item)
         }
     }
 

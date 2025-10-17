@@ -84,15 +84,8 @@ pub mod ArraySeqMtEph {
         }
     }
 
-    impl<T: StTInMtT> Clone for ArraySeqMtEphS<T> {
-        fn clone(&self) -> Self { ArraySeqMtEphS::from_vec(self.to_vec()) }
-    }
 
-    impl<T: StTInMtT> PartialEq for ArraySeqMtEphS<T> {
-        fn eq(&self, other: &Self) -> bool { self.to_vec() == other.to_vec() }
-    }
 
-    impl<T: StTInMtT> Eq for ArraySeqMtEphS<T> {}
 
     pub trait ArraySeqMtEphTrait<T: StTInMtT> {
         /// APAS: Work Θ(n), Span Θ(1)
@@ -166,6 +159,11 @@ pub mod ArraySeqMtEph {
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
         fn scan<F: Fn(&T, &T)                                                   -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T);
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> Self;
+
+        // Additional methods
+        fn from_vec(values: Vec<T>) -> Self;
+        fn iter_cloned(&self) -> Vec<T>;
+        fn to_vec(&self) -> Vec<T>;
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
@@ -366,6 +364,18 @@ pub mod ArraySeqMtEph {
             }
             out
         }
+
+        fn from_vec(values: Vec<T>) -> Self {
+            ArraySeqMtEphS::from_vec(values)
+        }
+
+        fn iter_cloned(&self) -> Vec<T> {
+            ArraySeqMtEphS::iter_cloned(self)
+        }
+
+        fn to_vec(&self) -> Vec<T> {
+            ArraySeqMtEphS::to_vec(self)
+        }
     }
 
     impl<T: StTInMtT> Display for ArraySeqMtEphS<T> {
@@ -381,6 +391,14 @@ pub mod ArraySeqMtEph {
             write!(f, "]")
         }
     }
+
+    impl<T: StTInMtT> Clone for ArraySeqMtEphS<T> {
+        fn clone(&self) -> Self { ArraySeqMtEphS::from_vec(self.to_vec()) }
+    }
+    impl<T: StTInMtT> PartialEq for ArraySeqMtEphS<T> {
+        fn eq(&self, other: &Self) -> bool { self.to_vec() == other.to_vec() }
+    }
+    impl<T: StTInMtT> Eq for ArraySeqMtEphS<T> {}
 
     #[macro_export]
     macro_rules! ArraySeqMtEphSLit {

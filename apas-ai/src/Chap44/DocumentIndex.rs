@@ -54,6 +54,9 @@ pub mod DocumentIndex {
         /// Claude Work: O(n), Span: O(log n)
         /// Converts document set to sequence
         fn to_seq(docs: &DocumentSet)                                -> ArraySeqStPerS<DocumentId>;
+        fn empty() -> Self;
+        fn get_all_words(&self) -> ArraySeqStPerS<Word>;
+        fn word_count(&self) -> N;
     }
 
     impl DocumentIndexTrait for DocumentIndex {
@@ -169,6 +172,18 @@ pub mod DocumentIndex {
             }
 
             array_seq
+        }
+
+        fn empty() -> Self {
+            DocumentIndex::empty()
+        }
+
+        fn get_all_words(&self) -> ArraySeqStPerS<Word> {
+            DocumentIndex::get_all_words(self)
+        }
+
+        fn word_count(&self) -> N {
+            DocumentIndex::word_count(self)
         }
     }
 

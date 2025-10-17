@@ -64,9 +64,6 @@ pub mod BSTKeyValueStEph {
         fn maximum_key(&self)       -> Option<&K>;
     }
 
-    impl<K: StT + Ord, V: StT> Default for BSTreeKeyValue<K, V> {
-        fn default() -> Self { Self::new() }
-    }
 
     impl<K: StT + Ord, V: StT> BSTKeyValueStEph<K, V> {
         // Private helper methods only - no public delegation
@@ -218,6 +215,10 @@ pub mod BSTKeyValueStEph {
         fn minimum_key(&self) -> Option<&K> { Self::min_key_link(&self.root) }
 
         fn maximum_key(&self) -> Option<&K> { Self::max_key_link(&self.root) }
+    }
+
+    impl<K: StT + Ord, V: StT> Default for BSTreeKeyValue<K, V> {
+        fn default() -> Self { Self::new() }
     }
 
     #[macro_export]

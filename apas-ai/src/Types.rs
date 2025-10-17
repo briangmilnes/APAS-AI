@@ -27,29 +27,16 @@ use std::sync::Mutex;
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Pair<K, V>(pub K, pub V);
 
-    impl<K: Display, V: Display> Display for Pair<K, V> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result { write!(f, "({} -> {})", self.0, self.1) }
-    }
 
     // Triple wrapper for three-element tuples
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Triple<A, B, C>(pub A, pub B, pub C);
 
-    impl<A: Display, B: Display, C: Display> Display for Triple<A, B, C> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            write!(f, "({}, {}, {})", self.0, self.1, self.2)
-        }
-    }
 
     // Quadruple wrapper for four-element tuples
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Quadruple<A, B, C, D>(pub A, pub B, pub C, pub D);
 
-    impl<A: Display, B: Display, C: Display, D: Display> Display for Quadruple<A, B, C, D> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            write!(f, "({}, {}, {}, {})", self.0, self.1, self.2, self.3)
-        }
-    }
 
     // Key-value struct with named fields
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -58,11 +45,6 @@ use std::sync::Mutex;
         pub val: V,
     }
 
-    impl<K: Display, V: Display> Display for KeyVal<K, V> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            write!(f, "{{key: {}, val: {}}}", self.key, self.val)
-        }
-    }
 
     // Type bounds shorthands
     // StT: single-threaded friendly elements: Eq + Clone + Display + Debug + Sized
@@ -270,6 +252,25 @@ use std::sync::Mutex;
 
     impl<A, B> From<Pair<A, B>> for (A, B) {
         fn from(p: Pair<A, B>) -> Self { (p.0, p.1) }
+    }
+
+    impl<K: Display, V: Display> Display for Pair<K, V> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result { write!(f, "({} -> {})", self.0, self.1) }
+    }
+    impl<A: Display, B: Display, C: Display> Display for Triple<A, B, C> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "({}, {}, {})", self.0, self.1, self.2)
+        }
+    }
+    impl<A: Display, B: Display, C: Display, D: Display> Display for Quadruple<A, B, C, D> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "({}, {}, {}, {})", self.0, self.1, self.2, self.3)
+        }
+    }
+    impl<K: Display, V: Display> Display for KeyVal<K, V> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{{key: {}, val: {}}}", self.key, self.val)
+        }
     }
 
     #[macro_export]

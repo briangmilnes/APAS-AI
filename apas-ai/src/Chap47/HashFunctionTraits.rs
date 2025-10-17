@@ -160,9 +160,6 @@ pub mod HashFunctionTraits {
         p: u64,
     }
 
-    impl Default for UniversalIntegerHashFamily {
-        fn default() -> Self { Self::new() }
-    }
 
     impl UniversalIntegerHashFamily {
         pub fn new() -> Self {
@@ -289,20 +286,6 @@ pub mod HashFunctionTraits {
         }
     }
 
-    impl Display for HashTableStats {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            write!(
-                f,
-                "HashTableStats {{ elements: {}, size: {}, load_factor: {:.3}, collisions: {}, max_chain: {}, avg_chain: {:.2} }}",
-                self.num_elements,
-                self.table_size,
-                self.load_factor,
-                self.num_collisions,
-                self.max_chain_length,
-                self.avg_chain_length
-            )
-        }
-    }
 
     /// Utility functions for hash table implementation
     pub struct HashTableUtils;
@@ -419,4 +402,23 @@ pub mod HashFunctionTraits {
             start.elapsed()
         }
     }
+
+    impl Default for UniversalIntegerHashFamily {
+        fn default() -> Self { Self::new() }
+    }
+    impl Display for HashTableStats {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(
+                f,
+                "HashTableStats {{ elements: {}, size: {}, load_factor: {:.3}, collisions: {}, max_chain: {}, avg_chain: {:.2} }}",
+                self.num_elements,
+                self.table_size,
+                self.load_factor,
+                self.num_collisions,
+                self.max_chain_length,
+                self.avg_chain_length
+            )
+        }
+    }
+
 }

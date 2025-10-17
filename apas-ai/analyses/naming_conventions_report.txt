@@ -1,0 +1,888 @@
+
+==============================================================================================================
+RUST FUNCTION/METHOD NAMING CONVENTION ANALYSIS - FULL TABLE
+==============================================================================================================
+
+==============================================================================================================
+File                                                        Pascal      camel      snake      Other Status    
+==============================================================================================================
+src/Chap03/InsertionSortSt.rs                                    0          2          0          0 ✓ camel   
+src/Chap05/MappingStEph.rs                                       4          0         11          0 ⚠️ MIXED  
+src/Chap05/RelationStEph.rs                                      4          0         10          0 ⚠️ MIXED  
+src/Chap05/SetStEph.rs                                           4          0         16          0 ⚠️ MIXED  
+src/Chap05/SetStEphClean.rs                                      2          0         16          0 ⚠️ MIXED  
+src/Chap06/DirGraphMtEph.rs                                     22          4         11          2 ⚠️ MIXED  
+src/Chap06/DirGraphStEph.rs                                     22          4          6          2 ⚠️ MIXED  
+src/Chap06/LabDirGraphMtEph.rs                                   0          0         24          0 ✓ snake   
+src/Chap06/LabDirGraphStEph.rs                                   0          0         22          0 ✓ snake   
+src/Chap06/LabUnDirGraphMtEph.rs                                 4          1         24          0 ⚠️ MIXED  
+src/Chap06/LabUnDirGraphStEph.rs                                 8          2         24          0 ⚠️ MIXED  
+src/Chap06/UnDirGraphMtEph.rs                                   22          6         10          2 ⚠️ MIXED  
+src/Chap06/UnDirGraphStEph.rs                                   22          6          8          2 ⚠️ MIXED  
+src/Chap06/WeightedDirGraphMtEphFloat.rs                         0          0          9          0 ✓ snake   
+src/Chap06/WeightedDirGraphMtEphInt.rs                           0          0          9          0 ✓ snake   
+src/Chap06/WeightedDirGraphStEphFloat.rs                         0          0         12          0 ✓ snake   
+src/Chap06/WeightedDirGraphStEphInt.rs                           0          0          9          0 ✓ snake   
+src/Chap06/WeightedUnDirGraphMtEphFloat.rs                       0          0          8          0 ✓ snake   
+src/Chap06/WeightedUnDirGraphMtEphInt.rs                         0          0          8          0 ✓ snake   
+src/Chap06/WeightedUnDirGraphStEphFloat.rs                       0          0         10          0 ✓ snake   
+src/Chap06/WeightedUnDirGraphStEphInt.rs                         0          0          8          0 ✓ snake   
+src/Chap11/FibonacciMt.rs                                        0          0          2          0 ✓ snake   
+src/Chap12/Exercise12_1.rs                                       0          0          9          0 ✓ snake   
+src/Chap12/Exercise12_2.rs                                       0          0          4          0 ✓ snake   
+src/Chap12/Exercise12_5.rs                                       0          0          9          0 ✓ snake   
+src/Chap17/MathSeq.rs                                            0          4         28          0 ⚠️ MIXED  
+src/Chap18/ArraySeq.rs                                           0          6         47          1 ⚠️ MIXED  
+src/Chap18/ArraySeqMtEph.rs                                      0          4         51          0 ⚠️ MIXED  
+src/Chap18/ArraySeqMtPer.rs                                      0          6         50          0 ⚠️ MIXED  
+src/Chap18/ArraySeqStEph.rs                                      0          4         45          1 ⚠️ MIXED  
+src/Chap18/ArraySeqStEphClean.rs                                 0          0         14          0 ✓ snake   
+src/Chap18/ArraySeqStEphMinimal.rs                               0          0         12          0 ✓ snake   
+src/Chap18/ArraySeqStEphSimple.rs                                0          0         14          0 ✓ snake   
+src/Chap18/ArraySeqStPer.rs                                      0          4         40          0 ⚠️ MIXED  
+src/Chap18/LinkedListStEph.rs                                    0          2         49          0 ⚠️ MIXED  
+src/Chap18/LinkedListStPer.rs                                    0          2         45          0 ⚠️ MIXED  
+src/Chap19/ArraySeqMtEph.rs                                      0          4         34          0 ⚠️ MIXED  
+src/Chap19/ArraySeqMtEphSlice.rs                                 0          4         55          0 ⚠️ MIXED  
+src/Chap19/ArraySeqMtPer.rs                                      0          8         40          0 ⚠️ MIXED  
+src/Chap19/ArraySeqStEph.rs                                      0          4         36          0 ⚠️ MIXED  
+src/Chap19/ArraySeqStPer.rs                                      0          4         38          0 ⚠️ MIXED  
+src/Chap21/Algorithm21_1.rs                                      0          0          2          0 ✓ snake   
+src/Chap21/Algorithm21_2.rs                                      0          0          2          0 ✓ snake   
+src/Chap21/Algorithm21_5.rs                                      0          0          2          0 ✓ snake   
+src/Chap21/Algorithm21_6.rs                                      0          0          2          0 ✓ snake   
+src/Chap21/Exercise21_5.rs                                       0          0          2          0 ✓ snake   
+src/Chap21/Exercise21_7.rs                                       0          0          6          0 ✓ snake   
+src/Chap21/Exercise21_8.rs                                       0          0          4          0 ✓ snake   
+src/Chap21/Problem21_1.rs                                        0          0          2          0 ✓ snake   
+src/Chap21/Problem21_3.rs                                        0          0          2          0 ✓ snake   
+src/Chap21/Problem21_4.rs                                        0          0          4          0 ✓ snake   
+src/Chap23/BalBinTreeStEph.rs                                    0          0         21          0 ✓ snake   
+src/Chap23/PrimTreeSeqSt.rs                                      0          0         24          0 ✓ snake   
+src/Chap26/DivConReduceMt.rs                                     0          0         10          0 ✓ snake   
+src/Chap26/DivConReduceSt.rs                                     0          0         10          0 ✓ snake   
+src/Chap26/MergeSortMt.rs                                        0          0          4          0 ✓ snake   
+src/Chap26/MergeSortSt.rs                                        0          0          4          0 ✓ snake   
+src/Chap27/ReduceContractMtEph.rs                                0          0          2          0 ✓ snake   
+src/Chap27/ReduceContractStEph.rs                                0          0          2          0 ✓ snake   
+src/Chap27/ScanContractMtEph.rs                                  0          0          2          0 ✓ snake   
+src/Chap27/ScanContractStEph.rs                                  0          0          2          0 ✓ snake   
+src/Chap28/MaxContigSubSumBruteStEph.rs                          0          0          3          0 ✓ snake   
+src/Chap28/MaxContigSubSumDivConMtEph.rs                         0          0          5          0 ✓ snake   
+src/Chap28/MaxContigSubSumDivConOptMtEph.rs                      0          0          4          0 ✓ snake   
+src/Chap28/MaxContigSubSumDivConOptStEph.rs                      0          0          4          0 ✓ snake   
+src/Chap28/MaxContigSubSumDivConStEph.rs                         0          0          5          0 ✓ snake   
+src/Chap28/MaxContigSubSumOptMtEph.rs                            0          0          2          0 ✓ snake   
+src/Chap28/MaxContigSubSumOptStEph.rs                            0          0          2          0 ✓ snake   
+src/Chap28/MaxContigSubSumReducedStEph.rs                        0          0          3          0 ✓ snake   
+src/Chap35/OrderStatSelectMtEph.rs                               0          0          2          0 ✓ snake   
+src/Chap35/OrderStatSelectMtPer.rs                               0          0          2          0 ✓ snake   
+src/Chap35/OrderStatSelectStEph.rs                               0          0          2          0 ✓ snake   
+src/Chap35/OrderStatSelectStPer.rs                               0          0          2          0 ✓ snake   
+src/Chap36/QuickSortMt.rs                                        0          0         15          0 ✓ snake   
+src/Chap36/QuickSortMtSlice.rs                                   0          0         15          0 ✓ snake   
+src/Chap36/QuickSortSt.rs                                        0          0         16          0 ✓ snake   
+src/Chap37/AVLTreeSeq.rs                                         0          4         53          0 ⚠️ MIXED  
+src/Chap37/AVLTreeSeqMtPer.rs                                    0          4         27          0 ⚠️ MIXED  
+src/Chap37/AVLTreeSeqStEph.rs                                    0          4         46          0 ⚠️ MIXED  
+src/Chap37/AVLTreeSeqStPer.rs                                    0          4         31          0 ⚠️ MIXED  
+src/Chap37/BSTAVLMtEph.rs                                        0          0         32          0 ✓ snake   
+src/Chap37/BSTAVLStEph.rs                                        0          0         33          0 ✓ snake   
+src/Chap37/BSTBBAlphaMtEph.rs                                    0          0         33          0 ✓ snake   
+src/Chap37/BSTBBAlphaStEph.rs                                    0          0         38          0 ✓ snake   
+src/Chap37/BSTPlainMtEph.rs                                      0          0         26          0 ✓ snake   
+src/Chap37/BSTPlainStEph.rs                                      0          0         25          0 ✓ snake   
+src/Chap37/BSTRBMtEph.rs                                         0          0         34          0 ✓ snake   
+src/Chap37/BSTRBStEph.rs                                         0          0         34          0 ✓ snake   
+src/Chap37/BSTSetAVLMtEph.rs                                     0          0         63          0 ✓ snake   
+src/Chap37/BSTSetBBAlphaMtEph.rs                                 0          0         63          0 ✓ snake   
+src/Chap37/BSTSetPlainMtEph.rs                                   0          0         63          0 ✓ snake   
+src/Chap37/BSTSetRBMtEph.rs                                      0          0         63          0 ✓ snake   
+src/Chap37/BSTSetSplayMtEph.rs                                   0          0         63          0 ✓ snake   
+src/Chap37/BSTSplayMtEph.rs                                      0          0         29          0 ✓ snake   
+src/Chap37/BSTSplayStEph.rs                                      0          0         29          0 ✓ snake   
+src/Chap38/BSTParaMtEph.rs                                       0          0         44          0 ✓ snake   
+src/Chap38/BSTParaStEph.rs                                       0          0         30          0 ✓ snake   
+src/Chap39/BSTParaTreapMtEph.rs                                  0          0         48          0 ✓ snake   
+src/Chap39/BSTSetTreapMtEph.rs                                   0          0         63          0 ✓ snake   
+src/Chap39/BSTTreapMtEph.rs                                      0          0         31          0 ✓ snake   
+src/Chap39/BSTTreapStEph.rs                                      0          0         31          0 ✓ snake   
+src/Chap40/BSTKeyValueStEph.rs                                   0          0         31          0 ✓ snake   
+src/Chap40/BSTReducedStEph.rs                                    0          0         49          0 ✓ snake   
+src/Chap40/BSTSizeStEph.rs                                       0          0         38          0 ✓ snake   
+src/Chap41/AVLTreeSetMtEph.rs                                    0          0         26          0 ✓ snake   
+src/Chap41/AVLTreeSetMtPer.rs                                    0          0         25          0 ✓ snake   
+src/Chap41/AVLTreeSetStEph.rs                                    0          0         24          0 ✓ snake   
+src/Chap41/AVLTreeSetStPer.rs                                    0          0         24          0 ✓ snake   
+src/Chap41/ArraySetEnumMtEph.rs                                  0          0         24          0 ✓ snake   
+src/Chap41/ArraySetStEph.rs                                      0          0         24          0 ✓ snake   
+src/Chap41/Example41_3.rs                                        0          0          7          0 ✓ snake   
+src/Chap42/Example42_1.rs                                        0          0          4          0 ✓ snake   
+src/Chap42/TableMtEph.rs                                         0          0         33          0 ✓ snake   
+src/Chap42/TableStEph.rs                                         0          0         33          0 ✓ snake   
+src/Chap42/TableStPer.rs                                         0          0         33          0 ✓ snake   
+src/Chap43/AugOrderedTableMtEph.rs                               0          0         66          0 ✓ snake   
+src/Chap43/AugOrderedTableStEph.rs                               0          0         64          0 ✓ snake   
+src/Chap43/AugOrderedTableStPer.rs                               0          0         58          0 ✓ snake   
+src/Chap43/Example43_1.rs                                        0          0          4          0 ✓ snake   
+src/Chap43/OrderedSetMtEph.rs                                    0          0         42          0 ✓ snake   
+src/Chap43/OrderedSetStEph.rs                                    0          0         43          0 ✓ snake   
+src/Chap43/OrderedSetStPer.rs                                    0          0         43          0 ✓ snake   
+src/Chap43/OrderedTableMtEph.rs                                  0          0         59          0 ✓ snake   
+src/Chap43/OrderedTableMtPer.rs                                  0          0         18          0 ✓ snake   
+src/Chap43/OrderedTableStEph.rs                                  0          0         59          0 ✓ snake   
+src/Chap43/OrderedTableStPer.rs                                  0          0         53          0 ✓ snake   
+src/Chap44/DocumentIndex.rs                                      0          0         30          1 ✓ snake   
+src/Chap44/Example44_1.rs                                        0          0         19          0 ✓ snake   
+src/Chap45/BalancedTreePQ.rs                                     0          0         56          1 ✓ snake   
+src/Chap45/BinaryHeapPQ.rs                                       0          0         36          1 ✓ snake   
+src/Chap45/Example45_2.rs                                        0          0         16          0 ✓ snake   
+src/Chap45/HeapsortExample.rs                                    0          0         43          0 ✓ snake   
+src/Chap45/LeftistHeapPQ.rs                                      0          0         58          1 ✓ snake   
+src/Chap45/SortedListPQ.rs                                       0          0         44          1 ✓ snake   
+src/Chap45/UnsortedListPQ.rs                                     0          0         35          1 ✓ snake   
+src/Chap47/AdvancedDoubleHashing.rs                              0          0         16          0 ✓ snake   
+src/Chap47/AdvancedLinearProbing.rs                              0          0         10          0 ✓ snake   
+src/Chap47/AdvancedQuadraticProbing.rs                           0          0         16          0 ✓ snake   
+src/Chap47/ClusteringAnalysis.rs                                 0          0         12          0 ✓ snake   
+src/Chap47/DoubleHashing.rs                                      0          0          4          0 ✓ snake   
+src/Chap47/Example47_1.rs                                        0          0          4          0 ✓ snake   
+src/Chap47/Example47_2.rs                                        0          0          8          0 ✓ snake   
+src/Chap47/Example47_4.rs                                        0          0          8          0 ✓ snake   
+src/Chap47/Example47_5.rs                                        0          0         10          0 ✓ snake   
+src/Chap47/Example47_6.rs                                        0          0         10          0 ✓ snake   
+src/Chap47/Exercise47_1.rs                                       0          0         13          0 ✓ snake   
+src/Chap47/FlatHashTable.rs                                      0          0         11          0 ✓ snake   
+src/Chap47/HashExamples.rs                                       0          0         18          0 ✓ snake   
+src/Chap47/HashFunctionTraits.rs                                 0          0         22          0 ✓ snake   
+src/Chap47/LinearProbing.rs                                      0          0          4          0 ✓ snake   
+src/Chap47/NestedHashTable.rs                                    0          0         13          1 ✓ snake   
+src/Chap47/ProbeSequenceExamples.rs                              0          0         12          0 ✓ snake   
+src/Chap47/QuadraticProbing.rs                                   0          0          5          0 ✓ snake   
+src/Chap47/SeparateChaining.rs                                   0          0          9          0 ✓ snake   
+src/Chap47clean/ChainedHashTable.rs                              0          0          4          0 ✓ snake   
+src/Chap47clean/DoubleHashFlatHashTableStEph.rs                  0          0          6          0 ✓ snake   
+src/Chap47clean/FlatHashTable.rs                                 0          0          7          0 ✓ snake   
+src/Chap47clean/LinProbFlatHashTableStEph.rs                     0          0          5          0 ✓ snake   
+src/Chap47clean/LinkedListChainedHashTableStEph.rs               0          0          7          0 ✓ snake   
+src/Chap47clean/ParaHashTableStEph.rs                            0          2          7          0 ⚠️ MIXED  
+src/Chap47clean/QuadProbFlatHashTableStEph.rs                    0          0          5          0 ✓ snake   
+src/Chap47clean/StructChainedHashTable.rs                        0          0          7          0 ✓ snake   
+src/Chap47clean/VecChainedHashTableStEph.rs                      0          0          7          0 ✓ snake   
+src/Chap49/MinEditDistMtEph.rs                                   0          0         21          0 ✓ snake   
+src/Chap49/MinEditDistMtPer.rs                                   0          0         11          0 ✓ snake   
+src/Chap49/MinEditDistStEph.rs                                   0          0         21          0 ✓ snake   
+src/Chap49/MinEditDistStPer.rs                                   0          0         11          0 ✓ snake   
+src/Chap49/SubsetSumMtEph.rs                                     0          0         15          0 ✓ snake   
+src/Chap49/SubsetSumMtPer.rs                                     0          0          9          0 ✓ snake   
+src/Chap49/SubsetSumStEph.rs                                     0          0         15          0 ✓ snake   
+src/Chap49/SubsetSumStPer.rs                                     0          0          9          0 ✓ snake   
+src/Chap50/MatrixChainMtEph.rs                                   0          0         21          0 ✓ snake   
+src/Chap50/MatrixChainMtPer.rs                                   0          0         15          0 ✓ snake   
+src/Chap50/MatrixChainStEph.rs                                   0          0         22          0 ✓ snake   
+src/Chap50/MatrixChainStPer.rs                                   0          0         14          0 ✓ snake   
+src/Chap50/OptBinSearchTreeMtEph.rs                              0          0         20          0 ✓ snake   
+src/Chap50/OptBinSearchTreeMtPer.rs                              0          0         14          0 ✓ snake   
+src/Chap50/OptBinSearchTreeStEph.rs                              0          0         21          0 ✓ snake   
+src/Chap50/OptBinSearchTreeStPer.rs                              0          0         13          0 ✓ snake   
+src/Chap50/Probability.rs                                        0          0          5          0 ✓ snake   
+src/Chap51/BottomUpDPMtEph.rs                                    0          0         10          0 ✓ snake   
+src/Chap51/BottomUpDPMtPer.rs                                    0          0          8          0 ✓ snake   
+src/Chap51/BottomUpDPStEph.rs                                    0          0         10          0 ✓ snake   
+src/Chap51/BottomUpDPStPer.rs                                    0          0          8          0 ✓ snake   
+src/Chap51/TopDownDPMtEph.rs                                     0          0         15          0 ✓ snake   
+src/Chap51/TopDownDPMtPer.rs                                     0          0         13          0 ✓ snake   
+src/Chap51/TopDownDPStEph.rs                                     0          0         13          0 ✓ snake   
+src/Chap51/TopDownDPStPer.rs                                     0          0         11          0 ✓ snake   
+src/Chap52/AdjMatrixGraphMtEph.rs                                0          0         14          0 ✓ snake   
+src/Chap52/AdjMatrixGraphMtPer.rs                                0          0         12          0 ✓ snake   
+src/Chap52/AdjMatrixGraphStEph.rs                                0          0         16          0 ✓ snake   
+src/Chap52/AdjMatrixGraphStPer.rs                                0          0         16          0 ✓ snake   
+src/Chap52/AdjSeqGraphMtEph.rs                                   0          0         12          0 ✓ snake   
+src/Chap52/AdjSeqGraphMtPer.rs                                   0          0         12          0 ✓ snake   
+src/Chap52/AdjSeqGraphStEph.rs                                   0          0         16          0 ✓ snake   
+src/Chap52/AdjSeqGraphStPer.rs                                   0          0         16          0 ✓ snake   
+src/Chap52/AdjTableGraphMtPer.rs                                 0          0         20          0 ✓ snake   
+src/Chap52/AdjTableGraphStEph.rs                                 0          0         24          0 ✓ snake   
+src/Chap52/AdjTableGraphStPer.rs                                 0          0         24          0 ✓ snake   
+src/Chap52/EdgeSetGraphMtPer.rs                                  0          0         26          0 ✓ snake   
+src/Chap52/EdgeSetGraphStEph.rs                                  0          0         26          0 ✓ snake   
+src/Chap52/EdgeSetGraphStPer.rs                                  0          0         26          0 ✓ snake   
+src/Chap53/GraphSearchMtPer.rs                                   0          0         10          0 ✓ snake   
+src/Chap53/GraphSearchStEph.rs                                   0          0         10          0 ✓ snake   
+src/Chap53/GraphSearchStPer.rs                                   0          0         10          0 ✓ snake   
+src/Chap53/PQMinMtEph.rs                                         0          0          7          0 ✓ snake   
+src/Chap53/PQMinMtPer.rs                                         0          0          8          0 ✓ snake   
+src/Chap53/PQMinStEph.rs                                         0          0          8          0 ✓ snake   
+src/Chap53/PQMinStPer.rs                                         0          0          8          0 ✓ snake   
+src/Chap54/BFSMtEph.rs                                           0          0          2          0 ✓ snake   
+src/Chap54/BFSMtPer.rs                                           0          0          2          0 ✓ snake   
+src/Chap54/BFSStEph.rs                                           0          0          2          0 ✓ snake   
+src/Chap54/BFSStPer.rs                                           0          0          2          0 ✓ snake   
+src/Chap55/CycleDetectStEph.rs                                   0          0          3          0 ✓ snake   
+src/Chap55/CycleDetectStPer.rs                                   0          0          3          0 ✓ snake   
+src/Chap55/DFSStEph.rs                                           0          0          3          0 ✓ snake   
+src/Chap55/DFSStPer.rs                                           0          0          3          0 ✓ snake   
+src/Chap55/SCCStEph.rs                                           0          0          6          0 ✓ snake   
+src/Chap55/SCCStPer.rs                                           0          0          6          0 ✓ snake   
+src/Chap55/TopoSortStEph.rs                                      0          0          5          0 ✓ snake   
+src/Chap55/TopoSortStPer.rs                                      0          0          5          0 ✓ snake   
+src/Chap56/AllPairsResultStEphFloat.rs                           0          0          8          0 ✓ snake   
+src/Chap56/AllPairsResultStEphInt.rs                             0          0          8          0 ✓ snake   
+src/Chap56/AllPairsResultStPerFloat.rs                           0          0          8          0 ✓ snake   
+src/Chap56/AllPairsResultStPerInt.rs                             0          0          8          0 ✓ snake   
+src/Chap56/Example56_1.rs                                        0          0          6          0 ✓ snake   
+src/Chap56/Example56_3.rs                                        0          0          4          0 ✓ snake   
+src/Chap56/PathWeightUtilsStEph.rs                               0          0          8          0 ✓ snake   
+src/Chap56/PathWeightUtilsStPer.rs                               0          0          8          0 ✓ snake   
+src/Chap56/SSSPResultStEphFloat.rs                               0          0          8          0 ✓ snake   
+src/Chap56/SSSPResultStEphInt.rs                                 0          0          8          0 ✓ snake   
+src/Chap56/SSSPResultStPerFloat.rs                               0          0          8          0 ✓ snake   
+src/Chap56/SSSPResultStPerInt.rs                                 0          0          8          0 ✓ snake   
+src/Chap57/DijkstraStEphFloat.rs                                 0          0          3          0 ✓ snake   
+src/Chap57/DijkstraStEphInt.rs                                   0          0          3          0 ✓ snake   
+src/Chap57/StackStEph.rs                                         0          0          8          0 ✓ snake   
+src/Chap58/BellmanFordStEphFloat.rs                              0          0          3          0 ✓ snake   
+src/Chap58/BellmanFordStEphInt.rs                                0          0          3          0 ✓ snake   
+src/Chap59/JohnsonMtEphFloat.rs                                  0          0          6          0 ✓ snake   
+src/Chap59/JohnsonMtEphInt.rs                                    0          0          6          0 ✓ snake   
+src/Chap59/JohnsonStEphFloat.rs                                  0          0          5          0 ✓ snake   
+src/Chap59/JohnsonStEphInt.rs                                    0          0          5          0 ✓ snake   
+src/Chap61/EdgeContractionMtEph.rs                               0          0          5          0 ✓ snake   
+src/Chap61/EdgeContractionStEph.rs                               0          0          4          0 ✓ snake   
+src/Chap61/VertexMatchingMtEph.rs                                0          0          6          0 ✓ snake   
+src/Chap61/VertexMatchingStEph.rs                                0          0          4          0 ✓ snake   
+src/Chap62/StarContractionMtEph.rs                               0          0          6          0 ✓ snake   
+src/Chap62/StarContractionStEph.rs                               0          0          5          0 ✓ snake   
+src/Chap62/StarPartitionMtEph.rs                                 0          0          2          0 ✓ snake   
+src/Chap62/StarPartitionStEph.rs                                 0          0          2          0 ✓ snake   
+src/Chap63/ConnectivityMtEph.rs                                  0          0         11          0 ✓ snake   
+src/Chap63/ConnectivityStEph.rs                                  0          0          9          0 ✓ snake   
+src/Chap64/SpanTreeMtEph.rs                                      0          0          4          0 ✓ snake   
+src/Chap64/SpanTreeStEph.rs                                      0          0          4          0 ✓ snake   
+src/Chap64/TSPApproxMtEph.rs                                     0          0         11          0 ✓ snake   
+src/Chap64/TSPApproxStEph.rs                                     0          0         11          0 ✓ snake   
+src/Chap65/KruskalStEph.rs                                       0          0          6          0 ✓ snake   
+src/Chap65/PrimStEph.rs                                          0          0          7          0 ✓ snake   
+src/Chap65/UnionFindStEph.rs                                     0          0         15          0 ✓ snake   
+src/Chap66/BoruvkaMtEph.rs                                       0          0         12          0 ✓ snake   
+src/Chap66/BoruvkaStEph.rs                                       0          0         10          0 ✓ snake   
+src/Types.rs                                                     1          0         26          1 ⚠️ MIXED  
+==============================================================================================================
+
+==============================================================================================================
+DETAILED BREAKDOWN - MIXED NAMING FILES
+==============================================================================================================
+
+📁 src/Chap05/MappingStEph.rs
+   PascalCase (4 functions):
+      Line 28: FromVec
+      Line 32: FromRelation
+      Line 70: FromVec
+      Line 77: FromRelation
+   snake_case (11 functions):
+      Line 24: empty
+      Line 36: size
+      Line 40: domain
+      Line 44: range
+      Line 48: mem
+      Line 54: unique_pairs_from_iter
+      Line 64: empty
+      Line 84: size
+      Line 86: domain
+      Line 88: range
+      ... and 1 more
+
+📁 src/Chap05/RelationStEph.rs
+   PascalCase (4 functions):
+      Line 26: FromSet
+      Line 54: FromVec
+      Line 60: FromSet
+      Line 62: FromVec
+   snake_case (10 functions):
+      Line 22: empty
+      Line 30: size
+      Line 34: domain
+      Line 40: range
+      Line 46: mem
+      Line 58: empty
+      Line 68: size
+      Line 70: domain
+      Line 81: range
+      Line 92: mem
+
+📁 src/Chap05/SetStEph.rs
+   PascalCase (4 functions):
+      Line 45: CartesianProduct
+      Line 56: FromVec
+      Line 156: CartesianProduct
+      Line 176: FromVec
+   snake_case (16 functions):
+      Line 23: empty
+      Line 26: singleton
+      Line 29: size
+      Line 32: mem
+      Line 35: union
+      Line 38: intersection
+      Line 41: partition
+      Line 49: insert
+      Line 104: empty
+      Line 106: singleton
+      ... and 6 more
+
+📁 src/Chap05/SetStEphClean.rs
+   PascalCase (2 functions):
+      Line 39: CartesianProduct
+      Line 104: CartesianProduct
+   snake_case (16 functions):
+      Line 22: empty
+      Line 23: singleton
+      Line 24: size
+      Line 25: mem
+      Line 27: insert
+      Line 30: union
+      Line 33: intersection
+      Line 36: partition
+      Line 46: empty
+      Line 47: singleton
+      ... and 6 more
+
+📁 src/Chap06/DirGraphMtEph.rs
+   PascalCase (22 functions):
+      Line 32: FromSets
+      Line 47: Neighbor
+      Line 53: NGOfVertices
+      Line 56: NPlus
+      Line 59: NMinus
+      Line 62: NPlusOfVertices
+      Line 65: NMinusOfVertices
+      Line 68: Incident
+      Line 71: Degree
+      Line 74: InDegree
+      ... and 12 more
+   camelCase (4 functions):
+      Line 41: sizeV
+      Line 44: sizeA
+      Line 90: sizeV
+      Line 91: sizeA
+   snake_case (11 functions):
+      Line 29: empty
+      Line 35: vertices
+      Line 38: arcs
+      Line 81: empty
+      Line 88: vertices
+      Line 89: arcs
+      Line 115: parallel_ng_of_vertices
+      Line 161: parallel_nplus
+      Line 211: parallel_nminus
+      Line 260: parallel_nplus_of_vertices
+      ... and 1 more
+
+📁 src/Chap06/DirGraphStEph.rs
+   PascalCase (22 functions):
+      Line 25: FromSets
+      Line 40: Neighbor
+      Line 46: NGOfVertices
+      Line 49: NPlus
+      Line 52: NMinus
+      Line 55: NPlusOfVertices
+      Line 58: NMinusOfVertices
+      Line 61: Incident
+      Line 64: Degree
+      Line 67: InDegree
+      ... and 12 more
+   camelCase (4 functions):
+      Line 34: sizeV
+      Line 37: sizeA
+      Line 83: sizeV
+      Line 84: sizeA
+   snake_case (6 functions):
+      Line 22: empty
+      Line 28: vertices
+      Line 31: arcs
+      Line 74: empty
+      Line 81: vertices
+      Line 82: arcs
+
+📁 src/Chap06/LabUnDirGraphMtEph.rs
+   PascalCase (4 functions):
+      Line 196: NPlus
+      Line 199: NMinus
+      Line 202: InDegree
+      Line 205: OutDegree
+   camelCase (1 functions):
+      Line 190: sizeA
+   snake_case (24 functions):
+      Line 26: empty
+      Line 29: from_vertices_and_labeled_edges
+      Line 32: vertices
+      Line 35: labeled_edges
+      Line 38: edges
+      Line 41: add_vertex
+      Line 44: add_labeled_edge
+      Line 47: get_edge_label
+      Line 50: has_edge
+      Line 53: neighbors
+      ... and 14 more
+
+📁 src/Chap06/LabUnDirGraphStEph.rs
+   PascalCase (8 functions):
+      Line 60: NPlus
+      Line 62: NMinus
+      Line 64: InDegree
+      Line 66: OutDegree
+      Line 155: NPlus
+      Line 157: NMinus
+      Line 159: InDegree
+      Line 161: OutDegree
+   camelCase (2 functions):
+      Line 56: sizeA
+      Line 151: sizeA
+   snake_case (24 functions):
+      Line 22: empty
+      Line 25: from_vertices_and_labeled_edges
+      Line 28: vertices
+      Line 31: labeled_edges
+      Line 34: edges
+      Line 37: add_vertex
+      Line 40: add_labeled_edge
+      Line 43: get_edge_label
+      Line 46: has_edge
+      Line 49: neighbors
+      ... and 14 more
+
+📁 src/Chap06/UnDirGraphMtEph.rs
+   PascalCase (22 functions):
+      Line 32: FromSets
+      Line 47: Neighbor
+      Line 53: NGOfVertices
+      Line 56: Incident
+      Line 59: Degree
+      Line 67: NPlus
+      Line 69: NMinus
+      Line 71: NPlusOfVertices
+      Line 73: NMinusOfVertices
+      Line 75: InDegree
+      ... and 12 more
+   camelCase (6 functions):
+      Line 41: sizeV
+      Line 44: sizeE
+      Line 63: sizeA
+      Line 90: sizeV
+      Line 91: sizeE
+      Line 204: sizeA
+   snake_case (10 functions):
+      Line 29: empty
+      Line 35: vertices
+      Line 38: edges
+      Line 65: arcs
+      Line 81: empty
+      Line 88: vertices
+      Line 89: edges
+      Line 116: parallel_ng
+      Line 169: parallel_ng_of_vertices
+      Line 206: arcs
+
+📁 src/Chap06/UnDirGraphStEph.rs
+   PascalCase (22 functions):
+      Line 25: FromSets
+      Line 40: Neighbor
+      Line 46: NGOfVertices
+      Line 49: Incident
+      Line 52: Degree
+      Line 60: NPlus
+      Line 62: NMinus
+      Line 64: NPlusOfVertices
+      Line 66: NMinusOfVertices
+      Line 68: InDegree
+      ... and 12 more
+   camelCase (6 functions):
+      Line 34: sizeV
+      Line 37: sizeE
+      Line 56: sizeA
+      Line 83: sizeV
+      Line 84: sizeE
+      Line 117: sizeA
+   snake_case (8 functions):
+      Line 22: empty
+      Line 28: vertices
+      Line 31: edges
+      Line 58: arcs
+      Line 74: empty
+      Line 81: vertices
+      Line 82: edges
+      Line 119: arcs
+
+📁 src/Chap17/MathSeq.rs
+   camelCase (4 functions):
+      Line 69: isEmpty
+      Line 73: isSingleton
+      Line 178: isEmpty
+      Line 180: isSingleton
+   snake_case (28 functions):
+      Line 33: set
+      Line 37: length
+      Line 41: nth
+      Line 45: empty
+      Line 49: singleton
+      Line 53: subseq
+      Line 57: subseq_copy
+      Line 61: add_last
+      Line 65: delete_last
+      Line 77: domain
+      ... and 18 more
+
+📁 src/Chap18/ArraySeq.rs
+   camelCase (6 functions):
+      Line 83: isEmpty
+      Line 87: isSingleton
+      Line 150: isEmpty
+      Line 152: isSingleton
+      Line 286: isEmpty
+      Line 288: isSingleton
+   snake_case (47 functions):
+      Line 29: set
+      Line 33: length
+      Line 37: nth
+      Line 41: empty
+      Line 45: singleton
+      Line 49: tabulate
+      Line 53: map
+      Line 57: subseq
+      Line 63: append
+      Line 67: filter
+      ... and 37 more
+
+📁 src/Chap18/ArraySeqMtEph.rs
+   camelCase (4 functions):
+      Line 144: isEmpty
+      Line 147: isSingleton
+      Line 275: isEmpty
+      Line 277: isSingleton
+   snake_case (51 functions):
+      Line 23: empty
+      Line 36: singleton
+      Line 38: from_vec
+      Line 44: length
+      Line 49: nth_cloned
+      Line 54: set
+      Line 67: iter_cloned
+      Line 72: subseq_copy
+      Line 81: to_vec
+      Line 103: set
+      ... and 41 more
+
+📁 src/Chap18/ArraySeqMtPer.rs
+   camelCase (6 functions):
+      Line 167: iteratePrefixes
+      Line 190: isEmpty
+      Line 191: isSingleton
+      Line 310: iteratePrefixes
+      Line 410: isEmpty
+      Line 412: isSingleton
+   snake_case (50 functions):
+      Line 25: empty
+      Line 39: singleton
+      Line 41: from_vec
+      Line 47: length
+      Line 49: nth
+      Line 51: subseq_copy
+      Line 59: is_empty
+      Line 61: is_singleton
+      Line 123: empty
+      Line 126: singleton
+      ... and 40 more
+
+📁 src/Chap18/ArraySeqStEph.rs
+   camelCase (4 functions):
+      Line 159: isEmpty
+      Line 162: isSingleton
+      Line 259: isEmpty
+      Line 261: isSingleton
+   snake_case (45 functions):
+      Line 22: from_vec
+      Line 30: empty
+      Line 32: singleton
+      Line 34: length
+      Line 36: nth
+      Line 41: subseq
+      Line 48: set
+      Line 57: update
+      Line 62: inject
+      Line 120: set
+      ... and 35 more
+
+📁 src/Chap18/ArraySeqStPer.rs
+   camelCase (4 functions):
+      Line 119: isEmpty
+      Line 122: isSingleton
+      Line 224: isEmpty
+      Line 226: isSingleton
+   snake_case (40 functions):
+      Line 21: from_vec
+      Line 27: empty
+      Line 28: singleton
+      Line 29: length
+      Line 30: nth
+      Line 31: subseq_copy
+      Line 86: length
+      Line 89: nth
+      Line 92: empty
+      Line 95: singleton
+      ... and 30 more
+
+📁 src/Chap18/LinkedListStEph.rs
+   camelCase (2 functions):
+      Line 245: iteratePrefixes
+      Line 391: iteratePrefixes
+   snake_case (49 functions):
+      Line 26: empty
+      Line 35: singleton
+      Line 37: from_vec
+      Line 46: length
+      Line 48: nth
+      Line 54: set
+      Line 64: subseq_copy
+      Line 94: node_at
+      Line 110: node_at_mut
+      Line 191: set
+      ... and 39 more
+
+📁 src/Chap18/LinkedListStPer.rs
+   camelCase (2 functions):
+      Line 75: iteratePrefixes
+      Line 290: iteratePrefixes
+   snake_case (45 functions):
+      Line 33: empty
+      Line 36: singleton
+      Line 39: length
+      Line 42: nth
+      Line 45: subseq_copy
+      Line 48: tabulate
+      Line 51: map
+      Line 54: append
+      Line 57: select
+      Line 60: filter
+      ... and 35 more
+
+📁 src/Chap19/ArraySeqMtEph.rs
+   camelCase (4 functions):
+      Line 56: isEmpty
+      Line 58: isSingleton
+      Line 279: isEmpty
+      Line 284: isSingleton
+   snake_case (34 functions):
+      Line 20: empty
+      Line 22: singleton
+      Line 24: length
+      Line 26: nth_cloned
+      Line 28: subseq_copy
+      Line 31: tabulate
+      Line 33: map
+      Line 38: select
+      Line 40: append
+      Line 42: append_select
+      ... and 24 more
+
+📁 src/Chap19/ArraySeqMtEphSlice.rs
+   camelCase (4 functions):
+      Line 52: isEmpty
+      Line 54: isSingleton
+      Line 162: isEmpty
+      Line 164: isSingleton
+   snake_case (55 functions):
+      Line 25: len
+      Line 42: length
+      Line 44: nth_cloned
+      Line 46: empty
+      Line 48: update
+      Line 50: singleton
+      Line 56: subseq_copy
+      Line 58: slice
+      Line 60: tabulate
+      Line 62: map
+      ... and 45 more
+
+📁 src/Chap19/ArraySeqMtPer.rs
+   camelCase (8 functions):
+      Line 50: iteratePrefixes
+      Line 73: atomicWrite
+      Line 79: isEmpty
+      Line 80: isSingleton
+      Line 208: iteratePrefixes
+      Line 277: atomicWrite
+      Line 285: isEmpty
+      Line 290: isSingleton
+   snake_case (40 functions):
+      Line 20: empty
+      Line 22: singleton
+      Line 24: length
+      Line 26: nth
+      Line 28: subseq_copy
+      Line 31: tabulate
+      Line 33: map
+      Line 40: append
+      Line 42: filter
+      Line 44: update_single
+      ... and 30 more
+
+📁 src/Chap19/ArraySeqStEph.rs
+   camelCase (4 functions):
+      Line 58: isEmpty
+      Line 60: isSingleton
+      Line 220: isEmpty
+      Line 225: isSingleton
+   snake_case (36 functions):
+      Line 18: empty
+      Line 20: singleton
+      Line 22: length
+      Line 24: nth
+      Line 26: subseq_copy
+      Line 30: tabulate
+      Line 33: map
+      Line 36: select
+      Line 39: append
+      Line 42: append_select
+      ... and 26 more
+
+📁 src/Chap19/ArraySeqStPer.rs
+   camelCase (4 functions):
+      Line 62: isEmpty
+      Line 64: isSingleton
+      Line 217: isEmpty
+      Line 222: isSingleton
+   snake_case (38 functions):
+      Line 18: empty
+      Line 20: singleton
+      Line 22: length
+      Line 24: nth
+      Line 26: subseq_copy
+      Line 30: tabulate
+      Line 33: map
+      Line 36: select
+      Line 39: append
+      Line 42: append_select
+      ... and 28 more
+
+📁 src/Chap37/AVLTreeSeq.rs
+   camelCase (4 functions):
+      Line 78: isEmpty
+      Line 79: isSingleton
+      Line 239: isEmpty
+      Line 241: isSingleton
+   snake_case (53 functions):
+      Line 54: empty
+      Line 62: length
+      Line 66: nth
+      Line 70: set
+      Line 74: singleton
+      Line 83: subseq_copy
+      Line 86: new_root
+      Line 87: update
+      Line 88: from_vec
+      Line 89: to_arrayseq
+      ... and 43 more
+
+📁 src/Chap37/AVLTreeSeqMtPer.rs
+   camelCase (4 functions):
+      Line 156: isEmpty
+      Line 158: isSingleton
+      Line 182: isEmpty
+      Line 183: isSingleton
+   snake_case (27 functions):
+      Line 23: height
+      Line 24: size
+      Line 26: mk
+      Line 39: rotate_right
+      Line 46: rotate_left
+      Line 53: rebalance
+      Line 75: nth_ref
+      Line 90: set_rec
+      Line 114: inorder_collect
+      Line 122: build_balanced_from_slice
+      ... and 17 more
+
+📁 src/Chap37/AVLTreeSeqStEph.rs
+   camelCase (4 functions):
+      Line 58: isEmpty
+      Line 60: isSingleton
+      Line 175: isEmpty
+      Line 177: isSingleton
+   snake_case (46 functions):
+      Line 46: empty
+      Line 50: length
+      Line 52: nth
+      Line 54: set
+      Line 56: singleton
+      Line 62: subseq_copy
+      Line 63: new_root
+      Line 64: update
+      Line 65: from_vec
+      Line 66: to_arrayseq
+      ... and 36 more
+
+📁 src/Chap37/AVLTreeSeqStPer.rs
+   camelCase (4 functions):
+      Line 157: isEmpty
+      Line 159: isSingleton
+      Line 185: isEmpty
+      Line 186: isSingleton
+   snake_case (31 functions):
+      Line 23: height
+      Line 24: size
+      Line 26: mk
+      Line 39: rotate_right
+      Line 46: rotate_left
+      Line 53: rebalance
+      Line 75: nth_ref
+      Line 90: set_rec
+      Line 115: inorder_collect
+      Line 123: build_balanced_from_slice
+      ... and 21 more
+
+📁 src/Chap47clean/ParaHashTableStEph.rs
+   camelCase (2 functions):
+      Line 46: createTable
+      Line 76: loadAndSize
+   snake_case (7 functions):
+      Line 37: insert
+      Line 38: lookup
+      Line 39: delete
+      Line 60: insert
+      Line 64: lookup
+      Line 68: delete
+      Line 71: metrics
+
+📁 src/Types.rs
+   PascalCase (1 functions):
+      Line 302: ArraySeqSetEq
+   snake_case (26 functions):
+      Line 80: clone_mt
+      Line 81: new_mt
+      Line 147: clone_mt
+      Line 151: new_mt
+      Line 156: clone_mt
+      Line 157: new_mt
+      Line 163: clone_mt
+      Line 164: new_mt
+      Line 169: clone_mt
+      Line 170: new_mt
+      ... and 16 more
+
+==============================================================================================================
+SUMMARY
+==============================================================================================================
+Total files analyzed: 262
+Total functions/methods: 4795
+
+PascalCase functions:       115  (2.4%)
+camelCase functions:         99  (2.1%)
+snake_case functions:      4581  (95.5%)
+Other naming:                18
+
+Files with PascalCase only:     0
+Files with camelCase only:      1
+Files with snake_case only:   232
+Files with MIXED naming:       29  ⚠️
+==============================================================================================================
+

@@ -9,6 +9,7 @@
 //! ```rust
 //! use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
 //! use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
+//! use apas_ai::Chap05::SetStEph::SetStEph::*;
 //! use apas_ai::WeightedDirGraphStEphFloatLit;
 //! use ordered_float::OrderedFloat;
 //!
@@ -18,9 +19,10 @@
 //! graph.add_weighted_edge("B", "C", OrderedFloat(2.71));
 //!
 //! // Create graph using macro with APAS notation (A: for directed arcs)
+//! use apas_ai::Types::Types::Triple;
 //! let graph_macro = WeightedDirGraphStEphFloatLit!(
 //!     V: ["A", "B", "C"],
-//!     A: [("A", "B", 3.14), ("B", "C", 2.71)]
+//!     A: [Triple("A", "B", OrderedFloat(3.14)), Triple("B", "C", OrderedFloat(2.71))]
 //! );
 //!
 //! // Query operations

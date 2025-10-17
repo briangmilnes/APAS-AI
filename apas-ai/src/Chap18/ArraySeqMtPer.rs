@@ -64,55 +64,11 @@ pub mod ArraySeqMtPer {
         pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
     }
 
-    impl<T: StTInMtT> Clone for ArraySeqMtPerS<T> {
-        fn clone(&self) -> Self {
-            let values: Vec<T> = self.data.to_vec();
-            ArraySeqMtPerS::from_vec(values)
-        }
-    }
 
-    impl<T: StTInMtT> PartialEq for ArraySeqMtPerS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            if self.data.len() != other.data.len() {
-                return false;
-            }
-            for i in 0..self.data.len() {
-                if self.data[i] != other.data[i] {
-                    return false;
-                }
-            }
-            true
-        }
-    }
 
-    impl<T: StTInMtT + Eq> Eq for ArraySeqMtPerS<T> {}
 
-    impl<'a, T: StTInMtT> IntoIterator for &'a ArraySeqMtPerS<T> {
-        type Item = &'a T;
-        type IntoIter = Iter<'a, T>;
 
-        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
-    }
 
-    impl<T: StTInMtT> IntoIterator for ArraySeqMtPerS<T> {
-        type Item = T;
-        type IntoIter = IntoIter<T>;
-
-        fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
-    }
-
-    impl<T: StTInMtT> Display for ArraySeqMtPerS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-            write!(f, "ArraySeqMtPerS[")?;
-            for (i, item) in self.data.iter().enumerate() {
-                if i > 0 {
-                    write!(f, ", ")?;
-                }
-                write!(f, "{item}")?;
-            }
-            write!(f, "]")
-        }
-    }
 
     pub trait ArraySeqMtPerTrait<T: StTInMtT> {
         /// APAS: Work Θ(n), Span Θ(1)
@@ -189,6 +145,18 @@ pub mod ArraySeqMtPer {
         fn inject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>)  -> Self;
         fn isEmpty(&self)                                                       -> B;
         fn isSingleton(&self)                                                   -> B;
+        /// APAS: Work Θ(n), Span Θ(1)
+        /// claude-4-sonet: Work Θ(n), Span Θ(1)
+        fn from_vec(values: Vec<T>) -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn is_empty(&self) -> B;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn is_singleton(&self) -> B;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn iter(&self) -> Iter<'_, T>;
     }
 
     impl<T: StTInMtT> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
@@ -398,5 +366,67 @@ pub mod ArraySeqMtPer {
         fn isEmpty(&self) -> B { ArraySeqMtPerS::is_empty(self) }
 
         fn isSingleton(&self) -> B { ArraySeqMtPerS::is_singleton(self) }
+
+        fn from_vec(values: Vec<T>) -> Self {
+            ArraySeqMtPerS::from_vec(values)
+        }
+
+        fn is_empty(&self) -> B {
+            ArraySeqMtPerS::is_empty(self)
+        }
+
+        fn is_singleton(&self) -> B {
+            ArraySeqMtPerS::is_singleton(self)
+        }
+
+        fn iter(&self) -> Iter<'_, T> {
+            ArraySeqMtPerS::iter(self)
+        }
     }
+
+    impl<T: StTInMtT> Clone for ArraySeqMtPerS<T> {
+        fn clone(&self) -> Self {
+            let values: Vec<T> = self.data.to_vec();
+            ArraySeqMtPerS::from_vec(values)
+        }
+    }
+    impl<T: StTInMtT> PartialEq for ArraySeqMtPerS<T> {
+        fn eq(&self, other: &Self) -> bool {
+            if self.data.len() != other.data.len() {
+                return false;
+            }
+            for i in 0..self.data.len() {
+                if self.data[i] != other.data[i] {
+                    return false;
+                }
+            }
+            true
+        }
+    }
+    impl<T: StTInMtT + Eq> Eq for ArraySeqMtPerS<T> {}
+    impl<'a, T: StTInMtT> IntoIterator for &'a ArraySeqMtPerS<T> {
+        type Item = &'a T;
+        type IntoIter = Iter<'a, T>;
+
+        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
+    }
+    impl<T: StTInMtT> IntoIterator for ArraySeqMtPerS<T> {
+        type Item = T;
+        type IntoIter = IntoIter<T>;
+
+        fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
+    }
+    impl<T: StTInMtT> Display for ArraySeqMtPerS<T> {
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "ArraySeqMtPerS[")?;
+            for (i, item) in self.data.iter().enumerate() {
+                if i > 0 {
+                    write!(f, ", ")?;
+                }
+                write!(f, "{item}")?;
+            }
+            write!(f, "]")
+        }
+    }
+
 }

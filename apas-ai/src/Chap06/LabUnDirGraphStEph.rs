@@ -50,6 +50,20 @@ pub mod LabUnDirGraphStEph {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn normalize_edge(v1: V, v2: V)                                                                   -> LabEdge<V, L>;
+
+        // DirGraph-compatible interface methods
+        /// Arc count (alias for edge count in undirected graphs)
+        fn sizeA(&self) -> N;
+        /// Arcs (alias for edges in undirected graphs)
+        fn arcs(&self) -> SetStEph<LabEdge<V, L>>;
+        /// Out-neighbors (in undirected graphs, all neighbors are both in and out)
+        fn NPlus(&self, v: &V) -> SetStEph<V>;
+        /// In-neighbors (in undirected graphs, all neighbors are both in and out)
+        fn NMinus(&self, v: &V) -> SetStEph<V>;
+        /// In-degree (in undirected graphs, equals total degree)
+        fn InDegree(&self, v: &V) -> N;
+        /// Out-degree (in undirected graphs, equals total degree)
+        fn OutDegree(&self, v: &V) -> N;
     }
 
     impl<V: HashOrd, L: StT + Hash> LabUnDirGraphStEphTrait<V, L> for LabUnDirGraphStEph<V, L> {
@@ -132,27 +146,19 @@ pub mod LabUnDirGraphStEph {
             // For now, we'll panic to indicate this needs to be fixed
             panic!("normalize_edge cannot create LabEdge without a label - method signature needs revision")
         }
-    }
 
-    // DirGraphStEph-compatible interface for labeled undirected graphs
-    impl<V: HashOrd, L: StT + Hash> LabUnDirGraphStEph<V, L> {
-        /// Arc count (alias for edge count in undirected graphs)
-        pub fn sizeA(&self) -> N { self.labeled_edges().size() }
+        // DirGraph-compatible interface implementations
+        fn sizeA(&self) -> N { self.labeled_edges().size() }
 
-        /// Arcs (alias for edges in undirected graphs)
-        pub fn arcs(&self) -> SetStEph<LabEdge<V, L>> { self.labeled_edges().clone() }
+        fn arcs(&self) -> SetStEph<LabEdge<V, L>> { self.labeled_edges().clone() }
 
-        /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NPlus(&self, v: &V) -> SetStEph<V> { self.neighbors(v) }
+        fn NPlus(&self, v: &V) -> SetStEph<V> { self.neighbors(v) }
 
-        /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NMinus(&self, v: &V) -> SetStEph<V> { self.neighbors(v) }
+        fn NMinus(&self, v: &V) -> SetStEph<V> { self.neighbors(v) }
 
-        /// Degree (in undirected graphs, in-degree equals total degree)
-        pub fn InDegree(&self, v: &V) -> N { self.neighbors(v).size() }
+        fn InDegree(&self, v: &V) -> N { self.neighbors(v).size() }
 
-        /// Degree (in undirected graphs, out-degree equals total degree)
-        pub fn OutDegree(&self, v: &V) -> N { self.neighbors(v).size() }
+        fn OutDegree(&self, v: &V) -> N { self.neighbors(v).size() }
     }
 
     impl<V: HashOrd, L: StT + Hash> Display for LabUnDirGraphStEph<V, L> {

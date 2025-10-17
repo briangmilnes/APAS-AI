@@ -30,27 +30,29 @@ pub mod Exercise12_5 {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - single atomic load
         fn is_empty(&self) -> bool;
+        /// Pop every element into a Vec for testing/teardown convenience.
+        /// APAS: Work Θ(n), Span Θ(n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) where n=stack size - sequential drain, one pop at a time
+        fn drain(&self) -> Vec<T>;
     }
 
-    impl<T: StTInMtT> ConcurrentStackMt<T> {
-        /// Raw pop operation returning node pointer (private helper).
-        ///
-        /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
-        /// claude-4-sonet: Work Θ(1) expected, Θ(n) worst case, Span Θ(1) - CAS retry loop
-        fn raw_pop(&self) -> Option<*mut Node<T>> {
-            loop {
-                let head = self.head.load(Ordering::Acquire);
-                if head.is_null() {
-                    return None;
-                }
-                let next = unsafe { (*head).next };
-                if self
-                    .head
-                    .compare_exchange_weak(head, next, Ordering::AcqRel, Ordering::Acquire)
-                    .is_ok()
-                {
-                    return Some(head);
-                }
+    /// Raw pop operation returning node pointer (private module helper).
+    ///
+    /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
+    /// claude-4-sonet: Work Θ(1) expected, Θ(n) worst case, Span Θ(1) - CAS retry loop
+    fn raw_pop<T: StTInMtT>(stack: &ConcurrentStackMt<T>) -> Option<*mut Node<T>> {
+        loop {
+            let head = stack.head.load(Ordering::Acquire);
+            if head.is_null() {
+                return None;
+            }
+            let next = unsafe { (*head).next };
+            if stack
+                .head
+                .compare_exchange_weak(head, next, Ordering::AcqRel, Ordering::Acquire)
+                .is_ok()
+            {
+                return Some(head);
             }
         }
     }
@@ -91,7 +93,7 @@ pub mod Exercise12_5 {
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
         /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n concurrent pops, Span Θ(1), Parallelism Θ(1) - CAS retry loop
         fn pop(&self) -> Option<T> {
-            let node_ptr = self.raw_pop()?;
+            let node_ptr = raw_pop(self)?;
             let boxed = unsafe { Box::from_raw(node_ptr) };
             let Node { value, .. } = *boxed;
             Some(value)
@@ -102,6 +104,14 @@ pub mod Exercise12_5 {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - single atomic load
         fn is_empty(&self) -> bool { self.head.load(Ordering::Acquire).is_null() }
+
+        fn drain(&self) -> Vec<T> {
+            let mut items = Vec::new();
+            while let Some(value) = self.pop() {
+                items.push(value);
+            }
+            items
+        }
     }
 
     impl<T: StTInMtT> Default for ConcurrentStackMt<T> {
@@ -118,20 +128,6 @@ pub mod Exercise12_5 {
                     // Box drop handles node and value cleanup
                 }
             }
-        }
-    }
-
-    impl<T: StTInMtT> ConcurrentStackMt<T> {
-        /// Pop every element into a Vec for testing/teardown convenience.
-        ///
-        /// APAS: Work Θ(n), Span Θ(n)
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) where n=stack size - sequential drain, one pop at a time
-        pub fn drain(&self) -> Vec<T> {
-            let mut items = Vec::new();
-            while let Some(value) = self.pop() {
-                items.push(value);
-            }
-            items
         }
     }
 }
