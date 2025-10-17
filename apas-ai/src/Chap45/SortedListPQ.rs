@@ -204,19 +204,42 @@ pub mod SortedListPQ {
         fn to_seq(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
 
         fn insert_all(&self, elements: &ArraySeqStPerS<T>) -> Self {
-            SortedListPQ::insert_all(self, elements)
+            let mut result = self.clone();
+            for i in 0..elements.length() {
+                let element = elements.nth(i);
+                result = result.insert(element.clone());
+            }
+            result
         }
 
-        fn extract_all_sorted(&self) -> ArraySeqStPerS<T> {
-            SortedListPQ::extract_all_sorted(self)
-        }
+        fn extract_all_sorted(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
 
         fn find_max(&self) -> Option<&T> {
-            SortedListPQ::find_max(self)
+            if self.elements.length() == 0 {
+                None
+            } else {
+                Some(self.elements.nth(self.elements.length() - 1))
+            }
         }
 
         fn delete_max(&self) -> (Self, Option<T>) {
-            SortedListPQ::delete_max(self)
+            if self.elements.length() == 0 {
+                return (self.clone(), None);
+            }
+
+            let max_element = self.elements.nth(self.elements.length() - 1).clone();
+
+            // Create new sequence without the last element
+            let mut new_elements = ArraySeqStPerS::empty();
+            for i in 0..(self.elements.length() - 1) {
+                let elem = self.elements.nth(i);
+                let single_seq = ArraySeqStPerS::singleton(elem.clone());
+                new_elements = ArraySeqStPerS::append(&new_elements, &single_seq);
+            }
+
+            let new_pq = SortedListPQ { elements: new_elements };
+
+            (new_pq, Some(max_element))
         }
 
         fn from_vec(vec: Vec<T>) -> Self {

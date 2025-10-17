@@ -116,11 +116,11 @@ pub mod ArraySeqStPer {
 
 
     impl<T: StT> ArraySeqStPerTrait<T> for ArraySeqStPerS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqStPerS<T> { ArraySeqStPerS::new(length, init_value) }
-        fn length(&self) -> N { ArraySeqStPerS::length(self) }
-        fn nth(&self, index: N) -> &T { ArraySeqStPerS::nth(self, index) }
-        fn empty() -> ArraySeqStPerS<T> { ArraySeqStPerS::empty() }
-        fn singleton(item: T) -> ArraySeqStPerS<T> { ArraySeqStPerS::singleton(item) }
+        fn new(length: N, init_value: T) -> ArraySeqStPerS<T> { Self::from_vec(vec![init_value; length]) }
+        fn length(&self) -> N { self.data.len() }
+        fn nth(&self, index: N) -> &T { &self.data[index] }
+        fn empty() -> ArraySeqStPerS<T> { Self::from_vec(Vec::new()) }
+        fn singleton(item: T) -> ArraySeqStPerS<T> { Self::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(length);
@@ -273,12 +273,12 @@ pub mod ArraySeqStPer {
         }
 
         fn from_vec(elts: Vec<T>) -> Self {
-            ArraySeqStPerS::from_vec(elts)
+            Self {
+                data: elts.into_boxed_slice(),
+            }
         }
 
-        fn iter(&self) -> Iter<'_, T> {
-            ArraySeqStPerS::iter(self)
-        }
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
     }
 
     impl<T: StT> PartialEq for ArraySeqStPerS<T> {

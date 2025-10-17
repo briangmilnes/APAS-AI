@@ -30,38 +30,22 @@ pub mod Exercise12_1 {
         fn with_lock<T>(&self, action: impl FnOnce() -> T) -> T;
     }
 
-    impl SpinLock {
-        pub fn new() -> Self {
+    impl SpinLockTrait for SpinLock {
+        fn new() -> Self {
             SpinLock {
                 ticket: AtomicUsize::new(0),
                 turn: AtomicUsize::new(0),
             }
         }
 
-        /// Acquire lock by taking a ticket and waiting for our turn.
-        ///
-        /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
-        /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n waiting threads, Span Θ(1) - sequential ticket acquisition
-        pub fn lock(&self) {
+        fn lock(&self) {
             let my_ticket = self.ticket.fetch_add(1, Ordering::Relaxed);
             while self.turn.load(Ordering::Acquire) != my_ticket {
                 spin_loop();
             }
         }
 
-        /// Release lock by advancing turn counter.
-        ///
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - atomic increment releases next thread
-        pub fn unlock(&self) { self.turn.fetch_add(1, Ordering::Release); }
-    }
-
-    impl SpinLockTrait for SpinLock {
-        fn new() -> Self { SpinLock::new() }
-
-        fn lock(&self) { SpinLock::lock(self) }
-
-        fn unlock(&self) { SpinLock::unlock(self) }
+        fn unlock(&self) { self.turn.fetch_add(1, Ordering::Release); }
 
         fn with_lock<T>(&self, action: impl FnOnce() -> T) -> T {
             self.lock();
@@ -72,7 +56,7 @@ pub mod Exercise12_1 {
     }
 
     impl Default for SpinLock {
-        fn default() -> Self { SpinLock::new() }
+        fn default() -> Self { <SpinLock as SpinLockTrait>::new() }
     }
 
     /// Parallel counter increment using spin-lock for mutual exclusion.
@@ -80,7 +64,7 @@ pub mod Exercise12_1 {
     /// APAS: Work Θ(t × i), Span Θ(i)
     /// claude-4-sonet: Work Θ(t × i) where t=threads, i=iterations, Span Θ(i) assuming bounded contention, Parallelism Θ(t) - linear speedup under low contention
     pub fn parallel_increment(iterations: N) -> usize {
-        let lock = Arc::new(SpinLock::new());
+        let lock = Arc::new(<SpinLock as SpinLockTrait>::new());
         let shared = Arc::new(AtomicUsize::new(0));
         let mut handles = Vec::new();
 

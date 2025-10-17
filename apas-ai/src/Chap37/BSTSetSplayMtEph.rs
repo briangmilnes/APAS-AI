@@ -237,19 +237,88 @@ pub mod BSTSetSplayMtEph {
 
         fn insert(&mut self, value: T) { self.tree.insert(value); }
 
-        fn delete(&mut self, target: &T) { BSTSetSplayMtEph::delete(self, target) }
+        fn delete(&mut self, target: &T) {
+            let mut values = self.values_vec();
+            if let Some(pos) = values.iter().position(|x| x == target) {
+                values.remove(pos);
+                self.tree = Self::rebuild_from_vec(values);
+            }
+        }
 
-        fn union(&self, other: &Self) -> Self { BSTSetSplayMtEph::union(self, other) }
+        fn union(&self, other: &Self) -> Self {
+            let mut merged: BTreeSet<T> = self.values_vec().into_iter().collect();
+            for value in other.values_vec() {
+                merged.insert(value);
+            }
+            Self::from_sorted_iter(merged)
+        }
 
-        fn intersection(&self, other: &Self) -> Self { BSTSetSplayMtEph::intersection(self, other) }
+        fn intersection(&self, other: &Self) -> Self {
+            let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
+            let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+            Self::from_sorted_iter(filtered)
+        }
 
-        fn difference(&self, other: &Self) -> Self { BSTSetSplayMtEph::difference(self, other) }
+        fn difference(&self, other: &Self) -> Self {
+            let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
+            let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if !other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+            Self::from_sorted_iter(filtered)
+        }
 
-        fn split(&self, pivot: &T) -> (Self, B, Self) { BSTSetSplayMtEph::split(self, pivot) }
+        fn split(&self, pivot: &T) -> (Self, B, Self) {
+            let mut left: Vec<T> = Vec::new();
+            let mut right: Vec<T> = Vec::new();
+            let mut found = false;
+            for value in self.tree.in_order().iter() {
+                if value < pivot {
+                    left.push(value.clone());
+                } else if value > pivot {
+                    right.push(value.clone());
+                } else {
+                    found = true;
+                }
+            }
+            (Self::from_sorted_iter(left), found, Self::from_sorted_iter(right))
+        }
 
-        fn join_pair(left: Self, right: Self) -> Self { BSTSetSplayMtEph::join_pair(left, right) }
+        fn join_pair(left: Self, right: Self) -> Self {
+            let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+            for value in right.values_vec() {
+                combined.insert(value);
+            }
+            Self::from_sorted_iter(combined)
+        }
 
-        fn join_m(left: Self, pivot: T, right: Self) -> Self { BSTSetSplayMtEph::join_m(left, pivot, right) }
+        fn join_m(left: Self, pivot: T, right: Self) -> Self {
+            let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+            combined.insert(pivot);
+            for value in right.values_vec() {
+                combined.insert(value);
+            }
+            Self::from_sorted_iter(combined)
+        }
 
         fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self { BSTSetSplayMtEph::filter(self, predicate) }
 

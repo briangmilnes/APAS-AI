@@ -193,19 +193,28 @@ pub mod ArraySeq {
     }
 
     impl<T: Clone> ArraySeq<T> for ArraySeqS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqS<T> { ArraySeqS::new(length, init_value) }
-
-        fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqS<T>, &'static str> {
-            ArraySeqS::set(self, index, item)
+        fn new(length: N, init_value: T) -> ArraySeqS<T> {
+            let mut data = Vec::with_capacity(length);
+            data.resize(length, init_value);
+            ArraySeqS::from_vec(data)
         }
 
-        fn length(&self) -> N { ArraySeqS::length(self) }
+        fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqS<T>, &'static str> {
+            if index < self.data.len() {
+                self.data[index] = item;
+                Ok(self)
+            } else {
+                Err("Index out of bounds")
+            }
+        }
 
-        fn nth(&self, index: N) -> &T { ArraySeqS::nth(self, index) }
+        fn length(&self) -> N { self.data.len() }
 
-        fn empty() -> ArraySeqS<T> { ArraySeqS::empty() }
+        fn nth(&self, index: N) -> &T { &self.data[index] }
 
-        fn singleton(item: T) -> ArraySeqS<T> { ArraySeqS::singleton(item) }
+        fn empty() -> ArraySeqS<T> { ArraySeqS::from_vec(Vec::new()) }
+
+        fn singleton(item: T) -> ArraySeqS<T> { ArraySeqS::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqS<T> {
             let mut values: Vec<T> = Vec::with_capacity(length);
@@ -283,9 +292,9 @@ pub mod ArraySeq {
             ArraySeqS::from_vec(values)
         }
 
-        fn isEmpty(&self) -> B { ArraySeqS::isEmpty(self) }
+        fn isEmpty(&self) -> B { self.data.is_empty() }
 
-        fn isSingleton(&self) -> B { ArraySeqS::isSingleton(self) }
+        fn isSingleton(&self) -> B { self.data.len() == 1 }
 
         fn collect<K: Clone + Eq, V: Clone>(
             pairs: &ArraySeqS<Pair<K, V>>,
@@ -335,20 +344,25 @@ pub mod ArraySeq {
         }
 
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqS<T> {
-            ArraySeqS::subseq_copy(self, start, length)
+            let sequence_length = self.data.len();
+            let start_index = start.min(sequence_length);
+            let end_exclusive = start.saturating_add(length).min(sequence_length);
+            if end_exclusive <= start_index {
+                return ArraySeqS::from_vec(Vec::new());
+            }
+            let segment: Vec<T> = self.data[start_index..end_exclusive].to_vec();
+            ArraySeqS::from_vec(segment)
         }
 
         fn from_vec(elts: Vec<T>) -> Self {
-            ArraySeqS::from_vec(elts)
+            ArraySeqS {
+                data: elts.into_boxed_slice(),
+            }
         }
 
-        fn iter(&self) -> Iter<'_, T> {
-            ArraySeqS::iter(self)
-        }
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
 
-        fn iter_mut(&mut self) -> IterMut<'_, T> {
-            ArraySeqS::iter_mut(self)
-        }
+        fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }
     }
 
     impl<T: PartialEq> PartialEq for ArraySeqS<T> {

@@ -186,31 +186,90 @@ pub mod BalancedTreePQ {
         fn to_seq(&self) -> AVLTreeSeqStPerS<T> { self.elements.clone() }
 
         fn find_max(&self) -> Option<&T> {
-            BalancedTreePQ::find_max(self)
+            if self.elements.length() == 0 {
+                None
+            } else {
+                Some(self.elements.nth(self.elements.length() - 1))
+            }
         }
 
         fn delete_max(&self) -> (Self, Option<T>) {
-            BalancedTreePQ::delete_max(self)
+            if self.elements.length() == 0 {
+                return (self.clone(), None);
+            }
+
+            let max_index = self.elements.length() - 1;
+            let max_element = self.elements.nth(max_index).clone();
+
+            // Convert to vector, remove last element, rebuild tree
+            let mut values = self.elements.values_in_order();
+            values.remove(max_index);
+
+            let new_pq = BalancedTreePQ {
+                elements: AVLTreeSeqStPerS::from_vec(values),
+            };
+
+            (new_pq, Some(max_element))
         }
 
         fn insert_all(&self, elements: &AVLTreeSeqStPerS<T>) -> Self {
-            BalancedTreePQ::insert_all(self, elements)
+            let mut result = self.clone();
+            for i in 0..elements.length() {
+                let element = elements.nth(i);
+                result = result.insert(element.clone());
+            }
+            result
         }
 
-        fn extract_all_sorted(&self) -> AVLTreeSeqStPerS<T> {
-            BalancedTreePQ::extract_all_sorted(self)
-        }
+        fn extract_all_sorted(&self) -> AVLTreeSeqStPerS<T> { self.elements.clone() }
 
         fn contains(&self, element: &T) -> bool {
-            BalancedTreePQ::contains(self, element)
+            for i in 0..self.elements.length() {
+                let current = self.elements.nth(i);
+                if current == element {
+                    return true;
+                }
+                if current > element {
+                    // Since sequence is sorted, we can stop early
+                    break;
+                }
+            }
+            false
         }
 
         fn remove(&self, element: &T) -> (Self, bool) {
-            BalancedTreePQ::remove(self, element)
+            let mut values = self.elements.values_in_order();
+
+            for (i, current) in values.iter().enumerate() {
+                if current == element {
+                    values.remove(i);
+                    let new_pq = BalancedTreePQ {
+                        elements: AVLTreeSeqStPerS::from_vec(values),
+                    };
+                    return (new_pq, true);
+                }
+                if current > element {
+                    // Element not found (would be here if it existed)
+                    break;
+                }
+            }
+            (self.clone(), false)
         }
 
         fn range(&self, min_val: &T, max_val: &T) -> AVLTreeSeqStPerS<T> {
-            BalancedTreePQ::range(self, min_val, max_val)
+            let values = self.elements.values_in_order();
+            let mut range_values = Vec::new();
+
+            for current in values.iter() {
+                if current >= min_val && current <= max_val {
+                    range_values.push(current.clone());
+                } else if current > max_val {
+                    // Since sequence is sorted, we can stop
+                    break;
+                }
+            }
+
+            AVLTreeSeqStPerS::from_vec(range_values)
         }
 
         fn from_vec(elements: Vec<T>) -> Self {

@@ -370,24 +370,25 @@ pub mod ArraySeqMtEphSlice {
         }
 
         fn from_box(data: Box<[T]>) -> Self {
-            ArraySeqMtEphSliceS::from_box(data)
+            let len = data.len();
+            ArraySeqMtEphSliceS {
+                inner: Arc::new(Inner::new(data)),
+                range: 0..len,
+            }
         }
 
-        fn from_vec(data: Vec<T>) -> Self {
-            ArraySeqMtEphSliceS::from_vec(data)
-        }
+        fn from_vec(data: Vec<T>) -> Self { Self::from_box(data.into_boxed_slice()) }
 
         fn to_vec(&self) -> Vec<T> {
-            ArraySeqMtEphSliceS::to_vec(self)
+            let guard = self.inner.data.lock().unwrap();
+            guard[self.range.start..self.range.end].to_vec()
         }
 
         fn with_exclusive<F: FnOnce(&mut [T]) -> R, R>(&self, f: F) -> R {
             ArraySeqMtEphSliceS::with_exclusive(self, f)
         }
 
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
-            ArraySeqMtEphSliceS::set(self, index, item)
-        }
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> { self.update(index, item) }
     }
 
     impl<T: StTInMtT> Clone for ArraySeqMtEphSliceS<T> {

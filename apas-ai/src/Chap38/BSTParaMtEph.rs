@@ -298,7 +298,17 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn join_mid(exposed: Exposed<T>) -> Self { ParamBST::join_mid(exposed) }
+        fn join_mid(exposed: Exposed<T>) -> Self {
+            match exposed {
+                | Exposed::Leaf => ParamBST::new(),
+                | Exposed::Node(left, key, right) => {
+                    let size = 1 + left.size() + right.size();
+                    ParamBST {
+                        root: Arc::new(RwLock::new(Some(Box::new(NodeInner { key, size, left, right })))),
+                    }
+                }
+            }
+        }
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)

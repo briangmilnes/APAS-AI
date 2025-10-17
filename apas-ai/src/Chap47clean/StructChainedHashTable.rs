@@ -27,7 +27,7 @@ pub mod StructChainedHashTable {
     }
 
     impl<Key: PartialEq + Clone, Value: Clone> EntryTrait<Key, Value> for ChainList<Key, Value> {
-        fn new() -> Self { ChainList::new() }
+        fn new() -> Self { ChainList { head: None } }
 
         fn insert(&mut self, key: Key, value: Value) {
             // Search for existing key and update

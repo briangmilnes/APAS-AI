@@ -208,11 +208,15 @@ pub mod AVLTreeSeqStPer {
         }
 
         fn to_arrayseq(&self) -> ArraySeqStPerS<T> {
-            AVLTreeSeqStPerS::to_arrayseq(self)
+            let v = self.values_in_order();
+            ArraySeqStPerS::from_vec(v)
         }
 
         fn iter<'a>(&'a self) -> AVLTreeSeqStPerIter<'a, T> {
-            AVLTreeSeqStPerS::iter(self)
+            AVLTreeSeqStPerIter {
+                stack: Vec::new(),
+                current: self.root.as_deref(),
+            }
         }
     }
 

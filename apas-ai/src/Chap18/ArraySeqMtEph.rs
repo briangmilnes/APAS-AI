@@ -168,19 +168,39 @@ pub mod ArraySeqMtEph {
 
 
     impl<T: StTInMtT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqMtEphS<T> { ArraySeqMtEphS::new(length, init_value) }
-
-        fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqMtEphS<T>, &'static str> {
-            ArraySeqMtEphS::set(self, index, item)
+        fn new(length: N, init_value: T) -> ArraySeqMtEphS<T> {
+            ArraySeqMtEphS::from_vec(vec![init_value; length])
         }
 
-        fn length(&self) -> N { ArraySeqMtEphS::length(self) }
+        fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqMtEphS<T>, &'static str> {
+            {
+                let mut guard = self.data.lock().unwrap();
+                if index < guard.len() {
+                    guard[index] = item;
+                } else {
+                    return Err("Index out of bounds");
+                }
+            }
+            Ok(self)
+        }
 
-        fn nth_cloned(&self, index: N) -> T { ArraySeqMtEphS::nth_cloned(self, index) }
+        fn length(&self) -> N {
+            let guard = self.data.lock().unwrap();
+            guard.len()
+        }
 
-        fn empty() -> ArraySeqMtEphS<T> { ArraySeqMtEphS::empty() }
+        fn nth_cloned(&self, index: N) -> T {
+            let guard = self.data.lock().unwrap();
+            guard[index].clone()
+        }
 
-        fn singleton(item: T) -> ArraySeqMtEphS<T> { ArraySeqMtEphS::singleton(item) }
+        fn empty() -> ArraySeqMtEphS<T> {
+            ArraySeqMtEphS {
+                data: Mutex::new(Vec::new().into_boxed_slice()),
+            }
+        }
+
+        fn singleton(item: T) -> ArraySeqMtEphS<T> { ArraySeqMtEphS::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T> {
             let mut values: Vec<T> = Vec::with_capacity(n);
@@ -221,7 +241,12 @@ pub mod ArraySeqMtEph {
         }
 
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtEphS<T> {
-            ArraySeqMtEphS::subseq_copy(self, start, length)
+            let guard = self.data.lock().unwrap();
+            let n = guard.len();
+            let s = start.min(n);
+            let e = start.saturating_add(length).min(n);
+            let values: Vec<T> = guard[s..e].to_vec();
+            ArraySeqMtEphS::from_vec(values)
         }
 
         fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T> {
@@ -367,15 +392,19 @@ pub mod ArraySeqMtEph {
         }
 
         fn from_vec(values: Vec<T>) -> Self {
-            ArraySeqMtEphS::from_vec(values)
+            ArraySeqMtEphS {
+                data: Mutex::new(values.into_boxed_slice()),
+            }
         }
 
         fn iter_cloned(&self) -> Vec<T> {
-            ArraySeqMtEphS::iter_cloned(self)
+            let guard = self.data.lock().unwrap();
+            guard.iter().cloned().collect()
         }
 
         fn to_vec(&self) -> Vec<T> {
-            ArraySeqMtEphS::to_vec(self)
+            let guard = self.data.lock().unwrap();
+            guard.iter().cloned().collect()
         }
     }
 

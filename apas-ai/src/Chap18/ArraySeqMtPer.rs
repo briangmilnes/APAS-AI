@@ -161,13 +161,27 @@ pub mod ArraySeqMtPer {
 
 
     impl<T: StTInMtT> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqMtPerS<T> { ArraySeqMtPerS::new(length, init_value) }
-        fn empty() -> ArraySeqMtPerS<T> { ArraySeqMtPerS::empty() }
-        fn singleton(item: T) -> ArraySeqMtPerS<T> { ArraySeqMtPerS::singleton(item) }
-        fn length(&self) -> N { ArraySeqMtPerS::length(self) }
-        fn nth(&self, index: N) -> &T { ArraySeqMtPerS::nth(self, index) }
+        fn new(length: N, init_value: T) -> ArraySeqMtPerS<T> {
+            let mut values: Vec<T> = Vec::with_capacity(length);
+            for _ in 0..length {
+                values.push(init_value.clone());
+            }
+            ArraySeqMtPerS::from_vec(values)
+        }
+        fn empty() -> ArraySeqMtPerS<T> {
+            ArraySeqMtPerS {
+                data: Vec::new().into_boxed_slice(),
+            }
+        }
+        fn singleton(item: T) -> ArraySeqMtPerS<T> { ArraySeqMtPerS::from_vec(vec![item]) }
+        fn length(&self) -> N { self.data.len() }
+        fn nth(&self, index: N) -> &T { &self.data[index] }
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T> {
-            ArraySeqMtPerS::subseq_copy(self, start, length)
+            let n = self.data.len();
+            let s = start.min(n);
+            let e = start.saturating_add(length).min(n);
+            let values: Vec<T> = self.data[s..e].to_vec();
+            ArraySeqMtPerS::from_vec(values)
         }
 
         fn set(&self, index: N, item: T) -> Result<ArraySeqMtPerS<T>, &'static str> {
@@ -369,20 +383,16 @@ pub mod ArraySeqMtPer {
         fn isSingleton(&self) -> B { ArraySeqMtPerS::is_singleton(self) }
 
         fn from_vec(values: Vec<T>) -> Self {
-            ArraySeqMtPerS::from_vec(values)
+            ArraySeqMtPerS {
+                data: values.into_boxed_slice(),
+            }
         }
 
-        fn is_empty(&self) -> B {
-            ArraySeqMtPerS::is_empty(self)
-        }
+        fn is_empty(&self) -> B { self.data.is_empty() }
 
-        fn is_singleton(&self) -> B {
-            ArraySeqMtPerS::is_singleton(self)
-        }
+        fn is_singleton(&self) -> B { self.data.len() == 1 }
 
-        fn iter(&self) -> Iter<'_, T> {
-            ArraySeqMtPerS::iter(self)
-        }
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
     }
 
     impl<T: StTInMtT> Clone for ArraySeqMtPerS<T> {

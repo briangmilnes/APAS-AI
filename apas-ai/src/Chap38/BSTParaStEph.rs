@@ -155,7 +155,17 @@ pub mod BSTParaStEph {
 
         fn expose(&self) -> Exposed<T> { self.expose_internal() }
 
-        fn join_mid(exposed: Exposed<T>) -> Self { ParamBST::join_mid(exposed) }
+        fn join_mid(exposed: Exposed<T>) -> Self {
+            match exposed {
+                | Exposed::Leaf => ParamBST::new(),
+                | Exposed::Node(left, key, right) => {
+                    let size = 1 + left.size() + right.size();
+                    ParamBST {
+                        root: Rc::new(RefCell::new(Some(Box::new(NodeInner { key, size, left, right })))),
+                    }
+                }
+            }
+        }
 
         fn size(&self) -> N { self.root.borrow().as_ref().map_or(0, |node| node.size) }
 

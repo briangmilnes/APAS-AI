@@ -108,19 +108,62 @@ pub mod BalBinTreeStEph {
     }
 
     impl<T: StT> BalBinTreeStEphTrait<T> for BalBinTree<T> {
-        fn leaf() -> Self { BalBinTree::leaf() }
+        fn leaf() -> Self { BalBinTree::Leaf }
 
-        fn node(left: Self, value: T, right: Self) -> Self { BalBinTree::node(left, value, right) }
+        fn node(left: Self, value: T, right: Self) -> Self {
+            BalBinTree::Node(Box::new(BalBinNode::new(left, value, right)))
+        }
 
-        fn is_leaf(&self) -> B { BalBinTree::is_leaf(self) }
+        fn is_leaf(&self) -> B {
+            match self {
+                | BalBinTree::Leaf => true,
+                | BalBinTree::Node(_) => false,
+            }
+        }
 
-        fn in_order(&self) -> ArraySeqStPerS<T> { BalBinTree::in_order(self) }
+        fn in_order(&self) -> ArraySeqStPerS<T> {
+            match self {
+                | BalBinTree::Leaf => <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::empty(),
+                | BalBinTree::Node(node) => {
+                    let left = node.left.in_order();
+                    let middle = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::singleton(node.value.clone());
+                    let right = node.right.in_order();
+                    let left_mid = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::append(&left, &middle);
+                    <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::append(&left_mid, &right)
+                }
+            }
+        }
 
-        fn pre_order(&self) -> ArraySeqStPerS<T> { BalBinTree::pre_order(self) }
+        fn pre_order(&self) -> ArraySeqStPerS<T> {
+            match self {
+                | BalBinTree::Leaf => <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::empty(),
+                | BalBinTree::Node(node) => {
+                    let root = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::singleton(node.value.clone());
+                    let left = node.left.pre_order();
+                    let right = node.right.pre_order();
+                    let root_left = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::append(&root, &left);
+                    <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::append(&root_left, &right)
+                }
+            }
+        }
 
-        fn height(&self) -> N { BalBinTree::height(self) }
+        fn height(&self) -> N {
+            match self {
+                | BalBinTree::Leaf => 0,
+                | BalBinTree::Node(node) => {
+                    let left_h = node.left.height();
+                    let right_h = node.right.height();
+                    1 + left_h.max(right_h)
+                }
+            }
+        }
 
-        fn size(&self) -> N { BalBinTree::size(self) }
+        fn size(&self) -> N {
+            match self {
+                | BalBinTree::Leaf => 0,
+                | BalBinTree::Node(node) => 1 + node.left.size() + node.right.size(),
+            }
+        }
     }
 
     #[macro_export]
