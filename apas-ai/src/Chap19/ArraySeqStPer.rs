@@ -18,25 +18,15 @@ pub mod ArraySeqStPer {
         fn empty()                                                              -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(item: T)                                                   -> Self;
-
         /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
         /// claude-4-sonet: Work Θ(n + Σᵢ W(f(i))), Span Θ(n + maxᵢ S(f(i))), Parallelism Θ(1)
         fn tabulate<F: Fn(N)                                                    -> T>(f: &F, n: N) -> ArraySeqStPerS<T>;
         /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x)))
         /// claude-4-sonet: Work Θ(|a| + Σₓ W(f(x))), Span Θ(|a| + maxₓ S(f(x))), Parallelism Θ(1)
         fn map<U: StT, F: Fn(&T)                                                -> U>(a: &ArraySeqStPerS<T>, f: &F) -> ArraySeqStPerS<U>;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn select<'a>(a: &'a ArraySeqStPerS<T>, b: &'a ArraySeqStPerS<T>, i: N) -> Option<&'a T>;
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1)
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)                 -> Self;
-        /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1)
-        fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)          -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn deflate<F: PredSt<T>>(f: &F, x: &T)                                  -> Self;
         /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(1 + max i S(f(a[i])))
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(|a| + maxᵢ S(f(aᵢ))), Parallelism Θ(1)
         fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F)                -> Self;
@@ -46,26 +36,26 @@ pub mod ArraySeqStPer {
         fn reduce<F: Fn(&T, &T)                                                 -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> T;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
         fn scan<F: Fn(&T, &T)                                                   -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T);
-        /// claude-4-sonet: Work Θ(Σᵢ |sᵢ|), Span Θ(Σᵢ |sᵢ|), Parallelism Θ(1)
-        fn flatten(s: &ArraySeqStPerS<ArraySeqStPerS<T>>)                       -> Self;
-        /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(|a| + |updates|), Parallelism Θ(1)
-        fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>)  -> Self;
-        /// claude-4-sonet: Work Θ(|a| + |updates|), Span Θ(|a| + |updates|), Parallelism Θ(1)
-        fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> Self;
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
+        fn update(a: &ArraySeqStPerS<T>, index: N, item: T)                     -> Self;
+
+        // Chapter 19 specific functions
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn select<'a>(a: &'a ArraySeqStPerS<T>, b: &'a ArraySeqStPerS<T>, i: N) -> Option<&'a T>;
+        /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1)
+        fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)          -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn deflate<F: PredSt<T>>(f: &F, x: &T)                                  -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isEmpty(a: &ArraySeqStPerS<T>)                                       -> bool;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn isSingleton(a: &ArraySeqStPerS<T>)                                   -> bool;
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn update(a: &ArraySeqStPerS<T>, index: N, item: T)                     -> Self;
     }
 
     impl<T: StT> ArraySeqStPerTrait<T> for ArraySeqStPerS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqStPerS<T> {
-            // Keep as primitive - delegates to tabulate
-            <ArraySeqStPerS<T> as ArraySeqStPerTraitChap18<T>>::new(length, init_value)
-        }
-
         fn empty() -> ArraySeqStPerS<T> {
             // Algorithm 19.1: empty = tabulate(lambda i.i, 0)
             <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(
@@ -77,15 +67,6 @@ pub mod ArraySeqStPer {
         fn singleton(item: T) -> ArraySeqStPerS<T> {
             // Algorithm 19.2: singleton x = tabulate(lambda i.x, 1)
             <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(&|_| item.clone(), 1)
-        }
-
-        fn length(&self) -> N { ArraySeqStPerTraitChap18::length(self) }
-
-        fn nth(&self, index: N) -> &T { ArraySeqStPerTraitChap18::nth(self, index) }
-
-        fn subseq_copy(&self, start: N, length: N) -> ArraySeqStPerS<T> {
-            // Keep as primitive - subseq is one of the 7 APAS primitives
-            <ArraySeqStPerS<T> as ArraySeqStPerTraitChap18<T>>::subseq_copy(self, start, length)
         }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> ArraySeqStPerS<T> {
@@ -123,7 +104,7 @@ pub mod ArraySeqStPer {
                 &|i| if i == 0 { a.clone() } else { b.clone() },
                 2,
             );
-            <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::flatten(&sequences)
+            <ArraySeqStPerS<T> as Chap18Trait<T>>::flatten(&sequences)
         }
 
         fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
@@ -152,7 +133,7 @@ pub mod ArraySeqStPer {
             let deflated = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::map(a, &|x| {
                 <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::deflate(pred, x)
             });
-            <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::flatten(&deflated)
+            <ArraySeqStPerS<T> as Chap18Trait<T>>::flatten(&deflated)
         }
 
         fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &ArraySeqStPerS<T>, f: &F, x: A) -> A {
@@ -191,21 +172,6 @@ pub mod ArraySeqStPer {
             // Implement directly since we can't capture with &F
             let result_seq = ArraySeqStPerS::from_vec(results);
             (result_seq, acc)
-        }
-
-        fn flatten(s: &ArraySeqStPerS<ArraySeqStPerS<T>>) -> ArraySeqStPerS<T> {
-            // Keep as primitive - flatten is one of the 7 APAS primitives
-            <ArraySeqStPerS<T> as ArraySeqStPerTraitChap18<T>>::flatten(s)
-        }
-
-        fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T> {
-            // Keep as primitive - inject is one of the 7 APAS primitives
-            <ArraySeqStPerS<T> as ArraySeqStPerTraitChap18<T>>::inject(a, updates)
-        }
-
-        fn ninject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T> {
-            // Keep as primitive - ninject is one of the 7 APAS primitives
-            <ArraySeqStPerS<T> as ArraySeqStPerTraitChap18<T>>::ninject(a, updates)
         }
 
         fn isEmpty(a: &ArraySeqStPerS<T>) -> bool {

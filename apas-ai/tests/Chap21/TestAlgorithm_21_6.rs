@@ -1,6 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Algorithm 21.6 (Prime Sieve) using ArraySeqPer and ninject.
 
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait as Chap18Trait;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap21::Algorithm21_6::Algorithm21_6::*;
 use apas_ai::Types::Types::*;
@@ -22,7 +23,7 @@ fn prime_sieve(n: N) -> ArraySeqStPerS<N> {
             },
             if root >= 2 { root - 1 } else { 0 },
         );
-    let cs: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::flatten(&nested);
+    let cs: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as Chap18Trait<N>>::flatten(&nested);
 
     // sieve = 〈 (x, false) : x ∈ cs 〉
     let sieve_pairs: ArraySeqStPerS<Pair<N, B>> =
@@ -35,7 +36,7 @@ fn prime_sieve(n: N) -> ArraySeqStPerS<N> {
     let all: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(&|_| true, n);
 
     // isPrime = ninject all sieve
-    let is_prime: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::ninject(&all, &sieve_pairs);
+    let is_prime: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as Chap18Trait<B>>::ninject(&all, &sieve_pairs);
 
     // primes = 〈 i : 2 ≤ i < n | isPrime[i] = true 〉
     let candidates: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i, n);

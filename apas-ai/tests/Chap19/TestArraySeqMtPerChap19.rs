@@ -1,6 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 use apas_ai::ArrayMtPerSLit;
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerTrait as Chap18Trait;
 use apas_ai::Chap19::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::PairLit;
 use apas_ai::Types::Types::*;
@@ -13,9 +14,9 @@ fn test_new_and_set() {
     assert_eq!(*a.nth(1), 7);
     assert_eq!(*a.nth(2), 7);
     let changes1 = ArrayMtPerSLit![Pair(1, 9)];
-    let b = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&a, &changes1);
+    let b = <ArraySeqMtPerS<N> as Chap18Trait<N>>::inject(&a, &changes1);
     let changes2 = ArrayMtPerSLit![Pair(0, 2)];
-    let c = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&b, &changes2);
+    let c = <ArraySeqMtPerS<N> as Chap18Trait<N>>::inject(&b, &changes2);
     assert_eq!(*c.nth(0), 2);
     assert_eq!(*c.nth(1), 9);
     assert_eq!(*c.nth(2), 7);
@@ -42,7 +43,7 @@ fn test_sequence_basic() {
     assert!(a.length() != 0);
     assert_eq!(a.length(), 10);
     let changes1 = ArrayMtPerSLit![Pair(0, true), Pair(1, false), Pair(2, true)];
-    let d = <ArraySeqMtPerS<B> as ArraySeqMtPerTrait<B>>::inject(&a, &changes1);
+    let d = <ArraySeqMtPerS<B> as Chap18Trait<B>>::inject(&a, &changes1);
     assert_eq!(d.length(), 10);
     let head4 = ArrayMtPerSLit![*d.nth(0), *d.nth(1), *d.nth(2), *d.nth(3)];
     assert_eq!(head4, ArrayMtPerSLit![true, false, true, false]);
@@ -203,7 +204,7 @@ fn test_concurrent_inject_operations() {
         let base_clone = Arc::clone(&base);
         let handle = thread::spawn(move || {
             let updates = ArrayMtPerSLit![Pair(i, (i + 1) * 10)];
-            <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&base_clone, &updates)
+            <ArraySeqMtPerS<N> as Chap18Trait<N>>::inject(&base_clone, &updates)
         });
         handles.push(handle);
     }
@@ -420,7 +421,7 @@ fn test_race_condition_verification_concurrent_inject_operations() {
                 let value = thread_id * 100 + i;
                 let updates = ArrayMtPerSLit![Pair(index, value)];
 
-                let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&base_clone, &updates);
+                let result = <ArraySeqMtPerS<N> as Chap18Trait<N>>::inject(&base_clone, &updates);
                 results.push((index, value, *result.nth(index)));
 
                 counter_clone.fetch_add(1, Ordering::SeqCst);
@@ -521,7 +522,7 @@ fn test_race_condition_verification_mixed_operations() {
                 let value = thread_id * 100 + i;
                 let updates = ArrayMtPerSLit![Pair(index, value)];
 
-                let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&seq_clone, &updates);
+                let result = <ArraySeqMtPerS<N> as Chap18Trait<N>>::inject(&seq_clone, &updates);
 
                 // Verify the inject worked
                 if *result.nth(index) == value {
@@ -671,7 +672,7 @@ fn test_atomic_operation_correctness_inject_operations() {
                 let updates = ArrayMtPerSLit![Pair(index, value)];
 
                 // Perform atomic inject operation
-                let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&base_clone, &updates);
+                let result = <ArraySeqMtPerS<N> as Chap18Trait<N>>::inject(&base_clone, &updates);
 
                 // Verify atomicity: the inject operation should be all-or-nothing
                 let actual_value = *result.nth(index);
@@ -749,7 +750,7 @@ fn test_atomic_operation_correctness_memory_ordering() {
                 let updates = ArrayMtPerSLit![Pair(index, value)];
 
                 // Perform write with memory ordering guarantees
-                let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&seq_clone, &updates);
+                let result = <ArraySeqMtPerS<N> as Chap18Trait<N>>::inject(&seq_clone, &updates);
 
                 // Verify the write was atomic and visible
                 let written_value = *result.nth(index);
@@ -845,7 +846,7 @@ fn test_arrayseqmtper_trait_empty() {
 
 #[test]
 fn test_arrayseqmtper_trait_new() {
-    let seq = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::new(5, 42);
+    let seq = <ArraySeqMtPerS<i32> as Chap18Trait<i32>>::new(5, 42);
     assert_eq!(seq.length(), 5);
     for i in 0..5 {
         assert_eq!(*seq.nth(i), 42);
@@ -863,14 +864,14 @@ fn test_arrayseqmtper_trait_singleton() {
 #[test]
 fn test_arrayseqmtper_trait_length() {
     let seq = ArrayMtPerSLit![1, 2, 3, 4];
-    assert_eq!(<ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::length(&seq), 4);
+    assert_eq!(<ArraySeqMtPerS<i32> as Chap18Trait<i32>>::length(&seq), 4);
 }
 
 #[test]
 fn test_arrayseqmtper_trait_nth() {
     let seq = ArrayMtPerSLit![10, 20, 30];
-    assert_eq!(*<ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::nth(&seq, 0), 10);
-    assert_eq!(*<ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::nth(&seq, 2), 30);
+    assert_eq!(*<ArraySeqMtPerS<i32> as Chap18Trait<i32>>::nth(&seq, 0), 10);
+    assert_eq!(*<ArraySeqMtPerS<i32> as Chap18Trait<i32>>::nth(&seq, 2), 30);
 }
 
 #[test]
@@ -927,7 +928,7 @@ fn test_arrayseqmtper_trait_flatten() {
     let seq1 = ArrayMtPerSLit![1, 2];
     let seq2 = ArrayMtPerSLit![3, 4];
     let nested = ArrayMtPerSLit![seq1, seq2];
-    let flat = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::flatten(&nested);
+    let flat = <ArraySeqMtPerS<i32> as Chap18Trait<i32>>::flatten(&nested);
     assert_eq!(flat.length(), 4);
     assert_eq!(*flat.nth(0), 1);
     assert_eq!(*flat.nth(3), 4);
@@ -959,7 +960,7 @@ fn test_arrayseqmtper_trait_iterate() {
 fn test_arrayseqmtper_trait_ninject() {
     let base = ArrayMtPerSLit![0, 0, 0, 0, 0];
     let updates = ArrayMtPerSLit![Pair(1, 10), Pair(3, 30)];
-    let result = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::ninject(&base, &updates);
+    let result = <ArraySeqMtPerS<i32> as Chap18Trait<i32>>::ninject(&base, &updates);
     assert_eq!(result.length(), 5);
     assert_eq!(*result.nth(1), 10);
     assert_eq!(*result.nth(3), 30);
@@ -988,7 +989,7 @@ fn test_arrayseqmtper_trait_deflate() {
 #[test]
 fn test_arrayseqmtper_collect() {
     let pairs = ArrayMtPerSLit![Pair(1, 1), Pair(1, 2), Pair(2, 3)];
-    let grouped = <ArraySeqMtPerS<i32> as ArraySeqMtPerTrait<i32>>::collect(&pairs, |a, b| a.cmp(b));
+    let grouped = <ArraySeqMtPerS<Pair<i32, i32>> as Chap18Trait<Pair<i32, i32>>>::collect(&pairs, |a, b| a.cmp(b));
     assert!(grouped.length() > 0);
 }
 
@@ -1021,7 +1022,7 @@ fn test_arraymtperslit_macro_functionality() {
 fn test_inject_basic() {
     let values = ArrayMtPerSLit![0, 1, 2, 3, 4, 5];
     let changes = ArrayMtPerSLit![PairLit!(2, 99), PairLit!(4, 88)];
-    let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
+    let result = <ArraySeqMtPerS<N> as Chap18Trait<N>>::inject(&values, &changes);
 
     assert_eq!(result.length(), 6);
     // inject should apply first occurrence of each index
@@ -1037,7 +1038,7 @@ fn test_inject_basic() {
 fn test_inject_conflicting_updates() {
     let values = ArrayMtPerSLit![0, 1, 2, 3, 4, 5];
     let changes = ArrayMtPerSLit![PairLit!(2, 99), PairLit!(2, 77), PairLit!(4, 88)];
-    let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
+    let result = <ArraySeqMtPerS<N> as Chap18Trait<N>>::inject(&values, &changes);
 
     assert_eq!(result.length(), 6);
     // inject takes FIRST update for each index (99 for index 2)
@@ -1053,7 +1054,7 @@ fn test_inject_conflicting_updates() {
 fn test_inject_out_of_bounds() {
     let values = ArrayMtPerSLit![0, 1, 2];
     let changes = ArrayMtPerSLit![PairLit!(1, 99), PairLit!(5, 77)]; // index 5 is out of bounds
-    let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
+    let result = <ArraySeqMtPerS<N> as Chap18Trait<N>>::inject(&values, &changes);
 
     assert_eq!(result.length(), 3);
     assert_eq!(*result.nth(0), 0);
@@ -1065,7 +1066,7 @@ fn test_inject_out_of_bounds() {
 fn test_inject_empty_changes() {
     let values = ArrayMtPerSLit![1, 2, 3];
     let changes: ArraySeqMtPerS<Pair<N, N>> = ArrayMtPerSLit![];
-    let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
+    let result = <ArraySeqMtPerS<N> as Chap18Trait<N>>::inject(&values, &changes);
 
     assert_eq!(result.length(), 3);
     assert_eq!(*result.nth(0), 1);
@@ -1077,7 +1078,7 @@ fn test_inject_empty_changes() {
 fn test_inject_empty_values() {
     let values: ArraySeqMtPerS<N> = ArrayMtPerSLit![];
     let changes = ArrayMtPerSLit![PairLit!(0, 99)];
-    let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::inject(&values, &changes);
+    let result = <ArraySeqMtPerS<N> as Chap18Trait<N>>::inject(&values, &changes);
 
     assert_eq!(result.length(), 0); // No values to update
 }
@@ -1090,7 +1091,7 @@ fn test_inject_empty_values() {
 fn test_inject_string_values() {
     let values = ArrayMtPerSLit!["hello", "world", "test"];
     let changes = ArrayMtPerSLit![PairLit!(1, "rust"), PairLit!(0, "hi")];
-    let result = <ArraySeqMtPerS<&str> as ArraySeqMtPerTrait<&str>>::inject(&values, &changes);
+    let result = <ArraySeqMtPerS<&str> as Chap18Trait<&str>>::inject(&values, &changes);
 
     assert_eq!(result.length(), 3);
     assert_eq!(*result.nth(0), "hi");
@@ -1155,7 +1156,7 @@ fn test_flatten_basic() {
     let b = ArrayMtPerSLit![3, 4];
     let c = ArrayMtPerSLit![5, 6];
     let nested = ArrayMtPerSLit![a, b, c];
-    let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::flatten(&nested);
+    let result = <ArraySeqMtPerS<N> as Chap18Trait<N>>::flatten(&nested);
     assert_eq!(result.length(), 6);
 }
 
@@ -1210,7 +1211,7 @@ fn test_iterate_basic() {
 fn test_ninject_basic() {
     let seq = ArrayMtPerSLit![0, 1, 2, 3, 4];
     let updates = ArrayMtPerSLit![PairLit!(1, 99), PairLit!(3, 88)];
-    let result = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::ninject(&seq, &updates);
+    let result = <ArraySeqMtPerS<N> as Chap18Trait<N>>::ninject(&seq, &updates);
     assert_eq!(result.length(), 5);
     assert_eq!(*result.nth(1), 99);
     assert_eq!(*result.nth(3), 88);

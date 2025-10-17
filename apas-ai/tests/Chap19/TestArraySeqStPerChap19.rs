@@ -4,6 +4,7 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 
 use apas_ai::ArraySeqStPerSLit;
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait as Chap18Trait;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Types::Types::*;
 
@@ -38,7 +39,7 @@ fn test_empty() {
 
 #[test]
 fn test_sequence_basic() {
-    let a: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::new(10, false);
+    let a: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as Chap18Trait<B>>::new(10, false);
     assert!(a.length() != 0);
     assert_eq!(a.length(), 10);
     let b = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::update(&a, 0, true);
@@ -252,7 +253,7 @@ fn test_arrayseqstper_trait_empty() {
 
 #[test]
 fn test_arrayseqstper_trait_new() {
-    let seq = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::new(5, 42);
+    let seq = <ArraySeqStPerS<i32> as Chap18Trait<i32>>::new(5, 42);
     assert_eq!(seq.length(), 5);
     for i in 0..5 {
         assert_eq!(*seq.nth(i), 42);
@@ -270,14 +271,14 @@ fn test_arrayseqstper_trait_singleton() {
 #[test]
 fn test_arrayseqstper_trait_length() {
     let seq = ArraySeqStPerSLit![1, 2, 3, 4];
-    assert_eq!(<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::length(&seq), 4);
+    assert_eq!(<ArraySeqStPerS<i32> as Chap18Trait<i32>>::length(&seq), 4);
 }
 
 #[test]
 fn test_arrayseqstper_trait_nth() {
     let seq = ArraySeqStPerSLit![10, 20, 30];
-    assert_eq!(*<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::nth(&seq, 0), 10);
-    assert_eq!(*<ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::nth(&seq, 2), 30);
+    assert_eq!(*<ArraySeqStPerS<i32> as Chap18Trait<i32>>::nth(&seq, 0), 10);
+    assert_eq!(*<ArraySeqStPerS<i32> as Chap18Trait<i32>>::nth(&seq, 2), 30);
 }
 
 #[test]
@@ -333,7 +334,7 @@ fn test_arrayseqstper_trait_flatten() {
     let seq1 = ArraySeqStPerSLit![1, 2];
     let seq2 = ArraySeqStPerSLit![3, 4];
     let nested = ArraySeqStPerSLit![seq1, seq2];
-    let flat = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::flatten(&nested);
+    let flat = <ArraySeqStPerS<i32> as Chap18Trait<i32>>::flatten(&nested);
     assert_eq!(flat.length(), 4);
     assert_eq!(*flat.nth(0), 1);
     assert_eq!(*flat.nth(3), 4);
@@ -365,7 +366,7 @@ fn test_arrayseqstper_trait_iterate() {
 fn test_arrayseqstper_trait_inject() {
     let base = ArraySeqStPerSLit![0, 0, 0, 0, 0];
     let updates = ArraySeqStPerSLit![Pair(1, 10), Pair(3, 30)];
-    let result = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::inject(&base, &updates);
+    let result = <ArraySeqStPerS<i32> as Chap18Trait<i32>>::inject(&base, &updates);
     assert_eq!(result.length(), 5);
     assert_eq!(*result.nth(1), 10);
     assert_eq!(*result.nth(3), 30);
@@ -375,7 +376,7 @@ fn test_arrayseqstper_trait_inject() {
 fn test_arrayseqstper_trait_ninject() {
     let base = ArraySeqStPerSLit![0, 0, 0, 0, 0];
     let updates = ArraySeqStPerSLit![Pair(1, 10), Pair(3, 30)];
-    let result = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::ninject(&base, &updates);
+    let result = <ArraySeqStPerS<i32> as Chap18Trait<i32>>::ninject(&base, &updates);
     assert_eq!(result.length(), 5);
     assert_eq!(*result.nth(1), 10);
     assert_eq!(*result.nth(3), 30);
@@ -462,7 +463,7 @@ fn test_iterate_reduce_scan_flatten() {
         <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 1, 2),
         <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 3, 2),
     ];
-    let flat = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::flatten(&nested);
+    let flat = <ArraySeqStPerS<N> as Chap18Trait<N>>::flatten(&nested);
     assert_eq!(flat, ArraySeqStPerSLit![1, 2, 3, 4]);
 }
 
@@ -470,7 +471,7 @@ fn test_iterate_reduce_scan_flatten() {
 fn test_inject_and_parallel() {
     let values = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i, 6);
     let changes: ArraySeqStPerS<Pair<N, N>> = ArraySeqStPerSLit![Pair(2, 99), Pair(2, 7), Pair(4, 20)];
-    let result = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::inject(&values, &changes);
+    let result = <ArraySeqStPerS<N> as Chap18Trait<N>>::inject(&values, &changes);
     assert_eq!(result.nth(0), &0);
     assert_eq!(result.nth(1), &1);
     assert_eq!(result.nth(2), &99); // First update wins: Pair(2, 99) over Pair(2, 7)
