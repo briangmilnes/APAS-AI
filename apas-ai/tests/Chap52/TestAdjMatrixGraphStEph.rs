@@ -2,6 +2,7 @@
 //! Tests for Chap52 AdjMatrixGraphStEph.
 
 use apas_ai::Chap52::AdjMatrixGraphStEph::AdjMatrixGraphStEph::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new() {

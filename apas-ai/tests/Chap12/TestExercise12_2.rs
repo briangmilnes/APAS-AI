@@ -5,6 +5,7 @@ use std::sync::Arc;
 use std::thread;
 
 use apas_ai::Chap12::Exercise12_2::Exercise12_2::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn fetch_add_cas_returns_previous_value() {

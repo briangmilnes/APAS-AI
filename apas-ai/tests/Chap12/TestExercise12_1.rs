@@ -6,6 +6,7 @@ use std::thread;
 use std::time::Duration;
 
 use apas_ai::Chap12::Exercise12_1::Exercise12_1::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn spin_lock_excludes_parallel_threads() {

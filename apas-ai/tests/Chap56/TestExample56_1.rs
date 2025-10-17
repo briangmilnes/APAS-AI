@@ -2,6 +2,7 @@
 //! Tests for Example56_1 - Path Weight Computation.
 
 use apas_ai::Chap56::Example56_1::Example56_1::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_example_path_weight_int() { example_path_weight_int(); }

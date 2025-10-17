@@ -4,6 +4,7 @@
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
 use apas_ai::Chap55::TopoSortStPer::TopoSortStPer::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_single_node() {

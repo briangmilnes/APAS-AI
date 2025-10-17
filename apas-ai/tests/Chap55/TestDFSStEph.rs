@@ -4,6 +4,7 @@
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
 use apas_ai::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
 use apas_ai::Chap55::DFSStEph::DFSStEph::dfs;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_empty_graph() {

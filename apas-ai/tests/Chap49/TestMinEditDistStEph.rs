@@ -3,6 +3,7 @@
 
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap49::MinEditDistStEph::MinEditDistStEph::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new_empty() {

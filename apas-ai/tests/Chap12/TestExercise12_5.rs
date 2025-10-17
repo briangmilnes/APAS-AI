@@ -5,6 +5,7 @@ use std::sync::{mpsc, Arc};
 use std::thread;
 
 use apas_ai::Chap12::Exercise12_5::Exercise12_5::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn push_pop_lifo_single_thread() {

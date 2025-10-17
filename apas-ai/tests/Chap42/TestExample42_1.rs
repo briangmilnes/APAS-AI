@@ -2,6 +2,7 @@
 //! Tests for Chapter 42 Example 42.1.
 
 use apas_ai::Chap42::Example42_1::Example42_1::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_example_42_1_runs() {

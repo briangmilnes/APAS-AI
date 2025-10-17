@@ -3,6 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Chap49::SubsetSumMtEph::SubsetSumMtEph::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new_empty() {

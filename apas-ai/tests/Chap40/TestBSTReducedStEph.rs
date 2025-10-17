@@ -2,6 +2,7 @@
 
 use apas_ai::Chap40::BSTReducedStEph::BSTReducedStEph::*;
 use apas_ai::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn reduced_bst_sum_operations() {

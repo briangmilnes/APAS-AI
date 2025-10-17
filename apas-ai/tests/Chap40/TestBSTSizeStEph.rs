@@ -2,6 +2,7 @@
 
 use apas_ai::Chap40::BSTSizeStEph::BSTSizeStEph::*;
 use apas_ai::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn size_bst_basic_operations() {

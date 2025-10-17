@@ -3,6 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap55::CycleDetectStEph::CycleDetectStEph::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_no_cycle_empty_graph() {

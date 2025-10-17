@@ -3,6 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Chap51::BottomUpDPMtPer::BottomUpDPMtPer::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new() {

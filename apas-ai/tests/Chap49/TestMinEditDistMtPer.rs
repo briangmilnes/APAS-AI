@@ -3,6 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Chap49::MinEditDistMtPer::MinEditDistMtPer::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new_empty() {

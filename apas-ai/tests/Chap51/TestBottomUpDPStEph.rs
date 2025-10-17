@@ -3,6 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap51::BottomUpDPStEph::BottomUpDPStEph::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new() {

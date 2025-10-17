@@ -5,6 +5,7 @@
 use ordered_float::OrderedFloat;
 
 use apas_ai::Chap56::AllPairsResultStEphFloat::AllPairsResultStEphFloat::AllPairsResultStEphFloat;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new() {

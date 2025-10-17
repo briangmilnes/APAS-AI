@@ -1,6 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 /// Exercise 21.6: Cost analysis tests.
 use apas_ai::Chap21::Exercise21_6::Exercise21_6::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 #[allow(clippy::assertions_on_constants)]

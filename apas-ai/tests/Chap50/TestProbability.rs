@@ -6,6 +6,7 @@ use std::cmp::Ordering::Greater;
 use std::cmp::Ordering::Less;
 
 use apas_ai::Chap50::Probability::Probability::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new() {

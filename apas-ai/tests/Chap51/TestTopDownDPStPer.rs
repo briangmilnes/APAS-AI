@@ -3,6 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap51::TopDownDPStPer::TopDownDPStPer::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new() {

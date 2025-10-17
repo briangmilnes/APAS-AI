@@ -3,6 +3,7 @@
 //! Test suite for SSSPResultStEphInt.
 
 use apas_ai::Chap56::SSSPResultStEphInt::SSSPResultStEphInt::SSSPResultStEphInt;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new() {

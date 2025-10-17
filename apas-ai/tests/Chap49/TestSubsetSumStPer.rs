@@ -3,6 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap49::SubsetSumStPer::SubsetSumStPer::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new_empty() {

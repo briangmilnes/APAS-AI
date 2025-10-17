@@ -3,6 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Chap26::DivConReduceMt::DivConReduceMt::DivConReduceMtTrait;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_max_element_parallel_empty() {

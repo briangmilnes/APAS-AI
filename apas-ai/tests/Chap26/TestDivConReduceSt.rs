@@ -3,6 +3,7 @@
 
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap26::DivConReduceSt::DivConReduceSt::DivConReduceStTrait;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_max_element_empty() {

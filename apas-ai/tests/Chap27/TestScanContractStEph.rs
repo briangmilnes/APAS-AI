@@ -3,6 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_scan_contract_empty() {

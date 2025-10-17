@@ -2,6 +2,7 @@
 
 use apas_ai::Chap40::BSTKeyValueStEph::BSTKeyValueStEph::*;
 use apas_ai::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn key_value_bst_basic_operations() {

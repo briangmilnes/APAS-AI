@@ -2,6 +2,7 @@
 //! Tests for Chap52 AdjSeqGraphStEph.
 
 use apas_ai::Chap52::AdjSeqGraphStEph::AdjSeqGraphStEph::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new() {

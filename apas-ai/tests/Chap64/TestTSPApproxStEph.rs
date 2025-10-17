@@ -6,6 +6,7 @@ use apas_ai::{
     Chap64::TSPApproxStEph::TSPApproxStEph::*, SetLit, Types::Types::*,
 };
 use ordered_float::OrderedFloat;
+use apas_ai::Types::Types::*;
 
 fn create_triangle_graph() -> (
     LabUnDirGraphStEph<N, OrderedFloat<f64>>,

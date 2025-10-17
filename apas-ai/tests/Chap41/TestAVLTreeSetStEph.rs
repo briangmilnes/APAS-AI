@@ -7,6 +7,7 @@ use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
 use apas_ai::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
 use apas_ai::Chap41::Example41_3::Example41_3::*;
 use apas_ai::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_avltreesetstephlit_macro_functionality() {

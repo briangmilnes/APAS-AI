@@ -3,6 +3,7 @@
 
 use apas_ai::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
 use apas_ai::Chap53::GraphSearchMtPer::GraphSearchMtPer::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_reachable_single_node() {

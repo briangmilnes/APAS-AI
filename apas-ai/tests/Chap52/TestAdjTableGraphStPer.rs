@@ -4,6 +4,7 @@
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::Chap43::OrderedTableStPer::OrderedTableStPer::*;
 use apas_ai::Chap52::AdjTableGraphStPer::AdjTableGraphStPer::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_empty() {

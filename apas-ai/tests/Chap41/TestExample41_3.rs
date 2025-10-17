@@ -2,6 +2,7 @@
 //! Tests for Example41_3
 
 use apas_ai::Chap41::Example41_3::Example41_3::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_example_41_1_array_set() { example_41_1_array_set(); }

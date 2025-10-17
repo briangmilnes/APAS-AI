@@ -2,6 +2,7 @@
 //! Tests for Chap45 HeapsortExample.
 
 use apas_ai::Chap45::HeapsortExample::HeapsortExample::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_heapsort_unsorted_list_basic() {

@@ -1,5 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::Chap03::InsertionSortSt::InsertionSortSt::InsertionSortStTrait;
+use apas_ai::Types::Types::*;
 
 fn sort_and_assert(mut data: Vec<i32>, expected: &[i32]) {
     0i32.insSort(&mut data);

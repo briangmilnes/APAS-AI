@@ -4,6 +4,7 @@
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
 use apas_ai::Chap55::SCCStEph::SCCStEph::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_single_node() {

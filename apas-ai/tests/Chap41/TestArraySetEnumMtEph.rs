@@ -4,6 +4,7 @@
 use apas_ai::ArraySetEnumMtEphLit;
 use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
 use apas_ai::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_arraysetenummtephlit_macro_type_safety() {

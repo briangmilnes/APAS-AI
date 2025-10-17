@@ -3,6 +3,7 @@
 use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap35::OrderStatSelectStPer::OrderStatSelectStPer::OrderStatSelectStPerTrait;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_empty() {

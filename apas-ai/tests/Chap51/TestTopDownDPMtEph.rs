@@ -3,6 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Chap51::TopDownDPMtEph::TopDownDPMtEph::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new() {

@@ -3,6 +3,7 @@
 use apas_ai::ArraySeqMtEphSLit;
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Chap28::MaxContigSubSumOptMtEph::MaxContigSubSumOptMtEph::MaxContigSubSumOptMtTrait;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_empty() {

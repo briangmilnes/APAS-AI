@@ -3,6 +3,7 @@
 //! Test suite for AllPairsResultStPerInt.
 
 use apas_ai::Chap56::AllPairsResultStPerInt::AllPairsResultStPerInt::AllPairsResultStPerInt;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new() {

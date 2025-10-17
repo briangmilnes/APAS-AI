@@ -2,6 +2,7 @@
 use apas_ai::BSTRBStEphLit;
 use apas_ai::Chap37::BSTRBStEph::BSTRBStEph::*;
 use apas_ai::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_bstrbstephlit_macro_functionality() {

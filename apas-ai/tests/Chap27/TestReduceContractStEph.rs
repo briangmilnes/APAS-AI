@@ -3,6 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap27::ReduceContractStEph::ReduceContractStEph::ReduceContractStEphTrait;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_reduce_contract_empty() {

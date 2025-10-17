@@ -4,6 +4,7 @@
 use apas_ai::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph::*;
 use apas_ai::Chap50::Probability::Probability::Probability;
 use apas_ai::{prob, OBSTStEphLit};
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new_empty_obst() {

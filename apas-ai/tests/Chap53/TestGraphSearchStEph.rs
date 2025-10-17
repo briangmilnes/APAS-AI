@@ -4,6 +4,7 @@
 use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
 use apas_ai::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
 use apas_ai::Chap53::GraphSearchStEph::GraphSearchStEph::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_reachable_single_node() {

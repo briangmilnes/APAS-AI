@@ -2,6 +2,7 @@
 //! Exercise 21.9 (Composite generation proof) tests.
 
 use apas_ai::Chap21::Exercise21_9::Exercise21_9::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 #[allow(clippy::assertions_on_constants)]

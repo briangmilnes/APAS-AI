@@ -2,6 +2,7 @@
 //! Tests for Example56_3 - Negative Weight Cycles.
 
 use apas_ai::Chap56::Example56_3::Example56_3::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_example_negative_cycle() { example_negative_cycle(); }

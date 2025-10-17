@@ -3,6 +3,7 @@
 use apas_ai::ArrayMtPerSLit;
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Chap35::OrderStatSelectMtPer::OrderStatSelectMtPer::OrderStatSelectMtPerTrait;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_empty() {

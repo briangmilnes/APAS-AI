@@ -2,6 +2,7 @@
 use apas_ai::BSTBBAlphaStEphLit;
 use apas_ai::Chap37::BSTBBAlphaStEph::BSTBBAlphaStEph::*;
 use apas_ai::*;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_bstbbalphastephlit_macro_functionality() {

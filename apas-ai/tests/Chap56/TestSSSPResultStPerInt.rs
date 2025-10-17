@@ -3,6 +3,7 @@
 //! Test suite for SSSPResultStPerInt.
 
 use apas_ai::Chap56::SSSPResultStPerInt::SSSPResultStPerInt::SSSPResultStPerInt;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new() {

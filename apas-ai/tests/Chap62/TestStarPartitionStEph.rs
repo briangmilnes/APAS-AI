@@ -6,6 +6,7 @@ use apas_ai::{
     Chap62::StarPartitionStEph::StarPartitionStEph::*, SetLit, Types::Types::*,
 };
 use std::collections::HashMap;
+use apas_ai::Types::Types::*;
 
 // Helper to create a cycle graph
 fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {

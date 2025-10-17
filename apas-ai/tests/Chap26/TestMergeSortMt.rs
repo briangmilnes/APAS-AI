@@ -3,6 +3,7 @@
 
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Chap26::MergeSortMt::MergeSortMt::MergeSortMtTrait;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_merge_sort_parallel_empty() {
