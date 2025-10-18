@@ -96,14 +96,6 @@ pub mod ArraySeqMtEphSlice {
             guard[self.range.start..self.range.end].to_vec()
         }
 
-        /// Invokes the closure with a mutable slice under the single mutex.
-        pub fn with_exclusive<F: FnOnce(&mut [T]) -> R, R>(&self, f: F) -> R {
-            let mut guard = self.inner.data.lock().unwrap();
-            let start = self.range.start;
-            let end = self.range.end;
-            f(&mut guard[start..end])
-        }
-
         /// Set method for ephemeral sequences (alias for update)
         pub fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> { self.update(index, item) }
 
@@ -385,7 +377,10 @@ pub mod ArraySeqMtEphSlice {
         }
 
         fn with_exclusive<F: FnOnce(&mut [T]) -> R, R>(&self, f: F) -> R {
-            ArraySeqMtEphSliceS::with_exclusive(self, f)
+            let mut guard = self.inner.data.lock().unwrap();
+            let start = self.range.start;
+            let end = self.range.end;
+            f(&mut guard[start..end])
         }
 
         fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> { self.update(index, item) }

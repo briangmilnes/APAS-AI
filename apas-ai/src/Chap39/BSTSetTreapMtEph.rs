@@ -60,18 +60,6 @@ pub mod BSTSetTreapMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetTreapMtEph<T> {
-        pub fn empty() -> Self {
-            Self {
-                tree: BSTTreapMtEph::new(),
-            }
-        }
-
-        pub fn singleton(value: T) -> Self {
-            let tree = BSTTreapMtEph::new();
-            tree.insert(value);
-            Self { tree }
-        }
-
         pub fn size(&self) -> N { self.tree.size() }
 
         pub fn is_empty(&self) -> B { self.tree.is_empty() }
@@ -219,9 +207,17 @@ pub mod BSTSetTreapMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetTreapMtEphTrait<T> for BSTSetTreapMtEph<T> {
-        fn empty() -> Self { Self::empty() }
+        fn empty() -> Self {
+            Self {
+                tree: BSTTreapMtEph::new(),
+            }
+        }
 
-        fn singleton(value: T) -> Self { Self::singleton(value) }
+        fn singleton(value: T) -> Self {
+            let tree = BSTTreapMtEph::new();
+            tree.insert(value);
+            Self { tree }
+        }
 
         fn size(&self) -> N { self.tree.size() }
 

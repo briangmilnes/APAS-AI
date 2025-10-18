@@ -60,18 +60,6 @@ pub mod BSTSetBBAlphaMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetBBAlphaMtEph<T> {
-        pub fn empty() -> Self {
-            Self {
-                tree: BSTBBAlphaMtEph::new(),
-            }
-        }
-
-        pub fn singleton(value: T) -> Self {
-            let tree = BSTBBAlphaMtEph::new();
-            tree.insert(value);
-            Self { tree }
-        }
-
         pub fn size(&self) -> N { self.tree.size() }
 
         pub fn is_empty(&self) -> B { self.tree.is_empty() }
@@ -219,9 +207,17 @@ pub mod BSTSetBBAlphaMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetBBAlphaMtEphTrait<T> for BSTSetBBAlphaMtEph<T> {
-        fn empty() -> Self { Self::empty() }
+        fn empty() -> Self {
+            Self {
+                tree: BSTBBAlphaMtEph::new(),
+            }
+        }
 
-        fn singleton(value: T) -> Self { Self::singleton(value) }
+        fn singleton(value: T) -> Self {
+            let tree = BSTBBAlphaMtEph::new();
+            tree.insert(value);
+            Self { tree }
+        }
 
         fn size(&self) -> N { self.tree.size() }
 

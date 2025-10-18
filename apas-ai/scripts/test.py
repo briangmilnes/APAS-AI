@@ -23,23 +23,28 @@ def main():
     # Change to project root
     project_root = Path(__file__).parent.parent
     
-    print("Running tests with cargo nextest...")
-    print("=" * 60)
+    print("Running tests with cargo nextest...", flush=True)
+    print("=" * 60, flush=True)
     
-    # Run cargo nextest with --no-fail-fast, capture output for stripping
-    result = subprocess.run(
+    # Run cargo nextest with --no-fail-fast, stream output line by line
+    process = subprocess.Popen(
         ["cargo", "nextest", "run", "--no-fail-fast", "-j", "10"],
         cwd=project_root,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
-        text=True
+        text=True,
+        bufsize=1  # Line buffered
     )
     
-    # Strip ANSI codes and print for emacs compile mode
-    clean_output = strip_ansi_codes(result.stdout)
-    print(clean_output, end='')
+    # Stream output line by line, stripping ANSI codes
+    for line in process.stdout:
+        clean_line = strip_ansi_codes(line)
+        print(clean_line, end='', flush=True)
     
-    return result.returncode
+    # Wait for process to complete
+    returncode = process.wait()
+    
+    return returncode
 
 
 if __name__ == "__main__":

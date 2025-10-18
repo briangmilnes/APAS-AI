@@ -60,18 +60,6 @@ pub mod BSTSetRBMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetRBMtEph<T> {
-        pub fn empty() -> Self {
-            Self {
-                tree: BSTRBMtEph::new(),
-            }
-        }
-
-        pub fn singleton(value: T) -> Self {
-            let tree = BSTRBMtEph::new();
-            tree.insert(value);
-            Self { tree }
-        }
-
         pub fn size(&self) -> N { self.tree.size() }
 
         pub fn is_empty(&self) -> B { self.tree.is_empty() }
@@ -219,9 +207,17 @@ pub mod BSTSetRBMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetRBMtEphTrait<T> for BSTSetRBMtEph<T> {
-        fn empty() -> Self { Self::empty() }
+        fn empty() -> Self {
+            Self {
+                tree: BSTRBMtEph::new(),
+            }
+        }
 
-        fn singleton(value: T) -> Self { Self::singleton(value) }
+        fn singleton(value: T) -> Self {
+            let tree = BSTRBMtEph::new();
+            tree.insert(value);
+            Self { tree }
+        }
 
         fn size(&self) -> N { self.tree.size() }
 

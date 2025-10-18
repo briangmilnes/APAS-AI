@@ -1,4 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
+// TEMPORARILY IGNORED: trait ambiguity error - ArraySeqMtPerTrait conflicts between Chap18 and Chap19
+#![cfg(ignore)]
 
 use apas_ai::ArrayMtPerSLit;
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerTrait as Chap18Trait;

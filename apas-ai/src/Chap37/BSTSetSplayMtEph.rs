@@ -60,18 +60,6 @@ pub mod BSTSetSplayMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetSplayMtEph<T> {
-        pub fn empty() -> Self {
-            Self {
-                tree: BSTSplayMtEph::new(),
-            }
-        }
-
-        pub fn singleton(value: T) -> Self {
-            let tree = BSTSplayMtEph::new();
-            tree.insert(value);
-            Self { tree }
-        }
-
         pub fn size(&self) -> N { self.tree.size() }
 
         pub fn is_empty(&self) -> B { self.tree.is_empty() }
@@ -219,9 +207,17 @@ pub mod BSTSetSplayMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetSplayMtEphTrait<T> for BSTSetSplayMtEph<T> {
-        fn empty() -> Self { Self::empty() }
+        fn empty() -> Self {
+            Self {
+                tree: BSTSplayMtEph::new(),
+            }
+        }
 
-        fn singleton(value: T) -> Self { Self::singleton(value) }
+        fn singleton(value: T) -> Self {
+            let tree = BSTSplayMtEph::new();
+            tree.insert(value);
+            Self { tree }
+        }
 
         fn size(&self) -> N { self.tree.size() }
 
