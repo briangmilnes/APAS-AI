@@ -112,9 +112,19 @@ Result guidance
 - Do not hand-build literals with temporary vars, loops, or manual inserts in tests or examples. Prefer the literal macro for clarity and brevity.
 - If a macro cannot express the literal you need, prefer adding/updating that macro rather than open-coding a one-off constructor.
 
-#### Helper function extraction threshold
+#### Avoid "helper" terminology (code smell)
 - Do not introduce a helper function unless it will be used in at least 3 distinct call sites (or across 2+ modules), or it eliminates clearly error-prone duplication.
 - Otherwise, keep the code inline or use an existing macro/constructor. Exceptions: readability for >10 lines of complex logic.
+- **Never use "helper" to describe types or functions** - it's vague and adds no information
+  - ❌ BAD: "helper type", "helper function", "helper method"
+  - ✓ GOOD: Describe the actual purpose or role
+    - "mutex wrapper" (describes what it does)
+    - "constructor" (describes its role)
+    - "private internal type" (visibility + architectural role)
+- **"Private" vs "Internal"** - both are appropriate but mean different things:
+  - **Private** = Rust visibility scope (no `pub` keyword)
+  - **Internal** = architectural role (implementation detail, not exported API)
+  - Example: "private internal type" is precise - private visibility, internal purpose
 
 #### Module/file layout and Mandatory Encapsulation
 - **MANDATORY**: Each file should have a single module.
