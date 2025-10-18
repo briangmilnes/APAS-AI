@@ -123,13 +123,13 @@ pub mod LabDirGraphStEph {
         }
     }
 
-    impl<V: StT + Hash, L: Clone + Display + Debug + Eq + Hash> Display for LabDirGraphStEph<V, L> {
+    impl<V: StT + Hash, L: StT + Hash> Display for LabDirGraphStEph<V, L> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "LabDirGraph(V: {}, A: {})", self.vertices, self.labeled_arcs)
         }
     }
 
-    impl<V: StT + Hash, L: Clone + Display + Debug + Eq + Hash> Debug for LabDirGraphStEph<V, L> {
+    impl<V: StT + Hash, L: StT + Hash> Debug for LabDirGraphStEph<V, L> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(
                 f,

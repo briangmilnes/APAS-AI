@@ -187,6 +187,28 @@ User activates by saying "careful mode" or "ask first":
 - When matching Claude's workflow, run `cargo nextest --no-fail-fast --no-capture --color never 2>&1 | cat` so the full stream is visible while preserving identical options.
 - When touching benchmark code or configs, begin with `cargo bench --no-run 2>&1 | cat` to surface compile issues quickly before full runs.
 
+#### GRIND - Comprehensive Build/Test/Bench Check
+- **Full codebase check**: `scripts/grind_codebase.py`
+  - Compile source: `cargo check --lib -j 10`
+  - Compile tests: `cargo test --no-run -j 10`
+  - Run tests: `cargo nextest run --no-fail-fast -j 10`
+  - Compile benchmarks: `cargo bench --no-run -j 10`
+  - Stops at first failure for fast feedback
+  
+- **Single module check**: `scripts/grind_module.py <ModuleName>`
+  - Example: `scripts/grind_module.py AVLTreeSeq`
+  - Compile source (lib only)
+  - Find and compile ALL tests for that module (reads from Cargo.toml)
+  - Run ALL tests for that module
+  - Compile ALL benchmarks for that module
+  - Handles multiple test/bench files per module (e.g., TestAVLTreeSeqStPer18, TestAVLTreeSeqStEphChap37)
+  
+- **Use when**: 
+  - `grind_codebase`: Making changes that affect multiple parts of the codebase
+  - `grind_module`: Testing a specific module after changes
+- **Output**: Both stream incrementally, show clear step-by-step progress
+- **Aliases**: User may say "grind" - means full codebase check
+
 #### No Perl; awk acceptable
 - Use `rg/grep`; `awk` only if needed; never Perl.
 

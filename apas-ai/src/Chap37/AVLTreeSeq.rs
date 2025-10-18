@@ -18,7 +18,7 @@ pub mod AVLTreeSeq {
 
     type Link<T> = Option<Box<AVLTreeNode<T>>>;
 
-    pub struct AVLTreeNode<T: Copy + Debug> {
+    pub struct AVLTreeNode<T: StT> {
         pub value: T,
         pub height: N,
         pub left_size: N,
@@ -28,7 +28,7 @@ pub mod AVLTreeSeq {
         pub index: N,
     }
 
-    impl<T: Copy + Debug> AVLTreeNode<T> {
+    impl<T: StT> AVLTreeNode<T> {
         fn new(value: T, index: N) -> Self {
             AVLTreeNode {
                 value,
@@ -42,12 +42,12 @@ pub mod AVLTreeSeq {
         }
     }
 
-    pub struct AVLTreeS<T: Copy + Debug> {
+    pub struct AVLTreeS<T: StT> {
         pub root: Link<T>,
         pub next_key: N,
     }
 
-    pub trait AVLTreeSeq<T: Copy + Debug> {
+    pub trait AVLTreeSeq<T: StT> {
         /// Construct an empty tree.
         /// APAS: Work Θ(1), Span Θ(1).
         /// claude-4-sonet: Work Θ(1), Span Θ(1).
@@ -97,7 +97,7 @@ pub mod AVLTreeSeq {
     }
 
 
-    impl<T: Copy + Debug> AVLTreeS<T> {
+    impl<T: StT> AVLTreeS<T> {
         pub fn new_root() -> Self {
             AVLTreeS {
                 root: None,
@@ -133,11 +133,11 @@ pub mod AVLTreeSeq {
                 return <ArraySeqS<T> as ArraySeq<T>>::empty();
             }
             let mut it = self.iter();
-            let first = *it.next().expect("length > 0 but iter was empty");
+            let first = it.next().expect("length > 0 but iter was empty").clone();
             let mut out = <ArraySeqS<T> as ArraySeq<T>>::new(len, first);
             let mut index: N = 1;
             for v in it {
-                let _ = out.set(index, *v);
+                let _ = out.set(index, v.clone());
                 index += 1;
             }
             out
@@ -182,10 +182,10 @@ pub mod AVLTreeSeq {
                 // Rebuild without the element at idx, using ArraySeq preallocation
                 let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
                 for i in 0..idx {
-                    out_vec.push(*self.nth(i));
+                    out_vec.push(self.nth(i).clone());
                 }
                 for i in (idx + 1)..len {
-                    out_vec.push(*self.nth(i));
+                    out_vec.push(self.nth(i).clone());
                 }
                 *self = AVLTreeS::from_vec(out_vec);
                 true
@@ -206,7 +206,7 @@ pub mod AVLTreeSeq {
         }
     }
 
-    impl<T: Copy + Debug> AVLTreeSeq<T> for AVLTreeS<T> {
+    impl<T: StT> AVLTreeSeq<T> for AVLTreeS<T> {
         /// APAS: Work Θ(1), Span Θ(1).
         fn empty() -> AVLTreeS<T> { AVLTreeS::new_root() }
 
@@ -250,7 +250,7 @@ pub mod AVLTreeSeq {
             }
             let mut vals: Vec<T> = Vec::with_capacity(e - s);
             for i in s..e {
-                vals.push(*self.nth(i));
+                vals.push(self.nth(i).clone());
             }
             AVLTreeS::from_vec(vals)
         }
@@ -300,7 +300,7 @@ pub mod AVLTreeSeq {
         }
     }
 
-    impl<T: Eq + Copy + Debug> PartialEq for AVLTreeS<T> {
+    impl<T: StT> PartialEq for AVLTreeS<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.length() != other.length() {
                 return false;
@@ -314,16 +314,16 @@ pub mod AVLTreeSeq {
         }
     }
 
-    impl<T: Eq + Copy + Debug> Eq for AVLTreeS<T> {}
+    impl<T: StT> Eq for AVLTreeS<T> {}
 
-    impl<T: Debug + Copy> Debug for AVLTreeS<T> {
+    impl<T: StT> Debug for AVLTreeS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             let elts = (0..self.length()).map(|i| self.nth(i));
             f.debug_list().entries(elts).finish()
         }
     }
 
-    impl<T: Display + Copy + Debug> Display for AVLTreeS<T> {
+    impl<T: StT> Display for AVLTreeS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "[")?;
             let mut first = true;
@@ -340,12 +340,12 @@ pub mod AVLTreeSeq {
 
     // ---- Iterator ----
 
-    pub struct AVLTreeSeqIter<'a, T: Copy + Debug> {
+    pub struct AVLTreeSeqIter<'a, T: StT> {
         stack: Vec<&'a AVLTreeNode<T>>,
         current: Option<&'a AVLTreeNode<T>>,
     }
 
-    impl<'a, T: Copy + Debug> AVLTreeSeqIter<'a, T> {
+    impl<'a, T: StT> AVLTreeSeqIter<'a, T> {
         fn new(root: &'a Link<T>) -> Self {
             let mut it = AVLTreeSeqIter {
                 stack: Vec::new(),
@@ -364,7 +364,7 @@ pub mod AVLTreeSeq {
         }
     }
 
-    impl<'a, T: Copy + Debug> Iterator for AVLTreeSeqIter<'a, T> {
+    impl<'a, T: StT> Iterator for AVLTreeSeqIter<'a, T> {
         type Item = &'a T;
         fn next(&mut self) -> Option<Self::Item> {
             let node = self.stack.pop()?;
@@ -376,8 +376,8 @@ pub mod AVLTreeSeq {
 
     // ---- Internal helpers ----
 
-    fn h<T: Copy + Debug>(n: &Link<T>) -> N { n.as_ref().map_or(0, |b| b.height) }
-    fn size_link<T: Copy + Debug>(n: &Link<T>) -> N {
+    fn h<T: StT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |b| b.height) }
+    fn size_link<T: StT>(n: &Link<T>) -> N {
         if let Some(b) = n {
             1 + b.left_size + b.right_size
         } else {
@@ -385,7 +385,7 @@ pub mod AVLTreeSeq {
         }
     }
 
-    fn update_meta<T: Copy + Debug>(n: &mut Box<AVLTreeNode<T>>) {
+    fn update_meta<T: StT>(n: &mut Box<AVLTreeNode<T>>) {
         n.left_size = size_link(&n.left);
         n.right_size = size_link(&n.right);
         let hl = h(&n.left);
@@ -393,7 +393,7 @@ pub mod AVLTreeSeq {
         n.height = 1 + hl.max(hr);
     }
 
-    fn rotate_right<T: Copy + Debug>(mut y: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
+    fn rotate_right<T: StT>(mut y: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
         let mut x = y.left.take().expect("rotate_right requires left child");
         let t2 = x.right.take();
 
@@ -406,7 +406,7 @@ pub mod AVLTreeSeq {
         x
     }
 
-    fn rotate_left<T: Copy + Debug>(mut x: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
+    fn rotate_left<T: StT>(mut x: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
         let mut y = x.right.take().expect("rotate_left requires right child");
         let t2 = y.left.take();
 
@@ -419,7 +419,7 @@ pub mod AVLTreeSeq {
         y
     }
 
-    fn rebalance<T: Copy + Debug>(mut n: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
+    fn rebalance<T: StT>(mut n: Box<AVLTreeNode<T>>) -> Box<AVLTreeNode<T>> {
         update_meta(&mut n);
         let hl = h(&n.left);
         let hr = h(&n.right);
@@ -443,7 +443,7 @@ pub mod AVLTreeSeq {
     }
 
     #[doc(hidden)]
-    pub(crate) fn insert_at_link<T: Copy + Debug>(node: Link<T>, index: N, value: T, next_key: &mut N) -> Link<T> {
+    pub(crate) fn insert_at_link<T: StT>(node: Link<T>, index: N, value: T, next_key: &mut N) -> Link<T> {
         match node {
             | None => {
                 debug_assert!(index == 0, "insert_at_link reached None with index > 0");
@@ -463,7 +463,7 @@ pub mod AVLTreeSeq {
         }
     }
 
-    fn nth_link<T: Copy + Debug>(node: &Link<T>, index: N) -> &T {
+    fn nth_link<T: StT>(node: &Link<T>, index: N) -> &T {
         let n = node.as_ref().expect("index out of bounds");
         let left_size = n.left_size;
         if index < left_size {
@@ -475,7 +475,7 @@ pub mod AVLTreeSeq {
         nth_link(&n.right, index - left_size - 1)
     }
 
-    fn set_link<T: Copy + Debug>(node: &mut Link<T>, index: N, value: T) -> Result<(), &'static str> {
+    fn set_link<T: StT>(node: &mut Link<T>, index: N, value: T) -> Result<(), &'static str> {
         match node {
             | None => Err("Index out of bounds"),
             | Some(n) => {
@@ -492,15 +492,15 @@ pub mod AVLTreeSeq {
         }
     }
 
-    fn push_inorder<T: Copy + Debug + Clone>(link: &Link<T>, out: &mut Vec<T>) {
+    fn push_inorder<T: StT + Clone>(link: &Link<T>, out: &mut Vec<T>) {
         if let Some(n) = link {
             push_inorder(&n.left, out);
-            out.push(n.value);
+            out.push(n.value.clone());
             push_inorder(&n.right, out);
         }
     }
 
-    impl<T: Copy + Debug> Default for AVLTreeS<T> {
+    impl<T: StT> Default for AVLTreeS<T> {
         fn default() -> Self { Self::new() }
     }
 

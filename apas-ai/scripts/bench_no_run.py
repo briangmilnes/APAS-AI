@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compile benchmarks without running them using cargo bench --no-run."""
-# Git commit: 584a672b6a34782766863c5f76a461d3297a741a
-# Date: 2025-10-17 05:17:36 -0700
+# Git commit: 08cec0603b305aa07307724314ae2656d8597279
+# Date: 2025-10-18
 
 
 import subprocess
