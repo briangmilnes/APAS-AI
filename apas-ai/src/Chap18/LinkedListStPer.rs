@@ -97,101 +97,41 @@ pub mod LinkedListStPer {
         fn from_vec(elts: Vec<T>) -> Self;
     }
 
-    impl<T: StT> LinkedListStPerS<T> {
-        pub fn empty() -> Self { LinkedListStPerS { head: None, len: 0 } }
-
-        pub fn new(length: N, init_value: T) -> Self
-        where
-            T: Clone,
-        {
-            LinkedListStPerS::from_vec(vec![init_value; length])
+    // Module-level function for node navigation (private helper)
+    fn node_at<T: StT>(list: &LinkedListStPerS<T>, index: N) -> Option<&NodeP<T>> {
+        if index >= list.len {
+            return None;
         }
-
-        pub fn singleton(item: T) -> Self { LinkedListStPerS::from_vec(vec![item]) }
-
-        pub fn from_vec(elts: Vec<T>) -> Self {
-            let mut head: Option<Box<NodeP<T>>> = None;
-            let mut len = 0usize;
-            for value in elts.into_iter().rev() {
-                head = Some(Box::new(NodeP { value, next: head }));
-                len += 1;
+        let mut current = list.head.as_deref();
+        let mut i = 0usize;
+        while let Some(node) = current {
+            if i == index {
+                return Some(node);
             }
-            LinkedListStPerS { head, len }
+            current = node.next.as_deref();
+            i += 1;
         }
-
-        pub fn length(&self) -> N { self.len }
-
-        pub fn nth(&self, index: N) -> &T {
-            self.node_at(index)
-                .map(|node| &node.value)
-                .expect("Index out of bounds")
-        }
-
-        pub fn subseq_copy(&self, start: N, length: N) -> Self {
-            if length == 0 || start >= self.len {
-                return LinkedListStPerS::empty();
-            }
-            let mut current = self.head.as_deref();
-            let mut skipped = 0usize;
-            while skipped < start {
-                match current {
-                    | Some(node) => {
-                        current = node.next.as_deref();
-                        skipped += 1;
-                    }
-                    | None => return LinkedListStPerS::empty(),
-                }
-            }
-            let mut out: Vec<T> = Vec::with_capacity(length);
-            let mut taken = 0usize;
-            while taken < length {
-                match current {
-                    | Some(node) => {
-                        out.push(node.value.clone());
-                        current = node.next.as_deref();
-                        taken += 1;
-                    }
-                    | None => break,
-                }
-            }
-            LinkedListStPerS::from_vec(out)
-        }
-
-        fn node_at(&self, index: N) -> Option<&NodeP<T>> {
-            if index >= self.len {
-                return None;
-            }
-            let mut current = self.head.as_deref();
-            let mut i = 0usize;
-            while let Some(node) = current {
-                if i == index {
-                    return Some(node);
-                }
-                current = node.next.as_deref();
-                i += 1;
-            }
-            None
-        }
+        None
     }
 
     impl<T: StT> LinkedListStPerTrait<T> for LinkedListStPerS<T> {
         fn new(length: N, init_value: T) -> LinkedListStPerS<T>
         where
             T: Clone, {
-            LinkedListStPerS::from_vec(vec![init_value; length])
+            Self::from_vec(vec![init_value; length])
         }
 
         fn empty() -> LinkedListStPerS<T> { LinkedListStPerS { head: None, len: 0 } }
-        fn singleton(item: T) -> LinkedListStPerS<T> { LinkedListStPerS::from_vec(vec![item]) }
+        fn singleton(item: T) -> LinkedListStPerS<T> { Self::from_vec(vec![item]) }
         fn length(&self) -> N { self.len }
         fn nth(&self, index: N) -> &T {
-            self.node_at(index)
+            node_at(self, index)
                 .map(|node| &node.value)
                 .expect("Index out of bounds")
         }
         fn subseq_copy(&self, start: N, length: N) -> LinkedListStPerS<T> {
             if length == 0 || start >= self.len {
-                return LinkedListStPerS::empty();
+                return Self::empty();
             }
             let mut current = self.head.as_deref();
             let mut skipped = 0usize;
@@ -201,7 +141,7 @@ pub mod LinkedListStPer {
                         current = node.next.as_deref();
                         skipped += 1;
                     }
-                    | None => return LinkedListStPerS::empty(),
+                    | None => return Self::empty(),
                 }
             }
             let mut out: Vec<T> = Vec::with_capacity(length);
@@ -216,7 +156,7 @@ pub mod LinkedListStPer {
                     | None => break,
                 }
             }
-            LinkedListStPerS::from_vec(out)
+            Self::from_vec(out)
         }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> LinkedListStPerS<T> {
@@ -349,7 +289,7 @@ pub mod LinkedListStPer {
         fn scan<F: Fn(&T, &T) -> T>(a: &LinkedListStPerS<T>, f: &F, id: T) -> (LinkedListStPerS<T>, T) {
             let len = a.length();
             if len == 0 {
-                return (LinkedListStPerS::empty(), id);
+                return (Self::empty(), id);
             }
             let mut prefixes: Vec<T> = Vec::with_capacity(len);
             for i in 0..len {
