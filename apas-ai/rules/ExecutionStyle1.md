@@ -212,6 +212,12 @@ User activates by saying "careful mode" or "ask first":
 #### No Perl; awk acceptable
 - Use `rg/grep`; `awk` only if needed; never Perl.
 
+#### No heredocs
+- **NEVER use heredocs** (bash `<<EOF` syntax) in terminal commands or scripts
+- Heredocs make code unreadable and break copy-paste workflows
+- Instead: write to files using proper tools (write tool, echo with >, Python scripts)
+- If you need multi-line output, use Python or proper file writing
+
 #### CPR rule (heartbeat lines)
 - Always write brief heartbeat lines (e.g., "Thinking" or "Planning") so progress is visible—before a tool batch, after edits/commands, and at completion.
 
@@ -249,6 +255,21 @@ User activates by saying "careful mode" or "ask first":
     - Update files in place: `analysis.txt`, not `analysis_updated.txt`
     - If regenerating an analysis, overwrite the original file
     - Use git for versioning, not filename suffixes
+- **Script output and logging**:
+  - **Scripts MUST log by default**: All analysis/detection scripts must write output files automatically
+    - Don't rely on shell redirection (`> file.txt`) - easy to forget
+    - Scripts should take `--output` or use default paths (e.g., `analyses/code_quality/<script_name>.txt`)
+    - Both stdout (for user) AND file (for analysis) should be produced
+    - Example: Python script uses `tee` pattern - print to console and write to file
+  - **Output naming**: `<script_name>.txt` (no dates - git provides timestamps)
+    - Detection scripts: `analyses/code_quality/detect_<pattern>.txt`
+    - Fix scripts: `analyses/code_quality/fix_<pattern>.txt`
+    - Grind/test runs: `analyses/build_logs/grind_<module>.txt`
+    - Update in place when re-running (git tracks changes)
+  - **Analysis workflow**: run script → review output → grep/analyze → commit with summary
+    - Large outputs: use grep/awk to extract key information
+    - Add findings to commit message or separate summary file
+    - Git checkout + log provides temporal context
 - **Scripts organization**: Place all scripts in appropriate `scripts/` subdirectories
   - `scripts/APAS/src/` - APAS source code review and fixes
   - `scripts/APAS/tests/` - APAS test utilities
