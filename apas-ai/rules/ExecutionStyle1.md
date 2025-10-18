@@ -241,6 +241,11 @@ User activates by saying "careful mode" or "ask first":
   - **Script location**: Never use `/tmp` for scripts - they damage future research
     - Temporary exploratory scripts go in `scripts/tmp/`
     - Reusable tools go in appropriate permanent locations
+  - **Script naming**: No version suffixes (`_v2`, `_v3`, etc.)
+    - Use base name for current version: `fix_trait_forwarding.py`
+    - NOT: `fix_trait_forwarding_v3.py`
+    - Use git for versioning, not filename suffixes
+    - Exception: Legacy scripts may retain version numbers temporarily during transition
 - **One-time scripts**: All temporary single-use scripts go in `scripts/tmp/`
   - Migration scripts (rename files, restructure)
   - One-time pattern fixes or reverts

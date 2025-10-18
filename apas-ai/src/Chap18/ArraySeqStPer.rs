@@ -231,6 +231,7 @@ pub mod ArraySeqStPer {
         }
 
         fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> T {
+
             if a.length() == 0 {
                 return id;
             }
@@ -243,7 +244,7 @@ pub mod ArraySeqStPer {
             let l = ArraySeqStPerS::reduce(&left, f, id.clone());
             let r = ArraySeqStPerS::reduce(&right, f, id);
             f(&l, &r)
-        }
+    }
 
         fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T) {
             let mut acc = id.clone();
