@@ -170,7 +170,8 @@ def main():
                     tee.print(f"  TRAIT: {trait_bounds}")
             else:
                 total_missing_traits += 1
-                tee.print(f"{rel_file}:{result['line']}: NO_TRAIT (inherent impl) - {result['impl_line'].strip()}")
+                tee.print(f"{rel_file}:{result['line']}: NO_TRAIT (inherent impl)")
+                tee.print(f"  {result['impl_line'].strip()}")
     
     tee.print(f"\n{'='*80}")
     tee.print("SUMMARY")
