@@ -162,10 +162,10 @@ def main():
                 # Simple check: do the bounds match?
                 if impl_bounds.split('{')[0].strip() == trait_bounds.split('{')[0].strip():
                     matches += 1
-                    tee.print(f"{rel_file}:{result['line']}: MATCH")
+                    tee.print(f"{rel_file}:{result['line']}: MATCH - {impl_bounds}")
                 else:
                     mismatches += 1
-                    tee.print(f"{rel_file}:{result['line']}: MISMATCH")
+                    tee.print(f"{rel_file}:{result['line']}: MISMATCH (trait impl)")
                     tee.print(f"  IMPL:  {impl_bounds}")
                     tee.print(f"  TRAIT: {trait_bounds}")
             else:

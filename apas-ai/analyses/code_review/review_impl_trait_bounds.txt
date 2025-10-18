@@ -1,10 +1,10 @@
 INHERENT IMPL BLOCKS WITH TRAIT BOUNDS COMPARISON
 ================================================================================
 
-src/Chap06/LabDirGraphMtEph.rs:59: MISMATCH
+src/Chap06/LabDirGraphMtEph.rs:59: MISMATCH (trait impl)
   IMPL:  impl<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> LabDirGraphMtEphTrait<V, L>
   TRAIT: pub trait LabDirGraphMtEphTrait<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> {
-src/Chap06/LabUnDirGraphMtEph.rs:59: MISMATCH
+src/Chap06/LabUnDirGraphMtEph.rs:59: MISMATCH (trait impl)
   IMPL:  impl<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static> LabUnDirGraphMtEphTrait<V, L>
   TRAIT: pub trait LabUnDirGraphMtEphTrait<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static> {
 src/Chap06/LabUnDirGraphMtEph.rs:188: NO_TRAIT (inherent impl) - impl<V: HashOrd + MtT, L: StTInMtT + Hash> LabUnDirGraphMtEph<V, L> {
@@ -87,40 +87,40 @@ src/Chap47/LinearProbing.rs:17: NO_TRAIT (inherent impl) - impl<K: StT, H: HashF
 src/Chap47/NestedHashTable.rs:19: NO_TRAIT (inherent impl) - impl<K: StT, V: StT> NestedHashTable<K, V> {
 src/Chap47/QuadraticProbing.rs:19: NO_TRAIT (inherent impl) - impl<K: StT, H: HashFunClone<K>> QuadraticProbingStrategy<K, H> {
 src/Chap47/SeparateChaining.rs:26: NO_TRAIT (inherent impl) - impl<K, V, H, E> SeparateChainingHashTable<K, V, H, E>
-src/Chap47clean/DoubleHashFlatHashTableStEph.rs:56: MISMATCH
+src/Chap47clean/DoubleHashFlatHashTableStEph.rs:56: MISMATCH (trait impl)
   IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, FlatEntry<Key, Value>, Metrics>
   TRAIT: pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
-src/Chap47clean/DoubleHashFlatHashTableStEph.rs:111: MISMATCH
+src/Chap47clean/DoubleHashFlatHashTableStEph.rs:111: MISMATCH (trait impl)
   IMPL:  impl<Key: StT, Value: StT, Metrics: Default> FlatHashTable<Key, Value, FlatEntry<Key, Value>, Metrics>
   TRAIT: pub trait FlatHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
-src/Chap47clean/LinProbFlatHashTableStEph.rs:14: MISMATCH
+src/Chap47clean/LinProbFlatHashTableStEph.rs:14: MISMATCH (trait impl)
   IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, FlatEntry<Key, Value>, Metrics>
   TRAIT: pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
-src/Chap47clean/LinProbFlatHashTableStEph.rs:75: MISMATCH
+src/Chap47clean/LinProbFlatHashTableStEph.rs:75: MISMATCH (trait impl)
   IMPL:  impl<Key: StT, Value: StT, Metrics: Default> FlatHashTable<Key, Value, FlatEntry<Key, Value>, Metrics>
   TRAIT: pub trait FlatHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
-src/Chap47clean/LinkedListChainedHashTableStEph.rs:58: MISMATCH
+src/Chap47clean/LinkedListChainedHashTableStEph.rs:58: MISMATCH (trait impl)
   IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, LinkedList<(Key, Value)>, Metrics>
   TRAIT: pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
-src/Chap47clean/LinkedListChainedHashTableStEph.rs:74: MISMATCH
+src/Chap47clean/LinkedListChainedHashTableStEph.rs:74: MISMATCH (trait impl)
   IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ChainedHashTable<Key, Value, LinkedList<(Key, Value)>, Metrics>
   TRAIT: pub trait ChainedHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
-src/Chap47clean/QuadProbFlatHashTableStEph.rs:15: MISMATCH
+src/Chap47clean/QuadProbFlatHashTableStEph.rs:15: MISMATCH (trait impl)
   IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, FlatEntry<Key, Value>, Metrics>
   TRAIT: pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
-src/Chap47clean/QuadProbFlatHashTableStEph.rs:74: MISMATCH
+src/Chap47clean/QuadProbFlatHashTableStEph.rs:74: MISMATCH (trait impl)
   IMPL:  impl<Key: StT, Value: StT, Metrics: Default> FlatHashTable<Key, Value, FlatEntry<Key, Value>, Metrics>
   TRAIT: pub trait FlatHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
-src/Chap47clean/StructChainedHashTable.rs:82: MISMATCH
+src/Chap47clean/StructChainedHashTable.rs:82: MISMATCH (trait impl)
   IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, ChainList<Key, Value>, Metrics>
   TRAIT: pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
-src/Chap47clean/StructChainedHashTable.rs:98: MISMATCH
+src/Chap47clean/StructChainedHashTable.rs:98: MISMATCH (trait impl)
   IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ChainedHashTable<Key, Value, ChainList<Key, Value>, Metrics>
   TRAIT: pub trait ChainedHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
-src/Chap47clean/VecChainedHashTableStEph.rs:47: MISMATCH
+src/Chap47clean/VecChainedHashTableStEph.rs:47: MISMATCH (trait impl)
   IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, Vec<(Key, Value)>, Metrics>
   TRAIT: pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
-src/Chap47clean/VecChainedHashTableStEph.rs:63: MISMATCH
+src/Chap47clean/VecChainedHashTableStEph.rs:63: MISMATCH (trait impl)
   IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ChainedHashTable<Key, Value, Vec<(Key, Value)>, Metrics>
   TRAIT: pub trait ChainedHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
 src/Chap49/MinEditDistMtEph.rs:63: NO_TRAIT (inherent impl) - impl<T: MtVal> MinEditDistMtEphS<T> {
