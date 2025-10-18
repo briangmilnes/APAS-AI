@@ -235,22 +235,66 @@ Result guidance
   }
   ```
 
-- **Private helper types**: Use module-level functions instead of inherent impls
-  - Private types (iterators, internal nodes, etc.) aren't exported
-  - Inherent methods on private types are just internal helpers
-  - Module-level functions are clearer for implementation details
+- **Public vs Private types**: Different rules for what's exported
+  
+  **Public types (exported with `pub`)**: ALWAYS use `pub trait` + trait impl
+  - Enforces Single Implementation Pattern at API boundary
+  - Users get traits via `use Module::*;` automatically
+  - Prevents method hiding and ensures discoverability
   
   ```rust
-  // ❌ WRONG - inherent impl on private helper
-  struct PQEntry { dist: i64, vertex: usize }
-  impl PQEntry {
-      fn new(dist: i64, vertex: usize) -> Self { PQEntry { dist, vertex } }
+  // ✓ CORRECT - public type with public trait
+  pub struct ArraySeqMtEphSliceS<T> { /* ... */ }
+  
+  pub trait ArraySeqMtEphSliceTrait<T: StTInMtT> {
+      fn empty() -> Self;
+      fn length(&self) -> N;
+      // ... all public methods
   }
   
-  // ✓ CORRECT - module-level function for construction
-  struct PQEntry { dist: i64, vertex: usize }
-  fn pq_entry_new(dist: i64, vertex: usize) -> PQEntry { 
-      PQEntry { dist, vertex } 
+  impl<T: StTInMtT> ArraySeqMtEphSliceTrait<T> for ArraySeqMtEphSliceS<T> {
+      // implementations
+  }
+  ```
+  
+  **Private types (no `pub`)**: Use trait if non-trivial, skip if tiny
+  - Private types don't leak outside module (not in `use Module::*`)
+  - Use **private trait** (no `pub`) if:
+    - Multiple methods (>1)
+    - Non-trivial logic (mutex locking, tree balancing, etc.)
+    - Improves readability and maintainability
+  - Skip trait (use inherent impl) only if:
+    - Single trivial constructor (`fn new()` with basic field initialization)
+    - ≤3 lines total, no complex logic
+  
+  ```rust
+  // ✓ CORRECT - private internal type with private trait (mutex logic)
+  struct Inner<T: StTInMtT> {
+      data: Mutex<Box<[T]>>,
+  }
+  
+  trait InnerTrait<T: StTInMtT> {  // private trait (no pub)
+      fn new(data: Box<[T]>) -> Self;
+      fn len(&self) -> N;
+  }
+  
+  impl<T: StTInMtT> InnerTrait<T> for Inner<T> {
+      fn new(data: Box<[T]>) -> Self { Inner { data: Mutex::new(data) } }
+      fn len(&self) -> N {
+          let guard = self.data.lock().unwrap();
+          guard.len()
+      }
+  }
+  
+  // ✓ ACCEPTABLE - single trivial constructor (pragmatic exception)
+  struct AVLTreeNode<T> {
+      value: T, height: usize, left: Option<Box<AVLTreeNode<T>>>, right: Option<Box<AVLTreeNode<T>>>,
+  }
+  
+  impl<T: StT> AVLTreeNode<T> {
+      fn new(value: T) -> Self {
+          AVLTreeNode { value, height: 1, left: None, right: None }
+      }
   }
   ```
 
