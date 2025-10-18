@@ -44,9 +44,12 @@ pub mod PQMinMtPer {
             PF: PriorityFn<V, P>;
     }
 
+    pub trait ClosurePriorityTrait<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> {
+        fn new(f: F) -> Self;
+    }
 
-    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
-        pub fn new(f: F) -> Self {
+    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> ClosurePriorityTrait<V, P, F> for ClosurePriority<V, P, F> {
+        fn new(f: F) -> Self {
             Self {
                 f,
                 _phantom: PhantomData,

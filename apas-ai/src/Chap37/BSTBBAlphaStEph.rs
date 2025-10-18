@@ -64,38 +64,6 @@ pub mod BSTBBAlphaStEph {
 
 
     impl<T: StT + Ord> BSTBBAlphaStEph<T> {
-        // Private helper methods only - no public delegation
-
-        pub fn height(&self) -> N {
-            fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
-                match link {
-                    | None => 0,
-                    | Some(node) => 1 + height_rec(&node.left).max(height_rec(&node.right)),
-                }
-            }
-            height_rec(&self.root)
-        }
-
-        pub fn insert(&mut self, value: T) {
-            let inserted = Self::insert_link(&mut self.root, value);
-            if inserted {
-                let total = Self::size_link(&self.root);
-                Self::rebalance_if_needed(&mut self.root, total);
-            }
-        }
-
-        pub fn in_order(&self) -> ArraySeqStPerS<T> {
-            let mut out = Vec::with_capacity(self.size());
-            Self::in_order_collect(&self.root, &mut out);
-            ArraySeqStPerS::from_vec(out)
-        }
-
-        pub fn pre_order(&self) -> ArraySeqStPerS<T> {
-            let mut out = Vec::with_capacity(self.size());
-            Self::pre_order_collect(&self.root, &mut out);
-            ArraySeqStPerS::from_vec(out)
-        }
-
         fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
         fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right); }
@@ -228,7 +196,13 @@ pub mod BSTBBAlphaStEph {
             height_rec(&self.root)
         }
 
-        fn insert(&mut self, value: T) { Self::insert_link(&mut self.root, value); }
+        fn insert(&mut self, value: T) {
+            let inserted = Self::insert_link(&mut self.root, value);
+            if inserted {
+                let total = Self::size_link(&self.root);
+                Self::rebalance_if_needed(&mut self.root, total);
+            }
+        }
 
         fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
 

@@ -78,27 +78,6 @@ pub mod ArraySeqMtEphSlice {
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtEphSliceS<T> {
-        /// Constructs a sequence from an owned boxed slice.
-        pub fn from_box(data: Box<[T]>) -> Self {
-            let len = data.len();
-            ArraySeqMtEphSliceS {
-                inner: Arc::new(Inner::new(data)),
-                range: 0..len,
-            }
-        }
-
-        /// Constructs a sequence from a Vec without exposing it to callers.
-        pub fn from_vec(data: Vec<T>) -> Self { Self::from_box(data.into_boxed_slice()) }
-
-        /// Materializes the current slice into a Vec for diagnostics or copies.
-        pub fn to_vec(&self) -> Vec<T> {
-            let guard = self.inner.data.lock().unwrap();
-            guard[self.range.start..self.range.end].to_vec()
-        }
-
-        /// Set method for ephemeral sequences (alias for update)
-        pub fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> { self.update(index, item) }
-
         fn len(&self) -> N { self.range.end - self.range.start }
 
         fn clamp_subrange(&self, start: N, length: N) -> Range<N> {

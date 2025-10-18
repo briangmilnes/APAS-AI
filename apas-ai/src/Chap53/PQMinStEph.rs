@@ -39,9 +39,12 @@ pub mod PQMinStEph {
             PF: PriorityFn<V, P>;
     }
 
+    pub trait ClosurePriorityTrait<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> {
+        fn new(f: F) -> Self;
+    }
 
-    impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
-        pub fn new(f: F) -> Self {
+    impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriorityTrait<V, P, F> for ClosurePriority<V, P, F> {
+        fn new(f: F) -> Self {
             Self {
                 f,
                 _phantom: PhantomData,
