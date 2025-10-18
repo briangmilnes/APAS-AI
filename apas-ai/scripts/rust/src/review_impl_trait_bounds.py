@@ -142,33 +142,43 @@ def main():
     total_with_traits = 0
     total_missing_traits = 0
     
+    matches = 0
+    mismatches = 0
+    
     for filepath in sorted(by_file.keys()):
-        tee.print(f"\n{'='*80}")
-        tee.print(f"FILE: {filepath}")
-        tee.print('='*80)
-        
         for result in by_file[filepath]:
             total_impls += 1
-            tee.print(f"\nLine {result['line']}:")
-            tee.print(f"  IMPL: {result['impl_line'].strip()}")
+            rel_file = result['file'].replace(str(project_root) + '/', '')
             
             if result['trait_def']:
                 total_with_traits += 1
                 # Parse trait def
                 trait_file, trait_line, trait_decl = result['trait_def'].split(':', 2)
-                rel_trait_file = trait_file.replace(str(project_root) + '/', '')
-                tee.print(f"  TRAIT ({rel_trait_file}:{trait_line}):")
-                tee.print(f"        {trait_decl.strip()}")
+                
+                # Compare bounds
+                impl_bounds = result['impl_line'].strip()
+                trait_bounds = trait_decl.strip()
+                
+                # Simple check: do the bounds match?
+                if impl_bounds.split('{')[0].strip() == trait_bounds.split('{')[0].strip():
+                    matches += 1
+                    tee.print(f"{rel_file}:{result['line']}: MATCH")
+                else:
+                    mismatches += 1
+                    tee.print(f"{rel_file}:{result['line']}: MISMATCH")
+                    tee.print(f"  IMPL:  {impl_bounds}")
+                    tee.print(f"  TRAIT: {trait_bounds}")
             else:
                 total_missing_traits += 1
-                tee.print(f"  TRAIT: Not found ('{result['trait_name']}')")
+                tee.print(f"{rel_file}:{result['line']}: NO_TRAIT (inherent impl) - {result['impl_line'].strip()}")
     
     tee.print(f"\n{'='*80}")
     tee.print("SUMMARY")
     tee.print('='*80)
     tee.print(f"Total inherent impls with generics: {total_impls}")
-    tee.print(f"  With trait definitions found: {total_with_traits}")
-    tee.print(f"  Without trait definitions: {total_missing_traits}")
+    tee.print(f"  Trait impls (matching bounds): {matches}")
+    tee.print(f"  Trait impls (mismatched bounds): {mismatches}")
+    tee.print(f"  Actual inherent impls (no trait): {total_missing_traits}")
     tee.print()
     tee.print(f"Log written to: {log_path}")
     tee.close()

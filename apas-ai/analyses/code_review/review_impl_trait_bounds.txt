@@ -1,802 +1,154 @@
 INHERENT IMPL BLOCKS WITH TRAIT BOUNDS COMPARISON
 ================================================================================
 
-
-================================================================================
-FILE: src/Chap06/LabDirGraphMtEph.rs
-================================================================================
-
-Line 59:
-  IMPL: impl<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> LabDirGraphMtEphTrait<V, L>
-  TRAIT (src/Chap06/LabDirGraphMtEph.rs:23):
-        pub trait LabDirGraphMtEphTrait<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> {
-
-================================================================================
-FILE: src/Chap06/LabUnDirGraphMtEph.rs
-================================================================================
-
-Line 59:
-  IMPL: impl<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static> LabUnDirGraphMtEphTrait<V, L>
-  TRAIT (src/Chap06/LabUnDirGraphMtEph.rs:23):
-        pub trait LabUnDirGraphMtEphTrait<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static> {
-
-Line 188:
-  IMPL: impl<V: HashOrd + MtT, L: StTInMtT + Hash> LabUnDirGraphMtEph<V, L> {
-  TRAIT: Not found ('LabUnDirGraphMtEph')
-
-================================================================================
-FILE: src/Chap06/WeightedDirGraphMtEphFloat.rs
-================================================================================
-
-Line 20:
-  IMPL: impl<V: StT + MtT + Hash + 'static> WeightedDirGraphMtEphFloat<V> {
-  TRAIT: Not found ('WeightedDirGraphMtEphFloat')
-
-================================================================================
-FILE: src/Chap06/WeightedDirGraphMtEphInt.rs
-================================================================================
-
-Line 20:
-  IMPL: impl<V: StT + MtT + Hash + 'static> WeightedDirGraphMtEphInt<V> {
-  TRAIT: Not found ('WeightedDirGraphMtEphInt')
-
-================================================================================
-FILE: src/Chap06/WeightedDirGraphStEphFloat.rs
-================================================================================
-
-Line 48:
-  IMPL: impl<V: StT + Hash> WeightedDirGraphStEphFloat<V> {
-  TRAIT: Not found ('WeightedDirGraphStEphFloat')
-
-================================================================================
-FILE: src/Chap06/WeightedDirGraphStEphInt.rs
-================================================================================
-
-Line 16:
-  IMPL: impl<V: StT + Hash> WeightedDirGraphStEphInt<V> {
-  TRAIT: Not found ('WeightedDirGraphStEphInt')
-
-================================================================================
-FILE: src/Chap06/WeightedUnDirGraphMtEphFloat.rs
-================================================================================
-
-Line 20:
-  IMPL: impl<V: HashOrd + MtT + 'static> WeightedUnDirGraphMtEphFloat<V> {
-  TRAIT: Not found ('WeightedUnDirGraphMtEphFloat')
-
-================================================================================
-FILE: src/Chap06/WeightedUnDirGraphMtEphInt.rs
-================================================================================
-
-Line 20:
-  IMPL: impl<V: HashOrd + MtT + 'static> WeightedUnDirGraphMtEphInt<V> {
-  TRAIT: Not found ('WeightedUnDirGraphMtEphInt')
-
-================================================================================
-FILE: src/Chap06/WeightedUnDirGraphStEphFloat.rs
-================================================================================
-
-Line 46:
-  IMPL: impl<V: StT + Hash + Ord> WeightedUnDirGraphStEphFloat<V> {
-  TRAIT: Not found ('WeightedUnDirGraphStEphFloat')
-
-================================================================================
-FILE: src/Chap06/WeightedUnDirGraphStEphInt.rs
-================================================================================
-
-Line 16:
-  IMPL: impl<V: StT + Hash + Ord> WeightedUnDirGraphStEphInt<V> {
-  TRAIT: Not found ('WeightedUnDirGraphStEphInt')
-
-================================================================================
-FILE: src/Chap18/ArraySeqStEph.rs
-================================================================================
-
-Line 94:
-  IMPL: impl<T: StT> ArraySeqStEphS<T> {
-  TRAIT: Not found ('ArraySeqStEphS')
-
-================================================================================
-FILE: src/Chap18/ArraySeqStPer.rs
-================================================================================
-
-Line 89:
-  IMPL: impl<T: StT> ArraySeqStPerS<T> {
-  TRAIT: Not found ('ArraySeqStPerS')
-
-================================================================================
-FILE: src/Chap19/ArraySeqMtEphSlice.rs
-================================================================================
-
-Line 22:
-  IMPL: impl<T: StTInMtT> Inner<T> {
-  TRAIT: Not found ('Inner')
-
-Line 80:
-  IMPL: impl<T: StTInMtT + 'static> ArraySeqMtEphSliceS<T> {
-  TRAIT: Not found ('ArraySeqMtEphSliceS')
-
-================================================================================
-FILE: src/Chap23/BalBinTreeStEph.rs
-================================================================================
-
-Line 47:
-  IMPL: impl<T: StT> BalBinNode<T> {
-  TRAIT: Not found ('BalBinNode')
-
-================================================================================
-FILE: src/Chap37/AVLTreeSeq.rs
-================================================================================
-
-Line 31:
-  IMPL: impl<T: StT> AVLTreeNode<T> {
-  TRAIT: Not found ('AVLTreeNode')
-
-Line 100:
-  IMPL: impl<T: StT> AVLTreeS<T> {
-  TRAIT: Not found ('AVLTreeS')
-
-Line 348:
-  IMPL: impl<'a, T: StT> AVLTreeSeqIter<'a, T> {
-  TRAIT: Not found ('AVLTreeSeqIter')
-
-================================================================================
-FILE: src/Chap37/AVLTreeSeqStEph.rs
-================================================================================
-
-Line 24:
-  IMPL: impl<T: StT> AVLTreeNode<T> {
-  TRAIT: Not found ('AVLTreeNode')
-
-Line 75:
-  IMPL: impl<T: StT> AVLTreeSeqStEphS<T> {
-  TRAIT: Not found ('AVLTreeSeqStEphS')
-
-Line 232:
-  IMPL: impl<'a, T: StT> AVLTreeSeqIterStEph<'a, T> {
-  TRAIT: Not found ('AVLTreeSeqIterStEph')
-
-================================================================================
-FILE: src/Chap37/AVLTreeSeqStPer.rs
-================================================================================
-
-Line 258:
-  IMPL: impl<'a, T: StT> AVLTreeSeqStPerIter<'a, T> {
-  TRAIT: Not found ('AVLTreeSeqStPerIter')
-
-================================================================================
-FILE: src/Chap37/BSTAVLMtEph.rs
-================================================================================
-
-Line 23:
-  IMPL: impl<T: StTInMtT + Ord> Node<T> {
-  TRAIT: Not found ('Node')
-
-Line 66:
-  IMPL: impl<T: StTInMtT + Ord> BSTAVLMtEph<T> {
-  TRAIT: Not found ('BSTAVLMtEph')
-
-================================================================================
-FILE: src/Chap37/BSTAVLStEph.rs
-================================================================================
-
-Line 21:
-  IMPL: impl<T: StT + Ord> Node<T> {
-  TRAIT: Not found ('Node')
-
-Line 66:
-  IMPL: impl<T: StT + Ord> BSTAVLStEph<T> {
-  TRAIT: Not found ('BSTAVLStEph')
-
-================================================================================
-FILE: src/Chap37/BSTBBAlphaMtEph.rs
-================================================================================
-
-Line 24:
-  IMPL: impl<T: StTInMtT + Ord> Node<T> {
-  TRAIT: Not found ('Node')
-
-Line 66:
-  IMPL: impl<T: StTInMtT + Ord> BSTBBAlphaMtEph<T> {
-  TRAIT: Not found ('BSTBBAlphaMtEph')
-
-================================================================================
-FILE: src/Chap37/BSTBBAlphaStEph.rs
-================================================================================
-
-Line 22:
-  IMPL: impl<T: StT + Ord> Node<T> {
-  TRAIT: Not found ('Node')
-
-Line 66:
-  IMPL: impl<T: StT + Ord> BSTBBAlphaStEph<T> {
-  TRAIT: Not found ('BSTBBAlphaStEph')
-
-================================================================================
-FILE: src/Chap37/BSTPlainMtEph.rs
-================================================================================
-
-Line 22:
-  IMPL: impl<T: StTInMtT + Ord> Node<T> {
-  TRAIT: Not found ('Node')
-
-================================================================================
-FILE: src/Chap37/BSTRBMtEph.rs
-================================================================================
-
-Line 29:
-  IMPL: impl<T: StTInMtT + Ord> Node<T> {
-  TRAIT: Not found ('Node')
-
-Line 66:
-  IMPL: impl<T: StTInMtT + Ord> BSTRBMtEph<T> {
-  TRAIT: Not found ('BSTRBMtEph')
-
-================================================================================
-FILE: src/Chap37/BSTRBStEph.rs
-================================================================================
-
-Line 27:
-  IMPL: impl<T: StT + Ord> Node<T> {
-  TRAIT: Not found ('Node')
-
-Line 72:
-  IMPL: impl<T: StT + Ord> BSTRBStEph<T> {
-  TRAIT: Not found ('BSTRBStEph')
-
-================================================================================
-FILE: src/Chap37/BSTSetAVLMtEph.rs
-================================================================================
-
-Line 62:
-  IMPL: impl<T: StTInMtT + Ord> BSTSetAVLMtEph<T> {
-  TRAIT: Not found ('BSTSetAVLMtEph')
-
-================================================================================
-FILE: src/Chap37/BSTSetBBAlphaMtEph.rs
-================================================================================
-
-Line 62:
-  IMPL: impl<T: StTInMtT + Ord> BSTSetBBAlphaMtEph<T> {
-  TRAIT: Not found ('BSTSetBBAlphaMtEph')
-
-================================================================================
-FILE: src/Chap37/BSTSetPlainMtEph.rs
-================================================================================
-
-Line 62:
-  IMPL: impl<T: StTInMtT + Ord> BSTSetPlainMtEph<T> {
-  TRAIT: Not found ('BSTSetPlainMtEph')
-
-================================================================================
-FILE: src/Chap37/BSTSetRBMtEph.rs
-================================================================================
-
-Line 62:
-  IMPL: impl<T: StTInMtT + Ord> BSTSetRBMtEph<T> {
-  TRAIT: Not found ('BSTSetRBMtEph')
-
-================================================================================
-FILE: src/Chap37/BSTSetSplayMtEph.rs
-================================================================================
-
-Line 62:
-  IMPL: impl<T: StTInMtT + Ord> BSTSetSplayMtEph<T> {
-  TRAIT: Not found ('BSTSetSplayMtEph')
-
-================================================================================
-FILE: src/Chap37/BSTSplayMtEph.rs
-================================================================================
-
-Line 22:
-  IMPL: impl<T: StTInMtT + Ord> Node<T> {
-  TRAIT: Not found ('Node')
-
-Line 66:
-  IMPL: impl<T: StTInMtT + Ord> BSTSplayMtEph<T> {
-  TRAIT: Not found ('BSTSplayMtEph')
-
-================================================================================
-FILE: src/Chap37/BSTSplayStEph.rs
-================================================================================
-
-Line 20:
-  IMPL: impl<T: StT + Ord> Node<T> {
-  TRAIT: Not found ('Node')
-
-Line 64:
-  IMPL: impl<T: StT + Ord> BSTSplayStEph<T> {
-  TRAIT: Not found ('BSTSplayStEph')
-
-================================================================================
-FILE: src/Chap38/BSTParaMtEph.rs
-================================================================================
-
-Line 84:
-  IMPL: impl<T: MtKey + 'static> ParamBST<T> {
-  TRAIT: Not found ('ParamBST')
-
-================================================================================
-FILE: src/Chap38/BSTParaStEph.rs
-================================================================================
-
-Line 62:
-  IMPL: impl<T: StT + Ord> ParamBST<T> {
-  TRAIT: Not found ('ParamBST')
-
-================================================================================
-FILE: src/Chap39/BSTParaTreapMtEph.rs
-================================================================================
-
-Line 121:
-  IMPL: impl<T: MtKey + 'static> ParamTreap<T> {
-  TRAIT: Not found ('ParamTreap')
-
-================================================================================
-FILE: src/Chap39/BSTSetTreapMtEph.rs
-================================================================================
-
-Line 62:
-  IMPL: impl<T: StTInMtT + Ord> BSTSetTreapMtEph<T> {
-  TRAIT: Not found ('BSTSetTreapMtEph')
-
-================================================================================
-FILE: src/Chap39/BSTTreapMtEph.rs
-================================================================================
-
-Line 24:
-  IMPL: impl<T: StTInMtT + Ord> Node<T> {
-  TRAIT: Not found ('Node')
-
-Line 67:
-  IMPL: impl<T: StTInMtT + Ord> BSTTreapMtEph<T> {
-  TRAIT: Not found ('BSTTreapMtEph')
-
-================================================================================
-FILE: src/Chap39/BSTTreapStEph.rs
-================================================================================
-
-Line 22:
-  IMPL: impl<T: StT + Ord> Node<T> {
-  TRAIT: Not found ('Node')
-
-Line 66:
-  IMPL: impl<T: StT + Ord> BSTTreapStEph<T> {
-  TRAIT: Not found ('BSTTreapStEph')
-
-================================================================================
-FILE: src/Chap40/BSTKeyValueStEph.rs
-================================================================================
-
-Line 22:
-  IMPL: impl<K: StT + Ord, V: StT> Node<K, V> {
-  TRAIT: Not found ('Node')
-
-Line 68:
-  IMPL: impl<K: StT + Ord, V: StT> BSTKeyValueStEph<K, V> {
-  TRAIT: Not found ('BSTKeyValueStEph')
-
-================================================================================
-FILE: src/Chap40/BSTReducedStEph.rs
-================================================================================
-
-Line 37:
-  IMPL: impl<K: StT + Ord, V: StT, R: StT> Node<K, V, R> {
-  TRAIT: Not found ('Node')
-
-Line 114:
-  IMPL: impl<K: StT + Ord, V: StT, R: StT, Op: ReduceOp<V, R>> BSTReducedStEph<K, V, R, Op> {
-  TRAIT: Not found ('None')
-
-Line 275:
-  IMPL: impl<K: StT + Ord, V: StT, R: StT, Op: ReduceOp<V, R>> BSTReducedStEphTrait<K, V, R, Op>
-  TRAIT: Not found ('None')
-
-================================================================================
-FILE: src/Chap40/BSTSizeStEph.rs
-================================================================================
-
-Line 22:
-  IMPL: impl<T: StT + Ord> Node<T> {
-  TRAIT: Not found ('Node')
-
-Line 69:
-  IMPL: impl<T: StT + Ord> BSTSizeStEph<T> {
-  TRAIT: Not found ('BSTSizeStEph')
-
-================================================================================
-FILE: src/Chap43/AugOrderedTableMtEph.rs
-================================================================================
-
-Line 366:
-  IMPL: impl<K: MtKey, V: MtVal, F: MtReduceFn<V>> AugOrderedTableMtEph<K, V, F> {
-  TRAIT: Not found ('None')
-
-================================================================================
-FILE: src/Chap43/AugOrderedTableStEph.rs
-================================================================================
-
-Line 324:
-  IMPL: impl<K: StT + Ord, V: StT, F> AugOrderedTableStEph<K, V, F>
-  TRAIT: Not found ('AugOrderedTableStEph')
-
-================================================================================
-FILE: src/Chap43/AugOrderedTableStPer.rs
-================================================================================
-
-Line 359:
-  IMPL: impl<K: StT + Ord, V: StT, F> AugOrderedTableStPer<K, V, F>
-  TRAIT: Not found ('AugOrderedTableStPer')
-
-================================================================================
-FILE: src/Chap44/DocumentIndex.rs
-================================================================================
-
-Line 287:
-  IMPL: impl<'a> QueryBuilder<'a> {
-  TRAIT: Not found ('QueryBuilder')
-
-================================================================================
-FILE: src/Chap45/BalancedTreePQ.rs
-================================================================================
-
-Line 339:
-  IMPL: impl<T: StT + Ord> BalancedTreePQ<T> {
-  TRAIT: Not found ('BalancedTreePQ')
-
-Line 389:
-  IMPL: impl<T: StT + Ord> BalancedTreePQ<T> {
-  TRAIT: Not found ('BalancedTreePQ')
-
-================================================================================
-FILE: src/Chap45/BinaryHeapPQ.rs
-================================================================================
-
-Line 52:
-  IMPL: impl<T: StT + Ord> BinaryHeapPQ<T> {
-  TRAIT: Not found ('BinaryHeapPQ')
-
-Line 275:
-  IMPL: impl<T: StT + Ord> BinaryHeapPQ<T> {
-  TRAIT: Not found ('BinaryHeapPQ')
-
-Line 372:
-  IMPL: impl<T: StT + Ord> BinaryHeapPQ<T> {
-  TRAIT: Not found ('BinaryHeapPQ')
-
-================================================================================
-FILE: src/Chap45/HeapsortExample.rs
-================================================================================
-
-Line 195:
-  IMPL: impl<T: StT + Ord> HeapsortComparison<T> {
-  TRAIT: Not found ('HeapsortComparison')
-
-================================================================================
-FILE: src/Chap45/LeftistHeapPQ.rs
-================================================================================
-
-Line 81:
-  IMPL: impl<T: StT + Ord> LeftistHeapNode<T> {
-  TRAIT: Not found ('LeftistHeapNode')
-
-Line 352:
-  IMPL: impl<T: StT + Ord> LeftistHeapPQ<T> {
-  TRAIT: Not found ('LeftistHeapPQ')
-
-================================================================================
-FILE: src/Chap47/AdvancedDoubleHashing.rs
-================================================================================
-
-Line 109:
-  IMPL: impl<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> AdvancedDoubleHashingStrategy<K, H1, H2> {
-  TRAIT: Not found ('None')
-
-================================================================================
-FILE: src/Chap47/AdvancedLinearProbing.rs
-================================================================================
-
-Line 32:
-  IMPL: impl<K: StT, H: HashFunClone<K>> AdvancedLinearProbingStrategy<K, H> {
-  TRAIT: Not found ('None')
-
-================================================================================
-FILE: src/Chap47/AdvancedQuadraticProbing.rs
-================================================================================
-
-Line 114:
-  IMPL: impl<K: StT, H: HashFunClone<K>> AdvancedQuadraticProbingStrategy<K, H> {
-  TRAIT: Not found ('None')
-
-================================================================================
-FILE: src/Chap47/DoubleHashing.rs
-================================================================================
-
-Line 18:
-  IMPL: impl<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> DoubleHashingStrategy<K, H1, H2> {
-  TRAIT: Not found ('None')
-
-================================================================================
-FILE: src/Chap47/FlatHashTable.rs
-================================================================================
-
-Line 49:
-  IMPL: impl<K: StT, V: StT, P: ProbeSequence<K> + Clone> FlatHashTable<K, V, P> {
-  TRAIT: Not found ('None')
-
-================================================================================
-FILE: src/Chap47/HashFunctionTraits.rs
-================================================================================
-
-Line 192:
-  IMPL: impl<K, H1: HashFunction<K>, H2: HashFunction<K>> ProbeSequenceGenerator<K, H1, H2> {
-  TRAIT: Not found ('None')
-
-================================================================================
-FILE: src/Chap47/LinearProbing.rs
-================================================================================
-
-Line 17:
-  IMPL: impl<K: StT, H: HashFunClone<K>> LinearProbingStrategy<K, H> {
-  TRAIT: Not found ('None')
-
-================================================================================
-FILE: src/Chap47/NestedHashTable.rs
-================================================================================
-
-Line 19:
-  IMPL: impl<K: StT, V: StT> NestedHashTable<K, V> {
-  TRAIT: Not found ('NestedHashTable')
-
-================================================================================
-FILE: src/Chap47/QuadraticProbing.rs
-================================================================================
-
-Line 19:
-  IMPL: impl<K: StT, H: HashFunClone<K>> QuadraticProbingStrategy<K, H> {
-  TRAIT: Not found ('None')
-
-================================================================================
-FILE: src/Chap47/SeparateChaining.rs
-================================================================================
-
-Line 26:
-  IMPL: impl<K, V, H, E> SeparateChainingHashTable<K, V, H, E>
-  TRAIT: Not found ('SeparateChainingHashTable')
-
-================================================================================
-FILE: src/Chap47clean/DoubleHashFlatHashTableStEph.rs
-================================================================================
-
-Line 56:
-  IMPL: impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, FlatEntry<Key, Value>, Metrics>
-  TRAIT (src/Chap47clean/ParaHashTableStEph.rs:43):
-        pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
-
-Line 111:
-  IMPL: impl<Key: StT, Value: StT, Metrics: Default> FlatHashTable<Key, Value, FlatEntry<Key, Value>, Metrics>
-  TRAIT (src/Chap47clean/FlatHashTable.rs:47):
-        pub trait FlatHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
-
-================================================================================
-FILE: src/Chap47clean/LinProbFlatHashTableStEph.rs
-================================================================================
-
-Line 14:
-  IMPL: impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, FlatEntry<Key, Value>, Metrics>
-  TRAIT (src/Chap47clean/ParaHashTableStEph.rs:43):
-        pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
-
-Line 75:
-  IMPL: impl<Key: StT, Value: StT, Metrics: Default> FlatHashTable<Key, Value, FlatEntry<Key, Value>, Metrics>
-  TRAIT (src/Chap47clean/FlatHashTable.rs:47):
-        pub trait FlatHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
-
-================================================================================
-FILE: src/Chap47clean/LinkedListChainedHashTableStEph.rs
-================================================================================
-
-Line 58:
-  IMPL: impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, LinkedList<(Key, Value)>, Metrics>
-  TRAIT (src/Chap47clean/ParaHashTableStEph.rs:43):
-        pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
-
-Line 74:
-  IMPL: impl<Key: StT, Value: StT, Metrics: Default> ChainedHashTable<Key, Value, LinkedList<(Key, Value)>, Metrics>
-  TRAIT (src/Chap47clean/ChainedHashTable.rs:23):
-        pub trait ChainedHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
-
-================================================================================
-FILE: src/Chap47clean/QuadProbFlatHashTableStEph.rs
-================================================================================
-
-Line 15:
-  IMPL: impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, FlatEntry<Key, Value>, Metrics>
-  TRAIT (src/Chap47clean/ParaHashTableStEph.rs:43):
-        pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
-
-Line 74:
-  IMPL: impl<Key: StT, Value: StT, Metrics: Default> FlatHashTable<Key, Value, FlatEntry<Key, Value>, Metrics>
-  TRAIT (src/Chap47clean/FlatHashTable.rs:47):
-        pub trait FlatHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
-
-================================================================================
-FILE: src/Chap47clean/StructChainedHashTable.rs
-================================================================================
-
-Line 82:
-  IMPL: impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, ChainList<Key, Value>, Metrics>
-  TRAIT (src/Chap47clean/ParaHashTableStEph.rs:43):
-        pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
-
-Line 98:
-  IMPL: impl<Key: StT, Value: StT, Metrics: Default> ChainedHashTable<Key, Value, ChainList<Key, Value>, Metrics>
-  TRAIT (src/Chap47clean/ChainedHashTable.rs:23):
-        pub trait ChainedHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
-
-================================================================================
-FILE: src/Chap47clean/VecChainedHashTableStEph.rs
-================================================================================
-
-Line 47:
-  IMPL: impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, Vec<(Key, Value)>, Metrics>
-  TRAIT (src/Chap47clean/ParaHashTableStEph.rs:43):
-        pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
-
-Line 63:
-  IMPL: impl<Key: StT, Value: StT, Metrics: Default> ChainedHashTable<Key, Value, Vec<(Key, Value)>, Metrics>
-  TRAIT (src/Chap47clean/ChainedHashTable.rs:23):
-        pub trait ChainedHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
-
-================================================================================
-FILE: src/Chap49/MinEditDistMtEph.rs
-================================================================================
-
-Line 63:
-  IMPL: impl<T: MtVal> MinEditDistMtEphS<T> {
-  TRAIT: Not found ('MinEditDistMtEphS')
-
-================================================================================
-FILE: src/Chap49/MinEditDistMtPer.rs
-================================================================================
-
-Line 47:
-  IMPL: impl<T: MtVal> MinEditDistMtPerS<T> {
-  TRAIT: Not found ('MinEditDistMtPerS')
-
-================================================================================
-FILE: src/Chap49/MinEditDistStEph.rs
-================================================================================
-
-Line 61:
-  IMPL: impl<T: StT> MinEditDistStEphS<T> {
-  TRAIT: Not found ('MinEditDistStEphS')
-
-================================================================================
-FILE: src/Chap49/MinEditDistStPer.rs
-================================================================================
-
-Line 46:
-  IMPL: impl<T: StT> MinEditDistStPerS<T> {
-  TRAIT: Not found ('MinEditDistStPerS')
-
-================================================================================
-FILE: src/Chap49/SubsetSumMtEph.rs
-================================================================================
-
-Line 53:
-  IMPL: impl<T: MtVal> SubsetSumMtEphS<T> {
-  TRAIT: Not found ('SubsetSumMtEphS')
-
-================================================================================
-FILE: src/Chap49/SubsetSumMtPer.rs
-================================================================================
-
-Line 43:
-  IMPL: impl<T: MtVal> SubsetSumMtPerS<T> {
-  TRAIT: Not found ('SubsetSumMtPerS')
-
-================================================================================
-FILE: src/Chap49/SubsetSumStEph.rs
-================================================================================
-
-Line 51:
-  IMPL: impl<T: StT> SubsetSumStEphS<T> {
-  TRAIT: Not found ('SubsetSumStEphS')
-
-================================================================================
-FILE: src/Chap49/SubsetSumStPer.rs
-================================================================================
-
-Line 42:
-  IMPL: impl<T: StT> SubsetSumStPerS<T> {
-  TRAIT: Not found ('SubsetSumStPerS')
-
-================================================================================
-FILE: src/Chap50/OptBinSearchTreeMtEph.rs
-================================================================================
-
-Line 64:
-  IMPL: impl<T: MtVal> OBSTMtEphS<T> {
-  TRAIT: Not found ('OBSTMtEphS')
-
-================================================================================
-FILE: src/Chap50/OptBinSearchTreeMtPer.rs
-================================================================================
-
-Line 57:
-  IMPL: impl<T: MtVal> OBSTMtPerS<T> {
-  TRAIT: Not found ('OBSTMtPerS')
-
-================================================================================
-FILE: src/Chap50/OptBinSearchTreeStEph.rs
-================================================================================
-
-Line 67:
-  IMPL: impl<T: StT> OBSTStEphS<T> {
-  TRAIT: Not found ('OBSTStEphS')
-
-================================================================================
-FILE: src/Chap50/OptBinSearchTreeStPer.rs
-================================================================================
-
-Line 55:
-  IMPL: impl<T: StT> OBSTStPerS<T> {
-  TRAIT: Not found ('OBSTStPerS')
-
-================================================================================
-FILE: src/Chap53/PQMinMtEph.rs
-================================================================================
-
-Line 56:
-  IMPL: impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P + Send + Sync + 'static>
-  TRAIT: Not found ('P')
-
-Line 67:
-  IMPL: impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P + Send + Sync + 'static>
-  TRAIT: Not found ('P')
-
-================================================================================
-FILE: src/Chap53/PQMinMtPer.rs
-================================================================================
-
-Line 48:
-  IMPL: impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
-  TRAIT: Not found ('P')
-
-Line 57:
-  IMPL: impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> PriorityFn<V, P>
-  TRAIT: Not found ('P')
-
-================================================================================
-FILE: src/Chap53/PQMinStEph.rs
-================================================================================
-
-Line 43:
-  IMPL: impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
-  TRAIT: Not found ('P')
-
-================================================================================
-FILE: src/Chap53/PQMinStPer.rs
-================================================================================
-
-Line 50:
-  IMPL: impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
-  TRAIT: Not found ('P')
-
-================================================================================
-FILE: src/Chap57/StackStEph.rs
-================================================================================
-
-Line 44:
-  IMPL: impl<T: StT> StackStEph<T> {
-  TRAIT: Not found ('StackStEph')
+src/Chap06/LabDirGraphMtEph.rs:59: MISMATCH
+  IMPL:  impl<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> LabDirGraphMtEphTrait<V, L>
+  TRAIT: pub trait LabDirGraphMtEphTrait<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> {
+src/Chap06/LabUnDirGraphMtEph.rs:59: MISMATCH
+  IMPL:  impl<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static> LabUnDirGraphMtEphTrait<V, L>
+  TRAIT: pub trait LabUnDirGraphMtEphTrait<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static> {
+src/Chap06/LabUnDirGraphMtEph.rs:188: NO_TRAIT (inherent impl) - impl<V: HashOrd + MtT, L: StTInMtT + Hash> LabUnDirGraphMtEph<V, L> {
+src/Chap06/WeightedDirGraphMtEphFloat.rs:20: NO_TRAIT (inherent impl) - impl<V: StT + MtT + Hash + 'static> WeightedDirGraphMtEphFloat<V> {
+src/Chap06/WeightedDirGraphMtEphInt.rs:20: NO_TRAIT (inherent impl) - impl<V: StT + MtT + Hash + 'static> WeightedDirGraphMtEphInt<V> {
+src/Chap06/WeightedDirGraphStEphFloat.rs:48: NO_TRAIT (inherent impl) - impl<V: StT + Hash> WeightedDirGraphStEphFloat<V> {
+src/Chap06/WeightedDirGraphStEphInt.rs:16: NO_TRAIT (inherent impl) - impl<V: StT + Hash> WeightedDirGraphStEphInt<V> {
+src/Chap06/WeightedUnDirGraphMtEphFloat.rs:20: NO_TRAIT (inherent impl) - impl<V: HashOrd + MtT + 'static> WeightedUnDirGraphMtEphFloat<V> {
+src/Chap06/WeightedUnDirGraphMtEphInt.rs:20: NO_TRAIT (inherent impl) - impl<V: HashOrd + MtT + 'static> WeightedUnDirGraphMtEphInt<V> {
+src/Chap06/WeightedUnDirGraphStEphFloat.rs:46: NO_TRAIT (inherent impl) - impl<V: StT + Hash + Ord> WeightedUnDirGraphStEphFloat<V> {
+src/Chap06/WeightedUnDirGraphStEphInt.rs:16: NO_TRAIT (inherent impl) - impl<V: StT + Hash + Ord> WeightedUnDirGraphStEphInt<V> {
+src/Chap18/ArraySeqStEph.rs:94: NO_TRAIT (inherent impl) - impl<T: StT> ArraySeqStEphS<T> {
+src/Chap18/ArraySeqStPer.rs:89: NO_TRAIT (inherent impl) - impl<T: StT> ArraySeqStPerS<T> {
+src/Chap19/ArraySeqMtEphSlice.rs:22: NO_TRAIT (inherent impl) - impl<T: StTInMtT> Inner<T> {
+src/Chap19/ArraySeqMtEphSlice.rs:80: NO_TRAIT (inherent impl) - impl<T: StTInMtT + 'static> ArraySeqMtEphSliceS<T> {
+src/Chap23/BalBinTreeStEph.rs:47: NO_TRAIT (inherent impl) - impl<T: StT> BalBinNode<T> {
+src/Chap37/AVLTreeSeq.rs:31: NO_TRAIT (inherent impl) - impl<T: StT> AVLTreeNode<T> {
+src/Chap37/AVLTreeSeq.rs:100: NO_TRAIT (inherent impl) - impl<T: StT> AVLTreeS<T> {
+src/Chap37/AVLTreeSeq.rs:348: NO_TRAIT (inherent impl) - impl<'a, T: StT> AVLTreeSeqIter<'a, T> {
+src/Chap37/AVLTreeSeqStEph.rs:24: NO_TRAIT (inherent impl) - impl<T: StT> AVLTreeNode<T> {
+src/Chap37/AVLTreeSeqStEph.rs:75: NO_TRAIT (inherent impl) - impl<T: StT> AVLTreeSeqStEphS<T> {
+src/Chap37/AVLTreeSeqStEph.rs:232: NO_TRAIT (inherent impl) - impl<'a, T: StT> AVLTreeSeqIterStEph<'a, T> {
+src/Chap37/AVLTreeSeqStPer.rs:258: NO_TRAIT (inherent impl) - impl<'a, T: StT> AVLTreeSeqStPerIter<'a, T> {
+src/Chap37/BSTAVLMtEph.rs:23: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> Node<T> {
+src/Chap37/BSTAVLMtEph.rs:66: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> BSTAVLMtEph<T> {
+src/Chap37/BSTAVLStEph.rs:21: NO_TRAIT (inherent impl) - impl<T: StT + Ord> Node<T> {
+src/Chap37/BSTAVLStEph.rs:66: NO_TRAIT (inherent impl) - impl<T: StT + Ord> BSTAVLStEph<T> {
+src/Chap37/BSTBBAlphaMtEph.rs:24: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> Node<T> {
+src/Chap37/BSTBBAlphaMtEph.rs:66: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> BSTBBAlphaMtEph<T> {
+src/Chap37/BSTBBAlphaStEph.rs:22: NO_TRAIT (inherent impl) - impl<T: StT + Ord> Node<T> {
+src/Chap37/BSTBBAlphaStEph.rs:66: NO_TRAIT (inherent impl) - impl<T: StT + Ord> BSTBBAlphaStEph<T> {
+src/Chap37/BSTPlainMtEph.rs:22: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> Node<T> {
+src/Chap37/BSTRBMtEph.rs:29: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> Node<T> {
+src/Chap37/BSTRBMtEph.rs:66: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> BSTRBMtEph<T> {
+src/Chap37/BSTRBStEph.rs:27: NO_TRAIT (inherent impl) - impl<T: StT + Ord> Node<T> {
+src/Chap37/BSTRBStEph.rs:72: NO_TRAIT (inherent impl) - impl<T: StT + Ord> BSTRBStEph<T> {
+src/Chap37/BSTSetAVLMtEph.rs:62: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> BSTSetAVLMtEph<T> {
+src/Chap37/BSTSetBBAlphaMtEph.rs:62: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> BSTSetBBAlphaMtEph<T> {
+src/Chap37/BSTSetPlainMtEph.rs:62: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> BSTSetPlainMtEph<T> {
+src/Chap37/BSTSetRBMtEph.rs:62: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> BSTSetRBMtEph<T> {
+src/Chap37/BSTSetSplayMtEph.rs:62: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> BSTSetSplayMtEph<T> {
+src/Chap37/BSTSplayMtEph.rs:22: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> Node<T> {
+src/Chap37/BSTSplayMtEph.rs:66: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> BSTSplayMtEph<T> {
+src/Chap37/BSTSplayStEph.rs:20: NO_TRAIT (inherent impl) - impl<T: StT + Ord> Node<T> {
+src/Chap37/BSTSplayStEph.rs:64: NO_TRAIT (inherent impl) - impl<T: StT + Ord> BSTSplayStEph<T> {
+src/Chap38/BSTParaMtEph.rs:84: NO_TRAIT (inherent impl) - impl<T: MtKey + 'static> ParamBST<T> {
+src/Chap38/BSTParaStEph.rs:62: NO_TRAIT (inherent impl) - impl<T: StT + Ord> ParamBST<T> {
+src/Chap39/BSTParaTreapMtEph.rs:121: NO_TRAIT (inherent impl) - impl<T: MtKey + 'static> ParamTreap<T> {
+src/Chap39/BSTSetTreapMtEph.rs:62: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> BSTSetTreapMtEph<T> {
+src/Chap39/BSTTreapMtEph.rs:24: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> Node<T> {
+src/Chap39/BSTTreapMtEph.rs:67: NO_TRAIT (inherent impl) - impl<T: StTInMtT + Ord> BSTTreapMtEph<T> {
+src/Chap39/BSTTreapStEph.rs:22: NO_TRAIT (inherent impl) - impl<T: StT + Ord> Node<T> {
+src/Chap39/BSTTreapStEph.rs:66: NO_TRAIT (inherent impl) - impl<T: StT + Ord> BSTTreapStEph<T> {
+src/Chap40/BSTKeyValueStEph.rs:22: NO_TRAIT (inherent impl) - impl<K: StT + Ord, V: StT> Node<K, V> {
+src/Chap40/BSTKeyValueStEph.rs:68: NO_TRAIT (inherent impl) - impl<K: StT + Ord, V: StT> BSTKeyValueStEph<K, V> {
+src/Chap40/BSTReducedStEph.rs:37: NO_TRAIT (inherent impl) - impl<K: StT + Ord, V: StT, R: StT> Node<K, V, R> {
+src/Chap40/BSTReducedStEph.rs:114: NO_TRAIT (inherent impl) - impl<K: StT + Ord, V: StT, R: StT, Op: ReduceOp<V, R>> BSTReducedStEph<K, V, R, Op> {
+src/Chap40/BSTReducedStEph.rs:275: NO_TRAIT (inherent impl) - impl<K: StT + Ord, V: StT, R: StT, Op: ReduceOp<V, R>> BSTReducedStEphTrait<K, V, R, Op>
+src/Chap40/BSTSizeStEph.rs:22: NO_TRAIT (inherent impl) - impl<T: StT + Ord> Node<T> {
+src/Chap40/BSTSizeStEph.rs:69: NO_TRAIT (inherent impl) - impl<T: StT + Ord> BSTSizeStEph<T> {
+src/Chap43/AugOrderedTableMtEph.rs:366: NO_TRAIT (inherent impl) - impl<K: MtKey, V: MtVal, F: MtReduceFn<V>> AugOrderedTableMtEph<K, V, F> {
+src/Chap43/AugOrderedTableStEph.rs:324: NO_TRAIT (inherent impl) - impl<K: StT + Ord, V: StT, F> AugOrderedTableStEph<K, V, F>
+src/Chap43/AugOrderedTableStPer.rs:359: NO_TRAIT (inherent impl) - impl<K: StT + Ord, V: StT, F> AugOrderedTableStPer<K, V, F>
+src/Chap44/DocumentIndex.rs:287: NO_TRAIT (inherent impl) - impl<'a> QueryBuilder<'a> {
+src/Chap45/BalancedTreePQ.rs:339: NO_TRAIT (inherent impl) - impl<T: StT + Ord> BalancedTreePQ<T> {
+src/Chap45/BalancedTreePQ.rs:389: NO_TRAIT (inherent impl) - impl<T: StT + Ord> BalancedTreePQ<T> {
+src/Chap45/BinaryHeapPQ.rs:52: NO_TRAIT (inherent impl) - impl<T: StT + Ord> BinaryHeapPQ<T> {
+src/Chap45/BinaryHeapPQ.rs:275: NO_TRAIT (inherent impl) - impl<T: StT + Ord> BinaryHeapPQ<T> {
+src/Chap45/BinaryHeapPQ.rs:372: NO_TRAIT (inherent impl) - impl<T: StT + Ord> BinaryHeapPQ<T> {
+src/Chap45/HeapsortExample.rs:195: NO_TRAIT (inherent impl) - impl<T: StT + Ord> HeapsortComparison<T> {
+src/Chap45/LeftistHeapPQ.rs:81: NO_TRAIT (inherent impl) - impl<T: StT + Ord> LeftistHeapNode<T> {
+src/Chap45/LeftistHeapPQ.rs:352: NO_TRAIT (inherent impl) - impl<T: StT + Ord> LeftistHeapPQ<T> {
+src/Chap47/AdvancedDoubleHashing.rs:109: NO_TRAIT (inherent impl) - impl<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> AdvancedDoubleHashingStrategy<K, H1, H2> {
+src/Chap47/AdvancedLinearProbing.rs:32: NO_TRAIT (inherent impl) - impl<K: StT, H: HashFunClone<K>> AdvancedLinearProbingStrategy<K, H> {
+src/Chap47/AdvancedQuadraticProbing.rs:114: NO_TRAIT (inherent impl) - impl<K: StT, H: HashFunClone<K>> AdvancedQuadraticProbingStrategy<K, H> {
+src/Chap47/DoubleHashing.rs:18: NO_TRAIT (inherent impl) - impl<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> DoubleHashingStrategy<K, H1, H2> {
+src/Chap47/FlatHashTable.rs:49: NO_TRAIT (inherent impl) - impl<K: StT, V: StT, P: ProbeSequence<K> + Clone> FlatHashTable<K, V, P> {
+src/Chap47/HashFunctionTraits.rs:192: NO_TRAIT (inherent impl) - impl<K, H1: HashFunction<K>, H2: HashFunction<K>> ProbeSequenceGenerator<K, H1, H2> {
+src/Chap47/LinearProbing.rs:17: NO_TRAIT (inherent impl) - impl<K: StT, H: HashFunClone<K>> LinearProbingStrategy<K, H> {
+src/Chap47/NestedHashTable.rs:19: NO_TRAIT (inherent impl) - impl<K: StT, V: StT> NestedHashTable<K, V> {
+src/Chap47/QuadraticProbing.rs:19: NO_TRAIT (inherent impl) - impl<K: StT, H: HashFunClone<K>> QuadraticProbingStrategy<K, H> {
+src/Chap47/SeparateChaining.rs:26: NO_TRAIT (inherent impl) - impl<K, V, H, E> SeparateChainingHashTable<K, V, H, E>
+src/Chap47clean/DoubleHashFlatHashTableStEph.rs:56: MISMATCH
+  IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, FlatEntry<Key, Value>, Metrics>
+  TRAIT: pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
+src/Chap47clean/DoubleHashFlatHashTableStEph.rs:111: MISMATCH
+  IMPL:  impl<Key: StT, Value: StT, Metrics: Default> FlatHashTable<Key, Value, FlatEntry<Key, Value>, Metrics>
+  TRAIT: pub trait FlatHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
+src/Chap47clean/LinProbFlatHashTableStEph.rs:14: MISMATCH
+  IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, FlatEntry<Key, Value>, Metrics>
+  TRAIT: pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
+src/Chap47clean/LinProbFlatHashTableStEph.rs:75: MISMATCH
+  IMPL:  impl<Key: StT, Value: StT, Metrics: Default> FlatHashTable<Key, Value, FlatEntry<Key, Value>, Metrics>
+  TRAIT: pub trait FlatHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
+src/Chap47clean/LinkedListChainedHashTableStEph.rs:58: MISMATCH
+  IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, LinkedList<(Key, Value)>, Metrics>
+  TRAIT: pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
+src/Chap47clean/LinkedListChainedHashTableStEph.rs:74: MISMATCH
+  IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ChainedHashTable<Key, Value, LinkedList<(Key, Value)>, Metrics>
+  TRAIT: pub trait ChainedHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
+src/Chap47clean/QuadProbFlatHashTableStEph.rs:15: MISMATCH
+  IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, FlatEntry<Key, Value>, Metrics>
+  TRAIT: pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
+src/Chap47clean/QuadProbFlatHashTableStEph.rs:74: MISMATCH
+  IMPL:  impl<Key: StT, Value: StT, Metrics: Default> FlatHashTable<Key, Value, FlatEntry<Key, Value>, Metrics>
+  TRAIT: pub trait FlatHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
+src/Chap47clean/StructChainedHashTable.rs:82: MISMATCH
+  IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, ChainList<Key, Value>, Metrics>
+  TRAIT: pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
+src/Chap47clean/StructChainedHashTable.rs:98: MISMATCH
+  IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ChainedHashTable<Key, Value, ChainList<Key, Value>, Metrics>
+  TRAIT: pub trait ChainedHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
+src/Chap47clean/VecChainedHashTableStEph.rs:47: MISMATCH
+  IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, Vec<(Key, Value)>, Metrics>
+  TRAIT: pub trait ParaHashTableStEphTrait<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default> {
+src/Chap47clean/VecChainedHashTableStEph.rs:63: MISMATCH
+  IMPL:  impl<Key: StT, Value: StT, Metrics: Default> ChainedHashTable<Key, Value, Vec<(Key, Value)>, Metrics>
+  TRAIT: pub trait ChainedHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, Metrics: Default>:
+src/Chap49/MinEditDistMtEph.rs:63: NO_TRAIT (inherent impl) - impl<T: MtVal> MinEditDistMtEphS<T> {
+src/Chap49/MinEditDistMtPer.rs:47: NO_TRAIT (inherent impl) - impl<T: MtVal> MinEditDistMtPerS<T> {
+src/Chap49/MinEditDistStEph.rs:61: NO_TRAIT (inherent impl) - impl<T: StT> MinEditDistStEphS<T> {
+src/Chap49/MinEditDistStPer.rs:46: NO_TRAIT (inherent impl) - impl<T: StT> MinEditDistStPerS<T> {
+src/Chap49/SubsetSumMtEph.rs:53: NO_TRAIT (inherent impl) - impl<T: MtVal> SubsetSumMtEphS<T> {
+src/Chap49/SubsetSumMtPer.rs:43: NO_TRAIT (inherent impl) - impl<T: MtVal> SubsetSumMtPerS<T> {
+src/Chap49/SubsetSumStEph.rs:51: NO_TRAIT (inherent impl) - impl<T: StT> SubsetSumStEphS<T> {
+src/Chap49/SubsetSumStPer.rs:42: NO_TRAIT (inherent impl) - impl<T: StT> SubsetSumStPerS<T> {
+src/Chap50/OptBinSearchTreeMtEph.rs:64: NO_TRAIT (inherent impl) - impl<T: MtVal> OBSTMtEphS<T> {
+src/Chap50/OptBinSearchTreeMtPer.rs:57: NO_TRAIT (inherent impl) - impl<T: MtVal> OBSTMtPerS<T> {
+src/Chap50/OptBinSearchTreeStEph.rs:67: NO_TRAIT (inherent impl) - impl<T: StT> OBSTStEphS<T> {
+src/Chap50/OptBinSearchTreeStPer.rs:55: NO_TRAIT (inherent impl) - impl<T: StT> OBSTStPerS<T> {
+src/Chap53/PQMinMtEph.rs:56: NO_TRAIT (inherent impl) - impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P + Send + Sync + 'static>
+src/Chap53/PQMinMtEph.rs:67: NO_TRAIT (inherent impl) - impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P + Send + Sync + 'static>
+src/Chap53/PQMinMtPer.rs:48: NO_TRAIT (inherent impl) - impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
+src/Chap53/PQMinMtPer.rs:57: NO_TRAIT (inherent impl) - impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> PriorityFn<V, P>
+src/Chap53/PQMinStEph.rs:43: NO_TRAIT (inherent impl) - impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
+src/Chap53/PQMinStPer.rs:50: NO_TRAIT (inherent impl) - impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
+src/Chap57/StackStEph.rs:44: NO_TRAIT (inherent impl) - impl<T: StT> StackStEph<T> {
 
 ================================================================================
 SUMMARY
 ================================================================================
 Total inherent impls with generics: 113
-  With trait definitions found: 14
-  Without trait definitions: 99
+  Trait impls (matching bounds): 0
+  Trait impls (mismatched bounds): 14
+  Actual inherent impls (no trait): 99
 
 Log written to: /home/milnes/APASVERUS/APAS-AI/apas-ai/analyses/code_review/review_impl_trait_bounds.txt
