@@ -142,44 +142,55 @@ def main():
     total_with_traits = 0
     total_missing_traits = 0
     
-    matches = 0
-    mismatches = 0
+    def extract_bounds(line):
+        """Extract just the generic bounds from a line."""
+        # Find the part between < and >
+        match = re.search(r'<([^>]+)>', line)
+        if match:
+            return match.group(1)
+        return None
     
     for filepath in sorted(by_file.keys()):
         for result in by_file[filepath]:
             total_impls += 1
             rel_file = result['file'].replace(str(project_root) + '/', '')
             
+            impl_line = result['impl_line'].strip()
+            impl_bounds = extract_bounds(impl_line)
+            
+            tee.print(f"{rel_file}:{result['line']}")
+            
             if result['trait_def']:
                 total_with_traits += 1
                 # Parse trait def
                 trait_file, trait_line, trait_decl = result['trait_def'].split(':', 2)
+                trait_bounds = extract_bounds(trait_decl.strip())
                 
-                # Compare bounds
-                impl_bounds = result['impl_line'].strip()
-                trait_bounds = trait_decl.strip()
-                
-                # Simple check: do the bounds match?
-                if impl_bounds.split('{')[0].strip() == trait_bounds.split('{')[0].strip():
-                    matches += 1
-                    tee.print(f"{rel_file}:{result['line']}: MATCH - {impl_bounds}")
+                # Determine if this is a trait impl or inherent impl
+                # Trait impl: impl<...> TraitName<...> (no 'for', matches trait name)
+                # Inherent impl: impl<...> TypeName { (has '{')
+                if ' for ' in impl_line or impl_line.endswith('{'):
+                    # Inherent impl with trait found (private inherent method)
+                    tee.print(f"  trait:         <{trait_bounds}>")
+                    tee.print(f"  trait impl:    NONE")
+                    tee.print(f"  inherent impl: <{impl_bounds}>")
                 else:
-                    mismatches += 1
-                    tee.print(f"{rel_file}:{result['line']}: MISMATCH (trait impl)")
-                    tee.print(f"  IMPL:  {impl_bounds}")
-                    tee.print(f"  TRAIT: {trait_bounds}")
+                    # Trait impl
+                    tee.print(f"  trait:         <{trait_bounds}>")
+                    tee.print(f"  trait impl:    <{impl_bounds}>")
+                    tee.print(f"  inherent impl: NONE")
             else:
                 total_missing_traits += 1
-                tee.print(f"{rel_file}:{result['line']}: NO_TRAIT (inherent impl)")
-                tee.print(f"  {result['impl_line'].strip()}")
+                tee.print(f"  trait:         NONE")
+                tee.print(f"  trait impl:    NONE")
+                tee.print(f"  inherent impl: <{impl_bounds}>")
     
     tee.print(f"\n{'='*80}")
     tee.print("SUMMARY")
     tee.print('='*80)
-    tee.print(f"Total inherent impls with generics: {total_impls}")
-    tee.print(f"  Trait impls (matching bounds): {matches}")
-    tee.print(f"  Trait impls (mismatched bounds): {mismatches}")
-    tee.print(f"  Actual inherent impls (no trait): {total_missing_traits}")
+    tee.print(f"Total impl blocks with generics: {total_impls}")
+    tee.print(f"  With trait definitions: {total_with_traits}")
+    tee.print(f"  Without trait definitions: {total_missing_traits}")
     tee.print()
     tee.print(f"Log written to: {log_path}")
     tee.close()
