@@ -7,9 +7,29 @@ Finds closure/function bounds like "F: Fn(...) -> T + Send + Sync".
 These are often correct for multi-threaded code, but worth documenting.
 """
 
+import argparse
 import re
 import sys
 from pathlib import Path
+
+
+class TeeOutput:
+    """Write to both stdout and a log file."""
+    def __init__(self, log_path):
+        self.log_path = Path(log_path)
+        self.log_path.parent.mkdir(parents=True, exist_ok=True)
+        self.log_file = open(self.log_path, 'w', encoding='utf-8')
+    
+    def write(self, text):
+        print(text, end='', flush=True)
+        self.log_file.write(text)
+        self.log_file.flush()
+    
+    def print(self, text=''):
+        self.write(text + '\n')
+    
+    def close(self):
+        self.log_file.close()
 
 
 def detect_send_sync_closures(file_path):
@@ -44,12 +64,21 @@ def detect_send_sync_closures(file_path):
 
 
 def main():
+    parser = argparse.ArgumentParser(description='Detect Send + Sync on closure bounds')
+    parser.add_argument('--log_file', 
+                       default='analyses/code_review/detect_send_sync_closures.txt',
+                       help='Path to log file (default: analyses/code_review/detect_send_sync_closures.txt)')
+    args = parser.parse_args()
+    
     project_root = Path(__file__).parent.parent.parent.parent
     src_dir = project_root / "src"
+    log_path = project_root / args.log_file
     
-    print("Scanning for Send + Sync on closure bounds...\n")
-    print("Note: These are often CORRECT for multi-threaded code.")
-    print("Only fix if the file is single-threaded (StEph, StPer).\n")
+    tee = TeeOutput(log_path)
+    
+    tee.print("Scanning for Send + Sync on closure bounds...\n")
+    tee.print("Note: These are often CORRECT for multi-threaded code.")
+    tee.print("Only fix if the file is single-threaded (StEph, StPer).\n")
     
     all_issues = {}
     total = 0
@@ -72,22 +101,25 @@ def main():
                 st_files += 1
     
     if not all_issues:
-        print("✓ No Send + Sync on closures found!")
+        tee.print("✓ No Send + Sync on closures found!")
+        tee.close()
         return 0
     
-    print(f"Found {len(all_issues)} files with Send + Sync on closures:\n")
-    print(f"  {mt_files} multi-threaded files (MtEph/MtPer) - likely CORRECT")
-    print(f"  {st_files} single-threaded files (StEph/StPer) - may need review")
-    print(f"  {len(all_issues) - mt_files - st_files} other files\n")
+    tee.print(f"Found {len(all_issues)} files with Send + Sync on closures:\n")
+    tee.print(f"  {mt_files} multi-threaded files (MtEph/MtPer) - likely CORRECT")
+    tee.print(f"  {st_files} single-threaded files (StEph/StPer) - may need review")
+    tee.print(f"  {len(all_issues) - mt_files - st_files} other files\n")
     
     for file_path, issues in all_issues.items():
         rel_path = file_path.relative_to(project_root)
         file_type = "Mt" if any(x in file_path.name for x in ['MtEph', 'MtPer']) else "St" if any(x in file_path.name for x in ['StEph', 'StPer']) else "?"
-        print(f"{rel_path} [{file_type}]: {len(issues)} closures")
+        tee.print(f"{rel_path} [{file_type}]: {len(issues)} closures")
     
-    print(f"\nTotal: {total} closures with Send + Sync")
-    print(f"\nRecommendation: Send + Sync on closures is usually correct for Mt* files.")
-    print(f"Only remove from St* files if the parallel operations were converted to sequential.")
+    tee.print(f"\nTotal: {total} closures with Send + Sync")
+    tee.print(f"\nRecommendation: Send + Sync on closures is usually correct for Mt* files.")
+    tee.print(f"Only remove from St* files if the parallel operations were converted to sequential.")
+    tee.print(f"\nLog written to: {log_path}")
+    tee.close()
     
     return 0
 

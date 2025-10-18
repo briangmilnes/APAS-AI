@@ -7,10 +7,30 @@ Finds impl blocks, struct defs, and trait defs that use manual combinations of
 standard bounds instead of the project's trait aliases (StT, MtT, StTInMtT).
 """
 
+import argparse
 import re
 import sys
 from pathlib import Path
 from collections import defaultdict
+
+
+class TeeOutput:
+    """Write to both stdout and a log file."""
+    def __init__(self, log_path):
+        self.log_path = Path(log_path)
+        self.log_path.parent.mkdir(parents=True, exist_ok=True)
+        self.log_file = open(self.log_path, 'w', encoding='utf-8')
+    
+    def write(self, text):
+        print(text, end='', flush=True)
+        self.log_file.write(text)
+        self.log_file.flush()
+    
+    def print(self, text=''):
+        self.write(text + '\n')
+    
+    def close(self):
+        self.log_file.close()
 
 
 def detect_manual_bounds(file_path):
@@ -68,10 +88,19 @@ def detect_manual_bounds(file_path):
 
 
 def main():
+    parser = argparse.ArgumentParser(description='Detect manual bounds that should use trait aliases')
+    parser.add_argument('--log_file', 
+                       default='analyses/code_review/detect_manual_bounds.txt',
+                       help='Path to log file (default: analyses/code_review/detect_manual_bounds.txt)')
+    args = parser.parse_args()
+    
     project_root = Path(__file__).parent.parent.parent.parent
     src_dir = project_root / "src"
+    log_path = project_root / args.log_file
     
-    print("Scanning for manual bounds instead of trait aliases (StT, MtT)...\n")
+    tee = TeeOutput(log_path)
+    
+    tee.print("Scanning for manual bounds instead of trait aliases (StT, MtT)...\n")
     
     all_issues = {}
     pattern_counts = defaultdict(int)
@@ -88,27 +117,30 @@ def main():
                 pattern_counts[issue['pattern']] += 1
     
     if not all_issues:
-        print("✓ No manual bounds found!")
+        tee.print("✓ No manual bounds found!")
+        tee.close()
         return 0
     
     # Report findings
-    print(f"Found {len(all_issues)} files with manual bounds:\n")
+    tee.print(f"Found {len(all_issues)} files with manual bounds:\n")
     
     for file_path, issues in all_issues.items():
         rel_path = file_path.relative_to(project_root)
-        print(f"{rel_path}")
+        tee.print(f"{rel_path}")
         
         for issue in issues:
-            print(f"  Line {issue['line']}: {issue['pattern']}")
-            print(f"    {issue['content']}")
-        print()
+            tee.print(f"  Line {issue['line']}: {issue['pattern']}")
+            tee.print(f"    {issue['content']}")
+        tee.print()
     
-    print(f"\nPattern breakdown:")
+    tee.print(f"\nPattern breakdown:")
     for pattern, count in sorted(pattern_counts.items(), key=lambda x: -x[1]):
-        print(f"  {count:3d}x {pattern}")
+        tee.print(f"  {count:3d}x {pattern}")
     
-    print(f"\nTotal: {len(all_issues)} files")
-    print(f"Total: {sum(len(issues) for issues in all_issues.values())} problematic lines")
+    tee.print(f"\nTotal: {len(all_issues)} files")
+    tee.print(f"Total: {sum(len(issues) for issues in all_issues.values())} problematic lines")
+    tee.print(f"\nLog written to: {log_path}")
+    tee.close()
     
     return 0
 

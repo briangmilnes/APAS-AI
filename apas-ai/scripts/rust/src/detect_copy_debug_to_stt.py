@@ -6,9 +6,29 @@ Date: 2025-10-18
 Finds type bounds like "T: Copy + Debug" or "T: Clone + Debug" that should use StT.
 """
 
+import argparse
 import re
 import sys
 from pathlib import Path
+
+
+class TeeOutput:
+    """Write to both stdout and a log file."""
+    def __init__(self, log_path):
+        self.log_path = Path(log_path)
+        self.log_path.parent.mkdir(parents=True, exist_ok=True)
+        self.log_file = open(self.log_path, 'w', encoding='utf-8')
+    
+    def write(self, text):
+        print(text, end='', flush=True)
+        self.log_file.write(text)
+        self.log_file.flush()
+    
+    def print(self, text=''):
+        self.write(text + '\n')
+    
+    def close(self):
+        self.log_file.close()
 
 
 def detect_copy_debug(file_path):
@@ -43,10 +63,19 @@ def detect_copy_debug(file_path):
 
 
 def main():
+    parser = argparse.ArgumentParser(description='Detect Copy/Clone + Debug bounds that should be StT')
+    parser.add_argument('--log_file', 
+                       default='analyses/code_review/detect_copy_debug_to_stt.txt',
+                       help='Path to log file (default: analyses/code_review/detect_copy_debug_to_stt.txt)')
+    args = parser.parse_args()
+    
     project_root = Path(__file__).parent.parent.parent.parent
     src_dir = project_root / "src"
+    log_path = project_root / args.log_file
     
-    print("Scanning for Copy/Clone + Debug bounds that should be StT...\n")
+    tee = TeeOutput(log_path)
+    
+    tee.print("Scanning for Copy/Clone + Debug bounds that should be StT...\n")
     
     all_issues = {}
     total = 0
@@ -61,19 +90,22 @@ def main():
             total += len(issues)
     
     if not all_issues:
-        print("✓ No Copy/Clone + Debug patterns found!")
+        tee.print("✓ No Copy/Clone + Debug patterns found!")
+        tee.close()
         return 0
     
-    print(f"Found {len(all_issues)} files with Copy/Clone + Debug:\n")
+    tee.print(f"Found {len(all_issues)} files with Copy/Clone + Debug:\n")
     
     for file_path, issues in all_issues.items():
         rel_path = file_path.relative_to(project_root)
-        print(f"{rel_path}: {len(issues)} issues")
+        tee.print(f"{rel_path}: {len(issues)} issues")
         for issue in issues:
-            print(f"  Line {issue['line']}: {issue['content'][:80]}")
-        print()
+            tee.print(f"  Line {issue['line']}: {issue['content'][:80]}")
+        tee.print()
     
-    print(f"Total: {total} lines with Copy/Clone + Debug")
+    tee.print(f"Total: {total} lines with Copy/Clone + Debug")
+    tee.print(f"\nLog written to: {log_path}")
+    tee.close()
     
     return 0
 

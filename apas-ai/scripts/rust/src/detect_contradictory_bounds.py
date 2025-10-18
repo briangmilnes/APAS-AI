@@ -4,9 +4,29 @@ Git commit: 08cec0603b305aa07307724314ae2656d8597279
 Date: 2025-10-18
 """
 
+import argparse
 import re
 import sys
 from pathlib import Path
+
+
+class TeeOutput:
+    """Write to both stdout and a log file."""
+    def __init__(self, log_path):
+        self.log_path = Path(log_path)
+        self.log_path.parent.mkdir(parents=True, exist_ok=True)
+        self.log_file = open(self.log_path, 'w', encoding='utf-8')
+    
+    def write(self, text):
+        print(text, end='', flush=True)
+        self.log_file.write(text)
+        self.log_file.flush()
+    
+    def print(self, text=''):
+        self.write(text + '\n')
+    
+    def close(self):
+        self.log_file.close()
 
 
 def detect_contradictory_bounds(file_path):
@@ -50,10 +70,19 @@ def detect_contradictory_bounds(file_path):
 
 
 def main():
+    parser = argparse.ArgumentParser(description='Detect contradictory trait bounds (StT + MtT)')
+    parser.add_argument('--log_file', 
+                       default='analyses/code_review/detect_contradictory_bounds.txt',
+                       help='Path to log file (default: analyses/code_review/detect_contradictory_bounds.txt)')
+    args = parser.parse_args()
+    
     project_root = Path(__file__).parent.parent.parent.parent
     src_dir = project_root / "src"
+    log_path = project_root / args.log_file
     
-    print("Scanning for contradictory trait bounds (StT + MtT)...\n")
+    tee = TeeOutput(log_path)
+    
+    tee.print("Scanning for contradictory trait bounds (StT + MtT)...\n")
     
     all_issues = {}
     
@@ -67,24 +96,27 @@ def main():
             all_issues[rs_file] = issues
     
     if not all_issues:
-        print("✓ No contradictory bounds found!")
+        tee.print("✓ No contradictory bounds found!")
+        tee.close()
         return 0
     
     # Report findings
-    print(f"Found {len(all_issues)} files with contradictory bounds:\n")
+    tee.print(f"Found {len(all_issues)} files with contradictory bounds:\n")
     
     for file_path, issues in all_issues.items():
         rel_path = file_path.relative_to(project_root)
-        print(f"{rel_path}")
+        tee.print(f"{rel_path}")
         
         for issue in issues:
-            print(f"  Line {issue['line']}: {issue['content']}")
+            tee.print(f"  Line {issue['line']}: {issue['content']}")
             if issue['expected']:
-                print(f"    → File naming suggests: use {issue['expected']} only, remove {issue['wrong']}")
-        print()
+                tee.print(f"    → File naming suggests: use {issue['expected']} only, remove {issue['wrong']}")
+        tee.print()
     
-    print(f"\nTotal: {len(all_issues)} files with contradictory bounds")
-    print(f"Total: {sum(len(issues) for issues in all_issues.values())} problematic lines")
+    tee.print(f"\nTotal: {len(all_issues)} files with contradictory bounds")
+    tee.print(f"Total: {sum(len(issues) for issues in all_issues.values())} problematic lines")
+    tee.print(f"\nLog written to: {log_path}")
+    tee.close()
     
     return 0
 
