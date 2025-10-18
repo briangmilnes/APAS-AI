@@ -262,8 +262,8 @@ User activates by saying "careful mode" or "ask first":
     - Both stdout (for user) AND file (for analysis) should be produced
     - Example: Python script uses `tee` pattern - print to console and write to file
   - **Output naming**: `<script_name>.txt` (no dates - git provides timestamps)
-    - Detection scripts: `analyses/code_quality/detect_<pattern>.txt`
-    - Fix scripts: `analyses/code_quality/fix_<pattern>.txt`
+    - Detection scripts: `analyses/code_review/detect_<pattern>.txt`
+    - Fix scripts: `analyses/code_review/fix_<pattern>.txt`
     - Grind/test runs: `analyses/build_logs/grind_<module>.txt`
     - Update in place when re-running (git tracks changes)
   - **Analysis workflow**: run script → review output → grep/analyze → commit with summary
