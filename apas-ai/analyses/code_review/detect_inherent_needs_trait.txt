@@ -10,9 +10,6 @@ src/Chap06/WeightedDirGraphMtEphInt.rs
 src/Chap06/WeightedDirGraphStEphFloat.rs
   Line 48: impl<V: StT + Hash> WeightedDirGraphStEphFloat<V> {
 
-src/Chap06/WeightedDirGraphStEphInt.rs
-  Line 16: impl<V: StT + Hash> WeightedDirGraphStEphInt<V> {
-
 src/Chap06/WeightedUnDirGraphMtEphFloat.rs
   Line 20: impl<V: HashOrd + MtT + 'static> WeightedUnDirGraphMtEphFloat<V> {
 
@@ -151,7 +148,7 @@ src/Chap53/PQMinStPer.rs
   Line 50: impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
 
 ================================================================================
-Total files with inherent impls needing traits: 48
-Total inherent impl blocks needing conversion: 53
+Total files with inherent impls needing traits: 47
+Total inherent impl blocks needing conversion: 52
 
 Log written to: /home/milnes/APASVERUS/APAS-AI/apas-ai/analyses/code_review/detect_inherent_needs_trait.txt

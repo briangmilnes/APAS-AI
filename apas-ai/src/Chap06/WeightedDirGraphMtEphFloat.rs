@@ -16,12 +16,50 @@ pub mod WeightedDirGraphMtEphFloat {
 
     pub type WeightedDirGraphMtEphFloat<V> = LabDirGraphMtEph<V, OrderedF64>;
 
-    /// Convenience functions for weighted directed graphs with floating-point weights (multi-threaded)
-    impl<V: StT + MtT + Hash + 'static> WeightedDirGraphMtEphFloat<V> {
+    /// Trait for weighted directed graph operations with floating-point weights (multi-threaded)
+    pub trait WeightedDirGraphMtEphFloatTrait<V: StT + MtT + Hash + 'static> {
         /// Create from vertices and weighted edges
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
-        pub fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<Triple<V, V, OrderedFloat<f64>>>) -> Self {
+        fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<Triple<V, V, OrderedFloat<f64>>>) -> Self;
+
+        /// Add a weighted edge to the graph
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
+        fn add_weighted_edge(&mut self, from: V, to: V, weight: OrderedFloat<f64>);
+
+        /// Get the weight of an edge, if it exists
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential search
+        fn get_edge_weight(&self, from: &V, to: &V) -> Option<OrderedFloat<f64>>;
+
+        /// Get all weighted edges as (from, to, weight) tuples
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential map
+        fn weighted_edges(&self) -> SetStEph<Triple<V, V, OrderedFloat<f64>>>;
+
+        /// Get outgoing neighbors with weights
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
+        fn out_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>>;
+
+        /// Get incoming neighbors with weights
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
+        fn in_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>>;
+
+        /// Get the total weight of all edges
+        /// APAS: Work Θ(|A|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential sum
+        fn total_weight(&self) -> OrderedFloat<f64>;
+    }
+
+    /// Trait implementation for WeightedDirGraphMtEphFloat
+    impl<V: StT + MtT + Hash + 'static> WeightedDirGraphMtEphFloatTrait<V> for WeightedDirGraphMtEphFloat<V> {
+        /// Create from vertices and weighted edges
+        /// APAS: Work Θ(|V| + |E|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
+        fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<Triple<V, V, OrderedFloat<f64>>>) -> Self {
             let labeled_edges = edges
                 .iter()
                 .map(|Triple(from, to, weight)| LabEdge(from.clone(), to.clone(), *weight))
@@ -38,21 +76,21 @@ pub mod WeightedDirGraphMtEphFloat {
         /// Add a weighted edge to the graph
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        pub fn add_weighted_edge(&mut self, from: V, to: V, weight: OrderedFloat<f64>) {
+        fn add_weighted_edge(&mut self, from: V, to: V, weight: OrderedFloat<f64>) {
             self.add_labeled_arc(from, to, weight);
         }
 
         /// Get the weight of an edge, if it exists
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential search
-        pub fn get_edge_weight(&self, from: &V, to: &V) -> Option<OrderedFloat<f64>> {
+        fn get_edge_weight(&self, from: &V, to: &V) -> Option<OrderedFloat<f64>> {
             self.get_arc_label(from, to).copied()
         }
 
         /// Get all weighted edges as (from, to, weight) tuples
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential map
-        pub fn weighted_edges(&self) -> SetStEph<Triple<V, V, OrderedFloat<f64>>> {
+        fn weighted_edges(&self) -> SetStEph<Triple<V, V, OrderedFloat<f64>>> {
             let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_arcs().iter() {
                 edges.insert(Triple(labeled_edge.0.clone_mt(), labeled_edge.1.clone_mt(), labeled_edge.2));
@@ -63,7 +101,7 @@ pub mod WeightedDirGraphMtEphFloat {
         /// Get outgoing neighbors with weights
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
-        pub fn out_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>> {
+        fn out_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>> {
             // PARALLEL: filter weighted arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, OrderedF64>> = self.labeled_arcs().iter().cloned().collect();
             let n = arcs.len();
@@ -118,7 +156,7 @@ pub mod WeightedDirGraphMtEphFloat {
         /// Get incoming neighbors with weights
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
-        pub fn in_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>> {
+        fn in_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>> {
             // PARALLEL: filter weighted arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, OrderedF64>> = self.labeled_arcs().iter().cloned().collect();
             let n = arcs.len();
@@ -173,7 +211,7 @@ pub mod WeightedDirGraphMtEphFloat {
         /// Get the total weight of all edges
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential sum
-        pub fn total_weight(&self) -> OrderedFloat<f64> {
+        fn total_weight(&self) -> OrderedFloat<f64> {
             self.labeled_arcs()
                 .iter()
                 .map(|edge| edge.2)
