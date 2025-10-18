@@ -6,7 +6,7 @@ use std::time::Duration;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
-use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt;
+use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
 use apas_ai::Chap57::DijkstraStEphInt::DijkstraStEphInt::dijkstra;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::*;

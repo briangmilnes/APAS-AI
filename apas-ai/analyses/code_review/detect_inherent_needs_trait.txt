@@ -1,27 +1,6 @@
 INHERENT IMPLS NEEDING TRAIT CONVERSION
 ================================================================================
 
-src/Chap06/WeightedDirGraphMtEphFloat.rs
-  Line 20: impl<V: StT + MtT + Hash + 'static> WeightedDirGraphMtEphFloat<V> {
-
-src/Chap06/WeightedDirGraphMtEphInt.rs
-  Line 20: impl<V: StT + MtT + Hash + 'static> WeightedDirGraphMtEphInt<V> {
-
-src/Chap06/WeightedDirGraphStEphFloat.rs
-  Line 48: impl<V: StT + Hash> WeightedDirGraphStEphFloat<V> {
-
-src/Chap06/WeightedUnDirGraphMtEphFloat.rs
-  Line 20: impl<V: HashOrd + MtT + 'static> WeightedUnDirGraphMtEphFloat<V> {
-
-src/Chap06/WeightedUnDirGraphMtEphInt.rs
-  Line 20: impl<V: HashOrd + MtT + 'static> WeightedUnDirGraphMtEphInt<V> {
-
-src/Chap06/WeightedUnDirGraphStEphFloat.rs
-  Line 46: impl<V: StT + Hash + Ord> WeightedUnDirGraphStEphFloat<V> {
-
-src/Chap06/WeightedUnDirGraphStEphInt.rs
-  Line 16: impl<V: StT + Hash + Ord> WeightedUnDirGraphStEphInt<V> {
-
 src/Chap18/ArraySeqStEph.rs
   Line 94: impl<T: StT> ArraySeqStEphS<T> {
 
@@ -90,9 +69,6 @@ src/Chap40/BSTReducedStEph.rs
 src/Chap40/BSTSizeStEph.rs
   Line 22: impl<T: StT + Ord> Node<T> {
 
-src/Chap44/DocumentIndex.rs
-  Line 287: impl<'a> QueryBuilder<'a> {
-
 src/Chap45/HeapsortExample.rs
   Line 195: impl<T: StT + Ord> HeapsortComparison<T> {
 
@@ -148,7 +124,7 @@ src/Chap53/PQMinStPer.rs
   Line 50: impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
 
 ================================================================================
-Total files with inherent impls needing traits: 47
-Total inherent impl blocks needing conversion: 52
+Total files with inherent impls needing traits: 39
+Total inherent impl blocks needing conversion: 44
 
 Log written to: /home/milnes/APASVERUS/APAS-AI/apas-ai/analyses/code_review/detect_inherent_needs_trait.txt

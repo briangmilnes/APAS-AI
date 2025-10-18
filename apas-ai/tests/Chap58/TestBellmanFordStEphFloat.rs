@@ -3,7 +3,7 @@
 //! Tests for Bellman-Ford Algorithm (Float Weights)
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
-use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat;
+use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
 use apas_ai::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::*;

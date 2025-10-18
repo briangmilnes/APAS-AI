@@ -284,25 +284,34 @@ pub mod DocumentIndex {
         index: &'a DocumentIndex,
     }
 
-    impl<'a> QueryBuilder<'a> {
-        pub fn new(index: &'a DocumentIndex) -> Self { QueryBuilder { index } }
+    pub trait QueryBuilderTrait<'a> {
+        fn new(index: &'a DocumentIndex) -> Self;
+        fn find(&self, word: &Word) -> DocumentSet;
+        fn and(&self, docs_a: DocumentSet, docs_b: DocumentSet) -> DocumentSet;
+        fn or(&self, docs_a: DocumentSet, docs_b: DocumentSet) -> DocumentSet;
+        fn and_not(&self, docs_a: DocumentSet, docs_b: DocumentSet) -> DocumentSet;
+        fn complex_query(&self, word1: &Word, word2: &Word, word3: &Word, word4: &Word) -> DocumentSet;
+    }
 
-        pub fn find(&self, word: &Word) -> DocumentSet { self.index.find(word) }
+    impl<'a> QueryBuilderTrait<'a> for QueryBuilder<'a> {
+        fn new(index: &'a DocumentIndex) -> Self { QueryBuilder { index } }
 
-        pub fn and(&self, docs_a: DocumentSet, docs_b: DocumentSet) -> DocumentSet {
+        fn find(&self, word: &Word) -> DocumentSet { self.index.find(word) }
+
+        fn and(&self, docs_a: DocumentSet, docs_b: DocumentSet) -> DocumentSet {
             DocumentIndex::query_and(&docs_a, &docs_b)
         }
 
-        pub fn or(&self, docs_a: DocumentSet, docs_b: DocumentSet) -> DocumentSet {
+        fn or(&self, docs_a: DocumentSet, docs_b: DocumentSet) -> DocumentSet {
             DocumentIndex::query_or(&docs_a, &docs_b)
         }
 
-        pub fn and_not(&self, docs_a: DocumentSet, docs_b: DocumentSet) -> DocumentSet {
+        fn and_not(&self, docs_a: DocumentSet, docs_b: DocumentSet) -> DocumentSet {
             DocumentIndex::query_and_not(&docs_a, &docs_b)
         }
 
         /// Complex query: (word1 AND word2) OR (word3 AND NOT word4)
-        pub fn complex_query(&self, word1: &Word, word2: &Word, word3: &Word, word4: &Word) -> DocumentSet {
+        fn complex_query(&self, word1: &Word, word2: &Word, word3: &Word, word4: &Word) -> DocumentSet {
             let set1 = self.find(word1);
             let set2 = self.find(word2);
             let set3 = self.find(word3);

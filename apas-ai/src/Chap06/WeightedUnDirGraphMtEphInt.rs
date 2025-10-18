@@ -17,11 +17,21 @@ pub mod WeightedUnDirGraphMtEphInt {
     pub type WeightedUnDirGraphMtEphInt<V> = LabUnDirGraphMtEph<V, i32>;
 
     /// Convenience functions for weighted undirected graphs with integer weights (multi-threaded)
-    impl<V: HashOrd + MtT + 'static> WeightedUnDirGraphMtEphInt<V> {
+    pub trait WeightedUnDirGraphMtEphIntTrait<V: HashOrd + MtT + 'static> {
+        fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<Triple<V, V, i32>>) -> Self;
+        fn add_weighted_edge(&mut self, v1: V, v2: V, weight: i32);
+        fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<i32>;
+        fn weighted_edges(&self) -> SetStEph<Triple<V, V, i32>>;
+        fn neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, i32>>;
+        fn total_weight(&self) -> i32;
+        fn vertex_degree(&self, v: &V) -> usize;
+    }
+
+    impl<V: HashOrd + MtT + 'static> WeightedUnDirGraphMtEphIntTrait<V> for WeightedUnDirGraphMtEphInt<V> {
         /// Create from vertices and weighted edges
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
-        pub fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<Triple<V, V, i32>>) -> Self {
+        fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<Triple<V, V, i32>>) -> Self {
             let labeled_edges = edges
                 .iter()
                 .map(|Triple(v1, v2, weight)| LabEdge(v1.clone(), v2.clone(), *weight))
@@ -38,17 +48,17 @@ pub mod WeightedUnDirGraphMtEphInt {
         /// Add a weighted edge to the graph (undirected)
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        pub fn add_weighted_edge(&mut self, v1: V, v2: V, weight: i32) { self.add_labeled_edge(v1, v2, weight); }
+        fn add_weighted_edge(&mut self, v1: V, v2: V, weight: i32) { self.add_labeled_edge(v1, v2, weight); }
 
         /// Get the weight of an edge, if it exists
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential search
-        pub fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<i32> { self.get_edge_label(v1, v2).copied() }
+        fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<i32> { self.get_edge_label(v1, v2).copied() }
 
         /// Get all weighted edges as (v1, v2, weight) tuples
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential map
-        pub fn weighted_edges(&self) -> SetStEph<Triple<V, V, i32>> {
+        fn weighted_edges(&self) -> SetStEph<Triple<V, V, i32>> {
             let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_edges().iter() {
                 edges.insert(Triple(labeled_edge.0.clone_mt(), labeled_edge.1.clone_mt(), labeled_edge.2));
@@ -59,7 +69,7 @@ pub mod WeightedUnDirGraphMtEphInt {
         /// Get neighbors with weights
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|), Parallelism Θ(|E|/log |E|) - parallel divide-and-conquer filter
-        pub fn neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, i32>> {
+        fn neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, i32>> {
             // PARALLEL: filter weighted edges using divide-and-conquer
             let edges: Vec<LabEdge<V, i32>> = self.labeled_edges().iter().cloned().collect();
             let n = edges.len();
@@ -116,10 +126,10 @@ pub mod WeightedUnDirGraphMtEphInt {
         /// Get the total weight of all edges
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential sum
-        pub fn total_weight(&self) -> i32 { self.labeled_edges().iter().map(|edge| edge.2).sum() }
+        fn total_weight(&self) -> i32 { self.labeled_edges().iter().map(|edge| edge.2).sum() }
 
         /// Get the degree of a vertex (number of incident edges)
-        pub fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
+        fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
     }
 
     /// Macro requires explicit Triple wrappers: `E: [Triple(v1, v2, weight), ...]`
