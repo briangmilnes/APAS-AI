@@ -258,7 +258,7 @@ User activates by saying "careful mode" or "ask first":
 - **Script output and logging**:
   - **Scripts MUST log by default**: All analysis/detection scripts must write output files automatically
     - Don't rely on shell redirection (`> file.txt`) - easy to forget
-    - Scripts should take `--output` or use default paths (e.g., `analyses/code_quality/<script_name>.txt`)
+    - Scripts should take `--log_file` flag with default paths (e.g., `analyses/code_review/<script_name>.txt`)
     - Both stdout (for user) AND file (for analysis) should be produced
     - Example: Python script uses `tee` pattern - print to console and write to file
   - **Output naming**: `<script_name>.txt` (no dates - git provides timestamps)
