@@ -1,0 +1,42 @@
+INHERENT IMPL CLEANUP SUMMARY
+=============================
+
+Date: 2025-10-18
+
+## Modules Without Type Definitions
+
+Total modules without type definitions: 89
+
+### Breakdown:
+- 87 modules define traits (algorithm interfaces)
+- 2 modules are pure utility modules (no types, no traits)
+  - Chap21/Exercise21_6
+  - Chap21/Exercise21_9
+
+### Inherent Impl Cleanup
+
+Three files had inherent impls on private helper types (PQEntry) that violated modularity:
+
+1. src/Chap57/DijkstraStEphFloat.rs
+   - Converted: impl PQEntry { fn new(...) } → fn pq_entry_new(...)
+   - Tests: 4 passed
+
+2. src/Chap57/DijkstraStEphInt.rs  
+   - Converted: impl PQEntry { fn new(...) } → fn pq_entry_new(...)
+   - Tests: 7 passed
+
+3. src/Chap65/PrimStEph.rs
+   - Converted: impl<V> PQEntry<V> { fn new(...) } → fn pq_entry_new<V>(...)
+   - Tests: 6 passed
+
+### Result
+
+All inherent impls in modules without type definitions have been eliminated.
+Only standard trait impls (Ord, PartialOrd, Display) remain, which are required by Rust.
+
+### Modularity Impact
+
+By converting inherent methods to module-level functions:
+- Private helper methods no longer "leak" through imports
+- Maintains strict modularity: types must be explicitly brought into scope
+- Consistent with the project rule: "Inherent impls only for types with no custom trait"

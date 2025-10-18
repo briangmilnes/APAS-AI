@@ -243,65 +243,40 @@ pub mod SortedListPQ {
         }
 
         fn from_vec(vec: Vec<T>) -> Self {
-            SortedListPQ::from_vec(vec)
-        }
 
-        fn to_vec(&self) -> Vec<T> {
-            SortedListPQ::to_vec(self)
-        }
-
-        fn to_sorted_vec(&self) -> Vec<T> {
-            SortedListPQ::to_sorted_vec(self)
-        }
-
-        fn is_sorted(&self) -> bool {
-            SortedListPQ::is_sorted(self)
-        }
+            let mut pq = Self::empty();
+            for element in vec {
+                pq = pq.insert(element);
+            }
+            pq
     }
 
-    impl<T: StT + Ord> SortedListPQ<T> {
-        /// Insert multiple elements from a sequence
-        pub fn insert_all(&self, elements: &ArraySeqStPerS<T>) -> Self {
-            let mut result = self.clone();
-            for i in 0..elements.length() {
-                let element = elements.nth(i);
-                result = result.insert(element.clone());
+        fn to_vec(&self) -> Vec<T> {
+
+            let mut result = Vec::new();
+            for i in 0..self.elements.length() {
+                result.push(self.elements.nth(i).clone());
             }
             result
-        }
+    }
 
-        /// Extract all elements in sorted order (already sorted)
-        pub fn extract_all_sorted(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
+        fn to_sorted_vec(&self) -> Vec<T> {
 
-        /// Get the maximum element (last in sorted list)
-        pub fn find_max(&self) -> Option<&T> {
-            if self.elements.length() == 0 {
-                None
-            } else {
-                Some(self.elements.nth(self.elements.length() - 1))
+            // Already sorted, just convert to vector
+            self.to_vec()
+    }
+
+        fn is_sorted(&self) -> bool {
+
+            for i in 1..self.elements.length() {
+                let prev = self.elements.nth(i - 1);
+                let curr = self.elements.nth(i);
+                if prev > curr {
+                    return false;
+                }
             }
-        }
-
-        /// Remove and return maximum element
-        pub fn delete_max(&self) -> (Self, Option<T>) {
-            if self.elements.length() == 0 {
-                return (self.clone(), None);
-            }
-
-            let max_element = self.elements.nth(self.elements.length() - 1).clone();
-
-            // Create new sequence without the last element
-            let mut new_elements = ArraySeqStPerS::empty();
-            for i in 0..(self.elements.length() - 1) {
-                let elem = self.elements.nth(i);
-                let single_seq = ArraySeqStPerS::singleton(elem.clone());
-                new_elements = ArraySeqStPerS::append(&new_elements, &single_seq);
-            }
-
-            let new_pq = SortedListPQ { elements: new_elements };
-
-            (new_pq, Some(max_element))
-        }
+            true
+    }
     }
 
     impl<T: StT + Ord> Default for SortedListPQ<T> {
@@ -342,42 +317,4 @@ pub mod SortedListPQ {
         let _: SortedListPQ<i32> = SortedListPQLit![1, 2, 3];
     }
 
-    /// Convenience functions for common operations
-    impl<T: StT + Ord> SortedListPQ<T> {
-        /// Create priority queue from vector (for testing)
-        pub fn from_vec(vec: Vec<T>) -> Self {
-            let mut pq = Self::empty();
-            for element in vec {
-                pq = pq.insert(element);
-            }
-            pq
-        }
-
-        /// Convert to vector (for testing)
-        pub fn to_vec(&self) -> Vec<T> {
-            let mut result = Vec::new();
-            for i in 0..self.elements.length() {
-                result.push(self.elements.nth(i).clone());
-            }
-            result
-        }
-
-        /// Get elements in sorted order as vector (for testing)
-        pub fn to_sorted_vec(&self) -> Vec<T> {
-            // Already sorted, just convert to vector
-            self.to_vec()
-        }
-
-        /// Check if the list is properly sorted (for testing)
-        pub fn is_sorted(&self) -> bool {
-            for i in 1..self.elements.length() {
-                let prev = self.elements.nth(i - 1);
-                let curr = self.elements.nth(i);
-                if prev > curr {
-                    return false;
-                }
-            }
-            true
-        }
-    }
 }

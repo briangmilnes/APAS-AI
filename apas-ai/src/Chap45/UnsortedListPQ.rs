@@ -176,45 +176,32 @@ pub mod UnsortedListPQ {
         }
 
         fn from_vec(vec: Vec<T>) -> Self {
-            UnsortedListPQ::from_vec(vec)
-        }
 
-        fn to_vec(&self) -> Vec<T> {
-            UnsortedListPQ::to_vec(self)
-        }
-
-        fn to_sorted_vec(&self) -> Vec<T> {
-            UnsortedListPQ::to_sorted_vec(self)
-        }
+            let mut pq = Self::empty();
+            for element in vec {
+                pq = pq.insert(element);
+            }
+            pq
     }
 
-    impl<T: StT + Ord> UnsortedListPQ<T> {
-        /// Insert multiple elements from an iterator
-        pub fn insert_all(&self, elements: &ArraySeqStPerS<T>) -> Self {
-            let mut result = self.clone();
-            for i in 0..elements.length() {
-                let element = elements.nth(i);
-                result = result.insert(element.clone());
+        fn to_vec(&self) -> Vec<T> {
+
+            let mut result = Vec::new();
+            for i in 0..self.elements.length() {
+                result.push(self.elements.nth(i).clone());
             }
             result
-        }
+    }
 
-        /// Extract all elements in sorted order (heapsort-like operation)
-        pub fn extract_all_sorted(&self) -> ArraySeqStPerS<T> {
-            let mut result = ArraySeqStPerS::empty();
-            let mut current_pq = self.clone();
+        fn to_sorted_vec(&self) -> Vec<T> {
 
-            while !current_pq.is_empty() {
-                let (new_pq, min_element) = current_pq.delete_min();
-                if let Some(element) = min_element {
-                    let single_seq = ArraySeqStPerS::singleton(element);
-                    result = ArraySeqStPerS::append(&result, &single_seq);
-                }
-                current_pq = new_pq;
+            let sorted_seq = self.extract_all_sorted();
+            let mut result = Vec::new();
+            for i in 0..sorted_seq.length() {
+                result.push(sorted_seq.nth(i).clone());
             }
-
             result
-        }
+    }
     }
 
     impl<T: StT + Ord> Default for UnsortedListPQ<T> {
@@ -253,36 +240,5 @@ pub mod UnsortedListPQ {
     fn _unsorted_list_pq_lit_type_checks() {
         let _: UnsortedListPQ<i32> = UnsortedListPQLit![];
         let _: UnsortedListPQ<i32> = UnsortedListPQLit![1, 2, 3];
-    }
-
-    /// Convenience functions for common operations
-    impl<T: StT + Ord> UnsortedListPQ<T> {
-        /// Create priority queue from vector (for testing)
-        pub fn from_vec(vec: Vec<T>) -> Self {
-            let mut pq = Self::empty();
-            for element in vec {
-                pq = pq.insert(element);
-            }
-            pq
-        }
-
-        /// Convert to vector (for testing)
-        pub fn to_vec(&self) -> Vec<T> {
-            let mut result = Vec::new();
-            for i in 0..self.elements.length() {
-                result.push(self.elements.nth(i).clone());
-            }
-            result
-        }
-
-        /// Get elements in sorted order as vector (for testing)
-        pub fn to_sorted_vec(&self) -> Vec<T> {
-            let sorted_seq = self.extract_all_sorted();
-            let mut result = Vec::new();
-            for i in 0..sorted_seq.length() {
-                result.push(sorted_seq.nth(i).clone());
-            }
-            result
-        }
     }
 }

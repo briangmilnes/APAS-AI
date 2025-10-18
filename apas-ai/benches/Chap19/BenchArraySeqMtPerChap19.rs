@@ -3,6 +3,7 @@ use std::time::Duration;
 
 use criterion::*;
 
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerTrait;
 use apas_ai::Chap19::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Types::Types::*;
 

@@ -4,7 +4,7 @@
 pub mod BSTPlainStEph {
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap23::BalBinTreeStEph::BalBinTreeStEph::BalBinTree;
+    use crate::Chap23::BalBinTreeStEph::BalBinTreeStEph::*;
     use crate::Types::Types::*;
 
     #[derive(Debug, Clone)]

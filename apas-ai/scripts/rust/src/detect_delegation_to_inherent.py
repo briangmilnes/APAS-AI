@@ -55,12 +55,16 @@ def main():
         impl_content = content[impl_start:i+1]
         
         # Look for delegation pattern: StructName::method_name(
+        # Exclude enum variants (PascalCase) - only match methods (snake_case or camelCase starting lowercase)
         delegation_pattern = rf'{struct_name}::(\w+)\('
         delegations = set()
         
         for deleg_match in re.finditer(delegation_pattern, impl_content):
             method_name = deleg_match.group(1)
-            delegations.add(method_name)
+            # Filter out PascalCase identifiers (enum variants like Node, Leaf, etc.)
+            # Methods start with lowercase or underscore
+            if method_name[0].islower() or method_name[0] == '_':
+                delegations.add(method_name)
         
         if delegations:
             found_delegations = True

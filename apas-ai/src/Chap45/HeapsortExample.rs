@@ -5,11 +5,11 @@ pub mod HeapsortExample {
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
-    use crate::Chap45::BalancedTreePQ::BalancedTreePQ::*;
+    use crate::Chap45::BalancedTreePQ::BalancedTreePQ::{*, BalancedTreePQ};
     use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
     use crate::Chap45::LeftistHeapPQ::LeftistHeapPQ::*;
-    use crate::Chap45::SortedListPQ::SortedListPQ::*;
-    use crate::Chap45::UnsortedListPQ::UnsortedListPQ::*;
+    use crate::Chap45::SortedListPQ::SortedListPQ::{*, SortedListPQ};
+    use crate::Chap45::UnsortedListPQ::UnsortedListPQ::{*, UnsortedListPQ};
     use crate::Types::Types::*;
 
     // A dummy trait as a minimal type checking comment and space for algorithmic analysis.

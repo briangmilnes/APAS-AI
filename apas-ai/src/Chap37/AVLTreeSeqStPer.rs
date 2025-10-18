@@ -250,20 +250,6 @@ pub mod AVLTreeSeqStPer {
         }
     }
 
-    impl<T: StT> AVLTreeSeqStPerS<T> {
-        pub fn to_arrayseq(&self) -> ArraySeqStPerS<T> {
-            let v = self.values_in_order();
-            ArraySeqStPerS::from_vec(v)
-        }
-
-        pub fn iter<'a>(&'a self) -> AVLTreeSeqStPerIter<'a, T> {
-            AVLTreeSeqStPerIter {
-                stack: Vec::new(),
-                current: self.root.as_deref(),
-            }
-        }
-    }
-
     pub struct AVLTreeSeqStPerIter<'a, T: StT> {
         stack: Vec<&'a Node<T>>,
         current: Option<&'a Node<T>>,

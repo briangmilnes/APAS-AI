@@ -5,6 +5,7 @@ use std::time::Duration;
 
 use criterion::*;
 
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::{Chap49::MinEditDistMtPer::MinEditDistMtPer::*, MinEditDistMtPerLit};
 
 fn bench_min_edit_distance_mt_per(c: &mut Criterion) {

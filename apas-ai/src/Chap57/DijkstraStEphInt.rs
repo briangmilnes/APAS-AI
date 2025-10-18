@@ -34,9 +34,8 @@ pub mod DijkstraStEphInt {
         vertex: usize,
     }
 
-    impl PQEntry {
-        fn new(dist: i64, vertex: usize) -> Self { PQEntry { dist, vertex } }
-    }
+    /// Module-level function to create a new PQEntry
+    fn pq_entry_new(dist: i64, vertex: usize) -> PQEntry { PQEntry { dist, vertex } }
 
     impl Ord for PQEntry {
         fn cmp(&self, other: &Self) -> Ordering {
@@ -78,7 +77,7 @@ pub mod DijkstraStEphInt {
 
         // Priority queue Q: stores PQEntry(distance, vertex)
         // BinaryHeapPQ is a min-heap
-        let mut pq: BinaryHeapPQ<PQEntry> = BinaryHeapPQ::singleton(PQEntry::new(0, source));
+        let mut pq: BinaryHeapPQ<PQEntry> = BinaryHeapPQ::singleton(pq_entry_new(0, source));
 
         // Main loop: deleteMin until queue is empty
         while !pq.is_empty() {
@@ -111,7 +110,7 @@ pub mod DijkstraStEphInt {
                     }
 
                     let new_dist = dist + (*weight as i64);
-                    pq = pq.insert(PQEntry::new(new_dist, u_idx));
+                    pq = pq.insert(pq_entry_new(new_dist, u_idx));
 
                     // Update predecessor if this is a better path
                     // (First time we reach u with minimum distance through PQ ordering)

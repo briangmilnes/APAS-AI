@@ -14,7 +14,7 @@
 
 pub mod SSSPResultStEphInt {
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
     use crate::Types::Types::*;
 

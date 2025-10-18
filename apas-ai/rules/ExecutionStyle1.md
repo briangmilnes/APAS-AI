@@ -223,6 +223,10 @@ User activates by saying "careful mode" or "ask first":
 - **Analysis outputs**: Place all analysis results, reports, and summaries in `analyses/` directory
   - Organized by category: `analyses/benchmarks/`, `analyses/coverage/`, `analyses/code_quality/`, `analyses/implementation/`, `analyses/todos/`
   - Never leave analysis outputs at project root
+  - **File versioning anti-pattern**: Never create `_updated`, `_new`, `_fixed`, `_v2`, etc. versions
+    - Update files in place: `analysis.txt`, not `analysis_updated.txt`
+    - If regenerating an analysis, overwrite the original file
+    - Use git for versioning, not filename suffixes
 - **Scripts organization**: Place all scripts in appropriate `scripts/` subdirectories
   - `scripts/APAS/src/` - APAS source code review and fixes
   - `scripts/APAS/tests/` - APAS test utilities
@@ -234,6 +238,9 @@ User activates by saying "careful mode" or "ask first":
   - `scripts/counting/` - Counting and metrics utilities
   - `scripts/tmp/` - **Temporary one-time scripts only** (migrations, one-off fixes, reverts)
   - See `scripts/README.md` for complete organization
+  - **Script location**: Never use `/tmp` for scripts - they damage future research
+    - Temporary exploratory scripts go in `scripts/tmp/`
+    - Reusable tools go in appropriate permanent locations
 - **One-time scripts**: All temporary single-use scripts go in `scripts/tmp/`
   - Migration scripts (rename files, restructure)
   - One-time pattern fixes or reverts

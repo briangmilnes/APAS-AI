@@ -1,6 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chapter 52: Adjacency Matrix Graph (persistent, multi-threaded).
 
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Chap52::AdjMatrixGraphMtPer::AdjMatrixGraphMtPer::*;
 use apas_ai::Types::Types::*;
 

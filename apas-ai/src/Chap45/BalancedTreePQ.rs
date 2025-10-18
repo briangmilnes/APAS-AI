@@ -273,112 +273,28 @@ pub mod BalancedTreePQ {
         }
 
         fn from_vec(elements: Vec<T>) -> Self {
-            BalancedTreePQ::from_vec(elements)
-        }
 
-        fn to_vec(&self) -> Vec<T> {
-            BalancedTreePQ::to_vec(self)
-        }
-
-        fn to_sorted_vec(&self) -> Vec<T> {
-            BalancedTreePQ::to_sorted_vec(self)
-        }
+            let mut pq = Self::empty();
+            for element in elements {
+                pq = pq.insert(element);
+            }
+            pq
     }
 
-    impl<T: StT + Ord> BalancedTreePQ<T> {
-        /// Get the maximum element (rightmost in balanced tree)
-        pub fn find_max(&self) -> Option<&T> {
-            if self.elements.length() == 0 {
-                None
-            } else {
-                Some(self.elements.nth(self.elements.length() - 1))
-            }
-        }
+        fn to_vec(&self) -> Vec<T> {
 
-        /// Remove and return maximum element
-        pub fn delete_max(&self) -> (Self, Option<T>) {
-            if self.elements.length() == 0 {
-                return (self.clone(), None);
-            }
-
-            let max_index = self.elements.length() - 1;
-            let max_element = self.elements.nth(max_index).clone();
-
-            // Convert to vector, remove last element, rebuild tree
-            let mut values = self.elements.values_in_order();
-            values.remove(max_index);
-
-            let new_pq = BalancedTreePQ {
-                elements: AVLTreeSeqStPerS::from_vec(values),
-            };
-
-            (new_pq, Some(max_element))
-        }
-
-        /// Insert multiple elements from a sequence
-        pub fn insert_all(&self, elements: &AVLTreeSeqStPerS<T>) -> Self {
-            let mut result = self.clone();
-            for i in 0..elements.length() {
-                let element = elements.nth(i);
-                result = result.insert(element.clone());
+            let mut result = Vec::new();
+            for i in 0..self.elements.length() {
+                result.push(self.elements.nth(i).clone());
             }
             result
-        }
+    }
 
-        /// Extract all elements in sorted order (already sorted)
-        pub fn extract_all_sorted(&self) -> AVLTreeSeqStPerS<T> { self.elements.clone() }
+        fn to_sorted_vec(&self) -> Vec<T> {
 
-        /// Check if element exists in the priority queue
-        pub fn contains(&self, element: &T) -> bool {
-            for i in 0..self.elements.length() {
-                let current = self.elements.nth(i);
-                if current == element {
-                    return true;
-                }
-                if current > element {
-                    // Since sequence is sorted, we can stop early
-                    break;
-                }
-            }
-            false
-        }
-
-        /// Remove a specific element (not necessarily minimum)
-        pub fn remove(&self, element: &T) -> (Self, bool) {
-            let mut values = self.elements.values_in_order();
-
-            for (i, current) in values.iter().enumerate() {
-                if current == element {
-                    values.remove(i);
-                    let new_pq = BalancedTreePQ {
-                        elements: AVLTreeSeqStPerS::from_vec(values),
-                    };
-                    return (new_pq, true);
-                }
-                if current > element {
-                    // Element not found (would be here if it existed)
-                    break;
-                }
-            }
-            (self.clone(), false)
-        }
-
-        /// Get elements in a range [min_val, max_val]
-        pub fn range(&self, min_val: &T, max_val: &T) -> AVLTreeSeqStPerS<T> {
-            let values = self.elements.values_in_order();
-            let mut range_values = Vec::new();
-
-            for current in values.iter() {
-                if current >= min_val && current <= max_val {
-                    range_values.push(current.clone());
-                } else if current > max_val {
-                    // Since sequence is sorted, we can stop
-                    break;
-                }
-            }
-
-            AVLTreeSeqStPerS::from_vec(range_values)
-        }
+            // Already sorted, just convert to vector
+            self.to_vec()
+    }
     }
 
     impl<T: StT + Ord> Default for BalancedTreePQ<T> {
@@ -422,9 +338,9 @@ pub mod BalancedTreePQ {
     /// Convenience functions for common operations
     impl<T: StT + Ord> BalancedTreePQ<T> {
         /// Create priority queue from vector (for testing)
-        pub fn from_vec(vec: Vec<T>) -> Self {
+        pub fn from_vec(elements: Vec<T>) -> Self {
             let mut pq = Self::empty();
-            for element in vec {
+            for element in elements {
                 pq = pq.insert(element);
             }
             pq

@@ -41,13 +41,12 @@ pub mod PrimStEph {
         parent: Option<V>,
     }
 
-    impl<V: StT + Hash + Ord> PQEntry<V> {
-        fn new(priority: OrderedFloat<f64>, vertex: V, parent: Option<V>) -> Self {
-            PQEntry {
-                priority,
-                vertex,
-                parent,
-            }
+    /// Module-level function to create a new PQEntry
+    fn pq_entry_new<V: StT + Hash + Ord>(priority: OrderedFloat<f64>, vertex: V, parent: Option<V>) -> PQEntry<V> {
+        PQEntry {
+            priority,
+            vertex,
+            parent,
         }
     }
 
@@ -87,7 +86,7 @@ pub mod PrimStEph {
         let mut visited: HashSet<V> = HashSet::new();
 
         // Priority queue
-        let mut pq = BinaryHeapPQ::<PQEntry<V>>::singleton(PQEntry::new(OrderedFloat(0.0), start.clone(), None));
+        let mut pq = BinaryHeapPQ::<PQEntry<V>>::singleton(pq_entry_new(OrderedFloat(0.0), start.clone(), None));
 
         while !pq.is_empty() {
             // Extract minimum priority vertex
@@ -125,7 +124,7 @@ pub mod PrimStEph {
             for v in neighbors.iter() {
                 if !visited.contains(v) {
                     if let Some(weight) = get_edge_weight(graph, &u, v) {
-                        pq = pq.insert(PQEntry::new(weight, v.clone(), Some(u.clone())));
+                        pq = pq.insert(pq_entry_new(weight, v.clone(), Some(u.clone())));
                     }
                 }
             }

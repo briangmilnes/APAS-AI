@@ -162,7 +162,7 @@ pub mod SubsetSumMtPer {
 macro_rules! SubsetSumMtPerLit {
     ($($x:expr),* $(,)?) => {
         $crate::Chap49::SubsetSumMtPer::SubsetSumMtPer::SubsetSumMtPerS::from_multiset(
-            $crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS::from_vec(vec![$($x),*])
+            <$crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS<_> as $crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerTrait<_>>::from_vec(vec![$($x),*])
         )
     };
     () => {

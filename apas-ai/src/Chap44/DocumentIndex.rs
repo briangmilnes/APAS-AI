@@ -175,28 +175,14 @@ pub mod DocumentIndex {
         }
 
         fn empty() -> Self {
-            DocumentIndex::empty()
-        }
 
-        fn get_all_words(&self) -> ArraySeqStPerS<Word> {
-            DocumentIndex::get_all_words(self)
-        }
-
-        fn word_count(&self) -> N {
-            DocumentIndex::word_count(self)
-        }
-    }
-
-    impl DocumentIndex {
-        /// Helper function to create an empty index
-        pub fn empty() -> Self {
             DocumentIndex {
                 word_to_docs: TableStPer::empty(),
             }
-        }
+    }
 
-        /// Get all words in the index
-        pub fn get_all_words(&self) -> ArraySeqStPerS<Word> {
+        fn get_all_words(&self) -> ArraySeqStPerS<Word> {
+
             let entries = self.word_to_docs.collect();
             let mut words = ArraySeqStPerS::empty();
 
@@ -207,10 +193,9 @@ pub mod DocumentIndex {
             }
 
             words
-        }
+    }
 
-        /// Get the total number of unique words in the index
-        pub fn word_count(&self) -> N { self.word_to_docs.size() }
+        fn word_count(&self) -> N { self.word_to_docs.size() }
     }
 
     /// Tokenization function: splits content into words

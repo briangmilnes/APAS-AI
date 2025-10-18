@@ -12,7 +12,7 @@ pub mod KruskalStEph {
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
-    use crate::Chap65::UnionFindStEph::UnionFindStEph::UnionFindStEph;
+    use crate::Chap65::UnionFindStEph::UnionFindStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
 

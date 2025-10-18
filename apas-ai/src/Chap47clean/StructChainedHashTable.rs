@@ -22,10 +22,6 @@ pub mod StructChainedHashTable {
         pub head: Option<Box<Node<Key, Value>>>,
     }
 
-    impl<Key, Value> ChainList<Key, Value> {
-        pub fn new() -> Self { ChainList { head: None } }
-    }
-
     impl<Key: PartialEq + Clone, Value: Clone> EntryTrait<Key, Value> for ChainList<Key, Value> {
         fn new() -> Self { ChainList { head: None } }
 
@@ -77,7 +73,7 @@ pub mod StructChainedHashTable {
     }
 
     impl<Key, Value> Default for ChainList<Key, Value> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self { ChainList { head: None } }
     }
 
     /// Struct Chained Hash Table implementation.

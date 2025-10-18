@@ -1,0 +1,214 @@
+Scanning all files for trait impl forwarding to inherent impl...
+
+====================================================================================================
+TRAIT IMPLS THAT FORWARD TO INHERENT IMPLS (NOT STAND-ALONE):
+====================================================================================================
+
+src/Chap18/ArraySeq.rs:
+  Trait impl: ArraySeq for ArraySeqS
+  Methods delegating to inherent impl: from_vec
+  Count: 1
+
+src/Chap18/ArraySeqMtEph.rs:
+  Trait impl: ArraySeqMtEphTrait for ArraySeqMtEphS
+  Methods delegating to inherent impl: from_vec
+  Count: 1
+
+src/Chap18/ArraySeqMtPer.rs:
+  Trait impl: ArraySeqMtPerTrait for ArraySeqMtPerS
+  Methods delegating to inherent impl: append, from_vec, is_empty, is_singleton, map
+  Count: 5
+
+src/Chap18/ArraySeqStEph.rs:
+  Trait impl: ArraySeqStEphTrait for ArraySeqStEphS
+  Methods delegating to inherent impl: empty, from_vec, inject, iter, length, new, nth, set, singleton, update
+  Count: 10
+
+src/Chap18/ArraySeqStPer.rs:
+  Trait impl: ArraySeqStPerTrait for ArraySeqStPerS
+  Methods delegating to inherent impl: from_vec, reduce
+  Count: 2
+
+src/Chap18/LinkedListStEph.rs:
+  Trait impl: LinkedListStEphTrait for LinkedListStEphS
+  Methods delegating to inherent impl: empty, from_vec
+  Count: 2
+
+src/Chap18/LinkedListStPer.rs:
+  Trait impl: LinkedListStPerTrait for LinkedListStPerS
+  Methods delegating to inherent impl: empty, from_vec
+  Count: 2
+
+src/Chap19/ArraySeqMtEphSlice.rs:
+  Trait impl: ArraySeqMtEphSliceTrait for ArraySeqMtEphSliceS
+  Methods delegating to inherent impl: from_vec, with_exclusive
+  Count: 2
+
+src/Chap19/ArraySeqMtPer.rs:
+  Trait impl: ArraySeqMtPerTrait for ArraySeqMtPerS
+  Methods delegating to inherent impl: from_vec
+  Count: 1
+
+src/Chap19/ArraySeqStPer.rs:
+  Trait impl: ArraySeqStPerTrait for ArraySeqStPerS
+  Methods delegating to inherent impl: from_vec
+  Count: 1
+
+src/Chap23/PrimTreeSeqSt.rs:
+  Trait impl: PrimTreeSeqStTrait for PrimTreeSeqStS
+  Methods delegating to inherent impl: from_vec
+  Count: 1
+
+src/Chap26/MergeSortMt.rs:
+  Trait impl: MergeSortMtTrait for ArraySeqMtPerS
+  Methods delegating to inherent impl: append, empty, singleton, tabulate
+  Count: 4
+
+src/Chap26/MergeSortSt.rs:
+  Trait impl: MergeSortStTrait for ArraySeqStPerS
+  Methods delegating to inherent impl: empty, tabulate
+  Count: 2
+
+src/Chap27/ReduceContractMtEph.rs:
+  Trait impl: ReduceContractMtEphTrait for ArraySeqMtEphS
+  Methods delegating to inherent impl: tabulate
+  Count: 1
+
+src/Chap27/ReduceContractStEph.rs:
+  Trait impl: ReduceContractStEphTrait for ArraySeqStEphS
+  Methods delegating to inherent impl: tabulate
+  Count: 1
+
+src/Chap27/ScanContractMtEph.rs:
+  Trait impl: ScanContractMtEphTrait for ArraySeqMtEphS
+  Methods delegating to inherent impl: append, empty, singleton, tabulate
+  Count: 4
+
+src/Chap27/ScanContractStEph.rs:
+  Trait impl: ScanContractStEphTrait for ArraySeqStEphS
+  Methods delegating to inherent impl: append, empty, singleton, tabulate
+  Count: 4
+
+src/Chap35/OrderStatSelectMtEph.rs:
+  Trait impl: OrderStatSelectMtEphTrait for ArraySeqMtEphS
+  Methods delegating to inherent impl: tabulate
+  Count: 1
+
+src/Chap35/OrderStatSelectMtPer.rs:
+  Trait impl: OrderStatSelectMtPerTrait for ArraySeqMtPerS
+  Methods delegating to inherent impl: tabulate
+  Count: 1
+
+src/Chap35/OrderStatSelectStEph.rs:
+  Trait impl: OrderStatSelectStEphTrait for ArraySeqStEphS
+  Methods delegating to inherent impl: tabulate
+  Count: 1
+
+src/Chap35/OrderStatSelectStPer.rs:
+  Trait impl: OrderStatSelectStPerTrait for ArraySeqStPerS
+  Methods delegating to inherent impl: tabulate
+  Count: 1
+
+src/Chap36/QuickSortMt.rs:
+  Trait impl: Chapter36MtTrait for ArraySeqMtEphS
+  Methods delegating to inherent impl: from_vec
+  Count: 1
+
+src/Chap37/AVLTreeSeq.rs:
+  Trait impl: AVLTreeSeq for AVLTreeS
+  Methods delegating to inherent impl: contains_value, delete_value, from_vec, insert_value, is_tree_empty, iter, new_root, push_back, to_arrayseq, update, values_in_order
+  Count: 11
+
+src/Chap37/AVLTreeSeqStEph.rs:
+  Trait impl: AVLTreeSeqStEphTrait for AVLTreeSeqStEphS
+  Methods delegating to inherent impl: contains_value, delete_value, empty, from_vec, insert_value, iter, new_root, push_back, to_arrayseq, update
+  Count: 10
+
+src/Chap37/BSTSetAVLMtEph.rs:
+  Trait impl: BSTSetAVLMtEphTrait for BSTSetAVLMtEph
+  Methods delegating to inherent impl: filter, reduce
+  Count: 2
+
+src/Chap37/BSTSetBBAlphaMtEph.rs:
+  Trait impl: BSTSetBBAlphaMtEphTrait for BSTSetBBAlphaMtEph
+  Methods delegating to inherent impl: filter, reduce
+  Count: 2
+
+src/Chap37/BSTSetRBMtEph.rs:
+  Trait impl: BSTSetRBMtEphTrait for BSTSetRBMtEph
+  Methods delegating to inherent impl: filter, reduce
+  Count: 2
+
+src/Chap37/BSTSetSplayMtEph.rs:
+  Trait impl: BSTSetSplayMtEphTrait for BSTSetSplayMtEph
+  Methods delegating to inherent impl: filter, reduce
+  Count: 2
+
+src/Chap38/BSTParaMtEph.rs:
+  Trait impl: ParamBSTTrait for ParamBST
+  Methods delegating to inherent impl: collect_in_order, difference_inner, filter_parallel, intersect_inner, join_m, join_pair_inner, new, reduce_parallel, split_inner, union_inner
+  Count: 10
+
+src/Chap38/BSTParaStEph.rs:
+  Trait impl: ParamBSTTrait for ParamBST
+  Methods delegating to inherent impl: collect_in_order, join_m, join_pair_inner, new, split_inner, union_inner
+  Count: 6
+
+src/Chap39/BSTParaTreapMtEph.rs:
+  Trait impl: ParamTreapTrait for ParamTreap
+  Methods delegating to inherent impl: collect_in_order, difference_inner, filter_parallel, intersect_inner, join_pair_inner, join_with_priority, new, reduce_parallel, split_inner, union_inner
+  Count: 10
+
+src/Chap39/BSTSetTreapMtEph.rs:
+  Trait impl: BSTSetTreapMtEphTrait for BSTSetTreapMtEph
+  Methods delegating to inherent impl: filter, reduce
+  Count: 2
+
+src/Chap40/BSTSizeStEph.rs:
+  Trait impl: BSTSizeStEphTrait for BSTSizeStEph
+  Methods delegating to inherent impl: new
+  Count: 1
+
+src/Chap41/AVLTreeSetMtEph.rs:
+  Trait impl: AVLTreeSetMtEphTrait for AVLTreeSetMtEph
+  Methods delegating to inherent impl: from_seq
+  Count: 1
+
+src/Chap42/TableMtEph.rs:
+  Trait impl: TableMtEphTrait for TableMtEph
+  Methods delegating to inherent impl: empty, singleton
+  Count: 2
+
+src/Chap43/OrderedTableMtEph.rs:
+  Trait impl: OrderedTableMtEphTrait for OrderedTableMtEph
+  Methods delegating to inherent impl: empty
+  Count: 1
+
+src/Chap43/OrderedTableStEph.rs:
+  Trait impl: OrderedTableStEphTrait for OrderedTableStEph
+  Methods delegating to inherent impl: empty
+  Count: 1
+
+src/Chap45/LeftistHeapPQ.rs:
+  Trait impl: LeftistHeapPQTrait for LeftistHeapPQ
+  Methods delegating to inherent impl: extract_all_sorted, from_vec, height, is_valid_leftist_heap, meld_multiple, root_rank, split, to_sorted_vec, to_vec
+  Count: 9
+
+src/Chap47clean/LinkedListChainedHashTableStEph.rs:
+  Trait impl: EntryTrait for LinkedList
+  Methods delegating to inherent impl: new
+  Count: 1
+
+src/Chap47clean/VecChainedHashTableStEph.rs:
+  Trait impl: EntryTrait for Vec
+  Methods delegating to inherent impl: new
+  Count: 1
+
+====================================================================================================
+
+Summary: Found 40 file(s) with trait impl forwarding
+
+These need to be fixed BEFORE removing inherent impls:
+  1. Move implementation from inherent impl to trait impl
+  2. Make trait impl stand-alone (no calls to inherent methods)
+  3. Then inherent impl can be safely removed

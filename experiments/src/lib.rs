@@ -14,3 +14,9 @@ pub mod SimpleTraitDoc;
 pub mod TraitWithoutImpl;
 pub mod TraitAsDocumentation;
 pub mod FunctionTypes;
+
+// Inherent vs Trait impl experiment
+pub mod M1;
+pub mod M2Asterix;
+pub mod M2JustStructAndTrait;
+pub mod M2JustStruct;

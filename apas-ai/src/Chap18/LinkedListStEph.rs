@@ -96,47 +96,90 @@ pub mod LinkedListStEph {
         fn from_vec(elts: Vec<T>) -> Self;
     }
 
+    // Private helper functions
+    fn node_at<T: StT>(list: &LinkedListStEphS<T>, index: N) -> Option<&NodeE<T>> {
+        if index >= list.len {
+            return None;
+        }
+        let mut current = list.head.as_deref();
+        let mut i = 0usize;
+        while let Some(node) = current {
+            if i == index {
+                return Some(node);
+            }
+            current = node.next.as_deref();
+            i += 1;
+        }
+        None
+    }
 
-    impl<T: StT> LinkedListStEphS<T> {
-        pub fn empty() -> Self { LinkedListStEphS { head: None, len: 0 } }
+    fn node_at_mut<T: StT>(list: &mut LinkedListStEphS<T>, index: N) -> Option<&mut NodeE<T>> {
+        if index >= list.len {
+            return None;
+        }
+        let mut current = list.head.as_deref_mut();
+        let mut i = 0usize;
+        while let Some(node) = current {
+            if i == index {
+                return Some(node);
+            }
+            current = node.next.as_deref_mut();
+            i += 1;
+        }
+        None
+    }
 
-        pub fn new(length: N, init_value: T) -> Self
+    impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
+        fn new(length: N, init_value: T) -> Self
         where
             T: Clone,
         {
+
             LinkedListStEphS::from_vec(vec![init_value; length])
-        }
+    }
 
-        pub fn singleton(item: T) -> Self { LinkedListStEphS::from_vec(vec![item]) }
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
 
-        pub fn from_vec(mut elts: Vec<T>) -> Self {
-            let len = elts.len();
-            let mut head: Option<Box<NodeE<T>>> = None;
-            while let Some(value) = elts.pop() {
-                head = Some(Box::new(NodeE { value, next: head }));
-            }
-            LinkedListStEphS { head, len }
-        }
-
-        pub fn length(&self) -> N { self.len }
-
-        pub fn nth(&self, index: N) -> &T {
-            self.node_at(index)
-                .map(|node| &node.value)
-                .expect("Index out of bounds")
-        }
-
-        pub fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
-            match self.node_at_mut(index) {
+            match node_at_mut(self, index) {
                 | Some(node) => {
                     node.value = item;
                     Ok(self)
                 }
                 | None => Err("Index out of bounds"),
             }
+    }
+
+        fn length(&self) -> N { self.len }
+
+        fn nth(&self, index: N) -> &T {
+
+            node_at(self, index)
+                .map(|node| &node.value)
+                .expect("Index out of bounds")
+    }
+
+        fn empty() -> Self { LinkedListStEphS { head: None, len: 0 } }
+
+        fn singleton(item: T) -> Self { LinkedListStEphS::from_vec(vec![item]) }
+
+        fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> Self {
+            let mut values: Vec<T> = Vec::with_capacity(n);
+            for i in 0..n {
+                values.push(f(i));
+            }
+            LinkedListStEphS::from_vec(values)
         }
 
-        pub fn subseq_copy(&self, start: N, length: N) -> Self {
+        fn map<U: StT, F: Fn(&T) -> U>(a: &Self, f: &F) -> LinkedListStEphS<U> {
+            let mut values: Vec<U> = Vec::with_capacity(a.length());
+            for i in 0..a.length() {
+                values.push(f(a.nth(i)));
+            }
+            LinkedListStEphS::from_vec(values)
+        }
+
+        fn subseq_copy(&self, start: N, length: N) -> Self {
+
             if length == 0 || start >= self.len {
                 return LinkedListStEphS::empty();
             }
@@ -164,82 +207,7 @@ pub mod LinkedListStEph {
                 }
             }
             LinkedListStEphS::from_vec(out)
-        }
-
-        fn node_at(&self, index: N) -> Option<&NodeE<T>> {
-            if index >= self.len {
-                return None;
-            }
-            let mut current = self.head.as_deref();
-            let mut i = 0usize;
-            while let Some(node) = current {
-                if i == index {
-                    return Some(node);
-                }
-                current = node.next.as_deref();
-                i += 1;
-            }
-            None
-        }
-
-        fn node_at_mut(&mut self, index: N) -> Option<&mut NodeE<T>> {
-            if index >= self.len {
-                return None;
-            }
-            let mut current = self.head.as_deref_mut();
-            let mut i = 0usize;
-            while let Some(node) = current {
-                if i == index {
-                    return Some(node);
-                }
-                current = node.next.as_deref_mut();
-                i += 1;
-            }
-            None
-        }
     }
-
-
-
-
-
-    impl<T: StT> LinkedListStEphTrait<T> for LinkedListStEphS<T> {
-        fn new(length: N, init_value: T) -> Self
-        where
-            T: Clone,
-        {
-            LinkedListStEphS::new(length, init_value)
-        }
-
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
-            LinkedListStEphS::set(self, index, item)
-        }
-
-        fn length(&self) -> N { LinkedListStEphS::length(self) }
-
-        fn nth(&self, index: N) -> &T { LinkedListStEphS::nth(self, index) }
-
-        fn empty() -> Self { LinkedListStEphS::empty() }
-
-        fn singleton(item: T) -> Self { LinkedListStEphS::singleton(item) }
-
-        fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> Self {
-            let mut values: Vec<T> = Vec::with_capacity(n);
-            for i in 0..n {
-                values.push(f(i));
-            }
-            LinkedListStEphS::from_vec(values)
-        }
-
-        fn map<U: StT, F: Fn(&T) -> U>(a: &Self, f: &F) -> LinkedListStEphS<U> {
-            let mut values: Vec<U> = Vec::with_capacity(a.length());
-            for i in 0..a.length() {
-                values.push(f(a.nth(i)));
-            }
-            LinkedListStEphS::from_vec(values)
-        }
-
-        fn subseq_copy(&self, start: N, length: N) -> Self { LinkedListStEphS::subseq_copy(self, start, length) }
 
         fn append(a: &Self, b: &Self) -> Self {
             let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
@@ -378,9 +346,15 @@ pub mod LinkedListStEph {
             (LinkedListStEphS::from_vec(prefixes), total)
         }
 
-        fn from_vec(elts: Vec<T>) -> Self {
-            LinkedListStEphS::from_vec(elts)
-        }
+        fn from_vec(mut elts: Vec<T>) -> Self {
+
+            let len = elts.len();
+            let mut head: Option<Box<NodeE<T>>> = None;
+            while let Some(value) = elts.pop() {
+                head = Some(Box::new(NodeE { value, next: head }));
+            }
+            LinkedListStEphS { head, len }
+    }
     }
 
     impl<T: StT> Display for LinkedListStEphS<T> {

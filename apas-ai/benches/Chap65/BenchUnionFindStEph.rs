@@ -5,7 +5,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFindStEph;
+use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::*;
 use apas_ai::Types::Types::*;
 
 fn bench_union_find_operations(c: &mut Criterion) {

@@ -192,42 +192,40 @@ Result guidance
   // Call via trait: MyType::empty() or <MyType as MyTrait>::empty()
   ```
 
-#### Single Implementation Pattern (MANDATORY)
-- **Data structures with custom traits MUST have ONLY trait implementations.**
-- **NO inherent impl blocks alongside trait impl blocks for the same type.**
-- When a struct has an associated trait (e.g., `SetStEph` with `SetStEphTrait`), **all functionality belongs exclusively in the trait impl**.
-- **Rationale**: 
-  - Eliminates code duplication: one code path instead of two
-  - Achieves 100% test coverage without testing duplicate implementations
-  - Prevents confusion about which impl to call (inherent vs trait method resolution)
-  - Forces clear API boundaries through traits
-  - Makes refactoring and maintenance simpler
-  - In APAS, all types use consistent trait bounds (StT/MtT/StTInMtT), so no weaker-bound variants are needed
+#### Inherent Impls - Single Implementation Pattern (MANDATORY)
+
+**Core Rule: Types with custom traits MUST have only ONE implementation location.**
+
+- **Import philosophy**: `use Module::*;` is encouraged - modules control exports via `pub`
+  - Users get everything the module publicly exports
+  - Don't need to track which names are types vs traits vs functions
+  - Module author decides public API, not the importer
+  - Conflicts are rare and resolved explicitly when they occur
+
+- **Single Implementation Pattern**:
+  - If a type has a custom trait: ALL public methods go in the trait impl ONLY
+  - NO inherent impl block alongside trait impl for the same functionality
+  - Prevents duplicate code paths and testing overhead
+  - Eliminates confusion about method resolution (inherent vs trait)
   
-- **Violating pattern** (WRONG - found in 72 files):
   ```rust
+  // ❌ WRONG - two implementations of same functionality
   pub struct SetStEph<T> { data: HashSet<T> }
   
-  impl<T: Eq + Hash> SetStEph<T> {  // ❌ DELETE THIS ENTIRE BLOCK
+  impl<T: Eq + Hash> SetStEph<T> {  // ❌ DELETE THIS - duplicate code path
       pub fn empty() -> Self { SetStEph { data: HashSet::new() } }
       pub fn insert(&mut self, x: T) -> bool { self.data.insert(x) }
       pub fn union(&self, other: &Self) -> Self { /* ... */ }
-      // ... 20 more methods duplicating trait impl
   }
   
   impl<T: StT + Hash> SetStEphTrait<T> for SetStEph<T> {
       fn empty() -> Self { SetStEph { data: HashSet::new() } }
       fn insert(&mut self, x: T) -> bool { self.data.insert(x) }
       fn union(&self, other: &Self) -> Self { /* ... */ }
-      // ... same 20 methods (duplicate code path, untested)
   }
-  ```
-
-- **Correct pattern** (ONE implementation location):
-  ```rust
-  pub struct SetStEph<T> { data: HashSet<T> }
   
-  // No inherent impl block at all!
+  // ✓ CORRECT - single implementation location
+  pub struct SetStEph<T> { data: HashSet<T> }
   
   impl<T: StT + Hash> SetStEphTrait<T> for SetStEph<T> {  // ✓ SINGLE SOURCE
       fn empty() -> Self { SetStEph { data: HashSet::new() } }
@@ -237,11 +235,36 @@ Result guidance
   }
   ```
 
-- **Standard library trait impls ARE allowed**: Inherent impls should be deleted, but standard trait impls (Debug, Display, Clone, Eq, Hash, etc.) remain and go at the bottom of the file.
+- **Private helper types**: Use module-level functions instead of inherent impls
+  - Private types (iterators, internal nodes, etc.) aren't exported
+  - Inherent methods on private types are just internal helpers
+  - Module-level functions are clearer for implementation details
+  
+  ```rust
+  // ❌ WRONG - inherent impl on private helper
+  struct PQEntry { dist: i64, vertex: usize }
+  impl PQEntry {
+      fn new(dist: i64, vertex: usize) -> Self { PQEntry { dist, vertex } }
+  }
+  
+  // ✓ CORRECT - module-level function for construction
+  struct PQEntry { dist: i64, vertex: usize }
+  fn pq_entry_new(dist: i64, vertex: usize) -> PQEntry { 
+      PQEntry { dist, vertex } 
+  }
+  ```
 
-- **Detection script**: `scripts/rust/src/review_inherent_and_trait_impl.py` identifies all violations.
+- **Allowed inherent impls**: Only for types that have NO custom trait
+  - Utility types (examples, analysis helpers, result containers)
+  - Types that genuinely don't need/want a trait abstraction
+  - These should be rare - most types benefit from trait abstraction
 
-- **Current status**: 72 structs violate this rule and need refactoring.
+- **Standard library trait impls**: Always allowed (Clone, Debug, Display, Ord, PartialOrd, Hash, Eq, etc.)
+  - These are trait impls (`impl Trait for Type`), not inherent impls
+  - Place at bottom of file after custom trait impls
+
+- **Detection**: `scripts/rust/src/find_inherent_impls.py` - currently 149 blocks across 106 files
+- **Status**: Ongoing cleanup to eliminate duplicate implementations
 
 ### Types, Bounds, and Lifting
 

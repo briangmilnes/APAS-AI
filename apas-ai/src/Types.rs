@@ -27,16 +27,13 @@ use std::sync::Mutex;
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Pair<K, V>(pub K, pub V);
 
-
     // Triple wrapper for three-element tuples
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Triple<A, B, C>(pub A, pub B, pub C);
 
-
     // Quadruple wrapper for four-element tuples
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Quadruple<A, B, C, D>(pub A, pub B, pub C, pub D);
-
 
     // Key-value struct with named fields
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -44,7 +41,6 @@ use std::sync::Mutex;
         pub key: K,
         pub val: V,
     }
-
 
     // Type bounds shorthands
     // StT: single-threaded friendly elements: Eq + Clone + Display + Debug + Sized

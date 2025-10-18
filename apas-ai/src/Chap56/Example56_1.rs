@@ -9,7 +9,7 @@ pub mod Example56_1 {
 
     use ordered_float::OrderedFloat;
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
     use crate::Chap56::PathWeightUtilsStEph::PathWeightUtilsStEph::*;
 
