@@ -4,6 +4,8 @@
 use apas_ai::{
     ArraySeqMtEphSLit, ArraySeqStEphS, ArraySeqStPerS,
     Chap18::ArraySeqMtEph::ArraySeqMtEph::*,
+    Chap19::ArraySeqStEph::ArraySeqStEph::*,
+    Chap19::ArraySeqStPer::ArraySeqStPer::*,
     Chap49::SubsetSumMtEph::SubsetSumMtEph::*,
     Chap49::SubsetSumMtPer::SubsetSumMtPer::*, Chap49::SubsetSumStEph::SubsetSumStEph::*,
     Chap49::SubsetSumStPer::SubsetSumStPer::*, SubsetSumMtEphLit, SubsetSumMtPerLit, SubsetSumStEphLit,

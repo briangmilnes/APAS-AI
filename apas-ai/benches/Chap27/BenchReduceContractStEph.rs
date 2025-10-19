@@ -5,7 +5,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap27::ReduceContractStEph::ReduceContractStEph::ReduceContractStEphTrait;
 
 fn bench_reduce_contract_100(c: &mut Criterion) {

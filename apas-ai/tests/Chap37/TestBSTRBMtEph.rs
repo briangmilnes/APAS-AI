@@ -2,6 +2,7 @@
 //! Tests for BSTRBMtEph.
 
 use apas_ai::BSTRBMtEphLit;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap37::BSTRBMtEph::BSTRBMtEph::*;
 use apas_ai::Types::Types::*;
 

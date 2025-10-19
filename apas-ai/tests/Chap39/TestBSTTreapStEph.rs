@@ -2,6 +2,7 @@
 //! Tests for BSTTreapStEph.
 
 use apas_ai::BSTTreapStEphLit;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap39::BSTTreapStEph::BSTTreapStEph::*;
 use apas_ai::Types::Types::*;
 

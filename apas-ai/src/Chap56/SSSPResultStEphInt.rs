@@ -14,8 +14,8 @@
 
 pub mod SSSPResultStEphInt {
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     const UNREACHABLE: i64 = i64::MAX;

@@ -1,9 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-// TEMPORARILY IGNORED: type mismatch errors in test helper code (i32 vs usize)
-// ENTIRE FILE COMMENTED OUT - DOES NOT COMPILE
+// Previously ignored due to type mismatch errors - now being fixed
 
-/*
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerBaseTrait, ArraySeqStPerRedefinableTrait};
 use apas_ai::Types::Types::*;
 use apas_ai::*;
 
@@ -315,40 +314,33 @@ fn exercise_set<S: TestSet>() {
 }
 
 #[test]
-#[ignore]
 fn test_plain_bst_set_ops() {
     exercise_set::<apas_ai::Chap37::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMt<i32>>();
 }
 
 #[test]
-#[ignore]
 fn test_avl_bst_set_ops() { exercise_set::<apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt<i32>>(); }
 
 #[test]
-#[ignore]
 fn test_rb_bst_set_ops() { exercise_set::<apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt<i32>>(); }
 
 #[test]
-#[ignore]
 fn test_bbalpha_bst_set_ops() {
     exercise_set::<apas_ai::Chap37::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSetBBAlphaMt<i32>>();
 }
 
 #[test]
-#[ignore]
 fn test_treap_bst_set_ops() {
     exercise_set::<apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt<i32>>();
 }
 
 #[test]
-#[ignore]
 fn test_splay_bst_set_ops() {
     exercise_set::<apas_ai::Chap37::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMt<i32>>();
 }
 
 // Individual variant testing for BSTSet*MtEph variants
 #[test]
-#[ignore]
 fn test_plain_bst_individual_operations() {
     use apas_ai::Chap37::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMt;
 
@@ -403,7 +395,6 @@ fn test_plain_bst_individual_operations() {
 }
 
 #[test]
-#[ignore]
 fn test_avl_bst_individual_operations() {
     use apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt;
 
@@ -439,7 +430,6 @@ fn test_avl_bst_individual_operations() {
 }
 
 #[test]
-#[ignore]
 fn test_rb_bst_individual_operations() {
     use apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt;
 
@@ -477,7 +467,6 @@ fn test_rb_bst_individual_operations() {
 }
 
 #[test]
-#[ignore]
 fn test_bbalpha_bst_individual_operations() {
     use apas_ai::Chap37::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSetBBAlphaMt;
 
@@ -513,7 +502,6 @@ fn test_bbalpha_bst_individual_operations() {
 }
 
 #[test]
-#[ignore]
 fn test_treap_bst_individual_operations() {
     use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt;
 
@@ -550,7 +538,6 @@ fn test_treap_bst_individual_operations() {
 }
 
 #[test]
-#[ignore]
 fn test_splay_bst_individual_operations() {
     use apas_ai::Chap37::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMt;
 
@@ -587,7 +574,6 @@ fn test_splay_bst_individual_operations() {
 }
 
 #[test]
-#[ignore]
 fn test_all_variants_empty_operations() {
     // Test that all variants handle empty operations correctly
     macro_rules! test_empty_variant {
@@ -619,7 +605,6 @@ fn test_all_variants_empty_operations() {
 }
 
 #[test]
-#[ignore]
 fn test_all_variants_single_element() {
     // Test that all variants handle single element correctly
     macro_rules! test_single_variant {
@@ -664,7 +649,6 @@ fn test_all_variants_single_element() {
 
 // Concurrent access pattern tests for BSTSet*MtEph variants
 #[test]
-#[ignore]
 fn test_concurrent_plain_bst_operations() {
     use apas_ai::Chap37::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMt;
     use std::sync::*;
@@ -739,7 +723,6 @@ fn test_concurrent_plain_bst_operations() {
 }
 
 #[test]
-#[ignore]
 fn test_concurrent_avl_bst_operations() {
     use apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt;
     use std::sync::*;
@@ -790,7 +773,6 @@ fn test_concurrent_avl_bst_operations() {
 }
 
 #[test]
-#[ignore]
 fn test_concurrent_rb_bst_stress() {
     use apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt;
     use std::sync::*;
@@ -840,7 +822,6 @@ fn test_concurrent_rb_bst_stress() {
 }
 
 #[test]
-#[ignore]
 fn test_concurrent_bbalpha_operations() {
     use apas_ai::Chap37::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSetBBAlphaMt;
     use std::sync::*;
@@ -897,7 +878,6 @@ fn test_concurrent_bbalpha_operations() {
 }
 
 #[test]
-#[ignore]
 fn test_concurrent_treap_operations() {
     use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt;
     use std::sync::*;
@@ -918,11 +898,11 @@ fn test_concurrent_treap_operations() {
 
             // Build two sets with overlapping values
             for i in 0..20 {
-                set1.insert(thread_id * 20 + i);
+                set1.insert((thread_id * 20 + i) as i32);
             }
 
             for i in 10..30 {
-                set2.insert(thread_id * 20 + i);
+                set2.insert((thread_id * 20 + i) as i32);
             }
 
             // Test set operations
@@ -946,13 +926,12 @@ fn test_concurrent_treap_operations() {
         assert_eq!(*difference_size, 10); // 20 - 10 overlap = 10
 
         // Sum of intersection: thread_id*20 + 10 + ... + thread_id*20 + 19
-        let expected_sum = (0..10).map(|i| thread_id * 20 + 10 + i).sum::<usize>();
+        let expected_sum = (0..10).map(|i| (thread_id * 20 + 10 + i) as i32).sum::<i32>();
         assert_eq!(*sum, expected_sum);
     }
 }
 
 #[test]
-#[ignore]
 fn test_concurrent_splay_access_patterns() {
     use apas_ai::Chap37::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMt;
     use std::sync::*;
@@ -1012,7 +991,6 @@ fn test_concurrent_splay_access_patterns() {
 }
 
 #[test]
-#[ignore]
 fn test_all_variants_concurrent_stress() {
     use std::sync::{Arc, Barrier};
     use std::thread;
@@ -1081,7 +1059,6 @@ fn test_all_variants_concurrent_stress() {
 }
 
 #[test]
-#[ignore]
 fn test_race_condition_verification_bst_sets() {
     use apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt;
     use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
@@ -1206,7 +1183,6 @@ fn test_race_condition_verification_bst_sets() {
 }
 
 #[test]
-#[ignore]
 fn test_race_condition_verification_concurrent_modifications() {
     use apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt;
     use std::sync::atomic::{AtomicBool, Ordering};
@@ -1243,10 +1219,10 @@ fn test_race_condition_verification_concurrent_modifications() {
                     let set = &mut sets[set_index];
 
                     // Insert value
-                    set.insert(value);
+                    set.insert(value as i32);
 
                     // Verify the insertion worked
-                    if !set.contains(&value) {
+                    if !set.contains(&(value as i32)) {
                         inconsistency_clone.store(true, Ordering::SeqCst);
                     }
 
@@ -1316,7 +1292,6 @@ fn test_race_condition_verification_concurrent_modifications() {
 }
 
 #[test]
-#[ignore]
 fn test_deadlock_prevention_bst_sets() {
     use apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt;
     use std::sync::{Arc, Barrier};
@@ -1350,17 +1325,17 @@ fn test_deadlock_prevention_bst_sets() {
                 // Perform operations that could cause deadlocks if not properly synchronized
                 if let Ok(mut sets) = shared_sets_clone.try_write() {
                     // Insert values into first set
-                    sets[first_idx].insert(thread_id * 100 + operations_completed);
+                    sets[first_idx].insert((thread_id * 100 + operations_completed) as i32);
 
                     // Then into second set
-                    sets[second_idx].insert(thread_id * 100 + operations_completed + 50);
+                    sets[second_idx].insert((thread_id * 100 + operations_completed + 50) as i32);
 
                     operations_completed += 1;
                 } else {
                     // If we can't get write lock, try read operations
                     if let Ok(sets) = shared_sets_clone.try_read() {
                         let _ = sets[first_idx].size();
-                        let _ = sets[second_idx].contains(&(thread_id * 100));
+                        let _ = sets[second_idx].contains(&((thread_id * 100) as i32));
                     }
                 }
 
@@ -1399,4 +1374,3 @@ fn test_deadlock_prevention_bst_sets() {
         );
     }
 }
-*/

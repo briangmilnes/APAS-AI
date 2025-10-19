@@ -5,7 +5,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::{Chap49::SubsetSumStPer::SubsetSumStPer::*, SubsetSumStPerLit};
+use apas_ai::{Chap19::ArraySeqStPer::ArraySeqStPer::*, Chap49::SubsetSumStPer::SubsetSumStPer::*, SubsetSumStPerLit};
 
 fn bench_subset_sum_st_per(c: &mut Criterion) {
     let mut group = c.benchmark_group("subset_sum_st_per");

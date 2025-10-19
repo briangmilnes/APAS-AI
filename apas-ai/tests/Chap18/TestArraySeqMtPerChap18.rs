@@ -129,7 +129,7 @@ fn test_tabulate_large() {
 fn test_empty() {
     let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
     assert_eq!(empty.length(), 0);
-    assert!(empty.is_empty());
+    assert!(<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isEmpty(&empty));
 }
 
 #[test]
@@ -137,7 +137,7 @@ fn test_singleton() {
     let single = ArraySeqMtPerS::singleton(42);
     assert_eq!(single.length(), 1);
     assert_eq!(*single.nth(0), 42);
-    assert!(single.is_singleton());
+    assert!(<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isSingleton(&single));
 }
 
 #[test]
@@ -160,22 +160,22 @@ fn test_subseq_copy() {
 #[test]
 fn test_is_empty() {
     let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
-    assert!(empty.is_empty());
+    assert!(<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isEmpty(&empty));
 
     let non_empty = ArraySeqMtPerS::singleton(1);
-    assert!(!non_empty.is_empty());
+    assert!(!<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isEmpty(&non_empty));
 }
 
 #[test]
 fn test_is_singleton() {
     let single = ArraySeqMtPerS::singleton(10);
-    assert!(single.is_singleton());
+    assert!(<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isSingleton(&single));
 
     let multiple = ArraySeqMtPerS::from_vec(vec![1, 2]);
-    assert!(!multiple.is_singleton());
+    assert!(!<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isSingleton(&multiple));
 
     let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
-    assert!(!empty.is_singleton());
+    assert!(!<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isSingleton(&empty));
 }
 
 #[test]
@@ -415,7 +415,7 @@ fn test_flatten_empty() {
 fn test_collect_basic() {
     let pairs = ArraySeqMtPerS::from_vec(vec![Pair(1, 10), Pair(2, 20), Pair(1, 11), Pair(2, 21), Pair(1, 12)]);
 
-    let grouped = <ArraySeqMtPerS<Pair<N, N>> as ArraySeqMtPerTrait<Pair<N, N>>>::collect(&pairs, |a, b| a.cmp(b));
+    let grouped = <ArraySeqMtPerS<Pair<N, N>> as ArraySeqMtPerBaseTrait<Pair<N, N>>>::collect(&pairs, |a, b| a.cmp(b));
     assert_eq!(grouped.length(), 2);
 }
 
@@ -432,22 +432,22 @@ fn test_inject_first_wins() {
 #[test]
 fn test_isEmpty_trait() {
     let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
-    assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isEmpty(&empty));
+    assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isEmpty(&empty));
 
     let non_empty = ArraySeqMtPerS::singleton(1);
-    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isEmpty(&non_empty));
+    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isEmpty(&non_empty));
 }
 
 #[test]
 fn test_isSingleton_trait() {
     let single = ArraySeqMtPerS::singleton(42);
-    assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&single));
+    assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isSingleton(&single));
 
     let multiple = ArraySeqMtPerS::from_vec(vec![1, 2]);
-    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&multiple));
+    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isSingleton(&multiple));
 
     let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
-    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::isSingleton(&empty));
+    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isSingleton(&empty));
 }
 
 #[test]

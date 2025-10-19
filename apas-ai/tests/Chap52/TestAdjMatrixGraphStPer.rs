@@ -1,6 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chap52 AdjMatrixGraphStPer.
 
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap52::AdjMatrixGraphStPer::AdjMatrixGraphStPer::*;
 use apas_ai::Types::Types::*;
 

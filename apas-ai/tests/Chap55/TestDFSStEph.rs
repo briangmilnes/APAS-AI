@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for DFS - Sequential Ephemeral.
 
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
 use apas_ai::Chap55::DFSStEph::DFSStEph::dfs;
 use apas_ai::Types::Types::*;

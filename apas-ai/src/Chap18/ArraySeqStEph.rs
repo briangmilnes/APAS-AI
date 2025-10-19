@@ -4,7 +4,6 @@
 pub mod ArraySeqStEph {
 
     use std::collections::HashMap;
-    use std::collections::HashSet;
     use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
     use std::slice::Iter;
     use std::vec::IntoIter;
@@ -18,7 +17,8 @@ pub mod ArraySeqStEph {
 
     pub type ArrayStEph<T> = ArraySeqStEphS<T>;
 
-    pub trait ArraySeqStEphTrait<T: StT> {
+    // Base methods - never redefined in later chapters
+    pub trait ArraySeqStEphBaseTrait<T: StT> {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
         fn new(length: N, init_value: T)                           -> Self;
@@ -31,6 +31,34 @@ pub mod ArraySeqStEph {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn nth(&self, index: N)                                    -> &T;
+        /// APAS: Work Θ(len), Span Θ(1)
+        /// claude-4-sonet: Work Θ(len), Span Θ(len), Parallelism Θ(1) - sequential copy
+        fn subseq(&self, start: N, length: N)                      -> Self;
+        /// APAS: Work Θ(Σ|a[i]|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(Σ|a[i]|), Span Θ(Σ|a[i]|), Parallelism Θ(1) - sequential
+        fn flatten(a: &ArraySeqStEphS<ArraySeqStEphS<T>>)          -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - in-place mutation
+        fn update(&mut self, update: Pair<N, T>)                   -> &mut Self;
+        /// APAS: Work Θ(|updates|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|updates|), Span Θ(|updates|), Parallelism Θ(1) - sequential in-place
+        fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut Self;
+        /// APAS: Work Θ(|pairs|²), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|pairs|²), Span Θ(|pairs|²), Parallelism Θ(1) - sequential with linear search
+        fn collect<K: StT, V: StT>(
+            pairs: &ArraySeqStEphS<Pair<K, V>>,
+            cmp: fn(&K, &K) -> O,
+        ) -> ArraySeqStEphS<Pair<K, ArraySeqStEphS<V>>>;
+        /// APAS: Work Θ(n), Span Θ(1)
+        /// claude-4-sonet: Work Θ(n), Span Θ(1)
+        fn from_vec(elts: Vec<T>) -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn iter(&self) -> Iter<'_, T>;
+    }
+
+    // Redefinable methods - may be overridden with better algorithms in later chapters
+    pub trait ArraySeqStEphRedefinableTrait<T: StT> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn empty()                                                 -> Self;
@@ -43,36 +71,12 @@ pub mod ArraySeqStEph {
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
         fn map<U: StT, F: Fn(&T)                                   -> U>(a: &ArraySeqStEphS<T>, f: &F) -> ArraySeqStEphS<U>;
-        /// APAS: Work Θ(len), Span Θ(1)
-        /// claude-4-sonet: Work Θ(len), Span Θ(len), Parallelism Θ(1) - sequential copy
-        fn subseq(&self, start: N, length: N)      -> Self;
         /// APAS: Work Θ(|a|+|b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|+|b|), Span Θ(|a|+|b|), Parallelism Θ(1) - sequential
-        fn append(&self, b: &ArraySeqStEphS<T>)    -> Self;
+        fn append(&self, b: &ArraySeqStEphS<T>)                    -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn filter<F: PredSt<T>>(&self, pred: &F)   -> Self;
-        /// APAS: Work Θ(Σ|a[i]|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(Σ|a[i]|), Span Θ(Σ|a[i]|), Parallelism Θ(1) - sequential
-        fn flatten(a: &ArraySeqStEphS<ArraySeqStEphS<T>>)          -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - in-place mutation
-        fn update(&mut self, update: Pair<N, T>)                   -> &mut Self;
-        /// APAS: Work Θ(|updates|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|updates|), Span Θ(|updates|), Parallelism Θ(1) - sequential in-place
-        fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn isEmpty(&self)                                          -> B;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn isSingleton(&self)                                      -> B;
-        /// APAS: Work Θ(|pairs|²), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|pairs|²), Span Θ(|pairs|²), Parallelism Θ(1) - sequential with linear search
-        fn collect<K: StT, V: StT>(
-            pairs: &ArraySeqStEphS<Pair<K, V>>,
-            cmp: fn(&K, &K) -> O,
-        ) -> ArraySeqStEphS<Pair<K, ArraySeqStEphS<V>>>;
+        fn filter<F: PredSt<T>>(&self, pred: &F)                   -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
         fn iterate<A, F: Fn(&A, &T) -> A>(a: &ArraySeqStEphS<T>, f: &F, seed: A) -> A;
@@ -82,23 +86,17 @@ pub mod ArraySeqStEph {
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
         fn scan<F: Fn(&T, &T)                                      -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T);
-        /// APAS: Work Θ(n), Span Θ(1)
-        /// claude-4-sonet: Work Θ(n), Span Θ(1)
-        fn from_vec(elts: Vec<T>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn iter(&self) -> Iter<'_, T>;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
+        fn isEmpty(&self)                                          -> B;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
+        fn isSingleton(&self)                                      -> B;
     }
 
-    impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {
+    impl<T: StT> ArraySeqStEphBaseTrait<T> for ArraySeqStEphS<T> {
         fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
-
-        fn empty() -> Self { Self::from_vec(Vec::new()) }
-
-        fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
-
         fn length(&self) -> N { self.data.len() }
-
         fn nth(&self, index: N) -> &T { &self.data[index] }
 
         fn subseq(&self, start: N, length: N) -> Self {
@@ -132,6 +130,47 @@ pub mod ArraySeqStEph {
             }
             self
         }
+
+        fn flatten(a: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T> {
+            let mut values: Vec<T> = Vec::new();
+            for i in 0..a.length() {
+                let inner = a.nth(i);
+                for j in 0..inner.length() {
+                    values.push(inner.nth(j).clone());
+                }
+            }
+            ArraySeqStEphS::from_vec(values)
+        }
+
+        fn collect<K: StT, V: StT>(
+            pairs: &ArraySeqStEphS<Pair<K, V>>,
+            cmp: fn(&K, &K) -> O,
+        ) -> ArraySeqStEphS<Pair<K, ArraySeqStEphS<V>>> {
+            let mut groups: Vec<Pair<K, Vec<V>>> = Vec::new();
+            'outer: for i in 0..pairs.length() {
+                let Pair(key, value) = pairs.nth(i).clone();
+                for group in groups.iter_mut() {
+                    if cmp(&group.0, &key) == O::Equal {
+                        group.1.push(value.clone());
+                        continue 'outer;
+                    }
+                }
+                groups.push(Pair(key, vec![value]));
+            }
+            let collected: Vec<Pair<K, ArraySeqStEphS<V>>> = groups
+                .into_iter()
+                .map(|Pair(key, bucket)| Pair(key, ArraySeqStEphS::from_vec(bucket)))
+                .collect();
+            ArraySeqStEphS::from_vec(collected)
+        }
+
+        fn from_vec(elts: Vec<T>) -> Self { Self { data: elts.into_boxed_slice() } }
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+    }
+
+    impl<T: StT> ArraySeqStEphRedefinableTrait<T> for ArraySeqStEphS<T> {
+        fn empty() -> Self { Self::from_vec(Vec::new()) }
+        fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStEphS<T> {
             let mut values: Vec<T> = Vec::with_capacity(length);
@@ -172,43 +211,6 @@ pub mod ArraySeqStEph {
             ArraySeqStEphS::from_vec(kept)
         }
 
-        fn flatten(a: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T> {
-            let mut values: Vec<T> = Vec::new();
-            for i in 0..a.length() {
-                let inner = a.nth(i);
-                for j in 0..inner.length() {
-                    values.push(inner.nth(j).clone());
-                }
-            }
-            ArraySeqStEphS::from_vec(values)
-        }
-
-        fn isEmpty(&self) -> B { self.length() == 0 }
-
-        fn isSingleton(&self) -> B { self.length() == 1 }
-
-        fn collect<K: StT, V: StT>(
-            pairs: &ArraySeqStEphS<Pair<K, V>>,
-            cmp: fn(&K, &K) -> O,
-        ) -> ArraySeqStEphS<Pair<K, ArraySeqStEphS<V>>> {
-            let mut groups: Vec<Pair<K, Vec<V>>> = Vec::new();
-            'outer: for i in 0..pairs.length() {
-                let Pair(key, value) = pairs.nth(i).clone();
-                for group in groups.iter_mut() {
-                    if cmp(&group.0, &key) == O::Equal {
-                        group.1.push(value.clone());
-                        continue 'outer;
-                    }
-                }
-                groups.push(Pair(key, vec![value]));
-            }
-            let collected: Vec<Pair<K, ArraySeqStEphS<V>>> = groups
-                .into_iter()
-                .map(|Pair(key, bucket)| Pair(key, ArraySeqStEphS::from_vec(bucket)))
-                .collect();
-            ArraySeqStEphS::from_vec(collected)
-        }
-
         fn iterate<A, F: Fn(&A, &T) -> A>(a: &ArraySeqStEphS<T>, f: &F, seed: A) -> A {
             let mut acc = seed;
             for i in 0..a.length() {
@@ -228,7 +230,7 @@ pub mod ArraySeqStEph {
         fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T) {
             let mut prefixes: Vec<T> = Vec::with_capacity(a.length());
             let mut acc = id.clone();
-            prefixes.push(acc.clone()); // Include initial value
+            prefixes.push(acc.clone());
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
                 if i < a.length() - 1 {
@@ -238,8 +240,8 @@ pub mod ArraySeqStEph {
             (ArraySeqStEphS::from_vec(prefixes), acc)
         }
 
-        fn from_vec(elts: Vec<T>) -> Self { Self { data: elts.into_boxed_slice(), } }
-        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+        fn isEmpty(&self) -> B { self.length() == 0 }
+        fn isSingleton(&self) -> B { self.length() == 1 }
     }
 
    impl<T: StT> PartialEq for ArraySeqStEphS<T> {

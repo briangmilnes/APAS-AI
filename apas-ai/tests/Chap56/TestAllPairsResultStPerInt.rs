@@ -2,6 +2,7 @@
 //!
 //! Test suite for AllPairsResultStPerInt.
 
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap56::AllPairsResultStPerInt::AllPairsResultStPerInt::AllPairsResultStPerInt;
 use apas_ai::Types::Types::*;
 

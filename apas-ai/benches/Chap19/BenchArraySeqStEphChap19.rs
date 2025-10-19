@@ -4,8 +4,7 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::ArraySeqStEphSLit;
-use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait;
+use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Types::Types::*;
 
 fn bench_tabulate_map_eph_ch19(c: &mut Criterion) {

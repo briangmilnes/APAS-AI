@@ -1,10 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Minimum Edit Distance.
-// TEMPORARILY IGNORED: type mismatch errors
 
 use apas_ai::{
     ArraySeqMtEphSLit, ArraySeqStEphS, ArraySeqStPerS,
     Chap18::ArraySeqMtEph::ArraySeqMtEph::*,
+    Chap19::ArraySeqStEph::ArraySeqStEph::*,
+    Chap19::ArraySeqStPer::ArraySeqStPer::*,
     Chap49::MinEditDistMtEph::MinEditDistMtEph::*,
     Chap49::MinEditDistMtPer::MinEditDistMtPer::*, Chap49::MinEditDistStEph::MinEditDistStEph::*,
     Chap49::MinEditDistStPer::MinEditDistStPer::*, MinEditDistMtEphLit, MinEditDistMtPerLit, MinEditDistStEphLit,
@@ -14,7 +15,6 @@ use apas_ai::{
 
 // Test cases from APAS textbook
 #[test]
-#[ignore]
 fn test_min_edit_distance_st_per_example_49_3() {
     // Example 49.3: Transform S = <A, B, C, A, D, A> to T = <A, B, A, D, C>
     // Expected: 3 edits (delete C, delete last A, insert C at end)
@@ -27,7 +27,6 @@ fn test_min_edit_distance_st_per_example_49_3() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_st_per_basic() {
     // Identical sequences
     let solver1 = MinEditDistStPerLit!(
@@ -59,7 +58,6 @@ fn test_min_edit_distance_st_per_basic() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_st_per_single_operations() {
     // Single insertion
     let solver1 = MinEditDistStPerLit!(
@@ -84,7 +82,6 @@ fn test_min_edit_distance_st_per_single_operations() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_st_eph_basic() {
     let mut solver = MinEditDistStEphLit!(
         source: ['A', 'B', 'C'],
@@ -99,7 +96,6 @@ fn test_min_edit_distance_st_eph_basic() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_mt_per_basic() {
     let solver = MinEditDistMtPerLit!(
         source: ['A', 'B', 'C', 'A', 'D', 'A'],
@@ -110,7 +106,6 @@ fn test_min_edit_distance_mt_per_basic() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_mt_eph_basic() {
     let mut solver = MinEditDistMtEphLit!(
         source: ['A', 'B', 'C'],
@@ -125,7 +120,6 @@ fn test_min_edit_distance_mt_eph_basic() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_string_sequences() {
     // Test with string-like sequences
     let solver = MinEditDistStPerLit!(
@@ -139,7 +133,6 @@ fn test_min_edit_distance_string_sequences() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_edge_cases() {
     // Single character sequences
     let solver1 = MinEditDistStPerLit!(
@@ -164,7 +157,6 @@ fn test_min_edit_distance_edge_cases() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_display() {
     let solver = MinEditDistStPerLit!(
         source: ['A', 'B'],
@@ -179,7 +171,6 @@ fn test_min_edit_distance_display() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_iterator() {
     let solver = MinEditDistStPerLit!(
         source: ['A', 'B'],
@@ -193,7 +184,6 @@ fn test_min_edit_distance_iterator() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_accessors() {
     let solver = MinEditDistStPerLit!(
         source: ['A', 'B', 'C'],
@@ -206,7 +196,6 @@ fn test_min_edit_distance_accessors() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_eph_mutation() {
     let mut solver = MinEditDistStEphLit!(
         source: ['A', 'B'],
@@ -235,7 +224,6 @@ fn test_min_edit_distance_eph_mutation() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_mt_thread_safety() {
     use std::sync::Arc;
     use std::thread;
@@ -263,7 +251,6 @@ fn test_min_edit_distance_mt_thread_safety() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_memoization() {
     let solver = MinEditDistStPerLit!(
         source: ['A', 'B', 'C'],
@@ -280,7 +267,6 @@ fn test_min_edit_distance_memoization() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_equality() {
     let solver1 = MinEditDistStPerLit!(
         source: ['A', 'B'],
@@ -300,7 +286,6 @@ fn test_min_edit_distance_equality() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_longer_sequences() {
     // Test with longer sequences to verify dynamic programming efficiency
 
@@ -316,7 +301,6 @@ fn test_min_edit_distance_longer_sequences() {
 }
 
 #[test]
-#[ignore]
 fn test_min_edit_distance_numeric_sequences() {
     // Test with numeric sequences
     let solver = MinEditDistStPerLit!(

@@ -21,16 +21,11 @@ pub mod ArraySeqMtPer {
         data: Box<[T]>,
     }
 
-    pub trait ArraySeqMtPerTrait<T: StTInMtT> {
+    // Base trait: Methods that are not redefined in Chap19
+    pub trait ArraySeqMtPerBaseTrait<T: StTInMtT> {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
         fn new(length: N, init_value: T)                                        -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn empty()                                                              -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn singleton(item: T)                                                   -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn length(&self)                                                        -> N;
@@ -43,6 +38,35 @@ pub mod ArraySeqMtPer {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - copies entire array
         fn set(&self, index: N, item: T)                                        -> Result<ArraySeqMtPerS<T>, &'static str>;
+        /// APAS: Work Θ(|a|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
+        fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> Self;
+        /// APAS: Work Θ(Σ|ss[i]|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|), Parallelism Θ(1) - sequential
+        fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>)                      -> Self;
+        /// APAS: Work Θ(|a|²), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - sequential with linear search
+        fn collect<K: StTInMtT, V: StTInMtT>(
+            a: &ArraySeqMtPerS<Pair<K, V>>,
+            cmp: fn(&K, &K) -> O,
+        ) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>>;
+        fn inject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>)  -> Self;
+        /// APAS: Work Θ(n), Span Θ(1)
+        /// claude-4-sonet: Work Θ(n), Span Θ(1)
+        fn from_vec(values: Vec<T>) -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn iter(&self) -> Iter<'_, T>;
+    }
+
+    // Redefinable trait: Methods that Chap19 might redefine
+    pub trait ArraySeqMtPerRedefinableTrait<T: StTInMtT> {
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
+        fn empty()                                                              -> Self;
+        /// APAS: Work Θ(1), Span Θ(1)
+        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
+        fn singleton(item: T)                                                   -> Self;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
         fn tabulate<F: Fn(N)                                                    -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
@@ -64,9 +88,6 @@ pub mod ArraySeqMtPer {
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - copies entire array
         fn update(a: &ArraySeqMtPerS<T>, item_at: Pair<N, T>)                   -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> Self;
-        /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
         fn iterate<A: StTInMtT, F: Fn(&A, &T)                                   -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A;
         /// APAS: Work Θ(|a|), Span Θ(1)
@@ -84,34 +105,12 @@ pub mod ArraySeqMtPer {
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
         fn scan<F: Fn(&T, &T)                                                   -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T);
-        /// APAS: Work Θ(Σ|ss[i]|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|), Parallelism Θ(1) - sequential
-        fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>)                      -> Self;
-        /// APAS: Work Θ(|a|²), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - sequential with linear search
-        fn collect<K: StTInMtT, V: StTInMtT>(
-            a: &ArraySeqMtPerS<Pair<K, V>>,
-            cmp: fn(&K, &K) -> O,
-        ) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>>;
-        fn inject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>)  -> Self;
         fn isEmpty(&self)                                                       -> B;
         fn isSingleton(&self)                                                   -> B;
-        /// APAS: Work Θ(n), Span Θ(1)
-        /// claude-4-sonet: Work Θ(n), Span Θ(1)
-        fn from_vec(values: Vec<T>) -> Self;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self) -> B;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_singleton(&self) -> B;
-        /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn iter(&self) -> Iter<'_, T>;
     }
 
 
-    impl<T: StTInMtT> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
+    impl<T: StTInMtT> ArraySeqMtPerBaseTrait<T> for ArraySeqMtPerS<T> {
         fn new(length: N, init_value: T) -> ArraySeqMtPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(length);
             for _ in 0..length {
@@ -119,14 +118,11 @@ pub mod ArraySeqMtPer {
             }
             ArraySeqMtPerS::from_vec(values)
         }
-        fn empty() -> ArraySeqMtPerS<T> {
-            ArraySeqMtPerS {
-                data: Vec::new().into_boxed_slice(),
-            }
-        }
-        fn singleton(item: T) -> ArraySeqMtPerS<T> { ArraySeqMtPerS::from_vec(vec![item]) }
+
         fn length(&self) -> N { self.data.len() }
+
         fn nth(&self, index: N) -> &T { &self.data[index] }
+
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T> {
             let n = self.data.len();
             let s = start.min(n);
@@ -143,6 +139,85 @@ pub mod ArraySeqMtPer {
             new_data[index] = item;
             Ok(ArraySeqMtPerS::from_vec(new_data))
         }
+
+        fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T> {
+            let mut result = a.clone();
+            for i in 0..updates.length() {
+                let Pair(index, value) = updates.nth(i);
+                if *index < result.length() {
+                    result = result.set(*index, value.clone()).unwrap_or(result);
+                }
+            }
+            result
+        }
+
+        fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T> {
+            let mut values: Vec<T> = Vec::new();
+            for i in 0..ss.length() {
+                let inner_seq = ss.nth(i);
+                for j in 0..inner_seq.length() {
+                    values.push(inner_seq.nth(j).clone());
+                }
+            }
+            ArraySeqMtPerS::from_vec(values)
+        }
+
+        fn collect<K: StTInMtT, V: StTInMtT>(
+            a: &ArraySeqMtPerS<Pair<K, V>>,
+            cmp: fn(&K, &K) -> O,
+        ) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>> {
+            if a.length() == 0 {
+                return ArraySeqMtPerS::from_vec(vec![]);
+            }
+            let mut groups: Vec<Pair<K, ArraySeqMtPerS<V>>> = Vec::new();
+            for i in 0..a.length() {
+                let Pair(key, value) = a.nth(i);
+                let mut found_group = false;
+                for group in &mut groups {
+                    if cmp(key, &group.0) == O::Equal {
+                        let mut values: Vec<V> = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect();
+                        values.push(value.clone());
+                        group.1 = ArraySeqMtPerS::from_vec(values);
+                        found_group = true;
+                        break;
+                    }
+                }
+                if !found_group {
+                    groups.push(Pair(key.clone(), ArraySeqMtPerS::from_vec(vec![value.clone()])));
+                }
+            }
+            ArraySeqMtPerS::from_vec(groups)
+        }
+
+        fn inject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T> {
+            let mut result = a.clone();
+            let mut updated: HashSet<N> = HashSet::new();
+            for i in 0..updates.length() {
+                let Pair(index, value) = updates.nth(i);
+                if *index < result.length() && updated.insert(*index) {
+                    result = result.set(*index, value.clone()).unwrap_or(result);
+                }
+            }
+            result
+        }
+
+        fn from_vec(values: Vec<T>) -> Self {
+            ArraySeqMtPerS {
+                data: values.into_boxed_slice(),
+            }
+        }
+
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+    }
+
+    impl<T: StTInMtT> ArraySeqMtPerRedefinableTrait<T> for ArraySeqMtPerS<T> {
+        fn empty() -> ArraySeqMtPerS<T> {
+            ArraySeqMtPerS {
+                data: Vec::new().into_boxed_slice(),
+            }
+        }
+
+        fn singleton(item: T) -> ArraySeqMtPerS<T> { ArraySeqMtPerS::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(n);
@@ -210,17 +285,6 @@ pub mod ArraySeqMtPer {
             ArraySeqMtPerS::from_vec(new_data)
         }
 
-        fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T> {
-            let mut result = a.clone();
-            for i in 0..updates.length() {
-                let Pair(index, value) = updates.nth(i);
-                if *index < result.length() {
-                    result = result.set(*index, value.clone()).unwrap_or(result);
-                }
-            }
-            result
-        }
-
         fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A {
             let mut acc = x;
             for i in 0..a.length() {
@@ -263,8 +327,8 @@ pub mod ArraySeqMtPer {
             let id_clone = id.clone();
 
             let Pair(l, r) = ParaPair!(
-                move || <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::reduce(&left, f_clone, id_clone),
-                move || <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::reduce(&right, f_clone2, id)
+                move || <ArraySeqMtPerS<T> as ArraySeqMtPerRedefinableTrait<T>>::reduce(&left, f_clone, id_clone),
+                move || <ArraySeqMtPerS<T> as ArraySeqMtPerRedefinableTrait<T>>::reduce(&right, f_clone2, id)
             );
             f(&l, &r)
         }
@@ -279,71 +343,9 @@ pub mod ArraySeqMtPer {
             (ArraySeqMtPerS::from_vec(values), acc)
         }
 
-        fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T> {
-            let mut values: Vec<T> = Vec::new();
-            for i in 0..ss.length() {
-                let inner_seq = ss.nth(i);
-                for j in 0..inner_seq.length() {
-                    values.push(inner_seq.nth(j).clone());
-                }
-            }
-            ArraySeqMtPerS::from_vec(values)
-        }
+        fn isEmpty(&self) -> B { self.data.is_empty() }
 
-        fn collect<K: StTInMtT, V: StTInMtT>(
-            a: &ArraySeqMtPerS<Pair<K, V>>,
-            cmp: fn(&K, &K) -> O,
-        ) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>> {
-            if a.length() == 0 {
-                return ArraySeqMtPerS::from_vec(vec![]);
-            }
-            let mut groups: Vec<Pair<K, ArraySeqMtPerS<V>>> = Vec::new();
-            for i in 0..a.length() {
-                let Pair(key, value) = a.nth(i);
-                let mut found_group = false;
-                for group in &mut groups {
-                    if cmp(key, &group.0) == O::Equal {
-                        let mut values: Vec<V> = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect();
-                        values.push(value.clone());
-                        group.1 = ArraySeqMtPerS::from_vec(values);
-                        found_group = true;
-                        break;
-                    }
-                }
-                if !found_group {
-                    groups.push(Pair(key.clone(), ArraySeqMtPerS::from_vec(vec![value.clone()])));
-                }
-            }
-            ArraySeqMtPerS::from_vec(groups)
-        }
-
-        fn inject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T> {
-            let mut result = a.clone();
-            let mut updated: HashSet<N> = HashSet::new();
-            for i in 0..updates.length() {
-                let Pair(index, value) = updates.nth(i);
-                if *index < result.length() && updated.insert(*index) {
-                    result = result.set(*index, value.clone()).unwrap_or(result);
-                }
-            }
-            result
-        }
-
-        fn isEmpty(&self) -> B { ArraySeqMtPerS::is_empty(self) }
-
-        fn isSingleton(&self) -> B { ArraySeqMtPerS::is_singleton(self) }
-
-        fn from_vec(values: Vec<T>) -> Self {
-            ArraySeqMtPerS {
-                data: values.into_boxed_slice(),
-            }
-        }
-
-        fn is_empty(&self) -> B { self.data.is_empty() }
-
-        fn is_singleton(&self) -> B { self.data.len() == 1 }
-
-        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+        fn isSingleton(&self) -> B { self.data.len() == 1 }
     }
 
     impl<T: StTInMtT> Clone for ArraySeqMtPerS<T> {

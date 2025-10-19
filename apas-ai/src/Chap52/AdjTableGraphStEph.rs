@@ -3,6 +3,7 @@
 
 pub mod AdjTableGraphStEph {
 
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;

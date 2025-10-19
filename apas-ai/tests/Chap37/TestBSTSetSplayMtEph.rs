@@ -2,7 +2,7 @@
 //! Tests for BSTSetSplayMtEph.
 
 use apas_ai::BSTSetSplayMtEphLit;
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap37::BSTSetSplayMtEph::BSTSetSplayMtEph::*;
 use apas_ai::Chap37::BSTSplayMtEph::BSTSplayMtEph::BSTSplayMtEphTrait;
 use apas_ai::Types::Types::*;

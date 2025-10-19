@@ -29,7 +29,7 @@ fn test_new_and_set() {
 
 #[test]
 fn test_tabulate_basic() {
-    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(&double, 5);
+    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphRedefinableTrait<N>>::tabulate(&double, 5);
     assert_eq!(a.length(), 5);
 
     for i in 0..5 {
@@ -39,8 +39,8 @@ fn test_tabulate_basic() {
 
 #[test]
 fn test_map_parallel() {
-    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(&identity, 2000); // Large enough for parallel
-    let doubled: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::map(&a, &multiply_by_two);
+    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphRedefinableTrait<N>>::tabulate(&identity, 2000); // Large enough for parallel
+    let doubled: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphRedefinableTrait<N>>::map(&a, &multiply_by_two);
 
     assert_eq!(doubled.length(), 2000);
     for i in 0..2000 {
@@ -50,8 +50,8 @@ fn test_map_parallel() {
 
 #[test]
 fn test_reduce_parallel() {
-    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&add_one, 2000); // [1, 2, 3, ..., 2000]
-    let sum = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::reduce(&a, add_nums, 0);
+    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::tabulate(&add_one, 2000); // [1, 2, 3, ..., 2000]
+    let sum = <ArraySeqMtEphS<_> as ArraySeqMtEphBaseTrait<_>>::reduce(&a, add_nums, 0);
 
     // Sum of 1 to 2000 = 2000 * 2001 / 2 = 2001000
     assert_eq!(sum, 2001000);
@@ -59,8 +59,8 @@ fn test_reduce_parallel() {
 
 #[test]
 fn test_filter() {
-    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&identity, 10);
-    let evens = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::filter(&a, &is_even_bool);
+    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::tabulate(&identity, 10);
+    let evens = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::filter(&a, &is_even_bool);
 
     assert_eq!(evens.length(), 5); // 0, 2, 4, 6, 8
     for i in 0..5 {
@@ -70,9 +70,9 @@ fn test_filter() {
 
 #[test]
 fn test_append() {
-    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&identity, 3);
-    let b: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&add_ten, 2);
-    let combined = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::append(&a, &b);
+    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::tabulate(&identity, 3);
+    let b: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::tabulate(&add_ten, 2);
+    let combined = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::append(&a, &b);
 
     assert_eq!(combined.length(), 5);
     assert_eq!(combined.nth_cloned(0), 0);
@@ -84,11 +84,11 @@ fn test_append() {
 
 #[test]
 fn test_flatten() {
-    let inner1: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&|i| i, 2);
-    let inner2: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&|i| i + 10, 3);
+    let inner1: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::tabulate(&|i| i, 2);
+    let inner2: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::tabulate(&|i| i + 10, 3);
     let outer = ArraySeqMtEphSLit![inner1, inner2];
 
-    let flattened = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::flatten(&outer);
+    let flattened = <ArraySeqMtEphS<_> as ArraySeqMtEphBaseTrait<_>>::flatten(&outer);
     assert_eq!(flattened.length(), 5);
     assert_eq!(flattened.nth_cloned(0), 0);
     assert_eq!(flattened.nth_cloned(1), 1);
@@ -99,8 +99,8 @@ fn test_flatten() {
 
 #[test]
 fn test_scan() {
-    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&|i| i + 1, 5); // [1, 2, 3, 4, 5]
-    let (prefixes, final_sum) = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::scan(&a, &|x, y| x + y, 0);
+    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::tabulate(&|i| i + 1, 5); // [1, 2, 3, 4, 5]
+    let (prefixes, final_sum) = <ArraySeqMtEphS<_> as ArraySeqMtEphBaseTrait<_>>::scan(&a, &|x, y| x + y, 0);
 
     assert_eq!(prefixes.length(), 5);
     assert_eq!(prefixes.nth_cloned(0), 1); // 0 + 1
@@ -113,8 +113,8 @@ fn test_scan() {
 
 #[test]
 fn test_iterate() {
-    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&|i| i + 1, 5); // [1, 2, 3, 4, 5]
-    let sum = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::iterate(&a, &|acc, x| acc + x, 0);
+    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::tabulate(&|i| i + 1, 5); // [1, 2, 3, 4, 5]
+    let sum = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::iterate(&a, &|acc, x| acc + x, 0);
     assert_eq!(sum, 15); // 1 + 2 + 3 + 4 + 5
 }
 
@@ -128,7 +128,7 @@ fn test_collect() {
         Pair(2, "betty"),
     ]);
     let grouped =
-        <ArraySeqMtEphS<Pair<N, &str>> as ArraySeqMtEphTrait<Pair<N, &str>>>::collect(&pairs, |a, b| a.cmp(b));
+        <ArraySeqMtEphS<Pair<N, &str>> as ArraySeqMtEphBaseTrait<Pair<N, &str>>>::collect(&pairs, |a, b| a.cmp(b));
 
     assert_eq!(grouped.length(), 2);
     // First group should have key 1 with values ["alice", "alex"]
@@ -143,8 +143,8 @@ fn test_collect() {
 
 #[test]
 fn test_update() {
-    let mut a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&|i| i, 5);
-    let updated = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::update(&mut a, (2, 99));
+    let mut a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::tabulate(&|i| i, 5);
+    let updated = <ArraySeqMtEphS<_> as ArraySeqMtEphBaseTrait<_>>::update(&mut a, (2, 99));
 
     assert_eq!(updated.nth_cloned(2), 99);
     assert_eq!(updated.nth_cloned(0), 0); // Others unchanged
@@ -153,14 +153,14 @@ fn test_update() {
 
 #[test]
 fn test_inject() {
-    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::tabulate(&|i| i, 5);
+    let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::tabulate(&|i| i, 5);
     let updates = ArraySeqMtEphS::from_vec(vec![
         Pair(1, 100),
         Pair(3, 300),
         Pair(1, 111), // Duplicate index - first wins
     ]);
 
-    let injected = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::inject(&a, &updates);
+    let injected = <ArraySeqMtEphS<_> as ArraySeqMtEphBaseTrait<_>>::inject(&a, &updates);
     assert_eq!(injected.nth_cloned(0), 0); // Unchanged
     assert_eq!(injected.nth_cloned(1), 100); // Updated (first occurrence)
     assert_eq!(injected.nth_cloned(2), 2); // Unchanged
@@ -195,7 +195,7 @@ fn test_subseq_copy() {
 fn test_ninject() {
     let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3, 4, 5]);
     let updates = ArraySeqMtEphS::from_vec(vec![Pair(1, 10), Pair(3, 30)]);
-    let result = <ArraySeqMtEphS<_> as ArraySeqMtEphTrait<_>>::ninject(&seq, &updates);
+    let result = <ArraySeqMtEphS<_> as ArraySeqMtEphBaseTrait<_>>::ninject(&seq, &updates);
     assert_eq!(result.nth_cloned(1), 10);
     assert_eq!(result.nth_cloned(3), 30);
 }
@@ -203,7 +203,7 @@ fn test_ninject() {
 #[test]
 fn test_collect_mt_eph() {
     let pairs: ArraySeqMtEphS<Pair<N, N>> = ArraySeqMtEphS::from_vec(vec![Pair(1, 10), Pair(2, 20), Pair(1, 11)]);
-    let grouped = <ArraySeqMtEphS<Pair<N, N>> as ArraySeqMtEphTrait<Pair<N, N>>>::collect(&pairs, |a, b| a.cmp(b));
+    let grouped = <ArraySeqMtEphS<Pair<N, N>> as ArraySeqMtEphBaseTrait<Pair<N, N>>>::collect(&pairs, |a, b| a.cmp(b));
     assert_eq!(grouped.length(), 2);
 }
 

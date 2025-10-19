@@ -6,7 +6,7 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::ArraySetStEphLit;
-use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
+use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 
 fn build_array_set(len: usize) -> ArraySetStEph<i32> {

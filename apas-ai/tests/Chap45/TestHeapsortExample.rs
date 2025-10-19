@@ -1,6 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chap45 HeapsortExample.
 
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap45::HeapsortExample::HeapsortExample::*;
 use apas_ai::Types::Types::*;
 
@@ -173,7 +174,7 @@ fn test_is_sorted_utility() {
 fn test_vec_to_array_seq() {
     let vec = vec![1, 2, 3];
     let seq = vec_to_array_seq(&vec);
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+    // ArraySeqStPer traits already imported at module level
     assert_eq!(seq.length(), 3);
 }
 

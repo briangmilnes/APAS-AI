@@ -2,7 +2,7 @@
 //!
 //! Benchmarks for PathWeightUtilsStPer.
 
-use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap56::PathWeightUtilsStPer::PathWeightUtilsStPer::{
     path_weight_float, path_weight_int, validate_subpath_property_float, validate_subpath_property_int,
 };

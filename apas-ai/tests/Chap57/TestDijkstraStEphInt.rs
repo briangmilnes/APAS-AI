@@ -4,6 +4,7 @@
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap57::DijkstraStEphInt::DijkstraStEphInt::dijkstra;
 use apas_ai::Types::Types::*;
 

@@ -4,7 +4,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap54::BFSStEph::BFSStEph;
 
 fn create_dag(n: usize) -> ArraySeqStEphS<ArraySeqStEphS<usize>> {

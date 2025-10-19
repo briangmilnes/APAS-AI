@@ -5,9 +5,7 @@
 
 pub mod OrderStatSelectMtEph {
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
-        ArraySeqMtEphS, ArraySeqMtEphTrait as ArraySeqMtEphTraitImported,
-    };
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
     use rand::Rng;
 
@@ -42,7 +40,7 @@ pub mod OrderStatSelectMtEph {
             }
 
             if k < left_count {
-                let left = ArraySeqMtEphS::tabulate(
+                let left = <ArraySeqMtEphS<T> as crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphRedefinableTrait<T>>::tabulate(
                     &|i| {
                         let mut idx = 0;
                         for j in 0..n {
@@ -62,7 +60,7 @@ pub mod OrderStatSelectMtEph {
             } else if k < n - right_count {
                 Some(pivot)
             } else {
-                let right = ArraySeqMtEphS::tabulate(
+                let right = <ArraySeqMtEphS<T> as crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphRedefinableTrait<T>>::tabulate(
                     &|i| {
                         let mut idx = 0;
                         for j in 0..n {

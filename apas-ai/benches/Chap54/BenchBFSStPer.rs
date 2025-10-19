@@ -4,7 +4,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap54::BFSStPer::BFSStPer;
 
 fn create_dag(n: usize) -> ArraySeqStPerS<ArraySeqStPerS<usize>> {

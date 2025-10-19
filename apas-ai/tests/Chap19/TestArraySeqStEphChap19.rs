@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 use apas_ai::ArraySeqStEphSLit;
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphTrait as Chap18Trait;
+use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphBaseTrait as Chap18BaseTrait, ArraySeqStEphRedefinableTrait as Chap18RedefinableTrait};
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Types::Types::*;
 
@@ -56,7 +56,7 @@ fn test_arrayseqsteph_trait_empty() {
 
 #[test]
 fn test_arrayseqsteph_trait_new() {
-    let seq = <ArraySeqStEphS<i32> as Chap18Trait<i32>>::new(5, 42);
+    let seq = <ArraySeqStEphS<i32> as Chap18BaseTrait<i32>>::new(5, 42);
     assert_eq!(seq.length(), 5);
     for i in 0..5 {
         assert_eq!(*seq.nth(i), 42);
@@ -74,14 +74,14 @@ fn test_arrayseqsteph_trait_singleton() {
 #[test]
 fn test_arrayseqsteph_trait_length() {
     let seq = ArraySeqStEphSLit![1, 2, 3, 4];
-    assert_eq!(<ArraySeqStEphS<i32> as Chap18Trait<i32>>::length(&seq), 4);
+    assert_eq!(<ArraySeqStEphS<i32> as Chap18BaseTrait<i32>>::length(&seq), 4);
 }
 
 #[test]
 fn test_arrayseqsteph_trait_nth() {
     let seq = ArraySeqStEphSLit![10, 20, 30];
-    assert_eq!(*<ArraySeqStEphS<i32> as Chap18Trait<i32>>::nth(&seq, 0), 10);
-    assert_eq!(*<ArraySeqStEphS<i32> as Chap18Trait<i32>>::nth(&seq, 2), 30);
+    assert_eq!(*<ArraySeqStEphS<i32> as Chap18BaseTrait<i32>>::nth(&seq, 0), 10);
+    assert_eq!(*<ArraySeqStEphS<i32> as Chap18BaseTrait<i32>>::nth(&seq, 2), 30);
 }
 
 #[test]
@@ -137,7 +137,7 @@ fn test_arrayseqsteph_trait_flatten() {
     let seq1 = ArraySeqStEphSLit![1, 2];
     let seq2 = ArraySeqStEphSLit![3, 4];
     let nested = ArraySeqStEphSLit![seq1, seq2];
-    let flat = <ArraySeqStEphS<i32> as Chap18Trait<i32>>::flatten(&nested);
+    let flat = <ArraySeqStEphS<i32> as Chap18BaseTrait<i32>>::flatten(&nested);
     assert_eq!(flat.length(), 4);
     assert_eq!(*flat.nth(0), 1);
     assert_eq!(*flat.nth(3), 4);
@@ -205,7 +205,7 @@ fn test_arrayseqsteph_trait_update() {
 #[test]
 fn test_arrayseqsteph_trait_subseq_copy() {
     let seq = ArraySeqStEphSLit![1, 2, 3, 4, 5];
-    let sub = <ArraySeqStEphS<i32> as Chap18Trait<i32>>::subseq(&seq, 1, 3);
+    let sub = <ArraySeqStEphS<i32> as Chap18BaseTrait<i32>>::subseq(&seq, 1, 3);
     assert_eq!(sub.length(), 3);
     assert_eq!(*sub.nth(0), 2);
     assert_eq!(*sub.nth(2), 4);
@@ -290,8 +290,8 @@ fn test_update_out_of_bounds() {
 
 #[test]
 fn test_isEmpty() {
-    let _e: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
-    let e_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::empty();
+    let _e: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::empty();
+    let e_i32: ArraySeqStEphS<i32> = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::empty();
     assert!(<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isEmpty(&e_i32));
     let _s: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::singleton(7);
     let s_i32: ArraySeqStEphS<i32> = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::singleton(7);
@@ -303,8 +303,8 @@ fn test_isEmpty() {
 
 #[test]
 fn test_isSingleton() {
-    let _e: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
-    let e_i32: ArraySeqStEphS<i32> = ArraySeqStEphS::empty();
+    let _e: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::empty();
+    let e_i32: ArraySeqStEphS<i32> = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::empty();
     assert!(!<ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::isSingleton(&e_i32));
     let _s: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::singleton(7);
     let s_i32: ArraySeqStEphS<i32> = <ArraySeqStEphS<i32> as ArraySeqStEphTrait<i32>>::singleton(7);
@@ -416,6 +416,6 @@ fn test_flatten_ch19() {
     let s1: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::tabulate(&|i| i + 1, 2);
     let s2: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::tabulate(&|i| i + 3, 2);
     let nested: ArraySeqStEphS<ArraySeqStEphS<N>> = ArraySeqStEphSLit![s1, s2];
-    let flat: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as Chap18Trait<N>>::flatten(&nested);
+    let flat: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as Chap18BaseTrait<N>>::flatten(&nested);
     assert_eq!(flat, ArraySeqStEphSLit![1, 2, 3, 4]);
 }

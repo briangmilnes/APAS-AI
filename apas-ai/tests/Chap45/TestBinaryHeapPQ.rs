@@ -2,6 +2,7 @@
 //! Tests for BinaryHeapPQ.
 
 use apas_ai::BinaryHeapPQLit;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
 use apas_ai::Types::Types::*;
 
@@ -111,7 +112,7 @@ fn test_meld_with_empty() {
 #[test]
 fn test_from_seq() {
     use apas_ai::ArraySeqStPerSLit;
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     let seq = ArraySeqStPerSLit![10, 5, 15, 3, 8, 12];
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::from_seq(&seq);
@@ -301,7 +302,7 @@ fn test_sequential_delete_all() {
 #[test]
 fn test_large_heap() {
     use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 
     let heap: BinaryHeapPQ<i32> = BinaryHeapPQTrait::empty();
     let mut heap = heap;

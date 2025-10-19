@@ -1,8 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chapter 45: SortedListPQ - Priority Queue using Sorted List
 
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap45::SortedListPQ::SortedListPQ::*;
 use apas_ai::SortedListPQLit;
 use apas_ai::Types::Types::*;

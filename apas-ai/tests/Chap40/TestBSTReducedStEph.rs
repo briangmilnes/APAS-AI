@@ -1,5 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap40::BSTReducedStEph::BSTReducedStEph::*;
 use apas_ai::*;
 use apas_ai::Types::Types::*;

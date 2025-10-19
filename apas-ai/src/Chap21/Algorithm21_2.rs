@@ -25,26 +25,26 @@ pub mod Algorithm21_2 {
         }
         let outer: ArraySeqStPerS<ArraySeqStPerS<Pair<N, Pair<N, N>>>> = <ArraySeqStPerS<
             ArraySeqStPerS<Pair<N, Pair<N, N>>>,
-        > as ArraySeqStPerTrait<
+        > as ArraySeqStPerRedefinableTrait<
             ArraySeqStPerS<Pair<N, Pair<N, N>>>,
         >>::tabulate(
             &|x| {
                 let mid: ArraySeqStPerS<ArraySeqStPerS<Pair<N, Pair<N, N>>>> =
-                    <ArraySeqStPerS<ArraySeqStPerS<Pair<N, Pair<N, N>>>> as ArraySeqStPerTrait<
+                    <ArraySeqStPerS<ArraySeqStPerS<Pair<N, Pair<N, N>>>> as ArraySeqStPerRedefinableTrait<
                         ArraySeqStPerS<Pair<N, Pair<N, N>>>,
                     >>::tabulate(
                         &|y| {
-                            <ArraySeqStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerTrait<Pair<N, Pair<N, N>>>>::tabulate(
+                            <ArraySeqStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerRedefinableTrait<Pair<N, Pair<N, N>>>>::tabulate(
                                 &|z_idx| Pair(x, Pair(y + 1, z_idx + 2)),
                                 n + 1 - 2 + 1, // z: 2..=n+1 has length n
                             )
                         },
                         n, // y: 1..=n has length n
                     );
-                <ArraySeqStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerTrait<Pair<N, Pair<N, N>>>>::flatten(&mid)
+                <ArraySeqStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerBaseTrait<Pair<N, Pair<N, N>>>>::flatten(&mid)
             },
             n,
         );
-        <ArraySeqStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerTrait<Pair<N, Pair<N, N>>>>::flatten(&outer)
+        <ArraySeqStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerBaseTrait<Pair<N, Pair<N, N>>>>::flatten(&outer)
     }
 }

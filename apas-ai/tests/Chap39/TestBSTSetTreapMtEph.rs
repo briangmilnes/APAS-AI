@@ -2,7 +2,7 @@
 //! Tests for BSTSetTreapMtEph.
 
 use apas_ai::BSTSetTreapMtEphLit;
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::*;
 use apas_ai::Chap39::BSTTreapMtEph::BSTTreapMtEph::BSTTreapMtEphTrait;
 use apas_ai::Types::Types::*;

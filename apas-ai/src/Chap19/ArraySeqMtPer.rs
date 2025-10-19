@@ -7,13 +7,16 @@ pub mod ArraySeqMtPer {
 
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::{
         ArraySeqMtPerS as S,
-        ArraySeqMtPerTrait as Chap18Trait,
+        ArraySeqMtPerRedefinableTrait,
     };
     use crate::Types::Types::*;
 
     pub type ArraySeqMtPerS<T> = S<T>;
 
-    pub trait ArraySeqMtPerTrait<T: StTInMtT>: Chap18Trait<T> {
+    // Re-export BaseTrait so Chap19::* brings in base methods
+    pub use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerBaseTrait;
+
+    pub trait ArraySeqMtPerTrait<T: StTInMtT>: ArraySeqMtPerBaseTrait<T> {
         // Chapter 19 algorithmic implementations (override Chap18)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty()                                                                  -> Self;
@@ -80,6 +83,10 @@ pub mod ArraySeqMtPer {
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T> {
             // Keep as primitive - tabulate is one of the 7 APAS primitives
+            // AVOID INFINITE RECURSION: Use Chap18 empty() when n == 0
+            if n == 0 {
+                return <ArraySeqMtPerS<T> as ArraySeqMtPerRedefinableTrait<T>>::empty();
+            }
             // Implement directly to handle closures (can't delegate to Chap18 fn pointers)
             let mut values: Vec<T> = Vec::with_capacity(n);
             for i in 0..n {
@@ -118,7 +125,7 @@ pub mod ArraySeqMtPer {
                 &|i| if i == 0 { a.clone() } else { b.clone() },
                 2,
             );
-            <ArraySeqMtPerS<T> as Chap18Trait<T>>::flatten(&sequences)
+            <ArraySeqMtPerS<T> as ArraySeqMtPerBaseTrait<T>>::flatten(&sequences)
         }
 
         fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtPerS<T>, pred: F) -> ArraySeqMtPerS<T> {

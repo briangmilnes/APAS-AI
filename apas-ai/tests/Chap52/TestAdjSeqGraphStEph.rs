@@ -1,6 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chap52 AdjSeqGraphStEph.
 
+use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap52::AdjSeqGraphStEph::AdjSeqGraphStEph::*;
 use apas_ai::Types::Types::*;
 

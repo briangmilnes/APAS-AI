@@ -23,12 +23,12 @@ pub mod Algorithm21_1 {
             return ArraySeqStPerS::from_vec(Vec::new());
         }
         let inner: ArraySeqStPerS<ArraySeqStPerS<Pair<N, N>>> =
-            <ArraySeqStPerS<ArraySeqStPerS<Pair<N, N>>> as ArraySeqStPerTrait<ArraySeqStPerS<Pair<N, N>>>>::tabulate(
+            <ArraySeqStPerS<ArraySeqStPerS<Pair<N, N>>> as ArraySeqStPerRedefinableTrait<ArraySeqStPerS<Pair<N, N>>>>::tabulate(
                 &|x| {
-                    <ArraySeqStPerS<Pair<N, N>> as ArraySeqStPerTrait<Pair<N, N>>>::tabulate(&|y| Pair(x, y + 1), n - 1)
+                    <ArraySeqStPerS<Pair<N, N>> as ArraySeqStPerRedefinableTrait<Pair<N, N>>>::tabulate(&|y| Pair(x, y + 1), n - 1)
                 },
                 n,
             );
-        <ArraySeqStPerS<Pair<N, N>> as ArraySeqStPerTrait<Pair<N, N>>>::flatten(&inner)
+        <ArraySeqStPerS<Pair<N, N>> as ArraySeqStPerBaseTrait<Pair<N, N>>>::flatten(&inner)
     }
 }

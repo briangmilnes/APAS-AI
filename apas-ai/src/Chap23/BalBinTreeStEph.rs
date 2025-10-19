@@ -3,7 +3,8 @@
 
 pub mod BalBinTreeStEph {
 
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerRedefinableTrait;
     use crate::Types::Types::*;
 
     #[derive(Clone, PartialEq, Eq, Debug)]
@@ -64,26 +65,26 @@ pub mod BalBinTreeStEph {
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             match self {
-                | BalBinTree::Leaf => <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::empty(),
+                | BalBinTree::Leaf => <ArraySeqStPerS<T> as ArraySeqStPerRedefinableTrait<T>>::empty(),
                 | BalBinTree::Node(node) => {
                     let left = node.left.in_order();
-                    let middle = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::singleton(node.value.clone());
+                    let middle = <ArraySeqStPerS<T> as ArraySeqStPerRedefinableTrait<T>>::singleton(node.value.clone());
                     let right = node.right.in_order();
-                    let left_mid = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::append(&left, &middle);
-                    <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::append(&left_mid, &right)
+                    let left_mid = <ArraySeqStPerS<T> as ArraySeqStPerRedefinableTrait<T>>::append(&left, &middle);
+                    <ArraySeqStPerS<T> as ArraySeqStPerRedefinableTrait<T>>::append(&left_mid, &right)
                 }
             }
         }
 
         fn pre_order(&self) -> ArraySeqStPerS<T> {
             match self {
-                | BalBinTree::Leaf => <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::empty(),
+                | BalBinTree::Leaf => <ArraySeqStPerS<T> as ArraySeqStPerRedefinableTrait<T>>::empty(),
                 | BalBinTree::Node(node) => {
-                    let root = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::singleton(node.value.clone());
+                    let root = <ArraySeqStPerS<T> as ArraySeqStPerRedefinableTrait<T>>::singleton(node.value.clone());
                     let left = node.left.pre_order();
                     let right = node.right.pre_order();
-                    let root_left = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::append(&root, &left);
-                    <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::append(&root_left, &right)
+                    let root_left = <ArraySeqStPerS<T> as ArraySeqStPerRedefinableTrait<T>>::append(&root, &left);
+                    <ArraySeqStPerS<T> as ArraySeqStPerRedefinableTrait<T>>::append(&root_left, &right)
                 }
             }
         }

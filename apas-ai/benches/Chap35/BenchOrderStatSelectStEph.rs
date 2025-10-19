@@ -4,7 +4,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap35::OrderStatSelectStEph::OrderStatSelectStEph::OrderStatSelectStEphTrait;
 
 pub fn bench_select_st_eph(c: &mut Criterion) {

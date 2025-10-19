@@ -8,13 +8,16 @@ pub mod ArraySeqMtEph {
 
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
         ArraySeqMtEphS as S,
-        ArraySeqMtEphTrait as Chap18Trait,
+        ArraySeqMtEphRedefinableTrait,
     };
     use crate::Types::Types::*;
 
     pub type ArraySeqMtEphS<T> = S<T>;
 
-    pub trait ArraySeqMtEphTrait<T: StTInMtT>: Chap18Trait<T> {
+    // Re-export BaseTrait so Chap19::* brings in base methods
+    pub use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphBaseTrait;
+
+    pub trait ArraySeqMtEphTrait<T: StTInMtT>: ArraySeqMtEphBaseTrait<T> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>, index: N) -> Option<T>;
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
@@ -40,7 +43,7 @@ pub mod ArraySeqMtEph {
 
         fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T> {
             // Algorithm 19.4 alternative: append a b = tabulate(select(a,b), |a|+|b|)
-            <ArraySeqMtEphS<T> as Chap18Trait<T>>::tabulate(
+            <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::tabulate(
                 &|i| <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::select(a, b, i).unwrap(),
                 a.length() + b.length(),
             )
@@ -49,9 +52,9 @@ pub mod ArraySeqMtEph {
         fn deflate<F: PredMt<T>>(f: &F, x: &T) -> ArraySeqMtEphS<T> {
             // Helper for filter: deflate f x = if f(x) then [x] else []
             if f(x) {
-                <ArraySeqMtEphS<T> as Chap18Trait<T>>::singleton(x.clone())
+                <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::singleton(x.clone())
             } else {
-                <ArraySeqMtEphS<T> as Chap18Trait<T>>::empty()
+                <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::empty()
             }
         }
     }

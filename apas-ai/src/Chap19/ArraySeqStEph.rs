@@ -6,13 +6,17 @@ pub mod ArraySeqStEph {
     use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{
         ArraySeqStEphS as S,
-        ArraySeqStEphTrait as Chap18Trait,
+        ArraySeqStEphBaseTrait as BaseTrait,
+        ArraySeqStEphRedefinableTrait as Chap18RedefinableTrait,
     };
     use crate::Types::Types::*;
 
     pub type ArraySeqStEphS<T> = S<T>;
+    
+    // Re-export BaseTrait so users get it via wildcard import
+    pub use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphBaseTrait;
 
-    pub trait ArraySeqStEphTrait<T: StT>: Chap18Trait<T> {
+    pub trait ArraySeqStEphTrait<T: StT>: BaseTrait<T> {
         // Chapter 19 algorithmic implementations (override Chap18)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty()                                                        -> Self;
@@ -77,9 +81,10 @@ pub mod ArraySeqStEph {
         fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> ArraySeqStEphS<T> {
             // Keep as primitive - tabulate is one of the 7 APAS primitives
             if n == 0 {
-                return <ArraySeqStEphS<T> as Chap18Trait<T>>::empty();
+                // Use Chap18's empty() to avoid infinite recursion
+                return <ArraySeqStEphS<T> as Chap18RedefinableTrait<T>>::empty();
             }
-            let mut result = <ArraySeqStEphS<T> as Chap18Trait<T>>::new(n, f(0));
+            let mut result = <ArraySeqStEphS<T> as BaseTrait<T>>::new(n, f(0));
             for i in 1..n {
                 result.set(i, f(i)).unwrap();
             }
@@ -116,7 +121,7 @@ pub mod ArraySeqStEph {
             } else {
                 b.nth(0).clone()
             };
-            let mut result = <ArraySeqStEphS<T> as Chap18Trait<T>>::new(total_len, first_elem);
+            let mut result = <ArraySeqStEphS<T> as BaseTrait<T>>::new(total_len, first_elem);
             for i in 1..a.length() {
                 result.set(i, a.nth(i).clone()).unwrap();
             }
@@ -148,7 +153,7 @@ pub mod ArraySeqStEph {
             let deflated = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::map(a, &|x| {
                 <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::deflate(pred, x)
             });
-            <ArraySeqStEphS<T> as Chap18Trait<T>>::flatten(&deflated)
+            <ArraySeqStEphS<T> as BaseTrait<T>>::flatten(&deflated)
         }
 
         fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &ArraySeqStEphS<T>, f: &F, x: A) -> A {
@@ -168,8 +173,8 @@ pub mod ArraySeqStEph {
                 a.nth(0).clone()
             } else {
                 let mid = a.length() / 2;
-                let left = <ArraySeqStEphS<T> as Chap18Trait<T>>::subseq(a, 0, mid);
-                let right = <ArraySeqStEphS<T> as Chap18Trait<T>>::subseq(a, mid, a.length() - mid);
+                let left = <ArraySeqStEphS<T> as BaseTrait<T>>::subseq(a, 0, mid);
+                let right = <ArraySeqStEphS<T> as BaseTrait<T>>::subseq(a, mid, a.length() - mid);
                 let left_result = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::reduce(&left, f, id.clone());
                 let right_result = <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::reduce(&right, f, id);
                 f(&left_result, &right_result)
@@ -183,7 +188,7 @@ pub mod ArraySeqStEph {
             }
             let mut acc = id.clone();
             acc = f(&acc, a.nth(0));
-            let mut result_seq = <ArraySeqStEphS<T> as Chap18Trait<T>>::new(a.length(), acc.clone());
+            let mut result_seq = <ArraySeqStEphS<T> as BaseTrait<T>>::new(a.length(), acc.clone());
             for i in 1..a.length() {
                 acc = f(&acc, a.nth(i));
                 result_seq.set(i, acc.clone()).unwrap();

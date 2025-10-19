@@ -2,6 +2,7 @@
 //! Integration tests for lib.rs module structure and exports.
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::{ArraySeqStPerSLit};
 
 #[test]
@@ -9,7 +10,7 @@ fn test_module_accessibility() {
     // Test that all major modules are accessible through lib.rs
     use apas_ai::Chap03::InsertionSortSt::InsertionSortSt::*;
     use apas_ai::Chap05::SetStEph::SetStEph::*;
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;
 
     // Verify we can create instances through the module paths
@@ -59,7 +60,7 @@ fn test_all_chapters_compile() {
 fn test_cross_chapter_compatibility() {
     // Test that types from different chapters work together
     use apas_ai::Chap05::SetStEph::SetStEph::*;
-    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::SetLit;
     use apas_ai::Types::Types::*;
 

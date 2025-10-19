@@ -2,6 +2,7 @@
 //! Tests for BSTPlainStEph.
 
 use apas_ai::BSTPlainStEphLit;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap37::BSTPlainStEph::BSTPlainStEph::*;
 use apas_ai::Types::Types::*;
 

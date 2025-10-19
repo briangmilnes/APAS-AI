@@ -3,6 +3,7 @@ use std::time::Duration;
 
 use criterion::*;
 
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap40::BSTReducedStEph::BSTReducedStEph::{BSTReducedStEphTrait, *};
 use apas_ai::{BSTReducedStEphLit, *};
 

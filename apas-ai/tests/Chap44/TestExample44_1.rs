@@ -1,6 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 44: Example 44.1 Tests - Tweet Document Collection
 
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap44::DocumentIndex::DocumentIndex::*;
 use apas_ai::Chap44::Example44_1::Example44_1::*;
 use apas_ai::Types::Types::*;

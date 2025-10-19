@@ -6,14 +6,18 @@ pub mod ArraySeqStPer {
     use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{
         ArraySeqStPerS as S,
-        ArraySeqStPerTrait as Chap18Trait,
+        ArraySeqStPerBaseTrait as BaseTrait,
+        ArraySeqStPerRedefinableTrait as Chap18RedefinableTrait,
     };
     use crate::Types::Types::*;
 
     pub type ArraySeqStPerS<T> = S<T>;
+    
+    // Re-export BaseTrait so users get it via wildcard import
+    pub use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerBaseTrait;
 
-    pub trait ArraySeqStPerTrait<T: StT>: Chap18Trait<T> {
-        // Chapter 19 algorithmic implementations (override Chap18)
+    pub trait ArraySeqStPerTrait<T: StT>: BaseTrait<T> {
+        // Chapter 19 algorithmic implementations (redefines Chap18 Redefinable methods)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty()                                                              -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
@@ -36,10 +40,14 @@ pub mod ArraySeqStPer {
         fn reduce<F: Fn(&T, &T)                                                 -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> T;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
         fn scan<F: Fn(&T, &T)                                                   -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T);
-        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn update(a: &ArraySeqStPerS<T>, index: N, item: T)                     -> Self;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn isEmpty(a: &ArraySeqStPerS<T>)                                       -> bool;
+        /// claude-4-sonet: Work Θ(1), Span Θ(1)
+        fn isSingleton(a: &ArraySeqStPerS<T>)                                   -> bool;
 
         // Chapter 19 specific functions
+        /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
+        fn update(a: &ArraySeqStPerS<T>, index: N, item: T)                     -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn select<'a>(a: &'a ArraySeqStPerS<T>, b: &'a ArraySeqStPerS<T>, i: N) -> Option<&'a T>;
@@ -49,10 +57,6 @@ pub mod ArraySeqStPer {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn deflate<F: PredSt<T>>(f: &F, x: &T)                                  -> Self;
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(a: &ArraySeqStPerS<T>)                                       -> bool;
-        /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isSingleton(a: &ArraySeqStPerS<T>)                                   -> bool;
     }
 
     impl<T: StT> ArraySeqStPerTrait<T> for ArraySeqStPerS<T> {
@@ -84,48 +88,13 @@ pub mod ArraySeqStPer {
             <ArraySeqStPerS<U> as ArraySeqStPerTrait<U>>::tabulate(&|i| f(a.nth(i)), a.length())
         }
 
-        fn select<'a>(a: &'a ArraySeqStPerS<T>, b: &'a ArraySeqStPerS<T>, i: N) -> Option<&'a T> {
-            let len_a = a.length();
-            if i < len_a {
-                return Some(a.nth(i));
-            }
-            let offset = i - len_a;
-            let len_b = b.length();
-            if offset < len_b {
-                Some(b.nth(offset))
-            } else {
-                None
-            }
-        }
-
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
             // Algorithm 19.4: append a b = flatten([a, b])
             let sequences = <ArraySeqStPerS<ArraySeqStPerS<T>> as ArraySeqStPerTrait<ArraySeqStPerS<T>>>::tabulate(
                 &|i| if i == 0 { a.clone() } else { b.clone() },
                 2,
             );
-            <ArraySeqStPerS<T> as Chap18Trait<T>>::flatten(&sequences)
-        }
-
-        fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
-            // Algorithm 19.4 alternative: append a b = tabulate(select(a,b), |a|+|b|)
-            <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(
-                &|i| {
-                    <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::select(a, b, i)
-                        .unwrap()
-                        .clone()
-                },
-                a.length() + b.length(),
-            )
-        }
-
-        fn deflate<F: PredSt<T>>(f: &F, x: &T) -> ArraySeqStPerS<T> {
-            // Helper for filter: deflate f x = if f(x) then [x] else []
-            if f(x) {
-                <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::singleton(x.clone())
-            } else {
-                <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::empty()
-            }
+            <ArraySeqStPerS<T> as BaseTrait<T>>::flatten(&sequences)
         }
 
         fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F) -> ArraySeqStPerS<T> {
@@ -133,7 +102,7 @@ pub mod ArraySeqStPer {
             let deflated = <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::map(a, &|x| {
                 <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::deflate(pred, x)
             });
-            <ArraySeqStPerS<T> as Chap18Trait<T>>::flatten(&deflated)
+            <ArraySeqStPerS<T> as BaseTrait<T>>::flatten(&deflated)
         }
 
         fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &ArraySeqStPerS<T>, f: &F, x: A) -> A {
@@ -169,7 +138,6 @@ pub mod ArraySeqStPer {
                 acc = f(&acc, a.nth(i));
                 results.push(acc.clone());
             }
-            // Implement directly since we can't capture with &F
             let result_seq = ArraySeqStPerS::from_vec(results);
             (result_seq, acc)
         }
@@ -190,6 +158,41 @@ pub mod ArraySeqStPer {
                 &|j| if j == index { item.clone() } else { a.nth(j).clone() },
                 a.length(),
             )
+        }
+
+        fn select<'a>(a: &'a ArraySeqStPerS<T>, b: &'a ArraySeqStPerS<T>, i: N) -> Option<&'a T> {
+            let len_a = a.length();
+            if i < len_a {
+                return Some(a.nth(i));
+            }
+            let offset = i - len_a;
+            let len_b = b.length();
+            if offset < len_b {
+                Some(b.nth(offset))
+            } else {
+                None
+            }
+        }
+
+        fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
+            // Algorithm 19.4 alternative: append a b = tabulate(select(a,b), |a|+|b|)
+            <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::tabulate(
+                &|i| {
+                    <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::select(a, b, i)
+                        .unwrap()
+                        .clone()
+                },
+                a.length() + b.length(),
+            )
+        }
+
+        fn deflate<F: PredSt<T>>(f: &F, x: &T) -> ArraySeqStPerS<T> {
+            // Helper for filter: deflate f x = if f(x) then [x] else []
+            if f(x) {
+                <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::singleton(x.clone())
+            } else {
+                <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::empty()
+            }
         }
     }
 

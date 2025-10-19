@@ -1,6 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 use apas_ai::ArraySeqStPerSLit;
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerBaseTrait, ArraySeqStPerRedefinableTrait};
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Types::Types::Pair;
 use apas_ai::Types::Types::*; // macro import
@@ -34,7 +35,7 @@ fn test_tabulate_fibonacci() {
 #[test]
 fn test_map_increment() {
     let a = ArraySeqStPerSLit![1, 2, 3, 4, 5];
-    let b = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&a, &|x| x + 1);
+    let b = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::map(&a, &|x| x + 1);
     assert_eq!(b, ArraySeqStPerSLit![2, 3, 4, 5, 6]);
 }
 
@@ -53,7 +54,7 @@ fn test_subseq() {
 fn test_append() {
     let a = ArraySeqStPerSLit![1, 2, 3];
     let b = ArraySeqStPerSLit![4, 5, 6];
-    let c = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&a, &b);
+    let c = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::append(&a, &b);
     assert_eq!(c, ArraySeqStPerSLit![1, 2, 3, 4, 5, 6]);
 }
 
@@ -61,22 +62,22 @@ fn test_append() {
 fn test_sequence_literals_and_append() {
     let a = ArraySeqStPerSLit![1, 2, 3];
     let b = ArraySeqStPerSLit![4, 5];
-    let c = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&a, &b);
+    let c = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::append(&a, &b);
     assert_eq!(c, ArraySeqStPerSLit![1, 2, 3, 4, 5]);
     let empty: ArraySeqStPerS<N> = ArraySeqStPerS::empty();
-    let d = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::append(&ArraySeqStPerSLit![1, 2, 3], &empty);
+    let d = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::append(&ArraySeqStPerSLit![1, 2, 3], &empty);
     assert_eq!(d.length(), 3);
-    let e = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::append(&empty, &ArraySeqStPerSLit![1, 2, 3]);
+    let e = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::append(&empty, &ArraySeqStPerSLit![1, 2, 3]);
     assert_eq!(e.length(), 3);
 }
 
 #[test]
 fn test_filter_even() {
     let numbers = ArraySeqStPerSLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    let evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&numbers, &|&x| x % 2 == 0);
+    let evens = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::filter(&numbers, &|&x| x % 2 == 0);
     assert_eq!(evens, ArraySeqStPerSLit![2, 4, 6, 8, 10]);
     let odds_only = ArraySeqStPerSLit![1, 3, 5, 7];
-    let no_evens = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&odds_only, &|&x| x % 2 == 0);
+    let no_evens = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::filter(&odds_only, &|&x| x % 2 == 0);
     assert_eq!(no_evens.length(), 0);
 }
 
@@ -87,12 +88,12 @@ fn test_flatten() {
     let b: ArraySeqStPerS<N> = ArraySeqStPerSLit![3, 4, 5];
     let c: ArraySeqStPerS<N> = ArraySeqStPerSLit![6];
     let sequences: ArraySeqStPerS<ArraySeqStPerS<N>> = ArraySeqStPerSLit![a, b, c];
-    let flattened = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::flatten(&sequences);
+    let flattened = <ArraySeqStPerS<N> as ArraySeqStPerBaseTrait<N>>::flatten(&sequences);
     assert_eq!(flattened, ArraySeqStPerSLit![1, 2, 3, 4, 5, 6]);
     let empty: ArraySeqStPerS<N> = ArraySeqStPerS::empty();
     let mixed: ArraySeqStPerS<ArraySeqStPerS<N>> =
         ArraySeqStPerSLit![ArraySeqStPerSLit![1, 2], empty, ArraySeqStPerSLit![3]];
-    let mixed_flat = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::flatten(&mixed);
+    let mixed_flat = <ArraySeqStPerS<N> as ArraySeqStPerBaseTrait<N>>::flatten(&mixed);
     assert_eq!(mixed_flat, ArraySeqStPerSLit![1, 2, 3]);
 }
 
@@ -100,21 +101,21 @@ fn test_flatten() {
 fn test_inject_and_ninject() {
     let a = ArraySeqStPerSLit!["the", "cat", "in", "the", "hat"];
     let updates = ArraySeqStPerSLit![Pair(0, "a"), Pair(2, "on"), Pair(4, "mat")];
-    let injected = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::inject(&a, &updates);
+    let injected = <ArraySeqStPerS<&str> as ArraySeqStPerBaseTrait<&str>>::inject(&a, &updates);
     assert_eq!(injected.length(), 5);
     assert_eq!(injected, ArraySeqStPerSLit!["a", "cat", "on", "the", "mat"]);
 
     let conflicting_updates = ArraySeqStPerSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")];
-    let result_first = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::inject(&a, &conflicting_updates);
+    let result_first = <ArraySeqStPerS<&str> as ArraySeqStPerBaseTrait<&str>>::inject(&a, &conflicting_updates);
     assert_eq!(result_first, ArraySeqStPerSLit!["first", "updated", "in", "the", "hat"]);
 
-    let ninjected = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::ninject(
+    let ninjected = <ArraySeqStPerS<&str> as ArraySeqStPerBaseTrait<&str>>::ninject(
         &a,
         &ArraySeqStPerSLit![Pair(1, "dog"), Pair(3, "big"), Pair(6, "hog")],
     );
     assert_eq!(ninjected, ArraySeqStPerSLit!["the", "dog", "in", "big", "hat"]);
     assert_eq!(ninjected.length(), 5);
-    let result_last = <ArraySeqStPerS<&str> as ArraySeqStPerTrait<&str>>::ninject(
+    let result_last = <ArraySeqStPerS<&str> as ArraySeqStPerBaseTrait<&str>>::ninject(
         &a,
         &ArraySeqStPerSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")],
     );
@@ -125,15 +126,15 @@ fn test_inject_and_ninject() {
 fn test_iterate_and_prefixes_and_reduce_and_scan() {
     let numbers = ArraySeqStPerSLit![1, 2, 3, 4, 5];
     let sum_fn = |a: &N, b: &N| a + b;
-    let result = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::reduce(&numbers, &sum_fn, 0);
+    let result = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::reduce(&numbers, &sum_fn, 0);
     assert_eq!(result, 15);
     let empty: ArraySeqStPerS<N> = ArraySeqStPerS::empty();
-    let empty_result = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::reduce(&empty, &sum_fn, 42);
+    let empty_result = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::reduce(&empty, &sum_fn, 42);
     assert_eq!(empty_result, 42);
     let single = ArraySeqStPerSLit![100];
-    let single_result = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::reduce(&single, &sum_fn, 0);
+    let single_result = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::reduce(&single, &sum_fn, 0);
     assert_eq!(single_result, 100);
-    let (prefixes, final_result) = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::scan(&numbers, &sum_fn, 0);
+    let (prefixes, final_result) = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::scan(&numbers, &sum_fn, 0);
     assert_eq!(prefixes.length(), 5);
     assert_eq!(*prefixes.nth(0), 0);
     assert_eq!(*prefixes.nth(4), 10);
@@ -144,7 +145,7 @@ fn test_iterate_and_prefixes_and_reduce_and_scan() {
 fn test_iterate_sum_basic() {
     let numbers = ArraySeqStPerSLit![1, 2, 3, 4, 5];
     let sum_fn = |a: &N, x: &N| a + x;
-    let r = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::iterate(&numbers, &sum_fn, 0);
+    let r = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::iterate(&numbers, &sum_fn, 0);
     assert_eq!(r, 15);
 }
 
@@ -152,7 +153,7 @@ fn test_iterate_sum_basic() {
 fn test_iterate_prefixes_sum() {
     let numbers = ArraySeqStPerSLit![1, 2, 3];
     let sum_fn = |a: &N, x: &N| a + x;
-    let (prefixes, total) = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::scan(&numbers, &sum_fn, 0);
+    let (prefixes, total) = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::scan(&numbers, &sum_fn, 0);
     assert_eq!(prefixes.length(), 3);
     assert_eq!(*prefixes.nth(0), 0);
     assert_eq!(*prefixes.nth(1), 1);
@@ -169,7 +170,7 @@ fn test_collect_groups_by_key() {
         Pair(1_usize, 30_usize)
     ];
     let grouped: ArraySeqStPerS<Pair<N, ArraySeqStPerS<N>>> =
-        <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::collect(&pairs, |k1, k2| k1.cmp(k2));
+        <ArraySeqStPerS<N> as ArraySeqStPerBaseTrait<N>>::collect(&pairs, |k1, k2| k1.cmp(k2));
     assert_eq!(grouped.length(), 2);
     let pair0 = grouped.nth(0);
     assert_eq!(pair0.0, 1);
@@ -216,7 +217,7 @@ fn test_arrayseqstper_subseq_invalid_length() {
 fn test_arrayseqstper_inject_invalid_index() {
     let seq = ArraySeqStPerSLit![1, 2, 3];
     let updates = ArraySeqStPerSLit![Pair(5, 99)]; // Index 5 is out of bounds
-    let result = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::inject(&seq, &updates);
+    let result = <ArraySeqStPerS<i32> as ArraySeqStPerBaseTrait<i32>>::inject(&seq, &updates);
     // Should silently skip out-of-bounds indices, leaving sequence unchanged
     assert_eq!(result, seq);
 }
@@ -261,35 +262,35 @@ fn test_arrayseqstper_empty_operations_comprehensive() {
     assert_eq!(empty_subseq2.length(), 0);
 
     // Map on empty sequence should return empty
-    let mapped = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&empty, &|x| x * 2);
+    let mapped = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::map(&empty, &|x| x * 2);
     assert_eq!(mapped.length(), 0);
 
     // Filter on empty sequence should return empty
-    let filtered = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&empty, &|x| *x > 0);
+    let filtered = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::filter(&empty, &|x| *x > 0);
     assert_eq!(filtered.length(), 0);
 
     // Reduce on empty sequence should return base value
-    let reduced = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::reduce(&empty, &|a, b| a + b, 42);
+    let reduced = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::reduce(&empty, &|a, b| a + b, 42);
     assert_eq!(reduced, 42);
 
     // Scan on empty sequence should return sequence with base value
-    let scanned = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::scan(&empty, &|a, b| a + b, 0);
+    let scanned = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::scan(&empty, &|a, b| a + b, 0);
     assert_eq!(scanned.0.length(), 1); // scan returns (sequence with base, final_value)
     assert_eq!(*scanned.0.nth(0), 0); // Should contain the base value
 
     // Append with empty should work
     let non_empty = ArraySeqStPerSLit![1, 2, 3];
-    let appended1 = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&empty, &non_empty);
+    let appended1 = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::append(&empty, &non_empty);
     assert_eq!(appended1.length(), 3);
     assert_eq!(appended1, non_empty);
 
-    let appended2 = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&non_empty, &empty);
+    let appended2 = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::append(&non_empty, &empty);
     assert_eq!(appended2.length(), 3);
     assert_eq!(appended2, non_empty);
 
     // Inject on empty sequence with empty updates should return empty
     let empty_updates: ArraySeqStPerS<Pair<usize, i32>> = ArraySeqStPerS::empty();
-    let injected = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::inject(&empty, &empty_updates);
+    let injected = <ArraySeqStPerS<i32> as ArraySeqStPerBaseTrait<i32>>::inject(&empty, &empty_updates);
     assert_eq!(injected.length(), 0);
 
     // Iterator on empty sequence should be empty
@@ -322,40 +323,40 @@ fn test_arrayseqstper_single_element_boundary() {
     assert_eq!(zero_length_subseq.length(), 0);
 
     // Map operations
-    let mapped = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&single, &|x| x * 2);
+    let mapped = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::map(&single, &|x| x * 2);
     assert_eq!(mapped.length(), 1);
     assert_eq!(*mapped.nth(0), 84);
 
     // Filter operations
-    let filtered_true = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&single, &|x| *x > 0);
+    let filtered_true = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::filter(&single, &|x| *x > 0);
     assert_eq!(filtered_true.length(), 1);
     assert_eq!(*filtered_true.nth(0), 42);
 
-    let filtered_false = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&single, &|x| *x > 100);
+    let filtered_false = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::filter(&single, &|x| *x > 100);
     assert_eq!(filtered_false.length(), 0);
 
     // Reduce operations
-    let reduced = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::reduce(&single, &|a, b| a + b, 0);
+    let reduced = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::reduce(&single, &|a, b| a + b, 0);
     assert_eq!(reduced, 42);
 
     // Scan operations
-    let scanned = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::scan(&single, &|a, b| a + b, 0);
+    let scanned = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::scan(&single, &|a, b| a + b, 0);
     assert_eq!(scanned.0.length(), 1); // Just the prefix sum result
     assert_eq!(*scanned.0.nth(0), 0); // Base value is returned as first element
 
     // Append operations
     let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
-    let appended1 = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&single, &empty);
+    let appended1 = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::append(&single, &empty);
     assert_eq!(appended1.length(), 1);
     assert_eq!(appended1, single);
 
-    let appended2 = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&empty, &single);
+    let appended2 = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::append(&empty, &single);
     assert_eq!(appended2.length(), 1);
     assert_eq!(appended2, single);
 
     // Inject operations
     let updates = ArraySeqStPerSLit![Pair(0, 99)];
-    let injected = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::inject(&single, &updates);
+    let injected = <ArraySeqStPerS<i32> as ArraySeqStPerBaseTrait<i32>>::inject(&single, &updates);
     assert_eq!(injected.length(), 1);
     assert_eq!(*injected.nth(0), 99);
 
@@ -425,16 +426,16 @@ fn test_arrayseqstper_zero_length_operations() {
     assert_eq!(zero_empty, empty);
 
     // Test operations on zero-length subsequences
-    let mapped_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&zero_start, &|x| x * 2);
+    let mapped_zero = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::map(&zero_start, &|x| x * 2);
     assert_eq!(mapped_zero.length(), 0);
 
-    let filtered_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&zero_start, &|x| *x > 0);
+    let filtered_zero = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::filter(&zero_start, &|x| *x > 0);
     assert_eq!(filtered_zero.length(), 0);
 
-    let reduced_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::reduce(&zero_start, &|a, b| a + b, 100);
+    let reduced_zero = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::reduce(&zero_start, &|a, b| a + b, 100);
     assert_eq!(reduced_zero, 100); // Should return base value
 
-    let scanned_zero = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::scan(&zero_start, &|a, b| a + b, 50);
+    let scanned_zero = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::scan(&zero_start, &|a, b| a + b, 50);
     assert_eq!(scanned_zero.0.length(), 1); // Should contain base value
     assert_eq!(*scanned_zero.0.nth(0), 50);
 
@@ -539,20 +540,20 @@ fn test_arrayseqstper_maximum_size_boundary() {
     assert_eq!(*large_subseq.nth(4999), 5999);
 
     // Test map operation on large sequence (sample)
-    let mapped_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::map(&large_seq, &|x| x * 2);
+    let mapped_large = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::map(&large_seq, &|x| x * 2);
     assert_eq!(mapped_large.length(), large_size);
     assert_eq!(*mapped_large.nth(0), 0);
     assert_eq!(*mapped_large.nth(1), 2);
     assert_eq!(*mapped_large.nth(large_size - 1), ((large_size - 1) as i32) * 2);
 
     // Test filter operation on large sequence (sample)
-    let filtered_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::filter(&large_seq, &|x| *x % 1000 == 0);
+    let filtered_large = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::filter(&large_seq, &|x| *x % 1000 == 0);
     assert_eq!(filtered_large.length(), 50); // 0, 1000, 2000, ..., 49000
     assert_eq!(*filtered_large.nth(0), 0);
     assert_eq!(*filtered_large.nth(1), 1000);
 
     // Test reduce operation on large sequence
-    let sum_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::reduce(&large_seq, &|a, b| a + b, 0);
+    let sum_large = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::reduce(&large_seq, &|a, b| a + b, 0);
     let expected_sum = (large_size * (large_size - 1) / 2) as i32; // Sum of 0 to n-1
     assert_eq!(sum_large, expected_sum);
 
@@ -572,7 +573,7 @@ fn test_arrayseqstper_maximum_size_boundary() {
 
     // Test append with large sequences
     let medium_seq = ArraySeqStPerS::from_vec((0..1000).collect());
-    let appended_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::append(&medium_seq, &large_seq);
+    let appended_large = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::append(&medium_seq, &large_seq);
     assert_eq!(appended_large.length(), 1000 + large_size);
     assert_eq!(*appended_large.nth(0), 0); // From medium_seq
     assert_eq!(*appended_large.nth(999), 999); // Last from medium_seq
@@ -580,7 +581,7 @@ fn test_arrayseqstper_maximum_size_boundary() {
 
     // Test inject on large sequence (sample)
     let updates = ArraySeqStPerSLit![Pair(0, 999), Pair(large_size - 1, 888)];
-    let injected_large = <ArraySeqStPerS<i32> as ArraySeqStPerTrait<i32>>::inject(&large_seq, &updates);
+    let injected_large = <ArraySeqStPerS<i32> as ArraySeqStPerBaseTrait<i32>>::inject(&large_seq, &updates);
     assert_eq!(injected_large.length(), large_size);
     assert_eq!(*injected_large.nth(0), 999); // Updated
     assert_eq!(*injected_large.nth(large_size - 1), 888); // Updated

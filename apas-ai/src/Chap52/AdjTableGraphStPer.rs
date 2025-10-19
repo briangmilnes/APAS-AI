@@ -4,6 +4,7 @@
 
 pub mod AdjTableGraphStPer {
 
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     use crate::Chap43::OrderedTableStPer::OrderedTableStPer::*;

@@ -4,8 +4,8 @@
 
 use ordered_float::OrderedFloat;
 
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS;
-use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap56::PathWeightUtilsStEph::PathWeightUtilsStEph::*;
 use apas_ai::Types::Types::*;
 

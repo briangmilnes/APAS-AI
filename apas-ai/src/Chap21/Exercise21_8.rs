@@ -33,8 +33,8 @@ pub mod Exercise21_8 {
         }
         let k: N = (n as f64).sqrt().floor() as N;
         let all: ArraySeqStPerS<B> =
-            <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::tabulate(&|i| is_divisible(n, i + 1), k);
-        let ones: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerTrait<B>>::filter(&all, &|x| *x);
+            <ArraySeqStPerS<B> as ArraySeqStPerRedefinableTrait<B>>::tabulate(&|i| is_divisible(n, i + 1), k);
+        let ones: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerRedefinableTrait<B>>::filter(&all, &|x| *x);
         ones.length() == 1
     }
 }

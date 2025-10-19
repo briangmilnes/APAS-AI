@@ -2,6 +2,8 @@
 //!
 //! Test suite for AllPairsResultStEphInt.
 
+use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap56::AllPairsResultStEphInt::AllPairsResultStEphInt::AllPairsResultStEphInt;
 use apas_ai::Types::Types::*;
 

@@ -24,8 +24,8 @@ pub mod Algorithm21_5 {
         if n <= 2 {
             return ArraySeqStPerS::from_vec(Vec::new());
         }
-        let all: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i + 2, n - 2);
-        let filtered: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&all, &|x| is_prime(*x));
+        let all: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::tabulate(&|i| i + 2, n - 2);
+        let filtered: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::filter(&all, &|x| is_prime(*x));
         filtered
     }
 }

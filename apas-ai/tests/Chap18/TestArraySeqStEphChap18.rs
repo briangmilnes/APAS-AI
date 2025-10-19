@@ -2,6 +2,7 @@
 
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphBaseTrait, ArraySeqStEphRedefinableTrait};
 use apas_ai::Types::Types::*; // macro import
 
 #[test]
@@ -13,7 +14,7 @@ fn test_tabulate_fibonacci() {
             | _ => fib(n - 1) + fib(n - 2),
         }
     }
-    let a = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::tabulate(&fib, 10);
+    let a = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::tabulate(&fib, 10);
     let fib10_head = ArraySeqStEphSLit![
         *a.nth(0),
         *a.nth(1),
@@ -33,18 +34,18 @@ fn test_tabulate_fibonacci() {
 #[test]
 fn test_map_increment() {
     let a = ArraySeqStEphSLit![1, 2, 3, 4, 5];
-    let b = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::map(&a, &|x| x + 1);
+    let b = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::map(&a, &|x| x + 1);
     assert_eq!(b, ArraySeqStEphSLit![2, 3, 4, 5, 6]);
 }
 
 #[test]
 fn test_subseq() {
     let a = ArraySeqStEphSLit![10, 20, 30, 40, 50];
-    let b = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::subseq(&a, 1, 3);
+    let b = <ArraySeqStEphS<N> as ArraySeqStEphBaseTrait<N>>::subseq(&a, 1, 3);
     assert_eq!(b, ArraySeqStEphSLit![20, 30, 40]);
-    let c = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::subseq(&a, 2, 0);
+    let c = <ArraySeqStEphS<N> as ArraySeqStEphBaseTrait<N>>::subseq(&a, 2, 0);
     assert_eq!(c.length(), 0);
-    let d = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::subseq(&a, 0, 1);
+    let d = <ArraySeqStEphS<N> as ArraySeqStEphBaseTrait<N>>::subseq(&a, 0, 1);
     assert_eq!(d, ArraySeqStEphSLit![10]);
 }
 
@@ -52,7 +53,7 @@ fn test_subseq() {
 fn test_append() {
     let a = ArraySeqStEphSLit![1, 2, 3];
     let b = ArraySeqStEphSLit![4, 5, 6];
-    let c = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&a, &b);
+    let c = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::append(&a, &b);
     assert_eq!(c, ArraySeqStEphSLit![1, 2, 3, 4, 5, 6]);
 }
 
@@ -60,22 +61,22 @@ fn test_append() {
 fn test_sequence_literals_and_append() {
     let a = ArraySeqStEphSLit![1, 2, 3];
     let b = ArraySeqStEphSLit![4, 5];
-    let c = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&a, &b);
+    let c = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::append(&a, &b);
     assert_eq!(c, ArraySeqStEphSLit![1, 2, 3, 4, 5]);
-    let empty: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::empty();
-    let d = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&ArraySeqStEphSLit![1, 2, 3], &empty);
+    let empty: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::empty();
+    let d = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::append(&ArraySeqStEphSLit![1, 2, 3], &empty);
     assert_eq!(d.length(), 3);
-    let e = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&empty, &ArraySeqStEphSLit![1, 2, 3]);
+    let e = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::append(&empty, &ArraySeqStEphSLit![1, 2, 3]);
     assert_eq!(e.length(), 3);
 }
 
 #[test]
 fn test_filter_even() {
     let numbers = ArraySeqStEphSLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    let evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&numbers, &|&x| x % 2 == 0);
+    let evens = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::filter(&numbers, &|&x| x % 2 == 0);
     assert_eq!(evens, ArraySeqStEphSLit![2, 4, 6, 8, 10]);
     let odds_only = ArraySeqStEphSLit![1, 3, 5, 7];
-    let no_evens = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&odds_only, &|&x| x % 2 == 0);
+    let no_evens = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::filter(&odds_only, &|&x| x % 2 == 0);
     assert_eq!(no_evens.length(), 0);
 }
 
@@ -85,11 +86,11 @@ fn test_flatten() {
     let b = ArraySeqStEphSLit![3, 4, 5];
     let c = ArraySeqStEphSLit![6];
     let sequences = ArraySeqStEphSLit![a, b, c];
-    let flattened = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::flatten(&sequences);
+    let flattened = <ArraySeqStEphS<N> as ArraySeqStEphBaseTrait<N>>::flatten(&sequences);
     assert_eq!(flattened, ArraySeqStEphSLit![1, 2, 3, 4, 5, 6]);
-    let empty: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::empty();
+    let empty: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::empty();
     let mixed = ArraySeqStEphSLit![ArraySeqStEphSLit![1, 2], empty, ArraySeqStEphSLit![3]];
-    let mixed_flat = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::flatten(&mixed);
+    let mixed_flat = <ArraySeqStEphS<N> as ArraySeqStEphBaseTrait<N>>::flatten(&mixed);
     assert_eq!(mixed_flat, ArraySeqStEphSLit![1, 2, 3]);
 }
 
@@ -110,13 +111,13 @@ fn test_inject_conflicts_last_wins() {
     let a = ArraySeqStEphSLit!["the", "cat", "in", "the", "hat"];
     let updates = ArraySeqStEphSLit![Pair(0, "a"), Pair(2, "on"), Pair(4, "mat")];
     let mut a_mut = a.clone();
-    let injected = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&mut a_mut, &updates);
+    let injected = <ArraySeqStEphS<&str> as ArraySeqStEphBaseTrait<&str>>::inject(&mut a_mut, &updates);
     assert_eq!(injected.length(), 5);
     assert_eq!(*injected, ArraySeqStEphSLit!["a", "cat", "on", "the", "mat"]);
 
     let conflicting_updates = ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")];
     let mut a_mut2 = a.clone();
-    let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(&mut a_mut2, &conflicting_updates);
+    let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphBaseTrait<&str>>::inject(&mut a_mut2, &conflicting_updates);
     assert_eq!(
         *result_last,
         ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]
@@ -127,14 +128,14 @@ fn test_inject_conflicts_last_wins() {
 fn test_ninject_conflicts_last_wins() {
     let a = ArraySeqStEphSLit!["the", "cat", "in", "the", "hat"];
     let mut a_mut3 = a.clone();
-    let ninjected = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(
+    let ninjected = <ArraySeqStEphS<&str> as ArraySeqStEphBaseTrait<&str>>::inject(
         &mut a_mut3,
         &ArraySeqStEphSLit![Pair(1, "dog"), Pair(3, "big"), Pair(6, "hog")],
     );
     assert_eq!(*ninjected, ArraySeqStEphSLit!["the", "dog", "in", "big", "hat"]);
     assert_eq!(ninjected.length(), 5);
     let mut a_mut4 = a.clone();
-    let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::inject(
+    let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphBaseTrait<&str>>::inject(
         &mut a_mut4,
         &ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")],
     );
@@ -148,15 +149,15 @@ fn test_ninject_conflicts_last_wins() {
 fn test_iterate_and_prefixes_and_reduce_and_scan() {
     let numbers = ArraySeqStEphSLit![1, 2, 3, 4, 5];
     let sum_fn = |a: &N, b: &N| a + b;
-    let result = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::reduce(&numbers, &sum_fn, 0);
+    let result = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::reduce(&numbers, &sum_fn, 0);
     assert_eq!(result, 15);
-    let empty: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::empty();
-    let empty_result = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::reduce(&empty, &sum_fn, 42);
+    let empty: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::empty();
+    let empty_result = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::reduce(&empty, &sum_fn, 42);
     assert_eq!(empty_result, 42);
     let single = ArraySeqStEphSLit![100];
-    let single_result = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::reduce(&single, &sum_fn, 0);
+    let single_result = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::reduce(&single, &sum_fn, 0);
     assert_eq!(single_result, 100);
-    let (prefixes, final_result) = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::scan(&numbers, &sum_fn, 0);
+    let (prefixes, final_result) = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::scan(&numbers, &sum_fn, 0);
     assert_eq!(prefixes.length(), 5);
     assert_eq!(*prefixes.nth(0), 0);
     assert_eq!(*prefixes.nth(4), 10);
@@ -167,7 +168,7 @@ fn test_iterate_and_prefixes_and_reduce_and_scan() {
 fn test_iterate_sum_basic() {
     let numbers = ArraySeqStEphSLit![1, 2, 3, 4, 5];
     let sum_fn = |a: &N, x: &N| a + x;
-    let r = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::iterate(&numbers, &sum_fn, 0);
+    let r = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::iterate(&numbers, &sum_fn, 0);
     assert_eq!(r, 15);
 }
 
@@ -175,7 +176,7 @@ fn test_iterate_sum_basic() {
 fn test_iterate_prefixes_sum() {
     let numbers = ArraySeqStEphSLit![1, 2, 3];
     let sum_fn = |a: &N, x: &N| a + x;
-    let (prefixes, total) = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::scan(&numbers, &sum_fn, 0);
+    let (prefixes, total) = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::scan(&numbers, &sum_fn, 0);
     assert_eq!(prefixes.length(), 3);
     assert_eq!(*prefixes.nth(0), 0);
     assert_eq!(*prefixes.nth(1), 1);
@@ -186,7 +187,7 @@ fn test_iterate_prefixes_sum() {
 #[test]
 fn test_collect_groups_by_key() {
     let pairs = ArraySeqStEphSLit![Pair("a", 1_usize), Pair("b", 2_usize), Pair("a", 3_usize)];
-    let grouped = <ArraySeqStEphS<Pair<&str, ArraySeqStEphS<N>>> as ArraySeqStEphTrait<
+    let grouped = <ArraySeqStEphS<Pair<&str, ArraySeqStEphS<N>>> as ArraySeqStEphBaseTrait<
         Pair<&str, ArraySeqStEphS<N>>,
     >>::collect(&pairs, |k1, k2| k1.cmp(k2));
     assert_eq!(grouped.length(), 2);
@@ -292,35 +293,35 @@ fn test_debug_display() {
 #[test]
 fn test_map_empty() {
     let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
-    let mapped = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::map(&empty, &|x| x + 1);
+    let mapped = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::map(&empty, &|x| x + 1);
     assert_eq!(mapped.length(), 0);
 }
 
 #[test]
 fn test_filter_empty() {
     let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
-    let filtered = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::filter(&empty, &|_| true);
+    let filtered = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::filter(&empty, &|_| true);
     assert_eq!(filtered.length(), 0);
 }
 
 #[test]
 fn test_flatten_empty() {
     let empty: ArraySeqStEphS<ArraySeqStEphS<N>> = ArraySeqStEphS::empty();
-    let flattened = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::flatten(&empty);
+    let flattened = <ArraySeqStEphS<N> as ArraySeqStEphBaseTrait<N>>::flatten(&empty);
     assert_eq!(flattened.length(), 0);
 }
 
 #[test]
 fn test_reduce_empty() {
     let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
-    let result = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::reduce(&empty, &|a, b| a + b, 100);
+    let result = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::reduce(&empty, &|a, b| a + b, 100);
     assert_eq!(result, 100);
 }
 
 #[test]
 fn test_scan_empty() {
     let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
-    let (prefixes, total) = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::scan(&empty, &|a, b| a + b, 0);
+    let (prefixes, total) = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::scan(&empty, &|a, b| a + b, 0);
     // scan returns initial value as first prefix even for empty sequence
     assert_eq!(prefixes.length(), 1);
     assert_eq!(*prefixes.nth(0), 0);
@@ -332,13 +333,13 @@ fn test_append_empty() {
     let seq = ArraySeqStEphSLit![1, 2, 3];
     let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
 
-    let result1 = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&seq, &empty);
+    let result1 = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::append(&seq, &empty);
     assert_eq!(result1, seq);
 
-    let result2 = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&empty, &seq);
+    let result2 = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::append(&empty, &seq);
     assert_eq!(result2, seq);
 
-    let result3 = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::append(&empty, &empty);
+    let result3 = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::append(&empty, &empty);
     assert_eq!(result3.length(), 0);
 }
 
@@ -359,13 +360,13 @@ fn test_clone() {
 
 #[test]
 fn test_tabulate_empty() {
-    let seq = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::tabulate(&|i| i, 0);
+    let seq = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::tabulate(&|i| i, 0);
     assert_eq!(seq.length(), 0);
 }
 
 #[test]
 fn test_large_sequence() {
-    let seq = <ArraySeqStEphS<N> as ArraySeqStEphTrait<N>>::tabulate(&|i| i, 1000);
+    let seq = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::tabulate(&|i| i, 1000);
     assert_eq!(seq.length(), 1000);
     assert_eq!(*seq.nth(0), 0);
     assert_eq!(*seq.nth(500), 500);

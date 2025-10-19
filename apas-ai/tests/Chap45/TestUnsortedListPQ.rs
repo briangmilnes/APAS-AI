@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chapter 45: UnsortedListPQ Priority Queue implementation
 
-use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap45::UnsortedListPQ::UnsortedListPQ::*;
 use apas_ai::Types::Types::*;
 use apas_ai::UnsortedListPQLit;

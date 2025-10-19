@@ -4,7 +4,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphS, ArraySeqStEphTrait};
+use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap28::MaxContigSubSumOptStEph::MaxContigSubSumOptStEph::MaxContigSubSumOptTrait;
 
 pub fn bench_optimal(c: &mut Criterion) {

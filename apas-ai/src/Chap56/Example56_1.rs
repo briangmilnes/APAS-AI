@@ -9,8 +9,8 @@ pub mod Example56_1 {
 
     use ordered_float::OrderedFloat;
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap56::PathWeightUtilsStEph::PathWeightUtilsStEph::*;
 
     pub trait Example56_1Trait {
