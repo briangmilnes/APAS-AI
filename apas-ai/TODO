@@ -1,6 +1,4 @@
 
- Should StTinMtT have static?
-
  Are we checking that tests for Eph only include Eph?
  Are we checking that tests for Per only include Per?
  Are we checking that tests for St only include St?
@@ -19,4 +17,7 @@
 
  What about commented out tests?
  
-  
+ Do I want to keep the three Macro test files? I don't think so.
+
+ Where are we using fn len instead of fn length?
+

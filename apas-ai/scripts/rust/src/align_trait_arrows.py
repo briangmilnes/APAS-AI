@@ -55,8 +55,16 @@ def align_trait(lines, trait_info):
         
         # Check if this is a method signature with fn and ->
         if re.search(r'^\s*fn\s+\w+', line) and '->' in line:
-            # Find position of ->
+            # Skip lines that have arrows inside generic bounds (Fn/FnOnce/FnMut patterns)
+            # These have fundamentally different structure and shouldn't be aligned
+            if re.search(r'Fn(?:Once|Mut)?\s*\([^)]*\)\s*->', line):
+                continue
+            
+            # Find position of method return ->
             arrow_pos = line.find('->')
+            if arrow_pos == -1:
+                continue
+            
             method_lines.append({
                 'line_num': i,
                 'arrow_pos': arrow_pos

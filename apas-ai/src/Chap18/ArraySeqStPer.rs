@@ -41,7 +41,7 @@ pub mod ArraySeqStPer {
         fn map<U: StT, F: Fn(&T)                                                -> U>(a: &ArraySeqStPerS<T>, f: &F) -> ArraySeqStPerS<U>;
         /// APAS: Work Θ(len), Span Θ(1)
         /// claude-4-sonet: Work Θ(len), Span Θ(len), Parallelism Θ(1) - sequential copy
-        fn subseq_copy(a: &ArraySeqStPerS<T>, start: N, length: N)              -> Self;
+        fn subseq_copy(&self, start: N, length: N)              -> Self;
         /// APAS: Work Θ(|a|+|b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|+|b|), Span Θ(|a|+|b|), Parallelism Θ(1) - sequential
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)                 -> Self;
@@ -85,43 +85,12 @@ pub mod ArraySeqStPer {
         fn iter(&self) -> Iter<'_, T>;
     }
 
-
-    impl<T: StT> ArraySeqStPerS<T> {
-        pub fn from_vec(elts: Vec<T>) -> Self {
-            Self {
-                data: elts.into_boxed_slice(),
-            }
-        }
-        pub fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
-        pub fn empty() -> Self { Self::from_vec(Vec::new()) }
-        pub fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
-        pub fn length(&self) -> N { self.data.len() }
-        pub fn nth(&self, index: N) -> &T { &self.data[index] }
-        pub fn subseq_copy(&self, start: N, length: N) -> Self {
-            let total = self.data.len();
-            let begin = start.min(total);
-            let end = start.saturating_add(length).min(total);
-            let slice: Vec<T> = self.data[begin..end].to_vec();
-            Self::from_vec(slice)
-        }
-
-        /// Iterator over references to elements
-        pub fn iter(&self) -> Iter<'_, T> { self.data.iter() }
-    }
-
-
-
-
-
-
-
     impl<T: StT> ArraySeqStPerTrait<T> for ArraySeqStPerS<T> {
         fn new(length: N, init_value: T) -> ArraySeqStPerS<T> { Self::from_vec(vec![init_value; length]) }
-        fn length(&self) -> N { self.data.len() }
-        fn nth(&self, index: N) -> &T { &self.data[index] }
         fn empty() -> ArraySeqStPerS<T> { Self::from_vec(Vec::new()) }
         fn singleton(item: T) -> ArraySeqStPerS<T> { Self::from_vec(vec![item]) }
-
+        fn length(&self) -> N { self.data.len() }
+        fn nth(&self, index: N) -> &T { &self.data[index] }
         fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(length);
             for i in 0..length {
@@ -138,7 +107,13 @@ pub mod ArraySeqStPer {
             ArraySeqStPerS::from_vec(values)
         }
 
-        fn subseq_copy(a: &ArraySeqStPerS<T>, start: N, length: N) -> ArraySeqStPerS<T> { a.subseq_copy(start, length) }
+        fn subseq_copy(&self, start: N, length: N) -> Self {
+            let total = self.data.len();
+            let begin = start.min(total);
+            let end = start.saturating_add(length).min(total);
+            let slice: Vec<T> = self.data[begin..end].to_vec();
+            Self::from_vec(slice)
+        }
 
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
@@ -273,12 +248,7 @@ pub mod ArraySeqStPer {
             result
         }
 
-        fn from_vec(elts: Vec<T>) -> Self {
-            Self {
-                data: elts.into_boxed_slice(),
-            }
-        }
-
+        fn from_vec(elts: Vec<T>) -> Self { Self { data: elts.into_boxed_slice(), } }
         fn iter(&self) -> Iter<'_, T> { self.data.iter() }
     }
 

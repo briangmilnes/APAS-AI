@@ -1,0 +1,36 @@
+TEST VARIANT PURITY CHECK
+================================================================================
+
+Checking that:
+  - Eph tests only use Eph types (no Per)
+  - Per tests only use Per types (no Eph)
+  - St tests only use St types (no Mt)
+  - Mt tests can use St types (allowed)
+
+Checked 201 variant-specific test files
+
+FOUND 7 FILES WITH VIOLATIONS:
+================================================================================
+
+tests/Chap37/TestBSTSetAVLMtEph.rs (MtEph test):
+  Line 5: Per trait in MtEph test: use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+
+tests/Chap37/TestBSTSetBBAlphaMtEph.rs (MtEph test):
+  Line 5: Per trait in MtEph test: use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+
+tests/Chap37/TestBSTSetPlainMtEph.rs (MtEph test):
+  Line 5: Per trait in MtEph test: use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+
+tests/Chap37/TestBSTSetRBMtEph.rs (MtEph test):
+  Line 5: Per trait in MtEph test: use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+
+tests/Chap37/TestBSTSetSplayMtEph.rs (MtEph test):
+  Line 5: Per trait in MtEph test: use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+
+tests/Chap39/TestBSTSetTreapMtEph.rs (MtEph test):
+  Line 5: Per trait in MtEph test: use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
+
+tests/Chap43/TestOrderedTableMtPer.rs (MtPer test):
+  Line 4: Eph trait in MtPer test: use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
+
+TOTAL: 7 violations in 7 files

@@ -1,130 +1,118 @@
 INHERENT IMPLS NEEDING TRAIT CONVERSION
 ================================================================================
 
-src/Chap18/ArraySeqStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap18/ArraySeqStEph.rs
   Line 94: impl<T: StT> ArraySeqStEphS<T> {
 
-src/Chap18/ArraySeqStPer.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap18/ArraySeqStPer.rs
   Line 89: impl<T: StT> ArraySeqStPerS<T> {
 
-src/Chap19/ArraySeqMtEphSlice.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap19/ArraySeqMtEphSlice.rs
   Line 22: impl<T: StTInMtT> Inner<T> {
   Line 80: impl<T: StTInMtT + 'static> ArraySeqMtEphSliceS<T> {
 
-src/Chap23/BalBinTreeStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap23/BalBinTreeStEph.rs
   Line 47: impl<T: StT> BalBinNode<T> {
 
-src/Chap37/AVLTreeSeq.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/AVLTreeSeq.rs
   Line 31: impl<T: StT> AVLTreeNode<T> {
   Line 100: impl<T: StT> AVLTreeS<T> {
   Line 348: impl<'a, T: StT> AVLTreeSeqIter<'a, T> {
 
-src/Chap37/AVLTreeSeqStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/AVLTreeSeqStEph.rs
   Line 24: impl<T: StT> AVLTreeNode<T> {
   Line 75: impl<T: StT> AVLTreeSeqStEphS<T> {
   Line 232: impl<'a, T: StT> AVLTreeSeqIterStEph<'a, T> {
 
-src/Chap37/AVLTreeSeqStPer.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/AVLTreeSeqStPer.rs
   Line 258: impl<'a, T: StT> AVLTreeSeqStPerIter<'a, T> {
 
-src/Chap37/BSTAVLMtEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTAVLMtEph.rs
   Line 23: impl<T: StTInMtT + Ord> Node<T> {
 
-src/Chap37/BSTAVLStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTAVLStEph.rs
   Line 21: impl<T: StT + Ord> Node<T> {
 
-src/Chap37/BSTBBAlphaMtEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTBBAlphaMtEph.rs
   Line 24: impl<T: StTInMtT + Ord> Node<T> {
 
-src/Chap37/BSTBBAlphaStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTBBAlphaStEph.rs
   Line 22: impl<T: StT + Ord> Node<T> {
 
-src/Chap37/BSTPlainMtEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTPlainMtEph.rs
   Line 22: impl<T: StTInMtT + Ord> Node<T> {
 
-src/Chap37/BSTRBMtEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTRBMtEph.rs
   Line 29: impl<T: StTInMtT + Ord> Node<T> {
 
-src/Chap37/BSTRBStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTRBStEph.rs
   Line 27: impl<T: StT + Ord> Node<T> {
 
-src/Chap37/BSTSplayMtEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTSplayMtEph.rs
   Line 22: impl<T: StTInMtT + Ord> Node<T> {
 
-src/Chap37/BSTSplayStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTSplayStEph.rs
   Line 20: impl<T: StT + Ord> Node<T> {
 
-src/Chap39/BSTTreapMtEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap39/BSTTreapMtEph.rs
   Line 24: impl<T: StTInMtT + Ord> Node<T> {
 
-src/Chap39/BSTTreapStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap39/BSTTreapStEph.rs
   Line 22: impl<T: StT + Ord> Node<T> {
 
-src/Chap40/BSTKeyValueStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap40/BSTKeyValueStEph.rs
   Line 22: impl<K: StT + Ord, V: StT> Node<K, V> {
 
-src/Chap40/BSTReducedStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap40/BSTReducedStEph.rs
   Line 37: impl<K: StT + Ord, V: StT, R: StT> Node<K, V, R> {
 
-src/Chap40/BSTSizeStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap40/BSTSizeStEph.rs
   Line 22: impl<T: StT + Ord> Node<T> {
 
-src/Chap45/HeapsortExample.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/HeapsortExample.rs
   Line 195: impl<T: StT + Ord> HeapsortComparison<T> {
 
-src/Chap45/LeftistHeapPQ.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/LeftistHeapPQ.rs
   Line 81: impl<T: StT + Ord> LeftistHeapNode<T> {
 
-src/Chap47/NestedHashTable.rs
-  Line 19: impl<K: StT, V: StT> NestedHashTable<K, V> {
-
-src/Chap49/MinEditDistMtEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/MinEditDistMtEph.rs
   Line 63: impl<T: MtVal> MinEditDistMtEphS<T> {
 
-src/Chap49/MinEditDistMtPer.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/MinEditDistMtPer.rs
   Line 47: impl<T: MtVal> MinEditDistMtPerS<T> {
 
-src/Chap49/MinEditDistStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/MinEditDistStEph.rs
   Line 61: impl<T: StT> MinEditDistStEphS<T> {
 
-src/Chap49/MinEditDistStPer.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/MinEditDistStPer.rs
   Line 46: impl<T: StT> MinEditDistStPerS<T> {
 
-src/Chap49/SubsetSumMtEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/SubsetSumMtEph.rs
   Line 53: impl<T: MtVal> SubsetSumMtEphS<T> {
 
-src/Chap49/SubsetSumMtPer.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/SubsetSumMtPer.rs
   Line 43: impl<T: MtVal> SubsetSumMtPerS<T> {
 
-src/Chap49/SubsetSumStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/SubsetSumStEph.rs
   Line 51: impl<T: StT> SubsetSumStEphS<T> {
 
-src/Chap49/SubsetSumStPer.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/SubsetSumStPer.rs
   Line 42: impl<T: StT> SubsetSumStPerS<T> {
 
-src/Chap50/OptBinSearchTreeMtEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/OptBinSearchTreeMtEph.rs
   Line 64: impl<T: MtVal> OBSTMtEphS<T> {
 
-src/Chap50/OptBinSearchTreeMtPer.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/OptBinSearchTreeMtPer.rs
   Line 57: impl<T: MtVal> OBSTMtPerS<T> {
 
-src/Chap50/OptBinSearchTreeStEph.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/OptBinSearchTreeStEph.rs
   Line 67: impl<T: StT> OBSTStEphS<T> {
 
-src/Chap50/OptBinSearchTreeStPer.rs
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/OptBinSearchTreeStPer.rs
   Line 55: impl<T: StT> OBSTStPerS<T> {
 
-src/Chap53/PQMinMtPer.rs
-  Line 48: impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
-
-src/Chap53/PQMinStEph.rs
-  Line 43: impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
-
-src/Chap53/PQMinStPer.rs
-  Line 50: impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> ClosurePriority<V, P, F> {
-
 ================================================================================
-Total files with inherent impls needing traits: 39
-Total inherent impl blocks needing conversion: 44
+Total files with inherent impls needing traits: 35
+Total inherent impl blocks needing conversion: 40
 
 Log written to: /home/milnes/APASVERUS/APAS-AI/apas-ai/analyses/code_review/detect_inherent_needs_trait.txt

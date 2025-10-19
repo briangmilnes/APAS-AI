@@ -89,7 +89,7 @@ def main():
                 
                 # This is an inherent impl without a trait
                 results.append({
-                    'file': str(rel_path),
+                    'file': str(rs_file.absolute()),
                     'line': i,
                     'impl': line.strip()
                 })
