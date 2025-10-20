@@ -1,0 +1,31 @@
+SUB-STRUCT INHERENT IMPL BLOCKS
+======================================================================
+
+Inherent impl blocks for structs that DON'T match the filename.
+These are helper/sub-structs that might need trait conversion.
+
+Found 67 sub-struct inherent impl blocks
+
+DETAILED LISTING:
+----------------------------------------------------------------------
+
+src/Chap19/ArraySeqMtEphSlice.rs
+  Line 22: impl Inner
+    Expected: ArraySeqMtEphSlice
+    Methods (2): new, len
+
+
+src/Chap23/BalBinTreeStEph.rs
+  Line 48: impl BalBinNode
+    Expected: BalBinTreeStEph
+    Methods (1): new
+
+
+src/Chap37/AVLTreeSeq.rs
+  Line 32: impl AVLTreeNode
+    Expected: AVLTreeSeq
+    Methods (1): new
+
+  Line 101: impl AVLTreeS
+    Expected: AVLTreeSeq
+    Methods (12): new_root, new, update, from_vec, to_arrayseq, iter, push_back, contains_value, insert_value, delete_value, is_tree_empty, values_in_order

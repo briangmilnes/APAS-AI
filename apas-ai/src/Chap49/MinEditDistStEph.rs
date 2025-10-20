@@ -58,40 +58,38 @@ pub mod MinEditDistStEph {
         fn memo_size(&self)                                                     -> usize;
     }
 
-    impl<T: StT> MinEditDistStEphS<T> {
-        /// Internal recursive minimum edit distance with memoization
-        /// Claude Work: O(|S|*|T|) - each subproblem computed once
-        /// Claude Span: O(|S|+|T|) - maximum recursion depth
-        fn min_edit_distance_rec(&mut self, i: usize, j: usize) -> usize {
-            // Check memo first
-            if let Some(&result) = self.memo.get(&(i, j)) {
-                return result;
-            }
-
-            let result = match (i, j) {
-                | (i, 0) => i, // Base case: need i deletions
-                | (0, j) => j, // Base case: need j insertions
-                | (i, j) => {
-                    let source_char = self.source.nth(i - 1);
-                    let target_char = self.target.nth(j - 1);
-
-                    if source_char == target_char {
-                        // Characters match, no edit needed
-                        self.min_edit_distance_rec(i - 1, j - 1)
-                    } else {
-                        // Characters don't match, try both operations
-                        let delete_cost = self.min_edit_distance_rec(i - 1, j);
-                        let insert_cost = self.min_edit_distance_rec(i, j - 1);
-
-                        1 + std::cmp::min(delete_cost, insert_cost)
-                    }
-                }
-            };
-
-            // Memoize result
-            self.memo.insert((i, j), result);
-            result
+    /// Internal recursive minimum edit distance with memoization
+    /// Claude Work: O(|S|*|T|) - each subproblem computed once
+    /// Claude Span: O(|S|+|T|) - maximum recursion depth
+    fn min_edit_distance_rec<T: StT>(table: &mut MinEditDistStEphS<T>, i: usize, j: usize) -> usize {
+        // Check memo first
+        if let Some(&result) = table.memo.get(&(i, j)) {
+            return result;
         }
+
+        let result = match (i, j) {
+            | (i, 0) => i, // Base case: need i deletions
+            | (0, j) => j, // Base case: need j insertions
+            | (i, j) => {
+                let source_char = table.source.nth(i - 1);
+                let target_char = table.target.nth(j - 1);
+
+                if source_char == target_char {
+                    // Characters match, no edit needed
+                    min_edit_distance_rec(table, i - 1, j - 1)
+                } else {
+                    // Characters don't match, try both operations
+                    let delete_cost = min_edit_distance_rec(table, i - 1, j);
+                    let insert_cost = min_edit_distance_rec(table, i, j - 1);
+
+                    1 + std::cmp::min(delete_cost, insert_cost)
+                }
+            }
+        };
+
+        // Memoize result
+        table.memo.insert((i, j), result);
+        result
     }
 
     impl<T: StT> MinEditDistStEphTrait<T> for MinEditDistStEphS<T> {
@@ -121,7 +119,7 @@ pub mod MinEditDistStEph {
             let source_len = self.source.length();
             let target_len = self.target.length();
 
-            self.min_edit_distance_rec(source_len, target_len)
+            min_edit_distance_rec(self, source_len, target_len)
         }
 
         fn source(&self) -> &ArraySeqStEphS<T> { &self.source }

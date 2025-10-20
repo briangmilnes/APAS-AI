@@ -19,17 +19,17 @@ pub mod BSTPlainMtEph {
         right: Link<T>,
     }
 
-    impl<T: StTInMtT + Ord> Node<T> {
-        fn new(key: T) -> Self {
-            Node {
-                key,
-                height: 1,
-                size: 1,
-                left: Arc::new(RwLock::new(None)),
-                right: Arc::new(RwLock::new(None)),
-            }
+    fn new_node<T: StTInMtT + Ord>(key: T) -> Node<T> {
+        Node {
+            key,
+            height: 1,
+            size: 1,
+            left: Arc::new(RwLock::new(None)),
+            right: Arc::new(RwLock::new(None)),
         }
+    }
 
+    impl<T: StTInMtT + Ord> Node<T> {
         fn update(&mut self) {
             let left = self.left.read().unwrap();
             let right = self.right.read().unwrap();
@@ -98,7 +98,7 @@ pub mod BSTPlainMtEph {
                         inserted
                     }
                     | None => {
-                        *guard = Some(Node::new(value));
+                        *guard = Some(new_node(value));
                         true
                     }
                 }

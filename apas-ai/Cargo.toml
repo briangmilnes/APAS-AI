@@ -823,25 +823,26 @@ path = "tests/Chap43/TestOrderedTableMtEph.rs"
 name = "TestExample43_1"
 path = "tests/Chap43/TestExample43_1.rs"
 
-[[test]]
-name = "TestAdvancedLinearProbing"
-path = "tests/Chap47/TestAdvancedLinearProbing.rs"
-
-[[test]]
-name = "TestAdvancedQuadraticProbing"
-path = "tests/Chap47/TestAdvancedQuadraticProbing.rs"
-
-[[test]]
-name = "TestAdvancedDoubleHashing"
-path = "tests/Chap47/TestAdvancedDoubleHashing.rs"
-
-[[test]]
-name = "TestClusteringAnalysis"
-path = "tests/Chap47/TestClusteringAnalysis.rs"
-
-[[test]]
-name = "TestProbeSequenceExamples"
-path = "tests/Chap47/TestProbeSequenceExamples.rs"
+# Old Chap47 tests moved to attic
+# [[test]]
+# name = "TestAdvancedLinearProbing"
+# path = "tests/Chap47/TestAdvancedLinearProbing.rs"
+#
+# [[test]]
+# name = "TestAdvancedQuadraticProbing"
+# path = "tests/Chap47/TestAdvancedQuadraticProbing.rs"
+#
+# [[test]]
+# name = "TestAdvancedDoubleHashing"
+# path = "tests/Chap47/TestAdvancedDoubleHashing.rs"
+#
+# [[test]]
+# name = "TestClusteringAnalysis"
+# path = "tests/Chap47/TestClusteringAnalysis.rs"
+#
+# [[test]]
+# name = "TestProbeSequenceExamples"
+# path = "tests/Chap47/TestProbeSequenceExamples.rs"
 
 
 [[bench]]
@@ -924,35 +925,36 @@ name = "BenchAugOrderedTableMtEph"
 path = "benches/Chap43/BenchAugOrderedTableMtEph.rs"
 harness = false
 
-[[bench]]
-name = "BenchSeparateChaining"
-path = "benches/Chap47/BenchSeparateChaining.rs"
-harness = false
-
-[[bench]]
-name = "BenchLinearProbing"
-path = "benches/Chap47/BenchLinearProbing.rs"
-harness = false
-
-[[bench]]
-name = "BenchFlatHashTable"
-path = "benches/Chap47/BenchFlatHashTable.rs"
-harness = false
-
-[[bench]]
-name = "BenchAdvancedLinearProbing"
-path = "benches/Chap47/BenchAdvancedLinearProbing.rs"
-harness = false
-
-[[bench]]
-name = "BenchAdvancedQuadraticProbing"
-path = "benches/Chap47/BenchAdvancedQuadraticProbing.rs"
-harness = false
-
-[[bench]]
-name = "BenchAdvancedDoubleHashing"
-path = "benches/Chap47/BenchAdvancedDoubleHashing.rs"
-harness = false
+# Old Chap47 benches moved to attic
+# [[bench]]
+# name = "BenchSeparateChaining"
+# path = "benches/Chap47/BenchSeparateChaining.rs"
+# harness = false
+#
+# [[bench]]
+# name = "BenchLinearProbing"
+# path = "benches/Chap47/BenchLinearProbing.rs"
+# harness = false
+#
+# [[bench]]
+# name = "BenchFlatHashTable"
+# path = "benches/Chap47/BenchFlatHashTable.rs"
+# harness = false
+#
+# [[bench]]
+# name = "BenchAdvancedLinearProbing"
+# path = "benches/Chap47/BenchAdvancedLinearProbing.rs"
+# harness = false
+#
+# [[bench]]
+# name = "BenchAdvancedQuadraticProbing"
+# path = "benches/Chap47/BenchAdvancedQuadraticProbing.rs"
+# harness = false
+#
+# [[bench]]
+# name = "BenchAdvancedDoubleHashing"
+# path = "benches/Chap47/BenchAdvancedDoubleHashing.rs"
+# harness = false
 
 # Chapter 49: Dynamic Programming - Subset Sum and Minimum Edit Distance
 [[test]]
@@ -1884,37 +1886,38 @@ path = "tests/Chap45/TestUnsortedListPQ.rs"
 name = "TestHeapsortExample"
 path = "tests/Chap45/TestHeapsortExample.rs"
 
-[[test]]
-name = "TestDoubleHashing"
-path = "tests/Chap47/TestDoubleHashing.rs"
-
-[[test]]
-name = "TestFlatHashTable"
-path = "tests/Chap47/TestFlatHashTable.rs"
-
-[[test]]
-name = "TestHashExamples"
-path = "tests/Chap47/TestHashExamples.rs"
-
-[[test]]
-name = "TestHashFunctionTraits"
-path = "tests/Chap47/TestHashFunctionTraits.rs"
-
-[[test]]
-name = "TestLinearProbing"
-path = "tests/Chap47/TestLinearProbing.rs"
-
-[[test]]
-name = "TestNestedHashTable"
-path = "tests/Chap47/TestNestedHashTable.rs"
-
-[[test]]
-name = "TestQuadraticProbing"
-path = "tests/Chap47/TestQuadraticProbing.rs"
-
-[[test]]
-name = "TestSeparateChaining"
-path = "tests/Chap47/TestSeparateChaining.rs"
+# Old Chap47 tests moved to attic
+# [[test]]
+# name = "TestDoubleHashing"
+# path = "tests/Chap47/TestDoubleHashing.rs"
+#
+# [[test]]
+# name = "TestFlatHashTable"
+# path = "tests/Chap47/TestFlatHashTable.rs"
+#
+# [[test]]
+# name = "TestHashExamples"
+# path = "tests/Chap47/TestHashExamples.rs"
+#
+# [[test]]
+# name = "TestHashFunctionTraits"
+# path = "tests/Chap47/TestHashFunctionTraits.rs"
+#
+# [[test]]
+# name = "TestLinearProbing"
+# path = "tests/Chap47/TestLinearProbing.rs"
+#
+# [[test]]
+# name = "TestNestedHashTable"
+# path = "tests/Chap47/TestNestedHashTable.rs"
+#
+# [[test]]
+# name = "TestQuadraticProbing"
+# path = "tests/Chap47/TestQuadraticProbing.rs"
+#
+# [[test]]
+# name = "TestSeparateChaining"
+# path = "tests/Chap47/TestSeparateChaining.rs"
 
 [[test]]
 name = "TestAdjMatrixGraphStEph"
@@ -2054,51 +2057,52 @@ path = "tests/TestLibIntegration.rs"
 
 [[test]]
 name = "TestParaHashTableStEph"
-path = "tests/Chap47clean/TestParaHashTableStEph.rs"
+path = "tests/Chap47/TestParaHashTableStEph.rs"
 
 [[test]]
 name = "TestLinProbFlatHashTable"
-path = "tests/Chap47clean/TestLinProbFlatHashTable.rs"
+path = "tests/Chap47/TestLinProbFlatHashTable.rs"
 
 [[test]]
 name = "TestVecChainedHashTable"
-path = "tests/Chap47clean/TestVecChainedHashTable.rs"
+path = "tests/Chap47/TestVecChainedHashTable.rs"
 
 [[test]]
 name = "TestLinkedListChainedHashTable"
-path = "tests/Chap47clean/TestLinkedListChainedHashTable.rs"
+path = "tests/Chap47/TestLinkedListChainedHashTable.rs"
 
 [[test]]
 name = "TestStructChainedHashTable"
-path = "tests/Chap47clean/TestStructChainedHashTable.rs"
+path = "tests/Chap47/TestStructChainedHashTable.rs"
 
 [[test]]
 name = "TestQuadProbFlatHashTable"
-path = "tests/Chap47clean/TestQuadProbFlatHashTable.rs"
+path = "tests/Chap47/TestQuadProbFlatHashTable.rs"
 
 [[test]]
 name = "TestDoubleHashFlatHashTable"
-path = "tests/Chap47clean/TestDoubleHashFlatHashTable.rs"
+path = "tests/Chap47/TestDoubleHashFlatHashTable.rs"
 
-[[bench]]
-name = "BenchLinProbFlatHashTable"
-path = "benches/Chap47/BenchLinProbFlatHashTable.rs"
-harness = false
-
-[[bench]]
-name = "BenchQuadProbFlatHashTable"
-path = "benches/Chap47/BenchQuadProbFlatHashTable.rs"
-harness = false
-
-[[bench]]
-name = "BenchDoubleHashFlatHashTable"
-path = "benches/Chap47/BenchDoubleHashFlatHashTable.rs"
-harness = false
-
-[[bench]]
-name = "BenchVecChainedHashTable"
-path = "benches/Chap47/BenchVecChainedHashTable.rs"
-harness = false
+# Chap47 benches moved to attic
+# [[bench]]
+# name = "BenchLinProbFlatHashTable"
+# path = "benches/Chap47/BenchLinProbFlatHashTable.rs"
+# harness = false
+#
+# [[bench]]
+# name = "BenchQuadProbFlatHashTable"
+# path = "benches/Chap47/BenchQuadProbFlatHashTable.rs"
+# harness = false
+#
+# [[bench]]
+# name = "BenchDoubleHashFlatHashTable"
+# path = "benches/Chap47/BenchDoubleHashFlatHashTable.rs"
+# harness = false
+#
+# [[bench]]
+# name = "BenchVecChainedHashTable"
+# path = "benches/Chap47/BenchVecChainedHashTable.rs"
+# harness = false
 
 [[bench]]
 name = "BenchArraySeqMtEphChap18"

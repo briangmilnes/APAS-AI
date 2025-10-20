@@ -21,3 +21,5 @@
 
  Where are we using fn len instead of fn length?
 
+ Get rid of the *Simple files. examples that went loose.
+ 

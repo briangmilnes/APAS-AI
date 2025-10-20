@@ -21,14 +21,126 @@ pub mod BSTBBAlphaMtEph {
         right: Link<T>,
     }
 
-    impl<T: StTInMtT + Ord> Node<T> {
-        fn new(key: T) -> Self {
-            Node {
-                key,
-                size: 1,
-                left: None,
-                right: None,
+    fn new_node<T: StTInMtT + Ord>(key: T) -> Node<T> {
+        Node {
+            key,
+            size: 1,
+            left: None,
+            right: None,
+        }
+    }
+
+    fn size_link<T: StTInMtT + Ord>(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
+
+    fn update<T: StTInMtT + Ord>(node: &mut Node<T>) { node.size = 1 + size_link(&node.left) + size_link(&node.right); }
+
+    fn insert_link<T: StTInMtT + Ord>(link: &mut Link<T>, value: T) -> bool {
+        match link {
+            | Some(node) => {
+                let inserted = if value < node.key {
+                    insert_link(&mut node.left, value)
+                } else if value > node.key {
+                    insert_link(&mut node.right, value)
+                } else {
+                    false
+                };
+                if inserted {
+                    update(node);
+                }
+                inserted
             }
+            | None => {
+                *link = Some(Box::new(new_node(value)));
+                true
+            }
+        }
+    }
+
+    fn needs_rebuild<T: StTInMtT + Ord>(node: &Node<T>) -> bool {
+        let total = node.size as f64;
+        let left = size_link(&node.left) as f64;
+        let right = size_link(&node.right) as f64;
+        left > ALPHA * total || right > ALPHA * total
+    }
+
+    fn rebalance_if_needed<T: StTInMtT + Ord>(link: &mut Link<T>, total_size: N) {
+        if let Some(node) = link.as_ref() {
+            if needs_rebuild(node) {
+                let mut values = Vec::with_capacity(total_size);
+                collect_values(&Some(node.clone()), &mut values);
+                *link = build_balanced(&values);
+            }
+        }
+    }
+
+    fn collect_values<T: StTInMtT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
+        if let Some(node) = link {
+            collect_values(&node.left, out);
+            out.push(node.key.clone());
+            collect_values(&node.right, out);
+        }
+    }
+
+    fn build_balanced<T: StTInMtT + Ord>(values: &[T]) -> Link<T> {
+        if values.is_empty() {
+            return None;
+        }
+        let mid = values.len() / 2;
+        let mut node = Box::new(new_node(values[mid].clone()));
+        node.left = build_balanced(&values[..mid]);
+        node.right = build_balanced(&values[mid + 1..]);
+        update(&mut node);
+        Some(node)
+    }
+
+    fn find_link<'a, T: StTInMtT + Ord>(link: &'a Link<T>, target: &T) -> Option<&'a T> {
+        match link {
+            | None => None,
+            | Some(node) => {
+                if target == &node.key {
+                    Some(&node.key)
+                } else if target < &node.key {
+                    find_link(&node.left, target)
+                } else {
+                    find_link(&node.right, target)
+                }
+            }
+        }
+    }
+
+    fn min_link<T: StTInMtT + Ord>(link: &Link<T>) -> Option<&T> {
+        match link {
+            | None => None,
+            | Some(node) => match node.left {
+                | None => Some(&node.key),
+                | Some(_) => min_link(&node.left),
+            },
+        }
+    }
+
+    fn max_link<T: StTInMtT + Ord>(link: &Link<T>) -> Option<&T> {
+        match link {
+            | None => None,
+            | Some(node) => match node.right {
+                | None => Some(&node.key),
+                | Some(_) => max_link(&node.right),
+            },
+        }
+    }
+
+    fn in_order_collect<T: StTInMtT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
+        if let Some(node) = link {
+            in_order_collect(&node.left, out);
+            out.push(node.key.clone());
+            in_order_collect(&node.right, out);
+        }
+    }
+
+    fn pre_order_collect<T: StTInMtT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
+        if let Some(node) = link {
+            out.push(node.key.clone());
+            pre_order_collect(&node.left, out);
+            pre_order_collect(&node.right, out);
         }
     }
 
@@ -62,123 +174,6 @@ pub mod BSTBBAlphaMtEph {
         fn pre_order(&self)            -> ArraySeqStPerS<T>;
     }
 
-
-    impl<T: StTInMtT + Ord> BSTBBAlphaMtEph<T> {
-        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
-
-        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right); }
-
-        fn insert_link(link: &mut Link<T>, value: T) -> bool {
-            match link {
-                | Some(node) => {
-                    let inserted = if value < node.key {
-                        Self::insert_link(&mut node.left, value)
-                    } else if value > node.key {
-                        Self::insert_link(&mut node.right, value)
-                    } else {
-                        false
-                    };
-                    if inserted {
-                        Self::update(node);
-                    }
-                    inserted
-                }
-                | None => {
-                    *link = Some(Box::new(Node::new(value)));
-                    true
-                }
-            }
-        }
-
-        fn needs_rebuild(node: &Node<T>) -> bool {
-            let total = node.size as f64;
-            let left = Self::size_link(&node.left) as f64;
-            let right = Self::size_link(&node.right) as f64;
-            left > ALPHA * total || right > ALPHA * total
-        }
-
-        fn rebalance_if_needed(link: &mut Link<T>, total_size: N) {
-            if let Some(node) = link.as_ref() {
-                if Self::needs_rebuild(node) {
-                    let mut values = Vec::with_capacity(total_size);
-                    Self::collect_values(&Some(node.clone()), &mut values);
-                    *link = Self::build_balanced(&values);
-                }
-            }
-        }
-
-        fn collect_values(link: &Link<T>, out: &mut Vec<T>) {
-            if let Some(node) = link {
-                Self::collect_values(&node.left, out);
-                out.push(node.key.clone());
-                Self::collect_values(&node.right, out);
-            }
-        }
-
-        fn build_balanced(values: &[T]) -> Link<T> {
-            if values.is_empty() {
-                return None;
-            }
-            let mid = values.len() / 2;
-            let mut node = Box::new(Node::new(values[mid].clone()));
-            node.left = Self::build_balanced(&values[..mid]);
-            node.right = Self::build_balanced(&values[mid + 1..]);
-            Self::update(&mut node);
-            Some(node)
-        }
-
-        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {
-            match link {
-                | None => None,
-                | Some(node) => {
-                    if target == &node.key {
-                        Some(&node.key)
-                    } else if target < &node.key {
-                        Self::find_link(&node.left, target)
-                    } else {
-                        Self::find_link(&node.right, target)
-                    }
-                }
-            }
-        }
-
-        fn min_link(link: &Link<T>) -> Option<&T> {
-            match link {
-                | None => None,
-                | Some(node) => match node.left {
-                    | None => Some(&node.key),
-                    | Some(_) => Self::min_link(&node.left),
-                },
-            }
-        }
-
-        fn max_link(link: &Link<T>) -> Option<&T> {
-            match link {
-                | None => None,
-                | Some(node) => match node.right {
-                    | None => Some(&node.key),
-                    | Some(_) => Self::max_link(&node.right),
-                },
-            }
-        }
-
-        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {
-            if let Some(node) = link {
-                Self::in_order_collect(&node.left, out);
-                out.push(node.key.clone());
-                Self::in_order_collect(&node.right, out);
-            }
-        }
-
-        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {
-            if let Some(node) = link {
-                out.push(node.key.clone());
-                Self::pre_order_collect(&node.left, out);
-                Self::pre_order_collect(&node.right, out);
-            }
-        }
-    }
-
     impl<T: StTInMtT + Ord> BSTBBAlphaMtEphTrait<T> for BSTBBAlphaMtEph<T> {
         fn new() -> Self {
             BSTBBAlphaMtEph {
@@ -188,23 +183,23 @@ pub mod BSTBBAlphaMtEph {
 
         fn insert(&self, value: T) {
             let mut guard = self.root.write().unwrap();
-            let inserted = Self::insert_link(&mut *guard, value);
+            let inserted = insert_link(&mut *guard, value);
             if inserted {
-                let total = Self::size_link(&*guard);
-                Self::rebalance_if_needed(&mut *guard, total);
+                let total = size_link(&*guard);
+                rebalance_if_needed(&mut *guard, total);
             }
         }
 
         fn find(&self, target: &T) -> Option<T> {
             let guard = self.root.read().unwrap();
-            Self::find_link(&*guard, target).cloned()
+            find_link(&*guard, target).cloned()
         }
 
         fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
-            Self::size_link(&*guard)
+            size_link(&*guard)
         }
 
         fn is_empty(&self) -> B { self.size() == 0 }
@@ -223,25 +218,25 @@ pub mod BSTBBAlphaMtEph {
 
         fn minimum(&self) -> Option<T> {
             let guard = self.root.read().unwrap();
-            Self::min_link(&*guard).cloned()
+            min_link(&*guard).cloned()
         }
 
         fn maximum(&self) -> Option<T> {
             let guard = self.root.read().unwrap();
-            Self::max_link(&*guard).cloned()
+            max_link(&*guard).cloned()
         }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let guard = self.root.read().unwrap();
-            let mut out = Vec::with_capacity(Self::size_link(&*guard));
-            Self::in_order_collect(&*guard, &mut out);
+            let mut out = Vec::with_capacity(size_link(&*guard));
+            in_order_collect(&*guard, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
 
         fn pre_order(&self) -> ArraySeqStPerS<T> {
             let guard = self.root.read().unwrap();
-            let mut out = Vec::with_capacity(Self::size_link(&*guard));
-            Self::pre_order_collect(&*guard, &mut out);
+            let mut out = Vec::with_capacity(size_link(&*guard));
+            pre_order_collect(&*guard, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
     }

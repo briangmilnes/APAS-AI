@@ -1,0 +1,109 @@
+CLASSIFICATION OF INHERENT IMPLS (WITH GENERICS)
+================================================================================
+
+HELPER STRUCTS (Node, Inner, Iterator, etc.) - 17 items
+--------------------------------------------------------------------------------
+src/Chap19/ArraySeqMtEphSlice.rs
+  src/Chap19/ArraySeqMtEphSlice.rs:22:    impl<T: StTInMtT> Inner<T> {
+src/Chap23/BalBinTreeStEph.rs
+  src/Chap23/BalBinTreeStEph.rs:48:    impl<T: StT> BalBinNode<T> {
+src/Chap37/AVLTreeSeq.rs
+  src/Chap37/AVLTreeSeq.rs:32:    impl<T: StT> AVLTreeNode<T> {
+src/Chap37/AVLTreeSeqStEph.rs
+  src/Chap37/AVLTreeSeqStEph.rs:24:    impl<T: StT> AVLTreeNode<T> {
+src/Chap37/BSTAVLMtEph.rs
+  src/Chap37/BSTAVLMtEph.rs:23:    impl<T: StTInMtT + Ord> Node<T> {
+src/Chap37/BSTAVLStEph.rs
+  src/Chap37/BSTAVLStEph.rs:21:    impl<T: StT + Ord> Node<T> {
+src/Chap37/BSTBBAlphaMtEph.rs
+  src/Chap37/BSTBBAlphaMtEph.rs:24:    impl<T: StTInMtT + Ord> Node<T> {
+src/Chap37/BSTBBAlphaStEph.rs
+  src/Chap37/BSTBBAlphaStEph.rs:22:    impl<T: StT + Ord> Node<T> {
+src/Chap37/BSTPlainMtEph.rs
+  src/Chap37/BSTPlainMtEph.rs:22:    impl<T: StTInMtT + Ord> Node<T> {
+src/Chap37/BSTRBMtEph.rs
+  src/Chap37/BSTRBMtEph.rs:29:    impl<T: StTInMtT + Ord> Node<T> {
+... and 7 more
+
+HAS CORRESPONDING TRAIT - 40 items
+--------------------------------------------------------------------------------
+src/Chap37/AVLTreeSeqStEph.rs
+  src/Chap37/AVLTreeSeqStEph.rs:76:    impl<T: StT> AVLTreeSeqStEphS<T> {
+src/Chap37/BSTAVLMtEph.rs
+  src/Chap37/BSTAVLMtEph.rs:66:    impl<T: StTInMtT + Ord> BSTAVLMtEph<T> {
+src/Chap37/BSTAVLStEph.rs
+  src/Chap37/BSTAVLStEph.rs:66:    impl<T: StT + Ord> BSTAVLStEph<T> {
+src/Chap37/BSTBBAlphaMtEph.rs
+  src/Chap37/BSTBBAlphaMtEph.rs:66:    impl<T: StTInMtT + Ord> BSTBBAlphaMtEph<T> {
+src/Chap37/BSTBBAlphaStEph.rs
+  src/Chap37/BSTBBAlphaStEph.rs:66:    impl<T: StT + Ord> BSTBBAlphaStEph<T> {
+src/Chap37/BSTRBMtEph.rs
+  src/Chap37/BSTRBMtEph.rs:66:    impl<T: StTInMtT + Ord> BSTRBMtEph<T> {
+src/Chap37/BSTRBStEph.rs
+  src/Chap37/BSTRBStEph.rs:72:    impl<T: StT + Ord> BSTRBStEph<T> {
+src/Chap37/BSTSetAVLMtEph.rs
+  src/Chap37/BSTSetAVLMtEph.rs:62:    impl<T: StTInMtT + Ord> BSTSetAVLMtEph<T> {
+src/Chap37/BSTSetBBAlphaMtEph.rs
+  src/Chap37/BSTSetBBAlphaMtEph.rs:62:    impl<T: StTInMtT + Ord> BSTSetBBAlphaMtEph<T> {
+src/Chap37/BSTSetPlainMtEph.rs
+  src/Chap37/BSTSetPlainMtEph.rs:62:    impl<T: StTInMtT + Ord> BSTSetPlainMtEph<T> {
+... and 30 more
+
+NO TRAIT (needs trait) - 25 items
+--------------------------------------------------------------------------------
+src/Chap06/LabUnDirGraphMtEph.rs
+  src/Chap06/LabUnDirGraphMtEph.rs:189:    impl<V: HashOrd + MtT, L: StTInMtT + Hash> LabUnDirGraphMtEph<V, L> {
+src/Chap37/AVLTreeSeq.rs
+  src/Chap37/AVLTreeSeq.rs:101:    impl<T: StT> AVLTreeS<T> {
+src/Chap37/AVLTreeSeq.rs
+  src/Chap37/AVLTreeSeq.rs:349:    impl<'a, T: StT> AVLTreeSeqIter<'a, T> {
+src/Chap37/AVLTreeSeqStEph.rs
+  src/Chap37/AVLTreeSeqStEph.rs:233:    impl<'a, T: StT> AVLTreeSeqIterStEph<'a, T> {
+src/Chap37/AVLTreeSeqStPer.rs
+  src/Chap37/AVLTreeSeqStPer.rs:258:    impl<'a, T: StT> AVLTreeSeqStPerIter<'a, T> {
+src/Chap40/BSTKeyValueStEph.rs
+  src/Chap40/BSTKeyValueStEph.rs:22:    impl<K: StT + Ord, V: StT> Node<K, V> {
+src/Chap40/BSTKeyValueStEph.rs
+  src/Chap40/BSTKeyValueStEph.rs:68:    impl<K: StT + Ord, V: StT> BSTKeyValueStEph<K, V> {
+src/Chap40/BSTReducedStEph.rs
+  src/Chap40/BSTReducedStEph.rs:114:    impl<K: StT + Ord, V: StT, R: StT, Op: ReduceOp<V, R>> BSTReducedStEph<K, V, R, Op> {
+src/Chap40/BSTReducedStEph.rs
+  src/Chap40/BSTReducedStEph.rs:37:    impl<K: StT + Ord, V: StT, R: StT> Node<K, V, R> {
+src/Chap43/AugOrderedTableMtEph.rs
+  src/Chap43/AugOrderedTableMtEph.rs:366:    impl<K: MtKey, V: MtVal, F: MtReduceFn<V>> AugOrderedTableMtEph<K, V, F> {
+src/Chap43/AugOrderedTableStEph.rs
+  src/Chap43/AugOrderedTableStEph.rs:324:    impl<K: StT + Ord, V: StT, F> AugOrderedTableStEph<K, V, F>
+src/Chap43/AugOrderedTableStPer.rs
+  src/Chap43/AugOrderedTableStPer.rs:359:    impl<K: StT + Ord, V: StT, F> AugOrderedTableStPer<K, V, F>
+src/Chap45/HeapsortExample.rs
+  src/Chap45/HeapsortExample.rs:195:    impl<T: StT + Ord> HeapsortComparison<T> {
+src/Chap47/AdvancedDoubleHashing.rs
+  src/Chap47/AdvancedDoubleHashing.rs:109:    impl<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> AdvancedDoubleHashingStrategy<K, H1, H2> {
+src/Chap47/AdvancedLinearProbing.rs
+  src/Chap47/AdvancedLinearProbing.rs:32:    impl<K: StT, H: HashFunClone<K>> AdvancedLinearProbingStrategy<K, H> {
+src/Chap47/AdvancedQuadraticProbing.rs
+  src/Chap47/AdvancedQuadraticProbing.rs:114:    impl<K: StT, H: HashFunClone<K>> AdvancedQuadraticProbingStrategy<K, H> {
+src/Chap47/DoubleHashing.rs
+  src/Chap47/DoubleHashing.rs:18:    impl<K: StT, H1: HashFunClone<K>, H2: HashFunClone<K>> DoubleHashingStrategy<K, H1, H2> {
+src/Chap47/FlatHashTable.rs
+  src/Chap47/FlatHashTable.rs:49:    impl<K: StT, V: StT, P: ProbeSequence<K> + Clone> FlatHashTable<K, V, P> {
+src/Chap47/HashFunctionTraits.rs
+  src/Chap47/HashFunctionTraits.rs:192:    impl<K, H1: HashFunction<K>, H2: HashFunction<K>> ProbeSequenceGenerator<K, H1, H2> {
+src/Chap47/LinearProbing.rs
+  src/Chap47/LinearProbing.rs:17:    impl<K: StT, H: HashFunClone<K>> LinearProbingStrategy<K, H> {
+src/Chap47/NestedHashTable.rs
+  src/Chap47/NestedHashTable.rs:260:    impl<K: StT, V: StT> NestedHashTable<K, V> {
+src/Chap47/QuadraticProbing.rs
+  src/Chap47/QuadraticProbing.rs:19:    impl<K: StT, H: HashFunClone<K>> QuadraticProbingStrategy<K, H> {
+src/Chap47/SeparateChaining.rs
+  src/Chap47/SeparateChaining.rs:26:    impl<K, V, H, E> SeparateChainingHashTable<K, V, H, E>
+src/Chap53/PQMinMtEph.rs
+  src/Chap53/PQMinMtEph.rs:56:    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P + Send + Sync + 'static>
+src/Chap53/PQMinMtEph.rs
+  src/Chap53/PQMinMtEph.rs:67:    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P + Send + Sync + 'static>
+
+================================================================================
+SUMMARY:
+  Helper structs (leave as-is): 17
+  Has trait already: 40
+  Needs trait: 25

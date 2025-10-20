@@ -17,14 +17,89 @@ pub mod BSTSplayStEph {
         right: Link<T>,
     }
 
-    impl<T: StT + Ord> Node<T> {
-        fn new(key: T) -> Self {
-            Node {
-                key,
-                size: 1,
-                left: None,
-                right: None,
+    fn new_node<T: StT + Ord>(key: T) -> Node<T> {
+        Node {
+            key,
+            size: 1,
+            left: None,
+            right: None,
+        }
+    }
+
+    fn size_link<T: StT + Ord>(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
+
+    fn update<T: StT + Ord>(node: &mut Node<T>) { node.size = 1 + size_link(&node.left) + size_link(&node.right); }
+
+    fn insert_link<T: StT + Ord>(link: &mut Link<T>, value: T) -> bool {
+        match link {
+            | Some(node) => {
+                let inserted = if value < node.key {
+                    insert_link(&mut node.left, value)
+                } else if value > node.key {
+                    insert_link(&mut node.right, value)
+                } else {
+                    false
+                };
+                if inserted {
+                    update(node);
+                }
+                inserted
             }
+            | None => {
+                *link = Some(Box::new(new_node(value)));
+                true
+            }
+        }
+    }
+
+    fn find_link<'a, T: StT + Ord>(link: &'a Link<T>, target: &T) -> Option<&'a T> {
+        match link {
+            | None => None,
+            | Some(node) => {
+                if target == &node.key {
+                    Some(&node.key)
+                } else if target < &node.key {
+                    find_link(&node.left, target)
+                } else {
+                    find_link(&node.right, target)
+                }
+            }
+        }
+    }
+
+    fn min_link<T: StT + Ord>(link: &Link<T>) -> Option<&T> {
+        match link {
+            | None => None,
+            | Some(node) => match node.left {
+                | None => Some(&node.key),
+                | Some(_) => min_link(&node.left),
+            },
+        }
+    }
+
+    fn max_link<T: StT + Ord>(link: &Link<T>) -> Option<&T> {
+        match link {
+            | None => None,
+            | Some(node) => match node.right {
+                | None => Some(&node.key),
+                | Some(_) => max_link(&node.right),
+            },
+        }
+    }
+
+    fn in_order_collect<T: StT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
+        if let Some(node) = link {
+            in_order_collect(&node.left, out);
+            out.push(node.key.clone());
+            in_order_collect(&node.right, out);
+        }
+    }
+
+    fn pre_order_collect<T: StT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
+        if let Some(node) = link {
+            out.push(node.key.clone());
+            pre_order_collect(&node.left, out);
+            pre_order_collect(&node.right, out);
         }
     }
 
@@ -60,92 +135,10 @@ pub mod BSTSplayStEph {
         fn pre_order(&self)            -> ArraySeqStPerS<T>;
     }
 
-
-    impl<T: StT + Ord> BSTSplayStEph<T> {
-        // Private helper methods only - no public delegation
-
-        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
-
-        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right); }
-
-        fn insert_link(link: &mut Link<T>, value: T) -> bool {
-            match link {
-                | Some(node) => {
-                    let inserted = if value < node.key {
-                        Self::insert_link(&mut node.left, value)
-                    } else if value > node.key {
-                        Self::insert_link(&mut node.right, value)
-                    } else {
-                        false
-                    };
-                    if inserted {
-                        Self::update(node);
-                    }
-                    inserted
-                }
-                | None => {
-                    *link = Some(Box::new(Node::new(value)));
-                    true
-                }
-            }
-        }
-
-        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {
-            match link {
-                | None => None,
-                | Some(node) => {
-                    if target == &node.key {
-                        Some(&node.key)
-                    } else if target < &node.key {
-                        Self::find_link(&node.left, target)
-                    } else {
-                        Self::find_link(&node.right, target)
-                    }
-                }
-            }
-        }
-
-        fn min_link(link: &Link<T>) -> Option<&T> {
-            match link {
-                | None => None,
-                | Some(node) => match node.left {
-                    | None => Some(&node.key),
-                    | Some(_) => Self::min_link(&node.left),
-                },
-            }
-        }
-
-        fn max_link(link: &Link<T>) -> Option<&T> {
-            match link {
-                | None => None,
-                | Some(node) => match node.right {
-                    | None => Some(&node.key),
-                    | Some(_) => Self::max_link(&node.right),
-                },
-            }
-        }
-
-        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {
-            if let Some(node) = link {
-                Self::in_order_collect(&node.left, out);
-                out.push(node.key.clone());
-                Self::in_order_collect(&node.right, out);
-            }
-        }
-
-        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {
-            if let Some(node) = link {
-                out.push(node.key.clone());
-                Self::pre_order_collect(&node.left, out);
-                Self::pre_order_collect(&node.right, out);
-            }
-        }
-    }
-
     impl<T: StT + Ord> BSTSplayStEphTrait<T> for BSTSplayStEph<T> {
         fn new() -> Self { BSTSplayStEph { root: None } }
 
-        fn size(&self) -> N { Self::size_link(&self.root) }
+        fn size(&self) -> N { size_link(&self.root) }
 
         fn is_empty(&self) -> B { self.size() == 0 }
 
@@ -159,25 +152,25 @@ pub mod BSTSplayStEph {
             height_rec(&self.root)
         }
 
-        fn insert(&mut self, value: T) { Self::insert_link(&mut self.root, value); }
+        fn insert(&mut self, value: T) { insert_link(&mut self.root, value); }
 
-        fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
+        fn find(&self, target: &T) -> Option<&T> { find_link(&self.root, target) }
 
         fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
-        fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
+        fn minimum(&self) -> Option<&T> { min_link(&self.root) }
 
-        fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
+        fn maximum(&self) -> Option<&T> { max_link(&self.root) }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
-            Self::in_order_collect(&self.root, &mut out);
+            in_order_collect(&self.root, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
 
         fn pre_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
-            Self::pre_order_collect(&self.root, &mut out);
+            pre_order_collect(&self.root, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
     }

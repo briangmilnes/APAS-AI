@@ -1,0 +1,101 @@
+STUB DELEGATION ANTI-PATTERNS
+======================================================================
+
+Inherent impl methods that are simple delegations and may violate
+the 'No Stub Delegation' rule (RustRules.md lines 134-168)
+
+Found 16 potential stub delegations
+
+USAGE ANALYSIS:
+----------------------------------------------------------------------
+
+ONLY USED IN TESTS (or not used at all):
+----------------------------------------------------------------------
+src/Chap06/LabUnDirGraphMtEph.rs:191
+  LabUnDirGraphMtEph::sizeA()
+  Usage: 24 in tests, 0 in src
+  Body: { self.labeled_edges().size() }...
+
+src/Chap06/LabUnDirGraphMtEph.rs:194
+  LabUnDirGraphMtEph::arcs()
+  Usage: 23 in tests, 0 in src
+  Body: { self.labeled_edges().clone() }...
+
+src/Chap37/AVLTreeSeq.rs:107
+  AVLTreeS::new()
+  Usage: 0 in tests, 0 in src
+  Body: { Self::new_root() }...
+
+src/Chap37/AVLTreeSeqStEph.rs:82
+  AVLTreeSeqStEphS::new()
+  Usage: 11 in tests, 0 in src
+  Body: { Self::new_root() }...
+
+src/Chap45/BalancedTreePQ.rs:359
+  BalancedTreePQ::to_sorted_vec()
+  Usage: 7 in tests, 0 in src
+  Body: {
+            // Already sorted, just convert to vector
+            self.to_vec()
+        }...
+
+src/Chap45/BinaryHeapPQ.rs:304
+  BinaryHeapPQ::is_valid_heap()
+  Usage: 19 in tests, 0 in src
+  Body: { self.is_heap() }...
+
+
+SINGLE USE (called exactly once):
+----------------------------------------------------------------------
+
+MULTIPLE USE (might be legitimate):
+----------------------------------------------------------------------
+src/Chap06/LabUnDirGraphMtEph.rs:197
+  LabUnDirGraphMtEph::NPlus()
+  Usage: 18 in tests, 7 in src
+
+src/Chap06/LabUnDirGraphMtEph.rs:200
+  LabUnDirGraphMtEph::NMinus()
+  Usage: 18 in tests, 7 in src
+
+src/Chap06/LabUnDirGraphMtEph.rs:203
+  LabUnDirGraphMtEph::InDegree()
+  Usage: 24 in tests, 2 in src
+
+src/Chap06/LabUnDirGraphMtEph.rs:206
+  LabUnDirGraphMtEph::OutDegree()
+  Usage: 23 in tests, 2 in src
+
+src/Chap45/LeftistHeapPQ.rs:379
+  LeftistHeapPQ::from_vec()
+  Usage: 1 in tests, 1 in src
+
+src/Chap45/LeftistHeapPQ.rs:385
+  LeftistHeapPQ::to_sorted_vec()
+  Usage: 7 in tests, 1 in src
+
+src/Chap56/AllPairsResultStEphFloat.rs:113
+  AllPairsResultStEphFloat::is_reachable()
+  Usage: 17 in tests, 8 in src
+
+src/Chap56/AllPairsResultStPerFloat.rs:115
+  AllPairsResultStPerFloat::is_reachable()
+  Usage: 17 in tests, 8 in src
+
+src/Chap56/SSSPResultStEphFloat.rs:103
+  SSSPResultStEphFloat::is_reachable()
+  Usage: 17 in tests, 8 in src
+
+src/Chap56/SSSPResultStPerFloat.rs:110
+  SSSPResultStPerFloat::is_reachable()
+  Usage: 17 in tests, 8 in src
+
+
+======================================================================
+SUMMARY:
+  Only in tests/unused: 6
+  Single use: 0
+  Multiple use: 10
+  TOTAL: 16
+
+Log written to: /home/milnes/APASVERUS/APAS-AI/apas-ai/analyses/code_review/stub_delegations.txt

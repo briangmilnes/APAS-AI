@@ -50,55 +50,50 @@ pub mod SubsetSumMtEph {
         fn memo_size(&self)                           -> usize;
     }
 
-    impl<T: MtVal> SubsetSumMtEphS<T> {
-        /// Internal parallel recursive subset sum with shared memoization
-        /// Claude Work: O(k*|S|) - each subproblem computed once across all threads
-        /// Claude Span: O(|S|) - maximum recursion depth, parallelism O(k)
-        fn subset_sum_rec(&self, i: usize, j: i32) -> bool
-        where
-            T: Into<i32> + Copy + Send + Sync + 'static,
+    /// Internal parallel recursive subset sum with shared memoization
+    /// Claude Work: O(k*|S|) - each subproblem computed once across all threads
+    /// Claude Span: O(|S|) - maximum recursion depth, parallelism O(k)
+    fn subset_sum_rec<T: MtVal + Into<i32> + Copy + Send + Sync + 'static>(table: &SubsetSumMtEphS<T>, i: usize, j: i32) -> bool {
+        // Check memo first (thread-safe)
         {
-            // Check memo first (thread-safe)
-            {
-                let memo_guard = self.memo.lock().unwrap();
-                if let Some(&result) = memo_guard.get(&(i, j)) {
-                    return result;
-                }
+            let memo_guard = table.memo.lock().unwrap();
+            if let Some(&result) = memo_guard.get(&(i, j)) {
+                return result;
             }
-
-            let result = match (i, j) {
-                | (_, 0) => true,  // Base case: target sum is 0
-                | (0, _) => false, // Base case: no elements left, target > 0
-                | (i, j) => {
-                    let element_value: i32 = self.multiset.nth_cloned(i - 1).into();
-                    if element_value > j {
-                        // Element too large, skip it
-                        self.subset_sum_rec(i - 1, j)
-                    } else {
-                        // Parallel evaluation of both branches
-                        let self_clone1 = self.clone();
-                        let self_clone2 = self.clone();
-
-                        let handle1 = thread::spawn(move || self_clone1.subset_sum_rec(i - 1, j - element_value));
-
-                        let handle2 = thread::spawn(move || self_clone2.subset_sum_rec(i - 1, j));
-
-                        let result1 = handle1.join().unwrap();
-                        let result2 = handle2.join().unwrap();
-
-                        result1 || result2
-                    }
-                }
-            };
-
-            // Memoize result (thread-safe)
-            {
-                let mut memo_guard = self.memo.lock().unwrap();
-                memo_guard.insert((i, j), result);
-            }
-
-            result
         }
+
+        let result = match (i, j) {
+            | (_, 0) => true,  // Base case: target sum is 0
+            | (0, _) => false, // Base case: no elements left, target > 0
+            | (i, j) => {
+                let element_value: i32 = table.multiset.nth_cloned(i - 1).into();
+                if element_value > j {
+                    // Element too large, skip it
+                    subset_sum_rec(table, i - 1, j)
+                } else {
+                    // Parallel evaluation of both branches
+                    let table_clone1 = table.clone();
+                    let table_clone2 = table.clone();
+
+                    let handle1 = thread::spawn(move || subset_sum_rec(&table_clone1, i - 1, j - element_value));
+
+                    let handle2 = thread::spawn(move || subset_sum_rec(&table_clone2, i - 1, j));
+
+                    let result1 = handle1.join().unwrap();
+                    let result2 = handle2.join().unwrap();
+
+                    result1 || result2
+                }
+            }
+        };
+
+        // Memoize result (thread-safe)
+        {
+            let mut memo_guard = table.memo.lock().unwrap();
+            memo_guard.insert((i, j), result);
+        }
+
+        result
     }
 
     impl<T: MtVal> SubsetSumMtEphTrait<T> for SubsetSumMtEphS<T> {
@@ -134,7 +129,7 @@ pub mod SubsetSumMtEph {
             }
 
             let n = self.multiset.length();
-            self.subset_sum_rec(n, target)
+            subset_sum_rec(self, n, target)
         }
 
         fn multiset(&self) -> &ArraySeqMtEphS<T> { &self.multiset }

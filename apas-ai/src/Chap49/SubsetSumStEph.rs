@@ -48,38 +48,33 @@ pub mod SubsetSumStEph {
         fn memo_size(&self)                           -> usize;
     }
 
-    impl<T: StT> SubsetSumStEphS<T> {
-        /// Internal recursive subset sum with memoization
-        /// Claude Work: O(k*|S|) - each subproblem computed once
-        /// Claude Span: O(|S|) - maximum recursion depth
-        fn subset_sum_rec(&mut self, i: usize, j: i32) -> bool
-        where
-            T: Into<i32> + Copy,
-        {
-            // Check memo first
-            if let Some(&result) = self.memo.get(&(i, j)) {
-                return result;
-            }
-
-            let result = match (i, j) {
-                | (_, 0) => true,  // Base case: target sum is 0
-                | (0, _) => false, // Base case: no elements left, target > 0
-                | (i, j) => {
-                    let element_value: i32 = (*self.multiset.nth(i - 1)).into();
-                    if element_value > j {
-                        // Element too large, skip it
-                        self.subset_sum_rec(i - 1, j)
-                    } else {
-                        // Try both including and excluding the element
-                        self.subset_sum_rec(i - 1, j - element_value) || self.subset_sum_rec(i - 1, j)
-                    }
-                }
-            };
-
-            // Memoize result
-            self.memo.insert((i, j), result);
-            result
+    /// Internal recursive subset sum with memoization
+    /// Claude Work: O(k*|S|) - each subproblem computed once
+    /// Claude Span: O(|S|) - maximum recursion depth
+    fn subset_sum_rec<T: StT + Into<i32> + Copy>(table: &mut SubsetSumStEphS<T>, i: usize, j: i32) -> bool {
+        // Check memo first
+        if let Some(&result) = table.memo.get(&(i, j)) {
+            return result;
         }
+
+        let result = match (i, j) {
+            | (_, 0) => true,  // Base case: target sum is 0
+            | (0, _) => false, // Base case: no elements left, target > 0
+            | (i, j) => {
+                let element_value: i32 = (*table.multiset.nth(i - 1)).into();
+                if element_value > j {
+                    // Element too large, skip it
+                    subset_sum_rec(table, i - 1, j)
+                } else {
+                    // Try both including and excluding the element
+                    subset_sum_rec(table, i - 1, j - element_value) || subset_sum_rec(table, i - 1, j)
+                }
+            }
+        };
+
+        // Memoize result
+        table.memo.insert((i, j), result);
+        result
     }
 
     impl<T: StT> SubsetSumStEphTrait<T> for SubsetSumStEphS<T> {
@@ -112,7 +107,7 @@ pub mod SubsetSumStEph {
             self.memo.clear();
 
             let n = self.multiset.length();
-            self.subset_sum_rec(n, target)
+            subset_sum_rec(self, n, target)
         }
 
         fn multiset(&self) -> &ArraySeqStEphS<T> { &self.multiset }

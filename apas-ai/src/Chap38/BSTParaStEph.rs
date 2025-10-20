@@ -59,89 +59,87 @@ pub mod BSTParaStEph {
         fn in_order(&self)               -> ArraySeqStPerS<T>;
     }
 
-    impl<T: StT + Ord> ParamBST<T> {
-        fn expose_internal(&self) -> Exposed<T> {
-            let guard = self.root.borrow();
-            match &*guard {
-                | None => Exposed::Leaf,
-                | Some(node) => Exposed::Node(node.left.clone(), node.key.clone(), node.right.clone()),
-            }
+    fn expose_internal<T: StT + Ord>(tree: &ParamBST<T>) -> Exposed<T> {
+        let guard = tree.root.borrow();
+        match &*guard {
+            | None => Exposed::Leaf,
+            | Some(node) => Exposed::Node(node.left.clone(), node.key.clone(), node.right.clone()),
         }
+    }
 
-        fn join_mid(exposed: Exposed<T>) -> Self {
-            match exposed {
-                | Exposed::Leaf => ParamBST::new(),
-                | Exposed::Node(left, key, right) => {
-                    let size = 1 + left.size() + right.size();
-                    ParamBST {
-                        root: Rc::new(RefCell::new(Some(Box::new(NodeInner { key, size, left, right })))),
-                    }
+    fn join_mid<T: StT + Ord>(exposed: Exposed<T>) -> ParamBST<T> {
+        match exposed {
+            | Exposed::Leaf => ParamBST { root: Rc::new(RefCell::new(None)) },
+            | Exposed::Node(left, key, right) => {
+                let size = 1 + left.size() + right.size();
+                ParamBST {
+                    root: Rc::new(RefCell::new(Some(Box::new(NodeInner { key, size, left, right })))),
                 }
             }
         }
+    }
 
-        fn split_inner(tree: &Self, key: &T) -> (Self, B, Self) {
-            match tree.expose_internal() {
-                | Exposed::Leaf => (ParamBST::new(), false, ParamBST::new()),
-                | Exposed::Node(left, root_key, right) => match key.cmp(&root_key) {
-                    | Less => {
-                        let (ll, found, lr) = ParamBST::split_inner(&left, key);
-                        let rebuilt = ParamBST::join_mid(Exposed::Node(lr, root_key, right));
-                        (ll, found, rebuilt)
-                    }
-                    | Greater => {
-                        let (rl, found, rr) = ParamBST::split_inner(&right, key);
-                        let rebuilt = ParamBST::join_mid(Exposed::Node(left, root_key, rl));
-                        (rebuilt, found, rr)
-                    }
-                    | Equal => (left, true, right),
-                },
-            }
-        }
-
-        fn join_m(left: Self, key: T, right: Self) -> Self { ParamBST::join_mid(Exposed::Node(left, key, right)) }
-
-        fn min_key(tree: &Self) -> Option<T> {
-            match tree.expose_internal() {
-                | Exposed::Leaf => None,
-                | Exposed::Node(left, key, _) => match ParamBST::min_key(&left) {
-                    | Some(rec) => Some(rec),
-                    | None => Some(key),
-                },
-            }
-        }
-
-        fn join_pair_inner(left: Self, right: Self) -> Self {
-            match right.expose_internal() {
-                | Exposed::Leaf => left,
-                | Exposed::Node(_, key, _) => {
-                    let min_key = ParamBST::min_key(&right).unwrap_or(key);
-                    let (_, _, reduced_right) = ParamBST::split_inner(&right, &min_key);
-                    ParamBST::join_m(left, min_key, reduced_right)
+    fn split_inner<T: StT + Ord>(tree: &ParamBST<T>, key: &T) -> (ParamBST<T>, B, ParamBST<T>) {
+        match expose_internal(tree) {
+            | Exposed::Leaf => (ParamBST { root: Rc::new(RefCell::new(None)) }, false, ParamBST { root: Rc::new(RefCell::new(None)) }),
+            | Exposed::Node(left, root_key, right) => match key.cmp(&root_key) {
+                | Less => {
+                    let (ll, found, lr) = split_inner(&left, key);
+                    let rebuilt = join_mid(Exposed::Node(lr, root_key, right));
+                    (ll, found, rebuilt)
                 }
+                | Greater => {
+                    let (rl, found, rr) = split_inner(&right, key);
+                    let rebuilt = join_mid(Exposed::Node(left, root_key, rl));
+                    (rebuilt, found, rr)
+                }
+                | Equal => (left, true, right),
+            },
+        }
+    }
+
+    fn join_m<T: StT + Ord>(left: ParamBST<T>, key: T, right: ParamBST<T>) -> ParamBST<T> { join_mid(Exposed::Node(left, key, right)) }
+
+    fn min_key<T: StT + Ord>(tree: &ParamBST<T>) -> Option<T> {
+        match expose_internal(tree) {
+            | Exposed::Leaf => None,
+            | Exposed::Node(left, key, _) => match min_key(&left) {
+                | Some(rec) => Some(rec),
+                | None => Some(key),
+            },
+        }
+    }
+
+    fn join_pair_inner<T: StT + Ord>(left: ParamBST<T>, right: ParamBST<T>) -> ParamBST<T> {
+        match expose_internal(&right) {
+            | Exposed::Leaf => left,
+            | Exposed::Node(_, key, _) => {
+                let min_k = min_key(&right).unwrap_or(key);
+                let (_, _, reduced_right) = split_inner(&right, &min_k);
+                join_m(left, min_k, reduced_right)
             }
         }
+    }
 
-        fn union_inner(a: &Self, b: &Self) -> Self {
-            match a.expose_internal() {
-                | Exposed::Leaf => b.clone(),
-                | Exposed::Node(al, ak, ar) => {
-                    let (bl, _, br) = ParamBST::split_inner(b, &ak);
-                    let left_union = ParamBST::union_inner(&al, &bl);
-                    let right_union = ParamBST::union_inner(&ar, &br);
-                    ParamBST::join_m(left_union, ak, right_union)
-                }
+    fn union_inner<T: StT + Ord>(a: &ParamBST<T>, b: &ParamBST<T>) -> ParamBST<T> {
+        match expose_internal(a) {
+            | Exposed::Leaf => b.clone(),
+            | Exposed::Node(al, ak, ar) => {
+                let (bl, _, br) = split_inner(b, &ak);
+                let left_union = union_inner(&al, &bl);
+                let right_union = union_inner(&ar, &br);
+                join_m(left_union, ak, right_union)
             }
         }
+    }
 
-        fn collect_in_order(tree: &Self, out: &mut Vec<T>) {
-            match tree.expose_internal() {
-                | Exposed::Leaf => {}
-                | Exposed::Node(left, key, right) => {
-                    ParamBST::collect_in_order(&left, out);
-                    out.push(key);
-                    ParamBST::collect_in_order(&right, out);
-                }
+    fn collect_in_order<T: StT + Ord>(tree: &ParamBST<T>, out: &mut Vec<T>) {
+        match expose_internal(tree) {
+            | Exposed::Leaf => {}
+            | Exposed::Node(left, key, right) => {
+                collect_in_order(&left, out);
+                out.push(key);
+                collect_in_order(&right, out);
             }
         }
     }
@@ -153,18 +151,10 @@ pub mod BSTParaStEph {
             }
         }
 
-        fn expose(&self) -> Exposed<T> { self.expose_internal() }
+        fn expose(&self) -> Exposed<T> { expose_internal(self) }
 
         fn join_mid(exposed: Exposed<T>) -> Self {
-            match exposed {
-                | Exposed::Leaf => ParamBST::new(),
-                | Exposed::Node(left, key, right) => {
-                    let size = 1 + left.size() + right.size();
-                    ParamBST {
-                        root: Rc::new(RefCell::new(Some(Box::new(NodeInner { key, size, left, right })))),
-                    }
-                }
-            }
+            join_mid(exposed)
         }
 
         fn size(&self) -> N { self.root.borrow().as_ref().map_or(0, |node| node.size) }
@@ -172,21 +162,21 @@ pub mod BSTParaStEph {
         fn is_empty(&self) -> B { self.size() == 0 }
 
         fn insert(&self, key: T) {
-            let (left, _, right) = ParamBST::split_inner(self, &key);
-            let rebuilt = ParamBST::join_m(left, key, right);
+            let (left, _, right) = split_inner(self, &key);
+            let rebuilt = join_m(left, key, right);
             let new_state = { rebuilt.root.borrow().clone() };
             *self.root.borrow_mut() = new_state;
         }
 
         fn delete(&self, key: &T) {
-            let (left, _, right) = ParamBST::split_inner(self, key);
-            let merged = ParamBST::join_pair_inner(left, right);
+            let (left, _, right) = split_inner(self, key);
+            let merged = join_pair_inner(left, right);
             let new_state = { merged.root.borrow().clone() };
             *self.root.borrow_mut() = new_state;
         }
 
         fn find(&self, key: &T) -> Option<T> {
-            match self.expose_internal() {
+            match expose_internal(self) {
                 | Exposed::Leaf => None,
                 | Exposed::Node(left, root_key, right) => match key.cmp(&root_key) {
                     | Less => ParamBSTTrait::find(&left, key),
@@ -196,15 +186,15 @@ pub mod BSTParaStEph {
             }
         }
 
-        fn split(&self, key: &T) -> (Self, B, Self) { ParamBST::split_inner(self, key) }
+        fn split(&self, key: &T) -> (Self, B, Self) { split_inner(self, key) }
 
-        fn join_pair(&self, other: Self) -> Self { ParamBST::join_pair_inner(self.clone(), other) }
+        fn join_pair(&self, other: Self) -> Self { join_pair_inner(self.clone(), other) }
 
-        fn union(&self, other: &Self) -> Self { ParamBST::union_inner(self, other) }
+        fn union(&self, other: &Self) -> Self { union_inner(self, other) }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
-            ParamBST::collect_in_order(self, &mut out);
+            collect_in_order(self, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
     }

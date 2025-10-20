@@ -61,84 +61,79 @@ pub mod OptBinSearchTreeMtEph {
         fn memo_size(&self)                                       -> usize;
     }
 
-    impl<T: MtVal> OBSTMtEphS<T> {
-        /// Parallel reduction to find minimum cost among root choices
-        /// Claude Work: O(n) - n comparisons
-        /// Claude Span: O(log n) - parallel reduction tree
-        fn parallel_min_reduction(&self, costs: Vec<Probability>) -> Probability {
-            if costs.is_empty() {
-                return Probability::infinity();
-            }
-            if costs.len() == 1 {
-                return costs[0];
-            }
-
-            let mid = costs.len() / 2;
-            let left_costs = costs[..mid].to_vec();
-            let right_costs = costs[mid..].to_vec();
-
-            let self_clone1 = self.clone();
-            let self_clone2 = self.clone();
-
-            let handle1 = thread::spawn(move || self_clone1.parallel_min_reduction(left_costs));
-
-            let handle2 = thread::spawn(move || self_clone2.parallel_min_reduction(right_costs));
-
-            let left_min = handle1.join().unwrap();
-            let right_min = handle2.join().unwrap();
-
-            std::cmp::min(left_min, right_min)
+    /// Parallel reduction to find minimum cost among root choices
+    /// Claude Work: O(n) - n comparisons
+    /// Claude Span: O(log n) - parallel reduction tree
+    fn parallel_min_reduction<T: MtVal>(table: &OBSTMtEphS<T>, costs: Vec<Probability>) -> Probability {
+        if costs.is_empty() {
+            return Probability::infinity();
+        }
+        if costs.len() == 1 {
+            return costs[0];
         }
 
-        /// Internal recursive optimal BST with memoization and parallel reduction
-        /// Claude Work: O(n³) - O(n²) subproblems, each O(n) work
-        /// Claude Span: O(n log n) - maximum recursion depth O(n), each level O(log n) parallel reduction
-        fn obst_rec(&self, i: usize, l: usize) -> Probability
-        where
-            T: Send + Sync + 'static,
+        let mid = costs.len() / 2;
+        let left_costs = costs[..mid].to_vec();
+        let right_costs = costs[mid..].to_vec();
+
+        let table_clone1 = table.clone();
+        let table_clone2 = table.clone();
+
+        let handle1 = thread::spawn(move || parallel_min_reduction(&table_clone1, left_costs));
+
+        let handle2 = thread::spawn(move || parallel_min_reduction(&table_clone2, right_costs));
+
+        let left_min = handle1.join().unwrap();
+        let right_min = handle2.join().unwrap();
+
+        std::cmp::min(left_min, right_min)
+    }
+
+    /// Internal recursive optimal BST with memoization and parallel reduction
+    /// Claude Work: O(n³) - O(n²) subproblems, each O(n) work
+    /// Claude Span: O(n log n) - maximum recursion depth O(n), each level O(log n) parallel reduction
+    fn obst_rec<T: MtVal + Send + Sync + 'static>(table: &OBSTMtEphS<T>, i: usize, l: usize) -> Probability {
+        // Check memo first (thread-safe)
         {
-            // Check memo first (thread-safe)
-            {
-                let memo_guard = self.memo.lock().unwrap();
-                if let Some(&result) = memo_guard.get(&(i, l)) {
-                    return result;
-                }
+            let memo_guard = table.memo.lock().unwrap();
+            if let Some(&result) = memo_guard.get(&(i, l)) {
+                return result;
             }
+        }
 
-            let result = if l == 0 {
-                Probability::zero() // Base case: empty subsequence
-            } else {
-                // Sum probabilities for this subsequence (thread-safe access)
-                let prob_sum: Probability = {
-                    let keys_guard = self.keys.lock().unwrap();
-                    (0..l)
-                        .map(|k| keys_guard[i + k].prob)
-                        .fold(Probability::zero(), |acc, p| acc + p)
-                };
-
-                // Compute costs for each possible root in parallel
-                let costs: Vec<Probability> = (0..l)
-                    .map(|k| {
-                        let left_cost = self.obst_rec(i, k);
-                        let right_cost = self.obst_rec(i + k + 1, l - k - 1);
-                        left_cost + right_cost
-                    })
-                    .collect();
-
-                // Use parallel reduction to find minimum
-                let min_cost = self.parallel_min_reduction(costs);
-
-                prob_sum + min_cost
+        let result = if l == 0 {
+            Probability::zero() // Base case: empty subsequence
+        } else {
+            // Sum probabilities for this subsequence (thread-safe access)
+            let prob_sum: Probability = {
+                let keys_guard = table.keys.lock().unwrap();
+                (0..l)
+                    .map(|k| keys_guard[i + k].prob)
+                    .fold(Probability::zero(), |acc, p| acc + p)
             };
 
-            // Memoize result (thread-safe)
-            {
-                let mut memo_guard = self.memo.lock().unwrap();
-                memo_guard.insert((i, l), result);
-            }
+            // Compute costs for each possible root in parallel
+            let costs: Vec<Probability> = (0..l)
+                .map(|k| {
+                    let left_cost = obst_rec(table, i, k);
+                    let right_cost = obst_rec(table, i + k + 1, l - k - 1);
+                    left_cost + right_cost
+                })
+                .collect();
 
-            result
+            // Use parallel reduction to find minimum
+            let min_cost = parallel_min_reduction(table, costs);
+
+            prob_sum + min_cost
+        };
+
+        // Memoize result (thread-safe)
+        {
+            let mut memo_guard = table.memo.lock().unwrap();
+            memo_guard.insert((i, l), result);
         }
+
+        result
     }
 
     impl<T: MtVal> OBSTMtEphTrait<T> for OBSTMtEphS<T> {
@@ -188,7 +183,7 @@ pub mod OptBinSearchTreeMtEph {
                 memo_guard.clear();
             }
 
-            self.obst_rec(0, keys_len)
+            obst_rec(self, 0, keys_len)
         }
 
         fn keys(&self) -> Vec<KeyProb<T>> {

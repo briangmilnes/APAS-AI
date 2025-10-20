@@ -59,10 +59,10 @@ use std::sync::Mutex;
         fn new_mt(inner: Self::Inner) -> Self;
     }
 
-    // HashFunClone: Combines HashFunction and Clone for Chapter 47 hash tables
-    // Reduces where clause complexity by bundling common requirements
-    pub trait HashFunClone<K>: crate::Chap47::HashFunctionTraits::HashFunctionTraits::HashFunction<K> + Clone {}
-    impl<K, T> HashFunClone<K> for T where T: crate::Chap47::HashFunctionTraits::HashFunctionTraits::HashFunction<K> + Clone {}
+    // HashFunClone: DEPRECATED - Used by old Chap47 (now in attic)
+    // New Chap47 uses HashFunGen pattern instead
+    // pub trait HashFunClone<K>: crate::Chap47::HashFunctionTraits::HashFunctionTraits::HashFunction<K> + Clone {}
+    // impl<K, T> HashFunClone<K> for T where T: crate::Chap47::HashFunctionTraits::HashFunctionTraits::HashFunction<K> + Clone {}
 
     // MtKey: Multi-threaded key type with ordering and static lifetime
     // Common pattern: StTInMtT + Ord + 'static (appears 15+ times)

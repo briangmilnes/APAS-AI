@@ -6,7 +6,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphTrait};
+use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphS, ArraySeqMtEphBaseTrait, ArraySeqMtEphRedefinableTrait};
 use apas_ai::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
 
 fn bench_scan_contract_parallel_100(c: &mut Criterion) {

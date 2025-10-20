@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{*, ArraySeqMtEphBaseTrait, ArraySeqMtEphRedefinableTrait};
 use apas_ai::Types::Types::*;
 
 fn identity(i: N) -> N { i }
@@ -20,8 +20,8 @@ fn bench_tabulate_map_mteph_ch18(c: &mut Criterion) {
     for &n in &[1_000, 10_000] {
         group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
             b.iter(|| {
-                let s: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(&identity, len);
-                let m: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::map(&s, &increment);
+                let s: ArraySeqMtEphS<N> = ArraySeqMtEphS::tabulate(&identity, len);
+                let m: ArraySeqMtEphS<N> = ArraySeqMtEphS::map(&s, &increment);
                 black_box((s.length(), m.length()))
             })
         });
@@ -42,9 +42,9 @@ fn bench_reduce_parallel_mteph_ch18(c: &mut Criterion) {
     // Test different sizes (all use unconditional parallelism with ParaPair!)
     for &n in &[1_000, 10_000] {
         group.bench_with_input(BenchmarkId::new("reduce_sum", n), &n, |b, &len| {
-            let s: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(&one_plus, len);
+            let s = ArraySeqMtEphS::tabulate(&one_plus, len);
             b.iter(|| {
-                let sum = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::reduce(&s, add, 0);
+                let sum = ArraySeqMtEphS::reduce(&s, add, 0);
                 black_box(sum)
             })
         });
@@ -62,9 +62,9 @@ fn bench_filter_mteph_ch18(c: &mut Criterion) {
 
     let n: N = 10_000;
     group.bench_with_input(BenchmarkId::new("filter_evens", n), &n, |b, &len| {
-        let s: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(&identity, len);
+        let s = ArraySeqMtEphS::tabulate(&identity, len);
         b.iter(|| {
-            let evens = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::filter(&s, &is_even);
+            let evens = ArraySeqMtEphS::filter(&s, &is_even);
             black_box(evens.length())
         })
     });
@@ -79,9 +79,9 @@ fn bench_scan_mteph_ch18(c: &mut Criterion) {
 
     let n: N = 5_000;
     group.bench_with_input(BenchmarkId::new("scan_sum", n), &n, |b, &len| {
-        let s: ArraySeqMtEphS<N> = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::tabulate(&one_plus, len);
+        let s = ArraySeqMtEphS::tabulate(&one_plus, len);
         b.iter(|| {
-            let (prefixes, final_sum) = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::scan(&s, &add, 0);
+            let (prefixes, final_sum) = ArraySeqMtEphS::scan(&s, &add, 0);
             black_box((prefixes.length(), final_sum))
         })
     });

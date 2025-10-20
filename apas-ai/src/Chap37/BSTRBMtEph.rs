@@ -26,15 +26,181 @@ pub mod BSTRBMtEph {
         right: Link<T>,
     }
 
-    impl<T: StTInMtT + Ord> Node<T> {
-        fn new(key: T) -> Self {
-            Node {
-                key,
-                color: Color::Red,
-                size: 1,
-                left: None,
-                right: None,
+    fn new_node<T: StTInMtT + Ord>(key: T) -> Node<T> {
+        Node {
+            key,
+            color: Color::Red,
+            size: 1,
+            left: None,
+            right: None,
+        }
+    }
+
+    fn is_red<T: StTInMtT + Ord>(link: &Link<T>) -> bool { matches!(link, Some(node) if node.color == Color::Red) }
+
+    fn size_link<T: StTInMtT + Ord>(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
+
+    fn update<T: StTInMtT + Ord>(node: &mut Node<T>) { node.size = 1 + size_link(&node.left) + size_link(&node.right); }
+
+    fn rotate_left<T: StTInMtT + Ord>(link: &mut Link<T>) {
+        if let Some(mut h) = link.take() {
+            if let Some(mut x) = h.right.take() {
+                h.right = x.left.take();
+                update(&mut h);
+                x.color = h.color;
+                h.color = Color::Red;
+                x.left = Some(h);
+                if let Some(left) = x.left.as_mut() {
+                    update(left);
+                }
+                update(&mut x);
+                *link = Some(x);
+            } else {
+                *link = Some(h);
             }
+        }
+    }
+
+    fn rotate_right<T: StTInMtT + Ord>(link: &mut Link<T>) {
+        if let Some(mut h) = link.take() {
+            if let Some(mut x) = h.left.take() {
+                h.left = x.right.take();
+                update(&mut h);
+                x.color = h.color;
+                h.color = Color::Red;
+                x.right = Some(h);
+                if let Some(right) = x.right.as_mut() {
+                    update(right);
+                }
+                update(&mut x);
+                *link = Some(x);
+            } else {
+                *link = Some(h);
+            }
+        }
+    }
+
+    fn flip_colors<T: StTInMtT + Ord>(link: &mut Link<T>) {
+        if let Some(node) = link.as_mut() {
+            node.color = match node.color {
+                | Color::Red => Color::Black,
+                | Color::Black => Color::Red,
+            };
+            if let Some(left) = node.left.as_mut() {
+                left.color = match left.color {
+                    | Color::Red => Color::Black,
+                    | Color::Black => Color::Red,
+                };
+            }
+            if let Some(right) = node.right.as_mut() {
+                right.color = match right.color {
+                    | Color::Red => Color::Black,
+                    | Color::Black => Color::Red,
+                };
+            }
+        }
+    }
+
+    fn fix_up<T: StTInMtT + Ord>(link: &mut Link<T>) {
+        let rotate_left_needed = match link {
+            | Some(node) => is_red(&node.right) && !is_red(&node.left),
+            | None => false,
+        };
+        if rotate_left_needed {
+            rotate_left(link);
+        }
+
+        let rotate_right_needed = match link {
+            | Some(node) => {
+                if let Some(left) = node.left.as_ref() {
+                    is_red(&node.left) && is_red(&left.left)
+                } else {
+                    false
+                }
+            }
+            | None => false,
+        };
+        if rotate_right_needed {
+            rotate_right(link);
+        }
+
+        let flip_needed = match link {
+            | Some(node) => is_red(&node.left) && is_red(&node.right),
+            | None => false,
+        };
+        if flip_needed {
+            flip_colors(link);
+        }
+
+        if let Some(node) = link.as_mut() {
+            update(node);
+        }
+    }
+
+    fn insert_link<T: StTInMtT + Ord>(link: &mut Link<T>, value: T) {
+        if let Some(node) = link.as_mut() {
+            if value < node.key {
+                insert_link(&mut node.left, value);
+            } else if value > node.key {
+                insert_link(&mut node.right, value);
+            } else {
+                return;
+            }
+        } else {
+            *link = Some(Box::new(new_node(value)));
+            return;
+        }
+        fix_up(link);
+    }
+
+    fn find_link<'a, T: StTInMtT + Ord>(link: &'a Link<T>, target: &T) -> Option<&'a T> {
+        match link {
+            | None => None,
+            | Some(node) => {
+                if target == &node.key {
+                    Some(&node.key)
+                } else if target < &node.key {
+                    find_link(&node.left, target)
+                } else {
+                    find_link(&node.right, target)
+                }
+            }
+        }
+    }
+
+    fn min_link<T: StTInMtT + Ord>(link: &Link<T>) -> Option<&T> {
+        match link {
+            | None => None,
+            | Some(node) => match node.left {
+                | None => Some(&node.key),
+                | Some(_) => min_link(&node.left),
+            },
+        }
+    }
+
+    fn max_link<T: StTInMtT + Ord>(link: &Link<T>) -> Option<&T> {
+        match link {
+            | None => None,
+            | Some(node) => match node.right {
+                | None => Some(&node.key),
+                | Some(_) => max_link(&node.right),
+            },
+        }
+    }
+
+    fn in_order_collect<T: StTInMtT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
+        if let Some(node) = link {
+            in_order_collect(&node.left, out);
+            out.push(node.key.clone());
+            in_order_collect(&node.right, out);
+        }
+    }
+
+    fn pre_order_collect<T: StTInMtT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
+        if let Some(node) = link {
+            out.push(node.key.clone());
+            pre_order_collect(&node.left, out);
+            pre_order_collect(&node.right, out);
         }
     }
 
@@ -62,179 +228,6 @@ pub mod BSTRBMtEph {
         fn pre_order(&self)            -> ArraySeqStPerS<T>;
     }
 
-
-    impl<T: StTInMtT + Ord> BSTRBMtEph<T> {
-        // Private helper methods only - no public delegation
-
-        fn is_red(link: &Link<T>) -> bool { matches!(link, Some(node) if node.color == Color::Red) }
-
-        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
-
-        fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right); }
-
-        fn rotate_left(link: &mut Link<T>) {
-            if let Some(mut h) = link.take() {
-                if let Some(mut x) = h.right.take() {
-                    h.right = x.left.take();
-                    Self::update(&mut h);
-                    x.color = h.color;
-                    h.color = Color::Red;
-                    x.left = Some(h);
-                    if let Some(left) = x.left.as_mut() {
-                        Self::update(left);
-                    }
-                    Self::update(&mut x);
-                    *link = Some(x);
-                } else {
-                    *link = Some(h);
-                }
-            }
-        }
-
-        fn rotate_right(link: &mut Link<T>) {
-            if let Some(mut h) = link.take() {
-                if let Some(mut x) = h.left.take() {
-                    h.left = x.right.take();
-                    Self::update(&mut h);
-                    x.color = h.color;
-                    h.color = Color::Red;
-                    x.right = Some(h);
-                    if let Some(right) = x.right.as_mut() {
-                        Self::update(right);
-                    }
-                    Self::update(&mut x);
-                    *link = Some(x);
-                } else {
-                    *link = Some(h);
-                }
-            }
-        }
-
-        fn flip_colors(link: &mut Link<T>) {
-            if let Some(node) = link.as_mut() {
-                node.color = match node.color {
-                    | Color::Red => Color::Black,
-                    | Color::Black => Color::Red,
-                };
-                if let Some(left) = node.left.as_mut() {
-                    left.color = match left.color {
-                        | Color::Red => Color::Black,
-                        | Color::Black => Color::Red,
-                    };
-                }
-                if let Some(right) = node.right.as_mut() {
-                    right.color = match right.color {
-                        | Color::Red => Color::Black,
-                        | Color::Black => Color::Red,
-                    };
-                }
-            }
-        }
-
-        fn fix_up(link: &mut Link<T>) {
-            let rotate_left_needed = match link {
-                | Some(node) => Self::is_red(&node.right) && !Self::is_red(&node.left),
-                | None => false,
-            };
-            if rotate_left_needed {
-                Self::rotate_left(link);
-            }
-
-            let rotate_right_needed = match link {
-                | Some(node) => {
-                    if let Some(left) = node.left.as_ref() {
-                        Self::is_red(&node.left) && Self::is_red(&left.left)
-                    } else {
-                        false
-                    }
-                }
-                | None => false,
-            };
-            if rotate_right_needed {
-                Self::rotate_right(link);
-            }
-
-            let flip_needed = match link {
-                | Some(node) => Self::is_red(&node.left) && Self::is_red(&node.right),
-                | None => false,
-            };
-            if flip_needed {
-                Self::flip_colors(link);
-            }
-
-            if let Some(node) = link.as_mut() {
-                Self::update(node);
-            }
-        }
-
-        fn insert_link(link: &mut Link<T>, value: T) {
-            if let Some(node) = link.as_mut() {
-                if value < node.key {
-                    Self::insert_link(&mut node.left, value);
-                } else if value > node.key {
-                    Self::insert_link(&mut node.right, value);
-                } else {
-                    return;
-                }
-            } else {
-                *link = Some(Box::new(Node::new(value)));
-                return;
-            }
-            Self::fix_up(link);
-        }
-
-        fn find_link<'a>(link: &'a Link<T>, target: &T) -> Option<&'a T> {
-            match link {
-                | None => None,
-                | Some(node) => {
-                    if target == &node.key {
-                        Some(&node.key)
-                    } else if target < &node.key {
-                        Self::find_link(&node.left, target)
-                    } else {
-                        Self::find_link(&node.right, target)
-                    }
-                }
-            }
-        }
-
-        fn min_link(link: &Link<T>) -> Option<&T> {
-            match link {
-                | None => None,
-                | Some(node) => match node.left {
-                    | None => Some(&node.key),
-                    | Some(_) => Self::min_link(&node.left),
-                },
-            }
-        }
-
-        fn max_link(link: &Link<T>) -> Option<&T> {
-            match link {
-                | None => None,
-                | Some(node) => match node.right {
-                    | None => Some(&node.key),
-                    | Some(_) => Self::max_link(&node.right),
-                },
-            }
-        }
-
-        fn in_order_collect(link: &Link<T>, out: &mut Vec<T>) {
-            if let Some(node) = link {
-                Self::in_order_collect(&node.left, out);
-                out.push(node.key.clone());
-                Self::in_order_collect(&node.right, out);
-            }
-        }
-
-        fn pre_order_collect(link: &Link<T>, out: &mut Vec<T>) {
-            if let Some(node) = link {
-                out.push(node.key.clone());
-                Self::pre_order_collect(&node.left, out);
-                Self::pre_order_collect(&node.right, out);
-            }
-        }
-    }
-
     impl<T: StTInMtT + Ord> BSTRBMtEphTrait<T> for BSTRBMtEph<T> {
         fn new() -> Self {
             BSTRBMtEph {
@@ -244,7 +237,7 @@ pub mod BSTRBMtEph {
 
         fn insert(&self, value: T) {
             let mut guard = self.root.write().unwrap();
-            Self::insert_link(&mut *guard, value);
+            insert_link(&mut *guard, value);
             if let Some(node) = guard.as_mut() {
                 node.color = Color::Black;
             }
@@ -252,14 +245,14 @@ pub mod BSTRBMtEph {
 
         fn find(&self, target: &T) -> Option<T> {
             let guard = self.root.read().unwrap();
-            Self::find_link(&*guard, target).cloned()
+            find_link(&*guard, target).cloned()
         }
 
         fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
-            Self::size_link(&*guard)
+            size_link(&*guard)
         }
 
         fn is_empty(&self) -> B { self.size() == 0 }
@@ -277,25 +270,25 @@ pub mod BSTRBMtEph {
 
         fn minimum(&self) -> Option<T> {
             let guard = self.root.read().unwrap();
-            Self::min_link(&*guard).cloned()
+            min_link(&*guard).cloned()
         }
 
         fn maximum(&self) -> Option<T> {
             let guard = self.root.read().unwrap();
-            Self::max_link(&*guard).cloned()
+            max_link(&*guard).cloned()
         }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let guard = self.root.read().unwrap();
-            let mut out = Vec::with_capacity(Self::size_link(&*guard));
-            Self::in_order_collect(&*guard, &mut out);
+            let mut out = Vec::with_capacity(size_link(&*guard));
+            in_order_collect(&*guard, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
 
         fn pre_order(&self) -> ArraySeqStPerS<T> {
             let guard = self.root.read().unwrap();
-            let mut out = Vec::with_capacity(Self::size_link(&*guard));
-            Self::pre_order_collect(&*guard, &mut out);
+            let mut out = Vec::with_capacity(size_link(&*guard));
+            pre_order_collect(&*guard, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
     }
@@ -306,11 +299,11 @@ pub mod BSTRBMtEph {
 
     #[macro_export]
     macro_rules! BSTRBMtEphLit {
-        () => {
-            < $crate::Chap37::BSTRBMtEph::BSTRBMtEph::BSTRBMtEph<_> as $crate::Chap37::BSTRBMtEph::BSTRBMtEph::BSTRBMtEphTrait<_> >::new()
-        };
-        ( $( $x:expr ),* $(,)? ) => {{
-            let __tree = < $crate::Chap37::BSTRBMtEph::BSTRBMtEph::BSTRBMtEph<_> as $crate::Chap37::BSTRBMtEph::BSTRBMtEph::BSTRBMtEphTrait<_> >::new();
+        () => { < $crate::Chap37::BSTRBMtEph::BSTRBMtEph::BSTRBMtEph<_> as
+                  $crate::Chap37::BSTRBMtEph::BSTRBMtEph::BSTRBMtEphTrait<_> >::new() };
+        ($($x:expr),* $(,)?) => {{
+            let __tree = < $crate::Chap37::BSTRBMtEph::BSTRBMtEph::BSTRBMtEph<_> as
+                           $crate::Chap37::BSTRBMtEph::BSTRBMtEph::BSTRBMtEphTrait<_> >::new();
             $( __tree.insert($x); )*
             __tree
         }};

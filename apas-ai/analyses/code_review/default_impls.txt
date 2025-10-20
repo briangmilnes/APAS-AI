@@ -1,0 +1,222 @@
+DEFAULT TRAIT IMPLEMENTATIONS ANALYSIS
+======================================================================
+
+Analyzing Default trait implementations to find simplification opportunities.
+
+Found 46 Default trait implementations
+
+TRIVIAL IMPLEMENTATIONS (can use #[derive(Default)]):
+----------------------------------------------------------------------
+
+These manually implement Default by calling ::default() on all fields.
+They can be replaced with #[derive(Default)] on the struct.
+
+
+PARTIAL CUSTOM (some fields have custom defaults):
+----------------------------------------------------------------------
+
+These set some fields to custom values, not just ::default().
+Must remain manual implementations.
+
+
+COMPLEX IMPLEMENTATIONS (must remain manual):
+----------------------------------------------------------------------
+
+These have complex logic and cannot use #[derive(Default)].
+
+src/Chap12/Exercise12_1.rs:58
+  struct: SpinLock
+  body: <SpinLock as SpinLockTrait>::new()...
+
+src/Chap12/Exercise12_5.rs:117
+  struct: ConcurrentStackMt
+  body: Self::new()...
+
+src/Chap37/AVLTreeSeq.rs:503
+  struct: AVLTreeS
+  body: Self::new()...
+
+src/Chap37/AVLTreeSeqMtPer.rs:217
+  struct: AVLTreeSeqMtPerS
+  body: Self::empty()...
+
+src/Chap37/AVLTreeSeqStEph.rs:370
+  struct: AVLTreeSeqStEphS
+  body: Self::new()...
+
+src/Chap37/BSTAVLMtEph.rs:258
+  struct: BSTAVLMtEph
+  body: Self::new()...
+
+src/Chap37/BSTAVLStEph.rs:242
+  struct: BSTAVLStEph
+  body: Self::new()...
+
+src/Chap37/BSTBBAlphaMtEph.rs:249
+  struct: BSTBBAlphaMtEph
+  body: Self::new()...
+
+src/Chap37/BSTBBAlphaStEph.rs:228
+  struct: BSTBBAlphaStEph
+  body: Self::new()...
+
+src/Chap37/BSTRBMtEph.rs:303
+  struct: BSTRBMtEph
+  body: Self::new()...
+
+src/Chap37/BSTRBStEph.rs:266
+  struct: BSTRBStEph
+  body: Self::new()...
+
+src/Chap37/BSTSplayMtEph.rs:209
+  struct: BSTSplayMtEph
+  body: Self::new()...
+
+src/Chap37/BSTSplayStEph.rs:185
+  struct: BSTSplayStEph
+  body: Self::new()...
+
+src/Chap39/BSTTreapMtEph.rs:239
+  struct: BSTTreapMtEph
+  body: Self::new()...
+
+src/Chap39/BSTTreapStEph.rs:217
+  struct: BSTreeTreap
+  body: Self::new()...
+
+src/Chap40/BSTKeyValueStEph.rs:220
+  struct: BSTreeKeyValue
+  body: Self::new()...
+
+src/Chap40/BSTSizeStEph.rs:287
+  struct: BSTreeSize
+  body: Self::new()...
+
+src/Chap41/AVLTreeSetMtEph.rs:245
+  struct: AVLTreeSetMtEph
+  body: Self::empty()...
+
+src/Chap41/AVLTreeSetMtPer.rs:270
+  struct: AVLTreeSetMtPer
+  body: Self::empty()...
+
+src/Chap41/AVLTreeSetStEph.rs:177
+  struct: AVLTreeSetStEph
+  body: Self::empty()...
+
+src/Chap41/AVLTreeSetStPer.rs:188
+  struct: AVLTreeSetStPer
+  body: Self::empty()...
+
+src/Chap41/ArraySetStEph.rs:145
+  struct: ArraySetStEph
+  body: Self::empty()...
+
+src/Chap43/OrderedTableMtPer.rs:85
+  struct: OrderedTableMtPer
+  body: Self::empty()...
+
+src/Chap44/Example44_1.rs:41
+  struct: TweetQueryExamples
+  body: Self::new()...
+
+src/Chap45/BalancedTreePQ.rs:300
+  struct: BalancedTreePQ
+  body: Self::empty()...
+
+src/Chap45/BinaryHeapPQ.rs:333
+  struct: BinaryHeapPQ
+  body: Self::empty()...
+
+src/Chap45/LeftistHeapPQ.rs:418
+  struct: LeftistHeapPQ
+  body: Self::empty()...
+
+src/Chap45/SortedListPQ.rs:282
+  struct: SortedListPQ
+  body: Self::empty()...
+
+src/Chap45/UnsortedListPQ.rs:207
+  struct: UnsortedListPQ
+  body: Self::empty()...
+
+src/Chap47/ClusteringAnalysis.rs:70
+  struct: ClusteringAnalyzer
+  body: Self::new()...
+
+src/Chap47/HashFunctionTraits.rs:406
+  struct: UniversalIntegerHashFamily
+  body: Self::new()...
+
+src/Chap47/ProbeSequenceExamples.rs:51
+  struct: ProbeSequenceAnalyzer
+  body: Self::new()...
+
+src/Chap47clean/StructChainedHashTable.rs:75
+  struct: ChainList
+  body: ChainList { head: None...
+
+src/Chap50/Probability.rs:59
+  struct: Probability
+  body: Probability::zero()...
+
+src/Chap51/BottomUpDPMtEph.rs:180
+  struct: BottomUpDPMtEphS
+  body: let empty_s = ArraySeqMtEphS::new(0, ' ');...
+
+src/Chap51/BottomUpDPMtPer.rs:169
+  struct: BottomUpDPMtPerS
+  body: let empty_s = ArraySeqMtPerS::new(0, ' ');...
+
+src/Chap51/BottomUpDPStEph.rs:140
+  struct: BottomUpDPStEphS
+  body: let empty_s = ArraySeqStEphS::new(0, ' ');...
+
+src/Chap51/BottomUpDPStPer.rs:132
+  struct: BottomUpDPStPerS
+  body: let empty_s = ArraySeqStPerS::new(0, ' ');...
+
+src/Chap51/TopDownDPMtEph.rs:243
+  struct: TopDownDPMtEphS
+  body: let empty_s = ArraySeqMtEphS::new(0, ' ');...
+
+src/Chap51/TopDownDPMtPer.rs:235
+  struct: TopDownDPMtPerS
+  body: let empty_s = ArraySeqMtPerS::new(0, ' ');...
+
+src/Chap51/TopDownDPStEph.rs:148
+  struct: TopDownDPStEphS
+  body: let empty_s = ArraySeqStEphS::new(0, ' ');...
+
+src/Chap51/TopDownDPStPer.rs:147
+  struct: TopDownDPStPerS
+  body: let empty_s = ArraySeqStPerS::new(0, ' ');...
+
+src/Chap52/AdjTableGraphMtPer.rs:117
+  struct: AdjTableGraphMtPer
+  body: Self::empty()...
+
+src/Chap52/EdgeSetGraphMtPer.rs:129
+  struct: EdgeSetGraphMtPer
+  body: Self::empty()...
+
+src/Chap57/StackStEph.rs:72
+  struct: StackStEph
+  body: Self::new()...
+
+src/Chap65/UnionFindStEph.rs:106
+  struct: UnionFindStEph
+  body: Self::new()...
+
+
+======================================================================
+SUMMARY:
+----------------------------------------------------------------------
+  Trivial (can use #[derive(Default)]): 0
+  Partial custom (some custom values): 0
+  Complex (need manual impl): 46
+  Empty: 0
+  TOTAL: 46
+
+
+Log written to: /home/milnes/APASVERUS/APAS-AI/apas-ai/analyses/code_review/default_impls.txt

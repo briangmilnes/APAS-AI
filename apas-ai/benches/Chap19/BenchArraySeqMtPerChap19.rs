@@ -3,7 +3,6 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerTrait;
 use apas_ai::Chap19::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Types::Types::*;
 
@@ -15,8 +14,8 @@ fn bench_tabulate_map_mtper_ch19(c: &mut Criterion) {
     let n: N = 1_500;
     group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
         b.iter(|| {
-            let s: ArraySeqMtPerS<N> = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::tabulate(&|i| i, len);
-            let m: ArraySeqMtPerS<N> = <ArraySeqMtPerS<N> as ArraySeqMtPerTrait<N>>::map(&s, |x| x + 1);
+            let s: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&|i| i, len);
+            let m: ArraySeqMtPerS<N> = ArraySeqMtPerS::map(&s, |x| x + 1);
             black_box((s.length(), m.length()))
         })
     });

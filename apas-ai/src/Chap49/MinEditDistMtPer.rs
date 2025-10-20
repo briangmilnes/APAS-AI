@@ -44,57 +44,52 @@ pub mod MinEditDistMtPer {
         fn memo_size(&self)                                                     -> usize;
     }
 
-    impl<T: MtVal> MinEditDistMtPerS<T> {
-        /// Internal parallel recursive minimum edit distance with shared memoization
-        /// Claude Work: O(|S|*|T|) - each subproblem computed once across all threads
-        /// Claude Span: O(|S|+|T|) - maximum recursion depth, parallelism O(min(|S|,|T|))
-        fn min_edit_distance_rec(&self, i: usize, j: usize) -> usize
-        where
-            T: Send + Sync + 'static,
+    /// Internal parallel recursive minimum edit distance with shared memoization
+    /// Claude Work: O(|S|*|T|) - each subproblem computed once across all threads
+    /// Claude Span: O(|S|+|T|) - maximum recursion depth, parallelism O(min(|S|,|T|))
+    fn min_edit_distance_rec<T: MtVal + Send + Sync + 'static>(table: &MinEditDistMtPerS<T>, i: usize, j: usize) -> usize {
+        // Check memo first (thread-safe)
         {
-            // Check memo first (thread-safe)
-            {
-                let memo_guard = self.memo.lock().unwrap();
-                if let Some(&result) = memo_guard.get(&(i, j)) {
-                    return result;
-                }
+            let memo_guard = table.memo.lock().unwrap();
+            if let Some(&result) = memo_guard.get(&(i, j)) {
+                return result;
             }
-
-            let result = match (i, j) {
-                | (i, 0) => i, // Base case: need i deletions
-                | (0, j) => j, // Base case: need j insertions
-                | (i, j) => {
-                    let source_char = self.source.nth(i - 1);
-                    let target_char = self.target.nth(j - 1);
-
-                    if source_char == target_char {
-                        // Characters match, no edit needed
-                        self.min_edit_distance_rec(i - 1, j - 1)
-                    } else {
-                        // Parallel evaluation of both operations
-                        let self_clone1 = self.clone();
-                        let self_clone2 = self.clone();
-
-                        let handle1 = thread::spawn(move || self_clone1.min_edit_distance_rec(i - 1, j));
-
-                        let handle2 = thread::spawn(move || self_clone2.min_edit_distance_rec(i, j - 1));
-
-                        let delete_cost = handle1.join().unwrap();
-                        let insert_cost = handle2.join().unwrap();
-
-                        1 + std::cmp::min(delete_cost, insert_cost)
-                    }
-                }
-            };
-
-            // Memoize result (thread-safe)
-            {
-                let mut memo_guard = self.memo.lock().unwrap();
-                memo_guard.insert((i, j), result);
-            }
-
-            result
         }
+
+        let result = match (i, j) {
+            | (i, 0) => i, // Base case: need i deletions
+            | (0, j) => j, // Base case: need j insertions
+            | (i, j) => {
+                let source_char = table.source.nth(i - 1);
+                let target_char = table.target.nth(j - 1);
+
+                if source_char == target_char {
+                    // Characters match, no edit needed
+                    min_edit_distance_rec(table, i - 1, j - 1)
+                } else {
+                    // Parallel evaluation of both operations
+                    let table_clone1 = table.clone();
+                    let table_clone2 = table.clone();
+
+                    let handle1 = thread::spawn(move || min_edit_distance_rec(&table_clone1, i - 1, j));
+
+                    let handle2 = thread::spawn(move || min_edit_distance_rec(&table_clone2, i, j - 1));
+
+                    let delete_cost = handle1.join().unwrap();
+                    let insert_cost = handle2.join().unwrap();
+
+                    1 + std::cmp::min(delete_cost, insert_cost)
+                }
+            }
+        };
+
+        // Memoize result (thread-safe)
+        {
+            let mut memo_guard = table.memo.lock().unwrap();
+            memo_guard.insert((i, j), result);
+        }
+
+        result
     }
 
     impl<T: MtVal> MinEditDistMtPerTrait<T> for MinEditDistMtPerS<T> {
@@ -130,7 +125,7 @@ pub mod MinEditDistMtPer {
             let source_len = self.source.length();
             let target_len = self.target.length();
 
-            self.min_edit_distance_rec(source_len, target_len)
+            min_edit_distance_rec(self, source_len, target_len)
         }
 
         fn source(&self) -> &ArraySeqMtPerS<T> { &self.source }

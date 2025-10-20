@@ -217,28 +217,6 @@ pub mod Chap45 {
 }
 
 pub mod Chap47 {
-    pub mod AdvancedDoubleHashing;
-    pub mod AdvancedLinearProbing;
-    pub mod AdvancedQuadraticProbing;
-    pub mod ClusteringAnalysis;
-    pub mod DoubleHashing;
-    // pub mod Example47_1;  // TODO: Fix compilation errors
-    // pub mod Example47_2;  // TODO: Fix compilation errors
-    // pub mod Example47_4;  // TODO: Fix compilation errors
-    // pub mod Example47_5;  // TODO: Fix compilation errors
-    // pub mod Example47_6;  // TODO: Fix compilation errors
-    // pub mod Exercise47_1; // TODO: Fix compilation errors
-    pub mod FlatHashTable;
-    pub mod HashExamples;
-    pub mod HashFunctionTraits;
-    pub mod LinearProbing;
-    pub mod NestedHashTable;
-    pub mod ProbeSequenceExamples;
-    pub mod QuadraticProbing;
-    pub mod SeparateChaining;
-}
-
-pub mod Chap47clean {
     pub mod ParaHashTableStEph;
     pub mod FlatHashTable;
     pub mod ChainedHashTable;

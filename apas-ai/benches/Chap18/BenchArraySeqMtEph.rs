@@ -52,7 +52,7 @@ fn bench_arrayseqmteph_operations(c: &mut Criterion) {
         let seq_a = ArraySeqMtEphS::new(len / 2, 42);
         let seq_b = ArraySeqMtEphS::new(len / 2, 84);
         b.iter(|| {
-            let result = <ArraySeqMtEphS<N> as ArraySeqMtEphTrait<N>>::append(&seq_a, &seq_b);
+            let result = ArraySeqMtEphS::append(&seq_a, &seq_b);
             black_box(result)
         })
     });

@@ -19,15 +19,13 @@ pub mod BSTKeyValueStEph {
         right: Link<K, V>,
     }
 
-    impl<K: StT + Ord, V: StT> Node<K, V> {
-        fn new(key: K, value: V, priority: u64) -> Self {
-            Node {
-                key,
-                value,
-                priority,
-                left: None,
-                right: None,
-            }
+    fn new_node<K: StT + Ord, V: StT>(key: K, value: V, priority: u64) -> Node<K, V> {
+        Node {
+            key,
+            value,
+            priority,
+            left: None,
+            right: None,
         }
     }
 
@@ -65,107 +63,103 @@ pub mod BSTKeyValueStEph {
     }
 
 
-    impl<K: StT + Ord, V: StT> BSTKeyValueStEph<K, V> {
-        // Private helper methods only - no public delegation
-
-        fn rotate_left(link: &mut Link<K, V>) {
-            if let Some(mut x) = link.take() {
-                if let Some(mut y) = x.right.take() {
-                    x.right = y.left.take();
-                    y.left = Some(x);
-                    *link = Some(y);
-                } else {
-                    *link = Some(x);
-                }
-            }
-        }
-
-        fn rotate_right(link: &mut Link<K, V>) {
-            if let Some(mut x) = link.take() {
-                if let Some(mut y) = x.left.take() {
-                    x.left = y.right.take();
-                    y.right = Some(x);
-                    *link = Some(y);
-                } else {
-                    *link = Some(x);
-                }
-            }
-        }
-
-        fn insert_link(link: &mut Link<K, V>, key: K, value: V, rng: &mut impl Rng) -> bool {
-            if let Some(node) = link.as_mut() {
-                if key < node.key {
-                    let inserted = Self::insert_link(&mut node.left, key, value, rng);
-                    if node.left.as_ref().is_some_and(|left| left.priority < node.priority) {
-                        Self::rotate_right(link);
-                    }
-                    inserted
-                } else if key > node.key {
-                    let inserted = Self::insert_link(&mut node.right, key, value, rng);
-                    if node.right.as_ref().is_some_and(|right| right.priority < node.priority) {
-                        Self::rotate_left(link);
-                    }
-                    inserted
-                } else {
-                    // Key exists, update value
-                    node.value = value;
-                    false // No new insertion
-                }
+    fn rotate_left<K: StT + Ord, V: StT>(link: &mut Link<K, V>) {
+        if let Some(mut x) = link.take() {
+            if let Some(mut y) = x.right.take() {
+                x.right = y.left.take();
+                y.left = Some(x);
+                *link = Some(y);
             } else {
-                *link = Some(Box::new(Node::new(key, value, rng.random())));
-                true // New insertion
+                *link = Some(x);
             }
         }
+    }
 
-        fn find_link<'a>(link: &'a Link<K, V>, key: &K) -> Option<&'a V> {
-            match link {
-                | None => None,
-                | Some(node) => {
-                    if key == &node.key {
-                        Some(&node.value)
-                    } else if key < &node.key {
-                        Self::find_link(&node.left, key)
-                    } else {
-                        Self::find_link(&node.right, key)
-                    }
+    fn rotate_right<K: StT + Ord, V: StT>(link: &mut Link<K, V>) {
+        if let Some(mut x) = link.take() {
+            if let Some(mut y) = x.left.take() {
+                x.left = y.right.take();
+                y.right = Some(x);
+                *link = Some(y);
+            } else {
+                *link = Some(x);
+            }
+        }
+    }
+
+    fn insert_link<K: StT + Ord, V: StT>(link: &mut Link<K, V>, key: K, value: V, rng: &mut impl Rng) -> bool {
+        if let Some(node) = link.as_mut() {
+            if key < node.key {
+                let inserted = insert_link(&mut node.left, key, value, rng);
+                if node.left.as_ref().is_some_and(|left| left.priority < node.priority) {
+                    rotate_right(link);
+                }
+                inserted
+            } else if key > node.key {
+                let inserted = insert_link(&mut node.right, key, value, rng);
+                if node.right.as_ref().is_some_and(|right| right.priority < node.priority) {
+                    rotate_left(link);
+                }
+                inserted
+            } else {
+                // Key exists, update value
+                node.value = value;
+                false // No new insertion
+            }
+        } else {
+            *link = Some(Box::new(new_node(key, value, rng.random())));
+            true // New insertion
+        }
+    }
+
+    fn find_link<'a, K: StT + Ord, V: StT>(link: &'a Link<K, V>, key: &K) -> Option<&'a V> {
+        match link {
+            | None => None,
+            | Some(node) => {
+                if key == &node.key {
+                    Some(&node.value)
+                } else if key < &node.key {
+                    find_link(&node.left, key)
+                } else {
+                    find_link(&node.right, key)
                 }
             }
         }
+    }
 
-        fn min_key_link(link: &Link<K, V>) -> Option<&K> {
-            match link {
-                | None => None,
-                | Some(node) => match node.left {
-                    | None => Some(&node.key),
-                    | Some(_) => Self::min_key_link(&node.left),
-                },
-            }
+    fn min_key_link<K: StT + Ord, V: StT>(link: &Link<K, V>) -> Option<&K> {
+        match link {
+            | None => None,
+            | Some(node) => match node.left {
+                | None => Some(&node.key),
+                | Some(_) => min_key_link(&node.left),
+            },
         }
+    }
 
-        fn max_key_link(link: &Link<K, V>) -> Option<&K> {
-            match link {
-                | None => None,
-                | Some(node) => match node.right {
-                    | None => Some(&node.key),
-                    | Some(_) => Self::max_key_link(&node.right),
-                },
-            }
+    fn max_key_link<K: StT + Ord, V: StT>(link: &Link<K, V>) -> Option<&K> {
+        match link {
+            | None => None,
+            | Some(node) => match node.right {
+                | None => Some(&node.key),
+                | Some(_) => max_key_link(&node.right),
+            },
         }
+    }
 
-        fn collect_keys(link: &Link<K, V>, out: &mut Vec<K>) {
-            if let Some(node) = link {
-                Self::collect_keys(&node.left, out);
-                out.push(node.key.clone());
-                Self::collect_keys(&node.right, out);
-            }
+    fn collect_keys<K: StT + Ord, V: StT>(link: &Link<K, V>, out: &mut Vec<K>) {
+        if let Some(node) = link {
+            collect_keys(&node.left, out);
+            out.push(node.key.clone());
+            collect_keys(&node.right, out);
         }
+    }
 
-        fn collect_values(link: &Link<K, V>, out: &mut Vec<V>) {
-            if let Some(node) = link {
-                Self::collect_values(&node.left, out);
-                out.push(node.value.clone());
-                Self::collect_values(&node.right, out);
-            }
+    fn collect_values<K: StT + Ord, V: StT>(link: &Link<K, V>, out: &mut Vec<V>) {
+        if let Some(node) = link {
+            collect_values(&node.left, out);
+            out.push(node.value.clone());
+            collect_values(&node.right, out);
         }
     }
 
@@ -188,13 +182,13 @@ pub mod BSTKeyValueStEph {
 
         fn insert(&mut self, key: K, value: V) {
             let mut r = rng();
-            let inserted = Self::insert_link(&mut self.root, key, value, &mut r);
+            let inserted = insert_link(&mut self.root, key, value, &mut r);
             if inserted {
                 self.size += 1;
             }
         }
 
-        fn find(&self, key: &K) -> Option<&V> { Self::find_link(&self.root, key) }
+        fn find(&self, key: &K) -> Option<&V> { find_link(&self.root, key) }
 
         fn contains(&self, key: &K) -> B { self.find(key).is_some() }
 
@@ -202,19 +196,19 @@ pub mod BSTKeyValueStEph {
 
         fn keys(&self) -> ArraySeqStPerS<K> {
             let mut out = Vec::with_capacity(self.size);
-            Self::collect_keys(&self.root, &mut out);
+            collect_keys(&self.root, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
 
         fn values(&self) -> ArraySeqStPerS<V> {
             let mut out = Vec::with_capacity(self.size);
-            Self::collect_values(&self.root, &mut out);
+            collect_values(&self.root, &mut out);
             ArraySeqStPerS::from_vec(out)
         }
 
-        fn minimum_key(&self) -> Option<&K> { Self::min_key_link(&self.root) }
+        fn minimum_key(&self) -> Option<&K> { min_key_link(&self.root) }
 
-        fn maximum_key(&self) -> Option<&K> { Self::max_key_link(&self.root) }
+        fn maximum_key(&self) -> Option<&K> { max_key_link(&self.root) }
     }
 
     impl<K: StT + Ord, V: StT> Default for BSTreeKeyValue<K, V> {
