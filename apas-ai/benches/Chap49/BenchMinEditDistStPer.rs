@@ -5,7 +5,9 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::{Chap19::ArraySeqStPer::ArraySeqStPer::*, Chap49::MinEditDistStPer::MinEditDistStPer::*, MinEditDistStPerLit};
+use apas_ai::{
+    Chap19::ArraySeqStPer::ArraySeqStPer::*, Chap49::MinEditDistStPer::MinEditDistStPer::*, MinEditDistStPerLit,
+};
 
 fn bench_min_edit_distance_st_per(c: &mut Criterion) {
     let mut group = c.benchmark_group("min_edit_distance_st_per");

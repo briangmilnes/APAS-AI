@@ -21,22 +21,22 @@ pub mod ArraySeqStPer {
     pub trait ArraySeqStPerBaseTrait<T: StT> {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn new(length: N, init_value: T)                                        -> Self;
+        fn new(length: N, init_value: T) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn length(&self)                                                        -> N;
+        fn length(&self) -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn nth(&self, index: N)                                                 -> &T;
+        fn nth(&self, index: N) -> &T;
         /// APAS: Work Θ(len), Span Θ(1)
         /// claude-4-sonet: Work Θ(len), Span Θ(len), Parallelism Θ(1) - sequential copy
-        fn subseq_copy(&self, start: N, length: N)                              -> Self;
+        fn subseq_copy(&self, start: N, length: N) -> Self;
         /// APAS: Work Θ(Σ|a[i]|), Span Θ(1)
         /// claude-4-sonet: Work Θ(Σ|a[i]|), Span Θ(Σ|a[i]|), Parallelism Θ(1) - sequential
-        fn flatten(a: &ArraySeqStPerS<ArraySeqStPerS<T>>)                       -> Self;
+        fn flatten(a: &ArraySeqStPerS<ArraySeqStPerS<T>>) -> Self;
         /// APAS: Work Θ(|a|+|updates|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|+|updates|), Span Θ(|a|+|updates|), Parallelism Θ(1) - sequential with HashSet
-        fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>)  -> Self;
+        fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> Self;
         /// APAS: Work Θ(|pairs|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|pairs|²), Span Θ(|pairs|²), Parallelism Θ(1) - sequential with linear search
         fn collect<K: StT, V: StT>(
@@ -57,43 +57,49 @@ pub mod ArraySeqStPer {
     pub trait ArraySeqStPerRedefinableTrait<T: StT> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn empty()                                                              -> Self;
+        fn empty() -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn singleton(item: T)                                                   -> Self;
+        fn singleton(item: T) -> Self;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn tabulate<F: Fn(N)                                                    -> T>(f: &F, length: N) -> ArraySeqStPerS<T>;
+        fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStPerS<T>;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn map<U: StT, F: Fn(&T)                                                -> U>(a: &ArraySeqStPerS<T>, f: &F) -> ArraySeqStPerS<U>;
+        fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStPerS<T>, f: &F) -> ArraySeqStPerS<U>;
         /// APAS: Work Θ(|a|+|b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|+|b|), Span Θ(|a|+|b|), Parallelism Θ(1) - sequential
-        fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)                 -> Self;
+        fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F)                -> Self;
+        fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F) -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
-        fn iterate<A, F: Fn(&A, &T)                                             -> A>(a: &ArraySeqStPerS<T>, f: &F, seed: A) -> A;
+        fn iterate<A, F: Fn(&A, &T) -> A>(a: &ArraySeqStPerS<T>, f: &F, seed: A) -> A;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential reduction
-        fn reduce<F: Fn(&T, &T)                                                 -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> T;
+        fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> T;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
-        fn scan<F: Fn(&T, &T)                                                   -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T);
+        fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T);
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn isEmpty(&self)                                                       -> B;
+        fn isEmpty(&self) -> B;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn isSingleton(&self)                                                   -> B;
+        fn isSingleton(&self) -> B;
     }
 
     impl<T: StT> ArraySeqStPerBaseTrait<T> for ArraySeqStPerS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqStPerS<T> { Self::from_vec(vec![init_value; length]) }
-        fn length(&self) -> N { self.data.len() }
-        fn nth(&self, index: N) -> &T { &self.data[index] }
+        fn new(length: N, init_value: T) -> ArraySeqStPerS<T> {
+            Self::from_vec(vec![init_value; length])
+        }
+        fn length(&self) -> N {
+            self.data.len()
+        }
+        fn nth(&self, index: N) -> &T {
+            &self.data[index]
+        }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let total = self.data.len();
@@ -171,13 +177,23 @@ pub mod ArraySeqStPer {
             result
         }
 
-        fn from_vec(elts: Vec<T>) -> Self { Self { data: elts.into_boxed_slice() } }
-        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+        fn from_vec(elts: Vec<T>) -> Self {
+            Self {
+                data: elts.into_boxed_slice(),
+            }
+        }
+        fn iter(&self) -> Iter<'_, T> {
+            self.data.iter()
+        }
     }
 
     impl<T: StT> ArraySeqStPerRedefinableTrait<T> for ArraySeqStPerS<T> {
-        fn empty() -> ArraySeqStPerS<T> { Self::from_vec(Vec::new()) }
-        fn singleton(item: T) -> ArraySeqStPerS<T> { Self::from_vec(vec![item]) }
+        fn empty() -> ArraySeqStPerS<T> {
+            Self::from_vec(Vec::new())
+        }
+        fn singleton(item: T) -> ArraySeqStPerS<T> {
+            Self::from_vec(vec![item])
+        }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(length);
@@ -254,28 +270,40 @@ pub mod ArraySeqStPer {
             (ArraySeqStPerS::from_vec(values), acc)
         }
 
-        fn isEmpty(&self) -> B { self.data.is_empty() }
-        fn isSingleton(&self) -> B { self.data.len() == 1 }
+        fn isEmpty(&self) -> B {
+            self.data.is_empty()
+        }
+        fn isSingleton(&self) -> B {
+            self.data.len() == 1
+        }
     }
 
     impl<T: StT> PartialEq for ArraySeqStPerS<T> {
-        fn eq(&self, other: &Self) -> bool { self.data[..] == other.data[..] }
+        fn eq(&self, other: &Self) -> bool {
+            self.data[..] == other.data[..]
+        }
     }
     impl<T: StT> Eq for ArraySeqStPerS<T> {}
     impl<T: StT> Debug for ArraySeqStPerS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { f.debug_list().entries(self.data.iter()).finish() }
+        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+            f.debug_list().entries(self.data.iter()).finish()
+        }
     }
     impl<'a, T: StT> IntoIterator for &'a ArraySeqStPerS<T> {
         type Item = &'a T;
         type IntoIter = Iter<'a, T>;
 
-        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
+        fn into_iter(self) -> Self::IntoIter {
+            self.data.iter()
+        }
     }
     impl<T: StT> IntoIterator for ArraySeqStPerS<T> {
         type Item = T;
         type IntoIter = IntoIter<T>;
 
-        fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
+        fn into_iter(self) -> Self::IntoIter {
+            self.data.into_vec().into_iter()
+        }
     }
     impl<T: StT> Display for ArraySeqStPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {

@@ -17,7 +17,7 @@ pub mod BottomUpDPStPer {
     pub trait BottomUpDPStPerTrait<T: StT> {
         /// Create new bottom-up DP solver
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new()                     -> Self;
+        fn new() -> Self;
 
         /// Solve DP problem
         /// APAS: Work O(n³), Span O(n³)
@@ -34,7 +34,9 @@ pub mod BottomUpDPStPer {
 
     impl BottomUpDPStPerS {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn new(s: ArraySeqStPerS<char>, t: ArraySeqStPerS<char>) -> Self { BottomUpDPStPerS { seq_s: s, seq_t: t } }
+        pub fn new(s: ArraySeqStPerS<char>, t: ArraySeqStPerS<char>) -> Self {
+            BottomUpDPStPerS { seq_s: s, seq_t: t }
+        }
 
         /// Compute minimum edit distance using bottom-up diagonal pebbling
         /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(1)
@@ -116,17 +118,23 @@ pub mod BottomUpDPStPer {
         /// Get the length of sequence S
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn s_length(&self) -> usize { self.seq_s.length() }
+        pub fn s_length(&self) -> usize {
+            self.seq_s.length()
+        }
 
         /// Get the length of sequence T
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn t_length(&self) -> usize { self.seq_t.length() }
+        pub fn t_length(&self) -> usize {
+            self.seq_t.length()
+        }
 
         /// Check if sequences are empty
         /// Claude Work: O(1) - constant time check
         /// Claude Span: O(1) - constant time check
-        pub fn is_empty(&self) -> bool { self.seq_s.length() == 0usize && self.seq_t.length() == 0usize }
+        pub fn is_empty(&self) -> bool {
+            self.seq_s.length() == 0usize && self.seq_t.length() == 0usize
+        }
     }
 
     impl Default for BottomUpDPStPerS {

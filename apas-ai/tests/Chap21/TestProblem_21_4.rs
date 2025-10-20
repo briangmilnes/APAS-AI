@@ -5,9 +5,13 @@ use apas_ai::Chap21::Problem21_4::Problem21_4::*;
 use apas_ai::Types::Types::*;
 
 // Helper to create test sequences
-fn make_seq_n(items: Vec<N>) -> ArraySeqStPerS<N> { ArraySeqStPerS::from_vec(items) }
+fn make_seq_n(items: Vec<N>) -> ArraySeqStPerS<N> {
+    ArraySeqStPerS::from_vec(items)
+}
 
-fn make_seq_str(items: Vec<&'static str>) -> ArraySeqStPerS<&'static str> { ArraySeqStPerS::from_vec(items) }
+fn make_seq_str(items: Vec<&'static str>) -> ArraySeqStPerS<&'static str> {
+    ArraySeqStPerS::from_vec(items)
+}
 
 #[test]
 fn test_cartesian_loops_empty_first() {

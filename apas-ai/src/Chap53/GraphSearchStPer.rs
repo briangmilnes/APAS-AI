@@ -26,7 +26,9 @@ pub mod GraphSearchStPer {
     pub struct SelectAll;
 
     impl<V: StT + Ord> SelectionStrategy<V> for SelectAll {
-        fn select(&self, frontier: &AVLTreeSetStPer<V>) -> (AVLTreeSetStPer<V>, B) { (frontier.clone(), false) }
+        fn select(&self, frontier: &AVLTreeSetStPer<V>) -> (AVLTreeSetStPer<V>, B) {
+            (frontier.clone(), false)
+        }
     }
 
     /// Select single arbitrary vertex (depth-first style).
@@ -35,7 +37,7 @@ pub mod GraphSearchStPer {
     pub trait GraphSearchStPerTrait<V: StT + Ord> {
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
         /// Generic graph search starting from single source.
-        fn graph_search<G, S>(graph: &G, source: V, strategy: &S)                         -> SearchResult<V>
+        fn graph_search<G, S>(graph: &G, source: V, strategy: &S) -> SearchResult<V>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>,
             S: SelectionStrategy<V>;
@@ -49,11 +51,10 @@ pub mod GraphSearchStPer {
 
         /// Reachability: find all vertices reachable from source.
         /// Work: O(|V| + |E|), Span: O(|V|).
-        fn reachable<G>(graph: &G, source: V)                                             -> AVLTreeSetStPer<V>
+        fn reachable<G>(graph: &G, source: V) -> AVLTreeSetStPer<V>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>;
     }
-
 
     impl<V: StT + Ord> SelectionStrategy<V> for SelectOne {
         fn select(&self, frontier: &AVLTreeSetStPer<V>) -> (AVLTreeSetStPer<V>, B) {

@@ -93,4 +93,3 @@ fn test_into_iterator() {
     assert_eq!(doubled, vec![20, 40, 60]);
     // seq is now moved/consumed
 }
-

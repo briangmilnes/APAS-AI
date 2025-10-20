@@ -30,28 +30,28 @@ pub mod OptBinSearchTreeMtPer {
     /// Trait for parallel optimal BST operations
     pub trait OBSTMtPerTrait<T: MtVal> {
         /// Create new optimal BST solver
-        fn new()                                                  -> Self;
+        fn new() -> Self;
 
         /// Create from keys and probabilities
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self;
 
         /// Create from key-probability pairs
-        fn from_key_probs(key_probs: Vec<KeyProb<T>>)             -> Self;
+        fn from_key_probs(key_probs: Vec<KeyProb<T>>) -> Self;
 
         /// claude-4-sonet: Work Θ(n³), Span Θ(n log n), Parallelism Θ(n²/log n)
         /// Compute optimal BST cost where n=number of keys
-        fn optimal_cost(&self)                                    -> Probability
+        fn optimal_cost(&self) -> Probability
         where
             T: Send + Sync + 'static;
 
         /// Get the keys with probabilities
-        fn keys(&self)                                            -> &Arc<Vec<KeyProb<T>>>;
+        fn keys(&self) -> &Arc<Vec<KeyProb<T>>>;
 
         /// Get number of keys
-        fn num_keys(&self)                                        -> usize;
+        fn num_keys(&self) -> usize;
 
         /// Get memoization table size
-        fn memo_size(&self)                                       -> usize;
+        fn memo_size(&self) -> usize;
     }
 
     /// Parallel reduction to find minimum cost among root choices
@@ -172,9 +172,13 @@ pub mod OptBinSearchTreeMtPer {
             obst_rec(self, 0, n)
         }
 
-        fn keys(&self) -> &Arc<Vec<KeyProb<T>>> { &self.keys }
+        fn keys(&self) -> &Arc<Vec<KeyProb<T>>> {
+            &self.keys
+        }
 
-        fn num_keys(&self) -> usize { self.keys.len() }
+        fn num_keys(&self) -> usize {
+            self.keys.len()
+        }
 
         fn memo_size(&self) -> usize {
             let memo_guard = self.memo.lock().unwrap();
@@ -183,7 +187,9 @@ pub mod OptBinSearchTreeMtPer {
     }
 
     impl<T: MtVal> PartialEq for OBSTMtPerS<T> {
-        fn eq(&self, other: &Self) -> bool { self.keys == other.keys }
+        fn eq(&self, other: &Self) -> bool {
+            self.keys == other.keys
+        }
     }
 
     impl<T: MtVal> Eq for OBSTMtPerS<T> {}
@@ -215,7 +221,9 @@ pub mod OptBinSearchTreeMtPer {
         type Item = KeyProb<T>;
         type IntoIter = Cloned<Iter<'a, KeyProb<T>>>;
 
-        fn into_iter(self) -> Self::IntoIter { self.keys.iter().cloned() }
+        fn into_iter(self) -> Self::IntoIter {
+            self.keys.iter().cloned()
+        }
     }
 
     impl<T: MtVal + PartialEq> PartialEq for KeyProb<T> {
@@ -227,7 +235,9 @@ pub mod OptBinSearchTreeMtPer {
     impl<T: MtVal> Eq for KeyProb<T> {}
 
     impl<T: MtVal + Display> Display for KeyProb<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "({}: {:.3})", self.key, self.prob) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            write!(f, "({}: {:.3})", self.key, self.prob)
+        }
     }
 }
 

@@ -18,31 +18,31 @@ pub mod EdgeSetGraphMtPer {
 
     pub trait EdgeSetGraphMtPerTrait<V: StTInMtT + Ord + 'static> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                                                        -> Self;
+        fn empty() -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn from_vertices_and_edges(v: AVLTreeSetMtPer<V>, e: AVLTreeSetMtPer<Pair<V, V>>) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn num_vertices(&self)                                                            -> N;
+        fn num_vertices(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn num_edges(&self)                                                               -> N;
+        fn num_edges(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn vertices(&self)                                                                -> &AVLTreeSetMtPer<V>;
+        fn vertices(&self) -> &AVLTreeSetMtPer<V>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn edges(&self)                                                                   -> &AVLTreeSetMtPer<Pair<V, V>>;
+        fn edges(&self) -> &AVLTreeSetMtPer<Pair<V, V>>;
         /// claude-4-sonet: Work Θ(log |E|), Span Θ(log |E|), Parallelism Θ(1)
-        fn has_edge(&self, u: &V, v: &V)                                                  -> B;
+        fn has_edge(&self, u: &V, v: &V) -> B;
         /// claude-4-sonet: Work Θ(|E| log |V|), Span Θ(log |E| × log |V|), Parallelism Θ(|E|/log |E|)
-        fn out_neighbors(&self, u: &V)                                                    -> AVLTreeSetMtPer<V>;
+        fn out_neighbors(&self, u: &V) -> AVLTreeSetMtPer<V>;
         /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|), Parallelism Θ(|E|/log |E|)
-        fn out_degree(&self, u: &V)                                                       -> N;
+        fn out_degree(&self, u: &V) -> N;
         /// claude-4-sonet: Work Θ(log |V|), Span Θ(log |V|), Parallelism Θ(1)
-        fn insert_vertex(&self, v: V)                                                     -> Self;
+        fn insert_vertex(&self, v: V) -> Self;
         /// claude-4-sonet: Work Θ(|E| log |V| + |E| log |E|), Span Θ(log |E| × log |V|), Parallelism Θ(|E|/log |E|)
-        fn delete_vertex(&self, v: &V)                                                    -> Self;
+        fn delete_vertex(&self, v: &V) -> Self;
         /// claude-4-sonet: Work Θ(log |V| + log |E|), Span Θ(log |V| + log |E|), Parallelism Θ(1)
-        fn insert_edge(&self, u: V, v: V)                                                 -> Self;
+        fn insert_edge(&self, u: V, v: V) -> Self;
         /// claude-4-sonet: Work Θ(log |E|), Span Θ(log |E|), Parallelism Θ(1)
-        fn delete_edge(&self, u: &V, v: &V)                                               -> Self;
+        fn delete_edge(&self, u: &V, v: &V) -> Self;
     }
 
     impl<V: StTInMtT + Ord + 'static> EdgeSetGraphMtPerTrait<V> for EdgeSetGraphMtPer<V> {
@@ -57,16 +57,26 @@ pub mod EdgeSetGraphMtPer {
             EdgeSetGraphMtPer { vertices: v, edges: e }
         }
 
-        fn num_vertices(&self) -> N { self.vertices.size() }
+        fn num_vertices(&self) -> N {
+            self.vertices.size()
+        }
 
-        fn num_edges(&self) -> N { self.edges.size() }
+        fn num_edges(&self) -> N {
+            self.edges.size()
+        }
 
-        fn vertices(&self) -> &AVLTreeSetMtPer<V> { &self.vertices }
+        fn vertices(&self) -> &AVLTreeSetMtPer<V> {
+            &self.vertices
+        }
 
-        fn edges(&self) -> &AVLTreeSetMtPer<Pair<V, V>> { &self.edges }
+        fn edges(&self) -> &AVLTreeSetMtPer<Pair<V, V>> {
+            &self.edges
+        }
 
         // Work: Θ(log |E|), Span: Θ(log |E|)
-        fn has_edge(&self, u: &V, v: &V) -> B { self.edges.find(&Pair(u.clone(), v.clone())) }
+        fn has_edge(&self, u: &V, v: &V) -> B {
+            self.edges.find(&Pair(u.clone(), v.clone()))
+        }
 
         // PARALLEL: Work: Θ(|E|), Span: Θ(log |E|) - TRUE parallel filter
         fn out_neighbors(&self, u: &V) -> AVLTreeSetMtPer<V> {
@@ -82,7 +92,9 @@ pub mod EdgeSetGraphMtPer {
         }
 
         // Work: Θ(|E|), Span: Θ(log |E|)
-        fn out_degree(&self, u: &V) -> N { self.out_neighbors(u).size() }
+        fn out_degree(&self, u: &V) -> N {
+            self.out_neighbors(u).size()
+        }
 
         // Work: Θ(log |V|), Span: Θ(log |V|)
         fn insert_vertex(&self, v: V) -> Self {
@@ -127,6 +139,8 @@ pub mod EdgeSetGraphMtPer {
     }
 
     impl<V: StTInMtT + Ord + 'static> Default for EdgeSetGraphMtPer<V> {
-        fn default() -> Self { Self::empty() }
+        fn default() -> Self {
+            Self::empty()
+        }
     }
 }

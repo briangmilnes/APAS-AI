@@ -33,7 +33,7 @@ pub mod PQMinMtPer {
         /// claude-4-sonet: Work Θ((|V| + |E|) log |V|), Span Θ(|V| log |V|), Parallelism Θ(1)
         /// Priority-First Search using thread-safe persistent sets.
         /// Set operations (union, difference, filter) use parallel implementations.
-        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF)                         -> PQMinResult<V, P>
+        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             PF: PriorityFn<V, P>;
@@ -48,7 +48,9 @@ pub mod PQMinMtPer {
         fn new(f: F) -> Self;
     }
 
-    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> ClosurePriorityTrait<V, P, F> for ClosurePriority<V, P, F> {
+    impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> ClosurePriorityTrait<V, P, F>
+        for ClosurePriority<V, P, F>
+    {
         fn new(f: F) -> Self {
             Self {
                 f,
@@ -60,7 +62,9 @@ pub mod PQMinMtPer {
     impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> PriorityFn<V, P>
         for ClosurePriority<V, P, F>
     {
-        fn priority(&self, v: &V) -> P { (self.f)(v) }
+        fn priority(&self, v: &V) -> P {
+            (self.f)(v)
+        }
     }
 
     /// Priority queue minimum search starting from single source.

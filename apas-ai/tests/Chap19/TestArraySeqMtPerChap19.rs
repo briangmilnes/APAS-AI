@@ -801,7 +801,7 @@ fn test_atomic_operation_correctness_memory_ordering() {
                 // Verify all values are within expected ranges
                 for &val in &snapshot {
                     if !(1..=300).contains(&val) { // Original values 1-5, or thread values 0-299
-                         // This might happen due to concurrent writes, which is acceptable
+                        // This might happen due to concurrent writes, which is acceptable
                     }
                 }
 
@@ -991,7 +991,8 @@ fn test_arrayseqmtper_trait_deflate() {
 #[test]
 fn test_arrayseqmtper_collect() {
     let pairs = ArrayMtPerSLit![Pair(1, 1), Pair(1, 2), Pair(2, 3)];
-    let grouped = <ArraySeqMtPerS<Pair<i32, i32>> as ArraySeqMtPerBaseTrait<Pair<i32, i32>>>::collect(&pairs, |a, b| a.cmp(b));
+    let grouped =
+        <ArraySeqMtPerS<Pair<i32, i32>> as ArraySeqMtPerBaseTrait<Pair<i32, i32>>>::collect(&pairs, |a, b| a.cmp(b));
     assert!(grouped.length() > 0);
 }
 

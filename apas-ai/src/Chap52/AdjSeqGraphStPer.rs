@@ -14,23 +14,23 @@ pub mod AdjSeqGraphStPer {
 
     pub trait AdjSeqGraphStPerTrait {
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn new(n: N)                                        -> Self;
+        fn new(n: N) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn from_seq(adj: ArraySeqStPerS<ArraySeqStPerS<N>>) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn num_vertices(&self)                              -> N;
+        fn num_vertices(&self) -> N;
         /// claude-4-sonet: Work Θ(Σ deg(v)), Span Θ(Σ deg(v)), Parallelism Θ(1)
-        fn num_edges(&self)                                 -> N;
+        fn num_edges(&self) -> N;
         /// claude-4-sonet: Work Θ(deg(u)), Span Θ(deg(u)), Parallelism Θ(1)
-        fn has_edge(&self, u: N, v: N)                      -> B;
+        fn has_edge(&self, u: N, v: N) -> B;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn out_neighbors(&self, u: N)                       -> &ArraySeqStPerS<N>;
+        fn out_neighbors(&self, u: N) -> &ArraySeqStPerS<N>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn out_degree(&self, u: N)                          -> N;
+        fn out_degree(&self, u: N) -> N;
         /// claude-4-sonet: Work Θ(1 + deg(u)), Span Θ(1 + deg(u)), Parallelism Θ(1)
-        fn insert_edge(&self, u: N, v: N)                   -> Self;
+        fn insert_edge(&self, u: N, v: N) -> Self;
         /// claude-4-sonet: Work Θ(deg(u)), Span Θ(deg(u)), Parallelism Θ(1)
-        fn delete_edge(&self, u: N, v: N)                   -> Self;
+        fn delete_edge(&self, u: N, v: N) -> Self;
     }
 
     impl AdjSeqGraphStPerTrait for AdjSeqGraphStPer {
@@ -46,10 +46,14 @@ pub mod AdjSeqGraphStPer {
             }
         }
 
-        fn from_seq(adj: ArraySeqStPerS<ArraySeqStPerS<N>>) -> Self { AdjSeqGraphStPer { adj } }
+        fn from_seq(adj: ArraySeqStPerS<ArraySeqStPerS<N>>) -> Self {
+            AdjSeqGraphStPer { adj }
+        }
 
         // Work: Θ(1), Span: Θ(1)
-        fn num_vertices(&self) -> N { self.adj.length() }
+        fn num_vertices(&self) -> N {
+            self.adj.length()
+        }
 
         // Work: Θ(n), Span: Θ(n) - sum all neighbor list lengths
         fn num_edges(&self) -> N {
@@ -76,10 +80,14 @@ pub mod AdjSeqGraphStPer {
         }
 
         // Work: Θ(1), Span: Θ(1) - direct access
-        fn out_neighbors(&self, u: N) -> &ArraySeqStPerS<N> { self.adj.nth(u) }
+        fn out_neighbors(&self, u: N) -> &ArraySeqStPerS<N> {
+            self.adj.nth(u)
+        }
 
         // Work: Θ(1), Span: Θ(1)
-        fn out_degree(&self, u: N) -> N { self.adj.nth(u).length() }
+        fn out_degree(&self, u: N) -> N {
+            self.adj.nth(u).length()
+        }
 
         // Work: Θ(n), Span: Θ(n) - must copy entire sequence to update
         fn insert_edge(&self, u: N, v: N) -> Self {

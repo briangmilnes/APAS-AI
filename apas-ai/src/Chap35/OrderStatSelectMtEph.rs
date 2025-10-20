@@ -40,42 +40,48 @@ pub mod OrderStatSelectMtEph {
             }
 
             if k < left_count {
-                let left = <ArraySeqMtEphS<T> as crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphRedefinableTrait<T>>::tabulate(
-                    &|i| {
-                        let mut idx = 0;
-                        for j in 0..n {
-                            let elem = self.nth_cloned(j);
-                            if elem < pivot {
-                                if idx == i {
-                                    return elem;
+                let left =
+                    <ArraySeqMtEphS<T> as crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphRedefinableTrait<
+                        T,
+                    >>::tabulate(
+                        &|i| {
+                            let mut idx = 0;
+                            for j in 0..n {
+                                let elem = self.nth_cloned(j);
+                                if elem < pivot {
+                                    if idx == i {
+                                        return elem;
+                                    }
+                                    idx += 1;
                                 }
-                                idx += 1;
                             }
-                        }
-                        panic!("Index out of bounds in left partition");
-                    },
-                    left_count,
-                );
+                            panic!("Index out of bounds in left partition");
+                        },
+                        left_count,
+                    );
                 left.select(k)
             } else if k < n - right_count {
                 Some(pivot)
             } else {
-                let right = <ArraySeqMtEphS<T> as crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphRedefinableTrait<T>>::tabulate(
-                    &|i| {
-                        let mut idx = 0;
-                        for j in 0..n {
-                            let elem = self.nth_cloned(j);
-                            if elem > pivot {
-                                if idx == i {
-                                    return elem;
+                let right =
+                    <ArraySeqMtEphS<T> as crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphRedefinableTrait<
+                        T,
+                    >>::tabulate(
+                        &|i| {
+                            let mut idx = 0;
+                            for j in 0..n {
+                                let elem = self.nth_cloned(j);
+                                if elem > pivot {
+                                    if idx == i {
+                                        return elem;
+                                    }
+                                    idx += 1;
                                 }
-                                idx += 1;
                             }
-                        }
-                        panic!("Index out of bounds in right partition");
-                    },
-                    right_count,
-                );
+                            panic!("Index out of bounds in right partition");
+                        },
+                        right_count,
+                    );
                 right.select(k - (n - right_count))
             }
         }

@@ -18,7 +18,7 @@ pub mod VertexMatchingStEph {
     pub trait VertexMatchingStEphTrait {
         /// Greedy vertex matching algorithm
         /// APAS: Work Θ(|E|), Span Θ(|E|)
-        fn greedy_matching<V: StT + Hash>(graph: &UnDirGraphStEph<V>)      -> SetStEph<Edge<V>>;
+        fn greedy_matching<V: StT + Hash>(graph: &UnDirGraphStEph<V>) -> SetStEph<Edge<V>>;
 
         /// Sequential version of parallel matching
         /// APAS: Work Θ(|E|), Span Θ(|E|)

@@ -10,9 +10,9 @@ pub mod OptBinSearchTreeStEph {
     use std::slice::Iter;
     use std::vec::IntoIter;
 
-    use crate::prob;
     use crate::Chap50::Probability::Probability::Probability;
     use crate::Types::Types::*;
+    use crate::prob;
 
     #[derive(Clone, Debug, PartialEq)]
     pub struct KeyProb<T: StT> {
@@ -30,23 +30,23 @@ pub mod OptBinSearchTreeStEph {
     /// Trait for optimal BST operations
     pub trait OBSTStEphTrait<T: StT> {
         /// Create new optimal BST solver
-        fn new()                                                  -> Self;
+        fn new() -> Self;
 
         /// Create from keys and probabilities
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self;
 
         /// Create from key-probability pairs
-        fn from_key_probs(key_probs: Vec<KeyProb<T>>)             -> Self;
+        fn from_key_probs(key_probs: Vec<KeyProb<T>>) -> Self;
 
         /// claude-4-sonet: Work Θ(n³), Span Θ(n²), Parallelism Θ(1)
         /// Compute optimal BST cost where n=number of keys
-        fn optimal_cost(&mut self)                                -> Probability;
+        fn optimal_cost(&mut self) -> Probability;
 
         /// Get the keys with probabilities
-        fn keys(&self)                                            -> &Vec<KeyProb<T>>;
+        fn keys(&self) -> &Vec<KeyProb<T>>;
 
         /// Get mutable keys (ephemeral allows mutation)
-        fn keys_mut(&mut self)                                    -> &mut Vec<KeyProb<T>>;
+        fn keys_mut(&mut self) -> &mut Vec<KeyProb<T>>;
 
         /// Set key-probability pair at index
         fn set_key_prob(&mut self, index: usize, key_prob: KeyProb<T>);
@@ -55,13 +55,13 @@ pub mod OptBinSearchTreeStEph {
         fn update_prob(&mut self, index: usize, prob: Probability);
 
         /// Get number of keys
-        fn num_keys(&self)                                        -> usize;
+        fn num_keys(&self) -> usize;
 
         /// Clear memoization table
         fn clear_memo(&mut self);
 
         /// Get memoization table size
-        fn memo_size(&self)                                       -> usize;
+        fn memo_size(&self) -> usize;
     }
 
     impl<T: StT> OBSTStEphS<T> {
@@ -140,9 +140,13 @@ pub mod OptBinSearchTreeStEph {
             self.obst_rec(0, n)
         }
 
-        fn keys(&self) -> &Vec<KeyProb<T>> { &self.keys }
+        fn keys(&self) -> &Vec<KeyProb<T>> {
+            &self.keys
+        }
 
-        fn keys_mut(&mut self) -> &mut Vec<KeyProb<T>> { &mut self.keys }
+        fn keys_mut(&mut self) -> &mut Vec<KeyProb<T>> {
+            &mut self.keys
+        }
 
         fn set_key_prob(&mut self, index: usize, key_prob: KeyProb<T>) {
             if index < self.keys.len() {
@@ -160,11 +164,17 @@ pub mod OptBinSearchTreeStEph {
             self.memo.clear();
         }
 
-        fn num_keys(&self) -> usize { self.keys.len() }
+        fn num_keys(&self) -> usize {
+            self.keys.len()
+        }
 
-        fn clear_memo(&mut self) { self.memo.clear(); }
+        fn clear_memo(&mut self) {
+            self.memo.clear();
+        }
 
-        fn memo_size(&self) -> usize { self.memo.len() }
+        fn memo_size(&self) -> usize {
+            self.memo.len()
+        }
     }
 
     impl<T: StT> Display for OBSTStEphS<T> {
@@ -182,25 +192,33 @@ pub mod OptBinSearchTreeStEph {
         type Item = KeyProb<T>;
         type IntoIter = IntoIter<KeyProb<T>>;
 
-        fn into_iter(self) -> Self::IntoIter { self.keys.into_iter() }
+        fn into_iter(self) -> Self::IntoIter {
+            self.keys.into_iter()
+        }
     }
 
     impl<'a, T: StT> IntoIterator for &'a OBSTStEphS<T> {
         type Item = KeyProb<T>;
         type IntoIter = Cloned<Iter<'a, KeyProb<T>>>;
 
-        fn into_iter(self) -> Self::IntoIter { self.keys.iter().cloned() }
+        fn into_iter(self) -> Self::IntoIter {
+            self.keys.iter().cloned()
+        }
     }
 
     impl<'a, T: StT> IntoIterator for &'a mut OBSTStEphS<T> {
         type Item = KeyProb<T>;
         type IntoIter = Cloned<Iter<'a, KeyProb<T>>>;
 
-        fn into_iter(self) -> Self::IntoIter { self.keys.iter().cloned() }
+        fn into_iter(self) -> Self::IntoIter {
+            self.keys.iter().cloned()
+        }
     }
 
     impl<T: StT> Display for KeyProb<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "({}: {:.3})", self.key, self.prob) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            write!(f, "({}: {:.3})", self.key, self.prob)
+        }
     }
 
     impl<T: StT> Eq for KeyProb<T> {}

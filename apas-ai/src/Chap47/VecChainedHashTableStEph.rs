@@ -11,7 +11,9 @@ pub mod VecChainedHashTableStEph {
     use crate::Types::Types::*;
 
     impl<Key: PartialEq + Clone, Value: Clone> EntryTrait<Key, Value> for Vec<(Key, Value)> {
-        fn new() -> Self { Vec::new() }
+        fn new() -> Self {
+            Vec::new()
+        }
 
         fn insert(&mut self, key: Key, value: Value) {
             // Update if key exists, otherwise append
@@ -61,7 +63,10 @@ pub mod VecChainedHashTableStEph {
             Self::delete_chained(table, key)
         }
 
-        fn resize(table: &HashTable<Key, Value, Vec<(Key, Value)>, Metrics>, new_size: N) -> HashTable<Key, Value, Vec<(Key, Value)>, Metrics> {
+        fn resize(
+            table: &HashTable<Key, Value, Vec<(Key, Value)>, Metrics>,
+            new_size: N,
+        ) -> HashTable<Key, Value, Vec<(Key, Value)>, Metrics> {
             // Collect all key-value pairs from all chains
             let mut pairs = Vec::new();
             for chain in &table.table {

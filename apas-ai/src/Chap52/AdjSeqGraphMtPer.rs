@@ -16,19 +16,19 @@ pub mod AdjSeqGraphMtPer {
 
     pub trait AdjSeqGraphMtPerTrait {
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn new(n: N)                   -> Self;
+        fn new(n: N) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn num_vertices(&self)         -> N;
+        fn num_vertices(&self) -> N;
         /// claude-4-sonet: Work Θ(Σ deg(v)), Span Θ(log n), Parallelism Θ(|E|/log n)
-        fn num_edges(&self)            -> N;
+        fn num_edges(&self) -> N;
         /// claude-4-sonet: Work Θ(deg(u)), Span Θ(log(deg(u))), Parallelism Θ(deg(u)/log(deg(u)))
         fn has_edge(&self, u: N, v: N) -> B;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn out_neighbors(&self, u: N)  -> ArraySeqMtPerS<N>;
+        fn out_neighbors(&self, u: N) -> ArraySeqMtPerS<N>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn out_degree(&self, u: N)     -> N;
+        fn out_degree(&self, u: N) -> N;
         /// claude-4-sonet: Work Θ(n + |E|), Span Θ(log n), Parallelism Θ((n + |E|)/log n)
-        fn map_vertices<F: Fn(N)       -> N + Send + Sync + Clone + 'static>(&self, f: F) -> Self
+        fn map_vertices<F: Fn(N) -> N + Send + Sync + Clone + 'static>(&self, f: F) -> Self
         where
             N: 'static;
     }
@@ -45,7 +45,9 @@ pub mod AdjSeqGraphMtPer {
             }
         }
 
-        fn num_vertices(&self) -> N { self.adj.length() }
+        fn num_vertices(&self) -> N {
+            self.adj.length()
+        }
 
         // Work: Θ(n), Span: Θ(n) - sum all neighbor list lengths
         fn num_edges(&self) -> N {
@@ -70,9 +72,13 @@ pub mod AdjSeqGraphMtPer {
             false
         }
 
-        fn out_neighbors(&self, u: N) -> ArraySeqMtPerS<N> { self.adj.nth(u).clone() }
+        fn out_neighbors(&self, u: N) -> ArraySeqMtPerS<N> {
+            self.adj.nth(u).clone()
+        }
 
-        fn out_degree(&self, u: N) -> N { self.adj.nth(u).length() }
+        fn out_degree(&self, u: N) -> N {
+            self.adj.nth(u).length()
+        }
 
         // Work: Θ(n+m), Span: Θ(n) - map over all vertices
         fn map_vertices<F: Fn(N) -> N + Send + Sync + Clone + 'static>(&self, f: F) -> Self

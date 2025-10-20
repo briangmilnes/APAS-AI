@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqStEphSLit;
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphBaseTrait, ArraySeqStEphRedefinableTrait};
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphBaseTrait, ArraySeqStEphRedefinableTrait};
 use apas_ai::Types::Types::*;
 
 #[test]
@@ -17,13 +17,21 @@ fn arrayseq_steph_basic_macros() {
 fn arrayseq_steph_full_pipeline() {
     let seq = <ArraySeqStEphS<i32> as ArraySeqStEphRedefinableTrait<i32>>::tabulate(&|i| (i + 1) as i32, 5);
     let mapped = <ArraySeqStEphS<i32> as ArraySeqStEphRedefinableTrait<i32>>::map(&seq, &|value| value * 2);
-    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::nth(&mapped, 4), &10);
+    assert_eq!(
+        <ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::nth(&mapped, 4),
+        &10
+    );
 
     let subseq = <ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::subseq(&mapped, 1, 3);
-    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::nth(&subseq, 2), &8);
+    assert_eq!(
+        <ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::nth(&subseq, 2),
+        &8
+    );
 
-    let appended = <ArraySeqStEphS<i32> as ArraySeqStEphRedefinableTrait<i32>>::append(&mapped, &ArraySeqStEphSLit![99]);
-    let evens = <ArraySeqStEphS<i32> as ArraySeqStEphRedefinableTrait<i32>>::filter(&appended, &|value| *value % 2 == 0);
+    let appended =
+        <ArraySeqStEphS<i32> as ArraySeqStEphRedefinableTrait<i32>>::append(&mapped, &ArraySeqStEphSLit![99]);
+    let evens =
+        <ArraySeqStEphS<i32> as ArraySeqStEphRedefinableTrait<i32>>::filter(&appended, &|value| *value % 2 == 0);
     assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::length(&evens), 5);
 
     let nested = ArraySeqStEphSLit![
@@ -32,7 +40,10 @@ fn arrayseq_steph_full_pipeline() {
         ArraySeqStEphSLit![4, 5]
     ];
     let flattened = <ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::flatten(&nested);
-    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::nth(&flattened, 3), &4);
+    assert_eq!(
+        <ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::nth(&flattened, 3),
+        &4
+    );
 
     let mut writable = flattened.clone();
     let _ = <ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::update(&mut writable, Pair(0, 100));
@@ -45,8 +56,14 @@ fn arrayseq_steph_full_pipeline() {
         &mut writable,
         &ArraySeqStEphSLit![Pair(0, 7), Pair(0, 9), Pair(4, 11)],
     );
-    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::nth(&writable, 0), &9);
-    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::nth(&writable, 4), &11);
+    assert_eq!(
+        <ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::nth(&writable, 0),
+        &9
+    );
+    assert_eq!(
+        <ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::nth(&writable, 4),
+        &11
+    );
 
     let collected = <ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::collect(
         &ArraySeqStEphSLit![Pair("x", 1), Pair("y", 2), Pair("x", 3)],
@@ -54,16 +71,21 @@ fn arrayseq_steph_full_pipeline() {
     );
     assert_eq!(<ArraySeqStEphS<Pair<&str, ArraySeqStEphS<i32>>> as ArraySeqStEphBaseTrait<Pair<&str, ArraySeqStEphS<i32>>>>::length(&collected), 2);
 
-    let iter_sum = <ArraySeqStEphS<i32> as ArraySeqStEphRedefinableTrait<i32>>::iterate(&flattened, &|acc, item| acc + item, 0);
+    let iter_sum =
+        <ArraySeqStEphS<i32> as ArraySeqStEphRedefinableTrait<i32>>::iterate(&flattened, &|acc, item| acc + item, 0);
     assert_eq!(iter_sum, 15);
 
-    let reduced = <ArraySeqStEphS<i32> as ArraySeqStEphRedefinableTrait<i32>>::reduce(&flattened, &|lhs, rhs| lhs + rhs, 0);
+    let reduced =
+        <ArraySeqStEphS<i32> as ArraySeqStEphRedefinableTrait<i32>>::reduce(&flattened, &|lhs, rhs| lhs + rhs, 0);
     assert_eq!(reduced, 15);
 
     let (prefixes, total) =
         <ArraySeqStEphS<i32> as ArraySeqStEphRedefinableTrait<i32>>::scan(&flattened, &|lhs, rhs| lhs + rhs, 0);
     assert_eq!(total, 15);
-    assert_eq!(<ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::nth(&prefixes, 2), &3);
+    assert_eq!(
+        <ArraySeqStEphS<i32> as ArraySeqStEphBaseTrait<i32>>::nth(&prefixes, 2),
+        &3
+    );
 }
 
 #[test]
@@ -89,7 +111,7 @@ fn test_arrayseqsteph_outofbounds_graceful() {
     // Out-of-bounds update should be silently ignored (APAS style)
     let original_values = [*seq.nth(0), *seq.nth(1), *seq.nth(2)];
     let _ = seq.update(Pair(10, 99)); // Index 10 is out of bounds - should be ignored
-                                      // Verify sequence is unchanged
+    // Verify sequence is unchanged
     assert_eq!(*seq.nth(0), original_values[0]);
     assert_eq!(*seq.nth(1), original_values[1]);
     assert_eq!(*seq.nth(2), original_values[2]);

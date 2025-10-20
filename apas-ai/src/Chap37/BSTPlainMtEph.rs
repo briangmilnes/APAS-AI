@@ -47,23 +47,27 @@ pub mod BSTPlainMtEph {
 
     pub trait BSTPlainMtEphTrait<T: StTInMtT + Ord>: Sized {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new()                       -> Self;
+        fn new() -> Self;
         /// claude-4-sonet: Work Θ(log n) average, Θ(n) worst case; Span Θ(log n) average with locking
         fn insert(&self, value: T);
         /// claude-4-sonet: Work Θ(log n) average, Θ(n) worst case; Span Θ(log n) average with locking
-        fn find(&self, target: &T)     -> Option<T>;
+        fn find(&self, target: &T) -> Option<T>;
         fn contains(&self, target: &T) -> B;
-        fn size(&self)                 -> N;
-        fn is_empty(&self)             -> B;
-        fn height(&self)               -> N;
-        fn minimum(&self)              -> Option<T>;
-        fn maximum(&self)              -> Option<T>;
-        fn in_order(&self)             -> ArraySeqStPerS<T>;
+        fn size(&self) -> N;
+        fn is_empty(&self) -> B;
+        fn height(&self) -> N;
+        fn minimum(&self) -> Option<T>;
+        fn maximum(&self) -> Option<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
     }
 
-    fn height_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
+    fn height_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> i32 {
+        link.as_ref().map_or(0, |n| n.height)
+    }
 
-    fn size_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> N { link.as_ref().map_or(0, |n| n.size) }
+    fn size_of<T: StTInMtT + Ord>(link: &Option<Node<T>>) -> N {
+        link.as_ref().map_or(0, |n| n.size)
+    }
 
     impl<T: StTInMtT + Ord> BSTPlainMtEphTrait<T> for BSTPlainMtEph<T> {
         fn new() -> Self {
@@ -127,14 +131,18 @@ pub mod BSTPlainMtEph {
             find_rec(&self.root, target)
         }
 
-        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
+        fn contains(&self, target: &T) -> B {
+            self.find(target).is_some()
+        }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             guard.as_ref().map_or(0, |node| node.size)
         }
 
-        fn is_empty(&self) -> B { self.size() == 0 }
+        fn is_empty(&self) -> B {
+            self.size() == 0
+        }
 
         fn height(&self) -> N {
             let guard = self.root.read().unwrap();

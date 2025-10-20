@@ -72,7 +72,10 @@ pub mod QuadProbFlatHashTableStEph {
             false
         }
 
-        fn resize(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, new_size: N) -> HashTable<Key, Value, FlatEntry<Key, Value>, Metrics> {
+        fn resize(
+            table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>,
+            new_size: N,
+        ) -> HashTable<Key, Value, FlatEntry<Key, Value>, Metrics> {
             // Collect all key-value pairs from old table
             let mut pairs = Vec::new();
             for entry in &table.table {

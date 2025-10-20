@@ -25,7 +25,9 @@ pub mod StructChainedHashTable {
     }
 
     impl<Key: PartialEq + Clone, Value: Clone> EntryTrait<Key, Value> for ChainList<Key, Value> {
-        fn new() -> Self { ChainList { head: None } }
+        fn new() -> Self {
+            ChainList { head: None }
+        }
 
         fn insert(&mut self, key: Key, value: Value) {
             // Search for existing key and update
@@ -75,7 +77,9 @@ pub mod StructChainedHashTable {
     }
 
     impl<Key, Value> Default for ChainList<Key, Value> {
-        fn default() -> Self { ChainList { head: None } }
+        fn default() -> Self {
+            ChainList { head: None }
+        }
     }
 
     /// Struct Chained Hash Table implementation.
@@ -96,7 +100,10 @@ pub mod StructChainedHashTable {
             Self::delete_chained(table, key)
         }
 
-        fn resize(table: &HashTable<Key, Value, ChainList<Key, Value>, Metrics>, new_size: N) -> HashTable<Key, Value, ChainList<Key, Value>, Metrics> {
+        fn resize(
+            table: &HashTable<Key, Value, ChainList<Key, Value>, Metrics>,
+            new_size: N,
+        ) -> HashTable<Key, Value, ChainList<Key, Value>, Metrics> {
             // Collect all key-value pairs from all chains
             let mut pairs = Vec::new();
             for chain in &table.table {

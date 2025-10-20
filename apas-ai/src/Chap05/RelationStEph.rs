@@ -19,7 +19,7 @@ pub mod RelationStEph {
     pub trait RelationStEphTrait<X: StT + Hash, Y: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                              -> Self;
+        fn empty() -> Self;
 
         /// APAS: Work Θ(|pairs|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|pairs|), Span Θ(1)
@@ -27,37 +27,41 @@ pub mod RelationStEph {
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self)                          -> N;
+        fn size(&self) -> N;
 
         /// APAS: Work Θ(|R|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|R|), Span Θ(1)
-        fn domain(&self)                        -> SetStEph<X>
+        fn domain(&self) -> SetStEph<X>
         where
             X: Clone;
 
         /// APAS: Work Θ(|R|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|R|), Span Θ(1)
-        fn range(&self)                         -> SetStEph<Y>
+        fn range(&self) -> SetStEph<Y>
         where
             Y: Clone;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn mem(&self, a: &X, b: &Y)             -> B
+        fn mem(&self, a: &X, b: &Y) -> B
         where
             X: Clone,
             Y: Clone;
 
-        fn iter(&self)                          -> Iter<'_, Pair<X, Y>>;
+        fn iter(&self) -> Iter<'_, Pair<X, Y>>;
 
         // Methods added from inherent impl
         fn FromVec(v: Vec<Pair<X, Y>>) -> RelationStEph<X, Y>;
     }
 
     impl<X: StT + Hash, Y: StT + Hash> RelationStEphTrait<X, Y> for RelationStEph<X, Y> {
-        fn empty() -> RelationStEph<X, Y> { RelationStEph { pairs: SetLit![] } }
+        fn empty() -> RelationStEph<X, Y> {
+            RelationStEph { pairs: SetLit![] }
+        }
 
-        fn FromSet(pairs: SetStEph<Pair<X, Y>>) -> RelationStEph<X, Y> { RelationStEph { pairs } }
+        fn FromSet(pairs: SetStEph<Pair<X, Y>>) -> RelationStEph<X, Y> {
+            RelationStEph { pairs }
+        }
 
         fn FromVec(v: Vec<Pair<X, Y>>) -> RelationStEph<X, Y> {
             RelationStEph {
@@ -65,7 +69,9 @@ pub mod RelationStEph {
             }
         }
 
-        fn size(&self) -> N { self.pairs.size() }
+        fn size(&self) -> N {
+            self.pairs.size()
+        }
 
         fn domain(&self) -> SetStEph<X>
         where
@@ -97,21 +103,29 @@ pub mod RelationStEph {
             self.pairs.mem(&Pair(a.clone(), b.clone()))
         }
 
-        fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.pairs.iter() }
+        fn iter(&self) -> Iter<'_, Pair<X, Y>> {
+            self.pairs.iter()
+        }
     }
 
     impl<A: StT + Hash, B: StT + Hash> PartialEq for RelationStEph<A, B> {
-        fn eq(&self, other: &Self) -> bool { self.pairs == other.pairs }
+        fn eq(&self, other: &Self) -> bool {
+            self.pairs == other.pairs
+        }
     }
 
     impl<A: StT + Hash, B: StT + Hash> Eq for RelationStEph<A, B> {}
 
     impl<A: StT + Hash, B: StT + Hash> Debug for RelationStEph<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Debug::fmt(&self.pairs, f) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            std::fmt::Debug::fmt(&self.pairs, f)
+        }
     }
 
     impl<A: StT + Hash, B: StT + Hash> Display for RelationStEph<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Display::fmt(&self.pairs, f) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            std::fmt::Display::fmt(&self.pairs, f)
+        }
     }
 
     #[macro_export]

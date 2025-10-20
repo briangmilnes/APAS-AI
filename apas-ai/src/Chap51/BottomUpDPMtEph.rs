@@ -19,7 +19,7 @@ pub mod BottomUpDPMtEph {
     pub trait BottomUpDPMtEphTrait<T: MtVal> {
         /// Create new bottom-up DP solver
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new()                     -> Self;
+        fn new() -> Self;
 
         /// Solve DP problem
         /// APAS: Work O(n³), Span O(n)
@@ -36,7 +36,9 @@ pub mod BottomUpDPMtEph {
 
     impl BottomUpDPMtEphS {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn new(s: ArraySeqMtEphS<char>, t: ArraySeqMtEphS<char>) -> Self { BottomUpDPMtEphS { seq_s: s, seq_t: t } }
+        pub fn new(s: ArraySeqMtEphS<char>, t: ArraySeqMtEphS<char>) -> Self {
+            BottomUpDPMtEphS { seq_s: s, seq_t: t }
+        }
 
         /// Compute minimum edit distance using parallel bottom-up diagonal pebbling
         /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(min(|S|,|T|))
@@ -90,11 +92,7 @@ pub mod BottomUpDPMtEph {
             let positions: Vec<(usize, usize)> = (start..=end)
                 .filter_map(|i| {
                     let j = k - i;
-                    if j > 0 && j <= t_len {
-                        Some((i, j))
-                    } else {
-                        None
-                    }
+                    if j > 0 && j <= t_len { Some((i, j)) } else { None }
                 })
                 .collect();
 
@@ -154,27 +152,37 @@ pub mod BottomUpDPMtEph {
         /// Get the length of sequence S
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn s_length(&self) -> usize { self.seq_s.length() }
+        pub fn s_length(&self) -> usize {
+            self.seq_s.length()
+        }
 
         /// Get the length of sequence T
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn t_length(&self) -> usize { self.seq_t.length() }
+        pub fn t_length(&self) -> usize {
+            self.seq_t.length()
+        }
 
         /// Check if sequences are empty
         /// Claude Work: O(1) - constant time check
         /// Claude Span: O(1) - constant time check
-        pub fn is_empty(&self) -> bool { self.seq_s.length() == 0usize && self.seq_t.length() == 0usize }
+        pub fn is_empty(&self) -> bool {
+            self.seq_s.length() == 0usize && self.seq_t.length() == 0usize
+        }
 
         /// Mutably update sequence S
         /// Claude Work: O(1) - constant time update
         /// Claude Span: O(1) - constant time update
-        pub fn set_s(&mut self, s: ArraySeqMtEphS<char>) { self.seq_s = s; }
+        pub fn set_s(&mut self, s: ArraySeqMtEphS<char>) {
+            self.seq_s = s;
+        }
 
         /// Mutably update sequence T
         /// Claude Work: O(1) - constant time update
         /// Claude Span: O(1) - constant time update
-        pub fn set_t(&mut self, t: ArraySeqMtEphS<char>) { self.seq_t = t; }
+        pub fn set_t(&mut self, t: ArraySeqMtEphS<char>) {
+            self.seq_t = t;
+        }
     }
 
     impl Default for BottomUpDPMtEphS {

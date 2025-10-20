@@ -1,8 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 use apas_ai::ArraySeqStPerSLit;
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerBaseTrait, ArraySeqStPerRedefinableTrait};
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerBaseTrait, ArraySeqStPerRedefinableTrait};
 use apas_ai::Types::Types::Pair;
 use apas_ai::Types::Types::*; // macro import
 
@@ -432,10 +432,12 @@ fn test_arrayseqstper_zero_length_operations() {
     let filtered_zero = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::filter(&zero_start, &|x| *x > 0);
     assert_eq!(filtered_zero.length(), 0);
 
-    let reduced_zero = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::reduce(&zero_start, &|a, b| a + b, 100);
+    let reduced_zero =
+        <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::reduce(&zero_start, &|a, b| a + b, 100);
     assert_eq!(reduced_zero, 100); // Should return base value
 
-    let scanned_zero = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::scan(&zero_start, &|a, b| a + b, 50);
+    let scanned_zero =
+        <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::scan(&zero_start, &|a, b| a + b, 50);
     assert_eq!(scanned_zero.0.length(), 1); // Should contain base value
     assert_eq!(*scanned_zero.0.nth(0), 50);
 
@@ -547,7 +549,8 @@ fn test_arrayseqstper_maximum_size_boundary() {
     assert_eq!(*mapped_large.nth(large_size - 1), ((large_size - 1) as i32) * 2);
 
     // Test filter operation on large sequence (sample)
-    let filtered_large = <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::filter(&large_seq, &|x| *x % 1000 == 0);
+    let filtered_large =
+        <ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::filter(&large_seq, &|x| *x % 1000 == 0);
     assert_eq!(filtered_large.length(), 50); // 0, 1000, 2000, ..., 49000
     assert_eq!(*filtered_large.nth(0), 0);
     assert_eq!(*filtered_large.nth(1), 1000);

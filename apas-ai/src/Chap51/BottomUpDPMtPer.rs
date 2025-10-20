@@ -19,7 +19,7 @@ pub mod BottomUpDPMtPer {
     pub trait BottomUpDPMtPerTrait<T: MtVal> {
         /// Create new bottom-up DP solver
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new()                     -> Self;
+        fn new() -> Self;
 
         /// Solve DP problem
         /// APAS: Work O(n³), Span O(lg n)
@@ -36,7 +36,9 @@ pub mod BottomUpDPMtPer {
 
     impl BottomUpDPMtPerS {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        pub fn new(s: ArraySeqMtPerS<char>, t: ArraySeqMtPerS<char>) -> Self { BottomUpDPMtPerS { seq_s: s, seq_t: t } }
+        pub fn new(s: ArraySeqMtPerS<char>, t: ArraySeqMtPerS<char>) -> Self {
+            BottomUpDPMtPerS { seq_s: s, seq_t: t }
+        }
 
         /// Compute minimum edit distance using parallel bottom-up diagonal pebbling
         /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(min(|S|,|T|))
@@ -90,11 +92,7 @@ pub mod BottomUpDPMtPer {
             let positions: Vec<(usize, usize)> = (start..=end)
                 .filter_map(|i| {
                     let j = k - i;
-                    if j > 0 && j <= t_len {
-                        Some((i, j))
-                    } else {
-                        None
-                    }
+                    if j > 0 && j <= t_len { Some((i, j)) } else { None }
                 })
                 .collect();
 
@@ -153,17 +151,23 @@ pub mod BottomUpDPMtPer {
         /// Get the length of sequence S
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn s_length(&self) -> usize { self.seq_s.length() }
+        pub fn s_length(&self) -> usize {
+            self.seq_s.length()
+        }
 
         /// Get the length of sequence T
         /// Claude Work: O(1) - constant time access
         /// Claude Span: O(1) - constant time access
-        pub fn t_length(&self) -> usize { self.seq_t.length() }
+        pub fn t_length(&self) -> usize {
+            self.seq_t.length()
+        }
 
         /// Check if sequences are empty
         /// Claude Work: O(1) - constant time check
         /// Claude Span: O(1) - constant time check
-        pub fn is_empty(&self) -> bool { self.seq_s.length() == 0usize && self.seq_t.length() == 0usize }
+        pub fn is_empty(&self) -> bool {
+            self.seq_s.length() == 0usize && self.seq_t.length() == 0usize
+        }
     }
 
     impl Default for BottomUpDPMtPerS {

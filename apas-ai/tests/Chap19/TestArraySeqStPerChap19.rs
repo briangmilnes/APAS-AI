@@ -4,7 +4,9 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 
 use apas_ai::ArraySeqStPerSLit;
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerBaseTrait as Chap18BaseTrait, ArraySeqStPerRedefinableTrait as Chap18RedefinableTrait};
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{
+    ArraySeqStPerBaseTrait as Chap18BaseTrait, ArraySeqStPerRedefinableTrait as Chap18RedefinableTrait,
+};
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Types::Types::*;
 
@@ -146,7 +148,9 @@ fn test_eq_vs_partial_eq_difference() {
     } // Use i32 instead of f64 so Eq can be implemented
 
     impl Display for PartialComparable {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result { write!(f, "PartialComparable({})", self.value) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "PartialComparable({})", self.value)
+        }
     }
     let seq1 = ArraySeqStPerSLit![PartialComparable { value: 1 }];
     let seq2 = ArraySeqStPerSLit![PartialComparable { value: 1 }];
@@ -161,7 +165,9 @@ fn test_eq_vs_partial_eq_difference() {
     }
 
     impl Display for TotalComparable {
-        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result { write!(f, "TotalComparable({})", self.value) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+            write!(f, "TotalComparable({})", self.value)
+        }
     }
     let total_seq1 = ArraySeqStPerSLit![TotalComparable { value: 42 }];
     let total_seq2 = ArraySeqStPerSLit![TotalComparable { value: 42 }];

@@ -20,7 +20,7 @@ pub mod MergeSortMt {
         /// Sort a sequence using parallel merge sort.
         /// APAS: Work Θ(n log n), Span Θ(log² n)
         /// claude-4-sonet: Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log n)
-        fn merge_sort_parallel(a: &ArraySeqMtPerS<T>)                          -> Self;
+        fn merge_sort_parallel(a: &ArraySeqMtPerS<T>) -> Self;
     }
 
     impl<T: StTInMtT + Ord + 'static> MergeSortMtTrait<T> for ArraySeqMtPerS<T> {

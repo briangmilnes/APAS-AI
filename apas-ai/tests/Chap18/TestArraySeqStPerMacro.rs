@@ -1,20 +1,30 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqStPerSLit;
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerS as Seq, ArraySeqStPerBaseTrait, ArraySeqStPerRedefinableTrait};
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{
+    ArraySeqStPerBaseTrait, ArraySeqStPerRedefinableTrait, ArraySeqStPerS, ArraySeqStPerS as Seq,
+};
 use apas_ai::Types::Types::*;
 
 #[test]
 fn arrayseq_stper_macro_empty() {
     let seq: Seq<i32> = ArraySeqStPerSLit![];
     assert_eq!(<ArraySeqStPerS<i32> as ArraySeqStPerBaseTrait<i32>>::length(&seq), 0);
-    assert!(<ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::isEmpty(&seq));
+    assert!(<ArraySeqStPerS<i32> as ArraySeqStPerRedefinableTrait<i32>>::isEmpty(
+        &seq
+    ));
 }
 
 #[test]
 fn arrayseq_stper_macro_literal() {
     let seq = ArraySeqStPerSLit![1, 2, 3];
-    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerBaseTrait<usize>>::length(&seq), 3);
-    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerBaseTrait<usize>>::nth(&seq, 1), &2);
+    assert_eq!(
+        <ArraySeqStPerS<usize> as ArraySeqStPerBaseTrait<usize>>::length(&seq),
+        3
+    );
+    assert_eq!(
+        <ArraySeqStPerS<usize> as ArraySeqStPerBaseTrait<usize>>::nth(&seq, 1),
+        &2
+    );
 }
 
 #[test]
@@ -47,13 +57,17 @@ fn arrayseq_stper_operations() {
     );
 
     let subseq = mapped.subseq_copy(1, 2);
-    assert_eq!(<ArraySeqStPerS<usize> as ArraySeqStPerBaseTrait<usize>>::length(&subseq), 2);
+    assert_eq!(
+        <ArraySeqStPerS<usize> as ArraySeqStPerBaseTrait<usize>>::length(&subseq),
+        2
+    );
     assert_eq!(
         <ArraySeqStPerS<usize> as ArraySeqStPerBaseTrait<usize>>::nth(&subseq, 0),
         &3
     );
 
-    let appended = <ArraySeqStPerS<usize> as ArraySeqStPerRedefinableTrait<usize>>::append(&mapped, &ArraySeqStPerSLit![42]);
+    let appended =
+        <ArraySeqStPerS<usize> as ArraySeqStPerRedefinableTrait<usize>>::append(&mapped, &ArraySeqStPerSLit![42]);
     assert_eq!(
         <ArraySeqStPerS<usize> as ArraySeqStPerBaseTrait<usize>>::length(&appended),
         5
@@ -64,7 +78,8 @@ fn arrayseq_stper_operations() {
     );
 
     let a = ArraySeqStPerSLit![1, 2, 3, 4, 5];
-    let filtered = <ArraySeqStPerS<usize> as ArraySeqStPerRedefinableTrait<usize>>::filter(&a, &|value| *value % 2 == 0);
+    let filtered =
+        <ArraySeqStPerS<usize> as ArraySeqStPerRedefinableTrait<usize>>::filter(&a, &|value| *value % 2 == 0);
     assert_eq!(
         <ArraySeqStPerS<usize> as ArraySeqStPerBaseTrait<usize>>::length(&filtered),
         2
@@ -98,12 +113,19 @@ fn arrayseq_stper_operations() {
         &ArraySeqStPerSLit![Pair("a", 1), Pair("b", 2), Pair("a", 3)],
         |lhs: &&str, rhs: &&str| lhs.cmp(rhs),
     );
-    assert_eq!(<ArraySeqStPerS<Pair<&str, ArraySeqStPerS<usize>>> as ArraySeqStPerBaseTrait<Pair<&str, ArraySeqStPerS<usize>>>>::length(&collected), 2);
+    assert_eq!(
+        <ArraySeqStPerS<Pair<&str, ArraySeqStPerS<usize>>> as ArraySeqStPerBaseTrait<
+            Pair<&str, ArraySeqStPerS<usize>>,
+        >>::length(&collected),
+        2
+    );
 
-    let iterated = <ArraySeqStPerS<usize> as ArraySeqStPerRedefinableTrait<usize>>::iterate(&a, &|acc, item| acc + item, 0);
+    let iterated =
+        <ArraySeqStPerS<usize> as ArraySeqStPerRedefinableTrait<usize>>::iterate(&a, &|acc, item| acc + item, 0);
     assert_eq!(iterated, 15);
 
-    let reduced = <ArraySeqStPerS<usize> as ArraySeqStPerRedefinableTrait<usize>>::reduce(&flattened, &|lhs, rhs| lhs + rhs, 0);
+    let reduced =
+        <ArraySeqStPerS<usize> as ArraySeqStPerRedefinableTrait<usize>>::reduce(&flattened, &|lhs, rhs| lhs + rhs, 0);
     assert_eq!(reduced, 15);
 
     let (prefixes, total) =

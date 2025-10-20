@@ -30,9 +30,13 @@ pub mod BSTAVLMtEph {
         }
     }
 
-    fn height_link<T: StTInMtT + Ord>(link: &Link<T>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
+    fn height_link<T: StTInMtT + Ord>(link: &Link<T>) -> i32 {
+        link.as_ref().map_or(0, |n| n.height)
+    }
 
-    fn size_link<T: StTInMtT + Ord>(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
+    fn size_link<T: StTInMtT + Ord>(link: &Link<T>) -> N {
+        link.as_ref().map_or(0, |n| n.size)
+    }
 
     fn update<T: StTInMtT + Ord>(node: &mut Node<T>) {
         node.height = 1 + height_link(&node.left).max(height_link(&node.right));
@@ -171,28 +175,26 @@ pub mod BSTAVLMtEph {
 
     pub trait BSTAVLMtEphTrait<T: StTInMtT + Ord>: Sized {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new()                       -> Self;
+        fn new() -> Self;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
         fn insert(&self, value: T);
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
-        fn find(&self, target: &T)     -> Option<T>;
+        fn find(&self, target: &T) -> Option<T>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
         fn contains(&self, target: &T) -> B;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self)                 -> N;
+        fn size(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self)             -> B;
+        fn is_empty(&self) -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn height(&self)               -> N;
+        fn height(&self) -> N;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
-        fn minimum(&self)              -> Option<T>;
+        fn minimum(&self) -> Option<T>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
-        fn maximum(&self)              -> Option<T>;
-        fn in_order(&self)             -> ArraySeqStPerS<T>;
-        fn pre_order(&self)            -> ArraySeqStPerS<T>;
+        fn maximum(&self) -> Option<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn pre_order(&self) -> ArraySeqStPerS<T>;
     }
-
-
 
     impl<T: StTInMtT + Ord> BSTAVLMtEphTrait<T> for BSTAVLMtEph<T> {
         fn new() -> Self {
@@ -211,14 +213,18 @@ pub mod BSTAVLMtEph {
             find_link(&*guard, target).cloned()
         }
 
-        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
+        fn contains(&self, target: &T) -> B {
+            self.find(target).is_some()
+        }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B { self.size() == 0 }
+        fn is_empty(&self) -> B {
+            self.size() == 0
+        }
 
         fn height(&self) -> N {
             let guard = self.root.read().unwrap();
@@ -251,7 +257,9 @@ pub mod BSTAVLMtEph {
     }
 
     impl<T: StTInMtT + Ord> Default for BSTAVLMtEph<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     #[macro_export]

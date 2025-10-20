@@ -19,55 +19,55 @@ pub mod DirGraphStEph {
     pub trait DirGraphStEphTrait<V: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                        -> Self;
+        fn empty() -> Self;
         /// APAS: Work Θ(|V| + |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |A|), Span Θ(1)
         fn FromSets(V: SetStEph<V>, A: SetStEph<Edge<V>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn vertices(&self)                                -> &SetStEph<V>;
+        fn vertices(&self) -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn arcs(&self)                                    -> &SetStEph<Edge<V>>;
+        fn arcs(&self) -> &SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn sizeV(&self)                                   -> N;
+        fn sizeV(&self) -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn sizeA(&self)                                   -> N;
+        fn sizeA(&self) -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn Neighbor(&self, u: &V, v: &V)                  -> B;
+        fn Neighbor(&self, u: &V, v: &V) -> B;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn NG(&self, v: &V)                               -> SetStEph<V>;
+        fn NG(&self, v: &V) -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(1)
-        fn NGOfVertices(&self, u_set: &SetStEph<V>)       -> SetStEph<V>;
+        fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn NPlus(&self, v: &V)                            -> SetStEph<V>;
+        fn NPlus(&self, v: &V) -> SetStEph<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn NMinus(&self, v: &V)                           -> SetStEph<V>;
+        fn NMinus(&self, v: &V) -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(1)
-        fn NPlusOfVertices(&self, u_set: &SetStEph<V>)    -> SetStEph<V>;
+        fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(1)
-        fn NMinusOfVertices(&self, u_set: &SetStEph<V>)   -> SetStEph<V>;
+        fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn Incident(&self, e: &Edge<V>, v: &V)            -> B;
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn Degree(&self, v: &V)                           -> N;
+        fn Degree(&self, v: &V) -> N;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn InDegree(&self, v: &V)                         -> N;
+        fn InDegree(&self, v: &V) -> N;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn OutDegree(&self, v: &V)                        -> N;
+        fn OutDegree(&self, v: &V) -> N;
     }
 
     impl<V: StT + Hash> DirGraphStEphTrait<V> for DirGraphStEph<V> {
@@ -77,18 +77,30 @@ pub mod DirGraphStEph {
                 A: SetLit![],
             }
         }
-        fn FromSets(V: SetStEph<V>, A: SetStEph<Edge<V>>) -> DirGraphStEph<V> { DirGraphStEph { V, A } }
-        fn vertices(&self) -> &SetStEph<V> { &self.V }
-        fn arcs(&self) -> &SetStEph<Edge<V>> { &self.A }
-        fn sizeV(&self) -> N { self.V.size() }
-        fn sizeA(&self) -> N { self.A.size() }
+        fn FromSets(V: SetStEph<V>, A: SetStEph<Edge<V>>) -> DirGraphStEph<V> {
+            DirGraphStEph { V, A }
+        }
+        fn vertices(&self) -> &SetStEph<V> {
+            &self.V
+        }
+        fn arcs(&self) -> &SetStEph<Edge<V>> {
+            &self.A
+        }
+        fn sizeV(&self) -> N {
+            self.V.size()
+        }
+        fn sizeA(&self) -> N {
+            self.A.size()
+        }
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Adjacent if there is an arc either way
             self.A.mem(&Edge(u.clone(), v.clone()))
         }
 
-        fn NG(&self, v: &V) -> SetStEph<V> { self.NPlus(v).union(&self.NMinus(v)) }
+        fn NG(&self, v: &V) -> SetStEph<V> {
+            self.NPlus(v).union(&self.NMinus(v))
+        }
 
         fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
             let mut result: SetStEph<V> = SetLit![];
@@ -137,11 +149,19 @@ pub mod DirGraphStEph {
             result
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B { &e.0 == v || &e.1 == v }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B {
+            &e.0 == v || &e.1 == v
+        }
 
-        fn Degree(&self, v: &V) -> N { self.InDegree(v) + self.OutDegree(v) }
-        fn InDegree(&self, v: &V) -> N { self.NMinus(v).size() }
-        fn OutDegree(&self, v: &V) -> N { self.NPlus(v).size() }
+        fn Degree(&self, v: &V) -> N {
+            self.InDegree(v) + self.OutDegree(v)
+        }
+        fn InDegree(&self, v: &V) -> N {
+            self.NMinus(v).size()
+        }
+        fn OutDegree(&self, v: &V) -> N {
+            self.NPlus(v).size()
+        }
     }
 
     impl<V: StT + Hash> Debug for DirGraphStEph<V> {
@@ -154,11 +174,15 @@ pub mod DirGraphStEph {
     }
 
     impl<V: StT + Hash> Display for DirGraphStEph<V> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "V={} A={:?}", self.V, self.A) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            write!(f, "V={} A={:?}", self.V, self.A)
+        }
     }
 
     impl<V: StT + Hash> PartialEq for DirGraphStEph<V> {
-        fn eq(&self, other: &Self) -> bool { self.V == other.V && self.A == other.A }
+        fn eq(&self, other: &Self) -> bool {
+            self.V == other.V && self.A == other.A
+        }
     }
     impl<V: StT + Hash> Eq for DirGraphStEph<V> {}
 

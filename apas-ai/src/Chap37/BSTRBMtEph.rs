@@ -36,11 +36,17 @@ pub mod BSTRBMtEph {
         }
     }
 
-    fn is_red<T: StTInMtT + Ord>(link: &Link<T>) -> bool { matches!(link, Some(node) if node.color == Color::Red) }
+    fn is_red<T: StTInMtT + Ord>(link: &Link<T>) -> bool {
+        matches!(link, Some(node) if node.color == Color::Red)
+    }
 
-    fn size_link<T: StTInMtT + Ord>(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
+    fn size_link<T: StTInMtT + Ord>(link: &Link<T>) -> N {
+        link.as_ref().map_or(0, |n| n.size)
+    }
 
-    fn update<T: StTInMtT + Ord>(node: &mut Node<T>) { node.size = 1 + size_link(&node.left) + size_link(&node.right); }
+    fn update<T: StTInMtT + Ord>(node: &mut Node<T>) {
+        node.size = 1 + size_link(&node.left) + size_link(&node.right);
+    }
 
     fn rotate_left<T: StTInMtT + Ord>(link: &mut Link<T>) {
         if let Some(mut h) = link.take() {
@@ -213,19 +219,19 @@ pub mod BSTRBMtEph {
 
     pub trait BSTRBMtEphTrait<T: StTInMtT + Ord>: Sized {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new()                       -> Self;
+        fn new() -> Self;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
         fn insert(&self, value: T);
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
-        fn find(&self, target: &T)     -> Option<T>;
+        fn find(&self, target: &T) -> Option<T>;
         fn contains(&self, target: &T) -> B;
-        fn size(&self)                 -> N;
-        fn is_empty(&self)             -> B;
-        fn height(&self)               -> N;
-        fn minimum(&self)              -> Option<T>;
-        fn maximum(&self)              -> Option<T>;
-        fn in_order(&self)             -> ArraySeqStPerS<T>;
-        fn pre_order(&self)            -> ArraySeqStPerS<T>;
+        fn size(&self) -> N;
+        fn is_empty(&self) -> B;
+        fn height(&self) -> N;
+        fn minimum(&self) -> Option<T>;
+        fn maximum(&self) -> Option<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn pre_order(&self) -> ArraySeqStPerS<T>;
     }
 
     impl<T: StTInMtT + Ord> BSTRBMtEphTrait<T> for BSTRBMtEph<T> {
@@ -248,14 +254,18 @@ pub mod BSTRBMtEph {
             find_link(&*guard, target).cloned()
         }
 
-        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
+        fn contains(&self, target: &T) -> B {
+            self.find(target).is_some()
+        }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B { self.size() == 0 }
+        fn is_empty(&self) -> B {
+            self.size() == 0
+        }
 
         fn height(&self) -> N {
             fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {
@@ -294,7 +304,9 @@ pub mod BSTRBMtEph {
     }
 
     impl<T: StTInMtT + Ord> Default for BSTRBMtEph<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     #[macro_export]

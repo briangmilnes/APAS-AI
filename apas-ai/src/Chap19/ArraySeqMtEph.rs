@@ -6,10 +6,7 @@ pub mod ArraySeqMtEph {
     use std::sync::Mutex;
     use std::thread;
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
-        ArraySeqMtEphS as S,
-        ArraySeqMtEphRedefinableTrait,
-    };
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphRedefinableTrait, ArraySeqMtEphS as S};
     use crate::Types::Types::*;
 
     pub type ArraySeqMtEphS<T> = S<T>;
@@ -21,9 +18,9 @@ pub mod ArraySeqMtEph {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>, index: N) -> Option<T>;
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)    -> Self;
+        fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn deflate<F: PredMt<T>>(f: &F, x: &T)                            -> Self;
+        fn deflate<F: PredMt<T>>(f: &F, x: &T) -> Self;
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {

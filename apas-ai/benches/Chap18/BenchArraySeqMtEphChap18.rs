@@ -3,12 +3,16 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{*, ArraySeqMtEphBaseTrait, ArraySeqMtEphRedefinableTrait};
+use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphBaseTrait, ArraySeqMtEphRedefinableTrait, *};
 use apas_ai::Types::Types::*;
 
-fn identity(i: N) -> N { i }
+fn identity(i: N) -> N {
+    i
+}
 
-fn increment(x: &N) -> N { x + 1 }
+fn increment(x: &N) -> N {
+    x + 1
+}
 
 fn bench_tabulate_map_mteph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtEphChap18");
@@ -29,9 +33,13 @@ fn bench_tabulate_map_mteph_ch18(c: &mut Criterion) {
     group.finish();
 }
 
-fn one_plus(i: N) -> N { i + 1 }
+fn one_plus(i: N) -> N {
+    i + 1
+}
 
-fn add(x: &N, y: &N) -> N { x + y }
+fn add(x: &N, y: &N) -> N {
+    x + y
+}
 
 fn bench_reduce_parallel_mteph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtEphReduce");
@@ -52,7 +60,9 @@ fn bench_reduce_parallel_mteph_ch18(c: &mut Criterion) {
     group.finish();
 }
 
-fn is_even(x: &N) -> bool { x % 2 == 0 }
+fn is_even(x: &N) -> bool {
+    x % 2 == 0
+}
 
 fn bench_filter_mteph_ch18(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchArraySeqMtEphFilter");

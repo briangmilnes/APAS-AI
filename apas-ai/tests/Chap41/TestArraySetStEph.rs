@@ -6,8 +6,8 @@ use apas_ai::ArraySetStEphLit;
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap41::Example41_3::Example41_3::*;
-use apas_ai::*;
 use apas_ai::Types::Types::*;
+use apas_ai::*;
 
 #[test]
 fn test_arraysetstephlit_macro_functionality() {
@@ -139,10 +139,16 @@ fn test_array_set_macro() {
 }
 
 #[test]
-fn test_example_41_1_cases() { example_41_1_array_set(); }
+fn test_example_41_1_cases() {
+    example_41_1_array_set();
+}
 
 #[test]
-fn test_example_41_3_demonstration() { example_41_3_from_seq_demonstration(); }
+fn test_example_41_3_demonstration() {
+    example_41_3_from_seq_demonstration();
+}
 
 #[test]
-fn test_additional_operations() { additional_set_operations(); }
+fn test_additional_operations() {
+    additional_set_operations();
+}

@@ -5,58 +5,57 @@ pub mod ArraySeqStPer {
 
     use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{
+        ArraySeqStPerBaseTrait as BaseTrait, ArraySeqStPerRedefinableTrait as Chap18RedefinableTrait,
         ArraySeqStPerS as S,
-        ArraySeqStPerBaseTrait as BaseTrait,
-        ArraySeqStPerRedefinableTrait as Chap18RedefinableTrait,
     };
     use crate::Types::Types::*;
 
     pub type ArraySeqStPerS<T> = S<T>;
-    
+
     // Re-export BaseTrait so users get it via wildcard import
     pub use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerBaseTrait;
 
     pub trait ArraySeqStPerTrait<T: StT>: BaseTrait<T> {
         // Chapter 19 algorithmic implementations (redefines Chap18 Redefinable methods)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                                              -> Self;
+        fn empty() -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T)                                                   -> Self;
+        fn singleton(item: T) -> Self;
         /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
         /// claude-4-sonet: Work Θ(n + Σᵢ W(f(i))), Span Θ(n + maxᵢ S(f(i))), Parallelism Θ(1)
-        fn tabulate<F: Fn(N)                                                    -> T>(f: &F, n: N) -> ArraySeqStPerS<T>;
+        fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> ArraySeqStPerS<T>;
         /// APAS: Work Θ(1 + Σ x∈a W(f(x))), Span Θ(1 + max x∈a S(f(x)))
         /// claude-4-sonet: Work Θ(|a| + Σₓ W(f(x))), Span Θ(|a| + maxₓ S(f(x))), Parallelism Θ(1)
-        fn map<U: StT, F: Fn(&T)                                                -> U>(a: &ArraySeqStPerS<T>, f: &F) -> ArraySeqStPerS<U>;
+        fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStPerS<T>, f: &F) -> ArraySeqStPerS<U>;
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1)
-        fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)                 -> Self;
+        fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> Self;
         /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(1 + max i S(f(a[i])))
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(|a| + maxᵢ S(f(aᵢ))), Parallelism Θ(1)
-        fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F)                -> Self;
+        fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F) -> Self;
         /// claude-4-sonet: Work Θ(|a| × W(f)), Span Θ(|a| × S(f)), Parallelism Θ(1)
-        fn iterate<A: StT, F: Fn(&A, &T)                                        -> A>(a: &ArraySeqStPerS<T>, f: &F, x: A) -> A;
+        fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &ArraySeqStPerS<T>, f: &F, x: A) -> A;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
-        fn reduce<F: Fn(&T, &T)                                                 -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> T;
+        fn reduce<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> T;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
-        fn scan<F: Fn(&T, &T)                                                   -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T);
+        fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T);
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(a: &ArraySeqStPerS<T>)                                       -> bool;
+        fn isEmpty(a: &ArraySeqStPerS<T>) -> bool;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isSingleton(a: &ArraySeqStPerS<T>)                                   -> bool;
+        fn isSingleton(a: &ArraySeqStPerS<T>) -> bool;
 
         // Chapter 19 specific functions
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn update(a: &ArraySeqStPerS<T>, index: N, item: T)                     -> Self;
+        fn update(a: &ArraySeqStPerS<T>, index: N, item: T) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn select<'a>(a: &'a ArraySeqStPerS<T>, b: &'a ArraySeqStPerS<T>, i: N) -> Option<&'a T>;
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1)
-        fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>)          -> Self;
+        fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn deflate<F: PredSt<T>>(f: &F, x: &T)                                  -> Self;
+        fn deflate<F: PredSt<T>>(f: &F, x: &T) -> Self;
     }
 
     impl<T: StT> ArraySeqStPerTrait<T> for ArraySeqStPerS<T> {
@@ -167,11 +166,7 @@ pub mod ArraySeqStPer {
             }
             let offset = i - len_a;
             let len_b = b.length();
-            if offset < len_b {
-                Some(b.nth(offset))
-            } else {
-                None
-            }
+            if offset < len_b { Some(b.nth(offset)) } else { None }
         }
 
         fn append_select(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {

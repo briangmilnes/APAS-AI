@@ -20,13 +20,13 @@ pub mod Exercise12_5 {
     }
 
     pub trait ConcurrentStackMtTrait<T: StTInMtT> {
-        fn new()           -> Self;
+        fn new() -> Self;
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
         /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n concurrent pushes, Span Θ(1) - CAS retry loop
         fn push(&self, value: T);
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
         /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n concurrent pops, Span Θ(1) - CAS retry loop
-        fn pop(&self)      -> Option<T>;
+        fn pop(&self) -> Option<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - single atomic load
         fn is_empty(&self) -> bool;
@@ -103,7 +103,9 @@ pub mod Exercise12_5 {
         ///
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - single atomic load
-        fn is_empty(&self) -> bool { self.head.load(Ordering::Acquire).is_null() }
+        fn is_empty(&self) -> bool {
+            self.head.load(Ordering::Acquire).is_null()
+        }
 
         fn drain(&self) -> Vec<T> {
             let mut items = Vec::new();
@@ -115,7 +117,9 @@ pub mod Exercise12_5 {
     }
 
     impl<T: StTInMtT> Default for ConcurrentStackMt<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     impl<T: StTInMtT> Drop for ConcurrentStackMt<T> {

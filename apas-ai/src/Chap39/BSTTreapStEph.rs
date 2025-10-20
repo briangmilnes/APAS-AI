@@ -38,32 +38,35 @@ pub mod BSTTreapStEph {
 
     pub trait BSTTreapStEphTrait<T: StT + Ord> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new()                       -> Self;
+        fn new() -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self)                 -> N;
+        fn size(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self)             -> B;
+        fn is_empty(&self) -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn height(&self)               -> N;
+        fn height(&self) -> N;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn insert(&mut self, value: T);
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn find(&self, target: &T)     -> Option<&T>;
+        fn find(&self, target: &T) -> Option<&T>;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn contains(&self, target: &T) -> B;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn minimum(&self)              -> Option<&T>;
+        fn minimum(&self) -> Option<&T>;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn maximum(&self)              -> Option<&T>;
+        fn maximum(&self) -> Option<&T>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn in_order(&self)             -> ArraySeqStPerS<T>;
-        fn pre_order(&self)            -> ArraySeqStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn pre_order(&self) -> ArraySeqStPerS<T>;
     }
 
+    fn size_link<T: StT + Ord>(link: &Link<T>) -> N {
+        link.as_ref().map_or(0, |n| n.size)
+    }
 
-    fn size_link<T: StT + Ord>(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
-
-    fn update<T: StT + Ord>(node: &mut Node<T>) { node.size = 1 + size_link(&node.left) + size_link(&node.right); }
+    fn update<T: StT + Ord>(node: &mut Node<T>) {
+        node.size = 1 + size_link(&node.left) + size_link(&node.right);
+    }
 
     fn rotate_left<T: StT + Ord>(link: &mut Link<T>) {
         if let Some(mut x) = link.take() {
@@ -166,11 +169,17 @@ pub mod BSTTreapStEph {
     }
 
     impl<T: StT + Ord> BSTTreapStEphTrait<T> for BSTTreapStEph<T> {
-        fn new() -> Self { BSTTreapStEph { root: None } }
+        fn new() -> Self {
+            BSTTreapStEph { root: None }
+        }
 
-        fn size(&self) -> N { size_link(&self.root) }
+        fn size(&self) -> N {
+            size_link(&self.root)
+        }
 
-        fn is_empty(&self) -> B { self.size() == 0 }
+        fn is_empty(&self) -> B {
+            self.size() == 0
+        }
 
         fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
@@ -187,13 +196,21 @@ pub mod BSTTreapStEph {
             insert_link(&mut self.root, value, &mut r);
         }
 
-        fn find(&self, target: &T) -> Option<&T> { find_link(&self.root, target) }
+        fn find(&self, target: &T) -> Option<&T> {
+            find_link(&self.root, target)
+        }
 
-        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
+        fn contains(&self, target: &T) -> B {
+            self.find(target).is_some()
+        }
 
-        fn minimum(&self) -> Option<&T> { min_link(&self.root) }
+        fn minimum(&self) -> Option<&T> {
+            min_link(&self.root)
+        }
 
-        fn maximum(&self) -> Option<&T> { max_link(&self.root) }
+        fn maximum(&self) -> Option<&T> {
+            max_link(&self.root)
+        }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
@@ -209,7 +226,9 @@ pub mod BSTTreapStEph {
     }
 
     impl<T: StT + Ord> Default for BSTreeTreap<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     #[macro_export]

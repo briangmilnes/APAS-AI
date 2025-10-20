@@ -26,7 +26,7 @@ pub mod StarContractionStEph {
 
         /// Contract graph to just vertices (no edges)
         /// APAS: Work O((n + m) lg n), Span O((n + m) lg n)
-        fn contract_to_vertices<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>)     -> SetStEph<V>;
+        fn contract_to_vertices<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> SetStEph<V>;
     }
 
     /// Algorithm 62.5: Star Contraction (Sequential)

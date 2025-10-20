@@ -15,8 +15,8 @@ pub mod StarPartitionMtEph {
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphRedefinableTrait;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
 
@@ -88,7 +88,8 @@ pub mod StarPartitionMtEph {
         }
 
         // Phase 3: Build base sequence V' where each index maps to itself
-        let mut base_seq = <ArraySeqStEphS<V> as ArraySeqStEphRedefinableTrait<V>>::tabulate(&|i| vertices_vec[i].clone(), n);
+        let mut base_seq =
+            <ArraySeqStEphS<V> as ArraySeqStEphRedefinableTrait<V>>::tabulate(&|i| vertices_vec[i].clone(), n);
 
         // Phase 4: Convert th_edges to ArraySeqStEphS<Pair<usize, V>>
         let updates_seq =

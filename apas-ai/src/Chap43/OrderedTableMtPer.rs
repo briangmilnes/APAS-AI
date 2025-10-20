@@ -19,27 +19,29 @@ pub mod OrderedTableMtPer {
 
     pub trait OrderedTableMtPerTrait<K: StTInMtT + Ord, V: StTInMtT> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self)               -> N;
+        fn size(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                   -> Self;
+        fn empty() -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(k: K, v: V)     -> Self;
+        fn singleton(k: K, v: V) -> Self;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn find(&self, k: &K)        -> Option<V>;
+        fn find(&self, k: &K) -> Option<V>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn insert(&self, k: K, v: V) -> Self;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn delete(&self, k: &K)      -> Self;
+        fn delete(&self, k: &K) -> Self;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn domain(&self)             -> ArraySetStEph<K>;
+        fn domain(&self) -> ArraySetStEph<K>;
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(n × S(f)), Parallelism Θ(1)
-        fn map<F: Fn(&V)             -> V>(&self, f: F) -> Self;
+        fn map<F: Fn(&V) -> V>(&self, f: F) -> Self;
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(n × S(f)), Parallelism Θ(1)
-        fn filter<F: Fn(&K, &V)      -> B>(&self, f: F) -> Self;
+        fn filter<F: Fn(&K, &V) -> B>(&self, f: F) -> Self;
     }
 
     impl<K: StTInMtT + Ord, V: StTInMtT> OrderedTableMtPerTrait<K, V> for OrderedTableMtPer<K, V> {
-        fn size(&self) -> N { self.inner.size() }
+        fn size(&self) -> N {
+            self.inner.size()
+        }
 
         fn empty() -> Self {
             OrderedTableMtPer {
@@ -53,7 +55,9 @@ pub mod OrderedTableMtPer {
             }
         }
 
-        fn find(&self, k: &K) -> Option<V> { self.inner.find(k) }
+        fn find(&self, k: &K) -> Option<V> {
+            self.inner.find(k)
+        }
 
         fn insert(&self, k: K, v: V) -> Self {
             OrderedTableMtPer {
@@ -67,7 +71,9 @@ pub mod OrderedTableMtPer {
             }
         }
 
-        fn domain(&self) -> ArraySetStEph<K> { self.inner.domain() }
+        fn domain(&self) -> ArraySetStEph<K> {
+            self.inner.domain()
+        }
 
         fn map<F: Fn(&V) -> V>(&self, f: F) -> Self {
             OrderedTableMtPer {
@@ -83,7 +89,9 @@ pub mod OrderedTableMtPer {
     }
 
     impl<K: StTInMtT + Ord, V: StTInMtT> Default for OrderedTableMtPer<K, V> {
-        fn default() -> Self { Self::empty() }
+        fn default() -> Self {
+            Self::empty()
+        }
     }
 
     impl<K: StTInMtT + Ord, V: StTInMtT> Clone for OrderedTableMtPer<K, V> {

@@ -25,7 +25,7 @@ pub mod AllPairsResultStEphInt {
     pub trait AllPairsResultStEphIntTrait {
         /// Create new all-pairs result
         /// APAS: Work Θ(n²), Span Θ(n²)
-        fn new(n: N)                   -> Self;
+        fn new(n: N) -> Self;
 
         /// Get distance between vertices
         /// APAS: Work Θ(1), Span Θ(1)
@@ -90,11 +90,7 @@ pub mod AllPairsResultStEphInt {
                 return None;
             }
             let pred = *self.predecessors.nth(u).nth(v);
-            if pred == NO_PREDECESSOR {
-                None
-            } else {
-                Some(pred)
-            }
+            if pred == NO_PREDECESSOR { None } else { Some(pred) }
         }
 
         /// Sets the predecessor of vertex v in the shortest path from u.
@@ -107,7 +103,9 @@ pub mod AllPairsResultStEphInt {
         }
 
         /// Checks if vertex v is reachable from vertex u.
-        pub fn is_reachable(&self, u: usize, v: usize) -> bool { self.get_distance(u, v) != UNREACHABLE }
+        pub fn is_reachable(&self, u: usize, v: usize) -> bool {
+            self.get_distance(u, v) != UNREACHABLE
+        }
 
         /// Extracts the shortest path from u to v by following predecessors.
         /// Returns None if v is unreachable from u, otherwise returns the path as a sequence.

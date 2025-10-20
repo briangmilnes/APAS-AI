@@ -22,27 +22,27 @@ pub mod ArraySetEnumMtEph {
 
     pub trait ArraySetEnumMtEphTrait {
         /// claude-4-sonet: Work Θ(u), Span Θ(1)
-        fn new(u: N)                                  -> Self;
+        fn new(u: N) -> Self;
         /// claude-4-sonet: Work Θ(u/w) where w is word size, Span Θ(u/w)
-        fn size(&self)                                -> N;
+        fn size(&self) -> N;
         /// claude-4-sonet: Work Θ(|set|), Span Θ(|set|)
-        fn to_seq(&self)                              -> ArraySeqMtEphS<N>;
+        fn to_seq(&self) -> ArraySeqMtEphS<N>;
         /// claude-4-sonet: Work Θ(u), Span Θ(1)
-        fn empty(u: N)                                -> Self;
+        fn empty(u: N) -> Self;
         /// claude-4-sonet: Work Θ(u), Span Θ(1)
-        fn singleton(u: N, x: N)                      -> Self;
+        fn singleton(u: N, x: N) -> Self;
         /// claude-4-sonet: Work Θ(u + |seq|), Span Θ(1)
-        fn from_seq(u: N, seq: ArraySeqMtEphS<N>)     -> Self;
+        fn from_seq(u: N, seq: ArraySeqMtEphS<N>) -> Self;
         /// claude-4-sonet: Work Θ(u), Span Θ(log u), Parallelism Θ(u/log u)
         fn filter<F: PredVal<N> + Clone>(&self, f: F) -> Self;
         /// claude-4-sonet: Work Θ(u/w), Span Θ(u/w)
-        fn intersection(&self, other: &Self)          -> Self;
+        fn intersection(&self, other: &Self) -> Self;
         /// claude-4-sonet: Work Θ(u/w), Span Θ(u/w)
-        fn difference(&self, other: &Self)            -> Self;
+        fn difference(&self, other: &Self) -> Self;
         /// claude-4-sonet: Work Θ(u/w), Span Θ(u/w)
-        fn union(&self, other: &Self)                 -> Self;
+        fn union(&self, other: &Self) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn find(&self, x: N)                          -> B;
+        fn find(&self, x: N) -> B;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn delete(&mut self, x: N);
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
@@ -72,7 +72,9 @@ pub mod ArraySetEnumMtEph {
             ArraySeqMtEphS::from_vec(result)
         }
 
-        fn empty(u: N) -> Self { Self::new(u) }
+        fn empty(u: N) -> Self {
+            Self::new(u)
+        }
 
         fn singleton(u: N, x: N) -> Self {
             let mut bits = bitbox![0; u];
@@ -153,11 +155,7 @@ pub mod ArraySetEnumMtEph {
         }
 
         fn find(&self, x: N) -> B {
-            if x < self.universe_size {
-                self.bits[x]
-            } else {
-                false
-            }
+            if x < self.universe_size { self.bits[x] } else { false }
         }
 
         fn delete(&mut self, x: N) {

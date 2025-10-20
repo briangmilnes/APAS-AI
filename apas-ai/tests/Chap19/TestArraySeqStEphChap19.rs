@@ -1,7 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
 use apas_ai::ArraySeqStEphSLit;
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphBaseTrait as Chap18BaseTrait, ArraySeqStEphRedefinableTrait as Chap18RedefinableTrait};
+use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{
+    ArraySeqStEphBaseTrait as Chap18BaseTrait, ArraySeqStEphRedefinableTrait as Chap18RedefinableTrait,
+};
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Types::Types::*;
 
@@ -331,7 +333,11 @@ fn test_iterate_concat() {
         },
         3,
     );
-    let res: String = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::iterate(&a, &|acc: &String, x: &&str| format!("{acc}{x}"), String::new());
+    let res: String = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::iterate(
+        &a,
+        &|acc: &String, x: &&str| format!("{acc}{x}"),
+        String::new(),
+    );
     assert_eq!(res, "abc");
 }
 

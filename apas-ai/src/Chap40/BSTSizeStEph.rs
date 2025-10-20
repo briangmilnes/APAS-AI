@@ -40,36 +40,37 @@ pub mod BSTSizeStEph {
 
     pub trait BSTSizeStEphTrait<T: StT + Ord> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new()                       -> Self;
+        fn new() -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self)                 -> N;
+        fn size(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self)             -> B;
+        fn is_empty(&self) -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn height(&self)               -> N;
+        fn height(&self) -> N;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn insert(&mut self, value: T);
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn find(&self, target: &T)     -> Option<&T>;
+        fn find(&self, target: &T) -> Option<&T>;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn contains(&self, target: &T) -> B;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn minimum(&self)              -> Option<&T>;
+        fn minimum(&self) -> Option<&T>;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn maximum(&self)              -> Option<&T>;
+        fn maximum(&self) -> Option<&T>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn in_order(&self)             -> ArraySeqStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn rank(&self, key: &T)        -> N;
-        fn select(&self, rank: N)      -> Option<&T>;
-        fn split_rank(&self, rank: N)  -> (BSTSizeStEph<T>, BSTSizeStEph<T>);
+        fn rank(&self, key: &T) -> N;
+        fn select(&self, rank: N) -> Option<&T>;
+        fn split_rank(&self, rank: N) -> (BSTSizeStEph<T>, BSTSizeStEph<T>);
     }
-
 
     impl<T: StT + Ord> BSTSizeStEph<T> {
         // Private helper methods only - no public delegation
 
-        fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
+        fn size_link(link: &Link<T>) -> N {
+            link.as_ref().map_or(0, |n| n.size)
+        }
 
         fn update_size(node: &mut Node<T>) {
             node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right);
@@ -227,11 +228,17 @@ pub mod BSTSizeStEph {
     }
 
     impl<T: StT + Ord> BSTSizeStEphTrait<T> for BSTSizeStEph<T> {
-        fn new() -> Self { BSTSizeStEph { root: None } }
+        fn new() -> Self {
+            BSTSizeStEph { root: None }
+        }
 
-        fn size(&self) -> N { Self::size_link(&self.root) }
+        fn size(&self) -> N {
+            Self::size_link(&self.root)
+        }
 
-        fn is_empty(&self) -> B { self.size() == 0 }
+        fn is_empty(&self) -> B {
+            self.size() == 0
+        }
 
         fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
@@ -248,13 +255,21 @@ pub mod BSTSizeStEph {
             Self::insert_link(&mut self.root, value, &mut r);
         }
 
-        fn find(&self, target: &T) -> Option<&T> { Self::find_link(&self.root, target) }
+        fn find(&self, target: &T) -> Option<&T> {
+            Self::find_link(&self.root, target)
+        }
 
-        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
+        fn contains(&self, target: &T) -> B {
+            self.find(target).is_some()
+        }
 
-        fn minimum(&self) -> Option<&T> { Self::min_link(&self.root) }
+        fn minimum(&self) -> Option<&T> {
+            Self::min_link(&self.root)
+        }
 
-        fn maximum(&self) -> Option<&T> { Self::max_link(&self.root) }
+        fn maximum(&self) -> Option<&T> {
+            Self::max_link(&self.root)
+        }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
@@ -262,7 +277,9 @@ pub mod BSTSizeStEph {
             ArraySeqStPerS::from_vec(out)
         }
 
-        fn rank(&self, key: &T) -> N { Self::rank_link(&self.root, key) }
+        fn rank(&self, key: &T) -> N {
+            Self::rank_link(&self.root, key)
+        }
 
         fn select(&self, rank: N) -> Option<&T> {
             if rank == 0 || rank > self.size() {
@@ -285,7 +302,9 @@ pub mod BSTSizeStEph {
     }
 
     impl<T: StT + Ord> Default for BSTreeSize<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     #[macro_export]

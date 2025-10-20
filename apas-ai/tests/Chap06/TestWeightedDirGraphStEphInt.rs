@@ -106,7 +106,8 @@ fn test_total_weight_empty() {
 #[test]
 fn test_edges_above_weight() {
     let v: SetStEph<N> = SetLit![1, 2, 3, 4];
-    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10), Triple(2, 3, 25), Triple(3, 4, 5), Triple(1, 4, 30)];
+    let edges: SetStEph<Triple<N, N, i32>> =
+        SetLit![Triple(1, 2, 10), Triple(2, 3, 25), Triple(3, 4, 5), Triple(1, 4, 30)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     let above15 = g.edges_above_weight(15);
@@ -118,7 +119,8 @@ fn test_edges_above_weight() {
 #[test]
 fn test_edges_below_weight() {
     let v: SetStEph<N> = SetLit![1, 2, 3, 4];
-    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10), Triple(2, 3, 25), Triple(3, 4, 5), Triple(1, 4, 30)];
+    let edges: SetStEph<Triple<N, N, i32>> =
+        SetLit![Triple(1, 2, 10), Triple(2, 3, 25), Triple(3, 4, 5), Triple(1, 4, 30)];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     let below15 = g.edges_below_weight(15);
@@ -174,7 +176,14 @@ fn test_self_loop() {
 #[test]
 fn test_complete_graph_weighted() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
-    let edges: SetStEph<Triple<N, N, i32>> = SetLit![Triple(1, 2, 10), Triple(1, 3, 11), Triple(2, 1, 20), Triple(2, 3, 21), Triple(3, 1, 30), Triple(3, 2, 31)];
+    let edges: SetStEph<Triple<N, N, i32>> = SetLit![
+        Triple(1, 2, 10),
+        Triple(1, 3, 11),
+        Triple(2, 1, 20),
+        Triple(2, 3, 21),
+        Triple(3, 1, 30),
+        Triple(3, 2, 31)
+    ];
     let g = WeightedDirGraphStEphInt::from_weighted_edges(v, edges);
 
     assert_eq!(g.labeled_arcs().size(), 6);

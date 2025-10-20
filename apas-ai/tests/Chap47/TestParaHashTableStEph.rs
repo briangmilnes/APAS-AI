@@ -11,7 +11,8 @@ fn test_createtable() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|_size| Box::new(|k| *k as N));
     let table: HashTable<i32, String, Vec<(i32, String)>, ()> =
         <VecChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, Vec<(i32, String)>, ()>>::createTable(
-            hash_fn_gen, 10,
+            hash_fn_gen,
+            10,
         );
     assert_eq!(table.initial_size, 10);
     assert_eq!(table.current_size, 10);

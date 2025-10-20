@@ -14,7 +14,9 @@ fn test_arrayseq_mteph_basic_ops() {
     for i in 0..a.length() {
         assert_eq!(a.nth_cloned(i), i as i32);
     }
-    assert!(!<ArraySeqMtEphS<i32> as ArraySeqMtEphRedefinableTrait<i32>>::isEmpty(&a));
+    assert!(!<ArraySeqMtEphS<i32> as ArraySeqMtEphRedefinableTrait<i32>>::isEmpty(
+        &a
+    ));
     assert!(!<ArraySeqMtEphS<i32> as ArraySeqMtEphRedefinableTrait<i32>>::isSingleton(&a));
     let s = a.subseq_copy(1, 3);
     assert_eq!(s.length(), 3);
@@ -138,7 +140,9 @@ fn test_deflate() {
 fn test_arrayseqmteph_trait_empty() {
     let empty = <ArraySeqMtEphS<i32> as ArraySeqMtEphRedefinableTrait<i32>>::empty();
     assert_eq!(empty.length(), 0);
-    assert!(<ArraySeqMtEphS<i32> as ArraySeqMtEphRedefinableTrait<i32>>::isEmpty(&empty));
+    assert!(<ArraySeqMtEphS<i32> as ArraySeqMtEphRedefinableTrait<i32>>::isEmpty(
+        &empty
+    ));
 }
 
 #[test]

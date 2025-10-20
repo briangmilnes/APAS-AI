@@ -11,7 +11,9 @@ type FlatTable = HashTable<i32, String, FlatEntry<i32, String>, ()>;
 fn test_insert_and_lookup() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: FlatTable =
-        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     LinProbFlatHashTableStEph::insert(&mut table, 1, "one".to_string());
@@ -28,7 +30,9 @@ fn test_insert_and_lookup() {
 fn test_delete() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: FlatTable =
-        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     for _ in 0..10 {
@@ -44,7 +48,9 @@ fn test_delete() {
 fn test_probe() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let table: FlatTable =
-        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     let slot0 = LinProbFlatHashTableStEph::probe(&table, &5, 0);
@@ -58,7 +64,9 @@ fn test_probe() {
 fn test_find_slot() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: FlatTable =
-        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     for _ in 0..10 {
@@ -121,7 +129,9 @@ fn test_flat_entry_delete() {
 fn test_default_insert_with_probe() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: FlatTable =
-        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     for _ in 0..10 {
@@ -144,7 +154,9 @@ fn test_default_insert_with_probe() {
 fn test_default_lookup_with_probe() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: FlatTable =
-        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     for _ in 0..10 {
@@ -199,7 +211,9 @@ fn test_flat_entry_partial_eq() {
 fn test_insert_update_existing_key() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: FlatTable =
-        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     for _ in 0..10 {
@@ -219,7 +233,9 @@ fn test_insert_update_existing_key() {
 fn test_insert_into_deleted_slot() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: FlatTable =
-        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     for _ in 0..10 {
@@ -238,7 +254,9 @@ fn test_insert_into_deleted_slot() {
 fn test_lookup_through_deleted_entries() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: FlatTable =
-        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     for _ in 0..10 {
@@ -263,7 +281,9 @@ fn test_lookup_through_deleted_entries() {
 fn test_delete_not_found() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: FlatTable =
-        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     for _ in 0..10 {
@@ -279,7 +299,9 @@ fn test_delete_not_found() {
 fn test_find_slot_with_occupied_matching_key() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: FlatTable =
-        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     for _ in 0..10 {
@@ -299,7 +321,9 @@ fn test_find_slot_with_occupied_matching_key() {
 fn test_lookup_exhaustive_probe() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: FlatTable =
-        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     for _ in 0..10 {

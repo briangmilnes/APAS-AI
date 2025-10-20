@@ -16,43 +16,47 @@ pub mod BalancedTreePQ {
     /// Trait defining the Meldable Priority Queue ADT operations (Data Type 45.1)
     pub trait BalancedTreePQTrait<T: StT + Ord> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                             -> Self;
+        fn empty() -> Self;
 
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(element: T)               -> Self;
+        fn singleton(element: T) -> Self;
 
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Returns the minimum element (leftmost in balanced tree), or None if empty
-        fn find_min(&self)                     -> Option<&T>;
+        fn find_min(&self) -> Option<&T>;
 
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Inserts element into balanced tree maintaining order
-        fn insert(&self, element: T)           -> Self;
+        fn insert(&self, element: T) -> Self;
 
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Removes minimum element (leftmost) from balanced tree
-        fn delete_min(&self)                   -> (Self, Option<T>)
+        fn delete_min(&self) -> (Self, Option<T>)
         where
             Self: Sized;
 
         /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log n + log m)
         /// Melds two balanced trees using union operation
-        fn meld(&self, other: &Self)           -> Self;
+        fn meld(&self, other: &Self) -> Self;
 
         /// claude-4-sonet: Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log² n)
         /// Creates priority queue from sequence using balanced tree construction
         fn from_seq(seq: &AVLTreeSeqStPerS<T>) -> Self;
 
         /// Helper methods
-        fn size(&self)                         -> N;
-        fn is_empty(&self)                     -> bool;
-        fn to_seq(&self)                       -> AVLTreeSeqStPerS<T>;
+        fn size(&self) -> N;
+        fn is_empty(&self) -> bool;
+        fn to_seq(&self) -> AVLTreeSeqStPerS<T>;
         fn find_max(&self) -> Option<&T>;
-        fn delete_max(&self) -> (Self, Option<T>) where Self: Sized;
+        fn delete_max(&self) -> (Self, Option<T>)
+        where
+            Self: Sized;
         fn insert_all(&self, elements: &AVLTreeSeqStPerS<T>) -> Self;
         fn extract_all_sorted(&self) -> AVLTreeSeqStPerS<T>;
         fn contains(&self, element: &T) -> bool;
-        fn remove(&self, element: &T) -> (Self, bool) where Self: Sized;
+        fn remove(&self, element: &T) -> (Self, bool)
+        where
+            Self: Sized;
         fn range(&self, min_val: &T, max_val: &T) -> AVLTreeSeqStPerS<T>;
         fn from_vec(elements: Vec<T>) -> Self;
         fn to_vec(&self) -> Vec<T>;
@@ -177,13 +181,19 @@ pub mod BalancedTreePQ {
         }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn size(&self) -> N { self.elements.length() }
+        fn size(&self) -> N {
+            self.elements.length()
+        }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn is_empty(&self) -> bool { self.elements.length() == 0 }
+        fn is_empty(&self) -> bool {
+            self.elements.length() == 0
+        }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn to_seq(&self) -> AVLTreeSeqStPerS<T> { self.elements.clone() }
+        fn to_seq(&self) -> AVLTreeSeqStPerS<T> {
+            self.elements.clone()
+        }
 
         fn find_max(&self) -> Option<&T> {
             if self.elements.length() == 0 {
@@ -221,7 +231,9 @@ pub mod BalancedTreePQ {
             result
         }
 
-        fn extract_all_sorted(&self) -> AVLTreeSeqStPerS<T> { self.elements.clone() }
+        fn extract_all_sorted(&self) -> AVLTreeSeqStPerS<T> {
+            self.elements.clone()
+        }
 
         fn contains(&self, element: &T) -> bool {
             for i in 0..self.elements.length() {
@@ -273,32 +285,31 @@ pub mod BalancedTreePQ {
         }
 
         fn from_vec(elements: Vec<T>) -> Self {
-
             let mut pq = Self::empty();
             for element in elements {
                 pq = pq.insert(element);
             }
             pq
-    }
+        }
 
         fn to_vec(&self) -> Vec<T> {
-
             let mut result = Vec::new();
             for i in 0..self.elements.length() {
                 result.push(self.elements.nth(i).clone());
             }
             result
-    }
+        }
 
         fn to_sorted_vec(&self) -> Vec<T> {
-
             // Already sorted, just convert to vector
             self.to_vec()
-    }
+        }
     }
 
     impl<T: StT + Ord> Default for BalancedTreePQ<T> {
-        fn default() -> Self { Self::empty() }
+        fn default() -> Self {
+            Self::empty()
+        }
     }
 
     impl<T: StT + Ord> Display for BalancedTreePQ<T> {
@@ -410,7 +421,9 @@ pub mod BalancedTreePQ {
         }
 
         /// Join two priority queues where all elements in left <= all elements in right
-        pub fn join(left: &Self, right: &Self) -> Self { left.meld(right) }
+        pub fn join(left: &Self, right: &Self) -> Self {
+            left.meld(right)
+        }
 
         /// Filter elements based on a predicate
         pub fn filter<F>(&self, predicate: F) -> Self

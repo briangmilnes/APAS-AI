@@ -2,8 +2,8 @@
 
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap40::BSTReducedStEph::BSTReducedStEph::*;
-use apas_ai::*;
 use apas_ai::Types::Types::*;
+use apas_ai::*;
 
 #[test]
 fn reduced_bst_sum_operations() {

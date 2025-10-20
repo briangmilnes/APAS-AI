@@ -65,7 +65,11 @@ pub mod WeightedUnDirGraphMtEphFloat {
         fn weighted_edges(&self) -> SetStEph<Triple<V, V, OrderedFloat<f64>>> {
             let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_edges().iter() {
-                edges.insert(Triple(labeled_edge.0.clone_mt(), labeled_edge.1.clone_mt(), labeled_edge.2));
+                edges.insert(Triple(
+                    labeled_edge.0.clone_mt(),
+                    labeled_edge.1.clone_mt(),
+                    labeled_edge.2,
+                ));
             }
             edges
         }
@@ -141,7 +145,9 @@ pub mod WeightedUnDirGraphMtEphFloat {
         }
 
         /// Get the degree of a vertex (number of incident edges)
-        fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
+        fn vertex_degree(&self, v: &V) -> usize {
+            self.neighbors(v).size()
+        }
     }
 
     /// Macro requires explicit Triple wrappers: `E: [Triple(v1, v2, OrderedFloat(weight)), ...]`

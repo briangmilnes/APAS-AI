@@ -17,19 +17,19 @@ pub mod AdjMatrixGraphMtPer {
 
     pub trait AdjMatrixGraphMtPerTrait {
         /// claude-4-sonet: Work Θ(n²), Span Θ(log n), Parallelism Θ(n²/log n)
-        fn new(n: N)                   -> Self;
+        fn new(n: N) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn num_vertices(&self)         -> N;
+        fn num_vertices(&self) -> N;
         /// claude-4-sonet: Work Θ(n²), Span Θ(log n), Parallelism Θ(n²/log n)
-        fn num_edges(&self)            -> N;
+        fn num_edges(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn has_edge(&self, u: N, v: N) -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn out_neighbors(&self, u: N)  -> ArraySeqMtPerS<N>;
+        fn out_neighbors(&self, u: N) -> ArraySeqMtPerS<N>;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn out_degree(&self, u: N)     -> N;
+        fn out_degree(&self, u: N) -> N;
         /// claude-4-sonet: Work Θ(n²), Span Θ(log n), Parallelism Θ(n²/log n)
-        fn complement(&self)           -> Self
+        fn complement(&self) -> Self
         where
             bool: 'static;
     }
@@ -47,7 +47,9 @@ pub mod AdjMatrixGraphMtPer {
             }
         }
 
-        fn num_vertices(&self) -> N { self.n }
+        fn num_vertices(&self) -> N {
+            self.n
+        }
 
         fn num_edges(&self) -> N {
             let mut count = 0;

@@ -4,10 +4,10 @@
 
 pub mod DoubleHashFlatHashTableStEph {
 
-    use std::marker::PhantomData;
     use crate::Chap47::FlatHashTable::FlatHashTable::*;
     use crate::Chap47::ParaHashTableStEph::ParaHashTableStEph::*;
     use crate::Types::Types::*;
+    use std::marker::PhantomData;
 
     /// Double Hashing Flat Hash Table implementation.
     /// Probe sequence: h_i(k) = (h(k) + i·hh(k)) mod m
@@ -108,7 +108,10 @@ pub mod DoubleHashFlatHashTableStEph {
             false
         }
 
-        fn resize(table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, new_size: N) -> HashTable<Key, Value, FlatEntry<Key, Value>, Metrics> {
+        fn resize(
+            table: &HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>,
+            new_size: N,
+        ) -> HashTable<Key, Value, FlatEntry<Key, Value>, Metrics> {
             // Collect all key-value pairs from old table
             let mut pairs = Vec::new();
             for entry in &table.table {

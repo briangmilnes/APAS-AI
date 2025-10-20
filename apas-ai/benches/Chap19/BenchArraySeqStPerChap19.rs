@@ -4,7 +4,9 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::ArraySeqStPerSLit;
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerBaseTrait as Chap18BaseTrait, ArraySeqStPerRedefinableTrait as Chap18Trait};
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{
+    ArraySeqStPerBaseTrait as Chap18BaseTrait, ArraySeqStPerRedefinableTrait as Chap18Trait,
+};
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Types::Types::*;
 

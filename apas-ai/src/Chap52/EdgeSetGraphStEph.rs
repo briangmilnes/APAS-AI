@@ -15,23 +15,23 @@ pub mod EdgeSetGraphStEph {
 
     pub trait EdgeSetGraphStEphTrait<V: StT + Ord> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                                                        -> Self;
+        fn empty() -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn from_vertices_and_edges(v: AVLTreeSetStEph<V>, e: AVLTreeSetStEph<Pair<V, V>>) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn num_vertices(&self)                                                            -> N;
+        fn num_vertices(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn num_edges(&self)                                                               -> N;
+        fn num_edges(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn vertices(&self)                                                                -> &AVLTreeSetStEph<V>;
+        fn vertices(&self) -> &AVLTreeSetStEph<V>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn edges(&self)                                                                   -> &AVLTreeSetStEph<Pair<V, V>>;
+        fn edges(&self) -> &AVLTreeSetStEph<Pair<V, V>>;
         /// claude-4-sonet: Work Θ(log |E|), Span Θ(log |E|), Parallelism Θ(1)
-        fn has_edge(&self, u: &V, v: &V)                                                  -> B;
+        fn has_edge(&self, u: &V, v: &V) -> B;
         /// claude-4-sonet: Work Θ(|E| log |V|), Span Θ(|E| log |V|), Parallelism Θ(1)
-        fn out_neighbors(&self, u: &V)                                                    -> AVLTreeSetStEph<V>;
+        fn out_neighbors(&self, u: &V) -> AVLTreeSetStEph<V>;
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1)
-        fn out_degree(&self, u: &V)                                                       -> N;
+        fn out_degree(&self, u: &V) -> N;
         /// claude-4-sonet: Work Θ(log |V|), Span Θ(log |V|), Parallelism Θ(1)
         fn insert_vertex(&mut self, v: V);
         /// claude-4-sonet: Work Θ(|E| log |E|), Span Θ(|E| log |E|), Parallelism Θ(1)
@@ -54,15 +54,25 @@ pub mod EdgeSetGraphStEph {
             EdgeSetGraphStEph { vertices: v, edges: e }
         }
 
-        fn num_vertices(&self) -> N { self.vertices.size() }
+        fn num_vertices(&self) -> N {
+            self.vertices.size()
+        }
 
-        fn num_edges(&self) -> N { self.edges.size() }
+        fn num_edges(&self) -> N {
+            self.edges.size()
+        }
 
-        fn vertices(&self) -> &AVLTreeSetStEph<V> { &self.vertices }
+        fn vertices(&self) -> &AVLTreeSetStEph<V> {
+            &self.vertices
+        }
 
-        fn edges(&self) -> &AVLTreeSetStEph<Pair<V, V>> { &self.edges }
+        fn edges(&self) -> &AVLTreeSetStEph<Pair<V, V>> {
+            &self.edges
+        }
 
-        fn has_edge(&self, u: &V, v: &V) -> B { self.edges.find(&Pair(u.clone(), v.clone())) }
+        fn has_edge(&self, u: &V, v: &V) -> B {
+            self.edges.find(&Pair(u.clone(), v.clone()))
+        }
 
         fn out_neighbors(&self, u: &V) -> AVLTreeSetStEph<V> {
             let u_clone = u.clone();
@@ -76,9 +86,13 @@ pub mod EdgeSetGraphStEph {
             neighbors
         }
 
-        fn out_degree(&self, u: &V) -> N { self.out_neighbors(u).size() }
+        fn out_degree(&self, u: &V) -> N {
+            self.out_neighbors(u).size()
+        }
 
-        fn insert_vertex(&mut self, v: V) { self.vertices.insert(v); }
+        fn insert_vertex(&mut self, v: V) {
+            self.vertices.insert(v);
+        }
 
         fn delete_vertex(&mut self, v: &V) {
             let v_clone = v.clone();
@@ -106,6 +120,8 @@ pub mod EdgeSetGraphStEph {
             self.edges.insert(Pair(u, v));
         }
 
-        fn delete_edge(&mut self, u: &V, v: &V) { self.edges.delete(&Pair(u.clone(), v.clone())); }
+        fn delete_edge(&mut self, u: &V, v: &V) {
+            self.edges.delete(&Pair(u.clone(), v.clone()));
+        }
     }
 }

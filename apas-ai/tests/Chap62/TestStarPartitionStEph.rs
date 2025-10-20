@@ -1,12 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 62: Star Partition - Sequential Ephemeral Tests
 
+use apas_ai::Types::Types::*;
 use apas_ai::{
     Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
     Chap62::StarPartitionStEph::StarPartitionStEph::*, SetLit, Types::Types::*,
 };
 use std::collections::HashMap;
-use apas_ai::Types::Types::*;
 
 // Helper to create a cycle graph
 fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {

@@ -19,14 +19,16 @@ pub mod GraphSearchStEph {
 
     pub struct SelectAll;
     impl<V: StT + Ord> SelectionStrategy<V> for SelectAll {
-        fn select(&self, frontier: &AVLTreeSetStEph<V>) -> (AVLTreeSetStEph<V>, B) { (frontier.clone(), false) }
+        fn select(&self, frontier: &AVLTreeSetStEph<V>) -> (AVLTreeSetStEph<V>, B) {
+            (frontier.clone(), false)
+        }
     }
 
     pub struct SelectOne;
 
     pub trait GraphSearchStEphTrait<V: StT + Ord> {
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
-        fn graph_search<G, S>(graph: &G, source: V, strategy: &S)                         -> SearchResult<V>
+        fn graph_search<G, S>(graph: &G, source: V, strategy: &S) -> SearchResult<V>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             S: SelectionStrategy<V>;
@@ -38,11 +40,10 @@ pub mod GraphSearchStEph {
             S: SelectionStrategy<V>;
 
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V|), Parallelism Θ(1)
-        fn reachable<G>(graph: &G, source: V)                                             -> AVLTreeSetStEph<V>
+        fn reachable<G>(graph: &G, source: V) -> AVLTreeSetStEph<V>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>;
     }
-
 
     impl<V: StT + Ord> SelectionStrategy<V> for SelectOne {
         fn select(&self, frontier: &AVLTreeSetStEph<V>) -> (AVLTreeSetStEph<V>, B) {

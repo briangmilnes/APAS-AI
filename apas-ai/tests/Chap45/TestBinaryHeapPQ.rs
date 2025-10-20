@@ -419,4 +419,6 @@ fn test_descending_insertion() {
 }
 
 #[test]
-fn test_macro_type_check() { let _heap: BinaryHeapPQ<i32> = BinaryHeapPQLit![1, 2, 3]; }
+fn test_macro_type_check() {
+    let _heap: BinaryHeapPQ<i32> = BinaryHeapPQLit![1, 2, 3];
+}

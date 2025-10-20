@@ -60,7 +60,9 @@ fn test_chainlist_delete_not_found() {
 fn test_struct_chained_insert_lookup() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: StructChainTable =
-        <StructChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, ChainList<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <StructChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, ChainList<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     for _ in 0..10 {
@@ -81,7 +83,9 @@ fn test_struct_chained_insert_lookup() {
 fn test_struct_chained_delete() {
     let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
     let mut table: StructChainTable =
-        <StructChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, ChainList<i32, String>, ()>>::createTable(hash_fn_gen, 10,
+        <StructChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, ChainList<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
         );
 
     for _ in 0..10 {

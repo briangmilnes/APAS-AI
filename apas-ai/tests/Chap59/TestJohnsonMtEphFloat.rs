@@ -128,7 +128,10 @@ fn test_zero_weights() {
 #[test]
 fn test_large_weights() {
     let vertices = SetLit![0, 1, 2];
-    let edges = SetLit![Triple(0, 1, OrderedF64::from(1000.5)), Triple(1, 2, OrderedF64::from(2000.3))];
+    let edges = SetLit![
+        Triple(0, 1, OrderedF64::from(1000.5)),
+        Triple(1, 2, OrderedF64::from(2000.3))
+    ];
 
     let graph = WeightedDirGraphMtEphFloat::from_weighted_edges(vertices, edges);
     let result = johnson_apsp(&graph);

@@ -13,11 +13,13 @@ pub mod Exercise21_8 {
 
         /// Exercise 21.8 / Algorithm 21.4 (Brute Force Primality Test)
         /// APAS: Work Θ(√n), Span Θ(lg n)
-        fn is_prime(n: N)           -> B;
+        fn is_prime(n: N) -> B;
     }
 
     /// Helper function to check divisibility
-    pub fn is_divisible(n: N, i: N) -> B { n % i == 0 }
+    pub fn is_divisible(n: N, i: N) -> B {
+        n % i == 0
+    }
 
     /// Exercise 21.8 / Algorithm 21.4 (Brute Force Primality Test)
     /// isPrime n = |{ x in 1..=floor(sqrt(n)) : n mod i == 0 }| == 1

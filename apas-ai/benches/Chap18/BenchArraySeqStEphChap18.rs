@@ -4,8 +4,8 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::ArraySeqStEphSLit;
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphBaseTrait, ArraySeqStEphRedefinableTrait};
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphBaseTrait, ArraySeqStEphRedefinableTrait};
 use apas_ai::Types::Types::*;
 
 fn bench_tabulate_map(c: &mut Criterion) {
@@ -72,7 +72,8 @@ fn bench_tabulate_map(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("scan", n), &n, |b, &len| {
         let s: ArraySeqStEphS<N> = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::tabulate(&|i| i + 1, len);
         b.iter(|| {
-            let (prefixes, final_sum) = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::scan(&s, &|x, y| x + y, 0);
+            let (prefixes, final_sum) =
+                <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::scan(&s, &|x, y| x + y, 0);
             black_box((prefixes, final_sum))
         })
     });

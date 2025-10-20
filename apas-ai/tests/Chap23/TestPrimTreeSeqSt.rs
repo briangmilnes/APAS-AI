@@ -349,11 +349,17 @@ fn test_trait_join_two() {
 
 // Generic helper functions to force trait dispatch
 
-fn generic_as_slice<T: StT, S: PrimTreeSeqStTrait<T>>(seq: &S) -> &[T] { seq.as_slice() }
+fn generic_as_slice<T: StT, S: PrimTreeSeqStTrait<T>>(seq: &S) -> &[T] {
+    seq.as_slice()
+}
 
-fn generic_length<T: StT, S: PrimTreeSeqStTrait<T>>(seq: &S) -> N { seq.length() }
+fn generic_length<T: StT, S: PrimTreeSeqStTrait<T>>(seq: &S) -> N {
+    seq.length()
+}
 
-fn generic_expose<T: StT, S: PrimTreeSeqStTrait<T>>(seq: &S) -> PrimTreeSeqStTree<T> { seq.expose() }
+fn generic_expose<T: StT, S: PrimTreeSeqStTrait<T>>(seq: &S) -> PrimTreeSeqStTree<T> {
+    seq.expose()
+}
 
 #[test]
 fn test_generic_as_slice() {

@@ -119,7 +119,9 @@ fn test_clone() {
 
 #[test]
 fn test_generic_function() {
-    fn process_set<S: SetStEphCleanTrait<i32>>(s: &S) -> N { s.size() }
+    fn process_set<S: SetStEphCleanTrait<i32>>(s: &S) -> N {
+        s.size()
+    }
 
     let mut s: SetStEph<i32> = SetStEphCleanTrait::empty();
     s.insert(10).insert(20).insert(30);

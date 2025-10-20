@@ -9,7 +9,9 @@ use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::Chap53::PQMinStPer::PQMinStPer::*;
 use apas_ai::Types::Types::*;
 
-fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> { ClosurePriority::new(|v: &N| *v) }
+fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> {
+    ClosurePriority::new(|v: &N| *v)
+}
 
 fn build_complete_graph(n: N) -> impl Fn(&N) -> AVLTreeSetStPer<N> {
     move |v: &N| {

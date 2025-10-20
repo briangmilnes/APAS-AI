@@ -20,7 +20,7 @@ pub mod SubsetSumMtPer {
     /// Trait for parallel subset sum operations
     pub trait SubsetSumMtPerTrait<T: MtVal> {
         /// Create new subset sum solver
-        fn new()                                      -> Self
+        fn new() -> Self
         where
             T: Default;
 
@@ -29,21 +29,25 @@ pub mod SubsetSumMtPer {
 
         /// claude-4-sonet: Work Θ(k×|S|), Span Θ(|S|), Parallelism Θ(k)
         /// Solve subset sum problem with parallel DP where k=target, |S|=multiset size
-        fn subset_sum(&self, target: i32)             -> bool
+        fn subset_sum(&self, target: i32) -> bool
         where
             T: Into<i32> + Copy + Send + Sync + 'static;
 
         /// Get the multiset
-        fn multiset(&self)                            -> &ArraySeqMtPerS<T>;
+        fn multiset(&self) -> &ArraySeqMtPerS<T>;
 
         /// Get memoization table size
-        fn memo_size(&self)                           -> usize;
+        fn memo_size(&self) -> usize;
     }
 
     /// Internal parallel recursive subset sum with shared memoization
     /// Claude Work: O(k*|S|) - each subproblem computed once across all threads
     /// Claude Span: O(|S|) - maximum recursion depth, parallelism O(k)
-    fn subset_sum_rec<T: MtVal + Into<i32> + Copy + Send + Sync + 'static>(table: &SubsetSumMtPerS<T>, i: usize, j: i32) -> bool {
+    fn subset_sum_rec<T: MtVal + Into<i32> + Copy + Send + Sync + 'static>(
+        table: &SubsetSumMtPerS<T>,
+        i: usize,
+        j: i32,
+    ) -> bool {
         // Check memo first (thread-safe)
         {
             let memo_guard = table.memo.lock().unwrap();
@@ -122,7 +126,9 @@ pub mod SubsetSumMtPer {
             subset_sum_rec(self, n, target)
         }
 
-        fn multiset(&self) -> &ArraySeqMtPerS<T> { &self.multiset }
+        fn multiset(&self) -> &ArraySeqMtPerS<T> {
+            &self.multiset
+        }
 
         fn memo_size(&self) -> usize {
             let memo_guard = self.memo.lock().unwrap();
@@ -131,7 +137,9 @@ pub mod SubsetSumMtPer {
     }
 
     impl<T: MtVal> PartialEq for SubsetSumMtPerS<T> {
-        fn eq(&self, other: &Self) -> bool { self.multiset == other.multiset }
+        fn eq(&self, other: &Self) -> bool {
+            self.multiset == other.multiset
+        }
     }
 
     impl<T: MtVal> Eq for SubsetSumMtPerS<T> {}

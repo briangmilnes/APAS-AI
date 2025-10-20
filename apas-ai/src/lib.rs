@@ -217,15 +217,15 @@ pub mod Chap45 {
 }
 
 pub mod Chap47 {
-    pub mod ParaHashTableStEph;
-    pub mod FlatHashTable;
     pub mod ChainedHashTable;
-    pub mod LinkedListChainedHashTableStEph;
-    pub mod VecChainedHashTableStEph;
-    pub mod StructChainedHashTable;
-    pub mod LinProbFlatHashTableStEph;
-    pub mod QuadProbFlatHashTableStEph;
     pub mod DoubleHashFlatHashTableStEph;
+    pub mod FlatHashTable;
+    pub mod LinProbFlatHashTableStEph;
+    pub mod LinkedListChainedHashTableStEph;
+    pub mod ParaHashTableStEph;
+    pub mod QuadProbFlatHashTableStEph;
+    pub mod StructChainedHashTable;
+    pub mod VecChainedHashTableStEph;
 }
 
 pub mod Chap49 {
@@ -263,12 +263,12 @@ pub mod Chap51 {
 }
 
 pub mod Chap52 {
-    pub mod EdgeSetGraphMtPer;
-    pub mod EdgeSetGraphStEph;
-    pub mod EdgeSetGraphStPer;
     pub mod AdjTableGraphMtPer;
     pub mod AdjTableGraphStEph;
     pub mod AdjTableGraphStPer;
+    pub mod EdgeSetGraphMtPer;
+    pub mod EdgeSetGraphStEph;
+    pub mod EdgeSetGraphStPer;
     // pub mod AdjSeqGraphMtEph; // API mismatch - ArraySeqMtEphS lacks nth method
     pub mod AdjSeqGraphMtPer;
     pub mod AdjSeqGraphStEph;

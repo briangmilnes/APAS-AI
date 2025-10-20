@@ -24,7 +24,9 @@ pub mod GraphSearchMtPer {
 
     pub struct SelectAll;
     impl<V: StTInMtT + Ord + 'static> SelectionStrategy<V> for SelectAll {
-        fn select(&self, frontier: &AVLTreeSetMtPer<V>) -> (AVLTreeSetMtPer<V>, B) { (frontier.clone(), false) }
+        fn select(&self, frontier: &AVLTreeSetMtPer<V>) -> (AVLTreeSetMtPer<V>, B) {
+            (frontier.clone(), false)
+        }
     }
 
     pub struct SelectOne;
@@ -32,7 +34,7 @@ pub mod GraphSearchMtPer {
     pub trait GraphSearchMtPerTrait<V: StTInMtT + Ord + 'static> {
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| × log |V|), Parallelism Θ(|E|/|V|)
         /// Graph search using thread-safe persistent sets with parallel set operations.
-        fn graph_search<G, S>(graph: &G, source: V, strategy: &S)                         -> SearchResult<V>
+        fn graph_search<G, S>(graph: &G, source: V, strategy: &S) -> SearchResult<V>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             S: SelectionStrategy<V>;
@@ -42,11 +44,10 @@ pub mod GraphSearchMtPer {
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             S: SelectionStrategy<V>;
 
-        fn reachable<G>(graph: &G, source: V)                                             -> AVLTreeSetMtPer<V>
+        fn reachable<G>(graph: &G, source: V) -> AVLTreeSetMtPer<V>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>;
     }
-
 
     impl<V: StTInMtT + Ord + 'static> SelectionStrategy<V> for SelectOne {
         fn select(&self, frontier: &AVLTreeSetMtPer<V>) -> (AVLTreeSetMtPer<V>, B) {

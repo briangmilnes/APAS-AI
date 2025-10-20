@@ -10,21 +10,21 @@ use apas_ai::Types::Types::*;
 fn test_direct_method_calls_work() {
     // Trait is in scope, so methods work like normal!
     let seq: ArraySeqStEphSimpleS<i32> = ArraySeqStEphSimpleS::empty();
-    assert_eq!(seq.length(), 0);  // NO inherent method! Works via trait!
-    
+    assert_eq!(seq.length(), 0); // NO inherent method! Works via trait!
+
     let seq = ArraySeqStEphSimpleS::singleton(42);
-    assert_eq!(seq.length(), 1);  // Works!
-    assert_eq!(seq.nth(0), &42);  // Works!
+    assert_eq!(seq.length(), 1); // Works!
+    assert_eq!(seq.nth(0), &42); // Works!
 }
 
 #[test]
 fn test_mutable_operations() {
     let mut seq = ArraySeqStEphSimpleS::new(3, 10);
     assert_eq!(seq.length(), 3);
-    
+
     let _ = seq.set(1, 99);
     assert_eq!(seq.nth(1), &99);
-    
+
     let _ = seq.update(Pair(2, 88));
     assert_eq!(seq.nth(2), &88);
 }
@@ -33,7 +33,7 @@ fn test_mutable_operations() {
 fn test_from_vec_and_iter() {
     let seq = ArraySeqStEphSimpleS::from_vec(vec![1, 2, 3, 4, 5]);
     assert_eq!(seq.length(), 5);
-    
+
     let sum: i32 = seq.iter().sum();
     assert_eq!(sum, 15);
 }
@@ -41,17 +41,17 @@ fn test_from_vec_and_iter() {
 #[test]
 fn test_generic_function() {
     // This is the REAL benefit of traits - generic functions!
-    fn double_first<T, S>(seq: &mut S) 
-    where 
+    fn double_first<T, S>(seq: &mut S)
+    where
         T: StT + Add<Output = T> + Copy,
-        S: ArraySeqStEphSimpleTrait<T>
+        S: ArraySeqStEphSimpleTrait<T>,
     {
         if seq.length() > 0 {
             let first = *seq.nth(0);
             let _ = seq.set(0, first + first);
         }
     }
-    
+
     let mut seq = ArraySeqStEphSimpleS::from_vec(vec![5, 10, 15]);
     double_first(&mut seq);
     assert_eq!(seq.nth(0), &10);
@@ -61,9 +61,11 @@ fn test_generic_function() {
 fn test_explicit_trait_call() {
     // You CAN call via explicit trait syntax if needed
     let seq = <ArraySeqStEphSimpleS<i32> as ArraySeqStEphSimpleTrait<i32>>::empty();
-    assert_eq!(<ArraySeqStEphSimpleS<i32> as ArraySeqStEphSimpleTrait<i32>>::length(&seq), 0);
-    
+    assert_eq!(
+        <ArraySeqStEphSimpleS<i32> as ArraySeqStEphSimpleTrait<i32>>::length(&seq),
+        0
+    );
+
     // But normal method syntax works fine too!
     assert_eq!(seq.length(), 0);
 }
-

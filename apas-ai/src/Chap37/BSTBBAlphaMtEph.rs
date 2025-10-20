@@ -30,9 +30,13 @@ pub mod BSTBBAlphaMtEph {
         }
     }
 
-    fn size_link<T: StTInMtT + Ord>(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
+    fn size_link<T: StTInMtT + Ord>(link: &Link<T>) -> N {
+        link.as_ref().map_or(0, |n| n.size)
+    }
 
-    fn update<T: StTInMtT + Ord>(node: &mut Node<T>) { node.size = 1 + size_link(&node.left) + size_link(&node.right); }
+    fn update<T: StTInMtT + Ord>(node: &mut Node<T>) {
+        node.size = 1 + size_link(&node.left) + size_link(&node.right);
+    }
 
     fn insert_link<T: StTInMtT + Ord>(link: &mut Link<T>, value: T) -> bool {
         match link {
@@ -153,25 +157,25 @@ pub mod BSTBBAlphaMtEph {
 
     pub trait BSTBBAlphaMtEphTrait<T: StTInMtT + Ord>: Sized {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new()                       -> Self;
+        fn new() -> Self;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
         fn insert(&self, value: T);
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
-        fn find(&self, target: &T)     -> Option<T>;
+        fn find(&self, target: &T) -> Option<T>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
         fn contains(&self, target: &T) -> B;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self)                 -> N;
+        fn size(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self)             -> B;
+        fn is_empty(&self) -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn height(&self)               -> N;
+        fn height(&self) -> N;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
-        fn minimum(&self)              -> Option<T>;
+        fn minimum(&self) -> Option<T>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n) with locking
-        fn maximum(&self)              -> Option<T>;
-        fn in_order(&self)             -> ArraySeqStPerS<T>;
-        fn pre_order(&self)            -> ArraySeqStPerS<T>;
+        fn maximum(&self) -> Option<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn pre_order(&self) -> ArraySeqStPerS<T>;
     }
 
     impl<T: StTInMtT + Ord> BSTBBAlphaMtEphTrait<T> for BSTBBAlphaMtEph<T> {
@@ -195,14 +199,18 @@ pub mod BSTBBAlphaMtEph {
             find_link(&*guard, target).cloned()
         }
 
-        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
+        fn contains(&self, target: &T) -> B {
+            self.find(target).is_some()
+        }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B { self.size() == 0 }
+        fn is_empty(&self) -> B {
+            self.size() == 0
+        }
 
         fn height(&self) -> N {
             fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {
@@ -242,7 +250,9 @@ pub mod BSTBBAlphaMtEph {
     }
 
     impl<T: StTInMtT + Ord> Default for BSTBBAlphaMtEph<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     #[macro_export]

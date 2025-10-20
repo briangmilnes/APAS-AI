@@ -93,7 +93,11 @@ pub mod WeightedDirGraphMtEphFloat {
         fn weighted_edges(&self) -> SetStEph<Triple<V, V, OrderedFloat<f64>>> {
             let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_arcs().iter() {
-                edges.insert(Triple(labeled_edge.0.clone_mt(), labeled_edge.1.clone_mt(), labeled_edge.2));
+                edges.insert(Triple(
+                    labeled_edge.0.clone_mt(),
+                    labeled_edge.1.clone_mt(),
+                    labeled_edge.2,
+                ));
             }
             edges
         }

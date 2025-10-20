@@ -2,16 +2,12 @@
 //! Tests for Minimum Edit Distance.
 
 use apas_ai::{
-    ArraySeqMtEphSLit, ArraySeqStEphS, ArraySeqStPerS,
-    Chap18::ArraySeqMtEph::ArraySeqMtEph::*,
-    Chap19::ArraySeqStEph::ArraySeqStEph::*,
-    Chap19::ArraySeqStPer::ArraySeqStPer::*,
-    Chap49::MinEditDistMtEph::MinEditDistMtEph::*,
-    Chap49::MinEditDistMtPer::MinEditDistMtPer::*, Chap49::MinEditDistStEph::MinEditDistStEph::*,
-    Chap49::MinEditDistStPer::MinEditDistStPer::*, MinEditDistMtEphLit, MinEditDistMtPerLit, MinEditDistStEphLit,
-    MinEditDistStPerLit, Types::Types::*
+    ArraySeqMtEphSLit, ArraySeqStEphS, ArraySeqStPerS, Chap18::ArraySeqMtEph::ArraySeqMtEph::*,
+    Chap19::ArraySeqStEph::ArraySeqStEph::*, Chap19::ArraySeqStPer::ArraySeqStPer::*,
+    Chap49::MinEditDistMtEph::MinEditDistMtEph::*, Chap49::MinEditDistMtPer::MinEditDistMtPer::*,
+    Chap49::MinEditDistStEph::MinEditDistStEph::*, Chap49::MinEditDistStPer::MinEditDistStPer::*, MinEditDistMtEphLit,
+    MinEditDistMtPerLit, MinEditDistStEphLit, MinEditDistStPerLit, Types::Types::*,
 };
-
 
 // Test cases from APAS textbook
 #[test]

@@ -51,32 +51,32 @@ pub mod AVLTreeSeq {
         /// Construct an empty tree.
         /// APAS: Work Θ(1), Span Θ(1).
         /// claude-4-sonet: Work Θ(1), Span Θ(1).
-        fn empty()                                 -> Self;
+        fn empty() -> Self;
 
         /// Construct an empty tree (alias).
         /// APAS: Work Θ(1), Span Θ(1).
-        fn new()                                   -> Self;
+        fn new() -> Self;
 
         /// Return number of elements.
         /// APAS: Work Θ(1), Span Θ(1).
-        fn length(&self)                           -> N;
+        fn length(&self) -> N;
 
         /// Return a reference to the in-order `index`-th element. Panics if out of bounds.
         /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
-        fn nth(&self, index: N)                    -> &T;
+        fn nth(&self, index: N) -> &T;
 
         /// Set the in-order `index`-th element to `item`.
         /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
-        fn set(&mut self, index: N, item: T)       -> Result<&mut AVLTreeS<T>, &'static str>;
+        fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeS<T>, &'static str>;
 
         /// Construct a singleton sequence.
         /// APAS: Work Θ(1), Span Θ(1).
-        fn singleton(item: T)                      -> Self;
+        fn singleton(item: T) -> Self;
 
         /// Predicates.
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isEmpty(&self)                          -> B;
-        fn isSingleton(&self)                      -> B;
+        fn isEmpty(&self) -> B;
+        fn isSingleton(&self) -> B;
 
         /// Return subsequence [start, start+length) as a new tree.
         /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
@@ -85,17 +85,26 @@ pub mod AVLTreeSeq {
             T: Clone + Eq;
         fn new_root() -> Self;
         fn update(&mut self, item_at: (N, T)) -> &mut AVLTreeS<T>;
-        fn from_vec(values: Vec<T>) -> AVLTreeS<T> where T: Clone;
-        fn to_arrayseq(&self) -> ArraySeqS<T> where T: Clone;
+        fn from_vec(values: Vec<T>) -> AVLTreeS<T>
+        where
+            T: Clone;
+        fn to_arrayseq(&self) -> ArraySeqS<T>
+        where
+            T: Clone;
         fn iter<'a>(&'a self) -> AVLTreeSeqIter<'a, T>;
         fn push_back(&mut self, value: T);
-        fn contains_value(&self, target: &T) -> B where T: PartialEq;
+        fn contains_value(&self, target: &T) -> B
+        where
+            T: PartialEq;
         fn insert_value(&mut self, value: T);
-        fn delete_value(&mut self, target: &T) -> bool where T: Clone + PartialEq;
+        fn delete_value(&mut self, target: &T) -> bool
+        where
+            T: Clone + PartialEq;
         fn is_tree_empty(&self) -> bool;
-        fn values_in_order(&self) -> Vec<T> where T: Clone;
+        fn values_in_order(&self) -> Vec<T>
+        where
+            T: Clone;
     }
-
 
     impl<T: StT> AVLTreeS<T> {
         pub fn new_root() -> Self {
@@ -104,7 +113,9 @@ pub mod AVLTreeSeq {
                 next_key: 0,
             }
         }
-        pub fn new() -> Self { Self::new_root() }
+        pub fn new() -> Self {
+            Self::new_root()
+        }
 
         pub fn update(&mut self, (index, item): (N, T)) -> &mut AVLTreeS<T> {
             let _ = <AVLTreeS<T> as AVLTreeSeq<T>>::set(self, index, item);
@@ -143,7 +154,9 @@ pub mod AVLTreeSeq {
             out
         }
 
-        pub fn iter<'a>(&'a self) -> AVLTreeSeqIter<'a, T> { AVLTreeSeqIter::new(&self.root) }
+        pub fn iter<'a>(&'a self) -> AVLTreeSeqIter<'a, T> {
+            AVLTreeSeqIter::new(&self.root)
+        }
 
         pub fn push_back(&mut self, value: T) {
             let len = self.length();
@@ -164,7 +177,9 @@ pub mod AVLTreeSeq {
             false
         }
 
-        pub fn insert_value(&mut self, value: T) { self.push_back(value); }
+        pub fn insert_value(&mut self, value: T) {
+            self.push_back(value);
+        }
 
         pub fn delete_value(&mut self, target: &T) -> bool
         where
@@ -194,7 +209,9 @@ pub mod AVLTreeSeq {
             }
         }
 
-        pub fn is_tree_empty(&self) -> bool { self.length() == 0 }
+        pub fn is_tree_empty(&self) -> bool {
+            self.length() == 0
+        }
 
         pub fn values_in_order(&self) -> Vec<T>
         where
@@ -208,16 +225,24 @@ pub mod AVLTreeSeq {
 
     impl<T: StT> AVLTreeSeq<T> for AVLTreeS<T> {
         /// APAS: Work Θ(1), Span Θ(1).
-        fn empty() -> AVLTreeS<T> { AVLTreeS::new_root() }
+        fn empty() -> AVLTreeS<T> {
+            AVLTreeS::new_root()
+        }
 
         /// APAS: Work Θ(1), Span Θ(1).
-        fn new() -> AVLTreeS<T> { AVLTreeS::new_root() }
+        fn new() -> AVLTreeS<T> {
+            AVLTreeS::new_root()
+        }
 
         /// APAS: Work Θ(1), Span Θ(1).
-        fn length(&self) -> N { size_link(&self.root) }
+        fn length(&self) -> N {
+            size_link(&self.root)
+        }
 
         /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
-        fn nth(&self, index: N) -> &T { nth_link(&self.root, index) }
+        fn nth(&self, index: N) -> &T {
+            nth_link(&self.root, index)
+        }
 
         /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
         fn set(&mut self, index: N, item: T) -> Result<&mut AVLTreeS<T>, &'static str> {
@@ -233,9 +258,13 @@ pub mod AVLTreeSeq {
         }
 
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isEmpty(&self) -> B { self.length() == 0 }
+        fn isEmpty(&self) -> B {
+            self.length() == 0
+        }
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isSingleton(&self) -> B { self.length() == 1 }
+        fn isSingleton(&self) -> B {
+            self.length() == 1
+        }
 
         /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
         fn subseq_copy(&self, start: N, length: N) -> AVLTreeS<T>
@@ -263,11 +292,17 @@ pub mod AVLTreeSeq {
             AVLTreeS::update(self, item_at)
         }
 
-        fn from_vec(values: Vec<T>) -> AVLTreeS<T> where T: Clone {
+        fn from_vec(values: Vec<T>) -> AVLTreeS<T>
+        where
+            T: Clone,
+        {
             AVLTreeS::from_vec(values)
         }
 
-        fn to_arrayseq(&self) -> ArraySeqS<T> where T: Clone {
+        fn to_arrayseq(&self) -> ArraySeqS<T>
+        where
+            T: Clone,
+        {
             AVLTreeS::to_arrayseq(self)
         }
 
@@ -279,7 +314,10 @@ pub mod AVLTreeSeq {
             AVLTreeS::push_back(self, value)
         }
 
-        fn contains_value(&self, target: &T) -> B where T: PartialEq {
+        fn contains_value(&self, target: &T) -> B
+        where
+            T: PartialEq,
+        {
             AVLTreeS::contains_value(self, target)
         }
 
@@ -287,7 +325,10 @@ pub mod AVLTreeSeq {
             AVLTreeS::insert_value(self, value)
         }
 
-        fn delete_value(&mut self, target: &T) -> bool where T: Clone + PartialEq {
+        fn delete_value(&mut self, target: &T) -> bool
+        where
+            T: Clone + PartialEq,
+        {
             AVLTreeS::delete_value(self, target)
         }
 
@@ -295,7 +336,10 @@ pub mod AVLTreeSeq {
             AVLTreeS::is_tree_empty(self)
         }
 
-        fn values_in_order(&self) -> Vec<T> where T: Clone {
+        fn values_in_order(&self) -> Vec<T>
+        where
+            T: Clone,
+        {
             AVLTreeS::values_in_order(self)
         }
     }
@@ -376,7 +420,9 @@ pub mod AVLTreeSeq {
 
     // ---- Internal helpers ----
 
-    fn h<T: StT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |b| b.height) }
+    fn h<T: StT>(n: &Link<T>) -> N {
+        n.as_ref().map_or(0, |b| b.height)
+    }
     fn size_link<T: StT>(n: &Link<T>) -> N {
         if let Some(b) = n {
             1 + b.left_size + b.right_size
@@ -501,7 +547,8 @@ pub mod AVLTreeSeq {
     }
 
     impl<T: StT> Default for AVLTreeS<T> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
-
 }

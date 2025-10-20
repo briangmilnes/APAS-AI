@@ -3,8 +3,8 @@
 
 pub mod BalBinTreeStEph {
 
-    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerRedefinableTrait;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
     #[derive(Clone, PartialEq, Eq, Debug)]
@@ -23,34 +23,37 @@ pub mod BalBinTreeStEph {
     pub trait BalBinTreeStEphTrait<T: StT> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn leaf()                                  -> Self;
+        fn leaf() -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn node(left: Self, value: T, right: Self) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn is_leaf(&self)                          -> B;
+        fn is_leaf(&self) -> B;
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential traversal with append
-        fn in_order(&self)                         -> ArraySeqStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential traversal with append
-        fn pre_order(&self)                        -> ArraySeqStPerS<T>;
+        fn pre_order(&self) -> ArraySeqStPerS<T>;
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential tree traversal
-        fn height(&self)                           -> N;
+        fn height(&self) -> N;
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential tree traversal
-        fn size(&self)                             -> N;
+        fn size(&self) -> N;
     }
 
-
     impl<T: StT> BalBinNode<T> {
-        fn new(left: BalBinTree<T>, value: T, right: BalBinTree<T>) -> Self { BalBinNode { left, value, right } }
+        fn new(left: BalBinTree<T>, value: T, right: BalBinTree<T>) -> Self {
+            BalBinNode { left, value, right }
+        }
     }
 
     impl<T: StT> BalBinTreeStEphTrait<T> for BalBinTree<T> {
-        fn leaf() -> Self { BalBinTree::Leaf }
+        fn leaf() -> Self {
+            BalBinTree::Leaf
+        }
 
         fn node(left: Self, value: T, right: Self) -> Self {
             BalBinTree::Node(Box::new(BalBinNode::new(left, value, right)))

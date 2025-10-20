@@ -7,13 +7,27 @@ use apas_ai::ArrayMtPerSLit;
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Types::Types::*; // macro import
 
-fn identity(i: N) -> N { i }
-fn double(i: N) -> N { i * 2 }
-fn square(i: N) -> N { i * i }
-fn add_100(i: N) -> N { i + 100 }
-fn const_42(_i: N) -> N { 42 }
-fn format_item(i: N) -> String { format!("item_{i}") }
-fn is_even_bool(i: N) -> B { i % 2 == 0 }
+fn identity(i: N) -> N {
+    i
+}
+fn double(i: N) -> N {
+    i * 2
+}
+fn square(i: N) -> N {
+    i * i
+}
+fn add_100(i: N) -> N {
+    i + 100
+}
+fn const_42(_i: N) -> N {
+    42
+}
+fn format_item(i: N) -> String {
+    format!("item_{i}")
+}
+fn is_even_bool(i: N) -> B {
+    i % 2 == 0
+}
 
 // Helper function for set equality comparison
 fn assert_set_eq<T: PartialEq + Debug>(actual: &[T], expected: &[T]) {
@@ -129,7 +143,9 @@ fn test_tabulate_large() {
 fn test_empty() {
     let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
     assert_eq!(empty.length(), 0);
-    assert!(<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isEmpty(&empty));
+    assert!(<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isEmpty(
+        &empty
+    ));
 }
 
 #[test]
@@ -160,10 +176,14 @@ fn test_subseq_copy() {
 #[test]
 fn test_is_empty() {
     let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
-    assert!(<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isEmpty(&empty));
+    assert!(<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isEmpty(
+        &empty
+    ));
 
     let non_empty = ArraySeqMtPerS::singleton(1);
-    assert!(!<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isEmpty(&non_empty));
+    assert!(!<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isEmpty(
+        &non_empty
+    ));
 }
 
 #[test]
@@ -435,19 +455,27 @@ fn test_isEmpty_trait() {
     assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isEmpty(&empty));
 
     let non_empty = ArraySeqMtPerS::singleton(1);
-    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isEmpty(&non_empty));
+    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isEmpty(
+        &non_empty
+    ));
 }
 
 #[test]
 fn test_isSingleton_trait() {
     let single = ArraySeqMtPerS::singleton(42);
-    assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isSingleton(&single));
+    assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isSingleton(
+        &single
+    ));
 
     let multiple = ArraySeqMtPerS::from_vec(vec![1, 2]);
-    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isSingleton(&multiple));
+    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isSingleton(
+        &multiple
+    ));
 
     let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
-    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isSingleton(&empty));
+    assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isSingleton(
+        &empty
+    ));
 }
 
 #[test]

@@ -79,7 +79,9 @@ pub mod AugOrderedTableStPer {
         F: Fn(&V, &V) -> V + Clone,
     {
         /// Claude Work: O(1), Span: O(1)
-        fn size(&self) -> N { self.base_table.size() }
+        fn size(&self) -> N {
+            self.base_table.size()
+        }
 
         /// Claude Work: O(1), Span: O(1)
         fn empty(reducer: F, identity: V) -> Self {
@@ -102,7 +104,9 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn find(&self, k: &K) -> Option<V> { self.base_table.find(k) }
+        fn find(&self, k: &K) -> Option<V> {
+            self.base_table.find(k)
+        }
 
         /// Claude Work: O(lg n), Span: O(lg n)
         fn insert(&self, k: K, v: V) -> Self {
@@ -137,7 +141,9 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn domain(&self) -> ArraySetStEph<K> { self.base_table.domain() }
+        fn domain(&self) -> ArraySetStEph<K> {
+            self.base_table.domain()
+        }
 
         /// Claude Work: O(n), Span: O(lg n)
         fn tabulate<G: Fn(&K) -> V>(f: G, keys: &ArraySetStEph<K>, reducer: F, identity: V) -> Self {
@@ -244,19 +250,29 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(n), Span: O(lg n)
-        fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>> { self.base_table.collect() }
+        fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>> {
+            self.base_table.collect()
+        }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn first_key(&self) -> Option<K> { self.base_table.first_key() }
+        fn first_key(&self) -> Option<K> {
+            self.base_table.first_key()
+        }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn last_key(&self) -> Option<K> { self.base_table.last_key() }
+        fn last_key(&self) -> Option<K> {
+            self.base_table.last_key()
+        }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn previous_key(&self, k: &K) -> Option<K> { self.base_table.previous_key(k) }
+        fn previous_key(&self, k: &K) -> Option<K> {
+            self.base_table.previous_key(k)
+        }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn next_key(&self, k: &K) -> Option<K> { self.base_table.next_key(k) }
+        fn next_key(&self, k: &K) -> Option<K> {
+            self.base_table.next_key(k)
+        }
 
         /// Claude Work: O(lg n), Span: O(lg n)
         fn split_key(&self, k: &K) -> (Self, Option<V>, Self) {
@@ -315,10 +331,14 @@ pub mod AugOrderedTableStPer {
         }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn rank_key(&self, k: &K) -> N { self.base_table.rank_key(k) }
+        fn rank_key(&self, k: &K) -> N {
+            self.base_table.rank_key(k)
+        }
 
         /// Claude Work: O(lg n), Span: O(lg n)
-        fn select_key(&self, i: N) -> Option<K> { self.base_table.select_key(i) }
+        fn select_key(&self, i: N) -> Option<K> {
+            self.base_table.select_key(i)
+        }
 
         /// Claude Work: O(lg n), Span: O(lg n)
         fn split_rank_key(&self, i: N) -> (Self, Self) {
@@ -346,7 +366,9 @@ pub mod AugOrderedTableStPer {
 
         /// Claude Work: O(1), Span: O(1)
         /// The key innovation: O(1) reduction using cached value
-        fn reduce_val(&self) -> V { self.cached_reduction.clone() }
+        fn reduce_val(&self) -> V {
+            self.cached_reduction.clone()
+        }
 
         /// Claude Work: O(lg n), Span: O(lg n)
         /// Efficient range reduction for TRAMLAW/QADSAN scenarios

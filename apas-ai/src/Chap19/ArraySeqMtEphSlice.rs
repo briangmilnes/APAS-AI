@@ -20,7 +20,9 @@ pub mod ArraySeqMtEphSlice {
     }
 
     impl<T: StTInMtT> Inner<T> {
-        fn new(data: Box<[T]>) -> Self { Inner { data: Mutex::new(data) } }
+        fn new(data: Box<[T]>) -> Self {
+            Inner { data: Mutex::new(data) }
+        }
 
         fn len(&self) -> N {
             let guard = self.data.lock().unwrap();
@@ -37,44 +39,44 @@ pub mod ArraySeqMtEphSlice {
     /// Sequence trait for the slice-backed MT ephemeral array.
     pub trait ArraySeqMtEphSliceTrait<T: StTInMtT> {
         /// claude-4-sonet: Work Θ(n), Span Θ(1)
-        fn new(length: N, init_value: T)                   -> Self;
+        fn new(length: N, init_value: T) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self)                                   -> N;
+        fn length(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn nth_cloned(&self, index: N)                     -> T;
+        fn nth_cloned(&self, index: N) -> T;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                         -> Self;
+        fn empty() -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn update(&mut self, index: N, item: T)            -> Result<&mut Self, &'static str>;
+        fn update(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T)                              -> Self;
+        fn singleton(item: T) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(&self)                                  -> B;
+        fn isEmpty(&self) -> B;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isSingleton(&self)                              -> B;
+        fn isSingleton(&self) -> B;
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn subseq_copy(&self, start: N, length: N)         -> Self;
+        fn subseq_copy(&self, start: N, length: N) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn slice(&self, start: N, length: N)               -> Self;
+        fn slice(&self, start: N, length: N) -> Self;
         /// claude-4-sonet: Work Θ(n + Σᵢ W(f(i))), Span Θ(1 + maxᵢ S(f(i))), Parallelism Θ(n)
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> Self;
         /// claude-4-sonet: Work Θ(|a| + Σₓ W(f(x))), Span Θ(1 + maxₓ S(f(x))), Parallelism Θ(|a|)
         fn map<U: MtVal, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(a: &Self, f: F) -> ArraySeqMtEphSliceS<U>;
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(1 + maxᵢ S(f(aᵢ))), Parallelism Θ(|a|)
         fn filter<F: PredMt<T> + Clone>(a: &Self, pred: F) -> Self;
-        fn append(a: &Self, b: &Self)                      -> Self;
-        fn append_select(a: &Self, b: &Self)               -> Self;
-        fn flatten(sequences: &[ArraySeqMtEphSliceS<T>])   -> Self;
-        fn reduce<F: Fn(&T, &T)                            -> T + Send + Sync + Clone + 'static>(a: &Self, f: F, id: T) -> T;
-        fn scan<F: Fn(&T, &T)                              -> T + Send + Sync>(a: &Self, f: &F, id: T) -> (ArraySeqMtEphSliceS<T>, T);
-        fn iterate<A: StTInMtT, F: Fn(&A, &T)              -> A + Send + Sync>(a: &Self, f: &F, seed: A) -> A;
-        fn inject(a: &Self, updates: &[(N, T)])            -> Self;
-        fn ninject(a: &Self, updates: &[(N, T)])           -> Self;
-        fn from_box(data: Box<[T]>)                        -> Self;
-        fn from_vec(data: Vec<T>)                          -> Self;
-        fn to_vec(&self)                                   -> Vec<T>;
+        fn append(a: &Self, b: &Self) -> Self;
+        fn append_select(a: &Self, b: &Self) -> Self;
+        fn flatten(sequences: &[ArraySeqMtEphSliceS<T>]) -> Self;
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &Self, f: F, id: T) -> T;
+        fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &Self, f: &F, id: T) -> (ArraySeqMtEphSliceS<T>, T);
+        fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &Self, f: &F, seed: A) -> A;
+        fn inject(a: &Self, updates: &[(N, T)]) -> Self;
+        fn ninject(a: &Self, updates: &[(N, T)]) -> Self;
+        fn from_box(data: Box<[T]>) -> Self;
+        fn from_vec(data: Vec<T>) -> Self;
+        fn to_vec(&self) -> Vec<T>;
         fn with_exclusive<F: FnOnce(&mut [T]) -> R, R>(&self, f: F) -> R;
-        fn set(&mut self, index: N, item: T)               -> Result<&mut Self, &'static str>;
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtEphSliceTrait<T> for ArraySeqMtEphSliceS<T> {
@@ -83,7 +85,9 @@ pub mod ArraySeqMtEphSlice {
             ArraySeqMtEphSliceS::from_vec(data)
         }
 
-        fn length(&self) -> N { self.range.end - self.range.start }
+        fn length(&self) -> N {
+            self.range.end - self.range.start
+        }
 
         fn nth_cloned(&self, index: N) -> T {
             let guard = self.inner.data.lock().unwrap();
@@ -118,12 +122,16 @@ pub mod ArraySeqMtEphSlice {
             Self { inner, range: 0..1 }
         }
 
-        fn isEmpty(&self) -> B { self.length() == 0 }
+        fn isEmpty(&self) -> B {
+            self.length() == 0
+        }
 
-        fn isSingleton(&self) -> B { self.length() == 1 }
+        fn isSingleton(&self) -> B {
+            self.length() == 1
+        }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
-            let sub = clamp_subrange(self,start, length);
+            let sub = clamp_subrange(self, start, length);
             let guard = self.inner.data.lock().unwrap();
             let data: Vec<T> = guard[sub.start..sub.end].to_vec();
             ArraySeqMtEphSliceS::from_vec(data)
@@ -336,7 +344,9 @@ pub mod ArraySeqMtEphSlice {
             }
         }
 
-        fn from_vec(data: Vec<T>) -> Self { Self::from_box(data.into_boxed_slice()) }
+        fn from_vec(data: Vec<T>) -> Self {
+            Self::from_box(data.into_boxed_slice())
+        }
 
         fn to_vec(&self) -> Vec<T> {
             let guard = self.inner.data.lock().unwrap();
@@ -350,18 +360,18 @@ pub mod ArraySeqMtEphSlice {
             f(&mut guard[start..end])
         }
 
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> { self.update(index, item) }
-
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
+            self.update(index, item)
+        }
     }
 
     fn clamp_subrange<T: StTInMtT + 'static>(a: &ArraySeqMtEphSliceS<T>, start: N, length: N) -> Range<N> {
-            let local_len = a.length();
-            let clamped_start = start.min(local_len);
-            let clamped_end = clamped_start.saturating_add(length).min(local_len);
-            let base = a.range.start;
-            (base + clamped_start)..(base + clamped_end)
+        let local_len = a.length();
+        let clamped_start = start.min(local_len);
+        let clamped_end = clamped_start.saturating_add(length).min(local_len);
+        let base = a.range.start;
+        (base + clamped_start)..(base + clamped_end)
     }
-
 
     impl<T: StTInMtT> Clone for ArraySeqMtEphSliceS<T> {
         fn clone(&self) -> Self {

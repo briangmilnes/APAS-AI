@@ -10,8 +10,8 @@ use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEphTrait;
 use apas_ai::Chap06::WeightedUnDirGraphStEphFloat::WeightedUnDirGraphStEphFloat::*;
 use apas_ai::SetLit;
-use apas_ai::WeightedUnDirGraphStEphFloatLit;
 use apas_ai::Types::Types::*;
+use apas_ai::WeightedUnDirGraphStEphFloatLit;
 
 #[test]
 fn test_weightedundirgraphstephfloatlit_macro_functionality() {

@@ -1,10 +1,10 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for OptBinSearchTreeStPer.
 
-use apas_ai::prob;
 use apas_ai::Chap50::OptBinSearchTreeStPer::OptBinSearchTreeStPer::*;
 use apas_ai::Chap50::Probability::Probability::Probability;
 use apas_ai::Types::Types::*;
+use apas_ai::prob;
 
 #[test]
 fn test_new_empty_obst() {

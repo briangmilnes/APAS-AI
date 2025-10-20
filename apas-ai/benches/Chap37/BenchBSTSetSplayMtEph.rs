@@ -82,20 +82,34 @@ fn bench_set_variants<S: BenchSet>(c: &mut Criterion, label: &str) {
 }
 
 impl BenchSet for SplaySet<i32> {
-    fn empty() -> Self { BSTSetSplayMtEphLit![] }
+    fn empty() -> Self {
+        BSTSetSplayMtEphLit![]
+    }
 
-    fn insert_value(&mut self, value: i32) { self.insert(value); }
+    fn insert_value(&mut self, value: i32) {
+        self.insert(value);
+    }
 
-    fn union_with(&self, other: &Self) -> Self { self.union(other) }
+    fn union_with(&self, other: &Self) -> Self {
+        self.union(other)
+    }
 
-    fn difference_with(&self, other: &Self) -> Self { self.difference(other) }
+    fn difference_with(&self, other: &Self) -> Self {
+        self.difference(other)
+    }
 
-    fn filter_divisible_by(&self, divisor: i32) -> Self { self.filter(|value| *value % divisor == 0) }
+    fn filter_divisible_by(&self, divisor: i32) -> Self {
+        self.filter(|value| *value % divisor == 0)
+    }
 
-    fn reduce_sum(&self) -> i32 { self.reduce(|acc, value| acc + value, 0) }
+    fn reduce_sum(&self) -> i32 {
+        self.reduce(|acc, value| acc + value, 0)
+    }
 }
 
-fn bench_splay_set(c: &mut Criterion) { bench_set_variants::<SplaySet<i32>>(c, "BSTSetSplayMtEph"); }
+fn bench_splay_set(c: &mut Criterion) {
+    bench_set_variants::<SplaySet<i32>>(c, "BSTSetSplayMtEph");
+}
 
 criterion_group!(benches, bench_splay_set);
 criterion_main!(benches);

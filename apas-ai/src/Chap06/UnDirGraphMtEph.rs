@@ -26,37 +26,37 @@ pub mod UnDirGraphMtEph {
     pub trait UnDirGraphMtEphTrait<V: StT + MtT + Hash + 'static> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                        -> Self;
+        fn empty() -> Self;
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(1)
         fn FromSets(V: SetStEph<V>, E: SetStEph<Edge<V>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn vertices(&self)                                -> &SetStEph<V>;
+        fn vertices(&self) -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn edges(&self)                                   -> &SetStEph<Edge<V>>;
+        fn edges(&self) -> &SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn sizeV(&self)                                   -> N;
+        fn sizeV(&self) -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn sizeE(&self)                                   -> N;
+        fn sizeE(&self) -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn Neighbor(&self, u: &V, v: &V)                  -> B;
+        fn Neighbor(&self, u: &V, v: &V) -> B;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|), Parallelism Θ(|E|/log |E|) - parallel divide-and-conquer filter
-        fn NG(&self, v: &V)                               -> SetStEph<V>;
+        fn NG(&self, v: &V) -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |E|), Span Θ(log |u_set| + log |E|), Parallelism Θ((|u_set| × |E|)/(log |u_set| + log |E|)) - parallel map-reduce
-        fn NGOfVertices(&self, u_set: &SetStEph<V>)       -> SetStEph<V>;
+        fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn Incident(&self, e: &Edge<V>, v: &V)            -> B;
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|), Parallelism Θ(|E|/log |E|) - calls parallel NG
-        fn Degree(&self, v: &V)                           -> N;
+        fn Degree(&self, v: &V) -> N;
 
         // DirGraph-compatible interface methods
         /// Arc count (alias for edge count in undirected graphs)
@@ -84,11 +84,21 @@ pub mod UnDirGraphMtEph {
                 E: SetLit![],
             }
         }
-        fn FromSets(V: SetStEph<V>, E: SetStEph<Edge<V>>) -> UnDirGraphMtEph<V> { UnDirGraphMtEph { V, E } }
-        fn vertices(&self) -> &SetStEph<V> { &self.V }
-        fn edges(&self) -> &SetStEph<Edge<V>> { &self.E }
-        fn sizeV(&self) -> N { self.V.size() }
-        fn sizeE(&self) -> N { self.E.size() }
+        fn FromSets(V: SetStEph<V>, E: SetStEph<Edge<V>>) -> UnDirGraphMtEph<V> {
+            UnDirGraphMtEph { V, E }
+        }
+        fn vertices(&self) -> &SetStEph<V> {
+            &self.V
+        }
+        fn edges(&self) -> &SetStEph<Edge<V>> {
+            &self.E
+        }
+        fn sizeV(&self) -> N {
+            self.V.size()
+        }
+        fn sizeE(&self) -> N {
+            self.E.size()
+        }
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Treat edges as unordered: {u,v}
@@ -196,26 +206,46 @@ pub mod UnDirGraphMtEph {
             parallel_ng_of_vertices(vertices, self.clone())
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B { &e.0 == v || &e.1 == v }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B {
+            &e.0 == v || &e.1 == v
+        }
 
-        fn Degree(&self, v: &V) -> N { self.NG(v).size() }
+        fn Degree(&self, v: &V) -> N {
+            self.NG(v).size()
+        }
 
         // DirGraph-compatible interface implementations
-        fn sizeA(&self) -> N { self.sizeE() }
+        fn sizeA(&self) -> N {
+            self.sizeE()
+        }
 
-        fn arcs(&self) -> &SetStEph<Edge<V>> { self.edges() }
+        fn arcs(&self) -> &SetStEph<Edge<V>> {
+            self.edges()
+        }
 
-        fn NPlus(&self, v: &V) -> SetStEph<V> { self.NG(v) }
+        fn NPlus(&self, v: &V) -> SetStEph<V> {
+            self.NG(v)
+        }
 
-        fn NMinus(&self, v: &V) -> SetStEph<V> { self.NG(v) }
+        fn NMinus(&self, v: &V) -> SetStEph<V> {
+            self.NG(v)
+        }
 
-        fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> { self.NGOfVertices(u_set) }
+        fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
+            self.NGOfVertices(u_set)
+        }
 
-        fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> { self.NGOfVertices(u_set) }
+        fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
+            self.NGOfVertices(u_set)
+        }
 
-        fn InDegree(&self, v: &V) -> N { self.Degree(v) }
+        fn InDegree(&self, v: &V) -> N {
+            self.Degree(v)
+        }
 
-        fn OutDegree(&self, v: &V) -> N { self.Degree(v) }
+        fn OutDegree(&self, v: &V) -> N {
+            self.Degree(v)
+        }
     }
 
     impl<V: StT + MtT + Hash + 'static> Debug for UnDirGraphMtEph<V> {
@@ -228,11 +258,15 @@ pub mod UnDirGraphMtEph {
     }
 
     impl<V: StT + MtT + Hash + 'static> Display for UnDirGraphMtEph<V> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "V={} E={:?}", self.V, self.E) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            write!(f, "V={} E={:?}", self.V, self.E)
+        }
     }
 
     impl<V: StT + MtT + Hash + 'static> PartialEq for UnDirGraphMtEph<V> {
-        fn eq(&self, other: &Self) -> bool { self.V == other.V && self.E == other.E }
+        fn eq(&self, other: &Self) -> bool {
+            self.V == other.V && self.E == other.E
+        }
     }
     impl<V: StT + MtT + Hash + 'static> Eq for UnDirGraphMtEph<V> {}
 

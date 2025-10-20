@@ -2,8 +2,8 @@
 use apas_ai::BSTBBAlphaStEphLit;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap37::BSTBBAlphaStEph::BSTBBAlphaStEph::*;
-use apas_ai::*;
 use apas_ai::Types::Types::*;
+use apas_ai::*;
 
 #[test]
 fn test_bstbbalphastephlit_macro_functionality() {

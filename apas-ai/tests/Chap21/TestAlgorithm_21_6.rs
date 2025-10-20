@@ -41,11 +41,7 @@ fn prime_sieve(n: N) -> ArraySeqStPerS<N> {
     // primes = 〈 i : 2 ≤ i < n | isPrime[i] = true 〉
     let candidates: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::tabulate(&|i| i, n);
     let filtered_idx: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerTrait<N>>::filter(&candidates, &|i| {
-        if *i >= 2 && *i < n {
-            *is_prime.nth(*i)
-        } else {
-            false
-        }
+        if *i >= 2 && *i < n { *is_prime.nth(*i) } else { false }
     });
     filtered_idx
 }

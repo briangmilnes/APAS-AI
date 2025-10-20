@@ -26,7 +26,7 @@ pub mod TSPApproxStEph {
 
         /// Shortcut Euler tour to avoid revisiting vertices
         /// APAS: Work O(|V|), Span O(|V|)
-        fn shortcut_tour<V: StT + Hash + Ord>(euler_tour: &[V])                                       -> Vec<V>;
+        fn shortcut_tour<V: StT + Hash + Ord>(euler_tour: &[V]) -> Vec<V>;
 
         /// Compute total weight of a tour
         /// APAS: Work O(|V|), Span O(|V|)

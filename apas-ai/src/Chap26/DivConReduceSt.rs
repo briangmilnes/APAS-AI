@@ -17,25 +17,25 @@ pub mod DivConReduceSt {
         /// Pattern: reduce (+) 0 identity
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn sum(a: &ArraySeqStPerS<N>)         -> N;
+        fn sum(a: &ArraySeqStPerS<N>) -> N;
 
         /// Product of all elements via reduce.
         /// Pattern: reduce (*) 1 identity
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn product(a: &ArraySeqStPerS<N>)     -> N;
+        fn product(a: &ArraySeqStPerS<N>) -> N;
 
         /// Logical OR of all elements via reduce.
         /// Pattern: reduce (||) false identity
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn any(a: &ArraySeqStPerS<B>)         -> B;
+        fn any(a: &ArraySeqStPerS<B>) -> B;
 
         /// Logical AND of all elements via reduce.
         /// Pattern: reduce (&&) true identity
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn all(a: &ArraySeqStPerS<B>)         -> B;
+        fn all(a: &ArraySeqStPerS<B>) -> B;
     }
 
     impl DivConReduceStTrait for ArraySeqStPerS<N> {
@@ -46,12 +46,20 @@ pub mod DivConReduceSt {
             Some(ArraySeqStPerS::reduce(a, &|x, y| (*x).max(*y), *a.nth(0)))
         }
 
-        fn sum(a: &ArraySeqStPerS<N>) -> N { ArraySeqStPerS::reduce(a, &|x, y| x + y, 0) }
+        fn sum(a: &ArraySeqStPerS<N>) -> N {
+            ArraySeqStPerS::reduce(a, &|x, y| x + y, 0)
+        }
 
-        fn product(a: &ArraySeqStPerS<N>) -> N { ArraySeqStPerS::reduce(a, &|x, y| x * y, 1) }
+        fn product(a: &ArraySeqStPerS<N>) -> N {
+            ArraySeqStPerS::reduce(a, &|x, y| x * y, 1)
+        }
 
-        fn any(a: &ArraySeqStPerS<B>) -> B { ArraySeqStPerS::reduce(a, &|x, y| *x || *y, false) }
+        fn any(a: &ArraySeqStPerS<B>) -> B {
+            ArraySeqStPerS::reduce(a, &|x, y| *x || *y, false)
+        }
 
-        fn all(a: &ArraySeqStPerS<B>) -> B { ArraySeqStPerS::reduce(a, &|x, y| *x && *y, true) }
+        fn all(a: &ArraySeqStPerS<B>) -> B {
+            ArraySeqStPerS::reduce(a, &|x, y| *x && *y, true)
+        }
     }
 }

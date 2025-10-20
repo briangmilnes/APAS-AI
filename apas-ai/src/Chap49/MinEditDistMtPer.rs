@@ -21,7 +21,7 @@ pub mod MinEditDistMtPer {
     /// Trait for parallel minimum edit distance operations
     pub trait MinEditDistMtPerTrait<T: MtVal> {
         /// Create new minimum edit distance solver
-        fn new()                                                                -> Self
+        fn new() -> Self
         where
             T: Default;
 
@@ -30,24 +30,28 @@ pub mod MinEditDistMtPer {
 
         /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(min(|S|,|T|))
         /// Compute minimum edit distance with parallel DP where |S|=source length, |T|=target length
-        fn min_edit_distance(&self)                                             -> usize
+        fn min_edit_distance(&self) -> usize
         where
             T: Send + Sync + 'static;
 
         /// Get the source sequence
-        fn source(&self)                                                        -> &ArraySeqMtPerS<T>;
+        fn source(&self) -> &ArraySeqMtPerS<T>;
 
         /// Get the target sequence
-        fn target(&self)                                                        -> &ArraySeqMtPerS<T>;
+        fn target(&self) -> &ArraySeqMtPerS<T>;
 
         /// Get memoization table size
-        fn memo_size(&self)                                                     -> usize;
+        fn memo_size(&self) -> usize;
     }
 
     /// Internal parallel recursive minimum edit distance with shared memoization
     /// Claude Work: O(|S|*|T|) - each subproblem computed once across all threads
     /// Claude Span: O(|S|+|T|) - maximum recursion depth, parallelism O(min(|S|,|T|))
-    fn min_edit_distance_rec<T: MtVal + Send + Sync + 'static>(table: &MinEditDistMtPerS<T>, i: usize, j: usize) -> usize {
+    fn min_edit_distance_rec<T: MtVal + Send + Sync + 'static>(
+        table: &MinEditDistMtPerS<T>,
+        i: usize,
+        j: usize,
+    ) -> usize {
         // Check memo first (thread-safe)
         {
             let memo_guard = table.memo.lock().unwrap();
@@ -128,9 +132,13 @@ pub mod MinEditDistMtPer {
             min_edit_distance_rec(self, source_len, target_len)
         }
 
-        fn source(&self) -> &ArraySeqMtPerS<T> { &self.source }
+        fn source(&self) -> &ArraySeqMtPerS<T> {
+            &self.source
+        }
 
-        fn target(&self) -> &ArraySeqMtPerS<T> { &self.target }
+        fn target(&self) -> &ArraySeqMtPerS<T> {
+            &self.target
+        }
 
         fn memo_size(&self) -> usize {
             let memo_guard = self.memo.lock().unwrap();
@@ -139,7 +147,9 @@ pub mod MinEditDistMtPer {
     }
 
     impl<T: MtVal> PartialEq for MinEditDistMtPerS<T> {
-        fn eq(&self, other: &Self) -> bool { self.source == other.source && self.target == other.target }
+        fn eq(&self, other: &Self) -> bool {
+            self.source == other.source && self.target == other.target
+        }
     }
 
     impl<T: MtVal> Eq for MinEditDistMtPerS<T> {}

@@ -19,19 +19,19 @@ pub mod LabUnDirGraphStEph {
     pub trait LabUnDirGraphStEphTrait<V: HashOrd, L: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn empty()                                                                                        -> Self;
+        fn empty() -> Self;
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
         fn from_vertices_and_labeled_edges(vertices: SetStEph<V>, labeled_edges: SetStEph<LabEdge<V, L>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn vertices(&self)                                                                                -> &SetStEph<V>;
+        fn vertices(&self) -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn labeled_edges(&self)                                                                           -> &SetStEph<LabEdge<V, L>>;
+        fn labeled_edges(&self) -> &SetStEph<LabEdge<V, L>>;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential map
-        fn edges(&self)                                                                                   -> SetStEph<Edge<V>>;
+        fn edges(&self) -> SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn add_vertex(&mut self, v: V);
@@ -40,16 +40,16 @@ pub mod LabUnDirGraphStEph {
         fn add_labeled_edge(&mut self, v1: V, v2: V, label: L);
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential search
-        fn get_edge_label(&self, v1: &V, v2: &V)                                                          -> Option<&L>;
+        fn get_edge_label(&self, v1: &V, v2: &V) -> Option<&L>;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential search
-        fn has_edge(&self, v1: &V, v2: &V)                                                                -> bool;
+        fn has_edge(&self, v1: &V, v2: &V) -> bool;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential filter
-        fn neighbors(&self, v: &V)                                                                        -> SetStEph<V>;
+        fn neighbors(&self, v: &V) -> SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn normalize_edge(v1: V, v2: V)                                                                   -> LabEdge<V, L>;
+        fn normalize_edge(v1: V, v2: V) -> LabEdge<V, L>;
 
         // DirGraph-compatible interface methods
         /// Arc count (alias for edge count in undirected graphs)
@@ -81,9 +81,13 @@ pub mod LabUnDirGraphStEph {
             }
         }
 
-        fn vertices(&self) -> &SetStEph<V> { &self.vertices }
+        fn vertices(&self) -> &SetStEph<V> {
+            &self.vertices
+        }
 
-        fn labeled_edges(&self) -> &SetStEph<LabEdge<V, L>> { &self.labeled_edges }
+        fn labeled_edges(&self) -> &SetStEph<LabEdge<V, L>> {
+            &self.labeled_edges
+        }
 
         fn edges(&self) -> SetStEph<Edge<V>> {
             let mut edges = SetStEph::empty();
@@ -93,7 +97,9 @@ pub mod LabUnDirGraphStEph {
             edges
         }
 
-        fn add_vertex(&mut self, v: V) { self.vertices.insert(v); }
+        fn add_vertex(&mut self, v: V) {
+            self.vertices.insert(v);
+        }
 
         fn add_labeled_edge(&mut self, v1: V, v2: V, label: L) {
             self.vertices.insert(v1.clone());
@@ -148,17 +154,29 @@ pub mod LabUnDirGraphStEph {
         }
 
         // DirGraph-compatible interface implementations
-        fn sizeA(&self) -> N { self.labeled_edges().size() }
+        fn sizeA(&self) -> N {
+            self.labeled_edges().size()
+        }
 
-        fn arcs(&self) -> SetStEph<LabEdge<V, L>> { self.labeled_edges().clone() }
+        fn arcs(&self) -> SetStEph<LabEdge<V, L>> {
+            self.labeled_edges().clone()
+        }
 
-        fn NPlus(&self, v: &V) -> SetStEph<V> { self.neighbors(v) }
+        fn NPlus(&self, v: &V) -> SetStEph<V> {
+            self.neighbors(v)
+        }
 
-        fn NMinus(&self, v: &V) -> SetStEph<V> { self.neighbors(v) }
+        fn NMinus(&self, v: &V) -> SetStEph<V> {
+            self.neighbors(v)
+        }
 
-        fn InDegree(&self, v: &V) -> N { self.neighbors(v).size() }
+        fn InDegree(&self, v: &V) -> N {
+            self.neighbors(v).size()
+        }
 
-        fn OutDegree(&self, v: &V) -> N { self.neighbors(v).size() }
+        fn OutDegree(&self, v: &V) -> N {
+            self.neighbors(v).size()
+        }
     }
 
     impl<V: HashOrd, L: StT + Hash> Display for LabUnDirGraphStEph<V, L> {

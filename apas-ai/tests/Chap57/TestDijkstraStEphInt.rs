@@ -90,7 +90,7 @@ fn test_unreachable_vertices() {
 
     let mut edges = SetStEph::empty();
     edges.insert(Triple(0, 1, 1)); // s -> a
-                             // vertex 2 is unreachable
+    // vertex 2 is unreachable
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
     let result = dijkstra(&graph, 0);

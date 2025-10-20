@@ -40,7 +40,7 @@ pub mod PQMinMtEph {
         /// claude-4-sonet: Work Θ((|V| + |E|) log |V|), Span Θ(|V| log |V|), Parallelism Θ(1)
         /// Work: O((|V| + |E|) log |V|), Span: O(|V| log |V|) sequential rounds.
         /// Set operations use thread-safe structures.
-        fn pq_min<G, PF>(graph: G, source: V, priority_fn: PF)                         -> PQMinResult<V, P>
+        fn pq_min<G, PF>(graph: G, source: V, priority_fn: PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtEph<V> + Send + Sync + 'static,
             PF: PriorityFn<V, P>;
@@ -51,7 +51,6 @@ pub mod PQMinMtEph {
             G: Fn(&V) -> AVLTreeSetMtEph<V> + Send + Sync + 'static,
             PF: PriorityFn<V, P>;
     }
-
 
     impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P + Send + Sync + 'static>
         ClosurePriority<V, P, F>
@@ -67,7 +66,9 @@ pub mod PQMinMtEph {
     impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P + Send + Sync + 'static>
         PriorityFn<V, P> for ClosurePriority<V, P, F>
     {
-        fn priority(&self, v: &V) -> P { (self.f)(v) }
+        fn priority(&self, v: &V) -> P {
+            (self.f)(v)
+        }
     }
 
     /// Priority queue minimum search starting from single source.

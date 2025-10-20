@@ -26,13 +26,12 @@ pub mod BSTReducedStEph {
     /// Trait for associative reduction operations
     pub trait ReduceOp<V: StT, R: StT> {
         /// Identity element for the reduction operation
-        fn identity()          -> R;
+        fn identity() -> R;
         /// Associative binary operation: f(a, b)
         fn combine(a: R, b: R) -> R;
         /// Convert value to reduced form
-        fn lift(value: &V)     -> R;
+        fn lift(value: &V) -> R;
     }
-
 
     impl<K: StT + Ord, V: StT, R: StT> Node<K, V, R> {
         fn new(key: K, value: V, priority: u64, reduced_value: R) -> Self {
@@ -53,9 +52,15 @@ pub mod BSTReducedStEph {
     pub struct SumOp<T>(PhantomData<T>);
 
     impl<T: ArithmeticT> ReduceOp<T, T> for SumOp<T> {
-        fn identity() -> T { T::default() }
-        fn combine(a: T, b: T) -> T { a + b }
-        fn lift(value: &T) -> T { *value }
+        fn identity() -> T {
+            T::default()
+        }
+        fn combine(a: T, b: T) -> T {
+            a + b
+        }
+        fn lift(value: &T) -> T {
+            *value
+        }
     }
 
     /// Example: Max reduction for ordered values
@@ -67,9 +72,15 @@ pub mod BSTReducedStEph {
     pub struct CountOp<T>(PhantomData<T>);
 
     impl<T: StT> ReduceOp<T, N> for CountOp<T> {
-        fn identity() -> N { 0 }
-        fn combine(a: N, b: N) -> N { a + b }
-        fn lift(_value: &T) -> N { 1 }
+        fn identity() -> N {
+            0
+        }
+        fn combine(a: N, b: N) -> N {
+            a + b
+        }
+        fn lift(_value: &T) -> N {
+            1
+        }
     }
 
     #[derive(Debug, Clone)]
@@ -82,39 +93,43 @@ pub mod BSTReducedStEph {
 
     pub trait BSTReducedStEphTrait<K: StT + Ord, V: StT, R: StT, Op: ReduceOp<V, R>> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new()                                  -> Self;
+        fn new() -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self)                            -> N;
+        fn size(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self)                        -> B;
+        fn is_empty(&self) -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn height(&self)                          -> N;
+        fn height(&self) -> N;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn insert(&mut self, key: K, value: V);
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn find(&self, key: &K)                   -> Option<&V>;
+        fn find(&self, key: &K) -> Option<&V>;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn contains(&self, key: &K)               -> B;
+        fn contains(&self, key: &K) -> B;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn get(&self, key: &K)                    -> Option<&V>;
+        fn get(&self, key: &K) -> Option<&V>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn keys(&self)                            -> ArraySeqStPerS<K>;
+        fn keys(&self) -> ArraySeqStPerS<K>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn values(&self)                          -> ArraySeqStPerS<V>;
-        fn minimum_key(&self)                     -> Option<&K>;
-        fn maximum_key(&self)                     -> Option<&K>;
-        fn reduced_value(&self)                   -> R;
+        fn values(&self) -> ArraySeqStPerS<V>;
+        fn minimum_key(&self) -> Option<&K>;
+        fn maximum_key(&self) -> Option<&K>;
+        fn reduced_value(&self) -> R;
         fn range_reduce(&self, low: &K, high: &K) -> R;
     }
 
     impl<K: StT + Ord, V: StT, R: StT, Op: ReduceOp<V, R>> Default for BSTreeReduced<K, V, R, Op> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     impl<K: StT + Ord, V: StT, R: StT, Op: ReduceOp<V, R>> BSTReducedStEph<K, V, R, Op> {
         // Private helper methods only - no public delegation
 
-        fn size_link(link: &Link<K, V, R>) -> N { link.as_ref().map_or(0, |n| n.size) }
+        fn size_link(link: &Link<K, V, R>) -> N {
+            link.as_ref().map_or(0, |n| n.size)
+        }
 
         fn reduced_value_link(link: &Link<K, V, R>) -> R {
             link.as_ref()
@@ -282,9 +297,13 @@ pub mod BSTReducedStEph {
             }
         }
 
-        fn size(&self) -> N { Self::size_link(&self.root) }
+        fn size(&self) -> N {
+            Self::size_link(&self.root)
+        }
 
-        fn is_empty(&self) -> B { self.size() == 0 }
+        fn is_empty(&self) -> B {
+            self.size() == 0
+        }
 
         fn height(&self) -> N {
             fn height_rec<K: StT + Ord, V: StT, R: StT>(link: &Link<K, V, R>) -> N {
@@ -301,11 +320,17 @@ pub mod BSTReducedStEph {
             Self::insert_link(&mut self.root, key, value, &mut r);
         }
 
-        fn find(&self, key: &K) -> Option<&V> { Self::find_link(&self.root, key) }
+        fn find(&self, key: &K) -> Option<&V> {
+            Self::find_link(&self.root, key)
+        }
 
-        fn contains(&self, key: &K) -> B { self.find(key).is_some() }
+        fn contains(&self, key: &K) -> B {
+            self.find(key).is_some()
+        }
 
-        fn get(&self, key: &K) -> Option<&V> { self.find(key) }
+        fn get(&self, key: &K) -> Option<&V> {
+            self.find(key)
+        }
 
         fn keys(&self) -> ArraySeqStPerS<K> {
             let mut out = Vec::with_capacity(self.size());
@@ -319,13 +344,21 @@ pub mod BSTReducedStEph {
             ArraySeqStPerS::from_vec(out)
         }
 
-        fn minimum_key(&self) -> Option<&K> { Self::min_key_link(&self.root) }
+        fn minimum_key(&self) -> Option<&K> {
+            Self::min_key_link(&self.root)
+        }
 
-        fn maximum_key(&self) -> Option<&K> { Self::max_key_link(&self.root) }
+        fn maximum_key(&self) -> Option<&K> {
+            Self::max_key_link(&self.root)
+        }
 
-        fn reduced_value(&self) -> R { Self::reduced_value_link(&self.root) }
+        fn reduced_value(&self) -> R {
+            Self::reduced_value_link(&self.root)
+        }
 
-        fn range_reduce(&self, low: &K, high: &K) -> R { Self::range_reduce_link(&self.root, low, high) }
+        fn range_reduce(&self, low: &K, high: &K) -> R {
+            Self::range_reduce_link(&self.root, low, high)
+        }
     }
 
     // Type aliases for common reductions

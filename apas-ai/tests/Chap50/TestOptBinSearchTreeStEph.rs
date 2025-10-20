@@ -3,8 +3,8 @@
 
 use apas_ai::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph::*;
 use apas_ai::Chap50::Probability::Probability::Probability;
-use apas_ai::{prob, OBSTStEphLit};
 use apas_ai::Types::Types::*;
+use apas_ai::{OBSTStEphLit, prob};
 
 #[test]
 fn test_new_empty_obst() {

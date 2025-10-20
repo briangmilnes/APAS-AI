@@ -12,7 +12,9 @@ pub mod LinkedListChainedHashTableStEph {
     use crate::Types::Types::*;
 
     impl<Key: PartialEq + Clone, Value: Clone> EntryTrait<Key, Value> for LinkedList<(Key, Value)> {
-        fn new() -> Self { LinkedList::new() }
+        fn new() -> Self {
+            LinkedList::new()
+        }
 
         fn insert(&mut self, key: Key, value: Value) {
             // Update if key exists, otherwise append
@@ -71,7 +73,10 @@ pub mod LinkedListChainedHashTableStEph {
             Self::delete_chained(table, key)
         }
 
-        fn resize(table: &HashTable<Key, Value, LinkedList<(Key, Value)>, Metrics>, new_size: N) -> HashTable<Key, Value, LinkedList<(Key, Value)>, Metrics> {
+        fn resize(
+            table: &HashTable<Key, Value, LinkedList<(Key, Value)>, Metrics>,
+            new_size: N,
+        ) -> HashTable<Key, Value, LinkedList<(Key, Value)>, Metrics> {
             // Collect all key-value pairs from all chains
             let mut pairs = Vec::new();
             for chain in &table.table {

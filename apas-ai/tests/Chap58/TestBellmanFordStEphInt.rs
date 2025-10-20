@@ -150,7 +150,7 @@ fn test_unreachable_vertices() {
     let edges = SetLit![
         Triple(0, 1, 5), // s -> a
         Triple(1, 2, 3)  // a -> b
-                   // c is unreachable
+                         // c is unreachable
     ];
 
     let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);

@@ -7,11 +7,17 @@ use apas_ai::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
 use apas_ai::Chap36::QuickSortMtSlice::Chapter36MtSlice::Chapter36MtSliceTrait;
 use apas_ai::Types::Types::*;
 
-fn to_vec<T: StT + Send + Sync + 'static>(a: &ArraySeqMtEphSliceS<T>) -> Vec<T> { a.to_vec() }
+fn to_vec<T: StT + Send + Sync + 'static>(a: &ArraySeqMtEphSliceS<T>) -> Vec<T> {
+    a.to_vec()
+}
 
-fn is_sorted<T: StT + Ord>(values: &[T]) -> bool { values.windows(2).all(|w| w[0] <= w[1]) }
+fn is_sorted<T: StT + Ord>(values: &[T]) -> bool {
+    values.windows(2).all(|w| w[0] <= w[1])
+}
 
-fn mk_seq(data: &[i32]) -> ArraySeqMtEphSliceS<i32> { ArraySeqMtEphSliceS::from_vec(data.to_vec()) }
+fn mk_seq(data: &[i32]) -> ArraySeqMtEphSliceS<i32> {
+    ArraySeqMtEphSliceS::from_vec(data.to_vec())
+}
 
 #[test]
 fn quick_sort_slice_variants_produce_sorted_output() {
@@ -173,7 +179,7 @@ fn slice_pivot_mt_median3_edge_cases() {
     // Test with larger range
     let seq = mk_seq(&[5, 1, 9, 3, 7, 2, 8]);
     let median_large = seq.pivot_mt_median3(1, 6); // Range [1, 9, 3, 7, 2]
-                                                   // Should pick median of first, middle, last: [1, 3, 2] -> median is 2
+    // Should pick median of first, middle, last: [1, 3, 2] -> median is 2
     assert_eq!(median_large, 2);
 }
 

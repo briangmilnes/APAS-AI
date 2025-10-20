@@ -19,7 +19,7 @@ fn bench_sll_persistent_ops(c: &mut Criterion) {
     group.bench_with_input(BenchmarkId::new("new_then_updates", n), &n, |b, &len| {
         b.iter(|| {
             let s: LinkedListStPerS<N> = LinkedListStPerSLit![0; len]; // *Per: from_vec pattern
-                                                                       // Focus on operations that exist in the API
+            // Focus on operations that exist in the API
             black_box(<LinkedListStPerS<N> as LinkedListStPerTrait<N>>::length(&s))
         })
     });

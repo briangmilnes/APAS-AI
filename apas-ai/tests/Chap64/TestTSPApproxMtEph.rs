@@ -1,12 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 64: TSP 2-Approximation Tests (Parallel)
 
+use apas_ai::Types::Types::*;
 use apas_ai::{
     Chap05::SetStEph::SetStEph::*, Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*,
     Chap64::TSPApproxMtEph::TSPApproxMtEph::*, SetLit, Types::Types::*,
 };
 use ordered_float::OrderedFloat;
-use apas_ai::Types::Types::*;
 
 fn create_triangle_graph() -> (
     LabUnDirGraphMtEph<N, OrderedFloat<f64>>,

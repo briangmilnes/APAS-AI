@@ -51,15 +51,21 @@ pub mod PrimStEph {
     }
 
     impl<V: StT + Hash + Ord> Ord for PQEntry<V> {
-        fn cmp(&self, other: &Self) -> Ordering { self.priority.cmp(&other.priority) }
+        fn cmp(&self, other: &Self) -> Ordering {
+            self.priority.cmp(&other.priority)
+        }
     }
 
     impl<V: StT + Hash + Ord> PartialOrd for PQEntry<V> {
-        fn partial_cmp(&self, other: &Self) -> Option<Ordering> { Some(self.cmp(other)) }
+        fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+            Some(self.cmp(other))
+        }
     }
 
     impl<V: StT + Hash + Ord + Display> Display for PQEntry<V> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { write!(f, "({}, {})", self.priority, self.vertex) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+            write!(f, "({}, {})", self.priority, self.vertex)
+        }
     }
 
     /// Algorithm 65.1: Prim's MST Algorithm

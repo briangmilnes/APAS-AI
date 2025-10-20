@@ -27,7 +27,7 @@ pub mod PQMinStEph {
 
     pub trait PQMinStEphTrait<V: StT + Ord, P: StT + Ord> {
         /// claude-4-sonet: Work Θ((|V| + |E|) log |V|), Span Θ(|V| log |V|), Parallelism Θ(1)
-        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF)                         -> PQMinResult<V, P>
+        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             PF: PriorityFn<V, P>;
@@ -53,7 +53,9 @@ pub mod PQMinStEph {
     }
 
     impl<V: StT + Ord, P: StT + Ord, F: Fn(&V) -> P> PriorityFn<V, P> for ClosurePriority<V, P, F> {
-        fn priority(&self, v: &V) -> P { (self.f)(v) }
+        fn priority(&self, v: &V) -> P {
+            (self.f)(v)
+        }
     }
 
     /// Priority queue minimum search starting from single source.

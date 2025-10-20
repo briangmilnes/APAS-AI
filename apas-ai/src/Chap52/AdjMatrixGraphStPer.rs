@@ -15,23 +15,23 @@ pub mod AdjMatrixGraphStPer {
 
     pub trait AdjMatrixGraphStPerTrait {
         /// claude-4-sonet: Work Θ(n²), Span Θ(n²), Parallelism Θ(1)
-        fn new(n: N)                                                 -> Self;
+        fn new(n: N) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn from_matrix(matrix: ArraySeqStPerS<ArraySeqStPerS<bool>>) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn num_vertices(&self)                                       -> N;
+        fn num_vertices(&self) -> N;
         /// claude-4-sonet: Work Θ(n²), Span Θ(n²), Parallelism Θ(1)
-        fn num_edges(&self)                                          -> N;
+        fn num_edges(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn has_edge(&self, u: N, v: N)                               -> B;
+        fn has_edge(&self, u: N, v: N) -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn out_neighbors(&self, u: N)                                -> ArraySeqStPerS<N>;
+        fn out_neighbors(&self, u: N) -> ArraySeqStPerS<N>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn out_degree(&self, u: N)                                   -> N;
+        fn out_degree(&self, u: N) -> N;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn set_edge(&self, u: N, v: N, exists: B)                    -> Self;
+        fn set_edge(&self, u: N, v: N, exists: B) -> Self;
         /// claude-4-sonet: Work Θ(n²), Span Θ(n²), Parallelism Θ(1)
-        fn complement(&self)                                         -> Self;
+        fn complement(&self) -> Self;
     }
 
     impl AdjMatrixGraphStPerTrait for AdjMatrixGraphStPer {
@@ -54,7 +54,9 @@ pub mod AdjMatrixGraphStPer {
         }
 
         // Work: Θ(1), Span: Θ(1)
-        fn num_vertices(&self) -> N { self.n }
+        fn num_vertices(&self) -> N {
+            self.n
+        }
 
         // Work: Θ(n²), Span: Θ(n²) - count all true entries
         fn num_edges(&self) -> N {

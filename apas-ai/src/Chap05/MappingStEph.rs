@@ -3,8 +3,8 @@
 
 pub mod MappingStEph {
 
-    use std::collections::hash_set::Iter;
     use std::collections::HashMap;
+    use std::collections::hash_set::Iter;
     use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
@@ -21,11 +21,11 @@ pub mod MappingStEph {
     pub trait MappingStEphTrait<X: StT + Hash, Y: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                               -> Self;
+        fn empty() -> Self;
 
         /// APAS: Work Θ(|v|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
-        fn FromVec(v: Vec<Pair<X, Y>>)           -> Self;
+        fn FromVec(v: Vec<Pair<X, Y>>) -> Self;
 
         /// APAS: Work Θ(|r|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|r|), Span Θ(1)
@@ -33,25 +33,27 @@ pub mod MappingStEph {
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self)                           -> N;
+        fn size(&self) -> N;
 
         /// APAS: Work Θ(|m|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|m|), Span Θ(1)
-        fn domain(&self)                         -> SetStEph<X>;
+        fn domain(&self) -> SetStEph<X>;
 
         /// APAS: Work Θ(|m|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|m|), Span Θ(1)
-        fn range(&self)                          -> SetStEph<Y>;
+        fn range(&self) -> SetStEph<Y>;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn mem(&self, a: &X, b: &Y)              -> B;
+        fn mem(&self, a: &X, b: &Y) -> B;
 
-        fn iter(&self)                           -> Iter<'_, Pair<X, Y>>;
+        fn iter(&self) -> Iter<'_, Pair<X, Y>>;
     }
 
     // Helper function to ensure unique pairs (mapping property: each domain element maps to at most one range element)
-    fn unique_pairs_from_iter<A: StT + Hash, B: StT + Hash, I: IntoIterator<Item = Pair<A, B>>>(iter: I) -> SetStEph<Pair<A, B>> {
+    fn unique_pairs_from_iter<A: StT + Hash, B: StT + Hash, I: IntoIterator<Item = Pair<A, B>>>(
+        iter: I,
+    ) -> SetStEph<Pair<A, B>> {
         let mut m: HashMap<A, B> = HashMap::new();
         for Pair(a, b) in iter {
             m.insert(a, b);
@@ -81,29 +83,45 @@ pub mod MappingStEph {
             }
         }
 
-        fn size(&self) -> N { self.rel.size() }
+        fn size(&self) -> N {
+            self.rel.size()
+        }
 
-        fn domain(&self) -> SetStEph<X> { self.rel.domain() }
+        fn domain(&self) -> SetStEph<X> {
+            self.rel.domain()
+        }
 
-        fn range(&self) -> SetStEph<Y> { self.rel.range() }
+        fn range(&self) -> SetStEph<Y> {
+            self.rel.range()
+        }
 
-        fn mem(&self, a: &X, b: &Y) -> B { self.rel.mem(a, b) }
+        fn mem(&self, a: &X, b: &Y) -> B {
+            self.rel.mem(a, b)
+        }
 
-        fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.rel.iter() }
+        fn iter(&self) -> Iter<'_, Pair<X, Y>> {
+            self.rel.iter()
+        }
     }
 
     impl<A: StT + Hash, B: StT + Hash> PartialEq for MappingStEph<A, B> {
-        fn eq(&self, other: &Self) -> bool { self.rel == other.rel }
+        fn eq(&self, other: &Self) -> bool {
+            self.rel == other.rel
+        }
     }
 
     impl<A: StT + Hash, B: StT + Hash> Eq for MappingStEph<A, B> {}
 
     impl<A: StT + Hash, B: StT + Hash> Debug for MappingStEph<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { Debug::fmt(&self.rel, f) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            Debug::fmt(&self.rel, f)
+        }
     }
 
     impl<A: StT + Hash, B: StT + Hash> Display for MappingStEph<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { Display::fmt(&self.rel, f) }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            Display::fmt(&self.rel, f)
+        }
     }
 
     #[macro_export]

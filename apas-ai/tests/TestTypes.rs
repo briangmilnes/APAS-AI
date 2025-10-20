@@ -5,7 +5,7 @@ use std::f32::consts::PI;
 use std::f64::consts::E;
 
 use apas_ai::Types::Types::*;
-use apas_ai::{EdgeLit, PairLit, EdgeList, PairList, ParaPair};
+use apas_ai::{EdgeList, EdgeLit, PairList, PairLit, ParaPair};
 
 #[test]
 fn test_pair_creation() {
@@ -38,14 +38,14 @@ fn test_triple_clone() {
 
 #[test]
 fn test_key_val_creation() {
-    let kv = KeyVal{ key: 1, val: "test" };
+    let kv = KeyVal { key: 1, val: "test" };
     assert_eq!(kv.key, 1);
     assert_eq!(kv.val, "test");
 }
 
 #[test]
 fn test_key_val_clone() {
-    let kv1 = KeyVal{ key: 5, val: 100 };
+    let kv1 = KeyVal { key: 5, val: 100 };
     let kv2 = kv1;
     assert_eq!(kv1, kv2);
 }
@@ -156,32 +156,48 @@ fn test_ordered_float_f64() {
 
 #[test]
 fn test_array_seq_set_eq_equal() {
-    fn a_nth(i: usize) -> i32 { [1, 2, 3][i] }
-    fn b_nth(i: usize) -> i32 { [1, 2, 3][i] }
+    fn a_nth(i: usize) -> i32 {
+        [1, 2, 3][i]
+    }
+    fn b_nth(i: usize) -> i32 {
+        [1, 2, 3][i]
+    }
     let result = ArraySeqSetEq(3, a_nth, 3, b_nth);
     assert!(result);
 }
 
 #[test]
 fn test_array_seq_set_eq_different_order() {
-    fn a_nth(i: usize) -> i32 { [1, 2, 3][i] }
-    fn b_nth(i: usize) -> i32 { [3, 1, 2][i] }
+    fn a_nth(i: usize) -> i32 {
+        [1, 2, 3][i]
+    }
+    fn b_nth(i: usize) -> i32 {
+        [3, 1, 2][i]
+    }
     let result = ArraySeqSetEq(3, a_nth, 3, b_nth);
     assert!(result);
 }
 
 #[test]
 fn test_array_seq_set_eq_different_elements() {
-    fn a_nth(i: usize) -> i32 { [1, 2, 3][i] }
-    fn b_nth(i: usize) -> i32 { [1, 2, 4][i] }
+    fn a_nth(i: usize) -> i32 {
+        [1, 2, 3][i]
+    }
+    fn b_nth(i: usize) -> i32 {
+        [1, 2, 4][i]
+    }
     let result = ArraySeqSetEq(3, a_nth, 3, b_nth);
     assert!(!result);
 }
 
 #[test]
 fn test_array_seq_set_eq_different_length() {
-    fn a_nth(i: usize) -> i32 { [1, 2, 3][i] }
-    fn b_nth(i: usize) -> i32 { [1, 2][i] }
+    fn a_nth(i: usize) -> i32 {
+        [1, 2, 3][i]
+    }
+    fn b_nth(i: usize) -> i32 {
+        [1, 2][i]
+    }
     let result = ArraySeqSetEq(3, a_nth, 2, b_nth);
     assert!(!result);
 }
@@ -322,10 +338,7 @@ fn test_pairlist_macro_different_types() {
 
 #[test]
 fn test_parapair_macro() {
-    let result = ParaPair!(
-        || { 10 + 20 },
-        || { 5 * 6 }
-    );
+    let result = ParaPair!(|| { 10 + 20 }, || { 5 * 6 });
     assert_eq!(result.0, 30);
     assert_eq!(result.1, 30);
 }

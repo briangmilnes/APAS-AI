@@ -5,8 +5,8 @@ use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEphTrait;
 use apas_ai::Chap06::WeightedUnDirGraphStEphInt::WeightedUnDirGraphStEphInt::*;
 use apas_ai::SetLit;
-use apas_ai::WeightedUnDirGraphStEphIntLit;
 use apas_ai::Types::Types::*;
+use apas_ai::WeightedUnDirGraphStEphIntLit;
 
 #[test]
 fn test_weightedundirgraphstephintlit_macro_functionality() {

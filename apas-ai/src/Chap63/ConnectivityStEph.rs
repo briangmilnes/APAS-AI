@@ -22,15 +22,15 @@ pub mod ConnectivityStEph {
     pub trait ConnectivityStEphTrait {
         /// Count connected components using star contraction
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
-        fn count_components<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>)         -> N;
+        fn count_components<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> N;
 
         /// Find connected components using star contraction
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
-        fn connected_components<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>)     -> SetStEph<SetStEph<V>>;
+        fn connected_components<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> SetStEph<SetStEph<V>>;
 
         /// Count components using higher-order function approach
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
-        fn count_components_hof<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>)     -> N;
+        fn count_components_hof<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> N;
 
         /// Find components using higher-order function approach
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)

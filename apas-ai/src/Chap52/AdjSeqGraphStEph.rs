@@ -13,19 +13,19 @@ pub mod AdjSeqGraphStEph {
 
     pub trait AdjSeqGraphStEphTrait {
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn new(n: N)                                        -> Self;
+        fn new(n: N) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn from_seq(adj: ArraySeqStEphS<ArraySeqStEphS<N>>) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn num_vertices(&self)                              -> N;
+        fn num_vertices(&self) -> N;
         /// claude-4-sonet: Work Θ(Σ deg(v)), Span Θ(Σ deg(v)), Parallelism Θ(1)
-        fn num_edges(&self)                                 -> N;
+        fn num_edges(&self) -> N;
         /// claude-4-sonet: Work Θ(deg(u)), Span Θ(deg(u)), Parallelism Θ(1)
-        fn has_edge(&self, u: N, v: N)                      -> B;
+        fn has_edge(&self, u: N, v: N) -> B;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn out_neighbors(&self, u: N)                       -> ArraySeqStEphS<N>;
+        fn out_neighbors(&self, u: N) -> ArraySeqStEphS<N>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn out_degree(&self, u: N)                          -> N;
+        fn out_degree(&self, u: N) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn set_neighbors(&mut self, v: N, neighbors: ArraySeqStEphS<N>);
         /// claude-4-sonet: Work Θ(deg(u)), Span Θ(deg(u)), Parallelism Θ(1)
@@ -44,9 +44,13 @@ pub mod AdjSeqGraphStEph {
             }
         }
 
-        fn from_seq(adj: ArraySeqStEphS<ArraySeqStEphS<N>>) -> Self { AdjSeqGraphStEph { adj } }
+        fn from_seq(adj: ArraySeqStEphS<ArraySeqStEphS<N>>) -> Self {
+            AdjSeqGraphStEph { adj }
+        }
 
-        fn num_vertices(&self) -> N { self.adj.length() }
+        fn num_vertices(&self) -> N {
+            self.adj.length()
+        }
 
         fn num_edges(&self) -> N {
             let n = self.adj.length();
@@ -70,9 +74,13 @@ pub mod AdjSeqGraphStEph {
             false
         }
 
-        fn out_neighbors(&self, u: N) -> ArraySeqStEphS<N> { self.adj.nth(u).clone() }
+        fn out_neighbors(&self, u: N) -> ArraySeqStEphS<N> {
+            self.adj.nth(u).clone()
+        }
 
-        fn out_degree(&self, u: N) -> N { self.adj.nth(u).length() }
+        fn out_degree(&self, u: N) -> N {
+            self.adj.nth(u).length()
+        }
 
         fn set_neighbors(&mut self, v: N, neighbors: ArraySeqStEphS<N>) {
             if v < self.adj.length() {

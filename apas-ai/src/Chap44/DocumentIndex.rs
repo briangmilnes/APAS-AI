@@ -29,19 +29,19 @@ pub mod DocumentIndex {
     pub trait DocumentIndexTrait {
         /// claude-4-sonet: Work Θ(n log n), Span Θ(log² n), Parallelism Θ(n/log² n)
         /// Creates an index from a sequence of (id, contents) pairs
-        fn make_index(docs: &DocumentCollection)                     -> Self;
+        fn make_index(docs: &DocumentCollection) -> Self;
 
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Finds documents containing the given word
-        fn find(&self, word: &Word)                                  -> DocumentSet;
+        fn find(&self, word: &Word) -> DocumentSet;
 
         /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log n + log m)
         /// Logical AND: documents in both sets
-        fn query_and(docs_a: &DocumentSet, docs_b: &DocumentSet)     -> DocumentSet;
+        fn query_and(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet;
 
         /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log n + log m)
         /// Logical OR: documents in either set
-        fn query_or(docs_a: &DocumentSet, docs_b: &DocumentSet)      -> DocumentSet;
+        fn query_or(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet;
 
         /// claude-4-sonet: Work Θ(m log(1 + n/m)), Span Θ(log n + log m)
         /// Logical AND NOT: documents in first set but not second
@@ -49,11 +49,11 @@ pub mod DocumentIndex {
 
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         /// Returns the number of documents in the set
-        fn size(docs: &DocumentSet)                                  -> N;
+        fn size(docs: &DocumentSet) -> N;
 
         /// Claude Work: O(n), Span: O(log n)
         /// Converts document set to sequence
-        fn to_seq(docs: &DocumentSet)                                -> ArraySeqStPerS<DocumentId>;
+        fn to_seq(docs: &DocumentSet) -> ArraySeqStPerS<DocumentId>;
         fn empty() -> Self;
         fn get_all_words(&self) -> ArraySeqStPerS<Word>;
         fn word_count(&self) -> N;
@@ -145,19 +145,27 @@ pub mod DocumentIndex {
 
         /// Claude Work: O(m log(1 + n/m)), Span: O(log n + log m)
         /// Algorithm 44.3: queryAnd - set intersection
-        fn query_and(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet { docs_a.intersection(docs_b) }
+        fn query_and(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet {
+            docs_a.intersection(docs_b)
+        }
 
         /// Claude Work: O(m log(1 + n/m)), Span: O(log n + log m)
         /// Algorithm 44.3: queryOr - set union
-        fn query_or(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet { docs_a.union(docs_b) }
+        fn query_or(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet {
+            docs_a.union(docs_b)
+        }
 
         /// Claude Work: O(m log(1 + n/m)), Span: O(log n + log m)
         /// Algorithm 44.3: queryAndNot - set difference
-        fn query_and_not(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet { docs_a.difference(docs_b) }
+        fn query_and_not(docs_a: &DocumentSet, docs_b: &DocumentSet) -> DocumentSet {
+            docs_a.difference(docs_b)
+        }
 
         /// Claude Work: O(1), Span: O(1)
         /// Algorithm 44.3: size function
-        fn size(docs: &DocumentSet) -> N { docs.size() }
+        fn size(docs: &DocumentSet) -> N {
+            docs.size()
+        }
 
         /// Claude Work: O(n), Span: O(log n)
         /// Algorithm 44.3: toSeq function
@@ -175,14 +183,12 @@ pub mod DocumentIndex {
         }
 
         fn empty() -> Self {
-
             DocumentIndex {
                 word_to_docs: TableStPer::empty(),
             }
-    }
+        }
 
         fn get_all_words(&self) -> ArraySeqStPerS<Word> {
-
             let entries = self.word_to_docs.collect();
             let mut words = ArraySeqStPerS::empty();
 
@@ -193,9 +199,11 @@ pub mod DocumentIndex {
             }
 
             words
-    }
+        }
 
-        fn word_count(&self) -> N { self.word_to_docs.size() }
+        fn word_count(&self) -> N {
+            self.word_to_docs.size()
+        }
     }
 
     /// Tokenization function: splits content into words
@@ -294,9 +302,13 @@ pub mod DocumentIndex {
     }
 
     impl<'a> QueryBuilderTrait<'a> for QueryBuilder<'a> {
-        fn new(index: &'a DocumentIndex) -> Self { QueryBuilder { index } }
+        fn new(index: &'a DocumentIndex) -> Self {
+            QueryBuilder { index }
+        }
 
-        fn find(&self, word: &Word) -> DocumentSet { self.index.find(word) }
+        fn find(&self, word: &Word) -> DocumentSet {
+            self.index.find(word)
+        }
 
         fn and(&self, docs_a: DocumentSet, docs_b: DocumentSet) -> DocumentSet {
             DocumentIndex::query_and(&docs_a, &docs_b)

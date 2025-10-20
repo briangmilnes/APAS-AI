@@ -48,12 +48,16 @@ pub mod WeightedUnDirGraphMtEphInt {
         /// Add a weighted edge to the graph (undirected)
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn add_weighted_edge(&mut self, v1: V, v2: V, weight: i32) { self.add_labeled_edge(v1, v2, weight); }
+        fn add_weighted_edge(&mut self, v1: V, v2: V, weight: i32) {
+            self.add_labeled_edge(v1, v2, weight);
+        }
 
         /// Get the weight of an edge, if it exists
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential search
-        fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<i32> { self.get_edge_label(v1, v2).copied() }
+        fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<i32> {
+            self.get_edge_label(v1, v2).copied()
+        }
 
         /// Get all weighted edges as (v1, v2, weight) tuples
         /// APAS: Work Θ(|E|), Span Θ(1)
@@ -61,7 +65,11 @@ pub mod WeightedUnDirGraphMtEphInt {
         fn weighted_edges(&self) -> SetStEph<Triple<V, V, i32>> {
             let mut edges = SetStEph::empty();
             for labeled_edge in self.labeled_edges().iter() {
-                edges.insert(Triple(labeled_edge.0.clone_mt(), labeled_edge.1.clone_mt(), labeled_edge.2));
+                edges.insert(Triple(
+                    labeled_edge.0.clone_mt(),
+                    labeled_edge.1.clone_mt(),
+                    labeled_edge.2,
+                ));
             }
             edges
         }
@@ -87,7 +95,10 @@ pub mod WeightedUnDirGraphMtEphInt {
             }
 
             // Parallel divide-and-conquer
-            fn parallel_neighbors<V: HashOrd + MtT + 'static>(edges: Vec<LabEdge<V, i32>>, v: V) -> SetStEph<Pair<V, i32>> {
+            fn parallel_neighbors<V: HashOrd + MtT + 'static>(
+                edges: Vec<LabEdge<V, i32>>,
+                v: V,
+            ) -> SetStEph<Pair<V, i32>> {
                 let n = edges.len();
                 if n == 0 {
                     return SetStEph::empty();
@@ -126,10 +137,14 @@ pub mod WeightedUnDirGraphMtEphInt {
         /// Get the total weight of all edges
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential sum
-        fn total_weight(&self) -> i32 { self.labeled_edges().iter().map(|edge| edge.2).sum() }
+        fn total_weight(&self) -> i32 {
+            self.labeled_edges().iter().map(|edge| edge.2).sum()
+        }
 
         /// Get the degree of a vertex (number of incident edges)
-        fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
+        fn vertex_degree(&self, v: &V) -> usize {
+            self.neighbors(v).size()
+        }
     }
 
     /// Macro requires explicit Triple wrappers: `E: [Triple(v1, v2, weight), ...]`

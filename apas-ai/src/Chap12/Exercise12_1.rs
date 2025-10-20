@@ -4,8 +4,8 @@
 pub mod Exercise12_1 {
 
     use std::hint::spin_loop;
-    use std::sync::atomic::{AtomicUsize, Ordering};
     use std::sync::Arc;
+    use std::sync::atomic::{AtomicUsize, Ordering};
     use std::thread;
 
     use crate::Types::Types::*;
@@ -45,7 +45,9 @@ pub mod Exercise12_1 {
             }
         }
 
-        fn unlock(&self) { self.turn.fetch_add(1, Ordering::Release); }
+        fn unlock(&self) {
+            self.turn.fetch_add(1, Ordering::Release);
+        }
 
         fn with_lock<T>(&self, action: impl FnOnce() -> T) -> T {
             self.lock();
@@ -56,7 +58,9 @@ pub mod Exercise12_1 {
     }
 
     impl Default for SpinLock {
-        fn default() -> Self { <SpinLock as SpinLockTrait>::new() }
+        fn default() -> Self {
+            <SpinLock as SpinLockTrait>::new()
+        }
     }
 
     /// Parallel counter increment using spin-lock for mutual exclusion.

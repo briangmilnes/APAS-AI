@@ -34,29 +34,29 @@ pub mod BSTParaStEph {
 
     pub trait ParamBSTTrait<T: StT + Ord>: Sized {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new()                         -> Self;
+        fn new() -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn expose(&self)                 -> Exposed<T>;
+        fn expose(&self) -> Exposed<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn join_mid(exposed: Exposed<T>) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self)                   -> N;
+        fn size(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self)               -> B;
+        fn is_empty(&self) -> B;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn insert(&self, key: T);
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn delete(&self, key: &T);
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn find(&self, key: &T)          -> Option<T>;
+        fn find(&self, key: &T) -> Option<T>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn split(&self, key: &T)         -> (Self, B, Self);
+        fn split(&self, key: &T) -> (Self, B, Self);
         /// claude-4-sonet: Work Θ(log(|self| + |other|)), Span Θ(log(|self| + |other|)), Parallelism Θ(1)
         fn join_pair(&self, other: Self) -> Self;
         /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
-        fn union(&self, other: &Self)    -> Self;
+        fn union(&self, other: &Self) -> Self;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn in_order(&self)               -> ArraySeqStPerS<T>;
+        fn in_order(&self) -> ArraySeqStPerS<T>;
     }
 
     fn expose_internal<T: StT + Ord>(tree: &ParamBST<T>) -> Exposed<T> {
@@ -69,7 +69,9 @@ pub mod BSTParaStEph {
 
     fn join_mid<T: StT + Ord>(exposed: Exposed<T>) -> ParamBST<T> {
         match exposed {
-            | Exposed::Leaf => ParamBST { root: Rc::new(RefCell::new(None)) },
+            | Exposed::Leaf => ParamBST {
+                root: Rc::new(RefCell::new(None)),
+            },
             | Exposed::Node(left, key, right) => {
                 let size = 1 + left.size() + right.size();
                 ParamBST {
@@ -81,7 +83,15 @@ pub mod BSTParaStEph {
 
     fn split_inner<T: StT + Ord>(tree: &ParamBST<T>, key: &T) -> (ParamBST<T>, B, ParamBST<T>) {
         match expose_internal(tree) {
-            | Exposed::Leaf => (ParamBST { root: Rc::new(RefCell::new(None)) }, false, ParamBST { root: Rc::new(RefCell::new(None)) }),
+            | Exposed::Leaf => (
+                ParamBST {
+                    root: Rc::new(RefCell::new(None)),
+                },
+                false,
+                ParamBST {
+                    root: Rc::new(RefCell::new(None)),
+                },
+            ),
             | Exposed::Node(left, root_key, right) => match key.cmp(&root_key) {
                 | Less => {
                     let (ll, found, lr) = split_inner(&left, key);
@@ -98,7 +108,9 @@ pub mod BSTParaStEph {
         }
     }
 
-    fn join_m<T: StT + Ord>(left: ParamBST<T>, key: T, right: ParamBST<T>) -> ParamBST<T> { join_mid(Exposed::Node(left, key, right)) }
+    fn join_m<T: StT + Ord>(left: ParamBST<T>, key: T, right: ParamBST<T>) -> ParamBST<T> {
+        join_mid(Exposed::Node(left, key, right))
+    }
 
     fn min_key<T: StT + Ord>(tree: &ParamBST<T>) -> Option<T> {
         match expose_internal(tree) {
@@ -151,15 +163,21 @@ pub mod BSTParaStEph {
             }
         }
 
-        fn expose(&self) -> Exposed<T> { expose_internal(self) }
+        fn expose(&self) -> Exposed<T> {
+            expose_internal(self)
+        }
 
         fn join_mid(exposed: Exposed<T>) -> Self {
             join_mid(exposed)
         }
 
-        fn size(&self) -> N { self.root.borrow().as_ref().map_or(0, |node| node.size) }
+        fn size(&self) -> N {
+            self.root.borrow().as_ref().map_or(0, |node| node.size)
+        }
 
-        fn is_empty(&self) -> B { self.size() == 0 }
+        fn is_empty(&self) -> B {
+            self.size() == 0
+        }
 
         fn insert(&self, key: T) {
             let (left, _, right) = split_inner(self, &key);
@@ -186,11 +204,17 @@ pub mod BSTParaStEph {
             }
         }
 
-        fn split(&self, key: &T) -> (Self, B, Self) { split_inner(self, key) }
+        fn split(&self, key: &T) -> (Self, B, Self) {
+            split_inner(self, key)
+        }
 
-        fn join_pair(&self, other: Self) -> Self { join_pair_inner(self.clone(), other) }
+        fn join_pair(&self, other: Self) -> Self {
+            join_pair_inner(self.clone(), other)
+        }
 
-        fn union(&self, other: &Self) -> Self { union_inner(self, other) }
+        fn union(&self, other: &Self) -> Self {
+            union_inner(self, other)
+        }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());

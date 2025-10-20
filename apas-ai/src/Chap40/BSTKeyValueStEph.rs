@@ -39,29 +39,28 @@ pub mod BSTKeyValueStEph {
 
     pub trait BSTKeyValueStEphTrait<K: StT + Ord, V: StT> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new()                    -> Self;
+        fn new() -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self)              -> N;
+        fn size(&self) -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self)          -> B;
+        fn is_empty(&self) -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn height(&self)            -> N;
+        fn height(&self) -> N;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn insert(&mut self, key: K, value: V);
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn find(&self, key: &K)     -> Option<&V>;
+        fn find(&self, key: &K) -> Option<&V>;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn contains(&self, key: &K) -> B;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn get(&self, key: &K)      -> Option<&V>;
+        fn get(&self, key: &K) -> Option<&V>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn keys(&self)              -> ArraySeqStPerS<K>;
+        fn keys(&self) -> ArraySeqStPerS<K>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn values(&self)            -> ArraySeqStPerS<V>;
-        fn minimum_key(&self)       -> Option<&K>;
-        fn maximum_key(&self)       -> Option<&K>;
+        fn values(&self) -> ArraySeqStPerS<V>;
+        fn minimum_key(&self) -> Option<&K>;
+        fn maximum_key(&self) -> Option<&K>;
     }
-
 
     fn rotate_left<K: StT + Ord, V: StT>(link: &mut Link<K, V>) {
         if let Some(mut x) = link.take() {
@@ -164,11 +163,17 @@ pub mod BSTKeyValueStEph {
     }
 
     impl<K: StT + Ord, V: StT> BSTKeyValueStEphTrait<K, V> for BSTKeyValueStEph<K, V> {
-        fn new() -> Self { BSTKeyValueStEph { root: None, size: 0 } }
+        fn new() -> Self {
+            BSTKeyValueStEph { root: None, size: 0 }
+        }
 
-        fn size(&self) -> N { self.size }
+        fn size(&self) -> N {
+            self.size
+        }
 
-        fn is_empty(&self) -> B { self.size == 0 }
+        fn is_empty(&self) -> B {
+            self.size == 0
+        }
 
         fn height(&self) -> N {
             fn height_rec<K: StT + Ord, V: StT>(link: &Link<K, V>) -> N {
@@ -188,11 +193,17 @@ pub mod BSTKeyValueStEph {
             }
         }
 
-        fn find(&self, key: &K) -> Option<&V> { find_link(&self.root, key) }
+        fn find(&self, key: &K) -> Option<&V> {
+            find_link(&self.root, key)
+        }
 
-        fn contains(&self, key: &K) -> B { self.find(key).is_some() }
+        fn contains(&self, key: &K) -> B {
+            self.find(key).is_some()
+        }
 
-        fn get(&self, key: &K) -> Option<&V> { self.find(key) }
+        fn get(&self, key: &K) -> Option<&V> {
+            self.find(key)
+        }
 
         fn keys(&self) -> ArraySeqStPerS<K> {
             let mut out = Vec::with_capacity(self.size);
@@ -206,13 +217,19 @@ pub mod BSTKeyValueStEph {
             ArraySeqStPerS::from_vec(out)
         }
 
-        fn minimum_key(&self) -> Option<&K> { min_key_link(&self.root) }
+        fn minimum_key(&self) -> Option<&K> {
+            min_key_link(&self.root)
+        }
 
-        fn maximum_key(&self) -> Option<&K> { max_key_link(&self.root) }
+        fn maximum_key(&self) -> Option<&K> {
+            max_key_link(&self.root)
+        }
     }
 
     impl<K: StT + Ord, V: StT> Default for BSTreeKeyValue<K, V> {
-        fn default() -> Self { Self::new() }
+        fn default() -> Self {
+            Self::new()
+        }
     }
 
     #[macro_export]

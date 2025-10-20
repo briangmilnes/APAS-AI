@@ -24,11 +24,11 @@ pub mod SSSPResultStPerInt {
     pub trait SSSPResultStPerIntTrait {
         /// Create new SSSP result
         /// APAS: Work Θ(n), Span Θ(n)
-        fn new(n: N, source: N)      -> Self;
+        fn new(n: N, source: N) -> Self;
 
         /// Get distance to vertex
         /// APAS: Work Θ(1), Span Θ(1)
-        fn distance(&self, v: N)     -> Option<i32>;
+        fn distance(&self, v: N) -> Option<i32>;
 
         /// Check if vertex is reachable
         /// APAS: Work Θ(1), Span Θ(1)
@@ -84,11 +84,7 @@ pub mod SSSPResultStPerInt {
                 return None;
             }
             let pred = *self.predecessors.nth(v);
-            if pred == NO_PREDECESSOR {
-                None
-            } else {
-                Some(pred)
-            }
+            if pred == NO_PREDECESSOR { None } else { Some(pred) }
         }
 
         /// Sets the predecessor of vertex v, returning a new structure.
@@ -104,7 +100,9 @@ pub mod SSSPResultStPerInt {
         }
 
         /// Checks if vertex v is reachable from source.
-        pub fn is_reachable(&self, v: usize) -> bool { self.get_distance(v) != UNREACHABLE }
+        pub fn is_reachable(&self, v: usize) -> bool {
+            self.get_distance(v) != UNREACHABLE
+        }
 
         /// Extracts the shortest path from source to vertex v by following predecessors.
         /// Returns None if v is unreachable, otherwise returns the path as a sequence.

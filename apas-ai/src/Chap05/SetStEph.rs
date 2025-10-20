@@ -3,8 +3,8 @@
 
 pub mod SetStEph {
 
-    use std::collections::hash_set::Iter;
     use std::collections::HashSet;
+    use std::collections::hash_set::Iter;
     use std::fmt::Formatter;
     use std::fmt::Result;
     use std::fmt::{Debug, Display};
@@ -20,25 +20,25 @@ pub mod SetStEph {
     pub trait SetStEphTrait<T: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty()                                                     -> Self;
+        fn empty() -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(x: T)                                             -> Self;
+        fn singleton(x: T) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self)                                                 -> N;
+        fn size(&self) -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn mem(&self, x: &T)                                           -> B;
+        fn mem(&self, x: &T) -> B;
         /// APAS: Work Θ(|a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn union(&self, other: &SetStEph<T>)                           -> Self;
+        fn union(&self, other: &SetStEph<T>) -> Self;
         /// APAS: Work Θ(|a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn intersection(&self, other: &SetStEph<T>)                    -> Self;
+        fn intersection(&self, other: &SetStEph<T>) -> Self;
         /// APAS: Work Θ(|parts| × |a|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|parts| × |a|²), Span Θ(1)
-        fn partition(&self, parts: &SetStEph<SetStEph<T>>)             -> B;
+        fn partition(&self, parts: &SetStEph<SetStEph<T>>) -> B;
 
         /// APAS: Work Θ(|a| × |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| × |b|), Span Θ(1)
@@ -46,24 +46,22 @@ pub mod SetStEph {
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn insert(&mut self, x: T)                                     -> &mut Self;
+        fn insert(&mut self, x: T) -> &mut Self;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn iter(&self)                                                 -> Iter<'_, T>;
+        fn iter(&self) -> Iter<'_, T>;
         /// APAS: Work Θ(|v|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|v|), Span Θ(1)
-        fn FromVec(v: Vec<T>)                                          -> Self;
+        fn FromVec(v: Vec<T>) -> Self;
     }
-
-
-
-
 
     // Provide an order-independent Hash so sets of sets can be placed in a HashSet.
 
     impl<T: StT + Hash> SetStEphTrait<T> for SetStEph<T> {
-        fn empty() -> SetStEph<T> { SetStEph { data: HashSet::new() } }
+        fn empty() -> SetStEph<T> {
+            SetStEph { data: HashSet::new() }
+        }
 
         fn singleton(x: T) -> SetStEph<T> {
             let mut s = HashSet::with_capacity(1);
@@ -71,9 +69,13 @@ pub mod SetStEph {
             SetStEph { data: s }
         }
 
-        fn size(&self) -> N { self.data.len() }
+        fn size(&self) -> N {
+            self.data.len()
+        }
 
-        fn mem(&self, x: &T) -> B { self.data.contains(x) }
+        fn mem(&self, x: &T) -> B {
+            self.data.contains(x)
+        }
 
         fn union(&self, other: &SetStEph<T>) -> SetStEph<T>
         where
@@ -133,7 +135,9 @@ pub mod SetStEph {
             self
         }
 
-        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
+        fn iter(&self) -> Iter<'_, T> {
+            self.data.iter()
+        }
 
         fn FromVec(v: Vec<T>) -> SetStEph<T> {
             let mut s = HashSet::with_capacity(v.len());
@@ -145,11 +149,15 @@ pub mod SetStEph {
     }
 
     impl<T: Eq + Hash> PartialEq for SetStEph<T> {
-        fn eq(&self, other: &Self) -> bool { self.data == other.data }
+        fn eq(&self, other: &Self) -> bool {
+            self.data == other.data
+        }
     }
     impl<T: Eq + Hash> Eq for SetStEph<T> {}
     impl<T: Eq + Hash + Debug> Debug for SetStEph<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result { f.debug_set().entries(self.data.iter()).finish() }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+            f.debug_set().entries(self.data.iter()).finish()
+        }
     }
     impl<T: Eq + Hash + Display> Display for SetStEph<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {

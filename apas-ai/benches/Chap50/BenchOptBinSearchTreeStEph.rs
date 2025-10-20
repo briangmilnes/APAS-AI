@@ -2,8 +2,8 @@
 //! Benchmarks for OptBinSearchTreeStEph
 
 use apas_ai::{
-    prob,
     Chap50::{OptBinSearchTreeStEph::OptBinSearchTreeStEph::*, Probability::Probability::Probability},
+    prob,
 };
 use criterion::*;
 use std::time::Duration;
