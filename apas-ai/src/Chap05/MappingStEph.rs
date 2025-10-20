@@ -83,45 +83,29 @@ pub mod MappingStEph {
             }
         }
 
-        fn size(&self) -> N {
-            self.rel.size()
-        }
+        fn size(&self) -> N { self.rel.size() }
 
-        fn domain(&self) -> SetStEph<X> {
-            self.rel.domain()
-        }
+        fn domain(&self) -> SetStEph<X> { self.rel.domain() }
 
-        fn range(&self) -> SetStEph<Y> {
-            self.rel.range()
-        }
+        fn range(&self) -> SetStEph<Y> { self.rel.range() }
 
-        fn mem(&self, a: &X, b: &Y) -> B {
-            self.rel.mem(a, b)
-        }
+        fn mem(&self, a: &X, b: &Y) -> B { self.rel.mem(a, b) }
 
-        fn iter(&self) -> Iter<'_, Pair<X, Y>> {
-            self.rel.iter()
-        }
+        fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.rel.iter() }
     }
 
     impl<A: StT + Hash, B: StT + Hash> PartialEq for MappingStEph<A, B> {
-        fn eq(&self, other: &Self) -> bool {
-            self.rel == other.rel
-        }
+        fn eq(&self, other: &Self) -> bool { self.rel == other.rel }
     }
 
     impl<A: StT + Hash, B: StT + Hash> Eq for MappingStEph<A, B> {}
 
     impl<A: StT + Hash, B: StT + Hash> Debug for MappingStEph<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            Debug::fmt(&self.rel, f)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { Debug::fmt(&self.rel, f) }
     }
 
     impl<A: StT + Hash, B: StT + Hash> Display for MappingStEph<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            Display::fmt(&self.rel, f)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { Display::fmt(&self.rel, f) }
     }
 
     #[macro_export]

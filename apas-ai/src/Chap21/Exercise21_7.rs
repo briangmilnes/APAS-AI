@@ -21,9 +21,7 @@ pub mod Exercise21_7 {
     }
 
     /// Check if a number is even
-    pub fn is_even(x: &N) -> B {
-        *x % 2 == 0
-    }
+    pub fn is_even(x: &N) -> B { *x % 2 == 0 }
 
     /// Check if a character is a vowel (case-insensitive)
     pub fn is_vowel(c: &char) -> B {

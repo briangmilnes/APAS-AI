@@ -5,9 +5,7 @@ use criterion::*;
 
 use apas_ai::Chap03::InsertionSortSt::InsertionSortSt::InsertionSortStTrait;
 
-fn build_vec(len: usize) -> Vec<i32> {
-    (0..len as i32).rev().collect()
-}
+fn build_vec(len: usize) -> Vec<i32> { (0..len as i32).rev().collect() }
 
 fn bench_insertion_sort(c: &mut Criterion) {
     let mut group = c.benchmark_group("InsertionSortSt");

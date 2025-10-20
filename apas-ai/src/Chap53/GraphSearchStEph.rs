@@ -19,9 +19,7 @@ pub mod GraphSearchStEph {
 
     pub struct SelectAll;
     impl<V: StT + Ord> SelectionStrategy<V> for SelectAll {
-        fn select(&self, frontier: &AVLTreeSetStEph<V>) -> (AVLTreeSetStEph<V>, B) {
-            (frontier.clone(), false)
-        }
+        fn select(&self, frontier: &AVLTreeSetStEph<V>) -> (AVLTreeSetStEph<V>, B) { (frontier.clone(), false) }
     }
 
     pub struct SelectOne;

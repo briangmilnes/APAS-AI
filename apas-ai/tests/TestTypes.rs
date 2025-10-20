@@ -156,48 +156,32 @@ fn test_ordered_float_f64() {
 
 #[test]
 fn test_array_seq_set_eq_equal() {
-    fn a_nth(i: usize) -> i32 {
-        [1, 2, 3][i]
-    }
-    fn b_nth(i: usize) -> i32 {
-        [1, 2, 3][i]
-    }
+    fn a_nth(i: usize) -> i32 { [1, 2, 3][i] }
+    fn b_nth(i: usize) -> i32 { [1, 2, 3][i] }
     let result = ArraySeqSetEq(3, a_nth, 3, b_nth);
     assert!(result);
 }
 
 #[test]
 fn test_array_seq_set_eq_different_order() {
-    fn a_nth(i: usize) -> i32 {
-        [1, 2, 3][i]
-    }
-    fn b_nth(i: usize) -> i32 {
-        [3, 1, 2][i]
-    }
+    fn a_nth(i: usize) -> i32 { [1, 2, 3][i] }
+    fn b_nth(i: usize) -> i32 { [3, 1, 2][i] }
     let result = ArraySeqSetEq(3, a_nth, 3, b_nth);
     assert!(result);
 }
 
 #[test]
 fn test_array_seq_set_eq_different_elements() {
-    fn a_nth(i: usize) -> i32 {
-        [1, 2, 3][i]
-    }
-    fn b_nth(i: usize) -> i32 {
-        [1, 2, 4][i]
-    }
+    fn a_nth(i: usize) -> i32 { [1, 2, 3][i] }
+    fn b_nth(i: usize) -> i32 { [1, 2, 4][i] }
     let result = ArraySeqSetEq(3, a_nth, 3, b_nth);
     assert!(!result);
 }
 
 #[test]
 fn test_array_seq_set_eq_different_length() {
-    fn a_nth(i: usize) -> i32 {
-        [1, 2, 3][i]
-    }
-    fn b_nth(i: usize) -> i32 {
-        [1, 2][i]
-    }
+    fn a_nth(i: usize) -> i32 { [1, 2, 3][i] }
+    fn b_nth(i: usize) -> i32 { [1, 2][i] }
     let result = ArraySeqSetEq(3, a_nth, 2, b_nth);
     assert!(!result);
 }

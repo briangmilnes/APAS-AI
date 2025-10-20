@@ -75,9 +75,7 @@ pub mod OrderedSetStEph {
         // Base set operations - delegate to backing store with ephemeral semantics
 
         /// Claude Work: O(1), Span: O(1)
-        fn size(&self) -> N {
-            self.base_set.size()
-        }
+        fn size(&self) -> N { self.base_set.size() }
 
         /// Claude Work: O(1), Span: O(1)
         fn empty() -> Self {
@@ -94,19 +92,13 @@ pub mod OrderedSetStEph {
         }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn find(&self, x: &T) -> B {
-            self.base_set.find(x)
-        }
+        fn find(&self, x: &T) -> B { self.base_set.find(x) }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn insert(&mut self, x: T) {
-            self.base_set.insert(x);
-        }
+        fn insert(&mut self, x: T) { self.base_set.insert(x); }
 
         /// Claude Work: O(log n), Span: O(log n)
-        fn delete(&mut self, x: &T) {
-            self.base_set.delete(x);
-        }
+        fn delete(&mut self, x: &T) { self.base_set.delete(x); }
 
         /// Claude Work: O(n), Span: O(log n)
         fn filter<F: PredSt<T>>(&mut self, f: F) {
@@ -232,9 +224,7 @@ pub mod OrderedSetStEph {
         }
 
         /// Claude Work: O(log(m + n)), Span: O(log(m + n))
-        fn join(&mut self, other: Self) {
-            self.union(&other);
-        }
+        fn join(&mut self, other: Self) { self.union(&other); }
 
         /// Claude Work: O(log n), Span: O(log n)
         fn get_range(&self, k1: &T, k2: &T) -> Self {

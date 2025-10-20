@@ -197,19 +197,13 @@ pub mod SortedListPQ {
         }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn size(&self) -> N {
-            self.elements.length()
-        }
+        fn size(&self) -> N { self.elements.length() }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn is_empty(&self) -> bool {
-            self.elements.length() == 0
-        }
+        fn is_empty(&self) -> bool { self.elements.length() == 0 }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn to_seq(&self) -> ArraySeqStPerS<T> {
-            self.elements.clone()
-        }
+        fn to_seq(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
 
         fn insert_all(&self, elements: &ArraySeqStPerS<T>) -> Self {
             let mut result = self.clone();
@@ -220,9 +214,7 @@ pub mod SortedListPQ {
             result
         }
 
-        fn extract_all_sorted(&self) -> ArraySeqStPerS<T> {
-            self.elements.clone()
-        }
+        fn extract_all_sorted(&self) -> ArraySeqStPerS<T> { self.elements.clone() }
 
         fn find_max(&self) -> Option<&T> {
             if self.elements.length() == 0 {
@@ -286,9 +278,7 @@ pub mod SortedListPQ {
     }
 
     impl<T: StT + Ord> Default for SortedListPQ<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StT + Ord> Display for SortedListPQ<T> {

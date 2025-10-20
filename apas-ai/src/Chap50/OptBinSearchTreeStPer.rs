@@ -129,17 +129,11 @@ pub mod OptBinSearchTreeStPer {
             solver.obst_rec(0, n)
         }
 
-        fn keys(&self) -> &Vec<KeyProb<T>> {
-            &self.keys
-        }
+        fn keys(&self) -> &Vec<KeyProb<T>> { &self.keys }
 
-        fn num_keys(&self) -> usize {
-            self.keys.len()
-        }
+        fn num_keys(&self) -> usize { self.keys.len() }
 
-        fn memo_size(&self) -> usize {
-            self.memo.len()
-        }
+        fn memo_size(&self) -> usize { self.memo.len() }
     }
 
     impl<T: StT> Display for OBSTStPerS<T> {
@@ -157,24 +151,18 @@ pub mod OptBinSearchTreeStPer {
         type Item = KeyProb<T>;
         type IntoIter = IntoIter<KeyProb<T>>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.keys.into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.keys.into_iter() }
     }
 
     impl<'a, T: StT> IntoIterator for &'a OBSTStPerS<T> {
         type Item = KeyProb<T>;
         type IntoIter = Cloned<Iter<'a, KeyProb<T>>>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.keys.iter().cloned()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.keys.iter().cloned() }
     }
 
     impl<T: StT> Display for KeyProb<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "({}: {:.3})", self.key, self.prob)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "({}: {:.3})", self.key, self.prob) }
     }
 
     impl<T: StT> Eq for KeyProb<T> {}

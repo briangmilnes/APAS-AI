@@ -163,21 +163,13 @@ pub mod BSTParaStEph {
             }
         }
 
-        fn expose(&self) -> Exposed<T> {
-            expose_internal(self)
-        }
+        fn expose(&self) -> Exposed<T> { expose_internal(self) }
 
-        fn join_mid(exposed: Exposed<T>) -> Self {
-            join_mid(exposed)
-        }
+        fn join_mid(exposed: Exposed<T>) -> Self { join_mid(exposed) }
 
-        fn size(&self) -> N {
-            self.root.borrow().as_ref().map_or(0, |node| node.size)
-        }
+        fn size(&self) -> N { self.root.borrow().as_ref().map_or(0, |node| node.size) }
 
-        fn is_empty(&self) -> B {
-            self.size() == 0
-        }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         fn insert(&self, key: T) {
             let (left, _, right) = split_inner(self, &key);
@@ -204,17 +196,11 @@ pub mod BSTParaStEph {
             }
         }
 
-        fn split(&self, key: &T) -> (Self, B, Self) {
-            split_inner(self, key)
-        }
+        fn split(&self, key: &T) -> (Self, B, Self) { split_inner(self, key) }
 
-        fn join_pair(&self, other: Self) -> Self {
-            join_pair_inner(self.clone(), other)
-        }
+        fn join_pair(&self, other: Self) -> Self { join_pair_inner(self.clone(), other) }
 
-        fn union(&self, other: &Self) -> Self {
-            union_inner(self, other)
-        }
+        fn union(&self, other: &Self) -> Self { union_inner(self, other) }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());

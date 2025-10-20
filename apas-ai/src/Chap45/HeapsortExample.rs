@@ -201,9 +201,7 @@ pub mod HeapsortExample {
 
         /// Check if all results are properly sorted
         pub fn all_results_sorted(&self) -> bool {
-            fn is_sorted<T: Ord>(vec: &[T]) -> bool {
-                vec.windows(2).all(|w| w[0] <= w[1])
-            }
+            fn is_sorted<T: Ord>(vec: &[T]) -> bool { vec.windows(2).all(|w| w[0] <= w[1]) }
 
             is_sorted(&self.unsorted_list_result)
                 && is_sorted(&self.sorted_list_result)
@@ -333,14 +331,10 @@ pub mod HeapsortExample {
     }
 
     /// Convert Vec to AVLTreeSeqStPerS for use with balanced tree operations
-    pub fn vec_to_avl_seq<T: StT>(vec: &[T]) -> AVLTreeSeqStPerS<T> {
-        AVLTreeSeqStPerS::from_vec(vec.to_vec())
-    }
+    pub fn vec_to_avl_seq<T: StT>(vec: &[T]) -> AVLTreeSeqStPerS<T> { AVLTreeSeqStPerS::from_vec(vec.to_vec()) }
 
     /// Check if a sequence is sorted
-    pub fn is_sorted<T: Ord>(vec: &[T]) -> bool {
-        vec.windows(2).all(|w| w[0] <= w[1])
-    }
+    pub fn is_sorted<T: Ord>(vec: &[T]) -> bool { vec.windows(2).all(|w| w[0] <= w[1]) }
 
     /// Generate test sequences of various patterns
     pub fn generate_test_sequences(size: usize) -> Vec<(String, Vec<i32>)> {

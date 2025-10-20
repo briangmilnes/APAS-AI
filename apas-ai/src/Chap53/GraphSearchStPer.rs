@@ -26,9 +26,7 @@ pub mod GraphSearchStPer {
     pub struct SelectAll;
 
     impl<V: StT + Ord> SelectionStrategy<V> for SelectAll {
-        fn select(&self, frontier: &AVLTreeSetStPer<V>) -> (AVLTreeSetStPer<V>, B) {
-            (frontier.clone(), false)
-        }
+        fn select(&self, frontier: &AVLTreeSetStPer<V>) -> (AVLTreeSetStPer<V>, B) { (frontier.clone(), false) }
     }
 
     /// Select single arbitrary vertex (depth-first style).

@@ -118,13 +118,9 @@ pub mod ArraySeqMtPer {
             ArraySeqMtPerS::from_vec(values)
         }
 
-        fn length(&self) -> N {
-            self.data.len()
-        }
+        fn length(&self) -> N { self.data.len() }
 
-        fn nth(&self, index: N) -> &T {
-            &self.data[index]
-        }
+        fn nth(&self, index: N) -> &T { &self.data[index] }
 
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtPerS<T> {
             let n = self.data.len();
@@ -210,9 +206,7 @@ pub mod ArraySeqMtPer {
             }
         }
 
-        fn iter(&self) -> Iter<'_, T> {
-            self.data.iter()
-        }
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
     }
 
     impl<T: StTInMtT> ArraySeqMtPerRedefinableTrait<T> for ArraySeqMtPerS<T> {
@@ -222,9 +216,7 @@ pub mod ArraySeqMtPer {
             }
         }
 
-        fn singleton(item: T) -> ArraySeqMtPerS<T> {
-            ArraySeqMtPerS::from_vec(vec![item])
-        }
+        fn singleton(item: T) -> ArraySeqMtPerS<T> { ArraySeqMtPerS::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(n);
@@ -350,13 +342,9 @@ pub mod ArraySeqMtPer {
             (ArraySeqMtPerS::from_vec(values), acc)
         }
 
-        fn isEmpty(&self) -> B {
-            self.data.is_empty()
-        }
+        fn isEmpty(&self) -> B { self.data.is_empty() }
 
-        fn isSingleton(&self) -> B {
-            self.data.len() == 1
-        }
+        fn isSingleton(&self) -> B { self.data.len() == 1 }
     }
 
     impl<T: StTInMtT> Clone for ArraySeqMtPerS<T> {
@@ -383,17 +371,13 @@ pub mod ArraySeqMtPer {
         type Item = &'a T;
         type IntoIter = Iter<'a, T>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
     impl<T: StTInMtT> IntoIterator for ArraySeqMtPerS<T> {
         type Item = T;
         type IntoIter = IntoIter<T>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.into_vec().into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
     }
     impl<T: StTInMtT> Display for ArraySeqMtPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {

@@ -5,11 +5,7 @@ use apas_ai::Chap56::Example56_3::Example56_3::*;
 use apas_ai::Types::Types::*;
 
 #[test]
-fn test_example_negative_cycle() {
-    example_negative_cycle();
-}
+fn test_example_negative_cycle() { example_negative_cycle(); }
 
 #[test]
-fn test_example_undefined_shortest_path() {
-    example_undefined_shortest_path();
-}
+fn test_example_undefined_shortest_path() { example_undefined_shortest_path(); }

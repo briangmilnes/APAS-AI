@@ -30,13 +30,9 @@ pub mod BSTBBAlphaMtEph {
         }
     }
 
-    fn size_link<T: StTInMtT + Ord>(link: &Link<T>) -> N {
-        link.as_ref().map_or(0, |n| n.size)
-    }
+    fn size_link<T: StTInMtT + Ord>(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
-    fn update<T: StTInMtT + Ord>(node: &mut Node<T>) {
-        node.size = 1 + size_link(&node.left) + size_link(&node.right);
-    }
+    fn update<T: StTInMtT + Ord>(node: &mut Node<T>) { node.size = 1 + size_link(&node.left) + size_link(&node.right); }
 
     fn insert_link<T: StTInMtT + Ord>(link: &mut Link<T>, value: T) -> bool {
         match link {
@@ -199,18 +195,14 @@ pub mod BSTBBAlphaMtEph {
             find_link(&*guard, target).cloned()
         }
 
-        fn contains(&self, target: &T) -> B {
-            self.find(target).is_some()
-        }
+        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B {
-            self.size() == 0
-        }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         fn height(&self) -> N {
             fn height_rec<T: StTInMtT + Ord>(link: &Link<T>) -> N {
@@ -250,9 +242,7 @@ pub mod BSTBBAlphaMtEph {
     }
 
     impl<T: StTInMtT + Ord> Default for BSTBBAlphaMtEph<T> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     #[macro_export]

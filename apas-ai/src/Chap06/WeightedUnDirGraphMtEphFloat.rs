@@ -55,9 +55,7 @@ pub mod WeightedUnDirGraphMtEphFloat {
         /// Get the weight of an edge, if it exists
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential search
-        fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<OrderedFloat<f64>> {
-            self.get_edge_label(v1, v2).copied()
-        }
+        fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<OrderedFloat<f64>> { self.get_edge_label(v1, v2).copied() }
 
         /// Get all weighted edges as (v1, v2, weight) tuples
         /// APAS: Work Θ(|E|), Span Θ(1)
@@ -145,9 +143,7 @@ pub mod WeightedUnDirGraphMtEphFloat {
         }
 
         /// Get the degree of a vertex (number of incident edges)
-        fn vertex_degree(&self, v: &V) -> usize {
-            self.neighbors(v).size()
-        }
+        fn vertex_degree(&self, v: &V) -> usize { self.neighbors(v).size() }
     }
 
     /// Macro requires explicit Triple wrappers: `E: [Triple(v1, v2, OrderedFloat(weight)), ...]`

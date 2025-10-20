@@ -156,9 +156,7 @@ fn test_avl_tree_set_ordering() {
 }
 
 #[test]
-fn test_example_41_1_avl_cases() {
-    example_41_1_avl_set();
-}
+fn test_example_41_1_avl_cases() { example_41_1_avl_set(); }
 
 #[test]
 fn test_clone_set() {

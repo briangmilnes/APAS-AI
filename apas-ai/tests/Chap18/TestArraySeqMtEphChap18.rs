@@ -5,27 +5,13 @@ use apas_ai::ArraySeqMtEphSLit;
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Types::Types::*;
 
-fn identity(i: N) -> N {
-    i
-}
-fn double(i: N) -> N {
-    i * 2
-}
-fn add_one(i: N) -> N {
-    i + 1
-}
-fn add_ten(i: N) -> N {
-    i + 10
-}
-fn multiply_by_two(x: &N) -> N {
-    x * 2
-}
-fn add_nums(x: &N, y: &N) -> N {
-    x + y
-}
-fn is_even_bool(x: &N) -> B {
-    x % 2 == 0
-}
+fn identity(i: N) -> N { i }
+fn double(i: N) -> N { i * 2 }
+fn add_one(i: N) -> N { i + 1 }
+fn add_ten(i: N) -> N { i + 10 }
+fn multiply_by_two(x: &N) -> N { x * 2 }
+fn add_nums(x: &N, y: &N) -> N { x + y }
+fn is_even_bool(x: &N) -> B { x % 2 == 0 }
 
 #[test]
 fn test_new_and_set() {

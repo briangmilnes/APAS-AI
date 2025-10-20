@@ -80,9 +80,7 @@ pub mod ParaHashTableStEph {
         fn delete(table: &mut HashTable<Key, Value, Entry, Metrics>, key: &Key) -> B;
 
         /// Accessor for metrics field.
-        fn metrics(table: &HashTable<Key, Value, Entry, Metrics>) -> &Metrics {
-            &table.metrics
-        }
+        fn metrics(table: &HashTable<Key, Value, Entry, Metrics>) -> &Metrics { &table.metrics }
 
         /// Returns the load (number of entries) and size (table capacity).
         /// APAS: Work O(1), Span O(1).

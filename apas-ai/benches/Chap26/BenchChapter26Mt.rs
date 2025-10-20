@@ -8,9 +8,7 @@ use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{
 };
 use apas_ai::*;
 
-fn gen_sequence(n: usize) -> ArraySeqMtPerS<usize> {
-    ArraySeqMtPerS::new(n, 0)
-}
+fn gen_sequence(n: usize) -> ArraySeqMtPerS<usize> { ArraySeqMtPerS::new(n, 0) }
 
 fn bench_chapter26_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chapter26Mt");

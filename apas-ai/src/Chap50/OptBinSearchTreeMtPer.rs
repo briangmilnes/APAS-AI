@@ -172,13 +172,9 @@ pub mod OptBinSearchTreeMtPer {
             obst_rec(self, 0, n)
         }
 
-        fn keys(&self) -> &Arc<Vec<KeyProb<T>>> {
-            &self.keys
-        }
+        fn keys(&self) -> &Arc<Vec<KeyProb<T>>> { &self.keys }
 
-        fn num_keys(&self) -> usize {
-            self.keys.len()
-        }
+        fn num_keys(&self) -> usize { self.keys.len() }
 
         fn memo_size(&self) -> usize {
             let memo_guard = self.memo.lock().unwrap();
@@ -187,9 +183,7 @@ pub mod OptBinSearchTreeMtPer {
     }
 
     impl<T: MtVal> PartialEq for OBSTMtPerS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            self.keys == other.keys
-        }
+        fn eq(&self, other: &Self) -> bool { self.keys == other.keys }
     }
 
     impl<T: MtVal> Eq for OBSTMtPerS<T> {}
@@ -221,9 +215,7 @@ pub mod OptBinSearchTreeMtPer {
         type Item = KeyProb<T>;
         type IntoIter = Cloned<Iter<'a, KeyProb<T>>>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.keys.iter().cloned()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.keys.iter().cloned() }
     }
 
     impl<T: MtVal + PartialEq> PartialEq for KeyProb<T> {
@@ -235,9 +227,7 @@ pub mod OptBinSearchTreeMtPer {
     impl<T: MtVal> Eq for KeyProb<T> {}
 
     impl<T: MtVal + Display> Display for KeyProb<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "({}: {:.3})", self.key, self.prob)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "({}: {:.3})", self.key, self.prob) }
     }
 }
 

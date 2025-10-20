@@ -35,9 +35,7 @@ pub mod DijkstraStEphInt {
     }
 
     /// Module-level function to create a new PQEntry
-    fn pq_entry_new(dist: i64, vertex: usize) -> PQEntry {
-        PQEntry { dist, vertex }
-    }
+    fn pq_entry_new(dist: i64, vertex: usize) -> PQEntry { PQEntry { dist, vertex } }
 
     impl Ord for PQEntry {
         fn cmp(&self, other: &Self) -> Ordering {
@@ -47,15 +45,11 @@ pub mod DijkstraStEphInt {
     }
 
     impl PartialOrd for PQEntry {
-        fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-            Some(self.cmp(other))
-        }
+        fn partial_cmp(&self, other: &Self) -> Option<Ordering> { Some(self.cmp(other)) }
     }
 
     impl Display for PQEntry {
-        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-            write!(f, "({}, {})", self.dist, self.vertex)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { write!(f, "({}, {})", self.dist, self.vertex) }
     }
 
     /// Runs Dijkstra's algorithm on a weighted directed graph

@@ -44,13 +44,9 @@ pub mod AdjSeqGraphStEph {
             }
         }
 
-        fn from_seq(adj: ArraySeqStEphS<ArraySeqStEphS<N>>) -> Self {
-            AdjSeqGraphStEph { adj }
-        }
+        fn from_seq(adj: ArraySeqStEphS<ArraySeqStEphS<N>>) -> Self { AdjSeqGraphStEph { adj } }
 
-        fn num_vertices(&self) -> N {
-            self.adj.length()
-        }
+        fn num_vertices(&self) -> N { self.adj.length() }
 
         fn num_edges(&self) -> N {
             let n = self.adj.length();
@@ -74,13 +70,9 @@ pub mod AdjSeqGraphStEph {
             false
         }
 
-        fn out_neighbors(&self, u: N) -> ArraySeqStEphS<N> {
-            self.adj.nth(u).clone()
-        }
+        fn out_neighbors(&self, u: N) -> ArraySeqStEphS<N> { self.adj.nth(u).clone() }
 
-        fn out_degree(&self, u: N) -> N {
-            self.adj.nth(u).length()
-        }
+        fn out_degree(&self, u: N) -> N { self.adj.nth(u).length() }
 
         fn set_neighbors(&mut self, v: N, neighbors: ArraySeqStEphS<N>) {
             if v < self.adj.length() {

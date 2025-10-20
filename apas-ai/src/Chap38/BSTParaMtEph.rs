@@ -319,15 +319,11 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn expose(&self) -> Exposed<T> {
-            expose_internal(self)
-        }
+        fn expose(&self) -> Exposed<T> { expose_internal(self) }
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn join_mid(exposed: Exposed<T>) -> Self {
-            join_mid(exposed)
-        }
+        fn join_mid(exposed: Exposed<T>) -> Self { join_mid(exposed) }
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
@@ -338,9 +334,7 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn is_empty(&self) -> B {
-            self.size() == 0
-        }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)
@@ -377,33 +371,23 @@ pub mod BSTParaMtEph {
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)
-        fn split(&self, key: &T) -> (Self, B, Self) {
-            split_inner(self, key)
-        }
+        fn split(&self, key: &T) -> (Self, B, Self) { split_inner(self, key) }
 
         // APAS - work O(lg (|t_1| + |t_2|)), span O(lg (|t_1| + |t_2|))
         // gpt-5-codex-medium: work O(lg (|t_1| + |t_2|)), span O(lg (|t_1| + |t_2|))
-        fn join_pair(&self, other: Self) -> Self {
-            join_pair_inner(self.clone(), other)
-        }
+        fn join_pair(&self, other: Self) -> Self { join_pair_inner(self.clone(), other) }
 
         // APAS - work O(m · lg (n / m)), span O(lg n)
         // gpt-5-codex-medium: work O(m · lg (n / m)), span O(lg n)
-        fn union(&self, other: &Self) -> Self {
-            union_inner(self, other)
-        }
+        fn union(&self, other: &Self) -> Self { union_inner(self, other) }
 
         // APAS - work O(m · lg (n / m)), span O(lg n)
         // gpt-5-codex-medium: work O(m · lg (n / m)), span O(lg n)
-        fn intersect(&self, other: &Self) -> Self {
-            intersect_inner(self, other)
-        }
+        fn intersect(&self, other: &Self) -> Self { intersect_inner(self, other) }
 
         // APAS - work O(m · lg (n / m)), span O(lg n)
         // gpt-5-codex-medium: work O(m · lg (n / m)), span O(lg n)
-        fn difference(&self, other: &Self) -> Self {
-            difference_inner(self, other)
-        }
+        fn difference(&self, other: &Self) -> Self { difference_inner(self, other) }
 
         // APAS - work O(|t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(|t|), span O(lg |t|)

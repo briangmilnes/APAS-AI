@@ -45,15 +45,11 @@ pub mod BalBinTreeStEph {
     }
 
     impl<T: StT> BalBinNode<T> {
-        fn new(left: BalBinTree<T>, value: T, right: BalBinTree<T>) -> Self {
-            BalBinNode { left, value, right }
-        }
+        fn new(left: BalBinTree<T>, value: T, right: BalBinTree<T>) -> Self { BalBinNode { left, value, right } }
     }
 
     impl<T: StT> BalBinTreeStEphTrait<T> for BalBinTree<T> {
-        fn leaf() -> Self {
-            BalBinTree::Leaf
-        }
+        fn leaf() -> Self { BalBinTree::Leaf }
 
         fn node(left: Self, value: T, right: Self) -> Self {
             BalBinTree::Node(Box::new(BalBinNode::new(left, value, right)))

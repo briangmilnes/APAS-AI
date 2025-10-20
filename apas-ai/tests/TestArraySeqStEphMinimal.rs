@@ -56,17 +56,11 @@ fn test_can_override_defaults_if_needed() {
             }
         }
 
-        fn data(&self) -> &[T] {
-            &self.data
-        }
-        fn data_mut(&mut self) -> &mut [T] {
-            &mut self.data
-        }
+        fn data(&self) -> &[T] { &self.data }
+        fn data_mut(&mut self) -> &mut [T] { &mut self.data }
 
         // OVERRIDE: Use cached length instead of trait default
-        fn length(&self) -> N {
-            self.cached_len
-        }
+        fn length(&self) -> N { self.cached_len }
 
         // All other methods (empty, singleton, new, nth, set, etc.)
         // still come from trait defaults!

@@ -12,9 +12,7 @@ pub mod LinkedListChainedHashTableStEph {
     use crate::Types::Types::*;
 
     impl<Key: PartialEq + Clone, Value: Clone> EntryTrait<Key, Value> for LinkedList<(Key, Value)> {
-        fn new() -> Self {
-            LinkedList::new()
-        }
+        fn new() -> Self { LinkedList::new() }
 
         fn insert(&mut self, key: Key, value: Value) {
             // Update if key exists, otherwise append

@@ -81,13 +81,9 @@ pub mod LabUnDirGraphStEph {
             }
         }
 
-        fn vertices(&self) -> &SetStEph<V> {
-            &self.vertices
-        }
+        fn vertices(&self) -> &SetStEph<V> { &self.vertices }
 
-        fn labeled_edges(&self) -> &SetStEph<LabEdge<V, L>> {
-            &self.labeled_edges
-        }
+        fn labeled_edges(&self) -> &SetStEph<LabEdge<V, L>> { &self.labeled_edges }
 
         fn edges(&self) -> SetStEph<Edge<V>> {
             let mut edges = SetStEph::empty();
@@ -97,9 +93,7 @@ pub mod LabUnDirGraphStEph {
             edges
         }
 
-        fn add_vertex(&mut self, v: V) {
-            self.vertices.insert(v);
-        }
+        fn add_vertex(&mut self, v: V) { self.vertices.insert(v); }
 
         fn add_labeled_edge(&mut self, v1: V, v2: V, label: L) {
             self.vertices.insert(v1.clone());
@@ -154,29 +148,17 @@ pub mod LabUnDirGraphStEph {
         }
 
         // DirGraph-compatible interface implementations
-        fn sizeA(&self) -> N {
-            self.labeled_edges().size()
-        }
+        fn sizeA(&self) -> N { self.labeled_edges().size() }
 
-        fn arcs(&self) -> SetStEph<LabEdge<V, L>> {
-            self.labeled_edges().clone()
-        }
+        fn arcs(&self) -> SetStEph<LabEdge<V, L>> { self.labeled_edges().clone() }
 
-        fn NPlus(&self, v: &V) -> SetStEph<V> {
-            self.neighbors(v)
-        }
+        fn NPlus(&self, v: &V) -> SetStEph<V> { self.neighbors(v) }
 
-        fn NMinus(&self, v: &V) -> SetStEph<V> {
-            self.neighbors(v)
-        }
+        fn NMinus(&self, v: &V) -> SetStEph<V> { self.neighbors(v) }
 
-        fn InDegree(&self, v: &V) -> N {
-            self.neighbors(v).size()
-        }
+        fn InDegree(&self, v: &V) -> N { self.neighbors(v).size() }
 
-        fn OutDegree(&self, v: &V) -> N {
-            self.neighbors(v).size()
-        }
+        fn OutDegree(&self, v: &V) -> N { self.neighbors(v).size() }
     }
 
     impl<V: HashOrd, L: StT + Hash> Display for LabUnDirGraphStEph<V, L> {

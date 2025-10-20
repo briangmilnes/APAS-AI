@@ -54,9 +54,7 @@ pub mod AdjMatrixGraphStPer {
         }
 
         // Work: Θ(1), Span: Θ(1)
-        fn num_vertices(&self) -> N {
-            self.n
-        }
+        fn num_vertices(&self) -> N { self.n }
 
         // Work: Θ(n²), Span: Θ(n²) - count all true entries
         fn num_edges(&self) -> N {

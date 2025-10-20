@@ -55,13 +55,9 @@ pub mod RelationStEph {
     }
 
     impl<X: StT + Hash, Y: StT + Hash> RelationStEphTrait<X, Y> for RelationStEph<X, Y> {
-        fn empty() -> RelationStEph<X, Y> {
-            RelationStEph { pairs: SetLit![] }
-        }
+        fn empty() -> RelationStEph<X, Y> { RelationStEph { pairs: SetLit![] } }
 
-        fn FromSet(pairs: SetStEph<Pair<X, Y>>) -> RelationStEph<X, Y> {
-            RelationStEph { pairs }
-        }
+        fn FromSet(pairs: SetStEph<Pair<X, Y>>) -> RelationStEph<X, Y> { RelationStEph { pairs } }
 
         fn FromVec(v: Vec<Pair<X, Y>>) -> RelationStEph<X, Y> {
             RelationStEph {
@@ -69,9 +65,7 @@ pub mod RelationStEph {
             }
         }
 
-        fn size(&self) -> N {
-            self.pairs.size()
-        }
+        fn size(&self) -> N { self.pairs.size() }
 
         fn domain(&self) -> SetStEph<X>
         where
@@ -103,29 +97,21 @@ pub mod RelationStEph {
             self.pairs.mem(&Pair(a.clone(), b.clone()))
         }
 
-        fn iter(&self) -> Iter<'_, Pair<X, Y>> {
-            self.pairs.iter()
-        }
+        fn iter(&self) -> Iter<'_, Pair<X, Y>> { self.pairs.iter() }
     }
 
     impl<A: StT + Hash, B: StT + Hash> PartialEq for RelationStEph<A, B> {
-        fn eq(&self, other: &Self) -> bool {
-            self.pairs == other.pairs
-        }
+        fn eq(&self, other: &Self) -> bool { self.pairs == other.pairs }
     }
 
     impl<A: StT + Hash, B: StT + Hash> Eq for RelationStEph<A, B> {}
 
     impl<A: StT + Hash, B: StT + Hash> Debug for RelationStEph<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            std::fmt::Debug::fmt(&self.pairs, f)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Debug::fmt(&self.pairs, f) }
     }
 
     impl<A: StT + Hash, B: StT + Hash> Display for RelationStEph<A, B> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            std::fmt::Display::fmt(&self.pairs, f)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { std::fmt::Display::fmt(&self.pairs, f) }
     }
 
     #[macro_export]

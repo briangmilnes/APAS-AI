@@ -64,13 +64,9 @@ pub mod LabDirGraphStEph {
             LabDirGraphStEph { vertices, labeled_arcs }
         }
 
-        fn vertices(&self) -> &SetStEph<V> {
-            &self.vertices
-        }
+        fn vertices(&self) -> &SetStEph<V> { &self.vertices }
 
-        fn labeled_arcs(&self) -> &SetStEph<LabEdge<V, L>> {
-            &self.labeled_arcs
-        }
+        fn labeled_arcs(&self) -> &SetStEph<LabEdge<V, L>> { &self.labeled_arcs }
 
         fn arcs(&self) -> SetStEph<Edge<V>> {
             let mut arcs = SetStEph::empty();
@@ -80,9 +76,7 @@ pub mod LabDirGraphStEph {
             arcs
         }
 
-        fn add_vertex(&mut self, v: V) {
-            self.vertices.insert(v);
-        }
+        fn add_vertex(&mut self, v: V) { self.vertices.insert(v); }
 
         fn add_labeled_arc(&mut self, from: V, to: V, label: L) {
             self.vertices.insert(from.clone());

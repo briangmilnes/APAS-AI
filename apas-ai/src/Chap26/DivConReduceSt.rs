@@ -46,20 +46,12 @@ pub mod DivConReduceSt {
             Some(ArraySeqStPerS::reduce(a, &|x, y| (*x).max(*y), *a.nth(0)))
         }
 
-        fn sum(a: &ArraySeqStPerS<N>) -> N {
-            ArraySeqStPerS::reduce(a, &|x, y| x + y, 0)
-        }
+        fn sum(a: &ArraySeqStPerS<N>) -> N { ArraySeqStPerS::reduce(a, &|x, y| x + y, 0) }
 
-        fn product(a: &ArraySeqStPerS<N>) -> N {
-            ArraySeqStPerS::reduce(a, &|x, y| x * y, 1)
-        }
+        fn product(a: &ArraySeqStPerS<N>) -> N { ArraySeqStPerS::reduce(a, &|x, y| x * y, 1) }
 
-        fn any(a: &ArraySeqStPerS<B>) -> B {
-            ArraySeqStPerS::reduce(a, &|x, y| *x || *y, false)
-        }
+        fn any(a: &ArraySeqStPerS<B>) -> B { ArraySeqStPerS::reduce(a, &|x, y| *x || *y, false) }
 
-        fn all(a: &ArraySeqStPerS<B>) -> B {
-            ArraySeqStPerS::reduce(a, &|x, y| *x && *y, true)
-        }
+        fn all(a: &ArraySeqStPerS<B>) -> B { ArraySeqStPerS::reduce(a, &|x, y| *x && *y, true) }
     }
 }

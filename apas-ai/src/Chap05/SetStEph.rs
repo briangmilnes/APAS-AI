@@ -59,9 +59,7 @@ pub mod SetStEph {
     // Provide an order-independent Hash so sets of sets can be placed in a HashSet.
 
     impl<T: StT + Hash> SetStEphTrait<T> for SetStEph<T> {
-        fn empty() -> SetStEph<T> {
-            SetStEph { data: HashSet::new() }
-        }
+        fn empty() -> SetStEph<T> { SetStEph { data: HashSet::new() } }
 
         fn singleton(x: T) -> SetStEph<T> {
             let mut s = HashSet::with_capacity(1);
@@ -69,13 +67,9 @@ pub mod SetStEph {
             SetStEph { data: s }
         }
 
-        fn size(&self) -> N {
-            self.data.len()
-        }
+        fn size(&self) -> N { self.data.len() }
 
-        fn mem(&self, x: &T) -> B {
-            self.data.contains(x)
-        }
+        fn mem(&self, x: &T) -> B { self.data.contains(x) }
 
         fn union(&self, other: &SetStEph<T>) -> SetStEph<T>
         where
@@ -135,9 +129,7 @@ pub mod SetStEph {
             self
         }
 
-        fn iter(&self) -> Iter<'_, T> {
-            self.data.iter()
-        }
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
 
         fn FromVec(v: Vec<T>) -> SetStEph<T> {
             let mut s = HashSet::with_capacity(v.len());
@@ -149,15 +141,11 @@ pub mod SetStEph {
     }
 
     impl<T: Eq + Hash> PartialEq for SetStEph<T> {
-        fn eq(&self, other: &Self) -> bool {
-            self.data == other.data
-        }
+        fn eq(&self, other: &Self) -> bool { self.data == other.data }
     }
     impl<T: Eq + Hash> Eq for SetStEph<T> {}
     impl<T: Eq + Hash + Debug> Debug for SetStEph<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            f.debug_set().entries(self.data.iter()).finish()
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { f.debug_set().entries(self.data.iter()).finish() }
     }
     impl<T: Eq + Hash + Display> Display for SetStEph<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {

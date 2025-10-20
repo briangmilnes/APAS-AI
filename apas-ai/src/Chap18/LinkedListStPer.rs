@@ -122,15 +122,9 @@ pub mod LinkedListStPer {
             Self::from_vec(vec![init_value; length])
         }
 
-        fn empty() -> LinkedListStPerS<T> {
-            LinkedListStPerS { head: None, len: 0 }
-        }
-        fn singleton(item: T) -> LinkedListStPerS<T> {
-            Self::from_vec(vec![item])
-        }
-        fn length(&self) -> N {
-            self.len
-        }
+        fn empty() -> LinkedListStPerS<T> { LinkedListStPerS { head: None, len: 0 } }
+        fn singleton(item: T) -> LinkedListStPerS<T> { Self::from_vec(vec![item]) }
+        fn length(&self) -> N { self.len }
         fn nth(&self, index: N) -> &T {
             node_at(self, index)
                 .map(|node| &node.value)

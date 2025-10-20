@@ -20,12 +20,8 @@ pub mod FlatHashTable {
     }
 
     impl<Key: PartialEq + Clone, Value: Clone> EntryTrait<Key, Value> for FlatEntry<Key, Value> {
-        fn new() -> Self {
-            FlatEntry::Empty
-        }
-        fn insert(&mut self, key: Key, value: Value) {
-            *self = FlatEntry::Occupied(key, value);
-        }
+        fn new() -> Self { FlatEntry::Empty }
+        fn insert(&mut self, key: Key, value: Value) { *self = FlatEntry::Occupied(key, value); }
 
         fn lookup(&self, key: &Key) -> Option<Value> {
             match self {

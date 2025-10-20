@@ -139,21 +139,13 @@ pub mod ArraySeq {
             }
         }
 
-        fn length(&self) -> N {
-            self.data.len()
-        }
+        fn length(&self) -> N { self.data.len() }
 
-        fn nth(&self, index: N) -> &T {
-            &self.data[index]
-        }
+        fn nth(&self, index: N) -> &T { &self.data[index] }
 
-        fn empty() -> ArraySeqS<T> {
-            ArraySeqS::from_vec(Vec::new())
-        }
+        fn empty() -> ArraySeqS<T> { ArraySeqS::from_vec(Vec::new()) }
 
-        fn singleton(item: T) -> ArraySeqS<T> {
-            ArraySeqS::from_vec(vec![item])
-        }
+        fn singleton(item: T) -> ArraySeqS<T> { ArraySeqS::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqS<T> {
             let mut values: Vec<T> = Vec::with_capacity(length);
@@ -172,9 +164,7 @@ pub mod ArraySeq {
             ArraySeqS::from_vec(values)
         }
 
-        fn subseq(a: &ArraySeqS<T>, start: N, length: N) -> ArraySeqS<T> {
-            a.subseq_copy(start, length)
-        }
+        fn subseq(a: &ArraySeqS<T>, start: N, length: N) -> ArraySeqS<T> { a.subseq_copy(start, length) }
 
         fn append(a: &ArraySeqS<T>, b: &ArraySeqS<T>) -> ArraySeqS<T> {
             let total = a.length() + b.length();
@@ -233,13 +223,9 @@ pub mod ArraySeq {
             ArraySeqS::from_vec(values)
         }
 
-        fn isEmpty(&self) -> B {
-            self.data.is_empty()
-        }
+        fn isEmpty(&self) -> B { self.data.is_empty() }
 
-        fn isSingleton(&self) -> B {
-            self.data.len() == 1
-        }
+        fn isSingleton(&self) -> B { self.data.len() == 1 }
 
         fn collect<K: Clone + Eq, V: Clone>(
             pairs: &ArraySeqS<Pair<K, V>>,
@@ -305,27 +291,19 @@ pub mod ArraySeq {
             }
         }
 
-        fn iter(&self) -> Iter<'_, T> {
-            self.data.iter()
-        }
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
 
-        fn iter_mut(&mut self) -> IterMut<'_, T> {
-            self.data.iter_mut()
-        }
+        fn iter_mut(&mut self) -> IterMut<'_, T> { self.data.iter_mut() }
     }
 
     impl<T: PartialEq> PartialEq for ArraySeqS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            self.data == other.data
-        }
+        fn eq(&self, other: &Self) -> bool { self.data == other.data }
     }
 
     impl<T: Eq> Eq for ArraySeqS<T> {}
 
     impl<T: Debug> Debug for ArraySeqS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-            f.debug_list().entries(self.data.iter()).finish()
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { f.debug_list().entries(self.data.iter()).finish() }
     }
 
     impl<T: Display> Display for ArraySeqS<T> {
@@ -345,27 +323,21 @@ pub mod ArraySeq {
         type Item = &'a T;
         type IntoIter = Iter<'a, T>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
 
     impl<'a, T> IntoIterator for &'a mut ArraySeqS<T> {
         type Item = &'a mut T;
         type IntoIter = IterMut<'a, T>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.iter_mut()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.data.iter_mut() }
     }
 
     impl<T> IntoIterator for ArraySeqS<T> {
         type Item = T;
         type IntoIter = IntoIter<T>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            Vec::from(self.data).into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { Vec::from(self.data).into_iter() }
     }
 
     #[macro_export]

@@ -38,25 +38,15 @@ impl<T: StT> ArraySeqStEphSimpleTrait<T> for ArraySeqStEphSimpleS<T> {
         }
     }
 
-    fn new(length: N, init_value: T) -> Self {
-        Self::from_vec(vec![init_value; length])
-    }
+    fn new(length: N, init_value: T) -> Self { Self::from_vec(vec![init_value; length]) }
 
-    fn empty() -> Self {
-        Self::from_vec(Vec::new())
-    }
+    fn empty() -> Self { Self::from_vec(Vec::new()) }
 
-    fn singleton(item: T) -> Self {
-        Self::from_vec(vec![item])
-    }
+    fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
 
-    fn length(&self) -> N {
-        self.data.len()
-    }
+    fn length(&self) -> N { self.data.len() }
 
-    fn nth(&self, index: N) -> &T {
-        &self.data[index]
-    }
+    fn nth(&self, index: N) -> &T { &self.data[index] }
 
     fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
         if index < self.data.len() {
@@ -73,24 +63,18 @@ impl<T: StT> ArraySeqStEphSimpleTrait<T> for ArraySeqStEphSimpleS<T> {
         self
     }
 
-    fn iter(&self) -> Iter<'_, T> {
-        self.data.iter()
-    }
+    fn iter(&self) -> Iter<'_, T> { self.data.iter() }
 }
 
 // Standard trait impls for convenience
 impl<T: StT> PartialEq for ArraySeqStEphSimpleS<T> {
-    fn eq(&self, other: &Self) -> bool {
-        self.data[..] == other.data[..]
-    }
+    fn eq(&self, other: &Self) -> bool { self.data[..] == other.data[..] }
 }
 
 impl<T: StT> Eq for ArraySeqStEphSimpleS<T> {}
 
 impl<T: StT> Debug for ArraySeqStEphSimpleS<T> {
-    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-        f.debug_list().entries(self.data.iter()).finish()
-    }
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { f.debug_list().entries(self.data.iter()).finish() }
 }
 
 impl<T: StT> Display for ArraySeqStEphSimpleS<T> {
@@ -109,15 +93,11 @@ impl<T: StT> Display for ArraySeqStEphSimpleS<T> {
 impl<'a, T: StT> IntoIterator for &'a ArraySeqStEphSimpleS<T> {
     type Item = &'a T;
     type IntoIter = Iter<'a, T>;
-    fn into_iter(self) -> Self::IntoIter {
-        self.data.iter()
-    }
+    fn into_iter(self) -> Self::IntoIter { self.data.iter() }
 }
 
 impl<T: StT> IntoIterator for ArraySeqStEphSimpleS<T> {
     type Item = T;
     type IntoIter = IntoIter<T>;
-    fn into_iter(self) -> Self::IntoIter {
-        self.data.into_vec().into_iter()
-    }
+    fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
 }

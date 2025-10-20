@@ -103,9 +103,7 @@ pub mod ArraySeqMtEph {
     }
 
     impl<T: StTInMtT> ArraySeqMtEphBaseTrait<T> for ArraySeqMtEphS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqMtEphS<T> {
-            ArraySeqMtEphS::from_vec(vec![init_value; length])
-        }
+        fn new(length: N, init_value: T) -> ArraySeqMtEphS<T> { ArraySeqMtEphS::from_vec(vec![init_value; length]) }
 
         fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqMtEphS<T>, &'static str> {
             {
@@ -266,9 +264,7 @@ pub mod ArraySeqMtEph {
             }
         }
 
-        fn singleton(item: T) -> ArraySeqMtEphS<T> {
-            ArraySeqMtEphS::from_vec(vec![item])
-        }
+        fn singleton(item: T) -> ArraySeqMtEphS<T> { ArraySeqMtEphS::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T> {
             let mut values: Vec<T> = Vec::with_capacity(n);
@@ -333,13 +329,9 @@ pub mod ArraySeqMtEph {
             ArraySeqMtEphS::from_vec(kept)
         }
 
-        fn isEmpty(&self) -> B {
-            self.length() == 0
-        }
+        fn isEmpty(&self) -> B { self.length() == 0 }
 
-        fn isSingleton(&self) -> B {
-            self.length() == 1
-        }
+        fn isSingleton(&self) -> B { self.length() == 1 }
 
         fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A {
             let mut acc = x;
@@ -366,14 +358,10 @@ pub mod ArraySeqMtEph {
     }
 
     impl<T: StTInMtT> Clone for ArraySeqMtEphS<T> {
-        fn clone(&self) -> Self {
-            ArraySeqMtEphS::from_vec(self.to_vec())
-        }
+        fn clone(&self) -> Self { ArraySeqMtEphS::from_vec(self.to_vec()) }
     }
     impl<T: StTInMtT> PartialEq for ArraySeqMtEphS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            self.to_vec() == other.to_vec()
-        }
+        fn eq(&self, other: &Self) -> bool { self.to_vec() == other.to_vec() }
     }
     impl<T: StTInMtT> Eq for ArraySeqMtEphS<T> {}
 

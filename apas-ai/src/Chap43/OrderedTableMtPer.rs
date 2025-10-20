@@ -39,9 +39,7 @@ pub mod OrderedTableMtPer {
     }
 
     impl<K: StTInMtT + Ord, V: StTInMtT> OrderedTableMtPerTrait<K, V> for OrderedTableMtPer<K, V> {
-        fn size(&self) -> N {
-            self.inner.size()
-        }
+        fn size(&self) -> N { self.inner.size() }
 
         fn empty() -> Self {
             OrderedTableMtPer {
@@ -55,9 +53,7 @@ pub mod OrderedTableMtPer {
             }
         }
 
-        fn find(&self, k: &K) -> Option<V> {
-            self.inner.find(k)
-        }
+        fn find(&self, k: &K) -> Option<V> { self.inner.find(k) }
 
         fn insert(&self, k: K, v: V) -> Self {
             OrderedTableMtPer {
@@ -71,9 +67,7 @@ pub mod OrderedTableMtPer {
             }
         }
 
-        fn domain(&self) -> ArraySetStEph<K> {
-            self.inner.domain()
-        }
+        fn domain(&self) -> ArraySetStEph<K> { self.inner.domain() }
 
         fn map<F: Fn(&V) -> V>(&self, f: F) -> Self {
             OrderedTableMtPer {
@@ -89,9 +83,7 @@ pub mod OrderedTableMtPer {
     }
 
     impl<K: StTInMtT + Ord, V: StTInMtT> Default for OrderedTableMtPer<K, V> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<K: StTInMtT + Ord, V: StTInMtT> Clone for OrderedTableMtPer<K, V> {

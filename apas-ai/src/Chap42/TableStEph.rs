@@ -56,9 +56,7 @@ pub mod TableStEph {
 
     impl<K: StT + Ord, V: StT> TableStEphTrait<K, V> for TableStEph<K, V> {
         /// Work: O(1), Span: O(1)
-        fn size(&self) -> N {
-            self.entries.length()
-        }
+        fn size(&self) -> N { self.entries.length() }
 
         /// Work: O(1), Span: O(1)
         fn empty() -> Self {
@@ -285,9 +283,7 @@ pub mod TableStEph {
             self.entries = filtered;
         }
 
-        fn collect(&self) -> ArraySeqStEphS<Pair<K, V>> {
-            self.entries.clone()
-        }
+        fn collect(&self) -> ArraySeqStEphS<Pair<K, V>> { self.entries.clone() }
     }
 
     /// Helper function for creating tables from sorted entries

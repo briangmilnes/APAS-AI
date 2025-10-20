@@ -20,9 +20,7 @@ pub mod ArraySeqMtEphSlice {
     }
 
     impl<T: StTInMtT> Inner<T> {
-        fn new(data: Box<[T]>) -> Self {
-            Inner { data: Mutex::new(data) }
-        }
+        fn new(data: Box<[T]>) -> Self { Inner { data: Mutex::new(data) } }
 
         fn len(&self) -> N {
             let guard = self.data.lock().unwrap();
@@ -85,9 +83,7 @@ pub mod ArraySeqMtEphSlice {
             ArraySeqMtEphSliceS::from_vec(data)
         }
 
-        fn length(&self) -> N {
-            self.range.end - self.range.start
-        }
+        fn length(&self) -> N { self.range.end - self.range.start }
 
         fn nth_cloned(&self, index: N) -> T {
             let guard = self.inner.data.lock().unwrap();
@@ -122,13 +118,9 @@ pub mod ArraySeqMtEphSlice {
             Self { inner, range: 0..1 }
         }
 
-        fn isEmpty(&self) -> B {
-            self.length() == 0
-        }
+        fn isEmpty(&self) -> B { self.length() == 0 }
 
-        fn isSingleton(&self) -> B {
-            self.length() == 1
-        }
+        fn isSingleton(&self) -> B { self.length() == 1 }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let sub = clamp_subrange(self, start, length);
@@ -344,9 +336,7 @@ pub mod ArraySeqMtEphSlice {
             }
         }
 
-        fn from_vec(data: Vec<T>) -> Self {
-            Self::from_box(data.into_boxed_slice())
-        }
+        fn from_vec(data: Vec<T>) -> Self { Self::from_box(data.into_boxed_slice()) }
 
         fn to_vec(&self) -> Vec<T> {
             let guard = self.inner.data.lock().unwrap();
@@ -360,9 +350,7 @@ pub mod ArraySeqMtEphSlice {
             f(&mut guard[start..end])
         }
 
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> {
-            self.update(index, item)
-        }
+        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str> { self.update(index, item) }
     }
 
     fn clamp_subrange<T: StTInMtT + 'static>(a: &ArraySeqMtEphSliceS<T>, start: N, length: N) -> Range<N> {

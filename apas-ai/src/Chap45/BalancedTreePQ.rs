@@ -181,19 +181,13 @@ pub mod BalancedTreePQ {
         }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn size(&self) -> N {
-            self.elements.length()
-        }
+        fn size(&self) -> N { self.elements.length() }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn is_empty(&self) -> bool {
-            self.elements.length() == 0
-        }
+        fn is_empty(&self) -> bool { self.elements.length() == 0 }
 
         /// Claude Work: Θ(1), Span: Θ(1)
-        fn to_seq(&self) -> AVLTreeSeqStPerS<T> {
-            self.elements.clone()
-        }
+        fn to_seq(&self) -> AVLTreeSeqStPerS<T> { self.elements.clone() }
 
         fn find_max(&self) -> Option<&T> {
             if self.elements.length() == 0 {
@@ -231,9 +225,7 @@ pub mod BalancedTreePQ {
             result
         }
 
-        fn extract_all_sorted(&self) -> AVLTreeSeqStPerS<T> {
-            self.elements.clone()
-        }
+        fn extract_all_sorted(&self) -> AVLTreeSeqStPerS<T> { self.elements.clone() }
 
         fn contains(&self, element: &T) -> bool {
             for i in 0..self.elements.length() {
@@ -307,9 +299,7 @@ pub mod BalancedTreePQ {
     }
 
     impl<T: StT + Ord> Default for BalancedTreePQ<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StT + Ord> Display for BalancedTreePQ<T> {
@@ -421,9 +411,7 @@ pub mod BalancedTreePQ {
         }
 
         /// Join two priority queues where all elements in left <= all elements in right
-        pub fn join(left: &Self, right: &Self) -> Self {
-            left.meld(right)
-        }
+        pub fn join(left: &Self, right: &Self) -> Self { left.meld(right) }
 
         /// Filter elements based on a predicate
         pub fn filter<F>(&self, predicate: F) -> Self

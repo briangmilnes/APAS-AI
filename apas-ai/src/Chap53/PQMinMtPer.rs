@@ -62,9 +62,7 @@ pub mod PQMinMtPer {
     impl<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static, F: Fn(&V) -> P> PriorityFn<V, P>
         for ClosurePriority<V, P, F>
     {
-        fn priority(&self, v: &V) -> P {
-            (self.f)(v)
-        }
+        fn priority(&self, v: &V) -> P { (self.f)(v) }
     }
 
     /// Priority queue minimum search starting from single source.

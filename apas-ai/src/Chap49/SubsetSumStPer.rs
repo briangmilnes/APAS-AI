@@ -102,13 +102,9 @@ pub mod SubsetSumStPer {
             subset_sum_rec(&mut solver, n, target)
         }
 
-        fn multiset(&self) -> &ArraySeqStPerS<T> {
-            &self.multiset
-        }
+        fn multiset(&self) -> &ArraySeqStPerS<T> { &self.multiset }
 
-        fn memo_size(&self) -> usize {
-            self.memo.len()
-        }
+        fn memo_size(&self) -> usize { self.memo.len() }
     }
 
     impl<T: StT> Display for SubsetSumStPerS<T> {
@@ -126,18 +122,14 @@ pub mod SubsetSumStPer {
         type Item = T;
         type IntoIter = <ArraySeqStPerS<T> as IntoIterator>::IntoIter;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.multiset.into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.multiset.into_iter() }
     }
 
     impl<T: StT> IntoIterator for &SubsetSumStPerS<T> {
         type Item = T;
         type IntoIter = <ArraySeqStPerS<T> as IntoIterator>::IntoIter;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.multiset.clone().into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.multiset.clone().into_iter() }
     }
 }
 

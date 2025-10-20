@@ -91,15 +91,9 @@ pub mod ArraySeqStPer {
     }
 
     impl<T: StT> ArraySeqStPerBaseTrait<T> for ArraySeqStPerS<T> {
-        fn new(length: N, init_value: T) -> ArraySeqStPerS<T> {
-            Self::from_vec(vec![init_value; length])
-        }
-        fn length(&self) -> N {
-            self.data.len()
-        }
-        fn nth(&self, index: N) -> &T {
-            &self.data[index]
-        }
+        fn new(length: N, init_value: T) -> ArraySeqStPerS<T> { Self::from_vec(vec![init_value; length]) }
+        fn length(&self) -> N { self.data.len() }
+        fn nth(&self, index: N) -> &T { &self.data[index] }
 
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let total = self.data.len();
@@ -182,18 +176,12 @@ pub mod ArraySeqStPer {
                 data: elts.into_boxed_slice(),
             }
         }
-        fn iter(&self) -> Iter<'_, T> {
-            self.data.iter()
-        }
+        fn iter(&self) -> Iter<'_, T> { self.data.iter() }
     }
 
     impl<T: StT> ArraySeqStPerRedefinableTrait<T> for ArraySeqStPerS<T> {
-        fn empty() -> ArraySeqStPerS<T> {
-            Self::from_vec(Vec::new())
-        }
-        fn singleton(item: T) -> ArraySeqStPerS<T> {
-            Self::from_vec(vec![item])
-        }
+        fn empty() -> ArraySeqStPerS<T> { Self::from_vec(Vec::new()) }
+        fn singleton(item: T) -> ArraySeqStPerS<T> { Self::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStPerS<T> {
             let mut values: Vec<T> = Vec::with_capacity(length);
@@ -270,40 +258,28 @@ pub mod ArraySeqStPer {
             (ArraySeqStPerS::from_vec(values), acc)
         }
 
-        fn isEmpty(&self) -> B {
-            self.data.is_empty()
-        }
-        fn isSingleton(&self) -> B {
-            self.data.len() == 1
-        }
+        fn isEmpty(&self) -> B { self.data.is_empty() }
+        fn isSingleton(&self) -> B { self.data.len() == 1 }
     }
 
     impl<T: StT> PartialEq for ArraySeqStPerS<T> {
-        fn eq(&self, other: &Self) -> bool {
-            self.data[..] == other.data[..]
-        }
+        fn eq(&self, other: &Self) -> bool { self.data[..] == other.data[..] }
     }
     impl<T: StT> Eq for ArraySeqStPerS<T> {}
     impl<T: StT> Debug for ArraySeqStPerS<T> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
-            f.debug_list().entries(self.data.iter()).finish()
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { f.debug_list().entries(self.data.iter()).finish() }
     }
     impl<'a, T: StT> IntoIterator for &'a ArraySeqStPerS<T> {
         type Item = &'a T;
         type IntoIter = Iter<'a, T>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
     impl<T: StT> IntoIterator for ArraySeqStPerS<T> {
         type Item = T;
         type IntoIter = IntoIter<T>;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.data.into_vec().into_iter()
-        }
+        fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
     }
     impl<T: StT> Display for ArraySeqStPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {

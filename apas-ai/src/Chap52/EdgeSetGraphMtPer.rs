@@ -57,26 +57,16 @@ pub mod EdgeSetGraphMtPer {
             EdgeSetGraphMtPer { vertices: v, edges: e }
         }
 
-        fn num_vertices(&self) -> N {
-            self.vertices.size()
-        }
+        fn num_vertices(&self) -> N { self.vertices.size() }
 
-        fn num_edges(&self) -> N {
-            self.edges.size()
-        }
+        fn num_edges(&self) -> N { self.edges.size() }
 
-        fn vertices(&self) -> &AVLTreeSetMtPer<V> {
-            &self.vertices
-        }
+        fn vertices(&self) -> &AVLTreeSetMtPer<V> { &self.vertices }
 
-        fn edges(&self) -> &AVLTreeSetMtPer<Pair<V, V>> {
-            &self.edges
-        }
+        fn edges(&self) -> &AVLTreeSetMtPer<Pair<V, V>> { &self.edges }
 
         // Work: Θ(log |E|), Span: Θ(log |E|)
-        fn has_edge(&self, u: &V, v: &V) -> B {
-            self.edges.find(&Pair(u.clone(), v.clone()))
-        }
+        fn has_edge(&self, u: &V, v: &V) -> B { self.edges.find(&Pair(u.clone(), v.clone())) }
 
         // PARALLEL: Work: Θ(|E|), Span: Θ(log |E|) - TRUE parallel filter
         fn out_neighbors(&self, u: &V) -> AVLTreeSetMtPer<V> {
@@ -92,9 +82,7 @@ pub mod EdgeSetGraphMtPer {
         }
 
         // Work: Θ(|E|), Span: Θ(log |E|)
-        fn out_degree(&self, u: &V) -> N {
-            self.out_neighbors(u).size()
-        }
+        fn out_degree(&self, u: &V) -> N { self.out_neighbors(u).size() }
 
         // Work: Θ(log |V|), Span: Θ(log |V|)
         fn insert_vertex(&self, v: V) -> Self {
@@ -139,8 +127,6 @@ pub mod EdgeSetGraphMtPer {
     }
 
     impl<V: StTInMtT + Ord + 'static> Default for EdgeSetGraphMtPer<V> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 }

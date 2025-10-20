@@ -90,9 +90,7 @@ pub mod UnionFindStEph {
             }
         }
 
-        fn equals(&mut self, u: &V, v: &V) -> B {
-            self.find(u) == self.find(v)
-        }
+        fn equals(&mut self, u: &V, v: &V) -> B { self.find(u) == self.find(v) }
 
         fn num_sets(&mut self) -> usize {
             let mut roots = std::collections::HashSet::new();
@@ -106,8 +104,6 @@ pub mod UnionFindStEph {
     }
 
     impl<V: StT + Hash> Default for UnionFindStEph<V> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 }

@@ -147,9 +147,7 @@ pub mod LinkedListStEph {
             }
         }
 
-        fn length(&self) -> N {
-            self.len
-        }
+        fn length(&self) -> N { self.len }
 
         fn nth(&self, index: N) -> &T {
             node_at(self, index)
@@ -157,13 +155,9 @@ pub mod LinkedListStEph {
                 .expect("Index out of bounds")
         }
 
-        fn empty() -> Self {
-            LinkedListStEphS { head: None, len: 0 }
-        }
+        fn empty() -> Self { LinkedListStEphS { head: None, len: 0 } }
 
-        fn singleton(item: T) -> Self {
-            LinkedListStEphS::from_vec(vec![item])
-        }
+        fn singleton(item: T) -> Self { LinkedListStEphS::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> Self {
             let mut values: Vec<T> = Vec::with_capacity(n);

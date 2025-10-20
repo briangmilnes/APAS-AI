@@ -77,21 +77,11 @@ pub mod UnDirGraphStEph {
                 E: SetLit![],
             }
         }
-        fn FromSets(V: SetStEph<V>, E: SetStEph<Edge<V>>) -> UnDirGraphStEph<V> {
-            UnDirGraphStEph { V, E }
-        }
-        fn vertices(&self) -> &SetStEph<V> {
-            &self.V
-        }
-        fn edges(&self) -> &SetStEph<Edge<V>> {
-            &self.E
-        }
-        fn sizeV(&self) -> N {
-            self.V.size()
-        }
-        fn sizeE(&self) -> N {
-            self.E.size()
-        }
+        fn FromSets(V: SetStEph<V>, E: SetStEph<Edge<V>>) -> UnDirGraphStEph<V> { UnDirGraphStEph { V, E } }
+        fn vertices(&self) -> &SetStEph<V> { &self.V }
+        fn edges(&self) -> &SetStEph<Edge<V>> { &self.E }
+        fn sizeV(&self) -> N { self.V.size() }
+        fn sizeE(&self) -> N { self.E.size() }
 
         fn Neighbor(&self, u: &V, v: &V) -> B {
             // Treat edges as unordered: {u,v}
@@ -119,46 +109,26 @@ pub mod UnDirGraphStEph {
             result
         }
 
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B {
-            &e.0 == v || &e.1 == v
-        }
+        fn Incident(&self, e: &Edge<V>, v: &V) -> B { &e.0 == v || &e.1 == v }
 
-        fn Degree(&self, v: &V) -> N {
-            self.NG(v).size()
-        }
+        fn Degree(&self, v: &V) -> N { self.NG(v).size() }
 
         // DirGraph-compatible interface implementations
-        fn sizeA(&self) -> N {
-            self.sizeE()
-        }
+        fn sizeA(&self) -> N { self.sizeE() }
 
-        fn arcs(&self) -> &SetStEph<Edge<V>> {
-            self.edges()
-        }
+        fn arcs(&self) -> &SetStEph<Edge<V>> { self.edges() }
 
-        fn NPlus(&self, v: &V) -> SetStEph<V> {
-            self.NG(v)
-        }
+        fn NPlus(&self, v: &V) -> SetStEph<V> { self.NG(v) }
 
-        fn NMinus(&self, v: &V) -> SetStEph<V> {
-            self.NG(v)
-        }
+        fn NMinus(&self, v: &V) -> SetStEph<V> { self.NG(v) }
 
-        fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
-            self.NGOfVertices(u_set)
-        }
+        fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> { self.NGOfVertices(u_set) }
 
-        fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
-            self.NGOfVertices(u_set)
-        }
+        fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> { self.NGOfVertices(u_set) }
 
-        fn InDegree(&self, v: &V) -> N {
-            self.Degree(v)
-        }
+        fn InDegree(&self, v: &V) -> N { self.Degree(v) }
 
-        fn OutDegree(&self, v: &V) -> N {
-            self.Degree(v)
-        }
+        fn OutDegree(&self, v: &V) -> N { self.Degree(v) }
     }
 
     impl<V: StT + Hash> Debug for UnDirGraphStEph<V> {
@@ -171,15 +141,11 @@ pub mod UnDirGraphStEph {
     }
 
     impl<V: StT + Hash> Display for UnDirGraphStEph<V> {
-        fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-            write!(f, "V={} E={:?}", self.V, self.E)
-        }
+        fn fmt(&self, f: &mut Formatter<'_>) -> Result { write!(f, "V={} E={:?}", self.V, self.E) }
     }
 
     impl<V: StT + Hash> PartialEq for UnDirGraphStEph<V> {
-        fn eq(&self, other: &Self) -> bool {
-            self.V == other.V && self.E == other.E
-        }
+        fn eq(&self, other: &Self) -> bool { self.V == other.V && self.E == other.E }
     }
     impl<V: StT + Hash> Eq for UnDirGraphStEph<V> {}
 

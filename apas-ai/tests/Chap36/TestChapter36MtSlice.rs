@@ -7,17 +7,11 @@ use apas_ai::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
 use apas_ai::Chap36::QuickSortMtSlice::Chapter36MtSlice::Chapter36MtSliceTrait;
 use apas_ai::Types::Types::*;
 
-fn to_vec<T: StT + Send + Sync + 'static>(a: &ArraySeqMtEphSliceS<T>) -> Vec<T> {
-    a.to_vec()
-}
+fn to_vec<T: StT + Send + Sync + 'static>(a: &ArraySeqMtEphSliceS<T>) -> Vec<T> { a.to_vec() }
 
-fn is_sorted<T: StT + Ord>(values: &[T]) -> bool {
-    values.windows(2).all(|w| w[0] <= w[1])
-}
+fn is_sorted<T: StT + Ord>(values: &[T]) -> bool { values.windows(2).all(|w| w[0] <= w[1]) }
 
-fn mk_seq(data: &[i32]) -> ArraySeqMtEphSliceS<i32> {
-    ArraySeqMtEphSliceS::from_vec(data.to_vec())
-}
+fn mk_seq(data: &[i32]) -> ArraySeqMtEphSliceS<i32> { ArraySeqMtEphSliceS::from_vec(data.to_vec()) }
 
 #[test]
 fn quick_sort_slice_variants_produce_sorted_output() {

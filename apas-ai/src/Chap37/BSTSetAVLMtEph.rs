@@ -16,9 +16,7 @@ pub mod BSTSetAVLMtEph {
 
     pub type BSTSetAVLMt<T> = BSTSetAVLMtEph<T>;
 
-    fn values_vec<T: StTInMtT + Ord>(tree: &BSTAVLMtEph<T>) -> Vec<T> {
-        tree.in_order().iter().cloned().collect()
-    }
+    fn values_vec<T: StTInMtT + Ord>(tree: &BSTAVLMtEph<T>) -> Vec<T> { tree.in_order().iter().cloned().collect() }
 
     fn rebuild_from_vec<T: StTInMtT + Ord>(values: Vec<T>) -> BSTAVLMtEph<T> {
         let tree = BSTAVLMtEph::new();
@@ -83,33 +81,19 @@ pub mod BSTSetAVLMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetAVLMtEph<T> {
-        pub fn size(&self) -> N {
-            self.tree.size()
-        }
+        pub fn size(&self) -> N { self.tree.size() }
 
-        pub fn is_empty(&self) -> B {
-            self.tree.is_empty()
-        }
+        pub fn is_empty(&self) -> B { self.tree.is_empty() }
 
-        pub fn find(&self, value: &T) -> Option<T> {
-            self.tree.find(value)
-        }
+        pub fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }
 
-        pub fn contains(&self, value: &T) -> B {
-            self.tree.contains(value)
-        }
+        pub fn contains(&self, value: &T) -> B { self.tree.contains(value) }
 
-        pub fn minimum(&self) -> Option<T> {
-            self.tree.minimum()
-        }
+        pub fn minimum(&self) -> Option<T> { self.tree.minimum() }
 
-        pub fn maximum(&self) -> Option<T> {
-            self.tree.maximum()
-        }
+        pub fn maximum(&self) -> Option<T> { self.tree.maximum() }
 
-        pub fn insert(&mut self, value: T) {
-            self.tree.insert(value);
-        }
+        pub fn insert(&mut self, value: T) { self.tree.insert(value); }
 
         pub fn delete(&mut self, target: &T) {
             let mut values = values_vec(&self.tree);
@@ -217,13 +201,9 @@ pub mod BSTSetAVLMtEph {
                 .fold(base, |acc, value| op(acc, value.clone()))
         }
 
-        pub fn iter_in_order(&self) -> ArraySeqStPerS<T> {
-            self.tree.in_order()
-        }
+        pub fn iter_in_order(&self) -> ArraySeqStPerS<T> { self.tree.in_order() }
 
-        pub fn as_tree(&self) -> &BSTAVLMtEph<T> {
-            &self.tree
-        }
+        pub fn as_tree(&self) -> &BSTAVLMtEph<T> { &self.tree }
     }
 
     impl<T: StTInMtT + Ord> BSTSetAVLMtEphTrait<T> for BSTSetAVLMtEph<T> {
@@ -239,33 +219,19 @@ pub mod BSTSetAVLMtEph {
             Self { tree }
         }
 
-        fn size(&self) -> N {
-            self.tree.size()
-        }
+        fn size(&self) -> N { self.tree.size() }
 
-        fn is_empty(&self) -> B {
-            self.tree.is_empty()
-        }
+        fn is_empty(&self) -> B { self.tree.is_empty() }
 
-        fn find(&self, value: &T) -> Option<T> {
-            self.tree.find(value)
-        }
+        fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }
 
-        fn contains(&self, value: &T) -> B {
-            self.tree.contains(value)
-        }
+        fn contains(&self, value: &T) -> B { self.tree.contains(value) }
 
-        fn minimum(&self) -> Option<T> {
-            self.tree.minimum()
-        }
+        fn minimum(&self) -> Option<T> { self.tree.minimum() }
 
-        fn maximum(&self) -> Option<T> {
-            self.tree.maximum()
-        }
+        fn maximum(&self) -> Option<T> { self.tree.maximum() }
 
-        fn insert(&mut self, value: T) {
-            self.tree.insert(value);
-        }
+        fn insert(&mut self, value: T) { self.tree.insert(value); }
 
         fn delete(&mut self, target: &T) {
             let mut values = values_vec(&self.tree);
@@ -350,21 +316,13 @@ pub mod BSTSetAVLMtEph {
             from_sorted_iter(combined)
         }
 
-        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self {
-            BSTSetAVLMtEph::filter(self, predicate)
-        }
+        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self { BSTSetAVLMtEph::filter(self, predicate) }
 
-        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T {
-            BSTSetAVLMtEph::reduce(self, op, base)
-        }
+        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T { BSTSetAVLMtEph::reduce(self, op, base) }
 
-        fn iter_in_order(&self) -> ArraySeqStPerS<T> {
-            self.tree.in_order()
-        }
+        fn iter_in_order(&self) -> ArraySeqStPerS<T> { self.tree.in_order() }
 
-        fn as_tree(&self) -> &BSTAVLMtEph<T> {
-            &self.tree
-        }
+        fn as_tree(&self) -> &BSTAVLMtEph<T> { &self.tree }
     }
 
     #[macro_export]

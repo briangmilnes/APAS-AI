@@ -20,12 +20,8 @@ pub mod AVLTreeSeqMtPer {
         right: Link<T>,
     }
 
-    fn height<T: StTInMtT>(n: &Link<T>) -> N {
-        n.as_ref().map_or(0, |r| r.height)
-    }
-    fn size<T: StTInMtT>(n: &Link<T>) -> N {
-        n.as_ref().map_or(0, |r| r.size)
-    }
+    fn height<T: StTInMtT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |r| r.height) }
+    fn size<T: StTInMtT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |r| r.size) }
 
     fn mk<T: StTInMtT>(value: T, left: Link<T>, right: Link<T>) -> Arc<Node<T>> {
         let hl = height(&left);
@@ -169,18 +165,10 @@ pub mod AVLTreeSeqMtPer {
     }
 
     impl<T: StTInMtT> AVLTreeSeqMtPerTrait<T> for AVLTreeSeqMtPerS<T> {
-        fn empty() -> Self {
-            AVLTreeSeqMtPerS { root: None }
-        }
-        fn new() -> Self {
-            Self::empty()
-        }
-        fn length(&self) -> N {
-            size(&self.root)
-        }
-        fn nth(&self, index: N) -> &T {
-            nth_ref(&self.root, index)
-        }
+        fn empty() -> Self { AVLTreeSeqMtPerS { root: None } }
+        fn new() -> Self { Self::empty() }
+        fn length(&self) -> N { size(&self.root) }
+        fn nth(&self, index: N) -> &T { nth_ref(&self.root, index) }
         fn set(&self, index: N, item: T) -> Result<Self, &'static str> {
             Ok(AVLTreeSeqMtPerS {
                 root: set_rec(&self.root, index, item)?,
@@ -191,12 +179,8 @@ pub mod AVLTreeSeqMtPer {
                 root: Some(mk(item, None, None)),
             }
         }
-        fn isEmpty(&self) -> B {
-            self.length() == 0
-        }
-        fn isSingleton(&self) -> B {
-            self.length() == 1
-        }
+        fn isEmpty(&self) -> B { self.length() == 0 }
+        fn isSingleton(&self) -> B { self.length() == 1 }
         fn subseq_copy(&self, start: N, length: N) -> Self {
             let n = self.length();
             let s = start.min(n);
@@ -231,9 +215,7 @@ pub mod AVLTreeSeqMtPer {
     }
 
     impl<T: StTInMtT> Default for AVLTreeSeqMtPerS<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     // Iterator implementation

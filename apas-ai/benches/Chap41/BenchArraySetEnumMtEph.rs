@@ -187,16 +187,12 @@ fn bench_array_set_enum_mt_filter(c: &mut Criterion) {
         let set = build_array_set_enum_mt(*size, 0.5);
 
         group.bench_with_input(BenchmarkId::new("filter_half_parallel", size), size, |b, _| {
-            fn is_even(x: usize) -> bool {
-                x % 2 == 0
-            }
+            fn is_even(x: usize) -> bool { x % 2 == 0 }
             b.iter(|| black_box(set.filter(is_even)));
         });
 
         group.bench_with_input(BenchmarkId::new("filter_simple_parallel", size), size, |b, _| {
-            fn is_small(x: usize) -> bool {
-                x < 100
-            }
+            fn is_small(x: usize) -> bool { x < 100 }
             b.iter(|| black_box(set.filter(is_small)));
         });
     }

@@ -7,9 +7,7 @@ use apas_ai::Chap53::PQMinStEph::PQMinStEph::*;
 use apas_ai::Types::Types::*;
 
 // Simple priority function: vertex value itself as priority
-fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> {
-    ClosurePriority::new(|v: &N| *v)
-}
+fn vertex_priority() -> ClosurePriority<N, N, impl Fn(&N) -> N> { ClosurePriority::new(|v: &N| *v) }
 
 // Distance-based priority (for simulating shortest path)
 fn distance_priority(distances: AVLTreeSetStEph<Pair<N, N>>) -> impl PriorityFn<N, N> {

@@ -30,13 +30,9 @@ pub mod BSTAVLMtEph {
         }
     }
 
-    fn height_link<T: StTInMtT + Ord>(link: &Link<T>) -> i32 {
-        link.as_ref().map_or(0, |n| n.height)
-    }
+    fn height_link<T: StTInMtT + Ord>(link: &Link<T>) -> i32 { link.as_ref().map_or(0, |n| n.height) }
 
-    fn size_link<T: StTInMtT + Ord>(link: &Link<T>) -> N {
-        link.as_ref().map_or(0, |n| n.size)
-    }
+    fn size_link<T: StTInMtT + Ord>(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
     fn update<T: StTInMtT + Ord>(node: &mut Node<T>) {
         node.height = 1 + height_link(&node.left).max(height_link(&node.right));
@@ -213,18 +209,14 @@ pub mod BSTAVLMtEph {
             find_link(&*guard, target).cloned()
         }
 
-        fn contains(&self, target: &T) -> B {
-            self.find(target).is_some()
-        }
+        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
         fn size(&self) -> N {
             let guard = self.root.read().unwrap();
             size_link(&*guard)
         }
 
-        fn is_empty(&self) -> B {
-            self.size() == 0
-        }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         fn height(&self) -> N {
             let guard = self.root.read().unwrap();
@@ -257,9 +249,7 @@ pub mod BSTAVLMtEph {
     }
 
     impl<T: StTInMtT + Ord> Default for BSTAVLMtEph<T> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     #[macro_export]

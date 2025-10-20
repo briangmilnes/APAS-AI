@@ -32,209 +32,109 @@ impl TestSet for apas_ai::Chap37::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlai
         <Self as apas_ai::Chap37::BSTSetPlainMtEph::BSTSetPlainMtEph::BSTSetPlainMtEphTrait<i32>>::empty()
     }
 
-    fn insert(&mut self, value: i32) {
-        self.insert(value);
-    }
+    fn insert(&mut self, value: i32) { self.insert(value); }
 
-    fn delete(&mut self, value: &i32) {
-        self.delete(value);
-    }
+    fn delete(&mut self, value: &i32) { self.delete(value); }
 
-    fn size(&self) -> usize {
-        self.size()
-    }
+    fn size(&self) -> usize { self.size() }
 
-    fn is_empty(&self) -> B {
-        self.is_empty()
-    }
+    fn is_empty(&self) -> B { self.is_empty() }
 
-    fn contains(&self, value: &i32) -> B {
-        self.contains(value)
-    }
+    fn contains(&self, value: &i32) -> B { self.contains(value) }
 
-    fn minimum(&self) -> Option<i32> {
-        self.minimum()
-    }
+    fn minimum(&self) -> Option<i32> { self.minimum() }
 
-    fn maximum(&self) -> Option<i32> {
-        self.maximum()
-    }
+    fn maximum(&self) -> Option<i32> { self.maximum() }
 
-    fn union(&self, other: &Self) -> Self {
-        self.union(other)
-    }
+    fn union(&self, other: &Self) -> Self { self.union(other) }
 
-    fn intersection(&self, other: &Self) -> Self {
-        self.intersection(other)
-    }
+    fn intersection(&self, other: &Self) -> Self { self.intersection(other) }
 
-    fn difference(&self, other: &Self) -> Self {
-        self.difference(other)
-    }
+    fn difference(&self, other: &Self) -> Self { self.difference(other) }
 
-    fn split(&self, pivot: &i32) -> (Self, B, Self) {
-        self.split(pivot)
-    }
+    fn split(&self, pivot: &i32) -> (Self, B, Self) { self.split(pivot) }
 
-    fn join_pair(left: Self, right: Self) -> Self {
-        Self::join_pair(left, right)
-    }
+    fn join_pair(left: Self, right: Self) -> Self { Self::join_pair(left, right) }
 
-    fn join_m(left: Self, pivot: i32, right: Self) -> Self {
-        Self::join_m(left, pivot, right)
-    }
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self { Self::join_m(left, pivot, right) }
 
-    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self {
-        self.filter(predicate)
-    }
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self { self.filter(predicate) }
 
-    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 {
-        self.reduce(op, base)
-    }
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 { self.reduce(op, base) }
 
-    fn iter_seq(&self) -> ArraySeqStPerS<i32> {
-        self.iter_in_order()
-    }
+    fn iter_seq(&self) -> ArraySeqStPerS<i32> { self.iter_in_order() }
 }
 
 impl TestSet for apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt<i32> {
-    fn empty() -> Self {
-        <Self as apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMtEphTrait<i32>>::empty()
-    }
+    fn empty() -> Self { <Self as apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMtEphTrait<i32>>::empty() }
 
-    fn insert(&mut self, value: i32) {
-        self.insert(value);
-    }
+    fn insert(&mut self, value: i32) { self.insert(value); }
 
-    fn delete(&mut self, value: &i32) {
-        self.delete(value);
-    }
+    fn delete(&mut self, value: &i32) { self.delete(value); }
 
-    fn size(&self) -> usize {
-        self.size()
-    }
+    fn size(&self) -> usize { self.size() }
 
-    fn is_empty(&self) -> B {
-        self.is_empty()
-    }
+    fn is_empty(&self) -> B { self.is_empty() }
 
-    fn contains(&self, value: &i32) -> B {
-        self.contains(value)
-    }
+    fn contains(&self, value: &i32) -> B { self.contains(value) }
 
-    fn minimum(&self) -> Option<i32> {
-        self.minimum()
-    }
+    fn minimum(&self) -> Option<i32> { self.minimum() }
 
-    fn maximum(&self) -> Option<i32> {
-        self.maximum()
-    }
+    fn maximum(&self) -> Option<i32> { self.maximum() }
 
-    fn union(&self, other: &Self) -> Self {
-        self.union(other)
-    }
+    fn union(&self, other: &Self) -> Self { self.union(other) }
 
-    fn intersection(&self, other: &Self) -> Self {
-        self.intersection(other)
-    }
+    fn intersection(&self, other: &Self) -> Self { self.intersection(other) }
 
-    fn difference(&self, other: &Self) -> Self {
-        self.difference(other)
-    }
+    fn difference(&self, other: &Self) -> Self { self.difference(other) }
 
-    fn split(&self, pivot: &i32) -> (Self, B, Self) {
-        self.split(pivot)
-    }
+    fn split(&self, pivot: &i32) -> (Self, B, Self) { self.split(pivot) }
 
-    fn join_pair(left: Self, right: Self) -> Self {
-        Self::join_pair(left, right)
-    }
+    fn join_pair(left: Self, right: Self) -> Self { Self::join_pair(left, right) }
 
-    fn join_m(left: Self, pivot: i32, right: Self) -> Self {
-        Self::join_m(left, pivot, right)
-    }
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self { Self::join_m(left, pivot, right) }
 
-    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self {
-        self.filter(predicate)
-    }
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self { self.filter(predicate) }
 
-    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 {
-        self.reduce(op, base)
-    }
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 { self.reduce(op, base) }
 
-    fn iter_seq(&self) -> ArraySeqStPerS<i32> {
-        self.iter_in_order()
-    }
+    fn iter_seq(&self) -> ArraySeqStPerS<i32> { self.iter_in_order() }
 }
 
 impl TestSet for apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt<i32> {
-    fn empty() -> Self {
-        <Self as apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMtEphTrait<i32>>::empty()
-    }
+    fn empty() -> Self { <Self as apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMtEphTrait<i32>>::empty() }
 
-    fn insert(&mut self, value: i32) {
-        self.insert(value);
-    }
+    fn insert(&mut self, value: i32) { self.insert(value); }
 
-    fn delete(&mut self, value: &i32) {
-        self.delete(value);
-    }
+    fn delete(&mut self, value: &i32) { self.delete(value); }
 
-    fn size(&self) -> usize {
-        self.size()
-    }
+    fn size(&self) -> usize { self.size() }
 
-    fn is_empty(&self) -> B {
-        self.is_empty()
-    }
+    fn is_empty(&self) -> B { self.is_empty() }
 
-    fn contains(&self, value: &i32) -> B {
-        self.contains(value)
-    }
+    fn contains(&self, value: &i32) -> B { self.contains(value) }
 
-    fn minimum(&self) -> Option<i32> {
-        self.minimum()
-    }
+    fn minimum(&self) -> Option<i32> { self.minimum() }
 
-    fn maximum(&self) -> Option<i32> {
-        self.maximum()
-    }
+    fn maximum(&self) -> Option<i32> { self.maximum() }
 
-    fn union(&self, other: &Self) -> Self {
-        self.union(other)
-    }
+    fn union(&self, other: &Self) -> Self { self.union(other) }
 
-    fn intersection(&self, other: &Self) -> Self {
-        self.intersection(other)
-    }
+    fn intersection(&self, other: &Self) -> Self { self.intersection(other) }
 
-    fn difference(&self, other: &Self) -> Self {
-        self.difference(other)
-    }
+    fn difference(&self, other: &Self) -> Self { self.difference(other) }
 
-    fn split(&self, pivot: &i32) -> (Self, B, Self) {
-        self.split(pivot)
-    }
+    fn split(&self, pivot: &i32) -> (Self, B, Self) { self.split(pivot) }
 
-    fn join_pair(left: Self, right: Self) -> Self {
-        Self::join_pair(left, right)
-    }
+    fn join_pair(left: Self, right: Self) -> Self { Self::join_pair(left, right) }
 
-    fn join_m(left: Self, pivot: i32, right: Self) -> Self {
-        Self::join_m(left, pivot, right)
-    }
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self { Self::join_m(left, pivot, right) }
 
-    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self {
-        self.filter(predicate)
-    }
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self { self.filter(predicate) }
 
-    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 {
-        self.reduce(op, base)
-    }
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 { self.reduce(op, base) }
 
-    fn iter_seq(&self) -> ArraySeqStPerS<i32> {
-        self.iter_in_order()
-    }
+    fn iter_seq(&self) -> ArraySeqStPerS<i32> { self.iter_in_order() }
 }
 
 impl TestSet for apas_ai::Chap37::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSetBBAlphaMt<i32> {
@@ -242,69 +142,37 @@ impl TestSet for apas_ai::Chap37::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSet
         <Self as apas_ai::Chap37::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEph::BSTSetBBAlphaMtEphTrait<i32>>::empty()
     }
 
-    fn insert(&mut self, value: i32) {
-        self.insert(value);
-    }
+    fn insert(&mut self, value: i32) { self.insert(value); }
 
-    fn delete(&mut self, value: &i32) {
-        self.delete(value);
-    }
+    fn delete(&mut self, value: &i32) { self.delete(value); }
 
-    fn size(&self) -> usize {
-        self.size()
-    }
+    fn size(&self) -> usize { self.size() }
 
-    fn is_empty(&self) -> B {
-        self.is_empty()
-    }
+    fn is_empty(&self) -> B { self.is_empty() }
 
-    fn contains(&self, value: &i32) -> B {
-        self.contains(value)
-    }
+    fn contains(&self, value: &i32) -> B { self.contains(value) }
 
-    fn minimum(&self) -> Option<i32> {
-        self.minimum()
-    }
+    fn minimum(&self) -> Option<i32> { self.minimum() }
 
-    fn maximum(&self) -> Option<i32> {
-        self.maximum()
-    }
+    fn maximum(&self) -> Option<i32> { self.maximum() }
 
-    fn union(&self, other: &Self) -> Self {
-        self.union(other)
-    }
+    fn union(&self, other: &Self) -> Self { self.union(other) }
 
-    fn intersection(&self, other: &Self) -> Self {
-        self.intersection(other)
-    }
+    fn intersection(&self, other: &Self) -> Self { self.intersection(other) }
 
-    fn difference(&self, other: &Self) -> Self {
-        self.difference(other)
-    }
+    fn difference(&self, other: &Self) -> Self { self.difference(other) }
 
-    fn split(&self, pivot: &i32) -> (Self, B, Self) {
-        self.split(pivot)
-    }
+    fn split(&self, pivot: &i32) -> (Self, B, Self) { self.split(pivot) }
 
-    fn join_pair(left: Self, right: Self) -> Self {
-        Self::join_pair(left, right)
-    }
+    fn join_pair(left: Self, right: Self) -> Self { Self::join_pair(left, right) }
 
-    fn join_m(left: Self, pivot: i32, right: Self) -> Self {
-        Self::join_m(left, pivot, right)
-    }
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self { Self::join_m(left, pivot, right) }
 
-    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self {
-        self.filter(predicate)
-    }
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self { self.filter(predicate) }
 
-    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 {
-        self.reduce(op, base)
-    }
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 { self.reduce(op, base) }
 
-    fn iter_seq(&self) -> ArraySeqStPerS<i32> {
-        self.iter_in_order()
-    }
+    fn iter_seq(&self) -> ArraySeqStPerS<i32> { self.iter_in_order() }
 }
 
 impl TestSet for apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt<i32> {
@@ -312,69 +180,37 @@ impl TestSet for apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTrea
         <Self as apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEphTrait<i32>>::empty()
     }
 
-    fn insert(&mut self, value: i32) {
-        self.insert(value);
-    }
+    fn insert(&mut self, value: i32) { self.insert(value); }
 
-    fn delete(&mut self, value: &i32) {
-        self.delete(value);
-    }
+    fn delete(&mut self, value: &i32) { self.delete(value); }
 
-    fn size(&self) -> usize {
-        self.size()
-    }
+    fn size(&self) -> usize { self.size() }
 
-    fn is_empty(&self) -> B {
-        self.is_empty()
-    }
+    fn is_empty(&self) -> B { self.is_empty() }
 
-    fn contains(&self, value: &i32) -> B {
-        self.contains(value)
-    }
+    fn contains(&self, value: &i32) -> B { self.contains(value) }
 
-    fn minimum(&self) -> Option<i32> {
-        self.minimum()
-    }
+    fn minimum(&self) -> Option<i32> { self.minimum() }
 
-    fn maximum(&self) -> Option<i32> {
-        self.maximum()
-    }
+    fn maximum(&self) -> Option<i32> { self.maximum() }
 
-    fn union(&self, other: &Self) -> Self {
-        self.union(other)
-    }
+    fn union(&self, other: &Self) -> Self { self.union(other) }
 
-    fn intersection(&self, other: &Self) -> Self {
-        self.intersection(other)
-    }
+    fn intersection(&self, other: &Self) -> Self { self.intersection(other) }
 
-    fn difference(&self, other: &Self) -> Self {
-        self.difference(other)
-    }
+    fn difference(&self, other: &Self) -> Self { self.difference(other) }
 
-    fn split(&self, pivot: &i32) -> (Self, B, Self) {
-        self.split(pivot)
-    }
+    fn split(&self, pivot: &i32) -> (Self, B, Self) { self.split(pivot) }
 
-    fn join_pair(left: Self, right: Self) -> Self {
-        Self::join_pair(left, right)
-    }
+    fn join_pair(left: Self, right: Self) -> Self { Self::join_pair(left, right) }
 
-    fn join_m(left: Self, pivot: i32, right: Self) -> Self {
-        Self::join_m(left, pivot, right)
-    }
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self { Self::join_m(left, pivot, right) }
 
-    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self {
-        self.filter(predicate)
-    }
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self { self.filter(predicate) }
 
-    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 {
-        self.reduce(op, base)
-    }
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 { self.reduce(op, base) }
 
-    fn iter_seq(&self) -> ArraySeqStPerS<i32> {
-        self.iter_in_order()
-    }
+    fn iter_seq(&self) -> ArraySeqStPerS<i32> { self.iter_in_order() }
 }
 
 impl TestSet for apas_ai::Chap37::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMt<i32> {
@@ -382,69 +218,37 @@ impl TestSet for apas_ai::Chap37::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSpla
         <Self as apas_ai::Chap37::BSTSetSplayMtEph::BSTSetSplayMtEph::BSTSetSplayMtEphTrait<i32>>::empty()
     }
 
-    fn insert(&mut self, value: i32) {
-        self.insert(value);
-    }
+    fn insert(&mut self, value: i32) { self.insert(value); }
 
-    fn delete(&mut self, value: &i32) {
-        self.delete(value);
-    }
+    fn delete(&mut self, value: &i32) { self.delete(value); }
 
-    fn size(&self) -> usize {
-        self.size()
-    }
+    fn size(&self) -> usize { self.size() }
 
-    fn is_empty(&self) -> B {
-        self.is_empty()
-    }
+    fn is_empty(&self) -> B { self.is_empty() }
 
-    fn contains(&self, value: &i32) -> B {
-        self.contains(value)
-    }
+    fn contains(&self, value: &i32) -> B { self.contains(value) }
 
-    fn minimum(&self) -> Option<i32> {
-        self.minimum()
-    }
+    fn minimum(&self) -> Option<i32> { self.minimum() }
 
-    fn maximum(&self) -> Option<i32> {
-        self.maximum()
-    }
+    fn maximum(&self) -> Option<i32> { self.maximum() }
 
-    fn union(&self, other: &Self) -> Self {
-        self.union(other)
-    }
+    fn union(&self, other: &Self) -> Self { self.union(other) }
 
-    fn intersection(&self, other: &Self) -> Self {
-        self.intersection(other)
-    }
+    fn intersection(&self, other: &Self) -> Self { self.intersection(other) }
 
-    fn difference(&self, other: &Self) -> Self {
-        self.difference(other)
-    }
+    fn difference(&self, other: &Self) -> Self { self.difference(other) }
 
-    fn split(&self, pivot: &i32) -> (Self, B, Self) {
-        self.split(pivot)
-    }
+    fn split(&self, pivot: &i32) -> (Self, B, Self) { self.split(pivot) }
 
-    fn join_pair(left: Self, right: Self) -> Self {
-        Self::join_pair(left, right)
-    }
+    fn join_pair(left: Self, right: Self) -> Self { Self::join_pair(left, right) }
 
-    fn join_m(left: Self, pivot: i32, right: Self) -> Self {
-        Self::join_m(left, pivot, right)
-    }
+    fn join_m(left: Self, pivot: i32, right: Self) -> Self { Self::join_m(left, pivot, right) }
 
-    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self {
-        self.filter(predicate)
-    }
+    fn filter<F: FnMut(&i32) -> bool>(&self, predicate: F) -> Self { self.filter(predicate) }
 
-    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 {
-        self.reduce(op, base)
-    }
+    fn reduce<F: FnMut(i32, i32) -> i32>(&self, op: F, base: i32) -> i32 { self.reduce(op, base) }
 
-    fn iter_seq(&self) -> ArraySeqStPerS<i32> {
-        self.iter_in_order()
-    }
+    fn iter_seq(&self) -> ArraySeqStPerS<i32> { self.iter_in_order() }
 }
 
 fn exercise_set<S: TestSet>() {
@@ -512,14 +316,10 @@ fn test_plain_bst_set_ops() {
 }
 
 #[test]
-fn test_avl_bst_set_ops() {
-    exercise_set::<apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt<i32>>();
-}
+fn test_avl_bst_set_ops() { exercise_set::<apas_ai::Chap37::BSTSetAVLMtEph::BSTSetAVLMtEph::BSTSetAVLMt<i32>>(); }
 
 #[test]
-fn test_rb_bst_set_ops() {
-    exercise_set::<apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt<i32>>();
-}
+fn test_rb_bst_set_ops() { exercise_set::<apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt<i32>>(); }
 
 #[test]
 fn test_bbalpha_bst_set_ops() {

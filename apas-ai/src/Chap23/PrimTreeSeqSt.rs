@@ -60,29 +60,17 @@ pub mod PrimTreeSeqSt {
     }
 
     impl<T: StT> PrimTreeSeqStTrait<T> for PrimTreeSeqStS<T> {
-        fn empty() -> Self {
-            Self { data: Vec::new() }
-        }
+        fn empty() -> Self { Self { data: Vec::new() } }
 
-        fn singleton(value: T) -> Self {
-            Self { data: vec![value] }
-        }
+        fn singleton(value: T) -> Self { Self { data: vec![value] } }
 
-        fn from_vec(vec: Vec<T>) -> Self {
-            Self { data: vec }
-        }
+        fn from_vec(vec: Vec<T>) -> Self { Self { data: vec } }
 
-        fn into_vec(self) -> Vec<T> {
-            self.data
-        }
+        fn into_vec(self) -> Vec<T> { self.data }
 
-        fn as_slice(&self) -> &[T] {
-            &self.data
-        }
+        fn as_slice(&self) -> &[T] { &self.data }
 
-        fn length(&self) -> N {
-            self.data.len()
-        }
+        fn length(&self) -> N { self.data.len() }
 
         fn expose(&self) -> PrimTreeSeqStTree<T> {
             match self.data.len() {

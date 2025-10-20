@@ -82,34 +82,20 @@ fn bench_set_variants<S: BenchSet>(c: &mut Criterion, label: &str) {
 }
 
 impl BenchSet for AVLSet<i32> {
-    fn empty() -> Self {
-        BSTSetAVLMtEphLit![]
-    }
+    fn empty() -> Self { BSTSetAVLMtEphLit![] }
 
-    fn insert_value(&mut self, value: i32) {
-        self.insert(value);
-    }
+    fn insert_value(&mut self, value: i32) { self.insert(value); }
 
-    fn union_with(&self, other: &Self) -> Self {
-        self.union(other)
-    }
+    fn union_with(&self, other: &Self) -> Self { self.union(other) }
 
-    fn difference_with(&self, other: &Self) -> Self {
-        self.difference(other)
-    }
+    fn difference_with(&self, other: &Self) -> Self { self.difference(other) }
 
-    fn filter_divisible_by(&self, divisor: i32) -> Self {
-        self.filter(|value| *value % divisor == 0)
-    }
+    fn filter_divisible_by(&self, divisor: i32) -> Self { self.filter(|value| *value % divisor == 0) }
 
-    fn reduce_sum(&self) -> i32 {
-        self.reduce(|acc, value| acc + value, 0)
-    }
+    fn reduce_sum(&self) -> i32 { self.reduce(|acc, value| acc + value, 0) }
 }
 
-fn bench_avl_set(c: &mut Criterion) {
-    bench_set_variants::<AVLSet<i32>>(c, "BSTSetAVLMtEph");
-}
+fn bench_avl_set(c: &mut Criterion) { bench_set_variants::<AVLSet<i32>>(c, "BSTSetAVLMtEph"); }
 
 criterion_group!(benches, bench_avl_set);
 criterion_main!(benches);

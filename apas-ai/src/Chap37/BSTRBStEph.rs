@@ -34,17 +34,11 @@ pub mod BSTRBStEph {
         }
     }
 
-    fn is_red<T: StT + Ord>(link: &Link<T>) -> bool {
-        matches!(link, Some(node) if node.color == Color::Red)
-    }
+    fn is_red<T: StT + Ord>(link: &Link<T>) -> bool { matches!(link, Some(node) if node.color == Color::Red) }
 
-    fn size_link<T: StT + Ord>(link: &Link<T>) -> N {
-        link.as_ref().map_or(0, |n| n.size)
-    }
+    fn size_link<T: StT + Ord>(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
-    fn update<T: StT + Ord>(node: &mut Node<T>) {
-        node.size = 1 + size_link(&node.left) + size_link(&node.right);
-    }
+    fn update<T: StT + Ord>(node: &mut Node<T>) { node.size = 1 + size_link(&node.left) + size_link(&node.right); }
 
     fn rotate_left<T: StT + Ord>(link: &mut Link<T>) {
         if let Some(mut h) = link.take() {
@@ -216,17 +210,11 @@ pub mod BSTRBStEph {
     }
 
     impl<T: StT + Ord> BSTRBStEphTrait<T> for BSTRBStEph<T> {
-        fn new() -> Self {
-            BSTRBStEph { root: None }
-        }
+        fn new() -> Self { BSTRBStEph { root: None } }
 
-        fn size(&self) -> N {
-            size_link(&self.root)
-        }
+        fn size(&self) -> N { size_link(&self.root) }
 
-        fn is_empty(&self) -> B {
-            self.size() == 0
-        }
+        fn is_empty(&self) -> B { self.size() == 0 }
 
         fn height(&self) -> N {
             fn height_rec<T: StT + Ord>(link: &Link<T>) -> N {
@@ -245,21 +233,13 @@ pub mod BSTRBStEph {
             }
         }
 
-        fn find(&self, target: &T) -> Option<&T> {
-            find_link(&self.root, target)
-        }
+        fn find(&self, target: &T) -> Option<&T> { find_link(&self.root, target) }
 
-        fn contains(&self, target: &T) -> B {
-            self.find(target).is_some()
-        }
+        fn contains(&self, target: &T) -> B { self.find(target).is_some() }
 
-        fn minimum(&self) -> Option<&T> {
-            min_link(&self.root)
-        }
+        fn minimum(&self) -> Option<&T> { min_link(&self.root) }
 
-        fn maximum(&self) -> Option<&T> {
-            max_link(&self.root)
-        }
+        fn maximum(&self) -> Option<&T> { max_link(&self.root) }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let mut out = Vec::with_capacity(self.size());
@@ -275,9 +255,7 @@ pub mod BSTRBStEph {
     }
 
     impl<T: StT + Ord> Default for BSTRBStEph<T> {
-        fn default() -> Self {
-            Self::new()
-        }
+        fn default() -> Self { Self::new() }
     }
 
     #[macro_export]

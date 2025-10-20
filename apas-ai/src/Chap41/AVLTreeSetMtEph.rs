@@ -243,9 +243,7 @@ pub mod AVLTreeSetMtEph {
     }
 
     impl<T: StTInMtT + Ord + 'static> Default for AVLTreeSetMtEph<T> {
-        fn default() -> Self {
-            Self::empty()
-        }
+        fn default() -> Self { Self::empty() }
     }
 
     impl<T: StTInMtT + Ord + 'static> Clone for AVLTreeSetMtEph<T> {

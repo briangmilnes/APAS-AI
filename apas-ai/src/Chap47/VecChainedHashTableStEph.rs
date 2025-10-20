@@ -11,9 +11,7 @@ pub mod VecChainedHashTableStEph {
     use crate::Types::Types::*;
 
     impl<Key: PartialEq + Clone, Value: Clone> EntryTrait<Key, Value> for Vec<(Key, Value)> {
-        fn new() -> Self {
-            Vec::new()
-        }
+        fn new() -> Self { Vec::new() }
 
         fn insert(&mut self, key: Key, value: Value) {
             // Update if key exists, otherwise append

@@ -108,17 +108,11 @@ pub mod MinEditDistStPer {
             min_edit_distance_rec(&mut solver, source_len, target_len)
         }
 
-        fn source(&self) -> &ArraySeqStPerS<T> {
-            &self.source
-        }
+        fn source(&self) -> &ArraySeqStPerS<T> { &self.source }
 
-        fn target(&self) -> &ArraySeqStPerS<T> {
-            &self.target
-        }
+        fn target(&self) -> &ArraySeqStPerS<T> { &self.target }
 
-        fn memo_size(&self) -> usize {
-            self.memo.len()
-        }
+        fn memo_size(&self) -> usize { self.memo.len() }
     }
 
     impl<T: StT> Display for MinEditDistStPerS<T> {
@@ -140,9 +134,7 @@ pub mod MinEditDistStPer {
             fn((T, T)) -> Pair<T, T>,
         >;
 
-        fn into_iter(self) -> Self::IntoIter {
-            self.source.into_iter().zip(self.target).map(|(a, b)| Pair(a, b))
-        }
+        fn into_iter(self) -> Self::IntoIter { self.source.into_iter().zip(self.target).map(|(a, b)| Pair(a, b)) }
     }
 
     impl<T: StT> IntoIterator for &MinEditDistStPerS<T> {
