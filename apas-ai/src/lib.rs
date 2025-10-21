@@ -14,7 +14,6 @@ pub mod Chap05 {
     pub mod MappingStEph;
     pub mod RelationStEph;
     pub mod SetStEph;
-    pub mod SetStEphClean;
 }
 
 pub mod Chap06 {
@@ -70,9 +69,6 @@ pub mod Chap18 {
     pub mod ArraySeqMtEph;
     pub mod ArraySeqMtPer;
     pub mod ArraySeqStEph;
-    pub mod ArraySeqStEphClean;
-    pub mod ArraySeqStEphMinimal;
-    pub mod ArraySeqStEphSimple;
     pub mod ArraySeqStPer;
 
     pub mod LinkedListStEph;
