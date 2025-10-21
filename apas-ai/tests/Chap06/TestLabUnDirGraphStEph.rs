@@ -197,7 +197,7 @@ fn test_sizea() {
         V: [1, 2, 3],
         E: [(1, 2, "a"), (2, 3, "b")]
     );
-    assert_eq!(g.sizeA(), 2);
+    assert_eq!(g.labeled_edges().size(), 2);
 }
 
 #[test]
@@ -206,7 +206,7 @@ fn test_arcs() {
         V: [1, 2, 3],
         E: [(1, 2, "first"), (2, 3, "second")]
     );
-    let arcs = g.arcs();
+    let arcs = g.labeled_edges();
     assert_eq!(arcs.size(), 2);
     assert!(arcs.mem(&LabEdge(1, 2, "first")));
     assert!(arcs.mem(&LabEdge(2, 3, "second")));
@@ -218,7 +218,7 @@ fn test_nplus() {
         V: [1, 2, 3],
         E: [(1, 2, "a")]
     );
-    let nplus = g.NPlus(&1);
+    let nplus = g.neighbors(&1);
     assert_eq!(nplus.size(), 1);
     assert!(nplus.mem(&2));
 }
@@ -229,7 +229,7 @@ fn test_nminus() {
         V: [1, 2, 3],
         E: [(1, 2, "a")]
     );
-    let nminus = g.NMinus(&2);
+    let nminus = g.neighbors(&2);
     assert_eq!(nminus.size(), 1);
     assert!(nminus.mem(&1));
 }
@@ -240,9 +240,9 @@ fn test_indegree() {
         V: [1, 2, 3],
         E: [(1, 2, "a"), (2, 3, "b")]
     );
-    assert_eq!(g.InDegree(&2), 2);
-    assert_eq!(g.InDegree(&1), 1);
-    assert_eq!(g.InDegree(&3), 1);
+    assert_eq!(g.neighbors(&2).size(), 2);
+    assert_eq!(g.neighbors(&1).size(), 1);
+    assert_eq!(g.neighbors(&3).size(), 1);
 }
 
 #[test]
@@ -251,9 +251,9 @@ fn test_outdegree() {
         V: [1, 2, 3],
         E: [(1, 2, "a"), (2, 3, "b")]
     );
-    assert_eq!(g.OutDegree(&2), 2);
-    assert_eq!(g.OutDegree(&1), 1);
-    assert_eq!(g.OutDegree(&3), 1);
+    assert_eq!(g.neighbors(&2).size(), 2);
+    assert_eq!(g.neighbors(&1).size(), 1);
+    assert_eq!(g.neighbors(&3).size(), 1);
 }
 
 #[test]

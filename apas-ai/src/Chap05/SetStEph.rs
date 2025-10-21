@@ -143,7 +143,9 @@ pub mod SetStEph {
     impl<T: Eq + Hash> PartialEq for SetStEph<T> {
         fn eq(&self, other: &Self) -> bool { self.data == other.data }
     }
+
     impl<T: Eq + Hash> Eq for SetStEph<T> {}
+
     impl<T: Eq + Hash + Debug> Debug for SetStEph<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result { f.debug_set().entries(self.data.iter()).finish() }
     }
@@ -162,6 +164,7 @@ pub mod SetStEph {
             write!(f, "}}")
         }
     }
+
     impl<T: Eq + Hash> Hash for SetStEph<T> {
         fn hash<H: Hasher>(&self, state: &mut H) {
             use std::collections::hash_map::DefaultHasher;

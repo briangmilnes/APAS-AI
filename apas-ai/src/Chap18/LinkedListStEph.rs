@@ -366,6 +366,7 @@ pub mod LinkedListStEph {
             write!(f, "]")
         }
     }
+
     impl<T: StT> Debug for LinkedListStEphS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "[")?;
@@ -383,6 +384,7 @@ pub mod LinkedListStEph {
             write!(f, "]")
         }
     }
+
     impl<T: StT> PartialEq for LinkedListStEphS<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.len != other.len {
@@ -400,6 +402,7 @@ pub mod LinkedListStEph {
             true
         }
     }
+
     impl<T: StT> Eq for LinkedListStEphS<T> {}
 
     #[macro_export]

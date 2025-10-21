@@ -57,24 +57,6 @@ pub mod UnDirGraphMtEph {
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|), Parallelism Θ(|E|/log |E|) - calls parallel NG
         fn Degree(&self, v: &V)                           -> N;
-
-        // DirGraph-compatible interface methods
-        /// Arc count (alias for edge count in undirected graphs)
-        fn sizeA(&self)                                   -> N;
-        /// Arcs (alias for edges in undirected graphs)
-        fn arcs(&self)                                    -> &SetStEph<Edge<V>>;
-        /// Out-neighbors (in undirected graphs, all neighbors are both in and out)
-        fn NPlus(&self, v: &V)                            -> SetStEph<V>;
-        /// In-neighbors (in undirected graphs, all neighbors are both in and out)
-        fn NMinus(&self, v: &V)                           -> SetStEph<V>;
-        /// Out-neighbors of vertex set
-        fn NPlusOfVertices(&self, u_set: &SetStEph<V>)    -> SetStEph<V>;
-        /// In-neighbors of vertex set
-        fn NMinusOfVertices(&self, u_set: &SetStEph<V>)   -> SetStEph<V>;
-        /// In-degree (in undirected graphs, equals total degree)
-        fn InDegree(&self, v: &V)                         -> N;
-        /// Out-degree (in undirected graphs, equals total degree)
-        fn OutDegree(&self, v: &V)                        -> N;
     }
 
     impl<V: StT + MtT + Hash + 'static> UnDirGraphMtEphTrait<V> for UnDirGraphMtEph<V> {
@@ -199,23 +181,6 @@ pub mod UnDirGraphMtEph {
         fn Incident(&self, e: &Edge<V>, v: &V) -> B { &e.0 == v || &e.1 == v }
 
         fn Degree(&self, v: &V) -> N { self.NG(v).size() }
-
-        // DirGraph-compatible interface implementations
-        fn sizeA(&self) -> N { self.sizeE() }
-
-        fn arcs(&self) -> &SetStEph<Edge<V>> { self.edges() }
-
-        fn NPlus(&self, v: &V) -> SetStEph<V> { self.NG(v) }
-
-        fn NMinus(&self, v: &V) -> SetStEph<V> { self.NG(v) }
-
-        fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> { self.NGOfVertices(u_set) }
-
-        fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> { self.NGOfVertices(u_set) }
-
-        fn InDegree(&self, v: &V) -> N { self.Degree(v) }
-
-        fn OutDegree(&self, v: &V) -> N { self.Degree(v) }
     }
 
     impl<V: StT + MtT + Hash + 'static> Debug for UnDirGraphMtEph<V> {

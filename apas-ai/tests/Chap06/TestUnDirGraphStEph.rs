@@ -45,7 +45,7 @@ fn test_sizea() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphStEph::FromSets(v, e);
-    assert_eq!(g.sizeA(), 2);
+    assert_eq!(g.sizeE(), 2);
 }
 
 #[test]
@@ -53,7 +53,7 @@ fn test_arcs() {
     let v: SetStEph<N> = SetLit![1, 2];
     let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphStEph::FromSets(v, e.clone());
-    assert_eq!(g.arcs(), &e);
+    assert_eq!(g.edges(), &e);
 }
 
 #[test]
@@ -61,7 +61,7 @@ fn test_nplus() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphStEph::FromSets(v, e);
-    let nplus = g.NPlus(&1);
+    let nplus = g.NG(&1);
     assert!(nplus.mem(&2));
 }
 
@@ -70,7 +70,7 @@ fn test_nminus() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphStEph::FromSets(v, e);
-    let nminus = g.NMinus(&2);
+    let nminus = g.NG(&2);
     assert!(nminus.mem(&1));
 }
 
@@ -79,7 +79,7 @@ fn test_indegree() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphStEph::FromSets(v, e);
-    assert_eq!(g.InDegree(&2), 2);
+    assert_eq!(g.Degree(&2), 2);
 }
 
 #[test]
@@ -87,7 +87,7 @@ fn test_outdegree() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphStEph::FromSets(v, e);
-    assert_eq!(g.OutDegree(&2), 2);
+    assert_eq!(g.Degree(&2), 2);
 }
 
 #[test]
@@ -140,7 +140,7 @@ fn test_nplusofvertices() {
     let g = UnDirGraphStEph::FromSets(v, e);
 
     let subset: SetStEph<N> = SetLit![1];
-    let nplus = g.NPlusOfVertices(&subset);
+    let nplus = g.NGOfVertices(&subset);
     assert!(nplus.mem(&2)); // Neighbor of 1
 }
 
@@ -151,7 +151,7 @@ fn test_nminusofvertices() {
     let g = UnDirGraphStEph::FromSets(v, e);
 
     let subset: SetStEph<N> = SetLit![2];
-    let nminus = g.NMinusOfVertices(&subset);
+    let nminus = g.NGOfVertices(&subset);
     assert!(nminus.mem(&1)); // Neighbor of 2
     assert!(nminus.mem(&3)); // Neighbor of 2
 }

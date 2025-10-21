@@ -265,22 +265,27 @@ pub mod ArraySeqStPer {
     impl<T: StT> PartialEq for ArraySeqStPerS<T> {
         fn eq(&self, other: &Self) -> bool { self.data[..] == other.data[..] }
     }
+
     impl<T: StT> Eq for ArraySeqStPerS<T> {}
+
     impl<T: StT> Debug for ArraySeqStPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { f.debug_list().entries(self.data.iter()).finish() }
     }
+
     impl<'a, T: StT> IntoIterator for &'a ArraySeqStPerS<T> {
         type Item = &'a T;
         type IntoIter = Iter<'a, T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
+
     impl<T: StT> IntoIterator for ArraySeqStPerS<T> {
         type Item = T;
         type IntoIter = IntoIter<T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
     }
+
     impl<T: StT> Display for ArraySeqStPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
             write!(f, "[")?;

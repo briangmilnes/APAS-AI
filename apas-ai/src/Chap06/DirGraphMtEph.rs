@@ -355,6 +355,7 @@ pub mod DirGraphMtEph {
     impl<V: StT + MtT + Hash + 'static> PartialEq for DirGraphMtEph<V> {
         fn eq(&self, other: &Self) -> bool { self.V == other.V && self.A == other.A }
     }
+
     impl<V: StT + MtT + Hash + 'static> Eq for DirGraphMtEph<V> {}
 
     #[macro_export]

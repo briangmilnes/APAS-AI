@@ -262,7 +262,7 @@ fn test_sizea() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-    assert_eq!(g.sizeA(), 2);
+    assert_eq!(g.labeled_edges().size(), 2);
 }
 
 #[test]
@@ -271,7 +271,7 @@ fn test_arcs() {
     let a: SetStEph<LabEdge<N, String>> =
         SetLit![LabEdge(1, 2, "edge1".to_string()), LabEdge(2, 3, "edge2".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-    let arcs = g.arcs();
+    let arcs = g.labeled_edges();
     assert_eq!(arcs.size(), 2);
 }
 
@@ -280,7 +280,7 @@ fn test_nplus() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-    let nplus = g.NPlus(&1);
+    let nplus = g.neighbors(&1);
     assert_eq!(nplus.size(), 1);
     assert!(nplus.mem(&2));
 }
@@ -290,7 +290,7 @@ fn test_nminus() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-    let nminus = g.NMinus(&2);
+    let nminus = g.neighbors(&2);
     assert_eq!(nminus.size(), 1);
     assert!(nminus.mem(&1));
 }
@@ -300,7 +300,7 @@ fn test_indegree() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-    assert_eq!(g.InDegree(&2), 2);
+    assert_eq!(g.neighbors(&2).size(), 2);
 }
 
 #[test]
@@ -308,7 +308,7 @@ fn test_outdegree() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
     let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-    assert_eq!(g.OutDegree(&2), 2);
+    assert_eq!(g.neighbors(&2).size(), 2);
 }
 
 #[test]

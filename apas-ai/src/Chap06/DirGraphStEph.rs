@@ -160,6 +160,7 @@ pub mod DirGraphStEph {
     impl<V: StT + Hash> PartialEq for DirGraphStEph<V> {
         fn eq(&self, other: &Self) -> bool { self.V == other.V && self.A == other.A }
     }
+
     impl<V: StT + Hash> Eq for DirGraphStEph<V> {}
 
     #[macro_export]

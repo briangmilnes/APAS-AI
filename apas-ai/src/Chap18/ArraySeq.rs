@@ -353,10 +353,4 @@ pub mod ArraySeq {
         };
     }
 
-    #[allow(dead_code)]
-    fn _arrayseqs_macro_type_checks() {
-        let _: ArraySeqS<i32> = ArraySeqS![];
-        let _: ArraySeqS<&str> = ArraySeqS!["a", "b", "c"];
-        let _: ArraySeqS<i64> = ArraySeqS![0; 3];
-    }
 }

@@ -254,22 +254,27 @@ pub mod ArraySeqStEph {
     impl<T: StT> PartialEq for ArraySeqStEphS<T> {
         fn eq(&self, other: &Self) -> bool { self.data[..] == other.data[..] }
     }
+
     impl<T: StT> Eq for ArraySeqStEphS<T> {}
+
     impl<T: StT> Debug for ArraySeqStEphS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult { f.debug_list().entries(self.data.iter()).finish() }
     }
+
     impl<'a, T: StT> IntoIterator for &'a ArraySeqStEphS<T> {
         type Item = &'a T;
         type IntoIter = Iter<'a, T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
+
     impl<T: StT> IntoIterator for ArraySeqStEphS<T> {
         type Item = T;
         type IntoIter = IntoIter<T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
     }
+
     impl<T: StT> Display for ArraySeqStEphS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
             write!(f, "[")?;
@@ -288,12 +293,5 @@ pub mod ArraySeqStEph {
         () => { $crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(Vec::new()) };
         ($x:expr; $n:expr) => { $crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$x; $n]) };
         ($($x:expr),* $(,)?) => { $crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$($x),*]) };
-    }
-
-    #[allow(dead_code)]
-    fn _arrayseqstephs_macro_type_checks() {
-        let _: ArraySeqStEphS<i32> = ArraySeqStEphS![];
-        let _: ArraySeqStEphS<&str> = ArraySeqStEphS!["alpha", "beta"];
-        let _: ArraySeqStEphS<i64> = ArraySeqStEphS![1; 2];
     }
 }

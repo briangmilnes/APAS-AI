@@ -376,7 +376,7 @@ fn test_sizea() {
     let v: SetStEph<N> = SetLit![1, 2];
     let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
-    assert_eq!(g.sizeA(), 1);
+    assert_eq!(g.sizeE(), 1);
 }
 
 #[test]
@@ -384,7 +384,7 @@ fn test_nplus() {
     let v: SetStEph<N> = SetLit![1, 2];
     let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
-    assert!(g.NPlus(&1).mem(&2));
+    assert!(g.NG(&1).mem(&2));
 }
 
 #[test]
@@ -392,7 +392,7 @@ fn test_nminus() {
     let v: SetStEph<N> = SetLit![1, 2];
     let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2)];
     let g = UnDirGraphMtEph::FromSets(v, e);
-    assert!(g.NMinus(&2).mem(&1));
+    assert!(g.NG(&2).mem(&1));
 }
 
 #[test]
@@ -400,7 +400,7 @@ fn test_indegree() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphMtEph::FromSets(v, e);
-    assert_eq!(g.InDegree(&2), 2);
+    assert_eq!(g.Degree(&2), 2);
 }
 
 #[test]
@@ -408,7 +408,7 @@ fn test_outdegree() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphMtEph::FromSets(v, e);
-    assert_eq!(g.OutDegree(&2), 2);
+    assert_eq!(g.Degree(&2), 2);
 }
 
 #[test]
@@ -416,8 +416,8 @@ fn test_arcs() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let e: SetStEph<Edge<N>> = SetLit![Edge(1, 2), Edge(2, 3)];
     let g = UnDirGraphMtEph::FromSets(v, e.clone());
-    assert_eq!(g.arcs(), &e);
-    assert_eq!(g.arcs().size(), 2);
+    assert_eq!(g.edges(), &e);
+    assert_eq!(g.edges().size(), 2);
 }
 
 #[test]
@@ -427,7 +427,7 @@ fn test_nplusofvertices() {
     let g = UnDirGraphMtEph::FromSets(v, e);
 
     let vertices_subset: SetStEph<N> = SetLit![0, 1];
-    let nplus = g.NPlusOfVertices(&vertices_subset);
+    let nplus = g.NGOfVertices(&vertices_subset);
 
     // Should include all neighbors of 0 and 1
     assert!(nplus.mem(&0));
@@ -442,9 +442,9 @@ fn test_nminusofvertices() {
     let g = UnDirGraphMtEph::FromSets(v, e);
 
     let vertices_subset: SetStEph<N> = SetLit![1, 2];
-    let nminus = g.NMinusOfVertices(&vertices_subset);
+    let nminus = g.NGOfVertices(&vertices_subset);
 
-    // In undirected graph, same as NPlusOfVertices
+    // In undirected graph, same as NGOfVertices
     assert!(nminus.mem(&0));
     assert!(nminus.mem(&1));
     assert!(nminus.mem(&2));
@@ -474,21 +474,21 @@ fn test_empty_graph_all_operations() {
 
     assert_eq!(g.sizeV(), 0);
     assert_eq!(g.sizeE(), 0);
-    assert_eq!(g.sizeA(), 0);
+    assert_eq!(g.sizeE(), 0);
     assert_eq!(g.vertices().size(), 0);
     assert_eq!(g.edges().size(), 0);
-    assert_eq!(g.arcs().size(), 0);
+    assert_eq!(g.edges().size(), 0);
 
     assert!(!g.Neighbor(&1, &2));
     assert_eq!(g.NG(&1).size(), 0);
     assert_eq!(g.Degree(&1), 0);
-    assert_eq!(g.InDegree(&1), 0);
-    assert_eq!(g.OutDegree(&1), 0);
+    assert_eq!(g.Degree(&1), 0);
+    assert_eq!(g.Degree(&1), 0);
 
     let empty_set: SetStEph<i32> = SetLit![];
     assert_eq!(g.NGOfVertices(&empty_set).size(), 0);
-    assert_eq!(g.NPlusOfVertices(&empty_set).size(), 0);
-    assert_eq!(g.NMinusOfVertices(&empty_set).size(), 0);
+    assert_eq!(g.NGOfVertices(&empty_set).size(), 0);
+    assert_eq!(g.NGOfVertices(&empty_set).size(), 0);
 }
 
 #[test]

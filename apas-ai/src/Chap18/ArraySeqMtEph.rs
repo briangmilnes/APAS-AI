@@ -360,10 +360,12 @@ pub mod ArraySeqMtEph {
     impl<T: StTInMtT> Clone for ArraySeqMtEphS<T> {
         fn clone(&self) -> Self { ArraySeqMtEphS::from_vec(self.to_vec()) }
     }
+
     impl<T: StTInMtT> PartialEq for ArraySeqMtEphS<T> {
         fn eq(&self, other: &Self) -> bool { self.to_vec() == other.to_vec() }
     }
     impl<T: StTInMtT> Eq for ArraySeqMtEphS<T> {}
+
 
     #[macro_export]
     macro_rules! ArraySeqMtEphSLit {

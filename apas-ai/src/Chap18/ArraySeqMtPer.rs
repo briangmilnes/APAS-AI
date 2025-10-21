@@ -353,6 +353,7 @@ pub mod ArraySeqMtPer {
             ArraySeqMtPerS::from_vec(values)
         }
     }
+
     impl<T: StTInMtT> PartialEq for ArraySeqMtPerS<T> {
         fn eq(&self, other: &Self) -> bool {
             if self.data.len() != other.data.len() {
@@ -366,19 +367,23 @@ pub mod ArraySeqMtPer {
             true
         }
     }
+
     impl<T: StTInMtT + Eq> Eq for ArraySeqMtPerS<T> {}
+
     impl<'a, T: StTInMtT> IntoIterator for &'a ArraySeqMtPerS<T> {
         type Item = &'a T;
         type IntoIter = Iter<'a, T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.iter() }
     }
+
     impl<T: StTInMtT> IntoIterator for ArraySeqMtPerS<T> {
         type Item = T;
         type IntoIter = IntoIter<T>;
 
         fn into_iter(self) -> Self::IntoIter { self.data.into_vec().into_iter() }
     }
+
     impl<T: StTInMtT> Display for ArraySeqMtPerS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "ArraySeqMtPerS[")?;

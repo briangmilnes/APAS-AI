@@ -217,10 +217,13 @@ pub mod MathSeq {
     impl<T: StT> PartialEq for MathSeqS<T> {
         fn eq(&self, other: &Self) -> bool { self.data == other.data }
     }
+
     impl<T: StT> Eq for MathSeqS<T> {}
+
     impl<T: StT> Debug for MathSeqS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result { f.debug_list().entries(self.data.iter()).finish() }
     }
+
     impl<T: StT> Display for MathSeqS<T> {
         fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
             write!(f, "[")?;

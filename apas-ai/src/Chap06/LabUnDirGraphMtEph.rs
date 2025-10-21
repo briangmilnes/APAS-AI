@@ -184,27 +184,6 @@ pub mod LabUnDirGraphMtEph {
         }
     }
 
-    // DirGraphStEph-compatible interface for labeled undirected graphs
-    impl<V: HashOrd + MtT, L: StTInMtT + Hash> LabUnDirGraphMtEph<V, L> {
-        /// Arc count (alias for edge count in undirected graphs)
-        pub fn sizeA(&self) -> N { self.labeled_edges().size() }
-
-        /// Arcs (alias for edges in undirected graphs)
-        pub fn arcs(&self) -> SetStEph<LabEdge<V, L>> { self.labeled_edges().clone() }
-
-        /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NPlus(&self, v: &V) -> SetStEph<V> { self.neighbors(v) }
-
-        /// Neighbors (in undirected graphs, all neighbors are both in and out)
-        pub fn NMinus(&self, v: &V) -> SetStEph<V> { self.neighbors(v) }
-
-        /// Degree (in undirected graphs, in-degree equals total degree)
-        pub fn InDegree(&self, v: &V) -> N { self.neighbors(v).size() }
-
-        /// Degree (in undirected graphs, out-degree equals total degree)
-        pub fn OutDegree(&self, v: &V) -> N { self.neighbors(v).size() }
-    }
-
     impl<V: HashOrd + MtT, L: StTInMtT + Hash> Display for LabUnDirGraphMtEph<V, L> {
         fn fmt(&self, f: &mut Formatter<'_>) -> Result {
             write!(f, "LabUnDirGraph(V: {}, E: {})", self.vertices, self.labeled_edges)
