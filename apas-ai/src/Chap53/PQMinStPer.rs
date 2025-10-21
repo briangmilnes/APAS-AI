@@ -34,7 +34,7 @@ pub mod PQMinStPer {
     pub trait PQMinStPerTrait<V: StT + Ord, P: StT + Ord> {
         /// claude-4-sonet: Work Θ((|V| + |E|) log |V|), Span Θ(|V| log |V|), Parallelism Θ(1)
         /// Priority Queue Search from a single source.
-        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
+        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF)                         -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStPer<V>,
             PF: PriorityFn<V, P>;

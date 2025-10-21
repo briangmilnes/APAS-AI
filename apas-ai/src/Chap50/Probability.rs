@@ -24,7 +24,7 @@ pub mod Probability {
 
         /// Get the underlying f64 value
         /// APAS: Work Θ(1), Span Θ(1)
-        fn value(&self) -> f64;
+        fn value(&self)    -> f64;
     }
 
     #[derive(Clone, Copy)]

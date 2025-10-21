@@ -5,6 +5,7 @@ pub mod MergeSortSt {
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    pub type T<T> = ArraySeqStPerS<T>;
 
     pub trait MergeSortStTrait<T: StT + Ord> {
         /// Merge two sorted sequences into one sorted sequence.
@@ -15,7 +16,7 @@ pub mod MergeSortSt {
         /// Sort a sequence using merge sort.
         /// APAS: Work Θ(n log n), Span Θ(n log n)
         /// claude-4-sonet: Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
-        fn merge_sort(a: &ArraySeqStPerS<T>) -> Self;
+        fn merge_sort(a: &ArraySeqStPerS<T>)                          -> Self;
     }
 
     impl<T: StT + Ord> MergeSortStTrait<T> for ArraySeqStPerS<T> {

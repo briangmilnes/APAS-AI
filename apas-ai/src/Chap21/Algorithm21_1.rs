@@ -5,6 +5,7 @@ pub mod Algorithm21_1 {
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    pub type T = N;
 
     pub trait Algorithm21_1Trait {
         /// Algorithm 21.1 (2D Points) using ArraySeqPer: points2D via tabulate + flatten

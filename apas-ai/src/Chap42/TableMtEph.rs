@@ -22,13 +22,13 @@ pub mod TableMtEph {
     /// Trait defining the Table ADT operations from Chapter 42
     pub trait TableMtEphTrait<K: MtKey, V: MtVal> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                 -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                     -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(key: K, value: V) -> Self;
         /// claude-4-sonet: Work Θ(n log n), Span Θ(log n), Parallelism Θ(n)
-        fn domain(&self) -> ArraySetStEph<K>;
+        fn domain(&self)               -> ArraySetStEph<K>;
         /// claude-4-sonet: Work Θ(|keys| × W(f)), Span Θ(log |keys| + S(f)), Parallelism Θ(|keys|/(log |keys| + S(f)))
         fn tabulate<F: Fn(&K) -> V + Send + Sync + 'static>(f: F, keys: &ArraySetStEph<K>) -> Self;
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(log n + S(f)), Parallelism Θ(n/(log n + S(f)))
@@ -42,7 +42,7 @@ pub mod TableMtEph {
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
         fn difference(&mut self, other: &Self);
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn find(&self, key: &K) -> Option<V>;
+        fn find(&self, key: &K)        -> Option<V>;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn delete(&mut self, key: &K);
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
@@ -54,7 +54,7 @@ pub mod TableMtEph {
 
         /// APAS: Work Θ(|a|), Span Θ(lg |a|)
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn collect(&self) -> ArraySeqMtEphS<Pair<K, V>>;
+        fn collect(&self)              -> ArraySeqMtEphS<Pair<K, V>>;
     }
 
     impl<K: MtKey, V: MtVal> TableMtEphTrait<K, V> for TableMtEph<K, V> {
@@ -643,7 +643,7 @@ pub mod TableMtEph {
         fn collect(&self) -> ArraySeqMtEphS<Pair<K, V>> { self.entries.clone() }
     }
 
-    /// Helper function for creating tables from sorted entries
+    /// Create tables from sorted entries
     pub fn from_sorted_entries<K: MtKey, V: MtVal>(entries: Vec<Pair<K, V>>) -> TableMtEph<K, V> {
         TableMtEph {
             entries: ArraySeqMtEphS::from_vec(entries),

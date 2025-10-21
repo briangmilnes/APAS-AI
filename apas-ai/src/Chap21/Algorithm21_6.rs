@@ -5,6 +5,7 @@ pub mod Algorithm21_6 {
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    pub type T = N;
 
     pub trait Algorithm21_6Trait {
         /// Algorithm 21.6 (Prime Sieve) using ArraySeqPer - simplified version

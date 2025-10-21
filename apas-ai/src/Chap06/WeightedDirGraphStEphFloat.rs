@@ -48,15 +48,15 @@ pub mod WeightedDirGraphStEphFloat {
     pub trait WeightedDirGraphStEphFloatTrait<V: StT + Hash> {
         fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<Triple<V, V, OrderedFloat<f64>>>) -> Self;
         fn add_weighted_edge(&mut self, from: V, to: V, weight: OrderedFloat<f64>);
-        fn get_edge_weight(&self, from: &V, to: &V) -> Option<OrderedFloat<f64>>;
-        fn weighted_edges(&self) -> SetStEph<Triple<V, V, OrderedFloat<f64>>>;
-        fn out_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>>;
-        fn in_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>>;
-        fn total_weight(&self) -> OrderedFloat<f64>;
-        fn edges_above_weight(&self, threshold: OrderedFloat<f64>) -> SetStEph<Triple<V, V, OrderedFloat<f64>>>;
-        fn edges_below_weight(&self, threshold: OrderedFloat<f64>) -> SetStEph<Triple<V, V, OrderedFloat<f64>>>;
-        fn min_weight_edge(&self) -> Option<Triple<V, V, OrderedFloat<f64>>>;
-        fn max_weight_edge(&self) -> Option<Triple<V, V, OrderedFloat<f64>>>;
+        fn get_edge_weight(&self, from: &V, to: &V)                                                     -> Option<OrderedFloat<f64>>;
+        fn weighted_edges(&self)                                                                        -> SetStEph<Triple<V, V, OrderedFloat<f64>>>;
+        fn out_neighbors_weighted(&self, v: &V)                                                         -> SetStEph<Pair<V, OrderedFloat<f64>>>;
+        fn in_neighbors_weighted(&self, v: &V)                                                          -> SetStEph<Pair<V, OrderedFloat<f64>>>;
+        fn total_weight(&self)                                                                          -> OrderedFloat<f64>;
+        fn edges_above_weight(&self, threshold: OrderedFloat<f64>)                                      -> SetStEph<Triple<V, V, OrderedFloat<f64>>>;
+        fn edges_below_weight(&self, threshold: OrderedFloat<f64>)                                      -> SetStEph<Triple<V, V, OrderedFloat<f64>>>;
+        fn min_weight_edge(&self)                                                                       -> Option<Triple<V, V, OrderedFloat<f64>>>;
+        fn max_weight_edge(&self)                                                                       -> Option<Triple<V, V, OrderedFloat<f64>>>;
         fn scale_weights(&mut self, factor: OrderedFloat<f64>);
     }
 

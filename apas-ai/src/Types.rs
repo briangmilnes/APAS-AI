@@ -55,7 +55,7 @@ pub mod Types {
     // Keep only thread-safety and size requirements.
     pub trait MtT: Sized + Send + Sync {
         type Inner: StT;
-        fn clone_mt(&self) -> Self;
+        fn clone_mt(&self)            -> Self;
         fn new_mt(inner: Self::Inner) -> Self;
     }
 

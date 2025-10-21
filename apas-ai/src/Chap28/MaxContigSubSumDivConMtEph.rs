@@ -13,6 +13,7 @@ pub mod MaxContigSubSumDivConMtEph {
     use crate::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
     use crate::ParaPair;
     use crate::Types::Types::*;
+    pub type T = ArraySeqMtEphS<i32>;
 
     fn max_with_neginf(a: Option<i32>, b: Option<i32>) -> Option<i32> {
         match (a, b) {

@@ -19,19 +19,19 @@ pub mod LabUnDirGraphStEph {
     pub trait LabUnDirGraphStEphTrait<V: HashOrd, L: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn empty() -> Self;
+        fn empty()                                                                                        -> Self;
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(|V| + |E|), Parallelism Θ(1) - sequential
         fn from_vertices_and_labeled_edges(vertices: SetStEph<V>, labeled_edges: SetStEph<LabEdge<V, L>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn vertices(&self) -> &SetStEph<V>;
+        fn vertices(&self)                                                                                -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn labeled_edges(&self) -> &SetStEph<LabEdge<V, L>>;
+        fn labeled_edges(&self)                                                                           -> &SetStEph<LabEdge<V, L>>;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential map
-        fn edges(&self) -> SetStEph<Edge<V>>;
+        fn edges(&self)                                                                                   -> SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn add_vertex(&mut self, v: V);
@@ -40,30 +40,30 @@ pub mod LabUnDirGraphStEph {
         fn add_labeled_edge(&mut self, v1: V, v2: V, label: L);
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential search
-        fn get_edge_label(&self, v1: &V, v2: &V) -> Option<&L>;
+        fn get_edge_label(&self, v1: &V, v2: &V)                                                          -> Option<&L>;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential search
-        fn has_edge(&self, v1: &V, v2: &V) -> bool;
+        fn has_edge(&self, v1: &V, v2: &V)                                                                -> bool;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(|E|), Parallelism Θ(1) - sequential filter
-        fn neighbors(&self, v: &V) -> SetStEph<V>;
+        fn neighbors(&self, v: &V)                                                                        -> SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn normalize_edge(v1: V, v2: V) -> LabEdge<V, L>;
+        fn normalize_edge(v1: V, v2: V)                                                                   -> LabEdge<V, L>;
 
         // DirGraph-compatible interface methods
         /// Arc count (alias for edge count in undirected graphs)
-        fn sizeA(&self) -> N;
+        fn sizeA(&self)                                                                                   -> N;
         /// Arcs (alias for edges in undirected graphs)
-        fn arcs(&self) -> SetStEph<LabEdge<V, L>>;
+        fn arcs(&self)                                                                                    -> SetStEph<LabEdge<V, L>>;
         /// Out-neighbors (in undirected graphs, all neighbors are both in and out)
-        fn NPlus(&self, v: &V) -> SetStEph<V>;
+        fn NPlus(&self, v: &V)                                                                            -> SetStEph<V>;
         /// In-neighbors (in undirected graphs, all neighbors are both in and out)
-        fn NMinus(&self, v: &V) -> SetStEph<V>;
+        fn NMinus(&self, v: &V)                                                                           -> SetStEph<V>;
         /// In-degree (in undirected graphs, equals total degree)
-        fn InDegree(&self, v: &V) -> N;
+        fn InDegree(&self, v: &V)                                                                         -> N;
         /// Out-degree (in undirected graphs, equals total degree)
-        fn OutDegree(&self, v: &V) -> N;
+        fn OutDegree(&self, v: &V)                                                                        -> N;
     }
 
     impl<V: HashOrd, L: StT + Hash> LabUnDirGraphStEphTrait<V, L> for LabUnDirGraphStEph<V, L> {

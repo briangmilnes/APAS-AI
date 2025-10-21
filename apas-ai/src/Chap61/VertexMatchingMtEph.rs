@@ -104,6 +104,7 @@ pub mod VertexMatchingMtEph {
         coins: &ArraySeqStEphS<B>,
     ) -> SetStEph<Edge<V>> {
         use std::sync::Arc;
+        pub type T<V> = UnDirGraphMtEph<V>;
 
         let n = edges.length();
         if n == 0 {
@@ -130,8 +131,6 @@ pub mod VertexMatchingMtEph {
         result
     }
 
-    /// Recursive helper for parallel edge selection
-    ///
     /// Work Θ(k × avg_degree) where k = end - start
     /// Span Θ(log k + avg_degree), Parallelism Θ(k/log k)
     fn select_edges_recursive<V: StT + MtT + Hash + 'static>(

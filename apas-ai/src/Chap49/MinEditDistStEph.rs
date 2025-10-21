@@ -22,7 +22,7 @@ pub mod MinEditDistStEph {
     /// Trait for minimum edit distance operations
     pub trait MinEditDistStEphTrait<T: StT> {
         /// Create new minimum edit distance solver
-        fn new() -> Self
+        fn new()                                                                -> Self
         where
             T: Default;
 
@@ -31,19 +31,19 @@ pub mod MinEditDistStEph {
 
         /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(1)
         /// Compute minimum edit distance where |S|=source length, |T|=target length
-        fn min_edit_distance(&mut self) -> usize;
+        fn min_edit_distance(&mut self)                                         -> usize;
 
         /// Get the source sequence
-        fn source(&self) -> &ArraySeqStEphS<T>;
+        fn source(&self)                                                        -> &ArraySeqStEphS<T>;
 
         /// Get the target sequence
-        fn target(&self) -> &ArraySeqStEphS<T>;
+        fn target(&self)                                                        -> &ArraySeqStEphS<T>;
 
         /// Get mutable source sequence (ephemeral allows mutation)
-        fn source_mut(&mut self) -> &mut ArraySeqStEphS<T>;
+        fn source_mut(&mut self)                                                -> &mut ArraySeqStEphS<T>;
 
         /// Get mutable target sequence (ephemeral allows mutation)
-        fn target_mut(&mut self) -> &mut ArraySeqStEphS<T>;
+        fn target_mut(&mut self)                                                -> &mut ArraySeqStEphS<T>;
 
         /// Set element in source sequence
         fn set_source(&mut self, index: usize, value: T);
@@ -55,7 +55,7 @@ pub mod MinEditDistStEph {
         fn clear_memo(&mut self);
 
         /// Get memoization table size
-        fn memo_size(&self) -> usize;
+        fn memo_size(&self)                                                     -> usize;
     }
 
     /// Internal recursive minimum edit distance with memoization

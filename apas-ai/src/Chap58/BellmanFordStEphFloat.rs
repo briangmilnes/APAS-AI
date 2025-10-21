@@ -18,6 +18,7 @@ pub mod BellmanFordStEphFloat {
     use crate::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
     use crate::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
     use crate::Types::Types::*;
+    pub type T = WeightedDirGraphStEphFloat<usize>;
 
     pub trait BellmanFordStEphFloatTrait {
         /// Bellman-Ford single source shortest path algorithm

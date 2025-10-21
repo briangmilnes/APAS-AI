@@ -9,6 +9,7 @@ pub mod OrderStatSelectStEph {
 
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
+    pub type T<T> = ArraySeqStEphS<T>;
 
     pub trait OrderStatSelectStEphTrait<T: StT + Ord> {
         /// claude-4-sonet: Work Θ(n) expected, Θ(n²) worst case; Span Θ(n) (sequential), Parallelism Θ(1)

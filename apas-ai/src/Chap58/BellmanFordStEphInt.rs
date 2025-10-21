@@ -18,6 +18,7 @@ pub mod BellmanFordStEphInt {
     use crate::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
     use crate::Chap56::SSSPResultStEphInt::SSSPResultStEphInt::SSSPResultStEphInt;
     use crate::Types::Types::*;
+    pub type T = WeightedDirGraphStEphInt<usize>;
 
     pub trait BellmanFordStEphIntTrait {
         /// Bellman-Ford single source shortest path algorithm

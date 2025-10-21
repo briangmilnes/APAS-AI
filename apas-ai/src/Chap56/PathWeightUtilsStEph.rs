@@ -18,6 +18,7 @@ pub mod PathWeightUtilsStEph {
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    pub type T = ArraySeqStPerS<usize>;
 
     pub trait PathWeightUtilsStEphTrait {
         /// Claude Work: O(k), Span: O(k) where k is path length

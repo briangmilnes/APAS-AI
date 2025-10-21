@@ -46,14 +46,14 @@ pub mod WeightedUnDirGraphStEphFloat {
     pub trait WeightedUnDirGraphStEphFloatTrait<V: StT + Hash + Ord> {
         fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<Triple<V, V, OrderedFloat<f64>>>) -> Self;
         fn add_weighted_edge(&mut self, v1: V, v2: V, weight: OrderedFloat<f64>);
-        fn get_edge_weight(&self, v1: &V, v2: &V) -> Option<OrderedFloat<f64>>;
-        fn weighted_edges(&self) -> SetStEph<Triple<V, V, OrderedFloat<f64>>>;
-        fn neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>>;
-        fn total_weight(&self) -> OrderedFloat<f64>;
-        fn vertex_degree(&self, v: &V) -> usize;
-        fn is_connected(&self) -> bool;
-        fn min_weight_edge(&self) -> Option<(V, V, OrderedFloat<f64>)>;
-        fn max_weight_edge(&self) -> Option<(V, V, OrderedFloat<f64>)>;
+        fn get_edge_weight(&self, v1: &V, v2: &V)                                                       -> Option<OrderedFloat<f64>>;
+        fn weighted_edges(&self)                                                                        -> SetStEph<Triple<V, V, OrderedFloat<f64>>>;
+        fn neighbors_weighted(&self, v: &V)                                                             -> SetStEph<Pair<V, OrderedFloat<f64>>>;
+        fn total_weight(&self)                                                                          -> OrderedFloat<f64>;
+        fn vertex_degree(&self, v: &V)                                                                  -> usize;
+        fn is_connected(&self)                                                                          -> bool;
+        fn min_weight_edge(&self)                                                                       -> Option<(V, V, OrderedFloat<f64>)>;
+        fn max_weight_edge(&self)                                                                       -> Option<(V, V, OrderedFloat<f64>)>;
     }
 
     impl<V: StT + Hash + Ord> WeightedUnDirGraphStEphFloatTrait<V> for WeightedUnDirGraphStEphFloat<V> {

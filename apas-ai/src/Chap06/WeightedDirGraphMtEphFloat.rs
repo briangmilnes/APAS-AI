@@ -31,27 +31,27 @@ pub mod WeightedDirGraphMtEphFloat {
         /// Get the weight of an edge, if it exists
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential search
-        fn get_edge_weight(&self, from: &V, to: &V) -> Option<OrderedFloat<f64>>;
+        fn get_edge_weight(&self, from: &V, to: &V)                                                     -> Option<OrderedFloat<f64>>;
 
         /// Get all weighted edges as (from, to, weight) tuples
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential map
-        fn weighted_edges(&self) -> SetStEph<Triple<V, V, OrderedFloat<f64>>>;
+        fn weighted_edges(&self)                                                                        -> SetStEph<Triple<V, V, OrderedFloat<f64>>>;
 
         /// Get outgoing neighbors with weights
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
-        fn out_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>>;
+        fn out_neighbors_weighted(&self, v: &V)                                                         -> SetStEph<Pair<V, OrderedFloat<f64>>>;
 
         /// Get incoming neighbors with weights
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
-        fn in_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>>;
+        fn in_neighbors_weighted(&self, v: &V)                                                          -> SetStEph<Pair<V, OrderedFloat<f64>>>;
 
         /// Get the total weight of all edges
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential sum
-        fn total_weight(&self) -> OrderedFloat<f64>;
+        fn total_weight(&self)                                                                          -> OrderedFloat<f64>;
     }
 
     /// Trait implementation for WeightedDirGraphMtEphFloat

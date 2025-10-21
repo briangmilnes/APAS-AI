@@ -10,6 +10,7 @@ pub mod BFSMtEph {
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::ParaPair;
     use crate::Types::Types::*;
+    pub type T<N> = ArraySeqMtEphS<ArraySeqMtEphS<N>>;
 
     pub trait BFSMtEphTrait {
         /// Performs parallel BFS from source vertex s on adjacency list graph G

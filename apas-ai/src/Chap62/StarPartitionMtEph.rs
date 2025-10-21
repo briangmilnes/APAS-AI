@@ -19,6 +19,7 @@ pub mod StarPartitionMtEph {
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
+    pub type T<V> = UnDirGraphMtEph<V>;
 
     pub trait StarPartitionMtEphTrait {
         /// Parallel star partition using randomized coin flips

@@ -19,21 +19,21 @@ pub mod SetStEphClean {
 
     pub trait SetStEphCleanTrait<T: StT + Hash>: Sized {
         // Method signatures (implementation in impl block)
-        fn empty() -> Self;
-        fn singleton(x: T) -> Self;
-        fn size(&self) -> N;
-        fn mem(&self, x: &T) -> B;
-        fn iter(&self) -> Iter<'_, T>;
-        fn insert(&mut self, x: T) -> &mut Self;
+        fn empty()                                                     -> Self;
+        fn singleton(x: T)                                             -> Self;
+        fn size(&self)                                                 -> N;
+        fn mem(&self, x: &T)                                           -> B;
+        fn iter(&self)                                                 -> Iter<'_, T>;
+        fn insert(&mut self, x: T)                                     -> &mut Self;
 
         // Multi-line methods (signature only, implementation in impl block)
-        fn union(&self, other: &Self) -> Self
+        fn union(&self, other: &Self)                                  -> Self
         where
             T: Clone;
-        fn intersection(&self, other: &Self) -> Self
+        fn intersection(&self, other: &Self)                           -> Self
         where
             T: Clone;
-        fn partition(&self, parts: &SetStEph<SetStEph<T>>) -> B
+        fn partition(&self, parts: &SetStEph<SetStEph<T>>)             -> B
         where
             T: Clone;
         fn CartesianProduct<U: StT + Hash>(&self, other: &SetStEph<U>) -> SetStEph<Pair<T, U>>

@@ -31,7 +31,7 @@ pub mod BoruvkaStEph {
 
         /// Borůvka's MST algorithm
         /// APAS: Work O(m log n), Span O(m log n)
-        fn boruvka_mst<V: StT + Hash + Ord>(edges: &SetStEph<LabeledEdge<V>>) -> SetStEph<LabeledEdge<V>>;
+        fn boruvka_mst<V: StT + Hash + Ord>(edges: &SetStEph<LabeledEdge<V>>)    -> SetStEph<LabeledEdge<V>>;
 
         /// Borůvka's MST with random seed
         /// APAS: Work O(m log n), Span O(m log n)
@@ -42,7 +42,7 @@ pub mod BoruvkaStEph {
 
         /// Compute total weight of MST
         /// APAS: Work O(m), Span O(1)
-        fn mst_weight<V: StT + Hash>(mst: &SetStEph<LabeledEdge<V>>) -> OrderedFloat<f64>;
+        fn mst_weight<V: StT + Hash>(mst: &SetStEph<LabeledEdge<V>>)             -> OrderedFloat<f64>;
     }
 
     /// Edge with label: (u, v, weight, label)

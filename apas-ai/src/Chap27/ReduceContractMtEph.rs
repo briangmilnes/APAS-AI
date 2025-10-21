@@ -9,6 +9,7 @@ pub mod ReduceContractMtEph {
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::ParaPair;
     use crate::Types::Types::*;
+    pub type T<T> = ArraySeqMtEphS<T>;
 
     pub trait ReduceContractMtEphTrait<T: StTInMtT> {
         /// Reduce a sequence using parallel contraction: contract→solve→expand.

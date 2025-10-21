@@ -28,47 +28,47 @@ pub mod LeftistHeapPQ {
     /// Trait defining the Meldable Priority Queue ADT operations (Data Type 45.1)
     pub trait LeftistHeapPQTrait<T: StT + Ord> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                       -> Self;
 
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(element: T) -> Self;
+        fn singleton(element: T)         -> Self;
 
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         /// Returns the minimum element (root of heap), or None if empty
-        fn find_min(&self) -> Option<&T>;
+        fn find_min(&self)               -> Option<&T>;
 
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Inserts element by creating singleton and melding
-        fn insert(&self, element: T) -> Self;
+        fn insert(&self, element: T)     -> Self;
 
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Removes root and melds left and right subtrees
-        fn delete_min(&self) -> (Self, Option<T>)
+        fn delete_min(&self)             -> (Self, Option<T>)
         where
             Self: Sized;
 
         /// Claude Work: Θ(log m + log n), Span: Θ(log m + log n)
         /// KEY ADVANTAGE: Efficient meld following right spines
-        fn meld(&self, other: &Self) -> Self;
+        fn meld(&self, other: &Self)     -> Self;
 
         /// Claude Work: Θ(n), Span: Θ(n)
         /// Creates heap from sequence using reduce with meld
-        fn from_seq(seq: &[T]) -> Self;
+        fn from_seq(seq: &[T])           -> Self;
 
         /// Helper methods
-        fn size(&self) -> N;
-        fn is_empty(&self) -> bool;
-        fn extract_all_sorted(&self) -> Vec<T>;
-        fn height(&self) -> N;
-        fn root_rank(&self) -> N;
-        fn is_valid_leftist_heap(&self) -> bool;
-        fn from_vec(vec: Vec<T>) -> Self;
-        fn to_vec(&self) -> Vec<T>;
-        fn to_sorted_vec(&self) -> Vec<T>;
+        fn size(&self)                   -> N;
+        fn is_empty(&self)               -> bool;
+        fn extract_all_sorted(&self)     -> Vec<T>;
+        fn height(&self)                 -> N;
+        fn root_rank(&self)              -> N;
+        fn is_valid_leftist_heap(&self)  -> bool;
+        fn from_vec(vec: Vec<T>)         -> Self;
+        fn to_vec(&self)                 -> Vec<T>;
+        fn to_sorted_vec(&self)          -> Vec<T>;
         fn meld_multiple(heaps: &[Self]) -> Self
         where
             Self: Sized;
-        fn split(&self, key: &T) -> (Self, Self)
+        fn split(&self, key: &T)         -> (Self, Self)
         where
             Self: Sized;
     }
@@ -78,7 +78,7 @@ pub mod LeftistHeapPQ {
         /// This would be much slower with other priority queue implementations!
         fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T>;
         /// Demonstrate parallel heap construction
-        fn parallel_heap_construction<T: StT + Ord>(elements: Vec<T>) -> LeftistHeapPQ<T>;
+        fn parallel_heap_construction<T: StT + Ord>(elements: Vec<T>)      -> LeftistHeapPQ<T>;
     }
 
     impl<T: StT + Ord> LeftistHeapNode<T> {

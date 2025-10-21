@@ -17,7 +17,7 @@ pub mod BottomUpDPStPer {
     pub trait BottomUpDPStPerTrait<T: StT> {
         /// Create new bottom-up DP solver
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                     -> Self;
 
         /// Solve DP problem
         /// APAS: Work O(n³), Span O(n³)

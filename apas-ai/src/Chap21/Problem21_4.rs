@@ -5,6 +5,7 @@ pub mod Problem21_4 {
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    pub type T<N> = ArraySeqStPerS<N>;
 
     pub trait Problem21_4Trait {
         /// Problem 21.4 (Cartesian Product) - Imperative approach using explicit loops

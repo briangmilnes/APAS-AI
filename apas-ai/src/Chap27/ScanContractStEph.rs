@@ -5,6 +5,7 @@ pub mod ScanContractStEph {
 
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
+    pub type T<T> = ArraySeqStEphS<T>;
 
     pub trait ScanContractStEphTrait<T: StT> {
         /// Scan a sequence using contraction: contract→solve→expand.

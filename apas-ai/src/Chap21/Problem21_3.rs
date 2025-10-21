@@ -5,6 +5,7 @@ pub mod Problem21_3 {
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    pub type T = N;
 
     pub trait Problem21_3Trait {
         /// Problem 21.3 (Points in 3D) using ArraySeqPer — imperative triple loop

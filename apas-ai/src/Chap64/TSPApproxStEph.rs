@@ -18,6 +18,7 @@ pub mod TSPApproxStEph {
     use crate::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
+    pub type T<V> = LabUnDirGraphStEph<V, OrderedFloat<f64>>;
 
     pub trait TSPApproxStEphTrait {
         /// Compute Euler tour of a tree
@@ -26,7 +27,7 @@ pub mod TSPApproxStEph {
 
         /// Shortcut Euler tour to avoid revisiting vertices
         /// APAS: Work O(|V|), Span O(|V|)
-        fn shortcut_tour<V: StT + Hash + Ord>(euler_tour: &[V]) -> Vec<V>;
+        fn shortcut_tour<V: StT + Hash + Ord>(euler_tour: &[V])                                       -> Vec<V>;
 
         /// Compute total weight of a tour
         /// APAS: Work O(|V|), Span O(|V|)
@@ -71,7 +72,6 @@ pub mod TSPApproxStEph {
         tour
     }
 
-    /// DFS helper for Euler tour
     fn euler_tour_dfs<V: StT + Hash + Ord>(
         graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
         current: &V,

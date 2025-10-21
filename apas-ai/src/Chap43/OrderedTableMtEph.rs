@@ -23,23 +23,23 @@ pub mod OrderedTableMtEph {
     pub trait OrderedTableMtEphTrait<K: MtKey, V: MtVal> {
         // Base table operations (ADT 42.1) - ephemeral semantics with parallelism
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                          -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                              -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(k: K, v: V) -> Self;
+        fn singleton(k: K, v: V)                -> Self;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn find(&self, k: &K) -> Option<V>;
+        fn find(&self, k: &K)                   -> Option<V>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn lookup(&self, k: &K) -> Option<V>; // Alias for find
+        fn lookup(&self, k: &K)                 -> Option<V>; // Alias for find
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self) -> B;
+        fn is_empty(&self)                      -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn insert<F: Fn(&V, &V) -> V + Send + Sync + 'static>(&mut self, k: K, v: V, combine: F);
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn delete(&mut self, k: &K) -> Option<V>;
+        fn delete(&mut self, k: &K)             -> Option<V>;
         /// claude-4-sonet: Work Θ(n log n), Span Θ(log n), Parallelism Θ(n)
-        fn domain(&self) -> ArraySetStEph<K>;
+        fn domain(&self)                        -> ArraySetStEph<K>;
         /// claude-4-sonet: Work Θ(|keys| × W(f)), Span Θ(log |keys| + S(f)), Parallelism Θ(|keys|/(log |keys| + S(f)))
         fn tabulate<F: Fn(&K) -> V + Send + Sync + 'static>(f: F, keys: &ArraySetStEph<K>) -> Self;
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(log n + S(f)), Parallelism Θ(n/(log n + S(f)))
@@ -59,26 +59,26 @@ pub mod OrderedTableMtEph {
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(log n + S(f)), Parallelism Θ(n/(log n + S(f)))
         fn reduce<R: StTInMtT + 'static, F: Fn(R, &K, &V) -> R + Send + Sync + 'static>(&self, init: R, f: F) -> R;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn collect(&self) -> AVLTreeSeqStPerS<Pair<K, V>>;
+        fn collect(&self)                       -> AVLTreeSeqStPerS<Pair<K, V>>;
 
         // Key ordering operations (ADT 43.1 adapted for tables) - sequential (inherently sequential on trees)
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn first_key(&self) -> Option<K>;
+        fn first_key(&self)                     -> Option<K>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn last_key(&self) -> Option<K>;
+        fn last_key(&self)                      -> Option<K>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn previous_key(&self, k: &K) -> Option<K>;
+        fn previous_key(&self, k: &K)           -> Option<K>;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn next_key(&self, k: &K) -> Option<K>;
+        fn next_key(&self, k: &K)               -> Option<K>;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
-        fn split_key(&mut self, k: &K) -> (Self, Self)
+        fn split_key(&mut self, k: &K)          -> (Self, Self)
         where
             Self: Sized;
         fn join_key(&mut self, other: Self);
         fn get_key_range(&self, k1: &K, k2: &K) -> Self;
-        fn rank_key(&self, k: &K) -> N;
-        fn select_key(&self, i: N) -> Option<K>;
-        fn split_rank_key(&mut self, i: N) -> (Self, Self)
+        fn rank_key(&self, k: &K)               -> N;
+        fn select_key(&self, i: N)              -> Option<K>;
+        fn split_rank_key(&mut self, i: N)      -> (Self, Self)
         where
             Self: Sized;
     }
@@ -391,9 +391,7 @@ pub mod OrderedTableMtEph {
         }
     }
 
-    /// Helper function for macro construction
     pub fn from_sorted_entries<K: MtKey, V: MtVal>(entries: AVLTreeSeqStPerS<Pair<K, V>>) -> OrderedTableMtEph<K, V> {
-        // Convert persistent sequence to Vec for TableMtEph helper
         let len = entries.length();
         let mut elements = Vec::new();
         for i in 0..len {

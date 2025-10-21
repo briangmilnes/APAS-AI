@@ -14,6 +14,7 @@ pub mod StarPartitionStEph {
     use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
+    pub type T<V> = UnDirGraphStEph<V>;
 
     pub trait StarPartitionStEphTrait {
         /// Sequential star partition using greedy selection

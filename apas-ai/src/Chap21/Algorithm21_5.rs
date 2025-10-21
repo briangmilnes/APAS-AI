@@ -6,6 +6,7 @@ pub mod Algorithm21_5 {
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap21::Exercise21_8::Exercise21_8::is_prime;
     use crate::Types::Types::*;
+    pub type T = N;
 
     pub trait Algorithm21_5Trait {
         /// Algorithm 21.5 (Brute Force Solution to the Primes Problem)

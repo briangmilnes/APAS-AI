@@ -14,7 +14,7 @@ fn test_is_prime_small_values() {
 }
 
 #[test]
-fn test_is_divisible_helper() {
+fn test_is_divisible() {
     assert!(is_divisible(6, 2));
     assert!(is_divisible(6, 3));
     assert!(!is_divisible(7, 2));

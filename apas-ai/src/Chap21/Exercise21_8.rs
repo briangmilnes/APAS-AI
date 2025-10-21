@@ -5,6 +5,7 @@ pub mod Exercise21_8 {
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    pub type T = N;
 
     pub trait Exercise21_8Trait {
         /// Helper function to check divisibility
@@ -13,7 +14,7 @@ pub mod Exercise21_8 {
 
         /// Exercise 21.8 / Algorithm 21.4 (Brute Force Primality Test)
         /// APAS: Work Θ(√n), Span Θ(lg n)
-        fn is_prime(n: N) -> B;
+        fn is_prime(n: N)           -> B;
     }
 
     /// Helper function to check divisibility

@@ -22,7 +22,7 @@ pub mod MinEditDistMtEph {
     /// Trait for parallel minimum edit distance operations
     pub trait MinEditDistMtEphTrait<T: MtVal> {
         /// Create new minimum edit distance solver
-        fn new() -> Self
+        fn new()                                                                -> Self
         where
             T: Default;
 
@@ -31,21 +31,21 @@ pub mod MinEditDistMtEph {
 
         /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(min(|S|,|T|))
         /// Compute minimum edit distance with parallel DP where |S|=source length, |T|=target length
-        fn min_edit_distance(&mut self) -> usize
+        fn min_edit_distance(&mut self)                                         -> usize
         where
             T: Send + Sync + 'static;
 
         /// Get the source sequence
-        fn source(&self) -> &ArraySeqMtEphS<T>;
+        fn source(&self)                                                        -> &ArraySeqMtEphS<T>;
 
         /// Get the target sequence
-        fn target(&self) -> &ArraySeqMtEphS<T>;
+        fn target(&self)                                                        -> &ArraySeqMtEphS<T>;
 
         /// Get mutable source sequence (ephemeral allows mutation)
-        fn source_mut(&mut self) -> &mut ArraySeqMtEphS<T>;
+        fn source_mut(&mut self)                                                -> &mut ArraySeqMtEphS<T>;
 
         /// Get mutable target sequence (ephemeral allows mutation)
-        fn target_mut(&mut self) -> &mut ArraySeqMtEphS<T>;
+        fn target_mut(&mut self)                                                -> &mut ArraySeqMtEphS<T>;
 
         /// Set element in source sequence
         fn set_source(&mut self, index: usize, value: T);
@@ -57,7 +57,7 @@ pub mod MinEditDistMtEph {
         fn clear_memo(&mut self);
 
         /// Get memoization table size
-        fn memo_size(&self) -> usize;
+        fn memo_size(&self)                                                     -> usize;
     }
 
     impl<T: MtVal> MinEditDistMtEphS<T> {

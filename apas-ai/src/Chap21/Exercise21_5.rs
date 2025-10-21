@@ -5,6 +5,7 @@ pub mod Exercise21_5 {
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    pub type T<S> = ArraySeqStPerS<S>;
 
     pub trait Exercise21_5Trait {
         /// Exercise 21.5: Generate all contiguous subsequences using nested tabulate + flatten

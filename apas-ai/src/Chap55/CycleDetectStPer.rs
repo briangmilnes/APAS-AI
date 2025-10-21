@@ -8,6 +8,7 @@ pub mod CycleDetectStPer {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     use crate::Types::Types::*;
+    pub type T<N> = ArraySeqStPerS<ArraySeqStPerS<N>>;
 
     pub trait CycleDetectStPerTrait {
         /// Detects if a directed graph contains a cycle

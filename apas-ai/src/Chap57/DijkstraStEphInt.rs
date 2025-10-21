@@ -19,6 +19,7 @@ pub mod DijkstraStEphInt {
     use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
     use crate::Chap56::SSSPResultStEphInt::SSSPResultStEphInt::SSSPResultStEphInt;
     use crate::Types::Types::*;
+    pub type T = PQEntry;
 
     pub trait DijkstraStEphIntTrait {
         /// Dijkstra's single source shortest path algorithm
@@ -29,7 +30,7 @@ pub mod DijkstraStEphInt {
     /// Priority queue entry: (distance, vertex)
     /// Ordered by distance (min-heap)
     #[derive(Clone, Eq, PartialEq, Debug)]
-    struct PQEntry {
+    pub struct PQEntry {
         dist: i64,
         vertex: usize,
     }

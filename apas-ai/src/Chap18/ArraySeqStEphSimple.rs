@@ -20,15 +20,15 @@ pub struct ArraySeqStEphSimpleS<T: StT> {
 // ============================================================================
 
 pub trait ArraySeqStEphSimpleTrait<T: StT> {
-    fn new(length: N, init_value: T) -> Self;
-    fn empty() -> Self;
-    fn singleton(item: T) -> Self;
-    fn from_vec(elts: Vec<T>) -> Self;
-    fn length(&self) -> N;
-    fn nth(&self, index: N) -> &T;
-    fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
+    fn new(length: N, init_value: T)         -> Self;
+    fn empty()                               -> Self;
+    fn singleton(item: T)                    -> Self;
+    fn from_vec(elts: Vec<T>)                -> Self;
+    fn length(&self)                         -> N;
+    fn nth(&self, index: N)                  -> &T;
+    fn set(&mut self, index: N, item: T)     -> Result<&mut Self, &'static str>;
     fn update(&mut self, update: Pair<N, T>) -> &mut Self;
-    fn iter(&self) -> Iter<'_, T>;
+    fn iter(&self)                           -> Iter<'_, T>;
 }
 
 impl<T: StT> ArraySeqStEphSimpleTrait<T> for ArraySeqStEphSimpleS<T> {

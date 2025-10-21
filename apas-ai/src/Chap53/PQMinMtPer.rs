@@ -33,7 +33,7 @@ pub mod PQMinMtPer {
         /// claude-4-sonet: Work Θ((|V| + |E|) log |V|), Span Θ(|V| log |V|), Parallelism Θ(1)
         /// Priority-First Search using thread-safe persistent sets.
         /// Set operations (union, difference, filter) use parallel implementations.
-        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
+        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF)                         -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetMtPer<V>,
             PF: PriorityFn<V, P>;

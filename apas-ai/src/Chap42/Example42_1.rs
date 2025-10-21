@@ -9,6 +9,7 @@ pub mod Example42_1 {
     use crate::Chap42::TableStPer::TableStPer::*;
     use crate::Types::Types::*;
     use crate::*;
+    pub type T = N;
 
     pub trait Example42_1Trait {
         /// Example 42.1: Basic table operations demonstration

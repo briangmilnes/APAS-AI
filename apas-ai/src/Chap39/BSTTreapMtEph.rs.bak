@@ -65,8 +65,6 @@ pub mod BSTTreapMtEph {
 
 
     impl<T: StTInMtT + Ord> BSTTreapMtEph<T> {
-        // Private helper methods only - no public delegation
-
         fn size_link(link: &Link<T>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
         fn update(node: &mut Node<T>) { node.size = 1 + Self::size_link(&node.left) + Self::size_link(&node.right); }

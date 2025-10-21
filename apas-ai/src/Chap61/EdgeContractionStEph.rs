@@ -16,6 +16,7 @@ pub mod EdgeContractionStEph {
     use crate::Chap61::VertexMatchingStEph::VertexMatchingStEph::greedy_matching;
     use crate::SetLit;
     use crate::Types::Types::*;
+    pub type T<V> = UnDirGraphStEph<V>;
 
     pub trait EdgeContractionStEphTrait {
         /// Sequential edge contraction algorithm

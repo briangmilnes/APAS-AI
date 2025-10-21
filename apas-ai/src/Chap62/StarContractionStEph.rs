@@ -14,6 +14,7 @@ pub mod StarContractionStEph {
     use crate::Chap62::StarPartitionStEph::StarPartitionStEph::sequential_star_partition;
     use crate::SetLit;
     use crate::Types::Types::*;
+    pub type T<V> = UnDirGraphStEph<V>;
 
     pub trait StarContractionStEphTrait {
         /// Sequential star contraction higher-order function
@@ -26,7 +27,7 @@ pub mod StarContractionStEph {
 
         /// Contract graph to just vertices (no edges)
         /// APAS: Work O((n + m) lg n), Span O((n + m) lg n)
-        fn contract_to_vertices<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> SetStEph<V>;
+        fn contract_to_vertices<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>)     -> SetStEph<V>;
     }
 
     /// Algorithm 62.5: Star Contraction (Sequential)

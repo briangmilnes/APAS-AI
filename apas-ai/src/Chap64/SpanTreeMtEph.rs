@@ -13,6 +13,7 @@ pub mod SpanTreeMtEph {
     use crate::Chap62::StarContractionMtEph::StarContractionMtEph::star_contract_mt;
     use crate::SetLit;
     use crate::Types::Types::*;
+    pub type T<V> = UnDirGraphMtEph<V>;
 
     pub trait SpanTreeMtEphTrait {
         /// Parallel spanning tree via star contraction

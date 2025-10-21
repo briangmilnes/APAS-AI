@@ -24,7 +24,7 @@ pub mod AllPairsResultStPerInt {
     pub trait AllPairsResultStPerIntTrait {
         /// Create new all-pairs result
         /// APAS: Work Θ(n²), Span Θ(n²)
-        fn new(n: N) -> Self;
+        fn new(n: N)                   -> Self;
 
         /// Get distance between vertices
         /// APAS: Work Θ(1), Span Θ(1)

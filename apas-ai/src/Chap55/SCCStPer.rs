@@ -9,6 +9,7 @@ pub mod SCCStPer {
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::{AVLTreeSeqStPerS, AVLTreeSeqStPerTrait};
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     use crate::Types::Types::*;
+    pub type T<N> = ArraySeqStPerS<ArraySeqStPerS<N>>;
 
     pub trait SCCStPerTrait {
         /// Finds strongly connected components in a directed graph

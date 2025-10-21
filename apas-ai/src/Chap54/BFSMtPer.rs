@@ -10,6 +10,7 @@ pub mod BFSMtPer {
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use crate::ParaPair;
     use crate::Types::Types::*;
+    pub type T<N> = ArraySeqMtPerS<ArraySeqMtPerS<N>>;
 
     pub trait BFSMtPerTrait {
         /// Performs parallel BFS from source vertex s on adjacency list graph G

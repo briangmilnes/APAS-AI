@@ -37,7 +37,7 @@ fn spin_lock_excludes_parallel_threads() {
 }
 
 #[test]
-fn spin_lock_with_lock_helper_executes_body() {
+fn spin_lock_with_lock_executes_body() {
     let lock = SpinLock::new();
     let flag = AtomicBool::new(false);
     lock.with_lock(|| flag.store(true, Ordering::Relaxed));

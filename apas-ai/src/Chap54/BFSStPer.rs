@@ -9,6 +9,7 @@ pub mod BFSStPer {
 
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    pub type T<N> = ArraySeqStPerS<ArraySeqStPerS<N>>;
 
     pub trait BFSStPerTrait {
         /// Performs BFS from source vertex s on adjacency list graph G

@@ -20,6 +20,7 @@ pub mod JohnsonStEphInt {
     use crate::Chap57::DijkstraStEphInt::DijkstraStEphInt::dijkstra;
     use crate::Chap58::BellmanFordStEphInt::BellmanFordStEphInt::bellman_ford;
     use crate::Types::Types::*;
+    pub type T = WeightedDirGraphStEphInt<usize>;
 
     pub trait JohnsonStEphIntTrait {
         /// Johnson's all-pairs shortest path algorithm

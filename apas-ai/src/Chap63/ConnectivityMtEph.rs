@@ -22,11 +22,12 @@ pub mod ConnectivityMtEph {
     use crate::ParaPair;
     use crate::SetLit;
     use crate::Types::Types::*;
+    pub type T<V> = UnDirGraphMtEph<V>;
 
     pub trait ConnectivityMtEphTrait {
         /// Count connected components using parallel star contraction
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)
-        fn count_components_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>) -> N;
+        fn count_components_mt<V: StT + MtT + Hash + Ord + 'static>(graph: &UnDirGraphMtEph<V>)  -> N;
 
         /// Find connected components using parallel star contraction
         /// APAS: Work O(|V| + |E|), Span O(lg² |V|)

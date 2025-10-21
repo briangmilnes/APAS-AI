@@ -9,6 +9,7 @@ pub mod OrderStatSelectMtPer {
 
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use crate::Types::Types::*;
+    pub type T<T> = ArraySeqMtPerS<T>;
 
     pub trait OrderStatSelectMtPerTrait<T: StTInMtT + Ord> {
         /// claude-4-sonet: Work Θ(n) expected, Θ(n²) worst case; Span Θ(log² n) expected (with parallel filter), Parallelism Θ(n/log² n) expected

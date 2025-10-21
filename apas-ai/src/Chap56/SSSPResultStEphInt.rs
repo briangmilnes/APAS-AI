@@ -25,11 +25,11 @@ pub mod SSSPResultStEphInt {
     pub trait SSSPResultStEphIntTrait {
         /// Create new SSSP result
         /// APAS: Work Θ(n), Span Θ(n)
-        fn new(n: N, source: N) -> Self;
+        fn new(n: N, source: N)      -> Self;
 
         /// Get distance to vertex
         /// APAS: Work Θ(1), Span Θ(1)
-        fn distance(&self, v: N) -> Option<i32>;
+        fn distance(&self, v: N)     -> Option<i32>;
 
         /// Check if vertex is reachable
         /// APAS: Work Θ(1), Span Θ(1)

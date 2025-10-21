@@ -19,7 +19,7 @@ pub mod HeapsortExample {
 
         /// Heapsort using SortedListPQ  
         /// Claude Work: Θ(n²), Span: Θ(n²) - inefficient due to O(n) insert
-        fn heapsort_sorted_list<T: StT + Ord>(sequence: &[T]) -> Vec<T>;
+        fn heapsort_sorted_list<T: StT + Ord>(sequence: &[T])   -> Vec<T>;
 
         /// Heapsort using BalancedTreePQ
         /// Claude Work: Θ(n log n), Span: Θ(n log n) - optimal complexity
@@ -27,15 +27,15 @@ pub mod HeapsortExample {
 
         /// Heapsort using BinaryHeapPQ
         /// Claude Work: Θ(n log n), Span: Θ(n log n) - optimal complexity
-        fn heapsort_binary_heap<T: StT + Ord>(sequence: &[T]) -> Vec<T>;
+        fn heapsort_binary_heap<T: StT + Ord>(sequence: &[T])   -> Vec<T>;
 
         /// Heapsort using LeftistHeapPQ
         /// Claude Work: Θ(n log n), Span: Θ(n log n) - optimal complexity
-        fn heapsort_leftist_heap<T: StT + Ord>(sequence: &[T]) -> Vec<T>;
+        fn heapsort_leftist_heap<T: StT + Ord>(sequence: &[T])  -> Vec<T>;
 
         /// Compare all heapsort implementations on the same input
         /// Claude Work: Θ(n²), Span: Θ(n²) - dominated by worst implementation
-        fn compare_all_heapsorts<T: StT + Ord>(sequence: &[T]) -> HeapsortComparison<T>;
+        fn compare_all_heapsorts<T: StT + Ord>(sequence: &[T])  -> HeapsortComparison<T>;
     }
 
     /// Heapsort using UnsortedListPQ
@@ -153,17 +153,17 @@ pub mod HeapsortExample {
 
     pub trait HeapsortExamplesTrait {
         /// Example from textbook - demonstrate heapsort on a small dataset
-        fn textbook_example() -> HeapsortComparison<i32>;
+        fn textbook_example()         -> HeapsortComparison<i32>;
         /// Demonstrate heapsort on reverse-sorted input (worst case for some algorithms)
-        fn reverse_sorted_example() -> HeapsortComparison<i32>;
+        fn reverse_sorted_example()   -> HeapsortComparison<i32>;
         /// Demonstrate heapsort on already-sorted input
-        fn already_sorted_example() -> HeapsortComparison<i32>;
+        fn already_sorted_example()   -> HeapsortComparison<i32>;
         /// Demonstrate heapsort on input with duplicates
-        fn duplicates_example() -> HeapsortComparison<i32>;
+        fn duplicates_example()       -> HeapsortComparison<i32>;
         /// Demonstrate heapsort on single element
-        fn single_element_example() -> HeapsortComparison<i32>;
+        fn single_element_example()   -> HeapsortComparison<i32>;
         /// Demonstrate heapsort on empty input
-        fn empty_example() -> HeapsortComparison<i32>;
+        fn empty_example()            -> HeapsortComparison<i32>;
         /// Generate large example for performance testing
         fn large_example(size: usize) -> Vec<i32>;
         /// Demonstrate the efficiency difference between implementations
@@ -172,18 +172,18 @@ pub mod HeapsortExample {
 
     pub trait HeapsortAnalysisTrait {
         /// Analyze the theoretical complexity of each heapsort variant
-        fn complexity_analysis() -> Vec<(String, String, String)>;
+        fn complexity_analysis()      -> Vec<(String, String, String)>;
         /// Verify that all heapsort implementations produce correct results
         fn correctness_verification() -> bool;
     }
 
     pub trait SequenceUtilsTrait {
         /// Convert Vec to ArraySeqStPerS for use with APAS sequence types
-        fn vec_to_array_seq<T: StT>(vec: &[T]) -> ArraySeqStPerS<T>;
+        fn vec_to_array_seq<T: StT>(vec: &[T])  -> ArraySeqStPerS<T>;
         /// Convert Vec to AVLTreeSeqStPerS for use with balanced tree operations
-        fn vec_to_avl_seq<T: StT>(vec: &[T]) -> AVLTreeSeqStPerS<T>;
+        fn vec_to_avl_seq<T: StT>(vec: &[T])    -> AVLTreeSeqStPerS<T>;
         /// Check if a sequence is sorted
-        fn is_sorted<T: Ord>(vec: &[T]) -> bool;
+        fn is_sorted<T: Ord>(vec: &[T])         -> bool;
         /// Generate test sequences of various patterns
         fn generate_test_sequences(size: usize) -> Vec<(String, Vec<i32>)>;
     }

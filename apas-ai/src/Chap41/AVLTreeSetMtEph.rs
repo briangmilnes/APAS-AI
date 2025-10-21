@@ -22,25 +22,25 @@ pub mod AVLTreeSetMtEph {
 
     pub trait AVLTreeSetMtEphTrait<T: StTInMtT + Ord + 'static> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                               -> N;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn to_seq(&self) -> AVLTreeSeqStEphS<T>;
+        fn to_seq(&self)                             -> AVLTreeSeqStEphS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                                   -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(x: T) -> Self;
+        fn singleton(x: T)                           -> Self;
         /// claude-4-sonet: Work Θ(n log n), Span Θ(log n), Parallelism Θ(n)
-        fn from_seq(seq: AVLTreeSeqStEphS<T>) -> Self;
+        fn from_seq(seq: AVLTreeSeqStEphS<T>)        -> Self;
         /// claude-4-sonet: Work Θ(n), Span Θ(log n), Parallelism Θ(n/log n)
         fn filter<F: PredMt<T> + Clone>(&self, f: F) -> Self;
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
-        fn intersection(&self, other: &Self) -> Self;
+        fn intersection(&self, other: &Self)         -> Self;
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
-        fn difference(&self, other: &Self) -> Self;
+        fn difference(&self, other: &Self)           -> Self;
         /// claude-4-sonet: Work Θ(m + n), Span Θ(log(m + n)), Parallelism Θ((m+n)/log(m+n))
-        fn union(&self, other: &Self) -> Self;
+        fn union(&self, other: &Self)                -> Self;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn find(&self, x: &T) -> B;
+        fn find(&self, x: &T)                        -> B;
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         fn delete(&mut self, x: &T);
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)

@@ -8,6 +8,7 @@ pub mod TopoSortStEph {
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
     use crate::Types::Types::*;
+    pub type T<N> = ArraySeqStEphS<ArraySeqStEphS<N>>;
 
     pub trait TopoSortStEphTrait {
         /// Computes topological sort of a DAG

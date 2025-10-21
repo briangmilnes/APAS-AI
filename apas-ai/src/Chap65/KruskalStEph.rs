@@ -15,6 +15,7 @@ pub mod KruskalStEph {
     use crate::Chap65::UnionFindStEph::UnionFindStEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
+    pub type T<V> = LabUnDirGraphStEph<V, OrderedFloat<f64>>;
 
     pub trait KruskalStEphTrait {
         /// Kruskal's MST algorithm

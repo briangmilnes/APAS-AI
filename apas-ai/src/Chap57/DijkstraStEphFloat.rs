@@ -20,6 +20,8 @@ pub mod DijkstraStEphFloat {
     use crate::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
     use crate::Types::Types::*;
 
+    pub type T = PQEntry;
+
     pub trait DijkstraStEphFloatTrait {
         /// Dijkstra's single source shortest path algorithm
         /// APAS: Work O(m log n), Span O(m log n) where m = |E|, n = |V|
@@ -29,7 +31,7 @@ pub mod DijkstraStEphFloat {
     /// Priority queue entry: (distance, vertex)
     /// Ordered by distance (min-heap)
     #[derive(Clone, Eq, PartialEq, Debug)]
-    struct PQEntry {
+    pub struct PQEntry {
         dist: OrderedF64,
         vertex: usize,
     }

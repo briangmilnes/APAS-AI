@@ -19,55 +19,55 @@ pub mod UnDirGraphStEph {
     pub trait UnDirGraphStEphTrait<V: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                                        -> Self;
         /// APAS: Work Θ(|V| + |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |E|), Span Θ(1)
         fn FromSets(V: SetStEph<V>, E: SetStEph<Edge<V>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn vertices(&self) -> &SetStEph<V>;
+        fn vertices(&self)                                -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn edges(&self) -> &SetStEph<Edge<V>>;
+        fn edges(&self)                                   -> &SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn sizeV(&self) -> N;
+        fn sizeV(&self)                                   -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn sizeE(&self) -> N;
+        fn sizeE(&self)                                   -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn Neighbor(&self, u: &V, v: &V) -> B;
+        fn Neighbor(&self, u: &V, v: &V)                  -> B;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(1)
-        fn NG(&self, v: &V) -> SetStEph<V>;
+        fn NG(&self, v: &V)                               -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |E|), Span Θ(1)
-        fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
+        fn NGOfVertices(&self, u_set: &SetStEph<V>)       -> SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B;
+        fn Incident(&self, e: &Edge<V>, v: &V)            -> B;
         /// APAS: Work Θ(|E|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|E|), Span Θ(1)
-        fn Degree(&self, v: &V) -> N;
+        fn Degree(&self, v: &V)                           -> N;
 
         // DirGraph-compatible interface methods
         /// Arc count (alias for edge count in undirected graphs)
-        fn sizeA(&self) -> N;
+        fn sizeA(&self)                                   -> N;
         /// Arcs (alias for edges in undirected graphs)
-        fn arcs(&self) -> &SetStEph<Edge<V>>;
+        fn arcs(&self)                                    -> &SetStEph<Edge<V>>;
         /// Out-neighbors (in undirected graphs, all neighbors are both in and out)
-        fn NPlus(&self, v: &V) -> SetStEph<V>;
+        fn NPlus(&self, v: &V)                            -> SetStEph<V>;
         /// In-neighbors (in undirected graphs, all neighbors are both in and out)
-        fn NMinus(&self, v: &V) -> SetStEph<V>;
+        fn NMinus(&self, v: &V)                           -> SetStEph<V>;
         /// Out-neighbors of vertex set
-        fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
+        fn NPlusOfVertices(&self, u_set: &SetStEph<V>)    -> SetStEph<V>;
         /// In-neighbors of vertex set
-        fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
+        fn NMinusOfVertices(&self, u_set: &SetStEph<V>)   -> SetStEph<V>;
         /// In-degree (in undirected graphs, equals total degree)
-        fn InDegree(&self, v: &V) -> N;
+        fn InDegree(&self, v: &V)                         -> N;
         /// Out-degree (in undirected graphs, equals total degree)
-        fn OutDegree(&self, v: &V) -> N;
+        fn OutDegree(&self, v: &V)                        -> N;
     }
 
     impl<V: StT + Hash> UnDirGraphStEphTrait<V> for UnDirGraphStEph<V> {

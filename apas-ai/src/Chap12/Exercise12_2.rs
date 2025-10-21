@@ -4,6 +4,7 @@
 pub mod Exercise12_2 {
 
     use std::sync::atomic::{AtomicUsize, Ordering};
+    pub type T = AtomicUsize;
 
     pub trait FetchAddCasTrait {
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)

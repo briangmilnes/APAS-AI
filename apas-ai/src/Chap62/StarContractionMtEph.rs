@@ -18,11 +18,12 @@ pub mod StarContractionMtEph {
     use crate::ParaPair;
     use crate::SetLit;
     use crate::Types::Types::*;
+    pub type T<V> = UnDirGraphMtEph<V>;
 
     pub trait StarContractionMtEphTrait {
         /// Parallel star contraction higher-order function
         /// APAS: Work O((n + m) lg n), Span O(lg² n)
-        fn star_contract_mt<V, R, F, G>(graph: &UnDirGraphMtEph<V>, base: F, expand: G) -> R
+        fn star_contract_mt<V, R, F, G>(graph: &UnDirGraphMtEph<V>, base: F, expand: G)             -> R
         where
             V: StT + MtT + Hash + Ord + 'static,
             R: StT + MtT + 'static,

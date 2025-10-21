@@ -116,7 +116,7 @@ fn test_filter_predicate() {
 }
 
 #[test]
-fn test_deflate_helper() {
+fn test_deflate() {
     let result_true = <LinkedListStEphS<N> as LinkedListStEphTrait<N>>::deflate(&|x| *x > 5, &10);
     assert_eq!(result_true.length(), 1);
     assert_eq!(*result_true.nth(0), 10);

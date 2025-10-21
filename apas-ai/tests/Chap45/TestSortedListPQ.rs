@@ -563,28 +563,28 @@ fn test_equality() {
 }
 
 #[test]
-fn test_from_vec_helper() {
+fn test_from_vec() {
     let pq = SortedListPQ::from_vec(vec![5, 2, 8, 1]);
     assert_eq!(pq.size(), 4);
     assert_eq!(pq.find_min(), Some(&1));
 }
 
 #[test]
-fn test_to_vec_helper() {
+fn test_to_vec() {
     let pq = SortedListPQLit![3, 1, 2];
     let vec = pq.to_vec();
     assert_eq!(vec, vec![1, 2, 3]);
 }
 
 #[test]
-fn test_to_sorted_vec_helper() {
+fn test_to_sorted_vec() {
     let pq = SortedListPQLit![3, 1, 2];
     let vec = pq.to_sorted_vec();
     assert_eq!(vec, vec![1, 2, 3]);
 }
 
 #[test]
-fn test_is_sorted_helper() {
+fn test_is_sorted() {
     let pq = SortedListPQLit![3, 1, 2];
     assert!(pq.is_sorted());
 

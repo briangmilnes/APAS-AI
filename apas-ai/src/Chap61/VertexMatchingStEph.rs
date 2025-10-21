@@ -18,7 +18,7 @@ pub mod VertexMatchingStEph {
     pub trait VertexMatchingStEphTrait {
         /// Greedy vertex matching algorithm
         /// APAS: Work Θ(|E|), Span Θ(|E|)
-        fn greedy_matching<V: StT + Hash>(graph: &UnDirGraphStEph<V>) -> SetStEph<Edge<V>>;
+        fn greedy_matching<V: StT + Hash>(graph: &UnDirGraphStEph<V>)      -> SetStEph<Edge<V>>;
 
         /// Sequential version of parallel matching
         /// APAS: Work Θ(|E|), Span Θ(|E|)
@@ -76,6 +76,7 @@ pub mod VertexMatchingStEph {
     pub fn parallel_matching_st<V: StT + Hash>(graph: &UnDirGraphStEph<V>, seed: u64) -> SetStEph<Edge<V>> {
         use rand::rngs::StdRng;
         use rand::{Rng, SeedableRng};
+        pub type T<V> = UnDirGraphStEph<V>;
 
         let mut rng = StdRng::seed_from_u64(seed);
         let mut matching: SetStEph<Edge<V>> = SetLit![];

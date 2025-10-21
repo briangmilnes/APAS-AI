@@ -26,31 +26,31 @@ pub mod MathSeq {
     pub trait MathSeqTrait<T: StT + Hash> {
         /// APAS: Work Θ(length), Span Θ(1)
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn new(length: N, init_value: T) -> Self;
+        fn new(length: N, init_value: T)           -> Self;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn set(&mut self, index: N, value: T) -> Result<&mut Self, &'static str>;
+        fn set(&mut self, index: N, value: T)      -> Result<&mut Self, &'static str>;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn length(&self) -> N;
+        fn length(&self)                           -> N;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn nth(&self, index: N) -> &T;
+        fn nth(&self, index: N)                    -> &T;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                                 -> Self;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> Self;
+        fn singleton(item: T)                      -> Self;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn subseq(&self, start: N, length: N) -> &[T];
+        fn subseq(&self, start: N, length: N)      -> &[T];
 
         /// APAS: Work Θ(length), Span Θ(1)
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
@@ -58,45 +58,45 @@ pub mod MathSeq {
 
         /// APAS: Work amortized Θ(1), worst case Θ(n), Span amortized Θ(1), worst case Θ(n)
         /// claude-4-sonet: Work amortized Θ(1), worst case Θ(n), Span amortized Θ(1), worst case Θ(n)
-        fn add_last(&mut self, value: T) -> &mut Self;
+        fn add_last(&mut self, value: T)           -> &mut Self;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn delete_last(&mut self) -> Option<T>;
+        fn delete_last(&mut self)                  -> Option<T>;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(&self) -> B;
+        fn isEmpty(&self)                          -> B;
 
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isSingleton(&self) -> B;
+        fn isSingleton(&self)                      -> B;
 
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
-        fn domain(&self) -> Vec<N>;
+        fn domain(&self)                           -> Vec<N>;
 
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
-        fn range(&self) -> Vec<T>;
+        fn range(&self)                            -> Vec<T>;
 
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(1)
-        fn multiset_range(&self) -> Vec<(N, T)>;
+        fn multiset_range(&self)                   -> Vec<(N, T)>;
 
         // Iterator and construction methods
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn iter(&self) -> Iter<'_, T>;
+        fn iter(&self)                             -> Iter<'_, T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn iter_mut(&mut self) -> IterMut<'_, T>;
+        fn iter_mut(&mut self)                     -> IterMut<'_, T>;
         /// APAS: Work Θ(|data|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|data|), Span Θ(1)
-        fn from_vec(data: Vec<T>) -> Self;
+        fn from_vec(data: Vec<T>)                  -> Self;
         /// APAS: Work Θ(length), Span Θ(1)
         /// claude-4-sonet: Work Θ(length), Span Θ(1)
-        fn with_len(length: N, init_value: T) -> Self;
+        fn with_len(length: N, init_value: T)      -> Self;
     }
 
     impl<T: StT + Hash> MathSeqTrait<T> for MathSeqS<T> {

@@ -1,0 +1,190 @@
+Entering directory '/home/milnes/APASVERUS/APAS-AI/apas-ai/src'
+
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/DFSStEph.rs:5:	Adding pub type: pub type T<N> = ArraySeqStEphS<ArraySeqStEphS<N>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/DFSStEph.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/CycleDetectStPer.rs:5:	Adding pub type: pub type T<N> = ArraySeqStPerS<ArraySeqStPerS<N>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/CycleDetectStPer.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/DFSStPer.rs:5:	Adding pub type: pub type T<N> = ArraySeqStPerS<ArraySeqStPerS<N>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/DFSStPer.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/TopoSortStPer.rs:5:	Adding pub type: pub type T<N> = ArraySeqStPerS<ArraySeqStPerS<N>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/TopoSortStPer.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/TopoSortStEph.rs:5:	Adding pub type: pub type T<N> = ArraySeqStEphS<ArraySeqStEphS<N>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/TopoSortStEph.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/SCCStEph.rs:5:	Adding pub type: pub type T<N> = ArraySeqStEphS<ArraySeqStEphS<N>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/SCCStEph.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/CycleDetectStEph.rs:5:	Adding pub type: pub type T<N> = ArraySeqStEphS<ArraySeqStEphS<N>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/CycleDetectStEph.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/SCCStPer.rs:5:	Adding pub type: pub type T<N> = ArraySeqStPerS<ArraySeqStPerS<N>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/SCCStPer.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap35/OrderStatSelectMtEph.rs:5:	Adding pub type: pub type T<T> = ArraySeqMtEphS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap35/OrderStatSelectMtEph.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap35/OrderStatSelectMtPer.rs:5:	Adding pub type: pub type T<T> = ArraySeqMtPerS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap35/OrderStatSelectMtPer.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap35/OrderStatSelectStPer.rs:5:	Adding pub type: pub type T<T> = ArraySeqStPerS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap35/OrderStatSelectStPer.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap35/OrderStatSelectStEph.rs:5:	Adding pub type: pub type T<T> = ArraySeqStEphS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap35/OrderStatSelectStEph.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap41/Example41_3.rs:3:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap41/Example41_3.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap41/Example41_3.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap27/ScanContractMtEph.rs:3:	Adding pub type: pub type T<T> = ArraySeqMtEphS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap27/ScanContractMtEph.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap27/ScanContractStEph.rs:3:	Adding pub type: pub type T<T> = ArraySeqStEphS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap27/ScanContractStEph.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap27/ReduceContractMtEph.rs:3:	Adding pub type: pub type T<T> = ArraySeqMtEphS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap27/ReduceContractMtEph.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap27/ReduceContractStEph.rs:3:	Adding pub type: pub type T<T> = ArraySeqStEphS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap27/ReduceContractStEph.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap42/Example42_1.rs:3:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap42/Example42_1.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap42/Example42_1.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap26/DivConReduceSt.rs:3:	Adding pub type: pub type T<N> = ArraySeqStPerS<N>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap26/DivConReduceSt.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap26/MergeSortSt.rs:3:	Adding pub type: pub type T<T> = ArraySeqStPerS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap26/MergeSortSt.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap26/DivConReduceMt.rs:4:	Adding pub type: pub type T<N> = ArraySeqMtPerS<N>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap26/DivConReduceMt.rs:4:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap26/MergeSortMt.rs:4:	Adding pub type: pub type T<T> = ArraySeqMtPerS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap26/MergeSortMt.rs:4:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap58/BellmanFordStEphFloat.rs:11:	Adding pub type: pub type T = WeightedDirGraphStEphFloat<usize>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap58/BellmanFordStEphFloat.rs:11:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap58/BellmanFordStEphFloat.rs:11:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap58/BellmanFordStEphInt.rs:11:	Adding pub type: pub type T = WeightedDirGraphStEphInt<usize>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap58/BellmanFordStEphInt.rs:11:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap58/BellmanFordStEphInt.rs:11:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap62/StarPartitionStEph.rs:7:	Adding pub type: pub type T<V> = UnDirGraphStEph<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap62/StarPartitionStEph.rs:7:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap62/StarContractionMtEph.rs:6:	Adding pub type: pub type T<V> = UnDirGraphMtEph<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap62/StarContractionMtEph.rs:6:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap62/StarPartitionMtEph.rs:6:	Adding pub type: pub type T<V> = UnDirGraphMtEph<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap62/StarPartitionMtEph.rs:6:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap62/StarContractionStEph.rs:6:	Adding pub type: pub type T<V> = UnDirGraphStEph<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap62/StarContractionStEph.rs:6:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap11/FibonacciMt.rs:4:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap11/FibonacciMt.rs:4:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap11/FibonacciMt.rs:4:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap03/InsertionSortSt.rs:3:	Adding pub type: pub type T<S> = [S];
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap03/InsertionSortSt.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Problem21_1.rs:3:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Problem21_1.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Problem21_1.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Problem21_3.rs:3:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Problem21_3.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Problem21_3.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Exercise21_5.rs:3:	Adding pub type: pub type T<S> = ArraySeqStPerS<S>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Exercise21_5.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Exercise21_9.rs:1: Error: Cannot determine meaningful pub type for this module
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Algorithm21_2.rs:3:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Algorithm21_2.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Algorithm21_2.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Algorithm21_1.rs:3:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Algorithm21_1.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Algorithm21_1.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Algorithm21_5.rs:3:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Algorithm21_5.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Algorithm21_5.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Exercise21_8.rs:3:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Exercise21_8.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Exercise21_8.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Problem21_4.rs:3:	Adding pub type: pub type T<N> = ArraySeqStPerS<N>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Problem21_4.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Exercise21_7.rs:3:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Exercise21_7.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Exercise21_7.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Exercise21_6.rs:1: Error: Cannot determine meaningful pub type for this module
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Algorithm21_6.rs:3:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Algorithm21_6.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap21/Algorithm21_6.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap63/ConnectivityStEph.rs:9:	Adding pub type: pub type T<V> = UnDirGraphStEph<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap63/ConnectivityStEph.rs:9:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap63/ConnectivityMtEph.rs:9:	Adding pub type: pub type T<V> = UnDirGraphMtEph<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap63/ConnectivityMtEph.rs:9:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap65/KruskalStEph.rs:6:	Adding pub type: pub type T<V> = LabUnDirGraphStEph<V, OrderedFloat<f64>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap65/KruskalStEph.rs:6:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap65/PrimStEph.rs:6:	Adding pub type: pub type T<V> = PQEntry<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap65/PrimStEph.rs:6:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap54/BFSMtPer.rs:5:	Adding pub type: pub type T<N> = ArraySeqMtPerS<ArraySeqMtPerS<N>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap54/BFSMtPer.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap54/BFSStPer.rs:5:	Adding pub type: pub type T<N> = ArraySeqStPerS<ArraySeqStPerS<N>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap54/BFSStPer.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap54/BFSMtEph.rs:5:	Adding pub type: pub type T<N> = ArraySeqMtEphS<ArraySeqMtEphS<N>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap54/BFSMtEph.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap54/BFSStEph.rs:5:	Adding pub type: pub type T<N> = ArraySeqStEphS<ArraySeqStEphS<N>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap54/BFSStEph.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/Example45_2.rs:3:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/Example45_2.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/Example45_2.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap12/Exercise12_2.rs:3:	Adding pub type: pub type T = AtomicUsize;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap12/Exercise12_2.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap12/Exercise12_2.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap57/DijkstraStEphInt.rs:9:	Adding pub type: pub type T = PQEntry;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap57/DijkstraStEphInt.rs:9:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap57/DijkstraStEphInt.rs:9:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap57/DijkstraStEphFloat.rs:9:	Adding pub type: pub type T = PQEntry;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap57/DijkstraStEphFloat.rs:9:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap57/DijkstraStEphFloat.rs:9:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap61/VertexMatchingStEph.rs:7:	Adding pub type: pub type T<V> = UnDirGraphStEph<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap61/VertexMatchingStEph.rs:7:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap61/EdgeContractionMtEph.rs:6:	Adding pub type: pub type T<V> = UnDirGraphMtEph<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap61/EdgeContractionMtEph.rs:6:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap61/VertexMatchingMtEph.rs:6:	Adding pub type: pub type T<V> = UnDirGraphMtEph<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap61/VertexMatchingMtEph.rs:6:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap61/EdgeContractionStEph.rs:7:	Adding pub type: pub type T<V> = UnDirGraphStEph<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap61/EdgeContractionStEph.rs:7:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap36/QuickSortMtSlice.rs:3:	Adding pub type: pub type T<T> = ArraySeqMtEphSliceS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap36/QuickSortMtSlice.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap36/QuickSortSt.rs:3:	Adding pub type: pub type T<T> = ArraySeqStEphS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap36/QuickSortSt.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap36/QuickSortMt.rs:3:	Adding pub type: pub type T<T> = ArraySeqMtEphS<T>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap36/QuickSortMt.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumReducedStEph.rs:3:	Adding pub type: pub type T = ArraySeqStEphS<i32>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumReducedStEph.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumOptStEph.rs:3:	Adding pub type: pub type T = ArraySeqStEphS<i32>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumOptStEph.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumDivConMtEph.rs:7:	Adding pub type: pub type T = ArraySeqMtEphS<i32>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumDivConMtEph.rs:7:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumDivConOptMtEph.rs:7:	Adding pub type: pub type T = ArraySeqMtEphS<i32>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumDivConOptMtEph.rs:7:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumDivConOptStEph.rs:7:	Adding pub type: pub type T = ArraySeqStEphS<i32>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumDivConOptStEph.rs:7:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumBruteStEph.rs:3:	Adding pub type: pub type T = ArraySeqStEphS<i32>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumBruteStEph.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumDivConStEph.rs:7:	Adding pub type: pub type T = ArraySeqStEphS<i32>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumDivConStEph.rs:7:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumOptMtEph.rs:3:	Adding pub type: pub type T = ArraySeqMtEphS<i32>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap28/MaxContigSubSumOptMtEph.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/Example56_3.rs:1: Error: Cannot determine meaningful pub type for this module
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStEph.rs:13:	Adding pub type: pub type T = ArraySeqStPerS<usize>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStEph.rs:13:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStEph.rs:13:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/Example56_1.rs:1: Error: Cannot determine meaningful pub type for this module
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStPer.rs:13:	Adding pub type: pub type T = ArraySeqStPerS<usize>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStPer.rs:13:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap56/PathWeightUtilsStPer.rs:13:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap43/Example43_1.rs:3:	Adding pub type: pub type T = N;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap43/Example43_1.rs:3:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap43/Example43_1.rs:3:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/lib.rs:1: Error: Cannot determine meaningful pub type for this module
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap64/SpanTreeMtEph.rs:5:	Adding pub type: pub type T<V> = UnDirGraphMtEph<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap64/SpanTreeMtEph.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap64/SpanTreeStEph.rs:5:	Adding pub type: pub type T<V> = UnDirGraphStEph<V>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap64/SpanTreeStEph.rs:5:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap64/TSPApproxStEph.rs:8:	Adding pub type: pub type T<V> = LabUnDirGraphStEph<V, OrderedFloat<f64>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap64/TSPApproxStEph.rs:8:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap64/TSPApproxMtEph.rs:6:	Adding pub type: pub type T<V> = LabUnDirGraphMtEph<V, OrderedFloat<f64>>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap64/TSPApproxMtEph.rs:6:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap59/JohnsonStEphInt.rs:12:	Adding pub type: pub type T = WeightedDirGraphStEphInt<usize>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap59/JohnsonStEphInt.rs:12:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap59/JohnsonStEphInt.rs:12:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap59/JohnsonMtEphInt.rs:13:	Adding pub type: pub type T = WeightedDirGraphMtEphInt<usize>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap59/JohnsonMtEphInt.rs:13:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap59/JohnsonMtEphInt.rs:13:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap59/JohnsonMtEphFloat.rs:13:	Adding pub type: pub type T = WeightedDirGraphMtEphFloat<usize>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap59/JohnsonMtEphFloat.rs:13:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap59/JohnsonMtEphFloat.rs:13:	Functional trait pattern - keeping standalone pub fn
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap59/JohnsonStEphFloat.rs:12:	Adding pub type: pub type T = WeightedDirGraphStEphFloat<usize>;
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap59/JohnsonStEphFloat.rs:12:	Added pub type
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap59/JohnsonStEphFloat.rs:12:	Functional trait pattern - keeping standalone pub fn
+
+Summary: 78 files fixed, 163 files skipped, 5 files with errors
+Completed in 316ms

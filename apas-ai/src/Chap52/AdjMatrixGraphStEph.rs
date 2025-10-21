@@ -14,23 +14,23 @@ pub mod AdjMatrixGraphStEph {
 
     pub trait AdjMatrixGraphStEphTrait {
         /// claude-4-sonet: Work Θ(n²), Span Θ(n²), Parallelism Θ(1)
-        fn new(n: N) -> Self;
+        fn new(n: N)                                                 -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn from_matrix(matrix: ArraySeqStEphS<ArraySeqStEphS<bool>>) -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn num_vertices(&self) -> N;
+        fn num_vertices(&self)                                       -> N;
         /// claude-4-sonet: Work Θ(n²), Span Θ(n²), Parallelism Θ(1)
-        fn num_edges(&self) -> N;
+        fn num_edges(&self)                                          -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn has_edge(&self, u: N, v: N) -> B;
+        fn has_edge(&self, u: N, v: N)                               -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn out_neighbors(&self, u: N) -> ArraySeqStEphS<N>;
+        fn out_neighbors(&self, u: N)                                -> ArraySeqStEphS<N>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn out_degree(&self, u: N) -> N;
+        fn out_degree(&self, u: N)                                   -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn set_edge(&mut self, u: N, v: N, exists: B);
         /// claude-4-sonet: Work Θ(n²), Span Θ(n²), Parallelism Θ(1)
-        fn complement(&self) -> Self;
+        fn complement(&self)                                         -> Self;
     }
 
     impl AdjMatrixGraphStEphTrait for AdjMatrixGraphStEph {

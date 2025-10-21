@@ -7,6 +7,7 @@ pub mod Example43_1 {
     use crate::Chap43::OrderedSetStPer::OrderedSetStPer::*;
     use crate::OrderedSetStPerLit;
     use crate::Types::Types::*;
+    pub type T = N;
 
     pub trait Example43_1Trait {
         /// Demonstrates Example 43.1 from the textbook with lexicographic ordering

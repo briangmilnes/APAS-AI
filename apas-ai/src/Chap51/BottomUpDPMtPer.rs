@@ -19,7 +19,7 @@ pub mod BottomUpDPMtPer {
     pub trait BottomUpDPMtPerTrait<T: MtVal> {
         /// Create new bottom-up DP solver
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                     -> Self;
 
         /// Solve DP problem
         /// APAS: Work O(n³), Span O(lg n)

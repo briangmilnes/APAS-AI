@@ -5,6 +5,7 @@ pub mod Algorithm21_2 {
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    pub type T = N;
 
     pub trait Algorithm21_2Trait {
         /// Algorithm 21.2 (3D Points) using ArraySeqPer: flatten of nested tabulates

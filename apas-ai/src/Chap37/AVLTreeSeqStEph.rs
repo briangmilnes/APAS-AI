@@ -43,32 +43,32 @@ pub mod AVLTreeSeqStEph {
     pub trait AVLTreeSeqStEphTrait<T: StT> {
         /// APAS: Work Θ(1), Span Θ(1).
         /// claude-4-sonet: Work Θ(1), Span Θ(1).
-        fn empty() -> Self;
+        fn empty()                                 -> Self;
         /// APAS: Work Θ(1), Span Θ(1).
-        fn new() -> Self;
+        fn new()                                   -> Self;
         /// APAS: Work Θ(1), Span Θ(1).
-        fn length(&self) -> N;
+        fn length(&self)                           -> N;
         /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
-        fn nth(&self, index: N) -> &T;
+        fn nth(&self, index: N)                    -> &T;
         /// APAS: Work Θ(lg(n)), Span Θ(lg(n)).
-        fn set(&mut self, index: N, item: T) -> Result<&mut Self, &'static str>;
+        fn set(&mut self, index: N, item: T)       -> Result<&mut Self, &'static str>;
         /// APAS: Work Θ(1), Span Θ(1).
-        fn singleton(item: T) -> Self;
+        fn singleton(item: T)                      -> Self;
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isEmpty(&self) -> B;
+        fn isEmpty(&self)                          -> B;
         /// APAS: Work Θ(1), Span Θ(1).
-        fn isSingleton(&self) -> B;
+        fn isSingleton(&self)                      -> B;
         /// APAS: Work Θ(1 + lg(|a|)), Span Θ(1 + lg(|a|)).
         fn subseq_copy(&self, start: N, length: N) -> Self;
-        fn new_root() -> Self;
-        fn update(&mut self, item_at: (N, T)) -> &mut AVLTreeSeqStEphS<T>;
-        fn from_vec(values: Vec<T>) -> AVLTreeSeqStEphS<T>;
-        fn to_arrayseq(&self) -> ArraySeqStEphS<T>;
-        fn iter<'a>(&'a self) -> AVLTreeSeqIterStEph<'a, T>;
+        fn new_root()                              -> Self;
+        fn update(&mut self, item_at: (N, T))      -> &mut AVLTreeSeqStEphS<T>;
+        fn from_vec(values: Vec<T>)                -> AVLTreeSeqStEphS<T>;
+        fn to_arrayseq(&self)                      -> ArraySeqStEphS<T>;
+        fn iter<'a>(&'a self)                      -> AVLTreeSeqIterStEph<'a, T>;
         fn push_back(&mut self, value: T);
-        fn contains_value(&self, target: &T) -> B;
+        fn contains_value(&self, target: &T)       -> B;
         fn insert_value(&mut self, value: T);
-        fn delete_value(&mut self, target: &T) -> bool;
+        fn delete_value(&mut self, target: &T)     -> bool;
     }
 
     impl<T: StT> AVLTreeSeqStEphS<T> {

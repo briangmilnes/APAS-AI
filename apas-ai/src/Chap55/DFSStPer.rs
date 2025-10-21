@@ -8,6 +8,7 @@ pub mod DFSStPer {
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     use crate::Types::Types::*;
+    pub type T<N> = ArraySeqStPerS<ArraySeqStPerS<N>>;
 
     pub trait DFSStPerTrait {
         /// Performs DFS from source vertex s on adjacency list graph G

@@ -19,13 +19,13 @@ pub mod TableStEph {
     /// Trait defining the Table ADT operations from Chapter 42
     pub trait TableStEphTrait<K: StT + Ord, V: StT> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                 -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                     -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn singleton(key: K, value: V) -> Self;
         /// claude-4-sonet: Work Θ(n log n), Span Θ(n log n), Parallelism Θ(1)
-        fn domain(&self) -> ArraySetStEph<K>;
+        fn domain(&self)               -> ArraySetStEph<K>;
         /// claude-4-sonet: Work Θ(|keys| × W(f)), Span Θ(|keys| × S(f)), Parallelism Θ(1)
         fn tabulate<F: Fn(&K) -> V>(f: F, keys: &ArraySetStEph<K>) -> Self;
         /// claude-4-sonet: Work Θ(n × W(f)), Span Θ(n × S(f)), Parallelism Θ(1)
@@ -39,7 +39,7 @@ pub mod TableStEph {
         /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
         fn difference(&mut self, other: &Self);
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
-        fn find(&self, key: &K) -> Option<V>;
+        fn find(&self, key: &K)        -> Option<V>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         fn delete(&mut self, key: &K);
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
@@ -51,7 +51,7 @@ pub mod TableStEph {
 
         /// APAS: Work Θ(|a|), Span Θ(lg |a|)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn collect(&self) -> ArraySeqStEphS<Pair<K, V>>;
+        fn collect(&self)              -> ArraySeqStEphS<Pair<K, V>>;
     }
 
     impl<K: StT + Ord, V: StT> TableStEphTrait<K, V> for TableStEph<K, V> {
@@ -286,7 +286,7 @@ pub mod TableStEph {
         fn collect(&self) -> ArraySeqStEphS<Pair<K, V>> { self.entries.clone() }
     }
 
-    /// Helper function for creating tables from sorted entries
+    /// Create tables from sorted entries
     pub fn from_sorted_entries<K: StT + Ord, V: StT>(entries: Vec<Pair<K, V>>) -> TableStEph<K, V> {
         TableStEph {
             entries: ArraySeqStEphS::from_vec(entries),

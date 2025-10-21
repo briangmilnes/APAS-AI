@@ -27,7 +27,7 @@ pub mod PQMinStEph {
 
     pub trait PQMinStEphTrait<V: StT + Ord, P: StT + Ord> {
         /// claude-4-sonet: Work Θ((|V| + |E|) log |V|), Span Θ(|V| log |V|), Parallelism Θ(1)
-        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF) -> PQMinResult<V, P>
+        fn pq_min<G, PF>(graph: &G, source: V, priority_fn: &PF)                         -> PQMinResult<V, P>
         where
             G: Fn(&V) -> AVLTreeSetStEph<V>,
             PF: PriorityFn<V, P>;

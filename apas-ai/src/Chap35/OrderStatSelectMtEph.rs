@@ -8,6 +8,7 @@ pub mod OrderStatSelectMtEph {
     use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
     use rand::Rng;
+    pub type T<T> = ArraySeqMtEphS<T>;
 
     pub trait OrderStatSelectMtEphTrait<T: StTInMtT + Ord> {
         /// claude-4-sonet: Work Θ(n) expected, Θ(n²) worst case; Span Θ(log² n) expected (with parallel filter), Parallelism Θ(n/log² n) expected

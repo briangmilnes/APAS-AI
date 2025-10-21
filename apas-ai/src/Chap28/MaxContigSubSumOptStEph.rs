@@ -6,6 +6,7 @@ pub mod MaxContigSubSumOptStEph {
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
     use crate::Types::Types::*;
+    pub type T = ArraySeqStEphS<i32>;
 
     pub trait MaxContigSubSumOptTrait {
         /// Compute maximum contiguous subsequence sum using optimal scan-based algorithm.

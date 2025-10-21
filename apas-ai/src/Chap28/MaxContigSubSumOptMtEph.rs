@@ -9,6 +9,7 @@ pub mod MaxContigSubSumOptMtEph {
     use crate::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
     use crate::ParaPair;
     use crate::Types::Types::*;
+    pub type T = ArraySeqMtEphS<i32>;
 
     pub trait MaxContigSubSumOptMtTrait {
         /// Compute maximum contiguous subsequence sum using parallel optimal scan-based algorithm.

@@ -25,6 +25,7 @@ pub mod JohnsonMtEphFloat {
     use crate::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::dijkstra;
     use crate::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
     use crate::Types::Types::*;
+    pub type T = WeightedDirGraphMtEphFloat<usize>;
 
     pub trait JohnsonMtEphFloatTrait {
         /// Parallel Johnson's all-pairs shortest path algorithm

@@ -18,9 +18,9 @@ pub mod ArraySeqMtEph {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>, index: N) -> Option<T>;
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> Self;
+        fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)    -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn deflate<F: PredMt<T>>(f: &F, x: &T) -> Self;
+        fn deflate<F: PredMt<T>>(f: &F, x: &T)                            -> Self;
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
@@ -38,8 +38,8 @@ pub mod ArraySeqMtEph {
             }
         }
 
+        // Algorithm 19.4 alternative: append a b = tabulate(select(a,b), |a|+|b|)
         fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T> {
-            // Algorithm 19.4 alternative: append a b = tabulate(select(a,b), |a|+|b|)
             <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::tabulate(
                 &|i| <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::select(a, b, i).unwrap(),
                 a.length() + b.length(),
@@ -47,7 +47,6 @@ pub mod ArraySeqMtEph {
         }
 
         fn deflate<F: PredMt<T>>(f: &F, x: &T) -> ArraySeqMtEphS<T> {
-            // Helper for filter: deflate f x = if f(x) then [x] else []
             if f(x) {
                 <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::singleton(x.clone())
             } else {

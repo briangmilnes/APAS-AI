@@ -29,26 +29,26 @@ pub mod MatrixChainMtPer {
     /// Trait for parallel matrix chain multiplication operations
     pub trait MatrixChainMtPerTrait {
         /// Create new matrix chain solver
-        fn new() -> Self;
+        fn new()                                              -> Self;
 
         /// Create from matrix dimensions
-        fn from_dimensions(dimensions: Vec<MatrixDim>) -> Self;
+        fn from_dimensions(dimensions: Vec<MatrixDim>)        -> Self;
 
         /// Create from dimension pairs (rows, cols)
         fn from_dim_pairs(dim_pairs: Vec<Pair<usize, usize>>) -> Self;
 
         /// claude-4-sonet: Work Θ(n³), Span Θ(n log n), Parallelism Θ(n²/log n)
         /// Compute optimal matrix chain multiplication cost where n=number of matrices
-        fn optimal_cost(&self) -> usize;
+        fn optimal_cost(&self)                                -> usize;
 
         /// Get the matrix dimensions
-        fn dimensions(&self) -> &Arc<Vec<MatrixDim>>;
+        fn dimensions(&self)                                  -> &Arc<Vec<MatrixDim>>;
 
         /// Get number of matrices
-        fn num_matrices(&self) -> usize;
+        fn num_matrices(&self)                                -> usize;
 
         /// Get memoization table size
-        fn memo_size(&self) -> usize;
+        fn memo_size(&self)                                   -> usize;
     }
 
     impl MatrixChainMtPerS {

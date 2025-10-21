@@ -9,6 +9,7 @@ pub mod SCCStEph {
     use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeSeqStEphS, AVLTreeSeqStEphTrait};
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
     use crate::Types::Types::*;
+    pub type T<N> = ArraySeqStEphS<ArraySeqStEphS<N>>;
 
     pub trait SCCStEphTrait {
         /// Finds strongly connected components in a directed graph

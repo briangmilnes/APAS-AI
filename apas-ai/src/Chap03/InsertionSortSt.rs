@@ -2,6 +2,7 @@
 //! Chapter 3 insertion sort over mutable slices.
 
 pub mod InsertionSortSt {
+    pub type T<S> = [S];
 
     pub trait InsertionSortStTrait<T: Ord + Clone> {
         /// APAS: Work O(n²), Span O(n log n)

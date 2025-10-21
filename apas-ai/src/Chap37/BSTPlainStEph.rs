@@ -16,27 +16,27 @@ pub mod BSTPlainStEph {
 
     pub trait BSTPlainStEphTrait<T: StT + Ord> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                       -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                 -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self) -> B;
+        fn is_empty(&self)             -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn height(&self) -> N;
+        fn height(&self)               -> N;
         /// claude-4-sonet: Work Θ(log n) average, Θ(n) worst case; Span Θ(log n) average, Parallelism Θ(1)
         fn insert(&mut self, value: T);
         /// claude-4-sonet: Work Θ(log n) average, Θ(n) worst case; Span Θ(log n) average, Parallelism Θ(1)
-        fn find(&self, target: &T) -> Option<&T>;
+        fn find(&self, target: &T)     -> Option<&T>;
         /// claude-4-sonet: Work Θ(log n) average, Θ(n) worst case; Span Θ(log n) average, Parallelism Θ(1)
         fn contains(&self, target: &T) -> B;
         /// claude-4-sonet: Work Θ(log n) average, Θ(n) worst case; Span Θ(log n) average, Parallelism Θ(1)
-        fn minimum(&self) -> Option<&T>;
+        fn minimum(&self)              -> Option<&T>;
         /// claude-4-sonet: Work Θ(log n) average, Θ(n) worst case; Span Θ(log n) average, Parallelism Θ(1)
-        fn maximum(&self) -> Option<&T>;
+        fn maximum(&self)              -> Option<&T>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn in_order(&self) -> ArraySeqStPerS<T>;
+        fn in_order(&self)             -> ArraySeqStPerS<T>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn pre_order(&self) -> ArraySeqStPerS<T>;
+        fn pre_order(&self)            -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT + Ord> BSTPlainStEphTrait<T> for BSTPlainStEph<T> {

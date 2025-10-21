@@ -6,6 +6,7 @@ pub mod FibonacciMt {
 
     use crate::ParaPair;
     use crate::Types::Types::*;
+    pub type T = N;
 
     pub trait FibonacciMtTrait {
         /// APAS: Work Θ(φⁿ), Span Θ(n)

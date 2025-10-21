@@ -20,29 +20,29 @@ pub mod ArraySeq {
     pub trait ArraySeq<T> {
         /// Create a new sequence of length `length` with each element initialized to `init_value`. <br/>
         /// claude-4-sonet: Work Θ(length), Span Θ(1), Parallelism Θ(1).
-        fn new(length: N, init_value: T) -> Self
+        fn new(length: N, init_value: T)                             -> Self
         where
             T: Clone;
 
         /// Set the element at `index` to `item` in place. <br/>
         /// Work: Θ(1), Span: Θ(1).
-        fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqS<T>, &'static str>;
+        fn set(&mut self, index: N, item: T)                         -> Result<&mut ArraySeqS<T>, &'static str>;
 
         /// Definition 18.1 (length). Return the number of elements. <br/>
         /// Work: Θ(1), Span: Θ(1).
-        fn length(&self) -> N;
+        fn length(&self)                                             -> N;
 
         /// Algorithm 19.11 (Function nth). Return a reference to the element at `index`. <br/>
         /// Work: Θ(1), Span: Θ(1).
-        fn nth(&self, index: N) -> &T;
+        fn nth(&self, index: N)                                      -> &T;
 
         /// Definition 18.1 (empty). Construct the empty sequence. <br/>
         /// Work: Θ(1), Span: Θ(1).
-        fn empty() -> Self;
+        fn empty()                                                   -> Self;
 
         /// Definition 18.1 (singleton). Construct a singleton sequence containing `item`. <br/>
         /// Work: Θ(1), Span: Θ(1).
-        fn singleton(item: T) -> Self;
+        fn singleton(item: T)                                        -> Self;
 
         /// Algorithm 18.3 (tabulate). Build a sequence by applying `f` to each index. <br/>
         /// Work: Θ(length), Span: Θ(1).
@@ -54,25 +54,25 @@ pub mod ArraySeq {
 
         /// Definition 18.12 (subseq). Extract a contiguous subsequence, truncating out-of-bounds ranges. <br/>
         /// Work: Θ(length), Span: Θ(1).
-        fn subseq(a: &ArraySeqS<T>, start: N, length: N) -> Self
+        fn subseq(a: &ArraySeqS<T>, start: N, length: N)             -> Self
         where
             T: Clone;
 
         /// Definition 18.13 (append). Concatenate two sequences. <br/>
         /// Work: Θ(|a| + |b|), Span: Θ(1).
-        fn append(a: &ArraySeqS<T>, b: &ArraySeqS<T>) -> Self;
+        fn append(a: &ArraySeqS<T>, b: &ArraySeqS<T>)                -> Self;
 
         /// Definition 18.14 (filter). Keep elements satisfying `pred`. <br/>
         /// Work: Θ(|a|), Span: Θ(1).
-        fn filter<F: PredSt<T>>(a: &ArraySeqS<T>, pred: &F) -> Self;
+        fn filter<F: PredSt<T>>(a: &ArraySeqS<T>, pred: &F)          -> Self;
 
         /// Definition 18.15 (flatten). Concatenate a sequence of sequences. <br/>
         /// Work: Θ(total length), Span: Θ(1).
-        fn flatten(a: &ArraySeqS<ArraySeqS<T>>) -> Self;
+        fn flatten(a: &ArraySeqS<ArraySeqS<T>>)                      -> Self;
 
         /// Definition 18.16 (update). Return a copy with the index replaced by the new value. <br/>
         /// Work: Θ(|a|), Span: Θ(1).
-        fn update(a: &ArraySeqS<T>, update: Pair<N, T>) -> Self;
+        fn update(a: &ArraySeqS<T>, update: Pair<N, T>)              -> Self;
 
         /// Definition 18.17 (inject). Apply updates, keeping the first update per index. <br/>
         /// Work: Θ(|a| + |updates|), Span: Θ(1).
@@ -80,11 +80,11 @@ pub mod ArraySeq {
 
         /// Definition 18.5 (isEmpty). true iff the sequence has length zero. <br/>
         /// Work: Θ(1), Span: Θ(1).
-        fn isEmpty(&self) -> B;
+        fn isEmpty(&self)                                            -> B;
 
         /// Definition 18.5 (isSingleton). true iff the sequence has length one. <br/>
         /// Work: Θ(1), Span: Θ(1).
-        fn isSingleton(&self) -> B;
+        fn isSingleton(&self)                                        -> B;
 
         /// Algorithm 18.21 (collect). Group values with equal keys under `cmp`. <br/>
         /// Work: Θ(|pairs|²) worst case due to linear search, Span: Θ(1).
@@ -111,16 +111,16 @@ pub mod ArraySeq {
         // Additional methods
         /// Definition 18.12 (subseq copy). Extract contiguous subsequence with allocation. <br/>
         /// Work: Θ(length), Span: Θ(1).
-        fn subseq_copy(&self, start: N, length: N) -> ArraySeqS<T>;
+        fn subseq_copy(&self, start: N, length: N)                   -> ArraySeqS<T>;
         /// Create sequence from Vec. <br/>
         /// Work: Θ(n) worst case, Θ(1) best case, Span: Θ(1).
-        fn from_vec(elts: Vec<T>) -> Self;
+        fn from_vec(elts: Vec<T>)                                    -> Self;
         /// Return iterator over elements. <br/>
         /// Work: Θ(1), Span: Θ(1).
-        fn iter(&self) -> Iter<'_, T>;
+        fn iter(&self)                                               -> Iter<'_, T>;
         /// Return mutable iterator over elements. <br/>
         /// Work: Θ(1), Span: Θ(1).
-        fn iter_mut(&mut self) -> IterMut<'_, T>;
+        fn iter_mut(&mut self)                                       -> IterMut<'_, T>;
     }
 
     impl<T: Clone> ArraySeq<T> for ArraySeqS<T> {

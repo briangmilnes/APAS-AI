@@ -16,6 +16,7 @@ pub mod TSPApproxMtEph {
     use crate::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
+    pub type T<V> = LabUnDirGraphMtEph<V, OrderedFloat<f64>>;
 
     pub trait TSPApproxMtEphTrait {
         /// Parallel Euler tour of a tree
@@ -69,7 +70,6 @@ pub mod TSPApproxMtEph {
         tour
     }
 
-    /// DFS helper for Euler tour
     fn euler_tour_dfs<V: StT + MtT + Hash + Ord>(
         graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>,
         current: &V,

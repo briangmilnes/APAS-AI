@@ -19,55 +19,55 @@ pub mod DirGraphStEph {
     pub trait DirGraphStEphTrait<V: StT + Hash> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                                        -> Self;
         /// APAS: Work Θ(|V| + |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |A|), Span Θ(1)
         fn FromSets(V: SetStEph<V>, A: SetStEph<Edge<V>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn vertices(&self) -> &SetStEph<V>;
+        fn vertices(&self)                                -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn arcs(&self) -> &SetStEph<Edge<V>>;
+        fn arcs(&self)                                    -> &SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn sizeV(&self) -> N;
+        fn sizeV(&self)                                   -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn sizeA(&self) -> N;
+        fn sizeA(&self)                                   -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn Neighbor(&self, u: &V, v: &V) -> B;
+        fn Neighbor(&self, u: &V, v: &V)                  -> B;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn NG(&self, v: &V) -> SetStEph<V>;
+        fn NG(&self, v: &V)                               -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(1)
-        fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
+        fn NGOfVertices(&self, u_set: &SetStEph<V>)       -> SetStEph<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn NPlus(&self, v: &V) -> SetStEph<V>;
+        fn NPlus(&self, v: &V)                            -> SetStEph<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn NMinus(&self, v: &V) -> SetStEph<V>;
+        fn NMinus(&self, v: &V)                           -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(1)
-        fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
+        fn NPlusOfVertices(&self, u_set: &SetStEph<V>)    -> SetStEph<V>;
         /// APAS: Work Θ(|u_set| × |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|u_set| × |A|), Span Θ(1)
-        fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V>;
+        fn NMinusOfVertices(&self, u_set: &SetStEph<V>)   -> SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn Incident(&self, e: &Edge<V>, v: &V) -> B;
+        fn Incident(&self, e: &Edge<V>, v: &V)            -> B;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn Degree(&self, v: &V) -> N;
+        fn Degree(&self, v: &V)                           -> N;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn InDegree(&self, v: &V) -> N;
+        fn InDegree(&self, v: &V)                         -> N;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(1)
-        fn OutDegree(&self, v: &V) -> N;
+        fn OutDegree(&self, v: &V)                        -> N;
     }
 
     impl<V: StT + Hash> DirGraphStEphTrait<V> for DirGraphStEph<V> {

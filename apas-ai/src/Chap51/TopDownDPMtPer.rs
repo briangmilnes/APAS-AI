@@ -19,7 +19,7 @@ pub mod TopDownDPMtPer {
     pub trait TopDownDPMtPerTrait<T: MtVal> {
         /// Create new top-down DP solver
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                     -> Self;
 
         /// Solve DP problem with memoization
         /// APAS: Work O(n²), Span O(lg n)
@@ -55,7 +55,6 @@ pub mod TopDownDPMtPer {
             self.med_recursive_concurrent(s_len, t_len)
         }
 
-        /// Recursive helper with concurrent memoization
         /// claude-4-sonet: Work Θ(1) amortized per call, Θ(|S|×|T|) total; Span Θ(|S|+|T|)
         fn med_recursive_concurrent(&self, i: usize, j: usize) -> usize {
             // Check memo table first
@@ -109,7 +108,6 @@ pub mod TopDownDPMtPer {
             self.med_recursive_parallel(s_len, t_len)
         }
 
-        /// Recursive helper with parallel branch exploration
         /// Claude Work: O(1) per call with memoization, O(|S|*|T|) total
         /// Claude Span: O(log(|S|+|T|)) - parallel recursive branches
         fn med_recursive_parallel(&self, i: usize, j: usize) -> usize {

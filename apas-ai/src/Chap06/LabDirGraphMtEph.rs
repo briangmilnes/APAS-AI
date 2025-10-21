@@ -23,19 +23,19 @@ pub mod LabDirGraphMtEph {
     pub trait LabDirGraphMtEphTrait<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn empty() -> Self;
+        fn empty()                                                                                      -> Self;
         /// APAS: Work Θ(|V| + |A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|V| + |A|), Span Θ(|V| + |A|), Parallelism Θ(1) - sequential
         fn from_vertices_and_labeled_arcs(vertices: SetStEph<V>, labeled_arcs: SetStEph<LabEdge<V, L>>) -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn vertices(&self) -> &SetStEph<V>;
+        fn vertices(&self)                                                                              -> &SetStEph<V>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn labeled_arcs(&self) -> &SetStEph<LabEdge<V, L>>;
+        fn labeled_arcs(&self)                                                                          -> &SetStEph<LabEdge<V, L>>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential map
-        fn arcs(&self) -> SetStEph<Edge<V>>;
+        fn arcs(&self)                                                                                  -> SetStEph<Edge<V>>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn add_vertex(&mut self, v: V);
@@ -44,16 +44,16 @@ pub mod LabDirGraphMtEph {
         fn add_labeled_arc(&mut self, from: V, to: V, label: L);
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential search
-        fn get_arc_label(&self, from: &V, to: &V) -> Option<&L>;
+        fn get_arc_label(&self, from: &V, to: &V)                                                       -> Option<&L>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential search
-        fn has_arc(&self, from: &V, to: &V) -> bool;
+        fn has_arc(&self, from: &V, to: &V)                                                             -> bool;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
-        fn out_neighbors(&self, v: &V) -> SetStEph<V>;
+        fn out_neighbors(&self, v: &V)                                                                  -> SetStEph<V>;
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
-        fn in_neighbors(&self, v: &V) -> SetStEph<V>;
+        fn in_neighbors(&self, v: &V)                                                                   -> SetStEph<V>;
     }
 
     impl<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static> LabDirGraphMtEphTrait<V, L>

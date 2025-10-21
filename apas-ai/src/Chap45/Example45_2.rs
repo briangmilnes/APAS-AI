@@ -5,32 +5,33 @@ pub mod Example45_2 {
 
     use crate::Chap45::HeapsortExample::HeapsortExample::*;
     use crate::Types::Types::*;
+    pub type T = N;
 
     /// Trait for Example 45.2 operations
     pub trait Example45_2Trait {
         /// Example 45.2: Textbook heapsort demonstration
         /// APAS: Work Θ(n log n), Span Θ(n log n)
-        fn example_45_2_textbook_example() -> HeapsortComparison<i32>;
+        fn example_45_2_textbook_example()         -> HeapsortComparison<i32>;
 
         /// Example 45.2: Reverse-sorted input demonstration
         /// APAS: Work Θ(n log n), Span Θ(n log n)
-        fn example_45_2_reverse_sorted() -> HeapsortComparison<i32>;
+        fn example_45_2_reverse_sorted()           -> HeapsortComparison<i32>;
 
         /// Example 45.2: Already-sorted input demonstration
         /// APAS: Work Θ(n log n), Span Θ(n log n)
-        fn example_45_2_already_sorted() -> HeapsortComparison<i32>;
+        fn example_45_2_already_sorted()           -> HeapsortComparison<i32>;
 
         /// Example 45.2: Input with duplicates demonstration
         /// APAS: Work Θ(n log n), Span Θ(n log n)
-        fn example_45_2_duplicates() -> HeapsortComparison<i32>;
+        fn example_45_2_duplicates()               -> HeapsortComparison<i32>;
 
         /// Example 45.2: Single element demonstration
         /// APAS: Work Θ(1), Span Θ(1)
-        fn example_45_2_single_element() -> HeapsortComparison<i32>;
+        fn example_45_2_single_element()           -> HeapsortComparison<i32>;
 
         /// Example 45.2: Empty input demonstration
         /// APAS: Work Θ(1), Span Θ(1)
-        fn example_45_2_empty() -> HeapsortComparison<i32>;
+        fn example_45_2_empty()                    -> HeapsortComparison<i32>;
 
         /// Example 45.2: Efficiency comparison demonstration
         /// APAS: Work Θ(n²), Span Θ(n²) - dominated by worst implementation
@@ -38,7 +39,7 @@ pub mod Example45_2 {
 
         /// Run comprehensive demonstration of Example 45.2
         /// APAS: Work Θ(n²), Span Θ(n²) - dominated by worst implementation
-        fn run_example_45_2() -> String;
+        fn run_example_45_2()                      -> String;
     }
 
     /// Example 45.2: Textbook heapsort demonstration

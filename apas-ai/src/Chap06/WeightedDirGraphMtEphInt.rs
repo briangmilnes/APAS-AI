@@ -20,11 +20,11 @@ pub mod WeightedDirGraphMtEphInt {
     pub trait WeightedDirGraphMtEphIntTrait<V: StT + MtT + Hash + 'static> {
         fn from_weighted_edges(vertices: SetStEph<V>, edges: SetStEph<Triple<V, V, i32>>) -> Self;
         fn add_weighted_edge(&mut self, from: V, to: V, weight: i32);
-        fn get_edge_weight(&self, from: &V, to: &V) -> Option<i32>;
-        fn weighted_edges(&self) -> SetStEph<Triple<V, V, i32>>;
-        fn out_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, i32>>;
-        fn in_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, i32>>;
-        fn total_weight(&self) -> i32;
+        fn get_edge_weight(&self, from: &V, to: &V)                                       -> Option<i32>;
+        fn weighted_edges(&self)                                                          -> SetStEph<Triple<V, V, i32>>;
+        fn out_neighbors_weighted(&self, v: &V)                                           -> SetStEph<Pair<V, i32>>;
+        fn in_neighbors_weighted(&self, v: &V)                                            -> SetStEph<Pair<V, i32>>;
+        fn total_weight(&self)                                                            -> i32;
     }
 
     impl<V: StT + MtT + Hash + 'static> WeightedDirGraphMtEphIntTrait<V> for WeightedDirGraphMtEphInt<V> {

@@ -66,8 +66,6 @@ pub mod BSTKeyValueStEph {
 
 
     impl<K: StT + Ord, V: StT> BSTKeyValueStEph<K, V> {
-        // Private helper methods only - no public delegation
-
         fn rotate_left(link: &mut Link<K, V>) {
             if let Some(mut x) = link.take() {
                 if let Some(mut y) = x.right.take() {

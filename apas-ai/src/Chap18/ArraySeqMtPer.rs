@@ -25,48 +25,48 @@ pub mod ArraySeqMtPer {
     pub trait ArraySeqMtPerBaseTrait<T: StTInMtT> {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn new(length: N, init_value: T) -> Self;
+        fn new(length: N, init_value: T)                                        -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn length(&self) -> N;
+        fn length(&self)                                                        -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn nth(&self, index: N) -> &T;
+        fn nth(&self, index: N)                                                 -> &T;
         /// APAS: Work Θ(len), Span Θ(1)
         /// claude-4-sonet: Work Θ(len), Span Θ(len), Parallelism Θ(1) - sequential copy
-        fn subseq_copy(&self, start: N, length: N) -> Self;
+        fn subseq_copy(&self, start: N, length: N)                              -> Self;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - copies entire array
-        fn set(&self, index: N, item: T) -> Result<ArraySeqMtPerS<T>, &'static str>;
+        fn set(&self, index: N, item: T)                                        -> Result<ArraySeqMtPerS<T>, &'static str>;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
         fn ninject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> Self;
         /// APAS: Work Θ(Σ|ss[i]|), Span Θ(1)
         /// claude-4-sonet: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|), Parallelism Θ(1) - sequential
-        fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> Self;
+        fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>)                      -> Self;
         /// APAS: Work Θ(|a|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - sequential with linear search
         fn collect<K: StTInMtT, V: StTInMtT>(
             a: &ArraySeqMtPerS<Pair<K, V>>,
             cmp: fn(&K, &K) -> O,
         ) -> ArraySeqMtPerS<Pair<K, ArraySeqMtPerS<V>>>;
-        fn inject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> Self;
+        fn inject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>)  -> Self;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(1)
-        fn from_vec(values: Vec<T>) -> Self;
+        fn from_vec(values: Vec<T>)                                             -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn iter(&self) -> Iter<'_, T>;
+        fn iter(&self)                                                          -> Iter<'_, T>;
     }
 
     // Redefinable trait: Methods that Chap19 might redefine
     pub trait ArraySeqMtPerRedefinableTrait<T: StTInMtT> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn empty() -> Self;
+        fn empty()                                               -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn singleton(item: T) -> Self;
+        fn singleton(item: T)                                    -> Self;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
@@ -80,13 +80,13 @@ pub mod ArraySeqMtPer {
             T: 'static;
         /// APAS: Work Θ(|a|+|b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|+|b|), Span Θ(|a|+|b|), Parallelism Θ(1) - sequential
-        fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> Self;
+        fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>)  -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
         fn filter<F: PredMt<T>>(a: &ArraySeqMtPerS<T>, pred: &F) -> Self;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - copies entire array
-        fn update(a: &ArraySeqMtPerS<T>, item_at: Pair<N, T>) -> Self;
+        fn update(a: &ArraySeqMtPerS<T>, item_at: Pair<N, T>)    -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
         fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A;
@@ -105,8 +105,8 @@ pub mod ArraySeqMtPer {
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T);
-        fn isEmpty(&self) -> B;
-        fn isSingleton(&self) -> B;
+        fn isEmpty(&self)                                        -> B;
+        fn isSingleton(&self)                                    -> B;
     }
 
     impl<T: StTInMtT> ArraySeqMtPerBaseTrait<T> for ArraySeqMtPerS<T> {

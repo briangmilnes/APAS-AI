@@ -16,9 +16,9 @@ pub mod ArraySeqMtPer {
     pub trait ArraySeqMtPerTrait<T: StTInMtT>: ArraySeqMtPerBaseTrait<T> {
         // Chapter 19 algorithmic implementations (override Chap18)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                                                              -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> Self;
+        fn singleton(item: T)                                                   -> Self;
         /// claude-4-sonet: Work Θ(n + Σᵢ W(f(i))), Span Θ(log n + maxᵢ S(f(i))), Parallelism Θ(n)
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T>;
         /// claude-4-sonet: Work Θ(|a| + Σₓ W(f(x))), Span Θ(log |a| + maxₓ S(f(x))), Parallelism Θ(|a|)
@@ -29,11 +29,11 @@ pub mod ArraySeqMtPer {
         where
             T: 'static;
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(log(|a| + |b|)), Parallelism Θ((|a|+|b|)/log(|a|+|b|))
-        fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> Self;
+        fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>)                 -> Self;
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(log |a| + maxᵢ S(f(aᵢ))), Parallelism Θ(|a|)
-        fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtPerS<T>, pred: F) -> Self;
+        fn filter<F: PredMt<T> + Clone>(a: &ArraySeqMtPerS<T>, pred: F)         -> Self;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(log |a|), Parallelism Θ(|a|/log |a|)
-        fn update_single(a: &ArraySeqMtPerS<T>, index: N, item: T) -> Self;
+        fn update_single(a: &ArraySeqMtPerS<T>, index: N, item: T)              -> Self;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
         fn iterate<A: StTInMtT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, x: A) -> A;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
@@ -57,11 +57,11 @@ pub mod ArraySeqMtPer {
             change_index: N,
         );
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(a: &ArraySeqMtPerS<T>) -> bool;
-        fn isSingleton(a: &ArraySeqMtPerS<T>) -> bool;
-        fn append_select(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> Self;
+        fn isEmpty(a: &ArraySeqMtPerS<T>)                                       -> bool;
+        fn isSingleton(a: &ArraySeqMtPerS<T>)                                   -> bool;
+        fn append_select(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>)          -> Self;
         fn select<'a>(a: &'a ArraySeqMtPerS<T>, b: &'a ArraySeqMtPerS<T>, i: N) -> Option<&'a T>;
-        fn deflate<F: PredMt<T>>(f: &F, x: &T) -> Self;
+        fn deflate<F: PredMt<T>>(f: &F, x: &T)                                  -> Self;
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtPerTrait<T> for ArraySeqMtPerS<T> {
@@ -266,7 +266,6 @@ pub mod ArraySeqMtPer {
         }
 
         fn deflate<F: PredMt<T>>(f: &F, x: &T) -> ArraySeqMtPerS<T> {
-            // Helper for filter: deflate f x = if f(x) then [x] else []
             if f(x) {
                 <ArraySeqMtPerS<T> as ArraySeqMtPerTrait<T>>::singleton(x.clone())
             } else {

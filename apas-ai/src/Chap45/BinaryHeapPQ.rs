@@ -16,37 +16,37 @@ pub mod BinaryHeapPQ {
     /// Trait defining the Meldable Priority Queue ADT operations (Data Type 45.1)
     pub trait BinaryHeapPQTrait<T: StT + Ord> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                           -> Self;
 
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(element: T) -> Self;
+        fn singleton(element: T)             -> Self;
 
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         /// Returns the minimum element (root of min-heap), or None if empty
-        fn find_min(&self) -> Option<&T>;
+        fn find_min(&self)                   -> Option<&T>;
 
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Inserts element and bubbles up to maintain heap property
-        fn insert(&self, element: T) -> Self;
+        fn insert(&self, element: T)         -> Self;
 
         /// claude-4-sonet: Work Θ(log n), Span Θ(log n), Parallelism Θ(1)
         /// Removes root (minimum) and bubbles down to maintain heap property
-        fn delete_min(&self) -> (Self, Option<T>)
+        fn delete_min(&self)                 -> (Self, Option<T>)
         where
             Self: Sized;
 
         /// claude-4-sonet: Work Θ(m + n), Span Θ(m + n), Parallelism Θ(1)
         /// Melds two heaps by concatenating and re-heapifying
-        fn meld(&self, other: &Self) -> Self;
+        fn meld(&self, other: &Self)         -> Self;
 
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
         /// Creates heap from sequence using bottom-up heapify
         fn from_seq(seq: &ArraySeqStPerS<T>) -> Self;
 
         /// Helper methods
-        fn size(&self) -> N;
-        fn is_empty(&self) -> bool;
-        fn to_seq(&self) -> ArraySeqStPerS<T>;
+        fn size(&self)                       -> N;
+        fn is_empty(&self)                   -> bool;
+        fn to_seq(&self)                     -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT + Ord> BinaryHeapPQ<T> {

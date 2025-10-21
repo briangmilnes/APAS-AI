@@ -21,7 +21,7 @@ pub mod MinEditDistMtPer {
     /// Trait for parallel minimum edit distance operations
     pub trait MinEditDistMtPerTrait<T: MtVal> {
         /// Create new minimum edit distance solver
-        fn new() -> Self
+        fn new()                                                                -> Self
         where
             T: Default;
 
@@ -30,18 +30,18 @@ pub mod MinEditDistMtPer {
 
         /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(min(|S|,|T|))
         /// Compute minimum edit distance with parallel DP where |S|=source length, |T|=target length
-        fn min_edit_distance(&self) -> usize
+        fn min_edit_distance(&self)                                             -> usize
         where
             T: Send + Sync + 'static;
 
         /// Get the source sequence
-        fn source(&self) -> &ArraySeqMtPerS<T>;
+        fn source(&self)                                                        -> &ArraySeqMtPerS<T>;
 
         /// Get the target sequence
-        fn target(&self) -> &ArraySeqMtPerS<T>;
+        fn target(&self)                                                        -> &ArraySeqMtPerS<T>;
 
         /// Get memoization table size
-        fn memo_size(&self) -> usize;
+        fn memo_size(&self)                                                     -> usize;
     }
 
     /// Internal parallel recursive minimum edit distance with shared memoization

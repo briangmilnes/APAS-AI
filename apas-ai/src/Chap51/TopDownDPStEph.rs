@@ -17,7 +17,7 @@ pub mod TopDownDPStEph {
     pub trait TopDownDPStEphTrait<T: StT> {
         /// Create new top-down DP solver
         /// APAS: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                     -> Self;
 
         /// Solve DP problem with memoization
         /// APAS: Work O(n²), Span O(n²)
@@ -53,7 +53,6 @@ pub mod TopDownDPStEph {
             self.med_recursive(s_len, t_len)
         }
 
-        /// Recursive helper with memoization
         /// claude-4-sonet: Work Θ(1) amortized per call, Θ(|S|×|T|) total; Span Θ(|S|+|T|)
         fn med_recursive(&mut self, i: usize, j: usize) -> usize {
             // Check memo table first

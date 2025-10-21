@@ -20,23 +20,23 @@ pub mod Exercise12_5 {
     }
 
     pub trait ConcurrentStackMtTrait<T: StTInMtT> {
-        fn new() -> Self;
+        fn new()           -> Self;
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
         /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n concurrent pushes, Span Θ(1) - CAS retry loop
         fn push(&self, value: T);
         /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
         /// claude-4-sonet: Work Θ(1) expected under low contention, Θ(n) worst case with n concurrent pops, Span Θ(1) - CAS retry loop
-        fn pop(&self) -> Option<T>;
+        fn pop(&self)      -> Option<T>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - single atomic load
         fn is_empty(&self) -> bool;
         /// Pop every element into a Vec for testing/teardown convenience.
         /// APAS: Work Θ(n), Span Θ(n)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) where n=stack size - sequential drain, one pop at a time
-        fn drain(&self) -> Vec<T>;
+        fn drain(&self)    -> Vec<T>;
     }
 
-    /// Raw pop operation returning node pointer (private module helper).
+    /// Raw pop operation returning node pointer
     ///
     /// APAS: Work Θ(1) expected, Θ(n) worst case, Span Θ(1)
     /// claude-4-sonet: Work Θ(1) expected, Θ(n) worst case, Span Θ(1) - CAS retry loop

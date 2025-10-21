@@ -18,9 +18,9 @@ pub mod ArraySeqStEph {
     pub trait ArraySeqStEphTrait<T: StT>: BaseTrait<T> {
         // Chapter 19 algorithmic implementations (override Chap18)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn empty() -> Self;
+        fn empty()                                                        -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn singleton(item: T) -> Self;
+        fn singleton(item: T)                                             -> Self;
         /// APAS: Work Θ(1 + Σ i=0..n-1 W(f(i))), Span Θ(1 + max i=0..n-1 S(f(i)))
         /// claude-4-sonet: Work Θ(n + Σᵢ W(f(i))), Span Θ(n + maxᵢ S(f(i))), Parallelism Θ(1)
         fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> ArraySeqStEphS<T>;
@@ -29,10 +29,10 @@ pub mod ArraySeqStEph {
         fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStEphS<T>, f: &F) -> ArraySeqStEphS<U>;
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1)
-        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> Self;
+        fn append(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>)           -> Self;
         /// APAS: Work Θ(1 + Σ i=0..|a|-1 W(f(a[i]))), Span Θ(1 + max i S(f(a[i])))
         /// claude-4-sonet: Work Θ(|a| + Σᵢ W(f(aᵢ))), Span Θ(|a| + maxᵢ S(f(aᵢ))), Parallelism Θ(1)
-        fn filter<F: PredSt<T>>(a: &ArraySeqStEphS<T>, pred: &F) -> Self;
+        fn filter<F: PredSt<T>>(a: &ArraySeqStEphS<T>, pred: &F)          -> Self;
         /// claude-4-sonet: Work Θ(|a| × W(f)), Span Θ(|a| × S(f)), Parallelism Θ(1)
         fn iterate<A: StT, F: Fn(&A, &T) -> A>(a: &ArraySeqStEphS<T>, f: &F, x: A) -> A;
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
@@ -40,7 +40,7 @@ pub mod ArraySeqStEph {
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1)
         fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T);
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn update(a: &ArraySeqStEphS<T>, index: N, item: T) -> Self;
+        fn update(a: &ArraySeqStEphS<T>, index: N, item: T)               -> Self;
 
         // Chapter 19 specific functions
         /// APAS: Work Θ(1), Span Θ(1)
@@ -48,19 +48,19 @@ pub mod ArraySeqStEph {
         fn select(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>, index: N) -> Option<T>;
         /// APAS: Work Θ(1 + |a| + |b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(|a| + |b|), Parallelism Θ(1)
-        fn append_select(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>) -> Self;
+        fn append_select(a: &ArraySeqStEphS<T>, b: &ArraySeqStEphS<T>)    -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn deflate<F: PredSt<T>>(f: &F, x: &T) -> Self;
+        fn deflate<F: PredSt<T>>(f: &F, x: &T)                            -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isEmpty(a: &ArraySeqStEphS<T>) -> bool;
+        fn isEmpty(a: &ArraySeqStEphS<T>)                                 -> bool;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn isSingleton(a: &ArraySeqStEphS<T>) -> bool;
+        fn isSingleton(a: &ArraySeqStEphS<T>)                             -> bool;
         /// Inject updates into base sequence. Updates is a vector of (index, value) pairs.
         /// If multiple updates target the same index, the last update wins.
         /// APAS: Work Θ(|base| + |updates|), Span Θ(|base| + |updates|)
         /// claude-4-sonet: Work Θ(|base| + |updates|), Span Θ(|base| + |updates|), Parallelism Θ(1)
-        fn inject(base: &ArraySeqStEphS<T>, updates: &[(N, T)]) -> Self;
+        fn inject(base: &ArraySeqStEphS<T>, updates: &[(N, T)])           -> Self;
     }
 
     impl<T: StT> ArraySeqStEphTrait<T> for ArraySeqStEphS<T> {
@@ -139,7 +139,6 @@ pub mod ArraySeqStEph {
         }
 
         fn deflate<F: PredSt<T>>(f: &F, x: &T) -> ArraySeqStEphS<T> {
-            // Helper for filter: deflate f x = if f(x) then [x] else []
             if f(x) {
                 <ArraySeqStEphS<T> as ArraySeqStEphTrait<T>>::singleton(x.clone())
             } else {

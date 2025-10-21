@@ -13,11 +13,12 @@ pub mod SpanTreeStEph {
     use crate::Chap62::StarContractionStEph::StarContractionStEph::star_contract;
     use crate::SetLit;
     use crate::Types::Types::*;
+    pub type T<V> = UnDirGraphStEph<V>;
 
     pub trait SpanTreeStEphTrait {
         /// Sequential spanning tree via star contraction
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)
-        fn spanning_tree_star_contraction<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> SetStEph<Edge<V>>;
+        fn spanning_tree_star_contraction<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>)                 -> SetStEph<Edge<V>>;
 
         /// Verify spanning tree properties
         /// APAS: Work O(|V| + |E|), Span O(|V| + |E|)

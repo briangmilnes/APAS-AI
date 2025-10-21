@@ -9,6 +9,7 @@ pub mod BFSStEph {
 
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
+    pub type T<N> = ArraySeqStEphS<ArraySeqStEphS<N>>;
 
     pub trait BFSStEphTrait {
         /// Performs BFS from source vertex s on adjacency list graph G

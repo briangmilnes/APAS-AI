@@ -19,6 +19,7 @@ pub mod PrimStEph {
     use crate::Chap45::BinaryHeapPQ::BinaryHeapPQ::*;
     use crate::SetLit;
     use crate::Types::Types::*;
+    pub type T<V> = PQEntry<V>;
 
     pub trait PrimStEphTrait {
         /// Prim's MST algorithm
@@ -35,7 +36,7 @@ pub mod PrimStEph {
 
     /// Priority queue entry for Prim's algorithm
     #[derive(Clone, Eq, PartialEq, Debug)]
-    struct PQEntry<V: StT + Hash + Ord> {
+    pub struct PQEntry<V: StT + Hash + Ord> {
         priority: OrderedFloat<f64>,
         vertex: V,
         parent: Option<V>,

@@ -25,6 +25,7 @@ pub mod JohnsonMtEphInt {
     use crate::Chap57::DijkstraStEphInt::DijkstraStEphInt::dijkstra;
     use crate::Chap58::BellmanFordStEphInt::BellmanFordStEphInt::bellman_ford;
     use crate::Types::Types::*;
+    pub type T = WeightedDirGraphMtEphInt<usize>;
 
     pub trait JohnsonMtEphIntTrait {
         /// Parallel Johnson's all-pairs shortest path algorithm

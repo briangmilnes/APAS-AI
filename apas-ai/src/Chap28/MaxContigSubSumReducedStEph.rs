@@ -6,6 +6,7 @@ pub mod MaxContigSubSumReducedStEph {
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
     use crate::Types::Types::*;
+    pub type T = ArraySeqStEphS<i32>;
 
     fn max_with_neginf(a: Option<i32>, b: Option<i32>) -> Option<i32> {
         match (a, b) {

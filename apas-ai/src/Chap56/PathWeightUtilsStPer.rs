@@ -17,6 +17,7 @@ pub mod PathWeightUtilsStPer {
 
     use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
+    pub type T = ArraySeqStPerS<usize>;
 
     pub trait PathWeightUtilsStPerTrait {
         /// Claude Work: O(k), Span: O(k) where k is path length

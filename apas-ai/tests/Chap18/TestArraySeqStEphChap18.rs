@@ -96,7 +96,7 @@ fn test_flatten() {
 
 #[test]
 fn test_update_sequence() {
-    // Eph: update mutates a clone (via update helper)
+    // Eph: update mutates a clone
     let a = ArraySeqStEphSLit!["hello", "world", "test"];
     let mut b = a.clone();
     let _ = b.update(Pair(1, "rust"));

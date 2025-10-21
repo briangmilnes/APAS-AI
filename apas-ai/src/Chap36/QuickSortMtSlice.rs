@@ -9,17 +9,18 @@ pub mod Chapter36MtSlice {
 
     use crate::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
     use crate::Types::Types::*;
+    pub type T<T> = ArraySeqMtEphSliceS<T>;
 
     pub trait Chapter36MtSliceTrait<T: StTInMtT + Ord> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time pivot selection
-        fn pivot_mt_first(&self, lo: N, hi: N) -> T;
+        fn pivot_mt_first(&self, lo: N, hi: N)   -> T;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time median-of-3
         fn pivot_mt_median3(&self, lo: N, hi: N) -> T;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - constant time random selection
-        fn pivot_mt_random(&self, lo: N, hi: N) -> T;
+        fn pivot_mt_random(&self, lo: N, hi: N)  -> T;
         /// APAS: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst
         /// claude-4-sonet: Work Θ(n log n) expected, Θ(n²) worst, Span Θ(log² n) expected, Θ(n) worst, Parallelism Θ(n/log n) expected - parallel divide-and-conquer with unconditional thread spawning (slice-based)
         fn quick_sort_mt_first(&self);

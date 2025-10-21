@@ -9,6 +9,7 @@ pub mod ScanContractMtEph {
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::ParaPair;
     use crate::Types::Types::*;
+    pub type T<T> = ArraySeqMtEphS<T>;
 
     pub trait ScanContractMtEphTrait<T: StTInMtT> {
         /// Scan a sequence using parallel contraction: contract→solve→expand.

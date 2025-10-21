@@ -8,6 +8,7 @@ pub mod DFSStEph {
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
     use crate::Types::Types::*;
+    pub type T<N> = ArraySeqStEphS<ArraySeqStEphS<N>>;
 
     pub trait DFSStEphTrait {
         /// Performs DFS from source vertex s on adjacency list graph G

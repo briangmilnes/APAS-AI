@@ -9,6 +9,7 @@ pub mod TopoSortStPer {
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::{AVLTreeSeqStPerS, AVLTreeSeqStPerTrait};
     use crate::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
     use crate::Types::Types::*;
+    pub type T<N> = ArraySeqStPerS<ArraySeqStPerS<N>>;
 
     pub trait TopoSortStPerTrait {
         /// Computes topological sort of a DAG

@@ -22,7 +22,7 @@ pub mod MinEditDistStPer {
     /// Trait for minimum edit distance operations
     pub trait MinEditDistStPerTrait<T: StT> {
         /// Create new minimum edit distance solver
-        fn new() -> Self
+        fn new()                                                                -> Self
         where
             T: Default;
 
@@ -31,16 +31,16 @@ pub mod MinEditDistStPer {
 
         /// Compute minimum edit distance between sequences
         /// claude-4-sonet: Work Θ(|S|×|T|), Span Θ(|S|+|T|), Parallelism Θ(1)
-        fn min_edit_distance(&self) -> usize;
+        fn min_edit_distance(&self)                                             -> usize;
 
         /// Get the source sequence
-        fn source(&self) -> &ArraySeqStPerS<T>;
+        fn source(&self)                                                        -> &ArraySeqStPerS<T>;
 
         /// Get the target sequence
-        fn target(&self) -> &ArraySeqStPerS<T>;
+        fn target(&self)                                                        -> &ArraySeqStPerS<T>;
 
         /// Get memoization table size
-        fn memo_size(&self) -> usize;
+        fn memo_size(&self)                                                     -> usize;
     }
 
     /// Internal recursive minimum edit distance with memoization

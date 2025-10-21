@@ -27,33 +27,33 @@ pub mod WeightedDirGraphStEphInt {
         /// Get the weight of an edge, if it exists
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential search
-        fn get_edge_weight(&self, from: &V, to: &V) -> Option<i32>;
+        fn get_edge_weight(&self, from: &V, to: &V)                                       -> Option<i32>;
 
         /// Get all weighted edges as (from, to, weight) tuples
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential map
-        fn weighted_edges(&self) -> SetStEph<Triple<V, V, i32>>;
+        fn weighted_edges(&self)                                                          -> SetStEph<Triple<V, V, i32>>;
 
         /// Get outgoing neighbors with weights
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential filter
-        fn out_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, i32>>;
+        fn out_neighbors_weighted(&self, v: &V)                                           -> SetStEph<Pair<V, i32>>;
 
         /// Get incoming neighbors with weights
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential filter
-        fn in_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, i32>>;
+        fn in_neighbors_weighted(&self, v: &V)                                            -> SetStEph<Pair<V, i32>>;
 
         /// Get the total weight of all edges
         /// APAS: Work Θ(|A|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|A|), Span Θ(|A|), Parallelism Θ(1) - sequential sum
-        fn total_weight(&self) -> i32;
+        fn total_weight(&self)                                                            -> i32;
 
         /// Get edges with weight greater than threshold
-        fn edges_above_weight(&self, threshold: i32) -> SetStEph<Triple<V, V, i32>>;
+        fn edges_above_weight(&self, threshold: i32)                                      -> SetStEph<Triple<V, V, i32>>;
 
         /// Get edges with weight less than threshold
-        fn edges_below_weight(&self, threshold: i32) -> SetStEph<Triple<V, V, i32>>;
+        fn edges_below_weight(&self, threshold: i32)                                      -> SetStEph<Triple<V, V, i32>>;
     }
 
     /// Trait implementation for WeightedDirGraphStEphInt

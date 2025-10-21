@@ -30,26 +30,26 @@ pub mod OptBinSearchTreeStPer {
     /// Trait for optimal BST operations
     pub trait OBSTStPerTrait<T: StT> {
         /// Create new optimal BST solver
-        fn new() -> Self;
+        fn new()                                                  -> Self;
 
         /// Create from keys and probabilities
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self;
 
         /// Create from key-probability pairs
-        fn from_key_probs(key_probs: Vec<KeyProb<T>>) -> Self;
+        fn from_key_probs(key_probs: Vec<KeyProb<T>>)             -> Self;
 
         /// Compute optimal BST cost using dynamic programming
         /// claude-4-sonet: Work Θ(n³), Span Θ(n²), Parallelism Θ(1)
-        fn optimal_cost(&self) -> Probability;
+        fn optimal_cost(&self)                                    -> Probability;
 
         /// Get the keys with probabilities
-        fn keys(&self) -> &Vec<KeyProb<T>>;
+        fn keys(&self)                                            -> &Vec<KeyProb<T>>;
 
         /// Get number of keys
-        fn num_keys(&self) -> usize;
+        fn num_keys(&self)                                        -> usize;
 
         /// Get memoization table size
-        fn memo_size(&self) -> usize;
+        fn memo_size(&self)                                       -> usize;
     }
 
     impl<T: StT> OBSTStPerS<T> {
