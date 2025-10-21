@@ -12,7 +12,6 @@ pub mod HeapsortExample {
     use crate::Chap45::UnsortedListPQ::UnsortedListPQ::{UnsortedListPQ, *};
     use crate::Types::Types::*;
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait HeapsortTrait {
         /// Heapsort using UnsortedListPQ
         /// Claude Work: Θ(n²), Span: Θ(n²) - inefficient due to O(n) deleteMin
@@ -211,7 +210,6 @@ pub mod HeapsortExample {
         }
     }
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     /// Example from textbook - demonstrate heapsort on a small dataset
     pub fn textbook_example() -> HeapsortComparison<i32> {
         let input = vec![64, 34, 25, 12, 22, 11, 90];
@@ -271,7 +269,6 @@ pub mod HeapsortExample {
         inputs
     }
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     /// Analyze the theoretical complexity of each heapsort variant
     pub fn complexity_analysis() -> Vec<(String, String, String)> {
         vec![
@@ -319,7 +316,6 @@ pub mod HeapsortExample {
             .all(|comparison| comparison.all_results_match() && comparison.all_results_sorted())
     }
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     /// Convert Vec to ArraySeqStPerS for use with APAS sequence types
     pub fn vec_to_array_seq<T: StT>(vec: &[T]) -> ArraySeqStPerS<T> {
         let mut result = ArraySeqStPerS::empty();

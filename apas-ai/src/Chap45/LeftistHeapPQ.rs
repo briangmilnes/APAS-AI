@@ -442,7 +442,6 @@ pub mod LeftistHeapPQ {
         let _: LeftistHeapPQ<i32> = LeftistHeapPQLit![1, 2, 3];
     }
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     /// Demonstrate the power of O(log n) meld operations
     /// This would be much slower with other priority queue implementations!
     pub fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T> {

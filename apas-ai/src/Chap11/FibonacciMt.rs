@@ -7,7 +7,6 @@ pub mod FibonacciMt {
     use crate::ParaPair;
     use crate::Types::Types::*;
 
-    // A dummy trait as a minimal type checking comment and space for algorithmic analysis.
     pub trait FibonacciMtTrait {
         /// APAS: Work Θ(φⁿ), Span Θ(n)
         /// claude-4-sonet: Work Θ(φⁿ), Span Θ(n), Parallelism Θ(φⁿ/n) - parallel binary recursion via ParaPair!
