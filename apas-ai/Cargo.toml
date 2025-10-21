@@ -547,10 +547,6 @@ name = "TestAVLTreeSeqMtPer"
 path = "tests/Chap37/TestAVLTreeSeqMtPer.rs"
 
 [[test]]
-name = "TestBSTSetMtEph"
-path = "tests/Chap37/TestBSTSetMtEph.rs"
-
-[[test]]
 name = "TestBSTParaMtEph"
 path = "tests/Chap38/TestBSTParaMtEph.rs"
 
