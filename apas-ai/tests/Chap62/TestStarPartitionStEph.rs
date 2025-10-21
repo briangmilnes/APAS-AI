@@ -8,7 +8,6 @@ use apas_ai::{
 };
 use std::collections::HashMap;
 
-// Helper to create a cycle graph
 fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {
     let mut vertices = SetLit![];
     for i in 0..n {
@@ -23,7 +22,6 @@ fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {
     <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(vertices, edges)
 }
 
-// Helper to create a star graph
 fn create_star_graph(n: N) -> UnDirGraphStEph<N> {
     if n == 0 {
         return <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::empty();

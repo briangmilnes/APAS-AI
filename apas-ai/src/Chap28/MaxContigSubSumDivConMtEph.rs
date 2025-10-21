@@ -24,7 +24,7 @@ pub mod MaxContigSubSumDivConMtEph {
         }
     }
 
-    /// Helper to find max suffix sum using inclusive prefix sums.
+    /// find max suffix sum using inclusive prefix sums.
     fn max_suffix_sum(a: &ArraySeqMtEphS<i32>) -> i32 {
         if a.length() == 0 {
             return i32::MIN / 2; // treat as -∞
@@ -41,7 +41,7 @@ pub mod MaxContigSubSumDivConMtEph {
         total - min_prefix
     }
 
-    /// Helper to find max prefix sum using inclusive prefix sums.
+    /// find max prefix sum using inclusive prefix sums.
     fn max_prefix_sum(a: &ArraySeqMtEphS<i32>) -> i32 {
         if a.length() == 0 {
             return i32::MIN / 2; // treat as -∞

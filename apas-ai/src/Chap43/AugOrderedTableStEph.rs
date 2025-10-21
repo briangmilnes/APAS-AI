@@ -325,12 +325,10 @@ pub mod AugOrderedTableStEph {
     where
         F: Fn(&V, &V) -> V + Clone,
     {
-        /// Helper to recalculate reduction from current base table
         fn recalculate_reduction(&self) -> V {
             Self::calculate_reduction(&self.base_table, &self.reducer, &self.identity)
         }
 
-        /// Helper to calculate reduction from any base table
         fn calculate_reduction(base: &OrderedTableStEph<K, V>, reducer: &F, identity: &V) -> V {
             if base.size() == 0 {
                 return identity.clone();

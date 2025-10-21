@@ -111,8 +111,6 @@ pub mod BSTReducedStEph {
     }
 
     impl<K: StT + Ord, V: StT, R: StT, Op: ReduceOp<V, R>> BSTReducedStEph<K, V, R, Op> {
-        // Private helper methods only - no public delegation
-
         fn size_link(link: &Link<K, V, R>) -> N { link.as_ref().map_or(0, |n| n.size) }
 
         fn reduced_value_link(link: &Link<K, V, R>) -> R {

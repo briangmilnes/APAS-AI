@@ -119,8 +119,7 @@ pub mod ConnectivityMtEph {
         (representatives, component_map)
     }
 
-    /// Helper: Build quotient graph edges in parallel
-    ///
+    /// Build quotient graph edges in parallel
     /// Work O(m), Span O(lg m), Parallelism Θ(m/lg m)
     fn build_quotient_edges_parallel<V: StT + MtT + Hash + Ord + 'static>(
         graph: &UnDirGraphMtEph<V>,
@@ -189,10 +188,8 @@ pub mod ConnectivityMtEph {
         result
     }
 
-    /// Helper: Compose maps in parallel (P ∘ C)
-    ///
+    /// Compose maps in parallel (P ∘ C)
     /// For each (u → v) in P, output (u → C[v])
-    ///
     /// Work O(|P|), Span O(lg |P|), Parallelism Θ(|P|/lg |P|)
     fn compose_maps_parallel<V: StT + MtT + Hash + Ord + 'static>(
         partition_map: &HashMap<V, V>,

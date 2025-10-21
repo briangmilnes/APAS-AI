@@ -165,7 +165,6 @@ pub mod TSPApproxMtEph {
         total
     }
 
-    /// Helper to get neighbors of a vertex
     fn get_neighbors<V: StT + MtT + Hash + Ord>(
         graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>,
         v: &V,
@@ -182,7 +181,6 @@ pub mod TSPApproxMtEph {
         neighbors
     }
 
-    /// Helper to get edge weight
     fn get_edge_weight<V: StT + MtT + Hash + Ord>(
         graph: &LabUnDirGraphMtEph<V, OrderedFloat<f64>>,
         u: &V,

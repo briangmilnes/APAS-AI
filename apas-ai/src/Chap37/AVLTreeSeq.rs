@@ -386,8 +386,6 @@ pub mod AVLTreeSeq {
         }
     }
 
-    // ---- Internal helpers ----
-
     fn h<T: StT>(n: &Link<T>) -> N { n.as_ref().map_or(0, |b| b.height) }
     fn size_link<T: StT>(n: &Link<T>) -> N {
         if let Some(b) = n {

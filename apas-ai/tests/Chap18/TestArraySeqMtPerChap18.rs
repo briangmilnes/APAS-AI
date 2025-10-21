@@ -15,7 +15,6 @@ fn const_42(_i: N) -> N { 42 }
 fn format_item(i: N) -> String { format!("item_{i}") }
 fn is_even_bool(i: N) -> B { i % 2 == 0 }
 
-// Helper function for set equality comparison
 fn assert_set_eq<T: PartialEq + Debug>(actual: &[T], expected: &[T]) {
     assert_eq!(actual.len(), expected.len());
     for val in actual {

@@ -347,8 +347,6 @@ fn test_trait_join_two() {
     assert_eq!(joined.as_slice(), &[1, 2, 3, 4, 5]);
 }
 
-// Generic helper functions to force trait dispatch
-
 fn generic_as_slice<T: StT, S: PrimTreeSeqStTrait<T>>(seq: &S) -> &[T] { seq.as_slice() }
 
 fn generic_length<T: StT, S: PrimTreeSeqStTrait<T>>(seq: &S) -> N { seq.length() }

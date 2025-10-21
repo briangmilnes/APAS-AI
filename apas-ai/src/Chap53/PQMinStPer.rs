@@ -85,7 +85,6 @@ pub mod PQMinStPer {
         G: Fn(&V) -> AVLTreeSetStPer<V>,
         PF: PriorityFn<V, P>,
     {
-        // Helper: find minimum priority vertex in frontier
         fn find_min_priority<V: StT + Ord, P: StT + Ord>(frontier: &AVLTreeSetStPer<Pair<Pair<P, V>, V>>) -> Option<V> {
             if frontier.size() == 0 {
                 None

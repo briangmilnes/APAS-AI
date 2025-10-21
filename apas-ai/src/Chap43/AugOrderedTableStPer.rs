@@ -360,12 +360,10 @@ pub mod AugOrderedTableStPer {
     where
         F: Fn(&V, &V) -> V + Clone,
     {
-        /// Helper to recalculate reduction from base table
         fn recalculate_reduction(&self, base: &OrderedTableStPer<K, V>) -> V {
             Self::calculate_reduction(base, &self.reducer, &self.identity)
         }
 
-        /// Helper to calculate reduction from any base table
         fn calculate_reduction(base: &OrderedTableStPer<K, V>, reducer: &F, identity: &V) -> V {
             if base.size() == 0 {
                 return identity.clone();

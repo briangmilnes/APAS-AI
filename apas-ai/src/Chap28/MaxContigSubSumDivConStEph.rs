@@ -21,7 +21,7 @@ pub mod MaxContigSubSumDivConStEph {
         }
     }
 
-    /// Helper to find max suffix sum (MCSSE problem).
+    /// find max suffix sum (MCSSE problem).
     fn max_suffix_sum(a: &ArraySeqStEphS<i32>) -> i32 {
         if a.length() == 0 {
             return i32::MIN / 2; // treat as -∞
@@ -39,7 +39,7 @@ pub mod MaxContigSubSumDivConStEph {
         total - min_prefix
     }
 
-    /// Helper to find max prefix sum (MCSSS problem).
+    /// find max prefix sum (MCSSS problem).
     fn max_prefix_sum(a: &ArraySeqStEphS<i32>) -> i32 {
         if a.length() == 0 {
             return i32::MIN / 2; // treat as -∞

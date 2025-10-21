@@ -6,7 +6,6 @@ use apas_ai::{
     Chap63::ConnectivityStEph::ConnectivityStEph::*, SetLit, Types::Types::*,
 };
 
-// Helper to create a simple connected graph
 fn create_connected_graph() -> UnDirGraphStEph<N> {
     let mut vertices = SetLit![];
     for i in 0..6 {
@@ -20,7 +19,6 @@ fn create_connected_graph() -> UnDirGraphStEph<N> {
     <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(vertices, edges)
 }
 
-// Helper to create a graph with multiple components
 fn create_multi_component_graph() -> UnDirGraphStEph<N> {
     let mut vertices = SetLit![];
     for i in 0..8 {

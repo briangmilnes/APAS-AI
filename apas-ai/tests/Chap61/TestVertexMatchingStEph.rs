@@ -8,7 +8,6 @@ use apas_ai::{
     Chap61::VertexMatchingStEph::VertexMatchingStEph::*, SetLit, Types::Types::*,
 };
 
-/// Helper: Create a cycle graph with n vertices
 fn create_cycle_graph(n: usize) -> UnDirGraphStEph<usize> {
     let mut vertices: SetStEph<usize> = SetLit![];
     let mut edges: SetStEph<Edge<usize>> = SetLit![];
@@ -26,7 +25,6 @@ fn create_cycle_graph(n: usize) -> UnDirGraphStEph<usize> {
     <UnDirGraphStEph<usize> as UnDirGraphStEphTrait<usize>>::FromSets(vertices, edges)
 }
 
-/// Helper: Create a star graph with n satellites
 fn create_star_graph(n: usize) -> UnDirGraphStEph<usize> {
     let mut vertices: SetStEph<usize> = SetLit![];
     let mut edges: SetStEph<Edge<usize>> = SetLit![];

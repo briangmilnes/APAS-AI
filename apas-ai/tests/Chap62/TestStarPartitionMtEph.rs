@@ -6,7 +6,6 @@ use apas_ai::{
     Chap62::StarPartitionMtEph::StarPartitionMtEph::*, SetLit, Types::Types::*,
 };
 
-// Helper to create a cycle graph
 fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {
     let mut vertices = SetLit![];
     for i in 0..n {
@@ -21,7 +20,6 @@ fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {
     <UnDirGraphMtEph<N> as UnDirGraphMtEphTrait<N>>::FromSets(vertices, edges)
 }
 
-// Helper to create a star graph
 fn create_star_graph(n: N) -> UnDirGraphMtEph<N> {
     if n == 0 {
         return <UnDirGraphMtEph<N> as UnDirGraphMtEphTrait<N>>::empty();

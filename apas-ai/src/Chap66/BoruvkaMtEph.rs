@@ -319,10 +319,8 @@ pub mod BoruvkaMtEph {
         left_result
     }
 
-    /// Helper: Create Borůvka MST with a specific seed
+    /// Create Borůvka MST with a specific seed
     ///
-    /// APAS: Work O(m log n), Span O(log² n)
-    /// claude-4-sonet: Work O(m log n), Span O(log² n)
     ///
     /// Arguments:
     /// - vertices: Set of vertices
@@ -331,6 +329,8 @@ pub mod BoruvkaMtEph {
     ///
     /// Returns:
     /// - Set of edge labels in the MST
+    /// APAS: Work O(m log n), Span O(log² n)
+    /// claude-4-sonet: Work O(m log n), Span O(log² n)
     pub fn boruvka_mst_mt_with_seed<V: StTInMtT + Hash + Ord + 'static>(
         vertices: &SetStEph<V>,
         edges: &SetStEph<LabeledEdge<V>>,

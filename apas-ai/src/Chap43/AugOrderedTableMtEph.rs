@@ -363,12 +363,10 @@ pub mod AugOrderedTableMtEph {
         }
     }
 
-    /// Helper to recalculate reduction from current base table
     fn recalculate_reduction<K: MtKey, V: MtVal, F: MtReduceFn<V>>(table: &AugOrderedTableMtEph<K, V, F>) -> V {
         calculate_reduction(&table.base_table, &table.reducer, &table.identity)
     }
 
-    /// Helper to calculate reduction from any base table
     fn calculate_reduction<K: MtKey, V: MtVal, F: MtReduceFn<V>>(
         base: &OrderedTableMtEph<K, V>,
         reducer: &F,

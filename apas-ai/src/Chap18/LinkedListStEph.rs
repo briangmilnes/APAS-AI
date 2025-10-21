@@ -58,7 +58,6 @@ pub mod LinkedListStEph {
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
         fn filter<F: PredSt<T>>(a: &Self, pred: &F)                  -> Self;
-        /// Helper for filter: deflate f x = if f(x) then [x] else []
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn deflate<F: PredSt<T>>(f: &F, x: &T)                       -> Self;
         /// APAS: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|)
@@ -227,7 +226,6 @@ pub mod LinkedListStEph {
         }
 
         fn deflate<F: PredSt<T>>(f: &F, x: &T) -> Self {
-            // Helper for filter: deflate f x = if f(x) then [x] else []
             if f(x) {
                 LinkedListStEphS::from_vec(vec![x.clone()])
             } else {

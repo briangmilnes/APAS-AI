@@ -55,7 +55,6 @@ pub mod LeftistHeapPQ {
         /// Creates heap from sequence using reduce with meld
         fn from_seq(seq: &[T])           -> Self;
 
-        /// Helper methods
         fn size(&self)                   -> N;
         fn is_empty(&self)               -> bool;
         fn extract_all_sorted(&self)     -> Vec<T>;

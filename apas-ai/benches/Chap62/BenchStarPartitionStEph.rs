@@ -8,7 +8,6 @@ use apas_ai::{
 use criterion::*;
 use std::time::Duration;
 
-// Helper to create a cycle graph
 fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {
     let mut vertices = SetLit![];
     for i in 0..n {
@@ -23,7 +22,7 @@ fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {
     <UnDirGraphStEph<N> as UnDirGraphStEphTrait<N>>::FromSets(vertices, edges)
 }
 
-// Helper to create a dense graph (approximately 50% of possible edges)
+// Create a dense graph (approximately 50% of possible edges)
 fn create_dense_graph(n: N) -> UnDirGraphStEph<N> {
     let mut vertices = SetLit![];
     for i in 0..n {

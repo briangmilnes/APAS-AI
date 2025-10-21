@@ -43,7 +43,6 @@ pub mod SortedListPQ {
         /// Creates priority queue from sequence by sorting
         fn from_seq(seq: &ArraySeqStPerS<T>)               -> Self;
 
-        /// Helper methods
         fn size(&self)                                     -> N;
         fn is_empty(&self)                                 -> bool;
         fn to_seq(&self)                                   -> ArraySeqStPerS<T>;

@@ -8,7 +8,6 @@ pub mod Exercise21_8 {
     pub type T = N;
 
     pub trait Exercise21_8Trait {
-        /// Helper function to check divisibility
         /// APAS: Work Θ(1), Span Θ(1)
         fn is_divisible(n: N, i: N) -> B;
 
@@ -17,7 +16,6 @@ pub mod Exercise21_8 {
         fn is_prime(n: N)           -> B;
     }
 
-    /// Helper function to check divisibility
     pub fn is_divisible(n: N, i: N) -> B { n % i == 0 }
 
     /// Exercise 21.8 / Algorithm 21.4 (Brute Force Primality Test)

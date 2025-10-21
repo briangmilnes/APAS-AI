@@ -95,7 +95,6 @@ pub mod PQMinMtEph {
         G: Fn(&V) -> AVLTreeSetMtEph<V> + Send + Sync + 'static,
         PF: PriorityFn<V, P>,
     {
-        // Helper: find minimum priority vertex in frontier
         fn find_min_priority<V: StTInMtT + Ord + 'static, P: StTInMtT + Ord + 'static>(
             frontier: &AVLTreeSetMtEph<Pair<Pair<P, V>, V>>,
         ) -> Option<V> {

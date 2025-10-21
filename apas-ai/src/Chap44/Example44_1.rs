@@ -126,7 +126,6 @@ pub mod Example44_1 {
         }
     }
 
-    /// Helper function to convert document set to sorted vector for testing
     pub fn doc_set_to_sorted_vec(docs: &DocumentSet) -> Vec<DocumentId> {
         let seq = DocumentIndex::to_seq(docs);
         let mut result = Vec::new();

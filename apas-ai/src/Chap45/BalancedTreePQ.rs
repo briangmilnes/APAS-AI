@@ -43,7 +43,6 @@ pub mod BalancedTreePQ {
         /// Creates priority queue from sequence using balanced tree construction
         fn from_seq(seq: &AVLTreeSeqStPerS<T>)               -> Self;
 
-        /// Helper methods
         fn size(&self)                                       -> N;
         fn is_empty(&self)                                   -> bool;
         fn to_seq(&self)                                     -> AVLTreeSeqStPerS<T>;

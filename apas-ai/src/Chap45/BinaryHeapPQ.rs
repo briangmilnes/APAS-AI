@@ -43,24 +43,16 @@ pub mod BinaryHeapPQ {
         /// Creates heap from sequence using bottom-up heapify
         fn from_seq(seq: &ArraySeqStPerS<T>) -> Self;
 
-        /// Helper methods
         fn size(&self)                       -> N;
         fn is_empty(&self)                   -> bool;
         fn to_seq(&self)                     -> ArraySeqStPerS<T>;
     }
 
     impl<T: StT + Ord> BinaryHeapPQ<T> {
-        /// Helper functions for heap navigation
-        /// left child of node at index i
         fn left_child(i: N) -> N { 2 * i + 1 }
-
-        /// right child of node at index i
         fn right_child(i: N) -> N { 2 * i + 2 }
-
-        /// parent of node at index i
         fn parent(i: N) -> N { if i == 0 { 0 } else { (i - 1) / 2 } }
 
-        /// Check if heap property is satisfied
         fn is_heap(&self) -> bool {
             for i in 0..self.elements.length() {
                 let left = Self::left_child(i);

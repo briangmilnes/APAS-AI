@@ -113,10 +113,8 @@ pub mod ConnectivityStEph {
         (representatives, component_map)
     }
 
-    /// Helper: Build quotient graph edges by routing through partition map
-    ///
+    /// Build quotient graph edges by routing through partition map
     /// Filters out self-edges (where both endpoints map to same super-vertex).
-    ///
     /// Work O(m), Span O(m)
     fn build_quotient_edges<V: StT + Hash + Ord>(
         graph: &UnDirGraphStEph<V>,

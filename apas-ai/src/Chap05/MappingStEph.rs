@@ -50,7 +50,7 @@ pub mod MappingStEph {
         fn iter(&self)                           -> Iter<'_, Pair<X, Y>>;
     }
 
-    // Helper function to ensure unique pairs (mapping property: each domain element maps to at most one range element)
+    // ensure unique pairs (mapping property: each domain element maps to at most one range element)
     fn unique_pairs_from_iter<A: StT + Hash, B: StT + Hash, I: IntoIterator<Item = Pair<A, B>>>(
         iter: I,
     ) -> SetStEph<Pair<A, B>> {

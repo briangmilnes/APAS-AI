@@ -5,7 +5,6 @@ use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap21::Algorithm21_6::Algorithm21_6::*;
 use apas_ai::Types::Types::*;
 
-// Helper function to check if number is prime
 fn is_prime(n: usize) -> bool {
     if n < 2 {
         return false;
@@ -25,7 +24,6 @@ fn is_prime(n: usize) -> bool {
     true
 }
 
-// Helper function for expected primes (simple sieve)
 fn expected_primes_up_to(n: usize) -> Vec<usize> {
     if n < 2 {
         return vec![];
@@ -45,7 +43,6 @@ fn expected_primes_up_to(n: usize) -> Vec<usize> {
     (2..=n).filter(|&i| is_prime[i]).collect()
 }
 
-// Helper function to convert sequence to vector for testing
 fn seq_to_vec<T: StT>(seq: &ArraySeqStPerS<T>) -> Vec<T> {
     let mut vec = Vec::new();
     for i in 0..seq.length() {

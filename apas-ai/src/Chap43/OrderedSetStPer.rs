@@ -285,7 +285,6 @@ pub mod OrderedSetStPer {
         }
     }
 
-    /// Helper function for macro construction
     pub fn from_sorted_elements<T: StT + Ord>(elements: Vec<T>) -> OrderedSetStPer<T> {
         let seq = AVLTreeSeqStPerS::from_vec(elements);
         OrderedSetStPer::from_seq(seq)

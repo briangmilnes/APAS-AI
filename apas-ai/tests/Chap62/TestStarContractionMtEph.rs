@@ -8,7 +8,6 @@ use apas_ai::{
     Chap62::StarContractionMtEph::StarContractionMtEph::*, SetLit, Types::Types::*,
 };
 
-// Helper to create a cycle graph
 fn create_cycle_graph(n: N) -> UnDirGraphMtEph<N> {
     let mut vertices = SetLit![];
     for i in 0..n {

@@ -21,7 +21,6 @@ fn test_documentcollectionlit_macro_functionality() {
     assert_eq!(with_data.length(), 2);
 }
 
-/// Helper function to create a test document collection
 fn create_test_documents() -> DocumentCollection {
     DocumentCollectionLit![
         "doc1" => "hello world programming",
@@ -32,7 +31,6 @@ fn create_test_documents() -> DocumentCollection {
     ]
 }
 
-/// Helper function to convert document set to sorted vector for assertions
 fn doc_set_to_sorted_vec(docs: &DocumentSet) -> Vec<DocumentId> {
     let seq = DocumentIndex::to_seq(docs);
     let mut result = Vec::new();

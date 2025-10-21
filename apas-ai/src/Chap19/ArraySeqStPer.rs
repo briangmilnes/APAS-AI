@@ -182,7 +182,6 @@ pub mod ArraySeqStPer {
         }
 
         fn deflate<F: PredSt<T>>(f: &F, x: &T) -> ArraySeqStPerS<T> {
-            // Helper for filter: deflate f x = if f(x) then [x] else []
             if f(x) {
                 <ArraySeqStPerS<T> as ArraySeqStPerTrait<T>>::singleton(x.clone())
             } else {

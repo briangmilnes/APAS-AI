@@ -182,7 +182,6 @@ pub mod TSPApproxStEph {
         total
     }
 
-    /// Helper to get neighbors of a vertex
     fn get_neighbors<V: StT + Hash + Ord>(graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>, v: &V) -> SetStEph<V> {
         let mut neighbors = SetLit![];
         for edge in graph.labeled_edges().iter() {
@@ -196,7 +195,6 @@ pub mod TSPApproxStEph {
         neighbors
     }
 
-    /// Helper to get edge weight between two vertices
     fn get_edge_weight<V: StT + Hash + Ord>(
         graph: &LabUnDirGraphStEph<V, OrderedFloat<f64>>,
         u: &V,

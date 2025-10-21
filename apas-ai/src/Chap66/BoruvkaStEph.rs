@@ -221,7 +221,7 @@ pub mod BoruvkaStEph {
         boruvka_mst(&remaining_vertices, &new_edges, new_mst_labels, rng)
     }
 
-    /// Helper: Create Borůvka MST with a specific seed
+    /// Create Borůvka MST with a specific seed
     ///
     /// APAS: Work O(m log n), Span O(m log n)
     /// claude-4-sonet: Work O(m log n), Span O(m log n)
