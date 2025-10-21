@@ -268,15 +268,6 @@ pub mod DocumentIndex {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _document_collection_lit_type_checks() {
-        let _: DocumentCollection = DocumentCollectionLit![
-            "doc1" => "hello world",
-            "doc2" => "world peace"
-        ];
-        let _: DocumentCollection = DocumentCollectionLit![];
-    }
-
     /// Complex query builder for chaining operations
     pub struct QueryBuilder<'a> {
         index: &'a DocumentIndex,

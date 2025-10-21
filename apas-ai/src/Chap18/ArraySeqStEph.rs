@@ -287,11 +287,4 @@ pub mod ArraySeqStEph {
             write!(f, "]")
         }
     }
-
-    #[macro_export]
-    macro_rules! ArraySeqStEphS {
-        () => { $crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(Vec::new()) };
-        ($x:expr; $n:expr) => { $crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$x; $n]) };
-        ($($x:expr),* $(,)?) => { $crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(vec![$($x),*]) };
-    }
 }

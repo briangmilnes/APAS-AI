@@ -282,13 +282,6 @@ pub mod Types {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _ParaPair_type_checks() {
-        let Pair(left, right) = ParaPair!(|| { 1usize }, || { 2usize });
-        let _: usize = left;
-        let _: usize = right;
-    }
-
     /// Set equivalence comparison for sequences (order-independent, useful for MT tests)
     /// APAS: Work Θ(n²), Span Θ(1) - simple membership test both ways
     /// claude-4-sonet: Work Θ(n²), Span Θ(1) - simple membership test both ways

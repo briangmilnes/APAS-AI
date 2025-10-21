@@ -339,18 +339,4 @@ pub mod ArraySeq {
 
         fn into_iter(self) -> Self::IntoIter { Vec::from(self.data).into_iter() }
     }
-
-    #[macro_export]
-    macro_rules! ArraySeqS {
-        () => {
-            $crate::Chap18::ArraySeq::ArraySeq::ArraySeqS::from_vec(Vec::new())
-        };
-        ($elem:expr; $len:expr) => {
-            $crate::Chap18::ArraySeq::ArraySeq::ArraySeqS::from_vec(vec![$elem; $len])
-        };
-        ($($elem:expr),+ $(,)?) => {
-            $crate::Chap18::ArraySeq::ArraySeq::ArraySeqS::from_vec(vec![$($elem),+])
-        };
-    }
-
 }

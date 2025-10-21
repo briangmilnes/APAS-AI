@@ -307,10 +307,4 @@ pub mod SortedListPQ {
             pq
         }};
     }
-
-    #[allow(dead_code)]
-    fn _sorted_list_pq_lit_type_checks() {
-        let _: SortedListPQ<i32> = SortedListPQLit![];
-        let _: SortedListPQ<i32> = SortedListPQLit![1, 2, 3];
-    }
 }

@@ -435,12 +435,6 @@ pub mod LeftistHeapPQ {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _leftist_heap_pq_lit_type_checks() {
-        let _: LeftistHeapPQ<i32> = LeftistHeapPQLit![];
-        let _: LeftistHeapPQ<i32> = LeftistHeapPQLit![1, 2, 3];
-    }
-
     /// Demonstrate the power of O(log n) meld operations
     /// This would be much slower with other priority queue implementations!
     pub fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T> {

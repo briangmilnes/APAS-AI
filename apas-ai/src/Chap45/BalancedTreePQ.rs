@@ -329,12 +329,6 @@ pub mod BalancedTreePQ {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _balanced_tree_pq_lit_type_checks() {
-        let _: BalancedTreePQ<i32> = BalancedTreePQLit![];
-        let _: BalancedTreePQ<i32> = BalancedTreePQLit![1, 2, 3];
-    }
-
     /// Convenience functions for common operations
     impl<T: StT + Ord> BalancedTreePQ<T> {
         /// Create priority queue from vector (for testing)

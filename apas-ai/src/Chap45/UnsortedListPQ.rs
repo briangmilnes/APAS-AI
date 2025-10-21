@@ -231,10 +231,4 @@ pub mod UnsortedListPQ {
             pq
         }};
     }
-
-    #[allow(dead_code)]
-    fn _unsorted_list_pq_lit_type_checks() {
-        let _: UnsortedListPQ<i32> = UnsortedListPQLit![];
-        let _: UnsortedListPQ<i32> = UnsortedListPQLit![1, 2, 3];
-    }
 }

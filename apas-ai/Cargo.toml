@@ -681,21 +681,8 @@ name = "TestTypes"
 path = "tests/TestTypes.rs"
 
 [[test]]
-name = "TestArraySeqMacro"
-path = "tests/Chap18/TestArraySeqMacro.rs"
-
-[[test]]
 name = "TestLinkedListStPerChap18"
 path = "tests/Chap18/TestLinkedListStPerChap18.rs"
-
-[[test]]
-name = "TestArraySeqStPerMacro"
-path = "tests/Chap18/TestArraySeqStPerMacro.rs"
-
-[[test]]
-name = "TestArraySeqStEphMacro"
-path = "tests/Chap18/TestArraySeqStEphMacro.rs"
-
 
 
 [[test]]

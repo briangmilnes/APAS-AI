@@ -6,7 +6,7 @@ pub mod SubsetSumStEph {
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::ArraySeqStEphS;
+    use crate::ArraySeqStEphSLit;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
 
@@ -162,7 +162,7 @@ pub mod SubsetSumStEph {
 macro_rules! SubsetSumStEphLit {
     ($($x:expr),* $(,)?) => {
         $crate::Chap49::SubsetSumStEph::SubsetSumStEph::SubsetSumStEphS::from_multiset(
-            $crate::ArraySeqStEphS![$($x),*]
+            $crate::ArraySeqStEphSLit![$($x),*]
         )
     };
     () => {

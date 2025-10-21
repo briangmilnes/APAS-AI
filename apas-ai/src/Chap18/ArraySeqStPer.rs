@@ -298,11 +298,4 @@ pub mod ArraySeqStPer {
             write!(f, "]")
         }
     }
-
-    #[macro_export]
-    macro_rules! ArraySeqStPerS {
-        () => { $crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::from_vec(Vec::new()) };
-        ($x:expr; $n:expr) => { $crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::from_vec(vec![$x; $n]) };
-        ($($x:expr),* $(,)?) => { $crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS::from_vec(vec![$($x),*]) };
-    }
 }

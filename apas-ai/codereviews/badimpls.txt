@@ -9,8 +9,11 @@ Clean
  Chap18
  Chap19
  Chap21
+ Chap23
+ Chap26
+ Chap27
+ Chap28
+ Chap35
+ Chap36
+ Chap37 - bugs     impl<T: StTInMtT + Ord> BSTSetSplayMtEph<T> {
  
-
-
-
-

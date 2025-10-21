@@ -8,7 +8,7 @@ pub mod MinEditDistStEph {
     use std::iter::Map;
     use std::iter::Zip;
 
-    use crate::ArraySeqStEphS;
+    use crate::ArraySeqStEphSLit;
     use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
 
@@ -206,8 +206,8 @@ pub mod MinEditDistStEph {
 macro_rules! MinEditDistStEphLit {
     (source: [$($s:expr),* $(,)?], target: [$($t:expr),* $(,)?]) => {
         $crate::Chap49::MinEditDistStEph::MinEditDistStEph::MinEditDistStEphS::from_sequences(
-            $crate::ArraySeqStEphS![$($s),*],
-            $crate::ArraySeqStEphS![$($t),*]
+            $crate::ArraySeqStEphSLit![$($s),*],
+            $crate::ArraySeqStEphSLit![$($t),*]
         )
     };
     () => {

@@ -348,12 +348,6 @@ pub mod BinaryHeapPQ {
         }};
     }
 
-    #[allow(dead_code)]
-    fn _binary_heap_pq_lit_type_checks() {
-        let _: BinaryHeapPQ<i32> = BinaryHeapPQLit![];
-        let _: BinaryHeapPQ<i32> = BinaryHeapPQLit![1, 2, 3];
-    }
-
     /// Convenience functions for common operations
     impl<T: StT + Ord> BinaryHeapPQ<T> {
         /// Create priority queue from vector (for testing)

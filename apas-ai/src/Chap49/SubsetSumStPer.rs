@@ -6,7 +6,7 @@ pub mod SubsetSumStPer {
     use std::collections::HashMap;
     use std::fmt::{Debug, Display, Formatter, Result};
 
-    use crate::ArraySeqStPerS;
+    use crate::ArraySeqStPerSLit;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
 
@@ -137,7 +137,7 @@ pub mod SubsetSumStPer {
 macro_rules! SubsetSumStPerLit {
     ($($x:expr),* $(,)?) => {
         $crate::Chap49::SubsetSumStPer::SubsetSumStPer::SubsetSumStPerS::from_multiset(
-            $crate::ArraySeqStPerS![$($x),*]
+            $crate::ArraySeqStPerSLit![$($x),*]
         )
     };
     () => {
