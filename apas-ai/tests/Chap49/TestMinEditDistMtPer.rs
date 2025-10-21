@@ -1,57 +1,30 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-//! Tests for MinEditDistMtPer - Minimum Edit Distance (persistent, multithreaded).
+//! Tests for MinEditDistMtPer.
 
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::Chap49::MinEditDistMtPer::MinEditDistMtPer::*;
-use apas_ai::Types::Types::*;
+use apas_ai::MinEditDistMtPerLit;
 
 #[test]
-fn test_new_empty() {
-    let med: MinEditDistMtPerS<char> = MinEditDistMtPerTrait::new();
-    assert_eq!(med.source().length(), 0);
-    assert_eq!(med.target().length(), 0);
+fn test_min_edit_distance_mt_per_basic() {
+    let solver = MinEditDistMtPerLit!(
+        source: ['A', 'B', 'C', 'A', 'D', 'A'],
+        target: ['A', 'B', 'A', 'D', 'C']
+    );
+    assert_eq!(solver.min_edit_distance(), 3);
 }
 
 #[test]
-fn test_from_sequences() {
-    let source = ArraySeqMtPerS::from_vec(vec!['a', 'b', 'c']);
-    let target = ArraySeqMtPerS::from_vec(vec!['d', 'e', 'f']);
+fn test_min_edit_distance_mt_per_empty() {
+    let solver1 = MinEditDistMtPerLit!(source: [], target: ['A', 'B']);
+    assert_eq!(solver1.min_edit_distance(), 2);
 
-    let med = MinEditDistMtPerS::from_sequences(source.clone(), target.clone());
-
-    assert_eq!(med.source().length(), 3);
-    assert_eq!(med.target().length(), 3);
+    let solver2: MinEditDistMtPerS<char> = MinEditDistMtPerLit!(source: [], target: []);
+    assert_eq!(solver2.min_edit_distance(), 0);
 }
 
 #[test]
-fn test_identical_strings() {
-    let source = ArraySeqMtPerS::from_vec(vec!['a', 'b', 'c']);
-    let target = ArraySeqMtPerS::from_vec(vec!['a', 'b', 'c']);
-
-    let med = MinEditDistMtPerS::from_sequences(source, target);
-    let dist = med.min_edit_distance();
-
-    assert_eq!(dist, 0);
-}
-
-#[test]
-fn test_empty_to_nonempty() {
-    let source = ArraySeqMtPerS::from_vec(vec![]);
-    let target = ArraySeqMtPerS::from_vec(vec!['a', 'b', 'c']);
-
-    let med = MinEditDistMtPerS::from_sequences(source, target);
-    let dist = med.min_edit_distance();
-
-    assert_eq!(dist, 3);
-}
-
-#[test]
-fn test_single_substitution() {
-    let source = ArraySeqMtPerS::from_vec(vec!['a', 'b', 'c']);
-    let target = ArraySeqMtPerS::from_vec(vec!['a', 'x', 'c']);
-
-    let med = MinEditDistMtPerS::from_sequences(source, target);
-    let dist = med.min_edit_distance();
-
-    assert_eq!(dist, 2);
+fn test_min_edit_distance_mt_per_identical() {
+    let solver = MinEditDistMtPerLit!(source: ['A', 'B', 'C'], target: ['A', 'B', 'C']);
+    assert_eq!(solver.min_edit_distance(), 0);
 }

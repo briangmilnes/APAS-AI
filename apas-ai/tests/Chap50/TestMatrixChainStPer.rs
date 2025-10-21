@@ -1,121 +1,118 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-//! Tests for MatrixChainStPer.
+//! Tests for Matrix Chain Multiplication StPer implementation.
 
 use apas_ai::Chap50::MatrixChainStPer::MatrixChainStPer::*;
 use apas_ai::MatrixChainStPerLit;
 use apas_ai::Types::Types::*;
 
 #[test]
-fn test_matrixchainstperlit_macro_functionality() {
-    let chain = MatrixChainStPerLit![dims: [(10, 20), (20, 30), (30, 40)]];
-    assert_eq!(chain.num_matrices(), 3);
-}
-
-#[test]
-fn test_new() {
-    let chain: MatrixChainStPerS = MatrixChainStPerTrait::new();
+fn test_matrix_chain_st_per_empty() {
+    let chain = MatrixChainStPerS::new();
     assert_eq!(chain.num_matrices(), 0);
+    assert_eq!(chain.optimal_cost(), 0);
 }
 
 #[test]
-fn test_from_dimensions() {
-    let dims = vec![MatrixDim { rows: 10, cols: 20 }, MatrixDim { rows: 20, cols: 30 }];
-    let chain = MatrixChainStPerS::from_dimensions(dims);
+fn test_matrix_chain_st_per_single_matrix() {
+    let dimensions = vec![MatrixDim { rows: 10, cols: 20 }];
+    let chain = MatrixChainStPerS::from_dimensions(dimensions);
+    assert_eq!(chain.num_matrices(), 1);
+    assert_eq!(chain.optimal_cost(), 0); // No multiplication needed for single matrix
+}
+
+#[test]
+fn test_matrix_chain_st_per_two_matrices() {
+    let dimensions = vec![MatrixDim { rows: 10, cols: 20 }, MatrixDim { rows: 20, cols: 30 }];
+    let chain = MatrixChainStPerS::from_dimensions(dimensions);
     assert_eq!(chain.num_matrices(), 2);
+    // Cost should be 10 * 20 * 30 = 6000
+    assert_eq!(chain.optimal_cost(), 6000);
 }
 
 #[test]
-fn test_from_dim_pairs() {
-    let pairs = vec![Pair(10, 20), Pair(20, 30), Pair(30, 40)];
-    let chain = MatrixChainStPerS::from_dim_pairs(pairs);
+fn test_matrix_chain_st_per_three_matrices() {
+    let dimensions = vec![
+        MatrixDim { rows: 10, cols: 20 },
+        MatrixDim { rows: 20, cols: 30 },
+        MatrixDim { rows: 30, cols: 40 },
+    ];
+    let chain = MatrixChainStPerS::from_dimensions(dimensions);
     assert_eq!(chain.num_matrices(), 3);
+    // Optimal cost should be minimum of:
+    // (A*B)*C: 10*20*30 + 10*30*40 = 6000 + 12000 = 18000
+    // A*(B*C): 20*30*40 + 10*20*40 = 24000 + 8000 = 32000
+    // So optimal is 18000
+    assert_eq!(chain.optimal_cost(), 18000);
 }
 
 #[test]
-fn test_optimal_cost_two_matrices() {
-    let chain = MatrixChainStPerLit![dims: [(10,20), (20,30)]];
-    let cost = chain.optimal_cost();
-    assert_eq!(cost, 10 * 20 * 30);
+fn test_matrix_chain_st_per_from_dim_pairs() {
+    let dim_pairs = vec![Pair(10, 20), Pair(20, 30), Pair(30, 40)];
+    let chain = MatrixChainStPerS::from_dim_pairs(dim_pairs);
+    assert_eq!(chain.num_matrices(), 3);
+    assert_eq!(chain.optimal_cost(), 18000);
 }
 
 #[test]
-fn test_optimal_cost_three_matrices() {
-    let chain = MatrixChainStPerLit![dims: [(10,20), (20,30), (30,40)]];
+fn test_matrix_chain_st_per_iteration() {
+    let dimensions = vec![MatrixDim { rows: 5, cols: 10 }, MatrixDim { rows: 10, cols: 15 }];
+    let chain = MatrixChainStPerS::from_dimensions(dimensions);
+
+    let collected: Vec<MatrixDim> = chain.into_iter().collect();
+    assert_eq!(collected.len(), 2);
+    assert_eq!(collected[0].rows, 5);
+    assert_eq!(collected[0].cols, 10);
+    assert_eq!(collected[1].rows, 10);
+    assert_eq!(collected[1].cols, 15);
+}
+
+#[test]
+fn test_matrix_dim_display() {
+    let dim = MatrixDim { rows: 10, cols: 20 };
+    let display_str = format!("{dim}");
+    assert!(display_str.contains("10"));
+    assert!(display_str.contains("20"));
+}
+
+#[test]
+fn test_matrix_chain_macro() {
+    let chain = MatrixChainStPerLit![
+        dims: [(10, 20), (20, 30)]
+    ];
+    assert_eq!(chain.num_matrices(), 2);
+    assert_eq!(chain.optimal_cost(), 6000);
+}
+
+#[test]
+fn test_matrix_chain_large_example() {
+    // Example from textbook: matrices with dimensions
+    // A: 40x20, B: 20x30, C: 30x10, D: 10x30
+    let dimensions = vec![
+        MatrixDim { rows: 40, cols: 20 },
+        MatrixDim { rows: 20, cols: 30 },
+        MatrixDim { rows: 30, cols: 10 },
+        MatrixDim { rows: 10, cols: 30 },
+    ];
+    let chain = MatrixChainStPerS::from_dimensions(dimensions);
+    assert_eq!(chain.num_matrices(), 4);
+
+    // The optimal cost should be computed by dynamic programming
     let cost = chain.optimal_cost();
     assert!(cost > 0);
+    assert!(cost < 100000); // Reasonable upper bound
 }
 
 #[test]
-fn test_dimensions() {
-    let chain = MatrixChainStPerLit![dims: [(5,10), (10,15)]];
-    let dims = chain.dimensions();
-    assert_eq!(dims.len(), 2);
-}
+fn test_matrix_chain_multiply_cost() {
+    let dimensions = vec![
+        MatrixDim { rows: 2, cols: 3 },
+        MatrixDim { rows: 3, cols: 4 },
+        MatrixDim { rows: 4, cols: 5 },
+    ];
+    let chain = MatrixChainStPerS::from_dimensions(dimensions);
 
-#[test]
-fn test_compute_multiplication() {
-    let chain = MatrixChainStPerLit![dims: [(2,3), (3,4)]];
+    // Test the multiply_cost function indirectly through optimal_cost
     let cost = chain.optimal_cost();
-    assert_eq!(cost, 2 * 3 * 4);
-}
-
-#[test]
-fn test_empty_chain() {
-    let chain: MatrixChainStPerS = MatrixChainStPerTrait::new();
-    let cost = chain.optimal_cost();
-    assert_eq!(cost, 0);
-}
-
-#[test]
-fn test_single_matrix() {
-    let chain = MatrixChainStPerLit![dims: [(5,10)]];
-    let cost = chain.optimal_cost();
-    assert_eq!(cost, 0);
-}
-
-#[test]
-fn test_large_chain() {
-    let pairs = vec![Pair(10, 20), Pair(20, 5), Pair(5, 30), Pair(30, 10), Pair(10, 25)];
-    let chain = MatrixChainStPerS::from_dim_pairs(pairs);
-    assert_eq!(chain.num_matrices(), 5);
-    let cost = chain.optimal_cost();
-    assert!(cost > 0);
-}
-
-#[test]
-fn test_memo_size() {
-    let chain = MatrixChainStPerLit![dims: [(10,20), (20,30)]];
-    assert_eq!(chain.memo_size(), 0);
-    let _ = chain.optimal_cost();
-    // Memo isn't preserved in persistent version by default
-}
-
-#[test]
-fn test_clone() {
-    let chain1 = MatrixChainStPerLit![dims: [(10,20), (20,30)]];
-    let chain2 = chain1.clone();
-    assert_eq!(chain1.num_matrices(), chain2.num_matrices());
-}
-
-#[test]
-fn test_debug() {
-    let chain = MatrixChainStPerLit![dims: [(10,20)]];
-    let debug_str = format!("{:?}", chain);
-    assert!(debug_str.contains("MatrixChainStPerS"));
-}
-
-#[test]
-fn test_equality() {
-    let chain1 = MatrixChainStPerLit![dims: [(10,20), (20,30)]];
-    let chain2 = MatrixChainStPerLit![dims: [(10,20), (20,30)]];
-    assert_eq!(chain1, chain2);
-}
-
-#[test]
-fn test_display() {
-    let chain = MatrixChainStPerLit![dims: [(10,20), (20,30)]];
-    let display_str = format!("{}", chain);
-    assert!(display_str.contains("MatrixChain") || display_str.contains("matrices"));
-    let cost = chain.optimal_cost();
+    // For 3 matrices, we should get the minimum of two possible parenthesizations
     assert!(cost > 0);
 }

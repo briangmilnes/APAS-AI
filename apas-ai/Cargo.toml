@@ -588,16 +588,16 @@ harness = false
 
 # Chapter 36 tests
 [[test]]
-name = "TestChapter36St"
-path = "tests/Chap36/TestChapter36St.rs"
+name = "TestQuickSortSt"
+path = "tests/Chap36/TestQuickSortSt.rs"
 
 [[test]]
-name = "TestChapter36Mt"
-path = "tests/Chap36/TestChapter36Mt.rs"
+name = "TestQuickSortMt"
+path = "tests/Chap36/TestQuickSortMt.rs"
 
 [[test]]
-name = "TestChapter36MtSlice"
-path = "tests/Chap36/TestChapter36MtSlice.rs"
+name = "TestQuickSortMtSlice"
+path = "tests/Chap36/TestQuickSortMtSlice.rs"
 
 # Chapter 39 tests
 [[test]]
@@ -949,21 +949,7 @@ harness = false
 # harness = false
 
 # Chapter 49: Dynamic Programming - Subset Sum and Minimum Edit Distance
-[[test]]
-name = "TestSubsetSum"
-path = "tests/TestSubsetSum.rs"
-
-[[test]]
-name = "TestMinEditDist"
-path = "tests/TestMinEditDist.rs"
-
-[[test]]
-name = "TestOptBinSearchTree"
-path = "tests/TestOptBinSearchTree.rs"
-
-[[test]]
-name = "TestMatrixChain"
-path = "tests/TestMatrixChain.rs"
+# (See individual variant tests below in their respective chapter sections)
 
 [[test]]
 name = "TestBottomUpDPStPer"
