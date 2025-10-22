@@ -7,6 +7,7 @@ use criterion::*;
 
 use apas_ai::BSTSetTreapMtEphLit;
 use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMt as TreapSet;
+use apas_ai::Chap39::BSTSetTreapMtEph::BSTSetTreapMtEph::BSTSetTreapMtEphTrait;
 
 trait BenchSet: Sized {
     fn empty() -> Self;

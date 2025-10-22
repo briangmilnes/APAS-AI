@@ -7,6 +7,7 @@ use criterion::*;
 
 use apas_ai::BSTSetRBMtEphLit;
 use apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMt as RBSet;
+use apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::BSTSetRBMtEphTrait;
 
 trait BenchSet: Sized {
     fn empty() -> Self;
