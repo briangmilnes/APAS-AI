@@ -60,114 +60,6 @@ pub mod BSTSetPlainMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetPlainMtEph<T> {
-        pub fn empty() -> Self {
-            Self {
-                tree: BSTPlainMtEph::new(),
-            }
-        }
-
-        pub fn singleton(value: T) -> Self {
-            let tree = BSTPlainMtEph::new();
-            tree.insert(value);
-            Self { tree }
-        }
-
-        pub fn size(&self) -> N { self.tree.size() }
-
-        pub fn is_empty(&self) -> B { self.tree.is_empty() }
-
-        pub fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }
-
-        pub fn contains(&self, value: &T) -> B { self.tree.contains(value) }
-
-        pub fn minimum(&self) -> Option<T> { self.tree.minimum() }
-
-        pub fn maximum(&self) -> Option<T> { self.tree.maximum() }
-
-        pub fn insert(&mut self, value: T) { self.tree.insert(value); }
-
-        pub fn delete(&mut self, target: &T) {
-            let mut values = self.values_vec();
-            if let Some(pos) = values.iter().position(|x| x == target) {
-                values.remove(pos);
-                self.tree = Self::rebuild_from_vec(values);
-            }
-        }
-
-        pub fn union(&self, other: &Self) -> Self {
-            let mut merged: BTreeSet<T> = self.values_vec().into_iter().collect();
-            for value in other.values_vec() {
-                merged.insert(value);
-            }
-            Self::from_sorted_iter(merged)
-        }
-
-        pub fn intersection(&self, other: &Self) -> Self {
-            let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
-            let filtered: Vec<T> = self
-                .tree
-                .in_order()
-                .iter()
-                .filter_map(|v| {
-                    if other_values.contains(v) {
-                        Some(v.clone())
-                    } else {
-                        None
-                    }
-                })
-                .collect();
-            Self::from_sorted_iter(filtered)
-        }
-
-        pub fn difference(&self, other: &Self) -> Self {
-            let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
-            let filtered: Vec<T> = self
-                .tree
-                .in_order()
-                .iter()
-                .filter_map(|v| {
-                    if !other_values.contains(v) {
-                        Some(v.clone())
-                    } else {
-                        None
-                    }
-                })
-                .collect();
-            Self::from_sorted_iter(filtered)
-        }
-
-        pub fn split(&self, pivot: &T) -> (Self, B, Self) {
-            let mut left: Vec<T> = Vec::new();
-            let mut right: Vec<T> = Vec::new();
-            let mut found = false;
-            for value in self.tree.in_order().iter() {
-                if value < pivot {
-                    left.push(value.clone());
-                } else if value > pivot {
-                    right.push(value.clone());
-                } else {
-                    found = true;
-                }
-            }
-            (Self::from_sorted_iter(left), found, Self::from_sorted_iter(right))
-        }
-
-        pub fn join_pair(left: Self, right: Self) -> Self {
-            let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
-            for value in right.values_vec() {
-                combined.insert(value);
-            }
-            Self::from_sorted_iter(combined)
-        }
-
-        pub fn join_m(left: Self, pivot: T, right: Self) -> Self {
-            let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
-            combined.insert(pivot);
-            for value in right.values_vec() {
-                combined.insert(value);
-            }
-            Self::from_sorted_iter(combined)
-        }
 
         pub fn filter<F>(&self, mut predicate: F) -> Self
         where
@@ -192,10 +84,6 @@ pub mod BSTSetPlainMtEph {
                 .fold(base, |acc, value| op(acc, value.clone()))
         }
 
-        pub fn iter_in_order(&self) -> ArraySeqStPerS<T> { self.tree.in_order() }
-
-        pub fn as_tree(&self) -> &BSTPlainMtEph<T> { &self.tree }
-
         fn values_vec(&self) -> Vec<T> { self.tree.in_order().iter().cloned().collect() }
 
         fn rebuild_from_vec(values: Vec<T>) -> BSTPlainMtEph<T> {
@@ -219,9 +107,17 @@ pub mod BSTSetPlainMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetPlainMtEphTrait<T> for BSTSetPlainMtEph<T> {
-        fn empty() -> Self { Self::empty() }
+        fn empty() -> Self {
+            Self {
+                tree: BSTPlainMtEph::new(),
+            }
+        }
 
-        fn singleton(value: T) -> Self { Self::singleton(value) }
+        fn singleton(value: T) -> Self {
+            let tree = BSTPlainMtEph::new();
+            tree.insert(value);
+            Self { tree }
+        }
 
         fn size(&self) -> N { self.tree.size() }
 
@@ -320,18 +216,27 @@ pub mod BSTSetPlainMtEph {
             Self::from_sorted_iter(combined)
         }
 
-        fn filter<F>(&self, predicate: F) -> Self
+        fn filter<F>(&self, mut predicate: F) -> Self
         where
             F: FnMut(&T) -> bool,
         {
-            Self::filter(self, predicate)
+            let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| if predicate(v) { Some(v.clone()) } else { None })
+                .collect();
+            Self::from_sorted_iter(filtered)
         }
 
-        fn reduce<F>(&self, op: F, base: T) -> T
+        fn reduce<F>(&self, mut op: F, base: T) -> T
         where
             F: FnMut(T, T) -> T,
         {
-            Self::reduce(self, op, base)
+            self.tree
+                .in_order()
+                .iter()
+                .fold(base, |acc, value| op(acc, value.clone()))
         }
 
         fn iter_in_order(&self) -> ArraySeqStPerS<T> { self.tree.in_order() }

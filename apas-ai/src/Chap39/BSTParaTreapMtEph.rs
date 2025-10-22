@@ -162,15 +162,6 @@ pub mod BSTParaTreapMtEph {
 
         // APAS - work O(1), span O(1)
         // gpt-5-codex-medium: work O(1), span O(1)
-        fn join_mid(exposed: Exposed<T>) -> Self {
-            match exposed {
-                | Exposed::Leaf => ParamTreap::new(),
-                | Exposed::Node(left, key, right) => {
-                    let priority = priority_for(&key);
-                    ParamTreap::join_with_priority(left, key, priority, right)
-                }
-            }
-        }
 
         // APAS - work O(lg |t|), span O(lg |t|)
         // gpt-5-codex-medium: work O(lg |t|), span O(lg |t|)

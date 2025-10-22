@@ -314,28 +314,7 @@ pub mod LeftistHeapPQ {
         /// Claude Work: Θ(1), Span: Θ(1)
         fn is_empty(&self) -> bool { matches!(self.root, LeftistHeapNode::Leaf) }
 
-        fn extract_all_sorted(&self) -> Vec<T> { LeftistHeapPQ::extract_all_sorted(self) }
-
-        fn height(&self) -> N { LeftistHeapPQ::height(self) }
-
-        fn root_rank(&self) -> N { LeftistHeapPQ::root_rank(self) }
-
-        fn is_valid_leftist_heap(&self) -> bool { LeftistHeapPQ::is_valid_leftist_heap(self) }
-
-        fn from_vec(vec: Vec<T>) -> Self { LeftistHeapPQ::from_vec(vec) }
-
-        fn to_vec(&self) -> Vec<T> { LeftistHeapPQ::to_vec(self) }
-
-        fn to_sorted_vec(&self) -> Vec<T> { LeftistHeapPQ::to_sorted_vec(self) }
-
-        fn meld_multiple(heaps: &[Self]) -> Self { LeftistHeapPQ::meld_multiple(heaps) }
-
-        fn split(&self, key: &T) -> (Self, Self) { LeftistHeapPQ::split(self, key) }
-    }
-
-    impl<T: StT + Ord> LeftistHeapPQ<T> {
-        /// Extract all elements in sorted order
-        pub fn extract_all_sorted(&self) -> Vec<T> {
+        fn extract_all_sorted(&self) -> Vec<T> {
             let mut result = Vec::new();
             let mut current_heap = self.clone();
 
@@ -350,26 +329,19 @@ pub mod LeftistHeapPQ {
             result
         }
 
-        /// Get the height of the heap (for analysis)
-        pub fn height(&self) -> N { self.root.height() }
+        fn height(&self) -> N { self.root.height() }
 
-        /// Get the rank of the root (for analysis)
-        pub fn root_rank(&self) -> N { self.root.rank() }
+        fn root_rank(&self) -> N { self.root.rank() }
 
-        /// Check if leftist property is maintained (for testing)
-        pub fn is_valid_leftist_heap(&self) -> bool { self.root.is_leftist() && self.root.is_heap() }
+        fn is_valid_leftist_heap(&self) -> bool { self.root.is_leftist() && self.root.is_heap() }
 
-        /// Create priority queue from vector (for testing)
-        pub fn from_vec(vec: Vec<T>) -> Self { Self::from_seq(&vec) }
+        fn from_vec(vec: Vec<T>) -> Self { Self::from_seq(&vec) }
 
-        /// Convert to vector (for testing)
-        pub fn to_vec(&self) -> Vec<T> { self.root.to_vec() }
+        fn to_vec(&self) -> Vec<T> { self.root.to_vec() }
 
-        /// Get elements in sorted order as vector (for testing)
-        pub fn to_sorted_vec(&self) -> Vec<T> { self.extract_all_sorted() }
+        fn to_sorted_vec(&self) -> Vec<T> { self.extract_all_sorted() }
 
-        /// Advanced meld operations for specific use cases
-        pub fn meld_multiple(heaps: &[Self]) -> Self {
+        fn meld_multiple(heaps: &[Self]) -> Self {
             if heaps.is_empty() {
                 return Self::empty();
             }
@@ -381,8 +353,7 @@ pub mod LeftistHeapPQ {
             result
         }
 
-        /// Split heap at a given value (returns (less_than, equal_or_greater))
-        pub fn split(&self, value: &T) -> (Self, Self) {
+        fn split(&self, value: &T) -> (Self, Self) {
             let mut less_than = Self::empty();
             let mut equal_or_greater = Self::empty();
 
@@ -398,6 +369,8 @@ pub mod LeftistHeapPQ {
             (less_than, equal_or_greater)
         }
     }
+
+    
 
     impl<T: StT + Ord> Default for LeftistHeapPQ<T> {
         fn default() -> Self { Self::empty() }

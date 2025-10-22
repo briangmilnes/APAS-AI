@@ -107,112 +107,10 @@ pub mod AVLTreeSeq {
     }
 
     impl<T: StT> AVLTreeS<T> {
-        pub fn new_root() -> Self {
-            AVLTreeS {
-                root: None,
-                next_key: 0,
-            }
-        }
-        pub fn new() -> Self { Self::new_root() }
-
-        pub fn update(&mut self, (index, item): (N, T)) -> &mut AVLTreeS<T> {
-            let _ = <AVLTreeS<T> as AVLTreeSeq<T>>::set(self, index, item);
-            self
-        }
-
-        pub fn from_vec(values: Vec<T>) -> AVLTreeS<T>
-        where
-            T: Clone,
-        {
-            let length = values.len();
-            let mut t = AVLTreeS::new_root();
-            for (i, v) in values.into_iter().enumerate() {
-                t.root = insert_at_link(t.root.take(), i, v, &mut t.next_key);
-            }
-            debug_assert!(t.length() == length);
-            t
-        }
-
-        pub fn to_arrayseq(&self) -> ArraySeqS<T>
-        where
-            T: Clone,
-        {
-            let len = self.length();
-            if len == 0 {
-                return <ArraySeqS<T> as ArraySeq<T>>::empty();
-            }
-            let mut it = self.iter();
-            let first = it.next().expect("length > 0 but iter was empty").clone();
-            let mut out = <ArraySeqS<T> as ArraySeq<T>>::new(len, first);
-            let mut index: N = 1;
-            for v in it {
-                let _ = out.set(index, v.clone());
-                index += 1;
-            }
-            out
-        }
 
         pub fn iter<'a>(&'a self) -> AVLTreeSeqIter<'a, T> { AVLTreeSeqIter::new(&self.root) }
 
-        pub fn push_back(&mut self, value: T) {
-            let len = self.length();
-            let node = insert_at_link(self.root.take(), len, value, &mut self.next_key);
-            self.root = node;
-        }
-
         // Convenience APIs kept for older tests (set-like operations over sequence storage)
-        pub fn contains_value(&self, target: &T) -> B
-        where
-            T: PartialEq,
-        {
-            for v in self.iter() {
-                if v == target {
-                    return true;
-                }
-            }
-            false
-        }
-
-        pub fn insert_value(&mut self, value: T) { self.push_back(value); }
-
-        pub fn delete_value(&mut self, target: &T) -> bool
-        where
-            T: Clone + PartialEq,
-        {
-            let len = self.length();
-            let mut found_index: Option<N> = None;
-            for i in 0..len {
-                if self.nth(i) == target {
-                    found_index = Some(i);
-                    break;
-                }
-            }
-            if let Some(idx) = found_index {
-                // Rebuild without the element at idx, using ArraySeq preallocation
-                let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
-                for i in 0..idx {
-                    out_vec.push(self.nth(i).clone());
-                }
-                for i in (idx + 1)..len {
-                    out_vec.push(self.nth(i).clone());
-                }
-                *self = AVLTreeS::from_vec(out_vec);
-                true
-            } else {
-                false
-            }
-        }
-
-        pub fn is_tree_empty(&self) -> bool { self.length() == 0 }
-
-        pub fn values_in_order(&self) -> Vec<T>
-        where
-            T: Clone,
-        {
-            let mut out = Vec::with_capacity(self.length());
-            push_inorder(&self.root, &mut out);
-            out
-        }
     }
 
     impl<T: StT> AVLTreeSeq<T> for AVLTreeS<T> {
@@ -264,51 +162,109 @@ pub mod AVLTreeSeq {
             AVLTreeS::from_vec(vals)
         }
 
-        fn new_root() -> Self { AVLTreeS::new_root() }
+        fn new_root() -> Self {
+            AVLTreeS {
+                root: None,
+                next_key: 0,
+            }
+        }
 
-        fn update(&mut self, item_at: (N, T)) -> &mut AVLTreeS<T> { AVLTreeS::update(self, item_at) }
+        fn update(&mut self, (index, item): (N, T)) -> &mut AVLTreeS<T> {
+            let _ = <AVLTreeS<T> as AVLTreeSeq<T>>::set(self, index, item);
+            self
+        }
 
         fn from_vec(values: Vec<T>) -> AVLTreeS<T>
         where
             T: Clone,
         {
-            AVLTreeS::from_vec(values)
+            let length = values.len();
+            let mut t = AVLTreeS::new_root();
+            for (i, v) in values.into_iter().enumerate() {
+                t.root = insert_at_link(t.root.take(), i, v, &mut t.next_key);
+            }
+            debug_assert!(t.length() == length);
+            t
         }
 
         fn to_arrayseq(&self) -> ArraySeqS<T>
         where
             T: Clone,
         {
-            AVLTreeS::to_arrayseq(self)
+            let len = self.length();
+            if len == 0 {
+                return <ArraySeqS<T> as ArraySeq<T>>::empty();
+            }
+            let mut it = self.iter();
+            let first = it.next().expect("length > 0 but iter was empty").clone();
+            let mut out = <ArraySeqS<T> as ArraySeq<T>>::new(len, first);
+            let mut index: N = 1;
+            for v in it {
+                let _ = out.set(index, v.clone());
+                index += 1;
+            }
+            out
         }
 
-        fn iter<'a>(&'a self) -> AVLTreeSeqIter<'a, T> { AVLTreeS::iter(self) }
+        fn iter<'a>(&'a self) -> AVLTreeSeqIter<'a, T> { AVLTreeSeqIter::new(&self.root) }
 
-        fn push_back(&mut self, value: T) { AVLTreeS::push_back(self, value) }
+        fn push_back(&mut self, value: T) {
+            let len = self.length();
+            let node = insert_at_link(self.root.take(), len, value, &mut self.next_key);
+            self.root = node;
+        }
 
         fn contains_value(&self, target: &T) -> B
         where
             T: PartialEq,
         {
-            AVLTreeS::contains_value(self, target)
+            for v in self.iter() {
+                if v == target {
+                    return true;
+                }
+            }
+            false
         }
 
-        fn insert_value(&mut self, value: T) { AVLTreeS::insert_value(self, value) }
+        fn insert_value(&mut self, value: T) { self.push_back(value); }
 
         fn delete_value(&mut self, target: &T) -> bool
         where
             T: Clone + PartialEq,
         {
-            AVLTreeS::delete_value(self, target)
+            let len = self.length();
+            let mut found_index: Option<N> = None;
+            for i in 0..len {
+                if self.nth(i) == target {
+                    found_index = Some(i);
+                    break;
+                }
+            }
+            if let Some(idx) = found_index {
+                // Rebuild without the element at idx, using ArraySeq preallocation
+                let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
+                for i in 0..idx {
+                    out_vec.push(self.nth(i).clone());
+                }
+                for i in (idx + 1)..len {
+                    out_vec.push(self.nth(i).clone());
+                }
+                *self = AVLTreeS::from_vec(out_vec);
+                true
+            } else {
+                false
+            }
         }
 
-        fn is_tree_empty(&self) -> bool { AVLTreeS::is_tree_empty(self) }
+        fn is_tree_empty(&self) -> bool { self.length() == 0 }
 
         fn values_in_order(&self) -> Vec<T>
         where
             T: Clone,
         {
-            AVLTreeS::values_in_order(self)
+            let mut out = Vec::with_capacity(self.length());
+            push_inorder(&self.root, &mut out);
+            out
         }
     }
 
