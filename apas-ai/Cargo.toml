@@ -2073,3 +2073,7 @@ path = "tests/Chap47/TestDoubleHashFlatHashTable.rs"
 name = "BenchArraySeqMtEphChap18"
 path = "benches/Chap18/BenchArraySeqMtEphChap18.rs"
 harness = false
+
+[[test]]
+name = "TestExample45_2"
+path = "tests/Chap45/TestExample45_2.rs"
