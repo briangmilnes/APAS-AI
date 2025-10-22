@@ -7,9 +7,9 @@ use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_ma
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
-use apas_ai::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::bellman_ford;
+use apas_ai::Chap58::BellmanFordStEphFloat::BellmanFordStEphFloat::*;
 use apas_ai::SetLit;
-use apas_ai::Types::Types::OrderedF64;
+use apas_ai::Types::Types::*;
 use apas_ai::Types::Types::*;
 
 fn create_sparse_graph(n: usize) -> WeightedDirGraphStEphFloat<usize> {

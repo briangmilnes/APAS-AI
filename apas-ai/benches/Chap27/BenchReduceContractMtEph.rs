@@ -9,7 +9,7 @@ use criterion::*;
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
     ArraySeqMtEphBaseTrait, ArraySeqMtEphRedefinableTrait, ArraySeqMtEphS,
 };
-use apas_ai::Chap27::ReduceContractMtEph::ReduceContractMtEph::ReduceContractMtEphTrait;
+use apas_ai::Chap27::ReduceContractMtEph::ReduceContractMtEph::*;
 
 fn bench_reduce_contract_parallel_100(c: &mut Criterion) {
     let a = ArraySeqMtEphS::tabulate(&|i| i + 1, 100);

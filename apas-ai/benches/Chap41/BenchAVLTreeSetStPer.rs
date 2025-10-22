@@ -6,7 +6,7 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::AVLTreeSetStPerLit;
-use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerS;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 
 fn build_avl_tree_set_per(len: usize) -> AVLTreeSetStPer<i32> {
@@ -169,7 +169,7 @@ fn bench_avl_tree_set_per_from_seq(c: &mut Criterion) {
         group.bench_with_input(BenchmarkId::new("from_seq", size), size, |b, _| {
             b.iter_batched(
                 || {
-                    use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
+                    
                     AVLTreeSeqStPerS::from_vec(vec_data.clone())
                 },
                 |seq| black_box(AVLTreeSetStPer::from_seq(seq)),

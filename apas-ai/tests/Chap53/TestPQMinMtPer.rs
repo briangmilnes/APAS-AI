@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chap53 PQMinMtPer.
 
-use apas_ai::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerTrait;
+use apas_ai::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
 use apas_ai::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
 use apas_ai::Chap53::PQMinMtPer::PQMinMtPer::*;
 use apas_ai::Types::Types::*;

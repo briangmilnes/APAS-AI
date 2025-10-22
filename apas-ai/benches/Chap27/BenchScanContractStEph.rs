@@ -6,7 +6,7 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
+use apas_ai::Chap27::ScanContractStEph::ScanContractStEph::*;
 
 fn bench_scan_contract_100(c: &mut Criterion) {
     let a = ArraySeqStEphS::tabulate(&|i| i + 1, 100);

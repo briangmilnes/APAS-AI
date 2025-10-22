@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for AVLTreeSeq base trait functionality.
 
-use apas_ai::Chap18::ArraySeq::ArraySeq::ArraySeq;
+use apas_ai::Chap18::ArraySeq::ArraySeq::*;
 use apas_ai::Chap37::AVLTreeSeq::AVLTreeSeq::*;
 use apas_ai::Types::Types::*;
 

@@ -2,7 +2,7 @@
 //! Tests for WeightedDirGraphStEphInt.
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
-use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
+use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
 use apas_ai::Types::Types::*;
 use apas_ai::{SetLit, WeightedDirGraphStEphIntLit};

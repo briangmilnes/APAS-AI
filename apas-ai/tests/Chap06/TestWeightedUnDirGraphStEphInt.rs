@@ -2,7 +2,7 @@
 //! Tests for Chap06 WeightedUnDirGraphStEphInt.
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
-use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEphTrait;
+use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
 use apas_ai::Chap06::WeightedUnDirGraphStEphInt::WeightedUnDirGraphStEphInt::*;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::*;

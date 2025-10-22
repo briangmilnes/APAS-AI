@@ -2,7 +2,7 @@
 
 use apas_ai::ArraySeqMtEphSLit;
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
-use apas_ai::Chap28::MaxContigSubSumDivConMtEph::MaxContigSubSumDivConMtEph::MaxContigSubSumDivConMtTrait;
+use apas_ai::Chap28::MaxContigSubSumDivConMtEph::MaxContigSubSumDivConMtEph::*;
 use apas_ai::Types::Types::*;
 
 #[test]

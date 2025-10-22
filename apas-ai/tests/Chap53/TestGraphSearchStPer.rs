@@ -2,7 +2,7 @@
 //! Tests for Chap53 GraphSearchStPer.
 
 use apas_ai::ArraySeqStPerSLit;
-use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::Chap53::GraphSearchStPer::GraphSearchStPer::*;
 use apas_ai::Types::Types::*;

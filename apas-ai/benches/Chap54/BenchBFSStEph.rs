@@ -5,7 +5,7 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap54::BFSStEph::BFSStEph;
+use apas_ai::Chap54::BFSStEph::*;
 
 fn create_dag(n: usize) -> ArraySeqStEphS<ArraySeqStEphS<usize>> {
     ArraySeqStEphS::tabulate(

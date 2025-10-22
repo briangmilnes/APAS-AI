@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chap53 PQMinStEph.
 
-use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
 use apas_ai::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
 use apas_ai::Chap53::PQMinStEph::PQMinStEph::*;
 use apas_ai::Types::Types::*;

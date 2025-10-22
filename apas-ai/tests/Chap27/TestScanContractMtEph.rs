@@ -4,7 +4,7 @@
 use std::sync::Arc;
 
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
-use apas_ai::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
+use apas_ai::Chap27::ScanContractMtEph::ScanContractMtEph::*;
 use apas_ai::Types::Types::*;
 
 #[test]

@@ -7,7 +7,7 @@ use std::time::Duration;
 use criterion::*;
 use ordered_float::OrderedFloat;
 
-use apas_ai::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::SSSPResultStEphFloat;
+use apas_ai::Chap56::SSSPResultStEphFloat::SSSPResultStEphFloat::*;
 
 fn bench_new(c: &mut Criterion) {
     let sizes = vec![100, 500, 1000];

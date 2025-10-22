@@ -3,7 +3,7 @@
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap40::BSTSizeStEph::BSTSizeStEph::*;
 use apas_ai::Types::Types::*;
-use apas_ai::*;
+use apas_ai::BSTSizeStEphLit;
 
 #[test]
 fn size_bst_basic_operations() {

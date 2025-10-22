@@ -5,7 +5,7 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap28::MaxContigSubSumDivConOptStEph::MaxContigSubSumDivConOptStEph::MaxContigSubSumDivConOptTrait;
+use apas_ai::Chap28::MaxContigSubSumDivConOptStEph::MaxContigSubSumDivConOptStEph::*;
 
 pub fn bench_divcon_opt(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap28::MaxContigSubSumDivConOptStEph");

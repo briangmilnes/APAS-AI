@@ -2,7 +2,7 @@
 
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap35::OrderStatSelectStEph::OrderStatSelectStEph::OrderStatSelectStEphTrait;
+use apas_ai::Chap35::OrderStatSelectStEph::OrderStatSelectStEph::*;
 use apas_ai::Types::Types::*;
 
 #[test]

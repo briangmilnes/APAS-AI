@@ -2,10 +2,10 @@
 //! Tests for AVLTreeSetStPer
 
 use apas_ai::AVLTreeSetStPerLit;
-use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
+use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::Types::Types::*;
-use apas_ai::*;
+use apas_ai::AVLTreeSeqStPerLit;
 
 #[test]
 fn test_avltreesetstperlit_macro_functionality() {

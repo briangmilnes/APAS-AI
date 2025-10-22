@@ -8,7 +8,7 @@ use criterion::*;
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{
     ArraySeqMtPerBaseTrait, ArraySeqMtPerRedefinableTrait, ArraySeqMtPerS,
 };
-use apas_ai::Chap26::MergeSortMt::MergeSortMt::MergeSortMtTrait;
+use apas_ai::Chap26::MergeSortMt::MergeSortMt::*;
 
 fn bench_merge_sort_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("merge_sort_mt");

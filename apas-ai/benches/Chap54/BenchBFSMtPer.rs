@@ -7,7 +7,7 @@ use criterion::*;
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{
     ArraySeqMtPerBaseTrait, ArraySeqMtPerRedefinableTrait, ArraySeqMtPerS,
 };
-use apas_ai::Chap54::BFSMtPer::BFSMtPer;
+use apas_ai::Chap54::BFSMtPer::*;
 
 fn create_dag(n: usize) -> ArraySeqMtPerS<ArraySeqMtPerS<usize>> {
     ArraySeqMtPerS::tabulate(

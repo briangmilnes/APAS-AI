@@ -7,7 +7,7 @@ use criterion::*;
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
     ArraySeqMtEphBaseTrait, ArraySeqMtEphRedefinableTrait, ArraySeqMtEphS,
 };
-use apas_ai::Chap35::OrderStatSelectMtEph::OrderStatSelectMtEph::OrderStatSelectMtEphTrait;
+use apas_ai::Chap35::OrderStatSelectMtEph::OrderStatSelectMtEph::*;
 
 pub fn bench_select_mt_eph(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap35::OrderStatSelectMtEph");

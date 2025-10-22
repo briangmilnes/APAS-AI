@@ -4,8 +4,8 @@
 use apas_ai::AVLTreeSeqStEphLit;
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap37::AVLTreeSeqStEph;
-use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS;
+use apas_ai::Chap37::*;
+use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
 use apas_ai::Types::Types::*; // macro import
 
 #[test]

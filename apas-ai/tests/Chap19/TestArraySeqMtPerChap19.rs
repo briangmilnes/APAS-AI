@@ -2,8 +2,8 @@
 // Tests for Chapter 19 ArraySeqMtPer
 
 use apas_ai::ArrayMtPerSLit;
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerBaseTrait;
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerRedefinableTrait;
+
+
 use apas_ai::Chap19::ArraySeqMtPer::ArraySeqMtPer::*;
 use apas_ai::PairLit;
 use apas_ai::Types::Types::*;

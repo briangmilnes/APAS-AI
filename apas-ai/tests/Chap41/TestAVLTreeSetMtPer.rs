@@ -2,7 +2,7 @@
 //! Tests for AVLTreeSetMtPer.
 
 use apas_ai::AVLTreeSetMtPerLit;
-use apas_ai::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::AVLTreeSeqMtPerS;
+use apas_ai::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
 use apas_ai::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
 use apas_ai::Types::Types::*;
 

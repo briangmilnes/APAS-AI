@@ -2,7 +2,7 @@
 //! Tests for sequential reduce using contraction (Chapter 27).
 
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap27::ReduceContractStEph::ReduceContractStEph::ReduceContractStEphTrait;
+use apas_ai::Chap27::ReduceContractStEph::ReduceContractStEph::*;
 use apas_ai::Types::Types::*;
 
 #[test]

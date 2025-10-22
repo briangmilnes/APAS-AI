@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphMtEphInt::WeightedDirGraphMtEphInt::*;
-use apas_ai::Chap59::JohnsonMtEphInt::JohnsonMtEphInt::johnson_apsp;
+use apas_ai::Chap59::JohnsonMtEphInt::JohnsonMtEphInt::*;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::*;
 

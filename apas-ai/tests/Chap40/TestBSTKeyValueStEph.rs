@@ -3,7 +3,7 @@
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap40::BSTKeyValueStEph::BSTKeyValueStEph::*;
 use apas_ai::Types::Types::*;
-use apas_ai::*;
+use apas_ai::BSTKeyValueStEphLit;
 
 #[test]
 fn key_value_bst_basic_operations() {

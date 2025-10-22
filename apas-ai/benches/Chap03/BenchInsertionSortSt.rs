@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap03::InsertionSortSt::InsertionSortSt::InsertionSortStTrait;
+use apas_ai::Chap03::InsertionSortSt::InsertionSortSt::*;
 
 fn build_vec(len: usize) -> Vec<i32> { (0..len as i32).rev().collect() }
 

@@ -2,7 +2,7 @@
 
 use apas_ai::ArrayMtPerSLit;
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
-use apas_ai::Chap54::BFSMtPer::BFSMtPer;
+use apas_ai::Chap54::BFSMtPer::*;
 use apas_ai::Types::Types::*;
 
 const UNREACHABLE: usize = usize::MAX;

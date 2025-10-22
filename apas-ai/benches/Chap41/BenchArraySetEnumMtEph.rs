@@ -6,8 +6,8 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::ArraySetEnumMtEphLit;
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
-use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS;
+
+use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Chap41::ArraySetEnumMtEph::ArraySetEnumMtEph::*;
 
 fn build_array_set_enum_mt(universe_size: usize, fill_ratio: f64) -> ArraySetEnumMtEph {

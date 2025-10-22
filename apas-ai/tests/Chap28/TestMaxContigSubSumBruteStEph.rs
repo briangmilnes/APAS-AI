@@ -2,7 +2,7 @@
 
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap28::MaxContigSubSumBruteStEph::MaxContigSubSumBruteStEph::MaxContigSubSumBruteTrait;
+use apas_ai::Chap28::MaxContigSubSumBruteStEph::MaxContigSubSumBruteStEph::*;
 use apas_ai::Types::Types::*;
 
 #[test]

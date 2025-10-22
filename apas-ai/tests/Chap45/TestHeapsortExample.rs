@@ -182,7 +182,7 @@ fn test_vec_to_array_seq() {
 fn test_vec_to_avl_seq() {
     let vec = vec![1, 2, 3];
     let seq = vec_to_avl_seq(&vec);
-    use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::AVLTreeSeqStPerTrait;
+    use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     assert_eq!(seq.length(), 3);
 }
 

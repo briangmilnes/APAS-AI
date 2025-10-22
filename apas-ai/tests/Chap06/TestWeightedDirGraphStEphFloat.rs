@@ -6,7 +6,7 @@ use std::f64::consts::PI;
 use ordered_float::OrderedFloat;
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
-use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::LabDirGraphStEphTrait;
+use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::*;

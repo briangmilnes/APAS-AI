@@ -2,7 +2,7 @@
 //! Tests for OptBinSearchTreeStPer.
 
 use apas_ai::Chap50::OptBinSearchTreeStPer::OptBinSearchTreeStPer::{KeyProb as OBSTStPerKeyProb, OBSTStPerS, OBSTStPerTrait};
-use apas_ai::Chap50::Probability::Probability::Probability;
+use apas_ai::Chap50::Probability::Probability::*;
 use apas_ai::{OBSTStPerLit, prob};
 
 #[test]

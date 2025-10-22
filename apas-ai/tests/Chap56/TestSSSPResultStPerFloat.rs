@@ -5,7 +5,7 @@
 use ordered_float::OrderedFloat;
 
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::Chap56::SSSPResultStPerFloat::SSSPResultStPerFloat::SSSPResultStPerFloat;
+use apas_ai::Chap56::SSSPResultStPerFloat::SSSPResultStPerFloat::*;
 use apas_ai::Types::Types::*;
 
 #[test]

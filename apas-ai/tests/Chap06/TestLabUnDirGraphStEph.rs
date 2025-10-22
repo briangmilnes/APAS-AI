@@ -3,7 +3,8 @@
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
 use apas_ai::Types::Types::*;
-use apas_ai::*;
+use apas_ai::LabUnDirGraphStEphLit;
+use apas_ai::SetLit;
 
 #[test]
 fn test_labelled_undir_graph_empty() {
@@ -258,7 +259,7 @@ fn test_outdegree() {
 
 #[test]
 fn test_from_vertices_and_labeled_edges() {
-    use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::LabUnDirGraphStEphTrait;
+    use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
 
     let v: SetStEph<i32> = SetLit![1, 2, 3];
     let e: SetStEph<LabEdge<i32, &str>> = SetLit![LabEdge(1, 2, "edge")];

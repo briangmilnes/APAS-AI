@@ -7,7 +7,7 @@ use criterion::*;
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{
     ArraySeqMtPerBaseTrait, ArraySeqMtPerRedefinableTrait, ArraySeqMtPerS,
 };
-use apas_ai::Chap35::OrderStatSelectMtPer::OrderStatSelectMtPer::OrderStatSelectMtPerTrait;
+use apas_ai::Chap35::OrderStatSelectMtPer::OrderStatSelectMtPer::*;
 
 pub fn bench_select_mt_per(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap35::OrderStatSelectMtPer");

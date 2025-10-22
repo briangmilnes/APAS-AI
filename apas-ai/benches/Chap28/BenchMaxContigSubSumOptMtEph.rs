@@ -7,7 +7,7 @@ use criterion::*;
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
     ArraySeqMtEphBaseTrait, ArraySeqMtEphRedefinableTrait, ArraySeqMtEphS,
 };
-use apas_ai::Chap28::MaxContigSubSumOptMtEph::MaxContigSubSumOptMtEph::MaxContigSubSumOptMtTrait;
+use apas_ai::Chap28::MaxContigSubSumOptMtEph::MaxContigSubSumOptMtEph::*;
 
 pub fn bench_optimal_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap28::MaxContigSubSumOptMtEph");

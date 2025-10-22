@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chap43 OrderedTableMtPer.
 
-use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
+use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::OrderedTableMtPer::OrderedTableMtPer::*;
 use apas_ai::Types::Types::*;
 

@@ -2,7 +2,7 @@
 //! Tests for sequential divide-and-conquer via reduce (Chapter 26).
 
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::Chap26::DivConReduceSt::DivConReduceSt::DivConReduceStTrait;
+use apas_ai::Chap26::DivConReduceSt::DivConReduceSt::*;
 use apas_ai::Types::Types::*;
 
 #[test]

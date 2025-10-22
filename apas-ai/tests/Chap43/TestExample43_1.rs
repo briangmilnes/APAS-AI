@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chap43 Example 43.1.
 
-use apas_ai::Chap43::Example43_1::Example43_1::run_example43_1;
+use apas_ai::Chap43::Example43_1::Example43_1::*;
 use apas_ai::Types::Types::*;
 
 #[test]

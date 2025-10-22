@@ -6,7 +6,8 @@ use apas_ai::Chap05::RelationStEph::RelationStEph::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::*;
-use apas_ai::*;
+use apas_ai::MappingLit;
+use apas_ai::PairLit;
 
 #[test]
 fn test_mappinglit_macro_functionality() {

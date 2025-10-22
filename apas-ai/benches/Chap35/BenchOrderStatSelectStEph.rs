@@ -5,7 +5,7 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap35::OrderStatSelectStEph::OrderStatSelectStEph::OrderStatSelectStEphTrait;
+use apas_ai::Chap35::OrderStatSelectStEph::OrderStatSelectStEph::*;
 
 pub fn bench_select_st_eph(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap35::OrderStatSelectStEph");

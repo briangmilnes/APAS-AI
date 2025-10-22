@@ -5,7 +5,7 @@ use criterion::*;
 
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap36::QuickSortSt::Chapter36St::Chapter36StTrait;
+use apas_ai::Chap36::QuickSortSt::Chapter36St::*;
 
 fn gen_data(n: usize) -> ArraySeqStEphS<i32> {
     let mut seed = 0xDEADBEEF12345678u64;

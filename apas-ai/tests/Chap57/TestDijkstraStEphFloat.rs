@@ -5,7 +5,7 @@ use ordered_float::OrderedFloat;
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphFloat::WeightedDirGraphStEphFloat::*;
-use apas_ai::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::dijkstra;
+use apas_ai::Chap57::DijkstraStEphFloat::DijkstraStEphFloat::*;
 use apas_ai::Types::Types::*;
 
 #[test]

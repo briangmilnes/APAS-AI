@@ -3,8 +3,8 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::BSTBBAlphaMtEphTrait;
-use apas_ai::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::BSTreeBBAlpha;
+use apas_ai::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::*;
+
 use apas_ai::{BSTBBAlphaMtEphLit, *};
 
 fn build_tree(len: usize) -> BSTreeBBAlpha<i32> {

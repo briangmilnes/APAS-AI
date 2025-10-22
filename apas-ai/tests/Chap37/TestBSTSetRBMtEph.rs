@@ -3,7 +3,7 @@
 
 use apas_ai::BSTSetRBMtEphLit;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::Chap37::BSTRBMtEph::BSTRBMtEph::BSTRBMtEphTrait;
+use apas_ai::Chap37::BSTRBMtEph::BSTRBMtEph::*;
 use apas_ai::Chap37::BSTSetRBMtEph::BSTSetRBMtEph::*;
 use apas_ai::Types::Types::*;
 

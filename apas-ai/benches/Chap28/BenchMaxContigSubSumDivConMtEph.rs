@@ -7,7 +7,7 @@ use criterion::*;
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
     ArraySeqMtEphBaseTrait, ArraySeqMtEphRedefinableTrait, ArraySeqMtEphS,
 };
-use apas_ai::Chap28::MaxContigSubSumDivConMtEph::MaxContigSubSumDivConMtEph::MaxContigSubSumDivConMtTrait;
+use apas_ai::Chap28::MaxContigSubSumDivConMtEph::MaxContigSubSumDivConMtEph::*;
 
 pub fn bench_divcon_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap28::MaxContigSubSumDivConMtEph");

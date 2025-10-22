@@ -2,9 +2,9 @@
 
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap36::QuickSortSt::Chapter36St::Chapter36StTrait;
+use apas_ai::Chap36::QuickSortSt::Chapter36St::*;
 use apas_ai::Types::Types::*;
-use apas_ai::*;
+
 
 trait ToVec<T: StT> {
     fn to_vec(&self) -> Vec<T>;

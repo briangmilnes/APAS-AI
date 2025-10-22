@@ -6,7 +6,7 @@ use criterion::*;
 
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap28::MaxContigSubSumReducedStEph::MaxContigSubSumReducedStEph::MaxContigSubSumReducedTrait;
+use apas_ai::Chap28::MaxContigSubSumReducedStEph::MaxContigSubSumReducedStEph::*;
 
 pub fn bench_reduced(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap28::MaxContigSubSumReducedStEph");

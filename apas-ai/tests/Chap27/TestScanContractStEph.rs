@@ -2,7 +2,7 @@
 //! Tests for sequential scan using contraction (Chapter 27).
 
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
+use apas_ai::Chap27::ScanContractStEph::ScanContractStEph::*;
 use apas_ai::Types::Types::*;
 
 #[test]

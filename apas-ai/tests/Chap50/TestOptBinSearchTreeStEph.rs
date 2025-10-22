@@ -2,7 +2,7 @@
 //! Tests for OptBinSearchTreeStEph.
 
 use apas_ai::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph::{KeyProb as OBSTStEphKeyProb, OBSTStEphS, OBSTStEphTrait};
-use apas_ai::Chap50::Probability::Probability::Probability;
+use apas_ai::Chap50::Probability::Probability::*;
 use apas_ai::prob;
 
 #[test]

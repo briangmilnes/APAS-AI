@@ -7,7 +7,7 @@ use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_ma
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::WeightedDirGraphStEphInt::WeightedDirGraphStEphInt::*;
-use apas_ai::Chap58::BellmanFordStEphInt::BellmanFordStEphInt::bellman_ford;
+use apas_ai::Chap58::BellmanFordStEphInt::BellmanFordStEphInt::*;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::*;
 

@@ -6,7 +6,7 @@ use criterion::*;
 
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap28::MaxContigSubSumBruteStEph::MaxContigSubSumBruteStEph::MaxContigSubSumBruteTrait;
+use apas_ai::Chap28::MaxContigSubSumBruteStEph::MaxContigSubSumBruteStEph::*;
 
 pub fn bench_brute_force(c: &mut Criterion) {
     let mut group = c.benchmark_group("Chap28::MaxContigSubSumBruteStEph");

@@ -4,7 +4,7 @@ use std::sync::{Arc, Barrier};
 use std::thread;
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
-use apas_ai::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::UnDirGraphMtEphTrait;
+use apas_ai::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
 use apas_ai::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::*;

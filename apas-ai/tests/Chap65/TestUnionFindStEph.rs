@@ -3,7 +3,7 @@
 
 use std::hash::Hash;
 
-use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFindStEph;
+use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::*;
 use apas_ai::Types::Types::*;
 
 #[test]
@@ -296,7 +296,7 @@ fn test_default_trait() {
 
 // Trait-based tests
 
-use apas_ai::Chap65::UnionFindStEph::UnionFindStEph::UnionFindStEphTrait;
+
 
 #[test]
 fn test_trait_new() {

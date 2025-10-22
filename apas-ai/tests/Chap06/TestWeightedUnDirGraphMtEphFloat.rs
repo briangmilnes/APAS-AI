@@ -9,7 +9,7 @@ use std::thread;
 use ordered_float::OrderedFloat;
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
-use apas_ai::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::LabUnDirGraphMtEphTrait;
+use apas_ai::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
 use apas_ai::Chap06::WeightedUnDirGraphMtEphFloat::WeightedUnDirGraphMtEphFloat::*;
 use apas_ai::SetLit;
 use apas_ai::Types::Types::*;
