@@ -106,12 +106,7 @@ pub mod AVLTreeSeq {
             T: Clone;
     }
 
-    impl<T: StT> AVLTreeS<T> {
-
-        pub fn iter<'a>(&'a self) -> AVLTreeSeqIter<'a, T> { AVLTreeSeqIter::new(&self.root) }
-
-        // Convenience APIs kept for older tests (set-like operations over sequence storage)
-    }
+    
 
     impl<T: StT> AVLTreeSeq<T> for AVLTreeS<T> {
         /// APAS: Work Θ(1), Span Θ(1).

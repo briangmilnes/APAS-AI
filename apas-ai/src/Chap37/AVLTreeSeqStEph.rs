@@ -71,9 +71,7 @@ pub mod AVLTreeSeqStEph {
         fn delete_value(&mut self, target: &T)     -> bool;
     }
 
-    impl<T: StT> AVLTreeSeqStEphS<T> {
-        pub fn iter<'a>(&'a self) -> AVLTreeSeqIterStEph<'a, T> { AVLTreeSeqIterStEph::new(&self.root) }
-    }
+    
 
     impl<T: StT> AVLTreeSeqStEphTrait<T> for AVLTreeSeqStEphS<T> {
         fn empty() -> Self { AVLTreeSeqStEphS::new_root() }

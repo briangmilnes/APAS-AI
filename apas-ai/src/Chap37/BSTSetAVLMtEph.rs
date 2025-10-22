@@ -80,31 +80,7 @@ pub mod BSTSetAVLMtEph {
         fn as_tree(&self)                            -> &BSTAVLMtEph<T>;
     }
 
-    impl<T: StTInMtT + Ord> BSTSetAVLMtEph<T> {
-
-        pub fn filter<F>(&self, mut predicate: F) -> Self
-        where
-            F: FnMut(&T) -> bool,
-        {
-            let filtered: Vec<T> = self
-                .tree
-                .in_order()
-                .iter()
-                .filter_map(|v| if predicate(v) { Some(v.clone()) } else { None })
-                .collect();
-            from_sorted_iter(filtered)
-        }
-
-        pub fn reduce<F>(&self, mut op: F, base: T) -> T
-        where
-            F: FnMut(T, T) -> T,
-        {
-            self.tree
-                .in_order()
-                .iter()
-                .fold(base, |acc, value| op(acc, value.clone()))
-        }
-    }
+    
 
     impl<T: StTInMtT + Ord> BSTSetAVLMtEphTrait<T> for BSTSetAVLMtEph<T> {
         fn empty() -> Self {

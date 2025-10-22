@@ -60,32 +60,7 @@ pub mod BSTSetPlainMtEph {
     }
 
     impl<T: StTInMtT + Ord> BSTSetPlainMtEph<T> {
-
-        pub fn filter<F>(&self, mut predicate: F) -> Self
-        where
-            F: FnMut(&T) -> bool,
-        {
-            let filtered: Vec<T> = self
-                .tree
-                .in_order()
-                .iter()
-                .filter_map(|v| if predicate(v) { Some(v.clone()) } else { None })
-                .collect();
-            Self::from_sorted_iter(filtered)
-        }
-
-        pub fn reduce<F>(&self, mut op: F, base: T) -> T
-        where
-            F: FnMut(T, T) -> T,
-        {
-            self.tree
-                .in_order()
-                .iter()
-                .fold(base, |acc, value| op(acc, value.clone()))
-        }
-
         fn values_vec(&self) -> Vec<T> { self.tree.in_order().iter().cloned().collect() }
-
         fn rebuild_from_vec(values: Vec<T>) -> BSTPlainMtEph<T> {
             let tree = BSTPlainMtEph::new();
             for value in values {
@@ -93,7 +68,6 @@ pub mod BSTSetPlainMtEph {
             }
             tree
         }
-
         fn from_sorted_iter<I>(values: I) -> Self
         where
             I: IntoIterator<Item = T>,

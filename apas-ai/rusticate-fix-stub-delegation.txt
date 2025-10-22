@@ -1,0 +1,16 @@
+~/APASVERUS/APAS-AI/apas-ai $ ~/projects/rusticate/target/release/rusticate-fix-stub-delegation -c 
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap39/BSTSetTreapMtEph.rs: fixed 2 stub delegations
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/BalancedTreePQ.rs: fixed 3 stub delegations
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTSetAVLMtEph.rs: fixed 2 stub delegations
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTSetPlainMtEph.rs: fixed 2 stub delegations
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/AVLTreeSeq.rs: fixed 1 stub delegations
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTSetSplayMtEph.rs: fixed 2 stub delegations
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTSetRBMtEph.rs: fixed 2 stub delegations
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/AVLTreeSeqStEph.rs: fixed 1 stub delegations
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTSetBBAlphaMtEph.rs: fixed 2 stub delegations
+
+Summary:
+  Files processed: 661
+  Files modified: 9
+  Stub delegations fixed: 17
+Completed in 219ms

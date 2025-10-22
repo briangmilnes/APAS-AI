@@ -331,30 +331,6 @@ pub mod BalancedTreePQ {
 
     /// Convenience functions for common operations
     impl<T: StT + Ord> BalancedTreePQ<T> {
-        /// Create priority queue from vector (for testing)
-        pub fn from_vec(elements: Vec<T>) -> Self {
-            let mut pq = Self::empty();
-            for element in elements {
-                pq = pq.insert(element);
-            }
-            pq
-        }
-
-        /// Convert to vector (for testing)
-        pub fn to_vec(&self) -> Vec<T> {
-            let mut result = Vec::new();
-            for i in 0..self.elements.length() {
-                result.push(self.elements.nth(i).clone());
-            }
-            result
-        }
-
-        /// Get elements in sorted order as vector (for testing)
-        pub fn to_sorted_vec(&self) -> Vec<T> {
-            // Already sorted, just convert to vector
-            self.to_vec()
-        }
-
         /// Check if the tree maintains sorted order (for testing)
         pub fn is_sorted(&self) -> bool {
             for i in 1..self.elements.length() {
@@ -366,7 +342,6 @@ pub mod BalancedTreePQ {
             }
             true
         }
-
         /// Get height of the underlying AVL tree (for testing)
         pub fn height(&self) -> N {
             // This would require access to internal tree structure
