@@ -338,3 +338,153 @@ fn test_lookup_exhaustive_probe() {
     // Lookup a key that's not in the table - should probe through all entries
     assert_eq!(LinProbFlatHashTableStEph::lookup(&table, &99), None);
 }
+
+#[test]
+fn test_resize_empty_table() {
+    let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
+    let table: FlatTable =
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
+        );
+
+    let new_table = LinProbFlatHashTableStEph::resize(&table, 20);
+    assert_eq!(new_table.current_size, 20);
+    assert_eq!(new_table.num_elements, 0);
+}
+
+#[test]
+fn test_resize_with_elements() {
+    let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
+    let mut table: FlatTable =
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
+        );
+
+    // Insert some elements
+    LinProbFlatHashTableStEph::insert(&mut table, 1, "one".to_string());
+    LinProbFlatHashTableStEph::insert(&mut table, 2, "two".to_string());
+    LinProbFlatHashTableStEph::insert(&mut table, 3, "three".to_string());
+    assert_eq!(table.num_elements, 3);
+
+    // Resize to larger table
+    let new_table = LinProbFlatHashTableStEph::resize(&table, 20);
+    assert_eq!(new_table.current_size, 20);
+    assert_eq!(new_table.num_elements, 3);
+
+    // Verify all elements are still present
+    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &1), Some("one".to_string()));
+    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &2), Some("two".to_string()));
+    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &3), Some("three".to_string()));
+}
+
+#[test]
+fn test_resize_smaller() {
+    let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
+    let mut table: FlatTable =
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            20,
+        );
+
+    // Insert some elements
+    LinProbFlatHashTableStEph::insert(&mut table, 1, "one".to_string());
+    LinProbFlatHashTableStEph::insert(&mut table, 2, "two".to_string());
+
+    // Resize to smaller table
+    let new_table = LinProbFlatHashTableStEph::resize(&table, 10);
+    assert_eq!(new_table.current_size, 10);
+    assert_eq!(new_table.num_elements, 2);
+
+    // Verify all elements are still present
+    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &1), Some("one".to_string()));
+    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &2), Some("two".to_string()));
+}
+
+#[test]
+fn test_resize_preserves_deleted_not_reinserted() {
+    let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
+    let mut table: FlatTable =
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
+        );
+
+    // Insert and delete
+    LinProbFlatHashTableStEph::insert(&mut table, 1, "one".to_string());
+    LinProbFlatHashTableStEph::insert(&mut table, 2, "two".to_string());
+    LinProbFlatHashTableStEph::delete(&mut table, &1);
+    assert_eq!(table.num_elements, 1);
+
+    // Resize - only occupied entries should be copied
+    let new_table = LinProbFlatHashTableStEph::resize(&table, 20);
+    assert_eq!(new_table.num_elements, 1);
+    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &1), None);
+    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &2), Some("two".to_string()));
+}
+
+#[test]
+fn test_load_and_size() {
+    let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
+    let mut table: FlatTable =
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
+        );
+
+    // Initially empty
+    let result = LinProbFlatHashTableStEph::loadAndSize(&table);
+    assert_eq!(result.load, 0.0);
+    assert_eq!(result.size, 10);
+
+    // After inserting
+    LinProbFlatHashTableStEph::insert(&mut table, 1, "one".to_string());
+    LinProbFlatHashTableStEph::insert(&mut table, 2, "two".to_string());
+    let result = LinProbFlatHashTableStEph::loadAndSize(&table);
+    assert_eq!(result.load, 0.2); // 2/10 = 0.2
+    assert_eq!(result.size, 10);
+
+    // After deleting
+    LinProbFlatHashTableStEph::delete(&mut table, &1);
+    let result = LinProbFlatHashTableStEph::loadAndSize(&table);
+    assert_eq!(result.load, 0.1); // 1/10 = 0.1
+    assert_eq!(result.size, 10);
+}
+
+#[test]
+fn test_find_slot_table_full_fallback() {
+    let hash_fn_gen: HashFunGen<i32> = Rc::new(|_size| Box::new(move |_k| 0)); // Always hash to slot 0
+    let mut table: FlatTable =
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            3,
+        );
+
+    // Fill all slots
+    for i in 0..3 {
+        LinProbFlatHashTableStEph::insert(&mut table, i, format!("num{}", i));
+    }
+
+    // Try to find slot for new key - should return first slot as fallback
+    let slot = LinProbFlatHashTableStEph::find_slot(&table, &99);
+    assert_eq!(slot, 0);
+}
+
+#[test]
+fn test_delete_exhaustive_probe() {
+    let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
+    let mut table: FlatTable =
+        <LinProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            10,
+        );
+
+    // Fill table with keys
+    for i in 0..9 {
+        LinProbFlatHashTableStEph::insert(&mut table, i, format!("num{}", i));
+    }
+
+    // Try to delete a key that's not in the table - should probe through all entries
+    assert!(!LinProbFlatHashTableStEph::delete(&mut table, &99));
+}
