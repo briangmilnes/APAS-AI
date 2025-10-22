@@ -215,3 +215,59 @@ fn test_prime_size_guarantees() {
         );
     }
 }
+
+#[test]
+fn test_resize_empty_table() {
+    let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
+    let table: QuadTable =
+        <QuadProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            11,
+        );
+
+    let new_table = QuadProbFlatHashTableStEph::resize(&table, 23);
+    assert_eq!(new_table.current_size, 23);
+    assert_eq!(new_table.num_elements, 0);
+}
+
+#[test]
+fn test_resize_with_elements() {
+    let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
+    let mut table: QuadTable =
+        <QuadProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            11,
+        );
+
+    QuadProbFlatHashTableStEph::insert(&mut table, 1, "one".to_string());
+    QuadProbFlatHashTableStEph::insert(&mut table, 2, "two".to_string());
+    QuadProbFlatHashTableStEph::insert(&mut table, 3, "three".to_string());
+
+    let new_table = QuadProbFlatHashTableStEph::resize(&table, 23);
+    assert_eq!(new_table.current_size, 23);
+    assert_eq!(new_table.num_elements, 3);
+    
+    assert_eq!(QuadProbFlatHashTableStEph::lookup(&new_table, &1), Some("one".to_string()));
+    assert_eq!(QuadProbFlatHashTableStEph::lookup(&new_table, &2), Some("two".to_string()));
+    assert_eq!(QuadProbFlatHashTableStEph::lookup(&new_table, &3), Some("three".to_string()));
+}
+
+#[test]
+fn test_load_and_size() {
+    let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
+    let mut table: QuadTable =
+        <QuadProbFlatHashTableStEph as ParaHashTableStEphTrait<i32, String, FlatEntry<i32, String>, ()>>::createTable(
+            hash_fn_gen,
+            11,
+        );
+
+    let result = QuadProbFlatHashTableStEph::loadAndSize(&table);
+    assert_eq!(result.load, 0.0);
+    assert_eq!(result.size, 11);
+
+    QuadProbFlatHashTableStEph::insert(&mut table, 1, "one".to_string());
+    QuadProbFlatHashTableStEph::insert(&mut table, 2, "two".to_string());
+    let result = QuadProbFlatHashTableStEph::loadAndSize(&table);
+    assert!((result.load - 0.18181818).abs() < 0.01); // 2/11 ≈ 0.182
+    assert_eq!(result.size, 11);
+}

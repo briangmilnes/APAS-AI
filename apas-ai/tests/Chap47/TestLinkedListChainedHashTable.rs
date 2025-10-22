@@ -87,3 +87,43 @@ fn test_linkedlist_chained_delete() {
     assert!(LinkedListChainedHashTableStEph::delete(&mut table, &1));
     assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &1), None);
 }
+
+#[test]
+fn test_collision_handling() {
+    let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
+    let mut table: LLChainTable = <LinkedListChainedHashTableStEph as ParaHashTableStEphTrait<
+        i32,
+        String,
+        LinkedList<(i32, String)>,
+        (),
+    >>::createTable(hash_fn_gen, 10);
+
+    // Since hash_index returns 0, all keys collide
+    LinkedListChainedHashTableStEph::insert(&mut table, 1, "one".to_string());
+    LinkedListChainedHashTableStEph::insert(&mut table, 11, "eleven".to_string());
+    LinkedListChainedHashTableStEph::insert(&mut table, 21, "twenty-one".to_string());
+
+    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &1), Some("one".to_string()));
+    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &11), Some("eleven".to_string()));
+    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &21), Some("twenty-one".to_string()));
+
+    assert!(LinkedListChainedHashTableStEph::delete(&mut table, &11));
+    
+    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &1), Some("one".to_string()));
+    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &11), None);
+    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &21), Some("twenty-one".to_string()));
+}
+
+#[test]
+fn test_entry_delete_not_found() {
+    let mut entry: LinkedList<(i32, String)> = EntryTrait::new();
+    EntryTrait::insert(&mut entry, 1, "one".to_string());
+    assert!(!EntryTrait::delete(&mut entry, &999));
+}
+
+#[test]
+fn test_entry_lookup_not_found() {
+    let mut entry: LinkedList<(i32, String)> = EntryTrait::new();
+    EntryTrait::insert(&mut entry, 1, "one".to_string());
+    assert_eq!(EntryTrait::lookup(&entry, &999), None);
+}
