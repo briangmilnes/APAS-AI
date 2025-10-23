@@ -300,3 +300,34 @@ fn test_clone() {
     assert_eq!(a, b);
 }
 
+#[test]
+fn test_subseq_copy() {
+    let seq = ArraySeqS::from_vec(vec![0, 1, 2, 3, 4, 5]);
+    let sub = seq.subseq_copy(2, 3);
+    assert_eq!(sub.length(), 3);
+    assert_eq!(*sub.nth(0), 2);
+    assert_eq!(*sub.nth(1), 3);
+    assert_eq!(*sub.nth(2), 4);
+}
+
+#[test]
+fn test_iter() {
+    let seq = ArraySeqS::from_vec(vec![1, 2, 3]);
+    let mut iter = seq.iter();
+    assert_eq!(iter.next(), Some(&1));
+    assert_eq!(iter.next(), Some(&2));
+    assert_eq!(iter.next(), Some(&3));
+    assert_eq!(iter.next(), None);
+}
+
+#[test]
+fn test_iter_mut() {
+    let mut seq = ArraySeqS::from_vec(vec![1, 2, 3]);
+    for x in seq.iter_mut() {
+        *x *= 2;
+    }
+    assert_eq!(*seq.nth(0), 2);
+    assert_eq!(*seq.nth(1), 4);
+    assert_eq!(*seq.nth(2), 6);
+}
+
