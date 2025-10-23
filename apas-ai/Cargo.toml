@@ -2077,3 +2077,8 @@ harness = false
 [[test]]
 name = "TestExample45_2"
 path = "tests/Chap45/TestExample45_2.rs"
+
+
+[[test]]
+name = "TestArraySeq"
+path = "tests/Chap18/TestArraySeq.rs"
