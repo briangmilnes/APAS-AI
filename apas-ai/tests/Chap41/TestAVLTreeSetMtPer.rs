@@ -228,3 +228,145 @@ fn test_duplicate_insert() {
 //     let u = s1.union(&s2);
 //     assert_eq!(u.size(), 1);
 // }
+
+#[test]
+fn test_filter_operation() {
+    let set = AVLTreeSetMtPerLit![1, 2, 3, 4, 5, 6];
+    let evens = set.filter(|x: &i32| *x % 2 == 0);
+    assert_eq!(evens.size(), 3);
+    assert!(evens.find(&2));
+    assert!(evens.find(&4));
+    assert!(evens.find(&6));
+}
+
+#[test]
+fn test_intersection_operation() {
+    let set1 = AVLTreeSetMtPerLit![1, 2, 3, 4];
+    let set2 = AVLTreeSetMtPerLit![3, 4, 5, 6];
+    let inter = set1.intersection(&set2);
+    assert_eq!(inter.size(), 2);
+    assert!(inter.find(&3));
+    assert!(inter.find(&4));
+}
+
+#[test]
+fn test_difference_operation() {
+    let set1 = AVLTreeSetMtPerLit![1, 2, 3, 4];
+    let set2 = AVLTreeSetMtPerLit![3, 4, 5];
+    let diff = set1.difference(&set2);
+    assert_eq!(diff.size(), 2);
+    assert!(diff.find(&1));
+    assert!(diff.find(&2));
+}
+
+#[test]
+fn test_union_operation() {
+    let set1 = AVLTreeSetMtPerLit![1, 2, 3];
+    let set2 = AVLTreeSetMtPerLit![3, 4, 5];
+    let uni = set1.union(&set2);
+    assert_eq!(uni.size(), 5);
+    assert!(uni.find(&1));
+    assert!(uni.find(&5));
+}
+
+#[test]
+fn test_from_seq_operation() {
+    let seq = AVLTreeSeqMtPerS::from_vec(vec![5, 2, 8, 2, 5]);
+    let set = AVLTreeSetMtPer::from_seq(seq);
+    assert_eq!(set.size(), 3);
+    assert!(set.find(&2));
+    assert!(set.find(&5));
+    assert!(set.find(&8));
+}
+
+#[test]
+fn test_default_trait() {
+    let set: AVLTreeSetMtPer<i32> = Default::default();
+    assert_eq!(set.size(), 0);
+}
+
+#[test]
+fn test_display_trait() {
+    let set = AVLTreeSetMtPerLit![1, 2, 3];
+    let display_str = format!("{}", set);
+    assert!(!display_str.is_empty());
+}
+
+#[test]
+fn test_debug_trait() {
+    let set = AVLTreeSetMtPerLit![1, 2, 3];
+    let debug_str = format!("{:?}", set);
+    assert!(!debug_str.is_empty());
+}
+
+#[test]
+fn test_to_seq() {
+    let set = AVLTreeSetMtPerLit![3, 1, 4, 1, 5];
+    let seq = set.to_seq();
+    assert_eq!(seq.length(), 4); // Duplicates removed
+}
+
+#[test]
+fn test_singleton_operation() {
+    let set = AVLTreeSetMtPer::singleton(99);
+    assert_eq!(set.size(), 1);
+    assert!(set.find(&99));
+    assert!(!set.find(&1));
+}
+
+#[test]
+fn test_insert_multiple() {
+    let set = AVLTreeSetMtPerLit![1, 2, 3];
+    let set2 = set.insert(4).insert(5).insert(6);
+    assert_eq!(set2.size(), 6);
+    assert!(set2.find(&4));
+    assert!(set2.find(&5));
+    assert!(set2.find(&6));
+}
+
+#[test]
+fn test_delete_multiple() {
+    let set = AVLTreeSetMtPerLit![1, 2, 3, 4, 5];
+    let set2 = set.delete(&2).delete(&4);
+    assert_eq!(set2.size(), 3);
+    assert!(!set2.find(&2));
+    assert!(!set2.find(&4));
+    assert!(set2.find(&1));
+}
+
+#[test]
+fn test_filter_empty_result() {
+    let set = AVLTreeSetMtPerLit![1, 3, 5];
+    let evens = set.filter(|x: &i32| *x % 2 == 0);
+    assert_eq!(evens.size(), 0);
+}
+
+#[test]
+fn test_intersection_empty() {
+    let set1 = AVLTreeSetMtPerLit![1, 2];
+    let set2 = AVLTreeSetMtPerLit![3, 4];
+    let inter = set1.intersection(&set2);
+    assert_eq!(inter.size(), 0);
+}
+
+#[test]
+fn test_difference_empty() {
+    let set1 = AVLTreeSetMtPerLit![1, 2];
+    let set2 = AVLTreeSetMtPerLit![1, 2, 3];
+    let diff = set1.difference(&set2);
+    assert_eq!(diff.size(), 0);
+}
+
+#[test]
+fn test_union_self() {
+    let set = AVLTreeSetMtPerLit![1, 2, 3];
+    let uni = set.union(&set);
+    assert_eq!(uni.size(), 3);
+}
+
+#[test]
+fn test_find_missing() {
+    let set = AVLTreeSetMtPerLit![1, 2, 3];
+    assert!(!set.find(&100));
+    assert!(!set.find(&0));
+}
