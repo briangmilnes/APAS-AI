@@ -265,19 +265,23 @@ pub mod Types {
         }
     }
 
+    // ARCHITECTURE NOTE: Thread Pool-Based Parallelism
+    // ================================================
+    // Previous implementation spawned unbounded threads, causing exponential growth:
+    // - 16 elements → ~16 threads
+    // - 32 elements → ~32+ threads  
+    // - Resulted in SIGABRT crashes and thread exhaustion
+    //
+    // Current implementation uses rayon's work-stealing thread pool:
+    // - Fixed pool size (10 threads on this system)
+    // - Work-stealing prevents deadlock during nested parallelism
+    // - Allows parallel recursion without thread explosion
+    // - Configured in lib.rs via ensure_rayon_initialized()
     #[macro_export]
     macro_rules! ParaPair {
         ( $left:expr, $right:expr ) => {{
-            let left_handle = std::thread::Builder::new()
-                .stack_size(32 * 1024 * 1024) // 32MB stack for unconditional parallelism
-                .spawn($left)
-                .expect("failed to spawn left thread");
-            let right_handle = std::thread::Builder::new()
-                .stack_size(32 * 1024 * 1024) // 32MB stack for unconditional parallelism
-                .spawn($right)
-                .expect("failed to spawn right thread");
-            let left_result = left_handle.join().expect("left ParaPair task panicked");
-            let right_result = right_handle.join().expect("right ParaPair task panicked");
+            $crate::ensure_rayon_initialized();
+            let (left_result, right_result) = rayon::join($left, $right);
             $crate::Types::Types::Pair(left_result, right_result)
         }};
     }

@@ -3,6 +3,23 @@
 //!
 //! Minimal lib.rs which does no reexporting and so requires pub use apas-ai::Chap03::Chap03::* imports.
 
+// Configure rayon thread pool to 10 threads to prevent thread explosion
+// in recursive parallel algorithms (AVLTreeSetMtPer, etc.)
+// This is initialized lazily on first use via static initialization
+use std::sync::Once;
+static INIT_RAYON: Once = Once::new();
+
+/// Initialize rayon thread pool (called automatically on first ParaPair! use)
+pub fn ensure_rayon_initialized() {
+    INIT_RAYON.call_once(|| {
+        rayon::ThreadPoolBuilder::new()
+            .num_threads(10)
+            .stack_size(32 * 1024 * 1024) // 32MB stack for deep recursion
+            .build_global()
+            .expect("Failed to initialize rayon thread pool");
+    });
+}
+
 pub mod Types;
 
 pub mod Chap03 {

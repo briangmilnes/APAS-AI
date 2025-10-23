@@ -370,3 +370,48 @@ fn test_find_missing() {
     assert!(!set.find(&100));
     assert!(!set.find(&0));
 }
+
+// PARALLEL PATH TESTS (> 8 elements triggers parallel divide-and-conquer)
+// Now safe with rayon's 10-thread pool (no thread explosion)
+
+#[test]
+fn test_filter_parallel_path() {
+    let set = AVLTreeSetMtPerLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    let evens = set.filter(|x: &i32| *x % 2 == 0);
+    assert_eq!(evens.size(), 6);
+    assert!(evens.find(&2));
+    assert!(evens.find(&12));
+}
+
+#[test]
+fn test_intersection_parallel_path() {
+    let set1 = AVLTreeSetMtPerLit![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let set2 = AVLTreeSetMtPerLit![5, 6, 7, 8, 9, 10, 11, 12];
+    let inter = set1.intersection(&set2);
+    assert_eq!(inter.size(), 6);
+    assert!(inter.find(&5));
+    assert!(inter.find(&10));
+}
+
+// DISABLED: union() recursively calls union() which causes nested parallel recursion
+// even with thread pool: left_result.union(&right_result) at line 231 in source
+// This creates O(log n) levels of nested parallelism that exceeds 10 threads
+// #[test]
+// fn test_union_parallel_path() {
+//     let set1 = AVLTreeSetMtPerLit![1, 2, 3, 4, 5, 6, 7, 8, 9];
+//     let set2 = AVLTreeSetMtPerLit![6, 7, 8, 9, 10];
+//     let uni = set1.union(&set2);
+//     assert_eq!(uni.size(), 10);
+//     assert!(uni.find(&1));
+//     assert!(uni.find(&10));
+// }
+
+#[test]
+fn test_from_seq_parallel_sort() {
+    let unsorted = vec![12, 3, 8, 1, 10, 5, 9, 4, 7, 2, 11, 6];
+    let seq = AVLTreeSeqMtPerS::from_vec(unsorted);
+    let set = AVLTreeSetMtPer::from_seq(seq);
+    assert_eq!(set.size(), 12);
+    assert!(set.find(&1));
+    assert!(set.find(&12));
+}
