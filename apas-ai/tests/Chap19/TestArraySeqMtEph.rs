@@ -1,7 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 use apas_ai::ArraySeqMtEphSLit;
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphBaseTrait;
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphRedefinableTrait;
 use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Types::Types::*;
 
@@ -259,4 +257,18 @@ fn test_arrayseqmteph_trait_subseq_copy() {
     assert_eq!(sub.length(), 3);
     assert_eq!(sub.nth_cloned(0), 2);
     assert_eq!(sub.nth_cloned(2), 4);
+}
+
+#[test]
+fn test_simple_calls_no_chap18_import() {
+    // This test uses ONLY Chap19 imports - no explicit Chap18 traits
+    let seq = ArraySeqMtEphSLit![1, 2, 3, 4];
+    
+    // These should resolve to Chap19's parallel implementations
+    let sum = ArraySeqMtEphS::reduce(&seq, |a, b| a + b, 0);
+    assert_eq!(sum, 10);
+    
+    let nested = ArraySeqMtEphSLit![ArraySeqMtEphSLit![1, 2], ArraySeqMtEphSLit![3, 4]];
+    let flat = ArraySeqMtEphS::flatten(&nested);
+    assert_eq!(flat.length(), 4);
 }
