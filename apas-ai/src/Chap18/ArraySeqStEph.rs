@@ -40,9 +40,6 @@ pub mod ArraySeqStEph {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - in-place mutation
         fn update(&mut self, update: Pair<N, T>)                   -> &mut Self;
-        /// APAS: Work Θ(|updates|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|updates|), Span Θ(|updates|), Parallelism Θ(1) - sequential in-place
-        fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut Self;
         /// APAS: Work Θ(|pairs|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|pairs|²), Span Θ(|pairs|²), Parallelism Θ(1) - sequential with linear search
         fn collect<K: StT, V: StT>(
@@ -92,6 +89,9 @@ pub mod ArraySeqStEph {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
         fn isSingleton(&self)                    -> B;
+        /// APAS: Work Θ(|updates|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|updates|), Span Θ(|updates|), Parallelism Θ(1) - sequential in-place (Chap18), functional (Chap19)
+        fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut Self;
     }
 
     impl<T: StT> ArraySeqStEphBaseTrait<T> for ArraySeqStEphS<T> {
@@ -117,20 +117,6 @@ pub mod ArraySeqStEph {
 
         fn update(&mut self, Pair(index, item): Pair<N, T>) -> &mut Self {
             let _ = self.set(index, item);
-            self
-        }
-
-        fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut Self {
-            let mut last_values: HashMap<N, T> = HashMap::new();
-            for i in 0..updates.length() {
-                let Pair(index, value) = updates.nth(i).clone();
-                if index < self.data.len() {
-                    last_values.insert(index, value);
-                }
-            }
-            for (index, value) in last_values {
-                let _ = self.set(index, value);
-            }
             self
         }
 
@@ -249,6 +235,20 @@ pub mod ArraySeqStEph {
 
         fn isEmpty(&self) -> B { self.length() == 0 }
         fn isSingleton(&self) -> B { self.length() == 1 }
+
+        fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut Self {
+            let mut last_values: HashMap<N, T> = HashMap::new();
+            for i in 0..updates.length() {
+                let Pair(index, value) = updates.nth(i).clone();
+                if index < self.data.len() {
+                    last_values.insert(index, value);
+                }
+            }
+            for (index, value) in last_values {
+                let _ = self.set(index, value);
+            }
+            self
+        }
     }
 
     impl<T: StT> PartialEq for ArraySeqStEphS<T> {
