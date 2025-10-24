@@ -103,12 +103,6 @@ path = "benches/Chap37/BenchAVLTreeSeqStPerChap37Ops.rs"
 harness = false
 
 [[bench]]
-name = "BenchArraySeqMtPerChap19"
-path = "benches/Chap19/BenchArraySeqMtPerChap19.rs"
-harness = false
-
-
-[[bench]]
 name = "BenchAVLTreeSeqStEph"
 path = "benches/Chap37/BenchAVLTreeSeqStEph.rs"
 harness = false
@@ -463,10 +457,6 @@ name = "TestArraySeqStEphChap18"
 path = "tests/Chap18/TestArraySeqStEphChap18.rs"
 
 [[test]]
-name = "TestArraySeqMtPerChap19"
-path = "tests/Chap19/TestArraySeqMtPerChap19.rs"
-
-[[test]]
 name = "TestArraySeqMtPerChap18"
 path = "tests/Chap18/TestArraySeqMtPerChap18.rs"
 
@@ -676,10 +666,6 @@ name = "TestProblem_21_1"
 path = "tests/Chap21/TestProblem_21_1.rs"
 
 # Additional missing test files
-[[test]]
-name = "TestTypes"
-path = "tests/TestTypes.rs"
-
 [[test]]
 name = "TestLinkedListStPerChap18"
 path = "tests/Chap18/TestLinkedListStPerChap18.rs"

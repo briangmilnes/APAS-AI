@@ -1,0 +1,95 @@
+✗ St/Mt Consistency violations found:
+
+================================================================================
+Mt files without threading (should use parallel operations):
+================================================================================
+src/Chap35/OrderStatSelectMtEph.rs: Missing parallel operations
+src/Chap35/OrderStatSelectMtPer.rs: Missing parallel operations
+src/Chap27/ScanContractMtEph.rs: Missing parallel operations
+src/Chap26/DivConReduceMt.rs: Missing parallel operations
+src/Chap62/StarPartitionMtEph.rs: Missing parallel operations
+src/Chap52/AdjMatrixGraphMtPer.rs: Missing parallel operations
+src/Chap52/AdjTableGraphMtPer.rs: Missing parallel operations
+src/Chap52/AdjSeqGraphMtPer.rs: Missing parallel operations
+src/Chap52/AdjMatrixGraphMtEph.rs: Missing parallel operations
+src/Chap52/EdgeSetGraphMtPer.rs: Missing parallel operations
+src/Chap52/AdjSeqGraphMtEph.rs: Missing parallel operations
+src/Chap39/BSTTreapMtEph.rs: Missing parallel operations
+src/Chap39/BSTSetTreapMtEph.rs: Missing parallel operations
+src/Chap54/BFSMtPer.rs: Missing parallel operations
+src/Chap54/BFSMtEph.rs: Missing parallel operations
+src/Chap28/MaxContigSubSumOptMtEph.rs: Missing parallel operations
+src/Chap43/OrderedSetMtEph.rs: Missing parallel operations
+src/Chap43/OrderedTableMtPer.rs: Missing parallel operations
+src/Chap43/OrderedTableMtEph.rs: Missing parallel operations
+src/Chap64/SpanTreeMtEph.rs: Missing parallel operations
+src/Chap64/TSPApproxMtEph.rs: Missing parallel operations
+src/Chap37/BSTSetAVLMtEph.rs: Missing parallel operations
+src/Chap37/AVLTreeSeqMtPer.rs: Missing parallel operations
+src/Chap37/BSTSetPlainMtEph.rs: Missing parallel operations
+src/Chap37/BSTSetSplayMtEph.rs: Missing parallel operations
+src/Chap37/BSTBBAlphaMtEph.rs: Missing parallel operations
+src/Chap37/BSTPlainMtEph.rs: Missing parallel operations
+src/Chap37/BSTSplayMtEph.rs: Missing parallel operations
+src/Chap37/BSTSetRBMtEph.rs: Missing parallel operations
+src/Chap37/BSTRBMtEph.rs: Missing parallel operations
+src/Chap37/BSTAVLMtEph.rs: Missing parallel operations
+src/Chap37/BSTSetBBAlphaMtEph.rs: Missing parallel operations
+src/Chap53/GraphSearchMtPer.rs: Missing parallel operations
+src/Chap53/PQMinMtPer.rs: Missing parallel operations
+src/Chap53/PQMinMtEph.rs: Missing parallel operations
+================================================================================
+Mt files with threshold-based serial fallback:
+(APAS is a class example - should always demonstrate parallelism)
+================================================================================
+src/Chap41/AVLTreeSetMtPer.rs:76: if n <= 1 {
+src/Chap41/AVLTreeSetMtPer.rs:117: if n <= 8 {
+src/Chap41/AVLTreeSetMtPer.rs:158: if n <= 8 {
+src/Chap41/AVLTreeSetMtPer.rs:207: if n <= 8 {
+src/Chap26/MergeSortMt.rs:164: if n <= 1 {
+src/Chap06/WeightedUnDirGraphMtEphFloat.rs:83: if n <= 8 {
+src/Chap06/WeightedUnDirGraphMtEphInt.rs:81: if n <= 8 {
+src/Chap06/LabUnDirGraphMtEph.rs:127: if n <= 8 {
+src/Chap06/WeightedDirGraphMtEphFloat.rs:113: if n <= 8 {
+src/Chap06/WeightedDirGraphMtEphFloat.rs:168: if n <= 8 {
+src/Chap06/UnDirGraphMtEph.rs:85: if n <= 8 {
+src/Chap06/UnDirGraphMtEph.rs:141: if n <= 8 {
+src/Chap06/DirGraphMtEph.rs:105: if n <= 8 {
+src/Chap06/DirGraphMtEph.rs:150: if n <= 8 {
+src/Chap06/DirGraphMtEph.rs:200: if n <= 8 {
+src/Chap06/DirGraphMtEph.rs:250: if n <= 8 {
+src/Chap06/DirGraphMtEph.rs:295: if n <= 8 {
+src/Chap06/WeightedDirGraphMtEphInt.rs:81: if n <= 8 {
+src/Chap06/WeightedDirGraphMtEphInt.rs:133: if n <= 8 {
+src/Chap06/LabDirGraphMtEph.rs:116: if n <= 8 {
+src/Chap06/LabDirGraphMtEph.rs:168: if n <= 8 {
+src/Chap11/FibonacciMt.rs:27: if n <= 1 {
+================================================================================
+THREAD EXPLOSION RISK - Recursive functions spawning multiple threads:
+(Recommendation: Use a thread pool like rayon instead of raw spawning)
+================================================================================
+src/Chap27/ReduceContractMtEph.rs:26: 2 spawn(s) detected
+  fn reduce_contract_parallel<F: Fn(&T, &T) -> T + Send + Sync + 'static>(
+  → Potential threads at depth 5: 32 (2^5)
+src/Chap26/MergeSortMt.rs:28: 2 spawn(s) detected
+  fn merge_parallel(left: &ArraySeqMtPerS<T>, right: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T> {
+  → Potential threads at depth 5: 32 (2^5)
+src/Chap06/LabUnDirGraphMtEph.rs:122: 2 spawn(s) detected
+  fn neighbors(&self, v: &V) -> SetStEph<V> {
+  → Potential threads at depth 5: 32 (2^5)
+src/Chap49/SubsetSumMtEph.rs:53: 4 spawn(s) detected
+  /// Internal parallel recursive subset sum with shared memoization
+  → Potential threads at depth 5: 1024 (4^5)
+  ⚠️  CRITICAL: Exponential thread explosion detected!
+  📋 RECOMMENDATION: Replace raw spawning with rayon thread pool
+     - Use rayon::join() instead of manual spawn()
+     - Use .par_iter() for collections
+     - Thread pool automatically limits parallelism
+src/Chap49/SubsetSumMtPer.rs:43: 4 spawn(s) detected
+  /// Internal parallel recursive subset sum with shared memoization
+  → Potential threads at depth 5: 1024 (4^5)
+  ⚠️  CRITICAL: Exponential thread explosion detected!
+  📋 RECOMMENDATION: Replace raw spawning with rayon thread pool
+     - Use rayon::join() instead of manual spawn()
+     - Use .par_iter() for collections
+     - Thread pool automatically limits parallelism

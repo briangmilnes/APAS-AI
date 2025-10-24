@@ -543,10 +543,11 @@ fn test_arrayseqmtephslice_ninject() {
     let base = ArraySeqMtEphSliceS::from_vec(vec![0, 0, 0, 0]);
     let updates = vec![(1, 10), (1, 20), (2, 30)];
 
-    // ninject applies updates (rightmost wins by reversing)
+    // ninject applies updates (rightmost wins: highest k wins)
     let result = ArraySeqMtEphSliceS::ninject(&base, &updates);
-    // Based on implementation, it reverses and applies, so leftmost in reversed = rightmost in original
-    assert_eq!(result.nth_cloned(1), 10); // First occurrence in forward direction
+    // For index 1: updates at k=0 (val=10) and k=1 (val=20)
+    // Rightmost wins means k=1 wins, so result should be 20
+    assert_eq!(result.nth_cloned(1), 20); // Rightmost wins: k=1 (val=20) beats k=0 (val=10)
     assert_eq!(result.nth_cloned(2), 30);
 }
 

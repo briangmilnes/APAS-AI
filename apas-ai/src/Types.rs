@@ -267,65 +267,24 @@ pub mod Types {
 
     // ARCHITECTURE NOTE: Thread Pool-Based Parallelism
     // ================================================
+    // Implements the APAS textbook's || (parallel pair) operator.
     // Previous implementation spawned unbounded threads, causing exponential growth:
     // - 16 elements → ~16 threads
     // - 32 elements → ~32+ threads  
     // - Resulted in SIGABRT crashes and thread exhaustion
     //
     // Current implementation uses rayon's work-stealing thread pool:
-    // - Fixed pool size (10 threads on this system)
+    // - Default pool size (num_cpus threads, typically 8-16)
     // - Work-stealing prevents deadlock during nested parallelism
     // - Allows parallel recursion without thread explosion
-    // - Configured in lib.rs via ensure_rayon_initialized()
     #[macro_export]
     macro_rules! ParaPair {
         ( $left:expr, $right:expr ) => {{
-            $crate::ensure_rayon_initialized();
             let (left_result, right_result) = rayon::join($left, $right);
             $crate::Types::Types::Pair(left_result, right_result)
         }};
     }
 
-    /// Set equivalence comparison for sequences (order-independent, useful for MT tests)
-    /// APAS: Work Θ(n²), Span Θ(1) - simple membership test both ways
-    /// claude-4-sonet: Work Θ(n²), Span Θ(1) - simple membership test both ways
-    pub fn ArraySeqSetEq<T: PartialEq>(a_len: N, a_nth: fn(N) -> T, b_len: N, b_nth: fn(N) -> T) -> bool {
-        if a_len != b_len {
-            return false;
-        }
-
-        // For each element in sequence A, check if it exists in sequence B
-        for i in 0..a_len {
-            let a_elem = a_nth(i);
-            let mut found = false;
-            for j in 0..b_len {
-                if a_elem == b_nth(j) {
-                    found = true;
-                    break;
-                }
-            }
-            if !found {
-                return false;
-            }
-        }
-
-        // For each element in sequence B, check if it exists in sequence A
-        for j in 0..b_len {
-            let b_elem = b_nth(j);
-            let mut found = false;
-            for i in 0..a_len {
-                if b_elem == a_nth(i) {
-                    found = true;
-                    break;
-                }
-            }
-            if !found {
-                return false;
-            }
-        }
-
-        true
-    }
 
     #[macro_export]
     macro_rules! EdgeLit {

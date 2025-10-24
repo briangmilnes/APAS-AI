@@ -198,26 +198,13 @@ pub mod ArraySeqMtEph {
         where
             T: Send + 'static,
         {
-            if a.length() == 0 {
-                return id;
+            // Chap18 base implementation: sequential reduce
+            // Chap19 will redefine this with parallel divide-and-conquer
+            let mut acc = id;
+            for i in 0..a.length() {
+                acc = f(&acc, &a.nth_cloned(i));
             }
-            if a.length() == 1 {
-                return a.nth_cloned(0);
-            }
-
-            // Unconditionally parallel using ParaPair!
-            let mid = a.length() / 2;
-            let left = a.subseq_copy(0, mid);
-            let right = a.subseq_copy(mid, a.length() - mid);
-            let f_clone = f.clone();
-            let f_clone2 = f.clone();
-            let id_clone = id.clone();
-
-            let Pair(l, r) = ParaPair!(
-                move || <ArraySeqMtEphS<T> as ArraySeqMtEphBaseTrait<T>>::reduce(&left, f_clone, id_clone),
-                move || <ArraySeqMtEphS<T> as ArraySeqMtEphBaseTrait<T>>::reduce(&right, f_clone2, id)
-            );
-            f(&l, &r)
+            acc
         }
 
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T) {

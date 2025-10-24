@@ -3,9 +3,6 @@
 
 pub mod ArraySeqMtEph {
 
-    use std::sync::Mutex;
-    use std::thread;
-
     use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphRedefinableTrait, ArraySeqMtEphS as S};
     use crate::Types::Types::*;
 
@@ -21,6 +18,18 @@ pub mod ArraySeqMtEph {
         fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)    -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn deflate<F: PredMt<T>>(f: &F, x: &T)                            -> Self;
+        
+        // Chap19 redefines these with parallel implementations
+        /// APAS Algorithm 19.9: Work Θ(|a|), Span Θ(log|a|)
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
+        where
+            T: Send + 'static;
+        /// APAS Algorithm 19.15: Work Θ(Σ|ss[i]|), Span Θ(log|ss|)
+        fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> Self;
+        /// APAS Algorithm 19.16: Work Θ(|a| + |updates|), Span Θ(log|updates|)
+        fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> Self;
+        /// APAS Algorithm 19.17: Work Θ(|a| + |updates|), Span Θ(log|updates|)
+        fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> Self;
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
@@ -52,6 +61,145 @@ pub mod ArraySeqMtEph {
             } else {
                 <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::empty()
             }
+        }
+
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
+        where
+            T: Send + 'static,
+        {
+            // Algorithm 19.9: parallel reduce using divide-and-conquer
+            use crate::ParaPair;
+            
+            if a.length() == 0 {
+                return id;
+            }
+            if a.length() == 1 {
+                return a.nth_cloned(0);
+            }
+
+            // Divide-and-conquer with ParaPair!
+            let mid = a.length() / 2;
+            let left = a.subseq_copy(0, mid);
+            let right = a.subseq_copy(mid, a.length() - mid);
+            let f_left = f.clone();
+            let f_right = f.clone();
+            let id_clone = id.clone();
+
+            let Pair(left_result, right_result) = ParaPair!(
+                move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&left, f_left, id_clone),
+                move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&right, f_right, id)
+            );
+            
+            f(&left_result, &right_result)
+        }
+
+        fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {
+            // Algorithm 19.15: parallel flatten using divide-and-conquer
+            use crate::ParaPair;
+            
+            if ss.length() == 0 {
+                return <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::empty();
+            }
+            if ss.length() == 1 {
+                return ss.nth_cloned(0);
+            }
+
+            // Divide-and-conquer with ParaPair!
+            let mid = ss.length() / 2;
+            let left = ss.subseq_copy(0, mid);
+            let right = ss.subseq_copy(mid, ss.length() - mid);
+
+            let Pair(left_result, right_result) = ParaPair!(
+                move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::flatten(&left),
+                move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::flatten(&right)
+            );
+
+            // Append the two flattened results
+            <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::append(&left_result, &right_result)
+        }
+
+        fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
+            // Algorithm 19.16: parallel inject with leftmost-wins atomic writes
+            use std::sync::{Arc, Mutex};
+            
+            if updates.length() == 0 {
+                return a.clone();
+            }
+
+            // Create shared atomic array: (value, update_index)
+            let values: Arc<Vec<Mutex<(T, N)>>> = Arc::new(
+                (0..a.length())
+                    .map(|i| Mutex::new((a.nth_cloned(i), a.length())))
+                    .collect()
+            );
+
+            // Apply all updates in parallel - leftmost wins
+            let updates_vec: Vec<Pair<N, T>> = (0..updates.length())
+                .map(|i| updates.nth_cloned(i))
+                .collect();
+            
+            std::thread::scope(|s| {
+                for (k, Pair(idx, val)) in updates_vec.into_iter().enumerate() {
+                    let vals = Arc::clone(&values);
+                    s.spawn(move || {
+                        if idx < vals.len() {
+                            let mut slot = vals[idx].lock().unwrap();
+                            if k < slot.1 {
+                                *slot = (val, k);
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Extract final values (Arc is automatically unwrapped after scope)
+            let result: Vec<T> = values
+                .iter()
+                .map(|m| m.lock().unwrap().0.clone())
+                .collect();
+            ArraySeqMtEphS::from_vec(result)
+        }
+
+        fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
+            // Algorithm 19.17: parallel ninject with rightmost-wins atomic writes
+            use std::sync::{Arc, Mutex};
+            
+            if updates.length() == 0 {
+                return a.clone();
+            }
+
+            // Create shared atomic array: (value, update_index)
+            let values: Arc<Vec<Mutex<(T, N)>>> = Arc::new(
+                (0..a.length())
+                    .map(|i| Mutex::new((a.nth_cloned(i), 0)))
+                    .collect()
+            );
+
+            // Apply all updates in parallel - rightmost wins
+            let updates_vec: Vec<Pair<N, T>> = (0..updates.length())
+                .map(|i| updates.nth_cloned(i))
+                .collect();
+            
+            std::thread::scope(|s| {
+                for (k, Pair(idx, val)) in updates_vec.into_iter().enumerate() {
+                    let vals = Arc::clone(&values);
+                    s.spawn(move || {
+                        if idx < vals.len() {
+                            let mut slot = vals[idx].lock().unwrap();
+                            if k >= slot.1 {
+                                *slot = (val, k);
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Extract final values (Arc is automatically unwrapped after scope)
+            let result: Vec<T> = values
+                .iter()
+                .map(|m| m.lock().unwrap().0.clone())
+                .collect();
+            ArraySeqMtEphS::from_vec(result)
         }
     }
 }
