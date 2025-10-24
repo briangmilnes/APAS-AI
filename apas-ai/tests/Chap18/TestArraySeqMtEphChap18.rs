@@ -88,7 +88,7 @@ fn test_flatten() {
     let inner2: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::tabulate(&|i| i + 10, 3);
     let outer = ArraySeqMtEphSLit![inner1, inner2];
 
-    let flattened = <ArraySeqMtEphS<_> as ArraySeqMtEphBaseTrait<_>>::flatten(&outer);
+    let flattened = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::flatten(&outer);
     assert_eq!(flattened.length(), 5);
     assert_eq!(flattened.nth_cloned(0), 0);
     assert_eq!(flattened.nth_cloned(1), 1);
@@ -160,7 +160,7 @@ fn test_inject() {
         Pair(1, 111), // Duplicate index - first wins
     ]);
 
-    let injected = <ArraySeqMtEphS<_> as ArraySeqMtEphBaseTrait<_>>::inject(&a, &updates);
+    let injected = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::inject(&a, &updates);
     assert_eq!(injected.nth_cloned(0), 0); // Unchanged
     assert_eq!(injected.nth_cloned(1), 100); // Updated (first occurrence)
     assert_eq!(injected.nth_cloned(2), 2); // Unchanged
@@ -195,7 +195,7 @@ fn test_subseq_copy() {
 fn test_ninject() {
     let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3, 4, 5]);
     let updates = ArraySeqMtEphS::from_vec(vec![Pair(1, 10), Pair(3, 30)]);
-    let result = <ArraySeqMtEphS<_> as ArraySeqMtEphBaseTrait<_>>::ninject(&seq, &updates);
+    let result = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::ninject(&seq, &updates);
     assert_eq!(result.nth_cloned(1), 10);
     assert_eq!(result.nth_cloned(3), 30);
 }

@@ -39,12 +39,6 @@ pub mod ArraySeqMtEph {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - in-place, locks mutex
         fn update(a: &mut ArraySeqMtEphS<T>, item_at: (N, T))                   -> &mut Self;
-        /// APAS: Work Θ(|a|+|updates|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(|a|+|updates|), Span Θ(|a|+|updates|), Parallelism Θ(1) - sequential
-        fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>)  -> Self;
-        /// APAS: Work Θ(Σ|ss[i]|), Span Θ(1)
-        /// claude-4-sonet: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|), Parallelism Θ(1) - sequential
-        fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>)                      -> Self;
         /// APAS: Work Θ(|a|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - sequential with linear search
         fn collect<K: StTInMtT, V: StTInMtT>(
@@ -59,7 +53,6 @@ pub mod ArraySeqMtEph {
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T);
-        fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> Self;
         // Additional methods
         fn from_vec(values: Vec<T>)                                             -> Self;
         fn iter_cloned(&self)                                                   -> Vec<T>;
@@ -100,6 +93,15 @@ pub mod ArraySeqMtEph {
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
         fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
+        /// APAS: Work Θ(Σ|ss[i]|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|), Parallelism Θ(1) - sequential (Chap18), parallel (Chap19)
+        fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>)                      -> Self;
+        /// APAS: Work Θ(|a|+|updates|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|+|updates|), Span Θ(|a|+|updates|), Parallelism Θ(1) - sequential (Chap18), parallel (Chap19)
+        fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>)  -> Self;
+        /// APAS: Work Θ(|a|+|updates|), Span Θ(1)
+        /// claude-4-sonet: Work Θ(|a|+|updates|), Span Θ(|a|+|updates|), Parallelism Θ(1) - sequential (Chap18), parallel (Chap19)
+        fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> Self;
     }
 
     impl<T: StTInMtT> ArraySeqMtEphBaseTrait<T> for ArraySeqMtEphS<T> {
@@ -139,29 +141,6 @@ pub mod ArraySeqMtEph {
         fn update(a: &mut ArraySeqMtEphS<T>, (index, item): (N, T)) -> &mut ArraySeqMtEphS<T> {
             let _ = a.set(index, item);
             a
-        }
-
-        fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
-            let mut out = a.clone();
-            let mut seen: HashSet<N> = HashSet::new();
-            for i in 0..updates.length() {
-                let Pair(idx, val) = updates.nth_cloned(i);
-                if seen.insert(idx) {
-                    let _ = out.set(idx, val);
-                }
-            }
-            out
-        }
-
-        fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {
-            let mut values: Vec<T> = Vec::new();
-            for i in 0..ss.length() {
-                let inner = ss.nth_cloned(i);
-                for j in 0..inner.length() {
-                    values.push(inner.nth_cloned(j));
-                }
-            }
-            ArraySeqMtEphS::from_vec(values)
         }
 
         fn collect<K: StTInMtT, V: StTInMtT>(
@@ -216,15 +195,6 @@ pub mod ArraySeqMtEph {
                 values.push(acc.clone());
             }
             (ArraySeqMtEphS::from_vec(values), acc)
-        }
-
-        fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
-            let mut out = a.clone();
-            for i in 0..updates.length() {
-                let Pair(idx, val) = updates.nth_cloned(i);
-                let _ = out.set(idx, val);
-            }
-            out
         }
 
         fn from_vec(values: Vec<T>) -> Self {
@@ -327,6 +297,38 @@ pub mod ArraySeqMtEph {
                 acc = f(&acc, &item);
             }
             acc
+        }
+
+        fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {
+            let mut values: Vec<T> = Vec::new();
+            for i in 0..ss.length() {
+                let inner = ss.nth_cloned(i);
+                for j in 0..inner.length() {
+                    values.push(inner.nth_cloned(j));
+                }
+            }
+            ArraySeqMtEphS::from_vec(values)
+        }
+
+        fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
+            let mut out = a.clone();
+            let mut seen: HashSet<N> = HashSet::new();
+            for i in 0..updates.length() {
+                let Pair(idx, val) = updates.nth_cloned(i);
+                if seen.insert(idx) {
+                    let _ = out.set(idx, val);
+                }
+            }
+            out
+        }
+
+        fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
+            let mut out = a.clone();
+            for i in 0..updates.length() {
+                let Pair(idx, val) = updates.nth_cloned(i);
+                let _ = out.set(idx, val);
+            }
+            out
         }
     }
 

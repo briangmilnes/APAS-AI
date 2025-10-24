@@ -93,7 +93,7 @@ fn test_scan() {
 #[test]
 fn test_flatten() {
     let a = ArraySeqMtEphS::singleton(ArraySeqMtEphSLit![1, 2]);
-    let flat = <ArraySeqMtEphS<i32> as ArraySeqMtEphBaseTrait<i32>>::flatten(&a);
+    let flat = <ArraySeqMtEphS<i32> as ArraySeqMtEphRedefinableTrait<i32>>::flatten(&a);
     assert_eq!(flat.length(), 2);
 }
 
@@ -224,7 +224,7 @@ fn test_arrayseqmteph_trait_flatten() {
     let seq1 = ArraySeqMtEphSLit![1, 2];
     let seq2 = ArraySeqMtEphSLit![3, 4];
     let nested = ArraySeqMtEphSLit![seq1, seq2];
-    let flat = <ArraySeqMtEphS<i32> as ArraySeqMtEphBaseTrait<i32>>::flatten(&nested);
+    let flat = <ArraySeqMtEphS<i32> as ArraySeqMtEphRedefinableTrait<i32>>::flatten(&nested);
     assert_eq!(flat.length(), 4);
     assert_eq!(flat.nth_cloned(0), 1);
     assert_eq!(flat.nth_cloned(3), 4);
