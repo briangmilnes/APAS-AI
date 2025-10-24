@@ -45,11 +45,6 @@ pub mod ArraySeqMtEph {
             a: &ArraySeqMtEphS<Pair<K, V>>,
             cmp: fn(&K, &K) -> O,
         ) -> ArraySeqMtEphS<Pair<K, ArraySeqMtEphS<V>>>;
-        /// APAS: Work Θ(|a|), Span Θ(log|a|)
-        /// claude-4-sonet: Work Θ(|a|), Span Θ(log|a|), Parallelism Θ(|a|/log|a|) - parallel via ParaPair! divide-and-conquer
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
-        where
-            T: Send + 'static;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T);
@@ -93,6 +88,11 @@ pub mod ArraySeqMtEph {
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
         fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
+        /// APAS: Work Θ(|a|), Span Θ(log|a|)
+        /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential (Chap18), parallel (Chap19)
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
+        where
+            T: Send + 'static;
         /// APAS: Work Θ(Σ|ss[i]|), Span Θ(1)
         /// claude-4-sonet: Work Θ(Σ|ss[i]|), Span Θ(Σ|ss[i]|), Parallelism Θ(1) - sequential (Chap18), parallel (Chap19)
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>)                      -> Self;
@@ -171,19 +171,6 @@ pub mod ArraySeqMtEph {
                 }
             }
             ArraySeqMtEphS::from_vec(groups)
-        }
-
-        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
-        where
-            T: Send + 'static,
-        {
-            // Chap18 base implementation: sequential reduce
-            // Chap19 will redefine this with parallel divide-and-conquer
-            let mut acc = id;
-            for i in 0..a.length() {
-                acc = f(&acc, &a.nth_cloned(i));
-            }
-            acc
         }
 
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T) {
@@ -295,6 +282,19 @@ pub mod ArraySeqMtEph {
             for i in 0..a.length() {
                 let item = a.nth_cloned(i);
                 acc = f(&acc, &item);
+            }
+            acc
+        }
+
+        fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
+        where
+            T: Send + 'static,
+        {
+            // Chap18 base implementation: sequential reduce
+            // Chap19 will redefine this with parallel divide-and-conquer
+            let mut acc = id;
+            for i in 0..a.length() {
+                acc = f(&acc, &a.nth_cloned(i));
             }
             acc
         }

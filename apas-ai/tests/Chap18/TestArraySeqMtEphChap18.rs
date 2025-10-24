@@ -51,7 +51,7 @@ fn test_map_parallel() {
 #[test]
 fn test_reduce_parallel() {
     let a: ArraySeqMtEphS<N> = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::tabulate(&add_one, 2000); // [1, 2, 3, ..., 2000]
-    let sum = <ArraySeqMtEphS<_> as ArraySeqMtEphBaseTrait<_>>::reduce(&a, add_nums, 0);
+    let sum = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::reduce(&a, add_nums, 0);
 
     // Sum of 1 to 2000 = 2000 * 2001 / 2 = 2001000
     assert_eq!(sum, 2001000);

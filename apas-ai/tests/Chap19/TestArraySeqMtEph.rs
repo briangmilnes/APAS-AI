@@ -78,7 +78,7 @@ fn test_filter() {
 #[test]
 fn test_reduce() {
     let a = ArraySeqMtEphSLit![1, 2, 3, 4];
-    let sum = <ArraySeqMtEphS<i32> as ArraySeqMtEphBaseTrait<i32>>::reduce(&a, |x, y| x + y, 0);
+    let sum = <ArraySeqMtEphS<i32> as ArraySeqMtEphRedefinableTrait<i32>>::reduce(&a, |x, y| x + y, 0);
     assert_eq!(sum, 10);
 }
 
@@ -233,7 +233,7 @@ fn test_arrayseqmteph_trait_flatten() {
 #[test]
 fn test_arrayseqmteph_trait_reduce() {
     let seq = ArraySeqMtEphSLit![1, 2, 3, 4];
-    let sum = <ArraySeqMtEphS<i32> as ArraySeqMtEphBaseTrait<i32>>::reduce(&seq, |a, b| a + b, 0);
+    let sum = <ArraySeqMtEphS<i32> as ArraySeqMtEphRedefinableTrait<i32>>::reduce(&seq, |a, b| a + b, 0);
     assert_eq!(sum, 10);
 }
 
