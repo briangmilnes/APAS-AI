@@ -76,19 +76,8 @@ pub mod WeightedDirGraphMtEphInt {
         fn out_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, i32>> {
             // PARALLEL: filter weighted arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, i32>> = self.labeled_arcs().iter().cloned().collect();
-            let n = arcs.len();
 
-            if n <= 8 {
-                let mut neighbors = SetStEph::empty();
-                for labeled_edge in arcs {
-                    if labeled_edge.0 == *v {
-                        neighbors.insert(Pair(labeled_edge.1.clone_mt(), labeled_edge.2));
-                    }
-                }
-                return neighbors;
-            }
-
-            // Parallel divide-and-conquer
+            // Parallel divide-and-conquer with proper base cases
             fn parallel_out<V: StT + MtT + Hash + 'static>(arcs: Vec<LabEdge<V, i32>>, v: V) -> SetStEph<Pair<V, i32>> {
                 let n = arcs.len();
                 if n == 0 {
@@ -128,19 +117,8 @@ pub mod WeightedDirGraphMtEphInt {
         fn in_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, i32>> {
             // PARALLEL: filter weighted arcs using divide-and-conquer
             let arcs: Vec<LabEdge<V, i32>> = self.labeled_arcs().iter().cloned().collect();
-            let n = arcs.len();
 
-            if n <= 8 {
-                let mut neighbors = SetStEph::empty();
-                for labeled_edge in arcs {
-                    if labeled_edge.1 == *v {
-                        neighbors.insert(Pair(labeled_edge.0.clone_mt(), labeled_edge.2));
-                    }
-                }
-                return neighbors;
-            }
-
-            // Parallel divide-and-conquer
+            // Parallel divide-and-conquer with proper base cases
             fn parallel_in<V: StT + MtT + Hash + 'static>(arcs: Vec<LabEdge<V, i32>>, v: V) -> SetStEph<Pair<V, i32>> {
                 let n = arcs.len();
                 if n == 0 {

@@ -114,17 +114,16 @@ pub mod AVLTreeSetMtPer {
         fn filter<F: PredMt<T> + Clone>(&self, f: F) -> Self {
             let n = self.size();
 
-            if n <= 8 {
-                let mut vals = Vec::new();
-                for i in 0..n {
-                    let elem = self.elements.nth(i);
-                    if f(elem) {
-                        vals.push(elem.clone());
-                    }
+            if n <= 1 {
+                if n == 0 {
+                    return Self::empty();
                 }
-                return AVLTreeSetMtPer {
-                    elements: AVLTreeSeqMtPerS::from_vec(vals),
-                };
+                let elem = self.elements.nth(0);
+                if f(elem) {
+                    return Self::singleton(elem.clone());
+                } else {
+                    return Self::empty();
+                }
             }
 
             // Unconditionally parallel divide-and-conquer using ParaPair!
@@ -142,7 +141,14 @@ pub mod AVLTreeSetMtPer {
             let Pair(left_result, right_result) =
                 ParaPair!(move || left_set.filter(f_left), move || right_set.filter(f_right));
 
-            left_result.union(&right_result)
+            // Sequential merge of results to avoid nested parallel recursion
+            let mut vals = left_result.elements.values_in_order();
+            vals.extend(right_result.elements.values_in_order());
+            vals.sort();
+            vals.dedup();
+            AVLTreeSetMtPer {
+                elements: AVLTreeSeqMtPerS::from_vec(vals),
+            }
         }
 
         // PARALLEL: intersection using divide-and-conquer (unconditionally parallel)
@@ -155,17 +161,13 @@ pub mod AVLTreeSetMtPer {
                 return Self::empty();
             }
 
-            if n <= 8 {
-                let mut vals = Vec::new();
-                for i in 0..n {
-                    let elem = self.elements.nth(i);
-                    if other.find(elem) {
-                        vals.push(elem.clone());
-                    }
+            if n == 1 {
+                let elem = self.elements.nth(0);
+                if other.find(elem) {
+                    return Self::singleton(elem.clone());
+                } else {
+                    return Self::empty();
                 }
-                return AVLTreeSetMtPer {
-                    elements: AVLTreeSeqMtPerS::from_vec(vals),
-                };
             }
 
             // Unconditionally parallel divide-and-conquer using ParaPair!
@@ -183,7 +185,14 @@ pub mod AVLTreeSetMtPer {
                 ParaPair!(move || left_set.intersection(&other_left), move || right_set
                     .intersection(&other_right));
 
-            left_result.union(&right_result)
+            // Sequential merge of results to avoid nested parallel recursion
+            let mut vals = left_result.elements.values_in_order();
+            vals.extend(right_result.elements.values_in_order());
+            vals.sort();
+            vals.dedup();
+            AVLTreeSetMtPer {
+                elements: AVLTreeSeqMtPerS::from_vec(vals),
+            }
         }
 
         fn difference(&self, other: &Self) -> Self {
@@ -204,14 +213,8 @@ pub mod AVLTreeSetMtPer {
                 return self.clone();
             }
 
-            if n <= 8 {
-                let mut vals = self.elements.values_in_order();
-                vals.extend(other.elements.values_in_order());
-                vals.sort();
-                vals.dedup();
-                return AVLTreeSetMtPer {
-                    elements: AVLTreeSeqMtPerS::from_vec(vals),
-                };
+            if n == 1 {
+                return other.insert(self.elements.nth(0).clone());
             }
 
             // Unconditionally parallel divide-and-conquer using ParaPair!
@@ -228,7 +231,14 @@ pub mod AVLTreeSetMtPer {
             let Pair(left_result, right_result) = ParaPair!(move || left_set.union(&other_left), move || right_set
                 .union(&other_right));
 
-            left_result.union(&right_result)
+            // Sequential merge of results to avoid nested parallel recursion
+            let mut vals = left_result.elements.values_in_order();
+            vals.extend(right_result.elements.values_in_order());
+            vals.sort();
+            vals.dedup();
+            AVLTreeSetMtPer {
+                elements: AVLTreeSeqMtPerS::from_vec(vals),
+            }
         }
 
         fn find(&self, x: &T) -> B {

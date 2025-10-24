@@ -78,21 +78,8 @@ pub mod WeightedUnDirGraphMtEphFloat {
         fn neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>> {
             // PARALLEL: filter weighted edges using divide-and-conquer
             let edges: Vec<LabEdge<V, OrderedF64>> = self.labeled_edges().iter().cloned().collect();
-            let n = edges.len();
 
-            if n <= 8 {
-                let mut neighbors = SetStEph::empty();
-                for labeled_edge in edges {
-                    if labeled_edge.0 == *v {
-                        neighbors.insert(Pair(labeled_edge.1.clone_mt(), labeled_edge.2));
-                    } else if labeled_edge.1 == *v {
-                        neighbors.insert(Pair(labeled_edge.0.clone_mt(), labeled_edge.2));
-                    }
-                }
-                return neighbors;
-            }
-
-            // Parallel divide-and-conquer
+            // Parallel divide-and-conquer with proper base cases
             fn parallel_neighbors<V: HashOrd + MtT + 'static>(
                 edges: Vec<LabEdge<V, OrderedF64>>,
                 v: V,

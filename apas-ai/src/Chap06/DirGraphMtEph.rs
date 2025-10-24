@@ -100,18 +100,8 @@ pub mod DirGraphMtEph {
         fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
             // PARALLEL: map-reduce over vertices using divide-and-conquer
             let vertices: Vec<V> = u_set.iter().cloned().collect();
-            let n = vertices.len();
 
-            if n <= 8 {
-                let mut result: SetStEph<V> = SetLit![];
-                for u in vertices {
-                    let ng_u = self.NG(&u);
-                    result = result.union(&ng_u);
-                }
-                return result;
-            }
-
-            // Parallel map-reduce
+            // Parallel map-reduce with proper base cases
             fn parallel_ng_of_vertices<V: StT + MtT + Hash + 'static>(
                 vertices: Vec<V>,
                 graph: DirGraphMtEph<V>,
@@ -145,19 +135,8 @@ pub mod DirGraphMtEph {
         fn NPlus(&self, v: &V) -> SetStEph<V> {
             // PARALLEL: filter arcs using divide-and-conquer
             let arcs: Vec<Edge<V>> = self.A.iter().cloned().collect();
-            let n = arcs.len();
 
-            if n <= 8 {
-                let mut out: SetStEph<V> = SetLit![];
-                for Edge(x, y) in arcs {
-                    if x == *v {
-                        let _ = out.insert(y.clone_mt());
-                    }
-                }
-                return out;
-            }
-
-            // Parallel divide-and-conquer
+            // Parallel divide-and-conquer with proper base cases
             fn parallel_nplus<V: StT + MtT + Hash + 'static>(arcs: Vec<Edge<V>>, v: V) -> SetStEph<V> {
                 let n = arcs.len();
                 if n == 0 {
@@ -195,19 +174,8 @@ pub mod DirGraphMtEph {
         fn NMinus(&self, v: &V) -> SetStEph<V> {
             // PARALLEL: filter arcs using divide-and-conquer
             let arcs: Vec<Edge<V>> = self.A.iter().cloned().collect();
-            let n = arcs.len();
 
-            if n <= 8 {
-                let mut inn: SetStEph<V> = SetLit![];
-                for Edge(x, y) in arcs {
-                    if y == *v {
-                        let _ = inn.insert(x.clone_mt());
-                    }
-                }
-                return inn;
-            }
-
-            // Parallel divide-and-conquer
+            // Parallel divide-and-conquer with proper base cases
             fn parallel_nminus<V: StT + MtT + Hash + 'static>(arcs: Vec<Edge<V>>, v: V) -> SetStEph<V> {
                 let n = arcs.len();
                 if n == 0 {
@@ -245,18 +213,8 @@ pub mod DirGraphMtEph {
         fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
             // PARALLEL: map-reduce over vertices using divide-and-conquer
             let vertices: Vec<V> = u_set.iter().cloned().collect();
-            let n = vertices.len();
 
-            if n <= 8 {
-                let mut result: SetStEph<V> = SetLit![];
-                for u in vertices {
-                    let plus_u = self.NPlus(&u);
-                    result = result.union(&plus_u);
-                }
-                return result;
-            }
-
-            // Parallel map-reduce
+            // Parallel map-reduce with proper base cases
             fn parallel_nplus_of_vertices<V: StT + MtT + Hash + 'static>(
                 vertices: Vec<V>,
                 graph: DirGraphMtEph<V>,
@@ -290,18 +248,8 @@ pub mod DirGraphMtEph {
         fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
             // PARALLEL: map-reduce over vertices using divide-and-conquer
             let vertices: Vec<V> = u_set.iter().cloned().collect();
-            let n = vertices.len();
 
-            if n <= 8 {
-                let mut result: SetStEph<V> = SetLit![];
-                for u in vertices {
-                    let minus_u = self.NMinus(&u);
-                    result = result.union(&minus_u);
-                }
-                return result;
-            }
-
-            // Parallel map-reduce
+            // Parallel map-reduce with proper base cases
             fn parallel_nminus_of_vertices<V: StT + MtT + Hash + 'static>(
                 vertices: Vec<V>,
                 graph: DirGraphMtEph<V>,

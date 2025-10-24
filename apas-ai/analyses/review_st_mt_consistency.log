@@ -39,32 +39,6 @@ src/Chap53/GraphSearchMtPer.rs: Missing parallel operations
 src/Chap53/PQMinMtPer.rs: Missing parallel operations
 src/Chap53/PQMinMtEph.rs: Missing parallel operations
 ================================================================================
-Mt files with threshold-based serial fallback:
-(APAS is a class example - should always demonstrate parallelism)
-================================================================================
-src/Chap41/AVLTreeSetMtPer.rs:76: if n <= 1 {
-src/Chap41/AVLTreeSetMtPer.rs:117: if n <= 8 {
-src/Chap41/AVLTreeSetMtPer.rs:158: if n <= 8 {
-src/Chap41/AVLTreeSetMtPer.rs:207: if n <= 8 {
-src/Chap26/MergeSortMt.rs:164: if n <= 1 {
-src/Chap06/WeightedUnDirGraphMtEphFloat.rs:83: if n <= 8 {
-src/Chap06/WeightedUnDirGraphMtEphInt.rs:81: if n <= 8 {
-src/Chap06/LabUnDirGraphMtEph.rs:127: if n <= 8 {
-src/Chap06/WeightedDirGraphMtEphFloat.rs:113: if n <= 8 {
-src/Chap06/WeightedDirGraphMtEphFloat.rs:168: if n <= 8 {
-src/Chap06/UnDirGraphMtEph.rs:85: if n <= 8 {
-src/Chap06/UnDirGraphMtEph.rs:141: if n <= 8 {
-src/Chap06/DirGraphMtEph.rs:105: if n <= 8 {
-src/Chap06/DirGraphMtEph.rs:150: if n <= 8 {
-src/Chap06/DirGraphMtEph.rs:200: if n <= 8 {
-src/Chap06/DirGraphMtEph.rs:250: if n <= 8 {
-src/Chap06/DirGraphMtEph.rs:295: if n <= 8 {
-src/Chap06/WeightedDirGraphMtEphInt.rs:81: if n <= 8 {
-src/Chap06/WeightedDirGraphMtEphInt.rs:133: if n <= 8 {
-src/Chap06/LabDirGraphMtEph.rs:116: if n <= 8 {
-src/Chap06/LabDirGraphMtEph.rs:168: if n <= 8 {
-src/Chap11/FibonacciMt.rs:27: if n <= 1 {
-================================================================================
 THREAD EXPLOSION RISK - Recursive functions spawning multiple threads:
 (Recommendation: Use a thread pool like rayon instead of raw spawning)
 ================================================================================
@@ -73,9 +47,6 @@ src/Chap27/ReduceContractMtEph.rs:26: 2 spawn(s) detected
   → Potential threads at depth 5: 32 (2^5)
 src/Chap26/MergeSortMt.rs:28: 2 spawn(s) detected
   fn merge_parallel(left: &ArraySeqMtPerS<T>, right: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T> {
-  → Potential threads at depth 5: 32 (2^5)
-src/Chap06/LabUnDirGraphMtEph.rs:122: 2 spawn(s) detected
-  fn neighbors(&self, v: &V) -> SetStEph<V> {
   → Potential threads at depth 5: 32 (2^5)
 src/Chap49/SubsetSumMtEph.rs:53: 4 spawn(s) detected
   /// Internal parallel recursive subset sum with shared memoization
@@ -93,3 +64,31 @@ src/Chap49/SubsetSumMtPer.rs:43: 4 spawn(s) detected
      - Use rayon::join() instead of manual spawn()
      - Use .par_iter() for collections
      - Thread pool automatically limits parallelism
+src/Chap49/MinEditDistMtEph.rs:64: 4 spawn(s) detected
+  /// Internal parallel recursive minimum edit distance with shared memoization
+  → Potential threads at depth 5: 1024 (4^5)
+  ⚠️  CRITICAL: Exponential thread explosion detected!
+  📋 RECOMMENDATION: Replace raw spawning with rayon thread pool
+     - Use rayon::join() instead of manual spawn()
+     - Use .par_iter() for collections
+     - Thread pool automatically limits parallelism
+src/Chap49/MinEditDistMtPer.rs:47: 4 spawn(s) detected
+  /// Internal parallel recursive minimum edit distance with shared memoization
+  → Potential threads at depth 5: 1024 (4^5)
+  ⚠️  CRITICAL: Exponential thread explosion detected!
+  📋 RECOMMENDATION: Replace raw spawning with rayon thread pool
+     - Use rayon::join() instead of manual spawn()
+     - Use .par_iter() for collections
+     - Thread pool automatically limits parallelism
+src/Chap51/TopDownDPMtEph.rs:109: 6 spawn(s) detected
+  /// Claude Work: O(1) per call with memoization, O(|S|*|T|) total
+  → Potential threads at depth 5: 7776 (6^5)
+  ⚠️  CRITICAL: Exponential thread explosion detected!
+  📋 RECOMMENDATION: Replace raw spawning with rayon thread pool
+     - Use rayon::join() instead of manual spawn()
+     - Use .par_iter() for collections
+     - Thread pool automatically limits parallelism
+src/Chap51/TopDownDPMtPer.rs:111: 6 spawn(s) detected
+  /// Claude Work: O(1) per call with memoization, O(|S|*|T|) total
+  → Potential threads at depth 5: 7776 (6^5)
+  ⚠️  CRITICAL: Exponential thread explosion detected!
