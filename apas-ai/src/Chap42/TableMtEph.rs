@@ -7,7 +7,7 @@ pub mod TableMtEph {
     use std::sync::Arc;
     use std::thread;
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     use crate::Types::Types::*;

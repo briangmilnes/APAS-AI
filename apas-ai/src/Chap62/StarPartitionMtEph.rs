@@ -15,8 +15,7 @@ pub mod StarPartitionMtEph {
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphRedefinableTrait;
-    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::SetLit;
     use crate::Types::Types::*;
     pub type T<V> = UnDirGraphMtEph<V>;
@@ -89,22 +88,22 @@ pub mod StarPartitionMtEph {
         }
 
         // Phase 3: Build base sequence V' where each index maps to itself
-        let mut base_seq =
-            <ArraySeqStEphS<V> as ArraySeqStEphRedefinableTrait<V>>::tabulate(&|i| vertices_vec[i].clone(), n);
+        let base_seq =
+            ArraySeqMtEphS::tabulate(&|i| vertices_vec[i].clone(), n);
 
-        // Phase 4: Convert th_edges to ArraySeqStEphS<Pair<usize, V>>
+        // Phase 4: Convert th_edges to ArraySeqMtEphS<Pair<N, V>> for parallel inject
         let updates_seq =
-            ArraySeqStEphS::from_vec(th_edges.into_iter().map(|(idx, vertex)| Pair(idx, vertex)).collect());
+            ArraySeqMtEphS::from_vec(th_edges.into_iter().map(|(idx, vertex)| Pair(idx, vertex)).collect());
 
-        // Phase 5: Apply inject to get partition map P
-        let p_seq = base_seq.inject(&updates_seq);
+        // Phase 5: Apply parallel inject to get partition map P
+        let p_seq = ArraySeqMtEphS::inject(&base_seq, &updates_seq);
 
         // Phase 6: Extract centers (vertices where P[v] = v)
         let mut centers: SetStEph<V> = SetLit![];
         let mut partition_map: HashMap<V, V> = HashMap::new();
 
         for (i, vertex) in vertices_vec.iter().enumerate() {
-            let center = p_seq.nth(i as N).clone();
+            let center = p_seq.nth_cloned(i as N);
             let _ = partition_map.insert(vertex.clone(), center.clone());
 
             // A vertex is a center if it maps to itself

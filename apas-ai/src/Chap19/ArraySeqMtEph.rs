@@ -12,6 +12,24 @@ pub mod ArraySeqMtEph {
     pub use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphBaseTrait;
 
     pub trait ArraySeqMtEphTrait<T: StTInMtT>: ArraySeqMtEphBaseTrait<T> {
+        // Re-declare methods from RedefinableTrait so they're available when importing Chap19::*
+        // These delegate to Chap18 implementations unless redefined below
+        fn empty()                                               -> Self;
+        fn singleton(item: T)                                    -> Self;
+        fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T>;
+        fn map<U: StTInMtT + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
+            a: &ArraySeqMtEphS<T>,
+            f: F,
+        ) -> ArraySeqMtEphS<U>
+        where
+            T: Send + 'static;
+        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)  -> Self;
+        fn filter<F: PredMt<T>>(a: &ArraySeqMtEphS<T>, pred: &F) -> Self;
+        fn isEmpty(&self)                                        -> B;
+        fn isSingleton(&self)                                    -> B;
+        fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
+        
+        // Chap19-specific methods
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>, index: N) -> Option<T>;
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
@@ -33,6 +51,50 @@ pub mod ArraySeqMtEph {
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
+        // Delegate non-redefined methods to Chap18
+        fn empty() -> Self {
+            <Self as ArraySeqMtEphRedefinableTrait<T>>::empty()
+        }
+        
+        fn singleton(item: T) -> Self {
+            <Self as ArraySeqMtEphRedefinableTrait<T>>::singleton(item)
+        }
+        
+        fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T> {
+            <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::tabulate(f, n)
+        }
+        
+        fn map<U: StTInMtT + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
+            a: &ArraySeqMtEphS<T>,
+            f: F,
+        ) -> ArraySeqMtEphS<U>
+        where
+            T: Send + 'static,
+        {
+            <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::map(a, f)
+        }
+        
+        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> Self {
+            <Self as ArraySeqMtEphRedefinableTrait<T>>::append(a, b)
+        }
+        
+        fn filter<F: PredMt<T>>(a: &ArraySeqMtEphS<T>, pred: &F) -> Self {
+            <Self as ArraySeqMtEphRedefinableTrait<T>>::filter(a, pred)
+        }
+        
+        fn isEmpty(&self) -> B {
+            <Self as ArraySeqMtEphRedefinableTrait<T>>::isEmpty(self)
+        }
+        
+        fn isSingleton(&self) -> B {
+            <Self as ArraySeqMtEphRedefinableTrait<T>>::isSingleton(self)
+        }
+        
+        fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A {
+            <Self as ArraySeqMtEphRedefinableTrait<T>>::iterate(a, f, x)
+        }
+        
+        // Chap19-specific implementations
         fn select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>, index: N) -> Option<T> {
             let len_a = a.length();
             if index < len_a {
