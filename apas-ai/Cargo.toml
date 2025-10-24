@@ -465,6 +465,10 @@ name = "TestArraySeqMtEph"
 path = "tests/Chap19/TestArraySeqMtEph.rs"
 
 [[test]]
+name = "TestChap19SimpleCallsProof"
+path = "tests/Chap19/TestChap19SimpleCallsProof.rs"
+
+[[test]]
 name = "TestAVLTreeSeqStPer"
 path = "tests/Chap37/TestAVLTreeSeqStPer.rs"
 

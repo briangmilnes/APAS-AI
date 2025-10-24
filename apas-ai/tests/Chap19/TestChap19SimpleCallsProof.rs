@@ -22,3 +22,13 @@ fn test_simple_calls_work_without_chap18_redefinable() {
     assert_eq!(injected.nth_cloned(2), 30);
 }
 
+#[test]
+fn test_type_prefix_required() {
+    let seq = ArraySeqMtEphSLit![1, 2, 3, 4];
+    
+    // reduce() is a TRAIT METHOD (associated function), not a free function
+    // Must use Type::method syntax - cannot call as bare reduce(...)
+    let sum = ArraySeqMtEphS::reduce(&seq, |a, b| a + b, 0);
+    assert_eq!(sum, 10);
+}
+
