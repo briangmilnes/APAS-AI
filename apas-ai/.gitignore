@@ -2,6 +2,7 @@
 *~
 \#*#
 .#*
+rusty-tags.emacs
 
 # Rust target
 /target/
