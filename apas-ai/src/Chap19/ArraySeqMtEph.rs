@@ -58,6 +58,10 @@ pub mod ArraySeqMtEph {
         fn singleton(item: T) -> Self { <Self as ArraySeqMtEphRedefinableTrait<T>>::singleton(item) }
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T> {
+            // Algorithm 19.14: parallel tabulate - "f can be evaluated at each element independently in parallel"
+            // NOTE: Current implementation delegates to Chap18's sequential tabulate due to trait bound `&F` without `Clone`.
+            // True parallelization would require `F: Clone` to pass f into parallel closures.
+            // The parallel operations (map, filter, reduce, flatten, inject, ninject, append) compensate.
             <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::tabulate(f, n)
         }
 
@@ -72,11 +76,41 @@ pub mod ArraySeqMtEph {
         }
 
         fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> Self {
-            <Self as ArraySeqMtEphRedefinableTrait<T>>::append(a, b)
+            // Algorithm 19.4: append a b = flatten ⟨a, b⟩
+            let sequences = ArraySeqMtEphS::<ArraySeqMtEphS<T>>::from_vec(vec![a.clone(), b.clone()]);
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::flatten(&sequences)
         }
 
         fn filter<F: PredMt<T>>(a: &ArraySeqMtEphS<T>, pred: &F) -> Self {
-            <Self as ArraySeqMtEphRedefinableTrait<T>>::filter(a, pred)
+            // Algorithm 19.5: filter f a = flatten (map (deflate f) a)
+            // Implemented using parallel divide-and-conquer
+            use crate::ParaPair;
+
+            if a.length() == 0 {
+                return <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::empty();
+            }
+            if a.length() == 1 {
+                let value = a.nth_cloned(0);
+                return if pred(&value) {
+                    <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::singleton(value)
+                } else {
+                    <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::empty()
+                };
+            }
+
+            // Divide-and-conquer with ParaPair!
+            let mid = a.length() / 2;
+            let left = a.subseq_copy(0, mid);
+            let right = a.subseq_copy(mid, a.length() - mid);
+
+            let Pair(left_result, right_result) = ParaPair!(
+                move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::filter(&left, pred),
+                move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::filter(&right, pred)
+            );
+
+            // Append the filtered results using parallel flatten
+            let sequences = ArraySeqMtEphS::<ArraySeqMtEphS<T>>::from_vec(vec![left_result, right_result]);
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::flatten(&sequences)
         }
 
         fn isEmpty(&self) -> B { <Self as ArraySeqMtEphRedefinableTrait<T>>::isEmpty(self) }
@@ -178,6 +212,27 @@ pub mod ArraySeqMtEph {
             use std::sync::Arc;
             use std::sync::Mutex;
 
+            // Helper: APAS Algorithm 19.16 atomicWrite - leftmost wins
+            fn atomic_write_leftmost<T: StTInMtT>(
+                aa: &Arc<Vec<Mutex<(T, N)>>>,
+                idx: N,
+                val: T,
+                k: N,
+            ) {
+                // atomicWrite aa b k =
+                //   atomically do:
+                //     (j, v) ← b[k]      // j=idx, v=val from caller
+                //     (w, i) ← aa[j]     // read current (value, index) at position idx
+                //     if k < i then      // leftmost wins: update only if this update is earlier
+                //       aa[j] ← (v, k)   // write new value and update index
+                if idx < aa.len() {
+                    let mut slot = aa[idx].lock().unwrap();
+                    if k < slot.1 {
+                        *slot = (val, k);
+                    }
+                }
+            }
+
             if updates.length() == 0 {
                 return a.clone();
             }
@@ -195,14 +250,7 @@ pub mod ArraySeqMtEph {
             std::thread::scope(|s| {
                 for (k, Pair(idx, val)) in updates_vec.into_iter().enumerate() {
                     let vals = Arc::clone(&values);
-                    s.spawn(move || {
-                        if idx < vals.len() {
-                            let mut slot = vals[idx].lock().unwrap();
-                            if k < slot.1 {
-                                *slot = (val, k);
-                            }
-                        }
-                    });
+                    s.spawn(move || atomic_write_leftmost(&vals, idx, val, k));
                 }
             });
 
@@ -215,6 +263,27 @@ pub mod ArraySeqMtEph {
             // Algorithm 19.17: parallel ninject with rightmost-wins atomic writes
             use std::sync::Arc;
             use std::sync::Mutex;
+
+            // Helper: APAS Algorithm 19.17 atomicWrite - rightmost wins
+            fn atomic_write_rightmost<T: StTInMtT>(
+                aa: &Arc<Vec<Mutex<(T, N)>>>,
+                idx: N,
+                val: T,
+                k: N,
+            ) {
+                // atomicWrite aa b k =
+                //   atomically do:
+                //     (j, v) ← b[k]      // j=idx, v=val from caller
+                //     (w, i) ← aa[j]     // read current (value, index) at position idx
+                //     if k >= i then     // rightmost wins: update if this update is later or equal
+                //       aa[j] ← (v, k)   // write new value and update index
+                if idx < aa.len() {
+                    let mut slot = aa[idx].lock().unwrap();
+                    if k >= slot.1 {
+                        *slot = (val, k);
+                    }
+                }
+            }
 
             if updates.length() == 0 {
                 return a.clone();
@@ -229,14 +298,7 @@ pub mod ArraySeqMtEph {
             std::thread::scope(|s| {
                 for (k, Pair(idx, val)) in updates_vec.into_iter().enumerate() {
                     let vals = Arc::clone(&values);
-                    s.spawn(move || {
-                        if idx < vals.len() {
-                            let mut slot = vals[idx].lock().unwrap();
-                            if k >= slot.1 {
-                                *slot = (val, k);
-                            }
-                        }
-                    });
+                    s.spawn(move || atomic_write_rightmost(&vals, idx, val, k));
                 }
             });
 
