@@ -58,4 +58,3 @@ fn test_run_example_45_2() {
     assert!(output.contains("Example 45.2"));
     assert!(output.contains("Heapsort"));
 }
-

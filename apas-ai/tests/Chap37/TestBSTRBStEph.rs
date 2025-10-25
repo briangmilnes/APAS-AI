@@ -4,7 +4,6 @@ use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap37::BSTRBStEph::BSTRBStEph::*;
 use apas_ai::Types::Types::*;
 
-
 #[test]
 fn test_bstrbstephlit_macro_functionality() {
     // Test empty tree creation

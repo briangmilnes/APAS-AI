@@ -374,9 +374,18 @@ fn test_resize_with_elements() {
     assert_eq!(new_table.num_elements, 3);
 
     // Verify all elements are still present
-    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &1), Some("one".to_string()));
-    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &2), Some("two".to_string()));
-    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &3), Some("three".to_string()));
+    assert_eq!(
+        LinProbFlatHashTableStEph::lookup(&new_table, &1),
+        Some("one".to_string())
+    );
+    assert_eq!(
+        LinProbFlatHashTableStEph::lookup(&new_table, &2),
+        Some("two".to_string())
+    );
+    assert_eq!(
+        LinProbFlatHashTableStEph::lookup(&new_table, &3),
+        Some("three".to_string())
+    );
 }
 
 #[test]
@@ -398,8 +407,14 @@ fn test_resize_smaller() {
     assert_eq!(new_table.num_elements, 2);
 
     // Verify all elements are still present
-    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &1), Some("one".to_string()));
-    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &2), Some("two".to_string()));
+    assert_eq!(
+        LinProbFlatHashTableStEph::lookup(&new_table, &1),
+        Some("one".to_string())
+    );
+    assert_eq!(
+        LinProbFlatHashTableStEph::lookup(&new_table, &2),
+        Some("two".to_string())
+    );
 }
 
 #[test]
@@ -421,7 +436,10 @@ fn test_resize_preserves_deleted_not_reinserted() {
     let new_table = LinProbFlatHashTableStEph::resize(&table, 20);
     assert_eq!(new_table.num_elements, 1);
     assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &1), None);
-    assert_eq!(LinProbFlatHashTableStEph::lookup(&new_table, &2), Some("two".to_string()));
+    assert_eq!(
+        LinProbFlatHashTableStEph::lookup(&new_table, &2),
+        Some("two".to_string())
+    );
 }
 
 #[test]

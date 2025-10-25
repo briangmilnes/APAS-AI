@@ -26,11 +26,11 @@ pub mod BSTReducedStEph {
     /// Trait for associative reduction operations
     pub trait ReduceOp<V: StT, R: StT> {
         /// Identity element for the reduction operation
-        fn identity() -> R;
+        fn identity()          -> R;
         /// Associative binary operation: f(a, b)
         fn combine(a: R, b: R) -> R;
         /// Convert value to reduced form
-        fn lift(value: &V) -> R;
+        fn lift(value: &V)     -> R;
     }
 
     impl<K: StT + Ord, V: StT, R: StT> Node<K, V, R> {
@@ -81,28 +81,28 @@ pub mod BSTReducedStEph {
 
     pub trait BSTReducedStEphTrait<K: StT + Ord, V: StT, R: StT, Op: ReduceOp<V, R>> {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn new() -> Self;
+        fn new()                                  -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn size(&self) -> N;
+        fn size(&self)                            -> N;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn is_empty(&self) -> B;
+        fn is_empty(&self)                        -> B;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn height(&self) -> N;
+        fn height(&self)                          -> N;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
         fn insert(&mut self, key: K, value: V);
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn find(&self, key: &K) -> Option<&V>;
+        fn find(&self, key: &K)                   -> Option<&V>;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn contains(&self, key: &K) -> B;
+        fn contains(&self, key: &K)               -> B;
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected, Parallelism Θ(1)
-        fn get(&self, key: &K) -> Option<&V>;
+        fn get(&self, key: &K)                    -> Option<&V>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn keys(&self) -> ArraySeqStPerS<K>;
+        fn keys(&self)                            -> ArraySeqStPerS<K>;
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1)
-        fn values(&self) -> ArraySeqStPerS<V>;
-        fn minimum_key(&self) -> Option<&K>;
-        fn maximum_key(&self) -> Option<&K>;
-        fn reduced_value(&self) -> R;
+        fn values(&self)                          -> ArraySeqStPerS<V>;
+        fn minimum_key(&self)                     -> Option<&K>;
+        fn maximum_key(&self)                     -> Option<&K>;
+        fn reduced_value(&self)                   -> R;
         fn range_reduce(&self, low: &K, high: &K) -> R;
     }
 

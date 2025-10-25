@@ -251,14 +251,14 @@ fn test_iter_cloned() {
 #[test]
 fn test_simple_calls_chap18() {
     let seq = ArraySeqMtEphSLit![1, 2, 3, 4];
-    
+
     // Try using simple Type::function calls instead of UFCS
     let sum = ArraySeqMtEphS::reduce(&seq, |a, b| a + b, 0);
     assert_eq!(sum, 10);
-    
+
     let doubled = ArraySeqMtEphS::map(&seq, |x| x * 2);
     assert_eq!(doubled.nth_cloned(0), 2);
-    
+
     let nested = ArraySeqMtEphSLit![ArraySeqMtEphSLit![1, 2], ArraySeqMtEphSLit![3, 4]];
     let flat = ArraySeqMtEphS::flatten(&nested);
     assert_eq!(flat.length(), 4);

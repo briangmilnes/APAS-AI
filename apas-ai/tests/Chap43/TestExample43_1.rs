@@ -4,11 +4,7 @@
 use apas_ai::Chap43::Example43_1::Example43_1::*;
 
 #[test]
-fn test_run_example43_1() {
-    run_example43_1();
-}
+fn test_run_example43_1() { run_example43_1(); }
 
 #[test]
-fn test_run_integer_example() {
-    run_integer_example();
-}
+fn test_run_integer_example() { run_integer_example(); }

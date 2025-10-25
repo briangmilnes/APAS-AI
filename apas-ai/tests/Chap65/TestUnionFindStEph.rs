@@ -296,8 +296,6 @@ fn test_default_trait() {
 
 // Trait-based tests
 
-
-
 #[test]
 fn test_trait_new() {
     let mut uf = <UnionFindStEph<i32> as UnionFindStEphTrait<i32>>::new();

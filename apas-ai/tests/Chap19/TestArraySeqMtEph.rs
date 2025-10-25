@@ -12,9 +12,7 @@ fn test_arrayseq_mteph_basic_ops() {
     for i in 0..a.length() {
         assert_eq!(a.nth_cloned(i), i as i32);
     }
-    assert!(!ArraySeqMtEphS::isEmpty(
-        &a
-    ));
+    assert!(!ArraySeqMtEphS::isEmpty(&a));
     assert!(!ArraySeqMtEphS::isSingleton(&a));
     let s = a.subseq_copy(1, 3);
     assert_eq!(s.length(), 3);
@@ -138,9 +136,7 @@ fn test_deflate() {
 fn test_arrayseqmteph_trait_empty() {
     let empty: ArraySeqMtEphS<i32> = ArraySeqMtEphS::empty();
     assert_eq!(empty.length(), 0);
-    assert!(ArraySeqMtEphS::isEmpty(
-        &empty
-    ));
+    assert!(ArraySeqMtEphS::isEmpty(&empty));
 }
 
 #[test]
@@ -263,11 +259,11 @@ fn test_arrayseqmteph_trait_subseq_copy() {
 fn test_simple_calls_no_chap18_import() {
     // This test uses ONLY Chap19 imports - no explicit Chap18 traits
     let seq = ArraySeqMtEphSLit![1, 2, 3, 4];
-    
+
     // These should resolve to Chap19's parallel implementations
     let sum = ArraySeqMtEphS::reduce(&seq, |a, b| a + b, 0);
     assert_eq!(sum, 10);
-    
+
     let nested = ArraySeqMtEphSLit![ArraySeqMtEphSLit![1, 2], ArraySeqMtEphSLit![3, 4]];
     let flat = ArraySeqMtEphS::flatten(&nested);
     assert_eq!(flat.length(), 4);

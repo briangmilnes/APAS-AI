@@ -113,7 +113,7 @@ fn test_subset_sum_st_per_memo_size() {
     let solver = SubsetSumStPerLit![1, 2, 3];
     // Initially, memo should be empty before any queries
     assert_eq!(solver.memo_size(), 0);
-    
+
     // After a query, memo should be populated (but we can't check it directly
     // because subset_sum() clones and uses a fresh memo each time)
     solver.subset_sum(5);

@@ -370,8 +370,6 @@ pub mod LeftistHeapPQ {
         }
     }
 
-    
-
     impl<T: StT + Ord> Default for LeftistHeapPQ<T> {
         fn default() -> Self { Self::empty() }
     }

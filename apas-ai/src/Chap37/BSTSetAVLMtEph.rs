@@ -80,8 +80,6 @@ pub mod BSTSetAVLMtEph {
         fn as_tree(&self)                            -> &BSTAVLMtEph<T>;
     }
 
-    
-
     impl<T: StTInMtT + Ord> BSTSetAVLMtEphTrait<T> for BSTSetAVLMtEph<T> {
         fn empty() -> Self {
             Self {

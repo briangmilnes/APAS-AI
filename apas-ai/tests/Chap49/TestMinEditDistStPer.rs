@@ -89,11 +89,11 @@ fn test_source_target_getters() {
 fn test_persistent_immutability() {
     let solver1 = MinEditDistStPerLit!(source: ['A', 'B', 'C'], target: ['A', 'B', 'D']);
     let dist1 = solver1.min_edit_distance();
-    
+
     // Create new solver with same data - persistent means original unchanged
     let solver2 = solver1.clone();
     let dist2 = solver2.min_edit_distance();
-    
+
     assert_eq!(dist1, dist2);
     assert_eq!(solver1.source().length(), 3);
     assert_eq!(solver2.source().length(), 3);
@@ -102,14 +102,14 @@ fn test_persistent_immutability() {
 #[test]
 fn test_memo_size() {
     let solver = MinEditDistStPerLit!(source: ['A', 'B', 'C'], target: ['A', 'B', 'D']);
-    
+
     // Initially memo is empty
     assert_eq!(solver.memo_size(), 0);
-    
+
     // After computing distance, memo might be populated in internal copy
     let dist = solver.min_edit_distance();
     assert_eq!(dist, 2);
-    
+
     // Original remains unchanged (persistent)
     assert_eq!(solver.memo_size(), 0);
 }
@@ -117,12 +117,12 @@ fn test_memo_size() {
 #[test]
 fn test_multiple_calls() {
     let solver = MinEditDistStPerLit!(source: ['A', 'B', 'C'], target: ['X', 'Y', 'Z']);
-    
+
     // Multiple calls should give same result (persistent)
     let dist1 = solver.min_edit_distance();
     let dist2 = solver.min_edit_distance();
     let dist3 = solver.min_edit_distance();
-    
+
     assert_eq!(dist1, 6);
     assert_eq!(dist2, 6);
     assert_eq!(dist3, 6);
@@ -155,7 +155,7 @@ fn test_into_iterator_ref() {
     assert_eq!(pairs.len(), 2);
     assert_eq!(pairs[0].0, 'A');
     assert_eq!(pairs[1].1, 'D');
-    
+
     // Original still usable (persistent)
     assert_eq!(solver.min_edit_distance(), 4);
 }
@@ -184,7 +184,7 @@ fn test_prefix_suffix() {
     // Test when one is prefix of other
     let solver1 = MinEditDistStPerLit!(source: ['A', 'B'], target: ['A', 'B', 'C', 'D']);
     assert_eq!(solver1.min_edit_distance(), 2);
-    
+
     let solver2 = MinEditDistStPerLit!(source: ['A', 'B', 'C', 'D'], target: ['A', 'B']);
     assert_eq!(solver2.min_edit_distance(), 2);
 }

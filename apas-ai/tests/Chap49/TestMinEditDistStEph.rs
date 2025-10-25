@@ -97,17 +97,17 @@ fn test_source_target_getters() {
 #[test]
 fn test_source_target_mut() {
     let mut solver = MinEditDistStEphLit!(source: ['A', 'B'], target: ['C', 'D']);
-    
+
     {
         let source_mut = solver.source_mut();
         let _ = source_mut.set(0, 'X');
     }
-    
+
     {
         let target_mut = solver.target_mut();
         let _ = target_mut.set(1, 'Y');
     }
-    
+
     assert_eq!(*solver.source().nth(0), 'X');
     assert_eq!(*solver.target().nth(1), 'Y');
 }
@@ -115,21 +115,21 @@ fn test_source_target_mut() {
 #[test]
 fn test_memoization() {
     let mut solver = MinEditDistStEphLit!(source: ['A', 'B', 'C'], target: ['A', 'B', 'D']);
-    
+
     assert_eq!(solver.memo_size(), 0);
-    
+
     let dist1 = solver.min_edit_distance();
     let memo_size1 = solver.memo_size();
     assert!(memo_size1 > 0, "Memoization should have cached results");
-    
+
     // Second call should use cached results
     let dist2 = solver.min_edit_distance();
     assert_eq!(dist1, dist2);
-    
+
     // Clear memo
     solver.clear_memo();
     assert_eq!(solver.memo_size(), 0);
-    
+
     // Recompute after clear
     let dist3 = solver.min_edit_distance();
     assert_eq!(dist1, dist3);
@@ -139,10 +139,10 @@ fn test_memoization() {
 #[test]
 fn test_set_source_clears_memo() {
     let mut solver = MinEditDistStEphLit!(source: ['A', 'B'], target: ['A', 'C']);
-    
+
     let _ = solver.min_edit_distance();
     assert!(solver.memo_size() > 0);
-    
+
     solver.set_source(1, 'C');
     assert_eq!(solver.memo_size(), 0, "set_source should clear memo");
 }
@@ -150,10 +150,10 @@ fn test_set_source_clears_memo() {
 #[test]
 fn test_set_target_clears_memo() {
     let mut solver = MinEditDistStEphLit!(source: ['A', 'B'], target: ['A', 'C']);
-    
+
     let _ = solver.min_edit_distance();
     assert!(solver.memo_size() > 0);
-    
+
     solver.set_target(1, 'B');
     assert_eq!(solver.memo_size(), 0, "set_target should clear memo");
 }

@@ -299,10 +299,19 @@ fn test_resize_with_elements() {
     let new_table = DoubleHashFlatHashTableStEph::resize(&table, 23);
     assert_eq!(new_table.current_size, 23);
     assert_eq!(new_table.num_elements, 3);
-    
-    assert_eq!(DoubleHashFlatHashTableStEph::lookup(&new_table, &1), Some("one".to_string()));
-    assert_eq!(DoubleHashFlatHashTableStEph::lookup(&new_table, &2), Some("two".to_string()));
-    assert_eq!(DoubleHashFlatHashTableStEph::lookup(&new_table, &3), Some("three".to_string()));
+
+    assert_eq!(
+        DoubleHashFlatHashTableStEph::lookup(&new_table, &1),
+        Some("one".to_string())
+    );
+    assert_eq!(
+        DoubleHashFlatHashTableStEph::lookup(&new_table, &2),
+        Some("two".to_string())
+    );
+    assert_eq!(
+        DoubleHashFlatHashTableStEph::lookup(&new_table, &3),
+        Some("three".to_string())
+    );
 }
 
 #[test]

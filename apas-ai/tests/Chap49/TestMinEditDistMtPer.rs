@@ -72,7 +72,7 @@ fn test_min_edit_distance_mt_per_memo_size() {
     let solver = MinEditDistMtPerLit!(source: ['A', 'B'], target: ['C', 'D']);
     // Before computation, memo should be empty
     assert_eq!(solver.memo_size(), 0);
-    
+
     // After computation, memo should contain subproblem results
     solver.min_edit_distance();
     assert!(solver.memo_size() > 0);
@@ -93,7 +93,7 @@ fn test_min_edit_distance_mt_per_partial_eq() {
     let solver1 = MinEditDistMtPerLit!(source: ['A', 'B'], target: ['C', 'D']);
     let solver2 = MinEditDistMtPerLit!(source: ['A', 'B'], target: ['C', 'D']);
     let solver3 = MinEditDistMtPerLit!(source: ['A', 'B'], target: ['C', 'E']);
-    
+
     assert_eq!(solver1, solver2);
     assert_ne!(solver1, solver3);
 }
@@ -102,7 +102,7 @@ fn test_min_edit_distance_mt_per_partial_eq() {
 fn test_min_edit_distance_mt_per_clone() {
     let solver1 = MinEditDistMtPerLit!(source: ['A', 'B', 'C'], target: ['A', 'C']);
     let solver2 = solver1.clone();
-    
+
     assert_eq!(solver1.source().length(), solver2.source().length());
     assert_eq!(solver1.target().length(), solver2.target().length());
     assert_eq!(solver1.min_edit_distance(), solver2.min_edit_distance());
@@ -129,7 +129,7 @@ fn test_min_edit_distance_mt_per_single_char() {
     // Mismatch: need to delete A (cost 1) and insert B (cost 1) = 2 total
     // Or go from (1,0) to (0,1) via (0,0), which would be 1 delete + 1 insert = 2
     assert_eq!(solver1.min_edit_distance(), 2); // Update based on actual
-    
+
     let solver2 = MinEditDistMtPerLit!(source: ['A'], target: ['A']);
     assert_eq!(solver2.min_edit_distance(), 0);
 }

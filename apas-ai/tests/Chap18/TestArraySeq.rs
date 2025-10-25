@@ -33,7 +33,7 @@ fn test_set_out_of_bounds() {
 fn test_length() {
     let seq: ArraySeqS<i32> = ArraySeqS::new(10, 0);
     assert_eq!(seq.length(), 10);
-    
+
     let empty: ArraySeqS<i32> = ArraySeqS::empty();
     assert_eq!(empty.length(), 0);
 }
@@ -136,7 +136,7 @@ fn test_flatten() {
     let inner2 = ArraySeqS::from_vec(vec![3, 4, 5]);
     let inner3 = ArraySeqS::from_vec(vec![6]);
     let outer = ArraySeqS::from_vec(vec![inner1, inner2, inner3]);
-    
+
     let flat = ArraySeqS::flatten(&outer);
     assert_eq!(flat.length(), 6);
     assert_eq!(*flat.nth(0), 1);
@@ -170,7 +170,7 @@ fn test_inject() {
 fn test_isEmpty() {
     let empty: ArraySeqS<i32> = ArraySeqS::empty();
     assert!(empty.isEmpty());
-    
+
     let not_empty = ArraySeqS::singleton(1);
     assert!(!not_empty.isEmpty());
 }
@@ -179,10 +179,10 @@ fn test_isEmpty() {
 fn test_isSingleton() {
     let single = ArraySeqS::singleton(42);
     assert!(single.isSingleton());
-    
+
     let empty: ArraySeqS<i32> = ArraySeqS::empty();
     assert!(!empty.isSingleton());
-    
+
     let multi = ArraySeqS::from_vec(vec![1, 2]);
     assert!(!multi.isSingleton());
 }
@@ -196,8 +196,10 @@ fn test_collect() {
         Pair('c', 4),
         Pair('b', 5),
     ]);
-    
-    let collected = <ArraySeqS<Pair<char, i32>> as ArraySeq<Pair<char, i32>>>::collect::<char, i32>(&pairs, |a, b| if a == b { O::Equal } else { O::Less });
+
+    let collected = <ArraySeqS<Pair<char, i32>> as ArraySeq<Pair<char, i32>>>::collect::<char, i32>(&pairs, |a, b| {
+        if a == b { O::Equal } else { O::Less }
+    });
     assert_eq!(collected.length(), 3);
 }
 
@@ -249,7 +251,7 @@ fn test_partial_eq() {
     let a = ArraySeqS::from_vec(vec![1, 2, 3]);
     let b = ArraySeqS::from_vec(vec![1, 2, 3]);
     let c = ArraySeqS::from_vec(vec![1, 2, 4]);
-    
+
     assert_eq!(a, b);
     assert_ne!(a, c);
 }
@@ -330,4 +332,3 @@ fn test_iter_mut() {
     assert_eq!(*seq.nth(1), 4);
     assert_eq!(*seq.nth(2), 6);
 }
-

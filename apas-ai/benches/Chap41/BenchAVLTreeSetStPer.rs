@@ -168,10 +168,7 @@ fn bench_avl_tree_set_per_from_seq(c: &mut Criterion) {
 
         group.bench_with_input(BenchmarkId::new("from_seq", size), size, |b, _| {
             b.iter_batched(
-                || {
-                    
-                    AVLTreeSeqStPerS::from_vec(vec_data.clone())
-                },
+                || AVLTreeSeqStPerS::from_vec(vec_data.clone()),
                 |seq| black_box(AVLTreeSetStPer::from_seq(seq)),
                 BatchSize::SmallInput,
             );

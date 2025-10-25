@@ -5,7 +5,6 @@ use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap36::QuickSortStEph::Chapter36St::*;
 use apas_ai::Types::Types::*;
 
-
 trait ToVec<T: StT> {
     fn to_vec(&self) -> Vec<T>;
 }

@@ -38,10 +38,7 @@ fn test_constructors() {
     assert_eq!(solver.source().length(), 0);
     assert_eq!(solver.target().length(), 0);
 
-    let solver2 = MinEditDistMtEphS::from_sequences(
-        ArraySeqMtEphSLit!['a', 'b'],
-        ArraySeqMtEphSLit!['c', 'd']
-    );
+    let solver2 = MinEditDistMtEphS::from_sequences(ArraySeqMtEphSLit!['a', 'b'], ArraySeqMtEphSLit!['c', 'd']);
     assert_eq!(solver2.source().nth_cloned(0), 'a');
     assert_eq!(solver2.target().nth_cloned(0), 'c');
 }

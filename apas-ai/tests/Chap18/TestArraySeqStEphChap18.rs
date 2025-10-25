@@ -117,7 +117,8 @@ fn test_inject_conflicts_last_wins() {
 
     let conflicting_updates = ArraySeqStEphSLit![Pair(0, "first"), Pair(0, "second"), Pair(1, "updated")];
     let mut a_mut2 = a.clone();
-    let result_last = <ArraySeqStEphS<&str> as ArraySeqStEphRedefinableTrait<&str>>::inject(&mut a_mut2, &conflicting_updates);
+    let result_last =
+        <ArraySeqStEphS<&str> as ArraySeqStEphRedefinableTrait<&str>>::inject(&mut a_mut2, &conflicting_updates);
     assert_eq!(
         *result_last,
         ArraySeqStEphSLit!["second", "updated", "in", "the", "hat"]

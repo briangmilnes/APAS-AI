@@ -1,11 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for AVLTreeSetStPer
 
+use apas_ai::AVLTreeSeqStPerLit;
 use apas_ai::AVLTreeSetStPerLit;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Chap41::AVLTreeSetStPer::AVLTreeSetStPer::*;
 use apas_ai::Types::Types::*;
-use apas_ai::AVLTreeSeqStPerLit;
 
 #[test]
 fn test_avltreesetstperlit_macro_functionality() {

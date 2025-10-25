@@ -1,9 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use apas_ai::BSTSizeStEphLit;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap40::BSTSizeStEph::BSTSizeStEph::*;
 use apas_ai::Types::Types::*;
-use apas_ai::BSTSizeStEphLit;
 
 #[test]
 fn size_bst_basic_operations() {

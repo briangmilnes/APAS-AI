@@ -4,10 +4,10 @@
 use apas_ai::Chap05::MappingStEph::MappingStEph::*;
 use apas_ai::Chap05::RelationStEph::RelationStEph::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
-use apas_ai::SetLit;
-use apas_ai::Types::Types::*;
 use apas_ai::MappingLit;
 use apas_ai::PairLit;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 #[test]
 fn test_mappinglit_macro_functionality() {

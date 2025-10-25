@@ -80,7 +80,10 @@ fn test_linkedlist_chained_delete() {
     LinkedListChainedHashTableStEph::insert(&mut table, 1, "one".to_string());
     assert!(LinkedListChainedHashTableStEph::delete(&mut table, &1));
     assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &1), None);
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &0), Some("zero".to_string()));
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &0),
+        Some("zero".to_string())
+    );
 }
 
 #[test]
@@ -103,23 +106,53 @@ fn test_collision_handling() {
     LinkedListChainedHashTableStEph::insert(&mut table, 5, "five".to_string());
 
     // Verify all retrievable
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &0), Some("zero".to_string()));
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &2), Some("two".to_string()));
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &4), Some("four".to_string()));
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &1), Some("one".to_string()));
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &3), Some("three".to_string()));
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &5), Some("five".to_string()));
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &0),
+        Some("zero".to_string())
+    );
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &2),
+        Some("two".to_string())
+    );
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &4),
+        Some("four".to_string())
+    );
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &1),
+        Some("one".to_string())
+    );
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &3),
+        Some("three".to_string())
+    );
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &5),
+        Some("five".to_string())
+    );
 
     // Delete from both chains
     assert!(LinkedListChainedHashTableStEph::delete(&mut table, &2));
     assert!(LinkedListChainedHashTableStEph::delete(&mut table, &3));
-    
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &0), Some("zero".to_string()));
+
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &0),
+        Some("zero".to_string())
+    );
     assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &2), None);
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &4), Some("four".to_string()));
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &1), Some("one".to_string()));
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &4),
+        Some("four".to_string())
+    );
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &1),
+        Some("one".to_string())
+    );
     assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &3), None);
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &5), Some("five".to_string()));
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &5),
+        Some("five".to_string())
+    );
 }
 
 #[test]
@@ -168,10 +201,19 @@ fn test_resize_with_elements() {
 
     let new_table = LinkedListChainedHashTableStEph::resize(&table, 4);
     assert_eq!(new_table.current_size, 4);
-    
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&new_table, &0), Some("zero".to_string()));
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&new_table, &1), Some("one".to_string()));
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&new_table, &2), Some("two".to_string()));
+
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&new_table, &0),
+        Some("zero".to_string())
+    );
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&new_table, &1),
+        Some("one".to_string())
+    );
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&new_table, &2),
+        Some("two".to_string())
+    );
 }
 
 #[test]
@@ -210,6 +252,9 @@ fn test_update_existing_key() {
     LinkedListChainedHashTableStEph::insert(&mut table, 0, "zero".to_string());
     LinkedListChainedHashTableStEph::insert(&mut table, 0, "ZERO".to_string());
     LinkedListChainedHashTableStEph::insert(&mut table, 0, "zer0".to_string());
-    
-    assert_eq!(LinkedListChainedHashTableStEph::lookup(&table, &0), Some("zer0".to_string()));
+
+    assert_eq!(
+        LinkedListChainedHashTableStEph::lookup(&table, &0),
+        Some("zer0".to_string())
+    );
 }

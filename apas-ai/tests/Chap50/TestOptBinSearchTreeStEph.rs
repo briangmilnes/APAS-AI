@@ -1,9 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for OptBinSearchTreeStEph.
 
-use apas_ai::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph::{KeyProb as OBSTStEphKeyProb, OBSTStEphS, OBSTStEphTrait};
+use apas_ai::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph::{
+    KeyProb as OBSTStEphKeyProb, OBSTStEphS, OBSTStEphTrait,
+};
 use apas_ai::Chap50::Probability::Probability::*;
-use apas_ai::{prob, OBSTStEphLit};
+use apas_ai::{OBSTStEphLit, prob};
 
 #[test]
 fn test_obst_st_eph_empty() {
@@ -40,13 +42,22 @@ fn test_obst_st_eph_mutation() {
 #[test]
 fn test_from_key_probs() {
     let key_probs = vec![
-        OBSTStEphKeyProb { key: 'A', prob: prob!(0.3) },
-        OBSTStEphKeyProb { key: 'B', prob: prob!(0.4) },
-        OBSTStEphKeyProb { key: 'C', prob: prob!(0.3) },
+        OBSTStEphKeyProb {
+            key: 'A',
+            prob: prob!(0.3),
+        },
+        OBSTStEphKeyProb {
+            key: 'B',
+            prob: prob!(0.4),
+        },
+        OBSTStEphKeyProb {
+            key: 'C',
+            prob: prob!(0.3),
+        },
     ];
     let mut obst = OBSTStEphS::from_key_probs(key_probs);
     assert_eq!(obst.num_keys(), 3);
-    
+
     let cost = obst.optimal_cost();
     assert!(cost > Probability::zero());
 }
@@ -80,28 +91,34 @@ fn test_keys_getter() {
 #[test]
 fn test_keys_mut() {
     let mut obst = OBSTStEphLit!(keys: ['A', 'B'], probs: [0.4, 0.6]);
-    
+
     {
         let keys_mut = obst.keys_mut();
         keys_mut[0].prob = prob!(0.5);
     }
-    
+
     assert_eq!(obst.keys()[0].prob, prob!(0.5));
 }
 
 #[test]
 fn test_set_key_prob() {
     let mut obst = OBSTStEphLit!(keys: ['A', 'B'], probs: [0.4, 0.6]);
-    
+
     let cost1 = obst.optimal_cost();
     let memo_size_before = obst.memo_size();
     assert!(memo_size_before > 0);
-    
-    obst.set_key_prob(1, OBSTStEphKeyProb { key: 'C', prob: prob!(0.8) });
+
+    obst.set_key_prob(
+        1,
+        OBSTStEphKeyProb {
+            key: 'C',
+            prob: prob!(0.8),
+        },
+    );
     assert_eq!(obst.memo_size(), 0, "set_key_prob should clear memo");
     assert_eq!(obst.keys()[1].key, 'C');
     assert_eq!(obst.keys()[1].prob, prob!(0.8));
-    
+
     let cost2 = obst.optimal_cost();
     assert_ne!(cost1, cost2);
 }
@@ -109,9 +126,15 @@ fn test_set_key_prob() {
 #[test]
 fn test_set_key_prob_out_of_bounds() {
     let mut obst = OBSTStEphLit!(keys: ['A'], probs: [0.5]);
-    
+
     // Should not panic
-    obst.set_key_prob(5, OBSTStEphKeyProb { key: 'Z', prob: prob!(0.9) });
+    obst.set_key_prob(
+        5,
+        OBSTStEphKeyProb {
+            key: 'Z',
+            prob: prob!(0.9),
+        },
+    );
     assert_eq!(obst.num_keys(), 1);
     assert_eq!(obst.keys()[0].key, 'A');
 }
@@ -119,15 +142,15 @@ fn test_set_key_prob_out_of_bounds() {
 #[test]
 fn test_update_prob() {
     let mut obst = OBSTStEphLit!(keys: ['A', 'B'], probs: [0.4, 0.6]);
-    
+
     let cost1 = obst.optimal_cost();
     let memo_size_before = obst.memo_size();
     assert!(memo_size_before > 0);
-    
+
     obst.update_prob(0, prob!(0.7));
     assert_eq!(obst.memo_size(), 0, "update_prob should clear memo");
     assert_eq!(obst.keys()[0].prob, prob!(0.7));
-    
+
     let cost2 = obst.optimal_cost();
     assert_ne!(cost1, cost2);
 }
@@ -135,7 +158,7 @@ fn test_update_prob() {
 #[test]
 fn test_update_prob_out_of_bounds() {
     let mut obst = OBSTStEphLit!(keys: ['A'], probs: [0.5]);
-    
+
     // Should not panic
     obst.update_prob(5, prob!(0.9));
     assert_eq!(obst.num_keys(), 1);
@@ -145,21 +168,21 @@ fn test_update_prob_out_of_bounds() {
 #[test]
 fn test_memoization() {
     let mut obst = OBSTStEphLit!(keys: ['A', 'B', 'C'], probs: [0.2, 0.3, 0.5]);
-    
+
     assert_eq!(obst.memo_size(), 0);
-    
+
     let cost1 = obst.optimal_cost();
     let memo_size1 = obst.memo_size();
     assert!(memo_size1 > 0, "Memoization should have cached results");
-    
+
     // Second call should use cached results
     let cost2 = obst.optimal_cost();
     assert_eq!(cost1, cost2);
-    
+
     // Clear memo
     obst.clear_memo();
     assert_eq!(obst.memo_size(), 0);
-    
+
     // Recompute after clear
     let cost3 = obst.optimal_cost();
     assert_eq!(cost1, cost3);
@@ -176,7 +199,10 @@ fn test_display_obst() {
 
 #[test]
 fn test_display_key_prob() {
-    let kp = OBSTStEphKeyProb { key: 'A', prob: prob!(0.5) };
+    let kp = OBSTStEphKeyProb {
+        key: 'A',
+        prob: prob!(0.5),
+    };
     let display_str = format!("{}", kp);
     assert!(display_str.contains("A"));
     assert!(display_str.contains("0.5"));

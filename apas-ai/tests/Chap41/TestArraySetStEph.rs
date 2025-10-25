@@ -8,7 +8,6 @@ use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap41::Example41_3::Example41_3::*;
 use apas_ai::Types::Types::*;
 
-
 #[test]
 fn test_arraysetstephlit_macro_functionality() {
     // Test empty set creation

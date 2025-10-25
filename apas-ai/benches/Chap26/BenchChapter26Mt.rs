@@ -7,7 +7,6 @@ use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{
     ArraySeqMtPerBaseTrait, ArraySeqMtPerRedefinableTrait, ArraySeqMtPerS,
 };
 
-
 fn gen_sequence(n: usize) -> ArraySeqMtPerS<usize> { ArraySeqMtPerS::new(n, 0) }
 
 fn bench_chapter26_mt(c: &mut Criterion) {

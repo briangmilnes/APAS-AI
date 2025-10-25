@@ -163,10 +163,10 @@ pub mod ArraySeqMtEphSlice {
             let f_left = f.clone();
             let f_right = f.clone();
 
-            let Pair(left_result, right_result) = ParaPair!(
-                move || Self::map(&left_slice, f_left),
-                move || Self::map(&right_slice, f_right)
-            );
+            let Pair(left_result, right_result) = ParaPair!(move || Self::map(&left_slice, f_left), move || Self::map(
+                &right_slice,
+                f_right
+            ));
 
             // Append results
             let mut results = Vec::with_capacity(a.length());
@@ -201,10 +201,11 @@ pub mod ArraySeqMtEphSlice {
             let pred_left = pred.clone();
             let pred_right = pred.clone();
 
-            let Pair(left_result, right_result) = ParaPair!(
-                move || Self::filter(&left_slice, pred_left),
-                move || Self::filter(&right_slice, pred_right)
-            );
+            let Pair(left_result, right_result) =
+                ParaPair!(move || Self::filter(&left_slice, pred_left), move || Self::filter(
+                    &right_slice,
+                    pred_right
+                ));
 
             // Append filtered results
             let mut kept_values = Vec::with_capacity(a.length());
@@ -257,10 +258,8 @@ pub mod ArraySeqMtEphSlice {
             let left_seqs = &sequences[..mid];
             let right_seqs = &sequences[mid..];
 
-            let Pair(left_result, right_result) = ParaPair!(
-                move || Self::flatten(left_seqs),
-                move || Self::flatten(right_seqs)
-            );
+            let Pair(left_result, right_result) =
+                ParaPair!(move || Self::flatten(left_seqs), move || Self::flatten(right_seqs));
 
             // Append the two flattened results
             let total_len = left_result.length() + right_result.length();
@@ -339,7 +338,7 @@ pub mod ArraySeqMtEphSlice {
         fn inject(a: &Self, updates: &[(N, T)]) -> Self {
             // Algorithm 19.16: parallel inject with leftmost-wins atomic writes
             use std::sync::{Arc, Mutex};
-            
+
             if updates.is_empty() {
                 return a.clone();
             }
@@ -348,12 +347,12 @@ pub mod ArraySeqMtEphSlice {
             let values: Arc<Vec<Mutex<(T, N)>>> = Arc::new(
                 (0..a.length())
                     .map(|i| Mutex::new((a.nth_cloned(i), a.length())))
-                    .collect()
+                    .collect(),
             );
 
             // Apply all updates in parallel - leftmost wins
             let updates_vec: Vec<(N, T)> = updates.to_vec();
-            
+
             std::thread::scope(|s| {
                 for (k, (idx, val)) in updates_vec.into_iter().enumerate() {
                     let vals = Arc::clone(&values);
@@ -369,31 +368,25 @@ pub mod ArraySeqMtEphSlice {
             });
 
             // Extract final values (Arc is automatically unwrapped after scope)
-            let result: Vec<T> = values
-                .iter()
-                .map(|m| m.lock().unwrap().0.clone())
-                .collect();
+            let result: Vec<T> = values.iter().map(|m| m.lock().unwrap().0.clone()).collect();
             ArraySeqMtEphSliceS::from_vec(result)
         }
 
         fn ninject(a: &Self, updates: &[(N, T)]) -> Self {
             // Algorithm 19.17: parallel ninject with rightmost-wins atomic writes
             use std::sync::{Arc, Mutex};
-            
+
             if updates.is_empty() {
                 return a.clone();
             }
 
             // Create shared atomic array: (value, update_index)
-            let values: Arc<Vec<Mutex<(T, N)>>> = Arc::new(
-                (0..a.length())
-                    .map(|i| Mutex::new((a.nth_cloned(i), 0)))
-                    .collect()
-            );
+            let values: Arc<Vec<Mutex<(T, N)>>> =
+                Arc::new((0..a.length()).map(|i| Mutex::new((a.nth_cloned(i), 0))).collect());
 
             // Apply all updates in parallel - rightmost wins
             let updates_vec: Vec<(N, T)> = updates.to_vec();
-            
+
             std::thread::scope(|s| {
                 for (k, (idx, val)) in updates_vec.into_iter().enumerate() {
                     let vals = Arc::clone(&values);
@@ -409,10 +402,7 @@ pub mod ArraySeqMtEphSlice {
             });
 
             // Extract final values (Arc is automatically unwrapped after scope)
-            let result: Vec<T> = values
-                .iter()
-                .map(|m| m.lock().unwrap().0.clone())
-                .collect();
+            let result: Vec<T> = values.iter().map(|m| m.lock().unwrap().0.clone()).collect();
             ArraySeqMtEphSliceS::from_vec(result)
         }
 

@@ -77,11 +77,11 @@ fn test_subset_sum_mt_eph_multiset_mut() {
 #[test]
 fn test_subset_sum_mt_eph_clear_memo() {
     let mut solver = SubsetSumMtEphLit![1, 2, 3];
-    
+
     // Run a query to populate memo
     solver.subset_sum(6);
     assert!(solver.memo_size() > 0);
-    
+
     // Clear memo
     solver.clear_memo();
     assert_eq!(solver.memo_size(), 0);
@@ -92,7 +92,7 @@ fn test_subset_sum_mt_eph_memo_size() {
     let mut solver = SubsetSumMtEphLit![1, 2, 3];
     // Before computation, memo should be empty
     assert_eq!(solver.memo_size(), 0);
-    
+
     // After computation, memo should contain subproblem results
     solver.subset_sum(5);
     assert!(solver.memo_size() > 0);
@@ -111,7 +111,7 @@ fn test_subset_sum_mt_eph_display() {
 fn test_subset_sum_mt_eph_clone() {
     let solver1 = SubsetSumMtEphLit![1, 2, 3];
     let mut solver2 = solver1.clone();
-    
+
     assert_eq!(solver1.multiset().length(), solver2.multiset().length());
     assert!(solver2.subset_sum(6));
 }
@@ -119,14 +119,14 @@ fn test_subset_sum_mt_eph_clone() {
 #[test]
 fn test_subset_sum_mt_eph_set_mutation() {
     let mut solver = SubsetSumMtEphLit![1, 2, 3];
-    
+
     // Verify initial state
     assert_eq!(solver.multiset().nth_cloned(0), 1);
-    
+
     // Mutate and verify
     solver.set(0, 100);
     assert_eq!(solver.multiset().nth_cloned(0), 100);
-    
+
     // Verify subset sum reflects mutation
     let result = solver.subset_sum(102);
     assert!(result);

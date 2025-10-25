@@ -5,7 +5,6 @@ use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
 use apas_ai::LabDirGraphStEphLit;
 use apas_ai::Types::Types::*;
 
-
 #[test]
 fn test_labdirgraphstephlit_macro_functionality() {
     // Test empty graph creation

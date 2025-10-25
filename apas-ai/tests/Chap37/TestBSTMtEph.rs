@@ -9,7 +9,6 @@ use apas_ai::Chap39::BSTTreapMtEph::BSTTreapMtEph::*;
 use apas_ai::Types::Types::*;
 use apas_ai::Types::*;
 
-
 #[test]
 fn mt_plain_basic_ops() {
     let bst = BSTree::new();

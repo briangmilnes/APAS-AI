@@ -1,7 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for OptBinSearchTreeStPer.
 
-use apas_ai::Chap50::OptBinSearchTreeStPer::OptBinSearchTreeStPer::{KeyProb as OBSTStPerKeyProb, OBSTStPerS, OBSTStPerTrait};
+use apas_ai::Chap50::OptBinSearchTreeStPer::OptBinSearchTreeStPer::{
+    KeyProb as OBSTStPerKeyProb, OBSTStPerS, OBSTStPerTrait,
+};
 use apas_ai::Chap50::Probability::Probability::*;
 use apas_ai::{OBSTStPerLit, prob};
 
@@ -58,9 +60,18 @@ fn test_obst_macro() {
 #[test]
 fn test_obst_st_per_from_key_probs() {
     let key_probs = vec![
-        OBSTStPerKeyProb { key: 'A', prob: prob!(0.2) },
-        OBSTStPerKeyProb { key: 'B', prob: prob!(0.5) },
-        OBSTStPerKeyProb { key: 'C', prob: prob!(0.3) },
+        OBSTStPerKeyProb {
+            key: 'A',
+            prob: prob!(0.2),
+        },
+        OBSTStPerKeyProb {
+            key: 'B',
+            prob: prob!(0.5),
+        },
+        OBSTStPerKeyProb {
+            key: 'C',
+            prob: prob!(0.3),
+        },
     ];
     let obst = OBSTStPerS::from_key_probs(key_probs);
     assert_eq!(obst.num_keys(), 3);
@@ -73,7 +84,7 @@ fn test_obst_st_per_keys_getter() {
     let keys = vec!['X', 'Y', 'Z'];
     let probs = vec![prob!(0.1), prob!(0.3), prob!(0.6)];
     let obst = OBSTStPerS::from_keys_probs(keys.clone(), probs);
-    
+
     let retrieved_keys = obst.keys();
     assert_eq!(retrieved_keys.len(), 3);
     assert_eq!(retrieved_keys[0].key, 'X');
@@ -86,7 +97,7 @@ fn test_obst_st_per_memo_size() {
     let obst = OBSTStPerS::from_keys_probs(vec!['A', 'B'], vec![prob!(0.4), prob!(0.6)]);
     // Memo size should be 0 initially (optimal_cost creates a clone, doesn't mutate original)
     assert_eq!(obst.memo_size(), 0);
-    
+
     // Even after computing optimal cost, original's memo stays empty
     obst.optimal_cost();
     assert_eq!(obst.memo_size(), 0);
@@ -102,7 +113,10 @@ fn test_obst_st_per_display() {
 
 #[test]
 fn test_obst_st_per_key_prob_display() {
-    let key_prob = OBSTStPerKeyProb { key: 'X', prob: prob!(0.123) };
+    let key_prob = OBSTStPerKeyProb {
+        key: 'X',
+        prob: prob!(0.123),
+    };
     let display_str = format!("{}", key_prob);
     assert!(display_str.contains("X"));
     assert!(display_str.contains("0.123"));

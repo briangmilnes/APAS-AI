@@ -88,8 +88,7 @@ pub mod StarPartitionMtEph {
         }
 
         // Phase 3: Build base sequence V' where each index maps to itself
-        let base_seq =
-            ArraySeqMtEphS::tabulate(&|i| vertices_vec[i].clone(), n);
+        let base_seq = ArraySeqMtEphS::tabulate(&|i| vertices_vec[i].clone(), n);
 
         // Phase 4: Convert th_edges to ArraySeqMtEphS<Pair<N, V>> for parallel inject
         let updates_seq =

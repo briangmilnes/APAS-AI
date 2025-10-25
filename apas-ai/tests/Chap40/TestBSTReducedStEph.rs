@@ -1,9 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
+use apas_ai::BSTReducedStEphLit;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap40::BSTReducedStEph::BSTReducedStEph::*;
 use apas_ai::Types::Types::*;
-use apas_ai::BSTReducedStEphLit;
 
 #[test]
 fn reduced_bst_sum_operations() {

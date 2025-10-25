@@ -14,8 +14,8 @@ pub mod ArraySeqMtEph {
     pub trait ArraySeqMtEphTrait<T: StTInMtT>: ArraySeqMtEphBaseTrait<T> {
         // Re-declare methods from RedefinableTrait so they're available when importing Chap19::*
         // These delegate to Chap18 implementations unless redefined below
-        fn empty()                                               -> Self;
-        fn singleton(item: T)                                    -> Self;
+        fn empty()                                                              -> Self;
+        fn singleton(item: T)                                                   -> Self;
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T>;
         fn map<U: StTInMtT + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
             a: &ArraySeqMtEphS<T>,
@@ -23,47 +23,43 @@ pub mod ArraySeqMtEph {
         ) -> ArraySeqMtEphS<U>
         where
             T: Send + 'static;
-        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)  -> Self;
-        fn filter<F: PredMt<T>>(a: &ArraySeqMtEphS<T>, pred: &F) -> Self;
-        fn isEmpty(&self)                                        -> B;
-        fn isSingleton(&self)                                    -> B;
+        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)                 -> Self;
+        fn filter<F: PredMt<T>>(a: &ArraySeqMtEphS<T>, pred: &F)                -> Self;
+        fn isEmpty(&self)                                                       -> B;
+        fn isSingleton(&self)                                                   -> B;
         fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
-        
+
         // Chap19-specific methods
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>, index: N) -> Option<T>;
+        fn select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>, index: N)       -> Option<T>;
         /// claude-4-sonet: Work Θ(|a| + |b|), Span Θ(1)
-        fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)    -> Self;
+        fn append_select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)          -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn deflate<F: PredMt<T>>(f: &F, x: &T)                            -> Self;
-        
+        fn deflate<F: PredMt<T>>(f: &F, x: &T)                                  -> Self;
+
         // Chap19 redefines these with parallel implementations
         /// APAS Algorithm 19.9: Work Θ(|a|), Span Θ(log|a|)
         fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
         where
             T: Send + 'static;
         /// APAS Algorithm 19.15: Work Θ(Σ|ss[i]|), Span Θ(log|ss|)
-        fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> Self;
+        fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>)                      -> Self;
         /// APAS Algorithm 19.16: Work Θ(|a| + |updates|), Span Θ(log|updates|)
-        fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> Self;
+        fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>)  -> Self;
         /// APAS Algorithm 19.17: Work Θ(|a| + |updates|), Span Θ(log|updates|)
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> Self;
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
         // Delegate non-redefined methods to Chap18
-        fn empty() -> Self {
-            <Self as ArraySeqMtEphRedefinableTrait<T>>::empty()
-        }
-        
-        fn singleton(item: T) -> Self {
-            <Self as ArraySeqMtEphRedefinableTrait<T>>::singleton(item)
-        }
-        
+        fn empty() -> Self { <Self as ArraySeqMtEphRedefinableTrait<T>>::empty() }
+
+        fn singleton(item: T) -> Self { <Self as ArraySeqMtEphRedefinableTrait<T>>::singleton(item) }
+
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T> {
             <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::tabulate(f, n)
         }
-        
+
         fn map<U: StTInMtT + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
             a: &ArraySeqMtEphS<T>,
             f: F,
@@ -73,27 +69,23 @@ pub mod ArraySeqMtEph {
         {
             <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::map(a, f)
         }
-        
+
         fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> Self {
             <Self as ArraySeqMtEphRedefinableTrait<T>>::append(a, b)
         }
-        
+
         fn filter<F: PredMt<T>>(a: &ArraySeqMtEphS<T>, pred: &F) -> Self {
             <Self as ArraySeqMtEphRedefinableTrait<T>>::filter(a, pred)
         }
-        
-        fn isEmpty(&self) -> B {
-            <Self as ArraySeqMtEphRedefinableTrait<T>>::isEmpty(self)
-        }
-        
-        fn isSingleton(&self) -> B {
-            <Self as ArraySeqMtEphRedefinableTrait<T>>::isSingleton(self)
-        }
-        
+
+        fn isEmpty(&self) -> B { <Self as ArraySeqMtEphRedefinableTrait<T>>::isEmpty(self) }
+
+        fn isSingleton(&self) -> B { <Self as ArraySeqMtEphRedefinableTrait<T>>::isSingleton(self) }
+
         fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A {
             <Self as ArraySeqMtEphRedefinableTrait<T>>::iterate(a, f, x)
         }
-        
+
         // Chap19-specific implementations
         fn select(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>, index: N) -> Option<T> {
             let len_a = a.length();
@@ -131,7 +123,7 @@ pub mod ArraySeqMtEph {
         {
             // Algorithm 19.9: parallel reduce using divide-and-conquer
             use crate::ParaPair;
-            
+
             if a.length() == 0 {
                 return id;
             }
@@ -151,14 +143,14 @@ pub mod ArraySeqMtEph {
                 move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&left, f_left, id_clone),
                 move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::reduce(&right, f_right, id)
             );
-            
+
             f(&left_result, &right_result)
         }
 
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {
             // Algorithm 19.15: parallel flatten using divide-and-conquer
             use crate::ParaPair;
-            
+
             if ss.length() == 0 {
                 return <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::empty();
             }
@@ -183,7 +175,7 @@ pub mod ArraySeqMtEph {
         fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
             // Algorithm 19.16: parallel inject with leftmost-wins atomic writes
             use std::sync::{Arc, Mutex};
-            
+
             if updates.length() == 0 {
                 return a.clone();
             }
@@ -192,14 +184,12 @@ pub mod ArraySeqMtEph {
             let values: Arc<Vec<Mutex<(T, N)>>> = Arc::new(
                 (0..a.length())
                     .map(|i| Mutex::new((a.nth_cloned(i), a.length())))
-                    .collect()
+                    .collect(),
             );
 
             // Apply all updates in parallel - leftmost wins
-            let updates_vec: Vec<Pair<N, T>> = (0..updates.length())
-                .map(|i| updates.nth_cloned(i))
-                .collect();
-            
+            let updates_vec: Vec<Pair<N, T>> = (0..updates.length()).map(|i| updates.nth_cloned(i)).collect();
+
             std::thread::scope(|s| {
                 for (k, Pair(idx, val)) in updates_vec.into_iter().enumerate() {
                     let vals = Arc::clone(&values);
@@ -215,33 +205,25 @@ pub mod ArraySeqMtEph {
             });
 
             // Extract final values (Arc is automatically unwrapped after scope)
-            let result: Vec<T> = values
-                .iter()
-                .map(|m| m.lock().unwrap().0.clone())
-                .collect();
+            let result: Vec<T> = values.iter().map(|m| m.lock().unwrap().0.clone()).collect();
             ArraySeqMtEphS::from_vec(result)
         }
 
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
             // Algorithm 19.17: parallel ninject with rightmost-wins atomic writes
             use std::sync::{Arc, Mutex};
-            
+
             if updates.length() == 0 {
                 return a.clone();
             }
 
             // Create shared atomic array: (value, update_index)
-            let values: Arc<Vec<Mutex<(T, N)>>> = Arc::new(
-                (0..a.length())
-                    .map(|i| Mutex::new((a.nth_cloned(i), 0)))
-                    .collect()
-            );
+            let values: Arc<Vec<Mutex<(T, N)>>> =
+                Arc::new((0..a.length()).map(|i| Mutex::new((a.nth_cloned(i), 0))).collect());
 
             // Apply all updates in parallel - rightmost wins
-            let updates_vec: Vec<Pair<N, T>> = (0..updates.length())
-                .map(|i| updates.nth_cloned(i))
-                .collect();
-            
+            let updates_vec: Vec<Pair<N, T>> = (0..updates.length()).map(|i| updates.nth_cloned(i)).collect();
+
             std::thread::scope(|s| {
                 for (k, Pair(idx, val)) in updates_vec.into_iter().enumerate() {
                     let vals = Arc::clone(&values);
@@ -257,10 +239,7 @@ pub mod ArraySeqMtEph {
             });
 
             // Extract final values (Arc is automatically unwrapped after scope)
-            let result: Vec<T> = values
-                .iter()
-                .map(|m| m.lock().unwrap().0.clone())
-                .collect();
+            let result: Vec<T> = values.iter().map(|m| m.lock().unwrap().0.clone()).collect();
             ArraySeqMtEphS::from_vec(result)
         }
     }

@@ -270,7 +270,7 @@ pub mod Types {
     // Implements the APAS textbook's || (parallel pair) operator.
     // Previous implementation spawned unbounded threads, causing exponential growth:
     // - 16 elements → ~16 threads
-    // - 32 elements → ~32+ threads  
+    // - 32 elements → ~32+ threads
     // - Resulted in SIGABRT crashes and thread exhaustion
     //
     // Current implementation uses rayon's work-stealing thread pool:
@@ -284,7 +284,6 @@ pub mod Types {
             $crate::Types::Types::Pair(left_result, right_result)
         }};
     }
-
 
     #[macro_export]
     macro_rules! EdgeLit {

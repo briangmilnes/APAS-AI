@@ -108,11 +108,11 @@ fn test_multiset_mut_getter() {
 fn test_set_clears_memo() {
     let mut solver = SubsetSumStEphLit![1, 2, 3];
     assert!(solver.subset_sum(6));
-    
+
     // Memo should be populated now
     let memo_size_after_first = solver.memo_size();
     assert!(memo_size_after_first > 0);
-    
+
     // Set clears memo
     solver.set(0, 10);
     assert_eq!(solver.memo_size(), 0);
@@ -122,10 +122,10 @@ fn test_set_clears_memo() {
 fn test_clear_memo() {
     let mut solver = SubsetSumStEphLit![1, 2, 3];
     assert!(solver.subset_sum(5));
-    
+
     // Memo should be populated
     assert!(solver.memo_size() > 0);
-    
+
     // Clear memo
     solver.clear_memo();
     assert_eq!(solver.memo_size(), 0);
@@ -134,10 +134,10 @@ fn test_clear_memo() {
 #[test]
 fn test_memo_size() {
     let mut solver = SubsetSumStEphLit![1, 2, 3, 4];
-    
+
     // Initially empty
     assert_eq!(solver.memo_size(), 0);
-    
+
     // After computation, memo is cleared for next call
     assert!(solver.subset_sum(6));
     // subset_sum clears memo at start, so after call it should be populated
@@ -165,7 +165,7 @@ fn test_into_iterator_ref() {
     let solver = SubsetSumStEphLit![1, 2, 3];
     let values: Vec<_> = (&solver).into_iter().collect();
     assert_eq!(values, vec![1, 2, 3]);
-    
+
     // Original still usable
     assert_eq!(solver.multiset().length(), 3);
 }
@@ -175,7 +175,7 @@ fn test_into_iterator_mut() {
     let mut solver = SubsetSumStEphLit![1, 2, 3];
     let values: Vec<_> = (&mut solver).into_iter().collect();
     assert_eq!(values, vec![1, 2, 3]);
-    
+
     // Original still usable
     assert_eq!(solver.multiset().length(), 3);
 }
@@ -190,7 +190,7 @@ fn test_macro_empty() {
 #[test]
 fn test_larger_multiset() {
     let mut solver = SubsetSumStEphLit![3, 34, 4, 12, 5, 2];
-    assert!(solver.subset_sum(9));  // 4 + 5 = 9
+    assert!(solver.subset_sum(9)); // 4 + 5 = 9
     assert!(solver.subset_sum(19)); // 3 + 4 + 12 = 19
     assert!(!solver.subset_sum(100)); // Impossible
 }
@@ -207,13 +207,13 @@ fn test_all_same_value() {
 fn test_mutation_preserves_functionality() {
     let mut solver = SubsetSumStEphLit![1, 2, 3];
     assert!(solver.subset_sum(6));
-    
+
     // Mutate
     solver.set(0, 10);
-    
+
     // Old sums don't work
     assert!(!solver.subset_sum(6));
-    
+
     // New sums work
     assert!(solver.subset_sum(15)); // 10 + 2 + 3 = 15
 }
@@ -221,7 +221,7 @@ fn test_mutation_preserves_functionality() {
 #[test]
 fn test_single_element() {
     let mut solver = SubsetSumStEphLit![42];
-    assert!(solver.subset_sum(0));  // Empty subset
+    assert!(solver.subset_sum(0)); // Empty subset
     assert!(solver.subset_sum(42)); // The element itself
     assert!(!solver.subset_sum(21)); // Impossible
 }

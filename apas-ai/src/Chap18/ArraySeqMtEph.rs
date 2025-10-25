@@ -23,22 +23,22 @@ pub mod ArraySeqMtEph {
     pub trait ArraySeqMtEphBaseTrait<T: StTInMtT> {
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
-        fn new(length: N, init_value: T)                                        -> Self;
+        fn new(length: N, init_value: T)                      -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - locks mutex
-        fn set(&mut self, index: N, item: T)                                    -> Result<&mut ArraySeqMtEphS<T>, &'static str>;
+        fn set(&mut self, index: N, item: T)                  -> Result<&mut ArraySeqMtEphS<T>, &'static str>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - locks mutex
-        fn length(&self)                                                        -> N;
+        fn length(&self)                                      -> N;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - locks mutex
-        fn nth_cloned(&self, index: N)                                          -> T;
+        fn nth_cloned(&self, index: N)                        -> T;
         /// APAS: Work Θ(len), Span Θ(1)
         /// claude-4-sonet: Work Θ(len), Span Θ(len), Parallelism Θ(1) - sequential copy, locks mutex
-        fn subseq_copy(&self, start: N, length: N)                              -> Self;
+        fn subseq_copy(&self, start: N, length: N)            -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - in-place, locks mutex
-        fn update(a: &mut ArraySeqMtEphS<T>, item_at: (N, T))                   -> &mut Self;
+        fn update(a: &mut ArraySeqMtEphS<T>, item_at: (N, T)) -> &mut Self;
         /// APAS: Work Θ(|a|²), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|²), Span Θ(|a|²), Parallelism Θ(1) - sequential with linear search
         fn collect<K: StTInMtT, V: StTInMtT>(
@@ -49,19 +49,19 @@ pub mod ArraySeqMtEph {
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential prefix sum
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T);
         // Additional methods
-        fn from_vec(values: Vec<T>)                                             -> Self;
-        fn iter_cloned(&self)                                                   -> Vec<T>;
-        fn to_vec(&self)                                                        -> Vec<T>;
+        fn from_vec(values: Vec<T>)                           -> Self;
+        fn iter_cloned(&self)                                 -> Vec<T>;
+        fn to_vec(&self)                                      -> Vec<T>;
     }
 
     // Redefinable trait: Methods that Chap19 might redefine
     pub trait ArraySeqMtEphRedefinableTrait<T: StTInMtT> {
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn empty()                                               -> Self;
+        fn empty()                                                              -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1)
-        fn singleton(item: T)                                    -> Self;
+        fn singleton(item: T)                                                   -> Self;
         /// APAS: Work Θ(n), Span Θ(1)
         /// claude-4-sonet: Work Θ(n), Span Θ(n), Parallelism Θ(1) - sequential
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T>;
@@ -75,16 +75,16 @@ pub mod ArraySeqMtEph {
             T: Send + 'static;
         /// APAS: Work Θ(|a|+|b|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|+|b|), Span Θ(|a|+|b|), Parallelism Θ(1) - sequential
-        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)  -> Self;
+        fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)                 -> Self;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential
-        fn filter<F: PredMt<T>>(a: &ArraySeqMtEphS<T>, pred: &F) -> Self;
+        fn filter<F: PredMt<T>>(a: &ArraySeqMtEphS<T>, pred: &F)                -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - locks mutex
-        fn isEmpty(&self)                                        -> B;
+        fn isEmpty(&self)                                                       -> B;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - locks mutex
-        fn isSingleton(&self)                                    -> B;
+        fn isSingleton(&self)                                                   -> B;
         /// APAS: Work Θ(|a|), Span Θ(1)
         /// claude-4-sonet: Work Θ(|a|), Span Θ(|a|), Parallelism Θ(1) - sequential fold
         fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
@@ -354,7 +354,6 @@ pub mod ArraySeqMtEph {
         fn eq(&self, other: &Self) -> bool { self.to_vec() == other.to_vec() }
     }
     impl<T: StTInMtT> Eq for ArraySeqMtEphS<T> {}
-
 
     #[macro_export]
     macro_rules! ArraySeqMtEphSLit {
