@@ -128,6 +128,6 @@ fn test_subset_sum_mt_eph_set_mutation() {
     assert_eq!(solver.multiset().nth_cloned(0), 100);
     
     // Verify subset sum reflects mutation
-    let mut result = solver.subset_sum(102);
+    let result = solver.subset_sum(102);
     assert!(result);
 }

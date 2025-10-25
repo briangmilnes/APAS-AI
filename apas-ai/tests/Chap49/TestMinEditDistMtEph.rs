@@ -34,7 +34,7 @@ fn test_min_edit_distance_mt_eph_empty() {
 
 #[test]
 fn test_constructors() {
-    let mut solver: MinEditDistMtEphS<char> = MinEditDistMtEphS::new();
+    let solver: MinEditDistMtEphS<char> = MinEditDistMtEphS::new();
     assert_eq!(solver.source().length(), 0);
     assert_eq!(solver.target().length(), 0);
 
@@ -100,8 +100,8 @@ fn test_getters() {
 #[test]
 fn test_mutable_getters() {
     let mut solver = MinEditDistMtEphLit!(source: ['a'], target: ['b']);
-    solver.source_mut().set(0, 'x');
-    solver.target_mut().set(0, 'y');
+    let _ = solver.source_mut().set(0, 'x');
+    let _ = solver.target_mut().set(0, 'y');
     assert_eq!(solver.source().nth_cloned(0), 'x');
     assert_eq!(solver.target().nth_cloned(0), 'y');
 }
