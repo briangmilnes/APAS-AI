@@ -142,14 +142,15 @@ pub mod ArraySeqMtEphSlice {
         }
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> Self {
-            // Algorithm 19.14: parallel tabulate - "f can be evaluated at each element independently in parallel"
-            // NOTE: Current implementation is sequential due to trait bound `&F` without `Clone`.
-            // True parallelization would require `F: Clone` to pass f into parallel closures.
-            // The parallel operations (map, filter, reduce, flatten, inject, ninject) compensate.
-            let mut values = Vec::<T>::with_capacity(n);
-            for i in 0..n {
-                values.push(f(i));
-            }
+            // Algorithm 19.14: "allocate a fresh array of n elements, evaluate f at each position i 
+            // and write the result into position i of the array"
+            // "the function f can be evaluated at each element independently in parallel"
+            // Use Rayon's parallel iterator which handles work-stealing and granularity automatically
+            use rayon::prelude::*;
+
+            // Evaluate f at each position in parallel using Rayon's work-stealing scheduler
+            // (Rayon handles n==0 case correctly by returning empty vec)
+            let values: Vec<T> = (0..n).into_par_iter().map(|i| f(i)).collect();
             ArraySeqMtEphSliceS::from_vec(values)
         }
 

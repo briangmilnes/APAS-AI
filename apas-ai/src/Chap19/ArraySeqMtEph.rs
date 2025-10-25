@@ -58,11 +58,16 @@ pub mod ArraySeqMtEph {
         fn singleton(item: T) -> Self { <Self as ArraySeqMtEphRedefinableTrait<T>>::singleton(item) }
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T> {
-            // Algorithm 19.14: parallel tabulate - "f can be evaluated at each element independently in parallel"
-            // NOTE: Current implementation delegates to Chap18's sequential tabulate due to trait bound `&F` without `Clone`.
-            // True parallelization would require `F: Clone` to pass f into parallel closures.
-            // The parallel operations (map, filter, reduce, flatten, inject, ninject, append) compensate.
-            <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::tabulate(f, n)
+            // Algorithm 19.14: "allocate a fresh array of n elements, evaluate f at each position i 
+            // and write the result into position i of the array"
+            // "the function f can be evaluated at each element independently in parallel"
+            // Use Rayon's parallel iterator which handles work-stealing and granularity automatically
+            use rayon::prelude::*;
+
+            // Evaluate f at each position in parallel using Rayon's work-stealing scheduler
+            // (Rayon handles n==0 case correctly by returning empty vec)
+            let values: Vec<T> = (0..n).into_par_iter().map(|i| f(i)).collect();
+            ArraySeqMtEphS::from_vec(values)
         }
 
         fn map<U: StTInMtT + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
