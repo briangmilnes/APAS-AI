@@ -7,7 +7,8 @@ use apas_ai::Chap05::MappingStEph::MappingStEph::*;
 use apas_ai::Chap05::RelationStEph::RelationStEph::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Types::Types::*;
-use apas_ai::{PairLit, SetLit};
+use apas_ai::PairLit;
+use apas_ai::SetLit;
 
 fn bench_mapping_build(c: &mut Criterion) {
     let mut group = c.benchmark_group("BenchMappingEphChap5_5");

@@ -49,8 +49,10 @@ pub mod VertexMatchingMtEph {
         seed: u64,
     ) -> SetStEph<Edge<V>> {
         use rand::rngs::StdRng;
-        use rand::{Rng, SeedableRng};
-        use std::sync::{Arc, Mutex};
+        use rand::Rng;
+        use rand::SeedableRng;
+        use std::sync::Arc;
+        use std::sync::Mutex;
 
         let mut rng = StdRng::seed_from_u64(seed);
 

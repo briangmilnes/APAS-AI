@@ -4,8 +4,10 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::Chap40::BSTReducedStEph::BSTReducedStEph::{BSTReducedStEphTrait, *};
-use apas_ai::{BSTReducedStEphLit, *};
+use apas_ai::Chap40::BSTReducedStEph::BSTReducedStEph::BSTReducedStEphTrait;
+use apas_ai::Chap40::BSTReducedStEph::BSTReducedStEph::*;
+use apas_ai::BSTReducedStEphLit;
+use apas_ai::*;
 
 fn build_sum_tree(len: usize) -> BSTSumStEph<i32, i32> {
     let mut tree = BSTReducedStEphLit![];

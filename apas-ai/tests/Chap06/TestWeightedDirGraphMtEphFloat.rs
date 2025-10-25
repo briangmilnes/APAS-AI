@@ -3,7 +3,8 @@
 use std::f64::consts::E;
 use std::f64::consts::PI;
 use std::f64::consts::SQRT_2;
-use std::sync::{Arc, Barrier};
+use std::sync::Arc;
+use std::sync::Barrier;
 use std::thread;
 
 use ordered_float::OrderedFloat;

@@ -4,10 +4,9 @@
 pub mod ArraySeqStPer {
 
     use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::{
-        ArraySeqStPerBaseTrait as BaseTrait, ArraySeqStPerRedefinableTrait as Chap18RedefinableTrait,
-        ArraySeqStPerS as S,
-    };
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerBaseTrait as BaseTrait;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerRedefinableTrait as Chap18RedefinableTrait;
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS as S;
     use crate::Types::Types::*;
 
     pub type ArraySeqStPerS<T> = S<T>;

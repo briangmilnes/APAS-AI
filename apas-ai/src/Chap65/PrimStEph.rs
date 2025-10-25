@@ -9,7 +9,9 @@ pub mod PrimStEph {
     use std::cmp::Ordering;
     use std::collections::HashMap;
     use std::collections::HashSet;
-    use std::fmt::{Display, Formatter, Result as FmtResult};
+    use std::fmt::Display;
+    use std::fmt::Formatter;
+    use std::fmt::Result as FmtResult;
     use std::hash::Hash;
 
     use ordered_float::OrderedFloat;

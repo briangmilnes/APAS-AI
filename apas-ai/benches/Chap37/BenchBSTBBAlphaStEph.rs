@@ -5,7 +5,8 @@ use criterion::*;
 
 use apas_ai::Chap37::BSTBBAlphaStEph::BSTBBAlphaStEph::*;
 
-use apas_ai::{BSTBBAlphaStEphLit, *};
+use apas_ai::BSTBBAlphaStEphLit;
+use apas_ai::*;
 
 fn build_tree(len: usize) -> BSTreeBBAlpha<i32> {
     let mut tree = BSTBBAlphaStEphLit![]; // BST Eph: empty constructor

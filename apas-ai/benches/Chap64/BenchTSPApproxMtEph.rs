@@ -1,10 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chapter 64 TSP 2-Approximation (Parallel)
 
-use apas_ai::{
-    Chap05::SetStEph::SetStEph::*, Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*,
-    Chap64::TSPApproxMtEph::TSPApproxMtEph::*, SetLit, Types::Types::*,
-};
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
+use apas_ai::Chap64::TSPApproxMtEph::TSPApproxMtEph::*;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 use criterion::*;
 use ordered_float::OrderedFloat;
 use std::time::Duration;

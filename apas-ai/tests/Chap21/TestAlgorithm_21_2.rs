@@ -3,7 +3,8 @@
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap21::Algorithm21_2::Algorithm21_2::*;
 use apas_ai::Types::Types::*;
-use apas_ai::{ArraySeqStPerSLit, PairLit};
+use apas_ai::ArraySeqStPerSLit;
+use apas_ai::PairLit;
 
 #[test]
 fn test_points3d_tab_flat_n0_empty() {

@@ -4,7 +4,10 @@
 pub mod ArraySeq {
 
     use std::collections::HashSet;
-    use std::fmt::{Debug, Display, Formatter, Result as FmtResult};
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
+    use std::fmt::Result as FmtResult;
     use std::slice::Iter;
     use std::slice::IterMut;
     use std::vec::IntoIter;

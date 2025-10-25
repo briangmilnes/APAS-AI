@@ -4,7 +4,10 @@
 pub mod SubsetSumStEph {
 
     use std::collections::HashMap;
-    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
+    use std::fmt::Result;
 
     use crate::ArraySeqStEphSLit;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;

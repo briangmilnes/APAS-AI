@@ -6,7 +6,8 @@ use criterion::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabDirGraphStEph::LabDirGraphStEph::*;
 use apas_ai::Types::Types::*;
-use apas_ai::{LabDirGraphStEphLit, SetLit};
+use apas_ai::LabDirGraphStEphLit;
+use apas_ai::SetLit;
 
 fn bench_labelled_dir_graph_creation(c: &mut Criterion) {
     let mut group = c.benchmark_group("LabDirGraphStEph_Creation");

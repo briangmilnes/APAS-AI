@@ -3,7 +3,8 @@
 
 pub mod Exercise12_2 {
 
-    use std::sync::atomic::{AtomicUsize, Ordering};
+    use std::sync::atomic::AtomicUsize;
+    use std::sync::atomic::Ordering;
     pub type T = AtomicUsize;
 
     pub trait FetchAddCasTrait {

@@ -1,10 +1,8 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for OptBinSearchTreeStPer
 
-use apas_ai::{
-    Chap50::{OptBinSearchTreeStPer::OptBinSearchTreeStPer::*, Probability::Probability::Probability},
-    prob,
-};
+use apas_ai::Chap50::{OptBinSearchTreeStPer::OptBinSearchTreeStPer::*, Probability::Probability::Probability};
+use apas_ai::prob;
 use criterion::*;
 use std::time::Duration;
 

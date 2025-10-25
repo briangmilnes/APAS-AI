@@ -4,8 +4,12 @@
 pub mod SubsetSumMtPer {
 
     use std::collections::HashMap;
-    use std::fmt::{Debug, Display, Formatter, Result};
-    use std::sync::{Arc, Mutex};
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
+    use std::fmt::Result;
+    use std::sync::Arc;
+    use std::sync::Mutex;
     use std::thread;
 
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;

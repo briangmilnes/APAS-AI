@@ -3,10 +3,11 @@
 
 use std::vec::Vec;
 
-use apas_ai::{
-    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
-    Chap61::VertexMatchingMtEph::VertexMatchingMtEph::*, SetLit, Types::Types::*,
-};
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+use apas_ai::Chap61::VertexMatchingMtEph::VertexMatchingMtEph::*;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 fn create_cycle_graph(n: usize) -> UnDirGraphMtEph<usize> {
     let mut vertices: SetStEph<usize> = SetLit![];

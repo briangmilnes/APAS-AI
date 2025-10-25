@@ -3,10 +3,11 @@
 
 use std::collections::HashMap;
 
-use apas_ai::{
-    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
-    Chap62::StarContractionStEph::StarContractionStEph::*, SetLit, Types::Types::*,
-};
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+use apas_ai::Chap62::StarContractionStEph::StarContractionStEph::*;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {
     let mut vertices = SetLit![];

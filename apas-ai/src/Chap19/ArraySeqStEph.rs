@@ -4,10 +4,9 @@
 pub mod ArraySeqStEph {
 
     use crate::Chap18::ArraySeq::ArraySeq::ArraySeq;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::{
-        ArraySeqStEphBaseTrait as BaseTrait, ArraySeqStEphRedefinableTrait as Chap18RedefinableTrait,
-        ArraySeqStEphS as S,
-    };
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphBaseTrait as BaseTrait;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphRedefinableTrait as Chap18RedefinableTrait;
+    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS as S;
     use crate::Types::Types::*;
 
     pub type ArraySeqStEphS<T> = S<T>;

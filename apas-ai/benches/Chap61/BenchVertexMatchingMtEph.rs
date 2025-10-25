@@ -1,10 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chapter 61 Vertex Matching (Multi-threaded)
 
-use apas_ai::{
-    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
-    Chap61::VertexMatchingMtEph::VertexMatchingMtEph::*, SetLit, Types::Types::*,
-};
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+use apas_ai::Chap61::VertexMatchingMtEph::VertexMatchingMtEph::*;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 use criterion::*;
 use std::time::Duration;
 

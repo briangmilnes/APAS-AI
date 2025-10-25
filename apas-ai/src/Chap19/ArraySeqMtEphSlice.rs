@@ -8,9 +8,12 @@
 
 pub mod ArraySeqMtEphSlice {
 
-    use std::fmt::{Debug, Display, Formatter};
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
     use std::ops::Range;
-    use std::sync::{Arc, Mutex};
+    use std::sync::Arc;
+    use std::sync::Mutex;
 
     use crate::ParaPair;
     use crate::Types::Types::*;
@@ -337,7 +340,8 @@ pub mod ArraySeqMtEphSlice {
 
         fn inject(a: &Self, updates: &[(N, T)]) -> Self {
             // Algorithm 19.16: parallel inject with leftmost-wins atomic writes
-            use std::sync::{Arc, Mutex};
+            use std::sync::Arc;
+            use std::sync::Mutex;
 
             if updates.is_empty() {
                 return a.clone();
@@ -374,7 +378,8 @@ pub mod ArraySeqMtEphSlice {
 
         fn ninject(a: &Self, updates: &[(N, T)]) -> Self {
             // Algorithm 19.17: parallel ninject with rightmost-wins atomic writes
-            use std::sync::{Arc, Mutex};
+            use std::sync::Arc;
+            use std::sync::Mutex;
 
             if updates.is_empty() {
                 return a.clone();

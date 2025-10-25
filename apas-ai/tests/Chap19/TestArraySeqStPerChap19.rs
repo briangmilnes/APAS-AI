@@ -4,9 +4,8 @@ use std::fmt::Display;
 use std::fmt::Formatter;
 
 use apas_ai::ArraySeqStPerSLit;
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{
-    ArraySeqStPerBaseTrait as Chap18BaseTrait, ArraySeqStPerRedefinableTrait as Chap18RedefinableTrait,
-};
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerBaseTrait as Chap18BaseTrait;
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerRedefinableTrait as Chap18RedefinableTrait;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Types::Types::*;
 

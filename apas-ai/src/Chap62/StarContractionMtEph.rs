@@ -8,7 +8,8 @@ pub mod StarContractionMtEph {
 
     use std::collections::HashMap;
     use std::hash::Hash;
-    use std::sync::{Arc, Mutex};
+    use std::sync::Arc;
+    use std::sync::Mutex;
     use std::vec::Vec;
 
     use crate::Chap05::SetStEph::SetStEph::*;

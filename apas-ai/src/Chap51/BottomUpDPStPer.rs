@@ -6,9 +6,11 @@
 
 pub mod BottomUpDPStPer {
 
-    use std::cmp::{max, min};
+    use std::cmp::max;
+    use std::cmp::min;
     use std::fmt::Formatter;
-    use std::fmt::{Debug, Display};
+    use std::fmt::Debug;
+    use std::fmt::Display;
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;

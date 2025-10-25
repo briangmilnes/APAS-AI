@@ -7,8 +7,10 @@ pub mod SetStEph {
     use std::collections::hash_set::Iter;
     use std::fmt::Formatter;
     use std::fmt::Result;
-    use std::fmt::{Debug, Display};
-    use std::hash::{Hash, Hasher};
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::hash::Hash;
+    use std::hash::Hasher;
 
     use crate::Types::Types::*;
 

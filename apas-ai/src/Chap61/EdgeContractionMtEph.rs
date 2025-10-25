@@ -59,7 +59,8 @@ pub mod EdgeContractionMtEph {
         graph: &UnDirGraphMtEph<V>,
         matching: &SetStEph<Edge<V>>,
     ) -> UnDirGraphMtEph<V> {
-        use std::sync::{Arc, Mutex};
+        use std::sync::Arc;
+        use std::sync::Mutex;
         pub type T<V> = UnDirGraphMtEph<V>;
 
         // Create a mapping from original vertices to their block representatives

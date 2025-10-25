@@ -4,10 +4,14 @@
 pub mod MatrixChainMtPer {
 
     use std::collections::HashMap;
-    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
+    use std::fmt::Result;
     use std::iter::Cloned;
     use std::slice::Iter;
-    use std::sync::{Arc, Mutex};
+    use std::sync::Arc;
+    use std::sync::Mutex;
     use std::thread;
     use std::vec::IntoIter;
 

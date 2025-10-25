@@ -2,10 +2,11 @@
 //! Chapter 64: TSP 2-Approximation Tests (Sequential)
 
 use apas_ai::Types::Types::*;
-use apas_ai::{
-    Chap05::SetStEph::SetStEph::*, Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*,
-    Chap64::TSPApproxStEph::TSPApproxStEph::*, SetLit, Types::Types::*,
-};
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::LabUnDirGraphStEph::LabUnDirGraphStEph::*;
+use apas_ai::Chap64::TSPApproxStEph::TSPApproxStEph::*;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 use ordered_float::OrderedFloat;
 
 fn create_triangle_graph() -> (

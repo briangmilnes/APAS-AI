@@ -1,11 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for OptBinSearchTreeStEph.
 
-use apas_ai::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph::{
-    KeyProb as OBSTStEphKeyProb, OBSTStEphS, OBSTStEphTrait,
-};
+use apas_ai::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph::KeyProb as OBSTStEphKeyProb;
+use apas_ai::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph::OBSTStEphS;
+use apas_ai::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph::OBSTStEphTrait;
 use apas_ai::Chap50::Probability::Probability::*;
-use apas_ai::{OBSTStEphLit, prob};
+use apas_ai::OBSTStEphLit;
+use apas_ai::prob;
 
 #[test]
 fn test_obst_st_eph_empty() {

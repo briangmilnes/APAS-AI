@@ -5,7 +5,8 @@ pub mod Exercise12_1 {
 
     use std::hint::spin_loop;
     use std::sync::Arc;
-    use std::sync::atomic::{AtomicUsize, Ordering};
+    use std::sync::atomic::AtomicUsize;
+    use std::sync::atomic::Ordering;
     use std::thread;
 
     use crate::Types::Types::*;

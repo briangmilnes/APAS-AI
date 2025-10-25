@@ -4,7 +4,8 @@
 pub mod Exercise12_5 {
 
     use std::ptr::null_mut;
-    use std::sync::atomic::{AtomicPtr, Ordering};
+    use std::sync::atomic::AtomicPtr;
+    use std::sync::atomic::Ordering;
 
     use crate::Types::Types::*;
 

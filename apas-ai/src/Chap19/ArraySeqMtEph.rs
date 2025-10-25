@@ -3,7 +3,8 @@
 
 pub mod ArraySeqMtEph {
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphRedefinableTrait, ArraySeqMtEphS as S};
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphRedefinableTrait;
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS as S;
     use crate::Types::Types::*;
 
     pub type ArraySeqMtEphS<T> = S<T>;
@@ -174,7 +175,8 @@ pub mod ArraySeqMtEph {
 
         fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
             // Algorithm 19.16: parallel inject with leftmost-wins atomic writes
-            use std::sync::{Arc, Mutex};
+            use std::sync::Arc;
+            use std::sync::Mutex;
 
             if updates.length() == 0 {
                 return a.clone();
@@ -211,7 +213,8 @@ pub mod ArraySeqMtEph {
 
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
             // Algorithm 19.17: parallel ninject with rightmost-wins atomic writes
-            use std::sync::{Arc, Mutex};
+            use std::sync::Arc;
+            use std::sync::Mutex;
 
             if updates.length() == 0 {
                 return a.clone();

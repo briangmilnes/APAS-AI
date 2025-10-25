@@ -3,7 +3,10 @@
 
 pub mod DocumentIndex {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
+    use std::fmt::Result;
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;

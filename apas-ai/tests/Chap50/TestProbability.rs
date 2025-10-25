@@ -150,7 +150,8 @@ fn test_copy_trait() {
 #[test]
 fn test_hash() {
     use std::collections::hash_map::DefaultHasher;
-    use std::hash::{Hash, Hasher};
+    use std::hash::Hash;
+    use std::hash::Hasher;
 
     let p1 = Probability::new(0.5);
     let p2 = Probability::new(0.5);

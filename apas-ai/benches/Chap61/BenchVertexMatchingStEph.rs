@@ -1,10 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chapter 61 Vertex Matching (Sequential)
 
-use apas_ai::{
-    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
-    Chap61::VertexMatchingStEph::VertexMatchingStEph::*, SetLit, Types::Types::*,
-};
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+use apas_ai::Chap61::VertexMatchingStEph::VertexMatchingStEph::*;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 use criterion::*;
 use std::time::Duration;
 

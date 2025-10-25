@@ -2,10 +2,11 @@
 //! Chapter 62: Star Partition - Sequential Ephemeral Tests
 
 use apas_ai::Types::Types::*;
-use apas_ai::{
-    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
-    Chap62::StarPartitionStEph::StarPartitionStEph::*, SetLit, Types::Types::*,
-};
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+use apas_ai::Chap62::StarPartitionStEph::StarPartitionStEph::*;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 use std::collections::HashMap;
 
 fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {

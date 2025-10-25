@@ -1,10 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for Chapter 64 Spanning Tree via Star Contraction (Parallel)
 
-use apas_ai::{
-    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*,
-    Chap64::SpanTreeMtEph::SpanTreeMtEph::*, SetLit, Types::Types::*,
-};
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
+use apas_ai::Chap64::SpanTreeMtEph::SpanTreeMtEph::*;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 use criterion::*;
 use std::time::Duration;
 

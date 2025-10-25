@@ -75,7 +75,8 @@ pub mod VertexMatchingStEph {
     /// - A set of edges forming a vertex matching
     pub fn parallel_matching_st<V: StT + Hash>(graph: &UnDirGraphStEph<V>, seed: u64) -> SetStEph<Edge<V>> {
         use rand::rngs::StdRng;
-        use rand::{Rng, SeedableRng};
+        use rand::Rng;
+        use rand::SeedableRng;
         pub type T<V> = UnDirGraphStEph<V>;
 
         let mut rng = StdRng::seed_from_u64(seed);

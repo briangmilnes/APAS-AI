@@ -5,7 +5,8 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
 use apas_ai::Chap26::DivConReduceStPer::DivConReduceStPer::*;
 
 fn bench_divcon_reduce_st(c: &mut Criterion) {

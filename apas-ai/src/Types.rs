@@ -5,7 +5,8 @@
 pub mod Types {
 
     use std::fmt::Formatter;
-    use std::fmt::{Debug, Display};
+    use std::fmt::Debug;
+    use std::fmt::Display;
     use std::hash::Hash;
     use std::ops::Add;
     use std::sync::Mutex;

@@ -5,7 +5,8 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::ArraySeqStPerSLit;
-use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerS;
+use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerTrait;
 use apas_ai::Chap35::OrderStatSelectStPer::OrderStatSelectStPer::*;
 
 pub fn bench_select_st_per(c: &mut Criterion) {

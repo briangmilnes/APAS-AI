@@ -3,7 +3,9 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{ArraySeqMtEphBaseTrait, ArraySeqMtEphRedefinableTrait, *};
+use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphBaseTrait;
+use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphRedefinableTrait;
+use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Types::Types::*;
 
 fn identity(i: N) -> N { i }

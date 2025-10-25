@@ -2,7 +2,8 @@
 
 use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerBaseTrait, ArraySeqStPerRedefinableTrait};
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerBaseTrait;
+use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerRedefinableTrait;
 use apas_ai::Types::Types::*;
 use apas_ai::Types::Types::*; // macro import
 

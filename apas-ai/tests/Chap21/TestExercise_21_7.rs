@@ -3,7 +3,8 @@
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap21::Exercise21_7::Exercise21_7::*;
 use apas_ai::Types::Types::*;
-use apas_ai::{ArraySeqStPerSLit, PairLit};
+use apas_ai::ArraySeqStPerSLit;
+use apas_ai::PairLit;
 
 #[test]
 fn test_pair_even_with_vowels_basic() {

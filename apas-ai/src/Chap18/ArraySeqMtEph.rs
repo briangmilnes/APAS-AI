@@ -8,7 +8,8 @@ pub mod ArraySeqMtEph {
     use std::collections::HashSet;
     use std::fmt::Display;
     use std::fmt::Formatter;
-    use std::sync::{Arc, Mutex};
+    use std::sync::Arc;
+    use std::sync::Mutex;
     use std::thread;
 
     use crate::ParaPair;

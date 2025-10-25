@@ -1,10 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 64: Spanning Tree via Star Contraction Tests (Sequential)
 
-use apas_ai::{
-    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
-    Chap64::SpanTreeStEph::SpanTreeStEph::*, SetLit, Types::Types::*,
-};
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+use apas_ai::Chap64::SpanTreeStEph::SpanTreeStEph::*;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 fn create_cycle_graph(n: N) -> UnDirGraphStEph<N> {
     let mut vertices = SetLit![];

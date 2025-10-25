@@ -6,10 +6,13 @@
 
 pub mod BottomUpDPMtEph {
 
-    use std::cmp::{max, min};
+    use std::cmp::max;
+    use std::cmp::min;
     use std::fmt::Formatter;
-    use std::fmt::{Debug, Display};
-    use std::sync::{Arc, Mutex};
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::sync::Arc;
+    use std::sync::Mutex;
     use std::thread;
 
     use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;

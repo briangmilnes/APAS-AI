@@ -1,9 +1,9 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Benchmarks for MatrixChainStEph
 
-use apas_ai::Chap50::MatrixChainStEph::MatrixChainStEph::{
-    MatrixChainStEphS, MatrixChainStEphTrait, MatrixDim as MatrixChainStEphMatrixDim,
-};
+use apas_ai::Chap50::MatrixChainStEph::MatrixChainStEph::MatrixChainStEphS;
+use apas_ai::Chap50::MatrixChainStEph::MatrixChainStEph::MatrixChainStEphTrait;
+use apas_ai::Chap50::MatrixChainStEph::MatrixChainStEph::MatrixDim as MatrixChainStEphMatrixDim;
 use criterion::*;
 use std::time::Duration;
 

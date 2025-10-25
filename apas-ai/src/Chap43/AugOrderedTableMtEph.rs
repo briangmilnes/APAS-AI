@@ -5,7 +5,10 @@
 
 pub mod AugOrderedTableMtEph {
 
-    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::fmt::Debug;
+    use std::fmt::Display;
+    use std::fmt::Formatter;
+    use std::fmt::Result;
     use std::sync::Arc;
     use std::thread;
 

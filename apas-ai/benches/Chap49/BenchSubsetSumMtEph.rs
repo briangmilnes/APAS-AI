@@ -6,7 +6,8 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
-use apas_ai::{Chap49::SubsetSumMtEph::SubsetSumMtEph::*, SubsetSumMtEphLit};
+use apas_ai::Chap49::SubsetSumMtEph::SubsetSumMtEph::*;
+use apas_ai::SubsetSumMtEphLit;
 
 fn bench_subset_sum_mt_eph(c: &mut Criterion) {
     let mut group = c.benchmark_group("subset_sum_mt_eph");

@@ -5,9 +5,9 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{
-    ArraySeqMtPerBaseTrait, ArraySeqMtPerRedefinableTrait, ArraySeqMtPerS,
-};
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerBaseTrait;
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerRedefinableTrait;
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS;
 use apas_ai::Chap26::DivConReduceMtPer::DivConReduceMtPer::*;
 
 fn bench_divcon_reduce_mt(c: &mut Criterion) {

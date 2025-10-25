@@ -1,10 +1,11 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 63: Graph Connectivity - Sequential Ephemeral Tests
 
-use apas_ai::{
-    Chap05::SetStEph::SetStEph::*, Chap06::UnDirGraphStEph::UnDirGraphStEph::*,
-    Chap63::ConnectivityStEph::ConnectivityStEph::*, SetLit, Types::Types::*,
-};
+use apas_ai::Chap05::SetStEph::SetStEph::*;
+use apas_ai::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
+use apas_ai::Chap63::ConnectivityStEph::ConnectivityStEph::*;
+use apas_ai::SetLit;
+use apas_ai::Types::Types::*;
 
 fn create_connected_graph() -> UnDirGraphStEph<N> {
     let mut vertices = SetLit![];

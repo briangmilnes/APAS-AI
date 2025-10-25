@@ -4,9 +4,9 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{
-    ArraySeqMtPerBaseTrait, ArraySeqMtPerRedefinableTrait, ArraySeqMtPerS,
-};
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerBaseTrait;
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerRedefinableTrait;
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS;
 use apas_ai::Chap54::BFSMtPer::*;
 
 fn create_dag(n: usize) -> ArraySeqMtPerS<ArraySeqMtPerS<usize>> {

@@ -5,7 +5,11 @@ use std::sync::*;
 use std::thread;
 use std::time::Duration;
 
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use criterion::BenchmarkId;
+use criterion::Criterion;
+use criterion::black_box;
+use criterion::criterion_group;
+use criterion::criterion_main;
 
 use apas_ai::AugOrderedTableMtEphLit;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;

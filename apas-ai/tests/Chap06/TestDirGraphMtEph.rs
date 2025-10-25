@@ -336,8 +336,10 @@ fn test_dirgraphmteph_thread_safety() {
 
 #[test]
 fn test_race_condition_verification_concurrent_graph_reads() {
-    use std::sync::atomic::{AtomicBool, Ordering};
-    use std::sync::{Arc, Barrier};
+    use std::sync::atomic::AtomicBool;
+    use std::sync::atomic::Ordering;
+    use std::sync::Arc;
+    use std::sync::Barrier;
     use std::thread;
 
     // Create a test graph
@@ -434,8 +436,11 @@ fn test_race_condition_verification_concurrent_graph_reads() {
 
 #[test]
 fn test_race_condition_verification_mixed_graph_operations() {
-    use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
-    use std::sync::{Arc, Barrier};
+    use std::sync::atomic::AtomicBool;
+    use std::sync::atomic::AtomicUsize;
+    use std::sync::atomic::Ordering;
+    use std::sync::Arc;
+    use std::sync::Barrier;
     use std::thread;
 
     // Create multiple graphs for concurrent access
@@ -577,9 +582,12 @@ fn test_race_condition_verification_mixed_graph_operations() {
 
 #[test]
 fn test_deadlock_prevention_concurrent_graph_operations() {
-    use std::sync::{Arc, Barrier, Mutex};
+    use std::sync::Arc;
+    use std::sync::Barrier;
+    use std::sync::Mutex;
     use std::thread;
-    use std::time::{Duration, Instant};
+    use std::time::Duration;
+    use std::time::Instant;
 
     // Create multiple graphs with different locking orders to test deadlock prevention
     let graph_a = Arc::new(Mutex::new({
