@@ -4,7 +4,7 @@
 use rand::*;
 
 use apas_ai::Chap19::ArraySeqMtEphSlice::ArraySeqMtEphSlice::*;
-use apas_ai::Chap36::QuickSortMtSlice::Chapter36MtSlice::*;
+use apas_ai::Chap36::QuickSortMtEphSlice::Chapter36MtEphSlice::*;
 use apas_ai::Types::Types::*;
 
 fn to_vec<T: StT + Send + Sync + 'static>(a: &ArraySeqMtEphSliceS<T>) -> Vec<T> { a.to_vec() }

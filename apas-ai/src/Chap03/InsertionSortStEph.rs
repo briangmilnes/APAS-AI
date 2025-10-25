@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Chapter 3 insertion sort over mutable slices.
 
-pub mod InsertionSortSt {
+pub mod InsertionSortStEph {
     pub type T<S> = [S];
 
     pub trait InsertionSortStTrait<T: Ord + Clone> {

@@ -2,7 +2,7 @@
 //! Tests for parallel merge sort (Chapter 26).
 
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
-use apas_ai::Chap26::MergeSortMt::MergeSortMt::*;
+use apas_ai::Chap26::MergeSortMtPer::MergeSortMtPer::*;
 use apas_ai::Types::Types::*;
 
 #[test]

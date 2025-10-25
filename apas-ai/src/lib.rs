@@ -7,7 +7,7 @@ pub mod Types;
 
 pub mod Chap03 {
 
-    pub mod InsertionSortSt;
+    pub mod InsertionSortStEph;
 }
 
 pub mod Chap05 {
@@ -36,7 +36,7 @@ pub mod Chap06 {
 }
 
 pub mod Chap11 {
-    pub mod FibonacciMt;
+    pub mod FibonacciMtPer;
 }
 
 pub mod Chap12 {
@@ -84,14 +84,14 @@ pub mod Chap19 {
 
 pub mod Chap23 {
     pub mod BalBinTreeStEph;
-    pub mod PrimTreeSeqSt;
+    pub mod PrimTreeSeqStPer;
 }
 
 pub mod Chap26 {
-    pub mod DivConReduceMt;
-    pub mod DivConReduceSt;
-    pub mod MergeSortMt;
-    pub mod MergeSortSt;
+    pub mod DivConReduceMtPer;
+    pub mod DivConReduceStPer;
+    pub mod MergeSortMtPer;
+    pub mod MergeSortStPer;
 }
 
 pub mod Chap27 {
@@ -120,9 +120,9 @@ pub mod Chap35 {
 }
 
 pub mod Chap36 {
-    pub mod QuickSortMt;
-    pub mod QuickSortMtSlice;
-    pub mod QuickSortSt;
+    pub mod QuickSortMtEph;
+    pub mod QuickSortMtEphSlice;
+    pub mod QuickSortStEph;
 }
 
 pub mod Chap37 {

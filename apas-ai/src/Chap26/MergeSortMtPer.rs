@@ -2,7 +2,7 @@
 //! Parallel merge sort implementation (Chapter 26).
 //! Note: Unconditionally parallel - no thresholding per APAS rules.
 
-pub mod MergeSortMt {
+pub mod MergeSortMtPer {
 
     use std::sync::Arc;
     use std::thread;

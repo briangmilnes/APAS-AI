@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Divide-and-conquer via reduce pattern - sequential implementation (Chapter 26, Section 5).
 
-pub mod DivConReduceSt {
+pub mod DivConReduceStPer {
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;

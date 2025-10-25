@@ -2,7 +2,7 @@
 //! Chapter 11 — Parallel Fibonacci (multi-threaded).
 //! Implements Example 11.10 using the project Parallel Pair abstraction.
 
-pub mod FibonacciMt {
+pub mod FibonacciMtPer {
 
     use crate::ParaPair;
     use crate::Types::Types::*;

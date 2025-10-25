@@ -8,7 +8,7 @@ use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 #[test]
 fn test_module_accessibility() {
     // Test that all major modules are accessible through lib.rs
-    use apas_ai::Chap03::InsertionSortSt::InsertionSortSt::*;
+    use apas_ai::Chap03::InsertionSortStEph::InsertionSortStEph::*;
     use apas_ai::Chap05::SetStEph::SetStEph::*;
     use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use apas_ai::Types::Types::*;

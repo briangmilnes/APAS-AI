@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Sequential merge sort implementation (Chapter 26).
 
-pub mod MergeSortSt {
+pub mod MergeSortStPer {
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;

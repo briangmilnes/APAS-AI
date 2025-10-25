@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap23::PrimTreeSeqSt::PrimTreeSeqSt::*;
+use apas_ai::Chap23::PrimTreeSeqStPer::PrimTreeSeqStPer::*;
 use apas_ai::Types::Types::*;
 
 fn bench_prim_tree_seq_st(c: &mut Criterion) {

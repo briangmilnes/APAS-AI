@@ -2,7 +2,7 @@
 //! Tests for sequential merge sort (Chapter 26).
 
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::Chap26::MergeSortSt::MergeSortSt::*;
+use apas_ai::Chap26::MergeSortStPer::MergeSortStPer::*;
 use apas_ai::Types::Types::*;
 
 #[test]

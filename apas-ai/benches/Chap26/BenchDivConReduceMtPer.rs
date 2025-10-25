@@ -8,7 +8,7 @@ use criterion::*;
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{
     ArraySeqMtPerBaseTrait, ArraySeqMtPerRedefinableTrait, ArraySeqMtPerS,
 };
-use apas_ai::Chap26::DivConReduceMt::DivConReduceMt::*;
+use apas_ai::Chap26::DivConReduceMtPer::DivConReduceMtPer::*;
 
 fn bench_divcon_reduce_mt(c: &mut Criterion) {
     let mut group = c.benchmark_group("divcon_reduce_mt");

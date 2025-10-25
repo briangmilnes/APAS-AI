@@ -4,7 +4,7 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
-use apas_ai::Chap36::QuickSortMt::Chapter36Mt::*;
+use apas_ai::Chap36::QuickSortMtEph::Chapter36Mt::*;
 use apas_ai::{ArraySeqMtEphSLit, *};
 
 fn gen_data(n: usize) -> apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS<i32> {

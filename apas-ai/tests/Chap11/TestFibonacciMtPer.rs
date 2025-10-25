@@ -1,5 +1,5 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-use apas_ai::Chap11::FibonacciMt::FibonacciMt::*;
+use apas_ai::Chap11::FibonacciMtPer::FibonacciMtPer::*;
 use apas_ai::Types::Types::*;
 
 #[test]

@@ -7,7 +7,7 @@
 //! balanced. The balancing here chooses a midpoint split; higher chapters can replace
 //! this strategy with more sophisticated tree management when needed.
 
-pub mod PrimTreeSeqSt {
+pub mod PrimTreeSeqStPer {
 
     use crate::Types::Types::*;
 

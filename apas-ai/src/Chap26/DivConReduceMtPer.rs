@@ -2,7 +2,7 @@
 //! Divide-and-conquer via reduce pattern - parallel implementation (Chapter 26, Section 5).
 //! Note: Unconditionally parallel - no thresholding per APAS rules.
 
-pub mod DivConReduceMt {
+pub mod DivConReduceMtPer {
 
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use crate::Types::Types::*;

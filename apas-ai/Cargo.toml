@@ -30,8 +30,8 @@ type_complexity = "allow"
 members = [ "."]
 
 [[bench]]
-name = "BenchFibonacciMt"
-path = "benches/Chap11/BenchFibonacciMt.rs"
+name = "BenchFibonacciMtPer"
+path = "benches/Chap11/BenchFibonacciMtPer.rs"
 harness = false
 
 [[bench]]
@@ -225,8 +225,8 @@ path = "benches/Chap39/BenchBSTParaTreapMtEph.rs"
 harness = false
 
 [[bench]]
-name = "BenchInsertionSortSt"
-path = "benches/Chap03/BenchInsertionSortSt.rs"
+name = "BenchInsertionSortStEph"
+path = "benches/Chap03/BenchInsertionSortStEph.rs"
 harness = false
 
 
@@ -311,8 +311,8 @@ path = "benches/Chap23/BenchBalBinTreeStEph.rs"
 harness = false
 
 [[bench]]
-name = "BenchPrimTreeSeqSt"
-path = "benches/Chap23/BenchPrimTreeSeqSt.rs"
+name = "BenchPrimTreeSeqStPer"
+path = "benches/Chap23/BenchPrimTreeSeqStPer.rs"
 harness = false
 
 [[bench]]
@@ -352,8 +352,8 @@ harness = false
 
 # Test files in chapter subdirectories
 [[test]]
-name = "TestInsertionSortSt"
-path = "tests/Chap03/TestInsertionSortSt.rs"
+name = "TestInsertionSortStEph"
+path = "tests/Chap03/TestInsertionSortStEph.rs"
 
 [[test]]
 name = "TestSetStEph"
@@ -400,8 +400,8 @@ name = "TestUnDirGraphMtEph"
 path = "tests/Chap06/TestUnDirGraphMtEph.rs"
 
 [[test]]
-name = "TestFibonacciMt"
-path = "tests/Chap11/TestFibonacciMt.rs"
+name = "TestFibonacciMtPer"
+path = "tests/Chap11/TestFibonacciMtPer.rs"
 
 [[test]]
 name = "TestWeightedDirGraphMtEphFloat"
@@ -586,16 +586,16 @@ harness = false
 
 # Chapter 36 tests
 [[test]]
-name = "TestQuickSortSt"
-path = "tests/Chap36/TestQuickSortSt.rs"
+name = "TestQuickSortStEph"
+path = "tests/Chap36/TestQuickSortStEph.rs"
 
 [[test]]
-name = "TestQuickSortMt"
-path = "tests/Chap36/TestQuickSortMt.rs"
+name = "TestQuickSortMtEph"
+path = "tests/Chap36/TestQuickSortMtEph.rs"
 
 [[test]]
-name = "TestQuickSortMtSlice"
-path = "tests/Chap36/TestQuickSortMtSlice.rs"
+name = "TestQuickSortMtEphSlice"
+path = "tests/Chap36/TestQuickSortMtEphSlice.rs"
 
 # Chapter 39 tests
 [[test]]
@@ -684,8 +684,8 @@ name = "TestArraySeqMtEphChap18"
 path = "tests/Chap18/TestArraySeqMtEphChap18.rs"
 
 [[test]]
-name = "TestPrimTreeSeqSt"
-path = "tests/Chap23/TestPrimTreeSeqSt.rs"
+name = "TestPrimTreeSeqStPer"
+path = "tests/Chap23/TestPrimTreeSeqStPer.rs"
 
 [[test]]
 name = "TestExercise_21_9"
@@ -1229,20 +1229,20 @@ path = "tests/Chap50/TestOptBinSearchTreeStPer.rs"
 
 # Chapter 26 Tests
 [[test]]
-name = "TestMergeSortSt"
-path = "tests/Chap26/TestMergeSortSt.rs"
+name = "TestMergeSortStPer"
+path = "tests/Chap26/TestMergeSortStPer.rs"
 
 [[test]]
-name = "TestMergeSortMt"
-path = "tests/Chap26/TestMergeSortMt.rs"
+name = "TestMergeSortMtPer"
+path = "tests/Chap26/TestMergeSortMtPer.rs"
 
 [[test]]
-name = "TestDivConReduceSt"
-path = "tests/Chap26/TestDivConReduceSt.rs"
+name = "TestDivConReduceStPer"
+path = "tests/Chap26/TestDivConReduceStPer.rs"
 
 [[test]]
-name = "TestDivConReduceMt"
-path = "tests/Chap26/TestDivConReduceMt.rs"
+name = "TestDivConReduceMtPer"
+path = "tests/Chap26/TestDivConReduceMtPer.rs"
 
 # Chapter 27 Tests
 [[test]]
@@ -1413,23 +1413,23 @@ harness = false
 
 # Chapter 26 Benchmarks
 [[bench]]
-name = "BenchMergeSortSt"
-path = "benches/Chap26/BenchMergeSortSt.rs"
+name = "BenchMergeSortStPer"
+path = "benches/Chap26/BenchMergeSortStPer.rs"
 harness = false
 
 [[bench]]
-name = "BenchMergeSortMt"
-path = "benches/Chap26/BenchMergeSortMt.rs"
+name = "BenchMergeSortMtPer"
+path = "benches/Chap26/BenchMergeSortMtPer.rs"
 harness = false
 
 [[bench]]
-name = "BenchDivConReduceSt"
-path = "benches/Chap26/BenchDivConReduceSt.rs"
+name = "BenchDivConReduceStPer"
+path = "benches/Chap26/BenchDivConReduceStPer.rs"
 harness = false
 
 [[bench]]
-name = "BenchDivConReduceMt"
-path = "benches/Chap26/BenchDivConReduceMt.rs"
+name = "BenchDivConReduceMtPer"
+path = "benches/Chap26/BenchDivConReduceMtPer.rs"
 harness = false
 
 # Chapter 27 Benchmarks

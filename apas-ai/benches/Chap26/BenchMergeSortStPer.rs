@@ -6,7 +6,7 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::{ArraySeqStPerS, ArraySeqStPerTrait};
-use apas_ai::Chap26::MergeSortSt::MergeSortSt::*;
+use apas_ai::Chap26::MergeSortStPer::MergeSortStPer::*;
 
 fn bench_merge_sort_st(c: &mut Criterion) {
     let mut group = c.benchmark_group("merge_sort_st");

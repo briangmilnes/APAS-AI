@@ -2,7 +2,7 @@
 //! Tests for parallel divide-and-conquer via reduce (Chapter 26).
 
 use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
-use apas_ai::Chap26::DivConReduceMt::DivConReduceMt::*;
+use apas_ai::Chap26::DivConReduceMtPer::DivConReduceMtPer::*;
 use apas_ai::Types::Types::*;
 
 #[test]
