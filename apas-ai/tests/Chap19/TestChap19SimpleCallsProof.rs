@@ -32,3 +32,53 @@ fn test_type_prefix_required() {
     assert_eq!(sum, 10);
 }
 
+#[test]
+fn test_delegated_methods_work_without_ufcs() {
+    // These methods are DELEGATED to Chap18 but should work with simple calls
+    // when importing only Chap19::*
+    
+    // empty() - delegated to Chap18
+    let empty: ArraySeqMtEphS<i32> = ArraySeqMtEphS::empty();
+    assert_eq!(empty.length(), 0);
+    
+    // singleton() - delegated to Chap18
+    let single = ArraySeqMtEphS::singleton(42);
+    assert_eq!(single.length(), 1);
+    assert_eq!(single.nth_cloned(0), 42);
+    
+    // tabulate() - delegated to Chap18
+    let tab = ArraySeqMtEphS::tabulate(&|i| (i * 2) as i32, 5);
+    assert_eq!(tab.length(), 5);
+    assert_eq!(tab.nth_cloned(0), 0);
+    assert_eq!(tab.nth_cloned(4), 8);
+    
+    // map() - delegated to Chap18
+    let seq = ArraySeqMtEphSLit![1, 2, 3];
+    let mapped = ArraySeqMtEphS::map(&seq, |x| x * 10);
+    assert_eq!(mapped.nth_cloned(0), 10);
+    assert_eq!(mapped.nth_cloned(2), 30);
+    
+    // append() - delegated to Chap18
+    let a = ArraySeqMtEphSLit![1, 2];
+    let b = ArraySeqMtEphSLit![3, 4];
+    let appended = ArraySeqMtEphS::append(&a, &b);
+    assert_eq!(appended.length(), 4);
+    
+    // filter() - delegated to Chap18
+    let seq = ArraySeqMtEphSLit![1, 2, 3, 4, 5];
+    let evens = ArraySeqMtEphS::filter(&seq, &|x: &i32| *x % 2 == 0);
+    assert_eq!(evens.length(), 2);
+    
+    // isEmpty() - delegated to Chap18
+    assert!(ArraySeqMtEphS::isEmpty(&empty));
+    assert!(!ArraySeqMtEphS::isEmpty(&seq));
+    
+    // isSingleton() - delegated to Chap18
+    assert!(ArraySeqMtEphS::isSingleton(&single));
+    assert!(!ArraySeqMtEphS::isSingleton(&seq));
+    
+    // iterate() - delegated to Chap18
+    let sum = ArraySeqMtEphS::iterate(&seq, &|acc, x| acc + x, 0);
+    assert_eq!(sum, 15);
+}
+
