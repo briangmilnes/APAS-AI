@@ -17,8 +17,8 @@ fn bench_obst_st_eph_small(c: &mut Criterion) {
     group.sample_size(20);
 
     for size in [5, 10, 15].iter() {
-        let keys: Vec<char> = (0..*size).map(|i| (b'A' + i as u8) as char).collect();
-        let probs: Vec<Probability> = (0..*size).map(|i| prob!(0.1 + (i as f64) * 0.05)).collect();
+        let keys = (0..*size).map(|i| (b'A' + i as u8) as char).collect::<Vec<char>>();
+        let probs = (0..*size).map(|i| prob!(0.1 + (i as f64) * 0.05)).collect::<Vec<Probability>>();
         let mut obst = OBSTStEphS::from_keys_probs(keys, probs);
 
         group.bench_with_input(BenchmarkId::new("optimal_cost", size), size, |b, _| {

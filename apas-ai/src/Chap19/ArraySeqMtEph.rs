@@ -181,14 +181,14 @@ pub mod ArraySeqMtEph {
             }
 
             // Create shared atomic array: (value, update_index)
-            let values: Arc<Vec<Mutex<(T, N)>>> = Arc::new(
+            let values = Arc::<Vec<Mutex<(T, N)>>>::new(
                 (0..a.length())
                     .map(|i| Mutex::new((a.nth_cloned(i), a.length())))
                     .collect(),
             );
 
             // Apply all updates in parallel - leftmost wins
-            let updates_vec: Vec<Pair<N, T>> = (0..updates.length()).map(|i| updates.nth_cloned(i)).collect();
+            let updates_vec = (0..updates.length()).map(|i| updates.nth_cloned(i)).collect::<Vec<Pair<N, T>>>();
 
             std::thread::scope(|s| {
                 for (k, Pair(idx, val)) in updates_vec.into_iter().enumerate() {
@@ -205,7 +205,7 @@ pub mod ArraySeqMtEph {
             });
 
             // Extract final values (Arc is automatically unwrapped after scope)
-            let result: Vec<T> = values.iter().map(|m| m.lock().unwrap().0.clone()).collect();
+            let result = values.iter().map(|m| m.lock().unwrap().0.clone()).collect::<Vec<T>>();
             ArraySeqMtEphS::from_vec(result)
         }
 
@@ -218,11 +218,10 @@ pub mod ArraySeqMtEph {
             }
 
             // Create shared atomic array: (value, update_index)
-            let values: Arc<Vec<Mutex<(T, N)>>> =
-                Arc::new((0..a.length()).map(|i| Mutex::new((a.nth_cloned(i), 0))).collect());
+            let values = Arc::<Vec<Mutex<(T, N)>>>::new((0..a.length()).map(|i| Mutex::new((a.nth_cloned(i), 0))).collect());
 
             // Apply all updates in parallel - rightmost wins
-            let updates_vec: Vec<Pair<N, T>> = (0..updates.length()).map(|i| updates.nth_cloned(i)).collect();
+            let updates_vec = (0..updates.length()).map(|i| updates.nth_cloned(i)).collect::<Vec<Pair<N, T>>>();
 
             std::thread::scope(|s| {
                 for (k, Pair(idx, val)) in updates_vec.into_iter().enumerate() {
@@ -239,7 +238,7 @@ pub mod ArraySeqMtEph {
             });
 
             // Extract final values (Arc is automatically unwrapped after scope)
-            let result: Vec<T> = values.iter().map(|m| m.lock().unwrap().0.clone()).collect();
+            let result = values.iter().map(|m| m.lock().unwrap().0.clone()).collect::<Vec<T>>();
             ArraySeqMtEphS::from_vec(result)
         }
     }

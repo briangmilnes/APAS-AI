@@ -9,7 +9,7 @@ fn sort_and_assert(mut data: Vec<i32>, expected: &[i32]) {
 
 #[test]
 fn insertion_sort_handles_empty() {
-    let mut data: Vec<i32> = Vec::new();
+    let mut data = Vec::<i32>::new();
     0i32.insSort(&mut data);
     assert!(data.is_empty());
 }
@@ -38,7 +38,7 @@ fn insertion_sort_random_slice() {
 #[test]
 fn insertion_sort_large_input_stress_test() {
     // Generate a large vector with 10,000+ elements
-    let mut data: Vec<i32> = (0..10_000).rev().collect(); // Reverse sorted - worst case
+    let mut data = (0..10_000).rev().collect::<Vec<i32>>(); // Reverse sorted - worst case
     let mut expected = data.clone();
     expected.sort();
 

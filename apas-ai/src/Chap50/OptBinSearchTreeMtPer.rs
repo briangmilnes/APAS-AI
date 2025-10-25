@@ -98,18 +98,17 @@ pub mod OptBinSearchTreeMtPer {
             Probability::zero() // Base case: empty subsequence
         } else {
             // Sum probabilities for this subsequence
-            let prob_sum: Probability = (0..l)
+            let prob_sum = (0..l)
                 .map(|k| table.keys[i + k].prob)
                 .fold(Probability::zero(), |acc, p| acc + p);
 
             // Compute costs for each possible root in parallel
-            let costs: Vec<Probability> = (0..l)
+            let costs = (0..l)
                 .map(|k| {
                     let left_cost = obst_rec(table, i, k);
                     let right_cost = obst_rec(table, i + k + 1, l - k - 1);
                     left_cost + right_cost
-                })
-                .collect();
+                }).collect::<Vec<Probability>>();
 
             // Use parallel reduction to find minimum
             let min_cost = parallel_min_reduction(table, costs);
@@ -135,11 +134,10 @@ pub mod OptBinSearchTreeMtPer {
         }
 
         fn from_keys_probs(keys: Vec<T>, probs: Vec<Probability>) -> Self {
-            let key_probs: Vec<KeyProb<T>> = keys
+            let key_probs = keys
                 .into_iter()
                 .zip(probs)
-                .map(|(key, prob)| KeyProb { key, prob })
-                .collect();
+                .map(|(key, prob)| KeyProb { key, prob }).collect::<Vec<KeyProb<T>>>();
 
             Self {
                 keys: Arc::new(key_probs),

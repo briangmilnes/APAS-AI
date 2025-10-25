@@ -246,7 +246,7 @@ fn test_ordered_table_mt_eph_thread_safety() {
 
     // Test concurrent reads
     for i in 0..10 {
-        let table_clone: Arc<OrderedTableMtEph<i32, String>> = Arc::clone(&table);
+        let table_clone = Arc::<OrderedTableMtEph<i32, String>>::clone(&table);
         let handle = thread::spawn(move || {
             // Each thread tries to read from the table
             let _ = table_clone.lookup(&i);

@@ -45,7 +45,7 @@ fn test_min_edit_distance_st_per_single_operations() {
 
 #[test]
 fn test_new() {
-    let solver: MinEditDistStPerS<i32> = MinEditDistStPerS::new();
+    let solver = MinEditDistStPerS::<i32>::new();
     assert_eq!(solver.source().length(), 0);
     assert_eq!(solver.target().length(), 0);
     assert_eq!(solver.min_edit_distance(), 0);
@@ -140,7 +140,7 @@ fn test_display() {
 #[test]
 fn test_into_iterator() {
     let solver = MinEditDistStPerLit!(source: ['A', 'B'], target: ['C', 'D']);
-    let pairs: Vec<_> = solver.into_iter().collect();
+    let pairs = solver.into_iter().collect::<Vec<_>>();
     assert_eq!(pairs.len(), 2);
     assert_eq!(pairs[0].0, 'A');
     assert_eq!(pairs[0].1, 'C');
@@ -151,7 +151,7 @@ fn test_into_iterator() {
 #[test]
 fn test_into_iterator_ref() {
     let solver = MinEditDistStPerLit!(source: ['A', 'B'], target: ['C', 'D']);
-    let pairs: Vec<_> = (&solver).into_iter().collect();
+    let pairs = (&solver).into_iter().collect::<Vec<_>>();
     assert_eq!(pairs.len(), 2);
     assert_eq!(pairs[0].0, 'A');
     assert_eq!(pairs[1].1, 'D');

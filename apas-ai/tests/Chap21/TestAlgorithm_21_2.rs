@@ -38,7 +38,7 @@ fn test_points3d_tab_flat_n2_values_and_order() {
 #[test]
 fn test_points3d_tab_flat_iterator_order() {
     let s = points3d_tab_flat(2);
-    let collected: Vec<Pair<N, Pair<N, N>>> = s.iter().copied().collect();
+    let collected = s.iter().copied().collect::<Vec<Pair<N, Pair<N, N>>>>();
     assert_eq!(
         collected,
         vec![

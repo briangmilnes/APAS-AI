@@ -15,7 +15,7 @@ fn is_even_bool(x: &N) -> B { x % 2 == 0 }
 
 #[test]
 fn test_new_and_set() {
-    let mut a: ArraySeqMtEphS<N> = ArraySeqMtEphS::new(5, 0);
+    let mut a = ArraySeqMtEphS::<N>::new(5, 0);
     assert_eq!(a.length(), 5);
 
     // Test set method
@@ -121,7 +121,7 @@ fn test_iterate() {
 #[test]
 fn test_collect() {
     // Now that collect supports Pair<K, V>, we can use different types
-    let pairs: ArraySeqMtEphS<Pair<N, &str>> = ArraySeqMtEphS::from_vec(vec![
+    let pairs = ArraySeqMtEphS::<Pair<N, &str>>::from_vec(vec![
         Pair(1, "alice"),
         Pair(2, "bob"),
         Pair(1, "alex"),
@@ -170,12 +170,12 @@ fn test_inject() {
 
 #[test]
 fn test_empty_and_singleton() {
-    let empty: ArraySeqMtEphS<N> = ArraySeqMtEphS::empty();
+    let empty = ArraySeqMtEphS::<N>::empty();
     assert_eq!(empty.length(), 0);
     assert!(empty.length() == 0);
     assert!(empty.length() != 1);
 
-    let single: ArraySeqMtEphS<N> = ArraySeqMtEphS::singleton(42);
+    let single = ArraySeqMtEphS::<N>::singleton(42);
     assert_eq!(single.length(), 1);
     assert!(single.length() != 0);
     assert!(single.length() == 1);
@@ -184,7 +184,7 @@ fn test_empty_and_singleton() {
 
 #[test]
 fn test_subseq_copy() {
-    let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    let seq = ArraySeqMtEphS::<N>::from_vec(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
     let sub = seq.subseq_copy(3, 4);
     assert_eq!(sub.length(), 4);
     assert_eq!(sub.nth_cloned(0), 3);
@@ -193,7 +193,7 @@ fn test_subseq_copy() {
 
 #[test]
 fn test_ninject() {
-    let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3, 4, 5]);
+    let seq = ArraySeqMtEphS::<N>::from_vec(vec![1, 2, 3, 4, 5]);
     let updates = ArraySeqMtEphS::from_vec(vec![Pair(1, 10), Pair(3, 30)]);
     let result = <ArraySeqMtEphS<_> as ArraySeqMtEphRedefinableTrait<_>>::ninject(&seq, &updates);
     assert_eq!(result.nth_cloned(1), 10);
@@ -202,30 +202,30 @@ fn test_ninject() {
 
 #[test]
 fn test_collect_mt_eph() {
-    let pairs: ArraySeqMtEphS<Pair<N, N>> = ArraySeqMtEphS::from_vec(vec![Pair(1, 10), Pair(2, 20), Pair(1, 11)]);
+    let pairs = ArraySeqMtEphS::<Pair<N, N>>::from_vec(vec![Pair(1, 10), Pair(2, 20), Pair(1, 11)]);
     let grouped = <ArraySeqMtEphS<Pair<N, N>> as ArraySeqMtEphBaseTrait<Pair<N, N>>>::collect(&pairs, |a, b| a.cmp(b));
     assert_eq!(grouped.length(), 2);
 }
 
 #[test]
 fn test_clone_mt_eph() {
-    let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
+    let seq = ArraySeqMtEphS::<N>::from_vec(vec![1, 2, 3]);
     let cloned = seq.clone();
     assert_eq!(seq, cloned);
 }
 
 #[test]
 fn test_partial_eq_mt_eph() {
-    let seq1: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
-    let seq2: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
-    let seq3: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 4]);
+    let seq1 = ArraySeqMtEphS::<N>::from_vec(vec![1, 2, 3]);
+    let seq2 = ArraySeqMtEphS::<N>::from_vec(vec![1, 2, 3]);
+    let seq3 = ArraySeqMtEphS::<N>::from_vec(vec![1, 2, 4]);
     assert_eq!(seq1, seq2);
     assert_ne!(seq1, seq3);
 }
 
 #[test]
 fn test_display_mt_eph() {
-    let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
+    let seq = ArraySeqMtEphS::<N>::from_vec(vec![1, 2, 3]);
     let display_str = format!("{seq}");
     assert!(display_str.contains("1"));
     assert!(display_str.contains("2"));
@@ -234,14 +234,14 @@ fn test_display_mt_eph() {
 
 #[test]
 fn test_to_vec() {
-    let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3, 4, 5]);
+    let seq = ArraySeqMtEphS::<N>::from_vec(vec![1, 2, 3, 4, 5]);
     let vec = seq.to_vec();
     assert_eq!(vec, vec![1, 2, 3, 4, 5]);
 }
 
 #[test]
 fn test_iter_cloned() {
-    let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3, 4, 5]);
+    let seq = ArraySeqMtEphS::<N>::from_vec(vec![1, 2, 3, 4, 5]);
     let vec = seq.iter_cloned();
     assert_eq!(vec.len(), 5);
     assert_eq!(vec[0], 1);

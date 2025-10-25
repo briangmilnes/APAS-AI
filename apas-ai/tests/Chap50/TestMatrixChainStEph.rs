@@ -52,7 +52,7 @@ fn test_matrix_chain_st_eph_iteration() {
     ];
     let chain = MatrixChainStEphS::from_dimensions(dimensions);
 
-    let collected: Vec<MatrixChainStEphMatrixDim> = chain.into_iter().collect();
+    let collected = chain.into_iter().collect::<Vec<MatrixChainStEphMatrixDim>>();
     assert_eq!(collected.len(), 2);
     assert_eq!(collected[0].rows, 5);
     assert_eq!(collected[0].cols, 10);
@@ -189,7 +189,7 @@ fn test_into_iterator_ref() {
     ];
     let chain = MatrixChainStEphS::from_dimensions(dimensions);
 
-    let collected: Vec<MatrixChainStEphMatrixDim> = (&chain).into_iter().collect();
+    let collected = (&chain).into_iter().collect::<Vec<MatrixChainStEphMatrixDim>>();
     assert_eq!(collected.len(), 2);
     assert_eq!(collected[0].rows, 5);
     assert_eq!(collected[1].rows, 10);
@@ -203,7 +203,7 @@ fn test_into_iterator_mut_ref() {
     ];
     let mut chain = MatrixChainStEphS::from_dimensions(dimensions);
 
-    let collected: Vec<MatrixChainStEphMatrixDim> = (&mut chain).into_iter().collect();
+    let collected = (&mut chain).into_iter().collect::<Vec<MatrixChainStEphMatrixDim>>();
     assert_eq!(collected.len(), 2);
     assert_eq!(collected[0].rows, 5);
     assert_eq!(collected[1].rows, 10);

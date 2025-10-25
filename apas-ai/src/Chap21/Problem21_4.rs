@@ -33,7 +33,7 @@ pub mod Problem21_4 {
         a: &ArraySeqStPerS<N>,
         b: &ArraySeqStPerS<&'static str>,
     ) -> ArraySeqStPerS<Pair<N, &'static str>> {
-        let mut v: Vec<Pair<N, &'static str>> = Vec::with_capacity(a.length() * b.length());
+        let mut v = Vec::<Pair<N, &'static str>>::with_capacity(a.length() * b.length());
         for i in 0..a.length() {
             for j in 0..b.length() {
                 v.push(Pair(*a.nth(i), *b.nth(j)));

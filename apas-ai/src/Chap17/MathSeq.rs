@@ -156,8 +156,8 @@ pub mod MathSeq {
         fn domain(&self) -> Vec<N> { (0..self.data.len()).collect() }
 
         fn range(&self) -> Vec<T> {
-            let mut seen: HashSet<T> = HashSet::with_capacity(self.data.len());
-            let mut out: Vec<T> = Vec::with_capacity(self.data.len());
+            let mut seen = HashSet::<T>::with_capacity(self.data.len());
+            let mut out = Vec::<T>::with_capacity(self.data.len());
             for x in self.data.iter() {
                 if seen.insert(x.clone()) {
                     out.push(x.clone());
@@ -167,8 +167,8 @@ pub mod MathSeq {
         }
 
         fn multiset_range(&self) -> Vec<(N, T)> {
-            let mut counts: HashMap<T, N> = HashMap::with_capacity(self.data.len());
-            let mut order: Vec<T> = Vec::new();
+            let mut counts = HashMap::<T, N>::with_capacity(self.data.len());
+            let mut order = Vec::<T>::new();
             for x in self.data.iter() {
                 match counts.entry(x.clone()) {
                     | Entry::Vacant(e) => {

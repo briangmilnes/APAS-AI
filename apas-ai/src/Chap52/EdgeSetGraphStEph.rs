@@ -83,9 +83,9 @@ pub mod EdgeSetGraphStEph {
         fn delete_vertex(&mut self, v: &V) {
             let v_clone = v.clone();
             self.vertices.delete(&v_clone);
-            let edges_to_remove: Vec<Pair<V, V>> = {
+            let edges_to_remove = {
                 let seq = self.edges.to_seq();
-                let mut to_remove = Vec::new();
+                let mut to_remove = Vec::<Pair<V, V>>::new();
                 for i in 0..seq.length() {
                     let edge = seq.nth(i);
                     let Pair(u, w) = edge;

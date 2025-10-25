@@ -38,7 +38,7 @@ fn test_subset_sum_st_eph_empty() {
 
 #[test]
 fn test_new() {
-    let mut solver: SubsetSumStEphS<i32> = SubsetSumStEphS::new();
+    let mut solver = SubsetSumStEphS::<i32>::new();
     assert_eq!(solver.multiset().length(), 0);
     assert!(solver.subset_sum(0));
     assert!(!solver.subset_sum(1));
@@ -156,14 +156,14 @@ fn test_display() {
 #[test]
 fn test_into_iterator() {
     let solver = SubsetSumStEphLit![1, 2, 3];
-    let values: Vec<_> = solver.into_iter().collect();
+    let values = solver.into_iter().collect::<Vec<_>>();
     assert_eq!(values, vec![1, 2, 3]);
 }
 
 #[test]
 fn test_into_iterator_ref() {
     let solver = SubsetSumStEphLit![1, 2, 3];
-    let values: Vec<_> = (&solver).into_iter().collect();
+    let values = (&solver).into_iter().collect::<Vec<_>>();
     assert_eq!(values, vec![1, 2, 3]);
 
     // Original still usable
@@ -173,7 +173,7 @@ fn test_into_iterator_ref() {
 #[test]
 fn test_into_iterator_mut() {
     let mut solver = SubsetSumStEphLit![1, 2, 3];
-    let values: Vec<_> = (&mut solver).into_iter().collect();
+    let values = (&mut solver).into_iter().collect::<Vec<_>>();
     assert_eq!(values, vec![1, 2, 3]);
 
     // Original still usable

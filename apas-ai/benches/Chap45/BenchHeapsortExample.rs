@@ -14,7 +14,7 @@ fn bench_heapsort(c: &mut Criterion) {
     group.sample_size(30);
 
     for size in [50, 100].iter() {
-        let data: Vec<i32> = (0..*size).rev().collect();
+        let data = (0..*size).rev().collect::<Vec<i32>>();
 
         group.bench_with_input(BenchmarkId::new("UnsortedList", size), size, |b, _| {
             b.iter(|| black_box(heapsort_unsorted_list(&data)))

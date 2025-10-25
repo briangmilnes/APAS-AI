@@ -475,7 +475,7 @@ fn mt_concurrent_plain_bst_operations() {
         bst4.height()
     }));
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Verify results - exact counts may vary due to concurrent insertions
     // but we should have reasonable results
@@ -521,7 +521,7 @@ fn mt_concurrent_avl_bst_operations() {
         }));
     }
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Verify each thread's results
     for (thread_id, size, height, min, max) in results {
@@ -564,7 +564,7 @@ fn mt_concurrent_rb_bst_stress() {
         }));
     }
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Verify results
     for (thread_id, final_size, height, is_sorted) in results {
@@ -617,7 +617,7 @@ fn mt_concurrent_bbalpha_operations() {
         (bst3.size(), bst3.height())
     }));
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // All threads should contribute to the tree
     for (i, (size, height)) in results.iter().enumerate() {
@@ -658,7 +658,7 @@ fn mt_concurrent_treap_operations() {
         }));
     }
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Verify results for each thread
     for (i, (size, height, min, max)) in results.iter().enumerate() {
@@ -712,7 +712,7 @@ fn mt_concurrent_splay_access_patterns() {
         bst2.size()
     }));
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Both threads should contribute
     assert!(results[0] >= 20); // Thread 1: at least 20 elements

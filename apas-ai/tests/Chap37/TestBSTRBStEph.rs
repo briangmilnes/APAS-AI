@@ -50,11 +50,11 @@ fn rb_duplicate_insert_is_idempotent() {
 
 #[test]
 fn rb_new_and_default() {
-    let bst: BSTRBStEph<i32> = BSTRBStEph::new();
+    let bst = BSTRBStEph::<i32>::new();
     assert_eq!(bst.size(), 0);
     assert!(bst.is_empty());
 
-    let bst_default: BSTRBStEph<i32> = BSTRBStEph::default();
+    let bst_default = BSTRBStEph::<i32>::default();
     assert_eq!(bst_default.size(), 0);
     assert!(bst_default.is_empty());
 }

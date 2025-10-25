@@ -74,11 +74,11 @@ pub mod DijkstraStEphInt {
         let mut result = SSSPResultStEphInt::new(n, source);
 
         // Track visited vertices (X in the algorithm)
-        let mut visited: HashMap<usize, i64> = HashMap::new();
+        let mut visited = HashMap::<usize, i64>::new();
 
         // Priority queue Q: stores PQEntry(distance, vertex)
         // BinaryHeapPQ is a min-heap
-        let mut pq: BinaryHeapPQ<PQEntry> = BinaryHeapPQ::singleton(pq_entry_new(0, source));
+        let mut pq = BinaryHeapPQ::<PQEntry>::singleton(pq_entry_new(0, source));
 
         // Main loop: deleteMin until queue is empty
         while !pq.is_empty() {

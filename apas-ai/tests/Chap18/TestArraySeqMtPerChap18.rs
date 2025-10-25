@@ -27,12 +27,12 @@ fn assert_set_eq<T: PartialEq + Debug>(actual: &[T], expected: &[T]) {
 
 #[test]
 fn test_tabulate_basic() {
-    let a: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&identity, 5);
+    let a = ArraySeqMtPerS::<N>::tabulate(&identity, 5);
     assert_eq!(a.length(), 5);
 
     // Use set comparison since MT results may vary in order
-    let a_vec: Vec<N> = (0..a.length()).map(|i| *a.nth(i)).collect();
-    let expected_vec: Vec<N> = (0..5).collect();
+    let a_vec = (0..a.length()).map(|i| *a.nth(i)).collect::<Vec<N>>();
+    let expected_vec = (0..5).collect::<Vec<N>>();
     assert_set_eq(&a_vec, &expected_vec);
 }
 
@@ -55,66 +55,66 @@ fn test_tabulate_fibonacci() {
         }
     }
 
-    let fibs: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&fib, 8);
+    let fibs = ArraySeqMtPerS::<N>::tabulate(&fib, 8);
     assert_eq!(fibs.length(), 8);
 
     // Expected fibonacci sequence: [0, 1, 1, 2, 3, 5, 8, 13]
     let expected = [0, 1, 1, 2, 3, 5, 8, 13];
-    let fibs_vec: Vec<N> = (0..fibs.length()).map(|i| *fibs.nth(i)).collect();
+    let fibs_vec = (0..fibs.length()).map(|i| *fibs.nth(i)).collect::<Vec<N>>();
     assert_set_eq(&fibs_vec, &expected);
 }
 
 #[test]
 fn test_tabulate_empty() {
-    let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&double, 0);
+    let empty = ArraySeqMtPerS::<N>::tabulate(&double, 0);
     assert_eq!(empty.length(), 0);
     assert!(empty.length() == 0);
 }
 
 #[test]
 fn test_tabulate_single() {
-    let single: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&const_42, 1);
+    let single = ArraySeqMtPerS::<N>::tabulate(&const_42, 1);
     assert_eq!(single.length(), 1);
     assert_eq!(*single.nth(0), 42);
 }
 
 #[test]
 fn test_tabulate_string() {
-    let strings: ArraySeqMtPerS<String> = ArraySeqMtPerS::tabulate(&format_item, 4);
+    let strings = ArraySeqMtPerS::<String>::tabulate(&format_item, 4);
     assert_eq!(strings.length(), 4);
 
     // Check that all expected strings are present (order may vary in MT)
     let expected = ["item_0", "item_1", "item_2", "item_3"];
-    let strings_vec: Vec<String> = (0..strings.length()).map(|i| strings.nth(i).clone()).collect();
-    let expected_vec: Vec<String> = expected.iter().map(|s| s.to_string()).collect();
+    let strings_vec = (0..strings.length()).map(|i| strings.nth(i).clone()).collect::<Vec<String>>();
+    let expected_vec = expected.iter().map(|s| s.to_string()).collect::<Vec<String>>();
     assert_set_eq(&strings_vec, &expected_vec);
 }
 
 #[test]
 fn test_tabulate_boolean() {
-    let bools: ArraySeqMtPerS<B> = ArraySeqMtPerS::tabulate(&is_even_bool, 6);
+    let bools = ArraySeqMtPerS::<B>::tabulate(&is_even_bool, 6);
     assert_eq!(bools.length(), 6);
 
     // Expected: [True, False, True, False, True, False]
     let expected = [true, false, true, false, true, false];
-    let bools_vec: Vec<B> = (0..bools.length()).map(|i| *bools.nth(i)).collect();
+    let bools_vec = (0..bools.length()).map(|i| *bools.nth(i)).collect::<Vec<B>>();
     assert_set_eq(&bools_vec, &expected);
 }
 
 #[test]
 fn test_tabulate_squares() {
-    let squares: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&square, 5);
+    let squares = ArraySeqMtPerS::<N>::tabulate(&square, 5);
     assert_eq!(squares.length(), 5);
 
     // Expected: [0, 1, 4, 9, 16]
     let expected = [0, 1, 4, 9, 16];
-    let squares_vec: Vec<N> = (0..squares.length()).map(|i| *squares.nth(i)).collect();
+    let squares_vec = (0..squares.length()).map(|i| *squares.nth(i)).collect::<Vec<N>>();
     assert_set_eq(&squares_vec, &expected);
 }
 
 #[test]
 fn test_tabulate_large() {
-    let large: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&add_100, 1000);
+    let large = ArraySeqMtPerS::<N>::tabulate(&add_100, 1000);
     assert_eq!(large.length(), 1000);
     assert_eq!(*large.nth(0), 100);
     assert_eq!(*large.nth(999), 1099);
@@ -126,7 +126,7 @@ fn test_tabulate_large() {
 
 #[test]
 fn test_empty() {
-    let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
+    let empty = ArraySeqMtPerS::<i32>::empty();
     assert_eq!(empty.length(), 0);
     assert!(<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isEmpty(
         &empty
@@ -160,7 +160,7 @@ fn test_subseq_copy() {
 
 #[test]
 fn test_is_empty() {
-    let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
+    let empty = ArraySeqMtPerS::<i32>::empty();
     assert!(<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isEmpty(
         &empty
     ));
@@ -179,7 +179,7 @@ fn test_is_singleton() {
     let multiple = ArraySeqMtPerS::from_vec(vec![1, 2]);
     assert!(!<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isSingleton(&multiple));
 
-    let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
+    let empty = ArraySeqMtPerS::<i32>::empty();
     assert!(!<ArraySeqMtPerS<i32> as ArraySeqMtPerRedefinableTrait<i32>>::isSingleton(&empty));
 }
 
@@ -201,7 +201,7 @@ fn test_iter() {
 
 #[test]
 fn test_large_sequence() {
-    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&identity, 10000);
+    let seq = ArraySeqMtPerS::<N>::tabulate(&identity, 10000);
     assert_eq!(seq.length(), 10000);
     assert_eq!(*seq.nth(0), 0);
     assert_eq!(*seq.nth(9999), 9999);
@@ -243,7 +243,7 @@ fn test_set_out_of_bounds() {
 
 #[test]
 fn test_map_basic() {
-    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
+    let seq = ArraySeqMtPerS::<N>::from_vec(vec![1, 2, 3, 4, 5]);
     let doubled = ArraySeqMtPerS::map(&seq, |x| x * 2);
     assert_eq!(doubled.length(), 5);
     for i in 0..5 {
@@ -253,7 +253,7 @@ fn test_map_basic() {
 
 #[test]
 fn test_map_empty() {
-    let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
+    let empty = ArraySeqMtPerS::<N>::empty();
     let mapped = ArraySeqMtPerS::map(&empty, |x: &N| x * 2);
     assert_eq!(mapped.length(), 0);
 }
@@ -272,7 +272,7 @@ fn test_append_basic() {
 #[test]
 fn test_append_empty() {
     let a = ArraySeqMtPerS::from_vec(vec![1, 2, 3]);
-    let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
+    let empty = ArraySeqMtPerS::<N>::empty();
 
     let result1 = ArraySeqMtPerS::append(&a, &empty);
     assert_eq!(result1.length(), 3);
@@ -283,7 +283,7 @@ fn test_append_empty() {
 
 #[test]
 fn test_filter_basic() {
-    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    let seq = ArraySeqMtPerS::<N>::from_vec(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     let evens = ArraySeqMtPerS::filter(&seq, &|x| *x % 2 == 0);
     assert_eq!(evens.length(), 5);
     for i in 0..5 {
@@ -293,7 +293,7 @@ fn test_filter_basic() {
 
 #[test]
 fn test_filter_none_match() {
-    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 3, 5, 7]);
+    let seq = ArraySeqMtPerS::<N>::from_vec(vec![1, 3, 5, 7]);
     let evens = ArraySeqMtPerS::filter(&seq, &|x| *x % 2 == 0);
     assert_eq!(evens.length(), 0);
 }
@@ -339,21 +339,21 @@ fn test_ninject_duplicate_keys() {
 
 #[test]
 fn test_iterate_sum() {
-    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
+    let seq = ArraySeqMtPerS::<N>::from_vec(vec![1, 2, 3, 4, 5]);
     let sum = ArraySeqMtPerS::iterate(&seq, &|acc, x| acc + x, 0);
     assert_eq!(sum, 15);
 }
 
 #[test]
 fn test_iterate_product() {
-    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4]);
+    let seq = ArraySeqMtPerS::<N>::from_vec(vec![1, 2, 3, 4]);
     let product = ArraySeqMtPerS::iterate(&seq, &|acc, x| acc * x, 1);
     assert_eq!(product, 24);
 }
 
 #[test]
 fn test_iteratePrefixes_basic() {
-    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
+    let seq = ArraySeqMtPerS::<N>::from_vec(vec![1, 2, 3, 4, 5]);
     let (prefixes, final_val) = ArraySeqMtPerS::iteratePrefixes(&seq, &|acc, x| acc + x, 0);
     assert_eq!(prefixes.length(), 5);
     assert_eq!(*prefixes.nth(0), 1);
@@ -366,28 +366,28 @@ fn test_iteratePrefixes_basic() {
 
 #[test]
 fn test_reduce_sum() {
-    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
+    let seq = ArraySeqMtPerS::<N>::from_vec(vec![1, 2, 3, 4, 5]);
     let sum = ArraySeqMtPerS::reduce(&seq, |x, y| x + y, 0);
     assert_eq!(sum, 15);
 }
 
 #[test]
 fn test_reduce_empty() {
-    let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
+    let empty = ArraySeqMtPerS::<N>::empty();
     let sum = ArraySeqMtPerS::reduce(&empty, |x, y| x + y, 42);
     assert_eq!(sum, 42);
 }
 
 #[test]
 fn test_reduce_single() {
-    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::singleton(10);
+    let seq = ArraySeqMtPerS::<N>::singleton(10);
     let result = ArraySeqMtPerS::reduce(&seq, |x, y| x + y, 0);
     assert_eq!(result, 10);
 }
 
 #[test]
 fn test_scan_basic() {
-    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
+    let seq = ArraySeqMtPerS::<N>::from_vec(vec![1, 2, 3, 4, 5]);
     let (prefixes, final_val) = ArraySeqMtPerS::scan(&seq, &|acc, x| acc + x, 0);
     assert_eq!(prefixes.length(), 5);
     assert_eq!(*prefixes.nth(0), 1);
@@ -397,9 +397,9 @@ fn test_scan_basic() {
 
 #[test]
 fn test_flatten_basic() {
-    let inner1: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2]);
-    let inner2: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![3, 4, 5]);
-    let inner3: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![6]);
+    let inner1 = ArraySeqMtPerS::<N>::from_vec(vec![1, 2]);
+    let inner2 = ArraySeqMtPerS::<N>::from_vec(vec![3, 4, 5]);
+    let inner3 = ArraySeqMtPerS::<N>::from_vec(vec![6]);
     let outer = ArraySeqMtPerS::from_vec(vec![inner1, inner2, inner3]);
 
     let flattened = ArraySeqMtPerS::flatten(&outer);
@@ -411,7 +411,7 @@ fn test_flatten_basic() {
 
 #[test]
 fn test_flatten_empty() {
-    let empty_outer: ArraySeqMtPerS<ArraySeqMtPerS<N>> = ArraySeqMtPerS::empty();
+    let empty_outer = ArraySeqMtPerS::<ArraySeqMtPerS<N>>::empty();
     let flattened = ArraySeqMtPerS::flatten(&empty_outer);
     assert_eq!(flattened.length(), 0);
 }
@@ -436,7 +436,7 @@ fn test_inject_first_wins() {
 
 #[test]
 fn test_isEmpty_trait() {
-    let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
+    let empty = ArraySeqMtPerS::<N>::empty();
     assert!(<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isEmpty(&empty));
 
     let non_empty = ArraySeqMtPerS::singleton(1);
@@ -457,7 +457,7 @@ fn test_isSingleton_trait() {
         &multiple
     ));
 
-    let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
+    let empty = ArraySeqMtPerS::<N>::empty();
     assert!(!<ArraySeqMtPerS<N> as ArraySeqMtPerRedefinableTrait<N>>::isSingleton(
         &empty
     ));

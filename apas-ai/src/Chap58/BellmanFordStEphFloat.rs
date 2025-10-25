@@ -56,7 +56,7 @@ pub mod BellmanFordStEphFloat {
         let n = graph.vertices().size();
 
         // Initialize distances: source = 0, others = infinity
-        let mut distances: HashMap<usize, OrderedF64> = HashMap::new();
+        let mut distances = HashMap::<usize, OrderedF64>::new();
         for v in 0..n {
             distances.insert(
                 v,
@@ -71,7 +71,7 @@ pub mod BellmanFordStEphFloat {
         // Iterate up to |V| rounds
         for round in 0..n {
             let mut changed = false;
-            let mut new_distances: HashMap<usize, OrderedF64> = HashMap::new();
+            let mut new_distances = HashMap::<usize, OrderedF64>::new();
 
             // For each vertex, compute minimum distance through in-neighbors (Line 5)
             for v in 0..n {

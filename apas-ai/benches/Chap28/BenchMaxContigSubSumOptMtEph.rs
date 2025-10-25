@@ -15,17 +15,17 @@ pub fn bench_optimal_mt(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    let a1000: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 1000);
+    let a1000 = ArraySeqMtEphS::<i32>::tabulate(&|i| (i as i32) % 10 - 4, 1000);
     group.bench_function("opt_mt_1000", |b| {
         b.iter(|| ArraySeqMtEphS::max_contig_sub_sum_opt_mt(black_box(&a1000)))
     });
 
-    let a10000: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 10000);
+    let a10000 = ArraySeqMtEphS::<i32>::tabulate(&|i| (i as i32) % 10 - 4, 10000);
     group.bench_function("opt_mt_10000", |b| {
         b.iter(|| ArraySeqMtEphS::max_contig_sub_sum_opt_mt(black_box(&a10000)))
     });
 
-    let a100000: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 100000);
+    let a100000 = ArraySeqMtEphS::<i32>::tabulate(&|i| (i as i32) % 10 - 4, 100000);
     group.bench_function("opt_mt_100000", |b| {
         b.iter(|| ArraySeqMtEphS::max_contig_sub_sum_opt_mt(black_box(&a100000)))
     });

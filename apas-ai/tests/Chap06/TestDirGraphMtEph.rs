@@ -27,7 +27,7 @@ fn test_dirgraphmtephlit_macro_functionality() {
 
 #[test]
 fn test_dirgraphmteph_empty() {
-    let empty_graph: DirGraphMtEph<i32> = DirGraphMtEph::empty();
+    let empty_graph = DirGraphMtEph::<i32>::empty();
     assert_eq!(empty_graph.sizeV(), 0);
     assert_eq!(empty_graph.sizeA(), 0);
     assert_eq!(empty_graph.vertices().size(), 0);
@@ -37,8 +37,8 @@ fn test_dirgraphmteph_empty() {
 #[test]
 fn test_dirgraphmteph_basic_operations() {
     let v: SetStEph<N> = SetLit![0, 1, 2, 3];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         let _ = s.insert(Edge(2, 3));
@@ -55,8 +55,8 @@ fn test_dirgraphmteph_basic_operations() {
 #[test]
 fn test_dirgraphmteph_neighbor() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         let _ = s.insert(Edge(0, 2));
@@ -76,8 +76,8 @@ fn test_dirgraphmteph_neighbor() {
 #[test]
 fn test_dirgraphmteph_ng() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         s
@@ -96,8 +96,8 @@ fn test_dirgraphmteph_ng() {
 #[test]
 fn test_dirgraphmteph_ngofvertices() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         s
@@ -115,8 +115,8 @@ fn test_dirgraphmteph_ngofvertices() {
 #[test]
 fn test_dirgraphmteph_nplus() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         s
@@ -134,8 +134,8 @@ fn test_dirgraphmteph_nplus() {
 #[test]
 fn test_dirgraphmteph_nminus() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         s
@@ -153,8 +153,8 @@ fn test_dirgraphmteph_nminus() {
 #[test]
 fn test_dirgraphmteph_nplusofvertices() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         s
@@ -171,8 +171,8 @@ fn test_dirgraphmteph_nplusofvertices() {
 #[test]
 fn test_dirgraphmteph_nminusofvertices() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         s
@@ -189,8 +189,8 @@ fn test_dirgraphmteph_nminusofvertices() {
 #[test]
 fn test_dirgraphmteph_incident() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         let _ = s.insert(Edge(2, 0));
@@ -209,8 +209,8 @@ fn test_dirgraphmteph_incident() {
 #[test]
 fn test_dirgraphmteph_degree() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         let _ = s.insert(Edge(2, 0));
@@ -226,8 +226,8 @@ fn test_dirgraphmteph_degree() {
 #[test]
 fn test_dirgraphmteph_indegree() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         let _ = s.insert(Edge(2, 0));
@@ -243,8 +243,8 @@ fn test_dirgraphmteph_indegree() {
 #[test]
 fn test_dirgraphmteph_outdegree() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         let _ = s.insert(Edge(2, 0));
@@ -260,8 +260,8 @@ fn test_dirgraphmteph_outdegree() {
 #[test]
 fn test_dirgraphmteph_concurrent_access() {
     let v: SetStEph<N> = SetLit![0, 1, 2, 3, 4];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         let _ = s.insert(Edge(2, 3));
@@ -301,8 +301,8 @@ fn test_dirgraphmteph_concurrent_access() {
 #[test]
 fn test_dirgraphmteph_thread_safety() {
     let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let a = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         s
@@ -342,8 +342,8 @@ fn test_race_condition_verification_concurrent_graph_reads() {
 
     // Create a test graph
     let vertices: SetStEph<i32> = SetLit![0, 1, 2, 3, 4, 5];
-    let edges: SetStEph<Edge<i32>> = {
-        let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+    let edges = {
+        let mut s = SetStEph::<Edge<i32>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         let _ = s.insert(Edge(2, 3));
@@ -504,8 +504,8 @@ fn test_race_condition_verification_mixed_graph_operations() {
 
                 // Create a small graph
                 let vertices: SetStEph<i32> = SetLit![thread_id * 10 + i, thread_id * 10 + i + 1];
-                let edges: SetStEph<Edge<i32>> = {
-                    let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+                let edges = {
+                    let mut s = SetStEph::<Edge<i32>>::empty();
                     let _ = s.insert(Edge(thread_id * 10 + i, thread_id * 10 + i + 1));
                     s
                 };
@@ -584,8 +584,8 @@ fn test_deadlock_prevention_concurrent_graph_operations() {
     // Create multiple graphs with different locking orders to test deadlock prevention
     let graph_a = Arc::new(Mutex::new({
         let vertices: SetStEph<i32> = SetLit![0, 1, 2];
-        let edges: SetStEph<Edge<i32>> = {
-            let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+        let edges = {
+            let mut s = SetStEph::<Edge<i32>>::empty();
             let _ = s.insert(Edge(0, 1));
             let _ = s.insert(Edge(1, 2));
             s
@@ -595,8 +595,8 @@ fn test_deadlock_prevention_concurrent_graph_operations() {
 
     let graph_b = Arc::new(Mutex::new({
         let vertices: SetStEph<i32> = SetLit![3, 4, 5];
-        let edges: SetStEph<Edge<i32>> = {
-            let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+        let edges = {
+            let mut s = SetStEph::<Edge<i32>>::empty();
             let _ = s.insert(Edge(3, 4));
             let _ = s.insert(Edge(4, 5));
             s
@@ -720,7 +720,7 @@ fn test_deadlock_prevention_concurrent_graph_operations() {
     }
 
     // Collect results - if there's a deadlock, this will hang
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Verify all threads completed some operations (no deadlock occurred)
     for (thread_id, op_count) in results.iter().enumerate() {
@@ -743,7 +743,7 @@ fn test_deadlock_prevention_concurrent_graph_operations() {
 #[test]
 fn test_empty_graph_operations() {
     let vertices = SetLit![];
-    let edges: SetStEph<Edge<N>> = SetStEph::empty();
+    let edges = SetStEph::<Edge<N>>::empty();
     let g = DirGraphMtEph::FromSets(vertices, edges);
     assert_eq!(g.sizeV(), 0);
     assert_eq!(g.sizeA(), 0);
@@ -754,7 +754,7 @@ fn test_empty_graph_operations() {
 fn test_isolated_vertex() {
     let vertices = SetLit![1, 2, 3];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(1, 2));
         s
     };
@@ -770,7 +770,7 @@ fn test_ngofvertices_large_parallel() {
     // Create a graph with 15 vertices and arcs to trigger parallel branch (>8 vertices)
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..14 {
             let _ = s.insert(Edge(i, i + 1));
         }
@@ -793,7 +793,7 @@ fn test_nplus_large_parallel() {
     // Create a graph with 15 arcs to trigger parallel branch (>8 arcs)
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..15 {
             let _ = s.insert(Edge(i, (i + 1) % 15));
         }
@@ -815,7 +815,7 @@ fn test_nminus_large_parallel() {
     // Create a graph with 15 arcs to trigger parallel branch (>8 arcs)
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..15 {
             let _ = s.insert(Edge(i, (i + 1) % 15));
         }
@@ -837,7 +837,7 @@ fn test_nplusofvertices_large_parallel() {
     // Create a graph with 15 vertices to trigger parallel branch (>8 vertices)
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..14 {
             let _ = s.insert(Edge(i, i + 1));
         }
@@ -861,7 +861,7 @@ fn test_nminusofvertices_large_parallel() {
     // Create a graph with 15 vertices to trigger parallel branch (>8 vertices)
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..14 {
             let _ = s.insert(Edge(i, i + 1));
         }
@@ -884,7 +884,7 @@ fn test_nminusofvertices_large_parallel() {
 fn test_debug_trait() {
     let vertices: SetStEph<N> = SetLit![1, 2, 3];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(1, 2));
         s
     };
@@ -898,7 +898,7 @@ fn test_debug_trait() {
 fn test_display_trait() {
     let vertices: SetStEph<N> = SetLit![1, 2, 3];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(1, 2));
         s
     };
@@ -913,7 +913,7 @@ fn test_display_trait() {
 fn test_equality() {
     let v1: SetStEph<N> = SetLit![1, 2, 3];
     let a1 = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(1, 2));
         s
     };
@@ -927,13 +927,13 @@ fn test_equality() {
 fn test_inequality() {
     let v1: SetStEph<N> = SetLit![1, 2, 3];
     let a1 = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(1, 2));
         s
     };
     let v2: SetStEph<N> = SetLit![1, 2, 4];
     let a2 = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(1, 2));
         s
     };
@@ -947,7 +947,7 @@ fn test_inequality() {
 fn test_clone() {
     let v: SetStEph<N> = SetLit![1, 2, 3];
     let a = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(1, 2));
         s
     };
@@ -965,7 +965,7 @@ fn test_clone() {
 fn test_ngofvertices_empty_query() {
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..9 {
             let _ = s.insert(Edge(i, i + 1));
         }
@@ -982,7 +982,7 @@ fn test_ngofvertices_empty_query() {
 fn test_nplusofvertices_empty_query() {
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..9 {
             let _ = s.insert(Edge(i, i + 1));
         }
@@ -999,7 +999,7 @@ fn test_nplusofvertices_empty_query() {
 fn test_nminusofvertices_empty_query() {
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..9 {
             let _ = s.insert(Edge(i, i + 1));
         }
@@ -1015,7 +1015,7 @@ fn test_nminusofvertices_empty_query() {
 #[test]
 fn test_nplus_empty_arcs() {
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    let edges: SetStEph<Edge<N>> = SetStEph::empty();
+    let edges = SetStEph::<Edge<N>>::empty();
     let g = DirGraphMtEph::FromSets(vertices, edges);
 
     let result = g.NPlus(&5);
@@ -1025,7 +1025,7 @@ fn test_nplus_empty_arcs() {
 #[test]
 fn test_nminus_empty_arcs() {
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    let edges: SetStEph<Edge<N>> = SetStEph::empty();
+    let edges = SetStEph::<Edge<N>>::empty();
     let g = DirGraphMtEph::FromSets(vertices, edges);
 
     let result = g.NMinus(&5);
@@ -1037,7 +1037,7 @@ fn test_minimal_parallel_ngofvertices() {
     // Exactly 9 vertices - minimal case to trigger parallel path
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..8 {
             let _ = s.insert(Edge(i, i + 1));
         }
@@ -1055,7 +1055,7 @@ fn test_minimal_parallel_nplusofvertices() {
     // Exactly 9 vertices - minimal case to trigger parallel path
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..8 {
             let _ = s.insert(Edge(i, i + 1));
         }
@@ -1073,7 +1073,7 @@ fn test_minimal_parallel_nminusofvertices() {
     // Exactly 9 vertices - minimal case to trigger parallel path
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..8 {
             let _ = s.insert(Edge(i, i + 1));
         }
@@ -1091,7 +1091,7 @@ fn test_minimal_parallel_nplus() {
     // Exactly 9 arcs - minimal case to trigger parallel path
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..9 {
             let _ = s.insert(Edge(i, i + 1));
         }
@@ -1109,7 +1109,7 @@ fn test_minimal_parallel_nminus() {
     // Exactly 9 arcs - minimal case to trigger parallel path
     let vertices: SetStEph<N> = SetLit![0, 1, 2, 3, 4, 5, 6, 7, 8];
     let edges = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let mut s = SetStEph::<Edge<N>>::empty();
         for i in 0..9 {
             let _ = s.insert(Edge(i, i + 1));
         }

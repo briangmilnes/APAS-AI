@@ -158,7 +158,7 @@ pub mod LinkedListStEph {
         fn singleton(item: T) -> Self { LinkedListStEphS::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> Self {
-            let mut values: Vec<T> = Vec::with_capacity(n);
+            let mut values = Vec::<T>::with_capacity(n);
             for i in 0..n {
                 values.push(f(i));
             }
@@ -166,7 +166,7 @@ pub mod LinkedListStEph {
         }
 
         fn map<U: StT, F: Fn(&T) -> U>(a: &Self, f: &F) -> LinkedListStEphS<U> {
-            let mut values: Vec<U> = Vec::with_capacity(a.length());
+            let mut values = Vec::<U>::with_capacity(a.length());
             for i in 0..a.length() {
                 values.push(f(a.nth(i)));
             }
@@ -188,7 +188,7 @@ pub mod LinkedListStEph {
                     | None => return LinkedListStEphS::empty(),
                 }
             }
-            let mut out: Vec<T> = Vec::with_capacity(length);
+            let mut out = Vec::<T>::with_capacity(length);
             let mut taken = 0usize;
             while taken < length {
                 match current {
@@ -204,7 +204,7 @@ pub mod LinkedListStEph {
         }
 
         fn append(a: &Self, b: &Self) -> Self {
-            let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+            let mut values = Vec::<T>::with_capacity(a.length() + b.length());
             for i in 0..a.length() {
                 values.push(a.nth(i).clone());
             }
@@ -215,7 +215,7 @@ pub mod LinkedListStEph {
         }
 
         fn filter<F: PredSt<T>>(a: &Self, pred: &F) -> Self {
-            let mut kept: Vec<T> = Vec::new();
+            let mut kept = Vec::<T>::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
                 if pred(value) {
@@ -234,7 +234,7 @@ pub mod LinkedListStEph {
         }
 
         fn flatten(ss: &LinkedListStEphS<LinkedListStEphS<T>>) -> LinkedListStEphS<T> {
-            let mut values: Vec<T> = Vec::new();
+            let mut values = Vec::<T>::new();
             for i in 0..ss.length() {
                 let inner = ss.nth(i);
                 for j in 0..inner.length() {
@@ -251,7 +251,7 @@ pub mod LinkedListStEph {
 
         fn inject(a: &Self, updates: &LinkedListStEphS<Pair<N, T>>) -> Self {
             let mut out = a.clone();
-            let mut applied: HashSet<N> = HashSet::new();
+            let mut applied = HashSet::<N>::new();
             for i in 0..updates.length() {
                 let Pair(idx, val) = updates.nth(i).clone();
                 if applied.insert(idx) {
@@ -274,7 +274,7 @@ pub mod LinkedListStEph {
             a: &LinkedListStEphS<Pair<A, Bv>>,
             cmp: fn(&A, &A) -> O,
         ) -> LinkedListStEphS<Pair<A, LinkedListStEphS<Bv>>> {
-            let mut groups: Vec<Pair<A, Vec<Bv>>> = Vec::new();
+            let mut groups = Vec::<Pair<A, Vec<Bv>>>::new();
             for i in 0..a.length() {
                 let Pair(k, v) = a.nth(i).clone();
                 if let Some(Pair(_, existing)) = groups.iter_mut().find(|Pair(gk, _)| cmp(&k, gk) == O::Equal) {
@@ -283,10 +283,9 @@ pub mod LinkedListStEph {
                     groups.push(Pair(k, vec![v]));
                 }
             }
-            let pairs: Vec<Pair<A, LinkedListStEphS<Bv>>> = groups
+            let pairs = groups
                 .into_iter()
-                .map(|Pair(k, vs)| Pair(k, LinkedListStEphS::from_vec(vs)))
-                .collect();
+                .map(|Pair(k, vs)| Pair(k, LinkedListStEphS::from_vec(vs))).collect::<Vec<Pair<A, LinkedListStEphS<Bv>>>>();
             LinkedListStEphS::from_vec(pairs)
         }
 
@@ -300,7 +299,7 @@ pub mod LinkedListStEph {
 
         fn iteratePrefixes<A: StT, F: Fn(&A, &T) -> A>(a: &Self, f: &F, x: A) -> (LinkedListStEphS<A>, A) {
             let mut acc = x.clone();
-            let mut prefixes: Vec<A> = Vec::with_capacity(a.length());
+            let mut prefixes = Vec::<A>::with_capacity(a.length());
             for i in 0..a.length() {
                 prefixes.push(acc.clone());
                 acc = f(&acc, a.nth(i));
@@ -329,7 +328,7 @@ pub mod LinkedListStEph {
             if len == 0 {
                 return (LinkedListStEphS::empty(), id);
             }
-            let mut prefixes: Vec<T> = Vec::with_capacity(len);
+            let mut prefixes = Vec::<T>::with_capacity(len);
             for i in 0..len {
                 let prefix = a.subseq_copy(0, i);
                 let red = <LinkedListStEphS<T> as LinkedListStEphTrait<T>>::reduce(&prefix, f, id.clone());

@@ -22,7 +22,7 @@ fn test_bstsetsplaymtephlit_macro_functionality() {
 
 #[test]
 fn test_empty() {
-    let set: BSTSetSplayMtEph<i32> = BSTSetSplayMtEph::empty();
+    let set = BSTSetSplayMtEph::<i32>::empty();
     assert_eq!(set.size(), 0);
     assert!(set.is_empty());
 }

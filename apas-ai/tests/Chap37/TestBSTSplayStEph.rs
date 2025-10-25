@@ -49,7 +49,7 @@ fn splay_duplicate_insert_is_idempotent() {
 
 #[test]
 fn test_empty() {
-    let bst: BSTreeSplay<i32> = BSTreeSplay::new();
+    let bst = BSTreeSplay::<i32>::new();
     assert_eq!(bst.size(), 0);
     assert!(bst.is_empty());
 }

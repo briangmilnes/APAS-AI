@@ -185,7 +185,7 @@ fn test_in_order_sorted() {
 
 #[test]
 fn test_find_empty_tree() {
-    let tree: BSTTreapMtEph<i32> = BSTTreapMtEph::new();
+    let tree = BSTTreapMtEph::<i32>::new();
     assert_eq!(tree.find(&42), None);
 }
 
@@ -199,7 +199,7 @@ fn test_find_all_elements() {
 
 #[test]
 fn test_minimum_maximum_empty() {
-    let tree: BSTTreapMtEph<i32> = BSTTreapMtEph::new();
+    let tree = BSTTreapMtEph::<i32>::new();
     assert_eq!(tree.minimum(), None);
     assert_eq!(tree.maximum(), None);
 }
@@ -220,7 +220,7 @@ fn test_minimum_maximum_large() {
 
 #[test]
 fn test_height() {
-    let empty: BSTTreapMtEph<i32> = BSTTreapMtEph::new();
+    let empty = BSTTreapMtEph::<i32>::new();
     assert_eq!(empty.height(), 0);
 
     let single = BSTTreapMtEphLit![42];
@@ -291,14 +291,14 @@ fn test_string_tree() {
 
 #[test]
 fn test_in_order_empty() {
-    let tree: BSTTreapMtEph<i32> = BSTTreapMtEph::new();
+    let tree = BSTTreapMtEph::<i32>::new();
     let in_order = tree.in_order();
     assert_eq!(in_order.length(), 0);
 }
 
 #[test]
 fn test_pre_order_empty() {
-    let tree: BSTTreapMtEph<i32> = BSTTreapMtEph::new();
+    let tree = BSTTreapMtEph::<i32>::new();
     let pre_order = tree.pre_order();
     assert_eq!(pre_order.length(), 0);
 }

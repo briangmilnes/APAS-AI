@@ -17,7 +17,7 @@ fn bench_boruvka_complete(c: &mut Criterion) {
     group.sample_size(30);
 
     for n in [8, 10, 12] {
-        let vertices: Vec<usize> = (0..n).collect();
+        let vertices = (0..n).collect::<Vec<usize>>();
         let mut edges = SetLit![];
         let mut label = 0;
 
@@ -53,7 +53,7 @@ fn bench_boruvka_sparse(c: &mut Criterion) {
     group.sample_size(30);
 
     for n in [10, 15, 20] {
-        let vertices: Vec<usize> = (0..n).collect();
+        let vertices = (0..n).collect::<Vec<usize>>();
         let mut edges = SetLit![];
         let mut label = 0;
 
@@ -92,7 +92,7 @@ fn bench_boruvka_path(c: &mut Criterion) {
     group.sample_size(30);
 
     for n in [20, 25, 30] {
-        let vertices: Vec<usize> = (0..n).collect();
+        let vertices = (0..n).collect::<Vec<usize>>();
         let mut edges = SetLit![];
 
         // Path graph
@@ -124,7 +124,7 @@ fn bench_boruvka_star(c: &mut Criterion) {
     group.sample_size(30);
 
     for n in [20, 30, 40] {
-        let vertices: Vec<usize> = (0..n).collect();
+        let vertices = (0..n).collect::<Vec<usize>>();
         let mut edges = SetLit![];
 
         // Star graph: center 0 connected to all others
@@ -156,7 +156,7 @@ fn bench_mst_weight_st(c: &mut Criterion) {
     group.sample_size(30);
 
     let n = 15;
-    let vertices: Vec<usize> = (0..n).collect();
+    let vertices = (0..n).collect::<Vec<usize>>();
     let mut edges = SetLit![];
     let mut label = 0;
 

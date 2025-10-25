@@ -87,15 +87,14 @@ pub mod BottomUpDPMtEph {
             let end = min(k, s_len);
 
             // Collect diagonal positions
-            let positions: Vec<(usize, usize)> = (start..=end)
+            let positions = (start..=end)
                 .filter_map(|i| {
                     let j = k - i;
                     if j > 0 && j <= t_len { Some((i, j)) } else { None }
-                })
-                .collect();
+                }).collect::<Vec<(usize, usize)>>();
 
             // Process diagonal elements in parallel
-            let handles: Vec<_> = positions
+            let handles = positions
                 .into_iter()
                 .map(|(i, j)| {
                     let table_clone = Arc::clone(&table);
@@ -106,12 +105,10 @@ pub mod BottomUpDPMtEph {
                         let new_value = Self::compute_cell_value_static(&seq_s_clone, &seq_t_clone, &table_clone, i, j);
                         (i, j, new_value)
                     })
-                })
-                .collect();
+                }).collect::<Vec<_>>();
 
             // Collect results from all threads FIRST (without holding lock)
-            let results: Vec<(usize, usize, usize)> =
-                handles.into_iter().map(|handle| handle.join().unwrap()).collect();
+            let results = handles.into_iter().map(|handle| handle.join().unwrap()).collect::<Vec<(usize, usize, usize)>>();
 
             // Then acquire lock once and write all results in-place
             let mut table_guard = table.lock().unwrap();

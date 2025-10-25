@@ -23,7 +23,7 @@ fn test_weightedundirgraphstephintlit_macro_functionality() {
 
 #[test]
 fn test_create_empty_graph() {
-    let graph: WeightedUnDirGraphStEphInt<i32> = WeightedUnDirGraphStEphInt::empty();
+    let graph = WeightedUnDirGraphStEphInt::<i32>::empty();
     assert_eq!(graph.vertices().size(), 0);
     assert_eq!(graph.edges().size(), 0);
 }

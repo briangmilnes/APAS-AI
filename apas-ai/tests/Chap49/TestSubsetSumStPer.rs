@@ -82,7 +82,7 @@ fn test_subset_sum_st_per_all_combinations() {
 
 #[test]
 fn test_subset_sum_st_per_new() {
-    let solver: SubsetSumStPerS<i32> = SubsetSumStPerS::new();
+    let solver = SubsetSumStPerS::<i32>::new();
     assert_eq!(solver.multiset().length(), 0);
     assert!(solver.subset_sum(0));
     assert!(!solver.subset_sum(1));
@@ -133,14 +133,14 @@ fn test_subset_sum_st_per_display() {
 #[test]
 fn test_subset_sum_st_per_into_iter_owned() {
     let solver = SubsetSumStPerLit![1, 2, 3];
-    let values: Vec<i32> = solver.into_iter().collect();
+    let values = solver.into_iter().collect::<Vec<i32>>();
     assert_eq!(values, vec![1, 2, 3]);
 }
 
 #[test]
 fn test_subset_sum_st_per_into_iter_ref() {
     let solver = SubsetSumStPerLit![5, 10, 15];
-    let values: Vec<i32> = (&solver).into_iter().collect();
+    let values = (&solver).into_iter().collect::<Vec<i32>>();
     assert_eq!(values, vec![5, 10, 15]);
     // Solver should still be usable after borrowing
     assert!(solver.subset_sum(15));

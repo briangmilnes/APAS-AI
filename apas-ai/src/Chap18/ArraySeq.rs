@@ -148,7 +148,7 @@ pub mod ArraySeq {
         fn singleton(item: T) -> ArraySeqS<T> { ArraySeqS::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqS<T> {
-            let mut values: Vec<T> = Vec::with_capacity(length);
+            let mut values = Vec::<T>::with_capacity(length);
             for i in 0..length {
                 values.push(f(i));
             }
@@ -157,7 +157,7 @@ pub mod ArraySeq {
 
         fn map<U: Clone, F: Fn(&T) -> U>(a: &ArraySeqS<T>, f: &F) -> ArraySeqS<U> {
             let len = a.length();
-            let mut values: Vec<U> = Vec::with_capacity(len);
+            let mut values = Vec::<U>::with_capacity(len);
             for i in 0..len {
                 values.push(f(a.nth(i)));
             }
@@ -171,7 +171,7 @@ pub mod ArraySeq {
             if total == 0 {
                 return ArraySeqS::from_vec(Vec::new());
             }
-            let mut values: Vec<T> = Vec::with_capacity(total);
+            let mut values = Vec::<T>::with_capacity(total);
             for i in 0..a.length() {
                 values.push(a.nth(i).clone());
             }
@@ -182,7 +182,7 @@ pub mod ArraySeq {
         }
 
         fn filter<F: PredSt<T>>(a: &ArraySeqS<T>, pred: &F) -> ArraySeqS<T> {
-            let mut kept: Vec<T> = Vec::new();
+            let mut kept = Vec::<T>::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
                 if pred(value) {
@@ -193,7 +193,7 @@ pub mod ArraySeq {
         }
 
         fn flatten(a: &ArraySeqS<ArraySeqS<T>>) -> ArraySeqS<T> {
-            let mut values: Vec<T> = Vec::new();
+            let mut values = Vec::<T>::new();
             for i in 0..a.length() {
                 let inner = a.nth(i);
                 for j in 0..inner.length() {
@@ -204,7 +204,7 @@ pub mod ArraySeq {
         }
 
         fn update(a: &ArraySeqS<T>, Pair(index, item): Pair<N, T>) -> ArraySeqS<T> {
-            let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
+            let mut values = (0..a.length()).map(|i| a.nth(i).clone()).collect::<Vec<T>>();
             if index < values.len() {
                 values[index] = item;
             }
@@ -212,8 +212,8 @@ pub mod ArraySeq {
         }
 
         fn inject(a: &ArraySeqS<T>, updates: &ArraySeqS<Pair<N, T>>) -> ArraySeqS<T> {
-            let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
-            let mut seen: HashSet<N> = HashSet::new();
+            let mut values = (0..a.length()).map(|i| a.nth(i).clone()).collect::<Vec<T>>();
+            let mut seen = HashSet::<N>::new();
             for i in 0..updates.length() {
                 let Pair(idx, val) = updates.nth(i).clone();
                 if idx < values.len() && seen.insert(idx) {
@@ -231,7 +231,7 @@ pub mod ArraySeq {
             pairs: &ArraySeqS<Pair<K, V>>,
             cmp: impl Fn(&K, &K) -> O,
         ) -> ArraySeqS<Pair<K, ArraySeqS<V>>> {
-            let mut groups: Vec<Pair<K, Vec<V>>> = Vec::new();
+            let mut groups = Vec::<Pair<K, Vec<V>>>::new();
             for i in 0..pairs.length() {
                 let Pair(key, value) = pairs.nth(i).clone();
                 if let Some(group) = groups.iter_mut().find(|existing| cmp(&existing.0, &key) == O::Equal) {
@@ -240,10 +240,9 @@ pub mod ArraySeq {
                     groups.push(Pair(key, vec![value]));
                 }
             }
-            let grouped: Vec<Pair<K, ArraySeqS<V>>> = groups
+            let grouped = groups
                 .into_iter()
-                .map(|Pair(key, bucket)| Pair(key, ArraySeqS::from_vec(bucket)))
-                .collect();
+                .map(|Pair(key, bucket)| Pair(key, ArraySeqS::from_vec(bucket))).collect::<Vec<Pair<K, ArraySeqS<V>>>>();
             ArraySeqS::from_vec(grouped)
         }
 
@@ -265,7 +264,7 @@ pub mod ArraySeq {
 
         fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqS<T>, f: &F, id: T) -> (ArraySeqS<T>, T) {
             let len = a.length();
-            let mut prefixes: Vec<T> = Vec::with_capacity(len);
+            let mut prefixes = Vec::<T>::with_capacity(len);
             let mut acc = id;
             for i in 0..len {
                 acc = f(&acc, a.nth(i));

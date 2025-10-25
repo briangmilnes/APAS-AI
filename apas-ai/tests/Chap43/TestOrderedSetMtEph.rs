@@ -10,7 +10,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn test_empty() {
-    let set: OrderedSetMtEph<i32> = OrderedSetMtEph::empty();
+    let set = OrderedSetMtEph::<i32>::empty();
     assert_eq!(set.size(), 0);
     assert_eq!(set.first(), None);
     assert_eq!(set.last(), None);
@@ -71,7 +71,7 @@ fn test_first_and_last() {
     assert_eq!(set.first(), Some(1));
     assert_eq!(set.last(), Some(8));
 
-    let empty_set: OrderedSetMtEph<i32> = OrderedSetMtEph::empty();
+    let empty_set = OrderedSetMtEph::<i32>::empty();
     assert_eq!(empty_set.first(), None);
     assert_eq!(empty_set.last(), None);
 }

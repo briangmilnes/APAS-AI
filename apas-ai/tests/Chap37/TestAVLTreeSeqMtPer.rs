@@ -6,14 +6,14 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn test_empty() {
-    let tree: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+    let tree = AVLTreeSeqMtPerS::<i32>::empty();
     assert_eq!(tree.length(), 0);
     assert!(tree.isEmpty());
 }
 
 #[test]
 fn test_new() {
-    let tree: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::new();
+    let tree = AVLTreeSeqMtPerS::<i32>::new();
     assert_eq!(tree.length(), 0);
 }
 
@@ -50,7 +50,7 @@ fn test_set() {
 
 #[test]
 fn test_isempty() {
-    let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+    let empty = AVLTreeSeqMtPerS::<i32>::empty();
     assert!(empty.isEmpty());
 
     let non_empty = AVLTreeSeqMtPerS::singleton(1);
@@ -140,7 +140,7 @@ fn test_persistence() {
 
 #[test]
 fn test_empty_subseq() {
-    let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+    let empty = AVLTreeSeqMtPerS::<i32>::empty();
     let sub = empty.subseq_copy(0, 0);
     assert_eq!(sub.length(), 0);
 }
@@ -224,7 +224,7 @@ fn test_iterator_comprehensive() {
     let tree = AVLTreeSeqMtPerS::from_vec(vec![10, 20, 30, 40, 50]);
 
     // Collect values
-    let collected: Vec<i32> = tree.clone().into_iter().collect();
+    let collected = tree.clone().into_iter().collect::<Vec<i32>>();
     assert_eq!(collected, vec![10, 20, 30, 40, 50]);
 
     // Count
@@ -232,7 +232,7 @@ fn test_iterator_comprehensive() {
     assert_eq!(count, 5);
 
     // Empty iterator
-    let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+    let empty = AVLTreeSeqMtPerS::<i32>::empty();
     let empty_count = empty.into_iter().count();
     assert_eq!(empty_count, 0);
 }
@@ -281,7 +281,7 @@ fn test_values_in_order_comprehensive() {
     let values = tree.values_in_order();
     assert_eq!(values, vec![5, 3, 7, 1, 9]);
 
-    let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+    let empty = AVLTreeSeqMtPerS::<i32>::empty();
     let empty_values = empty.values_in_order();
     assert_eq!(empty_values, Vec::<i32>::new());
 }
@@ -350,7 +350,7 @@ fn test_subseq_then_modify() {
 
 #[test]
 fn test_empty_operations() {
-    let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+    let empty = AVLTreeSeqMtPerS::<i32>::empty();
 
     assert_eq!(empty.length(), 0);
     assert!(empty.isEmpty());
@@ -392,8 +392,8 @@ fn test_equality_comprehensive() {
     assert_ne!(tree1, tree3);
     assert_ne!(tree1, tree4);
 
-    let empty1: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
-    let empty2: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+    let empty1 = AVLTreeSeqMtPerS::<i32>::empty();
+    let empty2 = AVLTreeSeqMtPerS::<i32>::empty();
     assert_eq!(empty1, empty2);
     assert_ne!(tree1, empty1);
 }
@@ -426,7 +426,7 @@ fn test_trigger_rotations() {
 
 #[test]
 fn test_set_at_index_zero_empty() {
-    let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+    let empty = AVLTreeSeqMtPerS::<i32>::empty();
     // This should trigger line 93 (setting at index 0 on empty tree)
     let result = empty.set(0, 42);
     // Actually it might succeed and create a node

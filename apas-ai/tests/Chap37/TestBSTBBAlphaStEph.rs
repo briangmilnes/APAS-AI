@@ -50,7 +50,7 @@ fn bbalpha_duplicate_insert_is_idempotent() {
 
 #[test]
 fn test_empty() {
-    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+    let bst = BSTreeBBAlpha::<i32>::new();
     assert_eq!(bst.size(), 0);
     assert!(bst.is_empty());
 }
@@ -84,7 +84,7 @@ fn test_reverse_insert() {
 
 #[test]
 fn test_contains_empty() {
-    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+    let bst = BSTreeBBAlpha::<i32>::new();
     assert!(!bst.contains(&5));
 }
 
@@ -120,7 +120,7 @@ fn test_maximum() {
 
 #[test]
 fn test_minimum_maximum_empty() {
-    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+    let bst = BSTreeBBAlpha::<i32>::new();
     assert_eq!(bst.minimum(), None);
     assert_eq!(bst.maximum(), None);
 }
@@ -135,7 +135,7 @@ fn test_minimum_maximum_single() {
 
 #[test]
 fn test_height_empty() {
-    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+    let bst = BSTreeBBAlpha::<i32>::new();
     assert_eq!(bst.height(), 0);
 }
 
@@ -165,7 +165,7 @@ fn test_height_balanced() {
 
 #[test]
 fn test_in_order_empty() {
-    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+    let bst = BSTreeBBAlpha::<i32>::new();
     let result = bst.in_order();
     assert_eq!(result.length(), 0);
 }
@@ -199,7 +199,7 @@ fn test_in_order_multiple() {
 
 #[test]
 fn test_pre_order_empty() {
-    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+    let bst = BSTreeBBAlpha::<i32>::new();
     let result = bst.pre_order();
     assert_eq!(result.length(), 0);
 }

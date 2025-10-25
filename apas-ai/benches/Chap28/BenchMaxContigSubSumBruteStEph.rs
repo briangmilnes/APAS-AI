@@ -19,7 +19,7 @@ pub fn bench_brute_force(c: &mut Criterion) {
         b.iter(|| ArraySeqStEphS::max_contig_sub_sum_brute(black_box(&a10)))
     });
 
-    let a20: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 5 - 2, 20);
+    let a20 = ArraySeqStEphS::<i32>::tabulate(&|i| (i as i32) % 5 - 2, 20);
     group.bench_function("brute_20", |b| {
         b.iter(|| ArraySeqStEphS::max_contig_sub_sum_brute(black_box(&a20)))
     });

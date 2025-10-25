@@ -9,7 +9,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn push_pop_lifo_single_thread() {
-    let stack: ConcurrentStackMt<usize> = ConcurrentStackMt::new();
+    let stack = ConcurrentStackMt::<usize>::new();
     for value in 0usize..4 {
         stack.push(value);
     }
@@ -23,13 +23,13 @@ fn push_pop_lifo_single_thread() {
 
 #[test]
 fn pop_on_empty_returns_none() {
-    let stack: ConcurrentStackMt<usize> = ConcurrentStackMt::new();
+    let stack = ConcurrentStackMt::<usize>::new();
     assert!(stack.pop().is_none());
 }
 
 #[test]
 fn multi_thread_push_collects_all_items() {
-    let stack: Arc<ConcurrentStackMt<usize>> = Arc::new(ConcurrentStackMt::new());
+    let stack = Arc::<ConcurrentStackMt<usize>>::new(ConcurrentStackMt::new());
     let threads = 4;
     let per_thread = 1_000;
 
@@ -51,13 +51,13 @@ fn multi_thread_push_collects_all_items() {
     let mut values = stack.drain();
     assert_eq!(values.len(), threads * per_thread);
     values.sort_unstable();
-    let expected: Vec<_> = (0..threads * per_thread).collect();
+    let expected = (0..threads * per_thread).collect::<Vec<_>>();
     assert_eq!(values, expected);
 }
 
 #[test]
 fn multi_thread_pop_consumes_all_elements() {
-    let stack: Arc<ConcurrentStackMt<usize>> = Arc::new(ConcurrentStackMt::new());
+    let stack = Arc::<ConcurrentStackMt<usize>>::new(ConcurrentStackMt::new());
     let threads = 4;
     let per_thread = 800;
     for value in 0..threads * per_thread {
@@ -89,10 +89,10 @@ fn multi_thread_pop_consumes_all_elements() {
     }
     assert_eq!(combined.len(), threads * per_thread);
 
-    let unique: HashSet<_> = combined.iter().copied().collect();
+    let unique = combined.iter().copied().collect::<HashSet<_>>();
     assert_eq!(unique.len(), combined.len());
 
-    let expected: HashSet<_> = (0..threads * per_thread).collect();
+    let expected = (0..threads * per_thread).collect::<HashSet<_>>();
     assert_eq!(unique, expected);
     assert!(stack.pop().is_none());
 }

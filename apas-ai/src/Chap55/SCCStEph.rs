@@ -25,7 +25,7 @@ pub mod SCCStEph {
 
         let n = graph.length();
         let mut visited = ArraySeqStEphS::tabulate(&|_| false, n);
-        let mut components: AVLTreeSeqStEphS<AVLTreeSetStEph<N>> = AVLTreeSeqStEphS::empty();
+        let mut components = AVLTreeSeqStEphS::<AVLTreeSetStEph<N>>::empty();
 
         for i in 0..finish_order.length() {
             let vertex = *finish_order.nth(i);

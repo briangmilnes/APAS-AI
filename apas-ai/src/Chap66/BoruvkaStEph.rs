@@ -74,7 +74,7 @@ pub mod BoruvkaStEph {
     pub fn vertex_bridges<V: StT + Hash + Ord>(
         edges: &SetStEph<LabeledEdge<V>>,
     ) -> HashMap<V, (V, OrderedFloat<f64>, usize)> {
-        let mut bridges: HashMap<V, (V, OrderedFloat<f64>, usize)> = HashMap::new();
+        let mut bridges = HashMap::<V, (V, OrderedFloat<f64>, usize)>::new();
 
         for edge in edges.iter() {
             let LabeledEdge(u, v, w, label) = edge.clone();
@@ -128,14 +128,14 @@ pub mod BoruvkaStEph {
         rng: &mut StdRng,
     ) -> (SetStEph<V>, HashMap<V, (V, OrderedFloat<f64>, usize)>) {
         // Coin flips for all vertices
-        let mut flips: HashMap<V, bool> = HashMap::new();
+        let mut flips = HashMap::<V, bool>::new();
         for v in vertices.iter() {
             let is_heads = rng.random::<bool>();
             let _ = flips.insert(v.clone(), is_heads);
         }
 
         // Select edges from Tail→Head (Tail=false, Head=true)
-        let mut partition: HashMap<V, (V, OrderedFloat<f64>, usize)> = HashMap::new();
+        let mut partition = HashMap::<V, (V, OrderedFloat<f64>, usize)>::new();
         for (u, (v, w, label)) in bridges.iter() {
             let u_heads = flips.get(u).copied().unwrap_or(false);
             let v_heads = flips.get(v).copied().unwrap_or(false);
@@ -197,7 +197,7 @@ pub mod BoruvkaStEph {
         }
 
         // Build full partition map (including identity for non-contracted vertices)
-        let mut full_partition: HashMap<V, V> = HashMap::new();
+        let mut full_partition = HashMap::<V, V>::new();
         for (tail, (head, _, _)) in partition.iter() {
             let _ = full_partition.insert(tail.clone(), head.clone());
         }

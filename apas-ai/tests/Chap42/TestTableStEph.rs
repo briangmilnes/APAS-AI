@@ -28,7 +28,7 @@ fn test_tablestephlit_macro_functionality() {
 
 #[test]
 fn test_table_empty() {
-    let table: TableStEph<i32, String> = TableStEph::empty();
+    let table = TableStEph::<i32, String>::empty();
     assert_eq!(table.size(), 0);
 }
 

@@ -147,7 +147,7 @@ pub mod BoruvkaMtEph {
         rng: &mut StdRng,
     ) -> (SetStEph<V>, HashMap<V, (V, OrderedFloat<f64>, usize)>) {
         // Coin flips (sequential for consistent seed)
-        let mut coin_flips: HashMap<V, bool> = HashMap::new();
+        let mut coin_flips = HashMap::<V, bool>::new();
         for vertex in vertices_vec.iter() {
             let _ = coin_flips.insert(vertex.clone(), rng.random::<bool>());
         }
@@ -261,7 +261,7 @@ pub mod BoruvkaMtEph {
         }
 
         // Build full partition map (including identity for non-contracted vertices)
-        let mut full_partition: HashMap<V, V> = HashMap::new();
+        let mut full_partition = HashMap::<V, V>::new();
         for (tail, (head, _, _)) in partition.iter() {
             let _ = full_partition.insert(tail.clone(), head.clone());
         }
@@ -274,7 +274,7 @@ pub mod BoruvkaMtEph {
         let new_edges = reroute_edges_mt(edges_arc, part_arc, 0, edges_len);
 
         // Recurse
-        let remaining_vec: Vec<V> = remaining_vertices.iter().cloned().collect();
+        let remaining_vec = remaining_vertices.iter().cloned().collect::<Vec<V>>();
         boruvka_mst_mt(remaining_vec, new_edges, new_mst_labels, rng)
     }
 
@@ -337,8 +337,8 @@ pub mod BoruvkaMtEph {
         seed: u64,
     ) -> SetStEph<usize> {
         let mut rng = StdRng::seed_from_u64(seed);
-        let vertices_vec: Vec<V> = vertices.iter().cloned().collect();
-        let edges_vec: Vec<LabeledEdge<V>> = edges.iter().cloned().collect();
+        let vertices_vec = vertices.iter().cloned().collect::<Vec<V>>();
+        let edges_vec = edges.iter().cloned().collect::<Vec<LabeledEdge<V>>>();
         boruvka_mst_mt(vertices_vec, edges_vec, SetLit![], &mut rng)
     }
 

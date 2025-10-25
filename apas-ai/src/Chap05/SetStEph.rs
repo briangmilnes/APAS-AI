@@ -115,7 +115,7 @@ pub mod SetStEph {
         where
             T: Clone,
         {
-            let mut out: HashSet<Pair<T, U>> = HashSet::new();
+            let mut out = HashSet::<Pair<T, U>>::new();
             for a in self.data.iter() {
                 for b in other.data.iter() {
                     let _ = out.insert(Pair(a.clone(), b.clone()));
@@ -168,7 +168,7 @@ pub mod SetStEph {
     impl<T: Eq + Hash> Hash for SetStEph<T> {
         fn hash<H: Hasher>(&self, state: &mut H) {
             use std::collections::hash_map::DefaultHasher;
-            let mut element_hashes: Vec<u64> = Vec::with_capacity(self.data.len());
+            let mut element_hashes = Vec::<u64>::with_capacity(self.data.len());
             for e in self.data.iter() {
                 let mut h = DefaultHasher::new();
                 e.hash(&mut h);

@@ -80,7 +80,7 @@ fn quick_sort_mt_large_inputs() {
     assert!(is_sorted(&to_vec(&descending)));
 
     let mut rng = rng();
-    let random_data: Vec<i32> = (0..230).map(|_| rng.random_range(-10_000..10_000)).collect();
+    let random_data = (0..230).map(|_| rng.random_range(-10_000..10_000)).collect::<Vec<i32>>();
     let mut random_seq = ArraySeqMtEphS::from_vec(random_data);
     <ArraySeqMtEphS<i32> as Chapter36MtTrait<i32>>::quick_sort_mt_random(&mut random_seq);
     assert!(is_sorted(&to_vec(&random_seq)));
@@ -168,7 +168,7 @@ fn quick_sort_mt_thread_safety_stress_test() {
     for thread_id in 0..num_threads {
         handles.push(thread::spawn(move || {
             // Each thread gets different data based on thread_id
-            let mut data: Vec<i32> = (0..data_size).map(|i| ((i * thread_id + 1) % 100) as i32).collect();
+            let mut data = (0..data_size).map(|i| ((i * thread_id + 1) % 100) as i32).collect::<Vec<i32>>();
             data.reverse(); // Make it unsorted
 
             let mut seq = ArraySeqMtEphS::from_vec(data);

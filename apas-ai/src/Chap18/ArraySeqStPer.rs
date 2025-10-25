@@ -104,7 +104,7 @@ pub mod ArraySeqStPer {
         }
 
         fn flatten(a: &ArraySeqStPerS<ArraySeqStPerS<T>>) -> ArraySeqStPerS<T> {
-            let mut values: Vec<T> = Vec::new();
+            let mut values = Vec::<T>::new();
             for i in 0..a.length() {
                 let inner_seq = a.nth(i);
                 for j in 0..inner_seq.length() {
@@ -116,7 +116,7 @@ pub mod ArraySeqStPer {
 
         fn inject(a: &ArraySeqStPerS<T>, updates: &ArraySeqStPerS<Pair<N, T>>) -> ArraySeqStPerS<T> {
             let mut result = a.clone();
-            let mut updated: HashSet<N> = HashSet::new();
+            let mut updated = HashSet::<N>::new();
             for i in 0..updates.length() {
                 let Pair(index, value) = updates.nth(i);
                 if *index >= result.length() {
@@ -138,13 +138,13 @@ pub mod ArraySeqStPer {
             if a.length() == 0 {
                 return ArraySeqStPerS::from_vec(vec![]);
             }
-            let mut groups: Vec<Pair<K, ArraySeqStPerS<V>>> = Vec::new();
+            let mut groups = Vec::<Pair<K, ArraySeqStPerS<V>>>::new();
             for i in 0..a.length() {
                 let Pair(key, value) = a.nth(i);
                 let mut found_group = false;
                 for group in &mut groups {
                     if cmp(key, &group.0) == O::Equal {
-                        let mut values: Vec<V> = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect();
+                        let mut values = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect::<Vec<V>>();
                         values.push(value.clone());
                         group.1 = ArraySeqStPerS::from_vec(values);
                         found_group = true;
@@ -184,7 +184,7 @@ pub mod ArraySeqStPer {
         fn singleton(item: T) -> ArraySeqStPerS<T> { Self::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStPerS<T> {
-            let mut values: Vec<T> = Vec::with_capacity(length);
+            let mut values = Vec::<T>::with_capacity(length);
             for i in 0..length {
                 values.push(f(i));
             }
@@ -192,7 +192,7 @@ pub mod ArraySeqStPer {
         }
 
         fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStPerS<T>, f: &F) -> ArraySeqStPerS<U> {
-            let mut values: Vec<U> = Vec::with_capacity(a.length());
+            let mut values = Vec::<U>::with_capacity(a.length());
             for i in 0..a.length() {
                 values.push(f(a.nth(i)));
             }
@@ -200,7 +200,7 @@ pub mod ArraySeqStPer {
         }
 
         fn append(a: &ArraySeqStPerS<T>, b: &ArraySeqStPerS<T>) -> ArraySeqStPerS<T> {
-            let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+            let mut values = Vec::<T>::with_capacity(a.length() + b.length());
             for i in 0..a.length() {
                 values.push(a.nth(i).clone());
             }
@@ -211,7 +211,7 @@ pub mod ArraySeqStPer {
         }
 
         fn filter<F: PredSt<T>>(a: &ArraySeqStPerS<T>, pred: &F) -> ArraySeqStPerS<T> {
-            let mut values: Vec<T> = Vec::new();
+            let mut values = Vec::<T>::new();
             for i in 0..a.length() {
                 let item = a.nth(i);
                 if pred(item) {
@@ -246,7 +246,7 @@ pub mod ArraySeqStPer {
 
         fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStPerS<T>, f: &F, id: T) -> (ArraySeqStPerS<T>, T) {
             let mut acc = id.clone();
-            let mut values: Vec<T> = Vec::with_capacity(a.length());
+            let mut values = Vec::<T>::with_capacity(a.length());
             values.push(acc.clone());
             for i in 0..a.length() {
                 let item = a.nth(i);

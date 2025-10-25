@@ -43,7 +43,7 @@ fn test_ephemeral_ch18_map_append_filter() {
 #[test]
 fn test_iterators_collect() {
     let s = ArraySeqStEphSLit![1, 2, 3];
-    let collected: Vec<N> = s.iter().copied().collect();
+    let collected = s.iter().copied().collect::<Vec<N>>();
     assert_eq!(collected, vec![1, 2, 3]);
 }
 
@@ -333,7 +333,7 @@ fn test_iterate_concat() {
         },
         3,
     );
-    let res: String = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::iterate(
+    let res = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::iterate(
         &a,
         &|acc: &String, x: &&str| format!("{acc}{x}"),
         String::new(),

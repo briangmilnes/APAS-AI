@@ -9,7 +9,7 @@ use apas_ai::{OBSTStPerLit, prob};
 
 #[test]
 fn test_obst_st_per_empty() {
-    let obst: OBSTStPerS<char> = OBSTStPerS::new();
+    let obst = OBSTStPerS::<char>::new();
     assert_eq!(obst.optimal_cost(), Probability::zero());
     assert_eq!(obst.num_keys(), 0);
 }
@@ -125,14 +125,14 @@ fn test_obst_st_per_key_prob_display() {
 #[test]
 fn test_obst_st_per_into_iter_owned() {
     let obst = OBSTStPerS::from_keys_probs(vec!['A', 'B', 'C'], vec![prob!(0.2), prob!(0.3), prob!(0.5)]);
-    let keys: Vec<char> = obst.into_iter().map(|kp| kp.key).collect();
+    let keys = obst.into_iter().map(|kp| kp.key).collect::<Vec<char>>();
     assert_eq!(keys, vec!['A', 'B', 'C']);
 }
 
 #[test]
 fn test_obst_st_per_into_iter_ref() {
     let obst = OBSTStPerS::from_keys_probs(vec!['A', 'B'], vec![prob!(0.4), prob!(0.6)]);
-    let keys: Vec<char> = (&obst).into_iter().map(|kp| kp.key).collect();
+    let keys = (&obst).into_iter().map(|kp| kp.key).collect::<Vec<char>>();
     assert_eq!(keys, vec!['A', 'B']);
     // OBST should still be usable after borrowing
     assert_eq!(obst.num_keys(), 2);

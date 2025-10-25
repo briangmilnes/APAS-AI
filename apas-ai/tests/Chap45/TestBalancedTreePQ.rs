@@ -520,7 +520,7 @@ fn test_map_to_string() {
 
 #[test]
 fn test_default() {
-    let pq: BalancedTreePQ<i32> = BalancedTreePQ::default();
+    let pq = BalancedTreePQ::<i32>::default();
     assert!(pq.is_empty());
     assert_eq!(pq.size(), 0);
 }

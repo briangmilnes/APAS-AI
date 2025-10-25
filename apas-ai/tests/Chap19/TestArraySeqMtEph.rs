@@ -33,7 +33,7 @@ fn test_arrayseq_mteph_append_and_map() {
 
 #[test]
 fn test_empty() {
-    let a: ArraySeqMtEphS<i32> = ArraySeqMtEphS::empty();
+    let a = ArraySeqMtEphS::<i32>::empty();
     assert_eq!(a.length(), 0);
     assert!(ArraySeqMtEphS::isEmpty(&a));
 }
@@ -134,7 +134,7 @@ fn test_deflate() {
 
 #[test]
 fn test_arrayseqmteph_trait_empty() {
-    let empty: ArraySeqMtEphS<i32> = ArraySeqMtEphS::empty();
+    let empty = ArraySeqMtEphS::<i32>::empty();
     assert_eq!(empty.length(), 0);
     assert!(ArraySeqMtEphS::isEmpty(&empty));
 }

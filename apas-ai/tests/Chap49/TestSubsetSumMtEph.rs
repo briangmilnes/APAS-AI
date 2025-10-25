@@ -36,7 +36,7 @@ fn test_subset_sum_mt_eph_empty() {
 
 #[test]
 fn test_subset_sum_mt_eph_new() {
-    let mut solver: SubsetSumMtEphS<i32> = SubsetSumMtEphS::new();
+    let mut solver = SubsetSumMtEphS::<i32>::new();
     assert_eq!(solver.multiset().length(), 0);
     assert!(solver.subset_sum(0));
     assert!(!solver.subset_sum(1));

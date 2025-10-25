@@ -21,7 +21,7 @@ fn test_unsortedlistpqlit_macro_functionality() {
 
 #[test]
 fn test_empty_priority_queue() {
-    let pq: UnsortedListPQ<i32> = UnsortedListPQ::empty();
+    let pq = UnsortedListPQ::<i32>::empty();
     assert!(pq.is_empty());
     assert_eq!(pq.size(), 0);
     assert_eq!(pq.find_min(), None);
@@ -415,14 +415,14 @@ fn test_to_vec() {
 
 #[test]
 fn test_to_seq_empty() {
-    let pq: UnsortedListPQ<i32> = UnsortedListPQ::empty();
+    let pq = UnsortedListPQ::<i32>::empty();
     let seq = pq.to_seq();
     assert_eq!(seq.length(), 0);
 }
 
 #[test]
 fn test_to_vec_empty() {
-    let pq: UnsortedListPQ<i32> = UnsortedListPQ::empty();
+    let pq = UnsortedListPQ::<i32>::empty();
     let vec = pq.to_vec();
     assert_eq!(vec.len(), 0);
 }
@@ -442,7 +442,7 @@ fn test_roundtrip_vec() {
 
 #[test]
 fn test_empty_constructor() {
-    let pq: UnsortedListPQ<i32> = UnsortedListPQ::empty();
+    let pq = UnsortedListPQ::<i32>::empty();
     assert!(pq.is_empty());
     assert_eq!(pq.size(), 0);
     assert_eq!(pq.find_min(), None);

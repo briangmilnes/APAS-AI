@@ -26,7 +26,7 @@ fn test_avltreesetstperlit_macro_functionality() {
 #[test]
 fn test_avl_tree_set_per_basic_operations() {
     // Test empty set
-    let empty_set: AVLTreeSetStPer<i32> = AVLTreeSetStPer::empty();
+    let empty_set = AVLTreeSetStPer::<i32>::empty();
     assert_eq!(empty_set.size(), 0);
     assert!(!empty_set.find(&1));
 

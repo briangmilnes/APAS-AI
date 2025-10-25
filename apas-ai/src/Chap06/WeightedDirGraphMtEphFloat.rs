@@ -107,7 +107,7 @@ pub mod WeightedDirGraphMtEphFloat {
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
         fn out_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>> {
             // PARALLEL: filter weighted arcs using divide-and-conquer
-            let arcs: Vec<LabEdge<V, OrderedF64>> = self.labeled_arcs().iter().cloned().collect();
+            let arcs = self.labeled_arcs().iter().cloned().collect::<Vec<LabEdge<V, OrderedF64>>>();
 
             // Parallel divide-and-conquer with proper base cases
             fn parallel_out<V: StT + MtT + Hash + 'static>(
@@ -151,7 +151,7 @@ pub mod WeightedDirGraphMtEphFloat {
         /// claude-4-sonet: Work Θ(|A|), Span Θ(log |A|), Parallelism Θ(|A|/log |A|) - parallel divide-and-conquer filter
         fn in_neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>> {
             // PARALLEL: filter weighted arcs using divide-and-conquer
-            let arcs: Vec<LabEdge<V, OrderedF64>> = self.labeled_arcs().iter().cloned().collect();
+            let arcs = self.labeled_arcs().iter().cloned().collect::<Vec<LabEdge<V, OrderedF64>>>();
 
             // Parallel divide-and-conquer with proper base cases
             fn parallel_in<V: StT + MtT + Hash + 'static>(

@@ -65,7 +65,7 @@ pub mod TSPApproxStEph {
         tree_edges: &SetStEph<LabEdge<V, OrderedFloat<f64>>>,
     ) -> Vec<V> {
         let mut tour = Vec::new();
-        let mut visited_edges: HashSet<(V, V)> = HashSet::new();
+        let mut visited_edges = HashSet::<(V, V)>::new();
 
         euler_tour_dfs(graph, start, None, tree_edges, &mut tour, &mut visited_edges);
 
@@ -140,7 +140,7 @@ pub mod TSPApproxStEph {
         }
 
         let mut shortcut = Vec::new();
-        let mut visited: HashSet<V> = HashSet::new();
+        let mut visited = HashSet::<V>::new();
 
         for vertex in euler_tour.iter() {
             if !visited.contains(vertex) {

@@ -37,7 +37,7 @@ fn test_points2d_n2_basic_values() {
 #[test]
 fn test_points2d_iterator_in_order() {
     let s = points2d_tab_flat(4);
-    let collected: Vec<Pair<N, N>> = s.iter().copied().collect();
+    let collected = s.iter().copied().collect::<Vec<Pair<N, N>>>();
     let expect = vec![
         PairLit!(0, 1),
         PairLit!(0, 2),

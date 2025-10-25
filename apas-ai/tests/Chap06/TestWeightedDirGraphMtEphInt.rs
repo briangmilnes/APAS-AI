@@ -27,7 +27,7 @@ fn test_weighteddirgraphmtephintlit_macro_functionality() {
 
 #[test]
 fn test_weighteddirgraphmtephint_empty() {
-    let empty_graph: WeightedDirGraphMtEphInt<i32> = WeightedDirGraphMtEphInt::empty();
+    let empty_graph = WeightedDirGraphMtEphInt::<i32>::empty();
     assert_eq!(empty_graph.vertices().size(), 0);
     assert_eq!(empty_graph.labeled_arcs().size(), 0);
     assert_eq!(empty_graph.vertices().size(), 0);
@@ -157,7 +157,7 @@ fn test_weighteddirgraphmtephint_nplusminusofvertices() {
 #[test]
 fn test_weighteddirgraphmtephint_edge_cases() {
     // Test empty graph
-    let empty: WeightedDirGraphMtEphInt<i32> = WeightedDirGraphMtEphInt::empty();
+    let empty = WeightedDirGraphMtEphInt::<i32>::empty();
     assert!(!empty.has_arc(&0, &1));
     assert_eq!(empty.out_neighbors(&0).size(), 0);
     assert_eq!(empty.out_neighbors(&0).size(), 0);

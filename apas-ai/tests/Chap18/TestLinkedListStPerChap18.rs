@@ -45,7 +45,7 @@ fn test_from_vec_and_debug_format() {
 #[test]
 fn test_iter_inorder_collect() {
     let l = LinkedListStPerSLit![10, 20, 30];
-    let vals: Vec<N> = (0..l.length()).map(|i| *l.nth(i)).collect();
+    let vals = (0..l.length()).map(|i| *l.nth(i)).collect::<Vec<N>>();
     assert_eq!(vals, vec![10, 20, 30]);
 }
 

@@ -194,7 +194,7 @@ pub mod OrderedSetMtEph {
             };
 
             let found = self.elements.get(pos) == Some(k);
-            let right_elements: Vec<T> = self.elements.drain(pos..).collect();
+            let right_elements = self.elements.drain(pos..).collect::<Vec<T>>();
             let left_elements = std::mem::take(&mut self.elements);
 
             let mut right_elements_filtered = right_elements;
@@ -247,7 +247,7 @@ pub mod OrderedSetMtEph {
 
         /// Claude Work: O(log n), Span: O(log n)
         fn split_rank(&mut self, i: N) -> (Self, Self) {
-            let right_elements: Vec<T> = self.elements.drain(i..).collect();
+            let right_elements = self.elements.drain(i..).collect::<Vec<T>>();
             let left_elements = std::mem::take(&mut self.elements);
 
             *self = Self::empty();

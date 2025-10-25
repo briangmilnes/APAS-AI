@@ -61,7 +61,7 @@ fn quick_sort_slice_large_inputs() {
     assert!(is_sorted(&to_vec(&descending)));
 
     let mut rng = rng();
-    let random_data: Vec<i32> = (0..230).map(|_| rng.random_range(-10_000..10_000)).collect();
+    let random_data = (0..230).map(|_| rng.random_range(-10_000..10_000)).collect::<Vec<i32>>();
     let mut random_seq = ArraySeqMtEphSliceS::from_vec(random_data);
     <ArraySeqMtEphSliceS<i32> as Chapter36MtSliceTrait<i32>>::quick_sort_mt_random(&mut random_seq);
     assert!(is_sorted(&to_vec(&random_seq)));
@@ -284,7 +284,7 @@ fn slice_pivot_concurrent_access() {
 fn slice_large_data_handling() {
     // Test with larger datasets to verify scalability
     let large_size = 10_000;
-    let mut large_data: Vec<i32> = (0..large_size).collect();
+    let mut large_data = (0..large_size).collect::<Vec<i32>>();
     large_data.reverse(); // Make it reverse sorted (worst case)
 
     let mut seq = ArraySeqMtEphSliceS::from_vec(large_data);

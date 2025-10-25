@@ -71,7 +71,7 @@ pub mod RelationStEph {
         where
             X: Clone,
         {
-            let mut out: SetStEph<X> = SetStEph::empty();
+            let mut out = SetStEph::<X>::empty();
             for Pair(a, _) in self.pairs.iter() {
                 let _ = out.insert(a.clone());
             }
@@ -82,7 +82,7 @@ pub mod RelationStEph {
         where
             Y: Clone,
         {
-            let mut out: SetStEph<Y> = SetStEph::empty();
+            let mut out = SetStEph::<Y>::empty();
             for Pair(_, b) in self.pairs.iter() {
                 let _ = out.insert(b.clone());
             }

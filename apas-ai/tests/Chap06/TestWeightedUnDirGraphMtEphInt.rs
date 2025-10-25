@@ -28,7 +28,7 @@ fn test_weightedundirgraphmtephintlit_macro_functionality() {
 
 #[test]
 fn test_weightedundirgraphmtephint_empty() {
-    let emptygraph: WeightedUnDirGraphMtEphInt<i32> = WeightedUnDirGraphMtEphInt::empty();
+    let emptygraph = WeightedUnDirGraphMtEphInt::<i32>::empty();
     assert_eq!(emptygraph.vertices().size(), 0);
     assert_eq!(emptygraph.labeled_edges().size(), 0);
     assert_eq!(emptygraph.vertices().size(), 0);
@@ -150,7 +150,7 @@ fn test_weightedundirgraphmtephint_nplusminusofvertices() {
 #[test]
 fn test_weightedundirgraphmtephint_edge_cases() {
     // Test empty graph
-    let empty: WeightedUnDirGraphMtEphInt<i32> = WeightedUnDirGraphMtEphInt::empty();
+    let empty = WeightedUnDirGraphMtEphInt::<i32>::empty();
     assert!(!empty.has_edge(&0, &1));
     assert_eq!(empty.neighbors(&0).size(), 0);
     assert_eq!(empty.vertex_degree(&0), 0);
@@ -351,7 +351,7 @@ fn test_from_weighted_edges() {
 
 #[test]
 fn test_add_weighted_edge() {
-    let mut g: WeightedUnDirGraphMtEphInt<i32> = WeightedUnDirGraphMtEphInt::empty();
+    let mut g = WeightedUnDirGraphMtEphInt::<i32>::empty();
     g.add_vertex(1);
     g.add_vertex(2);
     g.add_weighted_edge(1, 2, 42);

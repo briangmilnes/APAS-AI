@@ -78,7 +78,7 @@ pub mod OptBinSearchTreeStEph {
                 Probability::zero() // Base case: empty subsequence
             } else {
                 // Sum probabilities for this subsequence
-                let prob_sum: Probability = (0..l)
+                let prob_sum = (0..l)
                     .map(|k| self.keys[i + k].prob)
                     .fold(Probability::zero(), |acc, p| acc + p);
 

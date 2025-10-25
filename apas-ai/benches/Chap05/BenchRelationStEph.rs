@@ -17,7 +17,7 @@ fn bench_relation_operations(c: &mut Criterion) {
     let n: N = 500;
 
     group.bench_with_input(BenchmarkId::new("FromSet", n), &n, |b, &len| {
-        let pairs: SetStEph<Pair<N, N>> = SetStEph::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+        let pairs = SetStEph::<Pair<N, N>>::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
         b.iter(|| {
             let relation = RelationStEph::FromSet(pairs.clone());
             black_box(relation)
@@ -25,7 +25,7 @@ fn bench_relation_operations(c: &mut Criterion) {
     });
 
     group.bench_with_input(BenchmarkId::new("domain", n), &n, |b, &len| {
-        let pairs: SetStEph<Pair<N, N>> = SetStEph::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+        let pairs = SetStEph::<Pair<N, N>>::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
         let relation = RelationStEph::FromSet(pairs);
         b.iter(|| {
             let dom = relation.domain();
@@ -34,7 +34,7 @@ fn bench_relation_operations(c: &mut Criterion) {
     });
 
     group.bench_with_input(BenchmarkId::new("range", n), &n, |b, &len| {
-        let pairs: SetStEph<Pair<N, N>> = SetStEph::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+        let pairs = SetStEph::<Pair<N, N>>::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
         let relation = RelationStEph::FromSet(pairs);
         b.iter(|| {
             let rng = relation.range();
@@ -43,7 +43,7 @@ fn bench_relation_operations(c: &mut Criterion) {
     });
 
     group.bench_with_input(BenchmarkId::new("mem", n), &n, |b, &len| {
-        let pairs: SetStEph<Pair<N, N>> = SetStEph::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+        let pairs = SetStEph::<Pair<N, N>>::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
         let relation = RelationStEph::FromSet(pairs);
         b.iter(|| {
             let mut found = 0;
@@ -57,7 +57,7 @@ fn bench_relation_operations(c: &mut Criterion) {
     });
 
     group.bench_with_input(BenchmarkId::new("iter", n), &n, |b, &len| {
-        let pairs: SetStEph<Pair<N, N>> = SetStEph::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+        let pairs = SetStEph::<Pair<N, N>>::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
         let relation = RelationStEph::FromSet(pairs);
         b.iter(|| {
             let mut count = 0;
@@ -69,7 +69,7 @@ fn bench_relation_operations(c: &mut Criterion) {
     });
 
     group.bench_with_input(BenchmarkId::new("size", n), &n, |b, &len| {
-        let pairs: SetStEph<Pair<N, N>> = SetStEph::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+        let pairs = SetStEph::<Pair<N, N>>::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
         let relation = RelationStEph::FromSet(pairs);
         b.iter(|| {
             let sz = relation.size();

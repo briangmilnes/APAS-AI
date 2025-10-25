@@ -23,7 +23,7 @@ fn test_bstplainstephlit_macro_functionality() {
 
 #[test]
 fn test_new_empty() {
-    let tree: BSTPlainStEph<i32> = BSTPlainStEph::new();
+    let tree = BSTPlainStEph::<i32>::new();
     assert_eq!(tree.size(), 0);
     assert!(tree.is_empty());
 }
@@ -108,7 +108,7 @@ fn test_size() {
 
 #[test]
 fn test_is_empty() {
-    let tree: BSTPlainStEph<i32> = BSTPlainStEph::new();
+    let tree = BSTPlainStEph::<i32>::new();
     assert!(tree.is_empty());
 
     let mut tree2 = BSTPlainStEph::new();

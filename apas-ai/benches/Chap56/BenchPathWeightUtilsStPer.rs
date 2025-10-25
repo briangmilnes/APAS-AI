@@ -24,7 +24,7 @@ fn bench_path_weight_int(c: &mut Criterion) {
         }
         let weights = ArraySeqStPerS::from_vec(weights);
 
-        let path_vec: Vec<usize> = (0..n).collect();
+        let path_vec = (0..n).collect::<Vec<usize>>();
         let path = ArraySeqStPerS::from_vec(path_vec);
 
         c.bench_function(&format!("path_weight_int_n{n}"), |b| {
@@ -47,7 +47,7 @@ fn bench_path_weight_float(c: &mut Criterion) {
         }
         let weights = ArraySeqStPerS::from_vec(weights);
 
-        let path_vec: Vec<usize> = (0..n).collect();
+        let path_vec = (0..n).collect::<Vec<usize>>();
         let path = ArraySeqStPerS::from_vec(path_vec);
 
         c.bench_function(&format!("path_weight_float_n{n}"), |b| {
@@ -70,10 +70,10 @@ fn bench_validate_subpath_int(c: &mut Criterion) {
         }
         let weights = ArraySeqStPerS::from_vec(weights);
 
-        let distances_vec: Vec<i64> = (0..n as i64).collect();
+        let distances_vec = (0..n as i64).collect::<Vec<i64>>();
         let distances = ArraySeqStPerS::from_vec(distances_vec);
 
-        let path_vec: Vec<usize> = (0..n).collect();
+        let path_vec = (0..n).collect::<Vec<usize>>();
         let path = ArraySeqStPerS::from_vec(path_vec);
 
         c.bench_function(&format!("validate_subpath_int_n{n}"), |b| {
@@ -102,10 +102,10 @@ fn bench_validate_subpath_float(c: &mut Criterion) {
         }
         let weights = ArraySeqStPerS::from_vec(weights);
 
-        let distances_vec: Vec<OrderedFloat<f64>> = (0..n).map(|i| OrderedFloat(i as f64 * 1.5)).collect();
+        let distances_vec = (0..n).map(|i| OrderedFloat(i as f64 * 1.5)).collect::<Vec<OrderedFloat<f64>>>();
         let distances = ArraySeqStPerS::from_vec(distances_vec);
 
-        let path_vec: Vec<usize> = (0..n).collect();
+        let path_vec = (0..n).collect::<Vec<usize>>();
         let path = ArraySeqStPerS::from_vec(path_vec);
 
         c.bench_function(&format!("validate_subpath_float_n{n}"), |b| {

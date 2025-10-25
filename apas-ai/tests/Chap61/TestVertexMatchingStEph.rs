@@ -121,7 +121,7 @@ fn test_matching_properties() {
     }
 
     // Property 2: No two edges share an endpoint
-    let all_edges: Vec<&Edge<usize>> = matching.iter().collect();
+    let all_edges = matching.iter().collect::<Vec<&Edge<usize>>>();
     for i in 0..all_edges.len() {
         for j in (i + 1)..all_edges.len() {
             let Edge(u1, v1) = all_edges[i];

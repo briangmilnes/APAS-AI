@@ -7,7 +7,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn test_no_cycle_empty_graph() {
-    let graph: ArraySeqStPerS<ArraySeqStPerS<usize>> = ArraySeqStPerS::empty();
+    let graph = ArraySeqStPerS::<ArraySeqStPerS<usize>>::empty();
     let result = has_cycle(&graph);
     assert!(!result);
 }

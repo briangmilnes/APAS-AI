@@ -15,12 +15,12 @@ pub fn bench_divcon_mt(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    let a125: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 125);
+    let a125 = ArraySeqMtEphS::<i32>::tabulate(&|i| (i as i32) % 10 - 4, 125);
     group.bench_function("divcon_mt_125", |b| {
         b.iter(|| ArraySeqMtEphS::max_contig_sub_sum_divcon_mt(black_box(&a125)))
     });
 
-    let a200: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 200);
+    let a200 = ArraySeqMtEphS::<i32>::tabulate(&|i| (i as i32) % 10 - 4, 200);
     group.bench_function("divcon_mt_200", |b| {
         b.iter(|| ArraySeqMtEphS::max_contig_sub_sum_divcon_mt(black_box(&a200)))
     });

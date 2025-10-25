@@ -7,7 +7,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new_stack_is_empty() {
-    let stack: StackStEph<i32> = StackStEph::new();
+    let stack = StackStEph::<i32>::new();
     assert!(stack.is_empty());
     assert_eq!(stack.size(), 0);
 }
@@ -54,7 +54,7 @@ fn test_peek() {
 
 #[test]
 fn test_pop_from_empty() {
-    let mut stack: StackStEph<String> = StackStEph::new();
+    let mut stack = StackStEph::<String>::new();
     assert_eq!(stack.pop(), None);
     assert!(stack.is_empty());
 }
@@ -122,7 +122,7 @@ fn test_size_tracking() {
 
 #[test]
 fn test_default_trait() {
-    let stack: StackStEph<i32> = StackStEph::default();
+    let stack = StackStEph::<i32>::default();
     assert!(stack.is_empty());
     assert_eq!(stack.size(), 0);
 }

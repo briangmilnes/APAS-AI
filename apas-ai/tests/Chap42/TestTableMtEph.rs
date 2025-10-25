@@ -28,7 +28,7 @@ fn test_tablemtephlit_macro_functionality() {
 
 #[test]
 fn test_table_empty() {
-    let table: TableMtEph<i32, String> = TableMtEph::empty();
+    let table = TableMtEph::<i32, String>::empty();
     assert_eq!(table.size(), 0);
 }
 

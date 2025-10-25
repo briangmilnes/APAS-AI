@@ -69,7 +69,7 @@ fn test_disconnected_components() {
 
 #[test]
 fn test_empty_graph() {
-    let graph: ArraySeqStPerS<ArraySeqStPerS<usize>> = ArraySeqStPerS::empty();
+    let graph = ArraySeqStPerS::<ArraySeqStPerS<usize>>::empty();
     let result = topological_sort_opt(&graph);
     assert!(result.is_some());
 }
@@ -97,7 +97,7 @@ fn test_topo_sort_disconnected() {
 
 #[test]
 fn test_topo_sort_empty() {
-    let graph: ArraySeqStPerS<ArraySeqStPerS<usize>> = ArraySeqStPerS::empty();
+    let graph = ArraySeqStPerS::<ArraySeqStPerS<usize>>::empty();
     let result = topo_sort(&graph);
     assert_eq!(result.length(), 0);
 }

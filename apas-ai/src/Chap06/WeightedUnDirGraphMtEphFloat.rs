@@ -77,7 +77,7 @@ pub mod WeightedUnDirGraphMtEphFloat {
         /// claude-4-sonet: Work Θ(|E|), Span Θ(log |E|), Parallelism Θ(|E|/log |E|) - parallel divide-and-conquer filter
         fn neighbors_weighted(&self, v: &V) -> SetStEph<Pair<V, OrderedFloat<f64>>> {
             // PARALLEL: filter weighted edges using divide-and-conquer
-            let edges: Vec<LabEdge<V, OrderedF64>> = self.labeled_edges().iter().cloned().collect();
+            let edges = self.labeled_edges().iter().cloned().collect::<Vec<LabEdge<V, OrderedF64>>>();
 
             // Parallel divide-and-conquer with proper base cases
             fn parallel_neighbors<V: HashOrd + MtT + 'static>(

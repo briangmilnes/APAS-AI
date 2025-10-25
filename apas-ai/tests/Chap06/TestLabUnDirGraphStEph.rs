@@ -8,7 +8,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn test_labelled_undir_graph_empty() {
-    let g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+    let g = LabUnDirGraphStEph::<i32, &str>::empty();
     assert_eq!(g.vertices().size(), 0);
     assert_eq!(g.labeled_edges().size(), 0);
     assert_eq!(format!("{g}"), "LabUnDirGraph(V: {}, E: {})");
@@ -16,7 +16,7 @@ fn test_labelled_undir_graph_empty() {
 
 #[test]
 fn test_labelled_undir_graph_add_vertex() {
-    let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+    let mut g = LabUnDirGraphStEph::<i32, &str>::empty();
     g.add_vertex(1);
     g.add_vertex(2);
 
@@ -28,7 +28,7 @@ fn test_labelled_undir_graph_add_vertex() {
 
 #[test]
 fn test_labelled_undir_graph_add_labeled_edge() {
-    let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+    let mut g = LabUnDirGraphStEph::<i32, &str>::empty();
     g.add_labeled_edge(1, 2, "edge12");
     g.add_labeled_edge(2, 3, "edge23");
 
@@ -49,7 +49,7 @@ fn test_labelled_undir_graph_add_labeled_edge() {
 
 #[test]
 fn test_labelled_undir_graph_neighbors() {
-    let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+    let mut g = LabUnDirGraphStEph::<i32, &str>::empty();
     g.add_labeled_edge(1, 2, "a");
     g.add_labeled_edge(1, 3, "b");
     g.add_labeled_edge(2, 3, "c");
@@ -72,7 +72,7 @@ fn test_labelled_undir_graph_neighbors() {
 
 #[test]
 fn test_labelled_undir_graph_edges() {
-    let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+    let mut g = LabUnDirGraphStEph::<i32, &str>::empty();
     g.add_labeled_edge(1, 2, "label");
     g.add_labeled_edge(2, 3, "another");
 
@@ -167,7 +167,7 @@ fn test_labelled_undir_graph_debug() {
 
 #[test]
 fn test_labelled_undir_graph_self_loop() {
-    let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+    let mut g = LabUnDirGraphStEph::<i32, &str>::empty();
     g.add_labeled_edge(1, 1, "self_loop");
 
     assert!(g.has_edge(&1, &1));
@@ -182,7 +182,7 @@ fn test_labelled_undir_graph_self_loop() {
 fn test_labelled_undir_graph_multiple_edges_same_vertices() {
     // This test checks if we can have multiple edges between same vertices
     // Current implementation allows multiple labeled edges between same vertices
-    let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+    let mut g = LabUnDirGraphStEph::<i32, &str>::empty();
     g.add_labeled_edge(1, 2, "first");
     g.add_labeled_edge(1, 2, "second"); // This creates a second labeled edge
 

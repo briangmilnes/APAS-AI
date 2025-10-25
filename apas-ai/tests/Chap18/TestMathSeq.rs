@@ -141,7 +141,7 @@ fn test_domain_empty_is_empty() {
 #[test]
 fn test_iter_collect_and_sum() {
     let s: MathSeqS<N> = MathSeqSLit![1, 2, 3, 4];
-    let vals: Vec<N> = s.iter().copied().collect();
+    let vals = s.iter().copied().collect::<Vec<N>>();
     // Compare against expected MathSeq for consistency
     let expected: MathSeqS<N> = MathSeqSLit![1, 2, 3, 4];
     assert_eq!(vals, expected.iter().copied().collect::<Vec<N>>());
@@ -163,7 +163,7 @@ fn test_iter_mut_modify() {
 #[test]
 fn test_into_iter_consume() {
     let s: MathSeqS<N> = MathSeqSLit![1, 2, 3];
-    let vals: Vec<N> = s.into_iter().collect();
+    let vals = s.into_iter().collect::<Vec<N>>();
     assert_eq!(vals, vec![1, 2, 3]);
 }
 
@@ -266,15 +266,15 @@ fn test_mathseq_empty_operations_comprehensive() {
     assert_eq!(empty_subseq2.len(), 0);
 
     // Iterator on empty sequence should be empty
-    let collected: Vec<N> = empty.iter().cloned().collect();
+    let collected = empty.iter().cloned().collect::<Vec<N>>();
     assert_eq!(collected.len(), 0);
 
     // Mutable iterator on empty sequence should be empty
     let mut empty_mut = empty.clone();
-    let mut_collected: Vec<N> = empty_mut.iter_mut().map(|x| *x).collect();
+    let mut_collected = empty_mut.iter_mut().map(|x| *x).collect::<Vec<N>>();
     assert_eq!(mut_collected.len(), 0);
 
-    let into_collected: Vec<N> = empty.clone().into_iter().collect();
+    let into_collected = empty.clone().into_iter().collect::<Vec<N>>();
     assert_eq!(into_collected.len(), 0);
 
     // Equality with other empty sequences
@@ -320,7 +320,7 @@ fn test_mathseq_single_element_boundary() {
     assert!(result_oob.is_err());
 
     // Iterator operations
-    let collected: Vec<N> = single.iter().cloned().collect();
+    let collected = single.iter().cloned().collect::<Vec<N>>();
     assert_eq!(collected.len(), 1);
     assert_eq!(collected[0], 42);
 
@@ -330,7 +330,7 @@ fn test_mathseq_single_element_boundary() {
     }
     assert_eq!(*single_mut2.nth(0), 84);
 
-    let into_collected: Vec<N> = single.clone().into_iter().collect();
+    let into_collected = single.clone().into_iter().collect::<Vec<N>>();
     assert_eq!(into_collected.len(), 1);
     assert_eq!(into_collected[0], 42);
 
@@ -402,7 +402,7 @@ fn test_mathseq_iterator_boundaries() {
 
     // Test iterator ending at end
     let iter_end = seq.iter();
-    let collected: Vec<N> = iter_end.cloned().collect();
+    let collected = iter_end.cloned().collect::<Vec<N>>();
     assert_eq!(collected.len(), 5);
     assert_eq!(collected[0], 10); // First boundary
     assert_eq!(collected[4], 50); // Last boundary
@@ -466,7 +466,7 @@ fn test_mathseq_maximum_size_boundary() {
     // Test maximum size collection boundary - use reasonably large size
     // to verify graceful handling without causing memory issues
     let large_size = 50_000usize;
-    let large_seq: MathSeqS<N> = MathSeqS::with_len(large_size, 42);
+    let large_seq = MathSeqS::<N>::with_len(large_size, 42);
 
     // Verify basic operations work on large sequence
     assert_eq!(large_seq.length(), large_size);
@@ -521,8 +521,8 @@ fn test_mathseq_maximum_size_boundary() {
     assert_eq!(*large_seq_mut2.nth(1000), 42); // Unchanged
 
     // Test into_iter on smaller subset to avoid memory issues
-    let medium_seq: MathSeqS<N> = MathSeqS::with_len(1000, 77);
-    let collected: Vec<N> = medium_seq.into_iter().collect();
+    let medium_seq = MathSeqS::<N>::with_len(1000, 77);
+    let collected = medium_seq.into_iter().collect::<Vec<N>>();
     assert_eq!(collected.len(), 1000);
     assert_eq!(collected[0], 77);
     assert_eq!(collected[999], 77);

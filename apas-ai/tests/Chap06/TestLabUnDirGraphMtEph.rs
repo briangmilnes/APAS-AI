@@ -28,7 +28,7 @@ fn test_labundirgraphmtephlit_macro_functionality() {
 
 #[test]
 fn test_labundirgraphmteph_empty() {
-    let empty_graph: LabUnDirGraphMtEph<i32, String> = LabUnDirGraphMtEph::empty();
+    let empty_graph = LabUnDirGraphMtEph::<i32, String>::empty();
     assert_eq!(empty_graph.vertices().size(), 0);
     assert_eq!(empty_graph.labeled_edges().size(), 0);
 }
@@ -160,7 +160,7 @@ fn test_labundirgraphmteph_nplusminusofvertices() {
 #[test]
 fn test_labundirgraphmteph_edge_cases() {
     // Test empty graph
-    let empty: LabUnDirGraphMtEph<i32, String> = LabUnDirGraphMtEph::empty();
+    let empty = LabUnDirGraphMtEph::<i32, String>::empty();
     assert!(!empty.has_edge(&0, &1));
     assert_eq!(empty.neighbors(&0).size(), 0);
     assert_eq!(empty.neighbors(&0).size(), 0);
@@ -324,7 +324,7 @@ fn test_edges() {
 
 #[test]
 fn test_add_vertex() {
-    let mut g: LabUnDirGraphMtEph<i32, String> = LabUnDirGraphMtEph::empty();
+    let mut g = LabUnDirGraphMtEph::<i32, String>::empty();
     assert_eq!(g.vertices().size(), 0);
 
     g.add_vertex(1);
@@ -342,7 +342,7 @@ fn test_add_vertex() {
 
 #[test]
 fn test_add_labeled_edge() {
-    let mut g: LabUnDirGraphMtEph<i32, String> = LabUnDirGraphMtEph::empty();
+    let mut g = LabUnDirGraphMtEph::<i32, String>::empty();
 
     g.add_labeled_edge(1, 2, "edge12".to_string());
     assert_eq!(g.vertices().size(), 2);

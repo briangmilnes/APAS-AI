@@ -99,7 +99,7 @@ pub mod DirGraphMtEph {
 
         fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
             // PARALLEL: map-reduce over vertices using divide-and-conquer
-            let vertices: Vec<V> = u_set.iter().cloned().collect();
+            let vertices = u_set.iter().cloned().collect::<Vec<V>>();
 
             // Parallel map-reduce with proper base cases
             fn parallel_ng_of_vertices<V: StT + MtT + Hash + 'static>(
@@ -134,7 +134,7 @@ pub mod DirGraphMtEph {
 
         fn NPlus(&self, v: &V) -> SetStEph<V> {
             // PARALLEL: filter arcs using divide-and-conquer
-            let arcs: Vec<Edge<V>> = self.A.iter().cloned().collect();
+            let arcs = self.A.iter().cloned().collect::<Vec<Edge<V>>>();
 
             // Parallel divide-and-conquer with proper base cases
             fn parallel_nplus<V: StT + MtT + Hash + 'static>(arcs: Vec<Edge<V>>, v: V) -> SetStEph<V> {
@@ -173,7 +173,7 @@ pub mod DirGraphMtEph {
 
         fn NMinus(&self, v: &V) -> SetStEph<V> {
             // PARALLEL: filter arcs using divide-and-conquer
-            let arcs: Vec<Edge<V>> = self.A.iter().cloned().collect();
+            let arcs = self.A.iter().cloned().collect::<Vec<Edge<V>>>();
 
             // Parallel divide-and-conquer with proper base cases
             fn parallel_nminus<V: StT + MtT + Hash + 'static>(arcs: Vec<Edge<V>>, v: V) -> SetStEph<V> {
@@ -212,7 +212,7 @@ pub mod DirGraphMtEph {
 
         fn NPlusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
             // PARALLEL: map-reduce over vertices using divide-and-conquer
-            let vertices: Vec<V> = u_set.iter().cloned().collect();
+            let vertices = u_set.iter().cloned().collect::<Vec<V>>();
 
             // Parallel map-reduce with proper base cases
             fn parallel_nplus_of_vertices<V: StT + MtT + Hash + 'static>(
@@ -247,7 +247,7 @@ pub mod DirGraphMtEph {
 
         fn NMinusOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
             // PARALLEL: map-reduce over vertices using divide-and-conquer
-            let vertices: Vec<V> = u_set.iter().cloned().collect();
+            let vertices = u_set.iter().cloned().collect::<Vec<V>>();
 
             // Parallel map-reduce with proper base cases
             fn parallel_nminus_of_vertices<V: StT + MtT + Hash + 'static>(

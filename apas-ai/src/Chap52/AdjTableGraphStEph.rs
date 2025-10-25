@@ -102,7 +102,7 @@ pub mod AdjTableGraphStEph {
             // Get all vertices before deleting
             let domain = self.adj.domain();
             let seq = domain.to_seq();
-            let vertices: Vec<V> = (0..seq.length()).map(|i| seq.nth(i).clone()).collect();
+            let vertices = (0..seq.length()).map(|i| seq.nth(i).clone()).collect::<Vec<V>>();
 
             self.adj.delete(&v_clone);
             // Remove v from all neighbor sets

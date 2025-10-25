@@ -79,7 +79,7 @@ pub mod UnDirGraphMtEph {
 
         fn NG(&self, v: &V) -> SetStEph<V> {
             // PARALLEL: filter edges using divide-and-conquer
-            let edges: Vec<Edge<V>> = self.E.iter().cloned().collect();
+            let edges = self.E.iter().cloned().collect::<Vec<Edge<V>>>();
 
             // Parallel divide-and-conquer with proper base cases
             fn parallel_ng<V: StT + MtT + Hash + 'static>(edges: Vec<Edge<V>>, v: V) -> SetStEph<V> {
@@ -122,7 +122,7 @@ pub mod UnDirGraphMtEph {
 
         fn NGOfVertices(&self, u_set: &SetStEph<V>) -> SetStEph<V> {
             // PARALLEL: map-reduce over vertices using divide-and-conquer
-            let vertices: Vec<V> = u_set.iter().cloned().collect();
+            let vertices = u_set.iter().cloned().collect::<Vec<V>>();
 
             // Parallel map-reduce with proper base cases
             fn parallel_ng_of_vertices<V: StT + MtT + Hash + 'static>(

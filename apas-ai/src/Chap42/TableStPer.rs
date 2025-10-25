@@ -95,9 +95,8 @@ pub mod TableStPer {
         }
 
         fn domain(&self) -> ArraySetStEph<K> {
-            let keys: Vec<K> = (0..self.entries.length())
-                .map(|i| self.entries.nth(i).0.clone())
-                .collect();
+            let keys = (0..self.entries.length())
+                .map(|i| self.entries.nth(i).0.clone()).collect::<Vec<K>>();
             ArraySetStEph::from_seq(crate::Chap19::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphS::from_vec(
                 keys,
             ))

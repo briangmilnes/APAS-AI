@@ -26,7 +26,7 @@ fn test_labdirgraphmtephlit_macro_functionality() {
 
 #[test]
 fn test_labdirgraphmteph_empty() {
-    let empty_graph: LabDirGraphMtEph<i32, String> = LabDirGraphMtEph::empty();
+    let empty_graph = LabDirGraphMtEph::<i32, String>::empty();
     assert_eq!(empty_graph.vertices().size(), 0);
     assert_eq!(empty_graph.labeled_arcs().size(), 0);
     assert_eq!(empty_graph.arcs().size(), 0);
@@ -78,7 +78,7 @@ fn test_labdirgraphmteph_basic_operations() {
 
 #[test]
 fn test_labdirgraphmteph_mutable_operations() {
-    let mut g: LabDirGraphMtEph<i32, String> = LabDirGraphMtEph::empty();
+    let mut g = LabDirGraphMtEph::<i32, String>::empty();
 
     // Add vertices
     g.add_vertex(0);
@@ -145,7 +145,7 @@ fn test_labdirgraphmteph_neighbors() {
 #[test]
 fn test_labdirgraphmteph_edge_cases() {
     // Test empty graph
-    let empty: LabDirGraphMtEph<i32, String> = LabDirGraphMtEph::empty();
+    let empty = LabDirGraphMtEph::<i32, String>::empty();
     assert!(!empty.has_arc(&0, &1));
     assert_eq!(empty.out_neighbors(&0).size(), 0);
     assert_eq!(empty.in_neighbors(&0).size(), 0);

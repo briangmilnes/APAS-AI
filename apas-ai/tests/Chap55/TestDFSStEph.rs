@@ -8,7 +8,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn test_empty_graph() {
-    let graph: ArraySeqStEphS<ArraySeqStEphS<usize>> = ArraySeqStEphS::from_vec(vec![]);
+    let graph = ArraySeqStEphS::<ArraySeqStEphS<usize>>::from_vec(vec![]);
     let result = dfs(&graph, 0);
     assert_eq!(result.size(), 0);
 }

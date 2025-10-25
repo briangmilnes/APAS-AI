@@ -39,7 +39,7 @@ pub mod StarPartitionStEph {
     /// Returns:
     /// - (centers, partition_map): Set of center vertices and mapping from each vertex to its center
     pub fn sequential_star_partition<V: StT + Hash + Ord>(graph: &UnDirGraphStEph<V>) -> (SetStEph<V>, HashMap<V, V>) {
-        let mut partition_map: HashMap<V, V> = HashMap::new();
+        let mut partition_map = HashMap::<V, V>::new();
         let mut centers: SetStEph<V> = SetLit![];
         let mut processed: SetStEph<V> = SetLit![];
 

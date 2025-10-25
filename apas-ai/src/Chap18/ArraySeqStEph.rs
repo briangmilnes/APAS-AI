@@ -121,7 +121,7 @@ pub mod ArraySeqStEph {
         }
 
         fn flatten(a: &ArraySeqStEphS<ArraySeqStEphS<T>>) -> ArraySeqStEphS<T> {
-            let mut values: Vec<T> = Vec::new();
+            let mut values = Vec::<T>::new();
             for i in 0..a.length() {
                 let inner = a.nth(i);
                 for j in 0..inner.length() {
@@ -135,7 +135,7 @@ pub mod ArraySeqStEph {
             pairs: &ArraySeqStEphS<Pair<K, V>>,
             cmp: fn(&K, &K) -> O,
         ) -> ArraySeqStEphS<Pair<K, ArraySeqStEphS<V>>> {
-            let mut groups: Vec<Pair<K, Vec<V>>> = Vec::new();
+            let mut groups = Vec::<Pair<K, Vec<V>>>::new();
             'outer: for i in 0..pairs.length() {
                 let Pair(key, value) = pairs.nth(i).clone();
                 for group in groups.iter_mut() {
@@ -146,10 +146,9 @@ pub mod ArraySeqStEph {
                 }
                 groups.push(Pair(key, vec![value]));
             }
-            let collected: Vec<Pair<K, ArraySeqStEphS<V>>> = groups
+            let collected = groups
                 .into_iter()
-                .map(|Pair(key, bucket)| Pair(key, ArraySeqStEphS::from_vec(bucket)))
-                .collect();
+                .map(|Pair(key, bucket)| Pair(key, ArraySeqStEphS::from_vec(bucket))).collect::<Vec<Pair<K, ArraySeqStEphS<V>>>>();
             ArraySeqStEphS::from_vec(collected)
         }
 
@@ -166,7 +165,7 @@ pub mod ArraySeqStEph {
         fn singleton(item: T) -> Self { Self::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, length: N) -> ArraySeqStEphS<T> {
-            let mut values: Vec<T> = Vec::with_capacity(length);
+            let mut values = Vec::<T>::with_capacity(length);
             for i in 0..length {
                 values.push(f(i));
             }
@@ -174,7 +173,7 @@ pub mod ArraySeqStEph {
         }
 
         fn map<U: StT, F: Fn(&T) -> U>(a: &ArraySeqStEphS<T>, f: &F) -> ArraySeqStEphS<U> {
-            let mut values: Vec<U> = Vec::with_capacity(a.length());
+            let mut values = Vec::<U>::with_capacity(a.length());
             for i in 0..a.length() {
                 values.push(f(a.nth(i)));
             }
@@ -183,7 +182,7 @@ pub mod ArraySeqStEph {
 
         fn append(&self, b: &ArraySeqStEphS<T>) -> ArraySeqStEphS<T> {
             let total = self.length() + b.length();
-            let mut values: Vec<T> = Vec::with_capacity(total);
+            let mut values = Vec::<T>::with_capacity(total);
             for i in 0..self.length() {
                 values.push(self.nth(i).clone());
             }
@@ -194,7 +193,7 @@ pub mod ArraySeqStEph {
         }
 
         fn filter<F: PredSt<T>>(&self, pred: &F) -> ArraySeqStEphS<T> {
-            let mut kept: Vec<T> = Vec::new();
+            let mut kept = Vec::<T>::new();
             for i in 0..self.length() {
                 let value = self.nth(i);
                 if pred(value) {
@@ -221,7 +220,7 @@ pub mod ArraySeqStEph {
         }
 
         fn scan<F: Fn(&T, &T) -> T>(a: &ArraySeqStEphS<T>, f: &F, id: T) -> (ArraySeqStEphS<T>, T) {
-            let mut prefixes: Vec<T> = Vec::with_capacity(a.length());
+            let mut prefixes = Vec::<T>::with_capacity(a.length());
             let mut acc = id.clone();
             prefixes.push(acc.clone());
             for i in 0..a.length() {
@@ -237,7 +236,7 @@ pub mod ArraySeqStEph {
         fn isSingleton(&self) -> B { self.length() == 1 }
 
         fn inject(&mut self, updates: &ArraySeqStEphS<Pair<N, T>>) -> &mut Self {
-            let mut last_values: HashMap<N, T> = HashMap::new();
+            let mut last_values = HashMap::<N, T>::new();
             for i in 0..updates.length() {
                 let Pair(index, value) = updates.nth(i).clone();
                 if index < self.data.len() {

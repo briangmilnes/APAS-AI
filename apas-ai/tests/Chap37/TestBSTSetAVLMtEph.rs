@@ -22,7 +22,7 @@ fn test_bstsetavlmtephlit_macro_functionality() {
 
 #[test]
 fn test_empty() {
-    let set: BSTSetAVLMtEph<i32> = BSTSetAVLMtEph::empty();
+    let set = BSTSetAVLMtEph::<i32>::empty();
     assert_eq!(set.size(), 0);
     assert!(set.is_empty());
 }

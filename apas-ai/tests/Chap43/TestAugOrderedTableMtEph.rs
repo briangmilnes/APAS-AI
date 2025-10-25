@@ -13,7 +13,7 @@ use apas_ai::Types::Types::*;
 #[test]
 fn test_empty_table() {
     let max_reducer = |a: &i32, b: &i32| if a > b { *a } else { *b };
-    let table: AugOrderedTableMtEph<String, i32, _> = AugOrderedTableMtEph::empty(max_reducer, i32::MIN);
+    let table = AugOrderedTableMtEph::<String, i32, _>::empty(max_reducer, i32::MIN);
 
     assert_eq!(table.size(), 0);
     assert_eq!(table.reduce_val(), i32::MIN);

@@ -34,7 +34,7 @@ fn test_min_edit_distance_mt_eph_empty() {
 
 #[test]
 fn test_constructors() {
-    let solver: MinEditDistMtEphS<char> = MinEditDistMtEphS::new();
+    let solver = MinEditDistMtEphS::<char>::new();
     assert_eq!(solver.source().length(), 0);
     assert_eq!(solver.target().length(), 0);
 

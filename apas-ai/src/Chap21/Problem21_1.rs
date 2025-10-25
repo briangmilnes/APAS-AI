@@ -24,7 +24,7 @@ pub mod Problem21_1 {
             return ArraySeqStPerS::from_vec(Vec::new());
         }
         let len = n * (n - 1);
-        let mut v: Vec<Pair<N, N>> = Vec::with_capacity(len);
+        let mut v = Vec::<Pair<N, N>>::with_capacity(len);
         for x in 0..n {
             for y in 1..n {
                 v.push(Pair(x, y));

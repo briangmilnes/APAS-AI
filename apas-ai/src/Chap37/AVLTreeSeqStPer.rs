@@ -191,7 +191,7 @@ pub mod AVLTreeSeqStPer {
             if e <= s {
                 return Self::empty();
             }
-            let mut vals: Vec<T> = Vec::with_capacity(e - s);
+            let mut vals = Vec::<T>::with_capacity(e - s);
             let all = self.values_in_order();
             vals.extend(all[s..e].iter().cloned());
             Self::from_vec(vals)

@@ -84,7 +84,7 @@ pub mod PrimStEph {
         start: &V,
     ) -> SetStEph<LabEdge<V, OrderedFloat<f64>>> {
         let mut mst_edges = SetLit![];
-        let mut visited: HashSet<V> = HashSet::new();
+        let mut visited = HashSet::<V>::new();
 
         // Priority queue
         let mut pq = BinaryHeapPQ::<PQEntry<V>>::singleton(pq_entry_new(OrderedFloat(0.0), start.clone(), None));

@@ -150,13 +150,13 @@ pub mod ArraySeqMtEph {
             if a.length() == 0 {
                 return ArraySeqMtEphS::from_vec(vec![]);
             }
-            let mut groups: Vec<Pair<K, ArraySeqMtEphS<V>>> = Vec::new();
+            let mut groups = Vec::<Pair<K, ArraySeqMtEphS<V>>>::new();
             for i in 0..a.length() {
                 let Pair(key, value) = a.nth_cloned(i);
                 let mut found_group = false;
                 for group in &mut groups {
                     if cmp(&key, &group.0) == O::Equal {
-                        let mut values: Vec<V> = Vec::with_capacity(group.1.length() + 1);
+                        let mut values = Vec::<V>::with_capacity(group.1.length() + 1);
                         for j in 0..group.1.length() {
                             values.push(group.1.nth_cloned(j));
                         }
@@ -175,7 +175,7 @@ pub mod ArraySeqMtEph {
 
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T) {
             let mut acc = id.clone();
-            let mut values: Vec<T> = Vec::with_capacity(a.length());
+            let mut values = Vec::<T>::with_capacity(a.length());
             for i in 0..a.length() {
                 let item = a.nth_cloned(i);
                 acc = f(&acc, &item);
@@ -211,7 +211,7 @@ pub mod ArraySeqMtEph {
         fn singleton(item: T) -> ArraySeqMtEphS<T> { ArraySeqMtEphS::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T> {
-            let mut values: Vec<T> = Vec::with_capacity(n);
+            let mut values = Vec::<T>::with_capacity(n);
             for i in 0..n {
                 values.push(f(i));
             }
@@ -251,7 +251,7 @@ pub mod ArraySeqMtEph {
         fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> ArraySeqMtEphS<T> {
             let na = a.length();
             let nb = b.length();
-            let mut values: Vec<T> = Vec::with_capacity(na + nb);
+            let mut values = Vec::<T>::with_capacity(na + nb);
             for i in 0..na {
                 values.push(a.nth_cloned(i));
             }
@@ -262,7 +262,7 @@ pub mod ArraySeqMtEph {
         }
 
         fn filter<F: PredMt<T>>(a: &ArraySeqMtEphS<T>, pred: &F) -> ArraySeqMtEphS<T> {
-            let mut kept: Vec<T> = Vec::new();
+            let mut kept = Vec::<T>::new();
             let n = a.length();
             for i in 0..n {
                 let value = a.nth_cloned(i);
@@ -300,7 +300,7 @@ pub mod ArraySeqMtEph {
         }
 
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {
-            let mut values: Vec<T> = Vec::new();
+            let mut values = Vec::<T>::new();
             for i in 0..ss.length() {
                 let inner = ss.nth_cloned(i);
                 for j in 0..inner.length() {
@@ -312,7 +312,7 @@ pub mod ArraySeqMtEph {
 
         fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
             let mut out = a.clone();
-            let mut seen: HashSet<N> = HashSet::new();
+            let mut seen = HashSet::<N>::new();
             for i in 0..updates.length() {
                 let Pair(idx, val) = updates.nth_cloned(i);
                 if seen.insert(idx) {

@@ -113,14 +113,13 @@ pub mod MatrixChainMtEph {
                 0 // Base case: single matrix, no multiplication needed
             } else {
                 // Compute costs for each possible split in parallel
-                let costs: Vec<usize> = (i..j)
+                let costs = (i..j)
                     .map(|k| {
                         let left_cost = self.matrix_chain_rec(i, k);
                         let right_cost = self.matrix_chain_rec(k + 1, j);
                         let split_cost = self.multiply_cost(i, k, j);
                         left_cost + right_cost + split_cost
-                    })
-                    .collect();
+                    }).collect::<Vec<usize>>();
 
                 // Use parallel reduction to find minimum
                 self.parallel_min_reduction(costs)
@@ -152,13 +151,12 @@ pub mod MatrixChainMtEph {
         }
 
         fn from_dim_pairs(dim_pairs: Vec<Pair<usize, usize>>) -> Self {
-            let dimensions: Vec<MatrixDim> = dim_pairs
+            let dimensions = dim_pairs
                 .into_iter()
                 .map(|pair| MatrixDim {
                     rows: pair.0,
                     cols: pair.1,
-                })
-                .collect();
+                }).collect::<Vec<MatrixDim>>();
 
             Self {
                 dimensions: Arc::new(Mutex::new(dimensions)),

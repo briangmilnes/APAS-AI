@@ -202,7 +202,7 @@ fn test_collect_groups_by_key() {
 
 #[test]
 fn test_from_vec_empty() {
-    let seq: ArraySeqStEphS<N> = ArraySeqStEphS::from_vec(vec![]);
+    let seq = ArraySeqStEphS::<N>::from_vec(vec![]);
     assert_eq!(seq.length(), 0);
 }
 
@@ -241,11 +241,11 @@ fn test_set_success() {
 #[test]
 fn test_iter_comprehensive() {
     let seq = ArraySeqStEphSLit![10, 20, 30, 40, 50];
-    let collected: Vec<N> = seq.iter().copied().collect();
+    let collected = seq.iter().copied().collect::<Vec<N>>();
     assert_eq!(collected, vec![10, 20, 30, 40, 50]);
 
-    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
-    let empty_collected: Vec<N> = empty.iter().copied().collect();
+    let empty = ArraySeqStEphS::<N>::empty();
+    let empty_collected = empty.iter().copied().collect::<Vec<N>>();
     assert_eq!(empty_collected.len(), 0);
 }
 
@@ -293,35 +293,35 @@ fn test_debug_display() {
 
 #[test]
 fn test_map_empty() {
-    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+    let empty = ArraySeqStEphS::<N>::empty();
     let mapped = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::map(&empty, &|x| x + 1);
     assert_eq!(mapped.length(), 0);
 }
 
 #[test]
 fn test_filter_empty() {
-    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+    let empty = ArraySeqStEphS::<N>::empty();
     let filtered = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::filter(&empty, &|_| true);
     assert_eq!(filtered.length(), 0);
 }
 
 #[test]
 fn test_flatten_empty() {
-    let empty: ArraySeqStEphS<ArraySeqStEphS<N>> = ArraySeqStEphS::empty();
+    let empty = ArraySeqStEphS::<ArraySeqStEphS<N>>::empty();
     let flattened = <ArraySeqStEphS<N> as ArraySeqStEphBaseTrait<N>>::flatten(&empty);
     assert_eq!(flattened.length(), 0);
 }
 
 #[test]
 fn test_reduce_empty() {
-    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+    let empty = ArraySeqStEphS::<N>::empty();
     let result = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::reduce(&empty, &|a, b| a + b, 100);
     assert_eq!(result, 100);
 }
 
 #[test]
 fn test_scan_empty() {
-    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+    let empty = ArraySeqStEphS::<N>::empty();
     let (prefixes, total) = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::scan(&empty, &|a, b| a + b, 0);
     // scan returns initial value as first prefix even for empty sequence
     assert_eq!(prefixes.length(), 1);
@@ -332,7 +332,7 @@ fn test_scan_empty() {
 #[test]
 fn test_append_empty() {
     let seq = ArraySeqStEphSLit![1, 2, 3];
-    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+    let empty = ArraySeqStEphS::<N>::empty();
 
     let result1 = <ArraySeqStEphS<N> as ArraySeqStEphRedefinableTrait<N>>::append(&seq, &empty);
     assert_eq!(result1, seq);
@@ -347,7 +347,7 @@ fn test_append_empty() {
 #[test]
 fn test_inject_empty_updates() {
     let mut seq = ArraySeqStEphSLit![1, 2, 3];
-    let empty_updates: ArraySeqStEphS<Pair<N, N>> = ArraySeqStEphS::empty();
+    let empty_updates = ArraySeqStEphS::<Pair<N, N>>::empty();
     seq.inject(&empty_updates);
     assert_eq!(seq, ArraySeqStEphSLit![1, 2, 3]);
 }

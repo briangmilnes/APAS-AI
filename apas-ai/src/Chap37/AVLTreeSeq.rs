@@ -148,7 +148,7 @@ pub mod AVLTreeSeq {
             if e <= s {
                 return <AVLTreeS<T> as AVLTreeSeq<T>>::empty();
             }
-            let mut vals: Vec<T> = Vec::with_capacity(e - s);
+            let mut vals = Vec::<T>::with_capacity(e - s);
             for i in s..e {
                 vals.push(self.nth(i).clone());
             }
@@ -235,7 +235,7 @@ pub mod AVLTreeSeq {
             }
             if let Some(idx) = found_index {
                 // Rebuild without the element at idx, using ArraySeq preallocation
-                let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
+                let mut out_vec = Vec::<T>::with_capacity(len - 1);
                 for i in 0..idx {
                     out_vec.push(self.nth(i).clone());
                 }

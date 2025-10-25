@@ -30,7 +30,7 @@ fn test_weightedundirgraphstephfloatlit_macro_functionality() {
 
 #[test]
 fn test_create_empty_graph() {
-    let graph: WeightedUnDirGraphStEphFloat<i32> = WeightedUnDirGraphStEphFloat::empty();
+    let graph = WeightedUnDirGraphStEphFloat::<i32>::empty();
     assert_eq!(graph.vertices().size(), 0);
     assert_eq!(graph.edges().size(), 0);
 }

@@ -20,8 +20,8 @@ fn bench_tabulate_map_mteph_ch18(c: &mut Criterion) {
     for &n in &[1_000, 10_000] {
         group.bench_with_input(BenchmarkId::new("tabulate_then_map", n), &n, |b, &len| {
             b.iter(|| {
-                let s: ArraySeqMtEphS<N> = ArraySeqMtEphS::tabulate(&identity, len);
-                let m: ArraySeqMtEphS<N> = ArraySeqMtEphS::map(&s, &increment);
+                let s = ArraySeqMtEphS::<N>::tabulate(&identity, len);
+                let m = ArraySeqMtEphS::<N>::map(&s, &increment);
                 black_box((s.length(), m.length()))
             })
         });

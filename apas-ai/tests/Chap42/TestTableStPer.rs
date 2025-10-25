@@ -28,7 +28,7 @@ fn test_tablestperlit_macro_functionality() {
 
 #[test]
 fn test_table_empty_and_size() {
-    let table: TableStPer<i32, String> = TableStPer::empty();
+    let table = TableStPer::<i32, String>::empty();
     assert_eq!(table.size(), 0);
 }
 
@@ -249,7 +249,7 @@ fn test_table_macro() {
 
 #[test]
 fn test_table_empty_operations() {
-    let empty: TableStPer<i32, String> = TableStPer::empty();
+    let empty = TableStPer::<i32, String>::empty();
 
     assert_eq!(empty.size(), 0);
     assert_eq!(empty.find(&1), None);

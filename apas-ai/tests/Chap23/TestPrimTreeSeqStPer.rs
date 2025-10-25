@@ -5,7 +5,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn expose_zero_returns_zero() {
-    let seq: PrimTreeSeqStS<N> = PrimTreeSeqStS::empty();
+    let seq = PrimTreeSeqStS::<N>::empty();
     assert!(matches!(seq.expose(), PrimTreeSeqStTree::Zero));
 }
 
@@ -35,7 +35,7 @@ fn expose_two_splits_sequence() {
 
 #[test]
 fn join_zero_creates_empty_sequence() {
-    let seq: PrimTreeSeqStS<N> = PrimTreeSeqStS::join(PrimTreeSeqStTree::Zero);
+    let seq = PrimTreeSeqStS::<N>::join(PrimTreeSeqStTree::Zero);
     assert_eq!(seq.length(), 0);
 }
 
@@ -219,7 +219,7 @@ fn test_large_sequence_expose_join() {
 
 #[test]
 fn test_empty() {
-    let seq: PrimTreeSeqStS<i32> = PrimTreeSeqStS::empty();
+    let seq = PrimTreeSeqStS::<i32>::empty();
     assert_eq!(seq.length(), 0);
 }
 

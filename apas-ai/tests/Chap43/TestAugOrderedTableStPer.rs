@@ -10,7 +10,7 @@ use apas_ai::Types::Types::*;
 #[test]
 fn test_empty_table() {
     let sum_reducer = |a: &i32, b: &i32| a + b;
-    let table: AugOrderedTableStPer<i32, i32, _> = AugOrderedTableStPer::empty(sum_reducer, 0);
+    let table = AugOrderedTableStPer::<i32, i32, _>::empty(sum_reducer, 0);
 
     assert_eq!(table.size(), 0);
     assert_eq!(table.reduce_val(), 0);

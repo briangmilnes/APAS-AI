@@ -13,12 +13,12 @@ pub fn bench_divcon(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    let a1000: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 10 - 4, 1000);
+    let a1000 = ArraySeqStEphS::<i32>::tabulate(&|i| (i as i32) % 10 - 4, 1000);
     group.bench_function("divcon_1000", |b| {
         b.iter(|| ArraySeqStEphS::max_contig_sub_sum_divcon(black_box(&a1000)))
     });
 
-    let a10000: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 10 - 4, 10000);
+    let a10000 = ArraySeqStEphS::<i32>::tabulate(&|i| (i as i32) % 10 - 4, 10000);
     group.bench_function("divcon_10000", |b| {
         b.iter(|| ArraySeqStEphS::max_contig_sub_sum_divcon(black_box(&a10000)))
     });

@@ -16,7 +16,7 @@ fn test_all_contiguous_subseqs_n0() {
 fn test_all_contiguous_subseqs_n3_values() {
     let a = ArraySeqStPerSLit![1, 2, 3];
     let res = all_contiguous_subseqs(&a);
-    let v: Vec<Vec<N>> = res.iter().map(|s| s.iter().copied().collect()).collect();
+    let v = res.iter().map(|s| s.iter().copied().collect()).collect::<Vec<Vec<N>>>();
     let expect = vec![vec![1], vec![1, 2], vec![1, 2, 3], vec![2], vec![2, 3], vec![3]];
     assert_eq!(v, expect);
 }

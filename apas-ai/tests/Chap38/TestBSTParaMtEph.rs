@@ -58,7 +58,7 @@ fn para_union_and_delete() {
 
 #[test]
 fn para_join_mid_expose_roundtrip() {
-    let empty: ParamBST<i32> = ParamBST::join_mid(Exposed::Leaf);
+    let empty = ParamBST::<i32>::join_mid(Exposed::Leaf);
     match empty.expose() {
         | Exposed::Leaf => {}
         | Exposed::Node(..) => panic!("expected leaf"),
@@ -110,8 +110,8 @@ fn para_union_large_balanced() {
     let b = make_range_tree(100, 300);
 
     let union = a.union(&b);
-    let values: Vec<_> = union.in_order().iter().copied().collect();
-    let expected: Vec<_> = (0..300).collect();
+    let values = union.in_order().iter().copied().collect::<Vec<_>>();
+    let expected = (0..300).collect::<Vec<_>>();
     assert_eq!(values, expected);
 }
 
@@ -121,13 +121,13 @@ fn para_intersect_and_difference_large() {
     let b = make_range_tree(128, 384);
 
     let intersection = a.intersect(&b);
-    let intersect_values: Vec<_> = intersection.in_order().iter().copied().collect();
-    let expected_intersection: Vec<_> = (128..256).collect();
+    let intersect_values = intersection.in_order().iter().copied().collect::<Vec<_>>();
+    let expected_intersection = (128..256).collect::<Vec<_>>();
     assert_eq!(intersect_values, expected_intersection);
 
     let difference = a.difference(&b);
-    let diff_values: Vec<_> = difference.in_order().iter().copied().collect();
-    let expected_difference: Vec<_> = (0..128).collect();
+    let diff_values = difference.in_order().iter().copied().collect::<Vec<_>>();
+    let expected_difference = (0..128).collect::<Vec<_>>();
     assert_eq!(diff_values, expected_difference);
 }
 
@@ -136,8 +136,8 @@ fn para_filter_and_reduce_edge_cases() {
     let tree = make_range_tree(0, 64);
 
     let odds = tree.filter(|v| v % 2 == 1);
-    let odd_values: Vec<_> = odds.in_order().iter().copied().collect();
-    let expected_odds: Vec<_> = (0..64).filter(|v| v % 2 == 1).collect();
+    let odd_values = odds.in_order().iter().copied().collect::<Vec<_>>();
+    let expected_odds = (0..64).filter(|v| v % 2 == 1).collect::<Vec<_>>();
     assert_eq!(odd_values, expected_odds);
 
     let sum_squares = tree.reduce(|acc, v| acc + v * v, 0);
@@ -208,7 +208,7 @@ fn para_concurrent_insertions() {
         found_count
     }));
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Verify results - exact counts may vary due to concurrent insertions and timing
     // Each thread inserts 25 elements, but the size reflects total tree size when that thread finishes
@@ -260,7 +260,7 @@ fn para_concurrent_operations_stress() {
         }));
     }
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Verify each thread's results
     for (thread_id, size, is_empty, found_own) in results {
@@ -313,7 +313,7 @@ fn para_concurrent_set_operations() {
         difference.size()
     }));
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Verify results
     assert_eq!(results[0], 75); // Union: 0-74 (75 elements)
@@ -364,7 +364,7 @@ fn para_concurrent_filter_reduce() {
         tree4.reduce(|a, b| (a * (b + 1)) % 1000000, 1) as usize
     }));
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Verify results
     assert_eq!(results[0], 50); // 50 even numbers (0,2,4,...,98)
@@ -409,7 +409,7 @@ fn para_concurrent_split_join() {
         (left.size(), found, right.size())
     }));
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Verify results
     assert_eq!(results[0], (25, true, 74)); // Split at 25: 0-24, found, 26-99
@@ -456,7 +456,7 @@ fn para_concurrent_expose_join_mid() {
         combined.size() as i32
     }));
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Verify results
     assert!(results[0] >= 0); // Root key from exposed tree
@@ -524,7 +524,7 @@ fn para_concurrent_delete_operations() {
         remaining
     }));
 
-    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
 
     // Verify results - exact counts depend on deletion timing
     assert!(results[0] <= 100); // Size after deletions

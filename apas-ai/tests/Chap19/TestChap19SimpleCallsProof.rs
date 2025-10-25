@@ -38,7 +38,7 @@ fn test_delegated_methods_work_without_ufcs() {
     // when importing only Chap19::*
 
     // empty() - delegated to Chap18
-    let empty: ArraySeqMtEphS<i32> = ArraySeqMtEphS::empty();
+    let empty = ArraySeqMtEphS::<i32>::empty();
     assert_eq!(empty.length(), 0);
 
     // singleton() - delegated to Chap18

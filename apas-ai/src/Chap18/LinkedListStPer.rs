@@ -145,7 +145,7 @@ pub mod LinkedListStPer {
                     | None => return Self::empty(),
                 }
             }
-            let mut out: Vec<T> = Vec::with_capacity(length);
+            let mut out = Vec::<T>::with_capacity(length);
             let mut taken = 0usize;
             while taken < length {
                 match current {
@@ -161,7 +161,7 @@ pub mod LinkedListStPer {
         }
 
         fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> LinkedListStPerS<T> {
-            let mut values: Vec<T> = Vec::with_capacity(n);
+            let mut values = Vec::<T>::with_capacity(n);
             for i in 0..n {
                 values.push(f(i));
             }
@@ -169,7 +169,7 @@ pub mod LinkedListStPer {
         }
 
         fn map<U: StT, F: Fn(&T) -> U>(a: &LinkedListStPerS<T>, f: &F) -> LinkedListStPerS<U> {
-            let mut values: Vec<U> = Vec::with_capacity(a.length());
+            let mut values = Vec::<U>::with_capacity(a.length());
             for i in 0..a.length() {
                 values.push(f(a.nth(i)));
             }
@@ -177,7 +177,7 @@ pub mod LinkedListStPer {
         }
 
         fn append(a: &LinkedListStPerS<T>, b: &LinkedListStPerS<T>) -> LinkedListStPerS<T> {
-            let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+            let mut values = Vec::<T>::with_capacity(a.length() + b.length());
             for i in 0..a.length() {
                 values.push(a.nth(i).clone());
             }
@@ -202,7 +202,7 @@ pub mod LinkedListStPer {
         }
 
         fn filter<F: PredSt<T>>(a: &LinkedListStPerS<T>, pred: &F) -> LinkedListStPerS<T> {
-            let mut kept: Vec<T> = Vec::new();
+            let mut kept = Vec::<T>::new();
             for i in 0..a.length() {
                 let value = a.nth(i);
                 if pred(value) {
@@ -213,7 +213,7 @@ pub mod LinkedListStPer {
         }
 
         fn update(a: &LinkedListStPerS<T>, Pair(index, item): Pair<N, T>) -> LinkedListStPerS<T> {
-            let mut values: Vec<T> = Vec::with_capacity(a.length());
+            let mut values = Vec::<T>::with_capacity(a.length());
             for i in 0..a.length() {
                 let current = a.nth(i).clone();
                 if i == index {
@@ -226,7 +226,7 @@ pub mod LinkedListStPer {
         }
 
         fn inject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T> {
-            let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
+            let mut values = (0..a.length()).map(|i| a.nth(i).clone()).collect::<Vec<T>>();
             let mut seen = std::collections::HashSet::new();
             for k in 0..updates.length() {
                 let Pair(idx, val) = updates.nth(k).clone();
@@ -239,7 +239,7 @@ pub mod LinkedListStPer {
         }
 
         fn ninject(a: &LinkedListStPerS<T>, updates: &LinkedListStPerS<Pair<N, T>>) -> LinkedListStPerS<T> {
-            let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
+            let mut values = (0..a.length()).map(|i| a.nth(i).clone()).collect::<Vec<T>>();
             for k in 0..updates.length() {
                 let Pair(idx, val) = updates.nth(k).clone();
                 if idx < values.len() {
@@ -263,7 +263,7 @@ pub mod LinkedListStPer {
             x: A,
         ) -> (LinkedListStPerS<A>, A) {
             let mut acc = x.clone();
-            let mut prefixes: Vec<A> = Vec::with_capacity(a.length());
+            let mut prefixes = Vec::<A>::with_capacity(a.length());
             for i in 0..a.length() {
                 prefixes.push(acc.clone());
                 acc = f(&acc, a.nth(i));
@@ -292,7 +292,7 @@ pub mod LinkedListStPer {
             if len == 0 {
                 return (Self::empty(), id);
             }
-            let mut prefixes: Vec<T> = Vec::with_capacity(len);
+            let mut prefixes = Vec::<T>::with_capacity(len);
             for i in 0..len {
                 let prefix = a.subseq_copy(0, i);
                 let red = <LinkedListStPerS<T> as LinkedListStPerTrait<T>>::reduce(&prefix, f, id.clone());
@@ -313,7 +313,7 @@ pub mod LinkedListStPer {
         }
 
         fn flatten(ss: &LinkedListStPerS<LinkedListStPerS<T>>) -> LinkedListStPerS<T> {
-            let mut values: Vec<T> = Vec::new();
+            let mut values = Vec::<T>::new();
             for i in 0..ss.length() {
                 let inner = ss.nth(i);
                 for j in 0..inner.length() {
@@ -327,7 +327,7 @@ pub mod LinkedListStPer {
             a: &LinkedListStPerS<Pair<A, Bv>>,
             cmp: fn(&A, &A) -> O,
         ) -> LinkedListStPerS<Pair<A, LinkedListStPerS<Bv>>> {
-            let mut groups: Vec<Pair<A, Vec<Bv>>> = Vec::new();
+            let mut groups = Vec::<Pair<A, Vec<Bv>>>::new();
             for i in 0..a.length() {
                 let Pair(k, v) = a.nth(i).clone();
                 if let Some(Pair(_, existing)) = groups.iter_mut().find(|Pair(gk, _)| cmp(&k, gk) == O::Equal) {
@@ -336,10 +336,9 @@ pub mod LinkedListStPer {
                     groups.push(Pair(k, vec![v]));
                 }
             }
-            let pairs: Vec<Pair<A, LinkedListStPerS<Bv>>> = groups
+            let pairs = groups
                 .into_iter()
-                .map(|Pair(k, vs)| Pair(k, LinkedListStPerS::from_vec(vs)))
-                .collect();
+                .map(|Pair(k, vs)| Pair(k, LinkedListStPerS::from_vec(vs))).collect::<Vec<Pair<A, LinkedListStPerS<Bv>>>>();
             LinkedListStPerS::from_vec(pairs)
         }
     }

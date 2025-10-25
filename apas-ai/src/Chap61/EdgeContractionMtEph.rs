@@ -91,7 +91,7 @@ pub mod EdgeContractionMtEph {
         }
 
         // Phase 3: Build new edge set in parallel
-        let edges_vec: Vec<Edge<V>> = graph.edges().iter().cloned().collect();
+        let edges_vec = graph.edges().iter().cloned().collect::<Vec<Edge<V>>>();
         let edges_seq = ArraySeqStEphS::from_vec(edges_vec);
         let n_edges = edges_seq.length();
         let edges_arc = Arc::new(edges_seq);

@@ -6,7 +6,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new() {
-    let seq: ArraySeqS<i32> = ArraySeqS::new(5, 42);
+    let seq = ArraySeqS::<i32>::new(5, 42);
     assert_eq!(seq.length(), 5);
     assert_eq!(*seq.nth(0), 42);
     assert_eq!(*seq.nth(4), 42);
@@ -14,7 +14,7 @@ fn test_new() {
 
 #[test]
 fn test_set() {
-    let mut seq: ArraySeqS<i32> = ArraySeqS::new(3, 0);
+    let mut seq = ArraySeqS::<i32>::new(3, 0);
     seq.set(0, 10).unwrap();
     seq.set(1, 20).unwrap();
     seq.set(2, 30).unwrap();
@@ -25,16 +25,16 @@ fn test_set() {
 
 #[test]
 fn test_set_out_of_bounds() {
-    let mut seq: ArraySeqS<i32> = ArraySeqS::new(3, 0);
+    let mut seq = ArraySeqS::<i32>::new(3, 0);
     assert!(seq.set(10, 42).is_err());
 }
 
 #[test]
 fn test_length() {
-    let seq: ArraySeqS<i32> = ArraySeqS::new(10, 0);
+    let seq = ArraySeqS::<i32>::new(10, 0);
     assert_eq!(seq.length(), 10);
 
-    let empty: ArraySeqS<i32> = ArraySeqS::empty();
+    let empty = ArraySeqS::<i32>::empty();
     assert_eq!(empty.length(), 0);
 }
 
@@ -48,7 +48,7 @@ fn test_nth() {
 
 #[test]
 fn test_empty() {
-    let seq: ArraySeqS<i32> = ArraySeqS::empty();
+    let seq = ArraySeqS::<i32>::empty();
     assert_eq!(seq.length(), 0);
     assert!(seq.isEmpty());
 }
@@ -115,7 +115,7 @@ fn test_append() {
 #[test]
 fn test_append_empty() {
     let a = ArraySeqS::from_vec(vec![1, 2]);
-    let b: ArraySeqS<i32> = ArraySeqS::empty();
+    let b = ArraySeqS::<i32>::empty();
     let c = ArraySeqS::append(&a, &b);
     assert_eq!(c.length(), 2);
 }
@@ -168,7 +168,7 @@ fn test_inject() {
 
 #[test]
 fn test_isEmpty() {
-    let empty: ArraySeqS<i32> = ArraySeqS::empty();
+    let empty = ArraySeqS::<i32>::empty();
     assert!(empty.isEmpty());
 
     let not_empty = ArraySeqS::singleton(1);
@@ -180,7 +180,7 @@ fn test_isSingleton() {
     let single = ArraySeqS::singleton(42);
     assert!(single.isSingleton());
 
-    let empty: ArraySeqS<i32> = ArraySeqS::empty();
+    let empty = ArraySeqS::<i32>::empty();
     assert!(!empty.isSingleton());
 
     let multi = ArraySeqS::from_vec(vec![1, 2]);
@@ -219,7 +219,7 @@ fn test_reduce() {
 
 #[test]
 fn test_reduce_empty() {
-    let seq: ArraySeqS<i32> = ArraySeqS::empty();
+    let seq = ArraySeqS::<i32>::empty();
     let sum = ArraySeqS::reduce(&seq, &|a, b| a + b, 42);
     assert_eq!(sum, 42);
 }
@@ -291,7 +291,7 @@ fn test_into_iterator_mut() {
 #[test]
 fn test_into_iterator_owned() {
     let seq = ArraySeqS::from_vec(vec![1, 2, 3]);
-    let collected: Vec<i32> = seq.into_iter().collect();
+    let collected = seq.into_iter().collect::<Vec<i32>>();
     assert_eq!(collected, vec![1, 2, 3]);
 }
 

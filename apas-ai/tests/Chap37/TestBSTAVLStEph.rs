@@ -53,7 +53,7 @@ fn avl_duplicate_insert_is_idempotent() {
 // Tests for remaining 25% untested BST variant methods
 #[test]
 fn test_bst_empty_constructor() {
-    let bst: BSTreeAVL<N> = BSTreeAVL::new();
+    let bst = BSTreeAVL::<N>::new();
     assert_eq!(bst.size(), 0);
     assert!(bst.is_empty());
     assert_eq!(bst.height(), 0);
@@ -95,7 +95,7 @@ fn test_bst_is_empty_predicate() {
     assert!(!bst.is_empty());
 
     // Create another empty tree to verify
-    let empty_bst: BSTreeAVL<N> = BSTreeAVL::new();
+    let empty_bst = BSTreeAVL::<N>::new();
     assert!(empty_bst.is_empty());
 }
 
@@ -233,7 +233,7 @@ fn test_bst_large_tree_operations() {
     let mut bst = BSTreeAVL::new();
 
     // Insert many values
-    let values: Vec<N> = (1..=100).collect();
+    let values = (1..=100).collect::<Vec<N>>();
     for &value in &values {
         bst.insert(value);
     }

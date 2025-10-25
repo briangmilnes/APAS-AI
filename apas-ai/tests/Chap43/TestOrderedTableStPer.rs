@@ -9,7 +9,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn test_empty() {
-    let table: OrderedTableStPer<i32, String> = OrderedTableStPer::empty();
+    let table = OrderedTableStPer::<i32, String>::empty();
     assert_eq!(table.size(), 0);
     assert_eq!(table.first_key(), None);
     assert_eq!(table.last_key(), None);
@@ -74,7 +74,7 @@ fn test_first_key_and_last_key() {
     assert_eq!(table.first_key(), Some(1));
     assert_eq!(table.last_key(), Some(8));
 
-    let empty_table: OrderedTableStPer<i32, String> = OrderedTableStPer::empty();
+    let empty_table = OrderedTableStPer::<i32, String>::empty();
     assert_eq!(empty_table.first_key(), None);
     assert_eq!(empty_table.last_key(), None);
 }
@@ -490,7 +490,7 @@ fn test_collect() {
 
 #[test]
 fn test_empty_operations() {
-    let empty: OrderedTableStPer<i32, String> = OrderedTableStPer::empty();
+    let empty = OrderedTableStPer::<i32, String>::empty();
 
     assert_eq!(empty.size(), 0);
     assert_eq!(empty.find(&1), None);

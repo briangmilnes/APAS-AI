@@ -12,7 +12,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn test_new_and_set() {
-    let a: ArraySeqStPerS<N> = ArraySeqStPerS::new(3, 7);
+    let a = ArraySeqStPerS::<N>::new(3, 7);
     assert_eq!(a.length(), 3);
     assert_eq!(*a.nth(0), 7);
     assert_eq!(*a.nth(1), 7);
@@ -230,7 +230,7 @@ fn test_subseq_trait_form_basic() {
 
 #[test]
 fn test_new_set_persistent() {
-    let a: ArraySeqStPerS<N> = ArraySeqStPerS::new(3, 7);
+    let a = ArraySeqStPerS::<N>::new(3, 7);
     assert_eq!(a.length(), 3);
     let b = ArraySeqStPerS::update(&a, 1, 9);
     assert_eq!(*a.nth(1), 7);
@@ -240,7 +240,7 @@ fn test_new_set_persistent() {
 #[test]
 fn test_iterator_collects_in_order() {
     let s = ArraySeqStPerSLit![1, 2, 3, 4];
-    let collected: Vec<N> = s.iter().copied().collect();
+    let collected = s.iter().copied().collect::<Vec<N>>();
     assert_eq!(collected, vec![1, 2, 3, 4]);
 }
 

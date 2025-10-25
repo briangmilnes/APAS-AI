@@ -9,7 +9,7 @@ use apas_ai::{OBSTStEphLit, prob};
 
 #[test]
 fn test_obst_st_eph_empty() {
-    let mut obst: OBSTStEphS<char> = OBSTStEphS::new();
+    let mut obst = OBSTStEphS::<char>::new();
     assert_eq!(obst.optimal_cost(), Probability::zero());
     assert_eq!(obst.num_keys(), 0);
 }
@@ -211,7 +211,7 @@ fn test_display_key_prob() {
 #[test]
 fn test_into_iterator() {
     let obst = OBSTStEphLit!(keys: ['A', 'B'], probs: [0.4, 0.6]);
-    let key_probs: Vec<_> = obst.into_iter().collect();
+    let key_probs = obst.into_iter().collect::<Vec<_>>();
     assert_eq!(key_probs.len(), 2);
     assert_eq!(key_probs[0].key, 'A');
     assert_eq!(key_probs[0].prob, prob!(0.4));
@@ -222,7 +222,7 @@ fn test_into_iterator() {
 #[test]
 fn test_into_iterator_ref() {
     let obst = OBSTStEphLit!(keys: ['A', 'B'], probs: [0.4, 0.6]);
-    let key_probs: Vec<_> = (&obst).into_iter().collect();
+    let key_probs = (&obst).into_iter().collect::<Vec<_>>();
     assert_eq!(key_probs.len(), 2);
     assert_eq!(key_probs[0].key, 'A');
     assert_eq!(key_probs[1].prob, prob!(0.6));
@@ -231,7 +231,7 @@ fn test_into_iterator_ref() {
 #[test]
 fn test_into_iterator_mut_ref() {
     let mut obst = OBSTStEphLit!(keys: ['A', 'B'], probs: [0.4, 0.6]);
-    let key_probs: Vec<_> = (&mut obst).into_iter().collect();
+    let key_probs = (&mut obst).into_iter().collect::<Vec<_>>();
     assert_eq!(key_probs.len(), 2);
     assert_eq!(key_probs[0].key, 'A');
     assert_eq!(key_probs[1].prob, prob!(0.6));

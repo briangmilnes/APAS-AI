@@ -121,7 +121,7 @@ pub mod LabUnDirGraphMtEph {
 
         fn neighbors(&self, v: &V) -> SetStEph<V> {
             // PARALLEL: filter labeled edges using divide-and-conquer
-            let edges: Vec<LabEdge<V, L>> = self.labeled_edges.iter().cloned().collect();
+            let edges = self.labeled_edges.iter().cloned().collect::<Vec<LabEdge<V, L>>>();
 
             // Parallel divide-and-conquer with proper base cases
             fn parallel_neighbors<V: HashOrd + MtT + 'static, L: StTInMtT + Hash + 'static>(

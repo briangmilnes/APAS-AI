@@ -94,7 +94,7 @@ pub mod UnionFindStEph {
 
         fn num_sets(&mut self) -> usize {
             let mut roots = std::collections::HashSet::new();
-            let keys: Vec<V> = self.parent.keys().cloned().collect();
+            let keys = self.parent.keys().cloned().collect::<Vec<V>>();
             for v in keys.iter() {
                 let root = self.find(v);
                 let _ = roots.insert(root);

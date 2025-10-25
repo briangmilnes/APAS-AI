@@ -79,7 +79,7 @@ fn test_find_slot() {
 
 #[test]
 fn test_flat_entry_new() {
-    let entry: FlatEntry<i32, String> = FlatEntry::new();
+    let entry = FlatEntry::<i32, String>::new();
     match entry {
         | FlatEntry::Empty => assert!(true),
         | _ => panic!("Expected Empty"),
@@ -181,14 +181,14 @@ fn test_default_lookup_with_probe() {
 
 #[test]
 fn test_flat_entry_clone() {
-    let entry1: FlatEntry<i32, String> = FlatEntry::Occupied(42, "forty-two".to_string());
+    let entry1 = FlatEntry::<i32, String>::Occupied(42, "forty-two".to_string());
     let entry2 = entry1.clone();
     assert_eq!(entry1, entry2);
 }
 
 #[test]
 fn test_flat_entry_debug() {
-    let entry: FlatEntry<i32, String> = FlatEntry::Occupied(42, "forty-two".to_string());
+    let entry = FlatEntry::<i32, String>::Occupied(42, "forty-two".to_string());
     let debug_str = format!("{:?}", entry);
     assert!(debug_str.contains("Occupied"));
 }
@@ -202,8 +202,8 @@ fn test_flat_entry_partial_eq() {
     let entry3: FlatEntry<i32, String> = FlatEntry::Deleted;
     assert_ne!(entry1, entry3);
 
-    let entry4: FlatEntry<i32, String> = FlatEntry::Occupied(42, "forty-two".to_string());
-    let entry5: FlatEntry<i32, String> = FlatEntry::Occupied(42, "forty-two".to_string());
+    let entry4 = FlatEntry::<i32, String>::Occupied(42, "forty-two".to_string());
+    let entry5 = FlatEntry::<i32, String>::Occupied(42, "forty-two".to_string());
     assert_eq!(entry4, entry5);
 }
 

@@ -67,7 +67,7 @@ fn para_union_and_delete() {
 
 #[test]
 fn para_join_mid_expose_roundtrip() {
-    let empty: ParamBST<i32> = ParamBST::join_mid(Exposed::Leaf);
+    let empty = ParamBST::<i32>::join_mid(Exposed::Leaf);
     match empty.expose() {
         | Exposed::Leaf => {}
         | Exposed::Node(..) => panic!("expected leaf"),

@@ -24,7 +24,7 @@ fn test_arrayseqmtephsliceslit_macro_functionality() {
 
 #[test]
 fn test_arrayseqmtephslice_empty() {
-    let empty: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::empty();
+    let empty = ArraySeqMtEphSliceS::<i32>::empty();
     assert_eq!(empty.length(), 0);
     assert!(empty.isEmpty());
     assert!(!empty.isSingleton());
@@ -277,7 +277,7 @@ fn test_arrayseqmtephslice_large_sequence() {
 
 #[test]
 fn test_arrayseqmtephslice_predicates() {
-    let seq1: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::empty();
+    let seq1 = ArraySeqMtEphSliceS::<i32>::empty();
     assert!(seq1.isEmpty());
     assert!(!seq1.isSingleton());
 
@@ -403,7 +403,7 @@ fn test_arrayseqmtephslice_len() {
     let seq1 = ArraySeqMtEphSliceS::new(7, 42);
     assert_eq!(seq1.length(), 7);
 
-    let seq2: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::empty();
+    let seq2 = ArraySeqMtEphSliceS::<i32>::empty();
     assert_eq!(seq2.length(), 0);
 
     let seq3 = ArraySeqMtEphSliceS::singleton(99);
@@ -642,5 +642,5 @@ fn test_arrayseqmtephslice_trait_tabulate() {
 fn test_arrayseqmtephslice_type_checks() {
     // This function should exist for macro validation
     // Just verify it compiles
-    let _seq: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::new(3, 42);
+    let _seq = ArraySeqMtEphSliceS::<i32>::new(3, 42);
 }

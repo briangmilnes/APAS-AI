@@ -287,7 +287,7 @@ pub mod LeftistHeapPQ {
             }
 
             // Create singletons for each element
-            let mut heaps: Vec<Self> = seq.iter().map(|x| Self::singleton(x.clone())).collect();
+            let mut heaps = seq.iter().map(|x| Self::singleton(x.clone())).collect::<Vec<Self>>();
 
             // Reduce using meld operations (can be done in parallel)
             while heaps.len() > 1 {
@@ -410,7 +410,7 @@ pub mod LeftistHeapPQ {
     /// This would be much slower with other priority queue implementations!
     pub fn efficient_multi_way_merge<T: StT + Ord>(sequences: Vec<Vec<T>>) -> Vec<T> {
         // Convert each sorted sequence to a leftist heap
-        let heaps: Vec<LeftistHeapPQ<T>> = sequences.into_iter().map(|seq| LeftistHeapPQ::from_seq(&seq)).collect();
+        let heaps = sequences.into_iter().map(|seq| LeftistHeapPQ::from_seq(&seq)).collect::<Vec<LeftistHeapPQ<T>>>();
 
         // Meld all heaps together efficiently
         let merged_heap = LeftistHeapPQ::meld_multiple(&heaps);

@@ -53,7 +53,7 @@ pub mod BellmanFordStEphInt {
         let n = graph.vertices().size();
 
         // Initialize distances: source = 0, others = infinity
-        let mut distances: HashMap<usize, i64> = HashMap::new();
+        let mut distances = HashMap::<usize, i64>::new();
         for v in 0..n {
             distances.insert(v, if v == source { 0 } else { i64::MAX });
         }
@@ -61,7 +61,7 @@ pub mod BellmanFordStEphInt {
         // Iterate up to |V| rounds
         for round in 0..n {
             let mut changed = false;
-            let mut new_distances: HashMap<usize, i64> = HashMap::new();
+            let mut new_distances = HashMap::<usize, i64>::new();
 
             // For each vertex, compute minimum distance through in-neighbors (Line 5)
             for v in 0..n {

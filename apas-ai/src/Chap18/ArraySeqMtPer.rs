@@ -111,7 +111,7 @@ pub mod ArraySeqMtPer {
 
     impl<T: StTInMtT> ArraySeqMtPerBaseTrait<T> for ArraySeqMtPerS<T> {
         fn new(length: N, init_value: T) -> ArraySeqMtPerS<T> {
-            let mut values: Vec<T> = Vec::with_capacity(length);
+            let mut values = Vec::<T>::with_capacity(length);
             for _ in 0..length {
                 values.push(init_value.clone());
             }
@@ -151,7 +151,7 @@ pub mod ArraySeqMtPer {
         }
 
         fn flatten(ss: &ArraySeqMtPerS<ArraySeqMtPerS<T>>) -> ArraySeqMtPerS<T> {
-            let mut values: Vec<T> = Vec::new();
+            let mut values = Vec::<T>::new();
             for i in 0..ss.length() {
                 let inner_seq = ss.nth(i);
                 for j in 0..inner_seq.length() {
@@ -168,13 +168,13 @@ pub mod ArraySeqMtPer {
             if a.length() == 0 {
                 return ArraySeqMtPerS::from_vec(vec![]);
             }
-            let mut groups: Vec<Pair<K, ArraySeqMtPerS<V>>> = Vec::new();
+            let mut groups = Vec::<Pair<K, ArraySeqMtPerS<V>>>::new();
             for i in 0..a.length() {
                 let Pair(key, value) = a.nth(i);
                 let mut found_group = false;
                 for group in &mut groups {
                     if cmp(key, &group.0) == O::Equal {
-                        let mut values: Vec<V> = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect();
+                        let mut values = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect::<Vec<V>>();
                         values.push(value.clone());
                         group.1 = ArraySeqMtPerS::from_vec(values);
                         found_group = true;
@@ -190,7 +190,7 @@ pub mod ArraySeqMtPer {
 
         fn inject(a: &ArraySeqMtPerS<T>, updates: &ArraySeqMtPerS<Pair<N, T>>) -> ArraySeqMtPerS<T> {
             let mut result = a.clone();
-            let mut updated: HashSet<N> = HashSet::new();
+            let mut updated = HashSet::<N>::new();
             for i in 0..updates.length() {
                 let Pair(index, value) = updates.nth(i);
                 if *index < result.length() && updated.insert(*index) {
@@ -219,7 +219,7 @@ pub mod ArraySeqMtPer {
         fn singleton(item: T) -> ArraySeqMtPerS<T> { ArraySeqMtPerS::from_vec(vec![item]) }
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtPerS<T> {
-            let mut values: Vec<T> = Vec::with_capacity(n);
+            let mut values = Vec::<T>::with_capacity(n);
             for i in 0..n {
                 values.push(f(i));
             }
@@ -253,7 +253,7 @@ pub mod ArraySeqMtPer {
         }
 
         fn append(a: &ArraySeqMtPerS<T>, b: &ArraySeqMtPerS<T>) -> ArraySeqMtPerS<T> {
-            let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+            let mut values = Vec::<T>::with_capacity(a.length() + b.length());
             for i in 0..a.length() {
                 values.push(a.nth(i).clone());
             }
@@ -264,7 +264,7 @@ pub mod ArraySeqMtPer {
         }
 
         fn filter<F: PredMt<T>>(a: &ArraySeqMtPerS<T>, pred: &F) -> ArraySeqMtPerS<T> {
-            let mut values: Vec<T> = Vec::new();
+            let mut values = Vec::<T>::new();
             for i in 0..a.length() {
                 let item = a.nth(i);
                 if pred(item) {
@@ -298,7 +298,7 @@ pub mod ArraySeqMtPer {
             x: A,
         ) -> (ArraySeqMtPerS<A>, A) {
             let mut acc = x;
-            let mut values: Vec<A> = Vec::with_capacity(a.length());
+            let mut values = Vec::<A>::with_capacity(a.length());
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
                 values.push(acc.clone());
@@ -334,7 +334,7 @@ pub mod ArraySeqMtPer {
 
         fn scan<F: Fn(&T, &T) -> T + Send + Sync>(a: &ArraySeqMtPerS<T>, f: &F, id: T) -> (ArraySeqMtPerS<T>, T) {
             let mut acc = id.clone();
-            let mut values: Vec<T> = Vec::with_capacity(a.length());
+            let mut values = Vec::<T>::with_capacity(a.length());
             for i in 0..a.length() {
                 acc = f(&acc, a.nth(i));
                 values.push(acc.clone());

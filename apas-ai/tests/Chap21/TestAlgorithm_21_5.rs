@@ -7,7 +7,7 @@ use apas_ai::Types::Types::*;
 #[test]
 fn test_primes_bf_small() {
     let p = primes_bf(10);
-    let v: Vec<N> = p.iter().copied().collect();
+    let v = p.iter().copied().collect::<Vec<N>>();
     assert_eq!(v, vec![2, 3, 5, 7]);
 }
 
@@ -27,6 +27,6 @@ fn test_primes_bf_edge_cases() {
     assert_eq!(p2.length(), 0);
 
     let p3 = primes_bf(3);
-    let v3: Vec<N> = p3.iter().copied().collect();
+    let v3 = p3.iter().copied().collect::<Vec<N>>();
     assert_eq!(v3, vec![2]);
 }

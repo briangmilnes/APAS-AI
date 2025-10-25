@@ -54,11 +54,11 @@ pub mod MappingStEph {
     fn unique_pairs_from_iter<A: StT + Hash, B: StT + Hash, I: IntoIterator<Item = Pair<A, B>>>(
         iter: I,
     ) -> SetStEph<Pair<A, B>> {
-        let mut m: HashMap<A, B> = HashMap::new();
+        let mut m = HashMap::<A, B>::new();
         for Pair(a, b) in iter {
             m.insert(a, b);
         }
-        let pairs: Vec<Pair<A, B>> = m.into_iter().map(|(a, b)| Pair(a, b)).collect();
+        let pairs = m.into_iter().map(|(a, b)| Pair(a, b)).collect::<Vec<Pair<A, B>>>();
         SetStEph::FromVec(pairs)
     }
 

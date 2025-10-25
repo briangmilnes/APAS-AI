@@ -232,7 +232,7 @@ fn test_to_sorted_vec() {
 
 #[test]
 fn test_default() {
-    let heap: BinaryHeapPQ<i32> = BinaryHeapPQ::default();
+    let heap = BinaryHeapPQ::<i32>::default();
     assert!(heap.is_empty());
     assert_eq!(heap.size(), 0);
 }
@@ -307,7 +307,7 @@ fn test_large_heap() {
     let mut heap = heap;
 
     // Insert 100 elements
-    let elements: ArraySeqStPerS<i32> = ArraySeqStPerS::tabulate(&|i| (i as i32 * 17 + 13) % 97, 100);
+    let elements = ArraySeqStPerS::<i32>::tabulate(&|i| (i as i32 * 17 + 13) % 97, 100);
     for i in 0..elements.length() {
         heap = heap.insert(*elements.nth(i));
     }

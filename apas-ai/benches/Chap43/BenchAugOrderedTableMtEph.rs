@@ -64,14 +64,13 @@ fn bench_concurrent_access_patterns(c: &mut Criterion) {
     group.bench_function("concurrent_reads", |b| {
         b.iter(|| {
             let table_clone = Arc::clone(&table);
-            let handles: Vec<_> = (0..4)
+            let handles = (0..4)
                 .map(|_| {
                     let table_ref = Arc::clone(&table_clone);
                     thread::spawn(move || table_ref.reduce_val())
-                })
-                .collect();
+                }).collect::<Vec<_>>();
 
-            let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+            let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
             black_box(results)
         })
     });
@@ -79,16 +78,15 @@ fn bench_concurrent_access_patterns(c: &mut Criterion) {
     group.bench_function("concurrent_range_queries", |b| {
         b.iter(|| {
             let table_clone = Arc::clone(&table);
-            let handles: Vec<_> = (0..4)
+            let handles = (0..4)
                 .map(|i| {
                     let table_ref = Arc::clone(&table_clone);
                     let start = (i * 250) + 1;
                     let end = (i + 1) * 250;
                     thread::spawn(move || table_ref.reduce_range(&start, &end))
-                })
-                .collect();
+                }).collect::<Vec<_>>();
 
-            let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+            let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
             black_box(results)
         })
     });
@@ -108,7 +106,7 @@ fn bench_qadsan_multithreaded_scenario(c: &mut Criterion) {
         b.iter_batched(
             || Arc::new(Mutex::new(AugOrderedTableMtEph::empty(max_reducer, 0))),
             |table| {
-                let handles: Vec<_> = (0..3)
+                let handles = (0..3)
                     .map(|venue_id| {
                         let table_clone = Arc::clone(&table);
                         thread::spawn(move || {
@@ -121,8 +119,7 @@ fn bench_qadsan_multithreaded_scenario(c: &mut Criterion) {
                                 t.insert(timestamp, price, |old, new| if old > new { *old } else { *new });
                             }
                         })
-                    })
-                    .collect();
+                    }).collect::<Vec<_>>();
 
                 for handle in handles {
                     handle.join().unwrap();
@@ -147,7 +144,7 @@ fn bench_qadsan_multithreaded_scenario(c: &mut Criterion) {
                 Arc::new(table)
             },
             |table| {
-                let handles: Vec<_> = vec![
+                let handles = vec![
                     (570, 630), // Opening hour
                     (720, 780), // Lunch hour
                     (900, 960), // Closing hour
@@ -156,10 +153,9 @@ fn bench_qadsan_multithreaded_scenario(c: &mut Criterion) {
                 .map(|(start, end)| {
                     let table_clone = Arc::clone(&table);
                     thread::spawn(move || table_clone.reduce_range(&start, &end))
-                })
-                .collect();
+                }).collect::<Vec<_>>();
 
-                let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+                let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
                 black_box(results)
             },
             criterion::BatchSize::SmallInput,
@@ -194,7 +190,7 @@ fn bench_multithreaded_insert_performance(c: &mut Criterion) {
         b.iter_batched(
             || Arc::new(Mutex::new(AugOrderedTableMtEph::empty(sum_reducer, 0))),
             |table| {
-                let handles: Vec<_> = (0..4)
+                let handles = (0..4)
                     .map(|thread_id| {
                         let table_clone = Arc::clone(&table);
                         thread::spawn(move || {
@@ -205,8 +201,7 @@ fn bench_multithreaded_insert_performance(c: &mut Criterion) {
                                 t.insert(key, value, |_old, new| *new);
                             }
                         })
-                    })
-                    .collect();
+                    }).collect::<Vec<_>>();
 
                 for handle in handles {
                     handle.join().unwrap();

@@ -36,7 +36,7 @@ fn test_st_delegated_and_redefined_methods() {
     // Some are delegated to Chap18, some are redefined by Chap19
 
     // empty() - defined in Chap19
-    let empty: ArraySeqStEphS<i32> = ArraySeqStEphS::empty();
+    let empty = ArraySeqStEphS::<i32>::empty();
     assert_eq!(empty.length(), 0);
 
     // singleton() - defined in Chap19

@@ -1,0 +1,3424 @@
+=== Review Min Typing ===
+Entering directory '/home/milnes/APASVERUS/APAS-AI/apas-ai'
+tests/Chap55/TestTopoSortStEph.rs:72:  [TypeConstructor]
+  Current:    let graph: ArraySeqStEphS<ArraySeqStEphS<usize>> = ArraySeqStEphS::empty();
+  Simplified: let graph = <simplified>;
+tests/Chap55/TestTopoSortStEph.rs:100:  [TypeConstructor]
+  Current:    let graph: ArraySeqStEphS<ArraySeqStEphS<usize>> = ArraySeqStEphS::empty();
+  Simplified: let graph = <simplified>;
+tests/Chap55/TestCycleDetectStEph.rs:10:  [TypeConstructor]
+  Current:    let graph: ArraySeqStEphS<ArraySeqStEphS<usize>> = ArraySeqStEphS::empty();
+  Simplified: let graph = <simplified>;
+tests/Chap55/TestDFSStEph.rs:11:  [TypeConstructor]
+  Current:    let graph: ArraySeqStEphS<ArraySeqStEphS<usize>> = ArraySeqStEphS::from_vec(vec![]);
+  Simplified: let graph = <simplified>;
+tests/Chap55/TestDFSStPer.rs:11:  [TypeConstructor]
+  Current:    let graph: ArraySeqStPerS<ArraySeqStPerS<usize>> = ArraySeqStPerS::from_vec(vec![]);
+  Simplified: let graph = <simplified>;
+tests/Chap55/TestCycleDetectStPer.rs:10:  [TypeConstructor]
+  Current:    let graph: ArraySeqStPerS<ArraySeqStPerS<usize>> = ArraySeqStPerS::empty();
+  Simplified: let graph = <simplified>;
+tests/Chap55/TestTopoSortStPer.rs:72:  [TypeConstructor]
+  Current:    let graph: ArraySeqStPerS<ArraySeqStPerS<usize>> = ArraySeqStPerS::empty();
+  Simplified: let graph = <simplified>;
+tests/Chap55/TestTopoSortStPer.rs:100:  [TypeConstructor]
+  Current:    let graph: ArraySeqStPerS<ArraySeqStPerS<usize>> = ArraySeqStPerS::empty();
+  Simplified: let graph = <simplified>;
+tests/Chap41/TestAVLTreeSetStEph.rs:31:  [TypeConstructor]
+  Current:    let empty_set: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+  Simplified: let empty_set = <simplified>;
+tests/Chap41/TestAVLTreeSetStEph.rs:214:  [TypeConstructor]
+  Current:    let empty1: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+  Simplified: let empty1 = <simplified>;
+tests/Chap41/TestAVLTreeSetStEph.rs:215:  [TypeConstructor]
+  Current:    let empty2: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+  Simplified: let empty2 = <simplified>;
+tests/Chap41/TestAVLTreeSetStEph.rs:231:  [TypeConstructor]
+  Current:    let empty1: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+  Simplified: let empty1 = <simplified>;
+tests/Chap41/TestAVLTreeSetStEph.rs:242:  [TypeConstructor]
+  Current:    let empty1: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+  Simplified: let empty1 = <simplified>;
+tests/Chap41/TestAVLTreeSetStEph.rs:254:  [TypeConstructor]
+  Current:    let empty: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap41/TestAVLTreeSetStEph.rs:301:  [TypeConstructor]
+  Current:    let empty: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap41/TestArraySetStEph.rs:30:  [TypeConstructor]
+  Current:    let empty_set: ArraySetStEph<i32> = ArraySetStEph::empty();
+  Simplified: let empty_set = <simplified>;
+tests/Chap41/TestAVLTreeSetMtPer.rs:27:  [TypeConstructor]
+  Current:    let s: AVLTreeSetMtPer<N> = AVLTreeSetMtPer::empty();
+  Simplified: let s = <simplified>;
+tests/Chap41/TestAVLTreeSetMtEph.rs:274:  [TypeConstructor]
+  Current:    let empty1: AVLTreeSetMtEph<i32> = AVLTreeSetMtEph::empty();
+  Simplified: let empty1 = <simplified>;
+tests/Chap41/TestAVLTreeSetMtEph.rs:275:  [TypeConstructor]
+  Current:    let empty2: AVLTreeSetMtEph<i32> = AVLTreeSetMtEph::empty();
+  Simplified: let empty2 = <simplified>;
+tests/Chap41/TestAVLTreeSetMtEph.rs:286:  [TypeConstructor]
+  Current:    let empty1: AVLTreeSetMtEph<i32> = AVLTreeSetMtEph::empty();
+  Simplified: let empty1 = <simplified>;
+tests/Chap41/TestAVLTreeSetMtEph.rs:294:  [TypeConstructor]
+  Current:    let empty1: AVLTreeSetMtEph<i32> = AVLTreeSetMtEph::empty();
+  Simplified: let empty1 = <simplified>;
+tests/Chap41/TestAVLTreeSetMtEph.rs:306:  [TypeConstructor]
+  Current:    let empty: AVLTreeSetMtEph<i32> = AVLTreeSetMtEph::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap41/TestAVLTreeSetMtEph.rs:342:  [TypeConstructor]
+  Current:    let empty: AVLTreeSetMtEph<i32> = AVLTreeSetMtEph::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap41/TestAVLTreeSetStPer.rs:29:  [TypeConstructor]
+  Current:    let empty_set: AVLTreeSetStPer<i32> = AVLTreeSetStPer::empty();
+  Simplified: let empty_set = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:61:  [TypeConstructor]
+  Current:    let empty: ParamBST<i32> = ParamBST::join_mid(Exposed::Leaf);
+  Simplified: let empty = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:113:  [Collect]
+  Current:    let values: Vec<_> = union.in_order().iter().copied().collect();
+  Simplified: let values = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:114:  [Collect]
+  Current:    let expected: Vec<_> = (0..300).collect();
+  Simplified: let expected = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:124:  [Collect]
+  Current:    let intersect_values: Vec<_> = intersection.in_order().iter().copied().collect();
+  Simplified: let intersect_values = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:125:  [Collect]
+  Current:    let expected_intersection: Vec<_> = (128..256).collect();
+  Simplified: let expected_intersection = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:129:  [Collect]
+  Current:    let diff_values: Vec<_> = difference.in_order().iter().copied().collect();
+  Simplified: let diff_values = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:130:  [Collect]
+  Current:    let expected_difference: Vec<_> = (0..128).collect();
+  Simplified: let expected_difference = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:139:  [Collect]
+  Current:    let odd_values: Vec<_> = odds.in_order().iter().copied().collect();
+  Simplified: let odd_values = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:140:  [Collect]
+  Current:    let expected_odds: Vec<_> = (0..64).filter(|v| v % 2 == 1).collect();
+  Simplified: let expected_odds = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:211:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:263:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:316:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:367:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:412:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:459:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap38/TestBSTParaMtEph.rs:527:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap38/TestBSTParaStEph.rs:70:  [TypeConstructor]
+  Current:    let empty: ParamBST<i32> = ParamBST::join_mid(Exposed::Leaf);
+  Simplified: let empty = <simplified>;
+tests/Chap42/TestTableStEph.rs:31:  [TypeConstructor]
+  Current:    let table: TableStEph<i32, String> = TableStEph::empty();
+  Simplified: let table = <simplified>;
+tests/Chap42/TestTableMtEph.rs:31:  [TypeConstructor]
+  Current:    let table: TableMtEph<i32, String> = TableMtEph::empty();
+  Simplified: let table = <simplified>;
+tests/Chap42/TestTableStPer.rs:31:  [TypeConstructor]
+  Current:    let table: TableStPer<i32, String> = TableStPer::empty();
+  Simplified: let table = <simplified>;
+tests/Chap42/TestTableStPer.rs:252:  [TypeConstructor]
+  Current:    let empty: TableStPer<i32, String> = TableStPer::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap19/TestChap19StSimpleCallsProof.rs:39:  [TypeConstructor]
+  Current:    let empty: ArraySeqStEphS<i32> = ArraySeqStEphS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap19/TestArraySeqMtEphSlice.rs:27:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap19/TestArraySeqMtEphSlice.rs:280:  [TypeConstructor]
+  Current:    let seq1: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::empty();
+  Simplified: let seq1 = <simplified>;
+tests/Chap19/TestArraySeqMtEphSlice.rs:406:  [TypeConstructor]
+  Current:    let seq2: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::empty();
+  Simplified: let seq2 = <simplified>;
+tests/Chap19/TestArraySeqMtEphSlice.rs:645:  [TypeConstructor]
+  Current:    let _seq: ArraySeqMtEphSliceS<i32> = ArraySeqMtEphSliceS::new(3, 42);
+  Simplified: let _seq = <simplified>;
+tests/Chap19/TestChap19SimpleCallsProof.rs:41:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtEphS<i32> = ArraySeqMtEphS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap19/TestArraySeqStPerChap19.rs:15:  [TypeConstructor]
+  Current:    let a: ArraySeqStPerS<N> = ArraySeqStPerS::new(3, 7);
+  Simplified: let a = <simplified>;
+tests/Chap19/TestArraySeqStPerChap19.rs:233:  [TypeConstructor]
+  Current:    let a: ArraySeqStPerS<N> = ArraySeqStPerS::new(3, 7);
+  Simplified: let a = <simplified>;
+tests/Chap19/TestArraySeqStPerChap19.rs:243:  [Collect]
+  Current:    let collected: Vec<N> = s.iter().copied().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap19/TestArraySeqStEphChap19.rs:46:  [Collect]
+  Current:    let collected: Vec<N> = s.iter().copied().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap19/TestArraySeqStEphChap19.rs:336:  [TypeConstructor]
+  Current:    let res: String = <ArraySeqStEphS<&str> as ArraySeqStEphTrait<&str>>::iterate(
+        &a,
+        &|acc: &String, x: &&str| format!("{acc}{x}"),
+        String::new(),
+    );
+  Simplified: let res = <simplified>;
+tests/Chap19/TestArraySeqMtEph.rs:36:  [TypeConstructor]
+  Current:    let a: ArraySeqMtEphS<i32> = ArraySeqMtEphS::empty();
+  Simplified: let a = <simplified>;
+tests/Chap19/TestArraySeqMtEph.rs:137:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtEphS<i32> = ArraySeqMtEphS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap06/TestWeightedDirGraphMtEphInt.rs:30:  [TypeConstructor]
+  Current:    let empty_graph: WeightedDirGraphMtEphInt<i32> = WeightedDirGraphMtEphInt::empty();
+  Simplified: let empty_graph = <simplified>;
+tests/Chap06/TestWeightedDirGraphMtEphInt.rs:160:  [TypeConstructor]
+  Current:    let empty: WeightedDirGraphMtEphInt<i32> = WeightedDirGraphMtEphInt::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:30:  [TypeConstructor]
+  Current:    let empty_graph: DirGraphMtEph<i32> = DirGraphMtEph::empty();
+  Simplified: let empty_graph = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:40:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 3));
+        let _ = s.insert(Edge(3, 3));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:41:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:58:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(0, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:59:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:79:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:80:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:99:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:100:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:118:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:119:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:137:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:138:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:156:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:157:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:174:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:175:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:192:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 0));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:193:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:212:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 0));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:213:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:229:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 0));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:230:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:246:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 0));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:247:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:263:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 3));
+        let _ = s.insert(Edge(3, 4));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:264:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:304:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:305:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:345:  [TypeConstructor]
+  Current:    let edges: SetStEph<Edge<i32>> = {
+        let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 3));
+        let _ = s.insert(Edge(3, 4));
+        let _ = s.insert(Edge(4, 5));
+        let _ = s.insert(Edge(5, 0)); // Cycle
+        s
+    };
+  Simplified: let edges = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:346:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:507:  [TypeConstructor]
+  Current:    let edges: SetStEph<Edge<i32>> = {
+                    let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+                    let _ = s.insert(Edge(thread_id * 10 + i, thread_id * 10 + i + 1));
+                    s
+                };
+  Simplified: let edges = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:508:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:587:  [TypeConstructor]
+  Current:    let edges: SetStEph<Edge<i32>> = {
+            let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+            let _ = s.insert(Edge(0, 1));
+            let _ = s.insert(Edge(1, 2));
+            s
+        };
+  Simplified: let edges = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:588:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:598:  [TypeConstructor]
+  Current:    let edges: SetStEph<Edge<i32>> = {
+            let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+            let _ = s.insert(Edge(3, 4));
+            let _ = s.insert(Edge(4, 5));
+            s
+        };
+  Simplified: let edges = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:599:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:723:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:746:  [TypeConstructor]
+  Current:    let edges: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let edges = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:757:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:773:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:796:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:818:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:840:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:864:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:887:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:901:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:916:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:930:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:936:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:950:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:968:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:985:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:1002:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:1018:  [TypeConstructor]
+  Current:    let edges: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let edges = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:1028:  [TypeConstructor]
+  Current:    let edges: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let edges = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:1040:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:1058:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:1076:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:1094:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphMtEph.rs:1112:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:28:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 3));
+        let _ = s.insert(Edge(3, 3));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:29:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:45:  [TypeConstructor]
+  Current:    let empty_graph: DirGraphStEph<i32> = DirGraphStEph::empty();
+  Simplified: let empty_graph = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:55:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(0, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:56:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:76:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:77:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:96:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:97:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:115:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:116:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:134:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:135:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:153:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:154:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:171:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:172:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:189:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 0));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:190:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:209:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 0));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:210:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:226:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 0));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:227:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:243:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 0));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:244:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:259:  [TypeConstructor]
+  Current:    let empty_graph: DirGraphStEph<i32> = DirGraphStEph::empty();
+  Simplified: let empty_graph = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:283:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:300:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 0));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:301:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:322:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:323:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:347:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<i32>> = {
+        let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(i32::MAX, i32::MIN));
+        let _ = s.insert(Edge(i32::MIN, 0));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:348:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<i32>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:378:  [Collect]
+  Current:    let vertices: Vec<i32> = (0..1000).collect();
+  Simplified: let vertices = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:379:  [TypeConstructor]
+  Current:    let v: SetStEph<i32> = SetStEph::FromVec(vertices);
+  Simplified: let v = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:382:  [TypeConstructor]
+  Current:    let mut a: SetStEph<Edge<i32>> = SetStEph::empty();
+  Simplified: let mut a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:422:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 3));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:423:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:440:  [TypeConstructor]
+  Current:    let a: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:441:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:457:  [TypeConstructor]
+  Current:    let a1: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(1, 2));
+        s
+    };
+  Simplified: let a1 = <simplified>;
+tests/Chap06/TestDirGraphStEph.rs:458:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestWeightedDirGraphStEphFloat.rs:32:  [TypeConstructor]
+  Current:    let empty_graph: WeightedDirGraphStEphFloat<i32> = WeightedDirGraphStEphFloat::empty();
+  Simplified: let empty_graph = <simplified>;
+tests/Chap06/TestWeightedDirGraphStEphFloat.rs:84:  [TypeConstructor]
+  Current:    let mut g: WeightedDirGraphStEphFloat<i32> = WeightedDirGraphStEphFloat::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestWeightedDirGraphStEphFloat.rs:161:  [TypeConstructor]
+  Current:    let empty: WeightedDirGraphStEphFloat<i32> = WeightedDirGraphStEphFloat::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap06/TestWeightedDirGraphStEphFloat.rs:266:  [TypeConstructor]
+  Current:    let mut g: WeightedDirGraphStEphFloat<i32> = WeightedDirGraphStEphFloat::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:33:  [TypeConstructor]
+  Current:    let graph: WeightedUnDirGraphStEphFloat<i32> = WeightedUnDirGraphStEphFloat::empty();
+  Simplified: let graph = <simplified>;
+tests/Chap06/TestLabUnDirGraphMtEph.rs:31:  [TypeConstructor]
+  Current:    let empty_graph: LabUnDirGraphMtEph<i32, String> = LabUnDirGraphMtEph::empty();
+  Simplified: let empty_graph = <simplified>;
+tests/Chap06/TestLabUnDirGraphMtEph.rs:163:  [TypeConstructor]
+  Current:    let empty: LabUnDirGraphMtEph<i32, String> = LabUnDirGraphMtEph::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap06/TestLabUnDirGraphMtEph.rs:327:  [TypeConstructor]
+  Current:    let mut g: LabUnDirGraphMtEph<i32, String> = LabUnDirGraphMtEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestLabUnDirGraphMtEph.rs:345:  [TypeConstructor]
+  Current:    let mut g: LabUnDirGraphMtEph<i32, String> = LabUnDirGraphMtEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestWeightedDirGraphMtEphFloat.rs:36:  [TypeConstructor]
+  Current:    let empty_graph: WeightedDirGraphMtEphFloat<i32> = WeightedDirGraphMtEphFloat::empty();
+  Simplified: let empty_graph = <simplified>;
+tests/Chap06/TestWeightedDirGraphMtEphFloat.rs:175:  [TypeConstructor]
+  Current:    let empty: WeightedDirGraphMtEphFloat<i32> = WeightedDirGraphMtEphFloat::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap06/TestLabUnDirGraphStEph.rs:11:  [TypeConstructor]
+  Current:    let g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+  Simplified: let g = <simplified>;
+tests/Chap06/TestLabUnDirGraphStEph.rs:19:  [TypeConstructor]
+  Current:    let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestLabUnDirGraphStEph.rs:31:  [TypeConstructor]
+  Current:    let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestLabUnDirGraphStEph.rs:52:  [TypeConstructor]
+  Current:    let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestLabUnDirGraphStEph.rs:75:  [TypeConstructor]
+  Current:    let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestLabUnDirGraphStEph.rs:170:  [TypeConstructor]
+  Current:    let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestLabUnDirGraphStEph.rs:185:  [TypeConstructor]
+  Current:    let mut g: LabUnDirGraphStEph<i32, &str> = LabUnDirGraphStEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestWeightedUnDirGraphMtEphInt.rs:31:  [TypeConstructor]
+  Current:    let emptygraph: WeightedUnDirGraphMtEphInt<i32> = WeightedUnDirGraphMtEphInt::empty();
+  Simplified: let emptygraph = <simplified>;
+tests/Chap06/TestWeightedUnDirGraphMtEphInt.rs:153:  [TypeConstructor]
+  Current:    let empty: WeightedUnDirGraphMtEphInt<i32> = WeightedUnDirGraphMtEphInt::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap06/TestWeightedUnDirGraphMtEphInt.rs:354:  [TypeConstructor]
+  Current:    let mut g: WeightedUnDirGraphMtEphInt<i32> = WeightedUnDirGraphMtEphInt::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestLabDirGraphStEph.rs:26:  [TypeConstructor]
+  Current:    let g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
+  Simplified: let g = <simplified>;
+tests/Chap06/TestLabDirGraphStEph.rs:34:  [TypeConstructor]
+  Current:    let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestLabDirGraphStEph.rs:46:  [TypeConstructor]
+  Current:    let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestLabDirGraphStEph.rs:63:  [TypeConstructor]
+  Current:    let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestLabDirGraphStEph.rs:87:  [TypeConstructor]
+  Current:    let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestLabDirGraphStEph.rs:162:  [TypeConstructor]
+  Current:    let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestWeightedUnDirGraphStEphInt.rs:26:  [TypeConstructor]
+  Current:    let graph: WeightedUnDirGraphStEphInt<i32> = WeightedUnDirGraphStEphInt::empty();
+  Simplified: let graph = <simplified>;
+tests/Chap06/TestUnDirGraphStEph.rs:28:  [TypeConstructor]
+  Current:    let e: SetStEph<Edge<N>> = {
+        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+        let _ = s.insert(Edge(0, 1));
+        let _ = s.insert(Edge(1, 2));
+        let _ = s.insert(Edge(2, 3));
+        let _ = s.insert(Edge(3, 3));
+        s
+    };
+  Simplified: let e = <simplified>;
+tests/Chap06/TestUnDirGraphStEph.rs:29:  [TypeConstructor]
+  Current:    let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap06/TestUnDirGraphStEph.rs:95:  [TypeConstructor]
+  Current:    let g: UnDirGraphStEph<i32> = UnDirGraphStEph::empty();
+  Simplified: let g = <simplified>;
+tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs:36:  [TypeConstructor]
+  Current:    let empty_graph: WeightedUnDirGraphMtEphFloat<i32> = WeightedUnDirGraphMtEphFloat::empty();
+  Simplified: let empty_graph = <simplified>;
+tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs:170:  [TypeConstructor]
+  Current:    let empty: WeightedUnDirGraphMtEphFloat<i32> = WeightedUnDirGraphMtEphFloat::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs:347:  [TypeConstructor]
+  Current:    let mut g: WeightedUnDirGraphMtEphFloat<i32> = WeightedUnDirGraphMtEphFloat::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestUnDirGraphMtEph.rs:31:  [TypeConstructor]
+  Current:    let empty_graph: UnDirGraphMtEph<i32> = UnDirGraphMtEph::empty();
+  Simplified: let empty_graph = <simplified>;
+tests/Chap06/TestUnDirGraphMtEph.rs:251:  [TypeConstructor]
+  Current:    let empty: UnDirGraphMtEph<i32> = UnDirGraphMtEph::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap06/TestUnDirGraphMtEph.rs:473:  [TypeConstructor]
+  Current:    let g: UnDirGraphMtEph<i32> = UnDirGraphMtEph::empty();
+  Simplified: let g = <simplified>;
+tests/Chap06/TestUnDirGraphMtEph.rs:604:  [TypeConstructor]
+  Current:    let mut v: SetStEph<N> = SetStEph::empty();
+  Simplified: let mut v = <simplified>;
+tests/Chap06/TestUnDirGraphMtEph.rs:605:  [TypeConstructor]
+  Current:    let mut e: SetStEph<Edge<N>> = SetStEph::empty();
+  Simplified: let mut e = <simplified>;
+tests/Chap06/TestLabDirGraphMtEph.rs:29:  [TypeConstructor]
+  Current:    let empty_graph: LabDirGraphMtEph<i32, String> = LabDirGraphMtEph::empty();
+  Simplified: let empty_graph = <simplified>;
+tests/Chap06/TestLabDirGraphMtEph.rs:81:  [TypeConstructor]
+  Current:    let mut g: LabDirGraphMtEph<i32, String> = LabDirGraphMtEph::empty();
+  Simplified: let mut g = <simplified>;
+tests/Chap06/TestLabDirGraphMtEph.rs:148:  [TypeConstructor]
+  Current:    let empty: LabDirGraphMtEph<i32, String> = LabDirGraphMtEph::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap49/TestMinEditDistMtEph.rs:37:  [TypeConstructor]
+  Current:    let solver: MinEditDistMtEphS<char> = MinEditDistMtEphS::new();
+  Simplified: let solver = <simplified>;
+tests/Chap49/TestSubsetSumStPer.rs:85:  [TypeConstructor]
+  Current:    let solver: SubsetSumStPerS<i32> = SubsetSumStPerS::new();
+  Simplified: let solver = <simplified>;
+tests/Chap49/TestSubsetSumStPer.rs:136:  [Collect]
+  Current:    let values: Vec<i32> = solver.into_iter().collect();
+  Simplified: let values = <simplified>;
+tests/Chap49/TestSubsetSumStPer.rs:143:  [Collect]
+  Current:    let values: Vec<i32> = (&solver).into_iter().collect();
+  Simplified: let values = <simplified>;
+tests/Chap49/TestSubsetSumStEph.rs:41:  [TypeConstructor]
+  Current:    let mut solver: SubsetSumStEphS<i32> = SubsetSumStEphS::new();
+  Simplified: let mut solver = <simplified>;
+tests/Chap49/TestSubsetSumStEph.rs:159:  [Collect]
+  Current:    let values: Vec<_> = solver.into_iter().collect();
+  Simplified: let values = <simplified>;
+tests/Chap49/TestSubsetSumStEph.rs:166:  [Collect]
+  Current:    let values: Vec<_> = (&solver).into_iter().collect();
+  Simplified: let values = <simplified>;
+tests/Chap49/TestSubsetSumStEph.rs:176:  [Collect]
+  Current:    let values: Vec<_> = (&mut solver).into_iter().collect();
+  Simplified: let values = <simplified>;
+tests/Chap49/TestSubsetSumMtEph.rs:39:  [TypeConstructor]
+  Current:    let mut solver: SubsetSumMtEphS<i32> = SubsetSumMtEphS::new();
+  Simplified: let mut solver = <simplified>;
+tests/Chap49/TestMinEditDistStPer.rs:48:  [TypeConstructor]
+  Current:    let solver: MinEditDistStPerS<i32> = MinEditDistStPerS::new();
+  Simplified: let solver = <simplified>;
+tests/Chap49/TestMinEditDistStPer.rs:143:  [Collect]
+  Current:    let pairs: Vec<_> = solver.into_iter().collect();
+  Simplified: let pairs = <simplified>;
+tests/Chap49/TestMinEditDistStPer.rs:154:  [Collect]
+  Current:    let pairs: Vec<_> = (&solver).into_iter().collect();
+  Simplified: let pairs = <simplified>;
+tests/Chap49/TestSubsetSumMtPer.rs:35:  [TypeConstructor]
+  Current:    let solver: SubsetSumMtPerS<i32> = SubsetSumMtPerS::new();
+  Simplified: let solver = <simplified>;
+tests/Chap49/TestMinEditDistMtPer.rs:34:  [TypeConstructor]
+  Current:    let solver: MinEditDistMtPerS<char> = MinEditDistMtPerS::new();
+  Simplified: let solver = <simplified>;
+tests/Chap49/TestMinEditDistStEph.rs:39:  [TypeConstructor]
+  Current:    let mut solver: MinEditDistStEphS<i32> = MinEditDistStEphS::new();
+  Simplified: let mut solver = <simplified>;
+tests/Chap49/TestMinEditDistStEph.rs:173:  [Collect]
+  Current:    let pairs: Vec<_> = solver.into_iter().collect();
+  Simplified: let pairs = <simplified>;
+tests/Chap49/TestMinEditDistStEph.rs:184:  [Collect]
+  Current:    let pairs: Vec<_> = (&solver).into_iter().collect();
+  Simplified: let pairs = <simplified>;
+tests/Chap49/TestMinEditDistStEph.rs:193:  [Collect]
+  Current:    let pairs: Vec<_> = (&mut solver).into_iter().collect();
+  Simplified: let pairs = <simplified>;
+tests/Chap03/TestInsertionSortStEph.rs:12:  [TypeConstructor]
+  Current:    let mut data: Vec<i32> = Vec::new();
+  Simplified: let mut data = <simplified>;
+tests/Chap03/TestInsertionSortStEph.rs:41:  [Collect]
+  Current:    let mut data: Vec<i32> = (0..10_000).rev().collect();
+  Simplified: let mut data = <simplified>;
+tests/Chap47/TestStructChainedHashTable.rs:12:  [TypeConstructor]
+  Current:    let list: ChainList<i32, String> = ChainList::new();
+  Simplified: let list = <simplified>;
+tests/Chap47/TestLinProbFlatHashTable.rs:82:  [TypeConstructor]
+  Current:    let entry: FlatEntry<i32, String> = FlatEntry::new();
+  Simplified: let entry = <simplified>;
+tests/Chap47/TestLinProbFlatHashTable.rs:184:  [TypeConstructor]
+  Current:    let entry1: FlatEntry<i32, String> = FlatEntry::Occupied(42, "forty-two".to_string());
+  Simplified: let entry1 = <simplified>;
+tests/Chap47/TestLinProbFlatHashTable.rs:191:  [TypeConstructor]
+  Current:    let entry: FlatEntry<i32, String> = FlatEntry::Occupied(42, "forty-two".to_string());
+  Simplified: let entry = <simplified>;
+tests/Chap47/TestLinProbFlatHashTable.rs:205:  [TypeConstructor]
+  Current:    let entry4: FlatEntry<i32, String> = FlatEntry::Occupied(42, "forty-two".to_string());
+  Simplified: let entry4 = <simplified>;
+tests/Chap47/TestLinProbFlatHashTable.rs:206:  [TypeConstructor]
+  Current:    let entry5: FlatEntry<i32, String> = FlatEntry::Occupied(42, "forty-two".to_string());
+  Simplified: let entry5 = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:11:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:26:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:36:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:46:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:60:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:70:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:83:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:93:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:104:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:115:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:127:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:137:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:146:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStPer.rs:154:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestEdgeSetGraphStPer.rs:10:  [TypeConstructor]
+  Current:    let g: EdgeSetGraphStPer<N> = EdgeSetGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestEdgeSetGraphStPer.rs:17:  [TypeConstructor]
+  Current:    let g: EdgeSetGraphStPer<N> = EdgeSetGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestEdgeSetGraphStPer.rs:26:  [TypeConstructor]
+  Current:    let g: EdgeSetGraphStPer<N> = EdgeSetGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestEdgeSetGraphStPer.rs:36:  [TypeConstructor]
+  Current:    let g: EdgeSetGraphStPer<N> = EdgeSetGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestEdgeSetGraphStPer.rs:47:  [TypeConstructor]
+  Current:    let g: EdgeSetGraphStPer<N> = EdgeSetGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestEdgeSetGraphStPer.rs:57:  [TypeConstructor]
+  Current:    let g: EdgeSetGraphStPer<N> = EdgeSetGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestEdgeSetGraphStPer.rs:65:  [TypeConstructor]
+  Current:    let g: EdgeSetGraphStPer<N> = EdgeSetGraphStPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphMtPer.rs:10:  [TypeConstructor]
+  Current:    let g: AdjTableGraphMtPer<N> = AdjTableGraphMtPer::empty();
+  Simplified: let g = <simplified>;
+tests/Chap52/TestAdjTableGraphStEph.rs:10:  [TypeConstructor]
+  Current:    let g: AdjTableGraphStEph<N> = AdjTableGraphStEph::empty();
+  Simplified: let g = <simplified>;
+tests/Chap21/TestAlgorithm_21_1.rs:40:  [Collect]
+  Current:    let collected: Vec<Pair<N, N>> = s.iter().copied().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap21/TestAlgorithm_21_5.rs:10:  [Collect]
+  Current:    let v: Vec<N> = p.iter().copied().collect();
+  Simplified: let v = <simplified>;
+tests/Chap21/TestAlgorithm_21_5.rs:30:  [Collect]
+  Current:    let v3: Vec<N> = p3.iter().copied().collect();
+  Simplified: let v3 = <simplified>;
+tests/Chap21/TestAlgorithm_21_2.rs:41:  [Collect]
+  Current:    let collected: Vec<Pair<N, Pair<N, N>>> = s.iter().copied().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap21/TestExercise_21_5.rs:19:  [Collect]
+  Current:    let v: Vec<Vec<N>> = res.iter().map(|s| s.iter().copied().collect()).collect();
+  Simplified: let v = <simplified>;
+tests/Chap39/TestBSTTreapMtEph.rs:188:  [TypeConstructor]
+  Current:    let tree: BSTTreapMtEph<i32> = BSTTreapMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap39/TestBSTTreapMtEph.rs:202:  [TypeConstructor]
+  Current:    let tree: BSTTreapMtEph<i32> = BSTTreapMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap39/TestBSTTreapMtEph.rs:223:  [TypeConstructor]
+  Current:    let empty: BSTTreapMtEph<i32> = BSTTreapMtEph::new();
+  Simplified: let empty = <simplified>;
+tests/Chap39/TestBSTTreapMtEph.rs:294:  [TypeConstructor]
+  Current:    let tree: BSTTreapMtEph<i32> = BSTTreapMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap39/TestBSTTreapMtEph.rs:301:  [TypeConstructor]
+  Current:    let tree: BSTTreapMtEph<i32> = BSTTreapMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap39/TestBSTSetTreapMtEph.rs:25:  [TypeConstructor]
+  Current:    let set: BSTSetTreapMtEph<i32> = BSTSetTreapMtEph::empty();
+  Simplified: let set = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:11:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:50:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:73:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:79:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:87:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:99:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<String> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:115:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:130:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:146:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:183:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:191:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:202:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:215:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:247:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap65/TestUnionFindStEph.rs:269:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+tests/Chap50/TestOptBinSearchTreeStEph.rs:12:  [TypeConstructor]
+  Current:    let mut obst: OBSTStEphS<char> = OBSTStEphS::new();
+  Simplified: let mut obst = <simplified>;
+tests/Chap50/TestOptBinSearchTreeStEph.rs:214:  [Collect]
+  Current:    let key_probs: Vec<_> = obst.into_iter().collect();
+  Simplified: let key_probs = <simplified>;
+tests/Chap50/TestOptBinSearchTreeStEph.rs:225:  [Collect]
+  Current:    let key_probs: Vec<_> = (&obst).into_iter().collect();
+  Simplified: let key_probs = <simplified>;
+tests/Chap50/TestOptBinSearchTreeStEph.rs:234:  [Collect]
+  Current:    let key_probs: Vec<_> = (&mut obst).into_iter().collect();
+  Simplified: let key_probs = <simplified>;
+tests/Chap50/TestOptBinSearchTreeStPer.rs:12:  [TypeConstructor]
+  Current:    let obst: OBSTStPerS<char> = OBSTStPerS::new();
+  Simplified: let obst = <simplified>;
+tests/Chap50/TestOptBinSearchTreeStPer.rs:128:  [Collect]
+  Current:    let keys: Vec<char> = obst.into_iter().map(|kp| kp.key).collect();
+  Simplified: let keys = <simplified>;
+tests/Chap50/TestOptBinSearchTreeStPer.rs:135:  [Collect]
+  Current:    let keys: Vec<char> = (&obst).into_iter().map(|kp| kp.key).collect();
+  Simplified: let keys = <simplified>;
+tests/Chap50/TestMatrixChainStPer.rs:61:  [Collect]
+  Current:    let collected: Vec<MatrixDim> = chain.into_iter().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap50/TestMatrixChainStEph.rs:55:  [Collect]
+  Current:    let collected: Vec<MatrixChainStEphMatrixDim> = chain.into_iter().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap50/TestMatrixChainStEph.rs:192:  [Collect]
+  Current:    let collected: Vec<MatrixChainStEphMatrixDim> = (&chain).into_iter().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap50/TestMatrixChainStEph.rs:206:  [Collect]
+  Current:    let collected: Vec<MatrixChainStEphMatrixDim> = (&mut chain).into_iter().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap45/TestBinaryHeapPQ.rs:235:  [TypeConstructor]
+  Current:    let heap: BinaryHeapPQ<i32> = BinaryHeapPQ::default();
+  Simplified: let heap = <simplified>;
+tests/Chap45/TestBinaryHeapPQ.rs:310:  [TypeConstructor]
+  Current:    let elements: ArraySeqStPerS<i32> = ArraySeqStPerS::tabulate(&|i| (i as i32 * 17 + 13) % 97, 100);
+  Simplified: let elements = <simplified>;
+tests/Chap45/TestUnsortedListPQ.rs:24:  [TypeConstructor]
+  Current:    let pq: UnsortedListPQ<i32> = UnsortedListPQ::empty();
+  Simplified: let pq = <simplified>;
+tests/Chap45/TestUnsortedListPQ.rs:418:  [TypeConstructor]
+  Current:    let pq: UnsortedListPQ<i32> = UnsortedListPQ::empty();
+  Simplified: let pq = <simplified>;
+tests/Chap45/TestUnsortedListPQ.rs:425:  [TypeConstructor]
+  Current:    let pq: UnsortedListPQ<i32> = UnsortedListPQ::empty();
+  Simplified: let pq = <simplified>;
+tests/Chap45/TestUnsortedListPQ.rs:445:  [TypeConstructor]
+  Current:    let pq: UnsortedListPQ<i32> = UnsortedListPQ::empty();
+  Simplified: let pq = <simplified>;
+tests/Chap45/TestLeftistHeapPQ.rs:385:  [TypeConstructor]
+  Current:    let heap: LeftistHeapPQ<i32> = LeftistHeapPQ::default();
+  Simplified: let heap = <simplified>;
+tests/Chap45/TestBalancedTreePQ.rs:523:  [TypeConstructor]
+  Current:    let pq: BalancedTreePQ<i32> = BalancedTreePQ::default();
+  Simplified: let pq = <simplified>;
+tests/Chap12/TestExercise12_5.rs:12:  [TypeConstructor]
+  Current:    let stack: ConcurrentStackMt<usize> = ConcurrentStackMt::new();
+  Simplified: let stack = <simplified>;
+tests/Chap12/TestExercise12_5.rs:26:  [TypeConstructor]
+  Current:    let stack: ConcurrentStackMt<usize> = ConcurrentStackMt::new();
+  Simplified: let stack = <simplified>;
+tests/Chap12/TestExercise12_5.rs:32:  [TypeConstructor]
+  Current:    let stack: Arc<ConcurrentStackMt<usize>> = Arc::new(ConcurrentStackMt::new());
+  Simplified: let stack = <simplified>;
+tests/Chap12/TestExercise12_5.rs:54:  [Collect]
+  Current:    let expected: Vec<_> = (0..threads * per_thread).collect();
+  Simplified: let expected = <simplified>;
+tests/Chap12/TestExercise12_5.rs:60:  [TypeConstructor]
+  Current:    let stack: Arc<ConcurrentStackMt<usize>> = Arc::new(ConcurrentStackMt::new());
+  Simplified: let stack = <simplified>;
+tests/Chap12/TestExercise12_5.rs:92:  [Collect]
+  Current:    let unique: HashSet<_> = combined.iter().copied().collect();
+  Simplified: let unique = <simplified>;
+tests/Chap12/TestExercise12_5.rs:95:  [Collect]
+  Current:    let expected: HashSet<_> = (0..threads * per_thread).collect();
+  Simplified: let expected = <simplified>;
+tests/Chap57/TestStackStEph.rs:10:  [TypeConstructor]
+  Current:    let stack: StackStEph<i32> = StackStEph::new();
+  Simplified: let stack = <simplified>;
+tests/Chap57/TestStackStEph.rs:57:  [TypeConstructor]
+  Current:    let mut stack: StackStEph<String> = StackStEph::new();
+  Simplified: let mut stack = <simplified>;
+tests/Chap57/TestStackStEph.rs:125:  [TypeConstructor]
+  Current:    let stack: StackStEph<i32> = StackStEph::default();
+  Simplified: let stack = <simplified>;
+tests/Chap61/TestVertexMatchingMtEph.rs:86:  [Collect]
+  Current:    let all_edges: Vec<&Edge<usize>> = matching.iter().collect();
+  Simplified: let all_edges = <simplified>;
+tests/Chap61/TestVertexMatchingStEph.rs:124:  [Collect]
+  Current:    let all_edges: Vec<&Edge<usize>> = matching.iter().collect();
+  Simplified: let all_edges = <simplified>;
+tests/Chap36/TestQuickSortMtEphSlice.rs:64:  [Collect]
+  Current:    let random_data: Vec<i32> = (0..230).map(|_| rng.random_range(-10_000..10_000)).collect();
+  Simplified: let random_data = <simplified>;
+tests/Chap36/TestQuickSortMtEphSlice.rs:287:  [Collect]
+  Current:    let mut large_data: Vec<i32> = (0..large_size).collect();
+  Simplified: let mut large_data = <simplified>;
+tests/Chap36/TestQuickSortMtEph.rs:83:  [Collect]
+  Current:    let random_data: Vec<i32> = (0..230).map(|_| rng.random_range(-10_000..10_000)).collect();
+  Simplified: let random_data = <simplified>;
+tests/Chap36/TestQuickSortMtEph.rs:171:  [Collect]
+  Current:    let mut data: Vec<i32> = (0..data_size).map(|i| ((i * thread_id + 1) % 100) as i32).collect();
+  Simplified: let mut data = <simplified>;
+tests/Chap05/TestSetStEph.rs:94:  [TypeConstructor]
+  Current:    let empty_set: SetStEph<i32> = SetStEph::empty();
+  Simplified: let empty_set = <simplified>;
+tests/Chap05/TestSetStEph.rs:109:  [TypeConstructor]
+  Current:    let empty: SetStEph<i32> = SetStEph::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap05/TestSetStEph.rs:172:  [Collect]
+  Current:    let mut collected: Vec<i32> = set.iter().cloned().collect();
+  Simplified: let mut collected = <simplified>;
+tests/Chap05/TestSetStEph.rs:191:  [TypeConstructor]
+  Current:    let empty_set: SetStEph<i32> = SetStEph::empty();
+  Simplified: let empty_set = <simplified>;
+tests/Chap05/TestSetStEph.rs:216:  [TypeConstructor]
+  Current:    let empty: SetStEph<i32> = SetStEph::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap05/TestSetStEph.rs:231:  [TypeConstructor]
+  Current:    let empty: SetStEph<i32> = SetStEph::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap05/TestSetStEph.rs:247:  [Collect]
+  Current:    let large_vec: Vec<i32> = (0..10000).collect();
+  Simplified: let large_vec = <simplified>;
+tests/Chap05/TestSetStEph.rs:255:  [Collect]
+  Current:    let large_vec2: Vec<i32> = (5000..15000).collect();
+  Simplified: let large_vec2 = <simplified>;
+tests/Chap05/TestSetStEph.rs:266:  [TypeConstructor]
+  Current:    let empty_set: SetStEph<i32> = SetStEph::empty();
+  Simplified: let empty_set = <simplified>;
+tests/Chap05/TestSetStEph.rs:283:  [TypeConstructor]
+  Current:    let empty: SetStEph<i32> = SetStEph::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap05/TestSetStEph.rs:315:  [Collect]
+  Current:    let collected: Vec<i32> = single.iter().cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap05/TestSetStEph.rs:334:  [Collect]
+  Current:    let collected: Vec<i32> = iter_end.cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap05/TestSetStEph.rs:348:  [TypeConstructor]
+  Current:    let empty: SetStEph<i32> = SetStEph::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap05/TestSetStEph.rs:382:  [Collect]
+  Current:    let chained: Vec<i32> = set1.iter().chain(set2.iter()).cloned().collect();
+  Simplified: let chained = <simplified>;
+tests/Chap05/TestSetStEph.rs:391:  [Collect]
+  Current:    let skipped: Vec<i32> = set_skip.iter().skip(2).cloned().collect();
+  Simplified: let skipped = <simplified>;
+tests/Chap05/TestSetStEph.rs:398:  [Collect]
+  Current:    let taken: Vec<i32> = set_skip.iter().take(3).cloned().collect();
+  Simplified: let taken = <simplified>;
+tests/Chap05/TestSetStEph.rs:407:  [Collect]
+  Current:    let collected_all: Vec<i32> = original.iter().cloned().collect();
+  Simplified: let collected_all = <simplified>;
+tests/Chap05/TestSetStEph.rs:422:  [Collect]
+  Current:    let large_vec: Vec<i32> = (0..large_size as i32).collect();
+  Simplified: let large_vec = <simplified>;
+tests/Chap05/TestSetStEph.rs:432:  [TypeConstructor]
+  Current:    let empty_set: SetStEph<i32> = SetStEph::empty();
+  Simplified: let empty_set = <simplified>;
+tests/Chap05/TestSetStEph.rs:440:  [Collect]
+  Current:    let large_vec2: Vec<i32> = (10_000..30_000).collect();
+  Simplified: let large_vec2 = <simplified>;
+tests/Chap05/TestSetStEph.rs:519:  [TypeConstructor]
+  Current:    let mut s: SetStEph<i32> = SetStEph::empty();
+  Simplified: let mut s = <simplified>;
+tests/Chap05/TestMappingStEph.rs:94:  [Collect]
+  Current:    let collected: Vec<_> = m.iter().cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap05/TestMappingStEph.rs:129:  [Collect]
+  Current:    let collected: Vec<_> = m.iter().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap05/TestMappingStEph.rs:136:  [TypeConstructor]
+  Current:    let empty_rel: RelationStEph<i32, String> = RelationStEph::empty();
+  Simplified: let empty_rel = <simplified>;
+tests/Chap05/TestMappingStEph.rs:179:  [Collect]
+  Current:    let large_pairs: Vec<Pair<i32, String>> = (0..10000).map(|i| Pair(i, format!("value_{i}"))).collect();
+  Simplified: let large_pairs = <simplified>;
+tests/Chap05/TestRelationStEph.rs:42:  [TypeConstructor]
+  Current:    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
+  Simplified: let empty_rel = <simplified>;
+tests/Chap05/TestRelationStEph.rs:49:  [TypeConstructor]
+  Current:    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
+  Simplified: let empty_rel = <simplified>;
+tests/Chap05/TestRelationStEph.rs:63:  [TypeConstructor]
+  Current:    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
+  Simplified: let empty_rel = <simplified>;
+tests/Chap05/TestRelationStEph.rs:70:  [TypeConstructor]
+  Current:    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
+  Simplified: let empty_rel = <simplified>;
+tests/Chap05/TestRelationStEph.rs:77:  [TypeConstructor]
+  Current:    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
+  Simplified: let empty_rel = <simplified>;
+tests/Chap05/TestRelationStEph.rs:87:  [Collect]
+  Current:    let collected: Vec<_> = rel.iter().cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap05/TestRelationStEph.rs:147:  [Collect]
+  Current:    let collected: Vec<Pair<i32, char>> = iter_end.cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap05/TestRelationStEph.rs:195:  [Collect]
+  Current:    let chained: Vec<Pair<i32, char>> = rel1.iter().chain(rel2.iter()).cloned().collect();
+  Simplified: let chained = <simplified>;
+tests/Chap05/TestRelationStEph.rs:204:  [Collect]
+  Current:    let skipped: Vec<Pair<i32, char>> = rel_skip.iter().skip(2).cloned().collect();
+  Simplified: let skipped = <simplified>;
+tests/Chap05/TestRelationStEph.rs:211:  [Collect]
+  Current:    let taken: Vec<Pair<i32, char>> = rel_skip.iter().take(3).cloned().collect();
+  Simplified: let taken = <simplified>;
+tests/Chap05/TestRelationStEph.rs:220:  [Collect]
+  Current:    let collected_all: Vec<Pair<i32, char>> = original.iter().cloned().collect();
+  Simplified: let collected_all = <simplified>;
+tests/Chap05/TestRelationStEph.rs:244:  [Collect]
+  Current:    let large_vec: Vec<Pair<i32, i32>> = (0..large_size as i32).map(|i| Pair(i, i * 2)).collect();
+  Simplified: let large_vec = <simplified>;
+tests/Chap05/TestRelationStEph.rs:282:  [Collect]
+  Current:    let large_vec2: Vec<Pair<i32, i32>> = (25_000..75_000).map(|i| Pair(i, i * 3)).collect();
+  Simplified: let large_vec2 = <simplified>;
+tests/Chap23/TestPrimTreeSeqStPer.rs:8:  [TypeConstructor]
+  Current:    let seq: PrimTreeSeqStS<N> = PrimTreeSeqStS::empty();
+  Simplified: let seq = <simplified>;
+tests/Chap23/TestPrimTreeSeqStPer.rs:38:  [TypeConstructor]
+  Current:    let seq: PrimTreeSeqStS<N> = PrimTreeSeqStS::join(PrimTreeSeqStTree::Zero);
+  Simplified: let seq = <simplified>;
+tests/Chap23/TestPrimTreeSeqStPer.rs:222:  [TypeConstructor]
+  Current:    let seq: PrimTreeSeqStS<i32> = PrimTreeSeqStS::empty();
+  Simplified: let seq = <simplified>;
+tests/TestLibIntegration.rs:17:  [TypeConstructor]
+  Current:    let _set: SetStEph<i32> = SetStEph::empty();
+  Simplified: let _set = <simplified>;
+tests/TestLibIntegration.rs:18:  [TypeConstructor]
+  Current:    let _seq: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+  Simplified: let _seq = <simplified>;
+tests/Chap43/TestOrderedTableMtEph.rs:249:  [TypeConstructor]
+  Current:    let table_clone: Arc<OrderedTableMtEph<i32, String>> = Arc::clone(&table);
+  Simplified: let table_clone = <simplified>;
+tests/Chap43/TestOrderedSetMtEph.rs:13:  [TypeConstructor]
+  Current:    let set: OrderedSetMtEph<i32> = OrderedSetMtEph::empty();
+  Simplified: let set = <simplified>;
+tests/Chap43/TestOrderedSetMtEph.rs:74:  [TypeConstructor]
+  Current:    let empty_set: OrderedSetMtEph<i32> = OrderedSetMtEph::empty();
+  Simplified: let empty_set = <simplified>;
+tests/Chap43/TestOrderedTableStPer.rs:12:  [TypeConstructor]
+  Current:    let table: OrderedTableStPer<i32, String> = OrderedTableStPer::empty();
+  Simplified: let table = <simplified>;
+tests/Chap43/TestOrderedTableStPer.rs:77:  [TypeConstructor]
+  Current:    let empty_table: OrderedTableStPer<i32, String> = OrderedTableStPer::empty();
+  Simplified: let empty_table = <simplified>;
+tests/Chap43/TestOrderedTableStPer.rs:493:  [TypeConstructor]
+  Current:    let empty: OrderedTableStPer<i32, String> = OrderedTableStPer::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap43/TestOrderedSetStEph.rs:10:  [TypeConstructor]
+  Current:    let set: OrderedSetStEph<i32> = OrderedSetStEph::empty();
+  Simplified: let set = <simplified>;
+tests/Chap43/TestOrderedSetStEph.rs:71:  [TypeConstructor]
+  Current:    let empty_set: OrderedSetStEph<i32> = OrderedSetStEph::empty();
+  Simplified: let empty_set = <simplified>;
+tests/Chap43/TestAugOrderedTableStPer.rs:13:  [TypeConstructor]
+  Current:    let table: AugOrderedTableStPer<i32, i32, _> = AugOrderedTableStPer::empty(sum_reducer, 0);
+  Simplified: let table = <simplified>;
+tests/Chap43/TestOrderedSetStPer.rs:10:  [TypeConstructor]
+  Current:    let set: OrderedSetStPer<i32> = OrderedSetStPer::empty();
+  Simplified: let set = <simplified>;
+tests/Chap43/TestOrderedSetStPer.rs:72:  [TypeConstructor]
+  Current:    let empty_set: OrderedSetStPer<i32> = OrderedSetStPer::empty();
+  Simplified: let empty_set = <simplified>;
+tests/Chap43/TestAugOrderedTableMtEph.rs:16:  [TypeConstructor]
+  Current:    let table: AugOrderedTableMtEph<String, i32, _> = AugOrderedTableMtEph::empty(max_reducer, i32::MIN);
+  Simplified: let table = <simplified>;
+tests/Chap43/TestAugOrderedTableStEph.rs:13:  [TypeConstructor]
+  Current:    let table: AugOrderedTableStEph<String, i32, _> = AugOrderedTableStEph::empty(max_reducer, i32::MIN);
+  Simplified: let table = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:18:  [TypeConstructor]
+  Current:    let a: ArraySeqStPerS<N> = ArraySeqStPerS::tabulate(&fib, 10);
+  Simplified: let a = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:67:  [TypeConstructor]
+  Current:    let empty: ArraySeqStPerS<N> = ArraySeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:93:  [TypeConstructor]
+  Current:    let empty: ArraySeqStPerS<N> = ArraySeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:131:  [TypeConstructor]
+  Current:    let empty: ArraySeqStPerS<N> = ArraySeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:186:  [Collect]
+  Current:    let collected: Vec<i32> = seq.iter().cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:189:  [TypeConstructor]
+  Current:    let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:190:  [Collect]
+  Current:    let empty_collected: Vec<i32> = empty.iter().cloned().collect();
+  Simplified: let empty_collected = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:244:  [TypeConstructor]
+  Current:    let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:250:  [TypeConstructor]
+  Current:    let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:292:  [TypeConstructor]
+  Current:    let empty_updates: ArraySeqStPerS<Pair<usize, i32>> = ArraySeqStPerS::empty();
+  Simplified: let empty_updates = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:297:  [Collect]
+  Current:    let collected: Vec<i32> = empty.iter().cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:348:  [TypeConstructor]
+  Current:    let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:364:  [Collect]
+  Current:    let collected: Vec<i32> = single.iter().cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:414:  [TypeConstructor]
+  Current:    let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:445:  [Collect]
+  Current:    let collected: Vec<i32> = zero_start.iter().cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:461:  [Collect]
+  Current:    let collected: Vec<i32> = iter_end.cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:473:  [TypeConstructor]
+  Current:    let empty: ArraySeqStPerS<i32> = ArraySeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:507:  [Collect]
+  Current:    let chained: Vec<i32> = seq1.iter().chain(seq2.iter()).cloned().collect();
+  Simplified: let chained = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:514:  [Collect]
+  Current:    let skipped: Vec<i32> = seq_skip.iter().skip(2).cloned().collect();
+  Simplified: let skipped = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:518:  [Collect]
+  Current:    let taken: Vec<i32> = seq_skip.iter().take(3).cloned().collect();
+  Simplified: let taken = <simplified>;
+tests/Chap18/TestArraySeqStPerChap18.rs:528:  [Collect]
+  Current:    let large_vec: Vec<i32> = (0..large_size as i32).collect();
+  Simplified: let large_vec = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:18:  [TypeConstructor]
+  Current:    let mut a: ArraySeqMtEphS<N> = ArraySeqMtEphS::new(5, 0);
+  Simplified: let mut a = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:124:  [TypeConstructor]
+  Current:    let pairs: ArraySeqMtEphS<Pair<N, &str>> = ArraySeqMtEphS::from_vec(vec![
+        Pair(1, "alice"),
+        Pair(2, "bob"),
+        Pair(1, "alex"),
+        Pair(2, "betty"),
+    ]);
+  Simplified: let pairs = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:173:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtEphS<N> = ArraySeqMtEphS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:178:  [TypeConstructor]
+  Current:    let single: ArraySeqMtEphS<N> = ArraySeqMtEphS::singleton(42);
+  Simplified: let single = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:187:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:196:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3, 4, 5]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:205:  [TypeConstructor]
+  Current:    let pairs: ArraySeqMtEphS<Pair<N, N>> = ArraySeqMtEphS::from_vec(vec![Pair(1, 10), Pair(2, 20), Pair(1, 11)]);
+  Simplified: let pairs = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:212:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:219:  [TypeConstructor]
+  Current:    let seq1: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
+  Simplified: let seq1 = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:220:  [TypeConstructor]
+  Current:    let seq2: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
+  Simplified: let seq2 = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:221:  [TypeConstructor]
+  Current:    let seq3: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 4]);
+  Simplified: let seq3 = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:228:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:237:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3, 4, 5]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtEphChap18.rs:244:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtEphS<N> = ArraySeqMtEphS::from_vec(vec![1, 2, 3, 4, 5]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqStEphChap18.rs:205:  [TypeConstructor]
+  Current:    let seq: ArraySeqStEphS<N> = ArraySeqStEphS::from_vec(vec![]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqStEphChap18.rs:244:  [Collect]
+  Current:    let collected: Vec<N> = seq.iter().copied().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap18/TestArraySeqStEphChap18.rs:247:  [TypeConstructor]
+  Current:    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStEphChap18.rs:248:  [Collect]
+  Current:    let empty_collected: Vec<N> = empty.iter().copied().collect();
+  Simplified: let empty_collected = <simplified>;
+tests/Chap18/TestArraySeqStEphChap18.rs:296:  [TypeConstructor]
+  Current:    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStEphChap18.rs:303:  [TypeConstructor]
+  Current:    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStEphChap18.rs:310:  [TypeConstructor]
+  Current:    let empty: ArraySeqStEphS<ArraySeqStEphS<N>> = ArraySeqStEphS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStEphChap18.rs:317:  [TypeConstructor]
+  Current:    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStEphChap18.rs:324:  [TypeConstructor]
+  Current:    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStEphChap18.rs:335:  [TypeConstructor]
+  Current:    let empty: ArraySeqStEphS<N> = ArraySeqStEphS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqStEphChap18.rs:350:  [TypeConstructor]
+  Current:    let empty_updates: ArraySeqStEphS<Pair<N, N>> = ArraySeqStEphS::empty();
+  Simplified: let empty_updates = <simplified>;
+tests/Chap18/TestArraySeq.rs:9:  [TypeConstructor]
+  Current:    let seq: ArraySeqS<i32> = ArraySeqS::new(5, 42);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeq.rs:17:  [TypeConstructor]
+  Current:    let mut seq: ArraySeqS<i32> = ArraySeqS::new(3, 0);
+  Simplified: let mut seq = <simplified>;
+tests/Chap18/TestArraySeq.rs:28:  [TypeConstructor]
+  Current:    let mut seq: ArraySeqS<i32> = ArraySeqS::new(3, 0);
+  Simplified: let mut seq = <simplified>;
+tests/Chap18/TestArraySeq.rs:34:  [TypeConstructor]
+  Current:    let seq: ArraySeqS<i32> = ArraySeqS::new(10, 0);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeq.rs:37:  [TypeConstructor]
+  Current:    let empty: ArraySeqS<i32> = ArraySeqS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeq.rs:51:  [TypeConstructor]
+  Current:    let seq: ArraySeqS<i32> = ArraySeqS::empty();
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeq.rs:118:  [TypeConstructor]
+  Current:    let b: ArraySeqS<i32> = ArraySeqS::empty();
+  Simplified: let b = <simplified>;
+tests/Chap18/TestArraySeq.rs:171:  [TypeConstructor]
+  Current:    let empty: ArraySeqS<i32> = ArraySeqS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeq.rs:183:  [TypeConstructor]
+  Current:    let empty: ArraySeqS<i32> = ArraySeqS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeq.rs:222:  [TypeConstructor]
+  Current:    let seq: ArraySeqS<i32> = ArraySeqS::empty();
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeq.rs:294:  [Collect]
+  Current:    let collected: Vec<i32> = seq.into_iter().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:30:  [TypeConstructor]
+  Current:    let a: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&identity, 5);
+  Simplified: let a = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:34:  [Collect]
+  Current:    let a_vec: Vec<N> = (0..a.length()).map(|i| *a.nth(i)).collect();
+  Simplified: let a_vec = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:35:  [Collect]
+  Current:    let expected_vec: Vec<N> = (0..5).collect();
+  Simplified: let expected_vec = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:58:  [TypeConstructor]
+  Current:    let fibs: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&fib, 8);
+  Simplified: let fibs = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:63:  [Collect]
+  Current:    let fibs_vec: Vec<N> = (0..fibs.length()).map(|i| *fibs.nth(i)).collect();
+  Simplified: let fibs_vec = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:69:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&double, 0);
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:76:  [TypeConstructor]
+  Current:    let single: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&const_42, 1);
+  Simplified: let single = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:83:  [TypeConstructor]
+  Current:    let strings: ArraySeqMtPerS<String> = ArraySeqMtPerS::tabulate(&format_item, 4);
+  Simplified: let strings = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:88:  [Collect]
+  Current:    let strings_vec: Vec<String> = (0..strings.length()).map(|i| strings.nth(i).clone()).collect();
+  Simplified: let strings_vec = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:89:  [Collect]
+  Current:    let expected_vec: Vec<String> = expected.iter().map(|s| s.to_string()).collect();
+  Simplified: let expected_vec = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:95:  [TypeConstructor]
+  Current:    let bools: ArraySeqMtPerS<B> = ArraySeqMtPerS::tabulate(&is_even_bool, 6);
+  Simplified: let bools = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:100:  [Collect]
+  Current:    let bools_vec: Vec<B> = (0..bools.length()).map(|i| *bools.nth(i)).collect();
+  Simplified: let bools_vec = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:106:  [TypeConstructor]
+  Current:    let squares: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&square, 5);
+  Simplified: let squares = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:111:  [Collect]
+  Current:    let squares_vec: Vec<N> = (0..squares.length()).map(|i| *squares.nth(i)).collect();
+  Simplified: let squares_vec = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:117:  [TypeConstructor]
+  Current:    let large: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&add_100, 1000);
+  Simplified: let large = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:129:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:163:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:182:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtPerS<i32> = ArraySeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:204:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::tabulate(&identity, 10000);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:246:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:256:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:275:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:286:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:296:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 3, 5, 7]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:342:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:349:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:356:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:369:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:376:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:383:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::singleton(10);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:390:  [TypeConstructor]
+  Current:    let seq: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2, 3, 4, 5]);
+  Simplified: let seq = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:400:  [TypeConstructor]
+  Current:    let inner1: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![1, 2]);
+  Simplified: let inner1 = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:401:  [TypeConstructor]
+  Current:    let inner2: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![3, 4, 5]);
+  Simplified: let inner2 = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:402:  [TypeConstructor]
+  Current:    let inner3: ArraySeqMtPerS<N> = ArraySeqMtPerS::from_vec(vec![6]);
+  Simplified: let inner3 = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:414:  [TypeConstructor]
+  Current:    let empty_outer: ArraySeqMtPerS<ArraySeqMtPerS<N>> = ArraySeqMtPerS::empty();
+  Simplified: let empty_outer = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:439:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestArraySeqMtPerChap18.rs:460:  [TypeConstructor]
+  Current:    let empty: ArraySeqMtPerS<N> = ArraySeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap18/TestMathSeq.rs:144:  [Collect]
+  Current:    let vals: Vec<N> = s.iter().copied().collect();
+  Simplified: let vals = <simplified>;
+tests/Chap18/TestMathSeq.rs:166:  [Collect]
+  Current:    let vals: Vec<N> = s.into_iter().collect();
+  Simplified: let vals = <simplified>;
+tests/Chap18/TestMathSeq.rs:269:  [Collect]
+  Current:    let collected: Vec<N> = empty.iter().cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap18/TestMathSeq.rs:274:  [Collect]
+  Current:    let mut_collected: Vec<N> = empty_mut.iter_mut().map(|x| *x).collect();
+  Simplified: let mut_collected = <simplified>;
+tests/Chap18/TestMathSeq.rs:277:  [Collect]
+  Current:    let into_collected: Vec<N> = empty.clone().into_iter().collect();
+  Simplified: let into_collected = <simplified>;
+tests/Chap18/TestMathSeq.rs:323:  [Collect]
+  Current:    let collected: Vec<N> = single.iter().cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap18/TestMathSeq.rs:333:  [Collect]
+  Current:    let into_collected: Vec<N> = single.clone().into_iter().collect();
+  Simplified: let into_collected = <simplified>;
+tests/Chap18/TestMathSeq.rs:405:  [Collect]
+  Current:    let collected: Vec<N> = iter_end.cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap18/TestMathSeq.rs:469:  [TypeConstructor]
+  Current:    let large_seq: MathSeqS<N> = MathSeqS::with_len(large_size, 42);
+  Simplified: let large_seq = <simplified>;
+tests/Chap18/TestMathSeq.rs:524:  [TypeConstructor]
+  Current:    let medium_seq: MathSeqS<N> = MathSeqS::with_len(1000, 77);
+  Simplified: let medium_seq = <simplified>;
+tests/Chap18/TestMathSeq.rs:525:  [Collect]
+  Current:    let collected: Vec<N> = medium_seq.into_iter().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap18/TestLinkedListStPerChap18.rs:48:  [Collect]
+  Current:    let vals: Vec<N> = (0..l.length()).map(|i| *l.nth(i)).collect();
+  Simplified: let vals = <simplified>;
+tests/Chap37/TestBSTSplayStEph.rs:52:  [TypeConstructor]
+  Current:    let bst: BSTreeSplay<i32> = BSTreeSplay::new();
+  Simplified: let bst = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:295:  [TypeConstructor]
+  Current:    let empty1: AVLTreeS<i32> = AVLTreeS::empty();
+  Simplified: let empty1 = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:296:  [TypeConstructor]
+  Current:    let empty2: AVLTreeS<i32> = AVLTreeS::empty();
+  Simplified: let empty2 = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:338:  [TypeConstructor]
+  Current:    let empty: AVLTreeS<i32> = AVLTreeS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:348:  [Collect]
+  Current:    let collected: Vec<i32> = tree.iter().copied().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:352:  [TypeConstructor]
+  Current:    let empty: AVLTreeS<i32> = AVLTreeS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:353:  [Collect]
+  Current:    let empty_collected: Vec<i32> = empty.iter().copied().collect();
+  Simplified: let empty_collected = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:358:  [Collect]
+  Current:    let single_collected: Vec<i32> = single.iter().copied().collect();
+  Simplified: let single_collected = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:373:  [Collect]
+  Current:    let values: Vec<i32> = (1..=20).collect();
+  Simplified: let values = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:384:  [Collect]
+  Current:    let collected: Vec<i32> = tree.iter().copied().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:391:  [Collect]
+  Current:    let values: Vec<i32> = (1..=10).rev().collect();
+  Simplified: let values = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:514:  [Collect]
+  Current:    let final_values: Vec<i32> = tree.iter().copied().collect();
+  Simplified: let final_values = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:645:  [TypeConstructor]
+  Current:    let tree: AVLTreeS<i32> = AVLTreeS::empty();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:737:  [Collect]
+  Current:    let collected: Vec<i32> = tree.iter().copied().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap37/TestAVLTreeSeq.rs:810:  [Collect]
+  Current:    let collected: Vec<i32> = tree.iter().copied().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap37/TestBSTRBMtEph.rs:26:  [TypeConstructor]
+  Current:    let tree: BSTRBMtEph<i32> = BSTRBMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTRBMtEph.rs:122:  [TypeConstructor]
+  Current:    let tree: BSTRBMtEph<i32> = BSTRBMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTRBMtEph.rs:155:  [TypeConstructor]
+  Current:    let tree: BSTRBMtEph<i32> = BSTRBMtEph::default();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTPlainMtEph.rs:26:  [TypeConstructor]
+  Current:    let tree: BSTPlainMtEph<i32> = BSTPlainMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTPlainMtEph.rs:111:  [TypeConstructor]
+  Current:    let tree: BSTPlainMtEph<i32> = BSTPlainMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTSplayMtEph.rs:26:  [TypeConstructor]
+  Current:    let tree: BSTSplayMtEph<i32> = BSTSplayMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTSplayMtEph.rs:122:  [TypeConstructor]
+  Current:    let tree: BSTSplayMtEph<i32> = BSTSplayMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTSplayMtEph.rs:141:  [TypeConstructor]
+  Current:    let tree: BSTSplayMtEph<i32> = BSTSplayMtEph::default();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTBBAlphaMtEph.rs:26:  [TypeConstructor]
+  Current:    let tree: BSTBBAlphaMtEph<i32> = BSTBBAlphaMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTBBAlphaMtEph.rs:122:  [TypeConstructor]
+  Current:    let tree: BSTBBAlphaMtEph<i32> = BSTBBAlphaMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTBBAlphaMtEph.rs:155:  [TypeConstructor]
+  Current:    let tree: BSTBBAlphaMtEph<i32> = BSTBBAlphaMtEph::default();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTSetBBAlphaMtEph.rs:25:  [TypeConstructor]
+  Current:    let set: BSTSetBBAlphaMtEph<i32> = BSTSetBBAlphaMtEph::empty();
+  Simplified: let set = <simplified>;
+tests/Chap37/TestBSTSetAVLMtEph.rs:25:  [TypeConstructor]
+  Current:    let set: BSTSetAVLMtEph<i32> = BSTSetAVLMtEph::empty();
+  Simplified: let set = <simplified>;
+tests/Chap37/TestBSTBBAlphaStEph.rs:53:  [TypeConstructor]
+  Current:    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+  Simplified: let bst = <simplified>;
+tests/Chap37/TestBSTBBAlphaStEph.rs:87:  [TypeConstructor]
+  Current:    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+  Simplified: let bst = <simplified>;
+tests/Chap37/TestBSTBBAlphaStEph.rs:123:  [TypeConstructor]
+  Current:    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+  Simplified: let bst = <simplified>;
+tests/Chap37/TestBSTBBAlphaStEph.rs:138:  [TypeConstructor]
+  Current:    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+  Simplified: let bst = <simplified>;
+tests/Chap37/TestBSTBBAlphaStEph.rs:168:  [TypeConstructor]
+  Current:    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+  Simplified: let bst = <simplified>;
+tests/Chap37/TestBSTBBAlphaStEph.rs:202:  [TypeConstructor]
+  Current:    let bst: BSTreeBBAlpha<i32> = BSTreeBBAlpha::new();
+  Simplified: let bst = <simplified>;
+tests/Chap37/TestBSTAVLStEph.rs:56:  [TypeConstructor]
+  Current:    let bst: BSTreeAVL<N> = BSTreeAVL::new();
+  Simplified: let bst = <simplified>;
+tests/Chap37/TestBSTAVLStEph.rs:98:  [TypeConstructor]
+  Current:    let empty_bst: BSTreeAVL<N> = BSTreeAVL::new();
+  Simplified: let empty_bst = <simplified>;
+tests/Chap37/TestBSTAVLStEph.rs:236:  [Collect]
+  Current:    let values: Vec<N> = (1..=100).collect();
+  Simplified: let values = <simplified>;
+tests/Chap37/TestBSTAVLMtEph.rs:26:  [TypeConstructor]
+  Current:    let tree: BSTAVLMtEph<i32> = BSTAVLMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTAVLMtEph.rs:122:  [TypeConstructor]
+  Current:    let tree: BSTAVLMtEph<i32> = BSTAVLMtEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTAVLMtEph.rs:155:  [TypeConstructor]
+  Current:    let tree: BSTAVLMtEph<i32> = BSTAVLMtEph::default();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEph18.rs:20:  [Collect]
+  Current:    let mapped_v: Vec<N> = base.iter().map(|x| *x + 1).collect();
+  Simplified: let mapped_v = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEph18.rs:21:  [TypeConstructor]
+  Current:    let mapped: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::from_vec(mapped_v);
+  Simplified: let mapped = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEph18.rs:29:  [Collect]
+  Current:    let mut vals: Vec<N> = a.iter().copied().collect();
+  Simplified: let mut vals = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEph18.rs:42:  [Collect]
+  Current:    let kept: Vec<N> = base.iter().filter(|x| **x % 2 == 0).copied().collect();
+  Simplified: let kept = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEph18.rs:43:  [TypeConstructor]
+  Current:    let evens: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::from_vec(kept);
+  Simplified: let evens = <simplified>;
+tests/Chap37/TestBSTMtEph.rs:478:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap37/TestBSTMtEph.rs:524:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap37/TestBSTMtEph.rs:567:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap37/TestBSTMtEph.rs:620:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap37/TestBSTMtEph.rs:661:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap37/TestBSTMtEph.rs:715:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+tests/Chap37/TestBSTSetSplayMtEph.rs:25:  [TypeConstructor]
+  Current:    let set: BSTSetSplayMtEph<i32> = BSTSetSplayMtEph::empty();
+  Simplified: let set = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:13:  [TypeConstructor]
+  Current:    let mut t: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::new();
+  Simplified: let mut t = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:28:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:33:  [TypeConstructor]
+  Current:    let new_empty: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::new();
+  Simplified: let new_empty = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:59:  [TypeConstructor]
+  Current:    let empty_tree: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::from_vec(vec![]);
+  Simplified: let empty_tree = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:236:  [Collect]
+  Current:    let collected: Vec<N> = tree.iter().cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:241:  [Collect]
+  Current:    let empty_collected: Vec<N> = empty.iter().cloned().collect();
+  Simplified: let empty_collected = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:246:  [Collect]
+  Current:    let single_collected: Vec<N> = single.iter().cloned().collect();
+  Simplified: let single_collected = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:261:  [TypeConstructor]
+  Current:    let empty_tree: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::new();
+  Simplified: let empty_tree = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:276:  [TypeConstructor]
+  Current:    let empty1: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::new();
+  Simplified: let empty1 = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:277:  [TypeConstructor]
+  Current:    let empty2: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::new();
+  Simplified: let empty2 = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:323:  [Collect]
+  Current:    let values: Vec<N> = (1..=20).collect();
+  Simplified: let values = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:378:  [Collect]
+  Current:    let collected: Vec<N> = tree.iter().cloned().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:395:  [Collect]
+  Current:    let mapped_v: Vec<N> = t.iter().map(|x| *x * 2).collect();
+  Simplified: let mapped_v = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:396:  [TypeConstructor]
+  Current:    let m: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::from_vec(mapped_v);
+  Simplified: let m = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:416:  [Collect]
+  Current:    let mut vals: Vec<N> = a.iter().copied().collect();
+  Simplified: let mut vals = <simplified>;
+tests/Chap37/TestAVLTreeSeqStEphChap37.rs:435:  [Collect]
+  Current:    let kept: Vec<N> = t.iter().filter(|x| **x < 3).copied().collect();
+  Simplified: let kept = <simplified>;
+tests/Chap37/TestBSTRBStEph.rs:53:  [TypeConstructor]
+  Current:    let bst: BSTRBStEph<i32> = BSTRBStEph::new();
+  Simplified: let bst = <simplified>;
+tests/Chap37/TestBSTRBStEph.rs:57:  [TypeConstructor]
+  Current:    let bst_default: BSTRBStEph<i32> = BSTRBStEph::default();
+  Simplified: let bst_default = <simplified>;
+tests/Chap37/TestBSTSetPlainMtEph.rs:27:  [TypeConstructor]
+  Current:    let set: BSTSetPlainMtEph<i32> = BSTSetPlainMtEph::empty();
+  Simplified: let set = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:21:  [Collect]
+  Current:    let vals: Vec<N> = a.iter().copied().collect();
+  Simplified: let vals = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:111:  [Collect]
+  Current:    let values: Vec<N> = (1..=15).collect();
+  Simplified: let values = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:160:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:301:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:302:  [Collect]
+  Current:    let vals: Vec<N> = empty.iter().copied().collect();
+  Simplified: let vals = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:309:  [Collect]
+  Current:    let vals: Vec<N> = single.iter().copied().collect();
+  Simplified: let vals = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:316:  [Collect]
+  Current:    let vals: Vec<N> = tree.iter().copied().collect();
+  Simplified: let vals = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:325:  [TypeConstructor]
+  Current:    let tree: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::from_vec(vec![]);
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:332:  [Collect]
+  Current:    let values: Vec<N> = (1..=50).collect();
+  Simplified: let values = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:342:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:359:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:402:  [TypeConstructor]
+  Current:    let empty1: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
+  Simplified: let empty1 = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:403:  [TypeConstructor]
+  Current:    let empty2: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::new();
+  Simplified: let empty2 = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:424:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeqStPer.rs:495:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestBSTPlainStEph.rs:26:  [TypeConstructor]
+  Current:    let tree: BSTPlainStEph<i32> = BSTPlainStEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestBSTPlainStEph.rs:111:  [TypeConstructor]
+  Current:    let tree: BSTPlainStEph<i32> = BSTPlainStEph::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestAVLTreeSeqMtPer.rs:9:  [TypeConstructor]
+  Current:    let tree: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestAVLTreeSeqMtPer.rs:16:  [TypeConstructor]
+  Current:    let tree: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::new();
+  Simplified: let tree = <simplified>;
+tests/Chap37/TestAVLTreeSeqMtPer.rs:53:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeqMtPer.rs:143:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeqMtPer.rs:227:  [Collect]
+  Current:    let collected: Vec<i32> = tree.clone().into_iter().collect();
+  Simplified: let collected = <simplified>;
+tests/Chap37/TestAVLTreeSeqMtPer.rs:235:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeqMtPer.rs:284:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeqMtPer.rs:353:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestAVLTreeSeqMtPer.rs:395:  [TypeConstructor]
+  Current:    let empty1: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+  Simplified: let empty1 = <simplified>;
+tests/Chap37/TestAVLTreeSeqMtPer.rs:396:  [TypeConstructor]
+  Current:    let empty2: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+  Simplified: let empty2 = <simplified>;
+tests/Chap37/TestAVLTreeSeqMtPer.rs:429:  [TypeConstructor]
+  Current:    let empty: AVLTreeSeqMtPerS<i32> = AVLTreeSeqMtPerS::empty();
+  Simplified: let empty = <simplified>;
+tests/Chap37/TestBSTSetRBMtEph.rs:25:  [TypeConstructor]
+  Current:    let set: BSTSetRBMtEph<i32> = BSTSetRBMtEph::empty();
+  Simplified: let set = <simplified>;
+src/Chap55/SCCStEph.rs:28:  [TypeConstructor]
+  Current:    let mut components: AVLTreeSeqStEphS<AVLTreeSetStEph<N>> = AVLTreeSeqStEphS::empty();
+  Simplified: let mut components = <simplified>;
+src/Chap41/AVLTreeSetMtPer.rs:132:  [Collect]
+  Current:    let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
+  Simplified: let left_vals = <simplified>;
+src/Chap41/AVLTreeSetMtPer.rs:133:  [Collect]
+  Current:    let right_vals: Vec<T> = (mid..n).map(|i| self.elements.nth(i).clone()).collect();
+  Simplified: let right_vals = <simplified>;
+src/Chap41/AVLTreeSetMtPer.rs:176:  [Collect]
+  Current:    let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
+  Simplified: let left_vals = <simplified>;
+src/Chap41/AVLTreeSetMtPer.rs:177:  [Collect]
+  Current:    let right_vals: Vec<T> = (mid..n).map(|i| self.elements.nth(i).clone()).collect();
+  Simplified: let right_vals = <simplified>;
+src/Chap41/AVLTreeSetMtPer.rs:223:  [Collect]
+  Current:    let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
+  Simplified: let left_vals = <simplified>;
+src/Chap41/AVLTreeSetMtPer.rs:224:  [Collect]
+  Current:    let right_vals: Vec<T> = (mid..n).map(|i| self.elements.nth(i).clone()).collect();
+  Simplified: let right_vals = <simplified>;
+src/Chap42/TableStPer.rs:98:  [Collect]
+  Current:    let keys: Vec<K> = (0..self.entries.length())
+                .map(|i| self.entries.nth(i).0.clone())
+                .collect();
+  Simplified: let keys = <simplified>;
+src/Chap19/ArraySeqMtEphSlice.rs:142:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(n);
+  Simplified: let mut values = <simplified>;
+src/Chap19/ArraySeqMtEphSlice.rs:347:  [TypeConstructor]
+  Current:    let values: Arc<Vec<Mutex<(T, N)>>> = Arc::new(
+                (0..a.length())
+                    .map(|i| Mutex::new((a.nth_cloned(i), a.length())))
+                    .collect(),
+            );
+  Simplified: let values = <simplified>;
+src/Chap19/ArraySeqMtEphSlice.rs:371:  [Collect]
+  Current:    let result: Vec<T> = values.iter().map(|m| m.lock().unwrap().0.clone()).collect();
+  Simplified: let result = <simplified>;
+src/Chap19/ArraySeqMtEphSlice.rs:384:  [TypeConstructor]
+  Current:    let values: Arc<Vec<Mutex<(T, N)>>> = Arc::new((0..a.length()).map(|i| Mutex::new((a.nth_cloned(i), 0))).collect());
+  Simplified: let values = <simplified>;
+src/Chap19/ArraySeqMtEphSlice.rs:405:  [Collect]
+  Current:    let result: Vec<T> = values.iter().map(|m| m.lock().unwrap().0.clone()).collect();
+  Simplified: let result = <simplified>;
+src/Chap19/ArraySeqMtEph.rs:184:  [TypeConstructor]
+  Current:    let values: Arc<Vec<Mutex<(T, N)>>> = Arc::new(
+                (0..a.length())
+                    .map(|i| Mutex::new((a.nth_cloned(i), a.length())))
+                    .collect(),
+            );
+  Simplified: let values = <simplified>;
+src/Chap19/ArraySeqMtEph.rs:191:  [Collect]
+  Current:    let updates_vec: Vec<Pair<N, T>> = (0..updates.length()).map(|i| updates.nth_cloned(i)).collect();
+  Simplified: let updates_vec = <simplified>;
+src/Chap19/ArraySeqMtEph.rs:208:  [Collect]
+  Current:    let result: Vec<T> = values.iter().map(|m| m.lock().unwrap().0.clone()).collect();
+  Simplified: let result = <simplified>;
+src/Chap19/ArraySeqMtEph.rs:221:  [TypeConstructor]
+  Current:    let values: Arc<Vec<Mutex<(T, N)>>> = Arc::new((0..a.length()).map(|i| Mutex::new((a.nth_cloned(i), 0))).collect());
+  Simplified: let values = <simplified>;
+src/Chap19/ArraySeqMtEph.rs:225:  [Collect]
+  Current:    let updates_vec: Vec<Pair<N, T>> = (0..updates.length()).map(|i| updates.nth_cloned(i)).collect();
+  Simplified: let updates_vec = <simplified>;
+src/Chap19/ArraySeqMtEph.rs:242:  [Collect]
+  Current:    let result: Vec<T> = values.iter().map(|m| m.lock().unwrap().0.clone()).collect();
+  Simplified: let result = <simplified>;
+src/Chap19/ArraySeqStPer.rs:78:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(n);
+  Simplified: let mut values = <simplified>;
+src/Chap58/BellmanFordStEphFloat.rs:59:  [TypeConstructor]
+  Current:    let mut distances: HashMap<usize, OrderedF64> = HashMap::new();
+  Simplified: let mut distances = <simplified>;
+src/Chap58/BellmanFordStEphFloat.rs:74:  [TypeConstructor]
+  Current:    let mut new_distances: HashMap<usize, OrderedF64> = HashMap::new();
+  Simplified: let mut new_distances = <simplified>;
+src/Chap58/BellmanFordStEphInt.rs:56:  [TypeConstructor]
+  Current:    let mut distances: HashMap<usize, i64> = HashMap::new();
+  Simplified: let mut distances = <simplified>;
+src/Chap58/BellmanFordStEphInt.rs:64:  [TypeConstructor]
+  Current:    let mut new_distances: HashMap<usize, i64> = HashMap::new();
+  Simplified: let mut new_distances = <simplified>;
+src/Chap06/WeightedUnDirGraphMtEphFloat.rs:80:  [Collect]
+  Current:    let edges: Vec<LabEdge<V, OrderedF64>> = self.labeled_edges().iter().cloned().collect();
+  Simplified: let edges = <simplified>;
+src/Chap06/WeightedUnDirGraphMtEphInt.rs:78:  [Collect]
+  Current:    let edges: Vec<LabEdge<V, i32>> = self.labeled_edges().iter().cloned().collect();
+  Simplified: let edges = <simplified>;
+src/Chap06/LabUnDirGraphMtEph.rs:124:  [Collect]
+  Current:    let edges: Vec<LabEdge<V, L>> = self.labeled_edges.iter().cloned().collect();
+  Simplified: let edges = <simplified>;
+src/Chap06/WeightedDirGraphMtEphFloat.rs:110:  [Collect]
+  Current:    let arcs: Vec<LabEdge<V, OrderedF64>> = self.labeled_arcs().iter().cloned().collect();
+  Simplified: let arcs = <simplified>;
+src/Chap06/WeightedDirGraphMtEphFloat.rs:154:  [Collect]
+  Current:    let arcs: Vec<LabEdge<V, OrderedF64>> = self.labeled_arcs().iter().cloned().collect();
+  Simplified: let arcs = <simplified>;
+src/Chap06/UnDirGraphMtEph.rs:82:  [Collect]
+  Current:    let edges: Vec<Edge<V>> = self.E.iter().cloned().collect();
+  Simplified: let edges = <simplified>;
+src/Chap06/UnDirGraphMtEph.rs:125:  [Collect]
+  Current:    let vertices: Vec<V> = u_set.iter().cloned().collect();
+  Simplified: let vertices = <simplified>;
+src/Chap06/DirGraphMtEph.rs:102:  [Collect]
+  Current:    let vertices: Vec<V> = u_set.iter().cloned().collect();
+  Simplified: let vertices = <simplified>;
+src/Chap06/DirGraphMtEph.rs:137:  [Collect]
+  Current:    let arcs: Vec<Edge<V>> = self.A.iter().cloned().collect();
+  Simplified: let arcs = <simplified>;
+src/Chap06/DirGraphMtEph.rs:176:  [Collect]
+  Current:    let arcs: Vec<Edge<V>> = self.A.iter().cloned().collect();
+  Simplified: let arcs = <simplified>;
+src/Chap06/DirGraphMtEph.rs:215:  [Collect]
+  Current:    let vertices: Vec<V> = u_set.iter().cloned().collect();
+  Simplified: let vertices = <simplified>;
+src/Chap06/DirGraphMtEph.rs:250:  [Collect]
+  Current:    let vertices: Vec<V> = u_set.iter().cloned().collect();
+  Simplified: let vertices = <simplified>;
+src/Chap06/WeightedDirGraphStEphFloat.rs:182:  [Collect]
+  Current:    let current_edges: Vec<_> = self.labeled_arcs().iter().cloned().collect();
+  Simplified: let current_edges = <simplified>;
+src/Chap06/WeightedDirGraphStEphFloat.rs:186:  [Collect]
+  Current:    let vertices: Vec<_> = current_edges.iter().map(|e| e.0.clone()).collect();
+  Simplified: let vertices = <simplified>;
+src/Chap06/WeightedDirGraphMtEphInt.rs:78:  [Collect]
+  Current:    let arcs: Vec<LabEdge<V, i32>> = self.labeled_arcs().iter().cloned().collect();
+  Simplified: let arcs = <simplified>;
+src/Chap06/WeightedDirGraphMtEphInt.rs:119:  [Collect]
+  Current:    let arcs: Vec<LabEdge<V, i32>> = self.labeled_arcs().iter().cloned().collect();
+  Simplified: let arcs = <simplified>;
+src/Chap06/LabDirGraphMtEph.rs:113:  [Collect]
+  Current:    let arcs: Vec<LabEdge<V, L>> = self.labeled_arcs.iter().cloned().collect();
+  Simplified: let arcs = <simplified>;
+src/Chap06/LabDirGraphMtEph.rs:154:  [Collect]
+  Current:    let arcs: Vec<LabEdge<V, L>> = self.labeled_arcs.iter().cloned().collect();
+  Simplified: let arcs = <simplified>;
+src/Chap62/StarPartitionStEph.rs:42:  [TypeConstructor]
+  Current:    let mut partition_map: HashMap<V, V> = HashMap::new();
+  Simplified: let mut partition_map = <simplified>;
+src/Chap62/StarContractionMtEph.rs:92:  [Collect]
+  Current:    let edges_vec: Vec<Edge<V>> = graph.edges().iter().cloned().collect();
+  Simplified: let edges_vec = <simplified>;
+src/Chap62/StarPartitionMtEph.rs:55:  [Collect]
+  Current:    let vertices_vec: Vec<V> = graph.vertices().iter().cloned().collect();
+  Simplified: let vertices_vec = <simplified>;
+src/Chap62/StarPartitionMtEph.rs:58:  [TypeConstructor]
+  Current:    let mut vertex_to_index: HashMap<V, N> = HashMap::new();
+  Simplified: let mut vertex_to_index = <simplified>;
+src/Chap62/StarPartitionMtEph.rs:64:  [TypeConstructor]
+  Current:    let mut coin_flips: HashMap<V, bool> = HashMap::new();
+  Simplified: let mut coin_flips = <simplified>;
+src/Chap62/StarPartitionMtEph.rs:70:  [TypeConstructor]
+  Current:    let mut th_edges: Vec<(N, V)> = Vec::new();
+  Simplified: let mut th_edges = <simplified>;
+src/Chap62/StarPartitionMtEph.rs:102:  [TypeConstructor]
+  Current:    let mut partition_map: HashMap<V, V> = HashMap::new();
+  Simplified: let mut partition_map = <simplified>;
+src/Chap52/EdgeSetGraphStEph.rs:86:  [TypeConstructor]
+  Current:    let edges_to_remove: Vec<Pair<V, V>> = {
+                let seq = self.edges.to_seq();
+                let mut to_remove = Vec::new();
+                for i in 0..seq.length() {
+                    let edge = seq.nth(i);
+                    let Pair(u, w) = edge;
+                    if u == &v_clone || w == &v_clone {
+                        to_remove.push(edge.clone());
+                    }
+                }
+                to_remove
+            };
+  Simplified: let edges_to_remove = <simplified>;
+src/Chap52/AdjSeqGraphStEph.rs:98:  [TypeConstructor]
+  Current:    let mut new_neighbors_vec: Vec<N> = Vec::with_capacity(old_neighbors.length() + 1);
+  Simplified: let mut new_neighbors_vec = <simplified>;
+src/Chap52/AdjSeqGraphStEph.rs:107:  [TypeConstructor]
+  Current:    let mut new_neighbors_vec: Vec<N> = Vec::new();
+  Simplified: let mut new_neighbors_vec = <simplified>;
+src/Chap52/AdjSeqGraphStPer.rs:97:  [TypeConstructor]
+  Current:    let mut new_neighbors_vec: Vec<N> = Vec::with_capacity(old_neighbors.length() + 1);
+  Simplified: let mut new_neighbors_vec = <simplified>;
+src/Chap52/AdjSeqGraphStPer.rs:124:  [TypeConstructor]
+  Current:    let mut new_neighbors_vec: Vec<N> = Vec::new();
+  Simplified: let mut new_neighbors_vec = <simplified>;
+src/Chap52/AdjTableGraphStEph.rs:105:  [Collect]
+  Current:    let vertices: Vec<V> = (0..seq.length()).map(|i| seq.nth(i).clone()).collect();
+  Simplified: let vertices = <simplified>;
+src/Chap52/AdjSeqGraphMtEph.rs:87:  [TypeConstructor]
+  Current:    let mut new_neighbors_vec: Vec<N> = Vec::with_capacity(old_neighbors.length() + 1);
+  Simplified: let mut new_neighbors_vec = <simplified>;
+src/Chap52/AdjSeqGraphMtEph.rs:95:  [TypeConstructor]
+  Current:    let mut new_neighbors_vec: Vec<N> = Vec::new();
+  Simplified: let mut new_neighbors_vec = <simplified>;
+src/Chap17/MathSeq.rs:159:  [TypeConstructor]
+  Current:    let mut seen: HashSet<T> = HashSet::with_capacity(self.data.len());
+  Simplified: let mut seen = <simplified>;
+src/Chap17/MathSeq.rs:160:  [TypeConstructor]
+  Current:    let mut out: Vec<T> = Vec::with_capacity(self.data.len());
+  Simplified: let mut out = <simplified>;
+src/Chap17/MathSeq.rs:170:  [TypeConstructor]
+  Current:    let mut counts: HashMap<T, N> = HashMap::with_capacity(self.data.len());
+  Simplified: let mut counts = <simplified>;
+src/Chap17/MathSeq.rs:171:  [TypeConstructor]
+  Current:    let mut order: Vec<T> = Vec::new();
+  Simplified: let mut order = <simplified>;
+src/Chap21/Problem21_1.rs:27:  [TypeConstructor]
+  Current:    let mut v: Vec<Pair<N, N>> = Vec::with_capacity(len);
+  Simplified: let mut v = <simplified>;
+src/Chap21/Problem21_3.rs:28:  [TypeConstructor]
+  Current:    let mut v: Vec<Pair<N, Pair<N, N>>> = Vec::with_capacity(len);
+  Simplified: let mut v = <simplified>;
+src/Chap21/Problem21_4.rs:36:  [TypeConstructor]
+  Current:    let mut v: Vec<Pair<N, &'static str>> = Vec::with_capacity(a.length() * b.length());
+  Simplified: let mut v = <simplified>;
+src/Chap63/ConnectivityMtEph.rs:128:  [Collect]
+  Current:    let edges_vec: Vec<Edge<V>> = graph.edges().iter().cloned().collect();
+  Simplified: let edges_vec = <simplified>;
+src/Chap39/BSTSetTreapMtEph.rs:119:  [Collect]
+  Current:    let mut merged: BTreeSet<T> = self.values_vec().into_iter().collect();
+  Simplified: let mut merged = <simplified>;
+src/Chap39/BSTSetTreapMtEph.rs:127:  [Collect]
+  Current:    let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
+  Simplified: let other_values = <simplified>;
+src/Chap39/BSTSetTreapMtEph.rs:128:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap39/BSTSetTreapMtEph.rs:144:  [Collect]
+  Current:    let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
+  Simplified: let other_values = <simplified>;
+src/Chap39/BSTSetTreapMtEph.rs:145:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if !other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap39/BSTSetTreapMtEph.rs:161:  [TypeConstructor]
+  Current:    let mut left: Vec<T> = Vec::new();
+  Simplified: let mut left = <simplified>;
+src/Chap39/BSTSetTreapMtEph.rs:162:  [TypeConstructor]
+  Current:    let mut right: Vec<T> = Vec::new();
+  Simplified: let mut right = <simplified>;
+src/Chap39/BSTSetTreapMtEph.rs:177:  [Collect]
+  Current:    let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+  Simplified: let mut combined = <simplified>;
+src/Chap39/BSTSetTreapMtEph.rs:185:  [Collect]
+  Current:    let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+  Simplified: let mut combined = <simplified>;
+src/Chap39/BSTSetTreapMtEph.rs:194:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| if predicate(v) { Some(v.clone()) } else { None })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap51/BottomUpDPMtPer.rs:90:  [Collect]
+  Current:    let positions: Vec<(usize, usize)> = (start..=end)
+                .filter_map(|i| {
+                    let j = k - i;
+                    if j > 0 && j <= t_len { Some((i, j)) } else { None }
+                })
+                .collect();
+  Simplified: let positions = <simplified>;
+src/Chap51/BottomUpDPMtPer.rs:98:  [Collect]
+  Current:    let handles: Vec<_> = positions
+                .into_iter()
+                .map(|(i, j)| {
+                    let table_clone = Arc::clone(&table);
+                    let seq_s_clone = self.seq_s.clone();
+                    let seq_t_clone = self.seq_t.clone();
+
+                    thread::spawn(move || {
+                        let new_value = Self::compute_cell_value_static(&seq_s_clone, &seq_t_clone, &table_clone, i, j);
+                        (i, j, new_value)
+                    })
+                })
+                .collect();
+  Simplified: let handles = <simplified>;
+src/Chap51/BottomUpDPMtPer.rs:113:  [Collect]
+  Current:    let results: Vec<(usize, usize, usize)> = handles.into_iter().map(|handle| handle.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+src/Chap51/BottomUpDPMtEph.rs:90:  [Collect]
+  Current:    let positions: Vec<(usize, usize)> = (start..=end)
+                .filter_map(|i| {
+                    let j = k - i;
+                    if j > 0 && j <= t_len { Some((i, j)) } else { None }
+                })
+                .collect();
+  Simplified: let positions = <simplified>;
+src/Chap51/BottomUpDPMtEph.rs:98:  [Collect]
+  Current:    let handles: Vec<_> = positions
+                .into_iter()
+                .map(|(i, j)| {
+                    let table_clone = Arc::clone(&table);
+                    let seq_s_clone = self.seq_s.clone();
+                    let seq_t_clone = self.seq_t.clone();
+
+                    thread::spawn(move || {
+                        let new_value = Self::compute_cell_value_static(&seq_s_clone, &seq_t_clone, &table_clone, i, j);
+                        (i, j, new_value)
+                    })
+                })
+                .collect();
+  Simplified: let handles = <simplified>;
+src/Chap51/BottomUpDPMtEph.rs:113:  [Collect]
+  Current:    let results: Vec<(usize, usize, usize)> = handles.into_iter().map(|handle| handle.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+src/Chap65/KruskalStEph.rs:70:  [Collect]
+  Current:    let mut edges_vec: Vec<LabEdge<V, OrderedFloat<f64>>> = graph.labeled_edges().iter().cloned().collect();
+  Simplified: let mut edges_vec = <simplified>;
+src/Chap65/UnionFindStEph.rs:97:  [Collect]
+  Current:    let keys: Vec<V> = self.parent.keys().cloned().collect();
+  Simplified: let keys = <simplified>;
+src/Chap65/PrimStEph.rs:87:  [TypeConstructor]
+  Current:    let mut visited: HashSet<V> = HashSet::new();
+  Simplified: let mut visited = <simplified>;
+src/Chap50/OptBinSearchTreeMtEph.rs:108:  [TypeConstructor]
+  Current:    let prob_sum: Probability = {
+                let keys_guard = table.keys.lock().unwrap();
+                (0..l)
+                    .map(|k| keys_guard[i + k].prob)
+                    .fold(Probability::zero(), |acc, p| acc + p)
+            };
+  Simplified: let prob_sum = <simplified>;
+src/Chap50/OptBinSearchTreeMtEph.rs:116:  [Collect]
+  Current:    let costs: Vec<Probability> = (0..l)
+                .map(|k| {
+                    let left_cost = obst_rec(table, i, k);
+                    let right_cost = obst_rec(table, i + k + 1, l - k - 1);
+                    left_cost + right_cost
+                })
+                .collect();
+  Simplified: let costs = <simplified>;
+src/Chap50/OptBinSearchTreeMtEph.rs:148:  [Collect]
+  Current:    let key_probs: Vec<KeyProb<T>> = keys
+                .into_iter()
+                .zip(probs)
+                .map(|(key, prob)| KeyProb { key, prob })
+                .collect();
+  Simplified: let key_probs = <simplified>;
+src/Chap50/MatrixChainMtPer.rs:108:  [Collect]
+  Current:    let costs: Vec<usize> = (i..j)
+                    .map(|k| {
+                        let left_cost = self.matrix_chain_rec(i, k);
+                        let right_cost = self.matrix_chain_rec(k + 1, j);
+                        let split_cost = self.multiply_cost(i, k, j);
+                        left_cost + right_cost + split_cost
+                    })
+                    .collect();
+  Simplified: let costs = <simplified>;
+src/Chap50/MatrixChainMtPer.rs:147:  [Collect]
+  Current:    let dimensions: Vec<MatrixDim> = dim_pairs
+                .into_iter()
+                .map(|pair| MatrixDim {
+                    rows: pair.0,
+                    cols: pair.1,
+                })
+                .collect();
+  Simplified: let dimensions = <simplified>;
+src/Chap50/OptBinSearchTreeMtPer.rs:101:  [TypeConstructor]
+  Current:    let prob_sum: Probability = (0..l)
+                .map(|k| table.keys[i + k].prob)
+                .fold(Probability::zero(), |acc, p| acc + p);
+  Simplified: let prob_sum = <simplified>;
+src/Chap50/OptBinSearchTreeMtPer.rs:106:  [Collect]
+  Current:    let costs: Vec<Probability> = (0..l)
+                .map(|k| {
+                    let left_cost = obst_rec(table, i, k);
+                    let right_cost = obst_rec(table, i + k + 1, l - k - 1);
+                    left_cost + right_cost
+                })
+                .collect();
+  Simplified: let costs = <simplified>;
+src/Chap50/OptBinSearchTreeMtPer.rs:138:  [Collect]
+  Current:    let key_probs: Vec<KeyProb<T>> = keys
+                .into_iter()
+                .zip(probs)
+                .map(|(key, prob)| KeyProb { key, prob })
+                .collect();
+  Simplified: let key_probs = <simplified>;
+src/Chap50/OptBinSearchTreeStPer.rs:69:  [TypeConstructor]
+  Current:    let prob_sum: Probability = (0..l)
+                    .map(|k| self.keys[i + k].prob)
+                    .fold(Probability::zero(), |acc, p| acc + p);
+  Simplified: let prob_sum = <simplified>;
+src/Chap50/OptBinSearchTreeStEph.rs:81:  [TypeConstructor]
+  Current:    let prob_sum: Probability = (0..l)
+                    .map(|k| self.keys[i + k].prob)
+                    .fold(Probability::zero(), |acc, p| acc + p);
+  Simplified: let prob_sum = <simplified>;
+src/Chap50/MatrixChainMtEph.rs:116:  [Collect]
+  Current:    let costs: Vec<usize> = (i..j)
+                    .map(|k| {
+                        let left_cost = self.matrix_chain_rec(i, k);
+                        let right_cost = self.matrix_chain_rec(k + 1, j);
+                        let split_cost = self.multiply_cost(i, k, j);
+                        left_cost + right_cost + split_cost
+                    })
+                    .collect();
+  Simplified: let costs = <simplified>;
+src/Chap50/MatrixChainMtEph.rs:155:  [Collect]
+  Current:    let dimensions: Vec<MatrixDim> = dim_pairs
+                .into_iter()
+                .map(|pair| MatrixDim {
+                    rows: pair.0,
+                    cols: pair.1,
+                })
+                .collect();
+  Simplified: let dimensions = <simplified>;
+src/Chap45/LeftistHeapPQ.rs:290:  [Collect]
+  Current:    let mut heaps: Vec<Self> = seq.iter().map(|x| Self::singleton(x.clone())).collect();
+  Simplified: let mut heaps = <simplified>;
+src/Chap45/LeftistHeapPQ.rs:413:  [Collect]
+  Current:    let heaps: Vec<LeftistHeapPQ<T>> = sequences.into_iter().map(|seq| LeftistHeapPQ::from_seq(&seq)).collect();
+  Simplified: let heaps = <simplified>;
+src/Chap57/DijkstraStEphInt.rs:77:  [TypeConstructor]
+  Current:    let mut visited: HashMap<usize, i64> = HashMap::new();
+  Simplified: let mut visited = <simplified>;
+src/Chap57/DijkstraStEphInt.rs:81:  [TypeConstructor]
+  Current:    let mut pq: BinaryHeapPQ<PQEntry> = BinaryHeapPQ::singleton(pq_entry_new(0, source));
+  Simplified: let mut pq = <simplified>;
+src/Chap57/DijkstraStEphFloat.rs:78:  [TypeConstructor]
+  Current:    let mut visited: HashMap<usize, OrderedF64> = HashMap::new();
+  Simplified: let mut visited = <simplified>;
+src/Chap57/DijkstraStEphFloat.rs:82:  [TypeConstructor]
+  Current:    let mut pq: BinaryHeapPQ<PQEntry> = BinaryHeapPQ::singleton(pq_entry_new(OrderedF64::from(0.0), source));
+  Simplified: let mut pq = <simplified>;
+src/Chap61/VertexMatchingStEph.rs:85:  [TypeConstructor]
+  Current:    let mut edge_coins: HashMap<Edge<V>, bool> = HashMap::new();
+  Simplified: let mut edge_coins = <simplified>;
+src/Chap61/EdgeContractionMtEph.rs:94:  [Collect]
+  Current:    let edges_vec: Vec<Edge<V>> = graph.edges().iter().cloned().collect();
+  Simplified: let edges_vec = <simplified>;
+src/Chap61/VertexMatchingMtEph.rs:58:  [Collect]
+  Current:    let edges_vec: Vec<Edge<V>> = graph.edges().iter().cloned().collect();
+  Simplified: let edges_vec = <simplified>;
+src/Chap61/VertexMatchingMtEph.rs:59:  [TypeConstructor]
+  Current:    let edges_seq: ArraySeqStEphS<Edge<V>> = ArraySeqStEphS::from_vec(edges_vec);
+  Simplified: let edges_seq = <simplified>;
+src/Chap61/VertexMatchingMtEph.rs:115:  [Collect]
+  Current:    let edge_coin_map: HashMap<Edge<V>, bool> = edges.iter().zip(coins.iter()).map(|(e, c)| (e.clone(), *c)).collect();
+  Simplified: let edge_coin_map = <simplified>;
+src/Chap61/VertexMatchingMtEph.rs:175:  [Collect]
+  Current:    let mut left_vec: Vec<Edge<V>> = pair.0.iter().cloned().collect();
+  Simplified: let mut left_vec = <simplified>;
+src/Chap61/VertexMatchingMtEph.rs:176:  [Collect]
+  Current:    let right_vec: Vec<Edge<V>> = pair.1.iter().cloned().collect();
+  Simplified: let right_vec = <simplified>;
+src/Chap61/EdgeContractionStEph.rs:54:  [TypeConstructor]
+  Current:    let mut vertex_to_block: HashMap<V, V> = HashMap::new();
+  Simplified: let mut vertex_to_block = <simplified>;
+src/Chap05/MappingStEph.rs:57:  [TypeConstructor]
+  Current:    let mut m: HashMap<A, B> = HashMap::new();
+  Simplified: let mut m = <simplified>;
+src/Chap05/MappingStEph.rs:61:  [Collect]
+  Current:    let pairs: Vec<Pair<A, B>> = m.into_iter().map(|(a, b)| Pair(a, b)).collect();
+  Simplified: let pairs = <simplified>;
+src/Chap05/SetStEph.rs:118:  [TypeConstructor]
+  Current:    let mut out: HashSet<Pair<T, U>> = HashSet::new();
+  Simplified: let mut out = <simplified>;
+src/Chap05/SetStEph.rs:171:  [TypeConstructor]
+  Current:    let mut element_hashes: Vec<u64> = Vec::with_capacity(self.data.len());
+  Simplified: let mut element_hashes = <simplified>;
+src/Chap05/RelationStEph.rs:74:  [TypeConstructor]
+  Current:    let mut out: SetStEph<X> = SetStEph::empty();
+  Simplified: let mut out = <simplified>;
+src/Chap05/RelationStEph.rs:85:  [TypeConstructor]
+  Current:    let mut out: SetStEph<Y> = SetStEph::empty();
+  Simplified: let mut out = <simplified>;
+src/Chap43/OrderedSetMtEph.rs:197:  [Collect]
+  Current:    let right_elements: Vec<T> = self.elements.drain(pos..).collect();
+  Simplified: let right_elements = <simplified>;
+src/Chap43/OrderedSetMtEph.rs:250:  [Collect]
+  Current:    let right_elements: Vec<T> = self.elements.drain(i..).collect();
+  Simplified: let right_elements = <simplified>;
+src/Chap18/ArraySeq.rs:151:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(length);
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeq.rs:160:  [TypeConstructor]
+  Current:    let mut values: Vec<U> = Vec::with_capacity(len);
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeq.rs:174:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(total);
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeq.rs:185:  [TypeConstructor]
+  Current:    let mut kept: Vec<T> = Vec::new();
+  Simplified: let mut kept = <simplified>;
+src/Chap18/ArraySeq.rs:196:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::new();
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeq.rs:207:  [Collect]
+  Current:    let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeq.rs:215:  [Collect]
+  Current:    let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeq.rs:216:  [TypeConstructor]
+  Current:    let mut seen: HashSet<N> = HashSet::new();
+  Simplified: let mut seen = <simplified>;
+src/Chap18/ArraySeq.rs:234:  [TypeConstructor]
+  Current:    let mut groups: Vec<Pair<K, Vec<V>>> = Vec::new();
+  Simplified: let mut groups = <simplified>;
+src/Chap18/ArraySeq.rs:243:  [Collect]
+  Current:    let grouped: Vec<Pair<K, ArraySeqS<V>>> = groups
+                .into_iter()
+                .map(|Pair(key, bucket)| Pair(key, ArraySeqS::from_vec(bucket)))
+                .collect();
+  Simplified: let grouped = <simplified>;
+src/Chap18/ArraySeq.rs:268:  [TypeConstructor]
+  Current:    let mut prefixes: Vec<T> = Vec::with_capacity(len);
+  Simplified: let mut prefixes = <simplified>;
+src/Chap18/LinkedListStPer.rs:148:  [TypeConstructor]
+  Current:    let mut out: Vec<T> = Vec::with_capacity(length);
+  Simplified: let mut out = <simplified>;
+src/Chap18/LinkedListStPer.rs:164:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(n);
+  Simplified: let mut values = <simplified>;
+src/Chap18/LinkedListStPer.rs:172:  [TypeConstructor]
+  Current:    let mut values: Vec<U> = Vec::with_capacity(a.length());
+  Simplified: let mut values = <simplified>;
+src/Chap18/LinkedListStPer.rs:180:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+  Simplified: let mut values = <simplified>;
+src/Chap18/LinkedListStPer.rs:205:  [TypeConstructor]
+  Current:    let mut kept: Vec<T> = Vec::new();
+  Simplified: let mut kept = <simplified>;
+src/Chap18/LinkedListStPer.rs:216:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(a.length());
+  Simplified: let mut values = <simplified>;
+src/Chap18/LinkedListStPer.rs:229:  [Collect]
+  Current:    let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
+  Simplified: let mut values = <simplified>;
+src/Chap18/LinkedListStPer.rs:242:  [Collect]
+  Current:    let mut values: Vec<T> = (0..a.length()).map(|i| a.nth(i).clone()).collect();
+  Simplified: let mut values = <simplified>;
+src/Chap18/LinkedListStPer.rs:266:  [TypeConstructor]
+  Current:    let mut prefixes: Vec<A> = Vec::with_capacity(a.length());
+  Simplified: let mut prefixes = <simplified>;
+src/Chap18/LinkedListStPer.rs:295:  [TypeConstructor]
+  Current:    let mut prefixes: Vec<T> = Vec::with_capacity(len);
+  Simplified: let mut prefixes = <simplified>;
+src/Chap18/LinkedListStPer.rs:316:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::new();
+  Simplified: let mut values = <simplified>;
+src/Chap18/LinkedListStPer.rs:330:  [TypeConstructor]
+  Current:    let mut groups: Vec<Pair<A, Vec<Bv>>> = Vec::new();
+  Simplified: let mut groups = <simplified>;
+src/Chap18/LinkedListStPer.rs:339:  [Collect]
+  Current:    let pairs: Vec<Pair<A, LinkedListStPerS<Bv>>> = groups
+                .into_iter()
+                .map(|Pair(k, vs)| Pair(k, LinkedListStPerS::from_vec(vs)))
+                .collect();
+  Simplified: let pairs = <simplified>;
+src/Chap18/ArraySeqStEph.rs:124:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::new();
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqStEph.rs:138:  [TypeConstructor]
+  Current:    let mut groups: Vec<Pair<K, Vec<V>>> = Vec::new();
+  Simplified: let mut groups = <simplified>;
+src/Chap18/ArraySeqStEph.rs:149:  [Collect]
+  Current:    let collected: Vec<Pair<K, ArraySeqStEphS<V>>> = groups
+                .into_iter()
+                .map(|Pair(key, bucket)| Pair(key, ArraySeqStEphS::from_vec(bucket)))
+                .collect();
+  Simplified: let collected = <simplified>;
+src/Chap18/ArraySeqStEph.rs:169:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(length);
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqStEph.rs:177:  [TypeConstructor]
+  Current:    let mut values: Vec<U> = Vec::with_capacity(a.length());
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqStEph.rs:186:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(total);
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqStEph.rs:197:  [TypeConstructor]
+  Current:    let mut kept: Vec<T> = Vec::new();
+  Simplified: let mut kept = <simplified>;
+src/Chap18/ArraySeqStEph.rs:224:  [TypeConstructor]
+  Current:    let mut prefixes: Vec<T> = Vec::with_capacity(a.length());
+  Simplified: let mut prefixes = <simplified>;
+src/Chap18/ArraySeqStEph.rs:240:  [TypeConstructor]
+  Current:    let mut last_values: HashMap<N, T> = HashMap::new();
+  Simplified: let mut last_values = <simplified>;
+src/Chap18/ArraySeqMtPer.rs:114:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(length);
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtPer.rs:154:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::new();
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtPer.rs:171:  [TypeConstructor]
+  Current:    let mut groups: Vec<Pair<K, ArraySeqMtPerS<V>>> = Vec::new();
+  Simplified: let mut groups = <simplified>;
+src/Chap18/ArraySeqMtPer.rs:177:  [Collect]
+  Current:    let mut values: Vec<V> = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect();
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtPer.rs:193:  [TypeConstructor]
+  Current:    let mut updated: HashSet<N> = HashSet::new();
+  Simplified: let mut updated = <simplified>;
+src/Chap18/ArraySeqMtPer.rs:222:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(n);
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtPer.rs:256:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtPer.rs:267:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::new();
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtPer.rs:301:  [TypeConstructor]
+  Current:    let mut values: Vec<A> = Vec::with_capacity(a.length());
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtPer.rs:337:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(a.length());
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtEph.rs:153:  [TypeConstructor]
+  Current:    let mut groups: Vec<Pair<K, ArraySeqMtEphS<V>>> = Vec::new();
+  Simplified: let mut groups = <simplified>;
+src/Chap18/ArraySeqMtEph.rs:159:  [TypeConstructor]
+  Current:    let mut values: Vec<V> = Vec::with_capacity(group.1.length() + 1);
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtEph.rs:178:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(a.length());
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtEph.rs:214:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(n);
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtEph.rs:254:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(na + nb);
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtEph.rs:265:  [TypeConstructor]
+  Current:    let mut kept: Vec<T> = Vec::new();
+  Simplified: let mut kept = <simplified>;
+src/Chap18/ArraySeqMtEph.rs:303:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::new();
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqMtEph.rs:315:  [TypeConstructor]
+  Current:    let mut seen: HashSet<N> = HashSet::new();
+  Simplified: let mut seen = <simplified>;
+src/Chap18/LinkedListStEph.rs:161:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(n);
+  Simplified: let mut values = <simplified>;
+src/Chap18/LinkedListStEph.rs:169:  [TypeConstructor]
+  Current:    let mut values: Vec<U> = Vec::with_capacity(a.length());
+  Simplified: let mut values = <simplified>;
+src/Chap18/LinkedListStEph.rs:191:  [TypeConstructor]
+  Current:    let mut out: Vec<T> = Vec::with_capacity(length);
+  Simplified: let mut out = <simplified>;
+src/Chap18/LinkedListStEph.rs:207:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+  Simplified: let mut values = <simplified>;
+src/Chap18/LinkedListStEph.rs:218:  [TypeConstructor]
+  Current:    let mut kept: Vec<T> = Vec::new();
+  Simplified: let mut kept = <simplified>;
+src/Chap18/LinkedListStEph.rs:237:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::new();
+  Simplified: let mut values = <simplified>;
+src/Chap18/LinkedListStEph.rs:254:  [TypeConstructor]
+  Current:    let mut applied: HashSet<N> = HashSet::new();
+  Simplified: let mut applied = <simplified>;
+src/Chap18/LinkedListStEph.rs:277:  [TypeConstructor]
+  Current:    let mut groups: Vec<Pair<A, Vec<Bv>>> = Vec::new();
+  Simplified: let mut groups = <simplified>;
+src/Chap18/LinkedListStEph.rs:286:  [Collect]
+  Current:    let pairs: Vec<Pair<A, LinkedListStEphS<Bv>>> = groups
+                .into_iter()
+                .map(|Pair(k, vs)| Pair(k, LinkedListStEphS::from_vec(vs)))
+                .collect();
+  Simplified: let pairs = <simplified>;
+src/Chap18/LinkedListStEph.rs:303:  [TypeConstructor]
+  Current:    let mut prefixes: Vec<A> = Vec::with_capacity(a.length());
+  Simplified: let mut prefixes = <simplified>;
+src/Chap18/LinkedListStEph.rs:332:  [TypeConstructor]
+  Current:    let mut prefixes: Vec<T> = Vec::with_capacity(len);
+  Simplified: let mut prefixes = <simplified>;
+src/Chap18/ArraySeqStPer.rs:107:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::new();
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqStPer.rs:119:  [TypeConstructor]
+  Current:    let mut updated: HashSet<N> = HashSet::new();
+  Simplified: let mut updated = <simplified>;
+src/Chap18/ArraySeqStPer.rs:141:  [TypeConstructor]
+  Current:    let mut groups: Vec<Pair<K, ArraySeqStPerS<V>>> = Vec::new();
+  Simplified: let mut groups = <simplified>;
+src/Chap18/ArraySeqStPer.rs:147:  [Collect]
+  Current:    let mut values: Vec<V> = (0..group.1.length()).map(|j| group.1.nth(j).clone()).collect();
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqStPer.rs:187:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(length);
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqStPer.rs:195:  [TypeConstructor]
+  Current:    let mut values: Vec<U> = Vec::with_capacity(a.length());
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqStPer.rs:203:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(a.length() + b.length());
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqStPer.rs:214:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::new();
+  Simplified: let mut values = <simplified>;
+src/Chap18/ArraySeqStPer.rs:249:  [TypeConstructor]
+  Current:    let mut values: Vec<T> = Vec::with_capacity(a.length());
+  Simplified: let mut values = <simplified>;
+src/Chap66/BoruvkaMtEph.rs:150:  [TypeConstructor]
+  Current:    let mut coin_flips: HashMap<V, bool> = HashMap::new();
+  Simplified: let mut coin_flips = <simplified>;
+src/Chap66/BoruvkaMtEph.rs:264:  [TypeConstructor]
+  Current:    let mut full_partition: HashMap<V, V> = HashMap::new();
+  Simplified: let mut full_partition = <simplified>;
+src/Chap66/BoruvkaMtEph.rs:277:  [Collect]
+  Current:    let remaining_vec: Vec<V> = remaining_vertices.iter().cloned().collect();
+  Simplified: let remaining_vec = <simplified>;
+src/Chap66/BoruvkaMtEph.rs:340:  [Collect]
+  Current:    let vertices_vec: Vec<V> = vertices.iter().cloned().collect();
+  Simplified: let vertices_vec = <simplified>;
+src/Chap66/BoruvkaMtEph.rs:341:  [Collect]
+  Current:    let edges_vec: Vec<LabeledEdge<V>> = edges.iter().cloned().collect();
+  Simplified: let edges_vec = <simplified>;
+src/Chap66/BoruvkaStEph.rs:77:  [TypeConstructor]
+  Current:    let mut bridges: HashMap<V, (V, OrderedFloat<f64>, usize)> = HashMap::new();
+  Simplified: let mut bridges = <simplified>;
+src/Chap66/BoruvkaStEph.rs:131:  [TypeConstructor]
+  Current:    let mut flips: HashMap<V, bool> = HashMap::new();
+  Simplified: let mut flips = <simplified>;
+src/Chap66/BoruvkaStEph.rs:138:  [TypeConstructor]
+  Current:    let mut partition: HashMap<V, (V, OrderedFloat<f64>, usize)> = HashMap::new();
+  Simplified: let mut partition = <simplified>;
+src/Chap66/BoruvkaStEph.rs:200:  [TypeConstructor]
+  Current:    let mut full_partition: HashMap<V, V> = HashMap::new();
+  Simplified: let mut full_partition = <simplified>;
+src/Chap64/TSPApproxStEph.rs:68:  [TypeConstructor]
+  Current:    let mut visited_edges: HashSet<(V, V)> = HashSet::new();
+  Simplified: let mut visited_edges = <simplified>;
+src/Chap64/TSPApproxStEph.rs:143:  [TypeConstructor]
+  Current:    let mut visited: HashSet<V> = HashSet::new();
+  Simplified: let mut visited = <simplified>;
+src/Chap64/TSPApproxMtEph.rs:66:  [TypeConstructor]
+  Current:    let mut visited_edges: HashSet<(V, V)> = HashSet::new();
+  Simplified: let mut visited_edges = <simplified>;
+src/Chap64/TSPApproxMtEph.rs:130:  [TypeConstructor]
+  Current:    let mut visited: HashSet<V> = HashSet::new();
+  Simplified: let mut visited = <simplified>;
+src/Chap37/BSTSetAVLMtEph.rs:119:  [Collect]
+  Current:    let mut merged: BTreeSet<T> = values_vec(&self.tree).into_iter().collect();
+  Simplified: let mut merged = <simplified>;
+src/Chap37/BSTSetAVLMtEph.rs:127:  [Collect]
+  Current:    let other_values: BTreeSet<T> = values_vec(&other.tree).into_iter().collect();
+  Simplified: let other_values = <simplified>;
+src/Chap37/BSTSetAVLMtEph.rs:128:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/BSTSetAVLMtEph.rs:144:  [Collect]
+  Current:    let other_values: BTreeSet<T> = values_vec(&other.tree).into_iter().collect();
+  Simplified: let other_values = <simplified>;
+src/Chap37/BSTSetAVLMtEph.rs:145:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if !other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/BSTSetAVLMtEph.rs:161:  [TypeConstructor]
+  Current:    let mut left: Vec<T> = Vec::new();
+  Simplified: let mut left = <simplified>;
+src/Chap37/BSTSetAVLMtEph.rs:162:  [TypeConstructor]
+  Current:    let mut right: Vec<T> = Vec::new();
+  Simplified: let mut right = <simplified>;
+src/Chap37/BSTSetAVLMtEph.rs:177:  [Collect]
+  Current:    let mut combined: BTreeSet<T> = values_vec(&left.tree).into_iter().collect();
+  Simplified: let mut combined = <simplified>;
+src/Chap37/BSTSetAVLMtEph.rs:185:  [Collect]
+  Current:    let mut combined: BTreeSet<T> = values_vec(&left.tree).into_iter().collect();
+  Simplified: let mut combined = <simplified>;
+src/Chap37/BSTSetAVLMtEph.rs:194:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| if predicate(v) { Some(v.clone()) } else { None })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/AVLTreeSeqStPer.rs:194:  [TypeConstructor]
+  Current:    let mut vals: Vec<T> = Vec::with_capacity(e - s);
+  Simplified: let mut vals = <simplified>;
+src/Chap37/BSTSetPlainMtEph.rs:119:  [Collect]
+  Current:    let mut merged: BTreeSet<T> = self.values_vec().into_iter().collect();
+  Simplified: let mut merged = <simplified>;
+src/Chap37/BSTSetPlainMtEph.rs:127:  [Collect]
+  Current:    let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
+  Simplified: let other_values = <simplified>;
+src/Chap37/BSTSetPlainMtEph.rs:128:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/BSTSetPlainMtEph.rs:144:  [Collect]
+  Current:    let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
+  Simplified: let other_values = <simplified>;
+src/Chap37/BSTSetPlainMtEph.rs:145:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if !other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/BSTSetPlainMtEph.rs:161:  [TypeConstructor]
+  Current:    let mut left: Vec<T> = Vec::new();
+  Simplified: let mut left = <simplified>;
+src/Chap37/BSTSetPlainMtEph.rs:162:  [TypeConstructor]
+  Current:    let mut right: Vec<T> = Vec::new();
+  Simplified: let mut right = <simplified>;
+src/Chap37/BSTSetPlainMtEph.rs:177:  [Collect]
+  Current:    let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+  Simplified: let mut combined = <simplified>;
+src/Chap37/BSTSetPlainMtEph.rs:185:  [Collect]
+  Current:    let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+  Simplified: let mut combined = <simplified>;
+src/Chap37/BSTSetPlainMtEph.rs:197:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| if predicate(v) { Some(v.clone()) } else { None })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/AVLTreeSeq.rs:151:  [TypeConstructor]
+  Current:    let mut vals: Vec<T> = Vec::with_capacity(e - s);
+  Simplified: let mut vals = <simplified>;
+src/Chap37/AVLTreeSeq.rs:238:  [TypeConstructor]
+  Current:    let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
+  Simplified: let mut out_vec = <simplified>;
+src/Chap37/BSTSetSplayMtEph.rs:119:  [Collect]
+  Current:    let mut merged: BTreeSet<T> = self.values_vec().into_iter().collect();
+  Simplified: let mut merged = <simplified>;
+src/Chap37/BSTSetSplayMtEph.rs:127:  [Collect]
+  Current:    let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
+  Simplified: let other_values = <simplified>;
+src/Chap37/BSTSetSplayMtEph.rs:128:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/BSTSetSplayMtEph.rs:144:  [Collect]
+  Current:    let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
+  Simplified: let other_values = <simplified>;
+src/Chap37/BSTSetSplayMtEph.rs:145:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if !other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/BSTSetSplayMtEph.rs:161:  [TypeConstructor]
+  Current:    let mut left: Vec<T> = Vec::new();
+  Simplified: let mut left = <simplified>;
+src/Chap37/BSTSetSplayMtEph.rs:162:  [TypeConstructor]
+  Current:    let mut right: Vec<T> = Vec::new();
+  Simplified: let mut right = <simplified>;
+src/Chap37/BSTSetSplayMtEph.rs:177:  [Collect]
+  Current:    let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+  Simplified: let mut combined = <simplified>;
+src/Chap37/BSTSetSplayMtEph.rs:185:  [Collect]
+  Current:    let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+  Simplified: let mut combined = <simplified>;
+src/Chap37/BSTSetSplayMtEph.rs:194:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| if predicate(v) { Some(v.clone()) } else { None })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/BSTSetRBMtEph.rs:119:  [Collect]
+  Current:    let mut merged: BTreeSet<T> = self.values_vec().into_iter().collect();
+  Simplified: let mut merged = <simplified>;
+src/Chap37/BSTSetRBMtEph.rs:127:  [Collect]
+  Current:    let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
+  Simplified: let other_values = <simplified>;
+src/Chap37/BSTSetRBMtEph.rs:128:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/BSTSetRBMtEph.rs:144:  [Collect]
+  Current:    let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
+  Simplified: let other_values = <simplified>;
+src/Chap37/BSTSetRBMtEph.rs:145:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if !other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/BSTSetRBMtEph.rs:161:  [TypeConstructor]
+  Current:    let mut left: Vec<T> = Vec::new();
+  Simplified: let mut left = <simplified>;
+src/Chap37/BSTSetRBMtEph.rs:162:  [TypeConstructor]
+  Current:    let mut right: Vec<T> = Vec::new();
+  Simplified: let mut right = <simplified>;
+src/Chap37/BSTSetRBMtEph.rs:177:  [Collect]
+  Current:    let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+  Simplified: let mut combined = <simplified>;
+src/Chap37/BSTSetRBMtEph.rs:185:  [Collect]
+  Current:    let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+  Simplified: let mut combined = <simplified>;
+src/Chap37/BSTSetRBMtEph.rs:194:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| if predicate(v) { Some(v.clone()) } else { None })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/AVLTreeSeqStEph.rs:105:  [TypeConstructor]
+  Current:    let mut vals: Vec<T> = Vec::with_capacity(e - s);
+  Simplified: let mut vals = <simplified>;
+src/Chap37/AVLTreeSeqStEph.rs:180:  [TypeConstructor]
+  Current:    let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
+  Simplified: let mut out_vec = <simplified>;
+src/Chap37/BSTSetBBAlphaMtEph.rs:119:  [Collect]
+  Current:    let mut merged: BTreeSet<T> = self.values_vec().into_iter().collect();
+  Simplified: let mut merged = <simplified>;
+src/Chap37/BSTSetBBAlphaMtEph.rs:127:  [Collect]
+  Current:    let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
+  Simplified: let other_values = <simplified>;
+src/Chap37/BSTSetBBAlphaMtEph.rs:128:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/BSTSetBBAlphaMtEph.rs:144:  [Collect]
+  Current:    let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
+  Simplified: let other_values = <simplified>;
+src/Chap37/BSTSetBBAlphaMtEph.rs:145:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| {
+                    if !other_values.contains(v) {
+                        Some(v.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+  Simplified: let filtered = <simplified>;
+src/Chap37/BSTSetBBAlphaMtEph.rs:161:  [TypeConstructor]
+  Current:    let mut left: Vec<T> = Vec::new();
+  Simplified: let mut left = <simplified>;
+src/Chap37/BSTSetBBAlphaMtEph.rs:162:  [TypeConstructor]
+  Current:    let mut right: Vec<T> = Vec::new();
+  Simplified: let mut right = <simplified>;
+src/Chap37/BSTSetBBAlphaMtEph.rs:177:  [Collect]
+  Current:    let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+  Simplified: let mut combined = <simplified>;
+src/Chap37/BSTSetBBAlphaMtEph.rs:185:  [Collect]
+  Current:    let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+  Simplified: let mut combined = <simplified>;
+src/Chap37/BSTSetBBAlphaMtEph.rs:194:  [Collect]
+  Current:    let filtered: Vec<T> = self
+                .tree
+                .in_order()
+                .iter()
+                .filter_map(|v| if predicate(v) { Some(v.clone()) } else { None })
+                .collect();
+  Simplified: let filtered = <simplified>;
+benches/Chap35/BenchOrderStatSelectStEph.rs:16:  [TypeConstructor]
+  Current:    let a100: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| ((i * 7) % 100) as i32, 100);
+  Simplified: let a100 = <simplified>;
+benches/Chap35/BenchOrderStatSelectStEph.rs:21:  [TypeConstructor]
+  Current:    let a1000: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| ((i * 7) % 1000) as i32, 1000);
+  Simplified: let a1000 = <simplified>;
+benches/Chap35/BenchOrderStatSelectMtPer.rs:18:  [TypeConstructor]
+  Current:    let a100: ArraySeqMtPerS<i32> = ArraySeqMtPerS::tabulate(&|i| ((i * 7) % 100) as i32, 100);
+  Simplified: let a100 = <simplified>;
+benches/Chap35/BenchOrderStatSelectMtPer.rs:23:  [TypeConstructor]
+  Current:    let a1000: ArraySeqMtPerS<i32> = ArraySeqMtPerS::tabulate(&|i| ((i * 7) % 1000) as i32, 1000);
+  Simplified: let a1000 = <simplified>;
+benches/Chap35/BenchOrderStatSelectMtEph.rs:18:  [TypeConstructor]
+  Current:    let a100: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| ((i * 7) % 100) as i32, 100);
+  Simplified: let a100 = <simplified>;
+benches/Chap35/BenchOrderStatSelectMtEph.rs:23:  [TypeConstructor]
+  Current:    let a1000: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| ((i * 7) % 1000) as i32, 1000);
+  Simplified: let a1000 = <simplified>;
+benches/Chap35/BenchOrderStatSelectStPer.rs:17:  [TypeConstructor]
+  Current:    let a100: ArraySeqStPerS<i32> = ArraySeqStPerS::tabulate(&|i| ((i * 7) % 100) as i32, 100);
+  Simplified: let a100 = <simplified>;
+benches/Chap35/BenchOrderStatSelectStPer.rs:22:  [TypeConstructor]
+  Current:    let a1000: ArraySeqStPerS<i32> = ArraySeqStPerS::tabulate(&|i| ((i * 7) % 1000) as i32, 1000);
+  Simplified: let a1000 = <simplified>;
+benches/Chap17/BenchMathSeq.rs:82:  [TypeConstructor]
+  Current:    let target_dir: PathBuf = env::var_os("CARGO_TARGET_DIR")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from("target"));
+  Simplified: let target_dir = <simplified>;
+benches/Chap65/BenchUnionFindStEph.rs:20:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+benches/Chap65/BenchUnionFindStEph.rs:30:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+benches/Chap65/BenchUnionFindStEph.rs:42:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+benches/Chap65/BenchUnionFindStEph.rs:58:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+benches/Chap65/BenchUnionFindStEph.rs:75:  [TypeConstructor]
+  Current:    let mut uf: UnionFindStEph<N> = UnionFindStEph::new();
+  Simplified: let mut uf = <simplified>;
+benches/Chap50/BenchOptBinSearchTreeStPer.rs:20:  [Collect]
+  Current:    let keys: Vec<char> = (0..*size).map(|i| (b'A' + i as u8) as char).collect();
+  Simplified: let keys = <simplified>;
+benches/Chap50/BenchOptBinSearchTreeStPer.rs:21:  [Collect]
+  Current:    let probs: Vec<Probability> = (0..*size).map(|i| prob!(0.1 + (i as f64) * 0.05)).collect();
+  Simplified: let probs = <simplified>;
+benches/Chap50/BenchOptBinSearchTreeStEph.rs:20:  [Collect]
+  Current:    let keys: Vec<char> = (0..*size).map(|i| (b'A' + i as u8) as char).collect();
+  Simplified: let keys = <simplified>;
+benches/Chap50/BenchOptBinSearchTreeStEph.rs:21:  [Collect]
+  Current:    let probs: Vec<Probability> = (0..*size).map(|i| prob!(0.1 + (i as f64) * 0.05)).collect();
+  Simplified: let probs = <simplified>;
+benches/Chap45/BenchLeftistHeapPQ.rs:17:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).rev().collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchLeftistHeapPQ.rs:40:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchLeftistHeapPQ.rs:65:  [Collect]
+  Current:    let data1: Vec<i32> = (0..*size).collect();
+  Simplified: let data1 = <simplified>;
+benches/Chap45/BenchLeftistHeapPQ.rs:66:  [Collect]
+  Current:    let data2: Vec<i32> = (*size..(2 * size)).collect();
+  Simplified: let data2 = <simplified>;
+benches/Chap45/BenchLeftistHeapPQ.rs:85:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchLeftistHeapPQ.rs:103:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchHeapsortExample.rs:17:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).rev().collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchSortedListPQ.rs:17:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).rev().collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchSortedListPQ.rs:40:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchSortedListPQ.rs:65:  [Collect]
+  Current:    let data1: Vec<i32> = (0..*size).collect();
+  Simplified: let data1 = <simplified>;
+benches/Chap45/BenchSortedListPQ.rs:66:  [Collect]
+  Current:    let data2: Vec<i32> = (*size..(2 * size)).collect();
+  Simplified: let data2 = <simplified>;
+benches/Chap45/BenchSortedListPQ.rs:85:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchSortedListPQ.rs:103:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchBinaryHeapPQ.rs:17:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).rev().collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchBinaryHeapPQ.rs:40:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchBinaryHeapPQ.rs:65:  [Collect]
+  Current:    let data1: Vec<i32> = (0..*size).collect();
+  Simplified: let data1 = <simplified>;
+benches/Chap45/BenchBinaryHeapPQ.rs:66:  [Collect]
+  Current:    let data2: Vec<i32> = (*size..(2 * size)).collect();
+  Simplified: let data2 = <simplified>;
+benches/Chap45/BenchBinaryHeapPQ.rs:85:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchBinaryHeapPQ.rs:103:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchBalancedTreePQ.rs:17:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).rev().collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchBalancedTreePQ.rs:40:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchBalancedTreePQ.rs:65:  [Collect]
+  Current:    let data1: Vec<i32> = (0..*size).collect();
+  Simplified: let data1 = <simplified>;
+benches/Chap45/BenchBalancedTreePQ.rs:66:  [Collect]
+  Current:    let data2: Vec<i32> = (*size..(2 * size)).collect();
+  Simplified: let data2 = <simplified>;
+benches/Chap45/BenchBalancedTreePQ.rs:85:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchBalancedTreePQ.rs:103:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchUnsortedListPQ.rs:17:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).rev().collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchUnsortedListPQ.rs:40:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchUnsortedListPQ.rs:65:  [Collect]
+  Current:    let data1: Vec<i32> = (0..*size).collect();
+  Simplified: let data1 = <simplified>;
+benches/Chap45/BenchUnsortedListPQ.rs:66:  [Collect]
+  Current:    let data2: Vec<i32> = (*size..(2 * size)).collect();
+  Simplified: let data2 = <simplified>;
+benches/Chap45/BenchUnsortedListPQ.rs:85:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap45/BenchUnsortedListPQ.rs:103:  [Collect]
+  Current:    let data: Vec<i32> = (0..*size).collect();
+  Simplified: let data = <simplified>;
+benches/Chap28/BenchMaxContigSubSumDivConOptStEph.rs:16:  [TypeConstructor]
+  Current:    let a1000: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 10 - 4, 1000);
+  Simplified: let a1000 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumDivConOptStEph.rs:21:  [TypeConstructor]
+  Current:    let a10000: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 10 - 4, 10000);
+  Simplified: let a10000 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumDivConOptStEph.rs:26:  [TypeConstructor]
+  Current:    let a100000: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 10 - 4, 100000);
+  Simplified: let a100000 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumOptMtEph.rs:18:  [TypeConstructor]
+  Current:    let a1000: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 1000);
+  Simplified: let a1000 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumOptMtEph.rs:23:  [TypeConstructor]
+  Current:    let a10000: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 10000);
+  Simplified: let a10000 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumOptMtEph.rs:28:  [TypeConstructor]
+  Current:    let a100000: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 100000);
+  Simplified: let a100000 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumDivConMtEph.rs:18:  [TypeConstructor]
+  Current:    let a125: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 125);
+  Simplified: let a125 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumDivConMtEph.rs:23:  [TypeConstructor]
+  Current:    let a200: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 200);
+  Simplified: let a200 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumBruteStEph.rs:22:  [TypeConstructor]
+  Current:    let a20: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 5 - 2, 20);
+  Simplified: let a20 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumDivConOptMtEph.rs:18:  [TypeConstructor]
+  Current:    let a125: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 125);
+  Simplified: let a125 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumDivConOptMtEph.rs:23:  [TypeConstructor]
+  Current:    let a1250: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| (i as i32) % 10 - 4, 1250);
+  Simplified: let a1250 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumOptStEph.rs:16:  [TypeConstructor]
+  Current:    let a1000: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 10 - 4, 1000);
+  Simplified: let a1000 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumOptStEph.rs:21:  [TypeConstructor]
+  Current:    let a10000: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 10 - 4, 10000);
+  Simplified: let a10000 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumOptStEph.rs:26:  [TypeConstructor]
+  Current:    let a100000: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 10 - 4, 100000);
+  Simplified: let a100000 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumDivConStEph.rs:16:  [TypeConstructor]
+  Current:    let a1000: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 10 - 4, 1000);
+  Simplified: let a1000 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumDivConStEph.rs:21:  [TypeConstructor]
+  Current:    let a10000: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 10 - 4, 10000);
+  Simplified: let a10000 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumReducedStEph.rs:17:  [TypeConstructor]
+  Current:    let a100: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 10 - 4, 100);
+  Simplified: let a100 = <simplified>;
+benches/Chap28/BenchMaxContigSubSumReducedStEph.rs:22:  [TypeConstructor]
+  Current:    let a1000: ArraySeqStEphS<i32> = ArraySeqStEphS::tabulate(&|i| (i as i32) % 10 - 4, 1000);
+  Simplified: let a1000 = <simplified>;
+benches/Chap05/BenchSetStEph.rs:19:  [TypeConstructor]
+  Current:    let set_a: SetStEph<N> = SetStEph::FromVec((0..len).collect());
+  Simplified: let set_a = <simplified>;
+benches/Chap05/BenchSetStEph.rs:20:  [TypeConstructor]
+  Current:    let set_b: SetStEph<N> = SetStEph::FromVec((len / 2..len + len / 2).collect());
+  Simplified: let set_b = <simplified>;
+benches/Chap05/BenchSetStEph.rs:28:  [TypeConstructor]
+  Current:    let set_a: SetStEph<N> = SetStEph::FromVec((0..len).collect());
+  Simplified: let set_a = <simplified>;
+benches/Chap05/BenchSetStEph.rs:29:  [TypeConstructor]
+  Current:    let set_b: SetStEph<N> = SetStEph::FromVec((len / 2..len + len / 2).collect());
+  Simplified: let set_b = <simplified>;
+benches/Chap05/BenchSetStEph.rs:37:  [TypeConstructor]
+  Current:    let set_a: SetStEph<N> = SetStEph::FromVec((0..len).collect());
+  Simplified: let set_a = <simplified>;
+benches/Chap05/BenchSetStEph.rs:38:  [TypeConstructor]
+  Current:    let set_b: SetStEph<N> = SetStEph::FromVec((0..len).collect());
+  Simplified: let set_b = <simplified>;
+benches/Chap05/BenchSetStEph.rs:46:  [TypeConstructor]
+  Current:    let main_set: SetStEph<N> = SetStEph::FromVec((0..len * 4).collect());
+  Simplified: let main_set = <simplified>;
+benches/Chap05/BenchSetStEph.rs:49:  [TypeConstructor]
+  Current:    let subset: SetStEph<N> = SetStEph::FromVec((i * len..(i + 1) * len).collect());
+  Simplified: let subset = <simplified>;
+benches/Chap05/BenchSetStEph.rs:59:  [Collect]
+  Current:    let vec_data: Vec<N> = (0..len).collect();
+  Simplified: let vec_data = <simplified>;
+benches/Chap05/BenchSetStEph.rs:67:  [TypeConstructor]
+  Current:    let set: SetStEph<N> = SetStEph::FromVec((0..len).collect());
+  Simplified: let set = <simplified>;
+benches/Chap05/BenchRelationStEph.rs:20:  [TypeConstructor]
+  Current:    let pairs: SetStEph<Pair<N, N>> = SetStEph::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+  Simplified: let pairs = <simplified>;
+benches/Chap05/BenchRelationStEph.rs:28:  [TypeConstructor]
+  Current:    let pairs: SetStEph<Pair<N, N>> = SetStEph::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+  Simplified: let pairs = <simplified>;
+benches/Chap05/BenchRelationStEph.rs:37:  [TypeConstructor]
+  Current:    let pairs: SetStEph<Pair<N, N>> = SetStEph::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+  Simplified: let pairs = <simplified>;
+benches/Chap05/BenchRelationStEph.rs:46:  [TypeConstructor]
+  Current:    let pairs: SetStEph<Pair<N, N>> = SetStEph::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+  Simplified: let pairs = <simplified>;
+benches/Chap05/BenchRelationStEph.rs:60:  [TypeConstructor]
+  Current:    let pairs: SetStEph<Pair<N, N>> = SetStEph::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+  Simplified: let pairs = <simplified>;
+benches/Chap05/BenchRelationStEph.rs:72:  [TypeConstructor]
+  Current:    let pairs: SetStEph<Pair<N, N>> = SetStEph::FromVec((0..len).map(|i| PairLit![i, i * 2]).collect());
+  Simplified: let pairs = <simplified>;
+benches/Chap56/BenchPathWeightUtilsStPer.rs:27:  [Collect]
+  Current:    let path_vec: Vec<usize> = (0..n).collect();
+  Simplified: let path_vec = <simplified>;
+benches/Chap56/BenchPathWeightUtilsStPer.rs:50:  [Collect]
+  Current:    let path_vec: Vec<usize> = (0..n).collect();
+  Simplified: let path_vec = <simplified>;
+benches/Chap56/BenchPathWeightUtilsStPer.rs:73:  [Collect]
+  Current:    let distances_vec: Vec<i64> = (0..n as i64).collect();
+  Simplified: let distances_vec = <simplified>;
+benches/Chap56/BenchPathWeightUtilsStPer.rs:76:  [Collect]
+  Current:    let path_vec: Vec<usize> = (0..n).collect();
+  Simplified: let path_vec = <simplified>;
+benches/Chap56/BenchPathWeightUtilsStPer.rs:105:  [Collect]
+  Current:    let distances_vec: Vec<OrderedFloat<f64>> = (0..n).map(|i| OrderedFloat(i as f64 * 1.5)).collect();
+  Simplified: let distances_vec = <simplified>;
+benches/Chap56/BenchPathWeightUtilsStPer.rs:108:  [Collect]
+  Current:    let path_vec: Vec<usize> = (0..n).collect();
+  Simplified: let path_vec = <simplified>;
+benches/Chap56/BenchPathWeightUtilsStEph.rs:28:  [Collect]
+  Current:    let path_vec: Vec<usize> = (0..n).collect();
+  Simplified: let path_vec = <simplified>;
+benches/Chap56/BenchPathWeightUtilsStEph.rs:51:  [Collect]
+  Current:    let path_vec: Vec<usize> = (0..n).collect();
+  Simplified: let path_vec = <simplified>;
+benches/Chap56/BenchPathWeightUtilsStEph.rs:74:  [Collect]
+  Current:    let distances_vec: Vec<i64> = (0..n as i64).collect();
+  Simplified: let distances_vec = <simplified>;
+benches/Chap56/BenchPathWeightUtilsStEph.rs:77:  [Collect]
+  Current:    let path_vec: Vec<usize> = (0..n).collect();
+  Simplified: let path_vec = <simplified>;
+benches/Chap56/BenchPathWeightUtilsStEph.rs:106:  [Collect]
+  Current:    let distances_vec: Vec<OrderedFloat<f64>> = (0..n).map(|i| OrderedFloat(i as f64 * 1.5)).collect();
+  Simplified: let distances_vec = <simplified>;
+benches/Chap56/BenchPathWeightUtilsStEph.rs:109:  [Collect]
+  Current:    let path_vec: Vec<usize> = (0..n).collect();
+  Simplified: let path_vec = <simplified>;
+benches/Chap43/BenchOrderedTableStEph.rs:326:  [Collect]
+  Current:    let entries: Vec<Pair<i32, String>> = (0..*size).map(|i| Pair(i, format!("value_{i}"))).collect();
+  Simplified: let entries = <simplified>;
+benches/Chap43/BenchAugOrderedTableMtEph.rs:67:  [Collect]
+  Current:    let handles: Vec<_> = (0..4)
+                .map(|_| {
+                    let table_ref = Arc::clone(&table_clone);
+                    thread::spawn(move || table_ref.reduce_val())
+                })
+                .collect();
+  Simplified: let handles = <simplified>;
+benches/Chap43/BenchAugOrderedTableMtEph.rs:74:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+benches/Chap43/BenchAugOrderedTableMtEph.rs:82:  [Collect]
+  Current:    let handles: Vec<_> = (0..4)
+                .map(|i| {
+                    let table_ref = Arc::clone(&table_clone);
+                    let start = (i * 250) + 1;
+                    let end = (i + 1) * 250;
+                    thread::spawn(move || table_ref.reduce_range(&start, &end))
+                })
+                .collect();
+  Simplified: let handles = <simplified>;
+benches/Chap43/BenchAugOrderedTableMtEph.rs:91:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+benches/Chap43/BenchAugOrderedTableMtEph.rs:111:  [Collect]
+  Current:    let handles: Vec<_> = (0..3)
+                    .map(|venue_id| {
+                        let table_clone = Arc::clone(&table);
+                        thread::spawn(move || {
+                            let base_time = venue_id * 100;
+                            for minute in 0..60 {
+                                let timestamp = base_time + minute;
+                                let price = 15000 + (minute * 10) + (venue_id * 50);
+
+                                let mut t = table_clone.lock().unwrap();
+                                t.insert(timestamp, price, |old, new| if old > new { *old } else { *new });
+                            }
+                        })
+                    })
+                    .collect();
+  Simplified: let handles = <simplified>;
+benches/Chap43/BenchAugOrderedTableMtEph.rs:150:  [Collect]
+  Current:    let handles: Vec<_> = vec![
+                    (570, 630), // Opening hour
+                    (720, 780), // Lunch hour
+                    (900, 960), // Closing hour
+                ]
+                .into_iter()
+                .map(|(start, end)| {
+                    let table_clone = Arc::clone(&table);
+                    thread::spawn(move || table_clone.reduce_range(&start, &end))
+                })
+                .collect();
+  Simplified: let handles = <simplified>;
+benches/Chap43/BenchAugOrderedTableMtEph.rs:162:  [Collect]
+  Current:    let results: Vec<_> = handles.into_iter().map(|h| h.join().unwrap()).collect();
+  Simplified: let results = <simplified>;
+benches/Chap43/BenchAugOrderedTableMtEph.rs:197:  [Collect]
+  Current:    let handles: Vec<_> = (0..4)
+                    .map(|thread_id| {
+                        let table_clone = Arc::clone(&table);
+                        thread::spawn(move || {
+                            for i in 0..25 {
+                                let key = thread_id * 25 + i + 1;
+                                let value = key * 10;
+                                let mut t = table_clone.lock().unwrap();
+                                t.insert(key, value, |_old, new| *new);
+                            }
+                        })
+                    })
+                    .collect();
+  Simplified: let handles = <simplified>;
+benches/Chap18/BenchLinkedListStPer.rs:29:  [TypeConstructor]
+  Current:    let target_dir: PathBuf = env::var_os("CARGO_TARGET_DIR")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from("target"));
+  Simplified: let target_dir = <simplified>;
+benches/Chap18/BenchArraySeqMtEphChap18.rs:23:  [TypeConstructor]
+  Current:    let s: ArraySeqMtEphS<N> = ArraySeqMtEphS::tabulate(&identity, len);
+  Simplified: let s = <simplified>;
+benches/Chap18/BenchArraySeqMtEphChap18.rs:24:  [TypeConstructor]
+  Current:    let m: ArraySeqMtEphS<N> = ArraySeqMtEphS::map(&s, &increment);
+  Simplified: let m = <simplified>;
+benches/Chap66/BenchBoruvkaStEph.rs:20:  [Collect]
+  Current:    let vertices: Vec<usize> = (0..n).collect();
+  Simplified: let vertices = <simplified>;
+benches/Chap66/BenchBoruvkaStEph.rs:56:  [Collect]
+  Current:    let vertices: Vec<usize> = (0..n).collect();
+  Simplified: let vertices = <simplified>;
+benches/Chap66/BenchBoruvkaStEph.rs:95:  [Collect]
+  Current:    let vertices: Vec<usize> = (0..n).collect();
+  Simplified: let vertices = <simplified>;
+benches/Chap66/BenchBoruvkaStEph.rs:127:  [Collect]
+  Current:    let vertices: Vec<usize> = (0..n).collect();
+  Simplified: let vertices = <simplified>;
+benches/Chap66/BenchBoruvkaStEph.rs:159:  [Collect]
+  Current:    let vertices: Vec<usize> = (0..n).collect();
+  Simplified: let vertices = <simplified>;
+benches/Chap66/BenchBoruvkaMtEph.rs:20:  [Collect]
+  Current:    let vertices: Vec<usize> = (0..n).collect();
+  Simplified: let vertices = <simplified>;
+benches/Chap66/BenchBoruvkaMtEph.rs:56:  [Collect]
+  Current:    let vertices: Vec<usize> = (0..n).collect();
+  Simplified: let vertices = <simplified>;
+benches/Chap66/BenchBoruvkaMtEph.rs:95:  [Collect]
+  Current:    let vertices: Vec<usize> = (0..n).collect();
+  Simplified: let vertices = <simplified>;
+benches/Chap66/BenchBoruvkaMtEph.rs:127:  [Collect]
+  Current:    let vertices: Vec<usize> = (0..n).collect();
+  Simplified: let vertices = <simplified>;
+benches/Chap66/BenchBoruvkaMtEph.rs:159:  [Collect]
+  Current:    let vertices: Vec<usize> = (0..n).collect();
+  Simplified: let vertices = <simplified>;
+benches/Chap37/BenchAVLTreeSeqStPerChap37Build.rs:33:  [TypeConstructor]
+  Current:    let target_dir: PathBuf = env::var_os("CARGO_TARGET_DIR")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from("target"));
+  Simplified: let target_dir = <simplified>;
+benches/Chap37/BenchAVLTreeSeqStPer.rs:31:  [TypeConstructor]
+  Current:    let target_dir: PathBuf = env::var_os("CARGO_TARGET_DIR")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from("target"));
+  Simplified: let target_dir = <simplified>;
+
+================================================================================
+SUMMARY:
+By category:
+  Type constructors (Type<T> = Type::new()): 625
+  Collect with type (Vec<T> = iter.collect()): 328
+
+  TOTAL: 953
+Completed in 697ms

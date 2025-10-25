@@ -39,14 +39,14 @@ fn test_relation_domain_range_and_mem() {
 
 #[test]
 fn test_relation_empty() {
-    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
+    let empty_rel = RelationStEph::<i32, char>::empty();
     assert_eq!(empty_rel.size(), 0);
     assert!(!empty_rel.mem(&1, &'a'));
 }
 
 #[test]
 fn test_relation_size() {
-    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
+    let empty_rel = RelationStEph::<i32, char>::empty();
     assert_eq!(empty_rel.size(), 0);
 
     let single_pair = SetLit![PairLit!(1, 'a')];
@@ -60,21 +60,21 @@ fn test_relation_size() {
 
 #[test]
 fn test_relation_domain_empty_edge() {
-    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
+    let empty_rel = RelationStEph::<i32, char>::empty();
     let empty_domain = empty_rel.domain();
     assert_eq!(empty_domain.size(), 0);
 }
 
 #[test]
 fn test_relation_range_empty_edge() {
-    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
+    let empty_rel = RelationStEph::<i32, char>::empty();
     let empty_range = empty_rel.range();
     assert_eq!(empty_range.size(), 0);
 }
 
 #[test]
 fn test_relation_mem_empty_edge() {
-    let empty_rel: RelationStEph<i32, char> = RelationStEph::empty();
+    let empty_rel = RelationStEph::<i32, char>::empty();
     assert!(!empty_rel.mem(&1, &'a'));
     assert!(!empty_rel.mem(&0, &'z'));
 }
@@ -84,7 +84,7 @@ fn test_relation_iter() {
     let pairs = SetLit![PairLit!(1, 'a'), PairLit!(2, 'b')];
     let rel = RelationStEph::FromSet(pairs);
 
-    let collected: Vec<_> = rel.iter().cloned().collect();
+    let collected = rel.iter().cloned().collect::<Vec<_>>();
     assert_eq!(collected.len(), 2);
     assert!(collected.contains(&PairLit!(1, 'a')));
     assert!(collected.contains(&PairLit!(2, 'b')));
@@ -144,7 +144,7 @@ fn test_relation_iterator_boundaries() {
 
     // Test iterator ending at end
     let iter_end = rel.iter();
-    let collected: Vec<Pair<i32, char>> = iter_end.cloned().collect();
+    let collected = iter_end.cloned().collect::<Vec<Pair<i32, char>>>();
     assert_eq!(collected.len(), 5);
     // Note: HashSet iteration order is not guaranteed, so we check membership
     for pair in &collected {
@@ -192,7 +192,7 @@ fn test_relation_iterator_boundaries() {
     // Test iterator chain boundaries
     let rel1 = RelationLit![(1, 'a'), (2, 'b')];
     let rel2 = RelationLit![(3, 'c'), (4, 'd')];
-    let chained: Vec<Pair<i32, char>> = rel1.iter().chain(rel2.iter()).cloned().collect();
+    let chained = rel1.iter().chain(rel2.iter()).cloned().collect::<Vec<Pair<i32, char>>>();
     assert_eq!(chained.len(), 4);
     // Check all elements are present
     for pair in &chained {
@@ -201,14 +201,14 @@ fn test_relation_iterator_boundaries() {
 
     // Test iterator skip/take boundaries
     let rel_skip = RelationLit![(10, 'a'), (20, 'b'), (30, 'c'), (40, 'd'), (50, 'e')];
-    let skipped: Vec<Pair<i32, char>> = rel_skip.iter().skip(2).cloned().collect();
+    let skipped = rel_skip.iter().skip(2).cloned().collect::<Vec<Pair<i32, char>>>();
     assert_eq!(skipped.len(), 3);
     // All skipped elements should be in original relation
     for pair in &skipped {
         assert!(rel_skip.mem(&pair.0, &pair.1));
     }
 
-    let taken: Vec<Pair<i32, char>> = rel_skip.iter().take(3).cloned().collect();
+    let taken = rel_skip.iter().take(3).cloned().collect::<Vec<Pair<i32, char>>>();
     assert_eq!(taken.len(), 3);
     // All taken elements should be in original relation
     for pair in &taken {
@@ -217,7 +217,7 @@ fn test_relation_iterator_boundaries() {
 
     // Test iterator collect and verify completeness
     let original = RelationLit![(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd'), (5, 'e')];
-    let collected_all: Vec<Pair<i32, char>> = original.iter().cloned().collect();
+    let collected_all = original.iter().cloned().collect::<Vec<Pair<i32, char>>>();
     assert_eq!(collected_all.len(), 5);
 
     // Create new relation from collected elements and verify equality
@@ -241,7 +241,7 @@ fn test_relation_maximum_size_boundary() {
     // Test maximum size collection boundary - use reasonably large size
     // to verify graceful handling without causing memory issues
     let large_size = 50_000usize;
-    let large_vec: Vec<Pair<i32, i32>> = (0..large_size as i32).map(|i| Pair(i, i * 2)).collect();
+    let large_vec = (0..large_size as i32).map(|i| Pair(i, i * 2)).collect::<Vec<Pair<i32, i32>>>();
     let large_rel = RelationStEph::FromVec(large_vec);
 
     // Verify basic operations work on large relation
@@ -279,7 +279,7 @@ fn test_relation_maximum_size_boundary() {
     assert_eq!(count, large_size);
 
     // Test with another large relation (partial overlap)
-    let large_vec2: Vec<Pair<i32, i32>> = (25_000..75_000).map(|i| Pair(i, i * 3)).collect();
+    let large_vec2 = (25_000..75_000).map(|i| Pair(i, i * 3)).collect::<Vec<Pair<i32, i32>>>();
     let large_rel2 = RelationStEph::FromVec(large_vec2);
 
     // Verify the second relation

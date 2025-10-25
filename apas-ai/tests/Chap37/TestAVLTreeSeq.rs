@@ -292,8 +292,8 @@ fn test_values_in_order() {
 #[test]
 fn test_avltreeseq_equality_comprehensive() {
     // Test equality of empty trees
-    let empty1: AVLTreeS<i32> = AVLTreeS::empty();
-    let empty2: AVLTreeS<i32> = AVLTreeS::empty();
+    let empty1 = AVLTreeS::<i32>::empty();
+    let empty2 = AVLTreeS::<i32>::empty();
     assert_eq!(empty1, empty2);
 
     // Test equality of singleton trees
@@ -335,7 +335,7 @@ fn test_avltreeseq_debug_display() {
     assert!(display_str.contains("3"));
 
     // Test empty tree formatting
-    let empty: AVLTreeS<i32> = AVLTreeS::empty();
+    let empty = AVLTreeS::<i32>::empty();
     let _empty_debug = format!("{:?}", empty);
     let empty_display = format!("{}", empty);
     assert_eq!(empty_display, "[]");
@@ -345,17 +345,17 @@ fn test_avltreeseq_debug_display() {
 fn test_avltreeseq_iterator() {
     // Test iterator on multi-element tree
     let tree = AVLTreeS::from_vec(vec![1, 2, 3, 4, 5]);
-    let collected: Vec<i32> = tree.iter().copied().collect();
+    let collected = tree.iter().copied().collect::<Vec<i32>>();
     assert_eq!(collected, vec![1, 2, 3, 4, 5]);
 
     // Test iterator on empty tree
-    let empty: AVLTreeS<i32> = AVLTreeS::empty();
-    let empty_collected: Vec<i32> = empty.iter().copied().collect();
+    let empty = AVLTreeS::<i32>::empty();
+    let empty_collected = empty.iter().copied().collect::<Vec<i32>>();
     assert_eq!(empty_collected, Vec::<i32>::new());
 
     // Test iterator on singleton
     let single = AVLTreeS::from_vec(vec![42]);
-    let single_collected: Vec<i32> = single.iter().copied().collect();
+    let single_collected = single.iter().copied().collect::<Vec<i32>>();
     assert_eq!(single_collected, vec![42]);
 
     // Test iterator is consumed properly
@@ -370,7 +370,7 @@ fn test_avltreeseq_iterator() {
 #[test]
 fn test_avltreeseq_large_tree() {
     // Create a larger tree that will trigger rotations and rebalancing
-    let values: Vec<i32> = (1..=20).collect();
+    let values = (1..=20).collect::<Vec<i32>>();
     let tree = AVLTreeS::from_vec(values.clone());
 
     assert_eq!(tree.length(), 20);
@@ -381,14 +381,14 @@ fn test_avltreeseq_large_tree() {
     }
 
     // Verify iterator works correctly
-    let collected: Vec<i32> = tree.iter().copied().collect();
+    let collected = tree.iter().copied().collect::<Vec<i32>>();
     assert_eq!(collected, values);
 }
 
 #[test]
 fn test_avltreeseq_reverse_insertion_order() {
     // Insert in reverse order to test left-heavy rotations
-    let values: Vec<i32> = (1..=10).rev().collect();
+    let values = (1..=10).rev().collect::<Vec<i32>>();
     let tree = AVLTreeS::from_vec(values);
 
     assert_eq!(tree.length(), 10);
@@ -511,7 +511,7 @@ fn test_avltreeseq_mixed_operations() {
     assert_eq!(tree.length(), 4);
 
     // Verify final state
-    let final_values: Vec<i32> = tree.iter().copied().collect();
+    let final_values = tree.iter().copied().collect::<Vec<i32>>();
     assert_eq!(final_values, vec![1, 20, 4, 5]);
 }
 
@@ -642,7 +642,7 @@ fn test_avltreeseq_from_vec_empty() {
 
 #[test]
 fn test_avltreeseq_to_arrayseq_empty() {
-    let tree: AVLTreeS<i32> = AVLTreeS::empty();
+    let tree = AVLTreeS::<i32>::empty();
     let seq = tree.to_arrayseq();
     assert_eq!(seq.length(), 0);
 }
@@ -734,7 +734,7 @@ fn test_avltreeseq_complex_rotation_patterns() {
     assert_eq!(tree.length(), 15);
 
     // Verify tree maintains correct order
-    let collected: Vec<i32> = tree.iter().copied().collect();
+    let collected = tree.iter().copied().collect::<Vec<i32>>();
     assert_eq!(
         collected,
         vec![50, 25, 75, 10, 30, 60, 80, 5, 15, 27, 35, 55, 65, 77, 85]
@@ -807,6 +807,6 @@ fn test_avltreeseq_insert_at_boundaries() {
 
     // Verify order maintained
     let expected = vec![20, 30, 40, 10, 50];
-    let collected: Vec<i32> = tree.iter().copied().collect();
+    let collected = tree.iter().copied().collect::<Vec<i32>>();
     assert_eq!(collected, expected);
 }

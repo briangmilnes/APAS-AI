@@ -22,7 +22,7 @@ fn test_bstsettreapmtephlit_macro_functionality() {
 
 #[test]
 fn test_empty() {
-    let set: BSTSetTreapMtEph<i32> = BSTSetTreapMtEph::empty();
+    let set = BSTSetTreapMtEph::<i32>::empty();
     assert_eq!(set.size(), 0);
     assert!(set.is_empty());
 }

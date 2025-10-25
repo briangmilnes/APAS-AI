@@ -23,7 +23,7 @@ fn test_labdirgraphstephlit_macro_functionality() {
 
 #[test]
 fn test_labelled_dir_graph_empty() {
-    let g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
+    let g = LabDirGraphStEph::<i32, &str>::empty();
     assert_eq!(g.vertices().size(), 0);
     assert_eq!(g.labeled_arcs().size(), 0);
     assert_eq!(format!("{g}"), "LabDirGraph(V: {}, A: {})");
@@ -31,7 +31,7 @@ fn test_labelled_dir_graph_empty() {
 
 #[test]
 fn test_labelled_dir_graph_add_vertex() {
-    let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
+    let mut g = LabDirGraphStEph::<i32, &str>::empty();
     g.add_vertex(1);
     g.add_vertex(2);
 
@@ -43,7 +43,7 @@ fn test_labelled_dir_graph_add_vertex() {
 
 #[test]
 fn test_labelled_dir_graph_add_labeled_arc() {
-    let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
+    let mut g = LabDirGraphStEph::<i32, &str>::empty();
     g.add_labeled_arc(1, 2, "edge12");
     g.add_labeled_arc(2, 3, "edge23");
 
@@ -60,7 +60,7 @@ fn test_labelled_dir_graph_add_labeled_arc() {
 
 #[test]
 fn test_labelled_dir_graph_neighbors() {
-    let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
+    let mut g = LabDirGraphStEph::<i32, &str>::empty();
     g.add_labeled_arc(1, 2, "a");
     g.add_labeled_arc(1, 3, "b");
     g.add_labeled_arc(3, 1, "c");
@@ -84,7 +84,7 @@ fn test_labelled_dir_graph_neighbors() {
 
 #[test]
 fn test_labelled_dir_graph_arcs() {
-    let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
+    let mut g = LabDirGraphStEph::<i32, &str>::empty();
     g.add_labeled_arc(1, 2, "label");
     g.add_labeled_arc(2, 3, "another");
 
@@ -159,7 +159,7 @@ fn test_labelled_dir_graph_debug() {
 
 #[test]
 fn test_labelled_dir_graph_self_loop() {
-    let mut g: LabDirGraphStEph<i32, &str> = LabDirGraphStEph::empty();
+    let mut g = LabDirGraphStEph::<i32, &str>::empty();
     g.add_labeled_arc(1, 1, "self_loop");
 
     assert!(g.has_arc(&1, &1));

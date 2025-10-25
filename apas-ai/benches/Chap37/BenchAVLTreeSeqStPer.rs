@@ -28,7 +28,7 @@ fn bench_build_and_contains(c: &mut Criterion) {
 
     group.finish();
 
-    let target_dir: PathBuf = env::var_os("CARGO_TARGET_DIR")
+    let target_dir = env::var_os("CARGO_TARGET_DIR")
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from("target"));
     let report = target_dir.join("criterion").join("report").join("index.html");

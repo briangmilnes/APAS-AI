@@ -51,7 +51,7 @@ pub mod EdgeContractionStEph {
         matching: &SetStEph<Edge<V>>,
     ) -> UnDirGraphStEph<V> {
         // Create a mapping from original vertices to their block representatives
-        let mut vertex_to_block: HashMap<V, V> = HashMap::new();
+        let mut vertex_to_block = HashMap::<V, V>::new();
 
         // For each edge in the matching, assign both endpoints to the same representative
         for edge in matching.iter() {

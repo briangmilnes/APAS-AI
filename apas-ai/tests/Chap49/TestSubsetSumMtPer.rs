@@ -32,7 +32,7 @@ fn test_subset_sum_mt_per_empty() {
 
 #[test]
 fn test_subset_sum_mt_per_new() {
-    let solver: SubsetSumMtPerS<i32> = SubsetSumMtPerS::new();
+    let solver = SubsetSumMtPerS::<i32>::new();
     assert_eq!(solver.multiset().length(), 0);
     assert!(solver.subset_sum(0));
     assert!(!solver.subset_sum(1));

@@ -95,7 +95,7 @@ pub mod AdjSeqGraphStEph {
                     }
                 }
                 if !found {
-                    let mut new_neighbors_vec: Vec<N> = Vec::with_capacity(old_neighbors.length() + 1);
+                    let mut new_neighbors_vec = Vec::<N>::with_capacity(old_neighbors.length() + 1);
                     for i in 0..old_neighbors.length() {
                         new_neighbors_vec.push(*old_neighbors.nth(i));
                     }
@@ -104,7 +104,7 @@ pub mod AdjSeqGraphStEph {
                 }
             } else {
                 // Remove edge if present
-                let mut new_neighbors_vec: Vec<N> = Vec::new();
+                let mut new_neighbors_vec = Vec::<N>::new();
                 for i in 0..old_neighbors.length() {
                     let neighbor = *old_neighbors.nth(i);
                     if neighbor != v {

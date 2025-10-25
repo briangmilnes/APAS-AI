@@ -23,7 +23,7 @@ fn test_bstsplaymtephlit_macro_functionality() {
 
 #[test]
 fn test_new_empty() {
-    let tree: BSTSplayMtEph<i32> = BSTSplayMtEph::new();
+    let tree = BSTSplayMtEph::<i32>::new();
     assert_eq!(tree.size(), 0);
     assert!(tree.is_empty());
 }
@@ -119,7 +119,7 @@ fn test_size() {
 
 #[test]
 fn test_is_empty() {
-    let tree: BSTSplayMtEph<i32> = BSTSplayMtEph::new();
+    let tree = BSTSplayMtEph::<i32>::new();
     assert!(tree.is_empty());
 
     tree.insert(5);
@@ -138,7 +138,7 @@ fn test_duplicate_insert() {
 
 #[test]
 fn test_default() {
-    let tree: BSTSplayMtEph<i32> = BSTSplayMtEph::default();
+    let tree = BSTSplayMtEph::<i32>::default();
     assert_eq!(tree.size(), 0);
     assert!(tree.is_empty());
 }

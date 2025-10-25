@@ -15,12 +15,12 @@ pub fn bench_select_mt_eph(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    let a100: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| ((i * 7) % 100) as i32, 100);
+    let a100 = ArraySeqMtEphS::<i32>::tabulate(&|i| ((i * 7) % 100) as i32, 100);
     group.bench_function("select_median_100", |b| {
         b.iter(|| black_box(&a100).select(black_box(50)))
     });
 
-    let a1000: ArraySeqMtEphS<i32> = ArraySeqMtEphS::tabulate(&|i| ((i * 7) % 1000) as i32, 1000);
+    let a1000 = ArraySeqMtEphS::<i32>::tabulate(&|i| ((i * 7) % 1000) as i32, 1000);
     group.bench_function("select_median_1000", |b| {
         b.iter(|| black_box(&a1000).select(black_box(500)))
     });

@@ -75,7 +75,7 @@ pub mod ArraySeqStPer {
         fn tabulate<F: Fn(N) -> T>(f: &F, n: N) -> ArraySeqStPerS<T> {
             // Keep as primitive - tabulate is one of the 7 APAS primitives
             // Implement directly to handle closures (can't delegate to Chap18 fn pointers)
-            let mut values: Vec<T> = Vec::with_capacity(n);
+            let mut values = Vec::<T>::with_capacity(n);
             for i in 0..n {
                 values.push(f(i));
             }

@@ -27,7 +27,7 @@ fn test_arraysetstephlit_macro_functionality() {
 #[test]
 fn test_array_set_basic_operations() {
     // Test empty set
-    let empty_set: ArraySetStEph<i32> = ArraySetStEph::empty();
+    let empty_set = ArraySetStEph::<i32>::empty();
     assert_eq!(empty_set.size(), 0);
     assert!(!empty_set.find(&1));
 

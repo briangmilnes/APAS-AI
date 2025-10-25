@@ -17,8 +17,8 @@ fn test_tabulate_inorder() {
 #[test]
 fn test_map_increment() {
     let base: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphLit![0, 1, 2, 3];
-    let mapped_v: Vec<N> = base.iter().map(|x| *x + 1).collect();
-    let mapped: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::from_vec(mapped_v);
+    let mapped_v = base.iter().map(|x| *x + 1).collect::<Vec<N>>();
+    let mapped = AVLTreeSeqStEphS::<N>::from_vec(mapped_v);
     assert_eq!(mapped.to_arrayseq(), ArraySeqStEphSLit![1, 2, 3, 4]);
 }
 
@@ -26,7 +26,7 @@ fn test_map_increment() {
 fn test_append_union() {
     let a: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphLit![0, 1, 2, 3];
     let b: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphLit![2, 3, 4, 5];
-    let mut vals: Vec<N> = a.iter().copied().collect();
+    let mut vals = a.iter().copied().collect::<Vec<N>>();
     for x in b.iter() {
         if !vals.contains(x) {
             vals.push(*x);
@@ -39,7 +39,7 @@ fn test_append_union() {
 #[test]
 fn test_filter_even() {
     let base: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphLit![0, 1, 2, 3, 4, 5];
-    let kept: Vec<N> = base.iter().filter(|x| **x % 2 == 0).copied().collect();
-    let evens: AVLTreeSeqStEphS<N> = AVLTreeSeqStEphS::from_vec(kept);
+    let kept = base.iter().filter(|x| **x % 2 == 0).copied().collect::<Vec<N>>();
+    let evens = AVLTreeSeqStEphS::<N>::from_vec(kept);
     assert_eq!(evens.to_arrayseq(), ArraySeqStEphSLit![0, 2, 4]);
 }

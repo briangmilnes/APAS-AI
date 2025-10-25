@@ -323,7 +323,7 @@ fn bench_ordered_table_st_eph_from_sorted_entries(c: &mut Criterion) {
     group.sample_size(30);
 
     for size in [100, 500, 1000].iter() {
-        let entries: Vec<Pair<i32, String>> = (0..*size).map(|i| Pair(i, format!("value_{i}"))).collect();
+        let entries = (0..*size).map(|i| Pair(i, format!("value_{i}"))).collect::<Vec<Pair<i32, String>>>();
 
         group.bench_with_input(BenchmarkId::new("from_sorted_entries", size), &entries, |b, entries| {
             b.iter(|| {

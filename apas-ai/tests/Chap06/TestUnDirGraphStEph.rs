@@ -25,8 +25,8 @@ fn test_undirgraphstephlit_macro_functionality() {
 #[test]
 fn test_undigraph_vertices_and_edges() {
     let v: SetStEph<N> = SetLit![0, 1, 2, 3];
-    let e: SetStEph<Edge<N>> = {
-        let mut s: SetStEph<Edge<N>> = SetStEph::empty();
+    let e = {
+        let mut s = SetStEph::<Edge<N>>::empty();
         let _ = s.insert(Edge(0, 1));
         let _ = s.insert(Edge(1, 2));
         let _ = s.insert(Edge(2, 3));
@@ -92,7 +92,7 @@ fn test_outdegree() {
 
 #[test]
 fn test_empty() {
-    let g: UnDirGraphStEph<i32> = UnDirGraphStEph::empty();
+    let g = UnDirGraphStEph::<i32>::empty();
     assert_eq!(g.sizeV(), 0);
     assert_eq!(g.sizeE(), 0);
 }

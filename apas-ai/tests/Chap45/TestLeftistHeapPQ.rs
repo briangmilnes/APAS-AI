@@ -382,7 +382,7 @@ fn test_meld_efficiency() {
 
 #[test]
 fn test_default() {
-    let heap: LeftistHeapPQ<i32> = LeftistHeapPQ::default();
+    let heap = LeftistHeapPQ::<i32>::default();
     assert!(heap.is_empty());
     assert_eq!(heap.size(), 0);
 }

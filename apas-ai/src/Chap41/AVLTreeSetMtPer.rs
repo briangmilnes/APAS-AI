@@ -129,8 +129,8 @@ pub mod AVLTreeSetMtPer {
             // Unconditionally parallel divide-and-conquer using ParaPair!
             let mid = n / 2;
 
-            let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
-            let right_vals: Vec<T> = (mid..n).map(|i| self.elements.nth(i).clone()).collect();
+            let left_vals = (0..mid).map(|i| self.elements.nth(i).clone()).collect::<Vec<T>>();
+            let right_vals = (mid..n).map(|i| self.elements.nth(i).clone()).collect::<Vec<T>>();
 
             let left_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(left_vals));
             let right_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(right_vals));
@@ -173,8 +173,8 @@ pub mod AVLTreeSetMtPer {
             // Unconditionally parallel divide-and-conquer using ParaPair!
             let mid = n / 2;
 
-            let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
-            let right_vals: Vec<T> = (mid..n).map(|i| self.elements.nth(i).clone()).collect();
+            let left_vals = (0..mid).map(|i| self.elements.nth(i).clone()).collect::<Vec<T>>();
+            let right_vals = (mid..n).map(|i| self.elements.nth(i).clone()).collect::<Vec<T>>();
 
             let left_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(left_vals));
             let right_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(right_vals));
@@ -220,8 +220,8 @@ pub mod AVLTreeSetMtPer {
             // Unconditionally parallel divide-and-conquer using ParaPair!
             let mid = n / 2;
 
-            let left_vals: Vec<T> = (0..mid).map(|i| self.elements.nth(i).clone()).collect();
-            let right_vals: Vec<T> = (mid..n).map(|i| self.elements.nth(i).clone()).collect();
+            let left_vals = (0..mid).map(|i| self.elements.nth(i).clone()).collect::<Vec<T>>();
+            let right_vals = (mid..n).map(|i| self.elements.nth(i).clone()).collect::<Vec<T>>();
 
             let left_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(left_vals));
             let right_set = Self::from_seq(AVLTreeSeqMtPerS::from_vec(right_vals));

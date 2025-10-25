@@ -91,7 +91,7 @@ fn test_domain_and_range() {
 fn test_iter() {
     let m = MappingLit![(1, "one"), (2, "two")];
 
-    let collected: Vec<_> = m.iter().cloned().collect();
+    let collected = m.iter().cloned().collect::<Vec<_>>();
     assert_eq!(collected.len(), 2);
 
     // Check that all expected pairs are present (order may vary)
@@ -126,14 +126,14 @@ fn test_empty_mapping_operations() {
     assert_eq!(m.range().size(), 0);
     assert!(!m.mem(&1, &"anything"));
 
-    let collected: Vec<_> = m.iter().collect();
+    let collected = m.iter().collect::<Vec<_>>();
     assert_eq!(collected.len(), 0);
 }
 
 #[test]
 fn test_from_relation_empty_edge() {
     // Test FromRelation with empty relation
-    let empty_rel: RelationStEph<i32, String> = RelationStEph::empty();
+    let empty_rel = RelationStEph::<i32, String>::empty();
     let m = <MappingStEph<i32, String> as MappingStEphTrait<i32, String>>::FromRelation(&empty_rel);
 
     assert_eq!(m.size(), 0);
@@ -176,7 +176,7 @@ fn test_mapping_extreme_values_graceful() {
 #[test]
 fn test_mapping_large_dataset_stress() {
     // Test with large mapping to verify no panics occur
-    let large_pairs: Vec<Pair<i32, String>> = (0..10000).map(|i| Pair(i, format!("value_{i}"))).collect();
+    let large_pairs = (0..10000).map(|i| Pair(i, format!("value_{i}"))).collect::<Vec<Pair<i32, String>>>();
 
     let m = <MappingStEph<i32, String> as MappingStEphTrait<i32, String>>::FromVec(large_pairs);
 

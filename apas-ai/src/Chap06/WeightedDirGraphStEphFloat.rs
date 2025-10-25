@@ -179,11 +179,11 @@ pub mod WeightedDirGraphStEphFloat {
 
         /// Scale all weights by a factor
         fn scale_weights(&mut self, factor: OrderedFloat<f64>) {
-            let current_edges: Vec<_> = self.labeled_arcs().iter().cloned().collect();
+            let current_edges = self.labeled_arcs().iter().cloned().collect::<Vec<_>>();
 
             // Clear current edges and re-add with scaled weights
             *self = Self::empty();
-            let vertices: Vec<_> = current_edges.iter().map(|e| e.0.clone()).collect();
+            let vertices = current_edges.iter().map(|e| e.0.clone()).collect::<Vec<_>>();
             for v in vertices {
                 self.add_vertex(v);
             }

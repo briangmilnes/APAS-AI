@@ -18,7 +18,7 @@ fn test_persistent_set_does_not_mutate() {
 #[test]
 fn test_iterator_inorder_values() {
     let a: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerLit![1, 2, 3, 4, 5]; // tabulate(&|i| i + 1, 5)
-    let vals: Vec<N> = a.iter().copied().collect();
+    let vals = a.iter().copied().collect::<Vec<N>>();
     assert_eq!(vals, vec![1, 2, 3, 4, 5]);
 }
 
@@ -108,7 +108,7 @@ fn test_avl_right_left_rotation() {
 #[test]
 fn test_avl_large_tree_balancing() {
     // Test balancing with a larger tree (15 elements)
-    let values: Vec<N> = (1..=15).collect();
+    let values = (1..=15).collect::<Vec<N>>();
     let tree = AVLTreeSeqStPerS::from_vec(values.clone());
 
     assert_eq!(tree.length(), 15);
@@ -157,7 +157,7 @@ fn test_avl_sequential_modifications() {
 #[test]
 fn test_avl_empty_and_singleton_edge_cases() {
     // Test empty tree
-    let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
+    let empty = AVLTreeSeqStPerS::<N>::empty();
     assert_eq!(empty.length(), 0);
     assert!(empty.isEmpty());
     assert!(!empty.isSingleton());
@@ -298,22 +298,22 @@ fn test_clone_preserves_structure() {
 
 #[test]
 fn test_iterator_empty() {
-    let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
-    let vals: Vec<N> = empty.iter().copied().collect();
+    let empty = AVLTreeSeqStPerS::<N>::empty();
+    let vals = empty.iter().copied().collect::<Vec<N>>();
     assert_eq!(vals.len(), 0);
 }
 
 #[test]
 fn test_iterator_singleton() {
     let single = AVLTreeSeqStPerS::singleton(42);
-    let vals: Vec<N> = single.iter().copied().collect();
+    let vals = single.iter().copied().collect::<Vec<N>>();
     assert_eq!(vals, vec![42]);
 }
 
 #[test]
 fn test_iterator_large_tree() {
     let tree = AVLTreeSeqStPerS::from_vec((1..=100).collect());
-    let vals: Vec<N> = tree.iter().copied().collect();
+    let vals = tree.iter().copied().collect::<Vec<N>>();
     assert_eq!(vals.len(), 100);
     for (i, &val) in vals.iter().enumerate() {
         assert_eq!(val, (i + 1) as N);
@@ -322,14 +322,14 @@ fn test_iterator_large_tree() {
 
 #[test]
 fn test_from_vec_empty() {
-    let tree: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::from_vec(vec![]);
+    let tree = AVLTreeSeqStPerS::<N>::from_vec(vec![]);
     assert_eq!(tree.length(), 0);
     assert!(tree.isEmpty());
 }
 
 #[test]
 fn test_from_vec_large() {
-    let values: Vec<N> = (1..=50).collect();
+    let values = (1..=50).collect::<Vec<N>>();
     let tree = AVLTreeSeqStPerS::from_vec(values.clone());
     assert_eq!(tree.length(), 50);
     for (i, &expected) in values.iter().enumerate() {
@@ -339,7 +339,7 @@ fn test_from_vec_large() {
 
 #[test]
 fn test_values_in_order_empty() {
-    let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
+    let empty = AVLTreeSeqStPerS::<N>::empty();
     let vals = empty.values_in_order();
     assert_eq!(vals.len(), 0);
 }
@@ -356,7 +356,7 @@ fn test_values_in_order_large() {
 
 #[test]
 fn test_set_on_empty_at_zero() {
-    let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
+    let empty = AVLTreeSeqStPerS::<N>::empty();
     let result = empty.set(0, 42);
     assert!(result.is_ok());
     let tree = result.unwrap();
@@ -399,8 +399,8 @@ fn test_equality_comprehensive() {
     assert_ne!(tree1, tree4);
 
     // Empty trees
-    let empty1: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
-    let empty2: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::new();
+    let empty1 = AVLTreeSeqStPerS::<N>::empty();
+    let empty2 = AVLTreeSeqStPerS::<N>::new();
     assert_eq!(empty1, empty2);
     assert_ne!(empty1, tree1);
 }
@@ -421,7 +421,7 @@ fn test_persistence_verification() {
 
 #[test]
 fn test_to_arrayseq_empty() {
-    let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
+    let empty = AVLTreeSeqStPerS::<N>::empty();
     let array_seq = empty.to_arrayseq();
     assert_eq!(array_seq.length(), 0);
 }
@@ -492,7 +492,7 @@ fn test_debug_formatting() {
     assert!(debug_str.contains("200"));
     assert!(debug_str.contains("300"));
 
-    let empty: AVLTreeSeqStPerS<N> = AVLTreeSeqStPerS::empty();
+    let empty = AVLTreeSeqStPerS::<N>::empty();
     let empty_debug = format!("{:?}", empty);
     assert!(empty_debug.contains("[]") || empty_debug.is_empty() || empty_debug.len() < 5);
 }

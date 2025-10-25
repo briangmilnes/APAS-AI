@@ -82,7 +82,7 @@ pub mod VertexMatchingStEph {
         let mut matching: SetStEph<Edge<V>> = SetLit![];
 
         // Create a map from edges to their coin flips (heads = true, tails = false)
-        let mut edge_coins: HashMap<Edge<V>, bool> = HashMap::new();
+        let mut edge_coins = HashMap::<Edge<V>, bool>::new();
 
         for edge in graph.edges().iter() {
             edge_coins.insert(edge.clone(), rng.random::<bool>());

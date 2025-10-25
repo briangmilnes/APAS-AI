@@ -7,7 +7,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn test_empty() {
-    let g: AdjTableGraphMtPer<N> = AdjTableGraphMtPer::empty();
+    let g = AdjTableGraphMtPer::<N>::empty();
     assert_eq!(g.num_vertices(), 0);
     assert_eq!(g.num_edges(), 0);
 }

@@ -102,7 +102,7 @@ pub mod AVLTreeSeqStEph {
             if e <= s {
                 return AVLTreeSeqStEphS::empty();
             }
-            let mut vals: Vec<T> = Vec::with_capacity(e - s);
+            let mut vals = Vec::<T>::with_capacity(e - s);
             for i in s..e {
                 vals.push(self.nth(i).clone());
             }
@@ -177,7 +177,7 @@ pub mod AVLTreeSeqStEph {
                 }
             }
             if let Some(idx) = found_index {
-                let mut out_vec: Vec<T> = Vec::with_capacity(len - 1);
+                let mut out_vec = Vec::<T>::with_capacity(len - 1);
                 for i in 0..idx {
                     out_vec.push(self.nth(i).clone());
                 }

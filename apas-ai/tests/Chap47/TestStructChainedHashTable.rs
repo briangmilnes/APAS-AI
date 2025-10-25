@@ -9,7 +9,7 @@ type StructChainTable = HashTable<i32, String, ChainList<i32, String>, ()>;
 
 #[test]
 fn test_chainlist_new() {
-    let list: ChainList<i32, String> = ChainList::new();
+    let list = ChainList::<i32, String>::new();
     assert!(list.head.is_none());
 }
 

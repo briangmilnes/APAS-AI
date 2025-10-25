@@ -24,7 +24,7 @@ fn test_bstsetplainmtephlit_macro_functionality() {
 
 #[test]
 fn test_empty() {
-    let set: BSTSetPlainMtEph<i32> = BSTSetPlainMtEph::empty();
+    let set = BSTSetPlainMtEph::<i32>::empty();
     assert_eq!(set.size(), 0);
     assert!(set.is_empty());
 }

@@ -28,7 +28,7 @@ fn test_undirgraphmtephlit_macro_functionality() {
 
 #[test]
 fn test_undirgraphmteph_empty() {
-    let empty_graph: UnDirGraphMtEph<i32> = UnDirGraphMtEph::empty();
+    let empty_graph = UnDirGraphMtEph::<i32>::empty();
     assert_eq!(empty_graph.sizeV(), 0);
     assert_eq!(empty_graph.sizeE(), 0);
     assert_eq!(empty_graph.vertices().size(), 0);
@@ -248,7 +248,7 @@ fn test_undirgraphmteph_nplusminusofvertices() {
 #[test]
 fn test_undirgraphmteph_edge_cases() {
     // Test empty graph
-    let empty: UnDirGraphMtEph<i32> = UnDirGraphMtEph::empty();
+    let empty = UnDirGraphMtEph::<i32>::empty();
     assert!(!empty.Neighbor(&0, &1));
     assert_eq!(empty.NG(&0).size(), 0);
     assert_eq!(empty.Degree(&0), 0);
@@ -470,7 +470,7 @@ fn test_incident() {
 
 #[test]
 fn test_empty_graph_all_operations() {
-    let g: UnDirGraphMtEph<i32> = UnDirGraphMtEph::empty();
+    let g = UnDirGraphMtEph::<i32>::empty();
 
     assert_eq!(g.sizeV(), 0);
     assert_eq!(g.sizeE(), 0);
@@ -601,8 +601,8 @@ fn test_path_graph() {
 #[test]
 fn test_large_parallel_graph() {
     // Create a larger graph to trigger parallel operations
-    let mut v: SetStEph<N> = SetStEph::empty();
-    let mut e: SetStEph<Edge<N>> = SetStEph::empty();
+    let mut v = SetStEph::<N>::empty();
+    let mut e = SetStEph::<Edge<N>>::empty();
 
     // Create a grid-like graph
     for i in 0..20 {

@@ -52,22 +52,22 @@ pub mod StarPartitionMtEph {
         let mut rng = StdRng::seed_from_u64(seed);
 
         // Create vertex to index mapping for inject operation
-        let vertices_vec: Vec<V> = graph.vertices().iter().cloned().collect();
+        let vertices_vec = graph.vertices().iter().cloned().collect::<Vec<V>>();
         let n = vertices_vec.len() as N;
 
-        let mut vertex_to_index: HashMap<V, N> = HashMap::new();
+        let mut vertex_to_index = HashMap::<V, N>::new();
         for (i, v) in vertices_vec.iter().enumerate() {
             let _ = vertex_to_index.insert(v.clone(), i as N);
         }
 
         // Phase 1: Flip coins for each vertex (heads = true, tails = false)
-        let mut coin_flips: HashMap<V, bool> = HashMap::new();
+        let mut coin_flips = HashMap::<V, bool>::new();
         for vertex in vertices_vec.iter() {
             let _ = coin_flips.insert(vertex.clone(), rng.random::<bool>());
         }
 
         // Phase 2: Find edges from tails to heads (TH)
-        let mut th_edges: Vec<(N, V)> = Vec::new();
+        let mut th_edges = Vec::<(N, V)>::new();
         for edge in graph.edges().iter() {
             let Edge(u, v) = edge;
             let u_heads = coin_flips.get(u).copied().unwrap_or(false);
@@ -99,7 +99,7 @@ pub mod StarPartitionMtEph {
 
         // Phase 6: Extract centers (vertices where P[v] = v)
         let mut centers: SetStEph<V> = SetLit![];
-        let mut partition_map: HashMap<V, V> = HashMap::new();
+        let mut partition_map = HashMap::<V, V>::new();
 
         for (i, vertex) in vertices_vec.iter().enumerate() {
             let center = p_seq.nth_cloned(i as N);

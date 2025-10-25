@@ -55,8 +55,8 @@ pub mod VertexMatchingMtEph {
         let mut rng = StdRng::seed_from_u64(seed);
 
         // Convert edges to a sequence for parallel processing
-        let edges_vec: Vec<Edge<V>> = graph.edges().iter().cloned().collect();
-        let edges_seq: ArraySeqStEphS<Edge<V>> = ArraySeqStEphS::from_vec(edges_vec);
+        let edges_vec = graph.edges().iter().cloned().collect::<Vec<Edge<V>>>();
+        let edges_seq = ArraySeqStEphS::<Edge<V>>::from_vec(edges_vec);
         let n_edges = edges_seq.length();
 
         if n_edges == 0 {
@@ -112,8 +112,7 @@ pub mod VertexMatchingMtEph {
         }
 
         // Build edge index for O(1) coin lookups
-        let edge_coin_map: HashMap<Edge<V>, bool> =
-            edges.iter().zip(coins.iter()).map(|(e, c)| (e.clone(), *c)).collect();
+        let edge_coin_map = edges.iter().zip(coins.iter()).map(|(e, c)| (e.clone(), *c)).collect::<HashMap<Edge<V>, bool>>();
 
         // Wrap in Arc for thread-safe sharing
         let graph_arc = Arc::new(graph.clone());
@@ -172,8 +171,8 @@ pub mod VertexMatchingMtEph {
         );
 
         // Combine results
-        let mut left_vec: Vec<Edge<V>> = pair.0.iter().cloned().collect();
-        let right_vec: Vec<Edge<V>> = pair.1.iter().cloned().collect();
+        let mut left_vec = pair.0.iter().cloned().collect::<Vec<Edge<V>>>();
+        let right_vec = pair.1.iter().cloned().collect::<Vec<Edge<V>>>();
         left_vec.extend(right_vec);
         ArraySeqStEphS::from_vec(left_vec)
     }

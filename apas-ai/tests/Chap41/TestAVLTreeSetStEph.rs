@@ -28,7 +28,7 @@ fn test_avltreesetstephlit_macro_functionality() {
 #[test]
 fn test_avl_tree_set_basic_operations() {
     // Test empty set
-    let empty_set: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+    let empty_set = AVLTreeSetStEph::<i32>::empty();
     assert_eq!(empty_set.size(), 0);
     assert!(!empty_set.find(&1));
 
@@ -211,8 +211,8 @@ fn test_large_set_operations() {
 
 #[test]
 fn test_union_empty_sets() {
-    let empty1: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
-    let empty2: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+    let empty1 = AVLTreeSetStEph::<i32>::empty();
+    let empty2 = AVLTreeSetStEph::<i32>::empty();
     let result = empty1.union(&empty2);
     assert_eq!(result.size(), 0);
 
@@ -228,7 +228,7 @@ fn test_union_empty_sets() {
 
 #[test]
 fn test_intersection_empty_sets() {
-    let empty1: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+    let empty1 = AVLTreeSetStEph::<i32>::empty();
     let set = AVLTreeSetStEphLit![1, 2, 3];
     let result = set.intersection(&empty1);
     assert_eq!(result.size(), 0);
@@ -239,7 +239,7 @@ fn test_intersection_empty_sets() {
 
 #[test]
 fn test_difference_empty_sets() {
-    let empty1: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+    let empty1 = AVLTreeSetStEph::<i32>::empty();
     let set = AVLTreeSetStEphLit![1, 2, 3];
 
     let result = set.difference(&empty1);
@@ -251,7 +251,7 @@ fn test_difference_empty_sets() {
 
 #[test]
 fn test_filter_empty_set() {
-    let empty: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+    let empty = AVLTreeSetStEph::<i32>::empty();
     let filtered = empty.filter(|&x| x > 5);
     assert_eq!(filtered.size(), 0);
 }
@@ -298,7 +298,7 @@ fn test_from_seq_all_duplicates() {
 
 #[test]
 fn test_to_seq_empty() {
-    let empty: AVLTreeSetStEph<i32> = AVLTreeSetStEph::empty();
+    let empty = AVLTreeSetStEph::<i32>::empty();
     let seq = empty.to_seq();
     assert_eq!(seq.length(), 0);
 }

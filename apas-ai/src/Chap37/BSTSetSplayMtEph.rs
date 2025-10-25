@@ -116,7 +116,7 @@ pub mod BSTSetSplayMtEph {
         }
 
         fn union(&self, other: &Self) -> Self {
-            let mut merged: BTreeSet<T> = self.values_vec().into_iter().collect();
+            let mut merged = self.values_vec().into_iter().collect::<BTreeSet<T>>();
             for value in other.values_vec() {
                 merged.insert(value);
             }
@@ -124,8 +124,8 @@ pub mod BSTSetSplayMtEph {
         }
 
         fn intersection(&self, other: &Self) -> Self {
-            let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
-            let filtered: Vec<T> = self
+            let other_values = other.values_vec().into_iter().collect::<BTreeSet<T>>();
+            let filtered = self
                 .tree
                 .in_order()
                 .iter()
@@ -135,14 +135,13 @@ pub mod BSTSetSplayMtEph {
                     } else {
                         None
                     }
-                })
-                .collect();
+                }).collect::<Vec<T>>();
             Self::from_sorted_iter(filtered)
         }
 
         fn difference(&self, other: &Self) -> Self {
-            let other_values: BTreeSet<T> = other.values_vec().into_iter().collect();
-            let filtered: Vec<T> = self
+            let other_values = other.values_vec().into_iter().collect::<BTreeSet<T>>();
+            let filtered = self
                 .tree
                 .in_order()
                 .iter()
@@ -152,14 +151,13 @@ pub mod BSTSetSplayMtEph {
                     } else {
                         None
                     }
-                })
-                .collect();
+                }).collect::<Vec<T>>();
             Self::from_sorted_iter(filtered)
         }
 
         fn split(&self, pivot: &T) -> (Self, B, Self) {
-            let mut left: Vec<T> = Vec::new();
-            let mut right: Vec<T> = Vec::new();
+            let mut left = Vec::<T>::new();
+            let mut right = Vec::<T>::new();
             let mut found = false;
             for value in self.tree.in_order().iter() {
                 if value < pivot {
@@ -174,7 +172,7 @@ pub mod BSTSetSplayMtEph {
         }
 
         fn join_pair(left: Self, right: Self) -> Self {
-            let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+            let mut combined = left.values_vec().into_iter().collect::<BTreeSet<T>>();
             for value in right.values_vec() {
                 combined.insert(value);
             }
@@ -182,7 +180,7 @@ pub mod BSTSetSplayMtEph {
         }
 
         fn join_m(left: Self, pivot: T, right: Self) -> Self {
-            let mut combined: BTreeSet<T> = left.values_vec().into_iter().collect();
+            let mut combined = left.values_vec().into_iter().collect::<BTreeSet<T>>();
             combined.insert(pivot);
             for value in right.values_vec() {
                 combined.insert(value);
@@ -191,12 +189,11 @@ pub mod BSTSetSplayMtEph {
         }
 
         fn filter<F: FnMut(&T) -> bool>(&self, mut predicate: F) -> Self {
-            let filtered: Vec<T> = self
+            let filtered = self
                 .tree
                 .in_order()
                 .iter()
-                .filter_map(|v| if predicate(v) { Some(v.clone()) } else { None })
-                .collect();
+                .filter_map(|v| if predicate(v) { Some(v.clone()) } else { None }).collect::<Vec<T>>();
             Self::from_sorted_iter(filtered)
         }
 

@@ -31,7 +31,7 @@ fn test_min_edit_distance_mt_per_identical() {
 
 #[test]
 fn test_min_edit_distance_mt_per_new() {
-    let solver: MinEditDistMtPerS<char> = MinEditDistMtPerS::new();
+    let solver = MinEditDistMtPerS::<char>::new();
     assert_eq!(solver.source().length(), 0);
     assert_eq!(solver.target().length(), 0);
     assert_eq!(solver.min_edit_distance(), 0);

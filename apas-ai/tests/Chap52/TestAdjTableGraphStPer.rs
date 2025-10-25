@@ -8,7 +8,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn test_empty() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     assert_eq!(g.num_vertices(), 0);
     assert_eq!(g.num_edges(), 0);
 }
@@ -23,7 +23,7 @@ fn test_from_table() {
 
 #[test]
 fn test_num_vertices() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     assert_eq!(g.num_vertices(), 0);
     let g = g.insert_vertex(1);
     assert_eq!(g.num_vertices(), 1);
@@ -33,7 +33,7 @@ fn test_num_vertices() {
 
 #[test]
 fn test_num_edges() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     assert_eq!(g.num_edges(), 0);
     let g = g.insert_edge(1, 2);
     assert_eq!(g.num_edges(), 1);
@@ -43,7 +43,7 @@ fn test_num_edges() {
 
 #[test]
 fn test_vertices() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     let vertices = g.vertices();
     assert_eq!(vertices.size(), 0);
 
@@ -57,7 +57,7 @@ fn test_vertices() {
 
 #[test]
 fn test_has_edge() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     assert!(!g.has_edge(&1, &2));
 
     let g = g.insert_edge(1, 2);
@@ -67,7 +67,7 @@ fn test_has_edge() {
 
 #[test]
 fn test_out_neighbors() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     let neighbors = g.out_neighbors(&1);
     assert_eq!(neighbors.size(), 0);
 
@@ -80,7 +80,7 @@ fn test_out_neighbors() {
 
 #[test]
 fn test_out_degree() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     assert_eq!(g.out_degree(&1), 0);
 
     let g = g.insert_edge(1, 2).insert_edge(1, 3).insert_edge(1, 4);
@@ -90,7 +90,7 @@ fn test_out_degree() {
 
 #[test]
 fn test_insert_vertex() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     let g = g.insert_vertex(1);
     assert_eq!(g.num_vertices(), 1);
     assert!(g.vertices().find(&1));
@@ -101,7 +101,7 @@ fn test_insert_vertex() {
 
 #[test]
 fn test_delete_vertex() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     let g = g.insert_edge(1, 2).insert_edge(2, 3).insert_edge(3, 1);
 
     let g = g.delete_vertex(&2);
@@ -112,7 +112,7 @@ fn test_delete_vertex() {
 
 #[test]
 fn test_insert_edge() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     let g = g.insert_edge(1, 2);
     assert!(g.has_edge(&1, &2));
     assert_eq!(g.num_edges(), 1);
@@ -124,7 +124,7 @@ fn test_insert_edge() {
 
 #[test]
 fn test_delete_edge() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     let g = g.insert_edge(1, 2);
     assert!(g.has_edge(&1, &2));
 
@@ -134,7 +134,7 @@ fn test_delete_edge() {
 
 #[test]
 fn test_insert_edge_creates_vertices() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     let g = g.insert_edge(1, 2);
     assert_eq!(g.num_vertices(), 2);
     assert!(g.vertices().find(&1));
@@ -143,7 +143,7 @@ fn test_insert_edge_creates_vertices() {
 
 #[test]
 fn test_delete_edge_nonexistent() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     let g = g.insert_vertex(1);
     let g2 = g.delete_edge(&1, &2);
     assert_eq!(g2.num_vertices(), g.num_vertices());
@@ -151,7 +151,7 @@ fn test_delete_edge_nonexistent() {
 
 #[test]
 fn test_complex_graph() {
-    let g: AdjTableGraphStPer<i32> = AdjTableGraphStPer::empty();
+    let g = AdjTableGraphStPer::<i32>::empty();
     let g = g
         .insert_edge(1, 2)
         .insert_edge(1, 3)

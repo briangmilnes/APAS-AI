@@ -89,7 +89,7 @@ pub mod StarContractionMtEph {
         partition_map: &HashMap<V, V>,
     ) -> UnDirGraphMtEph<V> {
         // Convert edges to sequence for parallel processing
-        let edges_vec: Vec<Edge<V>> = graph.edges().iter().cloned().collect();
+        let edges_vec = graph.edges().iter().cloned().collect::<Vec<Edge<V>>>();
         let edges_seq = ArraySeqStEphS::from_vec(edges_vec);
         let n_edges = edges_seq.length();
 

@@ -58,7 +58,7 @@ fn test_matrix_chain_st_per_iteration() {
     let dimensions = vec![MatrixDim { rows: 5, cols: 10 }, MatrixDim { rows: 10, cols: 15 }];
     let chain = MatrixChainStPerS::from_dimensions(dimensions);
 
-    let collected: Vec<MatrixDim> = chain.into_iter().collect();
+    let collected = chain.into_iter().collect::<Vec<MatrixDim>>();
     assert_eq!(collected.len(), 2);
     assert_eq!(collected[0].rows, 5);
     assert_eq!(collected[0].cols, 10);

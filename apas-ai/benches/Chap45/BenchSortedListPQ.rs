@@ -14,7 +14,7 @@ fn bench_insert(c: &mut Criterion) {
     group.sample_size(30);
 
     for size in [10, 50, 100].iter() {
-        let data: Vec<i32> = (0..*size).rev().collect();
+        let data = (0..*size).rev().collect::<Vec<i32>>();
 
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, _| {
             b.iter(|| {
@@ -37,7 +37,7 @@ fn bench_delete_min(c: &mut Criterion) {
     group.sample_size(30);
 
     for size in [10, 50, 100].iter() {
-        let data: Vec<i32> = (0..*size).collect();
+        let data = (0..*size).collect::<Vec<i32>>();
         let pq = SortedListPQ::from_vec(data.clone());
 
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, _| {
@@ -62,8 +62,8 @@ fn bench_meld(c: &mut Criterion) {
     group.sample_size(30);
 
     for size in [10, 50, 100].iter() {
-        let data1: Vec<i32> = (0..*size).collect();
-        let data2: Vec<i32> = (*size..(2 * size)).collect();
+        let data1 = (0..*size).collect::<Vec<i32>>();
+        let data2 = (*size..(2 * size)).collect::<Vec<i32>>();
 
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, _| {
             let pq1 = SortedListPQ::from_vec(data1.clone());
@@ -82,7 +82,7 @@ fn bench_find_min(c: &mut Criterion) {
     group.sample_size(30);
 
     for size in [100, 500].iter() {
-        let data: Vec<i32> = (0..*size).collect();
+        let data = (0..*size).collect::<Vec<i32>>();
         let pq = SortedListPQ::from_vec(data.clone());
 
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, _| {
@@ -100,7 +100,7 @@ fn bench_construction(c: &mut Criterion) {
     group.sample_size(30);
 
     for size in [50, 100].iter() {
-        let data: Vec<i32> = (0..*size).collect();
+        let data = (0..*size).collect::<Vec<i32>>();
 
         group.bench_with_input(BenchmarkId::from_parameter(size), size, |b, _| {
             b.iter(|| black_box(SortedListPQ::from_vec(data.clone())))

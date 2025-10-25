@@ -91,7 +91,7 @@ fn test_partition_false_due_to_missing_element() {
 
 #[test]
 fn test_set_empty() {
-    let empty_set: SetStEph<i32> = SetStEph::empty();
+    let empty_set = SetStEph::<i32>::empty();
     assert_eq!(empty_set.size(), 0);
     assert!(!empty_set.mem(&42));
 }
@@ -106,7 +106,7 @@ fn test_set_singleton() {
 
 #[test]
 fn test_set_size_comprehensive() {
-    let empty: SetStEph<i32> = SetStEph::empty();
+    let empty = SetStEph::<i32>::empty();
     assert_eq!(empty.size(), 0);
 
     let single = SetStEph::singleton(1);
@@ -169,7 +169,7 @@ fn test_set_insert() {
 #[test]
 fn test_set_iter() {
     let set = SetLit![1, 2, 3];
-    let mut collected: Vec<i32> = set.iter().cloned().collect();
+    let mut collected = set.iter().cloned().collect::<Vec<i32>>();
     collected.sort(); // HashSet order is not guaranteed
 
     assert_eq!(collected, vec![1, 2, 3]);
@@ -188,7 +188,7 @@ fn test_set_fromvec() {
 
 #[test]
 fn test_cartesian_product_empty_edge() {
-    let empty_set: SetStEph<i32> = SetStEph::empty();
+    let empty_set = SetStEph::<i32>::empty();
     let normal_set = SetLit![1, 2];
 
     let prod1 = empty_set.CartesianProduct(&normal_set);
@@ -213,7 +213,7 @@ fn test_setlit_macro_direct() {
 
 #[test]
 fn test_empty_set_union() {
-    let empty: SetStEph<i32> = SetStEph::empty();
+    let empty = SetStEph::<i32>::empty();
     let normal = SetLit![1, 2, 3];
 
     let union1 = empty.union(&normal);
@@ -228,7 +228,7 @@ fn test_empty_set_union() {
 
 #[test]
 fn test_empty_set_intersection() {
-    let empty: SetStEph<i32> = SetStEph::empty();
+    let empty = SetStEph::<i32>::empty();
     let normal = SetLit![1, 2, 3];
 
     let intersect1 = empty.intersection(&normal);
@@ -244,7 +244,7 @@ fn test_empty_set_intersection() {
 #[test]
 fn test_set_large_operations_stress() {
     // Test with large sets to verify no panics occur
-    let large_vec: Vec<i32> = (0..10000).collect();
+    let large_vec = (0..10000).collect::<Vec<i32>>();
     let large_set = SetStEph::FromVec(large_vec);
 
     assert_eq!(large_set.size(), 10000);
@@ -252,7 +252,7 @@ fn test_set_large_operations_stress() {
     assert!(!large_set.mem(&15000));
 
     // Test union with another large set
-    let large_vec2: Vec<i32> = (5000..15000).collect();
+    let large_vec2 = (5000..15000).collect::<Vec<i32>>();
     let large_set2 = SetStEph::FromVec(large_vec2);
 
     let union_result = large_set.union(&large_set2);
@@ -263,7 +263,7 @@ fn test_set_large_operations_stress() {
     assert_eq!(intersection_result.size(), 5000); // 5000-9999 overlap
 
     // Verify no panics on extreme operations
-    let empty_set: SetStEph<i32> = SetStEph::empty();
+    let empty_set = SetStEph::<i32>::empty();
     let union_with_empty = large_set.union(&empty_set);
     assert_eq!(union_with_empty.size(), 10000);
 
@@ -280,7 +280,7 @@ fn test_set_single_element_boundary() {
     assert!(!single.mem(&43));
 
     // Operations with single element set
-    let empty: SetStEph<i32> = SetStEph::empty();
+    let empty = SetStEph::<i32>::empty();
     let union_with_empty = single.union(&empty);
     assert_eq!(union_with_empty.size(), 1);
     assert!(union_with_empty.mem(&42));
@@ -312,7 +312,7 @@ fn test_set_single_element_boundary() {
     assert!(cartesian.mem(&Pair(42, 'a')));
 
     // Iterator on single element
-    let collected: Vec<i32> = single.iter().cloned().collect();
+    let collected = single.iter().cloned().collect::<Vec<i32>>();
     assert_eq!(collected.len(), 1);
     assert_eq!(collected[0], 42);
 }
@@ -331,7 +331,7 @@ fn test_set_iterator_boundaries() {
 
     // Test iterator ending at end
     let iter_end = set.iter();
-    let collected: Vec<i32> = iter_end.cloned().collect();
+    let collected = iter_end.cloned().collect::<Vec<i32>>();
     assert_eq!(collected.len(), 5);
     // Note: HashSet iteration order is not guaranteed, so we check membership
     for val in &collected {
@@ -345,7 +345,7 @@ fn test_set_iterator_boundaries() {
     assert_eq!(single_iter.next(), None); // Past end
 
     // Test iterator on empty set - no boundaries
-    let empty: SetStEph<i32> = SetStEph::empty();
+    let empty = SetStEph::<i32>::empty();
     let mut empty_iter = empty.iter();
     assert_eq!(empty_iter.next(), None); // No beginning
 
@@ -379,7 +379,7 @@ fn test_set_iterator_boundaries() {
     // Test iterator chain boundaries
     let set1 = SetLit![1, 2];
     let set2 = SetLit![3, 4];
-    let chained: Vec<i32> = set1.iter().chain(set2.iter()).cloned().collect();
+    let chained = set1.iter().chain(set2.iter()).cloned().collect::<Vec<i32>>();
     assert_eq!(chained.len(), 4);
     // Check all elements are present
     for val in &chained {
@@ -388,14 +388,14 @@ fn test_set_iterator_boundaries() {
 
     // Test iterator skip/take boundaries
     let set_skip = SetLit![10, 20, 30, 40, 50];
-    let skipped: Vec<i32> = set_skip.iter().skip(2).cloned().collect();
+    let skipped = set_skip.iter().skip(2).cloned().collect::<Vec<i32>>();
     assert_eq!(skipped.len(), 3);
     // All skipped elements should be in original set
     for val in &skipped {
         assert!(set_skip.mem(val));
     }
 
-    let taken: Vec<i32> = set_skip.iter().take(3).cloned().collect();
+    let taken = set_skip.iter().take(3).cloned().collect::<Vec<i32>>();
     assert_eq!(taken.len(), 3);
     // All taken elements should be in original set
     for val in &taken {
@@ -404,7 +404,7 @@ fn test_set_iterator_boundaries() {
 
     // Test iterator collect and verify completeness
     let original = SetLit![1, 2, 3, 4, 5];
-    let collected_all: Vec<i32> = original.iter().cloned().collect();
+    let collected_all = original.iter().cloned().collect::<Vec<i32>>();
     assert_eq!(collected_all.len(), 5);
 
     // Create new set from collected elements and verify equality
@@ -419,7 +419,7 @@ fn test_set_iterator_boundaries() {
 fn test_set_maximum_size_boundary() {
     // Test large set boundary (reduced from 100k to 20k for faster testing)
     let large_size = 20_000usize;
-    let large_vec: Vec<i32> = (0..large_size as i32).collect();
+    let large_vec = (0..large_size as i32).collect::<Vec<i32>>();
     let large_set = SetStEph::FromVec(large_vec);
 
     // Verify basic operations work on large set
@@ -429,7 +429,7 @@ fn test_set_maximum_size_boundary() {
     assert!(!large_set.mem(&(large_size as i32)));
 
     // Test operations on large set
-    let empty_set: SetStEph<i32> = SetStEph::empty();
+    let empty_set = SetStEph::<i32>::empty();
     let union_with_empty = large_set.union(&empty_set);
     assert_eq!(union_with_empty.size(), large_size);
 
@@ -437,7 +437,7 @@ fn test_set_maximum_size_boundary() {
     assert_eq!(intersection_with_empty.size(), 0);
 
     // Test with another large set
-    let large_vec2: Vec<i32> = (10_000..30_000).collect();
+    let large_vec2 = (10_000..30_000).collect::<Vec<i32>>();
     let large_set2 = SetStEph::FromVec(large_vec2);
 
     let union_large = large_set.union(&large_set2);
@@ -516,7 +516,7 @@ fn test_trait_cartesian_product() {
 
 #[test]
 fn test_trait_insert() {
-    let mut s: SetStEph<i32> = SetStEph::empty();
+    let mut s = SetStEph::<i32>::empty();
     <SetStEph<i32> as SetStEphTrait<i32>>::insert(&mut s, 42);
     assert_eq!(s.size(), 1);
 }

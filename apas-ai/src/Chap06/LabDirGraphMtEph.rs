@@ -110,7 +110,7 @@ pub mod LabDirGraphMtEph {
 
         fn out_neighbors(&self, v: &V) -> SetStEph<V> {
             // PARALLEL: filter labeled arcs using divide-and-conquer
-            let arcs: Vec<LabEdge<V, L>> = self.labeled_arcs.iter().cloned().collect();
+            let arcs = self.labeled_arcs.iter().cloned().collect::<Vec<LabEdge<V, L>>>();
 
             // Parallel divide-and-conquer with proper base cases
             fn parallel_out<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static>(
@@ -151,7 +151,7 @@ pub mod LabDirGraphMtEph {
 
         fn in_neighbors(&self, v: &V) -> SetStEph<V> {
             // PARALLEL: filter labeled arcs using divide-and-conquer
-            let arcs: Vec<LabEdge<V, L>> = self.labeled_arcs.iter().cloned().collect();
+            let arcs = self.labeled_arcs.iter().cloned().collect::<Vec<LabEdge<V, L>>>();
 
             // Parallel divide-and-conquer with proper base cases
             fn parallel_in<V: StT + MtT + Hash + 'static, L: StTInMtT + Hash + 'static>(

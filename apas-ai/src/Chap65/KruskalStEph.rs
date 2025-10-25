@@ -67,7 +67,7 @@ pub mod KruskalStEph {
         }
 
         // Sort edges by weight
-        let mut edges_vec: Vec<LabEdge<V, OrderedFloat<f64>>> = graph.labeled_edges().iter().cloned().collect();
+        let mut edges_vec = graph.labeled_edges().iter().cloned().collect::<Vec<LabEdge<V, OrderedFloat<f64>>>>();
         edges_vec.sort_by(|e1, e2| {
             let LabEdge(_u1, _v1, w1) = e1;
             let LabEdge(_u2, _v2, w2) = e2;

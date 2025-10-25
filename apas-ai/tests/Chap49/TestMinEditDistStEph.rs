@@ -36,7 +36,7 @@ fn test_min_edit_distance_eph_mutation() {
 
 #[test]
 fn test_new() {
-    let mut solver: MinEditDistStEphS<i32> = MinEditDistStEphS::new();
+    let mut solver = MinEditDistStEphS::<i32>::new();
     assert_eq!(solver.source().length(), 0);
     assert_eq!(solver.target().length(), 0);
     assert_eq!(solver.min_edit_distance(), 0);
@@ -170,7 +170,7 @@ fn test_display() {
 #[test]
 fn test_into_iterator() {
     let solver = MinEditDistStEphLit!(source: ['A', 'B'], target: ['C', 'D']);
-    let pairs: Vec<_> = solver.into_iter().collect();
+    let pairs = solver.into_iter().collect::<Vec<_>>();
     assert_eq!(pairs.len(), 2);
     assert_eq!(pairs[0].0, 'A');
     assert_eq!(pairs[0].1, 'C');
@@ -181,7 +181,7 @@ fn test_into_iterator() {
 #[test]
 fn test_into_iterator_ref() {
     let solver = MinEditDistStEphLit!(source: ['A', 'B'], target: ['C', 'D']);
-    let pairs: Vec<_> = (&solver).into_iter().collect();
+    let pairs = (&solver).into_iter().collect::<Vec<_>>();
     assert_eq!(pairs.len(), 2);
     assert_eq!(pairs[0].0, 'A');
     assert_eq!(pairs[1].1, 'D');
@@ -190,7 +190,7 @@ fn test_into_iterator_ref() {
 #[test]
 fn test_into_iterator_mut_ref() {
     let mut solver = MinEditDistStEphLit!(source: ['A', 'B'], target: ['C', 'D']);
-    let pairs: Vec<_> = (&mut solver).into_iter().collect();
+    let pairs = (&mut solver).into_iter().collect::<Vec<_>>();
     assert_eq!(pairs.len(), 2);
     assert_eq!(pairs[0].0, 'A');
     assert_eq!(pairs[1].1, 'D');
