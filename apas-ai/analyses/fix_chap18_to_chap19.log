@@ -1,0 +1,178 @@
+Entering directory '/home/milnes/APASVERUS/APAS-AI/apas-ai'
+tests/Chap55/TestTopoSortStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap55/TestCycleDetectStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap55/TestSCCStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap35/TestOrderStatSelectStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap35/TestOrderStatSelectMtEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap27/TestScanContractStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap27/TestScanContractMtEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap27/TestReduceContractStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap27/TestReduceContractMtEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap49/TestMinEditDistMtEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap49/TestSubsetSumStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap49/TestSubsetSumMtEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap51/TestTopDownDPStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap51/TestBottomUpDPStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap51/TestBottomUpDPMtEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap51/TestTopDownDPMtEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap54/TestBFSStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap54/TestBFSMtEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap36/TestQuickSortMtEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap28/TestMaxContigSubSumDivConOptMtEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap28/TestMaxContigSubSumDivConStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap28/TestMaxContigSubSumOptMtEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap28/TestMaxContigSubSumOptStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap28/TestMaxContigSubSumBruteStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap28/TestMaxContigSubSumDivConOptStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap28/TestMaxContigSubSumDivConMtEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap28/TestMaxContigSubSumReducedStEph.rs:1: Converted Chap18 -> Chap19
+tests/Chap37/TestAVLTreeSeqStEph18.rs:1: Converted Chap18 -> Chap19
+src/Chap41/ArraySetEnumMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap41/ArraySetStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap27/ScanContractMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap27/ScanContractStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap27/ReduceContractMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap27/ReduceContractStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap42/TableStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap49/SubsetSumMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap49/MinEditDistMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap49/MinEditDistStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap49/SubsetSumStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap62/StarContractionMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap52/AdjSeqGraphStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap52/AdjMatrixGraphMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap52/AdjMatrixGraphStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap52/AdjSeqGraphMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap63/ConnectivityMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap51/TopDownDPMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap51/BottomUpDPMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap51/TopDownDPStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap51/BottomUpDPStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap54/BFSMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap54/BFSStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap61/EdgeContractionMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap61/VertexMatchingMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap61/EdgeContractionStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap36/QuickSortStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap36/QuickSortMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap28/MaxContigSubSumReducedStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap28/MaxContigSubSumOptStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap28/MaxContigSubSumDivConMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap28/MaxContigSubSumDivConOptMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap28/MaxContigSubSumDivConOptStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap28/MaxContigSubSumBruteStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap28/MaxContigSubSumDivConStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap28/MaxContigSubSumOptMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap43/AugOrderedTableMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap43/OrderedTableMtEph.rs:1: Converted Chap18 -> Chap19
+src/Chap43/OrderedTableStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap37/AVLTreeSeqStEph.rs:1: Converted Chap18 -> Chap19
+src/Chap59/JohnsonStEphInt.rs:1: Converted Chap18 -> Chap19
+src/Chap59/JohnsonMtEphInt.rs:1: Converted Chap18 -> Chap19
+src/Chap59/JohnsonMtEphFloat.rs:1: Converted Chap18 -> Chap19
+src/Chap59/JohnsonStEphFloat.rs:1: Converted Chap18 -> Chap19
+benches/Chap35/BenchOrderStatSelectMtEph.rs:1: Converted Chap18 -> Chap19
+benches/Chap27/BenchReduceContractMtEph.rs:1: Converted Chap18 -> Chap19
+benches/Chap27/BenchScanContractMtEph.rs:1: Converted Chap18 -> Chap19
+benches/Chap49/BenchSubsetSumMtEph.rs:1: Converted Chap18 -> Chap19
+benches/Chap49/BenchMinEditDistMtEph.rs:1: Converted Chap18 -> Chap19
+benches/Chap51/BenchBottomUpDPMtEph.rs:1: Converted Chap18 -> Chap19
+benches/Chap51/BenchBottomUpDPStEph.rs:1: Converted Chap18 -> Chap19
+benches/Chap51/BenchTopDownDPStEph.rs:1: Converted Chap18 -> Chap19
+benches/Chap51/BenchTopDownDPMtEph.rs:1: Converted Chap18 -> Chap19
+benches/Chap54/BenchBFSMtEph.rs:1: Converted Chap18 -> Chap19
+benches/Chap36/BenchChapter36Mt.rs:1: Converted Chap18 -> Chap19
+benches/Chap28/BenchMaxContigSubSumOptMtEph.rs:1: Converted Chap18 -> Chap19
+benches/Chap28/BenchMaxContigSubSumDivConMtEph.rs:1: Converted Chap18 -> Chap19
+benches/Chap28/BenchMaxContigSubSumDivConOptMtEph.rs:1: Converted Chap18 -> Chap19
+================================================================================
+SUMMARY:
+  Files fixed: 86
+Files modified:
+  tests/Chap55/TestTopoSortStEph.rs
+  tests/Chap55/TestCycleDetectStEph.rs
+  tests/Chap55/TestSCCStEph.rs
+  tests/Chap35/TestOrderStatSelectStEph.rs
+  tests/Chap35/TestOrderStatSelectMtEph.rs
+  tests/Chap27/TestScanContractStEph.rs
+  tests/Chap27/TestScanContractMtEph.rs
+  tests/Chap27/TestReduceContractStEph.rs
+  tests/Chap27/TestReduceContractMtEph.rs
+  tests/Chap49/TestMinEditDistMtEph.rs
+  tests/Chap49/TestSubsetSumStEph.rs
+  tests/Chap49/TestSubsetSumMtEph.rs
+  tests/Chap51/TestTopDownDPStEph.rs
+  tests/Chap51/TestBottomUpDPStEph.rs
+  tests/Chap51/TestBottomUpDPMtEph.rs
+  tests/Chap51/TestTopDownDPMtEph.rs
+  tests/Chap54/TestBFSStEph.rs
+  tests/Chap54/TestBFSMtEph.rs
+  tests/Chap36/TestQuickSortMtEph.rs
+  tests/Chap28/TestMaxContigSubSumDivConOptMtEph.rs
+  tests/Chap28/TestMaxContigSubSumDivConStEph.rs
+  tests/Chap28/TestMaxContigSubSumOptMtEph.rs
+  tests/Chap28/TestMaxContigSubSumOptStEph.rs
+  tests/Chap28/TestMaxContigSubSumBruteStEph.rs
+  tests/Chap28/TestMaxContigSubSumDivConOptStEph.rs
+  tests/Chap28/TestMaxContigSubSumDivConMtEph.rs
+  tests/Chap28/TestMaxContigSubSumReducedStEph.rs
+  tests/Chap37/TestAVLTreeSeqStEph18.rs
+  src/Chap41/ArraySetEnumMtEph.rs
+  src/Chap41/ArraySetStEph.rs
+  src/Chap27/ScanContractMtEph.rs
+  src/Chap27/ScanContractStEph.rs
+  src/Chap27/ReduceContractMtEph.rs
+  src/Chap27/ReduceContractStEph.rs
+  src/Chap42/TableStEph.rs
+  src/Chap49/SubsetSumMtEph.rs
+  src/Chap49/MinEditDistMtEph.rs
+  src/Chap49/MinEditDistStEph.rs
+  src/Chap49/SubsetSumStEph.rs
+  src/Chap62/StarContractionMtEph.rs
+  src/Chap52/AdjSeqGraphStEph.rs
+  src/Chap52/AdjMatrixGraphMtEph.rs
+  src/Chap52/AdjMatrixGraphStEph.rs
+  src/Chap52/AdjSeqGraphMtEph.rs
+  src/Chap63/ConnectivityMtEph.rs
+  src/Chap51/TopDownDPMtEph.rs
+  src/Chap51/BottomUpDPMtEph.rs
+  src/Chap51/TopDownDPStEph.rs
+  src/Chap51/BottomUpDPStEph.rs
+  src/Chap54/BFSMtEph.rs
+  src/Chap54/BFSStEph.rs
+  src/Chap61/EdgeContractionMtEph.rs
+  src/Chap61/VertexMatchingMtEph.rs
+  src/Chap61/EdgeContractionStEph.rs
+  src/Chap36/QuickSortStEph.rs
+  src/Chap36/QuickSortMtEph.rs
+  src/Chap28/MaxContigSubSumReducedStEph.rs
+  src/Chap28/MaxContigSubSumOptStEph.rs
+  src/Chap28/MaxContigSubSumDivConMtEph.rs
+  src/Chap28/MaxContigSubSumDivConOptMtEph.rs
+  src/Chap28/MaxContigSubSumDivConOptStEph.rs
+  src/Chap28/MaxContigSubSumBruteStEph.rs
+  src/Chap28/MaxContigSubSumDivConStEph.rs
+  src/Chap28/MaxContigSubSumOptMtEph.rs
+  src/Chap43/AugOrderedTableMtEph.rs
+  src/Chap43/OrderedTableMtEph.rs
+  src/Chap43/OrderedTableStEph.rs
+  src/Chap37/AVLTreeSeqStEph.rs
+  src/Chap59/JohnsonStEphInt.rs
+  src/Chap59/JohnsonMtEphInt.rs
+  src/Chap59/JohnsonMtEphFloat.rs
+  src/Chap59/JohnsonStEphFloat.rs
+  benches/Chap35/BenchOrderStatSelectMtEph.rs
+  benches/Chap27/BenchReduceContractMtEph.rs
+  benches/Chap27/BenchScanContractMtEph.rs
+  benches/Chap49/BenchSubsetSumMtEph.rs
+  benches/Chap49/BenchMinEditDistMtEph.rs
+  benches/Chap51/BenchBottomUpDPMtEph.rs
+  benches/Chap51/BenchBottomUpDPStEph.rs
+  benches/Chap51/BenchTopDownDPStEph.rs
+  benches/Chap51/BenchTopDownDPMtEph.rs
+  benches/Chap54/BenchBFSMtEph.rs
+  benches/Chap36/BenchChapter36Mt.rs
+  benches/Chap28/BenchMaxContigSubSumOptMtEph.rs
+  benches/Chap28/BenchMaxContigSubSumDivConMtEph.rs
+  benches/Chap28/BenchMaxContigSubSumDivConOptMtEph.rs
+Completed in 268ms

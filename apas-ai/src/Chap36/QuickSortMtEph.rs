@@ -7,7 +7,7 @@ pub mod Chapter36Mt {
 
     use rand::*;
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
     pub type T<T> = ArraySeqMtEphS<T>;
 

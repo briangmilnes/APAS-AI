@@ -2,7 +2,7 @@
 //! Tests for SubsetSumStEph.
 
 use apas_ai::ArraySeqStEphSLit;
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap49::SubsetSumStEph::SubsetSumStEph::*;
 use apas_ai::SubsetSumStEphLit;
 

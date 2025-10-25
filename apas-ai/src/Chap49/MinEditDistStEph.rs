@@ -9,7 +9,7 @@ pub mod MinEditDistStEph {
     use std::iter::Zip;
 
     use crate::ArraySeqStEphSLit;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
 
     #[derive(Clone, Debug, PartialEq, Eq)]

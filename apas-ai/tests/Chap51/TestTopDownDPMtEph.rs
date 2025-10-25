@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for TopDownDPMtEph - Top-Down Dynamic Programming Multi-Threaded Ephemeral
 
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Chap51::TopDownDPMtEph::TopDownDPMtEph::*;
 use apas_ai::Types::Types::*;
 

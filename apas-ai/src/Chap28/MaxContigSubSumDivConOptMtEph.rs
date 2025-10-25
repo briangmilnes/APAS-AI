@@ -7,7 +7,7 @@
 
 pub mod MaxContigSubSumDivConOptMtEph {
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::ParaPair;
     use crate::Types::Types::*;
     pub type T = ArraySeqMtEphS<i32>;

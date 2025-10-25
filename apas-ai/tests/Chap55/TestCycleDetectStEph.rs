@@ -1,7 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chap55 CycleDetectStEph.
 
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap55::CycleDetectStEph::CycleDetectStEph::*;
 use apas_ai::Types::Types::*;
 

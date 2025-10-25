@@ -3,7 +3,7 @@
 use rand::*;
 
 use apas_ai::ArraySeqMtEphSLit;
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Chap36::QuickSortMtEph::Chapter36Mt::*;
 use apas_ai::Types::Types::*;
 

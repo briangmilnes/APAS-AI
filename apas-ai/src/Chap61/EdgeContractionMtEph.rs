@@ -13,7 +13,7 @@ pub mod EdgeContractionMtEph {
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap61::VertexMatchingMtEph::VertexMatchingMtEph::parallel_matching_mt;
     use crate::ParaPair;
     use crate::SetLit;

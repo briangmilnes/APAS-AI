@@ -12,7 +12,7 @@ pub mod EdgeContractionStEph {
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphStEph::UnDirGraphStEph::*;
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap61::VertexMatchingStEph::VertexMatchingStEph::greedy_matching;
     use crate::SetLit;
     use crate::Types::Types::*;

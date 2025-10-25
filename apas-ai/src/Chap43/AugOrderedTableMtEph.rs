@@ -9,7 +9,7 @@ pub mod AugOrderedTableMtEph {
     use std::sync::Arc;
     use std::thread;
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     use crate::Chap43::OrderedTableMtEph::OrderedTableMtEph::*;

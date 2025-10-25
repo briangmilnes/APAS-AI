@@ -10,7 +10,7 @@ pub mod TopDownDPStEph {
     use std::fmt::Formatter;
     use std::fmt::{Debug, Display};
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
 
     /// Trait for top-down dynamic programming operations

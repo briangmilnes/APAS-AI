@@ -11,7 +11,7 @@ pub mod ArraySetEnumMtEph {
 
     use bitvec::prelude::*;
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
 
     #[derive(PartialEq, Clone)]

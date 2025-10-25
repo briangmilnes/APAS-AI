@@ -4,9 +4,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::{
-    ArraySeqMtEphBaseTrait, ArraySeqMtEphRedefinableTrait, ArraySeqMtEphS,
-};
+use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Chap28::MaxContigSubSumDivConMtEph::MaxContigSubSumDivConMtEph::*;
 
 pub fn bench_divcon_mt(c: &mut Criterion) {

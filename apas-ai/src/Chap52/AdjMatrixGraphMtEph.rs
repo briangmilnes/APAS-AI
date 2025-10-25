@@ -5,7 +5,7 @@ pub mod AdjMatrixGraphMtEph {
 
     use std::sync::Arc;
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
 
     #[derive(Clone)]

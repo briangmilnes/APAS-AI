@@ -12,7 +12,7 @@ pub mod BottomUpDPMtEph {
     use std::sync::{Arc, Mutex};
     use std::thread;
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
 
     /// Trait for bottom-up dynamic programming operations

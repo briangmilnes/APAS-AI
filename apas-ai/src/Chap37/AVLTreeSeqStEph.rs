@@ -5,7 +5,7 @@ pub mod AVLTreeSeqStEph {
 
     use std::fmt::Debug;
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
 
     type Link<T> = Option<Box<AVLTreeNode<T>>>;

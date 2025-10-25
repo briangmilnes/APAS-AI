@@ -9,7 +9,7 @@ pub mod MaxContigSubSumDivConMtEph {
 
     use std::sync::Arc;
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
     use crate::ParaPair;
     use crate::Types::Types::*;

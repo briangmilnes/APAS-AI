@@ -7,7 +7,7 @@
 
 pub mod MaxContigSubSumDivConStEph {
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap27::ScanContractStEph::ScanContractStEph::ScanContractStEphTrait;
     use crate::Types::Types::*;
     pub type T = ArraySeqStEphS<i32>;

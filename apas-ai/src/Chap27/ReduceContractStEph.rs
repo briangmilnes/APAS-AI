@@ -3,7 +3,7 @@
 
 pub mod ReduceContractStEph {
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
     pub type T<T> = ArraySeqStEphS<T>;
 

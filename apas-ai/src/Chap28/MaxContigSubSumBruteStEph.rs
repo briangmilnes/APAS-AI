@@ -3,7 +3,7 @@
 
 pub mod MaxContigSubSumBruteStEph {
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
     pub type T = ArraySeqStEphS<i32>;
 

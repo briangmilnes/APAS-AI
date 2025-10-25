@@ -3,7 +3,7 @@
 
 pub mod ArraySetStEph {
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
 
     #[derive(Debug, Clone, PartialEq)]

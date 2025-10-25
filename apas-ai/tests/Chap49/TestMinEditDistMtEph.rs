@@ -2,7 +2,7 @@
 //! Tests for MinEditDistMtEph.
 
 use apas_ai::ArraySeqMtEphSLit;
-use apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+use apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
 use apas_ai::Chap49::MinEditDistMtEph::MinEditDistMtEph::*;
 use apas_ai::MinEditDistMtEphLit;
 

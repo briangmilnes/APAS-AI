@@ -9,7 +9,7 @@ pub mod MinEditDistMtEph {
     use std::thread;
 
     use crate::ArraySeqMtEphSLit;
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
 
     #[derive(Clone, Debug)]

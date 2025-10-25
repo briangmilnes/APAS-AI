@@ -7,7 +7,7 @@ pub mod BFSStEph {
 
     use std::collections::VecDeque;
 
-    use crate::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;
     pub type T<N> = ArraySeqStEphS<ArraySeqStEphS<N>>;
 

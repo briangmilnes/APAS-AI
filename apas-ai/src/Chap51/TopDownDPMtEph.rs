@@ -12,7 +12,7 @@ pub mod TopDownDPMtEph {
     use std::sync::{Arc, Mutex};
     use std::thread;
 
-    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::*;
+    use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
     use crate::Types::Types::*;
 
     /// Trait for top-down dynamic programming operations
