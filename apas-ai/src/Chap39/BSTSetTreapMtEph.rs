@@ -1,28 +1,42 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-//! Set interface built atop the Treap single-threaded BST implementation.
+//! Set interface built atop the Treap multi-threaded BST implementation.
 //!
 //! NOTE: This implementation uses SEQUENTIAL aggregate operations (union, intersection, etc.)
-//! because it wraps BSTTreapStEph which doesn't expose tree structure for parallel divide-and-conquer.
+//! because it wraps BSTTreapMtEph which, while thread-safe, doesn't expose the internal tree 
+//! structure (split/join primitives) needed for parallel divide-and-conquer algorithms.
+//!
+//! The backing BSTTreapMtEph provides:
+//! - Thread-safe concurrent access (Arc<RwLock<>> at root)
+//! - Standard BST operations: insert, find, delete, min, max
+//! - Sequential traversals: in_order, pre_order
+//!
+//! What it LACKS for parallelization:
+//! - No split(pivot) -> (left_tree, found, right_tree) operation
+//! - No join(left_tree, right_tree) -> tree operation  
+//! - Internal node structure not exposed for parallel traversal
+//!
 //! For truly PARALLEL BST operations with O(lg n) span, use BSTParaTreapMtEph instead.
+//! BSTParaTreapMtEph provides split/join primitives enabling parallel aggregate operations.
 //! 
-//! This file exists for compatibility and testing purposes but has O(n) span for aggregate operations.
+//! This file exists for compatibility, testing, and basic thread-safe Treap usage,
+//! but has O(n) span for aggregate operations (union, intersection, difference).
 
 pub mod BSTSetTreapMtEph {
 
     use std::collections::BTreeSet;
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap39::BSTTreapStEph::BSTTreapStEph::*;
+    use crate::Chap39::BSTTreapMtEph::BSTTreapMtEph::*;
     use crate::Types::Types::*;
 
     #[derive(Debug, Clone)]
-    pub struct BSTSetTreapMtEph<T: StT + Ord> {
-        tree: BSTTreapStEph<T>,
+    pub struct BSTSetTreapMtEph<T: StTInMtT + Ord> {
+        tree: BSTTreapMtEph<T>,
     }
 
     pub type BSTSetTreapMt<T> = BSTSetTreapMtEph<T>;
 
-    pub trait BSTSetTreapMtEphTrait<T: StT + Ord>: Sized {
+    pub trait BSTSetTreapMtEphTrait<T: StTInMtT + Ord>: Sized {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty()                                   -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
@@ -62,13 +76,13 @@ pub mod BSTSetTreapMtEph {
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
         fn iter_in_order(&self)                      -> ArraySeqStPerS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn as_tree(&self)                            -> &BSTTreapStEph<T>;
+        fn as_tree(&self)                            -> &BSTTreapMtEph<T>;
     }
 
-    impl<T: StT + Ord> BSTSetTreapMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTSetTreapMtEph<T> {
         fn values_vec(&self) -> Vec<T> { self.tree.in_order().iter().cloned().collect() }
-        fn rebuild_from_vec(values: Vec<T>) -> BSTTreapStEph<T> {
-            let mut tree = BSTTreapStEph::new();
+        fn rebuild_from_vec(values: Vec<T>) -> BSTTreapMtEph<T> {
+            let tree = BSTTreapMtEph::new();
             for value in values {
                 tree.insert(value);
             }
@@ -78,7 +92,7 @@ pub mod BSTSetTreapMtEph {
         where
             I: IntoIterator<Item = T>,
         {
-            let mut tree = BSTTreapStEph::new();
+            let tree = BSTTreapMtEph::new();
             for value in values {
                 tree.insert(value);
             }
@@ -86,15 +100,15 @@ pub mod BSTSetTreapMtEph {
         }
     }
 
-    impl<T: StT + Ord> BSTSetTreapMtEphTrait<T> for BSTSetTreapMtEph<T> {
+    impl<T: StTInMtT + Ord> BSTSetTreapMtEphTrait<T> for BSTSetTreapMtEph<T> {
         fn empty() -> Self {
             Self {
-                tree: BSTTreapStEph::new(),
+                tree: BSTTreapMtEph::new(),
             }
         }
 
         fn singleton(value: T) -> Self {
-            let mut tree = BSTTreapStEph::new();
+            let tree = BSTTreapMtEph::new();
             tree.insert(value);
             Self { tree }
         }
@@ -103,13 +117,13 @@ pub mod BSTSetTreapMtEph {
 
         fn is_empty(&self) -> B { self.tree.is_empty() }
 
-        fn find(&self, value: &T) -> Option<T> { self.tree.find(value).cloned() }
+        fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }
 
         fn contains(&self, value: &T) -> B { self.tree.contains(value) }
 
-        fn minimum(&self) -> Option<T> { self.tree.minimum().cloned() }
+        fn minimum(&self) -> Option<T> { self.tree.minimum() }
 
-        fn maximum(&self) -> Option<T> { self.tree.maximum().cloned() }
+        fn maximum(&self) -> Option<T> { self.tree.maximum() }
 
         fn insert(&mut self, value: T) { self.tree.insert(value); }
 
@@ -212,7 +226,7 @@ pub mod BSTSetTreapMtEph {
 
         fn iter_in_order(&self) -> ArraySeqStPerS<T> { self.tree.in_order() }
 
-        fn as_tree(&self) -> &BSTTreapStEph<T> { &self.tree }
+        fn as_tree(&self) -> &BSTTreapMtEph<T> { &self.tree }
     }
 
     #[macro_export]
