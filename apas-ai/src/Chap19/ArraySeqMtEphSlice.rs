@@ -142,12 +142,11 @@ pub mod ArraySeqMtEphSlice {
             // Algorithm 19.14: "allocate a fresh array of n elements, evaluate f at each position i 
             // and write the result into position i of the array"
             // "the function f can be evaluated at each element independently in parallel"
-            // Use Rayon's parallel iterator which handles work-stealing and granularity automatically
-            use rayon::prelude::*;
-
-            // Evaluate f at each position in parallel using Rayon's work-stealing scheduler
-            // (Rayon handles n==0 case correctly by returning empty vec)
-            let values: Vec<T> = (0..n).into_par_iter().map(|i| f(i)).collect();
+            // Sequential evaluation - parallel version requires F: 'static
+            let mut values = Vec::with_capacity(n);
+            for i in 0..n {
+                values.push(f(i));
+            }
             ArraySeqMtEphSliceS::from_vec(values)
         }
 

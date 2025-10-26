@@ -99,15 +99,12 @@ pub mod OrderedTableMtPer {
             // but from_seq() uses parallel tree construction
             let pair_seq = self.tree.in_order();
             
-            // Extract keys in parallel using rayon
-            use rayon::prelude::*;
-            let keys: Vec<K> = (0..pair_seq.length())
-                .into_par_iter()
-                .map(|i| {
-                    let Pair(key, _val) = pair_seq.nth(i);
-                    key.clone()
-                })
-                .collect();
+            // Extract keys sequentially
+            let mut keys = Vec::with_capacity(pair_seq.length());
+            for i in 0..pair_seq.length() {
+                let Pair(key, _val) = pair_seq.nth(i);
+                keys.push(key.clone());
+            }
             
             let key_seq = ArraySeqStPerS::from_vec(keys);
             OrderedSetMtEph::from_seq(key_seq)

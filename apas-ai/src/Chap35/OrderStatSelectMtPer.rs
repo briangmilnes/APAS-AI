@@ -11,12 +11,12 @@ pub mod OrderStatSelectMtPer {
     use crate::Types::Types::*;
     pub type T<T> = ArraySeqMtPerS<T>;
 
-    pub trait OrderStatSelectMtPerTrait<T: StTInMtT + Ord> {
+    pub trait OrderStatSelectMtPerTrait<T: StTInMtT + Ord + 'static> {
         /// claude-4-sonet: Work Θ(n) expected, Θ(n²) worst case; Span Θ(log² n) expected (with parallel filter), Parallelism Θ(n/log² n) expected
         fn select(&self, k: N) -> Option<T>;
     }
 
-    impl<T: StTInMtT + Ord> OrderStatSelectMtPerTrait<T> for ArraySeqMtPerS<T> {
+    impl<T: StTInMtT + Ord + 'static> OrderStatSelectMtPerTrait<T> for ArraySeqMtPerS<T> {
         fn select(&self, k: N) -> Option<T> {
             let n = self.length();
             if k >= n || n == 0 {
