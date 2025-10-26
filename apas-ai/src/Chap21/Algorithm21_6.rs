@@ -3,7 +3,7 @@
 
 pub mod Algorithm21_6 {
 
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
     pub type T = N;
 
@@ -26,24 +26,24 @@ pub mod Algorithm21_6 {
         // cs = 〈 i * j : 2 ≤ i ≤ floor(sqrt(n)) , 2 ≤ j ≤ n/i 〉
         let root: N = (n as f64).sqrt().floor() as N;
         let nested: ArraySeqStPerS<ArraySeqStPerS<N>> =
-            <ArraySeqStPerS<ArraySeqStPerS<N>> as ArraySeqStPerRedefinableTrait<ArraySeqStPerS<N>>>::tabulate(
+            ArraySeqStPerS::tabulate(
                 &|i0| {
                     let i = i0 + 2; // i in [2..=root]
                     let limit = if i == 0 { 0 } else { n / i };
                     let len = if limit >= 2 { limit - 1 } else { 0 }; // j in [2..=limit] => length max(limit-1,0)
-                    <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::tabulate(&|j0| i * (j0 + 2), len)
+                    ArraySeqStPerS::tabulate(&|j0| i * (j0 + 2), len)
                 },
                 if root >= 2 { root - 1 } else { 0 },
             );
-        let composites: ArraySeqStPerS<N> = <ArraySeqStPerS<N> as ArraySeqStPerBaseTrait<N>>::flatten(&nested);
+        let composites: ArraySeqStPerS<N> = ArraySeqStPerS::flatten(&nested);
 
         // Create candidates: 2, 3, ..., n
         let candidates: ArraySeqStPerS<N> =
-            <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::tabulate(&|i| i + 2, n - 1);
+            ArraySeqStPerS::tabulate(&|i| i + 2, n - 1);
 
         // Filter out composites to get primes
         let filtered: ArraySeqStPerS<N> =
-            <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::filter(&candidates, &|x| {
+            ArraySeqStPerS::filter(&candidates, &|x| {
                 // Check if x is NOT in composites
                 let mut is_composite = false;
                 for i in 0..composites.length() {

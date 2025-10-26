@@ -3,7 +3,7 @@
 
 pub mod Algorithm21_2 {
 
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
     pub type T = N;
 
@@ -24,29 +24,21 @@ pub mod Algorithm21_2 {
         if n == 0 {
             return ArraySeqStPerS::from_vec(Vec::new());
         }
-        let outer: ArraySeqStPerS<ArraySeqStPerS<Pair<N, Pair<N, N>>>> = <ArraySeqStPerS<
-            ArraySeqStPerS<Pair<N, Pair<N, N>>>,
-        > as ArraySeqStPerRedefinableTrait<
-            ArraySeqStPerS<Pair<N, Pair<N, N>>>,
-        >>::tabulate(
+        let outer: ArraySeqStPerS<ArraySeqStPerS<Pair<N, Pair<N, N>>>> = ArraySeqStPerS::tabulate(
             &|x| {
-                let mid: ArraySeqStPerS<ArraySeqStPerS<Pair<N, Pair<N, N>>>> = <ArraySeqStPerS<
-                    ArraySeqStPerS<Pair<N, Pair<N, N>>>,
-                > as ArraySeqStPerRedefinableTrait<
-                    ArraySeqStPerS<Pair<N, Pair<N, N>>>,
-                >>::tabulate(
+                let mid: ArraySeqStPerS<ArraySeqStPerS<Pair<N, Pair<N, N>>>> = ArraySeqStPerS::tabulate(
                     &|y| {
-                        <ArraySeqStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerRedefinableTrait<Pair<N, Pair<N, N>>>>::tabulate(
+                        ArraySeqStPerS::tabulate(
                                 &|z_idx| Pair(x, Pair(y + 1, z_idx + 2)),
                                 n + 1 - 2 + 1, // z: 2..=n+1 has length n
                             )
                     },
                     n, // y: 1..=n has length n
                 );
-                <ArraySeqStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerBaseTrait<Pair<N, Pair<N, N>>>>::flatten(&mid)
+                ArraySeqStPerS::flatten(&mid)
             },
             n,
         );
-        <ArraySeqStPerS<Pair<N, Pair<N, N>>> as ArraySeqStPerBaseTrait<Pair<N, Pair<N, N>>>>::flatten(&outer)
+        ArraySeqStPerS::flatten(&outer)
     }
 }

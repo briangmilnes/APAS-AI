@@ -3,7 +3,7 @@
 
 pub mod Exercise21_5 {
 
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
     pub type T<S> = ArraySeqStPerS<S>;
 
@@ -20,11 +20,9 @@ pub mod Exercise21_5 {
     pub fn all_contiguous_subseqs<T: StT>(a: &ArraySeqStPerS<T>) -> ArraySeqStPerS<ArraySeqStPerS<T>> {
         let n = a.length();
         let nested: ArraySeqStPerS<ArraySeqStPerS<ArraySeqStPerS<T>>> =
-            <ArraySeqStPerS<ArraySeqStPerS<ArraySeqStPerS<T>>> as ArraySeqStPerRedefinableTrait<
-                ArraySeqStPerS<ArraySeqStPerS<T>>,
-            >>::tabulate(
+            ArraySeqStPerS::tabulate(
                 &|i| {
-                    <ArraySeqStPerS<ArraySeqStPerS<T>> as ArraySeqStPerRedefinableTrait<ArraySeqStPerS<T>>>::tabulate(
+                    ArraySeqStPerS::tabulate(
                         &|j| a.subseq_copy(i, j + 1),
                         n - i,
                     )
@@ -33,7 +31,7 @@ pub mod Exercise21_5 {
             );
         // flatten twice
         let mid: ArraySeqStPerS<ArraySeqStPerS<T>> =
-            <ArraySeqStPerS<ArraySeqStPerS<T>> as ArraySeqStPerBaseTrait<ArraySeqStPerS<T>>>::flatten(&nested);
+            ArraySeqStPerS::flatten(&nested);
         mid
     }
 }

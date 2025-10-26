@@ -3,7 +3,7 @@
 
 pub mod Exercise21_8 {
 
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
     pub type T = N;
 
@@ -32,8 +32,8 @@ pub mod Exercise21_8 {
         }
         let k: N = (n as f64).sqrt().floor() as N;
         let all: ArraySeqStPerS<B> =
-            <ArraySeqStPerS<B> as ArraySeqStPerRedefinableTrait<B>>::tabulate(&|i| is_divisible(n, i + 1), k);
-        let ones: ArraySeqStPerS<B> = <ArraySeqStPerS<B> as ArraySeqStPerRedefinableTrait<B>>::filter(&all, &|x| *x);
+            ArraySeqStPerS::tabulate(&|i| is_divisible(n, i + 1), k);
+        let ones: ArraySeqStPerS<B> = ArraySeqStPerS::filter(&all, &|x| *x);
         ones.length() == 1
     }
 }

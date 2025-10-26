@@ -3,7 +3,7 @@
 
 pub mod Exercise21_7 {
 
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
     pub type T = N;
 
@@ -39,21 +39,19 @@ pub mod Exercise21_7 {
     /// gpt-5-hard: Work: Θ(|a|·|b|), Span: Θ(lg |a|)
     /// APAS: Work: Θ(|a|·|b|), Span: Θ(lg |a|)
     pub fn pair_even_with_vowels(a: &ArraySeqStPerS<N>, b: &ArraySeqStPerS<char>) -> ArraySeqStPerS<Pair<N, char>> {
-        let filtered_a = <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::filter(a, &|x| is_even(x));
-        let filtered_b = <ArraySeqStPerS<char> as ArraySeqStPerRedefinableTrait<char>>::filter(b, &|y| is_vowel(y));
+        let filtered_a = ArraySeqStPerS::filter(a, &|x| is_even(x));
+        let filtered_b = ArraySeqStPerS::filter(b, &|y| is_vowel(y));
 
-        let nested = <ArraySeqStPerS<ArraySeqStPerS<Pair<N, char>>> as ArraySeqStPerRedefinableTrait<
-            ArraySeqStPerS<Pair<N, char>>,
-        >>::tabulate(
+        let nested = ArraySeqStPerS::tabulate(
             &|i| {
                 let x = filtered_a.nth(i);
-                <ArraySeqStPerS<Pair<N, char>> as ArraySeqStPerRedefinableTrait<Pair<N, char>>>::tabulate(
+                ArraySeqStPerS::tabulate(
                     &|j| Pair(*x, *filtered_b.nth(j)),
                     filtered_b.length(),
                 )
             },
             filtered_a.length(),
         );
-        <ArraySeqStPerS<Pair<N, char>> as ArraySeqStPerBaseTrait<Pair<N, char>>>::flatten(&nested)
+        ArraySeqStPerS::flatten(&nested)
     }
 }

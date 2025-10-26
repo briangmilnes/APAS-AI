@@ -3,7 +3,7 @@
 
 pub mod Algorithm21_5 {
 
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap21::Exercise21_8::Exercise21_8::is_prime;
     use crate::Types::Types::*;
     pub type T = N;
@@ -26,9 +26,9 @@ pub mod Algorithm21_5 {
             return ArraySeqStPerS::from_vec(Vec::new());
         }
         let all: ArraySeqStPerS<N> =
-            <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::tabulate(&|i| i + 2, n - 2);
+            ArraySeqStPerS::tabulate(&|i| i + 2, n - 2);
         let filtered: ArraySeqStPerS<N> =
-            <ArraySeqStPerS<N> as ArraySeqStPerRedefinableTrait<N>>::filter(&all, &|x| is_prime(*x));
+            ArraySeqStPerS::filter(&all, &|x| is_prime(*x));
         filtered
     }
 }

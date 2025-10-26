@@ -3,7 +3,7 @@
 
 pub mod Problem21_4 {
 
-    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use crate::Chap19::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
     pub type T<N> = ArraySeqStPerS<N>;
 
@@ -52,20 +52,16 @@ pub mod Problem21_4 {
         a: &ArraySeqStPerS<N>,
         b: &ArraySeqStPerS<&'static str>,
     ) -> ArraySeqStPerS<Pair<N, &'static str>> {
-        let nested: ArraySeqStPerS<ArraySeqStPerS<Pair<N, &'static str>>> = <ArraySeqStPerS<
-            ArraySeqStPerS<Pair<N, &'static str>>,
-        > as ArraySeqStPerRedefinableTrait<
-            ArraySeqStPerS<Pair<N, &'static str>>,
-        >>::tabulate(
+        let nested: ArraySeqStPerS<ArraySeqStPerS<Pair<N, &'static str>>> = ArraySeqStPerS::tabulate(
             &|i| {
                 let x = *a.nth(i);
-                <ArraySeqStPerS<Pair<N, &'static str>> as ArraySeqStPerRedefinableTrait<Pair<N, &'static str>>>::tabulate(
+                ArraySeqStPerS::tabulate(
                         &|j| Pair(x, *b.nth(j)),
                         b.length(),
                     )
             },
             a.length(),
         );
-        <ArraySeqStPerS<Pair<N, &'static str>> as ArraySeqStPerBaseTrait<Pair<N, &'static str>>>::flatten(&nested)
+        ArraySeqStPerS::flatten(&nested)
     }
 }
