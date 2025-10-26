@@ -5,7 +5,8 @@
 
 pub mod BFSMtPer {
 
-    use std::collections::VecDeque;
+    use std::sync::{Arc, Mutex};
+    use std::thread;
 
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use crate::ParaPair;
@@ -23,6 +24,10 @@ pub mod BFSMtPer {
     /// Performs parallel BFS from source vertex s on adjacency list graph G.
     /// Graph is represented as sequence of sequences (adjacency list).
     /// Returns array where result[v] = distance if reachable, UNREACHABLE otherwise.
+    /// 
+    /// Parallel version: Work O(|V| + |E|), Span O(d·lg n) where d is diameter
+    /// - O(d) sequential layers (unavoidable in BFS)
+    /// - O(lg n) parallel processing per layer using thread::spawn
     pub fn bfs(graph: &ArraySeqMtPerS<ArraySeqMtPerS<N>>, source: N) -> ArraySeqMtPerS<N> {
         let n = graph.length();
         if source >= n {
@@ -32,31 +37,82 @@ pub mod BFSMtPer {
         let mut distances = ArraySeqMtPerS::tabulate(&|_| UNREACHABLE, n);
         distances = ArraySeqMtPerS::update(&distances, Pair(source, 0));
 
-        let mut current_layer = VecDeque::new();
-        current_layer.push_back(source);
+        let mut current_layer = vec![source];
         let mut current_dist = 0;
 
         while !current_layer.is_empty() {
-            let layer_size = current_layer.len();
-            let mut next_layer = VecDeque::new();
+            // Parallel processing of current layer
+            // Each thread processes a chunk of vertices, collecting neighbors and updates
+            let (next_vertices, distance_updates) = 
+                process_layer_parallel(graph, &distances, &current_layer, current_dist + 1);
 
-            for _ in 0..layer_size {
-                if let Some(u) = current_layer.pop_front() {
-                    let neighbors = graph.nth(u);
-                    for i in 0..neighbors.length() {
-                        let v = *neighbors.nth(i);
-                        if *distances.nth(v) == UNREACHABLE {
-                            distances = ArraySeqMtPerS::update(&distances, Pair(v, current_dist + 1));
-                            next_layer.push_back(v);
-                        }
-                    }
-                }
+            // Apply distance updates in batch using ninject
+            if !distance_updates.is_empty() {
+                let updates_seq = ArraySeqMtPerS::from_vec(distance_updates);
+                distances = ArraySeqMtPerS::ninject(&distances, &updates_seq);
             }
 
-            current_layer = next_layer;
+            current_layer = next_vertices;
             current_dist += 1;
         }
 
         distances
+    }
+
+    /// Process a BFS layer in parallel
+    /// Returns: (next_layer_vertices, distance_updates)
+    fn process_layer_parallel(
+        graph: &ArraySeqMtPerS<ArraySeqMtPerS<N>>,
+        distances: &ArraySeqMtPerS<N>,
+        current_layer: &[N],
+        next_dist: N,
+    ) -> (Vec<N>, Vec<Pair<N, N>>) {
+        if current_layer.is_empty() {
+            return (Vec::new(), Vec::new());
+        }
+
+        if current_layer.len() == 1 {
+            // Base case: single vertex, process sequentially
+            let u = current_layer[0];
+            let neighbors = graph.nth(u);
+            let mut next_verts = Vec::new();
+            let mut updates = Vec::new();
+
+            for i in 0..neighbors.length() {
+                let v = *neighbors.nth(i);
+                if *distances.nth(v) == UNREACHABLE {
+                    next_verts.push(v);
+                    updates.push(Pair(v, next_dist));
+                }
+            }
+
+            return (next_verts, updates);
+        }
+
+        // Parallel case: split layer in half and process in parallel
+        let mid = current_layer.len() / 2;
+        let left_layer = current_layer[..mid].to_vec();
+        let right_layer = current_layer[mid..].to_vec();
+
+        let graph_clone = graph.clone();
+        let distances_clone = distances.clone();
+
+        let handle = thread::spawn(move || {
+            process_layer_parallel(&graph_clone, &distances_clone, &left_layer, next_dist)
+        });
+
+        let (right_verts, right_updates) = 
+            process_layer_parallel(graph, distances, &right_layer, next_dist);
+
+        let (left_verts, left_updates) = handle.join().unwrap();
+
+        // Merge results
+        let mut all_verts = left_verts;
+        all_verts.extend(right_verts);
+
+        let mut all_updates = left_updates;
+        all_updates.extend(right_updates);
+
+        (all_verts, all_updates)
     }
 }
