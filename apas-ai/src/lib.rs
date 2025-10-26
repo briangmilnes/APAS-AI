@@ -155,7 +155,6 @@ pub mod Chap38 {
 pub mod Chap39 {
     pub mod BSTParaTreapMtEph;
     pub mod BSTSetTreapMtEph;
-    pub mod BSTTreapMtEph;
     pub mod BSTTreapStEph;
 }
 

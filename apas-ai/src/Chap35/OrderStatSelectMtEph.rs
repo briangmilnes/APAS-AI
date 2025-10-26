@@ -11,13 +11,17 @@ pub mod OrderStatSelectMtEph {
     pub type T<T> = ArraySeqMtEphS<T>;
 
     pub trait OrderStatSelectMtEphTrait<T: StTInMtT + Ord> {
-        /// claude-4-sonet: Work Θ(n) expected, Θ(n²) worst case; Span Θ(log² n) expected (with parallel filter), Parallelism Θ(n/log² n) expected
+        /// Algorithm 35.2: Contraction-Based Select with parallel filter operations
+        /// APAS: Work O(n) expected, Span O(lg² n) with high probability
+        /// claude-4-sonet: Work Θ(n) expected, Θ(n²) worst case; Span Θ(log² n) expected, Parallelism Θ(n/log² n) expected
         fn select(&self, k: N) -> Option<T>;
     }
 
     impl<T: StTInMtT + Ord + 'static> OrderStatSelectMtEphTrait<T> for ArraySeqMtEphS<T> {
         fn select(&self, k: N) -> Option<T> {
             let n = self.length();
+            
+            // Base cases
             if k >= n || n == 0 {
                 return None;
             }
@@ -25,65 +29,33 @@ pub mod OrderStatSelectMtEph {
                 return Some(self.nth_cloned(0));
             }
 
+            // Pick a uniformly random element from a
             let pivot_idx = rand::rng().random_range(0..n);
             let pivot = self.nth_cloned(pivot_idx);
 
-            let mut left_count = 0;
-            let mut right_count = 0;
+            // Algorithm 35.2 lines 4-5: parallel filter operations
+            // ℓ = ⟨ x ∈ a | x < p ⟩
+            // r = ⟨ x ∈ a | x > p ⟩
+            let pivot_left = pivot.clone();
+            let pivot_right = pivot.clone();
+            let pivot_result = pivot.clone();
+            
+            let left = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::filter(self, &move |x: &T| *x < pivot_left);
+            let right = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::filter(self, &move |x: &T| *x > pivot_right);
 
-            for i in 0..n {
-                let elem = self.nth_cloned(i);
-                if elem < pivot {
-                    left_count += 1;
-                } else if elem > pivot {
-                    right_count += 1;
-                }
-            }
+            let left_len = left.length();
+            let right_len = right.length();
 
-            if k < left_count {
-                let left =
-                    <ArraySeqMtEphS<T> as crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphRedefinableTrait<
-                        T,
-                    >>::tabulate(
-                        &|i| {
-                            let mut idx = 0;
-                            for j in 0..n {
-                                let elem = self.nth_cloned(j);
-                                if elem < pivot {
-                                    if idx == i {
-                                        return elem;
-                                    }
-                                    idx += 1;
-                                }
-                            }
-                            panic!("Index out of bounds in left partition");
-                        },
-                        left_count,
-                    );
+            // Algorithm 35.2 lines 7-9: determine which partition contains kth element
+            if k < left_len {
+                // kth element is in left partition
                 left.select(k)
-            } else if k < n - right_count {
-                Some(pivot)
+            } else if k < n - right_len {
+                // kth element is the pivot (elements equal to pivot)
+                Some(pivot_result)
             } else {
-                let right =
-                    <ArraySeqMtEphS<T> as crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphRedefinableTrait<
-                        T,
-                    >>::tabulate(
-                        &|i| {
-                            let mut idx = 0;
-                            for j in 0..n {
-                                let elem = self.nth_cloned(j);
-                                if elem > pivot {
-                                    if idx == i {
-                                        return elem;
-                                    }
-                                    idx += 1;
-                                }
-                            }
-                            panic!("Index out of bounds in right partition");
-                        },
-                        right_count,
-                    );
-                right.select(k - (n - right_count))
+                // kth element is in right partition, adjust k
+                right.select(k - (n - right_len))
             }
         }
     }

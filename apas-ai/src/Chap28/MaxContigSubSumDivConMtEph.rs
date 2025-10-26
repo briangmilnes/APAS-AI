@@ -7,10 +7,8 @@
 
 pub mod MaxContigSubSumDivConMtEph {
 
-    use std::sync::Arc;
-
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphBaseTrait;
     use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
-    use crate::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
     use crate::ParaPair;
     use crate::Types::Types::*;
     pub type T = ArraySeqMtEphS<i32>;
@@ -24,38 +22,36 @@ pub mod MaxContigSubSumDivConMtEph {
         }
     }
 
-    /// find max suffix sum using inclusive prefix sums.
+    /// Algorithm 28.12 (MCSSE): find max suffix sum using scan
+    /// MCSSEOpt a j = let (b, v) = scan '+' 0 a[0..j]; w = reduce min ∞ b; in v - w
     fn max_suffix_sum(a: &ArraySeqMtEphS<i32>) -> i32 {
         if a.length() == 0 {
             return i32::MIN / 2; // treat as -∞
         }
 
-        let mut min_prefix = 0;
-        let mut running_sum = 0;
-        for i in 0..a.length() {
-            running_sum += a.nth_cloned(i);
-            min_prefix = min_prefix.min(running_sum);
-        }
-        let total = running_sum;
+        // scan '+' 0 a
+        let (prefix_sums, total) = <ArraySeqMtEphS<i32> as ArraySeqMtEphBaseTrait<i32>>::scan(a, &|x, y| x + y, 0);
+
+        // reduce min ∞ b (prepend 0 for empty prefix)
+        let zero_seq = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::singleton(0);
+        let all_prefixes = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::append(&zero_seq, &prefix_sums);
+        let min_prefix = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::reduce(&all_prefixes, |x, y| (*x).min(*y), i32::MAX);
 
         total - min_prefix
     }
 
-    /// find max prefix sum using inclusive prefix sums.
+    /// Algorithm 28.11 (MCSSS): find max prefix sum using scan
+    /// MCSSSOpt a i = let b = scanI '+' 0 a[i..|a|]; in reduce max −∞ b
     fn max_prefix_sum(a: &ArraySeqMtEphS<i32>) -> i32 {
         if a.length() == 0 {
             return i32::MIN / 2; // treat as -∞
         }
 
-        // Note: Start with first element (not empty prefix) since empty sequence is not allowed
-        let mut max_val = a.nth_cloned(0);
-        let mut running_sum = a.nth_cloned(0);
-        for i in 1..a.length() {
-            running_sum += a.nth_cloned(i);
-            max_val = max_val.max(running_sum);
-        }
+        // scan '+' 0 a (gives inclusive prefix sums)
+        let (prefix_sums, _total) = <ArraySeqMtEphS<i32> as ArraySeqMtEphBaseTrait<i32>>::scan(a, &|x, y| x + y, 0);
 
-        max_val
+        // reduce max −∞ prefix_sums
+        <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::reduce(&prefix_sums, |x, y| (*x).max(*y), i32::MIN)
     }
 
     /// Trait for parallel divide-and-conquer maximum contiguous subsequence sum.

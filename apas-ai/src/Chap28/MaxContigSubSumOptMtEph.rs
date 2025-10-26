@@ -3,11 +3,8 @@
 
 pub mod MaxContigSubSumOptMtEph {
 
-    use std::sync::Arc;
-
+    use crate::Chap18::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphBaseTrait;
     use crate::Chap19::ArraySeqMtEph::ArraySeqMtEph::*;
-    use crate::Chap27::ScanContractMtEph::ScanContractMtEph::ScanContractMtEphTrait;
-    use crate::ParaPair;
     use crate::Types::Types::*;
     pub type T = ArraySeqMtEphS<i32>;
 
@@ -29,36 +26,29 @@ pub mod MaxContigSubSumOptMtEph {
                 return None;
             }
 
-            // Compute all prefix sums manually (inclusive)
-            let mut all_prefixes_vec = Vec::with_capacity(n + 1);
-            all_prefixes_vec.push(0); // empty prefix
-            let mut running_sum = 0;
-            for i in 0..n {
-                running_sum += a.nth_cloned(i);
-                all_prefixes_vec.push(running_sum);
-            }
-            let all_prefixes = ArraySeqMtEphS::from_vec(all_prefixes_vec);
+            // Algorithm 28.16: MCSSOpt using parallel scan operations
+            // (b, v) = scan '+' 0 a
+            let (inclusive_prefixes, _total) = <ArraySeqMtEphS<i32> as ArraySeqMtEphBaseTrait<i32>>::scan(a, &|x, y| x + y, 0);
 
-            // Compute minimum prefix up to each position (inclusive)
-            let mut min_prefixes_vec = Vec::with_capacity(n + 1);
-            let mut running_min = i32::MAX;
-            for i in 0..=n {
-                running_min = running_min.min(all_prefixes.nth_cloned(i));
-                min_prefixes_vec.push(running_min);
-            }
-            let min_prefixes = ArraySeqMtEphS::from_vec(min_prefixes_vec);
+            // c = append ⟨0⟩ b  (prepend 0 to convert inclusive to exclusive-like sequence)
+            let zero_seq = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::singleton(0);
+            let all_prefixes = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::append(&zero_seq, &inclusive_prefixes);
 
-            // Compute maximum over all ending positions
-            let mut max_sum = None;
-            for i in 1..=n {
-                let ending_max = all_prefixes.nth_cloned(i) - min_prefixes.nth_cloned(i - 1);
-                max_sum = match max_sum {
-                    | None => Some(ending_max),
-                    | Some(current_max) => Some(current_max.max(ending_max)),
-                };
-            }
+            // (d, _) = scan min ∞ c
+            let (min_prefixes, _) = <ArraySeqMtEphS<i32> as ArraySeqMtEphBaseTrait<i32>>::scan(&all_prefixes, &|x, y| (*x).min(*y), i32::MAX);
 
-            max_sum
+            // e = ⟨c[i] − d[i−1] : 0 < i ≤ |a|⟩
+            // For each ending position i (1-indexed), compute max subsequence ending there
+            let differences = <ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::tabulate(
+                &|i| {
+                    // c[i+1] - d[i] since we prepended 0 to make c
+                    all_prefixes.nth_cloned(i + 1) - min_prefixes.nth_cloned(i)
+                },
+                n,
+            );
+
+            // reduce max −∞ e
+            Some(<ArraySeqMtEphS<i32> as ArraySeqMtEphTrait<i32>>::reduce(&differences, |x, y| (*x).max(*y), i32::MIN))
         }
     }
 }

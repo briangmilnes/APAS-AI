@@ -5,7 +5,7 @@ use apas_ai::Chap37::BSTBBAlphaMtEph::BSTBBAlphaMtEph::*;
 use apas_ai::Chap37::BSTPlainMtEph::BSTPlainMtEph::*;
 use apas_ai::Chap37::BSTRBMtEph::BSTRBMtEph::*;
 use apas_ai::Chap37::BSTSplayMtEph::BSTSplayMtEph::*;
-use apas_ai::Chap39::BSTTreapMtEph::BSTTreapMtEph::*;
+use apas_ai::Chap39::BSTTreapStEph::BSTTreapStEph::*;
 use apas_ai::Types::Types::*;
 use apas_ai::Types::*;
 
@@ -53,15 +53,6 @@ fn mt_bbalpha_basic_ops() {
     assert_eq!(bst.find(&12), Some(12));
 }
 
-#[test]
-fn mt_treap_basic_ops() {
-    let bst = BSTreeTreap::new();
-    for value in 0..16 {
-        bst.insert(value);
-    }
-    assert_eq!(bst.size(), 16);
-    assert_eq!(bst.find(&10), Some(10));
-}
 
 #[test]
 fn mt_splay_basic_ops() {
@@ -232,53 +223,6 @@ fn mt_bbalpha_comprehensive_operations() {
     assert_eq!(pre_order.length(), 30);
 }
 
-#[test]
-fn mt_treap_comprehensive_operations() {
-    let bst = BSTreeTreap::<i32>::new();
-
-    // Test with random-like values
-    let values = [42, 17, 89, 3, 56, 23, 78, 91, 12, 67, 34, 45, 8, 99, 1];
-    for &val in &values {
-        bst.insert(val);
-    }
-
-    assert_eq!(bst.size(), values.len());
-
-    // Treap should maintain reasonable balance due to random priorities
-    let height = bst.height();
-    assert!(height <= 15); // Should be reasonably balanced (relaxed for treap randomness)
-
-    // Test all operations
-    assert_eq!(bst.minimum(), Some(1));
-    assert_eq!(bst.maximum(), Some(99));
-
-    // Test search operations
-    for &val in &values {
-        assert_eq!(bst.find(&val), Some(val));
-        assert!(bst.contains(&val));
-    }
-
-    // Test non-existent values
-    for &val in &[0, 100, 50, 25] {
-        if !values.contains(&val) {
-            assert_eq!(bst.find(&val), None);
-            assert!(!bst.contains(&val));
-        }
-    }
-
-    // Note: BSTTreapMtEph doesn't have delete method - test comprehensive search only
-    // Verify all values are accessible
-    for &val in &values {
-        assert!(bst.contains(&val));
-        assert_eq!(bst.find(&val), Some(val));
-    }
-
-    // Verify tree integrity
-    let in_order = bst.in_order();
-    for i in 1..in_order.length() {
-        assert!(*in_order.nth(i - 1) < *in_order.nth(i));
-    }
-}
 
 #[test]
 fn mt_splay_comprehensive_operations() {
@@ -348,7 +292,6 @@ fn mt_all_variants_empty_operations() {
     test_empty_variant!(BSTreeAVL<i32>);
     test_empty_variant!(BSTreeRB<i32>);
     test_empty_variant!(BSTreeBBAlpha<i32>);
-    test_empty_variant!(BSTreeTreap<i32>);
     test_empty_variant!(BSTreeSplay<i32>);
 }
 
@@ -381,7 +324,6 @@ fn mt_all_variants_single_element() {
     test_single_variant!(BSTreeAVL<i32>);
     test_single_variant!(BSTreeRB<i32>);
     test_single_variant!(BSTreeBBAlpha<i32>);
-    test_single_variant!(BSTreeTreap<i32>);
     test_single_variant!(BSTreeSplay<i32>);
 }
 
@@ -417,7 +359,6 @@ fn mt_all_variants_duplicate_handling() {
     test_duplicate_variant!(BSTreeAVL<i32>);
     test_duplicate_variant!(BSTreeRB<i32>);
     test_duplicate_variant!(BSTreeBBAlpha<i32>);
-    test_duplicate_variant!(BSTreeTreap<i32>);
     test_duplicate_variant!(BSTreeSplay<i32>);
 }
 
@@ -627,46 +568,6 @@ fn mt_concurrent_bbalpha_operations() {
     }
 }
 
-#[test]
-fn mt_concurrent_treap_operations() {
-    use std::sync::{Arc, Barrier};
-    use std::thread;
-
-    let bst = Arc::new(BSTreeTreap::<i32>::new());
-    let num_threads = 4;
-    let barrier = Arc::new(Barrier::new(num_threads));
-    let mut handles = vec![];
-
-    for thread_id in 0..num_threads {
-        let bst_clone = Arc::clone(&bst);
-        let barrier_clone = Arc::clone(&barrier);
-
-        handles.push(thread::spawn(move || {
-            barrier_clone.wait();
-
-            // Each thread inserts different ranges
-            for i in 0..20 {
-                bst_clone.insert((thread_id * 20 + i) as i32);
-            }
-
-            let size = bst_clone.size();
-            let height = bst_clone.height();
-            let min = bst_clone.minimum();
-            let max = bst_clone.maximum();
-
-            (size, height, min, max)
-        }));
-    }
-
-    let results = handles.into_iter().map(|h| h.join().unwrap()).collect::<Vec<_>>();
-
-    // Verify results for each thread
-    for (i, (size, height, min, max)) in results.iter().enumerate() {
-        assert!(*size >= 20); // At least the thread's own insertions
-        assert!(*height > 0);
-        println!("Thread {i}: size={size}, height={height}, min={min:?}, max={max:?}");
-    }
-}
 
 #[test]
 fn mt_concurrent_splay_access_patterns() {
@@ -778,6 +679,5 @@ fn mt_all_variants_concurrent_stress() {
     test_concurrent_variant!(BSTreeAVL<i32>);
     test_concurrent_variant!(BSTreeRB<i32>);
     test_concurrent_variant!(BSTreeBBAlpha<i32>);
-    test_concurrent_variant!(BSTreeTreap<i32>);
     test_concurrent_variant!(BSTreeSplay<i32>);
 }

@@ -182,11 +182,6 @@ path = "benches/Chap37/BenchBSTBBAlphaMtEph.rs"
 harness = false
 
 [[bench]]
-name = "BenchBSTTreapMtEph"
-path = "benches/Chap39/BenchBSTTreapMtEph.rs"
-harness = false
-
-[[bench]]
 name = "BenchBSTSplayMtEph"
 path = "benches/Chap37/BenchBSTSplayMtEph.rs"
 harness = false
@@ -601,10 +596,6 @@ path = "tests/Chap36/TestQuickSortMtEphSlice.rs"
 [[test]]
 name = "TestBSTTreapStEph"
 path = "tests/Chap39/TestBSTTreapStEph.rs"
-
-[[test]]
-name = "TestBSTTreapMtEph"
-path = "tests/Chap39/TestBSTTreapMtEph.rs"
 
 [[test]]
 name = "TestBSTParaTreapMtEph"

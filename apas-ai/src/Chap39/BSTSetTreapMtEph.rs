@@ -1,22 +1,28 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-//! Set interface built atop the Treap multi-threaded BST implementation.
+//! Set interface built atop the Treap single-threaded BST implementation.
+//!
+//! NOTE: This implementation uses SEQUENTIAL aggregate operations (union, intersection, etc.)
+//! because it wraps BSTTreapStEph which doesn't expose tree structure for parallel divide-and-conquer.
+//! For truly PARALLEL BST operations with O(lg n) span, use BSTParaTreapMtEph instead.
+//! 
+//! This file exists for compatibility and testing purposes but has O(n) span for aggregate operations.
 
 pub mod BSTSetTreapMtEph {
 
     use std::collections::BTreeSet;
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
-    use crate::Chap39::BSTTreapMtEph::BSTTreapMtEph::*;
+    use crate::Chap39::BSTTreapStEph::BSTTreapStEph::*;
     use crate::Types::Types::*;
 
     #[derive(Debug, Clone)]
-    pub struct BSTSetTreapMtEph<T: StTInMtT + Ord> {
-        tree: BSTTreapMtEph<T>,
+    pub struct BSTSetTreapMtEph<T: StT + Ord> {
+        tree: BSTTreapStEph<T>,
     }
 
     pub type BSTSetTreapMt<T> = BSTSetTreapMtEph<T>;
 
-    pub trait BSTSetTreapMtEphTrait<T: StTInMtT + Ord>: Sized {
+    pub trait BSTSetTreapMtEphTrait<T: StT + Ord>: Sized {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn empty()                                   -> Self;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
@@ -37,11 +43,11 @@ pub mod BSTSetTreapMtEph {
         fn insert(&mut self, value: T);
         /// claude-4-sonet: Work Θ(log n) expected, Θ(n) worst case; Span Θ(log n) expected with locking
         fn delete(&mut self, target: &T);
-        /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
+        /// NOTE: Sequential implementation - Span Θ(n), not parallel
         fn union(&self, other: &Self)                -> Self;
-        /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
+        /// NOTE: Sequential implementation - Span Θ(n), not parallel
         fn intersection(&self, other: &Self)         -> Self;
-        /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
+        /// NOTE: Sequential implementation - Span Θ(n), not parallel
         fn difference(&self, other: &Self)           -> Self;
         /// claude-4-sonet: Work Θ(log n) expected, Span Θ(log n)
         fn split(&self, pivot: &T)                   -> (Self, B, Self);
@@ -56,13 +62,13 @@ pub mod BSTSetTreapMtEph {
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
         fn iter_in_order(&self)                      -> ArraySeqStPerS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
-        fn as_tree(&self)                            -> &BSTTreapMtEph<T>;
+        fn as_tree(&self)                            -> &BSTTreapStEph<T>;
     }
 
-    impl<T: StTInMtT + Ord> BSTSetTreapMtEph<T> {
+    impl<T: StT + Ord> BSTSetTreapMtEph<T> {
         fn values_vec(&self) -> Vec<T> { self.tree.in_order().iter().cloned().collect() }
-        fn rebuild_from_vec(values: Vec<T>) -> BSTTreapMtEph<T> {
-            let tree = BSTTreapMtEph::new();
+        fn rebuild_from_vec(values: Vec<T>) -> BSTTreapStEph<T> {
+            let mut tree = BSTTreapStEph::new();
             for value in values {
                 tree.insert(value);
             }
@@ -72,7 +78,7 @@ pub mod BSTSetTreapMtEph {
         where
             I: IntoIterator<Item = T>,
         {
-            let tree = BSTTreapMtEph::new();
+            let mut tree = BSTTreapStEph::new();
             for value in values {
                 tree.insert(value);
             }
@@ -80,15 +86,15 @@ pub mod BSTSetTreapMtEph {
         }
     }
 
-    impl<T: StTInMtT + Ord> BSTSetTreapMtEphTrait<T> for BSTSetTreapMtEph<T> {
+    impl<T: StT + Ord> BSTSetTreapMtEphTrait<T> for BSTSetTreapMtEph<T> {
         fn empty() -> Self {
             Self {
-                tree: BSTTreapMtEph::new(),
+                tree: BSTTreapStEph::new(),
             }
         }
 
         fn singleton(value: T) -> Self {
-            let tree = BSTTreapMtEph::new();
+            let mut tree = BSTTreapStEph::new();
             tree.insert(value);
             Self { tree }
         }
@@ -97,13 +103,13 @@ pub mod BSTSetTreapMtEph {
 
         fn is_empty(&self) -> B { self.tree.is_empty() }
 
-        fn find(&self, value: &T) -> Option<T> { self.tree.find(value) }
+        fn find(&self, value: &T) -> Option<T> { self.tree.find(value).cloned() }
 
         fn contains(&self, value: &T) -> B { self.tree.contains(value) }
 
-        fn minimum(&self) -> Option<T> { self.tree.minimum() }
+        fn minimum(&self) -> Option<T> { self.tree.minimum().cloned() }
 
-        fn maximum(&self) -> Option<T> { self.tree.maximum() }
+        fn maximum(&self) -> Option<T> { self.tree.maximum().cloned() }
 
         fn insert(&mut self, value: T) { self.tree.insert(value); }
 
@@ -206,7 +212,7 @@ pub mod BSTSetTreapMtEph {
 
         fn iter_in_order(&self) -> ArraySeqStPerS<T> { self.tree.in_order() }
 
-        fn as_tree(&self) -> &BSTTreapMtEph<T> { &self.tree }
+        fn as_tree(&self) -> &BSTTreapStEph<T> { &self.tree }
     }
 
     #[macro_export]
