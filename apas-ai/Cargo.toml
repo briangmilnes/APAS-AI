@@ -993,16 +993,8 @@ name = "TestPQMinStPer"
 path = "tests/Chap53/TestPQMinStPer.rs"
 
 [[test]]
-name = "TestPQMinMtEph"
-path = "tests/Chap53/TestPQMinMtEph.rs"
-
-[[test]]
 name = "TestPQMinStEph"
 path = "tests/Chap53/TestPQMinStEph.rs"
-
-[[test]]
-name = "TestPQMinMtPer"
-path = "tests/Chap53/TestPQMinMtPer.rs"
 
 [[test]]
 name = "TestGraphSearchStEph"
@@ -1020,11 +1012,6 @@ harness = false
 [[bench]]
 name = "BenchPQMinStPer"
 path = "benches/Chap53/BenchPQMinStPer.rs"
-harness = false
-
-[[bench]]
-name = "BenchPQMinMtEph"
-path = "benches/Chap53/BenchPQMinMtEph.rs"
 harness = false
 
 [[bench]]
@@ -1754,11 +1741,6 @@ path = "benches/Chap64/BenchTSPApproxStEph.rs"
 harness = false
 
 [[bench]]
-name = "BenchTSPApproxMtEph"
-path = "benches/Chap64/BenchTSPApproxMtEph.rs"
-harness = false
-
-[[bench]]
 name = "BenchUnionFindStEph"
 path = "benches/Chap65/BenchUnionFindStEph.rs"
 harness = false
@@ -1940,10 +1922,6 @@ path = "tests/Chap64/TestSpanTreeMtEph.rs"
 [[test]]
 name = "TestSpanTreeStEph"
 path = "tests/Chap64/TestSpanTreeStEph.rs"
-
-[[test]]
-name = "TestTSPApproxMtEph"
-path = "tests/Chap64/TestTSPApproxMtEph.rs"
 
 [[test]]
 name = "TestTSPApproxStEph"

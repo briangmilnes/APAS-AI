@@ -278,8 +278,6 @@ pub mod Chap53 {
     pub mod GraphSearchMtPer;
     pub mod GraphSearchStEph;
     pub mod GraphSearchStPer;
-    pub mod PQMinMtEph;
-    pub mod PQMinMtPer;
     pub mod PQMinStEph;
     pub mod PQMinStPer;
 }
@@ -354,7 +352,6 @@ pub mod Chap63 {
 pub mod Chap64 {
     pub mod SpanTreeMtEph;
     pub mod SpanTreeStEph;
-    pub mod TSPApproxMtEph;
     pub mod TSPApproxStEph;
 }
 pub mod Chap65 {
