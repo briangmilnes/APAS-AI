@@ -8,7 +8,7 @@
 
 pub mod AVLTreeSetMtPer {
 
-    use std::cmp::Ordering::{Equal, Greater, Less};
+    use std::cmp::Ordering::{self, Equal, Greater, Less};
     use std::{fmt, thread};
 
     use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
@@ -18,6 +18,42 @@ pub mod AVLTreeSetMtPer {
     #[derive(PartialEq, Eq)]
     pub struct AVLTreeSetMtPer<T: StTInMtT + Ord + 'static> {
         elements: AVLTreeSeqMtPerS<T>,
+    }
+
+    // NOTE: This type implements Ord because it is used as a VALUE in OrderedTableMtPer.
+    // OrderedTableMtPer<K, V> is backed by BSTParaTreapMtEph<Pair<K, V>>, which requires
+    // BOTH K and V to be Ord (via MtKey trait). For example, AdjTableGraphMtPer uses
+    // OrderedTableMtPer<V, AVLTreeSetMtPer<V>>, so AVLTreeSetMtPer<V> must implement Ord.
+    //
+    // This is purely a caller requirement - if no code used AVLTreeSetMtPer as a value in
+    // an ordered table, we wouldn't need Ord. See AVLTreeSetMtEph for comparison (no Ord needed).
+
+    impl<T: StTInMtT + Ord + 'static> PartialOrd for AVLTreeSetMtPer<T> {
+        fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+            Some(self.cmp(other))
+        }
+    }
+
+    impl<T: StTInMtT + Ord + 'static> Ord for AVLTreeSetMtPer<T> {
+        fn cmp(&self, other: &Self) -> Ordering {
+            // Lexicographic ordering: compare element by element (no cloning)
+            let n_self = self.size();
+            let n_other = other.size();
+            let min_n = n_self.min(n_other);
+            
+            // Compare common prefix
+            for i in 0..min_n {
+                let a = self.elements.nth(i);
+                let b = other.elements.nth(i);
+                match a.cmp(b) {
+                    Equal => continue,
+                    non_equal => return non_equal,
+                }
+            }
+            
+            // If all compared elements are equal, compare by size
+            n_self.cmp(&n_other)
+        }
     }
 
     pub trait AVLTreeSetMtPerTrait<T: StTInMtT + Ord + 'static> {

@@ -2,6 +2,7 @@
 //! Tests for Chap43 OrderedTableMtPer.
 
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
+use apas_ai::Chap43::OrderedSetMtEph::OrderedSetMtEph::OrderedSetMtEphTrait;
 use apas_ai::Chap43::OrderedTableMtPer::OrderedTableMtPer::*;
 use apas_ai::Types::Types::*;
 
@@ -43,7 +44,8 @@ fn test_ordered_table_mt_per_filter() {
         table = table.insert(i, format!("value_{i}"));
     }
 
-    let filtered = table.filter(|k, _v| k % 2 == 0);
+    // filter takes a predicate on Pair<K, V>
+    let filtered = table.filter(|pair: &Pair<i32, String>| pair.0 % 2 == 0);
     assert_eq!(filtered.size(), 10);
 }
 
@@ -55,8 +57,10 @@ fn test_ordered_table_mt_per_map() {
         table = table.insert(i, format!("val_{i}"));
     }
 
-    let mapped = table.map(|v| format!("mapped_{v}"));
-    assert_eq!(mapped.size(), 10);
+    // map is actually a filter (predicate), not a transformation
+    // Keep only entries where key < 5
+    let mapped = table.map(|pair: &Pair<i32, String>| pair.0 < 5);
+    assert_eq!(mapped.size(), 5);
 }
 
 #[test]

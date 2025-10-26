@@ -16,6 +16,15 @@ pub mod AVLTreeSetMtEph {
     use crate::ParaPair;
     use crate::Types::Types::*;
 
+    // NOTE: This type does NOT implement Ord (unlike AVLTreeSetMtPer) because no caller requires it.
+    // AVLTreeSetMtEph is not used as a value type in OrderedTableMtPer. It's only used for:
+    // - Standalone set operations (union, intersection, filter)
+    // - As a set of vertices/priorities in PQMinMtEph (Chap53)
+    //
+    // If future code tries to use AVLTreeSetMtEph as a value in OrderedTableMtPer, compilation
+    // will fail with "the trait bound `AVLTreeSetMtEph<V>: Ord` is not satisfied", and we can
+    // implement Ord then. This is purely driven by caller requirements.
+
     pub struct AVLTreeSetMtEph<T: StTInMtT + Ord + 'static> {
         inner: Arc<Mutex<AVLTreeSetStEph<T>>>,
     }

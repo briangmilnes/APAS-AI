@@ -4,12 +4,20 @@
 
 pub mod AdjTableGraphMtPer {
 
+    use crate::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerBaseTrait;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap41::AVLTreeSetMtPer::AVLTreeSetMtPer::*;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::ArraySetStEphTrait;
+    use crate::Chap43::OrderedSetMtEph::OrderedSetMtEph::OrderedSetMtEphTrait;
     use crate::Chap43::OrderedTableMtPer::OrderedTableMtPer::*;
     use crate::Types::Types::*;
 
+    // NOTE: This implementation requires V: Ord for BOTH keys and values because:
+    // - OrderedTableMtPer is backed by BSTParaTreapMtEph<Pair<K,V>>
+    // - BSTParaTreapMtEph requires elements to be MtKey (which includes Ord)
+    // - This allows the table to use parallel tree operations (split, join, union)
+    // - Sets (AVLTreeSetMtPer<V>) implement Ord via lexicographic ordering of elements
+    // - This constraint enables efficient parallel operations on the adjacency structure
     #[derive(Clone)]
     pub struct AdjTableGraphMtPer<V: StTInMtT + Ord + 'static> {
         adj: OrderedTableMtPer<V, AVLTreeSetMtPer<V>>,
@@ -78,11 +86,26 @@ pub mod AdjTableGraphMtPer {
         }
 
         fn delete_vertex(&self, v: &V) -> Self {
-            let new_adj = self.adj.delete(v);
             let v_clone = v.clone();
-            // Remove v from all adjacency lists
-            let new_adj = new_adj.map(|neighbors| neighbors.delete(&v_clone));
-            AdjTableGraphMtPer { adj: new_adj }
+            let new_adj = self.adj.delete(&v_clone);
+            
+            // TODO: Make this parallel by adding map_values operation to OrderedTableMtPer
+            // Current approach: Sequential iteration over domain
+            // Parallel approach: table.map_values(|neighbors| neighbors.delete(&v_clone))
+            // This would use the parallel filter operation on the underlying Treap
+            
+            // Remove v from all neighbor sets
+            let domain = new_adj.domain();
+            let seq = domain.to_seq();
+            let mut result_adj = new_adj;
+            for i in 0..seq.length() {
+                let u = seq.nth(i);
+                if let Some(neighbors) = result_adj.find(u) {
+                    let new_neighbors = neighbors.delete(&v_clone);
+                    result_adj = result_adj.insert(u.clone(), new_neighbors);
+                }
+            }
+            AdjTableGraphMtPer { adj: result_adj }
         }
 
         fn insert_edge(&self, u: V, v: V) -> Self {
