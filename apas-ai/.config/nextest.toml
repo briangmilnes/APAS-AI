@@ -1,0 +1,15 @@
+# Nextest configuration for APAS-AI
+# Mt (multi-threaded) tests use Rayon internally with full parallelism
+# Run Mt tests sequentially (1 at a time) to avoid thread explosion
+# St (single-threaded) tests run in parallel as normal
+
+[profile.default]
+# Run most tests in parallel with 10 test threads
+test-threads = 10
+
+# Override for Mt tests: run sequentially (1 at a time, using all 10 slots)
+# This allows each Mt test to use full Rayon parallelism without interference
+[[profile.default.overrides]]
+filter = 'test(~Mt)'
+threads-required = 10
+

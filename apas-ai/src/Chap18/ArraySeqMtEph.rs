@@ -27,7 +27,7 @@ pub mod ArraySeqMtEph {
         fn new(length: N, init_value: T)                      -> Self;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - locks mutex
-        fn set(&mut self, index: N, item: T)                  -> Result<&mut ArraySeqMtEphS<T>, &'static str>;
+        fn set(&self, index: N, item: T)                      -> Result<(), &'static str>;
         /// APAS: Work Θ(1), Span Θ(1)
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - locks mutex
         fn length(&self)                                      -> N;
@@ -108,16 +108,14 @@ pub mod ArraySeqMtEph {
     impl<T: StTInMtT> ArraySeqMtEphBaseTrait<T> for ArraySeqMtEphS<T> {
         fn new(length: N, init_value: T) -> ArraySeqMtEphS<T> { ArraySeqMtEphS::from_vec(vec![init_value; length]) }
 
-        fn set(&mut self, index: N, item: T) -> Result<&mut ArraySeqMtEphS<T>, &'static str> {
-            {
-                let mut guard = self.data.lock().unwrap();
-                if index < guard.len() {
-                    guard[index] = item;
-                } else {
-                    return Err("Index out of bounds");
-                }
+        fn set(&self, index: N, item: T) -> Result<(), &'static str> {
+            let mut guard = self.data.lock().unwrap();
+            if index < guard.len() {
+                guard[index] = item;
+                Ok(())
+            } else {
+                Err("Index out of bounds")
             }
-            Ok(self)
         }
 
         fn length(&self) -> N {
@@ -312,7 +310,7 @@ pub mod ArraySeqMtEph {
         }
 
         fn inject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
-            let mut out = a.clone();
+            let out = a.clone();
             let mut seen = HashSet::<N>::new();
             for i in 0..updates.length() {
                 let Pair(idx, val) = updates.nth_cloned(i);
@@ -324,7 +322,7 @@ pub mod ArraySeqMtEph {
         }
 
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
-            let mut out = a.clone();
+            let out = a.clone();
             for i in 0..updates.length() {
                 let Pair(idx, val) = updates.nth_cloned(i);
                 let _ = out.set(idx, val);

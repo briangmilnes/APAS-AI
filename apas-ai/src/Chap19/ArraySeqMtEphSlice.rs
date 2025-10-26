@@ -189,51 +189,26 @@ pub mod ArraySeqMtEphSlice {
 
         fn filter<F: PredMt<T> + Clone>(a: &Self, pred: F) -> Self {
             // Algorithm 19.5: filter f a = flatten (map (deflate f) a)
-            // Uses divide-and-conquer parallelism instead of spawning n threads
-            if a.length() == 0 {
-                return <Self as ArraySeqMtEphSliceTrait<T>>::empty();
-            }
-            if a.length() == 1 {
-                let value = a.nth_cloned(0);
-                return if pred(&value) {
-                    ArraySeqMtEphSliceS::from_vec(vec![value])
-                } else {
-                    ArraySeqMtEphSliceS::from_vec(Vec::new())
-                };
-            }
-
-            // Divide-and-conquer with ParaPair!
-            let mid = a.length() / 2;
-            let left_slice = a.slice(0, mid);
-            let right_slice = a.slice(mid, a.length() - mid);
-            let pred_left = pred.clone();
-            let pred_right = pred.clone();
-
-            let Pair(left_result, right_result) =
-                ParaPair!(move || Self::filter(&left_slice, pred_left), move || Self::filter(
-                    &right_slice,
-                    pred_right
-                ));
-
-            // Append filtered results
-            let mut kept_values = Vec::with_capacity(a.length());
-            for i in 0..left_result.length() {
-                kept_values.push(left_result.nth_cloned(i));
-            }
-            for i in 0..right_result.length() {
-                kept_values.push(right_result.nth_cloned(i));
-            }
-
-            if kept_values.is_empty() {
-                <Self as ArraySeqMtEphSliceTrait<T>>::empty()
-            } else {
-                ArraySeqMtEphSliceS::from_vec(kept_values)
-            }
+            // Map each element to a sequence (empty or singleton), then flatten
+            let deflated = <ArraySeqMtEphSliceS<ArraySeqMtEphSliceS<T>> as ArraySeqMtEphSliceTrait<ArraySeqMtEphSliceS<T>>>::tabulate(
+                &|i| {
+                    let x = a.nth_cloned(i);
+                    if pred(&x) {
+                        ArraySeqMtEphSliceS::from_vec(vec![x])
+                    } else {
+                        <Self as ArraySeqMtEphSliceTrait<T>>::empty()
+                    }
+                },
+                a.length()
+            );
+            // Flatten the sequence of sequences
+            let sequences: Vec<ArraySeqMtEphSliceS<T>> = (0..deflated.length()).map(|i| deflated.nth_cloned(i)).collect();
+            <Self as ArraySeqMtEphSliceTrait<T>>::flatten(&sequences)
         }
 
         fn append(a: &Self, b: &Self) -> Self {
             // Algorithm 19.4: append a b = flatten(<a, b>)
-            let sequences = vec![a.clone(), b.clone()];
+            let sequences = [a.clone(), b.clone()];
             <Self as ArraySeqMtEphSliceTrait<T>>::flatten(&sequences)
         }
 
@@ -350,7 +325,7 @@ pub mod ArraySeqMtEphSlice {
 
             // Helper: APAS Algorithm 19.16 atomicWrite - leftmost wins
             fn atomic_write_leftmost<T: StTInMtT>(
-                aa: &Arc<Vec<Mutex<(T, N)>>>,
+                aa: &Arc<Box<[Mutex<(T, N)>]>>,
                 idx: N,
                 val: T,
                 k: N,
@@ -373,26 +348,32 @@ pub mod ArraySeqMtEphSlice {
                 return a.clone();
             }
 
-            // Create shared atomic array: (value, update_index)
-            let values = Arc::<Vec<Mutex<(T, N)>>>::new(
-                (0..a.length())
-                    .map(|i| Mutex::new((a.nth_cloned(i), a.length())))
-                    .collect(),
-            );
+            // Algorithm 19.16: Create aa from a where aa[i] = (a[i], |a|)
+            let n = a.length();
+            
+            // Create copied array aa with per-element Mutexes for atomic writes (benign effect)
+            // Initialize aa[i] = (a[i], |a|) by reading from sequence a
+            let mut aa_uninit = Box::new_uninit_slice(n);
+            for i in 0..n {
+                aa_uninit[i].write(Mutex::new((a.nth_cloned(i), n)));
+            }
+            let aa = Arc::new(unsafe { aa_uninit.assume_init() });
 
-            // Apply all updates in parallel - leftmost wins
-            let updates_vec: Vec<(N, T)> = updates.to_vec();
-
+            // Inject all updates in parallel using atomicWrite - leftmost wins
             std::thread::scope(|s| {
-                for (k, (idx, val)) in updates_vec.into_iter().enumerate() {
-                    let vals = Arc::clone(&values);
-                    s.spawn(move || atomic_write_leftmost(&vals, idx, val, k));
+                for (k, (idx, val)) in updates.iter().enumerate() {
+                    let idx = *idx;
+                    let val = val.clone();
+                    let aa_ref = Arc::clone(&aa);
+                    s.spawn(move || atomic_write_leftmost(&aa_ref, idx, val, k));
                 }
             });
 
-            // Extract final values (Arc is automatically unwrapped after scope)
-            let result = values.iter().map(|m| m.lock().unwrap().0.clone()).collect::<Vec<T>>();
-            ArraySeqMtEphSliceS::from_vec(result)
+            // Extract result: create array with just the value component using tabulate
+            <Self as ArraySeqMtEphSliceTrait<T>>::tabulate(
+                &|i| aa[i].lock().unwrap().0.clone(),
+                n
+            )
         }
 
         fn ninject(a: &Self, updates: &[(N, T)]) -> Self {
@@ -402,7 +383,7 @@ pub mod ArraySeqMtEphSlice {
 
             // Helper: APAS Algorithm 19.17 atomicWrite - rightmost wins
             fn atomic_write_rightmost<T: StTInMtT>(
-                aa: &Arc<Vec<Mutex<(T, N)>>>,
+                aa: &Arc<Box<[Mutex<(T, N)>]>>,
                 idx: N,
                 val: T,
                 k: N,
@@ -425,22 +406,32 @@ pub mod ArraySeqMtEphSlice {
                 return a.clone();
             }
 
-            // Create shared atomic array: (value, update_index)
-            let values = Arc::<Vec<Mutex<(T, N)>>>::new((0..a.length()).map(|i| Mutex::new((a.nth_cloned(i), 0))).collect());
+            // Algorithm 19.17: Create aa from a where aa[i] = (a[i], 0)
+            let n = a.length();
+            
+            // Create copied array aa with per-element Mutexes for atomic writes (benign effect)
+            // Initialize aa[i] = (a[i], 0) by reading from sequence a
+            let mut aa_uninit = Box::new_uninit_slice(n);
+            for i in 0..n {
+                aa_uninit[i].write(Mutex::new((a.nth_cloned(i), 0)));
+            }
+            let aa = Arc::new(unsafe { aa_uninit.assume_init() });
 
-            // Apply all updates in parallel - rightmost wins
-            let updates_vec: Vec<(N, T)> = updates.to_vec();
-
+            // Inject all updates in parallel using atomicWrite - rightmost wins
             std::thread::scope(|s| {
-                for (k, (idx, val)) in updates_vec.into_iter().enumerate() {
-                    let vals = Arc::clone(&values);
-                    s.spawn(move || atomic_write_rightmost(&vals, idx, val, k));
+                for (k, (idx, val)) in updates.iter().enumerate() {
+                    let idx = *idx;
+                    let val = val.clone();
+                    let aa_ref = Arc::clone(&aa);
+                    s.spawn(move || atomic_write_rightmost(&aa_ref, idx, val, k));
                 }
             });
 
-            // Extract final values (Arc is automatically unwrapped after scope)
-            let result = values.iter().map(|m| m.lock().unwrap().0.clone()).collect::<Vec<T>>();
-            ArraySeqMtEphSliceS::from_vec(result)
+            // Extract result: create array with just the value component using tabulate
+            <Self as ArraySeqMtEphSliceTrait<T>>::tabulate(
+                &|i| aa[i].lock().unwrap().0.clone(),
+                n
+            )
         }
 
         fn from_box(data: Box<[T]>) -> Self {

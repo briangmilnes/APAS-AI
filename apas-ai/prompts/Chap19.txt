@@ -60,6 +60,7 @@ if i < |a| then a[i] (19.2)
 else b[i − |a|]. (19.3)
 We can now state append as
 append a b = tabulate (select (a, b)) (|a| + |b|).
+
 Algorithm 19.5 (Function filter ). We can implement filter by a using a combination of map
 and flatten. The basic idea is to map the elements of the sequence for which the condition
 holds to singletons and map the other elements to empty sequences and then flatten.
@@ -184,6 +185,7 @@ Algorithm 19.13 (Function subseq). Taking a subsequence of a sequence requires d
 mining the boundaries for the new slice. We do not need to copy the elements of the array
 within the boundary. This operation therefore requires basic arithmetic and thus can be
 done in constant work and span.
+
 Algorithm 19.14 (Function tabulate). Consider a call to tabulate of the form:
 tabulate f n.
 To construct the sequence of length n, we allocate a fresh array of n elements, evaluate f at

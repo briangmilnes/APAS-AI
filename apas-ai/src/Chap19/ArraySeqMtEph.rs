@@ -26,6 +26,7 @@ pub mod ArraySeqMtEph {
             T: Send + 'static;
         fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>)                 -> Self;
         fn filter<F: PredMt<T>>(a: &ArraySeqMtEphS<T>, pred: &F)                -> Self;
+        fn update(a: &ArraySeqMtEphS<T>, item_at: (N, T))                       -> Self;
         fn isEmpty(&self)                                                       -> B;
         fn isSingleton(&self)                                                   -> B;
         fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A;
@@ -43,6 +44,10 @@ pub mod ArraySeqMtEph {
         fn reduce<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: F, id: T) -> T
         where
             T: Send + 'static;
+        /// APAS Algorithm 19.10: Work Θ(|a|), Span Θ(log²|a|)
+        fn scan<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (ArraySeqMtEphS<T>, T)
+        where
+            T: Send + 'static;
         /// APAS Algorithm 19.15: Work Θ(Σ|ss[i]|), Span Θ(log|ss|)
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>)                      -> Self;
         /// APAS Algorithm 19.16: Work Θ(|a| + |updates|), Span Θ(log|updates|)
@@ -52,22 +57,47 @@ pub mod ArraySeqMtEph {
     }
 
     impl<T: StTInMtT + 'static> ArraySeqMtEphTrait<T> for ArraySeqMtEphS<T> {
-        // Delegate non-redefined methods to Chap18
-        fn empty() -> Self { <Self as ArraySeqMtEphRedefinableTrait<T>>::empty() }
+        // Algorithm 19.1: empty = tabulate(lambda i.i, 0)
+        fn empty() -> Self {
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(&|_| unreachable!("empty sequence"), 0)
+        }
 
-        fn singleton(item: T) -> Self { <Self as ArraySeqMtEphRedefinableTrait<T>>::singleton(item) }
+        // Algorithm 19.2: singleton x = tabulate(lambda i.x, 1)
+        fn singleton(item: T) -> Self {
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(&|_| item.clone(), 1)
+        }
 
         fn tabulate<F: Fn(N) -> T + Send + Sync>(f: &F, n: N) -> ArraySeqMtEphS<T> {
             // Algorithm 19.14: "allocate a fresh array of n elements, evaluate f at each position i 
             // and write the result into position i of the array"
             // "the function f can be evaluated at each element independently in parallel"
-            // Use Rayon's parallel iterator which handles work-stealing and granularity automatically
-            use rayon::prelude::*;
+            // Span: O(max W_f) - all f evaluations happen simultaneously
+            // Work: O(Σ W_f(i)) - sum of work to evaluate f at each position
 
-            // Evaluate f at each position in parallel using Rayon's work-stealing scheduler
-            // (Rayon handles n==0 case correctly by returning empty vec)
-            let values: Vec<T> = (0..n).into_par_iter().map(|i| f(i)).collect();
-            ArraySeqMtEphS::from_vec(values)
+            if n == 0 {
+                return <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::empty();
+            }
+
+            // Allocate sequence with f(0) as initial value for all positions
+            // Element 0 already correct, we'll overwrite the rest
+            let seq = ArraySeqMtEphS::new(n, f(0));
+
+            // Fork a thread per remaining element (skip i=0, already correct)
+            std::thread::scope(|s| {
+                for i in 1..n {
+                    let seq_ref = &seq; // Borrow seq for this iteration
+                    s.spawn(move || {
+                        // Evaluate f at position i (OUTSIDE lock - this is expensive)
+                        let value = f(i);
+                        
+                        // Write result to position i (INSIDE lock - quick)
+                        // set takes &self (shared ref), Mutex provides thread-safety
+                        seq_ref.set(i, value).unwrap();
+                    });
+                }
+            }); // All threads join here - all writes complete
+
+            seq
         }
 
         fn map<U: StTInMtT + 'static, F: Fn(&T) -> U + Send + Sync + Clone + 'static>(
@@ -77,50 +107,47 @@ pub mod ArraySeqMtEph {
         where
             T: Send + 'static,
         {
-            <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::map(a, f)
+            // Algorithm 19.3: map f a = tabulate(lambda i.f(a[i]), |a|)
+            <ArraySeqMtEphS<U> as ArraySeqMtEphTrait<U>>::tabulate(&|i| f(&a.nth_cloned(i)), a.length())
         }
 
         fn append(a: &ArraySeqMtEphS<T>, b: &ArraySeqMtEphS<T>) -> Self {
             // Algorithm 19.4: append a b = flatten ⟨a, b⟩
-            let sequences = ArraySeqMtEphS::<ArraySeqMtEphS<T>>::from_vec(vec![a.clone(), b.clone()]);
+            let sequences = <ArraySeqMtEphS<ArraySeqMtEphS<T>> as ArraySeqMtEphTrait<ArraySeqMtEphS<T>>>::tabulate(
+                &|i| if i == 0 { a.clone() } else { b.clone() },
+                2
+            );
             <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::flatten(&sequences)
         }
 
         fn filter<F: PredMt<T>>(a: &ArraySeqMtEphS<T>, pred: &F) -> Self {
             // Algorithm 19.5: filter f a = flatten (map (deflate f) a)
-            // Implemented using parallel divide-and-conquer
-            use crate::ParaPair;
-
-            if a.length() == 0 {
-                return <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::empty();
-            }
-            if a.length() == 1 {
-                let value = a.nth_cloned(0);
-                return if pred(&value) {
-                    <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::singleton(value)
-                } else {
-                    <ArraySeqMtEphS<T> as ArraySeqMtEphRedefinableTrait<T>>::empty()
-                };
-            }
-
-            // Divide-and-conquer with ParaPair!
-            let mid = a.length() / 2;
-            let left = a.subseq_copy(0, mid);
-            let right = a.subseq_copy(mid, a.length() - mid);
-
-            let Pair(left_result, right_result) = ParaPair!(
-                move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::filter(&left, pred),
-                move || <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::filter(&right, pred)
+            // Map each element to a sequence (empty or singleton), then flatten
+            // Using tabulate instead of map to avoid lifetime issues with pred
+            let deflated = <ArraySeqMtEphS<ArraySeqMtEphS<T>> as ArraySeqMtEphTrait<ArraySeqMtEphS<T>>>::tabulate(
+                &|i| {
+                    let x = a.nth_cloned(i);
+                    <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::deflate(pred, &x)
+                },
+                a.length()
             );
-
-            // Append the filtered results using parallel flatten
-            let sequences = ArraySeqMtEphS::<ArraySeqMtEphS<T>>::from_vec(vec![left_result, right_result]);
-            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::flatten(&sequences)
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::flatten(&deflated)
         }
 
-        fn isEmpty(&self) -> B { <Self as ArraySeqMtEphRedefinableTrait<T>>::isEmpty(self) }
+        fn update(a: &ArraySeqMtEphS<T>, (i, x): (N, T)) -> Self {
+            // Algorithm 19.6: update a (i, x) = tabulate (lambda j. if i = j then x else a[j]) |a|
+            let n = a.length();
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(
+                &|j| if j == i { x.clone() } else { a.nth_cloned(j) },
+                n
+            )
+        }
 
-        fn isSingleton(&self) -> B { <Self as ArraySeqMtEphRedefinableTrait<T>>::isSingleton(self) }
+        // Algorithm 19.7: isEmpty a = |a| = 0
+        fn isEmpty(&self) -> B { self.length() == 0 }
+
+        // Algorithm 19.7: isSingleton a = |a| = 1
+        fn isSingleton(&self) -> B { self.length() == 1 }
 
         fn iterate<A: StT, F: Fn(&A, &T) -> A + Send + Sync>(a: &ArraySeqMtEphS<T>, f: &F, x: A) -> A {
             <Self as ArraySeqMtEphRedefinableTrait<T>>::iterate(a, f, x)
@@ -187,6 +214,54 @@ pub mod ArraySeqMtEph {
             f(&left_result, &right_result)
         }
 
+        fn scan<F: Fn(&T, &T) -> T + Send + Sync + Clone + 'static>(a: &ArraySeqMtEphS<T>, f: &F, id: T) -> (Self, T)
+        where
+            T: Send + 'static,
+        {
+            // Algorithm 19.10: parallel scan using contraction
+            use crate::ParaPair;
+
+            let n = a.length();
+            if n == 0 {
+                return (<ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::empty(), id);
+            }
+            if n == 1 {
+                let item = a.nth_cloned(0);
+                let result = f(&id, &item);
+                let seq = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::singleton(result.clone());
+                return (seq, result);
+            }
+
+            // Contract: combine pairs
+            let contracted = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(
+                &|i| {
+                    if 2 * i + 1 < n {
+                        f(&a.nth_cloned(2 * i), &a.nth_cloned(2 * i + 1))
+                    } else {
+                        a.nth_cloned(2 * i)
+                    }
+                },
+                (n + 1) / 2
+            );
+
+            // Recursive scan on contracted
+            let (scanned_contracted, total) = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::scan(&contracted, f, id.clone());
+
+            // Expand: reconstruct full scan
+            let expanded = <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(
+                &|i| {
+                    if i % 2 == 0 {
+                        scanned_contracted.nth_cloned(i / 2)
+                    } else {
+                        f(&scanned_contracted.nth_cloned(i / 2), &a.nth_cloned(i))
+                    }
+                },
+                n
+            );
+
+            (expanded, total)
+        }
+
         fn flatten(ss: &ArraySeqMtEphS<ArraySeqMtEphS<T>>) -> ArraySeqMtEphS<T> {
             // Algorithm 19.15: parallel flatten using divide-and-conquer
             use crate::ParaPair;
@@ -219,7 +294,7 @@ pub mod ArraySeqMtEph {
 
             // Helper: APAS Algorithm 19.16 atomicWrite - leftmost wins
             fn atomic_write_leftmost<T: StTInMtT>(
-                aa: &Arc<Vec<Mutex<(T, N)>>>,
+                aa: &Arc<Box<[Mutex<(T, N)>]>>,
                 idx: N,
                 val: T,
                 k: N,
@@ -242,26 +317,31 @@ pub mod ArraySeqMtEph {
                 return a.clone();
             }
 
-            // Create shared atomic array: (value, update_index)
-            let values = Arc::<Vec<Mutex<(T, N)>>>::new(
-                (0..a.length())
-                    .map(|i| Mutex::new((a.nth_cloned(i), a.length())))
-                    .collect(),
-            );
+            // Algorithm 19.16: Create aa from a where aa[i] = (a[i], |a|)
+            let n = a.length();
+            
+            // Create copied array aa with per-element Mutexes for atomic writes (benign effect)
+            // Initialize aa[i] = (a[i], |a|) by reading from sequence a
+            let mut aa_uninit = Box::new_uninit_slice(n);
+            for i in 0..n {
+                aa_uninit[i].write(Mutex::new((a.nth_cloned(i), n)));
+            }
+            let aa = Arc::new(unsafe { aa_uninit.assume_init() });
 
-            // Apply all updates in parallel - leftmost wins
-            let updates_vec = (0..updates.length()).map(|i| updates.nth_cloned(i)).collect::<Vec<Pair<N, T>>>();
-
+            // Inject all updates in parallel using atomicWrite - leftmost wins
             std::thread::scope(|s| {
-                for (k, Pair(idx, val)) in updates_vec.into_iter().enumerate() {
-                    let vals = Arc::clone(&values);
-                    s.spawn(move || atomic_write_leftmost(&vals, idx, val, k));
+                for k in 0..updates.length() {
+                    let Pair(idx, val) = updates.nth_cloned(k);
+                    let aa_ref = Arc::clone(&aa);
+                    s.spawn(move || atomic_write_leftmost(&aa_ref, idx, val, k));
                 }
             });
 
-            // Extract final values (Arc is automatically unwrapped after scope)
-            let result = values.iter().map(|m| m.lock().unwrap().0.clone()).collect::<Vec<T>>();
-            ArraySeqMtEphS::from_vec(result)
+            // Extract result: create array with just the value component using tabulate
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(
+                &|i| aa[i].lock().unwrap().0.clone(),
+                n
+            )
         }
 
         fn ninject(a: &ArraySeqMtEphS<T>, updates: &ArraySeqMtEphS<Pair<N, T>>) -> ArraySeqMtEphS<T> {
@@ -271,7 +351,7 @@ pub mod ArraySeqMtEph {
 
             // Helper: APAS Algorithm 19.17 atomicWrite - rightmost wins
             fn atomic_write_rightmost<T: StTInMtT>(
-                aa: &Arc<Vec<Mutex<(T, N)>>>,
+                aa: &Arc<Box<[Mutex<(T, N)>]>>,
                 idx: N,
                 val: T,
                 k: N,
@@ -294,22 +374,31 @@ pub mod ArraySeqMtEph {
                 return a.clone();
             }
 
-            // Create shared atomic array: (value, update_index)
-            let values = Arc::<Vec<Mutex<(T, N)>>>::new((0..a.length()).map(|i| Mutex::new((a.nth_cloned(i), 0))).collect());
+            // Algorithm 19.17: Create aa from a where aa[i] = (a[i], 0)
+            let n = a.length();
+            
+            // Create copied array aa with per-element Mutexes for atomic writes (benign effect)
+            // Initialize aa[i] = (a[i], 0) by reading from sequence a
+            let mut aa_uninit = Box::new_uninit_slice(n);
+            for i in 0..n {
+                aa_uninit[i].write(Mutex::new((a.nth_cloned(i), 0)));
+            }
+            let aa = Arc::new(unsafe { aa_uninit.assume_init() });
 
-            // Apply all updates in parallel - rightmost wins
-            let updates_vec = (0..updates.length()).map(|i| updates.nth_cloned(i)).collect::<Vec<Pair<N, T>>>();
-
+            // Inject all updates in parallel using atomicWrite - rightmost wins
             std::thread::scope(|s| {
-                for (k, Pair(idx, val)) in updates_vec.into_iter().enumerate() {
-                    let vals = Arc::clone(&values);
-                    s.spawn(move || atomic_write_rightmost(&vals, idx, val, k));
+                for k in 0..updates.length() {
+                    let Pair(idx, val) = updates.nth_cloned(k);
+                    let aa_ref = Arc::clone(&aa);
+                    s.spawn(move || atomic_write_rightmost(&aa_ref, idx, val, k));
                 }
             });
 
-            // Extract final values (Arc is automatically unwrapped after scope)
-            let result = values.iter().map(|m| m.lock().unwrap().0.clone()).collect::<Vec<T>>();
-            ArraySeqMtEphS::from_vec(result)
+            // Extract result: create array with just the value component using tabulate
+            <ArraySeqMtEphS<T> as ArraySeqMtEphTrait<T>>::tabulate(
+                &|i| aa[i].lock().unwrap().0.clone(),
+                n
+            )
         }
     }
 }

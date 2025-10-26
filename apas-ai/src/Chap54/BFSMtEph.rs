@@ -29,7 +29,7 @@ pub mod BFSMtEph {
             return ArraySeqMtEphS::tabulate(&|_| UNREACHABLE, n);
         }
 
-        let mut distances = ArraySeqMtEphS::tabulate(&|_| UNREACHABLE, n);
+        let distances = ArraySeqMtEphS::tabulate(&|_| UNREACHABLE, n);
         let _ = distances.set(source, 0);
 
         let mut current_layer = VecDeque::new();
