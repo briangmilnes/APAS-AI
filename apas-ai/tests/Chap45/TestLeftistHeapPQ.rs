@@ -395,3 +395,31 @@ fn test_display() {
     let display_str = format!("{heap}");
     assert!(display_str.contains("LeftistHeapPQ"));
 }
+
+#[test]
+fn test_efficient_multi_way_merge() {
+    let seq1 = vec![1, 4, 7];
+    let seq2 = vec![2, 5, 8];
+    let seq3 = vec![3, 6, 9];
+    
+    let result = efficient_multi_way_merge(vec![seq1, seq2, seq3]);
+    assert_eq!(result, vec![1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+    // Test with empty sequences
+    let result_empty = efficient_multi_way_merge::<i32>(vec![]);
+    assert_eq!(result_empty, vec![]);
+
+    // Test with single sequence
+    let result_single = efficient_multi_way_merge(vec![vec![5, 10, 15]]);
+    assert_eq!(result_single, vec![5, 10, 15]);
+}
+
+#[test]
+fn test_parallel_heap_construction() {
+    let elements = vec![5, 2, 8, 1, 9, 3, 7];
+    let heap = parallel_heap_construction(elements);
+    
+    assert_eq!(heap.size(), 7);
+    assert_eq!(heap.find_min(), Some(&1));
+    assert!(heap.is_valid_leftist_heap());
+}

@@ -378,6 +378,42 @@ fn test_large_document_collection() {
 }
 
 #[test]
+fn test_create_finder() {
+    let docs = create_test_documents();
+    let index = DocumentIndex::make_index(&docs);
+
+    // Create a finder function for this index
+    let find_fn = create_finder(&index);
+
+    // Use the finder to find documents
+    let programming_docs = find_fn(&"programming".to_string());
+    let programming_vec = doc_set_to_sorted_vec(&programming_docs);
+    assert_eq!(
+        programming_vec,
+        vec!["doc1".to_string(), "doc3".to_string(), "doc4".to_string()]
+    );
+
+    // Use it again for different queries
+    let peace_docs = find_fn(&"peace".to_string());
+    assert_eq!(DocumentIndex::size(&peace_docs), 2);
+
+    let nonexistent = find_fn(&"nonexistent".to_string());
+    assert_eq!(DocumentIndex::size(&nonexistent), 0);
+
+    // Demonstrates staged computation pattern
+    let words = vec!["hello", "world", "programming"];
+    let results: Vec<N> = words
+        .iter()
+        .map(|word| {
+            let docs = find_fn(&word.to_string());
+            DocumentIndex::size(&docs)
+        })
+        .collect();
+    
+    assert_eq!(results, vec![2, 3, 3]); // hello:2, world:3, programming:3
+}
+
+#[test]
 fn test_algorithmic_costs_verification() {
     // This test verifies that the operations complete in reasonable time
     // indicating correct algorithmic complexity

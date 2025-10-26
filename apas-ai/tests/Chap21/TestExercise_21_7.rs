@@ -22,3 +22,34 @@ fn test_pair_even_with_vowels_debug_shape() {
     let dbg_str = format!("{s:?}");
     assert!(!dbg_str.is_empty());
 }
+
+#[test]
+fn test_is_even() {
+    assert!(is_even(&0));
+    assert!(!is_even(&1));
+    assert!(is_even(&2));
+    assert!(!is_even(&3));
+    assert!(is_even(&4));
+    assert!(!is_even(&5));
+    assert!(is_even(&100));
+    assert!(!is_even(&99));
+}
+
+#[test]
+fn test_is_vowel() {
+    assert!(is_vowel(&'a'));
+    assert!(is_vowel(&'e'));
+    assert!(is_vowel(&'i'));
+    assert!(is_vowel(&'o'));
+    assert!(is_vowel(&'u'));
+    assert!(is_vowel(&'A'));
+    assert!(is_vowel(&'E'));
+    assert!(is_vowel(&'I'));
+    assert!(is_vowel(&'O'));
+    assert!(is_vowel(&'U'));
+    assert!(!is_vowel(&'b'));
+    assert!(!is_vowel(&'x'));
+    assert!(!is_vowel(&'z'));
+    assert!(!is_vowel(&'B'));
+    assert!(!is_vowel(&'X'));
+}

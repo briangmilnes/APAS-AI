@@ -364,3 +364,23 @@ fn test_string_ordering() {
     assert_eq!(set.next(&"alice".to_string()), Some("bob".to_string()));
     assert_eq!(set.previous(&"charlie".to_string()), Some("bob".to_string()));
 }
+
+#[test]
+fn test_from_sorted_elements() {
+    let set = from_sorted_elements(vec![1, 3, 5, 7, 9]);
+    assert_eq!(set.size(), 5);
+    assert!(set.find(&1));
+    assert!(set.find(&3));
+    assert!(set.find(&5));
+    assert!(set.find(&7));
+    assert!(set.find(&9));
+    assert_eq!(set.first(), Some(1));
+    assert_eq!(set.last(), Some(9));
+
+    let empty_set = from_sorted_elements::<i32>(vec![]);
+    assert_eq!(empty_set.size(), 0);
+
+    let single = from_sorted_elements(vec![42]);
+    assert_eq!(single.size(), 1);
+    assert!(single.find(&42));
+}
