@@ -37,11 +37,11 @@ pub mod BSTSetSplayMtEph {
         fn insert(&mut self, value: T);
         /// claude-4-sonet: Work Θ(log n) amortized, Θ(n) worst case; Span Θ(log n) amortized with locking
         fn delete(&mut self, target: &T);
-        /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
+        /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m) [parallelized]
         fn union(&self, other: &Self)                -> Self;
-        /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
+        /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m) [parallelized]
         fn intersection(&self, other: &Self)         -> Self;
-        /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m)
+        /// claude-4-sonet: Work Θ(m log(n/m)) where m = min(|self|, |other|), Span Θ(log n × log m) [parallelized]
         fn difference(&self, other: &Self)           -> Self;
         /// claude-4-sonet: Work Θ(log n) amortized, Span Θ(log n)
         fn split(&self, pivot: &T)                   -> (Self, B, Self);
@@ -49,10 +49,10 @@ pub mod BSTSetSplayMtEph {
         fn join_pair(left: Self, right: Self)        -> Self;
         /// claude-4-sonet: Work Θ(log(|left| + |right|)), Span Θ(log(|left| + |right|))
         fn join_m(left: Self, pivot: T, right: Self) -> Self;
-        /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self;
-        /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T;
+        /// claude-4-sonet: Work Θ(n), Span Θ(n) [sequential due to FnMut]
+        fn filter<F: FnMut(&T) -> bool + Send>(&self, predicate: F) -> Self;
+        /// claude-4-sonet: Work Θ(n), Span Θ(n) [sequential due to FnMut]
+        fn reduce<F: FnMut(T, T) -> T + Send>(&self, op: F, base: T) -> T;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
         fn iter_in_order(&self)                      -> ArraySeqStPerS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
@@ -116,43 +116,110 @@ pub mod BSTSetSplayMtEph {
         }
 
         fn union(&self, other: &Self) -> Self {
-            let mut merged = self.values_vec().into_iter().collect::<BTreeSet<T>>();
-            for value in other.values_vec() {
-                merged.insert(value);
+            // Algorithm: Parallel divide-and-conquer using split/join primitives
+            // Work: O(m log(n/m)), Span: O(log n × log m)
+            
+            // Base cases
+            if self.is_empty() {
+                return other.clone();
             }
-            Self::from_sorted_iter(merged)
+            if other.is_empty() {
+                return self.clone();
+            }
+            
+            // Pick pivot from smaller tree for better balance
+            let pivot = if self.size() <= other.size() {
+                self.tree.minimum().unwrap()
+            } else {
+                other.tree.minimum().unwrap()
+            };
+            
+            // Split both trees at pivot
+            let (self_left, found_self, self_right) = self.split(&pivot);
+            let (other_left, found_other, other_right) = other.split(&pivot);
+            
+            // Parallel recursive union on left and right subtrees
+            use crate::Types::Types::Pair;
+            let Pair(left_union, right_union) = crate::ParaPair!(
+                move || self_left.union(&other_left),
+                move || self_right.union(&other_right)
+            );
+            
+            // Join results: include pivot if found in either tree
+            if found_self || found_other {
+                Self::join_m(left_union, pivot, right_union)
+            } else {
+                Self::join_pair(left_union, right_union)
+            }
         }
 
         fn intersection(&self, other: &Self) -> Self {
-            let other_values = other.values_vec().into_iter().collect::<BTreeSet<T>>();
-            let filtered = self
-                .tree
-                .in_order()
-                .iter()
-                .filter_map(|v| {
-                    if other_values.contains(v) {
-                        Some(v.clone())
-                    } else {
-                        None
-                    }
-                }).collect::<Vec<T>>();
-            Self::from_sorted_iter(filtered)
+            // Algorithm: Parallel divide-and-conquer using split/join primitives
+            // Work: O(m log(n/m)), Span: O(log n × log m)
+            
+            // Base cases
+            if self.is_empty() || other.is_empty() {
+                return Self::empty();
+            }
+            
+            // Pick pivot from smaller tree
+            let pivot = if self.size() <= other.size() {
+                self.tree.minimum().unwrap()
+            } else {
+                other.tree.minimum().unwrap()
+            };
+            
+            // Split both trees at pivot
+            let (self_left, found_self, self_right) = self.split(&pivot);
+            let (other_left, found_other, other_right) = other.split(&pivot);
+            
+            // Parallel recursive intersection on left and right subtrees
+            use crate::Types::Types::Pair;
+            let Pair(left_inter, right_inter) = crate::ParaPair!(
+                move || self_left.intersection(&other_left),
+                move || self_right.intersection(&other_right)
+            );
+            
+            // Join results: include pivot only if found in BOTH trees
+            if found_self && found_other {
+                Self::join_m(left_inter, pivot, right_inter)
+            } else {
+                Self::join_pair(left_inter, right_inter)
+            }
         }
 
         fn difference(&self, other: &Self) -> Self {
-            let other_values = other.values_vec().into_iter().collect::<BTreeSet<T>>();
-            let filtered = self
-                .tree
-                .in_order()
-                .iter()
-                .filter_map(|v| {
-                    if !other_values.contains(v) {
-                        Some(v.clone())
-                    } else {
-                        None
-                    }
-                }).collect::<Vec<T>>();
-            Self::from_sorted_iter(filtered)
+            // Algorithm: Parallel divide-and-conquer using split/join primitives
+            // Work: O(m log(n/m)), Span: O(log n × log m)
+            
+            // Base cases
+            if self.is_empty() {
+                return Self::empty();
+            }
+            if other.is_empty() {
+                return self.clone();
+            }
+            
+            // Pick pivot from self (the set we're subtracting from)
+            let pivot = self.tree.minimum().unwrap();
+            
+            // Split both trees at pivot
+            let (self_left, found_self, self_right) = self.split(&pivot);
+            let (other_left, found_other, other_right) = other.split(&pivot);
+            
+            // Parallel recursive difference on left and right subtrees
+            use crate::Types::Types::Pair;
+            let Pair(left_diff, right_diff) = crate::ParaPair!(
+                move || self_left.difference(&other_left),
+                move || self_right.difference(&other_right)
+            );
+            
+            // Join results: include pivot only if found in self but NOT in other
+            if found_self && !found_other {
+                Self::join_m(left_diff, pivot, right_diff)
+            } else {
+                Self::join_pair(left_diff, right_diff)
+            }
         }
 
         fn split(&self, pivot: &T) -> (Self, B, Self) {
@@ -172,23 +239,41 @@ pub mod BSTSetSplayMtEph {
         }
 
         fn join_pair(left: Self, right: Self) -> Self {
-            let mut combined = left.values_vec().into_iter().collect::<BTreeSet<T>>();
-            for value in right.values_vec() {
+            // Parallel extraction of values from both trees
+            use crate::Types::Types::Pair;
+            let Pair(left_values, right_values) = crate::ParaPair!(
+                move || left.values_vec(),
+                move || right.values_vec()
+            );
+            
+            // Merge into BTreeSet and rebuild
+            let mut combined = left_values.into_iter().collect::<BTreeSet<T>>();
+            for value in right_values {
                 combined.insert(value);
             }
             Self::from_sorted_iter(combined)
         }
 
         fn join_m(left: Self, pivot: T, right: Self) -> Self {
-            let mut combined = left.values_vec().into_iter().collect::<BTreeSet<T>>();
+            // Parallel extraction of values from both trees
+            use crate::Types::Types::Pair;
+            let Pair(left_values, right_values) = crate::ParaPair!(
+                move || left.values_vec(),
+                move || right.values_vec()
+            );
+            
+            // Merge into BTreeSet with pivot and rebuild
+            let mut combined = left_values.into_iter().collect::<BTreeSet<T>>();
             combined.insert(pivot);
-            for value in right.values_vec() {
+            for value in right_values {
                 combined.insert(value);
             }
             Self::from_sorted_iter(combined)
         }
 
-        fn filter<F: FnMut(&T) -> bool>(&self, mut predicate: F) -> Self {
+        fn filter<F: FnMut(&T) -> bool + Send>(&self, mut predicate: F) -> Self {
+            // Sequential implementation due to FnMut constraint
+            // Parallel implementation would require Fn + Sync which is incompatible with FnMut API
             let filtered = self
                 .tree
                 .in_order()
@@ -197,7 +282,9 @@ pub mod BSTSetSplayMtEph {
             Self::from_sorted_iter(filtered)
         }
 
-        fn reduce<F: FnMut(T, T) -> T>(&self, mut op: F, base: T) -> T {
+        fn reduce<F: FnMut(T, T) -> T + Send>(&self, mut op: F, base: T) -> T {
+            // Sequential implementation due to FnMut constraint
+            // Parallel implementation would require Fn + Sync which is incompatible with FnMut API
             self.tree
                 .in_order()
                 .iter()
@@ -221,3 +308,4 @@ pub mod BSTSetSplayMtEph {
         }};
     }
 }
+

@@ -1,0 +1,50 @@
+AVLTreeSeqMtPer Parallelism Analysis
+====================================
+
+File: src/Chap37/AVLTreeSeqMtPer.rs
+
+Parallel Operations (now implemented):
+--------------------------------------
+
+1. build_balanced_from_slice<T>
+   - Uses ParaPair! macro for parallel recursive construction
+   - Left and right subtrees are built in parallel
+   - Work: O(n), Span: O(lg n)
+   
+2. subseq_copy(start, length)
+   - Uses std::thread::scope with one thread per element
+   - Each thread extracts its element independently
+   - Uses Arc<Mutex<Option<T>>> for safe concurrent writes to indexed positions
+   - Work: O(n), Span: O(lg n) where n = length
+   
+3. from_vec(values)
+   - Delegates to build_balanced_from_slice (which is now parallel)
+   - Constructs balanced AVL tree from vector in parallel
+   - Work: O(n), Span: O(lg n)
+
+Sequential Operations (remain sequential):
+-----------------------------------------
+
+1. inorder_collect(&node, &mut Vec<T>)
+   - Must visit nodes in order (left, root, right)
+   - Used by values_in_order() which returns ordered Vec
+   - Inherently sequential due to ordering requirement
+   - Could potentially be parallelized with parallel merge, but Vec output maintains order
+   
+2. length() / nth(i)
+   - Tree traversal operations
+   - Could be parallelized but overhead likely not worth it for single element access
+   
+3. set(index, value)
+   - Path copying for persistence
+   - Sequential tree path traversal
+   - Parallelizing would require significant restructuring
+
+Summary:
+--------
+The most expensive operations (tree construction and subsequence extraction) are now
+parallel. The remaining sequential operations are either inherently ordered (inorder_collect)
+or involve single-element operations where parallelism overhead would exceed benefits.
+
+Overall Assessment: AVLTreeSeqMtPer is now appropriately parallel for its key operations.
+

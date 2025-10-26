@@ -86,9 +86,17 @@ pub mod BSTBBAlphaMtEph {
             return None;
         }
         let mid = values.len() / 2;
+        
+        // Parallel construction of left and right subtrees
+        use crate::Types::Types::Pair;
+        let Pair(left, right) = crate::ParaPair!(
+            move || build_balanced(&values[..mid]),
+            move || build_balanced(&values[mid + 1..])
+        );
+        
         let mut node = Box::new(new_node(values[mid].clone()));
-        node.left = build_balanced(&values[..mid]);
-        node.right = build_balanced(&values[mid + 1..]);
+        node.left = left;
+        node.right = right;
         update(&mut node);
         Some(node)
     }

@@ -50,9 +50,9 @@ pub mod BSTSetPlainMtEph {
         /// claude-4-sonet: Work Θ(log(|left| + |right|)), Span Θ(log(|left| + |right|))
         fn join_m(left: Self, pivot: T, right: Self) -> Self;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn filter<F: FnMut(&T) -> bool>(&self, predicate: F) -> Self;
+        fn filter<F: FnMut(&T) -> bool + Send>(&self, predicate: F) -> Self;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
-        fn reduce<F: FnMut(T, T) -> T>(&self, op: F, base: T) -> T;
+        fn reduce<F: FnMut(T, T) -> T + Send>(&self, op: F, base: T) -> T;
         /// claude-4-sonet: Work Θ(n), Span Θ(n)
         fn iter_in_order(&self)                      -> ArraySeqStPerS<T>;
         /// claude-4-sonet: Work Θ(1), Span Θ(1)

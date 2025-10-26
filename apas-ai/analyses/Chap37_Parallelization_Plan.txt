@@ -1,0 +1,130 @@
+Chap37 Parallelization Plan
+===========================
+
+GOAL: Parallelize aggregate operations in all 5 BSTSet wrappers to achieve
+      claimed O(log n × log m) span instead of current O(n) span.
+
+STRATEGY: Reference Implementation → Test → Replicate
+---------------------------------------------------------
+
+Phase 1: Reference Implementation (BSTSetAVLMtEph)
+--------------------------------------------------
+Tasks 1-7: Parallelize all aggregate operations in BSTSetAVLMtEph.rs
+Task 8: Compile and test to ensure correctness
+
+Operations to Parallelize:
+1. union()        - Split/join with ParaPair! instead of values_vec() + BTreeSet
+2. intersection() - Split/join with ParaPair! for divide-and-conquer
+3. difference()   - Split/join with ParaPair! for divide-and-conquer
+4. filter()       - Split/filter/join with ParaPair! for divide-and-conquer
+5. reduce()       - Split/reduce/merge with ParaPair! for divide-and-conquer
+6. join_pair()    - ParaPair! to extract values_vec() from both trees in parallel
+7. join_m()       - Same as join_pair with pivot insertion
+
+Pattern for union/intersection/difference:
+```rust
+fn operation(&self, other: &Self) -> Self {
+    // Base cases
+    if self.is_empty() { return ...; }
+    if other.is_empty() { return ...; }
+    
+    // Pick pivot from smaller tree
+    let pivot = ...;
+    
+    // Split both trees at pivot
+    let (self_left, found_self, self_right) = self.split(&pivot);
+    let (other_left, found_other, other_right) = other.split(&pivot);
+    
+    // Parallel recursive calls
+    let Pair(left, right) = ParaPair!(
+        move || self_left.operation(&other_left),
+        move || self_right.operation(&other_right)
+    );
+    
+    // Join results with/without pivot
+    if <condition for pivot> {
+        Self::join_m(left, pivot, right)
+    } else {
+        Self::join_pair(left, right)
+    }
+}
+```
+
+Phase 2: Replicate to Other BSTSet Files
+-----------------------------------------
+Tasks 9-10: Apply to BSTSetRBMtEph, compile, test
+Tasks 11-12: Apply to BSTSetSplayMtEph, compile, test
+Tasks 13-14: Apply to BSTSetPlainMtEph, compile, test
+Tasks 15-16: Apply to BSTSetBBAlphaMtEph, compile, test
+
+Note: All 5 BSTSet files have nearly identical implementations. The only
+differences are the underlying tree type (BSTAVLMtEph vs BSTRBMtEph, etc.).
+This should be straightforward copy-paste with type substitution.
+
+Phase 3: Base BST Optimization (Optional)
+------------------------------------------
+Tasks 17-18: Parallelize build_balanced() in BSTBBAlphaMtEph.rs
+
+This is the only base BST operation worth parallelizing. It's used during
+rebalancing operations.
+
+Pattern:
+```rust
+fn build_balanced<T: StTInMtT + Ord>(values: &[T]) -> Link<T> {
+    if values.is_empty() {
+        return None;
+    }
+    let mid = values.len() / 2;
+    
+    // Parallel construction of left and right subtrees
+    let Pair(left, right) = crate::ParaPair!(
+        move || build_balanced(&values[..mid]),
+        move || build_balanced(&values[mid + 1..])
+    );
+    
+    let mut node = Box::new(new_node(values[mid].clone()));
+    node.left = left;
+    node.right = right;
+    update(&mut node);
+    Some(node)
+}
+```
+
+Phase 4: Final Validation
+--------------------------
+Task 19: Run full test suite (cargo nextest run -j 10)
+Task 20: Commit with detailed message
+
+EXPECTED OUTCOMES:
+-----------------
+- All aggregate operations achieve O(log n × log m) span (was O(n))
+- No changes to API or test interfaces
+- All existing tests continue to pass
+- Improved performance on multi-core systems for large sets
+
+RISKS & NOTES:
+--------------
+1. The underlying split() operation in BSTSet is still sequential (extracts to Vec).
+   However, once split is done, the recursive calls are parallel.
+
+2. These implementations will still be less efficient than BSTParaTreapMtEph
+   because AVL/RB/etc. trees lack O(log n) split primitives. But they'll be
+   significantly better than the current sequential implementations.
+
+3. Filter and reduce predicates must be Fn (not FnMut) to be shared across threads.
+   This is a trait bound change but shouldn't break existing code.
+
+4. The split() operation could potentially be parallelized using rayon parallel
+   iteration, but that's a lower priority given the complexity of modifying the
+   base BST structures.
+
+ESTIMATED SCOPE:
+----------------
+- 5 BSTSet files × 7 operations = 35 function rewrites
+- But since 4 files are copies of the reference: ~11 unique implementations
+- Plus 1 base BST optimization = 12 total implementations
+- Each file gets compile + test after changes
+- Total: ~20 TODO items (as created)
+
+This is substantial but very mechanical after the reference implementation.
+
