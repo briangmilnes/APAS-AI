@@ -10,7 +10,7 @@ use apas_ai::*;
 
 fn gen_data(n: usize) -> apas_ai::Chap19::ArraySeqMtEph::ArraySeqMtEph::ArraySeqMtEphS<i32> {
     let mut seed = 0x1234_5678_9ABC_DEF0u64;
-    let mut arr = ArraySeqMtEphSLit![0; n]; // *Eph struct: constructor + set pattern
+    let arr = ArraySeqMtEphSLit![0; n]; // *Eph struct: constructor + set pattern
     for i in 0..n {
         seed = seed.wrapping_mul(6364136223846793005).wrapping_add(1);
         let _ = arr.set(i, (seed >> 32) as i32);
