@@ -47,14 +47,15 @@ pub mod AdjSeqGraphMtPer {
 
         fn num_vertices(&self) -> N { self.adj.length() }
 
-        // Work: Θ(n), Span: Θ(n) - sum all neighbor list lengths
+        // Parallel: map to extract lengths, then reduce to sum
+        // Work: Θ(n + |E|), Span: Θ(log n) via parallel map + reduce
         fn num_edges(&self) -> N {
-            let n = self.adj.length();
-            let mut count = 0;
-            for i in 0..n {
-                count += self.adj.nth(i).length();
-            }
-            count
+            use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
+            // Parallel map over adjacency lists to get their lengths
+            let lengths = ArraySeqMtPerS::map(&self.adj, |neighbors: &ArraySeqMtPerS<N>| neighbors.length());
+            // Parallel reduce to sum all lengths
+            let sum_fn = |acc: &N, len: &N| *acc + *len;
+            ArraySeqMtPerS::iterate(&lengths, &sum_fn, 0)
         }
 
         fn has_edge(&self, u: N, v: N) -> B {
@@ -74,25 +75,22 @@ pub mod AdjSeqGraphMtPer {
 
         fn out_degree(&self, u: N) -> N { self.adj.nth(u).length() }
 
-        // Work: Θ(n+m), Span: Θ(n) - map over all vertices
+        // Parallel: nested maps - outer over vertices, inner over edges
+        // Work: Θ(n + |E|), Span: Θ(log n) via parallel map over vertices, then parallel map over edges
         fn map_vertices<F: Fn(N) -> N + Send + Sync + Clone + 'static>(&self, f: F) -> Self
         where
             N: 'static,
         {
-            let n = self.adj.length();
-            let mut new_rows = Vec::with_capacity(n);
-            for i in 0..n {
-                let row = self.adj.nth(i);
-                let m = row.length();
-                let mut new_row = Vec::with_capacity(m);
-                for j in 0..m {
-                    new_row.push(f(*row.nth(j)));
-                }
-                new_rows.push(ArraySeqMtPerS::from_vec(new_row));
-            }
-            AdjSeqGraphMtPer {
-                adj: ArraySeqMtPerS::from_vec(new_rows),
-            }
+            use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
+            // Parallel map over vertices (outer)
+            let new_adj = ArraySeqMtPerS::map(&self.adj, move |neighbors: &ArraySeqMtPerS<N>| {
+                // Parallel map over edges of each vertex (inner)
+                ArraySeqMtPerS::map(neighbors, {
+                    let f_clone = f.clone();
+                    move |v: &N| f_clone(*v)
+                })
+            });
+            AdjSeqGraphMtPer { adj: new_adj }
         }
     }
 }

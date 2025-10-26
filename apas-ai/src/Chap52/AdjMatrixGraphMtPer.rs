@@ -50,16 +50,12 @@ pub mod AdjMatrixGraphMtPer {
         fn num_vertices(&self) -> N { self.n }
 
         fn num_edges(&self) -> N {
-            let mut count = 0;
-            for i in 0..self.n {
-                let row = self.matrix.nth(i);
-                for j in 0..self.n {
-                    if *row.nth(j) {
-                        count += 1;
-                    }
-                }
-            }
-            count
+            use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
+            // Parallel: flatten all rows into single sequence, then count true values
+            // Work: Θ(n²), Span: Θ(log n) via parallel reduce
+            let all_cells = ArraySeqMtPerBaseTrait::flatten(&self.matrix);
+            let count_fn = |acc: &N, cell: &bool| if *cell { *acc + 1 } else { *acc };
+            ArraySeqMtPerS::iterate(&all_cells, &count_fn, 0)
         }
 
         fn has_edge(&self, u: N, v: N) -> B {
@@ -70,54 +66,55 @@ pub mod AdjMatrixGraphMtPer {
         }
 
         fn out_neighbors(&self, u: N) -> ArraySeqMtPerS<N> {
+            use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
             if u >= self.n {
                 return ArraySeqMtPerS::empty();
             }
-            let row = self.matrix.nth(u);
-            let mut neighbors = Vec::new();
-            for v in 0..self.n {
-                if *row.nth(v) {
-                    neighbors.push(v);
-                }
-            }
-            ArraySeqMtPerS::from_vec(neighbors)
+            // Parallel: tabulate all possible neighbors, then filter to keep edges
+            // Work: Θ(n), Span: Θ(log n) via parallel filter
+            let row = self.matrix.nth(u).clone();
+            let all_vertices = ArraySeqMtPerS::tabulate(&|v| v, self.n);
+            let pred = move |v: &N| -> B { *row.nth(*v) };
+            ArraySeqMtPerS::filter(&all_vertices, &pred)
         }
 
         fn out_degree(&self, u: N) -> N {
+            use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
             if u >= self.n {
                 return 0;
             }
+            // Parallel: reduce over row to count true values
+            // Work: Θ(n), Span: Θ(log n) via parallel reduce
             let row = self.matrix.nth(u);
-            let mut count = 0;
-            for v in 0..self.n {
-                if *row.nth(v) {
-                    count += 1;
-                }
-            }
-            count
+            let count_fn = |acc: &N, cell: &bool| if *cell { *acc + 1 } else { *acc };
+            ArraySeqMtPerS::iterate(&row, &count_fn, 0)
         }
 
-        // Work: Θ(n²), Span: Θ(n²) sequential - Exercise 52.6
+        // Exercise 52.6: Parallel complement with Θ(log n) span via nested parallel tabulate
+        // Work: Θ(n²), Span: Θ(log n) 
         fn complement(&self) -> Self
         where
             bool: 'static,
         {
+            use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
             let n = self.n;
-            let mut new_matrix_vec = Vec::with_capacity(n);
-            for i in 0..n {
-                let row = self.matrix.nth(i);
-                let mut new_row_vec = Vec::with_capacity(n);
-                for j in 0..n {
+            let original_matrix = self.matrix.clone();
+            
+            // Parallel tabulate over rows (i = 0..n)
+            let new_matrix = ArraySeqMtPerS::tabulate(&|i| {
+                let row = original_matrix.nth(i);
+                // Parallel tabulate over columns (j = 0..n)
+                ArraySeqMtPerS::tabulate(&|j| {
                     if i == j {
-                        new_row_vec.push(false);
+                        false  // No self-loops
                     } else {
-                        new_row_vec.push(!*row.nth(j));
+                        !*row.nth(j)  // Complement the edge
                     }
-                }
-                new_matrix_vec.push(ArraySeqMtPerS::from_vec(new_row_vec));
-            }
+                }, n)
+            }, n);
+            
             AdjMatrixGraphMtPer {
-                matrix: ArraySeqMtPerS::from_vec(new_matrix_vec),
+                matrix: new_matrix,
                 n: self.n,
             }
         }
