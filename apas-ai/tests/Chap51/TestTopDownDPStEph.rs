@@ -57,6 +57,48 @@ fn test_get_memoized() {
 }
 
 #[test]
+fn test_insert_memo() {
+    let s = ArraySeqStEphS::tabulate(&|i| ['a', 'b'][i], 2);
+    let t = ArraySeqStEphS::tabulate(&|i| ['x', 'y'][i], 2);
+    let mut dp = TopDownDPStEphS::new(s, t);
+    
+    // Initially not memoized
+    assert!(!dp.is_memoized(1, 1));
+    assert_eq!(dp.get_memoized(1, 1), None);
+    assert_eq!(dp.memo_size(), 0);
+    
+    // Insert memo value
+    dp.insert_memo(1, 1, 42);
+    
+    // Now should be memoized
+    assert!(dp.is_memoized(1, 1));
+    assert_eq!(dp.get_memoized(1, 1), Some(42));
+    assert_eq!(dp.memo_size(), 1);
+    
+    // Insert another
+    dp.insert_memo(0, 1, 7);
+    assert!(dp.is_memoized(0, 1));
+    assert_eq!(dp.get_memoized(0, 1), Some(7));
+    assert_eq!(dp.memo_size(), 2);
+}
+
+#[test]
+fn test_insert_memo_overwrite() {
+    let s = ArraySeqStEphS::tabulate(&|_| 'a', 1);
+    let t = ArraySeqStEphS::tabulate(&|_| 'x', 1);
+    let mut dp = TopDownDPStEphS::new(s, t);
+    
+    // Insert initial value
+    dp.insert_memo(0, 0, 10);
+    assert_eq!(dp.get_memoized(0, 0), Some(10));
+    
+    // Overwrite with new value
+    dp.insert_memo(0, 0, 20);
+    assert_eq!(dp.get_memoized(0, 0), Some(20));
+    assert_eq!(dp.memo_size(), 1); // Still only one entry
+}
+
+#[test]
 fn test_s_length() {
     let s = ArraySeqStEphS::tabulate(&|i| ['a', 'b', 'c'][i], 3);
     let t = ArraySeqStEphS::new(0, ' ');

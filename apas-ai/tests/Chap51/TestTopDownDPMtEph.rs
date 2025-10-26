@@ -58,6 +58,48 @@ fn test_get_memoized() {
 }
 
 #[test]
+fn test_insert_memo() {
+    let s = ArraySeqMtEphS::from_vec(vec!['a', 'b']);
+    let t = ArraySeqMtEphS::from_vec(vec!['x', 'y']);
+    let mut dp = TopDownDPMtEphS::new(s, t);
+    
+    // Initially not memoized
+    assert!(!dp.is_memoized(1, 1));
+    assert_eq!(dp.get_memoized(1, 1), None);
+    assert_eq!(dp.memo_size(), 0);
+    
+    // Insert memo value
+    dp.insert_memo(1, 1, 42);
+    
+    // Now should be memoized
+    assert!(dp.is_memoized(1, 1));
+    assert_eq!(dp.get_memoized(1, 1), Some(42));
+    assert_eq!(dp.memo_size(), 1);
+    
+    // Insert another
+    dp.insert_memo(0, 1, 7);
+    assert!(dp.is_memoized(0, 1));
+    assert_eq!(dp.get_memoized(0, 1), Some(7));
+    assert_eq!(dp.memo_size(), 2);
+}
+
+#[test]
+fn test_insert_memo_overwrite() {
+    let s = ArraySeqMtEphS::from_vec(vec!['a']);
+    let t = ArraySeqMtEphS::from_vec(vec!['x']);
+    let mut dp = TopDownDPMtEphS::new(s, t);
+    
+    // Insert initial value
+    dp.insert_memo(0, 0, 10);
+    assert_eq!(dp.get_memoized(0, 0), Some(10));
+    
+    // Overwrite with new value
+    dp.insert_memo(0, 0, 20);
+    assert_eq!(dp.get_memoized(0, 0), Some(20));
+    assert_eq!(dp.memo_size(), 1); // Still only one entry
+}
+
+#[test]
 fn test_s_length() {
     let s = ArraySeqMtEphS::from_vec(vec!['a', 'b', 'c']);
     let t = ArraySeqMtEphS::new(0, ' ');
