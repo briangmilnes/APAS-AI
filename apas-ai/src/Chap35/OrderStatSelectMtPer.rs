@@ -30,49 +30,49 @@ pub mod OrderStatSelectMtPer {
             let pivot_idx = rand::rng().random_range(0..n);
             let pivot = self.nth(pivot_idx).clone();
 
-            // Parallel partition using rayon
-            use rayon::prelude::*;
+            // Parallel partition using thread spawning (no rayon)
+            use std::sync::{Arc, Mutex};
             
-            let pivot_left = pivot.clone();
-            let pivot_right = pivot.clone();
+            let pivot_left = Arc::new(pivot.clone());
+            let pivot_right = Arc::new(pivot.clone());
             
-            // Parallel filter for left partition (elements < pivot)
-            let left_vec: Vec<T> = (0..n)
-                .into_par_iter()
-                .filter_map(|i| {
-                    let elem = self.nth(i);
-                    if elem < &pivot_left {
-                        Some(elem.clone())
-                    } else {
-                        None
-                    }
-                })
-                .collect();
+            let left_vec = Arc::new(Mutex::new(Vec::new()));
+            let right_vec = Arc::new(Mutex::new(Vec::new()));
             
-            // Parallel filter for right partition (elements > pivot)
-            let right_vec: Vec<T> = (0..n)
-                .into_par_iter()
-                .filter_map(|i| {
-                    let elem = self.nth(i);
-                    if elem > &pivot_right {
-                        Some(elem.clone())
-                    } else {
-                        None
-                    }
-                })
-                .collect();
+            // Spawn threads to partition in parallel
+            std::thread::scope(|s| {
+                for i in 0..n {
+                    let self_ref = self;
+                    let pivot_left_ref = Arc::clone(&pivot_left);
+                    let pivot_right_ref = Arc::clone(&pivot_right);
+                    let left_vec_ref = Arc::clone(&left_vec);
+                    let right_vec_ref = Arc::clone(&right_vec);
+                    
+                    s.spawn(move || {
+                        let elem = self_ref.nth(i);
+                        if elem < pivot_left_ref.as_ref() {
+                            left_vec_ref.lock().unwrap().push(elem.clone());
+                        } else if elem > pivot_right_ref.as_ref() {
+                            right_vec_ref.lock().unwrap().push(elem.clone());
+                        }
+                    });
+                }
+            });
 
-            let left_count = left_vec.len();
-            let right_count = right_vec.len();
+            let left_elements = Arc::try_unwrap(left_vec).unwrap().into_inner().unwrap();
+            let right_elements = Arc::try_unwrap(right_vec).unwrap().into_inner().unwrap();
+            
+            let left_count = left_elements.len();
+            let right_count = right_elements.len();
 
             // Recursive selection based on partition sizes
             if k < left_count {
-                let left = ArraySeqMtPerS::from_vec(left_vec);
+                let left = ArraySeqMtPerS::from_vec(left_elements);
                 left.select(k)
             } else if k < n - right_count {
                 Some(pivot)
             } else {
-                let right = ArraySeqMtPerS::from_vec(right_vec);
+                let right = ArraySeqMtPerS::from_vec(right_elements);
                 right.select(k - (n - right_count))
             }
         }
