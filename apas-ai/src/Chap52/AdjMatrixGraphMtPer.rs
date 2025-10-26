@@ -5,6 +5,7 @@
 pub mod AdjMatrixGraphMtPer {
 
     use std::sync::Arc;
+    use std::thread;
 
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
     use crate::Types::Types::*;
@@ -50,12 +51,9 @@ pub mod AdjMatrixGraphMtPer {
         fn num_vertices(&self) -> N { self.n }
 
         fn num_edges(&self) -> N {
-            use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
-            // Parallel: flatten all rows into single sequence, then count true values
-            // Work: Θ(n²), Span: Θ(log n) via parallel reduce
-            let all_cells = ArraySeqMtPerBaseTrait::flatten(&self.matrix);
-            let count_fn = |acc: &N, cell: &bool| if *cell { *acc + 1 } else { *acc };
-            ArraySeqMtPerS::iterate(&all_cells, &count_fn, 0)
+            // Parallel: divide-and-conquer over rows
+            // Work: Θ(n²), Span: Θ(log n)
+            count_edges_parallel(&self.matrix)
         }
 
         fn has_edge(&self, u: N, v: N) -> B {
@@ -66,57 +64,196 @@ pub mod AdjMatrixGraphMtPer {
         }
 
         fn out_neighbors(&self, u: N) -> ArraySeqMtPerS<N> {
-            use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
             if u >= self.n {
                 return ArraySeqMtPerS::empty();
             }
-            // Parallel: tabulate all possible neighbors, then filter to keep edges
-            // Work: Θ(n), Span: Θ(log n) via parallel filter
-            let row = self.matrix.nth(u).clone();
-            let all_vertices = ArraySeqMtPerS::tabulate(&|v| v, self.n);
-            let pred = move |v: &N| -> B { *row.nth(*v) };
-            ArraySeqMtPerS::filter(&all_vertices, &pred)
+            // Parallel: divide-and-conquer over columns
+            // Work: Θ(n), Span: Θ(log n)
+            let row = self.matrix.nth(u);
+            collect_neighbors_parallel(row, 0, self.n)
         }
 
         fn out_degree(&self, u: N) -> N {
-            use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
             if u >= self.n {
                 return 0;
             }
-            // Parallel: reduce over row to count true values
-            // Work: Θ(n), Span: Θ(log n) via parallel reduce
+            // Parallel: divide-and-conquer over row
+            // Work: Θ(n), Span: Θ(log n)
             let row = self.matrix.nth(u);
-            let count_fn = |acc: &N, cell: &bool| if *cell { *acc + 1 } else { *acc };
-            ArraySeqMtPerS::iterate(&row, &count_fn, 0)
+            count_row_parallel(row)
         }
 
-        // Exercise 52.6: Parallel complement with Θ(log n) span via nested parallel tabulate
+        // Exercise 52.6: Parallel complement with Θ(log n) span
         // Work: Θ(n²), Span: Θ(log n) 
         fn complement(&self) -> Self
         where
             bool: 'static,
         {
-            use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;
             let n = self.n;
-            let original_matrix = self.matrix.clone();
-            
-            // Parallel tabulate over rows (i = 0..n)
-            let new_matrix = ArraySeqMtPerS::tabulate(&|i| {
-                let row = original_matrix.nth(i);
-                // Parallel tabulate over columns (j = 0..n)
-                ArraySeqMtPerS::tabulate(&|j| {
-                    if i == j {
-                        false  // No self-loops
-                    } else {
-                        !*row.nth(j)  // Complement the edge
-                    }
-                }, n)
-            }, n);
-            
+            let new_matrix = complement_matrix_parallel(&self.matrix, n);
             AdjMatrixGraphMtPer {
                 matrix: new_matrix,
                 n: self.n,
             }
         }
+    }
+
+    // ============================================================================
+    // Parallel Helper Functions (using thread::spawn/join, no generic closures)
+    // ============================================================================
+
+    /// Count total edges in matrix (parallel divide-and-conquer over rows)
+    /// Work: Θ(n²), Span: Θ(log n)
+    fn count_edges_parallel(matrix: &ArraySeqMtPerS<ArraySeqMtPerS<bool>>) -> N {
+        let n = matrix.length();
+        if n == 0 {
+            return 0;
+        }
+        if n == 1 {
+            // Base case: count true values in single row
+            return count_row_parallel(matrix.nth(0));
+        }
+
+        // Divide-and-conquer: split rows in half
+        let mid = n / 2;
+        let left_matrix = matrix.subseq_copy(0, mid);
+        let right_matrix = matrix.subseq_copy(mid, n - mid);
+
+        let left_handle = thread::spawn(move || count_edges_parallel(&left_matrix));
+        let right_count = count_edges_parallel(&right_matrix);
+        let left_count = left_handle.join().unwrap();
+
+        left_count + right_count
+    }
+
+    /// Count true values in a single row (parallel divide-and-conquer)
+    /// Work: Θ(n), Span: Θ(log n)
+    fn count_row_parallel(row: &ArraySeqMtPerS<bool>) -> N {
+        let n = row.length();
+        if n == 0 {
+            return 0;
+        }
+        if n == 1 {
+            return if *row.nth(0) { 1 } else { 0 };
+        }
+
+        // Divide columns in half
+        let mid = n / 2;
+        let left_row = row.subseq_copy(0, mid);
+        let right_row = row.subseq_copy(mid, n - mid);
+
+        let left_handle = thread::spawn(move || count_row_parallel(&left_row));
+        let right_count = count_row_parallel(&right_row);
+        let left_count = left_handle.join().unwrap();
+
+        left_count + right_count
+    }
+
+    /// Collect neighbor indices where row[i] == true (parallel)
+    /// Work: Θ(n), Span: Θ(log n)
+    fn collect_neighbors_parallel(
+        row: &ArraySeqMtPerS<bool>,
+        start: N,
+        end: N,
+    ) -> ArraySeqMtPerS<N> {
+        if start >= end {
+            return ArraySeqMtPerS::empty();
+        }
+        if end - start == 1 {
+            // Base case: single column
+            return if *row.nth(start) {
+                ArraySeqMtPerS::from_vec(vec![start])
+            } else {
+                ArraySeqMtPerS::empty()
+            };
+        }
+
+        // Divide columns in half
+        let mid = (start + end) / 2;
+        let row_clone = row.clone();
+
+        let left_handle =
+            thread::spawn(move || collect_neighbors_parallel(&row_clone, start, mid));
+        let right_result = collect_neighbors_parallel(row, mid, end);
+        let left_result = left_handle.join().unwrap();
+
+        ArraySeqMtPerS::append(&left_result, &right_result)
+    }
+
+    /// Complement entire matrix (parallel over rows and columns)
+    /// Work: Θ(n²), Span: Θ(log n)
+    fn complement_matrix_parallel(
+        matrix: &ArraySeqMtPerS<ArraySeqMtPerS<bool>>,
+        n: N,
+    ) -> ArraySeqMtPerS<ArraySeqMtPerS<bool>> {
+        complement_rows_parallel(matrix, 0, n, n)
+    }
+
+    /// Complement a range of rows (parallel divide-and-conquer)
+    fn complement_rows_parallel(
+        matrix: &ArraySeqMtPerS<ArraySeqMtPerS<bool>>,
+        start_row: N,
+        end_row: N,
+        n: N,
+    ) -> ArraySeqMtPerS<ArraySeqMtPerS<bool>> {
+        if start_row >= end_row {
+            return ArraySeqMtPerS::empty();
+        }
+        if end_row - start_row == 1 {
+            // Base case: complement single row
+            let i = start_row;
+            let row = matrix.nth(i);
+            let comp_row = complement_row_parallel(row, i, n);
+            return ArraySeqMtPerS::from_vec(vec![comp_row]);
+        }
+
+        // Divide rows in half
+        let mid = (start_row + end_row) / 2;
+        let matrix_clone = matrix.clone();
+
+        let left_handle =
+            thread::spawn(move || complement_rows_parallel(&matrix_clone, start_row, mid, n));
+        let right_result = complement_rows_parallel(matrix, mid, end_row, n);
+        let left_result = left_handle.join().unwrap();
+
+        ArraySeqMtPerS::append(&left_result, &right_result)
+    }
+
+    /// Complement a single row (parallel over columns)
+    fn complement_row_parallel(row: &ArraySeqMtPerS<bool>, row_idx: N, n: N) -> ArraySeqMtPerS<bool> {
+        complement_columns_parallel(row, row_idx, 0, n)
+    }
+
+    /// Complement a range of columns in a row (parallel divide-and-conquer)
+    fn complement_columns_parallel(
+        row: &ArraySeqMtPerS<bool>,
+        row_idx: N,
+        start: N,
+        end: N,
+    ) -> ArraySeqMtPerS<bool> {
+        if start >= end {
+            return ArraySeqMtPerS::empty();
+        }
+        if end - start == 1 {
+            // Base case: single column
+            let j = start;
+            let val = if row_idx == j {
+                false // No self-loops
+            } else {
+                !*row.nth(j) // Complement the edge
+            };
+            return ArraySeqMtPerS::from_vec(vec![val]);
+        }
+
+        // Divide columns in half
+        let mid = (start + end) / 2;
+        let row_clone = row.clone();
+
+        let left_handle =
+            thread::spawn(move || complement_columns_parallel(&row_clone, row_idx, start, mid));
+        let right_result = complement_columns_parallel(row, row_idx, mid, end);
+        let left_result = left_handle.join().unwrap();
+
+        ArraySeqMtPerS::append(&left_result, &right_result)
     }
 }
