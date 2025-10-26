@@ -5,12 +5,8 @@ pub mod SetStEph {
 
     use std::collections::HashSet;
     use std::collections::hash_set::Iter;
-    use std::fmt::Formatter;
-    use std::fmt::Result;
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::hash::Hash;
-    use std::hash::Hasher;
+    use std::fmt::{Formatter, Result, Debug, Display};
+    use std::hash::{Hash, Hasher};
 
     use crate::Types::Types::*;
 

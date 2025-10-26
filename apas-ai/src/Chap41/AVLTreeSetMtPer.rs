@@ -8,11 +8,8 @@
 
 pub mod AVLTreeSetMtPer {
 
-    use std::cmp::Ordering::Equal;
-    use std::cmp::Ordering::Greater;
-    use std::cmp::Ordering::Less;
-    use std::fmt;
-    use std::thread;
+    use std::cmp::Ordering::{Equal, Greater, Less};
+    use std::{fmt, thread};
 
     use crate::Chap37::AVLTreeSeqMtPer::AVLTreeSeqMtPer::*;
     use crate::ParaPair;

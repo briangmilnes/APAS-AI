@@ -1,8 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for AVLTreeSeq Eph (Chap18-style operations built using base APIs).
 
-use apas_ai::AVLTreeSeqStEphLit;
-use apas_ai::ArraySeqStEphSLit;
+use apas_ai::{AVLTreeSeqStEphLit, ArraySeqStEphSLit};
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::*;
 use apas_ai::Chap37::*;

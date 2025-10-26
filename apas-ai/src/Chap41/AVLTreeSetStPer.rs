@@ -3,8 +3,7 @@
 
 pub mod AVLTreeSetStPer {
 
-    use std::fmt::Display;
-    use std::fmt::Formatter;
+    use std::fmt::{Display, Formatter};
 
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Types::Types::*;

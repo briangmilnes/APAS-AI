@@ -11,9 +11,7 @@ pub mod DijkstraStEphInt {
 
     use std::cmp::Ordering;
     use std::collections::HashMap;
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
+    use std::fmt::{Debug, Display, Formatter};
     use std::fmt::Result as FmtResult;
 
     use crate::Chap05::SetStEph::SetStEph::*;

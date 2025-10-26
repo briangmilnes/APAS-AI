@@ -6,15 +6,11 @@
 
 pub mod LabDirGraphMtEph {
 
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
-    use std::fmt::Result;
+    use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
     use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::ParaPair;
-    use crate::SetLit;
+    use crate::{ParaPair, SetLit};
     use crate::Types::Types::*;
 
     #[derive(Clone)]

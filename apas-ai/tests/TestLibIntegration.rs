@@ -24,8 +24,7 @@ fn test_module_accessibility() {
 fn test_macro_accessibility() {
     // Test that macros are accessible through the crate
     use apas_ai::ArraySeqStPerSLit;
-    use apas_ai::PairLit;
-    use apas_ai::SetLit;
+    use apas_ai::{PairLit, SetLit};
 
     let _set = SetLit![1, 2, 3];
     let _pair = PairLit!(1, "test");
@@ -36,18 +35,7 @@ fn test_macro_accessibility() {
 fn test_all_chapters_compile() {
     // Verify all chapter modules can be imported without compilation errors
     use apas_ai::Chap03;
-    use apas_ai::Chap05;
-    use apas_ai::Chap06;
-    use apas_ai::Chap11;
-    use apas_ai::Chap12;
-    use apas_ai::Chap17;
-    use apas_ai::Chap18;
-    use apas_ai::Chap19;
-    use apas_ai::Chap23;
-    use apas_ai::Chap36;
-    use apas_ai::Chap37;
-    use apas_ai::Chap38;
-    use apas_ai::Chap39;
+    use apas_ai::{Chap05, Chap06, Chap11, Chap12, Chap17, Chap18, Chap19, Chap23, Chap36, Chap37, Chap38, Chap39};
 
     // If this compiles, the module structure is correct
     #[allow(clippy::assertions_on_constants)]

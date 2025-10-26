@@ -14,8 +14,7 @@ pub mod VertexMatchingMtEph {
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::ParaPair;
-    use crate::SetLit;
+    use crate::{ParaPair, SetLit};
     use crate::Types::Types::*;
 
     pub trait VertexMatchingMtEphTrait {
@@ -49,10 +48,8 @@ pub mod VertexMatchingMtEph {
         seed: u64,
     ) -> SetStEph<Edge<V>> {
         use rand::rngs::StdRng;
-        use rand::Rng;
-        use rand::SeedableRng;
-        use std::sync::Arc;
-        use std::sync::Mutex;
+        use rand::{Rng, SeedableRng};
+        use std::sync::{Arc, Mutex};
 
         let mut rng = StdRng::seed_from_u64(seed);
 

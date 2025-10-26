@@ -3,10 +3,7 @@
 
 pub mod BalancedTreePQ {
 
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
-    use std::fmt::Result;
+    use std::fmt::{Debug, Display, Formatter, Result};
 
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Types::Types::*;

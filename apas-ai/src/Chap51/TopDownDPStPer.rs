@@ -7,9 +7,7 @@
 pub mod TopDownDPStPer {
 
     use std::collections::HashMap;
-    use std::fmt::Formatter;
-    use std::fmt::Debug;
-    use std::fmt::Display;
+    use std::fmt::{Formatter, Debug, Display};
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;

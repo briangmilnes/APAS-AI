@@ -8,14 +8,10 @@
 pub mod MathSeq {
 
     use std::collections::hash_map::Entry;
-    use std::collections::HashMap;
-    use std::collections::HashSet;
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
+    use std::collections::{HashMap, HashSet};
+    use std::fmt::{Debug, Display, Formatter};
     use std::hash::Hash;
-    use std::slice::Iter;
-    use std::slice::IterMut;
+    use std::slice::{Iter, IterMut};
     use std::vec::IntoIter;
 
     use crate::Types::Types::*;

@@ -4,10 +4,7 @@
 pub mod SubsetSumStPer {
 
     use std::collections::HashMap;
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
-    use std::fmt::Result;
+    use std::fmt::{Debug, Display, Formatter, Result};
 
     use crate::ArraySeqStPerSLit;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;

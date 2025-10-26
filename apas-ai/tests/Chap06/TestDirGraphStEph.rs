@@ -2,8 +2,7 @@
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::DirGraphStEph::DirGraphStEph::*;
-use apas_ai::DirGraphStEphLit;
-use apas_ai::SetLit;
+use apas_ai::{DirGraphStEphLit, SetLit};
 use apas_ai::Types::Types::*;
 
 #[test]

@@ -424,8 +424,7 @@ fn mt_all_variants_duplicate_handling() {
 // Parallel operation verification tests for BST*MtEph variants
 #[test]
 fn mt_concurrent_plain_bst_operations() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let bst = Arc::new(BSTree::<i32>::new());
@@ -489,8 +488,7 @@ fn mt_concurrent_plain_bst_operations() {
 
 #[test]
 fn mt_concurrent_avl_bst_operations() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let bst = Arc::new(BSTreeAVL::<i32>::new());
@@ -536,8 +534,7 @@ fn mt_concurrent_avl_bst_operations() {
 
 #[test]
 fn mt_concurrent_rb_bst_stress() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let bst = Arc::new(BSTreeRB::<i32>::new());
@@ -579,8 +576,7 @@ fn mt_concurrent_rb_bst_stress() {
 
 #[test]
 fn mt_concurrent_bbalpha_operations() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let bst = Arc::new(BSTreeBBAlpha::<i32>::new());
@@ -633,8 +629,7 @@ fn mt_concurrent_bbalpha_operations() {
 
 #[test]
 fn mt_concurrent_treap_operations() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let bst = Arc::new(BSTreeTreap::<i32>::new());
@@ -675,8 +670,7 @@ fn mt_concurrent_treap_operations() {
 
 #[test]
 fn mt_concurrent_splay_access_patterns() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let bst = Arc::new(BSTreeSplay::<i32>::new());
@@ -727,8 +721,7 @@ fn mt_concurrent_splay_access_patterns() {
 
 #[test]
 fn mt_all_variants_concurrent_stress() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     macro_rules! test_concurrent_variant {

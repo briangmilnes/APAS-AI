@@ -2,8 +2,7 @@
 
 use apas_ai::Chap05::RelationStEph::RelationStEph::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
-use apas_ai::RelationLit;
-use apas_ai::SetLit;
+use apas_ai::{RelationLit, SetLit};
 use apas_ai::Types::Types::*; // macro import
 use apas_ai::*;
 

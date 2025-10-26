@@ -101,8 +101,7 @@ fn quick_sort_mt_small_inputs_use_shared_pivots() {
 
 #[test]
 fn quick_sort_mt_concurrent_execution_verification() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     // Test concurrent execution of QuickSort Mt variants

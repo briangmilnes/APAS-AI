@@ -1,14 +1,12 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-use std::sync::Arc;
-use std::sync::Barrier;
+use std::sync::{Arc, Barrier};
 use std::thread;
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
 use apas_ai::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
-use apas_ai::LabUnDirGraphMtEphLit;
-use apas_ai::SetLit;
+use apas_ai::{LabUnDirGraphMtEphLit, SetLit};
 use apas_ai::Types::Types::*;
 
 #[test]

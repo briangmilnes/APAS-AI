@@ -5,8 +5,7 @@ use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap21::Algorithm21_6::Algorithm21_6::*;
 use apas_ai::Types::Types::*;
-use apas_ai::ArraySeqStPerSLit;
-use apas_ai::PairLit;
+use apas_ai::{ArraySeqStPerSLit, PairLit};
 
 fn prime_sieve(n: N) -> ArraySeqStPerS<N> {
     if n <= 2 {

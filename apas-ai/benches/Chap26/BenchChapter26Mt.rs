@@ -3,9 +3,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerBaseTrait;
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerRedefinableTrait;
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS;
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerBaseTrait, ArraySeqMtPerRedefinableTrait, ArraySeqMtPerS};
 
 fn gen_sequence(n: usize) -> ArraySeqMtPerS<usize> { ArraySeqMtPerS::new(n, 0) }
 

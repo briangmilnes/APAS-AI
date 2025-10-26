@@ -6,13 +6,9 @@
 
 pub mod BottomUpDPMtPer {
 
-    use std::cmp::max;
-    use std::cmp::min;
-    use std::fmt::Formatter;
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::sync::Arc;
-    use std::sync::Mutex;
+    use std::cmp::{max, min};
+    use std::fmt::{Formatter, Debug, Display};
+    use std::sync::{Arc, Mutex};
     use std::thread;
 
     use crate::Chap18::ArraySeqMtPer::ArraySeqMtPer::*;

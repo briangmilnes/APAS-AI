@@ -5,8 +5,7 @@ use criterion::*;
 
 use apas_ai::ArraySeqStEphSLit;
 use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphBaseTrait;
-use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::ArraySeqStEphRedefinableTrait;
+use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::{ArraySeqStEphBaseTrait, ArraySeqStEphRedefinableTrait};
 use apas_ai::Types::Types::*;
 
 fn bench_tabulate_map(c: &mut Criterion) {

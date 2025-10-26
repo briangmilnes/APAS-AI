@@ -6,8 +6,7 @@
 pub mod SCCStEph {
 
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
-    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphS;
-    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::AVLTreeSeqStEphTrait;
+    use crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph::{AVLTreeSeqStEphS, AVLTreeSeqStEphTrait};
     use crate::Chap41::AVLTreeSetStEph::AVLTreeSetStEph::*;
     use crate::Types::Types::*;
     pub type T<N> = ArraySeqStEphS<ArraySeqStEphS<N>>;

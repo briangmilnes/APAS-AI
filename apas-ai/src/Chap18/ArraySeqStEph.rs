@@ -4,9 +4,7 @@
 pub mod ArraySeqStEph {
 
     use std::collections::HashMap;
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
+    use std::fmt::{Debug, Display, Formatter};
     use std::fmt::Result as FmtResult;
     use std::slice::Iter;
     use std::vec::IntoIter;

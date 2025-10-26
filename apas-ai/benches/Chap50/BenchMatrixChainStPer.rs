@@ -5,9 +5,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap50::MatrixChainStPer::MatrixChainStPer::MatrixChainStPerS;
-use apas_ai::Chap50::MatrixChainStPer::MatrixChainStPer::MatrixChainStPerTrait;
-use apas_ai::Chap50::MatrixChainStPer::MatrixChainStPer::MatrixDim;
+use apas_ai::Chap50::MatrixChainStPer::MatrixChainStPer::{MatrixChainStPerS, MatrixChainStPerTrait, MatrixDim};
 use apas_ai::MatrixChainStPerLit;
 
 fn create_random_dimensions(n: usize) -> Vec<MatrixDim> {

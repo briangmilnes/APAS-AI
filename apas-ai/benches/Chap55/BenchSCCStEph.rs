@@ -3,10 +3,7 @@
 
 use std::time::Duration;
 
-use criterion::Criterion;
-use criterion::black_box;
-use criterion::criterion_group;
-use criterion::criterion_main;
+use criterion::{Criterion, black_box, criterion_group, criterion_main};
 
 fn bench_placeholder(c: &mut Criterion) { c.bench_function("placeholder", |b| b.iter(|| black_box(1 + 1))); }
 

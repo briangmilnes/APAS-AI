@@ -4,8 +4,7 @@ use std::time::Duration;
 use criterion::*;
 
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
-use apas_ai::Chap40::BSTKeyValueStEph::BSTKeyValueStEph::BSTKeyValueStEphTrait;
-use apas_ai::Chap40::BSTKeyValueStEph::BSTKeyValueStEph::BSTreeKeyValue;
+use apas_ai::Chap40::BSTKeyValueStEph::BSTKeyValueStEph::{BSTKeyValueStEphTrait, BSTreeKeyValue};
 use apas_ai::BSTKeyValueStEphLit;
 use apas_ai::*;
 

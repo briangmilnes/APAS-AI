@@ -3,8 +3,7 @@
 
 pub mod AVLTreeSeqMtPer {
 
-    use std::fmt::Debug;
-    use std::fmt::Formatter;
+    use std::fmt::{Debug, Formatter};
     use std::sync::Arc;
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;

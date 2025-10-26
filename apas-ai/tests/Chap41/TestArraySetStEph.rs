@@ -1,8 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for ArraySetStEph
 
-use apas_ai::ArraySeqStEphSLit;
-use apas_ai::ArraySetStEphLit;
+use apas_ai::{ArraySeqStEphSLit, ArraySetStEphLit};
 use apas_ai::Chap19::ArraySeqStEph::ArraySeqStEph::*;
 use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap41::Example41_3::Example41_3::*;

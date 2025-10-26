@@ -4,12 +4,8 @@
 pub mod MinEditDistStEph {
 
     use std::collections::HashMap;
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
-    use std::fmt::Result;
-    use std::iter::Map;
-    use std::iter::Zip;
+    use std::fmt::{Debug, Display, Formatter, Result};
+    use std::iter::{Map, Zip};
 
     use crate::ArraySeqStEphSLit;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;

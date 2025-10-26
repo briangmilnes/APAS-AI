@@ -19,8 +19,7 @@ pub mod ConnectivityMtEph {
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap62::StarContractionMtEph::StarContractionMtEph::star_contract_mt;
     use crate::Chap62::StarPartitionMtEph::StarPartitionMtEph::parallel_star_partition;
-    use crate::ParaPair;
-    use crate::SetLit;
+    use crate::{ParaPair, SetLit};
     use crate::Types::Types::*;
     pub type T<V> = UnDirGraphMtEph<V>;
 

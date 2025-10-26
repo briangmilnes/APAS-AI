@@ -3,8 +3,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap40::BSTSizeStEph::BSTSizeStEph::BSTSizeStEphTrait;
-use apas_ai::Chap40::BSTSizeStEph::BSTSizeStEph::BSTreeSize;
+use apas_ai::Chap40::BSTSizeStEph::BSTSizeStEph::{BSTSizeStEphTrait, BSTreeSize};
 use apas_ai::BSTSizeStEphLit;
 use apas_ai::*;
 

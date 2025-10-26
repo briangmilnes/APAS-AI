@@ -1,7 +1,6 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 
-use std::fmt::Display;
-use std::fmt::Formatter;
+use std::fmt::{Display, Formatter};
 
 use apas_ai::ArraySeqStPerSLit;
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::ArraySeqStPerBaseTrait as Chap18BaseTrait;

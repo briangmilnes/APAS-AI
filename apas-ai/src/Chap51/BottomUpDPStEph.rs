@@ -6,11 +6,8 @@
 
 pub mod BottomUpDPStEph {
 
-    use std::cmp::max;
-    use std::cmp::min;
-    use std::fmt::Formatter;
-    use std::fmt::Debug;
-    use std::fmt::Display;
+    use std::cmp::{max, min};
+    use std::fmt::{Formatter, Debug, Display};
 
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Types::Types::*;

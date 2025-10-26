@@ -154,8 +154,7 @@ fn para_filter_and_reduce_edge_cases() {
 // Concurrent operation verification tests for BSTParaMtEph
 #[test]
 fn para_concurrent_insertions() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let tree = Arc::new(ParamBST::<i32>::new());
@@ -222,8 +221,7 @@ fn para_concurrent_insertions() {
 
 #[test]
 fn para_concurrent_operations_stress() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let tree = Arc::new(ParamBST::<i32>::new());
@@ -277,8 +275,7 @@ fn para_concurrent_operations_stress() {
 
 #[test]
 fn para_concurrent_set_operations() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let tree_a = Arc::new(make_range_tree(0, 50));
@@ -326,8 +323,7 @@ fn para_concurrent_set_operations() {
 
 #[test]
 fn para_concurrent_filter_reduce() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let tree = Arc::new(make_range_tree(0, 100));
@@ -379,8 +375,7 @@ fn para_concurrent_filter_reduce() {
 
 #[test]
 fn para_concurrent_split_join() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let tree = Arc::new(make_range_tree(0, 100));
@@ -424,8 +419,7 @@ fn para_concurrent_split_join() {
 
 #[test]
 fn para_concurrent_expose_join_mid() {
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let barrier = Arc::new(Barrier::new(3));
@@ -473,8 +467,7 @@ fn para_concurrent_expose_join_mid() {
 #[test]
 fn para_concurrent_delete_operations() {
     use apas_ai::ArraySeqStPerSLit;
-    use std::sync::Arc;
-    use std::sync::Barrier;
+    use std::sync::{Arc, Barrier};
     use std::thread;
 
     let tree = Arc::new(make_range_tree(0, 100));

@@ -7,10 +7,8 @@
 pub mod PrimStEph {
 
     use std::cmp::Ordering;
-    use std::collections::HashMap;
-    use std::collections::HashSet;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
+    use std::collections::{HashMap, HashSet};
+    use std::fmt::{Display, Formatter};
     use std::fmt::Result as FmtResult;
     use std::hash::Hash;
 

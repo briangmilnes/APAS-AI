@@ -5,10 +5,7 @@
 
 pub mod AugOrderedTableMtEph {
 
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
-    use std::fmt::Result;
+    use std::fmt::{Debug, Display, Formatter, Result};
     use std::sync::Arc;
     use std::thread;
 
@@ -16,8 +13,7 @@ pub mod AugOrderedTableMtEph {
     use crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
     use crate::Chap41::ArraySetStEph::ArraySetStEph::*;
     use crate::Chap43::OrderedTableMtEph::OrderedTableMtEph::*;
-    use crate::OrderedTableMtEphLit;
-    use crate::ParaPair;
+    use crate::{OrderedTableMtEphLit, ParaPair};
     use crate::Types::Types::*;
 
     #[derive(PartialEq, Clone)]

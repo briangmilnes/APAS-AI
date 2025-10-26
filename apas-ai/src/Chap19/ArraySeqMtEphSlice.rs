@@ -8,12 +8,9 @@
 
 pub mod ArraySeqMtEphSlice {
 
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
+    use std::fmt::{Debug, Display, Formatter};
     use std::ops::Range;
-    use std::sync::Arc;
-    use std::sync::Mutex;
+    use std::sync::{Arc, Mutex};
 
     use crate::ParaPair;
     use crate::Types::Types::*;

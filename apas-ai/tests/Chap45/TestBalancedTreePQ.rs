@@ -1,9 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Test for Chapter 45: BalancedTreePQ - Priority Queue using AVL Trees
 
-use apas_ai::AVLTreeSeqStPerLit;
-use apas_ai::ArraySeqStPerSLit;
-use apas_ai::BalancedTreePQLit;
+use apas_ai::{AVLTreeSeqStPerLit, ArraySeqStPerSLit, BalancedTreePQLit};
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;

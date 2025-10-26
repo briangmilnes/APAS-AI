@@ -4,9 +4,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerBaseTrait;
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerRedefinableTrait;
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS;
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerBaseTrait, ArraySeqMtPerRedefinableTrait, ArraySeqMtPerS};
 use apas_ai::Chap35::OrderStatSelectMtPer::OrderStatSelectMtPer::*;
 
 pub fn bench_select_mt_per(c: &mut Criterion) {

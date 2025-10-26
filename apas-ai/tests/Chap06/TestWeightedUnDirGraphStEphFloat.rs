@@ -1,8 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Chap06 WeightedUnDirGraphStEphFloat.
 
-use std::f64::consts::E;
-use std::f64::consts::PI;
+use std::f64::consts::{E, PI};
 
 use ordered_float::OrderedFloat;
 

@@ -4,10 +4,7 @@
 pub mod RelationStEph {
 
     use std::collections::hash_set::Iter;
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
-    use std::fmt::Result;
+    use std::fmt::{Debug, Display, Formatter, Result};
     use std::hash::Hash;
 
     use crate::Chap05::SetStEph::SetStEph::*;

@@ -1,8 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for AVLTreeSeq Chapter 18 algorithms.
 
-use apas_ai::AVLTreeSeqStPerLit;
-use apas_ai::ArraySeqStPerSLit;
+use apas_ai::{AVLTreeSeqStPerLit, ArraySeqStPerSLit};
 use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
 use apas_ai::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer::*;
 use apas_ai::Types::Types::*;

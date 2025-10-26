@@ -1,9 +1,7 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
 //! Tests for Probability.
 
-use std::cmp::Ordering::Equal;
-use std::cmp::Ordering::Greater;
-use std::cmp::Ordering::Less;
+use std::cmp::Ordering::{Equal, Greater, Less};
 
 use apas_ai::Chap50::Probability::Probability::*;
 use apas_ai::Types::Types::*;
@@ -150,8 +148,7 @@ fn test_copy_trait() {
 #[test]
 fn test_hash() {
     use std::collections::hash_map::DefaultHasher;
-    use std::hash::Hash;
-    use std::hash::Hasher;
+    use std::hash::{Hash, Hasher};
 
     let p1 = Probability::new(0.5);
     let p2 = Probability::new(0.5);

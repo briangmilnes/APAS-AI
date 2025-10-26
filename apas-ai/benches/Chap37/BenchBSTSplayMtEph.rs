@@ -3,8 +3,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap37::BSTSplayMtEph::BSTSplayMtEph::BSTSplayMtEphTrait;
-use apas_ai::Chap37::BSTSplayMtEph::BSTSplayMtEph::BSTreeSplay;
+use apas_ai::Chap37::BSTSplayMtEph::BSTSplayMtEph::{BSTSplayMtEphTrait, BSTreeSplay};
 use apas_ai::BSTSplayMtEphLit;
 use apas_ai::*;
 

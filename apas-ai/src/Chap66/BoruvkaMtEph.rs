@@ -15,8 +15,7 @@ pub mod BoruvkaMtEph {
     use rand::*;
 
     use crate::Chap05::SetStEph::SetStEph::*;
-    use crate::ParaPair;
-    use crate::SetLit;
+    use crate::{ParaPair, SetLit};
     use crate::Types::Types::*;
 
     pub trait BoruvkaMtEphTrait {

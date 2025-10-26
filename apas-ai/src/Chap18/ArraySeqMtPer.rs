@@ -6,8 +6,7 @@
 pub mod ArraySeqMtPer {
 
     use std::collections::HashSet;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
+    use std::fmt::{Display, Formatter};
     use std::slice::Iter;
     use std::sync::Arc;
     use std::thread;

@@ -8,16 +8,14 @@ pub mod StarContractionMtEph {
 
     use std::collections::HashMap;
     use std::hash::Hash;
-    use std::sync::Arc;
-    use std::sync::Mutex;
+    use std::sync::{Arc, Mutex};
     use std::vec::Vec;
 
     use crate::Chap05::SetStEph::SetStEph::*;
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap62::StarPartitionMtEph::StarPartitionMtEph::parallel_star_partition;
-    use crate::ParaPair;
-    use crate::SetLit;
+    use crate::{ParaPair, SetLit};
     use crate::Types::Types::*;
     pub type T<V> = UnDirGraphMtEph<V>;
 

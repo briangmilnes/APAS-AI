@@ -1,22 +1,15 @@
 Entering directory '/home/milnes/APASVERUS/APAS-AI/apas-ai'
 ================================================================================
-COMPILING MODULE: ArraySeqMtEphSlice
-================================================================================
-Found module files:
-  src:   /home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap19/ArraySeqMtEphSlice.rs
-  tests: 1
-         /home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap19/TestArraySeqMtEphSlice.rs
-  bench: 0
-================================================================================
-STEP 1: Compile library (includes src module)
+STEP 1: COMPILE LIBRARY
 ================================================================================
 ✓ Library compilation passed
 ================================================================================
-STEP 2: Compile test TestArraySeqMtEphSlice
+STEP 2: COMPILE ALL TESTS
 ================================================================================
-✓ Test TestArraySeqMtEphSlice compilation passed
+✓ All tests compilation passed
 ================================================================================
-✓ ALL COMPILATION COMPLETE for module 'ArraySeqMtEphSlice'
+STEP 3: COMPILE ALL BENCHMARKS
 ================================================================================
+✓ All benchmarks compilation passed
 
-Completed in 3278ms
+Completed in 344ms

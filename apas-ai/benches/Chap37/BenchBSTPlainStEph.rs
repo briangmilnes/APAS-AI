@@ -3,8 +3,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap37::BSTPlainStEph::BSTPlainStEph::BSTPlainStEphTrait;
-use apas_ai::Chap37::BSTPlainStEph::BSTPlainStEph::BSTree;
+use apas_ai::Chap37::BSTPlainStEph::BSTPlainStEph::{BSTPlainStEphTrait, BSTree};
 use apas_ai::BSTPlainStEphLit;
 use apas_ai::*;
 

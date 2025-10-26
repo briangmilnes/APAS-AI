@@ -6,8 +6,7 @@ use criterion::*;
 use apas_ai::Chap05::RelationStEph::RelationStEph::*;
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Types::Types::*;
-use apas_ai::PairLit;
-use apas_ai::SetLit;
+use apas_ai::{PairLit, SetLit};
 
 fn bench_relation_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("RelationStEph");

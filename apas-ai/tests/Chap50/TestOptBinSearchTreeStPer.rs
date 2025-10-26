@@ -2,11 +2,9 @@
 //! Tests for OptBinSearchTreeStPer.
 
 use apas_ai::Chap50::OptBinSearchTreeStPer::OptBinSearchTreeStPer::KeyProb as OBSTStPerKeyProb;
-use apas_ai::Chap50::OptBinSearchTreeStPer::OptBinSearchTreeStPer::OBSTStPerS;
-use apas_ai::Chap50::OptBinSearchTreeStPer::OptBinSearchTreeStPer::OBSTStPerTrait;
+use apas_ai::Chap50::OptBinSearchTreeStPer::OptBinSearchTreeStPer::{OBSTStPerS, OBSTStPerTrait};
 use apas_ai::Chap50::Probability::Probability::*;
-use apas_ai::OBSTStPerLit;
-use apas_ai::prob;
+use apas_ai::{OBSTStPerLit, prob};
 
 #[test]
 fn test_obst_st_per_empty() {

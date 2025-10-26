@@ -1,0 +1,632 @@
+Processing 661 files to merge imports...
+
+================================================================================
+  Line 3: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap41/TestArraySetStEph.rs:
+  Line 3: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap41/TestAVLTreeSetStPer.rs:
+  Line 157: Merging 2 imports from std::sync
+  Line 225: Merging 2 imports from std::sync
+  Line 280: Merging 2 imports from std::sync
+  Line 329: Merging 2 imports from std::sync
+  Line 382: Merging 2 imports from std::sync
+  Line 427: Merging 2 imports from std::sync
+  Line 476: Merging 2 imports from std::sync
+  ✓ Merged 14 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap38/TestBSTParaMtEph.rs:
+  Line 1: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap19/TestArraySeqMtEphSlice.rs:
+  Line 2: Merging 2 imports from std::fmt
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap19/TestArraySeqStPerChap19.rs:
+  Line 2: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestWeightedDirGraphMtEphInt.rs:
+  Line 7: Merging 2 imports from apas_ai
+  Line 339: Merging 2 imports from std::sync::atomic
+  Line 341: Merging 2 imports from std::sync
+  Line 439: Merging 3 imports from std::sync::atomic
+  Line 442: Merging 2 imports from std::sync
+  Line 585: Merging 3 imports from std::sync
+  Line 589: Merging 2 imports from std::time
+  ✓ Merged 16 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestDirGraphMtEph.rs:
+  Line 4: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestDirGraphStEph.rs:
+  Line 2: Merging 2 imports from std::f64::consts
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestWeightedDirGraphStEphFloat.rs:
+  Line 3: Merging 2 imports from std::f64::consts
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestWeightedUnDirGraphStEphFloat.rs:
+  Line 2: Merging 2 imports from std::sync
+  Line 9: Merging 2 imports from apas_ai
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestLabUnDirGraphMtEph.rs:
+  Line 2: Merging 3 imports from std::f64::consts
+  Line 5: Merging 2 imports from std::sync
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestWeightedDirGraphMtEphFloat.rs:
+  Line 7: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestWeightedDirGraphStEphInt.rs:
+  Line 4: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestLabUnDirGraphStEph.rs:
+  Line 2: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestWeightedUnDirGraphMtEphInt.rs:
+  Line 2: Merging 3 imports from std::f64::consts
+  Line 5: Merging 2 imports from std::sync
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestWeightedUnDirGraphMtEphFloat.rs:
+  Line 2: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestUnDirGraphMtEph.rs:
+  Line 2: Merging 2 imports from std::sync
+  Line 8: Merging 2 imports from apas_ai
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap06/TestLabDirGraphMtEph.rs:
+  Line 5: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap21/TestExercise_21_7.rs:
+  Line 7: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap21/TestAlgorithm_21_6.rs:
+  Line 5: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap21/TestAlgorithm_21_2.rs:
+  Line 4: Merging 2 imports from apas_ai::Chap50::OptBinSearchTreeStEph::OptBinSearchTreeStEph
+  Line 7: Merging 2 imports from apas_ai
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap50/TestOptBinSearchTreeStEph.rs:
+  Line 4: Merging 2 imports from apas_ai::Chap50::OptBinSearchTreeStPer::OptBinSearchTreeStPer
+  Line 7: Merging 2 imports from apas_ai
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap50/TestOptBinSearchTreeStPer.rs:
+  Line 3: Merging 3 imports from std::cmp::Ordering
+  Line 153: Merging 2 imports from std::hash
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap50/TestProbability.rs:
+  Line 3: Merging 2 imports from apas_ai::Chap50::MatrixChainStEph::MatrixChainStEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap50/TestMatrixChainStEph.rs:
+  Line 3: Merging 3 imports from apas_ai
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap45/TestBalancedTreePQ.rs:
+  Line 3: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap12/TestExercise12_5.rs:
+  Line 3: Merging 2 imports from std::sync::atomic
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap12/TestExercise12_2.rs:
+  Line 3: Merging 3 imports from std::sync::atomic
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap12/TestExercise12_1.rs:
+  Line 104: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap36/TestQuickSortMtEph.rs:
+  Line 3: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap05/TestSetStEph.rs:
+  Line 6: Merging 3 imports from apas_ai
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap05/TestMappingStEph.rs:
+  Line 4: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap05/TestRelationStEph.rs:
+  Line 27: Merging 2 imports from apas_ai
+  Line 39: Merging 12 imports from apas_ai
+  ✓ Merged 14 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/TestLibIntegration.rs:
+  Line 4: Merging 2 imports from apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap18/TestArraySeqStPerChap18.rs:
+  Line 4: Merging 2 imports from apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap18/TestArraySeqStEphChap18.rs:
+  Line 3: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap37/TestAVLTreeSeqStEph18.rs:
+  Line 427: Merging 2 imports from std::sync
+  Line 492: Merging 2 imports from std::sync
+  Line 539: Merging 2 imports from std::sync
+  Line 582: Merging 2 imports from std::sync
+  Line 636: Merging 2 imports from std::sync
+  Line 678: Merging 2 imports from std::sync
+  Line 730: Merging 2 imports from std::sync
+  ✓ Merged 14 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap37/TestBSTMtEph.rs:
+  Line 2: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap37/TestAVLTreeSeqStEphChap37.rs:
+  Line 3: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/tests/Chap37/TestAVLTreeSeqStPer18.rs:
+  Line 9: Merging 2 imports from crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/TopoSortStPer.rs:
+  Line 9: Merging 2 imports from crate::Chap37::AVLTreeSeqStEph::AVLTreeSeqStEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/SCCStEph.rs:
+  Line 9: Merging 2 imports from crate::Chap37::AVLTreeSeqStPer::AVLTreeSeqStPer
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap55/SCCStPer.rs:
+  Line 11: Merging 3 imports from std::cmp::Ordering
+  Line 14: Merging 2 imports from std
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap41/AVLTreeSetMtPer.rs:
+  Line 6: Merging 2 imports from std::fmt
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap41/AVLTreeSetStPer.rs:
+  Line 12: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap41/AVLTreeSetMtEph.rs:
+  Line 7: Merging 3 imports from std::cmp::Ordering
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap38/BSTParaStEph.rs:
+  Line 6: Merging 3 imports from std::cmp::Ordering
+  Line 9: Merging 2 imports from std::sync
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap38/BSTParaMtEph.rs:
+  Line 11: Merging 3 imports from std::fmt
+  Line 15: Merging 2 imports from std::sync
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap19/ArraySeqMtEphSlice.rs:
+  Line 9: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/WeightedUnDirGraphMtEphFloat.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/WeightedUnDirGraphStEphInt.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/UnDirGraphStEph.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/WeightedDirGraphStEphInt.rs:
+  Line 36: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/WeightedUnDirGraphStEphFloat.rs:
+  Line 9: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/WeightedUnDirGraphMtEphInt.rs:
+  Line 9: Merging 4 imports from std::fmt
+  Line 16: Merging 2 imports from crate
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/LabUnDirGraphMtEph.rs:
+  Line 9: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/WeightedDirGraphMtEphFloat.rs:
+  Line 9: Merging 4 imports from std::fmt
+  Line 16: Merging 2 imports from crate
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/UnDirGraphMtEph.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/LabDirGraphStEph.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/DirGraphStEph.rs:
+  Line 9: Merging 4 imports from std::fmt
+  Line 16: Merging 2 imports from crate
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/DirGraphMtEph.rs:
+  Line 36: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/WeightedDirGraphStEphFloat.rs:
+  Line 9: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/WeightedDirGraphMtEphInt.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/LabUnDirGraphStEph.rs:
+  Line 9: Merging 4 imports from std::fmt
+  Line 16: Merging 2 imports from crate
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap06/LabDirGraphMtEph.rs:
+  Line 7: Merging 4 imports from std::fmt
+  Line 11: Merging 2 imports from std::sync
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/SubsetSumMtEph.rs:
+  Line 7: Merging 4 imports from std::fmt
+  Line 11: Merging 2 imports from std::iter
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/MinEditDistStPer.rs:
+  Line 7: Merging 4 imports from std::fmt
+  Line 11: Merging 2 imports from std::sync
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/SubsetSumMtPer.rs:
+  Line 7: Merging 4 imports from std::fmt
+  Line 11: Merging 2 imports from std::sync
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/MinEditDistMtEph.rs:
+  Line 7: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/SubsetSumStPer.rs:
+  Line 7: Merging 4 imports from std::fmt
+  Line 11: Merging 2 imports from std::iter
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/MinEditDistStEph.rs:
+  Line 7: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/SubsetSumStEph.rs:
+  Line 7: Merging 4 imports from std::fmt
+  Line 11: Merging 2 imports from std::sync
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap49/MinEditDistMtPer.rs:
+  Line 11: Merging 2 imports from std::sync
+  Line 19: Merging 2 imports from crate
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap62/StarContractionMtEph.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap44/DocumentIndex.rs:
+  Line 11: Merging 2 imports from std::collections
+  Line 13: Merging 3 imports from std::fmt
+  Line 17: Merging 2 imports from std::slice
+  ✓ Merged 7 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap17/MathSeq.rs:
+  Line 22: Merging 2 imports from crate
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap63/ConnectivityMtEph.rs:
+  Line 6: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap39/BSTTreapMtEph.rs:
+  Line 6: Merging 3 imports from std::cmp::Ordering
+  Line 10: Merging 2 imports from std::hash
+  Line 12: Merging 2 imports from std::sync
+  ✓ Merged 7 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap39/BSTParaTreapMtEph.rs:
+  Line 9: Merging 2 imports from std::cmp
+  Line 11: Merging 3 imports from std::fmt
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap51/BottomUpDPStPer.rs:
+  Line 10: Merging 3 imports from std::fmt
+  Line 13: Merging 2 imports from std::sync
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap51/TopDownDPMtEph.rs:
+  Line 9: Merging 2 imports from std::cmp
+  Line 11: Merging 3 imports from std::fmt
+  Line 14: Merging 2 imports from std::sync
+  ✓ Merged 7 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap51/BottomUpDPMtPer.rs:
+  Line 10: Merging 3 imports from std::fmt
+  Line 13: Merging 2 imports from std::sync
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap51/TopDownDPMtPer.rs:
+  Line 9: Merging 2 imports from std::cmp
+  Line 11: Merging 3 imports from std::fmt
+  Line 14: Merging 2 imports from std::sync
+  ✓ Merged 7 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap51/BottomUpDPMtEph.rs:
+  Line 10: Merging 3 imports from std::fmt
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap51/TopDownDPStEph.rs:
+  Line 10: Merging 3 imports from std::fmt
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap51/TopDownDPStPer.rs:
+  Line 9: Merging 2 imports from std::cmp
+  Line 11: Merging 3 imports from std::fmt
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap51/BottomUpDPStEph.rs:
+  Line 10: Merging 2 imports from std::collections
+  Line 12: Merging 2 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap65/PrimStEph.rs:
+  Line 7: Merging 4 imports from std::fmt
+  Line 11: Merging 2 imports from std::sync
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/OptBinSearchTreeMtEph.rs:
+  Line 7: Merging 4 imports from std::fmt
+  Line 13: Merging 2 imports from std::sync
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/MatrixChainMtPer.rs:
+  Line 7: Merging 4 imports from std::fmt
+  Line 13: Merging 2 imports from std::sync
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/OptBinSearchTreeMtPer.rs:
+  Line 8: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/OptBinSearchTreeStPer.rs:
+  Line 10: Merging 3 imports from std::fmt
+  Line 14: Merging 2 imports from std::hash
+  Line 16: Merging 4 imports from std::ops
+  ✓ Merged 9 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/Probability.rs:
+  Line 8: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/OptBinSearchTreeStEph.rs:
+  Line 7: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/MatrixChainStEph.rs:
+  Line 7: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/MatrixChainStPer.rs:
+  Line 7: Merging 4 imports from std::fmt
+  Line 11: Merging 2 imports from std::sync
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap50/MatrixChainMtEph.rs:
+  Line 7: Merging 3 imports from std::fmt
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Types.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/UnsortedListPQ.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/LeftistHeapPQ.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/SortedListPQ.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/BinaryHeapPQ.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap45/BalancedTreePQ.rs:
+  Line 7: Merging 2 imports from std::sync::atomic
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap12/Exercise12_5.rs:
+  Line 6: Merging 2 imports from std::sync::atomic
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap12/Exercise12_2.rs:
+  Line 8: Merging 2 imports from std::sync::atomic
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap12/Exercise12_1.rs:
+  Line 14: Merging 3 imports from std::fmt
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap57/DijkstraStEphInt.rs:
+  Line 14: Merging 3 imports from std::fmt
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap57/DijkstraStEphFloat.rs:
+  Line 78: Merging 2 imports from rand
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap61/VertexMatchingStEph.rs:
+  Line 18: Merging 2 imports from crate
+  Line 62: Merging 2 imports from std::sync
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap61/EdgeContractionMtEph.rs:
+  Line 17: Merging 2 imports from crate
+  Line 52: Merging 2 imports from rand
+  Line 54: Merging 2 imports from std::sync
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap61/VertexMatchingMtEph.rs:
+  Line 8: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap05/MappingStEph.rs:
+  Line 8: Merging 4 imports from std::fmt
+  Line 12: Merging 2 imports from std::hash
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap05/SetStEph.rs:
+  Line 7: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap05/RelationStEph.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap43/AugOrderedTableStEph.rs:
+  Line 8: Merging 4 imports from std::fmt
+  Line 19: Merging 2 imports from crate
+  ✓ Merged 6 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap43/AugOrderedTableMtEph.rs:
+  Line 6: Merging 4 imports from std::fmt
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap43/AugOrderedTableStPer.rs:
+  Line 7: Merging 3 imports from std::fmt
+  Line 11: Merging 2 imports from std::slice
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap18/ArraySeq.rs:
+  Line 7: Merging 3 imports from std::fmt
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap18/LinkedListStPer.rs:
+  Line 7: Merging 3 imports from std::fmt
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap18/ArraySeqStEph.rs:
+  Line 9: Merging 2 imports from std::fmt
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap18/ArraySeqMtPer.rs:
+  Line 9: Merging 2 imports from std::fmt
+  Line 11: Merging 2 imports from std::sync
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap18/ArraySeqMtEph.rs:
+  Line 7: Merging 3 imports from std::fmt
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap18/LinkedListStEph.rs:
+  Line 7: Merging 3 imports from std::fmt
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap18/ArraySeqStPer.rs:
+  Line 18: Merging 2 imports from crate
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap66/BoruvkaMtEph.rs:
+  Line 11: Merging 2 imports from std::collections
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap64/TSPApproxStEph.rs:
+  Line 9: Merging 2 imports from std::collections
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap64/TSPApproxMtEph.rs:
+  Line 6: Merging 2 imports from std::fmt
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/AVLTreeSeqStPer.rs:
+  Line 6: Merging 2 imports from std::fmt
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/AVLTreeSeqMtPer.rs:
+  Line 12: Merging 3 imports from std::fmt
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/AVLTreeSeq.rs:
+  Line 6: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTBBAlphaMtEph.rs:
+  Line 6: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTPlainMtEph.rs:
+  Line 6: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTSplayMtEph.rs:
+  Line 6: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTRBMtEph.rs:
+  Line 6: Merging 2 imports from std::sync
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/src/Chap37/BSTAVLMtEph.rs:
+  Line 5: Merging 4 imports from criterion
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap55/BenchDFSStEph.rs:
+  Line 5: Merging 4 imports from criterion
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap55/BenchCycleDetectStPer.rs:
+  Line 5: Merging 4 imports from criterion
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap55/BenchDFSStPer.rs:
+  Line 5: Merging 4 imports from criterion
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap55/BenchCycleDetectStEph.rs:
+  Line 5: Merging 4 imports from criterion
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap55/BenchSCCStEph.rs:
+  Line 5: Merging 4 imports from criterion
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap55/BenchTopoSortStEph.rs:
+  Line 5: Merging 4 imports from criterion
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap55/BenchSCCStPer.rs:
+  Line 5: Merging 4 imports from criterion
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap55/BenchTopoSortStPer.rs:
+  Line 6: Merging 3 imports from apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap35/BenchOrderStatSelectMtPer.rs:
+  Line 7: Merging 2 imports from apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap35/BenchOrderStatSelectStPer.rs:
+  Line 7: Merging 2 imports from apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap26/BenchMergeSortStPer.rs:
+  Line 7: Merging 3 imports from apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap26/BenchMergeSortMtPer.rs:
+  Line 7: Merging 3 imports from apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap26/BenchDivConReduceMtPer.rs:
+  Line 7: Merging 2 imports from apas_ai::Chap19::ArraySeqStPer::ArraySeqStPer
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap26/BenchDivConReduceStPer.rs:
+  Line 5: Merging 3 imports from apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap26/BenchChapter26Mt.rs:
+  Line 5: Merging 5 imports from criterion
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap58/BenchBellmanFordStEphInt.rs:
+  Line 5: Merging 5 imports from criterion
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap58/BenchBellmanFordStEphFloat.rs:
+  Line 8: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap06/BenchLabUnDirGraphStEph.rs:
+  Line 8: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap06/BenchLabDirGraphStEph.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap11::FibonacciMtPer::FibonacciMtPer
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap11/BenchFibonacciMtPer.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap39::BSTTreapStEph::BSTTreapStEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap39/BenchBSTTreapStEph.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap39::BSTTreapMtEph::BSTTreapMtEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap39/BenchBSTTreapMtEph.rs:
+  Line 3: Merging 2 imports from apas_ai::Chap50::MatrixChainStEph::MatrixChainStEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap50/BenchMatrixChainStEph.rs:
+  Line 7: Merging 3 imports from apas_ai::Chap50::MatrixChainStPer::MatrixChainStPer
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap50/BenchMatrixChainStPer.rs:
+  Line 6: Merging 3 imports from apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer
+  ✓ Merged 3 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap54/BenchBFSMtPer.rs:
+  Line 5: Merging 5 imports from criterion
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap45/BenchLeftistHeapPQ.rs:
+  Line 5: Merging 5 imports from criterion
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap45/BenchHeapsortExample.rs:
+  Line 5: Merging 5 imports from criterion
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap45/BenchSortedListPQ.rs:
+  Line 5: Merging 5 imports from criterion
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap45/BenchBinaryHeapPQ.rs:
+  Line 5: Merging 5 imports from criterion
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap45/BenchBalancedTreePQ.rs:
+  Line 5: Merging 5 imports from criterion
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap45/BenchUnsortedListPQ.rs:
+  Line 5: Merging 5 imports from criterion
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap57/BenchDijkstraStEphInt.rs:
+  Line 5: Merging 5 imports from criterion
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap57/BenchDijkstraStEphFloat.rs:
+  Line 9: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap05/BenchMappingStEph.rs:
+  Line 8: Merging 2 imports from apas_ai
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap05/BenchRelationStEph.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap40::BSTSizeStEph::BSTSizeStEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap40/BenchBSTSizeStEph.rs:
+  Line 6: Merging 2 imports from apas_ai::Chap40::BSTKeyValueStEph::BSTKeyValueStEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap40/BenchBSTKeyValueStEph.rs:
+  Line 5: Merging 4 imports from apas_ai::Chap56::PathWeightUtilsStPer::PathWeightUtilsStPer
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap56/BenchPathWeightUtilsStPer.rs:
+  Line 6: Merging 4 imports from apas_ai::Chap56::PathWeightUtilsStEph::PathWeightUtilsStEph
+  ✓ Merged 4 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap56/BenchPathWeightUtilsStEph.rs:
+  Line 7: Merging 5 imports from criterion
+  ✓ Merged 5 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap43/BenchAugOrderedTableMtEph.rs:
+  Line 7: Merging 2 imports from apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap18/BenchArraySeqStEphChap18.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap18::ArraySeqMtEph::ArraySeqMtEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap18/BenchArraySeqMtEphChap18.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap37::BSTAVLStEph::BSTAVLStEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap37/BenchBSTAVLStEph.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap37::BSTSplayMtEph::BSTSplayMtEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap37/BenchBSTSplayMtEph.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap37::BSTAVLMtEph::BSTAVLMtEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap37/BenchBSTAVLMtEph.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap37::BSTRBMtEph::BSTRBMtEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap37/BenchBSTRBMtEph.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap37::BSTRBStEph::BSTRBStEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap37/BenchBSTRBStEph.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap37::BSTPlainMtEph::BSTPlainMtEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap37/BenchBSTPlainMtEph.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap37::BSTPlainStEph::BSTPlainStEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap37/BenchBSTPlainStEph.rs:
+  Line 5: Merging 2 imports from apas_ai::Chap37::BSTSplayStEph::BSTSplayStEph
+  ✓ Merged 2 imports
+/home/milnes/APASVERUS/APAS-AI/apas-ai/benches/Chap37/BenchBSTSplayStEph.rs:
+
+================================================================================
+SUMMARY:
+  Files processed: 661
+  Files modified: 185
+  Total imports merged: 693
+  Completed in 217ms
+================================================================================

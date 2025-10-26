@@ -15,8 +15,7 @@ pub mod EdgeContractionMtEph {
     use crate::Chap06::UnDirGraphMtEph::UnDirGraphMtEph::*;
     use crate::Chap19::ArraySeqStEph::ArraySeqStEph::*;
     use crate::Chap61::VertexMatchingMtEph::VertexMatchingMtEph::parallel_matching_mt;
-    use crate::ParaPair;
-    use crate::SetLit;
+    use crate::{ParaPair, SetLit};
     use crate::Types::Types::*;
 
     pub trait EdgeContractionMtEphTrait {
@@ -59,8 +58,7 @@ pub mod EdgeContractionMtEph {
         graph: &UnDirGraphMtEph<V>,
         matching: &SetStEph<Edge<V>>,
     ) -> UnDirGraphMtEph<V> {
-        use std::sync::Arc;
-        use std::sync::Mutex;
+        use std::sync::{Arc, Mutex};
         pub type T<V> = UnDirGraphMtEph<V>;
 
         // Create a mapping from original vertices to their block representatives

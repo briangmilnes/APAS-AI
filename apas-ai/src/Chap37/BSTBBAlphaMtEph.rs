@@ -3,8 +3,7 @@
 
 pub mod BSTBBAlphaMtEph {
 
-    use std::sync::Arc;
-    use std::sync::RwLock;
+    use std::sync::{Arc, RwLock};
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;

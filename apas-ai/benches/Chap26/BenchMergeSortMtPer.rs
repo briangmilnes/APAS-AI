@@ -5,9 +5,7 @@ use std::time::Duration;
 
 use criterion::*;
 
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerBaseTrait;
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerRedefinableTrait;
-use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::ArraySeqMtPerS;
+use apas_ai::Chap18::ArraySeqMtPer::ArraySeqMtPer::{ArraySeqMtPerBaseTrait, ArraySeqMtPerRedefinableTrait, ArraySeqMtPerS};
 use apas_ai::Chap26::MergeSortMtPer::MergeSortMtPer::*;
 
 fn bench_merge_sort_mt(c: &mut Criterion) {

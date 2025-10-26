@@ -4,9 +4,7 @@
 pub mod LinkedListStPer {
 
     use std::collections::HashSet;
-    use std::fmt::Debug;
-    use std::fmt::Display;
-    use std::fmt::Formatter;
+    use std::fmt::{Debug, Display, Formatter};
 
     use crate::Types::Types::*;
 

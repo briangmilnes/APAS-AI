@@ -3,14 +3,10 @@
 
 pub mod BSTParaTreapMtEph {
 
-    use std::cmp::Ordering::Equal;
-    use std::cmp::Ordering::Greater;
-    use std::cmp::Ordering::Less;
+    use std::cmp::Ordering::{Equal, Greater, Less};
     use std::fmt::Write;
-    use std::hash::Hash;
-    use std::hash::Hasher;
-    use std::sync::Arc;
-    use std::sync::RwLock;
+    use std::hash::{Hash, Hasher};
+    use std::sync::{Arc, RwLock};
 
     use crate::Chap18::ArraySeqStPer::ArraySeqStPer::*;
     use crate::Types::Types::*;
