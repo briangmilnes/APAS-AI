@@ -124,8 +124,13 @@ pub mod AVLTreeSeqMtPer {
                 return None;
             }
             let mid = a.len() / 2;
-            let left = rec(&a[..mid]);
-            let right = rec(&a[mid + 1..]);
+            
+            // Parallel construction of left and right subtrees
+            let Pair(left, right) = crate::ParaPair!(
+                move || rec(&a[..mid]),
+                move || rec(&a[mid + 1..])
+            );
+            
             Some(mk(a[mid].clone(), left, right))
         }
         rec(a)
@@ -187,10 +192,36 @@ pub mod AVLTreeSeqMtPer {
             if s >= e {
                 return Self::empty();
             }
-            let mut vals = Vec::with_capacity(e - s);
-            for i in s..e {
-                vals.push(self.nth(i).clone());
-            }
+            
+            // Parallel extraction using thread spawning with Arc for sharing
+            use std::sync::Arc;
+            
+            let result_len = e - s;
+            
+            // Create array of Mutexes for safe concurrent writes
+            let slots: Vec<_> = (0..result_len)
+                .map(|_| Arc::new(std::sync::Mutex::new(None)))
+                .collect();
+            
+            std::thread::scope(|scope| {
+                for i in s..e {
+                    let self_ref = self;
+                    let idx = i - s;
+                    let slot = Arc::clone(&slots[idx]);
+                    
+                    scope.spawn(move || {
+                        let value = self_ref.nth(i).clone();
+                        *slot.lock().unwrap() = Some(value);
+                    });
+                }
+            });
+            
+            // All threads joined, extract values
+            let vals: Vec<T> = slots
+                .into_iter()
+                .map(|slot| Arc::try_unwrap(slot).unwrap().into_inner().unwrap().unwrap())
+                .collect();
+            
             Self::from_vec(vals)
         }
         fn from_vec(values: Vec<T>) -> Self {
