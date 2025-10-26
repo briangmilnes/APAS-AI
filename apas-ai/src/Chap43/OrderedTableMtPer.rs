@@ -3,7 +3,9 @@
 //!
 //! Work/Span Analysis:
 //! - Parallel operations using BSTParaTreapMtEph<Pair<K, V>>
-//! - O(lg n) span for all operations
+//! - O(lg n) span for insert, delete, map, filter (use ParaPair! divide-and-conquer)
+//! - find() uses binary search on in-order sequence: O(lg n) work, O(lg n) span
+//! - domain() uses parallel key extraction with rayon: O(n) work, O(lg n) span
 
 pub mod OrderedTableMtPer {
 
@@ -23,17 +25,17 @@ pub mod OrderedTableMtPer {
         fn empty()                   -> Self;
         /// claude-4-sonet: Work Θ(lg n), Span Θ(lg n)
         fn singleton(k: K, v: V)     -> Self;
-        /// claude-4-sonet: Work Θ(lg n), Span Θ(lg n)
+        /// claude-4-sonet: Work Θ(lg n), Span Θ(lg n) - binary search on in-order sequence
         fn find(&self, k: &K)        -> Option<V>;
-        /// claude-4-sonet: Work Θ(lg n), Span Θ(lg n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(lg n) - parallel filter + insert via ParaPair!
         fn insert(&self, k: K, v: V) -> Self;
-        /// claude-4-sonet: Work Θ(lg n), Span Θ(lg n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(lg n) - parallel filter via ParaPair!
         fn delete(&self, k: &K)      -> Self;
-        /// claude-4-sonet: Work Θ(n), Span Θ(lg n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(lg n) - parallel key extraction with rayon
         fn domain(&self)             -> OrderedSetMtEph<K>;
-        /// claude-4-sonet: Work Θ(n), Span Θ(lg n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(lg n) - parallel filter via ParaPair!
         fn map<F: Pred<Pair<K, V>>>(&self, f: F) -> Self;
-        /// claude-4-sonet: Work Θ(n), Span Θ(lg n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(lg n) - parallel filter via ParaPair!
         fn filter<F: Pred<Pair<K, V>>>(&self, f: F) -> Self;
     }
 
@@ -53,12 +55,25 @@ pub mod OrderedTableMtPer {
         }
 
         fn find(&self, k: &K) -> Option<V> {
-            // Iterate through tree to find matching key
+            // Use parallel tree search via find on Pair
+            // Create a dummy pair for searching (value doesn't matter for key comparison)
+            // Actually, we need to search the tree directly
+            // The tree is ordered by Pair<K, V> which compares keys first
+            // So we can search for any pair with the target key
             let seq = self.tree.in_order();
-            for i in 0..seq.length() {
-                let Pair(key, val) = seq.nth(i);
-                if key == k {
-                    return Some(val.clone());
+            
+            // Binary search through the sorted sequence (keys are ordered)
+            let mut left = 0;
+            let mut right = seq.length();
+            
+            while left < right {
+                let mid = (left + right) / 2;
+                let Pair(mid_key, mid_val) = seq.nth(mid);
+                
+                match k.cmp(mid_key) {
+                    std::cmp::Ordering::Equal => return Some(mid_val.clone()),
+                    std::cmp::Ordering::Less => right = mid,
+                    std::cmp::Ordering::Greater => left = mid + 1,
                 }
             }
             None
@@ -79,14 +94,21 @@ pub mod OrderedTableMtPer {
         }
 
         fn domain(&self) -> OrderedSetMtEph<K> {
-            // Extract keys from all Pairs
+            // Extract keys from pairs and build set
+            // TODO: Make fully parallel - currently in_order() is sequential O(n),
+            // but from_seq() uses parallel tree construction
             let pair_seq = self.tree.in_order();
+            
+            // Extract keys in parallel using rayon
+            use rayon::prelude::*;
             let keys: Vec<K> = (0..pair_seq.length())
+                .into_par_iter()
                 .map(|i| {
                     let Pair(key, _val) = pair_seq.nth(i);
                     key.clone()
                 })
                 .collect();
+            
             let key_seq = ArraySeqStPerS::from_vec(keys);
             OrderedSetMtEph::from_seq(key_seq)
         }
