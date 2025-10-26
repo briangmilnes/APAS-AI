@@ -186,21 +186,31 @@ pub mod BSTPlainMtEph {
         }
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
-            fn traverse<T: StTInMtT + Ord>(link: &Link<T>, out: &mut Vec<T>) {
+            fn traverse_parallel<T: StTInMtT + Ord>(link: &Link<T>) -> Vec<T> {
                 let guard = link.read().unwrap();
-                if let Some(node) = guard.as_ref() {
-                    let left = node.left.clone();
-                    let right = node.right.clone();
-                    let key = node.key.clone();
-                    drop(guard);
-                    traverse(&left, out);
-                    out.push(key);
-                    traverse(&right, out);
+                match guard.as_ref() {
+                    | None => Vec::new(),
+                    | Some(node) => {
+                        let left = node.left.clone();
+                        let right = node.right.clone();
+                        let key = node.key.clone();
+                        drop(guard);
+                        
+                        use crate::Types::Types::Pair;
+                        let Pair(left_vals, right_vals) = crate::ParaPair!(
+                            move || traverse_parallel(&left),
+                            move || traverse_parallel(&right)
+                        );
+                        
+                        let mut result = left_vals;
+                        result.push(key);
+                        result.extend(right_vals);
+                        result
+                    }
                 }
             }
 
-            let mut values = Vec::new();
-            traverse(&self.root, &mut values);
+            let values = traverse_parallel(&self.root);
             ArraySeqStPerS::from_vec(values)
         }
     }

@@ -105,6 +105,114 @@ pub mod BSTSplayMtEph {
         }
     }
 
+    // Parallel traversals
+
+    fn in_order_parallel<T: StTInMtT + Ord>(link: &Link<T>) -> Vec<T> {
+        match link {
+            | None => Vec::new(),
+            | Some(node) => {
+                use crate::Types::Types::Pair;
+                let Pair(left_vec, right_vec) = crate::ParaPair!(
+                    move || in_order_parallel(&node.left),
+                    move || in_order_parallel(&node.right)
+                );
+                let mut result = left_vec;
+                result.push(node.key.clone());
+                result.extend(right_vec);
+                result
+            }
+        }
+    }
+
+    fn pre_order_parallel<T: StTInMtT + Ord>(link: &Link<T>) -> Vec<T> {
+        match link {
+            | None => Vec::new(),
+            | Some(node) => {
+                use crate::Types::Types::Pair;
+                let Pair(left_vec, right_vec) = crate::ParaPair!(
+                    move || pre_order_parallel(&node.left),
+                    move || pre_order_parallel(&node.right)
+                );
+                let mut result = vec![node.key.clone()];
+                result.extend(left_vec);
+                result.extend(right_vec);
+                result
+            }
+        }
+    }
+
+    // Parallel construction from sorted slice
+    fn build_balanced<T: StTInMtT + Ord>(values: &[T]) -> Link<T> {
+        if values.is_empty() {
+            return None;
+        }
+        let mid = values.len() / 2;
+        
+        // Parallel construction of left and right subtrees
+        use crate::Types::Types::Pair;
+        let Pair(left, right) = crate::ParaPair!(
+            move || build_balanced(&values[..mid]),
+            move || build_balanced(&values[mid + 1..])
+        );
+        
+        let mut node = Box::new(new_node(values[mid].clone()));
+        node.left = left;
+        node.right = right;
+        update(&mut node);
+        Some(node)
+    }
+
+    // Parallel filter
+    fn filter_parallel<T: StTInMtT + Ord, F>(link: &Link<T>, predicate: &std::sync::Arc<F>) -> Vec<T>
+    where
+        F: Fn(&T) -> bool + Send + Sync,
+    {
+        match link {
+            | None => Vec::new(),
+            | Some(node) => {
+                let pred_left = std::sync::Arc::clone(predicate);
+                let pred_right = std::sync::Arc::clone(predicate);
+                
+                use crate::Types::Types::Pair;
+                let Pair(left_vals, right_vals) = crate::ParaPair!(
+                    move || filter_parallel(&node.left, &pred_left),
+                    move || filter_parallel(&node.right, &pred_right)
+                );
+                
+                let mut result = left_vals;
+                if predicate(&node.key) {
+                    result.push(node.key.clone());
+                }
+                result.extend(right_vals);
+                result
+            }
+        }
+    }
+
+    // Parallel reduce
+    fn reduce_parallel<T: StTInMtT + Ord, F>(link: &Link<T>, op: &std::sync::Arc<F>, identity: T) -> T
+    where
+        F: Fn(T, T) -> T + Send + Sync,
+    {
+        match link {
+            | None => identity,
+            | Some(node) => {
+                let op_left = std::sync::Arc::clone(op);
+                let op_right = std::sync::Arc::clone(op);
+                let id_left = identity.clone();
+                
+                use crate::Types::Types::Pair;
+                let Pair(left_acc, right_acc) = crate::ParaPair!(
+                    move || reduce_parallel(&node.left, &op_left, id_left),
+                    move || reduce_parallel(&node.right, &op_right, identity)
+                );
+                
+                let with_key = op(left_acc, node.key.clone());
+                op(with_key, right_acc)
+            }
+        }
+    }
+
     #[derive(Debug, Clone)]
     pub struct BSTSplayMtEph<T: StTInMtT + Ord> {
         root: Arc<RwLock<Link<T>>>,
@@ -115,6 +223,8 @@ pub mod BSTSplayMtEph {
     pub trait BSTSplayMtEphTrait<T: StTInMtT + Ord>: Sized {
         /// claude-4-sonet: Work Θ(1), Span Θ(1)
         fn new()                       -> Self;
+        /// claude-4-sonet: Work Θ(n), Span Θ(log n) - Parallel construction from sorted slice
+        fn from_sorted_slice(values: &[T]) -> Self;
         /// claude-4-sonet: Work Θ(log n) amortized, Θ(n) worst case; Span Θ(log n) amortized with locking
         fn insert(&self, value: T);
         /// claude-4-sonet: Work Θ(log n) amortized, Θ(n) worst case; Span Θ(log n) amortized with locking
@@ -131,10 +241,18 @@ pub mod BSTSplayMtEph {
         fn minimum(&self)              -> Option<T>;
         /// claude-4-sonet: Work Θ(log n) amortized, Θ(n) worst case; Span Θ(log n) amortized with locking
         fn maximum(&self)              -> Option<T>;
-        /// claude-4-sonet: Work Θ(n), Span Θ(n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(log n) - Parallel traversal
         fn in_order(&self)             -> ArraySeqStPerS<T>;
-        /// claude-4-sonet: Work Θ(n), Span Θ(n)
+        /// claude-4-sonet: Work Θ(n), Span Θ(log n) - Parallel traversal
         fn pre_order(&self)            -> ArraySeqStPerS<T>;
+        /// claude-4-sonet: Work Θ(n), Span Θ(log n) - Parallel filter
+        fn filter<F>(&self, predicate: F) -> ArraySeqStPerS<T>
+        where
+            F: Fn(&T) -> bool + Send + Sync;
+        /// claude-4-sonet: Work Θ(n), Span Θ(log n) - Parallel reduce
+        fn reduce<F>(&self, op: F, identity: T) -> T
+        where
+            F: Fn(T, T) -> T + Send + Sync;
     }
 
     impl<T: StTInMtT + Ord> BSTSplayMtEphTrait<T> for BSTSplayMtEph<T> {
@@ -186,16 +304,39 @@ pub mod BSTSplayMtEph {
 
         fn in_order(&self) -> ArraySeqStPerS<T> {
             let guard = self.root.read().unwrap();
-            let mut out = Vec::with_capacity(size_link(&*guard));
-            in_order_collect(&*guard, &mut out);
+            let out = in_order_parallel(&*guard);
             ArraySeqStPerS::from_vec(out)
         }
 
         fn pre_order(&self) -> ArraySeqStPerS<T> {
             let guard = self.root.read().unwrap();
-            let mut out = Vec::with_capacity(size_link(&*guard));
-            pre_order_collect(&*guard, &mut out);
+            let out = pre_order_parallel(&*guard);
             ArraySeqStPerS::from_vec(out)
+        }
+
+        fn from_sorted_slice(values: &[T]) -> Self {
+            BSTSplayMtEph {
+                root: Arc::new(RwLock::new(build_balanced(values))),
+            }
+        }
+
+        fn filter<F>(&self, predicate: F) -> ArraySeqStPerS<T>
+        where
+            F: Fn(&T) -> bool + Send + Sync,
+        {
+            let guard = self.root.read().unwrap();
+            let predicate = std::sync::Arc::new(predicate);
+            let out = filter_parallel(&*guard, &predicate);
+            ArraySeqStPerS::from_vec(out)
+        }
+
+        fn reduce<F>(&self, op: F, identity: T) -> T
+        where
+            F: Fn(T, T) -> T + Send + Sync,
+        {
+            let guard = self.root.read().unwrap();
+            let op = std::sync::Arc::new(op);
+            reduce_parallel(&*guard, &op, identity)
         }
     }
 

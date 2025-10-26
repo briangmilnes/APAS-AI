@@ -116,43 +116,93 @@ pub mod BSTSetPlainMtEph {
         }
 
         fn union(&self, other: &Self) -> Self {
-            let mut merged = self.values_vec().into_iter().collect::<BTreeSet<T>>();
-            for value in other.values_vec() {
-                merged.insert(value);
+            // Parallel divide-and-conquer using split/join
+            if self.is_empty() {
+                return other.clone();
             }
-            Self::from_sorted_iter(merged)
+            if other.is_empty() {
+                return self.clone();
+            }
+            
+            let pivot = if self.size() <= other.size() {
+                self.tree.minimum().unwrap()
+            } else {
+                other.tree.minimum().unwrap()
+            };
+            
+            let (self_left, found_self, self_right) = self.split(&pivot);
+            let (other_left, found_other, other_right) = other.split(&pivot);
+            
+            use crate::Types::Types::Pair;
+            let Pair(left_union, right_union) = crate::ParaPair!(
+                move || self_left.union(&other_left),
+                move || self_right.union(&other_right)
+            );
+            
+            if found_self || found_other {
+                Self::join_m(left_union, pivot, right_union)
+            } else {
+                Self::join_pair(left_union, right_union)
+            }
         }
 
         fn intersection(&self, other: &Self) -> Self {
-            let other_values = other.values_vec().into_iter().collect::<BTreeSet<T>>();
-            let filtered = self
-                .tree
-                .in_order()
-                .iter()
-                .filter_map(|v| {
-                    if other_values.contains(v) {
-                        Some(v.clone())
-                    } else {
-                        None
-                    }
-                }).collect::<Vec<T>>();
-            Self::from_sorted_iter(filtered)
+            // Parallel divide-and-conquer using split/join
+            if self.is_empty() || other.is_empty() {
+                return Self::empty();
+            }
+            
+            let pivot = if self.size() <= other.size() {
+                self.tree.minimum().unwrap()
+            } else {
+                other.tree.minimum().unwrap()
+            };
+            
+            let (self_left, found_self, self_right) = self.split(&pivot);
+            let (other_left, found_other, other_right) = other.split(&pivot);
+            
+            use crate::Types::Types::Pair;
+            let Pair(left_inter, right_inter) = crate::ParaPair!(
+                move || self_left.intersection(&other_left),
+                move || self_right.intersection(&other_right)
+            );
+            
+            if found_self && found_other {
+                Self::join_m(left_inter, pivot, right_inter)
+            } else {
+                Self::join_pair(left_inter, right_inter)
+            }
         }
 
         fn difference(&self, other: &Self) -> Self {
-            let other_values = other.values_vec().into_iter().collect::<BTreeSet<T>>();
-            let filtered = self
-                .tree
-                .in_order()
-                .iter()
-                .filter_map(|v| {
-                    if !other_values.contains(v) {
-                        Some(v.clone())
-                    } else {
-                        None
-                    }
-                }).collect::<Vec<T>>();
-            Self::from_sorted_iter(filtered)
+            // Parallel divide-and-conquer using split/join
+            if self.is_empty() {
+                return Self::empty();
+            }
+            if other.is_empty() {
+                return self.clone();
+            }
+            
+            let pivot = if self.size() <= other.size() {
+                self.tree.minimum().unwrap()
+            } else {
+                other.tree.minimum().unwrap()
+            };
+            
+            let (self_left, found_self, self_right) = self.split(&pivot);
+            let (other_left, _, other_right) = other.split(&pivot);
+            
+            use crate::Types::Types::Pair;
+            let Pair(left_diff, right_diff) = crate::ParaPair!(
+                move || self_left.difference(&other_left),
+                move || self_right.difference(&other_right)
+            );
+            
+            if found_self {
+                Self::join_pair(left_diff, right_diff)
+            } else {
+                Self::join_m(left_diff, pivot, right_diff)
+            }
         }
 
         fn split(&self, pivot: &T) -> (Self, B, Self) {

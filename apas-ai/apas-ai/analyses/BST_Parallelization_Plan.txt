@@ -1,0 +1,150 @@
+Parallelization Plan for Remaining BST Mt Files
+================================================
+
+## Summary
+5 files need parallelization to achieve O(log n) span for traversal operations.
+4 are base BSTs, 1 is a Set wrapper.
+
+## Current Status Analysis
+
+### 1. BSTRBMtEph.rs (Red-Black BST)
+- **Structure**: Arc<RwLock<Option<Box<Node<T>>>>> at root (coarse-grained locking)
+- **Current State**: Thread-safe but SEQUENTIAL operations
+- **Operations**: in_order(), pre_order(), insert(), find(), min/max
+- **Needs**: Same parallelization as BSTAVLMtEph
+
+### 2. BSTSplayMtEph.rs (Splay BST)
+- **Structure**: Arc<RwLock<Option<Box<Node<T>>>>> at root (coarse-grained locking)
+- **Current State**: Thread-safe but SEQUENTIAL operations
+- **Operations**: in_order(), pre_order(), insert(), find(), min/max
+- **Needs**: Same parallelization as BSTAVLMtEph
+
+### 3. BSTPlainMtEph.rs (Plain BST)
+- **Structure**: Arc<RwLock<Option<Node<T>>>> at EVERY node (fine-grained locking)
+- **Current State**: Thread-safe with fine-grained locks, SEQUENTIAL operations
+- **Operations**: in_order(), insert(), find(), min/max
+- **Needs**: Parallel traversals but different implementation (clone Arcs, release locks, recurse in parallel)
+
+### 4. BSTSetPlainMtEph.rs (Set wrapper around BSTPlainMtEph)
+- **Structure**: Wraps BSTPlainMtEph base tree
+- **Current State**: Uses BTreeSet merge + sequential iteration for aggregate operations
+- **Operations**: union(), intersection(), difference(), filter(), reduce(), join_pair(), join_m()
+- **Needs**: Same parallelization as other BSTSet files (split/join with ParaPair!)
+
+### 5. BSTSetTreapMtEph.rs (Set wrapper around BSTTreapStEph)
+- **Structure**: Wraps BSTTreapStEph (SEQUENTIAL backing store)
+- **Current State**: Explicitly documented as SEQUENTIAL for compatibility
+- **Operations**: union(), intersection(), difference(), filter(), reduce()
+- **Decision**: Leave as-is (docs say use BSTParaTreapMtEph for parallelism) OR parallelize
+
+## Parallelization Strategy
+
+### For Base BSTs (BSTRBMtEph, BSTSplayMtEph)
+Same as BSTAVLMtEph:
+
+1. **build_balanced(values: &[T]) -> Link<T>**
+   - Recursive with ParaPair! on left/right subtrees
+   - O(n) work, O(log n) span
+
+2. **in_order_parallel(link: &Link<T>) -> Vec<T>**
+   - ParaPair! on left/right subtrees, combine with root
+   - O(n) work, O(log n) span
+
+3. **pre_order_parallel(link: &Link<T>) -> Vec<T>**
+   - ParaPair! on left/right subtrees, combine with root
+   - O(n) work, O(log n) span
+
+4. **filter_parallel(link: &Link<T>, predicate: &Arc<F>) -> Vec<T>**
+   - Recursive with ParaPair!, Arc for closure sharing
+   - O(n) work, O(log n) span
+
+5. **reduce_parallel(link: &Link<T>, op: &Arc<F>, identity: T) -> T**
+   - Recursive with ParaPair!, Arc for closure sharing
+   - O(n) work, O(log n) span
+
+6. **from_sorted_slice(values: &[T]) -> Self**
+   - Uses build_balanced() internally
+   - O(n) work, O(log n) span
+
+### For BSTPlainMtEph (Fine-grained locking)
+Similar to above but with different locking pattern:
+
+1. **in_order_parallel(link: &Link<T>) -> Vec<T>**
+   - Acquire read lock, clone Arc children, release lock
+   - ParaPair! on cloned Arcs
+   - O(n) work, O(log n) span
+
+2. **from_sorted_slice(values: &[T]) -> Self**
+   - Build tree structure in parallel
+   - Each node gets its own Arc<RwLock<...>>
+   - O(n) work, O(log n) span
+
+3. **filter_parallel(link: &Link<T>, predicate: &Arc<F>) -> Vec<T>**
+   - Similar to in_order but with predicate
+   - O(n) work, O(log n) span
+
+4. **reduce_parallel(link: &Link<T>, op: &Arc<F>, identity: T) -> T**
+   - Similar to in_order but with binary operation
+   - O(n) work, O(log n) span
+
+### For BSTSetPlainMtEph
+Same as other BSTSet files (BSTSetAVLMtEph pattern):
+
+1. **union(&self, other: &Self) -> Self**
+   - Pick pivot from smaller tree
+   - Split both trees at pivot
+   - ParaPair! on left/right recursive unions
+   - Join results
+   - O(m log(n/m)) work, O(log n × log m) span
+
+2. **intersection(&self, other: &Self) -> Self**
+   - Same pattern as union
+   - Include pivot only if found in both
+   - O(m log(n/m)) work, O(log n × log m) span
+
+3. **difference(&self, other: &Self) -> Self**
+   - Same pattern as union
+   - Include pivot only if NOT found in other
+   - O(m log(n/m)) work, O(log n × log m) span
+
+4. **join_pair(left: Self, right: Self) -> Self**
+   - Parallel values_vec() extraction from both
+   - Merge and rebuild
+   - Modest improvement
+
+5. **join_m(left: Self, pivot: T, right: Self) -> Self**
+   - Same as join_pair with pivot insertion
+   - Modest improvement
+
+NOTE: filter() and reduce() remain sequential due to FnMut constraints
+
+## Implementation Order
+
+1. **BSTRBMtEph** - Most similar to BSTAVLMtEph (just different balancing)
+2. **BSTSplayMtEph** - Same structure as above
+3. **BSTPlainMtEph** - Different locking, needs careful Arc handling
+4. **BSTSetPlainMtEph** - Uses BSTPlainMtEph, needs split/join
+5. **BSTSetTreapMtEph** - Decision point (skip or parallelize)
+
+## Expected Test Results
+
+After parallelization:
+- BSTRBMtEph: ~22 tests (13 original + 9 new)
+- BSTSplayMtEph: ~22 tests (13 original + 9 new)
+- BSTPlainMtEph: ~22 tests (13 original + 9 new)
+- BSTSetPlainMtEph: ~49 tests (all passing with parallel operations)
+- Total suite: 3718 + ~27 new tests = 3745+ tests
+
+## Performance Improvement Summary
+
+### Before:
+- Traversals: O(n) span (sequential)
+- Aggregate ops: O(n) span (sequential BTreeSet merge)
+
+### After:
+- Traversals: O(log n) span (parallel)
+- Aggregate ops: O(log n × log m) span (parallel split/join)
+- Bulk construction: O(log n) span (parallel build_balanced)
+
+All while maintaining thread-safety and O(log n) span for concurrent access!
+
