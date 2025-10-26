@@ -26,58 +26,53 @@ pub mod OrderStatSelectMtPer {
                 return Some(self.nth(0).clone());
             }
 
+            // Algorithm 35.2: Randomized selection with parallel partition
             let pivot_idx = rand::rng().random_range(0..n);
             let pivot = self.nth(pivot_idx).clone();
 
-            let mut left_count = 0;
-            let mut right_count = 0;
+            // Parallel partition using rayon
+            use rayon::prelude::*;
+            
+            let pivot_left = pivot.clone();
+            let pivot_right = pivot.clone();
+            
+            // Parallel filter for left partition (elements < pivot)
+            let left_vec: Vec<T> = (0..n)
+                .into_par_iter()
+                .filter_map(|i| {
+                    let elem = self.nth(i);
+                    if elem < &pivot_left {
+                        Some(elem.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
+            
+            // Parallel filter for right partition (elements > pivot)
+            let right_vec: Vec<T> = (0..n)
+                .into_par_iter()
+                .filter_map(|i| {
+                    let elem = self.nth(i);
+                    if elem > &pivot_right {
+                        Some(elem.clone())
+                    } else {
+                        None
+                    }
+                })
+                .collect();
 
-            for i in 0..n {
-                let elem = self.nth(i);
-                if elem < &pivot {
-                    left_count += 1;
-                } else if elem > &pivot {
-                    right_count += 1;
-                }
-            }
+            let left_count = left_vec.len();
+            let right_count = right_vec.len();
 
+            // Recursive selection based on partition sizes
             if k < left_count {
-                let left = ArraySeqMtPerS::tabulate(
-                    &|i| {
-                        let mut idx = 0;
-                        for j in 0..n {
-                            let elem = self.nth(j);
-                            if elem < &pivot {
-                                if idx == i {
-                                    return elem.clone();
-                                }
-                                idx += 1;
-                            }
-                        }
-                        panic!("Index out of bounds in left partition");
-                    },
-                    left_count,
-                );
+                let left = ArraySeqMtPerS::from_vec(left_vec);
                 left.select(k)
             } else if k < n - right_count {
                 Some(pivot)
             } else {
-                let right = ArraySeqMtPerS::tabulate(
-                    &|i| {
-                        let mut idx = 0;
-                        for j in 0..n {
-                            let elem = self.nth(j);
-                            if elem > &pivot {
-                                if idx == i {
-                                    return elem.clone();
-                                }
-                                idx += 1;
-                            }
-                        }
-                        panic!("Index out of bounds in right partition");
-                    },
-                    right_count,
-                );
+                let right = ArraySeqMtPerS::from_vec(right_vec);
                 right.select(k - (n - right_count))
             }
         }
