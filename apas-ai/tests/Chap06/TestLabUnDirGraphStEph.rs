@@ -152,6 +152,30 @@ fn test_clone() {
 }
 
 #[test]
+fn test_display_fmt() {
+    let mut g = LabUnDirGraphStEph::<i32, String>::empty();
+    g.add_labeled_edge(1, 2, "edge1".to_string());
+    g.add_vertex(3);
+    
+    let display_str = format!("{}", g);
+    assert!(display_str.contains("LabUnDirGraph"));
+    assert!(display_str.contains("V:"));
+    assert!(display_str.contains("E:"));
+}
+
+#[test]
+fn test_debug_fmt() {
+    let mut g = LabUnDirGraphStEph::<i32, String>::empty();
+    g.add_labeled_edge(1, 2, "edge1".to_string());
+    g.add_vertex(3);
+    
+    let debug_str = format!("{:?}", g);
+    assert!(debug_str.contains("LabUnDirGraph"));
+    assert!(debug_str.contains("vertices"));
+    assert!(debug_str.contains("labeled_edges"));
+}
+
+#[test]
 fn test_empty_graph_operations() {
     let g = LabUnDirGraphStEph::<i32, String>::empty();
     assert_eq!(g.vertices().size(), 0);
