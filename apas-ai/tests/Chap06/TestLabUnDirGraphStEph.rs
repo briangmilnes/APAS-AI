@@ -131,6 +131,27 @@ fn test_normalize_edge() {
 }
 
 #[test]
+fn test_clone() {
+    let mut g = LabUnDirGraphStEph::<i32, String>::empty();
+    g.add_labeled_edge(1, 2, "test".to_string());
+    g.add_vertex(3);
+    
+    // Clone the graph (aka "clone the nose" - Woody Allen, Sleeper)
+    let g_clone = g.clone();
+    
+    // Verify clone has same structure
+    assert_eq!(g_clone.vertices().size(), g.vertices().size());
+    assert_eq!(g_clone.labeled_edges().size(), g.labeled_edges().size());
+    assert!(g_clone.has_edge(&1, &2));
+    assert!(set_contains(g_clone.vertices(), &3));
+    
+    // Verify independence (modify original, clone unchanged)
+    g.add_vertex(4);
+    assert_eq!(g.vertices().size(), 4);
+    assert_eq!(g_clone.vertices().size(), 3); // Clone should still be 3
+}
+
+#[test]
 fn test_empty_graph_operations() {
     let g = LabUnDirGraphStEph::<i32, String>::empty();
     assert_eq!(g.vertices().size(), 0);

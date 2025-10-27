@@ -310,3 +310,44 @@ fn test_into_iter_impl_mut_ref() {
     assert_eq!(count, 3);
 }
 
+#[test]
+fn test_new_impl_via_trait() {
+    // Call the impl block's new directly via trait bound
+    let seq = <MathSeqS<i32> as MathSeqTrait<i32>>::new(10, 99);
+    assert_eq!(seq.length(), 10);
+    for i in 0..10 {
+        assert_eq!(*seq.nth(i), 99);
+    }
+}
+
+#[test]
+fn test_into_iter_by_ref_explicit() {
+    // Explicitly test IntoIterator for &MathSeqS
+    let seq = MathSeqSLit![1, 2, 3, 4, 5];
+    let mut sum = 0;
+    for val in &seq {
+        sum += val;
+    }
+    assert_eq!(sum, 15);
+}
+
+#[test]
+fn test_into_iter_by_mut_ref_explicit() {
+    // Explicitly test IntoIterator for &mut MathSeqS
+    let mut seq = MathSeqSLit![1, 2, 3];
+    for val in &mut seq {
+        *val *= 2;
+    }
+    assert_eq!(*seq.nth(0), 2);
+    assert_eq!(*seq.nth(1), 4);
+    assert_eq!(*seq.nth(2), 6);
+}
+
+#[test]
+fn test_into_iter_by_value_explicit() {
+    // Explicitly test IntoIterator for MathSeqS (by value)
+    let seq = MathSeqSLit![10, 20, 30];
+    let collected: Vec<i32> = seq.into_iter().collect();
+    assert_eq!(collected, vec![10, 20, 30]);
+}
+

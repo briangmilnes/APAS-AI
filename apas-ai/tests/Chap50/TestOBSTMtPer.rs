@@ -165,3 +165,14 @@ fn test_obst_iterability() {
     }
     assert_eq!(count, 3);
 }
+
+#[test]
+fn test_keyprob_display() {
+    let kp = KeyProb {
+        key: 42,
+        prob: Probability::new(0.75),
+    };
+    let display_str = format!("{}", kp);
+    assert!(display_str.contains("42"));
+    assert!(display_str.contains("0.75"));
+}
