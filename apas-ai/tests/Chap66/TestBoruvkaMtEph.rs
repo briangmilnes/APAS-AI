@@ -175,3 +175,76 @@ fn test_boruvka_mt_larger_graph() {
     assert_eq!(mst_labels.size(), 7); // n-1 edges for n vertices
     assert!(mst_w < OrderedFloat(40.0)); // Should be less than sum of all edges
 }
+
+#[test]
+fn test_vertex_bridges_mt_triangle() {
+    use std::sync::Arc;
+    let edges = vec![
+        LabeledEdge(1, 2, OrderedFloat(3.0), 0),
+        LabeledEdge(2, 3, OrderedFloat(2.0), 1),
+        LabeledEdge(3, 1, OrderedFloat(1.0), 2),
+    ];
+    let edges_arc = Arc::new(edges);
+    let bridges = vertex_bridges_mt(edges_arc, 0, 3);
+    assert_eq!(bridges.len(), 3);
+    assert_eq!(bridges.get(&1), Some(&(3, OrderedFloat(1.0), 2)));
+    assert_eq!(bridges.get(&2), Some(&(3, OrderedFloat(2.0), 1)));
+    assert_eq!(bridges.get(&3), Some(&(1, OrderedFloat(1.0), 2)));
+}
+
+#[test]
+fn test_vertex_bridges_mt_empty() {
+    use std::sync::Arc;
+    let edges: Vec<LabeledEdge<i32>> = vec![];
+    let edges_arc = Arc::new(edges);
+    let bridges = vertex_bridges_mt(edges_arc, 0, 0);
+    assert_eq!(bridges.len(), 0);
+}
+
+#[test]
+fn test_bridge_star_partition_mt() {
+    use rand::rngs::StdRng;
+    use rand::SeedableRng;
+    use std::collections::HashMap;
+    
+    let vertices = vec![1, 2, 3];
+    let mut bridges = HashMap::new();
+    bridges.insert(1, (2, OrderedFloat(1.0), 0));
+    bridges.insert(2, (3, OrderedFloat(2.0), 1));
+    
+    let mut rng = StdRng::seed_from_u64(42);
+    let (remaining, partition) = bridge_star_partition_mt(vertices, bridges, &mut rng);
+    
+    assert!(remaining.size() + partition.len() <= 3);
+    assert!(remaining.size() > 0 || partition.len() > 0);
+}
+
+#[test]
+fn test_boruvka_mst_mt_direct() {
+    use rand::rngs::StdRng;
+    use rand::SeedableRng;
+    
+    let vertices = vec![1, 2, 3];
+    let edges = vec![
+        LabeledEdge(1, 2, OrderedFloat(3.0), 0),
+        LabeledEdge(2, 3, OrderedFloat(2.0), 1),
+        LabeledEdge(3, 1, OrderedFloat(1.0), 2),
+    ];
+    let mut rng = StdRng::seed_from_u64(42);
+    let mst_labels = boruvka_mst_mt(vertices, edges, SetLit![], &mut rng);
+    
+    assert_eq!(mst_labels.size(), 2);
+}
+
+#[test]
+fn test_boruvka_mst_mt_empty() {
+    use rand::rngs::StdRng;
+    use rand::SeedableRng;
+    
+    let vertices: Vec<i32> = vec![];
+    let edges: Vec<LabeledEdge<i32>> = vec![];
+    let mut rng = StdRng::seed_from_u64(42);
+    let mst_labels = boruvka_mst_mt(vertices, edges, SetLit![], &mut rng);
+    
+    assert_eq!(mst_labels.size(), 0);
+}
