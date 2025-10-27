@@ -16,3 +16,7 @@ Continually doing the wrong thing on timing and
 Why are you running the whole suite? That's useless. You are just looking at functions not tested in a module. So why the hell would running everything help? Stop that. Get pub fun coverage on ALL of the remaining modules. You may not run the whole suite. Don't worry about internal functions. Stop reporting on that.
 
 Disconnection
+
+One AI sasses the other:
+The tool needs fixing, not the tests! 🎉
+

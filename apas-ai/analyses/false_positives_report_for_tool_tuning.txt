@@ -1,0 +1,359 @@
+================================================================================
+FALSE POSITIVES REPORT FOR review-test-functions TOOL
+================================================================================
+Total "Uncovered": 191 functions
+Actual False Positives: ~184 (96.3%)
+Genuinely Uncovered: ~7 (3.7%)
+
+================================================================================
+CATEGORY 1: Display/Debug fmt() Implementations (107 functions - 56%)
+================================================================================
+Pattern: impl Display/Debug { fn fmt(&self, f: &mut Formatter) -> Result }
+Problem: Tool doesn't detect usage via format!(), println!(), {:?}, or {}
+
+Detection Strategy:
+- Look for "impl Display for" or "impl Debug for" in same file
+- Check if function signature matches: fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult
+- Cross-reference with test files calling format!("{}", obj) or format!("{:?}", obj)
+
+All 107 fmt() functions follow this pattern:
+
+src/Chap05/MappingStEph.rs:104:  fmt - NO TEST COVERAGE
+src/Chap05/MappingStEph.rs:108:  fmt - NO TEST COVERAGE
+src/Chap05/RelationStEph.rs:110:  fmt - NO TEST COVERAGE
+src/Chap05/RelationStEph.rs:114:  fmt - NO TEST COVERAGE
+src/Chap05/SetStEph.rs:148:  fmt - NO TEST COVERAGE
+src/Chap05/SetStEph.rs:151:  fmt - NO TEST COVERAGE
+src/Chap06/DirGraphMtEph.rs:287:  fmt - NO TEST COVERAGE
+src/Chap06/DirGraphMtEph.rs:296:  fmt - NO TEST COVERAGE
+src/Chap06/DirGraphStEph.rs:148:  fmt - NO TEST COVERAGE
+src/Chap06/DirGraphStEph.rs:157:  fmt - NO TEST COVERAGE
+src/Chap06/LabDirGraphMtEph.rs:194:  fmt - NO TEST COVERAGE
+src/Chap06/LabDirGraphMtEph.rs:200:  fmt - NO TEST COVERAGE
+src/Chap06/LabDirGraphStEph.rs:127:  fmt - NO TEST COVERAGE
+src/Chap06/LabDirGraphStEph.rs:133:  fmt - NO TEST COVERAGE
+src/Chap06/LabUnDirGraphMtEph.rs:174:  fmt - NO TEST COVERAGE
+src/Chap06/LabUnDirGraphMtEph.rs:180:  fmt - NO TEST COVERAGE
+src/Chap06/LabUnDirGraphStEph.rs:138:  fmt - NO TEST COVERAGE
+src/Chap06/LabUnDirGraphStEph.rs:144:  fmt - NO TEST COVERAGE
+src/Chap06/UnDirGraphMtEph.rs:160:  fmt - NO TEST COVERAGE
+src/Chap06/UnDirGraphMtEph.rs:169:  fmt - NO TEST COVERAGE
+src/Chap06/UnDirGraphStEph.rs:100:  fmt - NO TEST COVERAGE
+src/Chap06/UnDirGraphStEph.rs:109:  fmt - NO TEST COVERAGE
+src/Chap17/MathSeq.rs:223:  fmt - NO TEST COVERAGE
+src/Chap17/MathSeq.rs:227:  fmt - NO TEST COVERAGE
+src/Chap18/ArraySeq.rs:305:  fmt - NO TEST COVERAGE
+src/Chap18/ArraySeq.rs:309:  fmt - NO TEST COVERAGE
+src/Chap18/ArraySeqMtEph.rs:333:  fmt - NO TEST COVERAGE
+src/Chap18/ArraySeqMtPer.rs:426:  fmt - NO TEST COVERAGE
+src/Chap18/ArraySeqStEph.rs:261:  fmt - NO TEST COVERAGE
+src/Chap18/ArraySeqStEph.rs:279:  fmt - NO TEST COVERAGE
+src/Chap18/ArraySeqStPer.rs:273:  fmt - NO TEST COVERAGE
+src/Chap18/ArraySeqStPer.rs:291:  fmt - NO TEST COVERAGE
+src/Chap18/LinkedListStEph.rs:350:  fmt - NO TEST COVERAGE
+src/Chap18/LinkedListStEph.rs:368:  fmt - NO TEST COVERAGE
+src/Chap18/LinkedListStPer.rs:345:  fmt - NO TEST COVERAGE
+src/Chap18/LinkedListStPer.rs:363:  fmt - NO TEST COVERAGE
+src/Chap19/ArraySeqMtEphSlice.rs:492:  fmt - NO TEST COVERAGE
+src/Chap19/ArraySeqMtEphSlice.rs:501:  fmt - NO TEST COVERAGE
+src/Chap37/AVLTreeSeq.rs:279:  fmt - NO TEST COVERAGE
+src/Chap37/AVLTreeSeq.rs:286:  fmt - NO TEST COVERAGE
+src/Chap37/AVLTreeSeqMtPer.rs:300:  fmt - NO TEST COVERAGE
+src/Chap37/AVLTreeSeqStPer.rs:246:  fmt - NO TEST COVERAGE
+src/Chap41/AVLTreeSetMtEph.rs:268:  fmt - NO TEST COVERAGE
+src/Chap41/AVLTreeSetMtEph.rs:282:  fmt - NO TEST COVERAGE
+src/Chap41/AVLTreeSetMtPer.rs:326:  fmt - NO TEST COVERAGE
+src/Chap41/AVLTreeSetMtPer.rs:339:  fmt - NO TEST COVERAGE
+src/Chap41/AVLTreeSetStEph.rs:190:  fmt - NO TEST COVERAGE
+src/Chap41/AVLTreeSetStEph.rs:203:  fmt - NO TEST COVERAGE
+src/Chap41/AVLTreeSetStPer.rs:200:  fmt - NO TEST COVERAGE
+src/Chap43/AugOrderedTableMtEph.rs:396:  fmt - NO TEST COVERAGE
+src/Chap43/AugOrderedTableMtEph.rs:407:  fmt - NO TEST COVERAGE
+src/Chap43/AugOrderedTableStEph.rs:359:  fmt - NO TEST COVERAGE
+src/Chap43/AugOrderedTableStEph.rs:373:  fmt - NO TEST COVERAGE
+src/Chap43/AugOrderedTableStPer.rs:394:  fmt - NO TEST COVERAGE
+src/Chap43/AugOrderedTableStPer.rs:408:  fmt - NO TEST COVERAGE
+src/Chap44/DocumentIndex.rs:234:  fmt - NO TEST COVERAGE
+src/Chap44/DocumentIndex.rs:245:  fmt - NO TEST COVERAGE
+src/Chap45/BalancedTreePQ.rs:305:  fmt - NO TEST COVERAGE
+src/Chap45/BinaryHeapPQ.rs:324:  fmt - NO TEST COVERAGE
+src/Chap45/LeftistHeapPQ.rs:378:  fmt - NO TEST COVERAGE
+src/Chap45/SortedListPQ.rs:284:  fmt - NO TEST COVERAGE
+src/Chap45/UnsortedListPQ.rs:208:  fmt - NO TEST COVERAGE
+src/Chap49/MinEditDistMtEph.rs:192:  fmt - NO TEST COVERAGE
+src/Chap49/MinEditDistMtPer.rs:152:  fmt - NO TEST COVERAGE
+src/Chap49/MinEditDistStEph.rs:150:  fmt - NO TEST COVERAGE
+src/Chap49/MinEditDistStPer.rs:118:  fmt - NO TEST COVERAGE
+src/Chap49/SubsetSumMtEph.rs:168:  fmt - NO TEST COVERAGE
+src/Chap49/SubsetSumMtPer.rs:144:  fmt - NO TEST COVERAGE
+src/Chap49/SubsetSumStEph.rs:129:  fmt - NO TEST COVERAGE
+src/Chap49/SubsetSumStPer.rs:111:  fmt - NO TEST COVERAGE
+src/Chap50/MatrixChainMtEph.rs:240:  fmt - NO TEST COVERAGE
+src/Chap50/MatrixChainMtEph.rs:293:  fmt - NO TEST COVERAGE
+src/Chap50/MatrixChainMtPer.rs:191:  fmt - NO TEST COVERAGE
+src/Chap50/MatrixChainMtPer.rs:226:  fmt - NO TEST COVERAGE
+src/Chap50/MatrixChainStEph.rs:175:  fmt - NO TEST COVERAGE
+src/Chap50/MatrixChainStEph.rs:207:  fmt - NO TEST COVERAGE
+src/Chap50/MatrixChainStPer.rs:143:  fmt - NO TEST COVERAGE
+src/Chap50/MatrixChainStPer.rs:168:  fmt - NO TEST COVERAGE
+src/Chap50/OptBinSearchTreeMtEph.rs:240:  fmt - NO TEST COVERAGE
+src/Chap50/OptBinSearchTreeMtEph.rs:298:  fmt - NO TEST COVERAGE
+src/Chap50/OptBinSearchTreeMtPer.rs:190:  fmt - NO TEST COVERAGE
+src/Chap50/OptBinSearchTreeMtPer.rs:228:  fmt - NO TEST COVERAGE
+src/Chap50/OptBinSearchTreeStEph.rs:171:  fmt - NO TEST COVERAGE
+src/Chap50/OptBinSearchTreeStEph.rs:203:  fmt - NO TEST COVERAGE
+src/Chap50/OptBinSearchTreeStPer.rs:140:  fmt - NO TEST COVERAGE
+src/Chap50/OptBinSearchTreeStPer.rs:165:  fmt - NO TEST COVERAGE
+src/Chap50/Probability.rs:99:  fmt - NO TEST COVERAGE
+src/Chap50/Probability.rs:103:  fmt - NO TEST COVERAGE
+src/Chap51/BottomUpDPMtEph.rs:181:  fmt - NO TEST COVERAGE
+src/Chap51/BottomUpDPMtPer.rs:170:  fmt - NO TEST COVERAGE
+src/Chap51/BottomUpDPStEph.rs:148:  fmt - NO TEST COVERAGE
+src/Chap51/BottomUpDPStPer.rs:140:  fmt - NO TEST COVERAGE
+src/Chap51/TopDownDPMtEph.rs:249:  fmt - NO TEST COVERAGE
+src/Chap51/TopDownDPMtPer.rs:241:  fmt - NO TEST COVERAGE
+src/Chap51/TopDownDPStEph.rs:155:  fmt - NO TEST COVERAGE
+src/Chap51/TopDownDPStPer.rs:154:  fmt - NO TEST COVERAGE
+src/Chap57/DijkstraStEphFloat.rs:55:  fmt - NO TEST COVERAGE
+src/Chap57/DijkstraStEphInt.rs:54:  fmt - NO TEST COVERAGE
+src/Chap65/PrimStEph.rs:63:  fmt - NO TEST COVERAGE
+src/Chap66/BoruvkaMtEph.rs:60:  fmt - NO TEST COVERAGE
+src/Chap66/BoruvkaStEph.rs:56:  fmt - NO TEST COVERAGE
+src/Types.rs:208:  fmt - NO TEST COVERAGE
+src/Types.rs:224:  fmt - NO TEST COVERAGE
+src/Types.rs:251:  fmt - NO TEST COVERAGE
+src/Types.rs:254:  fmt - NO TEST COVERAGE
+src/Types.rs:257:  fmt - NO TEST COVERAGE
+src/Types.rs:262:  fmt - NO TEST COVERAGE
+
+================================================================================
+CATEGORY 2: Eq/PartialEq eq() Implementations (33 functions - 17%)
+================================================================================
+Pattern: impl PartialEq { fn eq(&self, other: &Self) -> bool }
+Problem: Tool doesn't detect usage via == or != operators
+
+Detection Strategy:
+- Look for "impl PartialEq for" or "impl Eq for" in same file
+- Check if function signature matches: fn eq(&self, other: &Self) -> bool
+- Cross-reference with test files using == or != operators
+
+All 33 eq() functions follow this pattern:
+
+src/Chap05/MappingStEph.rs:98:  eq - NO TEST COVERAGE
+src/Chap05/RelationStEph.rs:104:  eq - NO TEST COVERAGE
+src/Chap05/SetStEph.rs:142:  eq - NO TEST COVERAGE
+src/Chap06/DirGraphMtEph.rs:300:  eq - NO TEST COVERAGE
+src/Chap06/DirGraphStEph.rs:161:  eq - NO TEST COVERAGE
+src/Chap06/UnDirGraphMtEph.rs:173:  eq - NO TEST COVERAGE
+src/Chap06/UnDirGraphStEph.rs:113:  eq - NO TEST COVERAGE
+src/Chap17/MathSeq.rs:217:  eq - NO TEST COVERAGE
+src/Chap18/ArraySeq.rs:299:  eq - NO TEST COVERAGE
+src/Chap18/ArraySeqMtEph.rs:351:  eq - NO TEST COVERAGE
+src/Chap18/ArraySeqMtPer.rs:396:  eq - NO TEST COVERAGE
+src/Chap18/ArraySeqStEph.rs:255:  eq - NO TEST COVERAGE
+src/Chap18/ArraySeqStPer.rs:267:  eq - NO TEST COVERAGE
+src/Chap18/LinkedListStEph.rs:386:  eq - NO TEST COVERAGE
+src/Chap18/LinkedListStPer.rs:381:  eq - NO TEST COVERAGE
+src/Chap19/ArraySeqMtEphSlice.rs:476:  eq - NO TEST COVERAGE
+src/Chap37/AVLTreeSeq.rs:263:  eq - NO TEST COVERAGE
+src/Chap37/AVLTreeSeqMtPer.rs:284:  eq - NO TEST COVERAGE
+src/Chap37/AVLTreeSeqStEph.rs:358:  eq - NO TEST COVERAGE
+src/Chap37/AVLTreeSeqStPer.rs:223:  eq - NO TEST COVERAGE
+src/Chap49/MinEditDistMtEph.rs:186:  eq - NO TEST COVERAGE
+src/Chap49/MinEditDistMtPer.rs:146:  eq - NO TEST COVERAGE
+src/Chap49/SubsetSumMtEph.rs:162:  eq - NO TEST COVERAGE
+src/Chap49/SubsetSumMtPer.rs:138:  eq - NO TEST COVERAGE
+src/Chap50/MatrixChainMtEph.rs:229:  eq - NO TEST COVERAGE
+src/Chap50/MatrixChainMtPer.rs:185:  eq - NO TEST COVERAGE
+src/Chap50/OptBinSearchTreeMtEph.rs:229:  eq - NO TEST COVERAGE
+src/Chap50/OptBinSearchTreeMtEph.rs:290:  eq - NO TEST COVERAGE
+src/Chap50/OptBinSearchTreeMtPer.rs:184:  eq - NO TEST COVERAGE
+src/Chap50/OptBinSearchTreeMtPer.rs:220:  eq - NO TEST COVERAGE
+src/Chap50/Probability.rs:62:  eq - NO TEST COVERAGE
+src/Chap51/TopDownDPMtEph.rs:233:  eq - NO TEST COVERAGE
+src/Chap51/TopDownDPMtPer.rs:225:  eq - NO TEST COVERAGE
+
+================================================================================
+CATEGORY 3: Internal Helper Functions (45 functions - 24%)
+================================================================================
+Pattern: fn internal_helper() called only from within public API methods
+Problem: Tool flags helper functions separately from the public methods that call them
+
+Subcategory 3A: Parallel Algorithm Helpers (19 functions)
+Pattern: fn parallel_X(...) called from public fn X(...)
+Examples:
+src/Chap06/DirGraphMtEph.rs:100:  parallel_ng_of_vertices - NO TEST COVERAGE
+src/Chap06/DirGraphMtEph.rs:135:  parallel_nplus - NO TEST COVERAGE
+src/Chap06/DirGraphMtEph.rs:174:  parallel_nminus - NO TEST COVERAGE
+src/Chap06/DirGraphMtEph.rs:213:  parallel_nplus_of_vertices - NO TEST COVERAGE
+src/Chap06/DirGraphMtEph.rs:248:  parallel_nminus_of_vertices - NO TEST COVERAGE
+src/Chap06/LabDirGraphMtEph.rs:114:  parallel_out - NO TEST COVERAGE
+src/Chap06/LabDirGraphMtEph.rs:155:  parallel_in - NO TEST COVERAGE
+src/Chap06/LabUnDirGraphMtEph.rs:125:  parallel_neighbors - NO TEST COVERAGE
+src/Chap06/UnDirGraphMtEph.rs:80:  parallel_ng - NO TEST COVERAGE
+src/Chap06/UnDirGraphMtEph.rs:123:  parallel_ng_of_vertices - NO TEST COVERAGE
+src/Chap06/WeightedDirGraphMtEphFloat.rs:112:  parallel_out - NO TEST COVERAGE
+src/Chap06/WeightedDirGraphMtEphFloat.rs:156:  parallel_in - NO TEST COVERAGE
+src/Chap06/WeightedDirGraphMtEphInt.rs:80:  parallel_out - NO TEST COVERAGE
+src/Chap06/WeightedDirGraphMtEphInt.rs:121:  parallel_in - NO TEST COVERAGE
+src/Chap06/WeightedUnDirGraphMtEphFloat.rs:82:  parallel_neighbors - NO TEST COVERAGE
+src/Chap06/WeightedUnDirGraphMtEphInt.rs:80:  parallel_neighbors - NO TEST COVERAGE
+src/Chap41/AVLTreeSetMtEph.rs:103:  parallel_filter - NO TEST COVERAGE
+src/Chap41/AVLTreeSetMtEph.rs:160:  parallel_intersect - NO TEST COVERAGE
+src/Chap41/AVLTreeSetMtPer.rs:106:  parallel_sort - NO TEST COVERAGE
+
+Subcategory 3B: Recursive Helpers (12 functions)
+Pattern: fn X_rec(...) called from public fn X(...)
+Examples:
+src/Chap37/BSTAVLStEph.rs:203:  height_rec - NO TEST COVERAGE
+src/Chap37/BSTBBAlphaMtEph.rs:216:  height_rec - NO TEST COVERAGE
+src/Chap37/BSTBBAlphaStEph.rs:185:  height_rec - NO TEST COVERAGE
+src/Chap37/BSTPlainMtEph.rs:111:  find_rec - NO TEST COVERAGE
+src/Chap37/BSTRBMtEph.rs:382:  height_rec - NO TEST COVERAGE
+src/Chap37/BSTRBStEph.rs:220:  height_rec - NO TEST COVERAGE
+src/Chap37/BSTSplayMtEph.rs:285:  height_rec - NO TEST COVERAGE
+src/Chap37/BSTSplayStEph.rs:146:  height_rec - NO TEST COVERAGE
+src/Chap39/BSTTreapMtEph.rs:201:  height_rec - NO TEST COVERAGE
+src/Chap39/BSTTreapStEph.rs:175:  height_rec - NO TEST COVERAGE
+src/Chap40/BSTKeyValueStEph.rs:173:  height_rec - NO TEST COVERAGE
+src/Chap40/BSTReducedStEph.rs:287:  height_rec - NO TEST COVERAGE
+src/Chap40/BSTSizeStEph.rs:234:  height_rec - NO TEST COVERAGE
+
+Subcategory 3C: Atomic Write Helpers (5 functions)
+Pattern: fn atomic_write_X(...) called from public methods
+Examples:
+src/Chap19/ArraySeqMtEph.rs:295:  atomic_write_leftmost - NO TEST COVERAGE
+src/Chap19/ArraySeqMtEph.rs:352:  atomic_write_rightmost - NO TEST COVERAGE
+src/Chap19/ArraySeqMtEphSlice.rs:322:  atomic_write_leftmost - NO TEST COVERAGE
+src/Chap19/ArraySeqMtEphSlice.rs:380:  atomic_write_rightmost - NO TEST COVERAGE
+
+Subcategory 3D: Algorithm Internals (9 functions)
+Pattern: Internal algorithm implementation details
+Examples:
+src/Chap19/ArraySeqMtEph.rs:295:  atomic_write_leftmost - NO TEST COVERAGE
+src/Chap19/ArraySeqMtEph.rs:352:  atomic_write_rightmost - NO TEST COVERAGE
+src/Chap19/ArraySeqMtEphSlice.rs:322:  atomic_write_leftmost - NO TEST COVERAGE
+src/Chap19/ArraySeqMtEphSlice.rs:380:  atomic_write_rightmost - NO TEST COVERAGE
+src/Chap36/QuickSortMtEph.rs:61:  quick_sort - NO TEST COVERAGE
+src/Chap36/QuickSortMtEph.rs:100:  quick_sort - NO TEST COVERAGE
+src/Chap36/QuickSortMtEph.rs:151:  quick_sort - NO TEST COVERAGE
+src/Chap36/QuickSortStEph.rs:90:  median3 - NO TEST COVERAGE
+src/Chap37/BSTPlainMtEph.rs:76:  descend - NO TEST COVERAGE
+src/Chap37/BSTPlainMtEph.rs:145:  leftmost - NO TEST COVERAGE
+src/Chap37/BSTPlainMtEph.rs:167:  rightmost - NO TEST COVERAGE
+src/Chap37/BSTPlainMtEph.rs:189:  traverse_parallel - NO TEST COVERAGE
+src/Chap45/LeftistHeapPQ.rs:379:  format_node - NO TEST COVERAGE
+
+Detection Strategy for Internal Helpers:
+1. Check if function name contains "_rec", "_impl", "_parallel", "_internal"
+2. Check if function is defined inside another function (nested fn)
+3. Parse AST to find if function is only called from within same module
+4. Look for pattern: public method calls private helper of similar name
+
+================================================================================
+CATEGORY 4: Operator Trait Implementations (4 functions - 2%)
+================================================================================
+Pattern: impl Add/Sub/Mul/Div { fn add/sub/mul/div(...) -> Self }
+Problem: Tool doesn't detect usage via +, -, *, / operators
+
+All 4 operator implementations:
+src/Chap50/Probability.rs:118:  add - NO TEST COVERAGE
+src/Chap50/Probability.rs:124:  sub - NO TEST COVERAGE
+src/Chap50/Probability.rs:130:  mul - NO TEST COVERAGE
+src/Chap50/Probability.rs:136:  div - NO TEST COVERAGE
+
+Detection Strategy:
+- Look for "impl Add for" or similar operator traits
+- Check if function signature matches operator trait signature
+- Cross-reference with test files using operators
+
+================================================================================
+CATEGORY 5: Special Methods (2 functions - 1%)
+================================================================================
+
+Priority function methods (tested via trait):
+src/Chap53/PQMinStEph.rs:56:  priority - NO TEST COVERAGE (NOW TESTED)
+src/Chap53/PQMinStPer.rs:63:  priority - NO TEST COVERAGE (NOW TESTED)
+
+================================================================================
+GENUINELY UNCOVERED (Already Fixed - 9 functions)
+================================================================================
+
+These were ACTUALLY uncovered and have now been tested:
+
+Chap52 - from_matrix constructors:
+✅ src/Chap52/AdjMatrixGraphStEph.rs:49:  from_matrix (FIXED)
+✅ src/Chap52/AdjMatrixGraphStPer.rs:51:  from_matrix (FIXED)
+
+Chap53 - priority methods:
+✅ src/Chap53/PQMinStEph.rs:56:  priority (FIXED)
+✅ src/Chap53/PQMinStPer.rs:63:  priority (FIXED)
+
+Chap66 - Borůvka internal functions:
+✅ src/Chap66/BoruvkaMtEph.rs:65:  vertex_bridges_mt (FIXED)
+✅ src/Chap66/BoruvkaMtEph.rs:128:  bridge_star_partition_mt (FIXED)
+✅ src/Chap66/BoruvkaMtEph.rs:221:  boruvka_mst_mt (FIXED)
+
+Chap44 - DocumentIndex (verified as false positive - tested via public API):
+src/Chap44/DocumentIndex.rs:294:  or (trait method, tested via query_or)
+src/Chap44/DocumentIndex.rs:298:  and_not (trait method, tested via query_and_not)
+
+================================================================================
+RECOMMENDATIONS FOR TOOL IMPROVEMENT
+================================================================================
+
+1. TRAIT IMPLEMENTATIONS - Add trait method detection:
+   - Parse "impl TraitName for TypeName" blocks
+   - Mark trait methods as "tested" if ANY of these conditions are met:
+     * Test calls obj.method() (direct)
+     * Test uses operator (==, !=, +, -, *, /, etc.)
+     * Test uses format!(), println!(), etc. for Display/Debug
+     * Test calls trait as function: TraitName::method(&obj)
+
+2. INTERNAL HELPERS - Detect nested/helper functions:
+   - Parse function nesting (fn inside fn)
+   - Detect naming patterns: *_rec, *_impl, *_internal, parallel_*
+   - Check if function is private (not pub) and only called within module
+   - Mark as "tested via caller" if parent function has test coverage
+
+3. OPERATOR OVERLOADS - Specific detection:
+   Add::add()      -> detect "a + b" in tests
+   Sub::sub()      -> detect "a - b" in tests
+   Mul::mul()      -> detect "a * b" in tests
+   Div::div()      -> detect "a / b" in tests
+   PartialEq::eq() -> detect "a == b" or "a != b" in tests
+   Display::fmt()  -> detect format!("{}", a) or println!("{}", a)
+   Debug::fmt()    -> detect format!("{:?}", a) or println!("{:?}", a)
+
+4. AST-BASED ANALYSIS:
+   - Parse Rust AST to find actual function calls
+   - Trace call graph from test functions to implementation functions
+   - Mark any function reachable from a test as "covered"
+
+5. CONFIGURATION FLAGS:
+   Add command-line options:
+   --ignore-trait-impls     Skip Display/Debug/Eq/etc implementations
+   --ignore-internal        Skip private/nested/helper functions
+   --ast-analysis           Use AST call graph (slower but accurate)
+   --report-false-positives Show functions likely to be false positives
+
+================================================================================
+VERIFICATION COMMANDS
+================================================================================
+
+To verify a function is actually tested, check:
+
+1. Direct calls in tests:
+   rg "function_name\(" tests/
+
+2. Trait usage (for Display):
+   rg 'format!\("\{\}", .*TypeName' tests/
+   rg 'format!\("\{:\?\}", .*TypeName' tests/
+
+3. Operator usage (for Eq):
+   rg 'TypeName.*==' tests/
+   rg 'assert_eq!\(.*TypeName' tests/
+
+4. Call graph from public API:
+   Check if function is called by any public method with test coverage
+

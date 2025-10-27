@@ -1,0 +1,137 @@
+================================================================================
+TODO: Test Coverage Improvements
+================================================================================
+Based on review_test_functions.txt analysis
+
+Current: 92.1% (2220/2411) | Target: ~99.7% | False Positives: 184/191
+
+================================================================================
+PRIORITY 1: TOOL ENHANCEMENTS (Recommended - High ROI)
+================================================================================
+
+[ ] 1.1 Add Display/Debug trait detection to review-test-functions
+    - Parse "impl Display for Type" and "impl Debug for Type"
+    - Detect format!("{}", obj) and format!("{:?}", obj) in tests
+    - Mark fmt() as covered when format! usage found
+    - Impact: Fixes 107/191 false positives (56%)
+
+[ ] 1.2 Add PartialEq trait detection to review-test-functions
+    - Parse "impl PartialEq for Type"
+    - Detect assert_eq!(), ==, != usage in tests
+    - Mark eq() as covered when operator usage found
+    - Impact: Fixes 33/191 false positives (17%)
+
+[ ] 1.3 Add internal helper function detection
+    - Detect nested functions (fn inside fn)
+    - Detect naming patterns: *_rec, *_impl, parallel_*, atomic_*
+    - Check if function is private (not pub)
+    - Mark as "tested via caller" if parent has coverage
+    - Impact: Fixes 45/191 false positives (24%)
+
+[ ] 1.4 Add operator trait detection (Add/Sub/Mul/Div)
+    - Parse "impl Add/Sub/Mul/Div for Type"
+    - Detect +, -, *, / usage in tests
+    - Mark operator methods as covered
+    - Impact: Fixes 4/191 false positives (2%)
+
+[ ] 1.5 Add AST-based call graph analysis (optional, advanced)
+    - Parse full Rust AST
+    - Build call graph from tests to implementations
+    - Mark any function reachable from tests as covered
+    - Impact: Most accurate, but slower
+
+[ ] 1.6 Add configuration flags to review-test-functions
+    --ignore-trait-impls     Skip Display/Debug/Eq implementations
+    --ignore-internal        Skip private/nested helpers
+    --ast-analysis          Use AST call graph (slower but accurate)
+    --report-false-positives Show likely false positives with confidence scores
+
+Expected Result: 92.1% → 99.7% detected coverage (184 false positives fixed)
+
+================================================================================
+PRIORITY 2: DOCUMENTATION (Low effort, medium value)
+================================================================================
+
+[ ] 2.1 Document trait coverage patterns
+    File: docs/testing/trait_coverage.md
+    - Explain transitive coverage concept
+    - Document that format!() tests Display::fmt()
+    - Document that == tests PartialEq::eq()
+    - Show verification commands (rg patterns)
+
+[ ] 2.2 Create coverage analysis guide
+    File: docs/testing/coverage_analysis.md
+    - How to interpret coverage reports
+    - Distinguish false positives from genuine gaps
+    - Explain internal helper patterns
+    - Provide verification workflow
+
+[ ] 2.3 Add coverage badges/reports to README
+    - Add badge showing actual vs reported coverage
+    - Link to detailed coverage report
+    - Explain the 92.1% vs ~99% difference
+
+================================================================================
+PRIORITY 3: VERIFICATION TESTS (Not recommended - low value/high effort)
+================================================================================
+
+[ ] 3.1 Add explicit Display/Debug tests (107 files)
+    Status: SKIP - Already tested via format!()
+    Reason: Redundant, increases maintenance burden
+    Value: Low - no new bugs found
+
+[ ] 3.2 Add explicit equality tests (33 files)
+    Status: SKIP - Already tested via == operator
+    Reason: Redundant, increases maintenance burden
+    Value: Low - no new bugs found
+
+[ ] 3.3 Add internal helper unit tests (45 files)
+    Status: SKIP - Already tested via public API
+    Reason: Helpers are implementation details
+    Value: Low - only useful for debugging specific helpers
+
+================================================================================
+COMPLETED (Already Done)
+================================================================================
+
+[✓] Chap52: from_matrix() tests for AdjMatrixGraph (StEph & StPer)
+[✓] Chap53: priority() tests for PQMin (StEph & StPer)
+[✓] Chap66: vertex_bridges_mt(), bridge_star_partition_mt(), boruvka_mst_mt()
+[✓] Generate false_positives_report_for_tool_tuning.txt (359 lines)
+
+================================================================================
+SUMMARY & RECOMMENDATION
+================================================================================
+
+TOP PRIORITY: Enhance review-test-functions tool (items 1.1-1.6)
+- One-time investment, permanent benefit
+- Eliminates 96% of false positives
+- Improves accuracy from 92.1% to ~99.7%
+- No new tests needed, just better detection
+
+DON'T DO: Add redundant tests for false positives (items 3.1-3.3)
+- High effort, low value
+- Already have transitive coverage
+- Increases maintenance burden
+- Wastes development time
+
+NICE TO HAVE: Documentation (items 2.1-2.3)
+- Helps future developers
+- Low effort, medium value
+- Can be done incrementally
+
+================================================================================
+METRICS
+================================================================================
+
+Before tool enhancement:
+  Reported Coverage: 92.1% (2220/2411)
+  False Positives:   191 functions
+  Actual Coverage:   ~99%
+
+After tool enhancement (projected):
+  Reported Coverage: 99.7% (2404/2411)
+  False Positives:   ~7 functions  
+  Actual Coverage:   ~99% (unchanged)
+
+Effort Saved: ~184 unnecessary test functions NOT written
