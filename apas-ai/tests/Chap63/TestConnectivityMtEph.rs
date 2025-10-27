@@ -92,3 +92,31 @@ fn test_count_components_hof_mt() {
     assert_eq!(count_hof, count_direct);
     assert_eq!(count_hof, 3);
 }
+
+#[test]
+fn test_connected_components_hof_mt() {
+    let graph = create_multi_component_graph();
+    let (reps_hof, comp_map_hof) = connected_components_hof(&graph, 1111);
+    let (reps_direct, comp_map_direct) = connected_components_mt(&graph, 1111);
+
+    // Should produce same number of components
+    assert_eq!(reps_hof.size(), reps_direct.size());
+    assert_eq!(reps_hof.size(), 3);
+
+    // Verify same component structure
+    // Vertices in same component map to same representative
+    let comp0 = comp_map_hof.get(&0).unwrap();
+    assert_eq!(comp_map_hof.get(&1).unwrap(), comp0);
+    assert_eq!(comp_map_hof.get(&2).unwrap(), comp0);
+
+    let comp3 = comp_map_hof.get(&3).unwrap();
+    assert_eq!(comp_map_hof.get(&4).unwrap(), comp3);
+
+    let comp5 = comp_map_hof.get(&5).unwrap();
+    assert_eq!(comp_map_hof.get(&6).unwrap(), comp5);
+    assert_eq!(comp_map_hof.get(&7).unwrap(), comp5);
+
+    assert_ne!(comp0, comp3);
+    assert_ne!(comp0, comp5);
+    assert_ne!(comp3, comp5);
+}

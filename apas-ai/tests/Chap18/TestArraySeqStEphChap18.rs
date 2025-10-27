@@ -373,3 +373,36 @@ fn test_large_sequence() {
     assert_eq!(*seq.nth(500), 500);
     assert_eq!(*seq.nth(999), 999);
 }
+
+#[test]
+fn test_into_iterator_by_ref() {
+    let seq = ArraySeqStEphSLit![10, 20, 30];
+    let collected: Vec<&i32> = (&seq).into_iter().collect();
+    assert_eq!(collected.len(), 3);
+    assert_eq!(*collected[0], 10);
+    assert_eq!(seq.length(), 3);
+}
+
+#[test]
+fn test_into_iterator_by_value() {
+    let seq = ArraySeqStEphSLit![10, 20, 30];
+    let sum: i32 = seq.into_iter().sum();
+    assert_eq!(sum, 60);
+}
+
+#[test]
+fn test_eq_trait() {
+    let seq1 = ArraySeqStEphSLit![1, 2, 3];
+    let seq2 = ArraySeqStEphSLit![1, 2, 3];
+    assert!(seq1 == seq2);
+    assert_eq!(seq1, seq2);
+}
+
+#[test]
+fn test_partial_eq_impl() {
+    let seq1 = ArraySeqStEphSLit![1, 2, 3];
+    let seq2 = ArraySeqStEphSLit![1, 2, 3];
+    let seq3 = ArraySeqStEphSLit![1, 2, 4];
+    assert_eq!(seq1, seq2);
+    assert_ne!(seq1, seq3);
+}

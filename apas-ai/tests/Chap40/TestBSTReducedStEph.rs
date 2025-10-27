@@ -401,3 +401,17 @@ fn test_edge_case_ranges() {
     assert_eq!(bst.range_reduce(&-10, &10), 150); // All elements
     assert_eq!(bst.range_reduce(&3, &100), 120); // 30+40+50
 }
+
+#[test]
+fn test_sumop_trait() {
+    assert_eq!(<SumOp<i32> as ReduceOp<i32, i32>>::identity(), 0);
+    assert_eq!(<SumOp<i32> as ReduceOp<i32, i32>>::combine(5, 10), 15);
+    assert_eq!(<SumOp<i32> as ReduceOp<i32, i32>>::lift(&42), 42);
+}
+
+#[test]
+fn test_countop_trait() {
+    assert_eq!(<CountOp<i32> as ReduceOp<i32, N>>::identity(), 0);
+    assert_eq!(<CountOp<i32> as ReduceOp<i32, N>>::combine(3, 7), 10);
+    assert_eq!(<CountOp<i32> as ReduceOp<i32, N>>::lift(&42), 1);
+}

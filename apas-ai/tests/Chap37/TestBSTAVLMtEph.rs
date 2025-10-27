@@ -270,3 +270,22 @@ fn test_reduce_empty() {
     let sum = tree.reduce(|a, b| a + b, 42);
     assert_eq!(sum, 42);
 }
+
+#[test]
+fn test_trait_new_direct() {
+    let tree = <BSTAVLMtEph<i32> as BSTAVLMtEphTrait<i32>>::new();
+    assert!(tree.is_empty());
+}
+
+#[test]
+fn test_trait_from_sorted_direct() {
+    let tree = <BSTAVLMtEph<i32> as BSTAVLMtEphTrait<i32>>::from_sorted_slice(&[1, 2, 3]);
+    assert_eq!(tree.size(), 3);
+}
+
+#[test]
+fn test_trait_insert_direct() {
+    let tree = <BSTAVLMtEph<i32> as BSTAVLMtEphTrait<i32>>::new();
+    tree.insert(10);
+    assert!(tree.contains(&10));
+}

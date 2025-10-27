@@ -102,3 +102,22 @@ fn test_disconnected_graph() {
     assert_eq!(result.get_distance(0, 3), i64::MAX);
     assert_eq!(result.get_distance(1, 2), i64::MAX);
 }
+
+#[test]
+fn test_negative_cycle() {
+    // Create graph with negative cycle: 0 -> 1 -> 2 -> 0 with total weight < 0
+    let vertices = SetLit![0, 1, 2];
+    let edges = SetLit![
+        Triple(0, 1, 1),
+        Triple(1, 2, -2),
+        Triple(2, 0, -1)  // Total cycle: 1 + (-2) + (-1) = -2 < 0
+    ];
+
+    let graph = WeightedDirGraphStEphInt::from_weighted_edges(vertices, edges);
+    let result = johnson_apsp(&graph);
+
+    // When negative cycle exists, all distances should be i64::MAX
+    assert_eq!(result.get_distance(0, 0), i64::MAX);
+    assert_eq!(result.get_distance(0, 1), i64::MAX);
+    assert_eq!(result.get_distance(1, 2), i64::MAX);
+}

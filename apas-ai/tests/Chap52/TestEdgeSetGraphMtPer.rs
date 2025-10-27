@@ -13,6 +13,58 @@ fn test_empty_graph() {
 }
 
 #[test]
+fn test_from_vertices_and_edges() {
+    let mut v = AVLTreeSetMtPer::empty();
+    v = v.insert(1);
+    v = v.insert(2);
+    v = v.insert(3);
+
+    let mut e = AVLTreeSetMtPer::empty();
+    e = e.insert(Pair(1, 2));
+    e = e.insert(Pair(2, 3));
+
+    let g = EdgeSetGraphMtPer::from_vertices_and_edges(v, e);
+    assert_eq!(g.num_vertices(), 3);
+    assert_eq!(g.num_edges(), 2);
+    assert!(g.has_edge(&1, &2));
+    assert!(g.has_edge(&2, &3));
+    assert!(!g.has_edge(&1, &3));
+}
+
+#[test]
+fn test_vertices_accessor() {
+    let g = EdgeSetGraphMtPer::<i32>::empty();
+    let g = g.insert_vertex(1);
+    let g = g.insert_vertex(2);
+
+    let vertices = g.vertices();
+    assert_eq!(vertices.size(), 2);
+    assert!(vertices.find(&1));
+    assert!(vertices.find(&2));
+    assert!(!vertices.find(&3));
+}
+
+#[test]
+fn test_edges_accessor() {
+    let g = EdgeSetGraphMtPer::<i32>::empty();
+    let g = g.insert_edge(1, 2);
+    let g = g.insert_edge(2, 3);
+
+    let edges = g.edges();
+    assert_eq!(edges.size(), 2);
+    assert!(edges.find(&Pair(1, 2)));
+    assert!(edges.find(&Pair(2, 3)));
+    assert!(!edges.find(&Pair(1, 3)));
+}
+
+#[test]
+fn test_default() {
+    let g = EdgeSetGraphMtPer::<i32>::default();
+    assert_eq!(g.num_vertices(), 0);
+    assert_eq!(g.num_edges(), 0);
+}
+
+#[test]
 fn test_insert_vertex() {
     let g = EdgeSetGraphMtPer::<i32>::empty();
     let g = g.insert_vertex(1);

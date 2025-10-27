@@ -116,3 +116,69 @@ fn test_matrix_chain_multiply_cost() {
     // For 3 matrices, we should get the minimum of two possible parenthesizations
     assert!(cost > 0);
 }
+
+#[test]
+fn test_dimensions_accessor() {
+    let dimensions = vec![
+        MatrixDim { rows: 10, cols: 20 },
+        MatrixDim { rows: 20, cols: 30 },
+    ];
+    let chain = MatrixChainStPerS::from_dimensions(dimensions.clone());
+    
+    let dims = chain.dimensions();
+    assert_eq!(dims.len(), 2);
+    assert_eq!(dims[0].rows, 10);
+    assert_eq!(dims[0].cols, 20);
+    assert_eq!(dims[1].rows, 20);
+    assert_eq!(dims[1].cols, 30);
+}
+
+#[test]
+fn test_memo_size() {
+    let dimensions = vec![
+        MatrixDim { rows: 10, cols: 20 },
+        MatrixDim { rows: 20, cols: 30 },
+        MatrixDim { rows: 30, cols: 40 },
+    ];
+    let chain = MatrixChainStPerS::from_dimensions(dimensions);
+    
+    // Before computing, memo should be empty
+    assert_eq!(chain.memo_size(), 0);
+    
+    // After computing optimal cost, memo should have entries
+    let _ = chain.optimal_cost();
+    // Note: optimal_cost creates a mutable copy, so original memo stays empty
+    // This is testing the persistent behavior
+    assert_eq!(chain.memo_size(), 0);
+}
+
+#[test]
+fn test_matrix_chain_display() {
+    let dimensions = vec![
+        MatrixDim { rows: 10, cols: 20 },
+        MatrixDim { rows: 20, cols: 30 },
+    ];
+    let chain = MatrixChainStPerS::from_dimensions(dimensions);
+    
+    let display_str = format!("{chain}");
+    assert!(display_str.contains("MatrixChainStPer"));
+    assert!(display_str.contains("2")); // 2 matrices
+}
+
+#[test]
+fn test_into_iter_by_ref() {
+    let dimensions = vec![
+        MatrixDim { rows: 5, cols: 10 },
+        MatrixDim { rows: 10, cols: 15 },
+    ];
+    let chain = MatrixChainStPerS::from_dimensions(dimensions);
+    
+    // Test iterating by reference
+    let collected = (&chain).into_iter().collect::<Vec<MatrixDim>>();
+    assert_eq!(collected.len(), 2);
+    assert_eq!(collected[0].rows, 5);
+    assert_eq!(collected[0].cols, 10);
+    
+    // Chain should still be valid after reference iteration
+    assert_eq!(chain.num_matrices(), 2);
+}

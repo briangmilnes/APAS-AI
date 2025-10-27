@@ -246,3 +246,16 @@ fn test_reduce_empty() {
     let sum = tree.reduce(|a, b| a + b, 42);
     assert_eq!(sum, 42);
 }
+
+#[test]
+fn test_default_trait() {
+    let tree: BSTSplayMtEph<i32> = Default::default();
+    assert_eq!(tree.size(), 0);
+    assert!(tree.is_empty());
+}
+
+#[test]
+fn test_trait_new() {
+    let tree = <BSTSplayMtEph<i32> as BSTSplayMtEphTrait<i32>>::new();
+    assert!(tree.is_empty());
+}

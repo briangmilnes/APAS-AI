@@ -3,113 +3,28 @@
 PUBLIC FUNCTIONS WITHOUT TEST COVERAGE:
 ================================================================================
 
-src/Chap12/Exercise12_1.rs:62:  parallel_increment - NO TEST COVERAGE
-src/Chap21/Exercise21_7.rs:24:  is_even - NO TEST COVERAGE
-src/Chap21/Exercise21_7.rs:27:  is_vowel - NO TEST COVERAGE
-src/Chap21/Exercise21_8.rs:19:  is_divisible - NO TEST COVERAGE
-src/Chap37/AVLTreeSeq.rs:402:  insert_at_link - NO TEST COVERAGE
-src/Chap37/AVLTreeSeqStEph.rs:289:  insert_at_link - NO TEST COVERAGE
-src/Chap43/OrderedSetStEph.rs:310:  from_sorted_elements - NO TEST COVERAGE
-src/Chap43/OrderedSetStPer.rs:288:  from_sorted_elements - NO TEST COVERAGE
-src/Chap44/DocumentIndex.rs:227:  create_finder - NO TEST COVERAGE
-src/Chap45/BinaryHeapPQ.rs:289:  is_valid_heap - NO TEST COVERAGE
-src/Chap45/HeapsortExample.rs:195:  all_results_match - NO TEST COVERAGE
-src/Chap45/HeapsortExample.rs:204:  all_results_sorted - NO TEST COVERAGE
-src/Chap45/HeapsortExample.rs:306:  correctness_verification - NO TEST COVERAGE
-src/Chap45/LeftistHeapPQ.rs:409:  efficient_multi_way_merge - NO TEST COVERAGE
-src/Chap45/LeftistHeapPQ.rs:422:  parallel_heap_construction - NO TEST COVERAGE
-src/Chap50/Probability.rs:41:  value - NO TEST COVERAGE
-src/Chap51/BottomUpDPMtEph.rs:40:  med_bottom_up_parallel - NO TEST COVERAGE
-src/Chap51/BottomUpDPMtEph.rs:146:  s_length - NO TEST COVERAGE
-src/Chap51/BottomUpDPMtEph.rs:151:  t_length - NO TEST COVERAGE
-src/Chap51/BottomUpDPMtPer.rs:40:  med_bottom_up_parallel - NO TEST COVERAGE
-src/Chap51/BottomUpDPMtPer.rs:145:  s_length - NO TEST COVERAGE
-src/Chap51/BottomUpDPMtPer.rs:150:  t_length - NO TEST COVERAGE
-src/Chap51/BottomUpDPStEph.rs:38:  med_bottom_up - NO TEST COVERAGE
-src/Chap51/BottomUpDPStEph.rs:113:  s_length - NO TEST COVERAGE
-src/Chap51/BottomUpDPStEph.rs:118:  t_length - NO TEST COVERAGE
-src/Chap51/BottomUpDPStPer.rs:38:  med_bottom_up - NO TEST COVERAGE
-src/Chap51/BottomUpDPStPer.rs:115:  s_length - NO TEST COVERAGE
-src/Chap51/BottomUpDPStPer.rs:120:  t_length - NO TEST COVERAGE
-src/Chap51/TopDownDPMtEph.rs:48:  med_memoized_concurrent - NO TEST COVERAGE
-src/Chap51/TopDownDPMtEph.rs:168:  is_memoized - NO TEST COVERAGE
-src/Chap51/TopDownDPMtEph.rs:176:  get_memoized - NO TEST COVERAGE
-src/Chap51/TopDownDPMtEph.rs:184:  insert_memo - NO TEST COVERAGE
-src/Chap51/TopDownDPMtEph.rs:192:  s_length - NO TEST COVERAGE
-src/Chap51/TopDownDPMtEph.rs:197:  t_length - NO TEST COVERAGE
-src/Chap51/TopDownDPMtPer.rs:48:  med_memoized_concurrent - NO TEST COVERAGE
-src/Chap51/TopDownDPMtPer.rs:181:  is_memoized - NO TEST COVERAGE
-src/Chap51/TopDownDPMtPer.rs:189:  get_memoized - NO TEST COVERAGE
-src/Chap51/TopDownDPMtPer.rs:197:  s_length - NO TEST COVERAGE
-src/Chap51/TopDownDPMtPer.rs:202:  t_length - NO TEST COVERAGE
-src/Chap51/TopDownDPStEph.rs:46:  med_memoized - NO TEST COVERAGE
-src/Chap51/TopDownDPStEph.rs:94:  is_memoized - NO TEST COVERAGE
-src/Chap51/TopDownDPStEph.rs:99:  get_memoized - NO TEST COVERAGE
-src/Chap51/TopDownDPStEph.rs:104:  insert_memo - NO TEST COVERAGE
-src/Chap51/TopDownDPStEph.rs:109:  s_length - NO TEST COVERAGE
-src/Chap51/TopDownDPStEph.rs:114:  t_length - NO TEST COVERAGE
-src/Chap51/TopDownDPStPer.rs:46:  med_memoized - NO TEST COVERAGE
-src/Chap51/TopDownDPStPer.rs:108:  is_memoized - NO TEST COVERAGE
-src/Chap51/TopDownDPStPer.rs:113:  get_memoized - NO TEST COVERAGE
-src/Chap51/TopDownDPStPer.rs:118:  s_length - NO TEST COVERAGE
-src/Chap51/TopDownDPStPer.rs:123:  t_length - NO TEST COVERAGE
-src/Chap56/AllPairsResultStEphFloat.rs:73:  get_distance - NO TEST COVERAGE
-src/Chap56/AllPairsResultStEphFloat.rs:90:  get_predecessor - NO TEST COVERAGE
-src/Chap56/AllPairsResultStEphFloat.rs:108:  is_reachable - NO TEST COVERAGE
-src/Chap56/AllPairsResultStEphInt.rs:70:  get_distance - NO TEST COVERAGE
-src/Chap56/AllPairsResultStEphInt.rs:87:  get_predecessor - NO TEST COVERAGE
-src/Chap56/AllPairsResultStEphInt.rs:105:  is_reachable - NO TEST COVERAGE
-src/Chap56/AllPairsResultStPerFloat.rs:67:  get_distance - NO TEST COVERAGE
-src/Chap56/AllPairsResultStPerFloat.rs:88:  get_predecessor - NO TEST COVERAGE
-src/Chap56/AllPairsResultStPerFloat.rs:110:  is_reachable - NO TEST COVERAGE
-src/Chap56/AllPairsResultStPerInt.rs:64:  get_distance - NO TEST COVERAGE
-src/Chap56/AllPairsResultStPerInt.rs:85:  get_predecessor - NO TEST COVERAGE
-src/Chap56/AllPairsResultStPerInt.rs:107:  is_reachable - NO TEST COVERAGE
-src/Chap56/PathWeightUtilsStEph.rs:52:  path_weight_int - NO TEST COVERAGE
-src/Chap56/PathWeightUtilsStEph.rs:75:  path_weight_float - NO TEST COVERAGE
-src/Chap56/PathWeightUtilsStEph.rs:98:  validate_subpath_property_int - NO TEST COVERAGE
-src/Chap56/PathWeightUtilsStEph.rs:128:  validate_subpath_property_float - NO TEST COVERAGE
-src/Chap56/PathWeightUtilsStPer.rs:51:  path_weight_int - NO TEST COVERAGE
-src/Chap56/PathWeightUtilsStPer.rs:74:  path_weight_float - NO TEST COVERAGE
-src/Chap56/PathWeightUtilsStPer.rs:97:  validate_subpath_property_int - NO TEST COVERAGE
-src/Chap56/PathWeightUtilsStPer.rs:127:  validate_subpath_property_float - NO TEST COVERAGE
-src/Chap56/SSSPResultStEphFloat.rs:67:  get_distance - NO TEST COVERAGE
-src/Chap56/SSSPResultStEphFloat.rs:82:  get_predecessor - NO TEST COVERAGE
-src/Chap56/SSSPResultStEphFloat.rs:98:  is_reachable - NO TEST COVERAGE
-src/Chap56/SSSPResultStEphInt.rs:64:  get_distance - NO TEST COVERAGE
-src/Chap56/SSSPResultStEphInt.rs:79:  get_predecessor - NO TEST COVERAGE
-src/Chap56/SSSPResultStEphInt.rs:95:  is_reachable - NO TEST COVERAGE
-src/Chap56/SSSPResultStPerFloat.rs:64:  get_distance - NO TEST COVERAGE
-src/Chap56/SSSPResultStPerFloat.rs:84:  get_predecessor - NO TEST COVERAGE
-src/Chap56/SSSPResultStPerFloat.rs:105:  is_reachable - NO TEST COVERAGE
-src/Chap56/SSSPResultStPerInt.rs:61:  get_distance - NO TEST COVERAGE
-src/Chap56/SSSPResultStPerInt.rs:81:  get_predecessor - NO TEST COVERAGE
-src/Chap56/SSSPResultStPerInt.rs:102:  is_reachable - NO TEST COVERAGE
-src/Chap57/StackStEph.rs:58:  peek - NO TEST COVERAGE
-src/Chap64/SpanTreeMtEph.rs:159:  verify_spanning_tree - NO TEST COVERAGE
-src/Chap64/SpanTreeStEph.rs:100:  verify_spanning_tree - NO TEST COVERAGE
-src/Chap65/KruskalStEph.rs:107:  verify_mst_size - NO TEST COVERAGE
 src/Chap66/BoruvkaMtEph.rs:65:  vertex_bridges_mt - NO TEST COVERAGE
 src/Chap66/BoruvkaMtEph.rs:128:  bridge_star_partition_mt - NO TEST COVERAGE
 src/Chap66/BoruvkaMtEph.rs:221:  boruvka_mst_mt - NO TEST COVERAGE
-src/Chap66/BoruvkaStEph.rs:61:  vertex_bridges - NO TEST COVERAGE
-src/Chap66/BoruvkaStEph.rs:110:  bridge_star_partition - NO TEST COVERAGE
-src/Chap66/BoruvkaStEph.rs:160:  boruvka_mst - NO TEST COVERAGE
 
 ================================================================================
 PUBLIC FUNCTIONS WITH TEST COVERAGE:
 ================================================================================
 
-src/Chap11/FibonacciMtPer.rs:18:  fib - 4 call(s) in 2 test file(s)
-src/Chap12/Exercise12_2.rs:34:  fetch_add_cas - 3 call(s) in 1 test file(s)
+src/Chap11/FibonacciMtPer.rs:18:  fib - 14 call(s) in 3 test file(s)
+src/Chap12/Exercise12_1.rs:62:  parallel_increment - 1 call(s) in 1 test file(s)
+src/Chap12/Exercise12_2.rs:34:  fetch_add_cas - 7 call(s) in 1 test file(s)
 src/Chap12/Exercise12_2.rs:40:  efficiency_note - 1 call(s) in 1 test file(s)
 src/Chap21/Algorithm21_1.rs:16:  points2d_tab_flat - 5 call(s) in 1 test file(s)
 src/Chap21/Algorithm21_2.rs:16:  points3d_tab_flat - 5 call(s) in 1 test file(s)
 src/Chap21/Algorithm21_5.rs:17:  primes_bf - 5 call(s) in 1 test file(s)
 src/Chap21/Algorithm21_6.rs:16:  prime_sieve - 19 call(s) in 2 test file(s)
 src/Chap21/Exercise21_5.rs:16:  all_contiguous_subseqs - 3 call(s) in 1 test file(s)
+src/Chap21/Exercise21_7.rs:24:  is_even - 8 call(s) in 1 test file(s)
+src/Chap21/Exercise21_7.rs:27:  is_vowel - 15 call(s) in 1 test file(s)
 src/Chap21/Exercise21_7.rs:35:  pair_even_with_vowels - 2 call(s) in 1 test file(s)
-src/Chap21/Exercise21_8.rs:21:  is_prime - 1 call(s) in 1 test file(s)
+src/Chap21/Exercise21_8.rs:19:  is_divisible - 4 call(s) in 1 test file(s)
+src/Chap21/Exercise21_8.rs:21:  is_prime - 8 call(s) in 2 test file(s)
 src/Chap21/Problem21_1.rs:16:  points2d - 8 call(s) in 1 test file(s)
 src/Chap21/Problem21_3.rs:16:  points3d_loops - 8 call(s) in 1 test file(s)
 src/Chap21/Problem21_4.rs:26:  cartesian_loops - 10 call(s) in 1 test file(s)
@@ -126,14 +41,17 @@ src/Chap42/TableStEph.rs:289:  from_sorted_entries - 2 call(s) in 2 test file(s)
 src/Chap42/TableStPer.rs:325:  from_sorted_entries - 2 call(s) in 2 test file(s)
 src/Chap43/Example43_1.rs:22:  run_example43_1 - 1 call(s) in 1 test file(s)
 src/Chap43/Example43_1.rs:168:  run_integer_example - 1 call(s) in 1 test file(s)
+src/Chap43/OrderedSetStEph.rs:310:  from_sorted_elements - 6 call(s) in 2 test file(s)
+src/Chap43/OrderedSetStPer.rs:288:  from_sorted_elements - 6 call(s) in 2 test file(s)
 src/Chap43/OrderedTableMtEph.rs:394:  from_sorted_entries - 2 call(s) in 2 test file(s)
 src/Chap43/OrderedTableStEph.rs:366:  from_sorted_entries - 2 call(s) in 2 test file(s)
 src/Chap43/OrderedTableStPer.rs:350:  from_sorted_entries - 2 call(s) in 2 test file(s)
 src/Chap44/DocumentIndex.rs:199:  tokens - 5 call(s) in 1 test file(s)
+src/Chap44/DocumentIndex.rs:227:  create_finder - 1 call(s) in 1 test file(s)
 src/Chap44/Example44_1.rs:11:  create_tweet_collection - 1 call(s) in 1 test file(s)
 src/Chap44/Example44_1.rs:21:  create_tweet_index - 3 call(s) in 1 test file(s)
 src/Chap44/Example44_1.rs:27:  create_tweet_finder - 1 call(s) in 1 test file(s)
-src/Chap44/Example44_1.rs:46:  new - 1013 call(s) in 106 test file(s)
+src/Chap44/Example44_1.rs:46:  new - 1060 call(s) in 111 test file(s)
 src/Chap44/Example44_1.rs:54:  search_fun - 6 call(s) in 1 test file(s)
 src/Chap44/Example44_1.rs:57:  search_club - 1 call(s) in 1 test file(s)
 src/Chap44/Example44_1.rs:60:  search_food - 3 call(s) in 1 test file(s)
@@ -145,23 +63,24 @@ src/Chap44/Example44_1.rs:101:  search_party_and_food - 1 call(s) in 1 test file
 src/Chap44/Example44_1.rs:109:  get_all_words - 2 call(s) in 2 test file(s)
 src/Chap44/Example44_1.rs:112:  get_word_count - 1 call(s) in 1 test file(s)
 src/Chap44/Example44_1.rs:115:  query_builder_example - 1 call(s) in 1 test file(s)
-src/Chap44/Example44_1.rs:129:  doc_set_to_sorted_vec - 18 call(s) in 2 test file(s)
+src/Chap44/Example44_1.rs:129:  doc_set_to_sorted_vec - 19 call(s) in 2 test file(s)
 src/Chap44/Example44_1.rs:142:  verify_textbook_examples - 1 call(s) in 1 test file(s)
 src/Chap44/Example44_1.rs:182:  performance_comparison_demo - 1 call(s) in 1 test file(s)
 src/Chap44/Example44_1.rs:196:  tokenization_demo - 1 call(s) in 1 test file(s)
 src/Chap44/Example44_1.rs:202:  index_statistics - 1 call(s) in 1 test file(s)
-src/Chap45/BalancedTreePQ.rs:334:  is_sorted - 1 call(s) in 1 test file(s)
-src/Chap45/BalancedTreePQ.rs:345:  height - 27 call(s) in 11 test file(s)
+src/Chap45/BalancedTreePQ.rs:334:  is_sorted - 17 call(s) in 5 test file(s)
+src/Chap45/BalancedTreePQ.rs:345:  height - 107 call(s) in 19 test file(s)
 src/Chap45/BalancedTreePQ.rs:359:  split - 31 call(s) in 14 test file(s)
-src/Chap45/BalancedTreePQ.rs:381:  join - 59 call(s) in 25 test file(s)
-src/Chap45/BalancedTreePQ.rs:384:  filter - 108 call(s) in 49 test file(s)
-src/Chap45/BalancedTreePQ.rs:401:  map - 89 call(s) in 40 test file(s)
+src/Chap45/BalancedTreePQ.rs:381:  join - 61 call(s) in 26 test file(s)
+src/Chap45/BalancedTreePQ.rs:384:  filter - 111 call(s) in 50 test file(s)
+src/Chap45/BalancedTreePQ.rs:401:  map - 95 call(s) in 43 test file(s)
 src/Chap45/BinaryHeapPQ.rs:262:  insert_all - 4 call(s) in 4 test file(s)
 src/Chap45/BinaryHeapPQ.rs:272:  extract_all_sorted - 9 call(s) in 5 test file(s)
-src/Chap45/BinaryHeapPQ.rs:292:  height - 27 call(s) in 11 test file(s)
+src/Chap45/BinaryHeapPQ.rs:289:  is_valid_heap - 19 call(s) in 1 test file(s)
+src/Chap45/BinaryHeapPQ.rs:292:  height - 107 call(s) in 19 test file(s)
 src/Chap45/BinaryHeapPQ.rs:301:  level_elements - 2 call(s) in 1 test file(s)
-src/Chap45/BinaryHeapPQ.rs:353:  from_vec - 528 call(s) in 50 test file(s)
-src/Chap45/BinaryHeapPQ.rs:363:  to_vec - 20 call(s) in 9 test file(s)
+src/Chap45/BinaryHeapPQ.rs:353:  from_vec - 614 call(s) in 53 test file(s)
+src/Chap45/BinaryHeapPQ.rs:363:  to_vec - 55 call(s) in 11 test file(s)
 src/Chap45/BinaryHeapPQ.rs:372:  to_sorted_vec - 7 call(s) in 5 test file(s)
 src/Chap45/Example45_2.rs:45:  example_45_2_textbook_example - 1 call(s) in 1 test file(s)
 src/Chap45/Example45_2.rs:50:  example_45_2_reverse_sorted - 1 call(s) in 1 test file(s)
@@ -177,6 +96,8 @@ src/Chap45/HeapsortExample.rs:80:  heapsort_balanced_tree - 1 call(s) in 1 test 
 src/Chap45/HeapsortExample.rs:98:  heapsort_binary_heap - 6 call(s) in 1 test file(s)
 src/Chap45/HeapsortExample.rs:116:  heapsort_leftist_heap - 1 call(s) in 1 test file(s)
 src/Chap45/HeapsortExample.rs:134:  compare_all_heapsorts - 1 call(s) in 1 test file(s)
+src/Chap45/HeapsortExample.rs:195:  all_results_match - 13 call(s) in 2 test file(s)
+src/Chap45/HeapsortExample.rs:204:  all_results_sorted - 13 call(s) in 2 test file(s)
 src/Chap45/HeapsortExample.rs:216:  textbook_example - 1 call(s) in 1 test file(s)
 src/Chap45/HeapsortExample.rs:222:  reverse_sorted_example - 1 call(s) in 1 test file(s)
 src/Chap45/HeapsortExample.rs:228:  already_sorted_example - 1 call(s) in 1 test file(s)
@@ -186,49 +107,87 @@ src/Chap45/HeapsortExample.rs:246:  empty_example - 1 call(s) in 1 test file(s)
 src/Chap45/HeapsortExample.rs:252:  large_example - 1 call(s) in 1 test file(s)
 src/Chap45/HeapsortExample.rs:264:  efficiency_demonstration - 1 call(s) in 1 test file(s)
 src/Chap45/HeapsortExample.rs:275:  complexity_analysis - 1 call(s) in 1 test file(s)
+src/Chap45/HeapsortExample.rs:306:  correctness_verification - 1 call(s) in 1 test file(s)
 src/Chap45/HeapsortExample.rs:322:  vec_to_array_seq - 1 call(s) in 1 test file(s)
 src/Chap45/HeapsortExample.rs:332:  vec_to_avl_seq - 1 call(s) in 1 test file(s)
-src/Chap45/HeapsortExample.rs:335:  is_sorted - 1 call(s) in 1 test file(s)
+src/Chap45/HeapsortExample.rs:335:  is_sorted - 17 call(s) in 5 test file(s)
 src/Chap45/HeapsortExample.rs:338:  generate_test_sequences - 1 call(s) in 1 test file(s)
+src/Chap45/LeftistHeapPQ.rs:409:  efficient_multi_way_merge - 3 call(s) in 1 test file(s)
+src/Chap45/LeftistHeapPQ.rs:422:  parallel_heap_construction - 1 call(s) in 1 test file(s)
 src/Chap47/DoubleHashFlatHashTableStEph.rs:18:  second_hash - 5 call(s) in 1 test file(s)
-src/Chap50/Probability.rs:32:  new - 1013 call(s) in 106 test file(s)
+src/Chap50/Probability.rs:32:  new - 1060 call(s) in 111 test file(s)
+src/Chap50/Probability.rs:41:  value - 35 call(s) in 3 test file(s)
 src/Chap50/Probability.rs:46:  infinity - 2 call(s) in 1 test file(s)
-src/Chap50/Probability.rs:51:  zero - 2 call(s) in 1 test file(s)
-src/Chap51/BottomUpDPMtEph.rs:37:  new - 1013 call(s) in 106 test file(s)
-src/Chap51/BottomUpDPMtEph.rs:156:  is_empty - 6 call(s) in 5 test file(s)
+src/Chap50/Probability.rs:51:  zero - 9 call(s) in 4 test file(s)
+src/Chap51/BottomUpDPMtEph.rs:37:  new - 1060 call(s) in 111 test file(s)
+src/Chap51/BottomUpDPMtEph.rs:40:  med_bottom_up_parallel - 7 call(s) in 2 test file(s)
+src/Chap51/BottomUpDPMtEph.rs:146:  s_length - 25 call(s) in 8 test file(s)
+src/Chap51/BottomUpDPMtEph.rs:151:  t_length - 25 call(s) in 8 test file(s)
+src/Chap51/BottomUpDPMtEph.rs:156:  is_empty - 210 call(s) in 72 test file(s)
 src/Chap51/BottomUpDPMtEph.rs:161:  set_s - 1 call(s) in 1 test file(s)
 src/Chap51/BottomUpDPMtEph.rs:166:  set_t - 1 call(s) in 1 test file(s)
-src/Chap51/BottomUpDPMtPer.rs:37:  new - 1013 call(s) in 106 test file(s)
-src/Chap51/BottomUpDPMtPer.rs:155:  is_empty - 6 call(s) in 5 test file(s)
-src/Chap51/BottomUpDPStEph.rs:35:  new - 1013 call(s) in 106 test file(s)
-src/Chap51/BottomUpDPStEph.rs:123:  is_empty - 6 call(s) in 5 test file(s)
+src/Chap51/BottomUpDPMtPer.rs:37:  new - 1060 call(s) in 111 test file(s)
+src/Chap51/BottomUpDPMtPer.rs:40:  med_bottom_up_parallel - 7 call(s) in 2 test file(s)
+src/Chap51/BottomUpDPMtPer.rs:145:  s_length - 25 call(s) in 8 test file(s)
+src/Chap51/BottomUpDPMtPer.rs:150:  t_length - 25 call(s) in 8 test file(s)
+src/Chap51/BottomUpDPMtPer.rs:155:  is_empty - 210 call(s) in 72 test file(s)
+src/Chap51/BottomUpDPStEph.rs:35:  new - 1060 call(s) in 111 test file(s)
+src/Chap51/BottomUpDPStEph.rs:38:  med_bottom_up - 9 call(s) in 2 test file(s)
+src/Chap51/BottomUpDPStEph.rs:113:  s_length - 25 call(s) in 8 test file(s)
+src/Chap51/BottomUpDPStEph.rs:118:  t_length - 25 call(s) in 8 test file(s)
+src/Chap51/BottomUpDPStEph.rs:123:  is_empty - 210 call(s) in 72 test file(s)
 src/Chap51/BottomUpDPStEph.rs:128:  set_s - 1 call(s) in 1 test file(s)
 src/Chap51/BottomUpDPStEph.rs:133:  set_t - 1 call(s) in 1 test file(s)
-src/Chap51/BottomUpDPStPer.rs:35:  new - 1013 call(s) in 106 test file(s)
-src/Chap51/BottomUpDPStPer.rs:125:  is_empty - 6 call(s) in 5 test file(s)
-src/Chap51/TopDownDPMtEph.rs:39:  new - 1013 call(s) in 106 test file(s)
+src/Chap51/BottomUpDPStPer.rs:35:  new - 1060 call(s) in 111 test file(s)
+src/Chap51/BottomUpDPStPer.rs:38:  med_bottom_up - 9 call(s) in 2 test file(s)
+src/Chap51/BottomUpDPStPer.rs:115:  s_length - 25 call(s) in 8 test file(s)
+src/Chap51/BottomUpDPStPer.rs:120:  t_length - 25 call(s) in 8 test file(s)
+src/Chap51/BottomUpDPStPer.rs:125:  is_empty - 210 call(s) in 72 test file(s)
+src/Chap51/TopDownDPMtEph.rs:39:  new - 1060 call(s) in 111 test file(s)
+src/Chap51/TopDownDPMtEph.rs:48:  med_memoized_concurrent - 4 call(s) in 2 test file(s)
 src/Chap51/TopDownDPMtEph.rs:98:  med_memoized_parallel - 2 call(s) in 2 test file(s)
-src/Chap51/TopDownDPMtEph.rs:160:  memo_size - 10 call(s) in 6 test file(s)
-src/Chap51/TopDownDPMtEph.rs:202:  is_empty - 6 call(s) in 5 test file(s)
+src/Chap51/TopDownDPMtEph.rs:160:  memo_size - 81 call(s) in 19 test file(s)
+src/Chap51/TopDownDPMtEph.rs:168:  is_memoized - 10 call(s) in 4 test file(s)
+src/Chap51/TopDownDPMtEph.rs:176:  get_memoized - 14 call(s) in 4 test file(s)
+src/Chap51/TopDownDPMtEph.rs:184:  insert_memo - 8 call(s) in 2 test file(s)
+src/Chap51/TopDownDPMtEph.rs:192:  s_length - 25 call(s) in 8 test file(s)
+src/Chap51/TopDownDPMtEph.rs:197:  t_length - 25 call(s) in 8 test file(s)
+src/Chap51/TopDownDPMtEph.rs:202:  is_empty - 210 call(s) in 72 test file(s)
 src/Chap51/TopDownDPMtEph.rs:207:  clear_memo - 12 call(s) in 12 test file(s)
 src/Chap51/TopDownDPMtEph.rs:215:  set_s - 1 call(s) in 1 test file(s)
 src/Chap51/TopDownDPMtEph.rs:223:  set_t - 1 call(s) in 1 test file(s)
-src/Chap51/TopDownDPMtPer.rs:39:  new - 1013 call(s) in 106 test file(s)
+src/Chap51/TopDownDPMtPer.rs:39:  new - 1060 call(s) in 111 test file(s)
+src/Chap51/TopDownDPMtPer.rs:48:  med_memoized_concurrent - 4 call(s) in 2 test file(s)
 src/Chap51/TopDownDPMtPer.rs:100:  med_memoized_parallel - 2 call(s) in 2 test file(s)
 src/Chap51/TopDownDPMtPer.rs:162:  with_memo_table - 1 call(s) in 1 test file(s)
-src/Chap51/TopDownDPMtPer.rs:173:  memo_size - 10 call(s) in 6 test file(s)
-src/Chap51/TopDownDPMtPer.rs:207:  is_empty - 6 call(s) in 5 test file(s)
+src/Chap51/TopDownDPMtPer.rs:173:  memo_size - 81 call(s) in 19 test file(s)
+src/Chap51/TopDownDPMtPer.rs:181:  is_memoized - 10 call(s) in 4 test file(s)
+src/Chap51/TopDownDPMtPer.rs:189:  get_memoized - 14 call(s) in 4 test file(s)
+src/Chap51/TopDownDPMtPer.rs:197:  s_length - 25 call(s) in 8 test file(s)
+src/Chap51/TopDownDPMtPer.rs:202:  t_length - 25 call(s) in 8 test file(s)
+src/Chap51/TopDownDPMtPer.rs:207:  is_empty - 210 call(s) in 72 test file(s)
 src/Chap51/TopDownDPMtPer.rs:212:  clear_memo - 12 call(s) in 12 test file(s)
-src/Chap51/TopDownDPStEph.rs:37:  new - 1013 call(s) in 106 test file(s)
-src/Chap51/TopDownDPStEph.rs:89:  memo_size - 10 call(s) in 6 test file(s)
-src/Chap51/TopDownDPStEph.rs:119:  is_empty - 6 call(s) in 5 test file(s)
+src/Chap51/TopDownDPStEph.rs:37:  new - 1060 call(s) in 111 test file(s)
+src/Chap51/TopDownDPStEph.rs:46:  med_memoized - 6 call(s) in 2 test file(s)
+src/Chap51/TopDownDPStEph.rs:89:  memo_size - 81 call(s) in 19 test file(s)
+src/Chap51/TopDownDPStEph.rs:94:  is_memoized - 10 call(s) in 4 test file(s)
+src/Chap51/TopDownDPStEph.rs:99:  get_memoized - 14 call(s) in 4 test file(s)
+src/Chap51/TopDownDPStEph.rs:104:  insert_memo - 8 call(s) in 2 test file(s)
+src/Chap51/TopDownDPStEph.rs:109:  s_length - 25 call(s) in 8 test file(s)
+src/Chap51/TopDownDPStEph.rs:114:  t_length - 25 call(s) in 8 test file(s)
+src/Chap51/TopDownDPStEph.rs:119:  is_empty - 210 call(s) in 72 test file(s)
 src/Chap51/TopDownDPStEph.rs:124:  clear_memo - 12 call(s) in 12 test file(s)
 src/Chap51/TopDownDPStEph.rs:129:  set_s - 1 call(s) in 1 test file(s)
 src/Chap51/TopDownDPStEph.rs:137:  set_t - 1 call(s) in 1 test file(s)
-src/Chap51/TopDownDPStPer.rs:37:  new - 1013 call(s) in 106 test file(s)
+src/Chap51/TopDownDPStPer.rs:37:  new - 1060 call(s) in 111 test file(s)
+src/Chap51/TopDownDPStPer.rs:46:  med_memoized - 6 call(s) in 2 test file(s)
 src/Chap51/TopDownDPStPer.rs:92:  with_memo_table - 1 call(s) in 1 test file(s)
-src/Chap51/TopDownDPStPer.rs:103:  memo_size - 10 call(s) in 6 test file(s)
-src/Chap51/TopDownDPStPer.rs:128:  is_empty - 6 call(s) in 5 test file(s)
+src/Chap51/TopDownDPStPer.rs:103:  memo_size - 81 call(s) in 19 test file(s)
+src/Chap51/TopDownDPStPer.rs:108:  is_memoized - 10 call(s) in 4 test file(s)
+src/Chap51/TopDownDPStPer.rs:113:  get_memoized - 14 call(s) in 4 test file(s)
+src/Chap51/TopDownDPStPer.rs:118:  s_length - 25 call(s) in 8 test file(s)
+src/Chap51/TopDownDPStPer.rs:123:  t_length - 25 call(s) in 8 test file(s)
+src/Chap51/TopDownDPStPer.rs:128:  is_empty - 210 call(s) in 72 test file(s)
 src/Chap51/TopDownDPStPer.rs:133:  clear_memo - 12 call(s) in 12 test file(s)
 src/Chap53/GraphSearchMtPer.rs:62:  graph_search - 11 call(s) in 3 test file(s)
 src/Chap53/GraphSearchMtPer.rs:74:  graph_search_multi - 3 call(s) in 3 test file(s)
@@ -257,56 +216,89 @@ src/Chap55/TopoSortStEph.rs:19:  topological_sort_opt - 14 call(s) in 2 test fil
 src/Chap55/TopoSortStEph.rs:37:  topo_sort - 6 call(s) in 2 test file(s)
 src/Chap55/TopoSortStPer.rs:20:  topological_sort_opt - 14 call(s) in 2 test file(s)
 src/Chap55/TopoSortStPer.rs:43:  topo_sort - 6 call(s) in 2 test file(s)
-src/Chap56/AllPairsResultStEphFloat.rs:53:  new - 1013 call(s) in 106 test file(s)
+src/Chap56/AllPairsResultStEphFloat.rs:53:  new - 1060 call(s) in 111 test file(s)
+src/Chap56/AllPairsResultStEphFloat.rs:73:  get_distance - 212 call(s) in 16 test file(s)
 src/Chap56/AllPairsResultStEphFloat.rs:81:  set_distance - 40 call(s) in 8 test file(s)
+src/Chap56/AllPairsResultStEphFloat.rs:90:  get_predecessor - 16 call(s) in 8 test file(s)
 src/Chap56/AllPairsResultStEphFloat.rs:99:  set_predecessor - 40 call(s) in 8 test file(s)
-src/Chap56/AllPairsResultStEphFloat.rs:111:  extract_path - 11 call(s) in 10 test file(s)
-src/Chap56/AllPairsResultStEphInt.rs:50:  new - 1013 call(s) in 106 test file(s)
+src/Chap56/AllPairsResultStEphFloat.rs:108:  is_reachable - 17 call(s) in 9 test file(s)
+src/Chap56/AllPairsResultStEphFloat.rs:111:  extract_path - 19 call(s) in 10 test file(s)
+src/Chap56/AllPairsResultStEphInt.rs:50:  new - 1060 call(s) in 111 test file(s)
+src/Chap56/AllPairsResultStEphInt.rs:70:  get_distance - 212 call(s) in 16 test file(s)
 src/Chap56/AllPairsResultStEphInt.rs:78:  set_distance - 40 call(s) in 8 test file(s)
+src/Chap56/AllPairsResultStEphInt.rs:87:  get_predecessor - 16 call(s) in 8 test file(s)
 src/Chap56/AllPairsResultStEphInt.rs:96:  set_predecessor - 40 call(s) in 8 test file(s)
-src/Chap56/AllPairsResultStEphInt.rs:108:  extract_path - 11 call(s) in 10 test file(s)
-src/Chap56/AllPairsResultStPerFloat.rs:52:  new - 1013 call(s) in 106 test file(s)
+src/Chap56/AllPairsResultStEphInt.rs:105:  is_reachable - 17 call(s) in 9 test file(s)
+src/Chap56/AllPairsResultStEphInt.rs:108:  extract_path - 19 call(s) in 10 test file(s)
+src/Chap56/AllPairsResultStPerFloat.rs:52:  new - 1060 call(s) in 111 test file(s)
+src/Chap56/AllPairsResultStPerFloat.rs:67:  get_distance - 212 call(s) in 16 test file(s)
 src/Chap56/AllPairsResultStPerFloat.rs:75:  set_distance - 40 call(s) in 8 test file(s)
+src/Chap56/AllPairsResultStPerFloat.rs:88:  get_predecessor - 16 call(s) in 8 test file(s)
 src/Chap56/AllPairsResultStPerFloat.rs:97:  set_predecessor - 40 call(s) in 8 test file(s)
-src/Chap56/AllPairsResultStPerFloat.rs:113:  extract_path - 11 call(s) in 10 test file(s)
-src/Chap56/AllPairsResultStPerInt.rs:49:  new - 1013 call(s) in 106 test file(s)
+src/Chap56/AllPairsResultStPerFloat.rs:110:  is_reachable - 17 call(s) in 9 test file(s)
+src/Chap56/AllPairsResultStPerFloat.rs:113:  extract_path - 19 call(s) in 10 test file(s)
+src/Chap56/AllPairsResultStPerInt.rs:49:  new - 1060 call(s) in 111 test file(s)
+src/Chap56/AllPairsResultStPerInt.rs:64:  get_distance - 212 call(s) in 16 test file(s)
 src/Chap56/AllPairsResultStPerInt.rs:72:  set_distance - 40 call(s) in 8 test file(s)
+src/Chap56/AllPairsResultStPerInt.rs:85:  get_predecessor - 16 call(s) in 8 test file(s)
 src/Chap56/AllPairsResultStPerInt.rs:94:  set_predecessor - 40 call(s) in 8 test file(s)
-src/Chap56/AllPairsResultStPerInt.rs:110:  extract_path - 11 call(s) in 10 test file(s)
+src/Chap56/AllPairsResultStPerInt.rs:107:  is_reachable - 17 call(s) in 9 test file(s)
+src/Chap56/AllPairsResultStPerInt.rs:110:  extract_path - 19 call(s) in 10 test file(s)
 src/Chap56/Example56_1.rs:30:  example_path_weight_int - 1 call(s) in 1 test file(s)
 src/Chap56/Example56_1.rs:46:  example_path_weight_float - 1 call(s) in 1 test file(s)
 src/Chap56/Example56_1.rs:82:  example_negative_weights - 1 call(s) in 1 test file(s)
 src/Chap56/Example56_3.rs:25:  example_negative_cycle - 1 call(s) in 1 test file(s)
 src/Chap56/Example56_3.rs:57:  example_undefined_shortest_path - 1 call(s) in 1 test file(s)
-src/Chap56/SSSPResultStEphFloat.rs:53:  new - 1013 call(s) in 106 test file(s)
+src/Chap56/PathWeightUtilsStEph.rs:52:  path_weight_int - 4 call(s) in 2 test file(s)
+src/Chap56/PathWeightUtilsStEph.rs:75:  path_weight_float - 2 call(s) in 2 test file(s)
+src/Chap56/PathWeightUtilsStEph.rs:98:  validate_subpath_property_int - 2 call(s) in 2 test file(s)
+src/Chap56/PathWeightUtilsStEph.rs:128:  validate_subpath_property_float - 2 call(s) in 2 test file(s)
+src/Chap56/PathWeightUtilsStPer.rs:51:  path_weight_int - 4 call(s) in 2 test file(s)
+src/Chap56/PathWeightUtilsStPer.rs:74:  path_weight_float - 2 call(s) in 2 test file(s)
+src/Chap56/PathWeightUtilsStPer.rs:97:  validate_subpath_property_int - 2 call(s) in 2 test file(s)
+src/Chap56/PathWeightUtilsStPer.rs:127:  validate_subpath_property_float - 2 call(s) in 2 test file(s)
+src/Chap56/SSSPResultStEphFloat.rs:53:  new - 1060 call(s) in 111 test file(s)
+src/Chap56/SSSPResultStEphFloat.rs:67:  get_distance - 212 call(s) in 16 test file(s)
 src/Chap56/SSSPResultStEphFloat.rs:75:  set_distance - 40 call(s) in 8 test file(s)
+src/Chap56/SSSPResultStEphFloat.rs:82:  get_predecessor - 16 call(s) in 8 test file(s)
 src/Chap56/SSSPResultStEphFloat.rs:91:  set_predecessor - 40 call(s) in 8 test file(s)
-src/Chap56/SSSPResultStEphFloat.rs:101:  extract_path - 11 call(s) in 10 test file(s)
-src/Chap56/SSSPResultStEphInt.rs:50:  new - 1013 call(s) in 106 test file(s)
+src/Chap56/SSSPResultStEphFloat.rs:98:  is_reachable - 17 call(s) in 9 test file(s)
+src/Chap56/SSSPResultStEphFloat.rs:101:  extract_path - 19 call(s) in 10 test file(s)
+src/Chap56/SSSPResultStEphInt.rs:50:  new - 1060 call(s) in 111 test file(s)
+src/Chap56/SSSPResultStEphInt.rs:64:  get_distance - 212 call(s) in 16 test file(s)
 src/Chap56/SSSPResultStEphInt.rs:72:  set_distance - 40 call(s) in 8 test file(s)
+src/Chap56/SSSPResultStEphInt.rs:79:  get_predecessor - 16 call(s) in 8 test file(s)
 src/Chap56/SSSPResultStEphInt.rs:88:  set_predecessor - 40 call(s) in 8 test file(s)
-src/Chap56/SSSPResultStEphInt.rs:98:  extract_path - 11 call(s) in 10 test file(s)
-src/Chap56/SSSPResultStPerFloat.rs:52:  new - 1013 call(s) in 106 test file(s)
+src/Chap56/SSSPResultStEphInt.rs:95:  is_reachable - 17 call(s) in 9 test file(s)
+src/Chap56/SSSPResultStEphInt.rs:98:  extract_path - 19 call(s) in 10 test file(s)
+src/Chap56/SSSPResultStPerFloat.rs:52:  new - 1060 call(s) in 111 test file(s)
+src/Chap56/SSSPResultStPerFloat.rs:64:  get_distance - 212 call(s) in 16 test file(s)
 src/Chap56/SSSPResultStPerFloat.rs:72:  set_distance - 40 call(s) in 8 test file(s)
+src/Chap56/SSSPResultStPerFloat.rs:84:  get_predecessor - 16 call(s) in 8 test file(s)
 src/Chap56/SSSPResultStPerFloat.rs:93:  set_predecessor - 40 call(s) in 8 test file(s)
-src/Chap56/SSSPResultStPerFloat.rs:108:  extract_path - 11 call(s) in 10 test file(s)
-src/Chap56/SSSPResultStPerInt.rs:49:  new - 1013 call(s) in 106 test file(s)
+src/Chap56/SSSPResultStPerFloat.rs:105:  is_reachable - 17 call(s) in 9 test file(s)
+src/Chap56/SSSPResultStPerFloat.rs:108:  extract_path - 19 call(s) in 10 test file(s)
+src/Chap56/SSSPResultStPerInt.rs:49:  new - 1060 call(s) in 111 test file(s)
+src/Chap56/SSSPResultStPerInt.rs:61:  get_distance - 212 call(s) in 16 test file(s)
 src/Chap56/SSSPResultStPerInt.rs:69:  set_distance - 40 call(s) in 8 test file(s)
+src/Chap56/SSSPResultStPerInt.rs:81:  get_predecessor - 16 call(s) in 8 test file(s)
 src/Chap56/SSSPResultStPerInt.rs:90:  set_predecessor - 40 call(s) in 8 test file(s)
-src/Chap56/SSSPResultStPerInt.rs:105:  extract_path - 11 call(s) in 10 test file(s)
+src/Chap56/SSSPResultStPerInt.rs:102:  is_reachable - 17 call(s) in 9 test file(s)
+src/Chap56/SSSPResultStPerInt.rs:105:  extract_path - 19 call(s) in 10 test file(s)
 src/Chap57/DijkstraStEphFloat.rs:58:  dijkstra - 11 call(s) in 2 test file(s)
 src/Chap57/DijkstraStEphInt.rs:57:  dijkstra - 11 call(s) in 2 test file(s)
-src/Chap57/StackStEph.rs:45:  new - 1013 call(s) in 106 test file(s)
-src/Chap57/StackStEph.rs:49:  push - 160 call(s) in 40 test file(s)
-src/Chap57/StackStEph.rs:53:  pop - 7 call(s) in 2 test file(s)
-src/Chap57/StackStEph.rs:63:  is_empty - 6 call(s) in 5 test file(s)
-src/Chap57/StackStEph.rs:67:  size - 56 call(s) in 21 test file(s)
+src/Chap57/StackStEph.rs:45:  new - 1060 call(s) in 111 test file(s)
+src/Chap57/StackStEph.rs:49:  push - 161 call(s) in 39 test file(s)
+src/Chap57/StackStEph.rs:53:  pop - 28 call(s) in 2 test file(s)
+src/Chap57/StackStEph.rs:58:  peek - 7 call(s) in 1 test file(s)
+src/Chap57/StackStEph.rs:63:  is_empty - 210 call(s) in 72 test file(s)
+src/Chap57/StackStEph.rs:67:  size - 1985 call(s) in 99 test file(s)
 src/Chap58/BellmanFordStEphFloat.rs:29:  bellman_ford - 15 call(s) in 2 test file(s)
 src/Chap58/BellmanFordStEphInt.rs:29:  bellman_ford - 15 call(s) in 2 test file(s)
-src/Chap59/JohnsonMtEphFloat.rs:36:  johnson_apsp - 25 call(s) in 4 test file(s)
-src/Chap59/JohnsonMtEphInt.rs:36:  johnson_apsp - 25 call(s) in 4 test file(s)
-src/Chap59/JohnsonStEphFloat.rs:33:  johnson_apsp - 25 call(s) in 4 test file(s)
-src/Chap59/JohnsonStEphInt.rs:31:  johnson_apsp - 25 call(s) in 4 test file(s)
+src/Chap59/JohnsonMtEphFloat.rs:36:  johnson_apsp - 31 call(s) in 4 test file(s)
+src/Chap59/JohnsonMtEphInt.rs:36:  johnson_apsp - 31 call(s) in 4 test file(s)
+src/Chap59/JohnsonStEphFloat.rs:33:  johnson_apsp - 31 call(s) in 4 test file(s)
+src/Chap59/JohnsonStEphInt.rs:31:  johnson_apsp - 31 call(s) in 4 test file(s)
 src/Chap61/EdgeContractionMtEph.rs:37:  edge_contract_mt - 2 call(s) in 1 test file(s)
 src/Chap61/EdgeContractionMtEph.rs:160:  contract_round_mt - 1 call(s) in 1 test file(s)
 src/Chap61/EdgeContractionStEph.rs:34:  edge_contract - 2 call(s) in 1 test file(s)
@@ -321,33 +313,39 @@ src/Chap62/StarContractionStEph.rs:109:  contract_to_vertices - 3 call(s) in 1 t
 src/Chap62/StarPartitionMtEph.rs:31:  parallel_star_partition - 5 call(s) in 1 test file(s)
 src/Chap62/StarPartitionStEph.rs:25:  sequential_star_partition - 5 call(s) in 1 test file(s)
 src/Chap63/ConnectivityMtEph.rs:48:  count_components_mt - 3 call(s) in 1 test file(s)
-src/Chap63/ConnectivityMtEph.rs:78:  connected_components_mt - 2 call(s) in 1 test file(s)
+src/Chap63/ConnectivityMtEph.rs:78:  connected_components_mt - 3 call(s) in 1 test file(s)
 src/Chap63/ConnectivityMtEph.rs:207:  count_components_hof - 2 call(s) in 2 test file(s)
-src/Chap63/ConnectivityMtEph.rs:221:  connected_components_hof - 1 call(s) in 1 test file(s)
+src/Chap63/ConnectivityMtEph.rs:221:  connected_components_hof - 2 call(s) in 2 test file(s)
 src/Chap63/ConnectivityStEph.rs:41:  count_components - 4 call(s) in 1 test file(s)
 src/Chap63/ConnectivityStEph.rs:72:  connected_components - 3 call(s) in 1 test file(s)
 src/Chap63/ConnectivityStEph.rs:144:  count_components_hof - 2 call(s) in 2 test file(s)
-src/Chap63/ConnectivityStEph.rs:160:  connected_components_hof - 1 call(s) in 1 test file(s)
+src/Chap63/ConnectivityStEph.rs:160:  connected_components_hof - 2 call(s) in 2 test file(s)
 src/Chap64/SpanTreeMtEph.rs:33:  spanning_tree_star_contraction_mt - 3 call(s) in 1 test file(s)
+src/Chap64/SpanTreeMtEph.rs:159:  verify_spanning_tree - 7 call(s) in 2 test file(s)
 src/Chap64/SpanTreeStEph.rs:28:  spanning_tree_star_contraction - 5 call(s) in 1 test file(s)
+src/Chap64/SpanTreeStEph.rs:100:  verify_spanning_tree - 7 call(s) in 2 test file(s)
 src/Chap64/TSPApproxStEph.rs:47:  euler_tour - 1 call(s) in 1 test file(s)
 src/Chap64/TSPApproxStEph.rs:124:  shortcut_tour - 1 call(s) in 1 test file(s)
 src/Chap64/TSPApproxStEph.rs:160:  tour_weight - 1 call(s) in 1 test file(s)
 src/Chap64/TSPApproxStEph.rs:212:  approx_metric_tsp - 1 call(s) in 1 test file(s)
 src/Chap65/KruskalStEph.rs:39:  kruskal_mst - 7 call(s) in 1 test file(s)
-src/Chap65/KruskalStEph.rs:94:  mst_weight - 19 call(s) in 4 test file(s)
+src/Chap65/KruskalStEph.rs:94:  mst_weight - 31 call(s) in 4 test file(s)
+src/Chap65/KruskalStEph.rs:107:  verify_mst_size - 4 call(s) in 1 test file(s)
 src/Chap65/PrimStEph.rs:66:  prim_mst - 8 call(s) in 1 test file(s)
-src/Chap65/PrimStEph.rs:164:  mst_weight - 19 call(s) in 4 test file(s)
+src/Chap65/PrimStEph.rs:164:  mst_weight - 31 call(s) in 4 test file(s)
 src/Chap66/BoruvkaMtEph.rs:321:  boruvka_mst_mt_with_seed - 9 call(s) in 1 test file(s)
-src/Chap66/BoruvkaMtEph.rs:344:  mst_weight - 19 call(s) in 4 test file(s)
+src/Chap66/BoruvkaMtEph.rs:344:  mst_weight - 31 call(s) in 4 test file(s)
+src/Chap66/BoruvkaStEph.rs:61:  vertex_bridges - 4 call(s) in 1 test file(s)
+src/Chap66/BoruvkaStEph.rs:110:  bridge_star_partition - 2 call(s) in 1 test file(s)
+src/Chap66/BoruvkaStEph.rs:160:  boruvka_mst - 2 call(s) in 1 test file(s)
 src/Chap66/BoruvkaStEph.rs:224:  boruvka_mst_with_seed - 8 call(s) in 1 test file(s)
-src/Chap66/BoruvkaStEph.rs:245:  mst_weight - 19 call(s) in 4 test file(s)
+src/Chap66/BoruvkaStEph.rs:245:  mst_weight - 31 call(s) in 4 test file(s)
 
 ================================================================================
 SUMMARY:
-  Total public functions: 334
-  Functions with test coverage: 242 (72.5%)
-  Functions without test coverage: 92 (27.5%)
-  Total test calls: 22136
+  Total public functions: 332
+  Functions with test coverage: 329 (99.1%)
+  Functions without test coverage: 3 (0.9%)
+  Total test calls: 30295
 ================================================================================
-Completed in 165ms
+Completed in 208ms

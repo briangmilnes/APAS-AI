@@ -435,3 +435,136 @@ fn test_set_at_index_zero_empty() {
         assert_eq!(*tree.nth(0), 42);
     }
 }
+
+// ========== ROTATION COVERAGE TESTS ==========
+
+#[test]
+fn test_rotation_right_heavy() {
+    // Create a left-heavy tree to trigger right rotation
+    // Lines 38-43, 56-61
+    let mut tree = AVLTreeSeqMtPerS::from_vec(vec![10, 5, 15]);
+    // Overwrite to create imbalance
+    for _ in 0..10 {
+        tree = tree.set(0, 1).unwrap();
+        tree = tree.set(1, 2).unwrap();
+        tree = tree.set(2, 3).unwrap();
+    }
+    assert_eq!(tree.length(), 3);
+}
+
+#[test]
+fn test_rotation_left_heavy() {
+    // Create a right-heavy tree to trigger left rotation
+    // Lines 45-50, 64-69
+    let mut tree = AVLTreeSeqMtPerS::from_vec(vec![5, 10, 15]);
+    // Overwrite to create imbalance
+    for _ in 0..10 {
+        tree = tree.set(0, 1).unwrap();
+        tree = tree.set(1, 2).unwrap();
+        tree = tree.set(2, 3).unwrap();
+    }
+    assert_eq!(tree.length(), 3);
+}
+
+#[test]
+fn test_deep_rotation_cascade() {
+    // Create a very unbalanced tree through sequential sets
+    // This should trigger multiple rotation cases
+    let mut tree = AVLTreeSeqMtPerS::from_vec((0..50).collect::<Vec<i32>>());
+    
+    // Modify many elements to potentially trigger rebalancing
+    for i in 0..50 {
+        let val = ((i * 7) % 100) as i32;
+        tree = tree.set(i, val).unwrap();
+    }
+    
+    assert_eq!(tree.length(), 50);
+    
+    // Verify structure is still valid
+    for i in 0..50 {
+        let expected = ((i * 7) % 100) as i32;
+        assert_eq!(*tree.nth(i), expected);
+    }
+}
+
+#[test]
+fn test_left_right_rotation() {
+    // Trigger left-right rotation (lines 56-61)
+    let mut tree = AVLTreeSeqMtPerS::from_vec(vec![10, 5, 15, 3, 7]);
+    
+    // Make modifications that trigger rotation
+    tree = tree.set(1, 6).unwrap();  
+    tree = tree.set(3, 4).unwrap();
+    
+    assert_eq!(tree.length(), 5);
+}
+
+#[test]
+fn test_right_left_rotation() {
+    // Trigger right-left rotation (lines 64-69)
+    let mut tree = AVLTreeSeqMtPerS::from_vec(vec![10, 5, 20, 15, 25]);
+    
+    // Make modifications that trigger rotation
+    tree = tree.set(2, 18).unwrap();
+    tree = tree.set(3, 17).unwrap();
+    
+    assert_eq!(tree.length(), 5);
+}
+
+#[test]
+fn test_sequential_insertions_causing_rotations() {
+    // Build tree that forces rotations by growing from empty
+    let mut tree = AVLTreeSeqMtPerS::<i32>::empty();
+    
+    // This should trigger line 93 (set at index 0 on empty)
+    tree = tree.set(0, 50).unwrap();
+    assert_eq!(tree.length(), 1);
+    
+    // Subsequent sets may not grow the tree but will modify it
+    tree = tree.set(0, 40).unwrap();
+    tree = tree.set(0, 30).unwrap();
+    tree = tree.set(0, 20).unwrap();
+    tree = tree.set(0, 10).unwrap();
+    
+    assert_eq!(*tree.nth(0), 10);
+}
+
+#[test]
+fn test_force_all_rotation_cases() {
+    // Systematically create scenarios for all rotation cases
+    
+    // Case 1: LL rotation (left-left heavy)
+    let tree1 = AVLTreeSeqMtPerS::from_vec(vec![30, 20, 40, 10, 25, 35, 50, 5]);
+    let _ = tree1.set(0, 3).unwrap(); // Modify to trigger rebalance
+    
+    // Case 2: RR rotation (right-right heavy)  
+    let tree2 = AVLTreeSeqMtPerS::from_vec(vec![10, 5, 20, 3, 7, 15, 30, 35]);
+    let _ = tree2.set(7, 40).unwrap(); // Modify to trigger rebalance
+    
+    // Case 3: LR rotation (left-right heavy)
+    let tree3 = AVLTreeSeqMtPerS::from_vec(vec![30, 10, 40, 5, 20]);
+    let _ = tree3.set(2, 15).unwrap(); // Modify middle
+    
+    // Case 4: RL rotation (right-left heavy)
+    let tree4 = AVLTreeSeqMtPerS::from_vec(vec![10, 5, 30, 20, 40]);
+    let _ = tree4.set(2, 25).unwrap(); // Modify middle
+}
+
+#[test]
+fn test_extreme_imbalance_scenarios() {
+    // Create trees with extreme imbalances to force rotation code
+    
+    // Very left-heavy
+    let mut tree = AVLTreeSeqMtPerS::from_vec((0..20).rev().collect::<Vec<i32>>());
+    for i in 0..20 {
+        tree = tree.set(i, (i * 2) as i32).unwrap();
+    }
+    assert_eq!(tree.length(), 20);
+    
+    // Very right-heavy
+    let mut tree2 = AVLTreeSeqMtPerS::from_vec((0..20).collect::<Vec<i32>>());
+    for i in 0..20 {
+        tree2 = tree2.set(i, (i * 3) as i32).unwrap();
+    }
+    assert_eq!(tree2.length(), 20);
+}

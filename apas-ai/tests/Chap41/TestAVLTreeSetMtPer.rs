@@ -300,6 +300,25 @@ fn test_debug_trait() {
 }
 
 #[test]
+fn test_partial_ord_trait() {
+    let set1 = AVLTreeSetMtPerLit![1, 2, 3];
+    let set2 = AVLTreeSetMtPerLit![1, 2, 3];
+    let set3 = AVLTreeSetMtPerLit![1, 2, 4];
+    assert_eq!(set1.partial_cmp(&set2), Some(std::cmp::Ordering::Equal));
+    assert_eq!(set1.partial_cmp(&set3), Some(std::cmp::Ordering::Less));
+}
+
+#[test]
+fn test_ord_trait() {
+    let set1 = AVLTreeSetMtPerLit![1, 2, 3];
+    let set2 = AVLTreeSetMtPerLit![1, 2, 3];
+    let set3 = AVLTreeSetMtPerLit![1, 2, 4];
+    assert_eq!(set1.cmp(&set2), std::cmp::Ordering::Equal);
+    assert_eq!(set1.cmp(&set3), std::cmp::Ordering::Less);
+    assert_eq!(set3.cmp(&set1), std::cmp::Ordering::Greater);
+}
+
+#[test]
 fn test_to_seq() {
     let set = AVLTreeSetMtPerLit![3, 1, 4, 1, 5];
     let seq = set.to_seq();

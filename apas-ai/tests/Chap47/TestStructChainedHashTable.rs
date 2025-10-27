@@ -96,3 +96,50 @@ fn test_struct_chained_delete() {
     assert!(StructChainedHashTableStEph::delete(&mut table, &1));
     assert_eq!(StructChainedHashTableStEph::lookup(&table, &1), None);
 }
+
+#[test]
+fn test_chainlist_default() {
+    let list: ChainList<i32, String> = Default::default();
+    assert!(list.head.is_none());
+    assert_eq!(EntryTrait::lookup(&list, &1), None);
+}
+
+#[test]
+fn test_struct_chained_resize() {
+    let hash_fn_gen: HashFunGen<i32> = Rc::new(|size| Box::new(move |k| (*k as N) % size));
+    let mut table: StructChainTable =
+        <StructChainedHashTableStEph as ParaHashTableStEphTrait<i32, String, ChainList<i32, String>, ()>>::createTable(
+            hash_fn_gen.clone(),
+            4,
+        );
+
+    for _ in 0..4 {
+        table.table.push(ChainList::new());
+    }
+
+    // Insert some values
+    StructChainedHashTableStEph::insert(&mut table, 1, "one".to_string());
+    StructChainedHashTableStEph::insert(&mut table, 5, "five".to_string());
+    StructChainedHashTableStEph::insert(&mut table, 9, "nine".to_string());
+
+    // Resize to larger table
+    let resized_table = StructChainedHashTableStEph::resize(&table, 8);
+
+    // Verify values still accessible in resized table
+    assert_eq!(StructChainedHashTableStEph::lookup(&resized_table, &1), Some("one".to_string()));
+    assert_eq!(StructChainedHashTableStEph::lookup(&resized_table, &5), Some("five".to_string()));
+    assert_eq!(StructChainedHashTableStEph::lookup(&resized_table, &9), Some("nine".to_string()));
+}
+
+#[test]
+fn test_node_clone() {
+    let node = Node {
+        key: 1,
+        value: "one".to_string(),
+        next: None,
+    };
+    let cloned = node.clone();
+    assert_eq!(cloned.key, 1);
+    assert_eq!(cloned.value, "one");
+    assert!(cloned.next.is_none());
+}

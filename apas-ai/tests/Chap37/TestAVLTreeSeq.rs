@@ -810,3 +810,12 @@ fn test_avltreeseq_insert_at_boundaries() {
     let collected = tree.iter().copied().collect::<Vec<i32>>();
     assert_eq!(collected, expected);
 }
+
+#[test]
+fn test_avltreeseq_eq_trait() {
+    let tree1 = AVLTreeS::from_vec(vec![1, 2, 3]);
+    let tree2 = AVLTreeS::from_vec(vec![1, 2, 3]);
+    assert_eq!(tree1, tree1); // Eq reflexive
+    assert_eq!(tree1, tree2);
+    assert_eq!(tree2, tree1);
+}

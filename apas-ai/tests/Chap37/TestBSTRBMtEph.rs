@@ -264,3 +264,22 @@ fn test_reduce_empty() {
     let sum = tree.reduce(|a, b| a + b, 42);
     assert_eq!(sum, 42);
 }
+
+#[test]
+fn test_trait_new() {
+    let tree = <BSTRBMtEph<i32> as BSTRBMtEphTrait<i32>>::new();
+    assert!(tree.is_empty());
+}
+
+#[test]
+fn test_trait_from_sorted() {
+    let tree = <BSTRBMtEph<i32> as BSTRBMtEphTrait<i32>>::from_sorted_slice(&[1, 2, 3]);
+    assert_eq!(tree.size(), 3);
+}
+
+#[test]
+fn test_trait_methods_direct() {
+    let tree = <BSTRBMtEph<i32> as BSTRBMtEphTrait<i32>>::new();
+    tree.insert(10);
+    assert!(tree.contains(&10));
+}

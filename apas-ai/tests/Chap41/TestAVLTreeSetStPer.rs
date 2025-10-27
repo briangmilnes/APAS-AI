@@ -174,3 +174,26 @@ fn test_avl_tree_set_per_persistence() {
     assert!(original.find(&1));
     assert!(!filtered.find(&1));
 }
+
+#[test]
+fn test_default_impl() {
+    let set: AVLTreeSetStPer<i32> = Default::default();
+    assert_eq!(set.size(), 0);
+}
+
+#[test]
+fn test_clone_impl() {
+    let set = AVLTreeSetStPerLit![1, 2, 3];
+    let cloned = set.clone();
+    assert_eq!(cloned.size(), 3);
+    assert!(cloned.find(&2));
+}
+
+#[test]
+fn test_display_impl() {
+    let set = AVLTreeSetStPerLit![1, 2, 3];
+    let display_str = format!("{}", set);
+    assert!(display_str.contains("1"));
+    assert!(display_str.contains("2"));
+    assert!(display_str.contains("3"));
+}

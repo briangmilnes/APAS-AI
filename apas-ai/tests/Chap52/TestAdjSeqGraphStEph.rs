@@ -74,3 +74,45 @@ fn test_empty_graph() {
     let graph: AdjSeqGraphStEph = AdjSeqGraphStEphTrait::new(5);
     assert_eq!(graph.num_edges(), 0);
 }
+
+#[test]
+fn test_from_seq() {
+    // Create adj list manually: [[1, 2], [2], []]
+    let adj0 = ArraySeqStEphS::from_vec(vec![1, 2]);
+    let adj1 = ArraySeqStEphS::from_vec(vec![2]);
+    let adj2 = ArraySeqStEphS::empty();
+    let adj_seq = ArraySeqStEphS::from_vec(vec![adj0, adj1, adj2]);
+    
+    let graph: AdjSeqGraphStEph = AdjSeqGraphStEphTrait::from_seq(adj_seq);
+    
+    assert_eq!(graph.num_vertices(), 3);
+    assert_eq!(graph.out_degree(0), 2);
+    assert_eq!(graph.out_degree(1), 1);
+    assert_eq!(graph.out_degree(2), 0);
+    assert!(graph.has_edge(0, 1));
+    assert!(graph.has_edge(0, 2));
+    assert!(graph.has_edge(1, 2));
+}
+
+#[test]
+fn test_set_neighbors() {
+    let mut graph: AdjSeqGraphStEph = AdjSeqGraphStEphTrait::new(4);
+    
+    // Set neighbors for vertex 0
+    let neighbors = ArraySeqStEphS::from_vec(vec![1, 2, 3]);
+    graph.set_neighbors(0, neighbors);
+    
+    assert_eq!(graph.out_degree(0), 3);
+    assert!(graph.has_edge(0, 1));
+    assert!(graph.has_edge(0, 2));
+    assert!(graph.has_edge(0, 3));
+    
+    // Replace neighbors
+    let new_neighbors = ArraySeqStEphS::from_vec(vec![2]);
+    graph.set_neighbors(0, new_neighbors);
+    
+    assert_eq!(graph.out_degree(0), 1);
+    assert!(!graph.has_edge(0, 1));
+    assert!(graph.has_edge(0, 2));
+    assert!(!graph.has_edge(0, 3));
+}

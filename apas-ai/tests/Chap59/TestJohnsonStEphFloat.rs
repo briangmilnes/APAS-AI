@@ -85,3 +85,22 @@ fn test_disconnected_graph() {
     assert_eq!(result.get_distance(0, 2), OrderedF64::from(f64::INFINITY));
     assert_eq!(result.get_distance(1, 3), OrderedF64::from(f64::INFINITY));
 }
+
+#[test]
+fn test_negative_cycle() {
+    // Create graph with negative cycle: 0 -> 1 -> 2 -> 0 with total weight < 0
+    let vertices = SetLit![0, 1, 2];
+    let edges = SetLit![
+        Triple(0, 1, OrderedF64::from(1.0)),
+        Triple(1, 2, OrderedF64::from(-2.0)),
+        Triple(2, 0, OrderedF64::from(-1.0))  // Total cycle: 1 + (-2) + (-1) = -2 < 0
+    ];
+
+    let graph = WeightedDirGraphStEphFloat::from_weighted_edges(vertices, edges);
+    let result = johnson_apsp(&graph);
+
+    // When negative cycle exists, all distances should be infinity
+    assert_eq!(result.get_distance(0, 0), OrderedF64::from(f64::INFINITY));
+    assert_eq!(result.get_distance(0, 1), OrderedF64::from(f64::INFINITY));
+    assert_eq!(result.get_distance(1, 2), OrderedF64::from(f64::INFINITY));
+}

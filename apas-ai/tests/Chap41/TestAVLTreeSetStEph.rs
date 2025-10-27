@@ -454,3 +454,37 @@ fn test_string_set() {
     assert_eq!(set.size(), 2);
     assert!(!set.find(&"banana".to_string()));
 }
+
+#[test]
+fn test_default_impl() {
+    let set: AVLTreeSetStEph<i32> = Default::default();
+    assert_eq!(set.size(), 0);
+}
+
+#[test]
+fn test_clone_impl() {
+    let mut set = AVLTreeSetStEph::empty();
+    set.insert(10);
+    set.insert(20);
+    let cloned = Clone::clone(&set);
+    assert_eq!(cloned.size(), 2);
+    assert!(cloned.find(&10));
+}
+
+#[test]
+fn test_debug_impl() {
+    let mut set = AVLTreeSetStEph::empty();
+    set.insert(10);
+    set.insert(20);
+    let debug_str = format!("{:?}", set);
+    assert!(debug_str.contains("10"));
+}
+
+#[test]
+fn test_display_impl() {
+    let mut set = AVLTreeSetStEph::empty();
+    set.insert(10);
+    set.insert(20);
+    let display_str = format!("{}", set);
+    assert!(display_str.contains("10"));
+}

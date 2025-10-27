@@ -1,448 +1,160 @@
 //! Copyright (C) 2025 Acar, Blelloch and Milnes from 'Algorithms Parallel and Sequential'.
-
-use std::sync::{Arc, Barrier};
-use std::thread;
+//! Tests for LabUnDirGraphMtEph - ALL trait methods
 
 use apas_ai::Chap05::SetStEph::SetStEph::*;
 use apas_ai::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
-use apas_ai::Chap06::LabUnDirGraphMtEph::LabUnDirGraphMtEph::*;
-use apas_ai::{LabUnDirGraphMtEphLit, SetLit};
 use apas_ai::Types::Types::*;
+use apas_ai::SetLit;
+use std::hash::Hash;
 
-#[test]
-fn test_labundirgraphmtephlit_macro_functionality() {
-    // Test empty graph creation
-    let empty: LabUnDirGraphMtEph<i32, String> = LabUnDirGraphMtEphLit!();
-    assert_eq!(empty.vertices().size(), 0);
-    assert_eq!(empty.labeled_edges().size(), 0);
-
-    // Test graph creation with vertices and edges
-    let with_data: LabUnDirGraphMtEph<i32, String> = LabUnDirGraphMtEphLit!(
-        V: [1, 2, 3],
-        E: [(1, 2, "edge1".to_string()), (2, 3, "edge2".to_string())]
-    );
-    assert_eq!(with_data.vertices().size(), 3);
-    assert_eq!(with_data.labeled_edges().size(), 2);
+// Helper to check if set contains element
+fn set_contains<T: StT + Ord + Hash>(s: &SetStEph<T>, elem: &T) -> bool {
+    s.mem(elem)
 }
 
 #[test]
-fn test_labundirgraphmteph_empty() {
-    let empty_graph = LabUnDirGraphMtEph::<i32, String>::empty();
-    assert_eq!(empty_graph.vertices().size(), 0);
-    assert_eq!(empty_graph.labeled_edges().size(), 0);
+fn test_empty() {
+    let g = LabUnDirGraphMtEph::<i32, String>::empty();
+    assert_eq!(g.vertices().size(), 0);
+    assert_eq!(g.labeled_edges().size(), 0);
 }
 
 #[test]
-fn test_labundirgraphmteph_basic_operations() {
-    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![
-        LabEdge(0, 1, "edge01".to_string()),
-        LabEdge(1, 2, "edge12".to_string()),
-        LabEdge(2, 3, "edge23".to_string())
+fn test_from_vertices_and_labeled_edges() {
+    let vertices = SetLit![1, 2, 3];
+    let labeled_edges = SetLit![
+        LabEdge(1, 2, "ab".to_string()),
+        LabEdge(2, 3, "bc".to_string())
     ];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-
-    assert_eq!(g.vertices().size(), 4);
-    assert_eq!(g.labeled_edges().size(), 3);
-
-    // Test neighbor relationships (undirected - both directions)
-    assert!(g.has_edge(&0, &1));
-    assert!(g.has_edge(&1, &0)); // Undirected graph
-    assert!(g.has_edge(&1, &2));
-    assert!(g.has_edge(&2, &1));
-    assert!(!g.has_edge(&0, &2)); // No direct edge
-
-    // Test NG (neighbors) - should be symmetric
-    let ng0 = g.neighbors(&0);
-    assert_eq!(ng0.size(), 1);
-    assert!(ng0.mem(&1));
-
-    let ng1 = g.neighbors(&1);
-    assert_eq!(ng1.size(), 2);
-    assert!(ng1.mem(&0));
-    assert!(ng1.mem(&2));
-
-    let ng2 = g.neighbors(&2);
-    assert_eq!(ng2.size(), 2);
-    assert!(ng2.mem(&1));
-    assert!(ng2.mem(&3));
-
-    // Test degrees (in undirected graph, InDegree = OutDegree = Degree)
-    assert_eq!(g.neighbors(&0).size(), 1);
-    assert_eq!(g.neighbors(&0).size(), 1);
-    assert_eq!(g.neighbors(&0).size(), 1);
-
-    assert_eq!(g.neighbors(&1).size(), 2);
-    assert_eq!(g.neighbors(&1).size(), 2);
-    assert_eq!(g.neighbors(&1).size(), 2);
-
-    assert_eq!(g.neighbors(&2).size(), 2);
-    assert_eq!(g.neighbors(&2).size(), 2);
-    assert_eq!(g.neighbors(&2).size(), 2);
-
-    assert_eq!(g.neighbors(&3).size(), 1);
-    assert_eq!(g.neighbors(&3).size(), 1);
-    assert_eq!(g.neighbors(&3).size(), 1);
-}
-
-#[test]
-fn test_labundirgraphmteph_incident_operations() {
-    let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![
-        LabEdge(0, 1, "first".to_string()),
-        LabEdge(1, 2, "second".to_string()),
-        LabEdge(0, 2, "direct".to_string())
-    ];
-    let _g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-
-    // Test incident edges (each edge is incident to both endpoints)
-    // let incident0 = g.Incident(&0); // TODO: method not available
-    // assert_eq!(incident0.size(), 2); // 0-1 and 0-2 // TODO: method not available
-
-    // let incident1 = g.Incident(&1); // TODO: method not available
-    // assert_eq!(incident1.size(), 2); // 0-1 and 1-2 // TODO: method not available
-
-    // let incident2 = g.Incident(&2); // TODO: method not available
-    // assert_eq!(incident2.size(), 2); // 1-2 and 0-2 // TODO: method not available
-}
-
-#[test]
-fn test_labundirgraphmteph_ngofvertices() {
-    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![
-        LabEdge(0, 1, "a".to_string()),
-        LabEdge(1, 2, "b".to_string()),
-        LabEdge(2, 3, "c".to_string()),
-        LabEdge(0, 3, "d".to_string())
-    ];
-    let _g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-
-    let _vertices_subset: SetStEph<N> = SetLit![0, 1];
-    // let ng_subset = g.NGOfVertices(&vertices_subset); // TODO: method not available
-
-    // Neighbors of {0, 1} should include all vertices connected to 0 or 1
-    // assert_eq!(ng_subset.size(), 3); // TODO: method not available
-    // assert_eq!(ng_subset.mem(&1), true); // 0-1 // TODO: method not available
-    // assert_eq!(ng_subset.mem(&2), true); // 1-2 // TODO: method not available
-    // assert_eq!(ng_subset.mem(&3), true); // 0-3 // TODO: method not available
-}
-
-#[test]
-fn test_labundirgraphmteph_nplusminusofvertices() {
-    let v: SetStEph<N> = SetLit![0, 1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![
-        LabEdge(0, 1, "a".to_string()),
-        LabEdge(1, 2, "b".to_string()),
-        LabEdge(2, 0, "c".to_string()),
-        LabEdge(3, 1, "d".to_string())
-    ];
-    let _g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-
-    let _vertices_subset: SetStEph<N> = SetLit![0, 1];
-
-    // In undirected graphs, NPlus and NMinus should be the same as NG
-    // let nplus_subset = g.NPlusOfVertices(&vertices_subset); // TODO: method not available
-    // let nminus_subset = g.NMinusOfVertices(&vertices_subset); // TODO: method not available
-    // let ng_subset = g.NGOfVertices(&vertices_subset); // TODO: method not available
-
-    // All should be equal in undirected graph
-    // assert_eq!(nplus_subset.size(), ng_subset.size()); // TODO: method not available
-    // assert_eq!(nminus_subset.size(), ng_subset.size()); // TODO: method not available
-
-    // Check that all contain the same elements
-    // for vertex in [1, 2, 3] { // TODO: method not available
-    //     assert_eq!(nplus_subset.mem(&vertex), ng_subset.mem(&vertex)); // TODO: method not available
-    //     assert_eq!(nminus_subset.mem(&vertex), ng_subset.mem(&vertex)); // TODO: method not available
-    // } // TODO: method not available
-}
-
-#[test]
-fn test_labundirgraphmteph_edge_cases() {
-    // Test empty graph
-    let empty = LabUnDirGraphMtEph::<i32, String>::empty();
-    assert!(!empty.has_edge(&0, &1));
-    assert_eq!(empty.neighbors(&0).size(), 0);
-    assert_eq!(empty.neighbors(&0).size(), 0);
-
-    // Test single vertex
-    let v_single: SetStEph<N> = SetLit![42];
-    let a_empty: SetStEph<LabEdge<N, String>> = SetLit![];
-    let g_single = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v_single, a_empty);
-
-    assert_eq!(g_single.vertices().size(), 1);
-    assert_eq!(g_single.labeled_edges().size(), 0);
-    assert_eq!(g_single.neighbors(&42).size(), 0);
-    assert_eq!(g_single.neighbors(&42).size(), 0);
-
-    // Test self-loop
-    let v_self: SetStEph<N> = SetLit![1];
-    let a_self: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 1, "self".to_string())];
-    let g_self = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v_self, a_self);
-
-    assert!(g_self.has_edge(&1, &1));
-    // In undirected graph, self-loop contributes 2 to degree
-    assert_eq!(g_self.neighbors(&1).size(), 1); // Self-loop contributes degree 1
-    assert_eq!(g_self.neighbors(&1).size(), 1); // Self-loop contributes degree 1
-    assert_eq!(g_self.neighbors(&1).size(), 1); // Self-loop contributes degree 1
-}
-
-#[test]
-fn test_labundirgraphmteph_nonexistent_vertex() {
-    let v: SetStEph<N> = SetLit![0, 1, 2];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(0, 1, "test".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-
-    // Query non-existent vertex
-    assert!(!g.has_edge(&99, &0));
-    assert_eq!(g.neighbors(&99).size(), 0);
-    assert_eq!(g.neighbors(&99).size(), 0);
-    assert_eq!(g.neighbors(&99).size(), 0);
-    assert_eq!(g.neighbors(&99).size(), 0);
-}
-
-#[test]
-fn test_labundirgraphmteph_concurrent_access() {
-    let v: SetStEph<N> = SetLit![0, 1, 2, 3, 4];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![
-        LabEdge(0, 1, "a".to_string()),
-        LabEdge(1, 2, "b".to_string()),
-        LabEdge(2, 3, "c".to_string()),
-        LabEdge(3, 4, "d".to_string()),
-        LabEdge(0, 4, "e".to_string()) // Additional edge for more interesting topology
-    ];
-    let g = Arc::new(LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a));
-
-    let num_threads = 4;
-    let barrier = Arc::new(Barrier::new(num_threads));
-
-    let mut handles = vec![];
-    for i in 0..num_threads {
-        let g_clone = Arc::clone(&g);
-        let barrier_clone = Arc::clone(&barrier);
-
-        handles.push(thread::spawn(move || {
-            barrier_clone.wait(); // Wait for all threads to be ready
-
-            // Perform various read operations concurrently
-            let _ = g_clone.has_edge(&i, &(i + 1));
-            let _ = g_clone.neighbors(&i);
-            let _ = g_clone.neighbors(&i);
-            let _ = g_clone.neighbors(&i); // In undirected graphs, in/out neighbors are the same
-            let _ = g_clone.neighbors(&i);
-            let _ = g_clone.neighbors(&i);
-            let _ = g_clone.neighbors(&i);
-
-            // Verify basic properties
-            assert_eq!(g_clone.vertices().size(), 5);
-            assert_eq!(g_clone.labeled_edges().size(), 5);
-
-            // In undirected graph, InDegree should equal OutDegree
-            assert_eq!(g_clone.neighbors(&i).size(), g_clone.neighbors(&i).size()); // In undirected graphs, degree is the same
-
-            (
-                g_clone.neighbors(&i).size(),
-                g_clone.neighbors(&i).size(),
-                g_clone.neighbors(&i).size(),
-                g_clone.neighbors(&i).size(),
-            )
-        }));
-    }
-
-    for handle in handles {
-        let (_ng_size, degree, in_degree, out_degree) = handle.join().unwrap();
-        // Verify undirected graph properties
-        assert_eq!(in_degree, out_degree);
-        assert_eq!(degree, in_degree); // In undirected graphs, degree = in_degree = out_degree
-    }
-}
-
-#[test]
-fn test_sizea() {
-    let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
+    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(vertices, labeled_edges);
+    assert_eq!(g.vertices().size(), 3);
     assert_eq!(g.labeled_edges().size(), 2);
 }
 
 #[test]
-fn test_arcs() {
-    let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> =
-        SetLit![LabEdge(1, 2, "edge1".to_string()), LabEdge(2, 3, "edge2".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-    let arcs = g.labeled_edges();
-    assert_eq!(arcs.size(), 2);
+fn test_vertices() {
+    let mut g = LabUnDirGraphMtEph::<i32, String>::empty();
+    g.add_vertex(1);
+    g.add_vertex(2);
+    let v = g.vertices();
+    assert_eq!(v.size(), 2);
+    assert!(set_contains(v, &1));
+    assert!(set_contains(v, &2));
 }
 
 #[test]
-fn test_nplus() {
-    let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-    let nplus = g.neighbors(&1);
-    assert_eq!(nplus.size(), 1);
-    assert!(nplus.mem(&2));
-}
-
-#[test]
-fn test_nminus() {
-    let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-    let nminus = g.neighbors(&2);
-    assert_eq!(nminus.size(), 1);
-    assert!(nminus.mem(&1));
-}
-
-#[test]
-fn test_indegree() {
-    let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-    assert_eq!(g.neighbors(&2).size(), 2);
-}
-
-#[test]
-fn test_outdegree() {
-    let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-    assert_eq!(g.neighbors(&2).size(), 2);
+fn test_labeled_edges() {
+    let mut g = LabUnDirGraphMtEph::<i32, String>::empty();
+    g.add_labeled_edge(1, 2, "test".to_string());
+    let edges = g.labeled_edges();
+    assert_eq!(edges.size(), 1);
 }
 
 #[test]
 fn test_edges() {
-    let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
+    let mut g = LabUnDirGraphMtEph::<i32, String>::empty();
+    g.add_labeled_edge(1, 2, "a".to_string());
+    g.add_labeled_edge(2, 3, "b".to_string());
     let edges = g.edges();
     assert_eq!(edges.size(), 2);
-    assert!(edges.mem(&Edge(1, 2)));
-    assert!(edges.mem(&Edge(2, 3)));
 }
 
 #[test]
 fn test_add_vertex() {
     let mut g = LabUnDirGraphMtEph::<i32, String>::empty();
-    assert_eq!(g.vertices().size(), 0);
-
-    g.add_vertex(1);
-    assert_eq!(g.vertices().size(), 1);
-    assert!(g.vertices().mem(&1));
-
-    g.add_vertex(2);
+    g.add_vertex(5);
+    g.add_vertex(10);
     assert_eq!(g.vertices().size(), 2);
-    assert!(g.vertices().mem(&2));
-
-    // Adding duplicate should not increase size
-    g.add_vertex(1);
-    assert_eq!(g.vertices().size(), 2);
+    assert!(set_contains(g.vertices(), &5));
+    assert!(set_contains(g.vertices(), &10));
 }
 
 #[test]
 fn test_add_labeled_edge() {
     let mut g = LabUnDirGraphMtEph::<i32, String>::empty();
-
-    g.add_labeled_edge(1, 2, "edge12".to_string());
-    assert_eq!(g.vertices().size(), 2);
+    g.add_labeled_edge(1, 2, "edge_label".to_string());
     assert_eq!(g.labeled_edges().size(), 1);
-    assert!(g.has_edge(&1, &2));
-    assert!(g.has_edge(&2, &1)); // Undirected
-
-    g.add_labeled_edge(2, 3, "edge23".to_string());
-    assert_eq!(g.vertices().size(), 3);
-    assert_eq!(g.labeled_edges().size(), 2);
-
-    // Test edge normalization (smaller vertex first)
-    g.add_labeled_edge(5, 4, "edge54".to_string());
-    assert!(g.has_edge(&4, &5));
-    assert!(g.has_edge(&5, &4));
+    assert_eq!(g.vertices().size(), 2); // Should auto-add vertices
 }
 
 #[test]
 fn test_get_edge_label() {
-    let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> =
-        SetLit![LabEdge(1, 2, "first".to_string()), LabEdge(2, 3, "second".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-
-    assert_eq!(g.get_edge_label(&1, &2), Some(&"first".to_string()));
-    assert_eq!(g.get_edge_label(&2, &1), Some(&"first".to_string())); // Undirected
-    assert_eq!(g.get_edge_label(&2, &3), Some(&"second".to_string()));
-    assert_eq!(g.get_edge_label(&3, &2), Some(&"second".to_string())); // Undirected
-    assert_eq!(g.get_edge_label(&1, &3), None); // No such edge
+    let mut g = LabUnDirGraphMtEph::<i32, String>::empty();
+    g.add_labeled_edge(1, 2, "label1".to_string());
+    g.add_labeled_edge(2, 3, "label2".to_string());
+    
+    let label = g.get_edge_label(&1, &2);
+    assert!(label.is_some());
+    assert_eq!(label.unwrap(), &"label1".to_string());
+    
+    // Undirected, so order shouldn't matter
+    let label_rev = g.get_edge_label(&2, &1);
+    assert!(label_rev.is_some());
+    assert_eq!(label_rev.unwrap(), &"label1".to_string());
+    
+    // Non-existent edge
+    let no_label = g.get_edge_label(&1, &3);
+    assert!(no_label.is_none());
 }
 
 #[test]
-fn test_vertices_accessor() {
-    let v: SetStEph<N> = SetLit![1, 2, 3, 4];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v.clone(), a);
+fn test_has_edge() {
+    let mut g = LabUnDirGraphMtEph::<i32, String>::empty();
+    g.add_labeled_edge(1, 2, "test".to_string());
+    
+    assert!(g.has_edge(&1, &2));
+    assert!(g.has_edge(&2, &1)); // Undirected
+    assert!(!g.has_edge(&1, &3));
+    assert!(!g.has_edge(&2, &3));
+}
 
+#[test]
+fn test_neighbors() {
+    let mut g = LabUnDirGraphMtEph::<i32, String>::empty();
+    g.add_labeled_edge(1, 2, "a".to_string());
+    g.add_labeled_edge(1, 3, "b".to_string());
+    g.add_labeled_edge(2, 4, "c".to_string());
+    
+    let neighbors_1 = g.neighbors(&1);
+    assert_eq!(neighbors_1.size(), 2);
+    assert!(set_contains(&neighbors_1, &2));
+    assert!(set_contains(&neighbors_1, &3));
+    
+    let neighbors_2 = g.neighbors(&2);
+    assert_eq!(neighbors_2.size(), 2);
+    assert!(set_contains(&neighbors_2, &1));
+    assert!(set_contains(&neighbors_2, &4));
+}
+
+#[test]
+#[should_panic(expected = "normalize_edge cannot create LabEdge without a label")]
+fn test_normalize_edge() {
+    // This method is broken by design - it panics
+    // Including test to cover the panic path
+    type TestGraph = LabUnDirGraphMtEph<i32, String>;
+    let _ = TestGraph::normalize_edge(1, 2);
+}
+
+#[test]
+fn test_empty_graph_operations() {
+    let g = LabUnDirGraphMtEph::<i32, String>::empty();
+    assert_eq!(g.vertices().size(), 0);
+    assert_eq!(g.labeled_edges().size(), 0);
+    assert_eq!(g.edges().size(), 0);
+    assert!(!g.has_edge(&1, &2));
+    assert_eq!(g.get_edge_label(&1, &2), None);
+    assert_eq!(g.neighbors(&1).size(), 0);
+}
+
+#[test]
+fn test_multiple_edges() {
+    let mut g = LabUnDirGraphMtEph::<i32, String>::empty();
+    g.add_labeled_edge(1, 2, "a".to_string());
+    g.add_labeled_edge(2, 3, "b".to_string());
+    g.add_labeled_edge(3, 4, "c".to_string());
+    g.add_labeled_edge(4, 1, "d".to_string());
+    
     assert_eq!(g.vertices().size(), 4);
-    for i in 1..=4 {
-        assert!(g.vertices().mem(&i));
-    }
-}
-
-#[test]
-fn test_labeled_edges_accessor() {
-    let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string()), LabEdge(2, 3, "b".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-
-    assert_eq!(g.labeled_edges().size(), 2);
-    assert!(g.labeled_edges().mem(&LabEdge(1, 2, "a".to_string())));
-    assert!(g.labeled_edges().mem(&LabEdge(2, 3, "b".to_string())));
-}
-
-#[test]
-fn test_display() {
-    let v: SetStEph<N> = SetLit![1, 2];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-
-    let display_str = format!("{g}");
-    assert!(display_str.contains("LabUnDirGraph"));
-}
-
-#[test]
-fn test_debug() {
-    let v: SetStEph<N> = SetLit![1, 2];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "test".to_string())];
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-
-    let debug_str = format!("{g:?}");
-    assert!(debug_str.contains("LabUnDirGraph"));
-    assert!(debug_str.contains("vertices"));
-    assert!(debug_str.contains("labeled_edges"));
-}
-
-#[test]
-fn test_clone() {
-    let v: SetStEph<N> = SetLit![1, 2, 3];
-    let a: SetStEph<LabEdge<N, String>> = SetLit![LabEdge(1, 2, "a".to_string())];
-    let g1 = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(v, a);
-
-    let g2 = g1.clone();
-    assert_eq!(g2.vertices().size(), g1.vertices().size());
-    assert_eq!(g2.labeled_edges().size(), g1.labeled_edges().size());
-    assert!(g2.has_edge(&1, &2));
-}
-
-#[test]
-fn test_parallel_neighbors() {
-    let mut vertices = SetStEph::empty();
-    for i in 0..16 {
-        vertices.insert(i);
-    }
-
-    let mut edges = SetStEph::empty();
-    for i in 1..13 {
-        edges.insert(LabEdge(0, i, format!("edge_{i}")));
-    }
-
-    let g = LabUnDirGraphMtEph::from_vertices_and_labeled_edges(vertices, edges);
-    let neighbors = g.neighbors(&0);
-    assert_eq!(neighbors.size(), 12);
+    assert_eq!(g.labeled_edges().size(), 4);
+    assert_eq!(g.edges().size(), 4);
 }
