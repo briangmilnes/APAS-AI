@@ -263,3 +263,15 @@ fn test_pq_min_self_loop() {
     assert!(result.visited.find(&1));
     assert!(result.visited.find(&2));
 }
+
+#[test]
+fn test_priority_fn_direct() {
+    use apas_ai::Chap53::PQMinStEph::PQMinStEph::*;
+    
+    let prio_fn = vertex_priority();
+    
+    // Test priority function directly
+    assert_eq!(prio_fn.priority(&1), 1);
+    assert_eq!(prio_fn.priority(&5), 5);
+    assert_eq!(prio_fn.priority(&10), 10);
+}

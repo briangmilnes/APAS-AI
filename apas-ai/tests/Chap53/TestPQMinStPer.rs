@@ -136,3 +136,15 @@ fn test_pq_min_cycle() {
     assert!(result.visited.find(&2));
     assert!(result.visited.find(&3));
 }
+
+#[test]
+fn test_priority_fn_direct() {
+    use apas_ai::Chap53::PQMinStPer::PQMinStPer::*;
+    
+    let prio_fn = vertex_priority();
+    
+    // Test priority function directly
+    assert_eq!(prio_fn.priority(&1), 1);
+    assert_eq!(prio_fn.priority(&5), 5);
+    assert_eq!(prio_fn.priority(&10), 10);
+}

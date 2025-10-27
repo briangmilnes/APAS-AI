@@ -65,3 +65,23 @@ fn test_persistent_semantics() {
     assert!(!graph1.has_edge(0, 1));
     assert!(graph2.has_edge(0, 1));
 }
+
+#[test]
+fn test_from_matrix() {
+    use apas_ai::Chap18::ArraySeqStPer::ArraySeqStPer::*;
+    use apas_ai::ArraySeqStPerSLit;
+    
+    // Create a 3x3 matrix manually
+    let row0 = ArraySeqStPerSLit![false, true, false];
+    let row1 = ArraySeqStPerSLit![false, false, true];
+    let row2 = ArraySeqStPerSLit![false, false, false];
+    let matrix = ArraySeqStPerSLit![row0, row1, row2];
+    
+    let g = AdjMatrixGraphStPer::from_matrix(matrix);
+    
+    assert_eq!(g.num_vertices(), 3);
+    assert_eq!(g.num_edges(), 2); // edges 0->1 and 1->2
+    assert!(g.has_edge(0, 1));
+    assert!(g.has_edge(1, 2));
+    assert!(!g.has_edge(0, 2));
+}

@@ -99,3 +99,23 @@ fn test_num_edges_large() {
     }
     assert_eq!(graph.num_edges(), 20);
 }
+
+#[test]
+fn test_from_matrix() {
+    use apas_ai::Chap18::ArraySeqStEph::ArraySeqStEph::*;
+    use apas_ai::ArraySeqStEphSLit;
+    
+    // Create a 3x3 matrix manually
+    let row0 = ArraySeqStEphSLit![false, true, false];
+    let row1 = ArraySeqStEphSLit![false, false, true];
+    let row2 = ArraySeqStEphSLit![false, false, false];
+    let matrix = ArraySeqStEphSLit![row0, row1, row2];
+    
+    let g = AdjMatrixGraphStEph::from_matrix(matrix);
+    
+    assert_eq!(g.num_vertices(), 3);
+    assert_eq!(g.num_edges(), 2); // edges 0->1 and 1->2
+    assert!(g.has_edge(0, 1));
+    assert!(g.has_edge(1, 2));
+    assert!(!g.has_edge(0, 2));
+}
