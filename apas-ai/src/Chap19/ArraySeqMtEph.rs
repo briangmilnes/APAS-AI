@@ -241,7 +241,7 @@ pub mod ArraySeqMtEph {
                         a.nth_cloned(2 * i)
                     }
                 },
-                (n + 1) / 2
+                n.div_ceil(2)
             );
 
             // Recursive scan on contracted

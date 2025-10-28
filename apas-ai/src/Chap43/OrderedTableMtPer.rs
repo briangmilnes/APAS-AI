@@ -82,14 +82,14 @@ pub mod OrderedTableMtPer {
         fn insert(&self, k: K, v: V) -> Self {
             // Delete old entry with same key, then insert new pair
             let k_clone = k.clone();
-            let filtered = self.tree.filter(move |pair: &Pair<K, V>| &pair.0 != &k_clone);
+            let filtered = self.tree.filter(move |pair: &Pair<K, V>| pair.0 != k_clone);
             filtered.insert(Pair(k, v));
             OrderedTableMtPer { tree: filtered }
         }
 
         fn delete(&self, k: &K) -> Self {
             let k_clone = k.clone();
-            let filtered = self.tree.filter(move |pair: &Pair<K, V>| &pair.0 != &k_clone);
+            let filtered = self.tree.filter(move |pair: &Pair<K, V>| pair.0 != k_clone);
             OrderedTableMtPer { tree: filtered }
         }
 
