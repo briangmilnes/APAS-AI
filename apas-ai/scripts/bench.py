@@ -16,10 +16,12 @@ def main():
     print("Running benchmarks with cargo bench -j 10...")
     print("=" * 60)
     
-    # Run cargo bench with parallel jobs
+    # Run cargo bench with parallel jobs, filtering out terminal control characters
+    # sed removes ANSI escape sequences: \x1b[ followed by any number of digits/semicolons and a letter
     result = subprocess.run(
-        ["cargo", "bench", "-j", "10"],
-        cwd=project_root
+        "cargo bench -j 10 2>&1 | sed 's/\\x1b\\[[0-9;]*[mGKHJA-Z]//g'",
+        cwd=project_root,
+        shell=True
     )
     
     return result.returncode
