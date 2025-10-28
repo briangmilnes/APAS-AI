@@ -295,6 +295,20 @@ apas-ai/
 └── analyses/      # Coverage and code quality reports
 ```
 
+## Code Quality
+
+This project has been extensively reviewed for Rust code quality using **[Rusticate](https://github.com/briangmilnes/rusticate)**, a suite of 76+ AST-based tools for analyzing and automatically fixing Rust codebases. Unlike traditional linters that rely on regex or string manipulation, Rusticate uses the Rust Analyzer syntax tree for precise, reliable code analysis and transformations.
+
+Rusticate has been used throughout this project to:
+- **Enforce naming conventions** (St/Mt, Eph/Per suffixes)
+- **Eliminate stub delegations** (functions that only call other functions)
+- **Fix import organization** (UFCS style, no wildcards)
+- **Detect parallel operations** (ensure Mt modules are actually parallel)
+- **Validate test coverage** (identify untested public functions with 99.6% accuracy)
+- **Check coding standards** (32 Rust rules + 17 APAS-specific rules)
+
+All Rusticate analysis results are stored in the `analyses/` directory, including code quality reports, coverage metrics, and refactoring logs. The project maintains **zero compiler warnings** and follows strict coding standards validated by Rusticate's automated tooling.
+
 ## Performance Notes
 
 - All parallel algorithms use `thread::spawn/join` for explicit parallelism
