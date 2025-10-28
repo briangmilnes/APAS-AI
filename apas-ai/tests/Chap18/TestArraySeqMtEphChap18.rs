@@ -15,7 +15,7 @@ fn is_even_bool(x: &N) -> B { x % 2 == 0 }
 
 #[test]
 fn test_new_and_set() {
-    let mut a = ArraySeqMtEphS::<N>::new(5, 0);
+    let a = ArraySeqMtEphS::<N>::new(5, 0);
     assert_eq!(a.length(), 5);
 
     // Test set method

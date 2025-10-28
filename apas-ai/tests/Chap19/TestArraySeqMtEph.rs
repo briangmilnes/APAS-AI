@@ -5,7 +5,7 @@ use apas_ai::Types::Types::*;
 
 #[test]
 fn test_arrayseq_mteph_basic_ops() {
-    let mut a = ArraySeqMtEphSLit![0; 5];
+    let a = ArraySeqMtEphSLit![0; 5];
     for i in 0..a.length() {
         let _ = a.set(i, i as i32);
     }
