@@ -17,13 +17,14 @@ def main():
     # Log start time
     start_time = datetime.now()
     print(f"Benchmark started at: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
-    print("Running benchmarks with cargo bench -j 10...")
+    print("Running benchmarks with cargo bench -j 10 --no-fail-fast...")
     print("=" * 60)
     
     # Run cargo bench with parallel jobs, filtering out terminal control characters
+    # --no-fail-fast: Continue running all benchmarks even if one fails
     # sed removes ANSI escape sequences: \x1b[ followed by any number of digits/semicolons and a letter
     result = subprocess.run(
-        "cargo bench -j 10 2>&1 | sed 's/\\x1b\\[[0-9;]*[mGKHJA-Z]//g'",
+        "cargo bench -j 10 --no-fail-fast 2>&1 | sed 's/\\x1b\\[[0-9;]*[mGKHJA-Z]//g'",
         cwd=project_root,
         shell=True
     )
