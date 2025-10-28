@@ -6,6 +6,7 @@
 
 import subprocess
 import sys
+from datetime import datetime
 from pathlib import Path
 
 
@@ -13,6 +14,9 @@ def main():
     # Change to project root
     project_root = Path(__file__).parent.parent
     
+    # Log start time
+    start_time = datetime.now()
+    print(f"Benchmark started at: {start_time.strftime('%Y-%m-%d %H:%M:%S')}")
     print("Running benchmarks with cargo bench -j 10...")
     print("=" * 60)
     
@@ -23,6 +27,13 @@ def main():
         cwd=project_root,
         shell=True
     )
+    
+    # Log end time and duration
+    end_time = datetime.now()
+    elapsed = end_time - start_time
+    print("=" * 60)
+    print(f"Benchmark finished at: {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"Total elapsed time: {elapsed}")
     
     return result.returncode
 
