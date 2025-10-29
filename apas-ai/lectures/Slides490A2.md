@@ -119,7 +119,7 @@ and hacks to Amazon, including front page New York Times outage articles.
  and software engineering.
 
 # You're about to have a fascinating career!
-::: incrementalcan an
+::: incremental
 1. What do you think your career will be like?
 2. Will Professor Ernst have a job?
 3. Will you have a job?
@@ -228,6 +228,7 @@ in enough detail, that I could implement it.
 
    	e. It has a TODO window so you can plan tasks and watch them execute.
     
+# Cursor
 4. What is wrong with Cursor?
 
 	a. It's changing twice a week
@@ -264,6 +265,7 @@ in enough detail, that I could implement it.
 7. Claude can't follow a coding standard at all.
 
 # The fundamental problems with AI LLMs for coding
+::: incremental
 1. The fundamental problem with AIs for coding is?
 2. It's designed by copying how humans program.
 3. Humans don't really program that well.
@@ -273,6 +275,7 @@ in enough detail, that I could implement it.
 7. Humans forget. 
 8. And it's not really learning, it's just holding a large
  working memory of tokens.
+:::
 
 # Even worse problems:
 ::: incremental
@@ -325,64 +328,89 @@ depreciate them over five to six years. In other words, they spread out the cost
 massive capital investments over a longer period than the facts warrant—what The Economist
 has referred to as the “$4trn accounting puzzle at the heart of the AI cloud.”
 
-8. Are Google's chips better? Who knows.
+8. Are Google's chips better? 
+"Google still has in its fleet chips from many previous generations.
+ I don't think they wear out, if that's what you mean, any more than a CPU would wear out."
+ -Personal communication with Anonymous
 
-9. And the market (like during early Amazon) seems to have pumped $300B into trying to grab
+9. This would be a huge advantage for Google.
+
+10. And the market (like during early Amazon) seems to have pumped $300B into trying to grab
 market share.
 
-10. Mike what AIs do these students have access too? 
+11. Mike what AIs do these students have access too? 
 
-11. And what does it really cost ?
+12. And what does it really cost ?
 
 # Dimensions 2 and 3: Speed and Throughput
 1. Getting this data is very hard, vendors don't want to publish too much.
-
 2. But you can see the trend is only increasing by about a factor of 2. 
+3. BTW, Google Deep Research is GREAT! Try it. Ask it to list the
+relevent research papers and go look at them. 
 
+4. BF8 (Brain Float 8) and BF16 (Brain Float 16) are low-precision floating-point data
+   formats primarily used in AI and high-performance computing (HPC) to improve
+   computational efficiency, reduce memory usage, and accelerate model training and
+   inference.
 
-| Model | Developer | Release Date | Parameters (Total/Active) | Hardware Config | Inference Engine | Quantization | Input/Output Tokens | Throughput (Output tokens/s) | TTFT (ms) | TPOT (ms) | Source/Benchmark |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| GPT-J 6B | EleutherAI | Jun 2021 | 6B | 1x H100 80GB | TensorRT-LLM | FP8 | 128 / 128 | 10,907 | 102 | - | [1] |
-| GPT-J 6B | EleutherAI | Jun 2021 | 1x A100 80GB | TensorRT-LLM | FP16 | 128 / 128 | 3,679 | 481 | - | [1] |
-| Llama 2 70B | Meta | Jul 2023 | 70B | 8x H200 | MLPerf | - | OpenOrca | 35,317 | - | - | [2] |
-| Llama 2 70B | Meta | Jul 2023 | 8x B200 | MLPerf | - | OpenOrca | 102,909 | - | - | [2] |
-| Llama 2 70B | Meta | Jul 2023 | Anyscale Platform | - | BF16 | 550 / 150 | 66 | 210 | 15.15 | [3] |
-| Llama 2 70B | Meta | Jul 2023 | Groq API | - | - | 550 / 150 | 185 | 130 | 5.41 | [3] |
-| Mixtral 8x7B | Mistral AI | Dec 2023 | 47B / 13B | 2x H100 | TensorRT-LLM | FP8 | 573 / 50 | ~19,200 (at 38.4 rps) | - | 16 | [4] |
-| Mixtral 8x22B | Mistral AI | Apr 2024 | 141B / 39B | 2x RTX 4090 | llama.cpp | - | - | 6 | 50,000+ | ~167 | [5, 6] |
-| Claude 3 Opus | Anthropic | Mar 2024 | - | Anthropic API | - | - | - | 25.9 | 2090 | 38.61 | [7] |
-| Claude 3 Sonnet | Anthropic | Mar 2024 | - | Anthropic API | - | - | - | 66.9 | 720 | 14.95 | [7] |
-| Claude 3 Haiku | Anthropic | Mar 2024 | - | Anthropic API | - | - | - | 123.1 | 710 | 8.12 | [7] |
-| Llama 3 8B Instruct | Meta | Apr 2024 | 8B | 1x H100 PCIe | llama.cpp | FP16 | - / 1024 | 67.79 | - | ~14.75 | [8] |
-| Llama 3 8B Instruct | Meta | Apr 2024 | 1x A100 PCIe | llama.cpp | FP16 | - / 1024 | 54.56 | - | ~18.33 | [8] |
-| Llama 3 70B Instruct | Meta | Apr 2024 | 70B | 2x H100 | TensorRT-LLM | FP8 | 128 / 2048 | 6,651 | - | - | [2] |
-| GPT-4 Turbo | OpenAI | Apr 2024 | - | OpenAI API | - | - | - | ~20 | - | ~50 | [9] |
-| GPT-4o | OpenAI | May 2024 | - | OpenAI API | - | - | - | ~109 | 480 | ~9.17 | [9, 10] |
-| Claude 3.5 Sonnet | Anthropic | Jun 2024 | - | Anthropic API | - | - | - | 72.3 | 970 | 13.83 | [7] |
-| Llama 3.1 8B Instruct | Meta | Jul 2024 | 8B | 1x H100 80GB | vLLM | BF16 | - | 3621.02 | - | - | [11] |
-| Llama 3.1 8B Instruct | Meta | Jul 2024 | 1x H200 | vLLM | BF16 | Chat (Avg) | ~7464 | - | - | [12] |
-| Llama 3.1 8B Instruct | Meta | Jul 2024 | 1x H100 | vLLM | BF16 | Chat (Avg) | ~6067 | - | - | [12] |
-| Llama 3.1 8B Instruct | Meta | Jul 2024 | 1x A100 80GB | vLLM | BF16 | Chat (Avg) | ~2622 | - | - | [12] |
-| Llama 3.1 70B | Meta | Jul 2024 | 70B | Anyscale API | - | BF16 | - | - | - | - | [13] |
-| Llama 3.1 405B | Meta | Jul 2024 | 405B | 4x B200 | TensorRT-LLM | FP4 | 128 / 2048 | 6,366 | - | - | [2] |
-| Llama 3.1 405B | Meta | Jul 2024 | 8x H200 | TensorRT-LLM | FP8 | 20000 / 2000 | 505 | - | - | [2] |
-| Mistral Large 2 | Mistral AI | Jul 2024 | 123B | Mistral API | - | - | - | - | - | - | [14] |
-| Gemini 1.5 Pro (updated) | Google | Sep 2024 | - | Google API | - | - | (2x faster) | (3x lower) | - | [15] |
-| o3-mini | OpenAI | Sep 2024 | - | OpenAI API | - | - | - | 189 | - | ~5.29 | [10] | 
+5. TTFT (Time to First Token)
+
+6. TPOT (Time per Output Token)
+
+7. https://www.workorb.com/blog/which-is-the-fastest-llm-a-comprehensive-benchmark
+
+# Dimensions 2 and 3: Speed and Throughput Table
+
+| Model | Dev | Release Date | Param | Hardware | Infe Eng| Quant | IO Tokens | Tput (T/s) | TTFT (ms) | TPOT (ms) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| GPT-J 6B | EleutherAI | Jun 21 | 6B | 1x H100 80GB | TensorRT-LLM | FP8 | 128 / 128 | 10,907 | 102 | - |
+| GPT-J 6B | EleutherAI | Jun 21 | 1x A100 80GB | TensorRT-LLM | FP16 | 128 / 128 | 3,679 | 481 | - |
+| Llama 2 70B | Meta | Jul 23 | 70B | 8x H200 | MLPerf | - | OpenOrca | 35,317 | - | - |
+| Llama 2 70B | Meta | Jul 23 | 8x B200 | MLPerf | - | OpenOrca | 102,909 | - | - |
+| Llama 2 70B | Meta | Jul 23 | Anyscale Platform | - | BF16 | 550 / 150 | 66 | 210 | 15.15 |
+| Llama 2 70B | Meta | Jul 23 | Groq API | - | - | 550 / 150 | 185 | 130 | 5.41 |
+| Mixtral 8x7B | Mistral AI | Dec 23 | 47B / 13B | 2x H100 | TensorRT-LLM | FP8 | 573 / 50 | ~19,200 (at 38.4 rps) | - | 16 |
+| Mixtral 8x22B | Mistral AI | Apr 24 | 141B / 39B | 2x RTX 4090 | llama.cpp | - | - | 6 | 50,000+ | ~167 |
+| Claude 3 Opus | Anthropic | Mar 24 | - | Anthropic API | - | - | - | 25.9 | 90 | 38.61 |
+| Claude 3 Sonnet | Anthropic | Mar 24 | - | Anthropic API | - | - | - | 66.9 | 720 | 14.95 |
+| Claude 3 Haiku | Anthropic | Mar 24 | - | Anthropic API | - | - | - | 123.1 | 710 | 8.12 |
+| Llama 3 8B Instruct | Meta | Apr 24 | 8B | 1x H100 PCIe | llama.cpp | FP16 | - / 1024 | 67.79 | - | ~14.75 |
+| Llama 3 8B Instruct | Meta | Apr 24 | 1x A100 PCIe | llama.cpp | FP16 | - / 1024 | 54.56 | - | ~18.33 |
+| Llama 3 70B Instruct | Meta | Apr 24 | 70B | 2x H100 | TensorRT-LLM | FP8 | 128 / 48 | 6,651 | - | - |
+| GPT-4 Turbo | OpenAI | Apr 24 | - | OpenAI API | - | - | - | ~20 | - | ~50 |
+| GPT-4o | OpenAI | May 24 | - | OpenAI API | - | - | - | ~109 | 480 | ~9.17 |
+| Claude 3.5 Sonnet | Anthropic | Jun 24 | - | Anthropic API | - | - | - | 72.3 | 970 | 13.83 |
+| Llama 3.1 8B Instruct | Meta | Jul 24 | 8B | 1x H100 80GB | vLLM | BF16 | - | 3621.02 | - | - |
+| Llama 3.1 8B Instruct | Meta | Jul 24 | 1x H200 | vLLM | BF16 | Chat (Avg) | ~7464 | - | - |
+| Llama 3.1 8B Instruct | Meta | Jul 24 | 1x H100 | vLLM | BF16 | Chat (Avg) | ~6067 | - | - |
+| Llama 3.1 8B Instruct | Meta | Jul 24 | 1x A100 80GB | vLLM | BF16 | Chat (Avg) | ~2622 | - | - |
+| Llama 3.1 70B | Meta | Jul 24 | 70B | Anyscale API | - | BF16 | - | - | - | - |
+| Llama 3.1 405B | Meta | Jul 24 | 405B | 4x B200 | TensorRT-LLM | FP4 | 128 / 48 | 6,366 | - | - |
+| Llama 3.1 405B | Meta | Jul 24 | 8x H200 | TensorRT-LLM | FP8 | 000 / 00 | 505 | - | - |
+| Mistral Large 2 | Mistral AI | Jul 24 | 123B | Mistral API | - | - | - | - | - | - |
+| Gemini 1.5 Pro (updated) | Google | Sep 24 | - | Google API | - | - | (2x faster) | (3x lower) | - |
+| o3-mini | OpenAI | Sep 24 | - | OpenAI API | - | - | - | 189 | - | ~5.29 |
+
+# Dimensions 2 and 3: Batching
+
+1. Batch processing queries improves throughput.
+2. https://www.anyscale.com/blog/continuous-batching-llm-inference
+
 
 # Dimension 4: Query Token Size and Model Size
-| Model Name | Developer | Release Date | Parameter Count (Total / Active) | Context Window (Tokens) | Architecture | Access |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| GPT-5 | OpenAI | Aug 2025 | Est. ~52.5T / Unknown [1] | 256,000 - 400,000 [2, 3] | MoE | API |
-| Llama 4 Scout | Meta | Apr 2025 | 109B / 17B [4, 5] | 10,000,000 [4, 5] | MoE | Open |
-| Llama 3.1 405B | Meta | Jul 2024 | 405B [6, 7] | 128,000 [8] | Dense | Open |
-| Gemini 2.5 Pro | Google | Mar 2025 | Est. ~128B [9] | 1,048,576 (2M planned) [5, 10] | MoE | API |
-| Claude 4.1 Opus | Anthropic | Aug 2025 | Est. ~400B [11] | 200,000 [12] | Hybrid Reasoning | API |
-| DeepSeek R1 | DeepSeek | Jan 2025 | 671B / 37B [6] | 128,000 [6] | MoE | Open, API |
-| Grok 4 | xAI | Jul 2025 | Est. ~1.7T [13] | 256,000 [5] | Dense | API |
-| Mistral Large 2 | Mistral AI | Jul 2024 | 123B [6, 14] | 128,000 [14] | Dense | API |
-| Qwen 3 235B | Alibaba | Apr 2025 | 235B [6] | 262,000 [5] | MoE | Open, API |
-| Phi-3 Medium | Microsoft | Apr 2024 | 14B [6] | 128,000 [15] | Dense | Open, API |
+
+| Model Name | Release Date | Para Count (Total / Active) | Window  |
+| :--- | :--- | :--- | :--- |
+| GPT-5 | Aug 25 | Est. ~52.5T / Unknown [1] | 256,000 - 400,000 [2, 3] |
+| Llama 4 Scout | Apr 25 | 109B / 17B [4, 5] | 10,000,000 [4, 5] |
+| Llama 3.1 405B | Jul 24 | 405B [6, 7] | 128,000 [8] |
+| Gemini 2.5 Pro | Mar 25 | Est. ~128B [9] | 1,048,576 (2M planned) [5, 10] |
+| Claude 4.1 Opus | Aug 25 | Est. ~400B [11] | 0,000 [12] |
+| DeepSeek R1 | Jan 25 | 671B / 37B [6] | 128,000 [6] |
+| Grok 4 | Jul 25 | Est. ~1.7T [13] | 256,000 [5] |
+| Mistral Large 2 | Jul 24 | 123B [6, 14] | 128,000 [14] |
+| Qwen 3 235B | Apr 25 | 235B [6] | 262,000 [5] |
+| Phi-3 Medium | Apr 24 | 14B [6] | 128,000 [15] |
 
 # Dimension 5: Data
 1. We are out of DATA! 
@@ -429,6 +457,7 @@ Insider. They fix mistakes while simultaneously training the programs on their o
 work.
 </p>
 
+# Dimension 7: Code Quality
 2. This is exactly what Rusticate is trying to fix. And it's been great.
 3. Why do these AIs produce such crappy code?
 4. Because programmers do and they are trained on LOTs of code.
@@ -447,7 +476,7 @@ generating its scripts, based on coding patterns like specific comments and emoj
  
 2. There are lots of AI safe code projects out there.
 3. https://techcrunch.com/2025/08/04/google-says-its-ai-based-bug-hunter-found-20-security-vulnerabilities/
-"Google says its AI-based bug hunter found 20 security vulnerabilities"
+"Google says its AI-based bug hunter found  security vulnerabilities"
 5. So the Attack/Defend ratio has shifted HUGELY towards attack.
 6. This is going to play out over decades, not just in two years.
 
@@ -484,6 +513,7 @@ for two years.
    https://www.imdb.com/title/tt31186958/ " A post-graduate mathematics student discovers
    an effort being made to destroy his work in finding a pattern in prime numbers that
    would allow him to access every computer in the world."
+9. https://theaidigest.org/time-horizons
 
 # Dimension 11: Copyright and open source
 1. https://m.slashdot.org/story/448330 
@@ -553,7 +583,7 @@ buy the traditional donuts and coffee.
 1. I have written this by taking APAS chapters and jamming them into Claude and ChatGPT.
 2. Chat-GPT writes somewhat better code.
 3. But it often gets things wrong: typeclasses, parallelism being the worst.
-4. It may take about 20 minutes to write a gnarly chapter's code.
+4. It may take about  minutes to write a gnarly chapter's code.
 
 # Coding APAS: Success - teaches you the PL!
 1. I knew almost no Rust when I started. :)
@@ -790,6 +820,8 @@ a 5% overhead in a software process you'll see in a few slides.
 6. And you're working more and more at the code base level.
 
 # Rusticate:
+
+::: incremental
 1. https://github.com/briangmilnes/rusticate
 
 2. Def. Rusticate - go to, live in, or spend time in the country or particularly suspend a student from an Oxbridge university as a punishment.
@@ -799,6 +831,11 @@ a 5% overhead in a software process you'll see in a few slides.
 4. Python will be sent back to the family estate for not working well.
 
 5. Summary: src 87 files 23,265 LOC, tests 32 files 2,012 LOC, total 119 files 25,277 LOC
+
+6. And I violated Mike's rule: I did not read a line of code in Rusticate? Why?
+
+7. Because I only care about it's output when run on a codebase. And it checks itself.
+::: 
 
 # The Milnes Problems 1: Coding Standard
 
@@ -1272,6 +1309,7 @@ in APAS in Verus.
 5. And you've seen predictions about the change in these tools: and that change is
   huge and coming fast like a freight train.
 
+# Summary
 6. And that future needs to have:
 
     a. Better Programming languages - so that Mike has a job.
@@ -1282,6 +1320,10 @@ in APAS in Verus.
 
 8. As Mike has such a hight teaching load, I might even come back and update
 you on using Verus and AIs to prove APAS. :)
+
+9. But I think the most important thing that you can take from this lecture is:
+ AI paired programming is FUN.
+
 
 # Projects
 
@@ -1329,3 +1371,6 @@ your religion class final.
 6. Oh wait, I deleted the copy of APAS-AI?
 
 7. Oh wait, I checked into APAS-AI let me revert that.
+
+8. cargo clippy has 450 warnings! LOL.
+

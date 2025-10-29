@@ -336,5 +336,5 @@ This Rust implementation is based on the algorithms described in "Algorithms: Pa
 
 ---
 
-**For bug reports, feature requests, or questions, please open an issue on GitHub.**
+**For bug reports, feature requests, or questions, please open an issue on GitHub or mail briangmilnes@gmail.com.**
 

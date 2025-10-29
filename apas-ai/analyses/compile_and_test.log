@@ -1,19 +1,7 @@
 Entering directory '/home/milnes/APASVERUS/APAS-AI/apas-ai'
 ================================================================================
-STEP 1: COMPILE LIBRARY
+COMPILING DIRECTORY: /home/milnes/APASVERUS/APAS-AI/apas-ai
 ================================================================================
-✓ Library compilation passed
-================================================================================
-STEP 2: COMPILE ALL TESTS
-================================================================================
-✓ All tests compilation passed
-================================================================================
-STEP 3: COMPILE ALL BENCHMARKS
-================================================================================
-✓ All benchmarks compilation passed
-================================================================================
-STEP 4: RUN ALL TESTS WITH NEXTEST
-================================================================================
-✓ All tests passed
+✓ Directory compilation passed
 
-Completed in 87664ms
+Completed in 4711ms
