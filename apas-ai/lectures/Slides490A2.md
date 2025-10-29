@@ -1,5 +1,5 @@
 
-#  Is AI Paired Ready?
+#  Is AI Paired Programming Ready?
 
 * Introduction to Brian Milnes
 * AI programming is changing the world
@@ -69,7 +69,7 @@
 6. He and Scott Fahlman (Common Lisp, Connectionist learning and reinvented the :))
  argued to get Geoff Hinton, the god father of LLM AI, on CMU Faculty. And it was close. :)
 
-# PL Research At CMU
+# PL Research At CMU for Harper, Lee and Pfenning
 1. Peter Lee - Proof Carrying Code is amongst his best work, but not heavily used.
    Now heads Microsoft Research Labs. Just did the best UW CSE guest lecture that I have
    ever seen, we'll see a bit of it in a moment.
@@ -594,6 +594,42 @@ buy the traditional donuts and coffee.
 3. But it often gets things wrong: typeclasses, parallelism being the worst.
 4. It may take about 20 minutes to write a gnarly chapter's code, with
  it pausing a few times at least.
+
+# What's a typeclass?
+
+1. Defines what should be in a module which you implement.
+2. Essentially a type of your module.
+
+```
+    /// Flat Hash Table trait - extends ParaHashTableStEphTrait.
+  pub trait FlatHashTable<Key: StT, Value: StT, Entry: EntryTrait<Key, Value>, ...
+       ParaHashTableStEphTrait<Key, Value, Entry, Metrics> {
+    fn probe(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key, attempt: N) ...
+    fn find_slot(table: &HashTable<Key, Value, Entry, Metrics>, key: &Key) -> N;
+    fn insert_with_probe(table: &mut HashTable<Key, Value, Entry, Metrics>, key: Key, value: Value) {
+        let slot = Self::find_slot(table, &key);
+         if slot < table.table.len() {....
+```
+
+# What's an impl (implementation)?
+
+1. Provides the function definitions to implement a trait.
+2. Essentially code that you provide that is type checked to match the trait (module type).
+
+```
+   impl<Key: StT, Value: StT, Metrics: Default> ParaHashTableStEphTrait<Key, Value, ...
+        for DoubleHashFlatHashTableStEph
+    {
+       fn insert(table: &mut HashTable<Key, Value, FlatEntry<Key, Value>, Metrics>, 
+                 key: Key, value: Value) {
+```
+
+2. Or just does it without a trait which is sloppier as it can define some of your functions for any type.
+
+``` 
+  impl DoubleHashFlatHashTableStEph {
+       pub fn second_hash<Key: StT>(key: &Key, table_size: N) -> N { ...
+```
 
 # Coding APAS: Success - teaches you the PL!
 1. I knew almost no Rust when I started. :)
