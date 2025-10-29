@@ -5,7 +5,7 @@
 set -e
 set -o pipefail
 
-TIMEOUT=40
+TIMEOUT=60
 TIMED_OUT_FILE="analyses/benchmarks_timed_out.txt"
 SUCCESS_FILE="analyses/benchmarks_success.txt"
 LOG_FILE="analyses/long_benchmark_hunt.txt"

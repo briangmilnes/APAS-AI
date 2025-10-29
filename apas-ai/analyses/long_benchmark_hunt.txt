@@ -1,448 +1,1979 @@
 ========================================================
-Long Benchmark Hunt - Timeout: 40s per benchmark
-Started: 2025-10-29 07:36:37
+Long Benchmark Hunt - Timeout: 60s per benchmark
+Started: 2025-10-29 08:43:25
 Log file: analyses/long_benchmark_hunt.txt
 ========================================================
 
-    Finished `bench` profile [optimized] target(s) in 0.04s
+    Finished `bench` profile [optimized] target(s) in 0.05s
      Running benches/Chap52/BenchAdjTableGraphStPer.rs (target/release/deps/BenchAdjTableGraphStPer-7f66cd9aff56c88b)
 Benchmarking AdjTableGraphStPer_build/insert_edges/10
 Benchmarking AdjTableGraphStPer_build/insert_edges/10: Warming up for 300.00 ms
-Benchmarking AdjTableGraphStPer_build/insert_edges/10: Collecting 30 samples in estimated 1.0151 s (20k iterations)
+Benchmarking AdjTableGraphStPer_build/insert_edges/10: Collecting 30 samples in estimated 1.0131 s (20k iterations)
 Benchmarking AdjTableGraphStPer_build/insert_edges/10: Analyzing
 AdjTableGraphStPer_build/insert_edges/10
-                        time:   [49.167 µs 49.657 µs 50.409 µs]
-                        change: [-11.702% -9.6328% -7.4415%] (p = 0.00 < 0.05)
-                        Performance has improved.
+                        time:   [50.235 µs 50.832 µs 51.546 µs]
+                        change: [-0.4702% +1.1517% +2.8854%] (p = 0.19 > 0.05)
+                        No change in performance detected.
 Benchmarking AdjTableGraphStPer_build/insert_edges/20
 Benchmarking AdjTableGraphStPer_build/insert_edges/20: Warming up for 300.00 ms
-Benchmarking AdjTableGraphStPer_build/insert_edges/20: Collecting 30 samples in estimated 1.0524 s (2325 iterations)
+Benchmarking AdjTableGraphStPer_build/insert_edges/20: Collecting 30 samples in estimated 1.1450 s (2325 iterations)
 Benchmarking AdjTableGraphStPer_build/insert_edges/20: Analyzing
 AdjTableGraphStPer_build/insert_edges/20
-                        time:   [445.29 µs 446.50 µs 447.93 µs]
-                        change: [-12.558% -10.432% -9.1717%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 1 outliers among 30 measurements (3.33%)
+                        time:   [488.88 µs 493.73 µs 499.70 µs]
+                        change: [+9.0106% +9.7537% +10.785%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
   1 (3.33%) high mild
+  2 (6.67%) high severe
 
     Finished `bench` profile [optimized] target(s) in 0.03s
      Running benches/Chap18/BenchArraySeq.rs (target/release/deps/BenchArraySeq-896abdf46a2da49e)
 Benchmarking ArraySeq/tabulate/2500
 Benchmarking ArraySeq/tabulate/2500: Warming up for 300.00 ms
-Benchmarking ArraySeq/tabulate/2500: Collecting 30 samples in estimated 1.0001 s (844k iterations)
+Benchmarking ArraySeq/tabulate/2500: Collecting 30 samples in estimated 1.0003 s (853k iterations)
 Benchmarking ArraySeq/tabulate/2500: Analyzing
-ArraySeq/tabulate/2500  time:   [1.1401 µs 1.1491 µs 1.1579 µs]
-                        change: [-12.522% -7.6750% -3.2693%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 5 outliers among 30 measurements (16.67%)
-  2 (6.67%) low severe
-  1 (3.33%) low mild
+ArraySeq/tabulate/2500  time:   [1.1622 µs 1.1635 µs 1.1645 µs]
+                        change: [+0.1111% +0.6500% +1.2304%] (p = 0.02 < 0.05)
+                        Change within noise threshold.
+Found 4 outliers among 30 measurements (13.33%)
+  2 (6.67%) low mild
   1 (3.33%) high mild
   1 (3.33%) high severe
 Benchmarking ArraySeq/map/2500
 Benchmarking ArraySeq/map/2500: Warming up for 300.00 ms
-Benchmarking ArraySeq/map/2500: Collecting 30 samples in estimated 1.0001 s (810k iterations)
+Benchmarking ArraySeq/map/2500: Collecting 30 samples in estimated 1.0004 s (812k iterations)
 Benchmarking ArraySeq/map/2500: Analyzing
-ArraySeq/map/2500       time:   [1.2053 µs 1.2155 µs 1.2230 µs]
-                        change: [-4.7110% -3.8272% -2.9204%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 9 outliers among 30 measurements (30.00%)
-  4 (13.33%) low severe
-  3 (10.00%) low mild
-  1 (3.33%) high mild
-  1 (3.33%) high severe
+ArraySeq/map/2500       time:   [1.2263 µs 1.2277 µs 1.2297 µs]
+                        change: [+0.4035% +1.2606% +2.1237%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
 Benchmarking ArraySeq/filter/2500
 Benchmarking ArraySeq/filter/2500: Warming up for 300.00 ms
-Benchmarking ArraySeq/filter/2500: Collecting 30 samples in estimated 1.0003 s (797k iterations)
+Benchmarking ArraySeq/filter/2500: Collecting 30 samples in estimated 1.0002 s (751k iterations)
 Benchmarking ArraySeq/filter/2500: Analyzing
-ArraySeq/filter/2500    time:   [1.2331 µs 1.2372 µs 1.2417 µs]
-                        change: [-3.2269% -2.1144% -0.8044%] (p = 0.00 < 0.05)
-                        Change within noise threshold.
+ArraySeq/filter/2500    time:   [1.3074 µs 1.3130 µs 1.3186 µs]
+                        change: [+5.5105% +6.1560% +6.8373%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high severe
 Benchmarking ArraySeq/reduce/2500
 Benchmarking ArraySeq/reduce/2500: Warming up for 300.00 ms
 Benchmarking ArraySeq/reduce/2500: Collecting 30 samples in estimated 1.0001 s (5.5M iterations)
 Benchmarking ArraySeq/reduce/2500: Analyzing
-ArraySeq/reduce/2500    time:   [182.81 ns 192.35 ns 202.91 ns]
-                        change: [-1.2996% +0.8427% +3.1974%] (p = 0.60 > 0.05)
+ArraySeq/reduce/2500    time:   [181.63 ns 182.10 ns 182.56 ns]
+                        change: [-4.7300% -2.0217% +0.0397%] (p = 0.11 > 0.05)
                         No change in performance detected.
-Found 4 outliers among 30 measurements (13.33%)
-  4 (13.33%) high severe
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) low mild
 Benchmarking ArraySeq/scan/2500
 Benchmarking ArraySeq/scan/2500: Warming up for 300.00 ms
-Benchmarking ArraySeq/scan/2500: Collecting 30 samples in estimated 1.0005 s (815k iterations)
+Benchmarking ArraySeq/scan/2500: Collecting 30 samples in estimated 1.0005 s (769k iterations)
 Benchmarking ArraySeq/scan/2500: Analyzing
-ArraySeq/scan/2500      time:   [1.2239 µs 1.2250 µs 1.2263 µs]
-                        change: [-5.3414% -4.4772% -3.7513%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 2 outliers among 30 measurements (6.67%)
-  1 (3.33%) high mild
-  1 (3.33%) high severe
+ArraySeq/scan/2500      time:   [1.2860 µs 1.2895 µs 1.2927 µs]
+                        change: [+4.7216% +5.1569% +5.6236%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 6 outliers among 30 measurements (20.00%)
+  1 (3.33%) low severe
+  2 (6.67%) low mild
+  3 (10.00%) high severe
 Benchmarking ArraySeq/append/2500
 Benchmarking ArraySeq/append/2500: Warming up for 300.00 ms
-Benchmarking ArraySeq/append/2500: Collecting 30 samples in estimated 1.0002 s (817k iterations)
+Benchmarking ArraySeq/append/2500: Collecting 30 samples in estimated 1.0001 s (762k iterations)
 Benchmarking ArraySeq/append/2500: Analyzing
-ArraySeq/append/2500    time:   [1.2263 µs 1.2291 µs 1.2329 µs]
-                        change: [-1.9471% -1.5351% -1.0584%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 3 outliers among 30 measurements (10.00%)
-  3 (10.00%) high mild
+ArraySeq/append/2500    time:   [1.2655 µs 1.2678 µs 1.2712 µs]
+                        change: [+3.0312% +3.6972% +4.4269%] (p = 0.00 < 0.05)
+                        Performance has regressed.
 Benchmarking ArraySeq/subseq/2500
 Benchmarking ArraySeq/subseq/2500: Warming up for 300.00 ms
-Benchmarking ArraySeq/subseq/2500: Collecting 30 samples in estimated 1.0000 s (9.6M iterations)
+Benchmarking ArraySeq/subseq/2500: Collecting 30 samples in estimated 1.0000 s (10.0M iterations)
 Benchmarking ArraySeq/subseq/2500: Analyzing
-ArraySeq/subseq/2500    time:   [105.22 ns 106.87 ns 108.58 ns]
-                        change: [-1.9966% -0.9317% +0.1765%] (p = 0.08 > 0.05)
-                        No change in performance detected.
+ArraySeq/subseq/2500    time:   [99.396 ns 100.52 ns 101.67 ns]
+                        change: [-7.4685% -6.3030% -5.1750%] (p = 0.00 < 0.05)
+                        Performance has improved.
 Found 5 outliers among 30 measurements (16.67%)
-  4 (13.33%) high mild
-  1 (3.33%) high severe
+  3 (10.00%) high mild
+  2 (6.67%) high severe
 
     Finished `bench` profile [optimized] target(s) in 0.03s
      Running benches/Chap18/BenchArraySeqMtEph.rs (target/release/deps/BenchArraySeqMtEph-89d37ccc4554f22b)
 Benchmarking ArraySeqMtEph/new/2500
 Benchmarking ArraySeqMtEph/new/2500: Warming up for 300.00 ms
-Benchmarking ArraySeqMtEph/new/2500: Collecting 30 samples in estimated 1.0000 s (9.4M iterations)
+Benchmarking ArraySeqMtEph/new/2500: Collecting 30 samples in estimated 1.0000 s (8.9M iterations)
 Benchmarking ArraySeqMtEph/new/2500: Analyzing
-ArraySeqMtEph/new/2500  time:   [106.40 ns 106.63 ns 106.88 ns]
-                        change: [-6.6786% -6.0411% -5.5803%] (p = 0.00 < 0.05)
+ArraySeqMtEph/new/2500  time:   [110.00 ns 110.46 ns 111.11 ns]
+                        change: [+3.4342% +3.9313% +4.3657%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking ArraySeqMtEph/length/2500
+Benchmarking ArraySeqMtEph/length/2500: Warming up for 300.00 ms
+Benchmarking ArraySeqMtEph/length/2500: Collecting 30 samples in estimated 1.0000 s (104M iterations)
+Benchmarking ArraySeqMtEph/length/2500: Analyzing
+ArraySeqMtEph/length/2500
+                        time:   [9.4286 ns 9.5577 ns 9.6843 ns]
+                        change: [-22.590% -19.002% -15.082%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 5 outliers among 30 measurements (16.67%)
+  2 (6.67%) high mild
+  3 (10.00%) high severe
+Benchmarking ArraySeqMtEph/nth_cloned/2500
+Benchmarking ArraySeqMtEph/nth_cloned/2500: Warming up for 300.00 ms
+Benchmarking ArraySeqMtEph/nth_cloned/2500: Collecting 30 samples in estimated 1.0091 s (48k iterations)
+Benchmarking ArraySeqMtEph/nth_cloned/2500: Analyzing
+ArraySeqMtEph/nth_cloned/2500
+                        time:   [21.103 µs 21.127 µs 21.151 µs]
+                        change: [-14.678% -10.846% -7.0456%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 3 outliers among 30 measurements (10.00%)
+  3 (10.00%) high mild
+Benchmarking ArraySeqMtEph/subseq_copy/2500
+Benchmarking ArraySeqMtEph/subseq_copy/2500: Warming up for 300.00 ms
+Benchmarking ArraySeqMtEph/subseq_copy/2500: Collecting 30 samples in estimated 1.0000 s (11M iterations)
+Benchmarking ArraySeqMtEph/subseq_copy/2500: Analyzing
+ArraySeqMtEph/subseq_copy/2500
+                        time:   [83.788 ns 84.095 ns 84.473 ns]
+                        change: [-9.0682% -8.0592% -7.0241%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking ArraySeqMtEph/append/2500
+Benchmarking ArraySeqMtEph/append/2500: Warming up for 300.00 ms
+Benchmarking ArraySeqMtEph/append/2500: Collecting 30 samples in estimated 1.0030 s (39k iterations)
+Benchmarking ArraySeqMtEph/append/2500: Analyzing
+ArraySeqMtEph/append/2500
+                        time:   [25.281 µs 25.325 µs 25.393 µs]
+                        change: [-4.0771% -2.7826% -1.5330%] (p = 0.00 < 0.05)
                         Performance has improved.
 Found 2 outliers among 30 measurements (6.67%)
   1 (3.33%) high mild
   1 (3.33%) high severe
-Benchmarking ArraySeqMtEph/length/2500
-Benchmarking ArraySeqMtEph/length/2500: Warming up for 300.00 ms
-Benchmarking ArraySeqMtEph/length/2500: Collecting 30 samples in estimated 1.0000 s (76M iterations)
-Benchmarking ArraySeqMtEph/length/2500: Analyzing
-ArraySeqMtEph/length/2500
-                        time:   [10.376 ns 10.620 ns 10.990 ns]
-                        change: [+13.170% +18.271% +24.430%] (p = 0.00 < 0.05)
-                        Performance has regressed.
-Benchmarking ArraySeqMtEph/nth_cloned/2500
-Benchmarking ArraySeqMtEph/nth_cloned/2500: Warming up for 300.00 ms
-Benchmarking ArraySeqMtEph/nth_cloned/2500: Collecting 30 samples in estimated 1.0090 s (46k iterations)
-Benchmarking ArraySeqMtEph/nth_cloned/2500: Analyzing
-ArraySeqMtEph/nth_cloned/2500
-                        time:   [23.986 µs 25.707 µs 27.321 µs]
-                        change: [+7.5084% +12.322% +16.887%] (p = 0.00 < 0.05)
-                        Performance has regressed.
-Found 2 outliers among 30 measurements (6.67%)
-  2 (6.67%) high mild
-Benchmarking ArraySeqMtEph/subseq_copy/2500
-Benchmarking ArraySeqMtEph/subseq_copy/2500: Warming up for 300.00 ms
-Benchmarking ArraySeqMtEph/subseq_copy/2500: Collecting 30 samples in estimated 1.0000 s (9.5M iterations)
-Benchmarking ArraySeqMtEph/subseq_copy/2500: Analyzing
-ArraySeqMtEph/subseq_copy/2500
-                        time:   [91.978 ns 93.084 ns 94.194 ns]
-                        change: [+1.4381% +2.6295% +3.7746%] (p = 0.00 < 0.05)
-                        Performance has regressed.
-Benchmarking ArraySeqMtEph/append/2500
-Benchmarking ArraySeqMtEph/append/2500: Warming up for 300.00 ms
-Benchmarking ArraySeqMtEph/append/2500: Collecting 30 samples in estimated 1.0050 s (37k iterations)
-Benchmarking ArraySeqMtEph/append/2500: Analyzing
-ArraySeqMtEph/append/2500
-                        time:   [25.683 µs 26.056 µs 26.455 µs]
-                        change: [-0.0596% +1.7570% +3.6718%] (p = 0.07 > 0.05)
-                        No change in performance detected.
 
-    Finished `bench` profile [optimized] target(s) in 0.04s
+    Finished `bench` profile [optimized] target(s) in 0.03s
      Running benches/Chap18/BenchArraySeqMtEphChap18.rs (target/release/deps/BenchArraySeqMtEphChap18-82d6c76346f8b869)
 Benchmarking BenchArraySeqMtEphChap18/tabulate_then_map/1000
 Benchmarking BenchArraySeqMtEphChap18/tabulate_then_map/1000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqMtEphChap18/tabulate_then_map/1000: Collecting 10 samples in estimated 1.0025 s (7260 iterations)
+Benchmarking BenchArraySeqMtEphChap18/tabulate_then_map/1000: Collecting 10 samples in estimated 1.0021 s (7040 iterations)
 Benchmarking BenchArraySeqMtEphChap18/tabulate_then_map/1000: Analyzing
 BenchArraySeqMtEphChap18/tabulate_then_map/1000
-                        time:   [137.77 µs 138.92 µs 141.04 µs]
-                        change: [-7.9591% -5.6378% -3.1885%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 2 outliers among 10 measurements (20.00%)
-  1 (10.00%) low severe
-  1 (10.00%) high severe
+                        time:   [137.82 µs 139.50 µs 141.86 µs]
+                        change: [-1.9628% +0.9482% +4.0064%] (p = 0.56 > 0.05)
+                        No change in performance detected.
 Benchmarking BenchArraySeqMtEphChap18/tabulate_then_map/10000
 Benchmarking BenchArraySeqMtEphChap18/tabulate_then_map/10000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqMtEphChap18/tabulate_then_map/10000: Collecting 10 samples in estimated 1.0399 s (1265 iterations)
+Benchmarking BenchArraySeqMtEphChap18/tabulate_then_map/10000: Collecting 10 samples in estimated 1.0111 s (1375 iterations)
 Benchmarking BenchArraySeqMtEphChap18/tabulate_then_map/10000: Analyzing
 BenchArraySeqMtEphChap18/tabulate_then_map/10000
-                        time:   [666.17 µs 671.67 µs 676.16 µs]
-                        change: [-8.0088% -7.3719% -6.6482%] (p = 0.00 < 0.05)
-                        Performance has improved.
+                        time:   [694.82 µs 700.89 µs 711.50 µs]
+                        change: [+2.9447% +4.3758% +5.9818%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 10 measurements (20.00%)
+  1 (10.00%) low mild
+  1 (10.00%) high mild
 
 Benchmarking BenchArraySeqMtEphReduce/reduce_sum/1000
 Benchmarking BenchArraySeqMtEphReduce/reduce_sum/1000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqMtEphReduce/reduce_sum/1000: Collecting 10 samples in estimated 1.0003 s (97k iterations)
+Benchmarking BenchArraySeqMtEphReduce/reduce_sum/1000: Collecting 10 samples in estimated 1.0003 s (120k iterations)
 Benchmarking BenchArraySeqMtEphReduce/reduce_sum/1000: Analyzing
 BenchArraySeqMtEphReduce/reduce_sum/1000
-                        time:   [7.9753 µs 8.0249 µs 8.0761 µs]
-                        change: [-4.8439% -3.8904% -2.7453%] (p = 0.00 < 0.05)
-                        Performance has improved.
+                        time:   [8.0162 µs 8.2038 µs 8.4830 µs]
+                        change: [+1.5820% +3.8370% +5.6908%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 10 measurements (20.00%)
+  2 (20.00%) low severe
 Benchmarking BenchArraySeqMtEphReduce/reduce_sum/10000
 Benchmarking BenchArraySeqMtEphReduce/reduce_sum/10000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqMtEphReduce/reduce_sum/10000: Collecting 10 samples in estimated 1.0016 s (12k iterations)
+Benchmarking BenchArraySeqMtEphReduce/reduce_sum/10000: Collecting 10 samples in estimated 1.0005 s (12k iterations)
 Benchmarking BenchArraySeqMtEphReduce/reduce_sum/10000: Analyzing
 BenchArraySeqMtEphReduce/reduce_sum/10000
-                        time:   [83.153 µs 84.922 µs 87.304 µs]
-                        change: [-4.7638% -2.6994% -0.1974%] (p = 0.04 < 0.05)
-                        Change within noise threshold.
-Found 1 outliers among 10 measurements (10.00%)
-  1 (10.00%) high mild
+                        time:   [82.610 µs 83.371 µs 84.566 µs]
+                        change: [-2.6265% -0.0204% +2.2423%] (p = 0.99 > 0.05)
+                        No change in performance detected.
+Found 2 outliers among 10 measurements (20.00%)
+  2 (20.00%) low mild
 
 Benchmarking BenchArraySeqMtEphFilter/filter_evens/10000
 Benchmarking BenchArraySeqMtEphFilter/filter_evens/10000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqMtEphFilter/filter_evens/10000: Collecting 10 samples in estimated 1.0003 s (9955 iterations)
+Benchmarking BenchArraySeqMtEphFilter/filter_evens/10000: Collecting 10 samples in estimated 1.0045 s (10k iterations)
 Benchmarking BenchArraySeqMtEphFilter/filter_evens/10000: Analyzing
 BenchArraySeqMtEphFilter/filter_evens/10000
-                        time:   [100.20 µs 100.29 µs 100.36 µs]
-                        change: [-1.4867% -1.2436% -0.9419%] (p = 0.00 < 0.05)
-                        Change within noise threshold.
+                        time:   [100.07 µs 113.32 µs 121.49 µs]
+                        change: [-0.3703% +5.4695% +12.705%] (p = 0.10 > 0.05)
+                        No change in performance detected.
+Found 2 outliers among 10 measurements (20.00%)
+  2 (20.00%) high severe
 
 Benchmarking BenchArraySeqMtEphScan/scan_sum/5000
 Benchmarking BenchArraySeqMtEphScan/scan_sum/5000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqMtEphScan/scan_sum/5000: Collecting 10 samples in estimated 1.0023 s (20k iterations)
+Benchmarking BenchArraySeqMtEphScan/scan_sum/5000: Collecting 10 samples in estimated 1.0014 s (19k iterations)
 Benchmarking BenchArraySeqMtEphScan/scan_sum/5000: Analyzing
 BenchArraySeqMtEphScan/scan_sum/5000
-                        time:   [49.795 µs 49.858 µs 49.921 µs]
-                        change: [-1.3043% -1.0915% -0.8692%] (p = 0.00 < 0.05)
-                        Change within noise threshold.
+                        time:   [49.617 µs 49.937 µs 50.153 µs]
+                        change: [-0.2098% +0.2487% +0.6868%] (p = 0.34 > 0.05)
+                        No change in performance detected.
 Found 2 outliers among 10 measurements (20.00%)
-  1 (10.00%) low mild
-  1 (10.00%) high severe
+  2 (20.00%) low mild
 
-    Finished `bench` profile [optimized] target(s) in 0.03s
+    Finished `bench` profile [optimized] target(s) in 0.04s
      Running benches/Chap18/BenchArraySeqStEphChap18.rs (target/release/deps/BenchArraySeqStEphChap18-f4eeb79839438af1)
 Benchmarking BenchArraySeqStEphChap18/tabulate_then_map/5000
 Benchmarking BenchArraySeqStEphChap18/tabulate_then_map/5000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqStEphChap18/tabulate_then_map/5000: Collecting 30 samples in estimated 1.0001 s (152k iterations)
+Benchmarking BenchArraySeqStEphChap18/tabulate_then_map/5000: Collecting 30 samples in estimated 1.0019 s (152k iterations)
 Benchmarking BenchArraySeqStEphChap18/tabulate_then_map/5000: Analyzing
 BenchArraySeqStEphChap18/tabulate_then_map/5000
-                        time:   [6.5217 µs 6.5274 µs 6.5334 µs]
-                        change: [-0.5305% -0.3713% -0.2210%] (p = 0.00 < 0.05)
+                        time:   [6.5466 µs 6.6095 µs 6.7180 µs]
+                        change: [+0.1698% +0.6625% +1.4547%] (p = 0.05 < 0.05)
                         Change within noise threshold.
-Found 1 outliers among 30 measurements (3.33%)
-  1 (3.33%) high mild
+Found 2 outliers among 30 measurements (6.67%)
+  2 (6.67%) high severe
 Benchmarking BenchArraySeqStEphChap18/subseq/5000
 Benchmarking BenchArraySeqStEphChap18/subseq/5000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqStEphChap18/subseq/5000: Collecting 30 samples in estimated 1.0000 s (8.4M iterations)
+Benchmarking BenchArraySeqStEphChap18/subseq/5000: Collecting 30 samples in estimated 1.0000 s (8.1M iterations)
 Benchmarking BenchArraySeqStEphChap18/subseq/5000: Analyzing
 BenchArraySeqStEphChap18/subseq/5000
-                        time:   [119.79 ns 120.81 ns 121.45 ns]
-                        change: [-4.2340% -3.3979% -2.4776%] (p = 0.00 < 0.05)
-                        Performance has improved.
+                        time:   [120.56 ns 121.25 ns 122.27 ns]
+                        change: [+1.2429% +2.1411% +3.0608%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
 Benchmarking BenchArraySeqStEphChap18/append/5000
 Benchmarking BenchArraySeqStEphChap18/append/5000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqStEphChap18/append/5000: Collecting 30 samples in estimated 1.0002 s (282k iterations)
+Benchmarking BenchArraySeqStEphChap18/append/5000: Collecting 30 samples in estimated 1.0010 s (274k iterations)
 Benchmarking BenchArraySeqStEphChap18/append/5000: Analyzing
 BenchArraySeqStEphChap18/append/5000
-                        time:   [3.4727 µs 3.4768 µs 3.4813 µs]
-                        change: [-21.315% -16.279% -10.887%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 5 outliers among 30 measurements (16.67%)
-  1 (3.33%) low mild
-  2 (6.67%) high mild
-  2 (6.67%) high severe
+                        time:   [3.5402 µs 3.5599 µs 3.5874 µs]
+                        change: [+1.9831% +2.4717% +3.0597%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high severe
 Benchmarking BenchArraySeqStEphChap18/filter/5000
 Benchmarking BenchArraySeqStEphChap18/filter/5000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqStEphChap18/filter/5000: Collecting 30 samples in estimated 1.0004 s (385k iterations)
+Benchmarking BenchArraySeqStEphChap18/filter/5000: Collecting 30 samples in estimated 1.0004 s (358k iterations)
 Benchmarking BenchArraySeqStEphChap18/filter/5000: Analyzing
 BenchArraySeqStEphChap18/filter/5000
-                        time:   [2.4587 µs 2.4651 µs 2.4722 µs]
-                        change: [-5.3202% -4.6779% -4.0980%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 3 outliers among 30 measurements (10.00%)
-  2 (6.67%) low mild
-  1 (3.33%) high mild
+                        time:   [2.4787 µs 2.4859 µs 2.4950 µs]
+                        change: [-0.5267% +0.0548% +0.6184%] (p = 0.84 > 0.05)
+                        No change in performance detected.
+Found 6 outliers among 30 measurements (20.00%)
+  4 (13.33%) low mild
+  2 (6.67%) high mild
 Benchmarking BenchArraySeqStEphChap18/flatten/500
 Benchmarking BenchArraySeqStEphChap18/flatten/500: Warming up for 300.00 ms
-Benchmarking BenchArraySeqStEphChap18/flatten/500: Collecting 30 samples in estimated 1.0017 s (217k iterations)
+Benchmarking BenchArraySeqStEphChap18/flatten/500: Collecting 30 samples in estimated 1.0019 s (166k iterations)
 Benchmarking BenchArraySeqStEphChap18/flatten/500: Analyzing
 BenchArraySeqStEphChap18/flatten/500
-                        time:   [4.3703 µs 4.3848 µs 4.4010 µs]
-                        change: [-6.4792% -4.5824% -2.8618%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 1 outliers among 30 measurements (3.33%)
-  1 (3.33%) low mild
+                        time:   [4.6067 µs 4.6281 µs 4.6574 µs]
+                        change: [+6.0206% +6.9270% +7.7312%] (p = 0.00 < 0.05)
+                        Performance has regressed.
 Benchmarking BenchArraySeqStEphChap18/reduce/5000
 Benchmarking BenchArraySeqStEphChap18/reduce/5000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqStEphChap18/reduce/5000: Collecting 30 samples in estimated 1.0001 s (2.7M iterations)
+Benchmarking BenchArraySeqStEphChap18/reduce/5000: Collecting 30 samples in estimated 1.0001 s (2.6M iterations)
 Benchmarking BenchArraySeqStEphChap18/reduce/5000: Analyzing
 BenchArraySeqStEphChap18/reduce/5000
-                        time:   [371.40 ns 371.92 ns 372.44 ns]
-                        change: [-0.7787% -0.4872% -0.1640%] (p = 0.00 < 0.05)
-                        Change within noise threshold.
-Found 3 outliers among 30 measurements (10.00%)
-  2 (6.67%) high mild
-  1 (3.33%) high severe
+                        time:   [386.21 ns 389.35 ns 393.12 ns]
+                        change: [+2.9724% +3.7907% +4.7132%] (p = 0.00 < 0.05)
+                        Performance has regressed.
 Benchmarking BenchArraySeqStEphChap18/scan/5000
 Benchmarking BenchArraySeqStEphChap18/scan/5000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqStEphChap18/scan/5000: Collecting 30 samples in estimated 1.0013 s (276k iterations)
+Benchmarking BenchArraySeqStEphChap18/scan/5000: Collecting 30 samples in estimated 1.0004 s (275k iterations)
 Benchmarking BenchArraySeqStEphChap18/scan/5000: Analyzing
 BenchArraySeqStEphChap18/scan/5000
-                        time:   [3.5238 µs 3.5312 µs 3.5387 µs]
-                        change: [-1.8645% -1.3422% -0.7972%] (p = 0.00 < 0.05)
+                        time:   [3.6224 µs 3.6510 µs 3.6705 µs]
+                        change: [+0.3734% +1.3269% +2.2619%] (p = 0.01 < 0.05)
                         Change within noise threshold.
-Found 5 outliers among 30 measurements (16.67%)
-  4 (13.33%) high mild
-  1 (3.33%) high severe
 Benchmarking BenchArraySeqStEphChap18/iterate/5000
 Benchmarking BenchArraySeqStEphChap18/iterate/5000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqStEphChap18/iterate/5000: Collecting 30 samples in estimated 1.0001 s (2.7M iterations)
+Benchmarking BenchArraySeqStEphChap18/iterate/5000: Collecting 30 samples in estimated 1.0000 s (2.6M iterations)
 Benchmarking BenchArraySeqStEphChap18/iterate/5000: Analyzing
 BenchArraySeqStEphChap18/iterate/5000
-                        time:   [359.40 ns 363.92 ns 368.70 ns]
-                        change: [-3.0662% -2.3277% -1.7057%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 4 outliers among 30 measurements (13.33%)
-  3 (10.00%) low severe
-  1 (3.33%) low mild
+                        time:   [380.08 ns 380.83 ns 381.60 ns]
+                        change: [+3.1334% +3.7628% +4.4933%] (p = 0.00 < 0.05)
+                        Performance has regressed.
 
     Finished `bench` profile [optimized] target(s) in 0.03s
      Running benches/Chap19/BenchArraySeqStEphChap19.rs (target/release/deps/BenchArraySeqStEphChap19-0e79a4a868d2d823)
 Benchmarking BenchArraySeqStEphChap19/tabulate_then_map/10000
 Benchmarking BenchArraySeqStEphChap19/tabulate_then_map/10000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqStEphChap19/tabulate_then_map/10000: Collecting 10 samples in estimated 1.0001 s (162k iterations)
+Benchmarking BenchArraySeqStEphChap19/tabulate_then_map/10000: Collecting 10 samples in estimated 1.0000 s (164k iterations)
 Benchmarking BenchArraySeqStEphChap19/tabulate_then_map/10000: Analyzing
 BenchArraySeqStEphChap19/tabulate_then_map/10000
-                        time:   [5.9297 µs 5.9446 µs 5.9572 µs]
-                        change: [-4.7946% -3.6357% -2.6342%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 2 outliers among 10 measurements (20.00%)
-  2 (20.00%) low severe
+                        time:   [6.0922 µs 6.0974 µs 6.1014 µs]
+                        change: [+2.4774% +3.4204% +4.6756%] (p = 0.00 < 0.05)
+                        Performance has regressed.
 
     Finished `bench` profile [optimized] target(s) in 0.03s
      Running benches/Chap19/BenchArraySeqStPerChap19.rs (target/release/deps/BenchArraySeqStPerChap19-106d4fdbc626b623)
 Benchmarking BenchArraySeqStPerChap19/tabulate_then_map/10000
 Benchmarking BenchArraySeqStPerChap19/tabulate_then_map/10000: Warming up for 300.00 ms
-Benchmarking BenchArraySeqStPerChap19/tabulate_then_map/10000: Collecting 10 samples in estimated 1.0003 s (73k iterations)
+Benchmarking BenchArraySeqStPerChap19/tabulate_then_map/10000: Collecting 10 samples in estimated 1.0004 s (71k iterations)
 Benchmarking BenchArraySeqStPerChap19/tabulate_then_map/10000: Analyzing
 BenchArraySeqStPerChap19/tabulate_then_map/10000
-                        time:   [13.488 µs 13.511 µs 13.533 µs]
-                        change: [-0.2444% -0.0125% +0.2021%] (p = 0.92 > 0.05)
-                        No change in performance detected.
+                        time:   [13.587 µs 13.766 µs 14.010 µs]
+                        change: [+1.0154% +2.2571% +3.7171%] (p = 0.00 < 0.05)
+                        Performance has regressed.
 
-    Finished `bench` profile [optimized] target(s) in 0.04s
+    Finished `bench` profile [optimized] target(s) in 0.03s
      Running benches/Chap41/BenchArraySetEnumMtEph.rs (target/release/deps/BenchArraySetEnumMtEph-6256ab955f8ef202)
 Benchmarking ArraySetEnumMtEph_build/build_50pct/300
 Benchmarking ArraySetEnumMtEph_build/build_50pct/300: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_build/build_50pct/300: Collecting 30 samples in estimated 1.0001 s (3.6M iterations)
+Benchmarking ArraySetEnumMtEph_build/build_50pct/300: Collecting 30 samples in estimated 1.0000 s (3.5M iterations)
 Benchmarking ArraySetEnumMtEph_build/build_50pct/300: Analyzing
 ArraySetEnumMtEph_build/build_50pct/300
-                        time:   [276.01 ns 277.71 ns 279.15 ns]
-                        change: [-6.0967% -5.7218% -5.3880%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 3 outliers among 30 measurements (10.00%)
-  1 (3.33%) low severe
-  2 (6.67%) high mild
+                        time:   [285.39 ns 285.90 ns 286.28 ns]
+                        change: [+1.8736% +2.2786% +2.7352%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 4 outliers among 30 measurements (13.33%)
+  4 (13.33%) low mild
 Benchmarking ArraySetEnumMtEph_build/build_50pct/800
 Benchmarking ArraySetEnumMtEph_build/build_50pct/800: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_build/build_50pct/800: Collecting 30 samples in estimated 1.0002 s (1.4M iterations)
+Benchmarking ArraySetEnumMtEph_build/build_50pct/800: Collecting 30 samples in estimated 1.0003 s (1.3M iterations)
 Benchmarking ArraySetEnumMtEph_build/build_50pct/800: Analyzing
 ArraySetEnumMtEph_build/build_50pct/800
-                        time:   [702.01 ns 704.89 ns 708.10 ns]
-                        change: [-7.9473% -7.5477% -7.1362%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 4 outliers among 30 measurements (13.33%)
-  1 (3.33%) low mild
-  3 (10.00%) high mild
+                        time:   [777.45 ns 778.99 ns 780.68 ns]
+                        change: [+10.614% +11.095% +11.595%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
 
 Benchmarking ArraySetEnumMtEph_find/find_existing/300
 Benchmarking ArraySetEnumMtEph_find/find_existing/300: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_find/find_existing/300: Collecting 30 samples in estimated 1.0000 s (658M iterations)
+Benchmarking ArraySetEnumMtEph_find/find_existing/300: Collecting 30 samples in estimated 1.0000 s (632M iterations)
 Benchmarking ArraySetEnumMtEph_find/find_existing/300: Analyzing
 ArraySetEnumMtEph_find/find_existing/300
-                        time:   [1.5895 ns 1.6052 ns 1.6221 ns]
-                        change: [-3.2156% -2.3552% -1.2248%] (p = 0.00 < 0.05)
+                        time:   [1.5393 ns 1.5710 ns 1.5971 ns]
+                        change: [-2.1429% -0.5540% +0.7795%] (p = 0.47 > 0.05)
+                        No change in performance detected.
+Found 5 outliers among 30 measurements (16.67%)
+  1 (3.33%) low severe
+  2 (6.67%) low mild
+  2 (6.67%) high mild
+Benchmarking ArraySetEnumMtEph_find/find_missing/300
+Benchmarking ArraySetEnumMtEph_find/find_missing/300: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_find/find_missing/300: Collecting 30 samples in estimated 1.0000 s (620M iterations)
+Benchmarking ArraySetEnumMtEph_find/find_missing/300: Analyzing
+ArraySetEnumMtEph_find/find_missing/300
+                        time:   [1.5828 ns 1.5878 ns 1.5925 ns]
+                        change: [+2.7496% +3.2672% +3.7578%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking ArraySetEnumMtEph_find/find_existing/800
+Benchmarking ArraySetEnumMtEph_find/find_existing/800: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_find/find_existing/800: Collecting 30 samples in estimated 1.0000 s (620M iterations)
+Benchmarking ArraySetEnumMtEph_find/find_existing/800: Analyzing
+ArraySetEnumMtEph_find/find_existing/800
+                        time:   [1.5851 ns 1.5880 ns 1.5912 ns]
+                        change: [+3.8000% +4.2524% +4.7728%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  1 (3.33%) high mild
+  1 (3.33%) high severe
+Benchmarking ArraySetEnumMtEph_find/find_missing/800
+Benchmarking ArraySetEnumMtEph_find/find_missing/800: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_find/find_missing/800: Collecting 30 samples in estimated 1.0000 s (614M iterations)
+Benchmarking ArraySetEnumMtEph_find/find_missing/800: Analyzing
+ArraySetEnumMtEph_find/find_missing/800
+                        time:   [1.5815 ns 1.5876 ns 1.5941 ns]
+                        change: [+3.0225% +3.5080% +3.9560%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  2 (6.67%) high mild
+
+Benchmarking ArraySetEnumMtEph_insert/insert_new/300
+Benchmarking ArraySetEnumMtEph_insert/insert_new/300: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_insert/insert_new/300: Collecting 30 samples in estimated 1.0001 s (2.9M iterations)
+Benchmarking ArraySetEnumMtEph_insert/insert_new/300: Analyzing
+ArraySetEnumMtEph_insert/insert_new/300
+                        time:   [5.2439 ns 5.4243 ns 5.5823 ns]
+                        change: [+1.2258% +6.6268% +12.562%] (p = 0.03 < 0.05)
+                        Performance has regressed.
+Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/300
+Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/300: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/300: Collecting 30 samples in estimated 1.0001 s (2.8M iterations)
+Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/300: Analyzing
+ArraySetEnumMtEph_insert/insert_duplicate/300
+                        time:   [5.2321 ns 5.5288 ns 5.7602 ns]
+                        change: [+0.0228% +5.8526% +12.182%] (p = 0.05 > 0.05)
+                        No change in performance detected.
+Benchmarking ArraySetEnumMtEph_insert/insert_new/800
+Benchmarking ArraySetEnumMtEph_insert/insert_new/800: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_insert/insert_new/800: Collecting 30 samples in estimated 1.0004 s (1.2M iterations)
+Benchmarking ArraySetEnumMtEph_insert/insert_new/800: Analyzing
+ArraySetEnumMtEph_insert/insert_new/800
+                        time:   [5.1807 ns 5.3900 ns 5.5562 ns]
+                        change: [+3.2563% +8.0353% +12.839%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  1 (3.33%) low mild
+  2 (6.67%) high mild
+Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/800
+Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/800: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/800: Collecting 30 samples in estimated 1.0002 s (1.2M iterations)
+Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/800: Analyzing
+ArraySetEnumMtEph_insert/insert_duplicate/800
+                        time:   [5.2518 ns 5.5242 ns 5.7593 ns]
+                        change: [+5.4874% +10.100% +15.033%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 5 outliers among 30 measurements (16.67%)
+  1 (3.33%) low mild
+  2 (6.67%) high mild
+  2 (6.67%) high severe
+
+Benchmarking ArraySetEnumMtEph_delete/delete_existing/300
+Benchmarking ArraySetEnumMtEph_delete/delete_existing/300: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_delete/delete_existing/300: Collecting 30 samples in estimated 1.0002 s (2.8M iterations)
+Benchmarking ArraySetEnumMtEph_delete/delete_existing/300: Analyzing
+ArraySetEnumMtEph_delete/delete_existing/300
+                        time:   [5.0629 ns 5.2929 ns 5.4657 ns]
+                        change: [-2.2820% +2.9128% +8.6046%] (p = 0.30 > 0.05)
+                        No change in performance detected.
+Benchmarking ArraySetEnumMtEph_delete/delete_missing/300
+Benchmarking ArraySetEnumMtEph_delete/delete_missing/300: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_delete/delete_missing/300: Collecting 30 samples in estimated 1.0001 s (3.0M iterations)
+Benchmarking ArraySetEnumMtEph_delete/delete_missing/300: Analyzing
+ArraySetEnumMtEph_delete/delete_missing/300
+                        time:   [5.0029 ns 5.2526 ns 5.4415 ns]
+                        change: [-3.6898% +1.5305% +7.6264%] (p = 0.59 > 0.05)
+                        No change in performance detected.
+Benchmarking ArraySetEnumMtEph_delete/delete_existing/800
+Benchmarking ArraySetEnumMtEph_delete/delete_existing/800: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_delete/delete_existing/800: Collecting 30 samples in estimated 1.0001 s (1.3M iterations)
+Benchmarking ArraySetEnumMtEph_delete/delete_existing/800: Analyzing
+ArraySetEnumMtEph_delete/delete_existing/800
+                        time:   [4.9715 ns 5.2594 ns 5.4888 ns]
+                        change: [-14.502% -9.8860% -5.2186%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+Benchmarking ArraySetEnumMtEph_delete/delete_missing/800
+Benchmarking ArraySetEnumMtEph_delete/delete_missing/800: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_delete/delete_missing/800: Collecting 30 samples in estimated 1.0002 s (1.2M iterations)
+Benchmarking ArraySetEnumMtEph_delete/delete_missing/800: Analyzing
+ArraySetEnumMtEph_delete/delete_missing/800
+                        time:   [5.7783 ns 5.9639 ns 6.1367 ns]
+                        change: [+12.883% +18.410% +23.913%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  1 (3.33%) low mild
+  1 (3.33%) high mild
+
+Benchmarking ArraySetEnumMtEph_bulk/union/300
+Benchmarking ArraySetEnumMtEph_bulk/union/300: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_bulk/union/300: Collecting 30 samples in estimated 1.0001 s (2.0M iterations)
+Benchmarking ArraySetEnumMtEph_bulk/union/300: Analyzing
+ArraySetEnumMtEph_bulk/union/300
+                        time:   [498.65 ns 505.03 ns 511.22 ns]
+                        change: [+8.7691% +9.5418% +10.277%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  2 (6.67%) low mild
+Benchmarking ArraySetEnumMtEph_bulk/intersection/300
+Benchmarking ArraySetEnumMtEph_bulk/intersection/300: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_bulk/intersection/300: Collecting 30 samples in estimated 1.0001 s (2.1M iterations)
+Benchmarking ArraySetEnumMtEph_bulk/intersection/300: Analyzing
+ArraySetEnumMtEph_bulk/intersection/300
+                        time:   [480.03 ns 486.34 ns 493.32 ns]
+                        change: [+0.9199% +1.9365% +2.9878%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 5 outliers among 30 measurements (16.67%)
+  3 (10.00%) high mild
+  2 (6.67%) high severe
+Benchmarking ArraySetEnumMtEph_bulk/difference/300
+Benchmarking ArraySetEnumMtEph_bulk/difference/300: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_bulk/difference/300: Collecting 30 samples in estimated 1.0002 s (1.8M iterations)
+Benchmarking ArraySetEnumMtEph_bulk/difference/300: Analyzing
+ArraySetEnumMtEph_bulk/difference/300
+                        time:   [533.28 ns 537.15 ns 541.63 ns]
+                        change: [-4.5039% +1.6494% +7.5482%] (p = 0.61 > 0.05)
+                        No change in performance detected.
+Benchmarking ArraySetEnumMtEph_bulk/union/800
+Benchmarking ArraySetEnumMtEph_bulk/union/800: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_bulk/union/800: Collecting 30 samples in estimated 1.0003 s (749k iterations)
+Benchmarking ArraySetEnumMtEph_bulk/union/800: Analyzing
+ArraySetEnumMtEph_bulk/union/800
+                        time:   [1.3279 µs 1.3384 µs 1.3484 µs]
+                        change: [+12.223% +13.064% +13.861%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  2 (6.67%) high mild
+Benchmarking ArraySetEnumMtEph_bulk/intersection/800
+Benchmarking ArraySetEnumMtEph_bulk/intersection/800: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_bulk/intersection/800: Collecting 30 samples in estimated 1.0004 s (713k iterations)
+Benchmarking ArraySetEnumMtEph_bulk/intersection/800: Analyzing
+ArraySetEnumMtEph_bulk/intersection/800
+                        time:   [1.2635 µs 1.2985 µs 1.3488 µs]
+                        change: [+15.870% +19.711% +23.620%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking ArraySetEnumMtEph_bulk/difference/800
+Benchmarking ArraySetEnumMtEph_bulk/difference/800: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_bulk/difference/800: Collecting 30 samples in estimated 1.0001 s (766k iterations)
+Benchmarking ArraySetEnumMtEph_bulk/difference/800: Analyzing
+ArraySetEnumMtEph_bulk/difference/800
+                        time:   [1.2073 µs 1.2174 µs 1.2320 µs]
+                        change: [+3.8568% +6.3311% +9.1956%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 8 outliers among 30 measurements (26.67%)
+  2 (6.67%) low mild
+  6 (20.00%) high severe
+
+Benchmarking ArraySetEnumMtEph_from_seq/from_seq/300
+Benchmarking ArraySetEnumMtEph_from_seq/from_seq/300: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_from_seq/from_seq/300: Collecting 30 samples in estimated 1.0007 s (436k iterations)
+Benchmarking ArraySetEnumMtEph_from_seq/from_seq/300: Analyzing
+ArraySetEnumMtEph_from_seq/from_seq/300
+                        time:   [2.2297 µs 2.2362 µs 2.2436 µs]
+                        change: [-16.063% -13.923% -11.843%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking ArraySetEnumMtEph_from_seq/from_seq/800
+Benchmarking ArraySetEnumMtEph_from_seq/from_seq/800: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_from_seq/from_seq/800: Collecting 30 samples in estimated 1.0001 s (182k iterations)
+Benchmarking ArraySetEnumMtEph_from_seq/from_seq/800: Analyzing
+ArraySetEnumMtEph_from_seq/from_seq/800
+                        time:   [5.8822 µs 6.0144 µs 6.1794 µs]
+                        change: [+3.5681% +5.9356% +8.3588%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+
+Benchmarking ArraySetEnumMtEph_filter/filter_half_parallel/300
+Benchmarking ArraySetEnumMtEph_filter/filter_half_parallel/300: Warming up for 300.00 ms
+
+Warning: Unable to complete 30 samples in 1.0s. You may wish to increase target time to 1.7s, enable flat sampling, or reduce sample count to 10.
+Benchmarking ArraySetEnumMtEph_filter/filter_half_parallel/300: Collecting 30 samples in estimated 1.7319 s (465 iterations)
+Benchmarking ArraySetEnumMtEph_filter/filter_half_parallel/300: Analyzing
+ArraySetEnumMtEph_filter/filter_half_parallel/300
+                        time:   [3.7813 ms 3.8799 ms 3.9888 ms]
+                        change: [-0.9061% +1.9664% +5.3754%] (p = 0.24 > 0.05)
+                        No change in performance detected.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+Benchmarking ArraySetEnumMtEph_filter/filter_simple_parallel/300
+Benchmarking ArraySetEnumMtEph_filter/filter_simple_parallel/300: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_filter/filter_simple_parallel/300: Collecting 30 samples in estimated 1.0466 s (240 iterations)
+Benchmarking ArraySetEnumMtEph_filter/filter_simple_parallel/300: Analyzing
+ArraySetEnumMtEph_filter/filter_simple_parallel/300
+                        time:   [4.0482 ms 4.1922 ms 4.3373 ms]
+                        change: [-0.3117% +4.5770% +9.1528%] (p = 0.08 > 0.05)
+                        No change in performance detected.
+Benchmarking ArraySetEnumMtEph_filter/filter_half_parallel/800
+Benchmarking ArraySetEnumMtEph_filter/filter_half_parallel/800: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_filter/filter_half_parallel/800: Collecting 30 samples in estimated 1.1968 s (120 iterations)
+Benchmarking ArraySetEnumMtEph_filter/filter_half_parallel/800: Analyzing
+ArraySetEnumMtEph_filter/filter_half_parallel/800
+                        time:   [9.9480 ms 10.131 ms 10.332 ms]
+                        change: [-5.3023% -1.8951% +1.4944%] (p = 0.32 > 0.05)
+                        No change in performance detected.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+Benchmarking ArraySetEnumMtEph_filter/filter_simple_parallel/800
+Benchmarking ArraySetEnumMtEph_filter/filter_simple_parallel/800: Warming up for 300.00 ms
+Benchmarking ArraySetEnumMtEph_filter/filter_simple_parallel/800: Collecting 30 samples in estimated 1.0480 s (90 iterations)
+Benchmarking ArraySetEnumMtEph_filter/filter_simple_parallel/800: Analyzing
+ArraySetEnumMtEph_filter/filter_simple_parallel/800
+                        time:   [10.579 ms 11.059 ms 11.603 ms]
+                        change: [-4.3931% +0.0572% +5.5489%] (p = 0.98 > 0.05)
+                        No change in performance detected.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+
+    Finished `bench` profile [optimized] target(s) in 0.03s
+     Running benches/Chap41/BenchArraySetStEph.rs (target/release/deps/BenchArraySetStEph-28a88473f0dc6c4f)
+Benchmarking ArraySetStEph_build/build/10
+Benchmarking ArraySetStEph_build/build/10: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_build/build/10: Collecting 30 samples in estimated 1.0001 s (4.6M iterations)
+Benchmarking ArraySetStEph_build/build/10: Analyzing
+ArraySetStEph_build/build/10
+                        time:   [215.77 ns 216.59 ns 217.35 ns]
+                        change: [+4.2076% +5.0761% +5.8802%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 4 outliers among 30 measurements (13.33%)
+  1 (3.33%) low severe
+  2 (6.67%) low mild
+  1 (3.33%) high mild
+Benchmarking ArraySetStEph_build/build/20
+Benchmarking ArraySetStEph_build/build/20: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_build/build/20: Collecting 30 samples in estimated 1.0000 s (1.8M iterations)
+Benchmarking ArraySetStEph_build/build/20: Analyzing
+ArraySetStEph_build/build/20
+                        time:   [582.43 ns 584.57 ns 587.37 ns]
+                        change: [+11.057% +12.137% +13.324%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+Benchmarking ArraySetStEph_find/find_existing/10
+Benchmarking ArraySetStEph_find/find_existing/10: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_find/find_existing/10: Collecting 30 samples in estimated 1.0000 s (321M iterations)
+Benchmarking ArraySetStEph_find/find_existing/10: Analyzing
+ArraySetStEph_find/find_existing/10
+                        time:   [2.9789 ns 3.0239 ns 3.0641 ns]
+                        change: [+4.6351% +6.3208% +7.8523%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) low mild
+Benchmarking ArraySetStEph_find/find_missing/10
+Benchmarking ArraySetStEph_find/find_missing/10: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_find/find_missing/10: Collecting 30 samples in estimated 1.0000 s (211M iterations)
+Benchmarking ArraySetStEph_find/find_missing/10: Analyzing
+ArraySetStEph_find/find_missing/10
+                        time:   [5.0708 ns 5.1242 ns 5.1582 ns]
+                        change: [-4.3866% -0.0507% +3.4280%] (p = 0.98 > 0.05)
+                        No change in performance detected.
+Benchmarking ArraySetStEph_find/find_existing/20
+Benchmarking ArraySetStEph_find/find_existing/20: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_find/find_existing/20: Collecting 30 samples in estimated 1.0000 s (208M iterations)
+Benchmarking ArraySetStEph_find/find_existing/20: Analyzing
+ArraySetStEph_find/find_existing/20
+                        time:   [4.7204 ns 4.7449 ns 4.7675 ns]
+                        change: [+12.278% +13.163% +14.017%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+Benchmarking ArraySetStEph_find/find_missing/20
+Benchmarking ArraySetStEph_find/find_missing/20: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_find/find_missing/20: Collecting 30 samples in estimated 1.0000 s (115M iterations)
+Benchmarking ArraySetStEph_find/find_missing/20: Analyzing
+ArraySetStEph_find/find_missing/20
+                        time:   [8.5958 ns 8.6333 ns 8.6790 ns]
+                        change: [+14.285% +15.104% +15.877%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+Benchmarking ArraySetStEph_insert/insert_new/100
+Benchmarking ArraySetStEph_insert/insert_new/100: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_insert/insert_new/100: Collecting 30 samples in estimated 1.0036 s (128k iterations)
+Benchmarking ArraySetStEph_insert/insert_new/100: Analyzing
+ArraySetStEph_insert/insert_new/100
+                        time:   [139.27 ns 140.08 ns 141.19 ns]
+                        change: [+3.4123% +4.0588% +4.9568%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high severe
+Benchmarking ArraySetStEph_insert/insert_duplicate/100
+Benchmarking ArraySetStEph_insert/insert_duplicate/100: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_insert/insert_duplicate/100: Collecting 30 samples in estimated 1.0032 s (136k iterations)
+Benchmarking ArraySetStEph_insert/insert_duplicate/100: Analyzing
+ArraySetStEph_insert/insert_duplicate/100
+                        time:   [17.419 ns 17.495 ns 17.585 ns]
+                        change: [-0.8788% +0.6030% +2.1547%] (p = 0.45 > 0.05)
+                        No change in performance detected.
+Found 2 outliers among 30 measurements (6.67%)
+  1 (3.33%) high mild
+  1 (3.33%) high severe
+Benchmarking ArraySetStEph_insert/insert_new/1000
+Benchmarking ArraySetStEph_insert/insert_new/1000: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_insert/insert_new/1000: Collecting 30 samples in estimated 1.1226 s (1860 iterations)
+Benchmarking ArraySetStEph_insert/insert_new/1000: Analyzing
+ArraySetStEph_insert/insert_new/1000
+                        time:   [1.0729 µs 1.1058 µs 1.1416 µs]
+                        change: [+4.7913% +8.1711% +10.712%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  3 (10.00%) low mild
+Benchmarking ArraySetStEph_insert/insert_duplicate/1000
+Benchmarking ArraySetStEph_insert/insert_duplicate/1000: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_insert/insert_duplicate/1000: Collecting 30 samples in estimated 1.1058 s (1860 iterations)
+Benchmarking ArraySetStEph_insert/insert_duplicate/1000: Analyzing
+ArraySetStEph_insert/insert_duplicate/1000
+                        time:   [155.48 ns 156.65 ns 158.51 ns]
+                        change: [+6.8682% +9.9036% +14.068%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  1 (3.33%) low mild
+  2 (6.67%) high severe
+
+Benchmarking ArraySetStEph_delete/delete_existing/100
+Benchmarking ArraySetStEph_delete/delete_existing/100: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_delete/delete_existing/100: Collecting 30 samples in estimated 1.0029 s (74k iterations)
+Benchmarking ArraySetStEph_delete/delete_existing/100: Analyzing
+ArraySetStEph_delete/delete_existing/100
+                        time:   [5.1996 µs 5.2301 µs 5.2769 µs]
+                        change: [+10.393% +13.902% +16.804%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  2 (6.67%) low severe
+  1 (3.33%) low mild
+Benchmarking ArraySetStEph_delete/delete_missing/100
+Benchmarking ArraySetStEph_delete/delete_missing/100: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_delete/delete_missing/100: Collecting 30 samples in estimated 1.0035 s (76k iterations)
+Benchmarking ArraySetStEph_delete/delete_missing/100: Analyzing
+ArraySetStEph_delete/delete_missing/100
+                        time:   [4.9576 µs 4.9851 µs 5.0228 µs]
+                        change: [+5.9301% +6.7046% +7.5029%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking ArraySetStEph_delete/delete_existing/1000
+Benchmarking ArraySetStEph_delete/delete_existing/1000: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_delete/delete_existing/1000: Collecting 30 samples in estimated 1.2437 s (1860 iterations)
+Benchmarking ArraySetStEph_delete/delete_existing/1000: Analyzing
+ArraySetStEph_delete/delete_existing/1000
+                        time:   [44.465 µs 45.516 µs 46.130 µs]
+                        change: [+7.0032% +8.5226% +9.7648%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  1 (3.33%) low severe
+  2 (6.67%) high mild
+Benchmarking ArraySetStEph_delete/delete_missing/1000
+Benchmarking ArraySetStEph_delete/delete_missing/1000: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_delete/delete_missing/1000: Collecting 30 samples in estimated 1.1900 s (1860 iterations)
+Benchmarking ArraySetStEph_delete/delete_missing/1000: Analyzing
+ArraySetStEph_delete/delete_missing/1000
+                        time:   [46.104 µs 46.296 µs 46.496 µs]
+                        change: [+4.2478% +5.6643% +7.0234%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  2 (6.67%) low severe
+
+Benchmarking ArraySetStEph_bulk/union/100
+Benchmarking ArraySetStEph_bulk/union/100: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_bulk/union/100: Collecting 30 samples in estimated 1.0002 s (1.1M iterations)
+Benchmarking ArraySetStEph_bulk/union/100: Analyzing
+ArraySetStEph_bulk/union/100
+                        time:   [921.80 ns 928.88 ns 934.28 ns]
+                        change: [+6.1002% +7.6119% +9.1244%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking ArraySetStEph_bulk/intersection/100
+Benchmarking ArraySetStEph_bulk/intersection/100: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_bulk/intersection/100: Collecting 30 samples in estimated 1.0000 s (178k iterations)
+Benchmarking ArraySetStEph_bulk/intersection/100: Analyzing
+ArraySetStEph_bulk/intersection/100
+                        time:   [5.3157 µs 5.3261 µs 5.3357 µs]
+                        change: [+0.6013% +1.1949% +1.7367%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 7 outliers among 30 measurements (23.33%)
+  2 (6.67%) low severe
+  2 (6.67%) low mild
+  3 (10.00%) high mild
+Benchmarking ArraySetStEph_bulk/difference/100
+Benchmarking ArraySetStEph_bulk/difference/100: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_bulk/difference/100: Collecting 30 samples in estimated 1.0019 s (228k iterations)
+Benchmarking ArraySetStEph_bulk/difference/100: Analyzing
+ArraySetStEph_bulk/difference/100
+                        time:   [4.3085 µs 4.3211 µs 4.3356 µs]
+                        change: [+15.118% +15.828% +16.485%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 4 outliers among 30 measurements (13.33%)
+  4 (13.33%) high mild
+Benchmarking ArraySetStEph_bulk/union/1000
+Benchmarking ArraySetStEph_bulk/union/1000: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_bulk/union/1000: Collecting 30 samples in estimated 1.0096 s (24k iterations)
+Benchmarking ArraySetStEph_bulk/union/1000: Analyzing
+ArraySetStEph_bulk/union/1000
+                        time:   [38.248 µs 38.682 µs 39.484 µs]
+                        change: [+3.1693% +5.1676% +7.0088%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+Benchmarking ArraySetStEph_bulk/intersection/1000
+Benchmarking ArraySetStEph_bulk/intersection/1000: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_bulk/intersection/1000: Collecting 30 samples in estimated 1.0168 s (7440 iterations)
+Benchmarking ArraySetStEph_bulk/intersection/1000: Analyzing
+ArraySetStEph_bulk/intersection/1000
+                        time:   [134.72 µs 134.87 µs 135.03 µs]
+                        change: [+1.6638% +1.8598% +2.0637%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking ArraySetStEph_bulk/difference/1000
+Benchmarking ArraySetStEph_bulk/difference/1000: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_bulk/difference/1000: Collecting 30 samples in estimated 1.0512 s (6045 iterations)
+Benchmarking ArraySetStEph_bulk/difference/1000: Analyzing
+ArraySetStEph_bulk/difference/1000
+                        time:   [163.46 µs 166.19 µs 168.70 µs]
+                        change: [-7.5073% -4.8352% -2.3350%] (p = 0.00 < 0.05)
+                        Performance has improved.
+
+Benchmarking ArraySetStEph_from_seq/from_seq/100
+Benchmarking ArraySetStEph_from_seq/from_seq/100: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_from_seq/from_seq/100: Collecting 30 samples in estimated 1.0065 s (68k iterations)
+Benchmarking ArraySetStEph_from_seq/from_seq/100: Analyzing
+ArraySetStEph_from_seq/from_seq/100
+                        time:   [15.770 µs 15.993 µs 16.179 µs]
+                        change: [-0.6876% +1.2468% +3.0346%] (p = 0.20 > 0.05)
+                        No change in performance detected.
+Benchmarking ArraySetStEph_from_seq/from_seq/1000
+Benchmarking ArraySetStEph_from_seq/from_seq/1000: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_from_seq/from_seq/1000: Collecting 30 samples in estimated 1.2469 s (1395 iterations)
+Benchmarking ArraySetStEph_from_seq/from_seq/1000: Analyzing
+ArraySetStEph_from_seq/from_seq/1000
+                        time:   [860.00 µs 872.55 µs 887.84 µs]
+                        change: [+3.1546% +4.2245% +5.2435%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  1 (3.33%) low mild
+  2 (6.67%) high severe
+
+Benchmarking ArraySetStEph_filter/filter_half/100
+Benchmarking ArraySetStEph_filter/filter_half/100: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_filter/filter_half/100: Collecting 30 samples in estimated 1.0004 s (222k iterations)
+Benchmarking ArraySetStEph_filter/filter_half/100: Analyzing
+ArraySetStEph_filter/filter_half/100
+                        time:   [4.5311 µs 4.5987 µs 4.6672 µs]
+                        change: [-15.486% -10.732% -6.2389%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 4 outliers among 30 measurements (13.33%)
+  3 (10.00%) high mild
+  1 (3.33%) high severe
+Benchmarking ArraySetStEph_filter/filter_half/1000
+Benchmarking ArraySetStEph_filter/filter_half/1000: Warming up for 300.00 ms
+Benchmarking ArraySetStEph_filter/filter_half/1000: Collecting 30 samples in estimated 1.0038 s (21k iterations)
+Benchmarking ArraySetStEph_filter/filter_half/1000: Analyzing
+ArraySetStEph_filter/filter_half/1000
+                        time:   [41.416 µs 41.597 µs 41.875 µs]
+                        change: [-14.634% -13.496% -12.397%] (p = 0.00 < 0.05)
+                        Performance has improved.
+
+    Finished `bench` profile [optimized] target(s) in 0.04s
+     Running benches/Chap43/BenchAugOrderedTableStEph.rs (target/release/deps/BenchAugOrderedTableStEph-5d995ee53e5fb5d1)
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/100
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/100: Warming up for 300.00 ms
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/100: Collecting 30 samples in estimated 1.0000 s (3.5B iterations)
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/100: Analyzing
+ephemeral_reduce_val/ephemeral_reduce_val/100
+                        time:   [307.43 ps 309.52 ps 312.09 ps]
+                        change: [+18.366% +19.547% +20.993%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high severe
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/100
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/100: Warming up for 300.00 ms
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/100: Collecting 30 samples in estimated 1.0006 s (214k iterations)
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/100: Analyzing
+ephemeral_reduce_val/naive_reduce_ephemeral/100
+                        time:   [5.0211 µs 5.2752 µs 5.5568 µs]
+                        change: [+2.2524% +6.2613% +11.285%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  2 (6.67%) high mild
+  1 (3.33%) high severe
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/500
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/500: Warming up for 300.00 ms
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/500: Collecting 30 samples in estimated 1.0000 s (3.7B iterations)
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/500: Analyzing
+ephemeral_reduce_val/ephemeral_reduce_val/500
+                        time:   [268.95 ps 280.25 ps 289.99 ps]
+                        change: [-3.1553% +0.1268% +3.5981%] (p = 0.94 > 0.05)
+                        No change in performance detected.
+Found 6 outliers among 30 measurements (20.00%)
+  1 (3.33%) low mild
+  1 (3.33%) high mild
+  4 (13.33%) high severe
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/500
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/500: Warming up for 300.00 ms
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/500: Collecting 30 samples in estimated 1.0073 s (38k iterations)
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/500: Analyzing
+ephemeral_reduce_val/naive_reduce_ephemeral/500
+                        time:   [25.704 µs 25.787 µs 25.873 µs]
+                        change: [+9.5801% +10.124% +10.620%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/1000
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/1000: Warming up for 300.00 ms
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/1000: Collecting 30 samples in estimated 1.0000 s (3.5B iterations)
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/1000: Analyzing
+ephemeral_reduce_val/ephemeral_reduce_val/1000
+                        time:   [303.18 ps 305.45 ps 306.91 ps]
+                        change: [+12.428% +14.816% +17.047%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/1000
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/1000: Warming up for 300.00 ms
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/1000: Collecting 30 samples in estimated 1.0054 s (14k iterations)
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/1000: Analyzing
+ephemeral_reduce_val/naive_reduce_ephemeral/1000
+                        time:   [68.049 µs 68.271 µs 68.484 µs]
+                        change: [+11.023% +11.547% +12.042%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  1 (3.33%) low mild
+  1 (3.33%) high mild
+  1 (3.33%) high severe
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/2000
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/2000: Warming up for 300.00 ms
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/2000: Collecting 30 samples in estimated 1.0000 s (3.4B iterations)
+Benchmarking ephemeral_reduce_val/ephemeral_reduce_val/2000: Analyzing
+ephemeral_reduce_val/ephemeral_reduce_val/2000
+                        time:   [278.07 ps 280.17 ps 282.17 ps]
+                        change: [+3.9480% +6.3761% +8.7791%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  3 (10.00%) low mild
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/2000
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/2000: Warming up for 300.00 ms
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/2000: Collecting 30 samples in estimated 1.0113 s (7440 iterations)
+Benchmarking ephemeral_reduce_val/naive_reduce_ephemeral/2000: Analyzing
+ephemeral_reduce_val/naive_reduce_ephemeral/2000
+                        time:   [134.09 µs 134.78 µs 135.74 µs]
+                        change: [+5.7305% +6.4403% +7.1724%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+
+Benchmarking qadsan_stock_analysis/daily_max_price
+Benchmarking qadsan_stock_analysis/daily_max_price: Warming up for 300.00 ms
+Benchmarking qadsan_stock_analysis/daily_max_price: Collecting 30 samples in estimated 1.0000 s (3.8B iterations)
+Benchmarking qadsan_stock_analysis/daily_max_price: Analyzing
+qadsan_stock_analysis/daily_max_price
+                        time:   [264.12 ps 265.41 ps 266.63 ps]
+                        change: [+0.2048% +1.3429% +2.5506%] (p = 0.03 < 0.05)
+                        Change within noise threshold.
+Found 3 outliers among 30 measurements (10.00%)
+  1 (3.33%) low severe
+  2 (6.67%) low mild
+Benchmarking qadsan_stock_analysis/morning_session_max
+Benchmarking qadsan_stock_analysis/morning_session_max: Warming up for 300.00 ms
+Benchmarking qadsan_stock_analysis/morning_session_max: Collecting 30 samples in estimated 1.0058 s (26k iterations)
+Benchmarking qadsan_stock_analysis/morning_session_max: Analyzing
+qadsan_stock_analysis/morning_session_max
+                        time:   [34.569 µs 34.684 µs 34.761 µs]
+                        change: [-3.7064% -1.9606% -0.3110%] (p = 0.03 < 0.05)
+                        Change within noise threshold.
+Found 4 outliers among 30 measurements (13.33%)
+  3 (10.00%) low severe
+  1 (3.33%) low mild
+Benchmarking qadsan_stock_analysis/afternoon_session_max
+Benchmarking qadsan_stock_analysis/afternoon_session_max: Warming up for 300.00 ms
+Benchmarking qadsan_stock_analysis/afternoon_session_max: Collecting 30 samples in estimated 1.0006 s (20k iterations)
+Benchmarking qadsan_stock_analysis/afternoon_session_max: Analyzing
+qadsan_stock_analysis/afternoon_session_max
+                        time:   [47.964 µs 48.184 µs 48.515 µs]
+                        change: [+11.720% +12.433% +13.150%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking qadsan_stock_analysis/multiple_time_window_queries
+Benchmarking qadsan_stock_analysis/multiple_time_window_queries: Warming up for 300.00 ms
+Benchmarking qadsan_stock_analysis/multiple_time_window_queries: Collecting 30 samples in estimated 1.0160 s (11k iterations)
+Benchmarking qadsan_stock_analysis/multiple_time_window_queries: Analyzing
+qadsan_stock_analysis/multiple_time_window_queries
+                        time:   [100.39 µs 101.31 µs 102.36 µs]
+                        change: [+14.041% +15.096% +16.117%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/0
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/0: Warming up for 300.00 ms
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/0: Collecting 30 samples in estimated 1.0000 s (48M iterations)
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/0: Analyzing
+ephemeral_insert_operations/insert_with_reduction_update/0
+                        time:   [12.852 ns 12.968 ns 13.111 ns]
+                        change: [+5.8903% +7.3540% +8.6310%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/100
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/100: Warming up for 300.00 ms
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/100: Collecting 30 samples in estimated 1.0027 s (110k iterations)
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/100: Analyzing
+ephemeral_insert_operations/insert_with_reduction_update/100
+                        time:   [174.15 ns 174.65 ns 175.23 ns]
+                        change: [+7.4065% +8.3472% +9.3432%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 6 outliers among 30 measurements (20.00%)
+  3 (10.00%) high mild
+  3 (10.00%) high severe
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/500
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/500: Warming up for 300.00 ms
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/500: Collecting 30 samples in estimated 1.0826 s (6045 iterations)
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/500: Analyzing
+ephemeral_insert_operations/insert_with_reduction_update/500
+                        time:   [717.32 ns 720.28 ns 724.14 ns]
+                        change: [+14.967% +16.838% +19.009%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  2 (6.67%) high mild
+  1 (3.33%) high severe
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/1000
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/1000: Warming up for 300.00 ms
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/1000: Collecting 30 samples in estimated 1.1965 s (1860 iterations)
+Benchmarking ephemeral_insert_operations/insert_with_reduction_update/1000: Analyzing
+ephemeral_insert_operations/insert_with_reduction_update/1000
+                        time:   [1.3462 µs 1.3579 µs 1.3755 µs]
+                        change: [+4.8475% +6.4177% +7.9411%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  3 (10.00%) high mild
+
+Benchmarking ephemeral_delete_operations/delete_with_reduction_recalc/100
+Benchmarking ephemeral_delete_operations/delete_with_reduction_recalc/100: Warming up for 300.00 ms
+Benchmarking ephemeral_delete_operations/delete_with_reduction_recalc/100: Collecting 30 samples in estimated 1.0008 s (46k iterations)
+Benchmarking ephemeral_delete_operations/delete_with_reduction_recalc/100: Analyzing
+ephemeral_delete_operations/delete_with_reduction_recalc/100
+                        time:   [11.220 µs 11.248 µs 11.286 µs]
+                        change: [+15.658% +16.826% +18.057%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking ephemeral_delete_operations/delete_with_reduction_recalc/500
+Benchmarking ephemeral_delete_operations/delete_with_reduction_recalc/500: Warming up for 300.00 ms
+Benchmarking ephemeral_delete_operations/delete_with_reduction_recalc/500: Collecting 30 samples in estimated 1.0378 s (4650 iterations)
+Benchmarking ephemeral_delete_operations/delete_with_reduction_recalc/500: Analyzing
+ephemeral_delete_operations/delete_with_reduction_recalc/500
+                        time:   [53.332 µs 53.486 µs 53.630 µs]
+                        change: [+9.8587% +10.523% +11.140%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) low mild
+Benchmarking ephemeral_delete_operations/delete_with_reduction_recalc/1000
+Benchmarking ephemeral_delete_operations/delete_with_reduction_recalc/1000: Warming up for 300.00 ms
+Benchmarking ephemeral_delete_operations/delete_with_reduction_recalc/1000: Collecting 30 samples in estimated 1.0849 s (1395 iterations)
+Benchmarking ephemeral_delete_operations/delete_with_reduction_recalc/1000: Analyzing
+ephemeral_delete_operations/delete_with_reduction_recalc/1000
+                        time:   [123.88 µs 124.36 µs 124.94 µs]
+                        change: [+0.7090% +1.7192% +2.5879%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 5 outliers among 30 measurements (16.67%)
+  2 (6.67%) low severe
+  1 (3.33%) low mild
+  2 (6.67%) high mild
+
+Benchmarking ephemeral_reducer_types/sum_reducer_ephemeral
+Benchmarking ephemeral_reducer_types/sum_reducer_ephemeral: Warming up for 300.00 ms
+Benchmarking ephemeral_reducer_types/sum_reducer_ephemeral: Collecting 30 samples in estimated 1.0000 s (3.4B iterations)
+Benchmarking ephemeral_reducer_types/sum_reducer_ephemeral: Analyzing
+ephemeral_reducer_types/sum_reducer_ephemeral
+                        time:   [278.94 ps 281.23 ps 283.26 ps]
+                        change: [-6.1358% -5.1577% -4.2343%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking ephemeral_reducer_types/max_reducer_ephemeral
+Benchmarking ephemeral_reducer_types/max_reducer_ephemeral: Warming up for 300.00 ms
+Benchmarking ephemeral_reducer_types/max_reducer_ephemeral: Collecting 30 samples in estimated 1.0000 s (3.7B iterations)
+Benchmarking ephemeral_reducer_types/max_reducer_ephemeral: Analyzing
+ephemeral_reducer_types/max_reducer_ephemeral
+                        time:   [267.20 ps 270.57 ps 274.91 ps]
+                        change: [-10.110% -8.8593% -7.4992%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking ephemeral_reducer_types/min_reducer_ephemeral
+Benchmarking ephemeral_reducer_types/min_reducer_ephemeral: Warming up for 300.00 ms
+Benchmarking ephemeral_reducer_types/min_reducer_ephemeral: Collecting 30 samples in estimated 1.0000 s (3.5B iterations)
+Benchmarking ephemeral_reducer_types/min_reducer_ephemeral: Analyzing
+ephemeral_reducer_types/min_reducer_ephemeral
+                        time:   [277.87 ps 279.29 ps 280.54 ps]
+                        change: [-13.468% -11.666% -9.8519%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+
+Benchmarking ephemeral_mutable_operations/union_operation
+Benchmarking ephemeral_mutable_operations/union_operation: Warming up for 300.00 ms
+Benchmarking ephemeral_mutable_operations/union_operation: Collecting 30 samples in estimated 1.0245 s (6045 iterations)
+Benchmarking ephemeral_mutable_operations/union_operation: Analyzing
+ephemeral_mutable_operations/union_operation
+                        time:   [29.263 µs 29.368 µs 29.508 µs]
+                        change: [-22.089% -20.613% -18.977%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 2 outliers among 30 measurements (6.67%)
+  2 (6.67%) high mild
+Benchmarking ephemeral_mutable_operations/intersection_operation
+Benchmarking ephemeral_mutable_operations/intersection_operation: Warming up for 300.00 ms
+Benchmarking ephemeral_mutable_operations/intersection_operation: Collecting 30 samples in estimated 1.0224 s (6510 iterations)
+Benchmarking ephemeral_mutable_operations/intersection_operation: Analyzing
+ephemeral_mutable_operations/intersection_operation
+                        time:   [8.7505 µs 8.7922 µs 8.8446 µs]
+                        change: [-10.622% -9.1863% -7.8758%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 3 outliers among 30 measurements (10.00%)
+  3 (10.00%) high mild
+Benchmarking ephemeral_mutable_operations/difference_operation
+Benchmarking ephemeral_mutable_operations/difference_operation: Warming up for 300.00 ms
+Benchmarking ephemeral_mutable_operations/difference_operation: Collecting 30 samples in estimated 1.0367 s (12k iterations)
+Benchmarking ephemeral_mutable_operations/difference_operation: Analyzing
+ephemeral_mutable_operations/difference_operation
+                        time:   [12.963 µs 13.021 µs 13.097 µs]
+                        change: [-13.808% -12.706% -11.603%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 2 outliers among 30 measurements (6.67%)
+  2 (6.67%) low mild
+
+Benchmarking ephemeral_split_join/split_key_operation
+Benchmarking ephemeral_split_join/split_key_operation: Warming up for 300.00 ms
+Benchmarking ephemeral_split_join/split_key_operation: Collecting 30 samples in estimated 1.0896 s (2790 iterations)
+Benchmarking ephemeral_split_join/split_key_operation: Analyzing
+ephemeral_split_join/split_key_operation
+                        time:   [149.55 µs 153.92 µs 158.75 µs]
+                        change: [-2.1245% +0.0198% +2.3400%] (p = 0.98 > 0.05)
+                        No change in performance detected.
+Found 2 outliers among 30 measurements (6.67%)
+  2 (6.67%) high mild
+Benchmarking ephemeral_split_join/join_key_operation
+Benchmarking ephemeral_split_join/join_key_operation: Warming up for 300.00 ms
+Benchmarking ephemeral_split_join/join_key_operation: Collecting 30 samples in estimated 1.1310 s (2790 iterations)
+Benchmarking ephemeral_split_join/join_key_operation: Analyzing
+ephemeral_split_join/join_key_operation
+                        time:   [1.4480 µs 1.4777 µs 1.5196 µs]
+                        change: [-31.713% -21.190% -9.2605%] (p = 0.00 < 0.05)
                         Performance has improved.
 Found 3 outliers among 30 measurements (10.00%)
   2 (6.67%) high mild
   1 (3.33%) high severe
-Benchmarking ArraySetEnumMtEph_find/find_missing/300
-Benchmarking ArraySetEnumMtEph_find/find_missing/300: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_find/find_missing/300: Collecting 30 samples in estimated 1.0000 s (634M iterations)
-Benchmarking ArraySetEnumMtEph_find/find_missing/300: Analyzing
-ArraySetEnumMtEph_find/find_missing/300
-                        time:   [1.5203 ns 1.5268 ns 1.5343 ns]
-                        change: [-7.2390% -6.6513% -6.0832%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 1 outliers among 30 measurements (3.33%)
-  1 (3.33%) high mild
-Benchmarking ArraySetEnumMtEph_find/find_existing/800
-Benchmarking ArraySetEnumMtEph_find/find_existing/800: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_find/find_existing/800: Collecting 30 samples in estimated 1.0000 s (646M iterations)
-Benchmarking ArraySetEnumMtEph_find/find_existing/800: Analyzing
-ArraySetEnumMtEph_find/find_existing/800
-                        time:   [1.5279 ns 1.5315 ns 1.5352 ns]
-                        change: [-5.6880% -5.2886% -4.9221%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Found 1 outliers among 30 measurements (3.33%)
-  1 (3.33%) high mild
-Benchmarking ArraySetEnumMtEph_find/find_missing/800
-Benchmarking ArraySetEnumMtEph_find/find_missing/800: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_find/find_missing/800: Collecting 30 samples in estimated 1.0000 s (642M iterations)
-Benchmarking ArraySetEnumMtEph_find/find_missing/800: Analyzing
-ArraySetEnumMtEph_find/find_missing/800
-                        time:   [1.5201 ns 1.5249 ns 1.5315 ns]
-                        change: [-7.3359% -6.8315% -6.3328%] (p = 0.00 < 0.05)
-                        Performance has improved.
 
-Benchmarking ArraySetEnumMtEph_insert/insert_new/300
-Benchmarking ArraySetEnumMtEph_insert/insert_new/300: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_insert/insert_new/300: Collecting 30 samples in estimated 1.0001 s (3.2M iterations)
-Benchmarking ArraySetEnumMtEph_insert/insert_new/300: Analyzing
-ArraySetEnumMtEph_insert/insert_new/300
-                        time:   [4.9853 ns 5.2718 ns 5.4864 ns]
-                        change: [-10.143% -4.9121% +0.6924%] (p = 0.08 > 0.05)
-                        No change in performance detected.
-Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/300
-Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/300: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/300: Collecting 30 samples in estimated 1.0001 s (3.2M iterations)
-Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/300: Analyzing
-ArraySetEnumMtEph_insert/insert_duplicate/300
-                        time:   [4.9936 ns 5.2411 ns 5.4204 ns]
-                        change: [-8.6086% -3.9064% +1.1792%] (p = 0.14 > 0.05)
-                        No change in performance detected.
-Benchmarking ArraySetEnumMtEph_insert/insert_new/800
-Benchmarking ArraySetEnumMtEph_insert/insert_new/800: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_insert/insert_new/800: Collecting 30 samples in estimated 1.0002 s (1.3M iterations)
-Benchmarking ArraySetEnumMtEph_insert/insert_new/800: Analyzing
-ArraySetEnumMtEph_insert/insert_new/800
-                        time:   [4.8325 ns 5.1058 ns 5.3562 ns]
-                        change: [-8.9433% -4.1656% +1.0142%] (p = 0.11 > 0.05)
+Benchmarking ephemeral_range_operations/reduce_range_ephemeral/100
+Benchmarking ephemeral_range_operations/reduce_range_ephemeral/100: Warming up for 300.00 ms
+Benchmarking ephemeral_range_operations/reduce_range_ephemeral/100: Collecting 30 samples in estimated 1.0758 s (6510 iterations)
+Benchmarking ephemeral_range_operations/reduce_range_ephemeral/100: Analyzing
+ephemeral_range_operations/reduce_range_ephemeral/100
+                        time:   [152.64 µs 153.38 µs 154.12 µs]
+                        change: [-13.605% -12.946% -12.259%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking ephemeral_range_operations/reduce_range_ephemeral/500
+Benchmarking ephemeral_range_operations/reduce_range_ephemeral/500: Warming up for 300.00 ms
+Benchmarking ephemeral_range_operations/reduce_range_ephemeral/500: Collecting 30 samples in estimated 1.0090 s (4185 iterations)
+Benchmarking ephemeral_range_operations/reduce_range_ephemeral/500: Analyzing
+ephemeral_range_operations/reduce_range_ephemeral/500
+                        time:   [238.84 µs 239.41 µs 240.14 µs]
+                        change: [-7.4926% -6.8178% -6.1453%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high severe
+Benchmarking ephemeral_range_operations/reduce_range_ephemeral/1000
+Benchmarking ephemeral_range_operations/reduce_range_ephemeral/1000: Warming up for 300.00 ms
+    Finished `bench` profile [optimized] target(s) in 0.03s
+     Running benches/Chap43/BenchAugOrderedTableStPer.rs (target/release/deps/BenchAugOrderedTableStPer-3a845634e996d3a6)
+Benchmarking reduce_val_comparison/augmented_reduce_val/100
+Benchmarking reduce_val_comparison/augmented_reduce_val/100: Warming up for 300.00 ms
+Benchmarking reduce_val_comparison/augmented_reduce_val/100: Collecting 30 samples in estimated 1.0000 s (3.9B iterations)
+Benchmarking reduce_val_comparison/augmented_reduce_val/100: Analyzing
+reduce_val_comparison/augmented_reduce_val/100
+                        time:   [253.32 ps 254.73 ps 256.16 ps]
+                        change: [-10.465% -8.4318% -6.0446%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 3 outliers among 30 measurements (10.00%)
+  3 (10.00%) low mild
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/100
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/100: Warming up for 300.00 ms
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/100: Collecting 30 samples in estimated 1.0004 s (188k iterations)
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/100: Analyzing
+reduce_val_comparison/naive_reduce_on_augmented/100
+                        time:   [5.4952 µs 5.7498 µs 6.0932 µs]
+                        change: [+14.576% +17.907% +22.459%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  1 (3.33%) high mild
+  1 (3.33%) high severe
+Benchmarking reduce_val_comparison/augmented_reduce_val/500
+Benchmarking reduce_val_comparison/augmented_reduce_val/500: Warming up for 300.00 ms
+Benchmarking reduce_val_comparison/augmented_reduce_val/500: Collecting 30 samples in estimated 1.0000 s (3.6B iterations)
+Benchmarking reduce_val_comparison/augmented_reduce_val/500: Analyzing
+reduce_val_comparison/augmented_reduce_val/500
+                        time:   [255.53 ps 257.62 ps 259.79 ps]
+                        change: [+0.8047% +2.2061% +3.6991%] (p = 0.01 < 0.05)
+                        Change within noise threshold.
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/500
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/500: Warming up for 300.00 ms
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/500: Collecting 30 samples in estimated 1.0017 s (41k iterations)
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/500: Analyzing
+reduce_val_comparison/naive_reduce_on_augmented/500
+                        time:   [24.657 µs 25.332 µs 26.118 µs]
+                        change: [+7.6155% +9.3330% +10.736%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 6 outliers among 30 measurements (20.00%)
+  4 (13.33%) low severe
+  1 (3.33%) low mild
+  1 (3.33%) high mild
+Benchmarking reduce_val_comparison/augmented_reduce_val/1000
+Benchmarking reduce_val_comparison/augmented_reduce_val/1000: Warming up for 300.00 ms
+Benchmarking reduce_val_comparison/augmented_reduce_val/1000: Collecting 30 samples in estimated 1.0000 s (3.8B iterations)
+Benchmarking reduce_val_comparison/augmented_reduce_val/1000: Analyzing
+reduce_val_comparison/augmented_reduce_val/1000
+                        time:   [249.06 ps 250.99 ps 253.13 ps]
+                        change: [-1.2560% -0.3266% +0.5968%] (p = 0.51 > 0.05)
                         No change in performance detected.
 Found 2 outliers among 30 measurements (6.67%)
   2 (6.67%) high mild
-Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/800
-Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/800: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/800: Collecting 30 samples in estimated 1.0001 s (1.3M iterations)
-Benchmarking ArraySetEnumMtEph_insert/insert_duplicate/800: Analyzing
-ArraySetEnumMtEph_insert/insert_duplicate/800
-                        time:   [4.8293 ns 5.0575 ns 5.2327 ns]
-                        change: [-12.760% -8.1780% -3.4806%] (p = 0.00 < 0.05)
-                        Performance has improved.
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/1000
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/1000: Warming up for 300.00 ms
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/1000: Collecting 30 samples in estimated 1.0217 s (15k iterations)
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/1000: Analyzing
+reduce_val_comparison/naive_reduce_on_augmented/1000
+                        time:   [66.046 µs 66.287 µs 66.511 µs]
+                        change: [+4.1308% +4.5671% +5.0203%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  2 (6.67%) low mild
+  1 (3.33%) high mild
+Benchmarking reduce_val_comparison/augmented_reduce_val/2000
+Benchmarking reduce_val_comparison/augmented_reduce_val/2000: Warming up for 300.00 ms
+Benchmarking reduce_val_comparison/augmented_reduce_val/2000: Collecting 30 samples in estimated 1.0000 s (3.4B iterations)
+Benchmarking reduce_val_comparison/augmented_reduce_val/2000: Analyzing
+reduce_val_comparison/augmented_reduce_val/2000
+                        time:   [287.83 ps 288.79 ps 289.92 ps]
+                        change: [+18.495% +19.834% +21.055%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/2000
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/2000: Warming up for 300.00 ms
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/2000: Collecting 30 samples in estimated 1.0394 s (6510 iterations)
+Benchmarking reduce_val_comparison/naive_reduce_on_augmented/2000: Analyzing
+reduce_val_comparison/naive_reduce_on_augmented/2000
+                        time:   [156.52 µs 156.92 µs 157.44 µs]
+                        change: [+16.241% +17.070% +17.847%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  1 (3.33%) high mild
+  1 (3.33%) high severe
 
-Benchmarking ArraySetEnumMtEph_delete/delete_existing/300
-Benchmarking ArraySetEnumMtEph_delete/delete_existing/300: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_delete/delete_existing/300: Collecting 30 samples in estimated 1.0001 s (3.2M iterations)
-Benchmarking ArraySetEnumMtEph_delete/delete_existing/300: Analyzing
-ArraySetEnumMtEph_delete/delete_existing/300
-                        time:   [4.9555 ns 5.1903 ns 5.3681 ns]
-                        change: [-12.814% -7.9950% -2.7937%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Benchmarking ArraySetEnumMtEph_delete/delete_missing/300
-Benchmarking ArraySetEnumMtEph_delete/delete_missing/300: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_delete/delete_missing/300: Collecting 30 samples in estimated 1.0001 s (3.1M iterations)
-Benchmarking ArraySetEnumMtEph_delete/delete_missing/300: Analyzing
-ArraySetEnumMtEph_delete/delete_missing/300
-                        time:   [4.9805 ns 5.2385 ns 5.4244 ns]
-                        change: [-15.216% -9.9461% -4.9176%] (p = 0.00 < 0.05)
-                        Performance has improved.
-Benchmarking ArraySetEnumMtEph_delete/delete_existing/800
-Benchmarking ArraySetEnumMtEph_delete/delete_existing/800: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_delete/delete_existing/800: Collecting 30 samples in estimated 1.0002 s (1.2M iterations)
-Benchmarking ArraySetEnumMtEph_delete/delete_existing/800: Analyzing
-ArraySetEnumMtEph_delete/delete_existing/800
-                        time:   [5.3375 ns 5.5125 ns 5.7398 ns]
-                        change: [-3.9975% +1.9989% +7.6325%] (p = 0.51 > 0.05)
-                        No change in performance detected.
+Benchmarking range_reduction/reduce_range/100
+Benchmarking range_reduction/reduce_range/100: Warming up for 300.00 ms
+Benchmarking range_reduction/reduce_range/100: Collecting 30 samples in estimated 1.0890 s (2325 iterations)
+Benchmarking range_reduction/reduce_range/100: Analyzing
+range_reduction/reduce_range/100
+                        time:   [455.75 µs 456.35 µs 457.00 µs]
+                        change: [+17.436% +18.554% +19.499%] (p = 0.00 < 0.05)
+                        Performance has regressed.
 Found 4 outliers among 30 measurements (13.33%)
-  4 (13.33%) high mild
-Benchmarking ArraySetEnumMtEph_delete/delete_missing/800
-Benchmarking ArraySetEnumMtEph_delete/delete_missing/800: Warming up for 300.00 ms
-Benchmarking ArraySetEnumMtEph_delete/delete_missing/80
+  3 (10.00%) low severe
+  1 (3.33%) low mild
+Benchmarking range_reduction/reduce_range/500
+Benchmarking range_reduction/reduce_range/500: Warming up for 300.00 ms
+Benchmarking range_reduction/reduce_range/500: Collecting 30 samples in estimated 1.2130 s (2325 iterations)
+Benchmarking range_reduction/reduce_range/500: Analyzing
+range_reduction/reduce_range/500
+                        time:   [507.58 µs 509.56 µs 511.98 µs]
+                        change: [+15.381% +15.823% +16.268%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+Benchmarking range_reduction/reduce_range/1000
+Benchmarking range_reduction/reduce_range/1000: Warming up for 300.00 ms
+Benchmarking range_reduction/reduce_range/1000: Collecting 30 samples in estimated 1.1767 s (1860 iterations)
+Benchmarking range_reduction/reduce_range/1000: Analyzing
+range_reduction/reduce_range/1000
+                        time:   [571.23 µs 588.46 µs 610.13 µs]
+                        change: [+15.023% +17.402% +19.211%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 7 outliers among 30 measurements (23.33%)
+  6 (20.00%) low severe
+  1 (3.33%) high mild
+Benchmarking range_reduction/reduce_range/2000
+Benchmarking range_reduction/reduce_range/2000: Warming up for 300.00 ms
+Benchmarking range_reduction/reduce_range/2000: Collecting 30 samples in estimated 1.0753 s (1395 iterations)
+Benchmarking range_reduction/reduce_range/2000: Analyzing
+range_reduction/reduce_range/2000
+                        time:   [701.46 µs 725.36 µs 749.33 µs]
+                        change: [-3.0827% -0.3129% +2.4344%] (p = 0.82 > 0.05)
+                        No change in performance detected.
+Found 3 outliers among 30 measurements (10.00%)
+  3 (10.00%) low severe
+
+Benchmarking tramlaw_sales_analysis/total_daily_sales
+Benchmarking tramlaw_sales_analysis/total_daily_sales: Warming up for 300.00 ms
+Benchmarking tramlaw_sales_analysis/total_daily_sales: Collecting 30 samples in estimated 1.0000 s (3.7B iterations)
+Benchmarking tramlaw_sales_analysis/total_daily_sales: Analyzing
+tramlaw_sales_analysis/total_daily_sales
+                        time:   [267.98 ps 270.42 ps 273.00 ps]
+                        change: [+9.0566% +10.028% +11.144%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+Benchmarking tramlaw_sales_analysis/business_hours_sales
+Benchmarking tramlaw_sales_analysis/business_hours_sales: Warming up for 300.00 ms
+Benchmarking tramlaw_sales_analysis/business_hours_sales: Collecting 30 samples in estimated 1.0408 s (4650 iterations)
+Benchmarking tramlaw_sales_analysis/business_hours_sales: Analyzing
+tramlaw_sales_analysis/business_hours_sales
+                        time:   [206.96 µs 210.75 µs 215.24 µs]
+                        change: [+1.4425% +3.6983% +5.8894%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking tramlaw_sales_analysis/peak_hours_sales
+Benchmarking tramlaw_sales_analysis/peak_hours_sales: Warming up for 300.00 ms
+Benchmarking tramlaw_sales_analysis/peak_hours_sales: Collecting 30 samples in estimated 1.0423 s (7905 iterations)
+Benchmarking tramlaw_sales_analysis/peak_hours_sales: Analyzing
+tramlaw_sales_analysis/peak_hours_sales
+                        time:   [128.18 µs 128.43 µs 128.76 µs]
+                        change: [+12.464% +13.416% +14.220%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+Benchmarking tramlaw_sales_analysis/multiple_range_queries
+Benchmarking tramlaw_sales_analysis/multiple_range_queries: Warming up for 300.00 ms
+Benchmarking tramlaw_sales_analysis/multiple_range_queries: Collecting 30 samples in estimated 1.1124 s (2325 iterations)
+Benchmarking tramlaw_sales_analysis/multiple_range_queries: Analyzing
+tramlaw_sales_analysis/multiple_range_queries
+                        time:   [465.67 µs 468.30 µs 469.95 µs]
+                        change: [+0.7186% +5.6874% +9.8593%] (p = 0.01 < 0.05)
+                        Change within noise threshold.
+Found 6 outliers among 30 measurements (20.00%)
+  3 (10.00%) low severe
+  2 (6.67%) high mild
+  1 (3.33%) high severe
+
+Benchmarking insert_operations/insert_with_reduction_update/0
+Benchmarking insert_operations/insert_with_reduction_update/0: Warming up for 300.00 ms
+Benchmarking insert_operations/insert_with_reduction_update/0: Collecting 30 samples in estimated 1.0000 s (17M iterations)
+Benchmarking insert_operations/insert_with_reduction_update/0: Analyzing
+insert_operations/insert_with_reduction_update/0
+                        time:   [24.485 ns 24.635 ns 24.798 ns]
+                        change: [-1.0775% +0.5277% +2.2310%] (p = 0.54 > 0.05)
+                        No change in performance detected.
+Benchmarking insert_operations/insert_with_reduction_update/100
+Benchmarking insert_operations/insert_with_reduction_update/100: Warming up for 300.00 ms
+Benchmarking insert_operations/insert_with_reduction_update/100: Collecting 30 samples in estimated 1.0000 s (3.9M iterations)
+Benchmarking insert_operations/insert_with_reduction_update/100: Analyzing
+insert_operations/insert_with_reduction_update/100
+                        time:   [174.17 ns 175.47 ns 176.31 ns]
+                        change: [+1.0883% +3.0600% +4.9883%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) low mild
+Benchmarking insert_operations/insert_with_reduction_update/500
+Benchmarking insert_operations/insert_with_reduction_update/500: Warming up for 300.00 ms
+Benchmarking insert_operations/insert_with_reduction_update/500: Collecting 30 samples in estimated 1.0000 s (675k iterations)
+Benchmarking insert_operations/insert_with_reduction_update/500: Analyzing
+insert_operations/insert_with_reduction_update/500
+                        time:   [777.14 ns 782.20 ns 786.33 ns]
+                        change: [-30.801% -26.402% -21.159%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 2 outliers among 30 measurements (6.67%)
+  2 (6.67%) low severe
+Benchmarking insert_operations/insert_with_reduction_update/1000
+Benchmarking insert_operations/insert_with_reduction_update/1000: Warming up for 300.00 ms
+Benchmarking insert_operations/insert_with_reduction_update/1000: Collecting 30 samples in estimated 1.0003 s (364k iterations)
+Benchmarking insert_operations/insert_with_reduction_update/1000: Analyzing
+insert_operations/insert_with_reduction_update/1000
+                        time:   [1.3819 µs 1.4135 µs 1.4408 µs]
+                        change: [-25.146% -22.291% -19.222%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) low mild
+
+Benchmarking reducer_types/sum_reducer
+Benchmarking reducer_types/sum_reducer: Warming up for 300.00 ms
+Benchmarking reducer_types/sum_reducer: Collecting 30 samples in estimated 1.0000 s (3.9B iterations)
+Benchmarking reducer_types/sum_reducer: Analyzing
+reducer_types/sum_reducer
+                        time:   [263.86 ps 265.20 ps 266.76 ps]
+                        change: [-15.075% -13.026% -11.168%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 2 outliers among 30 measurements (6.67%)
+  2 (6.67%) high mild
+Benchmarking reducer_types/max_reducer
+Benchmarking reducer_types/max_reducer: Warming up for 300.00 ms
+Benchmarking reducer_types/max_reducer: Collecting 30 samples in estimated 1.0000 s (3.6B iterations)
+Benchmarking reducer_types/max_reducer: Analyzing
+reducer_types/max_reducer
+                        time:   [260.14 ps 262.98 ps 265.68 ps]
+                        change: [-22.386% -17.032% -11.744%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 3 outliers among 30 measurements (10.00%)
+  2 (6.67%) low severe
+  1 (3.33%) high mild
+Benchmarking reducer_types/min_reducer
+Benchmarking reducer_types/min_reducer: Warming up for 300.00 ms
+Benchmarking reducer_types/min_reducer: Collecting 30 samples in estimated 1.0000 s (3.8B iterations)
+Benchmarking reducer_types/min_reducer: Analyzing
+reducer_types/min_reducer
+                        time:   [254.22 ps 255.16 ps 255.99 ps]
+                        change: [-21.843% -17.531% -13.823%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+
+Benchmarking split_join_operations/split_key
+Benchmarking split_join_operations/split_key: Warming up for 300.00 ms
+Benchmarking split_join_operations/split_key: Collecting 30 samples in estimated 1.0101 s (5115 iterations)
+Benchmarking split_join_operations/split_key: Analyzing
+split_join_operations/split_key
+                        time:   [200.90 µs 206.37 µs 210.18 µs]
+                        change: [-6.3838% -4.5537% -2.5518%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Benchmarking split_join_operations/join_key
+Benchmarking split_join_operations/join_key: Warming up for 300.00 ms
+Benchmarking split_join_operations/join_key: Collecting 30 samples in estimated 1.0909 s (4650 iterations)
+Benchmarking split_join_operations/join_key: Analyzing
+split_join_operations/join_key
+                        time:   [221.58 µs 224.71 µs 228.22 µs]
+                        change: [+2.7124% +3.7116% +4.7950%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  3 (10.00%) high mild
+
+Benchmarking construction_methods/macro_construction_small
+Benchmarking construction_methods/macro_construction_small: Warming up for 300.00 ms
+Benchmarking construction_methods/macro_construction_small: Collecting 30 samples in estimated 1.0000 s (7.5M iterations)
+Benchmarking construction_methods/macro_construction_small: Analyzing
+construction_methods/macro_construction_small
+                        time:   [123.79 ns 124.96 ns 126.92 ns]
+                        change: [+4.9134% +7.5394% +10.083%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking construction_methods/iterative_construction_small
+Benchmarking construction_methods/iterative_construction_small: Warming up for 300.00 ms
+Benchmarking construction_methods/iterative_construction_small: Collecting 30 samples in estimated 1.0000 s (8.1M iterations)
+Benchmarking construction_methods/iterative_construction_small: Analyzing
+construction_methods/iterative_construction_small
+                        time:   [119.24 ns 120.00 ns 121.10 ns]
+                        change: [-0.5645% +0.8945% +2.4360%] (p = 0.25 > 0.05)
+                        No change in performance detected.
+
+Benchmarking memory_patterns/persistent_versions
+Benchmarking memory_patterns/persistent_versions: Warming up for 300.00 ms
+Benchmarking memory_patterns/persistent_versions: Collecting 30 samples in estimated 1.0026 s (95k iterations)
+Benchmarking memory_patterns/persistent_versions: Analyzing
+memory_patterns/persistent_versions
+                        time:   [9.6431 µs 9.8184 µs 10.011 µs]
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+
+    Finished `bench` profile [optimized] target(s) in 0.03s
+     Running benches/Chap37/BenchAVLTreeSeqStEph.rs (target/release/deps/BenchAVLTreeSeqStEph-fd293d410a395d1c)
+Benchmarking BenchAVLTreeSeqEph/push_back_then_nth/1000
+Benchmarking BenchAVLTreeSeqEph/push_back_then_nth/1000: Warming up for 300.00 ms
+Benchmarking BenchAVLTreeSeqEph/push_back_then_nth/1000: Collecting 10 samples in estimated 1.0015 s (18k iterations)
+Benchmarking BenchAVLTreeSeqEph/push_back_then_nth/1000: Analyzing
+BenchAVLTreeSeqEph/push_back_then_nth/1000
+                        time:   [57.754 µs 58.711 µs 59.412 µs]
+                        change: [+11.204% +12.496% +13.844%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+    Finished `bench` profile [optimized] target(s) in 0.04s
+     Running benches/Chap37/BenchAVLTreeSeqStEphChap37Build.rs (target/release/deps/BenchAVLTreeSeqStEphChap37Build-acf048c1459ea415)
+Benchmarking BenchAVLTreeSeqEph/push_then_map/1000
+Benchmarking BenchAVLTreeSeqEph/push_then_map/1000: Warming up for 300.00 ms
+Benchmarking BenchAVLTreeSeqEph/push_then_map/1000: Collecting 10 samples in estimated 1.0012 s (6105 iterations)
+Benchmarking BenchAVLTreeSeqEph/push_then_map/1000: Analyzing
+BenchAVLTreeSeqEph/push_then_map/1000
+                        time:   [143.50 µs 150.46 µs 155.40 µs]
+                        change: [+6.3799% +10.697% +15.152%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+    Finished `bench` profile [optimized] target(s) in 0.04s
+     Running benches/Chap37/BenchAVLTreeSeqStEphChap37Ops.rs (target/release/deps/BenchAVLTreeSeqStEphChap37Ops-0bfc4c6f4d420369)
+Benchmarking BenchAVLTreeSeqEph/push_then_nth/1000
+Benchmarking BenchAVLTreeSeqEph/push_then_nth/1000: Warming up for 300.00 ms
+Benchmarking BenchAVLTreeSeqEph/push_then_nth/1000: Collecting 10 samples in estimated 1.0017 s (17k iterations)
+Benchmarking BenchAVLTreeSeqEph/push_then_nth/1000: Analyzing
+BenchAVLTreeSeqEph/push_then_nth/1000
+                        time:   [55.321 µs 56.003 µs 57.302 µs]
+                        change: [+4.1455% +6.5186% +8.8130%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+    Finished `bench` profile [optimized] target(s) in 0.04s
+     Running benches/Chap37/BenchAVLTreeSeqStPer.rs (target/release/deps/BenchAVLTreeSeqStPer-c1b78ad647564918)
+Benchmarking BenchAVLTreeSeqPer/build_then_length/1000
+Benchmarking BenchAVLTreeSeqPer/build_then_length/1000: Warming up for 300.00 ms
+Benchmarking BenchAVLTreeSeqPer/build_then_length/1000: Collecting 30 samples in estimated 1.0000 s (25M iterations)
+Benchmarking BenchAVLTreeSeqPer/build_then_length/1000: Analyzing
+BenchAVLTreeSeqPer/build_then_length/1000
+                        time:   [39.778 ns 39.871 ns 39.977 ns]
+                        change: [+4.7378% +5.1649% +5.5922%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  1 (3.33%) low mild
+  1 (3.33%) high mild
+
+HTML report: file://target/criterion/report/index.html
+    Finished `bench` profile [optimized] target(s) in 0.04s
+     Running benches/Chap37/BenchAVLTreeSeqStPerChap37Build.rs (target/release/deps/BenchAVLTreeSeqStPerChap37Build-5e6cbc44b2b8114f)
+Benchmarking BenchAVLTreeSeqPer/tabulate_then_nth/1000
+Benchmarking BenchAVLTreeSeqPer/tabulate_then_nth/1000: Warming up for 300.00 ms
+Benchmarking BenchAVLTreeSeqPer/tabulate_then_nth/1000: Collecting 30 samples in estimated 1.0386 s (4185 iterations)
+Benchmarking BenchAVLTreeSeqPer/tabulate_then_nth/1000: Analyzing
+BenchAVLTreeSeqPer/tabulate_then_nth/1000
+                        time:   [249.31 µs 250.62 µs 252.76 µs]
+                        change: [+5.5951% +7.0434% +8.5146%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+HTML report: file://target/criterion/report/index.html
+    Finished `bench` profile [optimized] target(s) in 0.04s
+     Running benches/Chap37/BenchAVLTreeSeqStPerChap37Ops.rs (target/release/deps/BenchAVLTreeSeqStPerChap37Ops-2d336e575267fc54)
+Benchmarking AVLTreeSeqPer_ops/build_then_length/1000
+Benchmarking AVLTreeSeqPer_ops/build_then_length/1000: Warming up for 300.00 ms
+Benchmarking AVLTreeSeqPer_ops/build_then_length/1000: Collecting 10 samples in estimated 1.0125 s (3630 iterations)
+Benchmarking AVLTreeSeqPer_ops/build_then_length/1000: Analyzing
+AVLTreeSeqPer_ops/build_then_length/1000
+                        time:   [274.71 µs 275.30 µs 276.31 µs]
+                        change: [+15.258% +15.761% +16.210%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high severe
+
+    Finished `bench` profile [optimized] target(s) in 0.04s
+     Running benches/Chap41/BenchAVLTreeSetStEph.rs (target/release/deps/BenchAVLTreeSetStEph-04de5128d0d5e68f)
+Benchmarking AVLTreeSetStEph_basic/build
+Benchmarking AVLTreeSetStEph_basic/build: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStEph_basic/build: Collecting 30 samples in estimated 1.0000 s (4.9M iterations)
+Benchmarking AVLTreeSetStEph_basic/build: Analyzing
+AVLTreeSetStEph_basic/build
+                        time:   [197.01 ns 198.03 ns 199.17 ns]
+                        change: [+16.503% +17.055% +17.597%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking AVLTreeSetStEph_basic/find
+Benchmarking AVLTreeSetStEph_basic/find: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStEph_basic/find: Collecting 30 samples in estimated 1.0000 s (526M iterations)
+Benchmarking AVLTreeSetStEph_basic/find: Analyzing
+AVLTreeSetStEph_basic/find
+                        time:   [1.8739 ns 1.8795 ns 1.8843 ns]
+                        change: [+4.7887% +5.1750% +5.5799%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  1 (3.33%) low mild
+  1 (3.33%) high mild
+  1 (3.33%) high severe
+Benchmarking AVLTreeSetStEph_basic/insert
+Benchmarking AVLTreeSetStEph_basic/insert: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStEph_basic/insert: Collecting 30 samples in estimated 1.0000 s (1.9M iterations)
+Benchmarking AVLTreeSetStEph_basic/insert: Analyzing
+AVLTreeSetStEph_basic/insert
+                        time:   [126.39 ns 126.98 ns 127.69 ns]
+                        change: [+12.252% +13.594% +14.987%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high severe
+
+    Finished `bench` profile [optimized] target(s) in 0.05s
+     Running benches/Chap41/BenchAVLTreeSetStPer.rs (target/release/deps/BenchAVLTreeSetStPer-2f9e7e91329b154f)
+Benchmarking AVLTreeSetStPer_build/build/20
+Benchmarking AVLTreeSetStPer_build/build/20: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStPer_build/build/20: Collecting 30 samples in estimated 1.0009 s (167k iterations)
+Benchmarking AVLTreeSetStPer_build/build/20: Analyzing
+AVLTreeSetStPer_build/build/20
+                        time:   [6.5316 µs 6.5983 µs 6.6674 µs]
+                        change: [+8.6031% +11.099% +13.303%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) low mild
+
+Benchmarking AVLTreeSetStPer_find/find_existing/20
+Benchmarking AVLTreeSetStPer_find/find_existing/20: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStPer_find/find_existing/20: Collecting 30 samples in estimated 1.0000 s (21M iterations)
+Benchmarking AVLTreeSetStPer_find/find_existing/20: Analyzing
+AVLTreeSetStPer_find/find_existing/20
+                        time:   [47.565 ns 47.848 ns 48.119 ns]
+                        change: [+15.483% +16.351% +17.238%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  1 (3.33%) low mild
+  1 (3.33%) high mild
+Benchmarking AVLTreeSetStPer_find/find_missing/20
+Benchmarking AVLTreeSetStPer_find/find_missing/20: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStPer_find/find_missing/20: Collecting 30 samples in estimated 1.0000 s (11M iterations)
+Benchmarking AVLTreeSetStPer_find/find_missing/20: Analyzing
+AVLTreeSetStPer_find/find_missing/20
+                        time:   [85.746 ns 86.113 ns 86.533 ns]
+                        change: [+2.8204% +3.8720% +5.1668%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  2 (6.67%) high mild
+
+Benchmarking AVLTreeSetStPer_insert/insert_new/20
+Benchmarking AVLTreeSetStPer_insert/insert_new/20: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStPer_insert/insert_new/20: Collecting 30 samples in estimated 1.0015 s (125k iterations)
+Benchmarking AVLTreeSetStPer_insert/insert_new/20: Analyzing
+AVLTreeSetStPer_insert/insert_new/20
+                        time:   [749.38 ns 751.30 ns 753.97 ns]
+                        change: [+5.4485% +6.3973% +7.4402%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+Benchmarking AVLTreeSetStPer_insert/insert_duplicate/20
+Benchmarking AVLTreeSetStPer_insert/insert_duplicate/20: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStPer_insert/insert_duplicate/20: Collecting 30 samples in estimated 1.0023 s (126k iterations)
+Benchmarking AVLTreeSetStPer_insert/insert_duplicate/20: Analyzing
+AVLTreeSetStPer_insert/insert_duplicate/20
+                        time:   [693.88 ns 711.45 ns 725.71 ns]
+                        change: [+3.1361% +4.6715% +6.2304%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 5 outliers among 30 measurements (16.67%)
+  1 (3.33%) high mild
+  4 (13.33%) high severe
+
+Benchmarking AVLTreeSetStPer_delete/delete_existing/20
+Benchmarking AVLTreeSetStPer_delete/delete_existing/20: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStPer_delete/delete_existing/20: Collecting 30 samples in estimated 1.0062 s (64k iterations)
+Benchmarking AVLTreeSetStPer_delete/delete_existing/20: Analyzing
+AVLTreeSetStPer_delete/delete_existing/20
+                        time:   [6.8116 µs 6.8648 µs 6.9061 µs]
+                        change: [+2.0161% +4.5282% +6.9305%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) low mild
+Benchmarking AVLTreeSetStPer_delete/delete_missing/20
+Benchmarking AVLTreeSetStPer_delete/delete_missing/20: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStPer_delete/delete_missing/20: Collecting 30 samples in estimated 1.0067 s (61k iterations)
+Benchmarking AVLTreeSetStPer_delete/delete_missing/20: Analyzing
+AVLTreeSetStPer_delete/delete_missing/20
+                        time:   [8.1913 µs 8.2369 µs 8.2698 µs]
+                        change: [+9.4994% +13.541% +17.761%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 8 outliers among 30 measurements (26.67%)
+  5 (16.67%) low severe
+  3 (10.00%) high severe
+
+Benchmarking AVLTreeSetStPer_bulk/union/20
+Benchmarking AVLTreeSetStPer_bulk/union/20: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStPer_bulk/union/20: Collecting 30 samples in estimated 1.0018 s (69k iterations)
+Benchmarking AVLTreeSetStPer_bulk/union/20: Analyzing
+AVLTreeSetStPer_bulk/union/20
+                        time:   [14.195 µs 14.288 µs 14.401 µs]
+                        change: [+0.8219% +2.2690% +3.5473%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 3 outliers among 30 measurements (10.00%)
+  2 (6.67%) low mild
+  1 (3.33%) high severe
+Benchmarking AVLTreeSetStPer_bulk/intersection/20
+Benchmarking AVLTreeSetStPer_bulk/intersection/20: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStPer_bulk/intersection/20: Collecting 30 samples in estimated 1.0004 s (429k iterations)
+Benchmarking AVLTreeSetStPer_bulk/intersection/20: Analyzing
+AVLTreeSetStPer_bulk/intersection/20
+                        time:   [2.3185 µs 2.3407 µs 2.3644 µs]
+                        change: [+3.2546% +4.1495% +4.9470%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+Benchmarking AVLTreeSetStPer_bulk/difference/20
+Benchmarking AVLTreeSetStPer_bulk/difference/20: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStPer_bulk/difference/20: Collecting 30 samples in estimated 1.0010 s (426k iterations)
+Benchmarking AVLTreeSetStPer_bulk/difference/20: Analyzing
+AVLTreeSetStPer_bulk/difference/20
+                        time:   [2.3077 µs 2.3167 µs 2.3266 µs]
+                        change: [+2.8896% +3.4382% +4.0717%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high severe
+
+Benchmarking AVLTreeSetStPer_from_seq/from_seq/20
+Benchmarking AVLTreeSetStPer_from_seq/from_seq/20: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStPer_from_seq/from_seq/20: Collecting 30 samples in estimated 1.0291 s (12k iterations)
+Benchmarking AVLTreeSetStPer_from_seq/from_seq/20: Analyzing
+AVLTreeSetStPer_from_seq/from_seq/20
+                        time:   [84.448 µs 84.773 µs 85.093 µs]
+                        change: [+12.620% +13.095% +13.583%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  1 (3.33%) low mild
+  2 (6.67%) high mild
+
+Benchmarking AVLTreeSetStPer_filter/filter_half/20
+Benchmarking AVLTreeSetStPer_filter/filter_half/20: Warming up for 300.00 ms
+Benchmarking AVLTreeSetStPer_filter/filter_half/20: Collecting 30 samples in estimated 1.0007 s (494k iterations)
+Benchmarking AVLTreeSetStPer_filter/filter_half/20: Analyzing
+AVLTreeSetStPer_filter/filter_half/20
+                        time:   [1.9979 µs 2.0059 µs 2.0168 µs]
+                        change: [+11.942% +12.590% +13.335%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 4 outliers among 30 measurements (13.33%)
+  1 (3.33%) low mild
+  1 (3.33%) high mild
+  2 (6.67%) high severe
+
+    Finished `bench` profile [optimized] target(s) in 0.03s
+     Running benches/Chap45/BenchBalancedTreePQ.rs (target/release/deps/BenchBalancedTreePQ-15243c44f84c8889)
+Benchmarking BalancedTreePQ Insert/10
+Benchmarking BalancedTreePQ Insert/10: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ Insert/10: Collecting 30 samples in estimated 1.0008 s (577k iterations)
+Benchmarking BalancedTreePQ Insert/10: Analyzing
+BalancedTreePQ Insert/10
+                        time:   [1.7199 µs 1.7232 µs 1.7270 µs]
+                        change: [+2.8615% +5.1269% +7.5023%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  2 (6.67%) high mild
+Benchmarking BalancedTreePQ Insert/50
+Benchmarking BalancedTreePQ Insert/50: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ Insert/50: Collecting 30 samples in estimated 1.0028 s (20k iterations)
+Benchmarking BalancedTreePQ Insert/50: Analyzing
+BalancedTreePQ Insert/50
+                        time:   [50.663 µs 50.899 µs 51.119 µs]
+                        change: [+7.1239% +7.8771% +8.6006%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  1 (3.33%) low mild
+  1 (3.33%) high mild
+Benchmarking BalancedTreePQ Insert/100
+Benchmarking BalancedTreePQ Insert/100: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ Insert/100: Collecting 30 samples in estimated 1.0407 s (5580 iterations)
+Benchmarking BalancedTreePQ Insert/100: Analyzing
+BalancedTreePQ Insert/100
+                        time:   [185.27 µs 186.27 µs 187.31 µs]
+                        change: [+0.2920% +1.3286% +2.4671%] (p = 0.02 < 0.05)
+                        Change within noise threshold.
+
+Benchmarking BalancedTreePQ DeleteMin/10
+Benchmarking BalancedTreePQ DeleteMin/10: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ DeleteMin/10: Collecting 30 samples in estimated 1.0005 s (764k iterations)
+Benchmarking BalancedTreePQ DeleteMin/10: Analyzing
+BalancedTreePQ DeleteMin/10
+                        time:   [1.3975 µs 1.4194 µs 1.4346 µs]
+                        change: [+5.4204% +6.8235% +8.3761%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking BalancedTreePQ DeleteMin/50
+Benchmarking BalancedTreePQ DeleteMin/50: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ DeleteMin/50: Collecting 30 samples in estimated 1.0012 s (18k iterations)
+Benchmarking BalancedTreePQ DeleteMin/50: Analyzing
+BalancedTreePQ DeleteMin/50
+                        time:   [48.879 µs 50.087 µs 51.721 µs]
+                        change: [+15.150% +17.688% +20.452%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking BalancedTreePQ DeleteMin/100
+Benchmarking BalancedTreePQ DeleteMin/100: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ DeleteMin/100: Collecting 30 samples in estimated 1.0080 s (5580 iterations)
+Benchmarking BalancedTreePQ DeleteMin/100: Analyzing
+BalancedTreePQ DeleteMin/100
+                        time:   [177.42 µs 178.19 µs 179.05 µs]
+                        change: [-0.3373% +0.1707% +0.6461%] (p = 0.50 > 0.05)
+                        No change in performance detected.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) low mild
+
+Benchmarking BalancedTreePQ Meld/10
+Benchmarking BalancedTreePQ Meld/10: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ Meld/10: Collecting 30 samples in estimated 1.0003 s (1.3M iterations)
+Benchmarking BalancedTreePQ Meld/10: Analyzing
+BalancedTreePQ Meld/10  time:   [673.60 ns 693.82 ns 717.16 ns]
+                        change: [+4.4321% +6.2889% +8.1491%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 6 outliers among 30 measurements (20.00%)
+  5 (16.67%) low severe
+  1 (3.33%) high mild
+Benchmarking BalancedTreePQ Meld/50
+Benchmarking BalancedTreePQ Meld/50: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ Meld/50: Collecting 30 samples in estimated 1.0015 s (262k iterations)
+Benchmarking BalancedTreePQ Meld/50: Analyzing
+BalancedTreePQ Meld/50  time:   [3.6018 µs 3.6214 µs 3.6438 µs]
+                        change: [+0.8314% +1.3743% +1.9520%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 8 outliers among 30 measurements (26.67%)
+  3 (10.00%) low severe
+  1 (3.33%) low mild
+  3 (10.00%) high mild
+  1 (3.33%) high severe
+Benchmarking BalancedTreePQ Meld/100
+Benchmarking BalancedTreePQ Meld/100: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ Meld/100: Collecting 30 samples in estimated 1.0015 s (121k iterations)
+Benchmarking BalancedTreePQ Meld/100: Analyzing
+BalancedTreePQ Meld/100 time:   [8.2660 µs 8.3912 µs 8.5141 µs]
+                        change: [+14.153% +15.393% +16.365%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 2 outliers among 30 measurements (6.67%)
+  1 (3.33%) low severe
+  1 (3.33%) low mild
+
+Benchmarking BalancedTreePQ FindMin/100
+Benchmarking BalancedTreePQ FindMin/100: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ FindMin/100: Collecting 30 samples in estimated 1.0000 s (286M iterations)
+Benchmarking BalancedTreePQ FindMin/100: Analyzing
+BalancedTreePQ FindMin/100
+                        time:   [3.3466 ns 3.6441 ns 4.1132 ns]
+                        change: [+29.461% +36.955% +48.513%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  2 (6.67%) high mild
+  1 (3.33%) high severe
+Benchmarking BalancedTreePQ FindMin/500
+Benchmarking BalancedTreePQ FindMin/500: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ FindMin/500: Collecting 30 samples in estimated 1.0000 s (245M iterations)
+Benchmarking BalancedTreePQ FindMin/500: Analyzing
+BalancedTreePQ FindMin/500
+                        time:   [4.0234 ns 4.0665 ns 4.1057 ns]
+                        change: [+13.701% +15.167% +16.730%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 7 outliers among 30 measurements (23.33%)
+  3 (10.00%) low severe
+  1 (3.33%) low mild
+  1 (3.33%) high mild
+  2 (6.67%) high severe
+
+Benchmarking BalancedTreePQ Construction/50
+Benchmarking BalancedTreePQ Construction/50: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ Construction/50: Collecting 30 samples in estimated 1.0001 s (19k iterations)
+Benchmarking BalancedTreePQ Construction/50: Analyzing
+BalancedTreePQ Construction/50
+                        time:   [47.812 µs 48.254 µs 48.940 µs]
+                        change: [+6.1583% +7.9189% +9.7195%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking BalancedTreePQ Construction/100
+Benchmarking BalancedTreePQ Construction/100: Warming up for 300.00 ms
+Benchmarking BalancedTreePQ Construction/100: Collecting 30 samples in estimated 1.0536 s (4650 iterations)
+Benchmarking BalancedTreePQ Construction/100: Analyzing
+BalancedTreePQ Construction/100
+                        time:   [187.99 µs 191.42 µs 195.84 µs]
+                        change: [+7.3923% +10.820% +14.203%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+    Finished `bench` profile [optimized] target(s) in 0.04s
+     Running benches/Chap23/BenchBalBinTreeStEph.rs (target/release/deps/BenchBalBinTreeStEph-dda84cae2ec8e89d)
+Benchmarking BalBinTreeStEph/build_tree/1000
+Benchmarking BalBinTreeStEph/build_tree/1000: Warming up for 300.00 ms
+Benchmarking BalBinTreeStEph/build_tree/1000: Collecting 10 samples in estimated 1.0005 s (84k iterations)
+Benchmarking BalBinTreeStEph/build_tree/1000: Analyzing
+BalBinTreeStEph/build_tree/1000
+                        time:   [11.748 µs 11.824 µs 11.938 µs]
+                        change: [+12.413% +14.839% +18.235%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+Benchmarking BalBinTreeStEph/tree_traversal/1000
+Benchmarking BalBinTreeStEph/tree_traversal/1000: Warming up for 300.00 ms
+Benchmarking BalBinTreeStEph/tree_traversal/1000: Collecting 10 samples in estimated 1.0000 s (3.4M iterations)
+Benchmarking BalBinTreeStEph/tree_traversal/1000: Analyzing
+BalBinTreeStEph/tree_traversal/1000
+                        time:   [306.90 ns 310.06 ns 315.98 ns]
+                        change: [+16.206% +18.723% +21.198%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+    Finished `bench` profile [optimized] target(s) in 0.03s
+     Running benches/Chap58/BenchBellmanFordStEphFloat.rs (target/release/deps/BenchBellmanFordStEphFloat-0c51f25596713455)
+Benchmarking BellmanFord Float Sparse/10
+Benchmarking BellmanFord Float Sparse/10: Warming up for 300.00 ms
+Benchmarking BellmanFord Float Sparse/10: Collecting 30 samples in estimated 1.0015 s (63k iterations)
+Benchmarking BellmanFord Float Sparse/10: Analyzing
+BellmanFord Float Sparse/10
+                        time:   [16.439 µs 16.485 µs 16.526 µs]
+                        change: [+13.694% +14.908% +16.282%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  1 (3.33%) low mild
+  1 (3.33%) high mild
+  1 (3.33%) high severe
+Benchmarking BellmanFord Float Sparse/20
+Benchmarking BellmanFord Float Sparse/20: Warming up for 300.00 ms
+Benchmarking BellmanFord Float Sparse/20: Collecting 30 samples in estimated 1.0106 s (16k iterations)
+Benchmarking BellmanFord Float Sparse/20: Analyzing
+BellmanFord Float Sparse/20
+                        time:   [68.053 µs 68.913 µs 69.433 µs]
+                        change: [+2.6726% +4.4491% +6.3616%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Benchmarking BellmanFord Float Sparse/30
+Benchmarking BellmanFord Float Sparse/30: Warming up for 300.00 ms
+Benchmarking BellmanFord Float Sparse/30: Collecting 30 samples in estimated 1.0227 s (6045 iterations)
+Benchmarking BellmanFord Float Sparse/30: Analyzing
+BellmanFord Float Sparse/30
+                        time:   [166.54 µs 167.38 µs 168.37 µs]
+                        change: [+5.0873% +5.7711% +6.4773%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+Benchmarking BellmanFord Float Dense/10
+Benchmarking BellmanFord Float Dense/10: Warming up for 300.00 ms
+Benchmarking BellmanFord Float Dense/10: Collecting 30 samples in estimated 1.0003 s (88k iterations)
+Benchmarking BellmanFord Float Dense/10: Analyzing
+BellmanFord Float Dense/10
+                        time:   [11.111 µs 11.189 µs 11.290 µs]
+                        change: [+17.185% +18.574% +20.264%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  1 (3.33%) low mild
+  2 (6.67%) high mild
+Benchmarking BellmanFord Float Dense/20
+Benchmarking BellmanFord Float Dense/20: Warming up for 300.00 ms
+Benchmarking BellmanFord Float Dense/20: Collecting 30 samples in estimated 1.0014 s (18k iterations)
+Benchmarking BellmanFord Float Dense/20: Analyzing
+BellmanFord Float Dense/20
+                        time:   [47.406 µs 47.812 µs 48.163 µs]
+                        change: [+0.6412% +3.3751% +5.7005%] (p = 0.01 < 0.05)
+                        Change within noise threshold.
+Benchmarking BellmanFord Float Dense/30
+Benchmarking BellmanFord Float Dense/30: Warming up for 300.00 ms
+Benchmarking BellmanFord Float Dense/30: Collecting 30 samples in estimated 1.0418 s (7440 iterations)
+Benchmarking BellmanFord Float Dense/30: Analyzing
+BellmanFord Float Dense/30
+                        time:   [145.32 µs 147.18 µs 149.18 µs]
+                        change: [+18.272% +19.347% +20.482%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+Benchmarking BellmanFord Float Negative/10
+Benchmarking BellmanFord Float Negative/10: Warming up for 300.00 ms
+Benchmarking BellmanFord Float Negative/10: Collecting 30 samples in estimated 1.0041 s (76k iterations)
+Benchmarking BellmanFord Float Negative/10: Analyzing
+BellmanFord Float Negative/10
+                        time:   [12.724 µs 12.768 µs 12.813 µs]
+                        change: [+10.984% +11.464% +11.938%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  2 (6.67%) low mild
+  1 (3.33%) high mild
+Benchmarking BellmanFord Float Negative/20
+Benchmarking BellmanFord Float Negative/20: Warming up for 300.00 ms
+Benchmarking BellmanFord Float Negative/20: Collecting 30 samples in estimated 1.0217 s (20k iterations)
+Benchmarking BellmanFord Float Negative/20: Analyzing
+BellmanFord Float Negative/20
+                        time:   [46.563 µs 47.825 µs 48.947 µs]
+                        change: [+1.6274% +4.0439% +6.6787%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+    Finished `bench` profile [optimized] target(s) in 0.03s
+     Running benches/Chap58/BenchBellmanFordStEphInt.rs (target/release/deps/BenchBellmanFordStEphInt-9d08ff400b83029e)
+Benchmarking BellmanFord Int Sparse/10
+Benchmarking BellmanFord Int Sparse/10: Warming up for 300.00 ms
+Benchmarking BellmanFord Int Sparse/10: Collecting 30 samples in estimated 1.0010 s (103k iterations)
+Benchmarking BellmanFord Int Sparse/10: Analyzing
+BellmanFord Int Sparse/10
+                        time:   [9.5993 µs 9.6241 µs 9.6550 µs]
+                        change: [+10.624% +11.099% +11.648%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 6 outliers among 30 measurements (20.00%)
+  1 (3.33%) low mild
+  2 (6.67%) high mild
+  3 (10.00%) high severe
+Benchmarking BellmanFord Int Sparse/20
+Benchmarking BellmanFord Int Sparse/20: Warming up for 300.00 ms
+Benchmarking BellmanFord Int Sparse/20: Collecting 30 samples in estimated 1.0012 s (30k iterations)
+Benchmarking BellmanFord Int Sparse/20: Analyzing
+BellmanFord Int Sparse/20
+                        time:   [33.222 µs 33.272 µs 33.317 µs]
+                        change: [+1.0976% +1.4685% +1.8448%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) low severe
+Benchmarking BellmanFord Int Sparse/30
+Benchmarking BellmanFord Int Sparse/30: Warming up for 300.00 ms
+Benchmarking BellmanFord Int Sparse/30: Collecting 30 samples in estimated 1.0244 s (12k iterations)
+Benchmarking BellmanFord Int Sparse/30: Analyzing
+BellmanFord Int Sparse/30
+                        time:   [83.584 µs 83.938 µs 84.423 µs]
+                        change: [+2.1353% +2.5341% +2.9295%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+
+Benchmarking BellmanFord Int Dense/10
+Benchmarking BellmanFord Int Dense/10: Warming up for 300.00 ms
+Benchmarking BellmanFord Int Dense/10: Collecting 30 samples in estimated 1.0010 s (99k iterations)
+Benchmarking BellmanFord Int Dense/10: Analyzing
+BellmanFord Int Dense/10
+                        time:   [9.9772 µs 10.083 µs 10.167 µs]
+                        change: [+9.3857% +11.366% +13.153%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) low mild
+Benchmarking BellmanFord Int Dense/20
+Benchmarking BellmanFord Int Dense/20: Warming up for 300.00 ms
+Benchmarking BellmanFord Int Dense/20: Collecting 30 samples in estimated 1.0052 s (22k iterations)
+Benchmarking BellmanFord Int Dense/20: Analyzing
+BellmanFord Int Dense/20
+                        time:   [48.235 µs 48.378 µs 48.494 µs]
+                        change: [+5.7239% +8.5676% +10.554%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 5 outliers among 30 measurements (16.67%)
+  4 (13.33%) low severe
+  1 (3.33%) low mild
+Benchmarking BellmanFord Int Dense/30
+Benchmarking BellmanFord Int Dense/30: Warming up for 300.00 ms
+Benchmarking BellmanFord Int Dense/30: Collecting 30 samples in estimated 1.0581 s (7905 iterations)
+Benchmarking BellmanFord Int Dense/30: Analyzing
+BellmanFord Int Dense/30
+                        time:   [133.64 µs 134.87 µs 136.41 µs]
+                        change: [+12.970% +13.924% +14.883%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+
+Benchmarking BellmanFord Int Negative/10
+Benchmarking BellmanFord Int Negative/10: Warming up for 300.00 ms
+Benchmarking BellmanFord Int Negative/10: Collecting 30 samples in estimated 1.0033 s (80k iterations)
+Benchmarking BellmanFord Int Negative/10: Analyzing
+BellmanFord Int Negative/10
+                        time:   [11.556 µs 11.679 µs 11.862 µs]
+                        change: [+8.0053% +9.2479% +10.637%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  3 (10.00%) high mild
+Benchmarking BellmanFord Int Negative/20
+Benchmarking BellmanFord Int Negative/20: Warming up for 300.00 ms
+Benchmarking BellmanFord Int Negative/20: Collecting 30 samples in estimated 1.0110 s (22k iterations)
+Benchmarking BellmanFord Int Negative/20: Analyzing
+BellmanFord Int Negative/20
+                        time:   [44.781 µs 45.010 µs 45.236 µs]
+                        change: [-15.385% -11.197% -7.2645%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high severe
+
+    Finished `bench` profile [optimized] target(s) in 0.03s
+     Running benches/Chap54/BenchBFSMtEph.rs (target/release/deps/BenchBFSMtEph-a6e594d9d9d291ba)
+Benchmarking Chap54::BFSMtEph/bfs_dag_100
+Benchmarking Chap54::BFSMtEph/bfs_dag_100: Warming up for 300.00 ms
+Benchmarking Chap54::BFSMtEph/bfs_dag_100: Collecting 30 samples in estimated 1.2672 s (930 iterations)
+Benchmarking Chap54::BFSMtEph/bfs_dag_100: Analyzing
+Chap54::BFSMtEph/bfs_dag_100
+                        time:   [1.3047 ms 1.3463 ms 1.3877 ms]
+                        change: [+2.8955% +6.8355% +10.911%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 1 outliers among 30 measurements (3.33%)
+  1 (3.33%) high mild
+Benchmarking Chap54::BFSMtEph/bfs_dag_1000
+Benchmarking Chap54::BFSMtEph/bfs_dag_1000: Warming up for 300.00 ms
+Benchmarking Chap54::BFSMtEph/bfs_dag_1000: Collecting 30 samples in estimated 1.2871 s (90 iterations)
+Benchmarking Chap54::BFSMtEph/bfs_dag_1000: Analyzing
+Chap54::BFSMtEph/bfs_dag_1000
+                        time:   [15.685 ms 16.750 ms 17.924 ms]
+                        change: [+20.279% +27.845% +38.046%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+Found 3 outliers among 30 measurements (10.00%)
+  3 (10.00%) high mild
+

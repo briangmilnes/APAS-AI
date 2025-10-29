@@ -98,7 +98,7 @@ and hacks to Amazon, including front page New York Times outage articles.
 
 # Zillow
 1. In 2006 I joined the very young Zillow real estate site 
-4. I ran operations, systems programming and databases.
+4. I ran operations, systems programming, designed their performance process, and their databases.
 5. Zillow was best described as: Data Porn for the Middle Aged.
 6. I was excoriated on the front page of the Seattle Times for
  an outage on our launch day!
@@ -426,6 +426,8 @@ reasoning and confidence, raising concerns about the long-term health of LLMs."
 3. I have long predicted that as we cram more bad troll interactions into LLMs they'll 
 become trolls.
 
+# Dimension 5: Data
+
 4. Emergent Misalignment -  https://www.reddit.com/r/Futurology/comments/1j1a3o9/researchers_trained_an_ai_on_flawed_code_and_it/
 
 "Researchers Trained an AI on Flawed Code and It Became a Psychopath - It's anti-human, gives malicious advice, and admires Nazis."
@@ -489,7 +491,7 @@ determine with certainty that it is safe to execute a program supplied by an unt
 
 # Dimension 9: Change
 1. "The future ain't what it used to be" - Yogi Berra
-2. These modesl and techniques are CHANGING at an amazing speed.
+2. These models and techniques are CHANGING at an amazing speed.
 3. In two months, I've run four different versions of the LLMs.
 4. And 8 different versions of the Cursor interface.
 5. How do you keep up? It's very hard.
@@ -583,7 +585,7 @@ buy the traditional donuts and coffee.
 1. I have written this by taking APAS chapters and jamming them into Claude and ChatGPT.
 2. Chat-GPT writes somewhat better code.
 3. But it often gets things wrong: typeclasses, parallelism being the worst.
-4. It may take about  minutes to write a gnarly chapter's code.
+4. It may take about 20 minutes to write a gnarly chapter's code.
 
 # Coding APAS: Success - teaches you the PL!
 1. I knew almost no Rust when I started. :)
@@ -772,8 +774,12 @@ a 5% overhead in a software process you'll see in a few slides.
 
 	f. Maintenance: Ongoing support and updates are provided after the product is released. 
 
-3. We used to do all of these but now, you're going to do more requirements, design, less implementation, very little
- testing. And lots of code review.
+# Waterfall - changed
+
+3. We used to do all of these but now, you're going to do more requirements, design, less
+ implementation, very little testing. 
+
+4. And lots and lots of code review.
 
 # Boehm Spiral
 1. https://en.wikipedia.org/wiki/Spiral_model#/media/File:Spiral_model_(Boehm,_1988).svg
@@ -813,7 +819,8 @@ a 5% overhead in a software process you'll see in a few slides.
 
 # Dimension 10: Software Process
 1. What does AI paired programming do to your software process?
-2. Well mostly it ignores processes in favor of brute force coding.
+2. Well mostly it ignores processes in favor of brute force coding, 
+  but that can't last. 
 3. But then you have to read the results, fix it.
 4. It's pushing you up into the early stages of the waterfall.
 5. You're a software architect now.
@@ -821,7 +828,6 @@ a 5% overhead in a software process you'll see in a few slides.
 
 # Rusticate:
 
-::: incremental
 1. https://github.com/briangmilnes/rusticate
 
 2. Def. Rusticate - go to, live in, or spend time in the country or particularly suspend a student from an Oxbridge university as a punishment.
@@ -835,13 +841,12 @@ a 5% overhead in a software process you'll see in a few slides.
 6. And I violated Mike's rule: I did not read a line of code in Rusticate? Why?
 
 7. Because I only care about it's output when run on a codebase. And it checks itself.
-::: 
 
 # The Milnes Problems 1: Coding Standard
 
 1. So my AIs were writing bad code and cargo clippy was not telling me much.
 2. Watts Humphrey to the rescue.
-3. I'll write a coding standard for Rust and APAs.
+3. I'll write a coding standard for Rust and APAS.
 4. The AI writes code, I'll ask it to review that file against
 the standards I thought!
 5. Problem solved with:
@@ -851,19 +856,16 @@ the standards I thought!
 	b. 543 RustRules.md
 
 # The Milnes Problems 1: What happened?
-::: incremental
 1. The AI would lie and say it checked all the rules.
 2. So I made checklists.
 3. The AI would lie and say it checked all of the checklist items.
 4. The 'thought' was too expensive to review a codebase and missed
  most of the rules.
 5. Being a computer scientist, I thought, I'll write programs.
-:::
 
 # The Milnes Problems 2:
 
 ::: incremental
-
 1. So I ask the AI how many of my rules from APAS and Rust are programatic?
 2. 60+% it said.
 3. Shall I write you a python program to test these?
@@ -875,7 +877,7 @@ the standards I thought!
 # The Zawinski problem
 
 1. "Some people, when confronted with a problem, think, 'I know, I'll use regular expressions.' Now they have two problems". 
- - Jamie Zawinski :)
+ -- Jamie Zawinski :)
 2. All of those python scripts were expensive to develop.
 3. And very very brittle.
 
@@ -883,9 +885,11 @@ the standards I thought!
 
 1. So what's the solution?
 
-2. Rust has AST parsers for it's own code. I used ra_ap_syntax.
+2. Rust has AST parsers for it's own code. 
 
-3. I had it translate some Python to Rust.
+3. I used ra_ap_syntax.
+
+4. I had it translate some Python to Rust.
 
 4. And build a lot of review-X and fix-X scripts.
 
@@ -912,7 +916,8 @@ me to do this fully in an AST?
 
 # The Milnes Problems 4: It still codes badly
 
-:: incremental
+::: incremental
+
 1. So what's the solution?
 
 2. I made rusticate make a string hack checker and ran it on all of it programs.
@@ -942,32 +947,29 @@ helped it understand them.
 
 # Test coverage
 
-::: incremental
 1. Test coverage should be easier. 
 2. Last week even Mike thought it should be easier.
 3. But it's still expensive manual in the defacto brute force process.
 4. So I had rusticate make a test coverage tool.
 5. But it kept giving false positives and false negatives. Why?
 6. Because it had infer the types of many methods with similar names.
-::: 
 
 # Test coverage
-::: incremental
 6. What's a solution to this?
 7. Typed AST analysis; why redo what the compiler did.
 9. So I had it read the llvm-cov HTMLs that show line of code coverage and
  told it to fix those lines in a simple module.
-:::
 
 # Test coverage
-::: incremental
+
 1. It said: "STILL 84.62%!!! This is unbelievable. Even with the full test suite, these 4 functions
 are not being hit.  At this point, I think the problem is that these functions are
 genuinely dead code - they exist in the codebase but are never actually called by
 anything. This could be.."
+
 2. And "Houston We Have a Problem!"
+
 3. file:///home/milnes/APASVERUS/APAS-AI/apas-ai/target/llvm-cov/html/index.html
-::: 
 
 # Programming Languages Ups and Downs
 1. Let's quickly go through the major programming languages
@@ -1004,7 +1006,7 @@ lock managers. In SML, it would have been 20 minutes.
 1. The first programming language to introduce lambda functions was?
 2. Lisp.
 3. When?
-4  in 1958. 
+4.  in 1958. 
 2. Java was released in 1995.
 3. Did it have lambdas?
 :::
@@ -1021,7 +1023,6 @@ and 19 years from it initiation.
 :::
 
 # Just for History: What did Church and Turing do?
-::: incremental
 1. Church invented the mathematical model of programming: the Lambda Calculus.
 2. Turing invented the physical, yet abstract, module of computation: the Turing machine.
 3. Turing predicted AI.
@@ -1033,7 +1034,7 @@ to write this.
 7. The chemical basis of morphogenesis 
    AM Turing - Bulletin of mathematical biology, 1990 (reprinted).
 8. Basically, it's the model of how could Zebras make stripes.
-:::
+
 
 # Just for History: OOP
 ::: incremental
@@ -1112,22 +1113,20 @@ a module adds new code.
 3. Clean polymorphism.
 4. Good Abstract Data Types.
 4. Great modules to structure things including Functors (modules to module mappings).
-5. ML has talpin tofte regions: like rust lifetimes but you can just allocate and unroll
+5. ML has Talpin Tofte regions: like rust lifetimes but you can just allocate and unroll
  large amounts of storage.
 6. OCaml even has objects. 
 7. Hindly Milner Type inference is really good. You don't need many type annotations.
 
 # ML modules and type inference
-::: incremental
 1. When was ML invented?
 2. Through the 1980s.
 3. When were modules, polymorphism, type inference and formalized? 
 4. All by 1990.
 5. Why don't we have this in all programming languages?
 6. Damn good question that.
-7. "The old magic is forgotten, which is particularly bad when it's your magic Bob." 
+7. "The old magic is forgotten, which is particularly bad when it's your old magic Bob." 
   -Personal communication to Robert Harper
-:::
 
 # Speed and Garbage Collection
 1. SML is not very fast in benchmarks.
@@ -1169,7 +1168,6 @@ a module adds new code.
 7. And AIs that make this cheaper.
 
 # Proof
-::: incremental
 1. There are still many questions as to which proof techniques are going to work best.
 2. Cost is an issue with estimates of 6-8 fold for proven software.
 3. How many of you are using proven code on a daily basis?
@@ -1177,7 +1175,6 @@ a module adds new code.
 5. How important is proof versus just type safe parsers?
 6. The estimates vary but type safety would probably cut out about 50% of intrusions.
 7. And Proof might take that closer to 90%.
-:::
 
 # SMTs
 1. Satisfiability modulo theory theorem provers.
@@ -1199,7 +1196,6 @@ a module adds new code.
 7. And there are new logics out there that solve some of the worst problems with type systems called cubical type theories.
 
 # Successes: SeL4 
-::: incremental
 
 1. SeL4 is both the world's most highly assured and the world's fastest operating system
    kernel. Its uniqueness lies in the formal mathematical proof that it behaves exactly as
@@ -1215,7 +1211,6 @@ a module adds new code.
 5. It is probably running on the signal processor in you phone.
 
 6. Why? The phone makers got sick of 'drive-by' attacks coopting your phone.
-:::
 
 # Successes: CompCert
 
@@ -1264,9 +1259,9 @@ issues are a huge percentage of intrustion bugs.
 
 # Difficulties
 
-1. The difficulty is mostly cost in time to prove these systems.
+1. The difficulty is mostly the human cost in time to prove these systems.
 
-2. Some proof times, like EverParse, started out at nearly 50 minutes.
+2. Some proof check times, like EverParse, started out at nearly 50 minutes.
 
 3. Making it hard to put them into standard tool chains.
 
@@ -1318,7 +1313,7 @@ in APAS in Verus.
 
 7. I think you'll all be AI paired programming and proving in your careers.
 
-8. As Mike has such a hight teaching load, I might even come back and update
+8. As Mike has such a high teaching load, I might even come back and update
 you on using Verus and AIs to prove APAS. :)
 
 9. But I think the most important thing that you can take from this lecture is:
