@@ -1,3 +1,16 @@
+
+#  Is AI Paired Ready?
+
+* Introduction to Brian Milnes
+* AI programming is changing the world
+* AI programming tools
+* Concerns/challenges/problems with AI paired programming
+* Case study: implement all of an algorithms textbook; successes and failures
+* Software processes
+* A methodology/process to tame LLMs (Rusticate, etc.)
+* Programming languages comparison
+* Proof is essential, and an open problem for LLMs
+
 # Introduction
 1. Hi, I'm Brian Milnes, computer scientist and entrepreneur.
 2. CMU Math/CS undergraduate.
@@ -56,15 +69,10 @@
 6. He and Scott Fahlman (Common Lisp, Connectionist learning and reinvented the :))
  argued to get Geoff Hinton, the god father of LLM AI, on CMU Faculty. And it was close. :)
 
-# PL Research with 
-1. Robert Harper - One of the top programming language semantics researchers. 
-     Designed and proved the ML module system. Latest great result is a 'cublical'
-     semantics for programming languages. :)
-2. Frank Pfenning - Logic programming, various PL semantics, Higher Order Abstract Syntax,
-   proofs of programming semantics in logic frameworks.
-3. Peter Lee - Proof Carrying Code is amongst his best work, but not heavily used.
+# PL Research At CMU
+1. Peter Lee - Proof Carrying Code is amongst his best work, but not heavily used.
    Now heads Microsoft Research Labs. Just did the best UW CSE guest lecture that I have
-   ever seen.
+   ever seen, we'll see a bit of it in a moment.
 4. Fox Project - could we use an advanced programming language for systems programming?
 5. FoxNet - we rebuild TCP/IP in SML and it was amazing. Lately referred to as "The Traditional Approach". :)
 6. My favorite part was making a DNS server that read just like the IETF standard (RFC).
@@ -124,8 +132,6 @@ and hacks to Amazon, including front page New York Times outage articles.
 2. Will Professor Ernst have a job?
 3. Will you have a job?
 4. What will be different between your careers and mine?
-5. What other giant change is coming?
-6. Quantum Computing: Has it really achieved quantum supremacy? 
 :::
 
 # Peter Lee lecture
@@ -169,7 +175,7 @@ Peter Lee, Microsoft - The Emergence of General AI for Medicine
 https://www.amazon.com/Anyone-Builds-Everyone-Dies-Superhuman/dp/0316595640
 4. https://superintelligence-statement.org/
 5. You'll have to watch this but we're just going to say that it's 
- really dangerous and not go into any depth here except for it's affects
+ really dangerous and not go into any depth here except for its affects
  on computer security, software engineering and programming languages.
 6. What's the most dangerous thing you can think of to do with an AI?
 7. Design a new killer virus hooked up to a robot lab.
@@ -250,9 +256,11 @@ in enough detail, that I could implement it.
 
 # Chat-GPT-5
 1. Chat-gpt-5 has a high and a med and a low.
-2. Chat-gpt-5 high writes better code than Claude.
+2. Chat-gpt-5 high wrote better code than Claude for APAS.
 3. It understands Rust types a bit better than Claude.
-4. It can't manually review code bases for heck; it's far too slow.
+4. 'Manual' is what AI agents call reading the source code and thinking
+  deeply about it.
+4. It can't 'manually' review code bases for heck; it's far too slow.
 5. Chat-gpt-5 can't follow a coding standard at all.
 
 # Claude-4.5-Sonnet
@@ -260,7 +268,7 @@ in enough detail, that I could implement it.
 2. Claude is learning to plan well.
 3. Claude repeats lots of information.
 4. Claude can get confused and stop on mildly complicated Rust types.
-5. Claude does not really understand Rust UFCS's requirements.
+5. Claude does not really understand Rust call semantics.
 6. Claude jams vectors all over the place.
 7. Claude can't follow a coding standard at all.
 
@@ -464,8 +472,7 @@ work.
 3. Why do these AIs produce such crappy code?
 4. Because programmers do and they are trained on LOTs of code.
 5. Wadhwa, Nalin, et al. "Core: Resolving code quality issues using llms." Proceedings of the ACM on Software Engineering 1.FSE (2024): 789-811.
-6. If you dip into Scholar.google.com (originally built by Anurag Acharya from the Soar project),
- it's still a pretty thin literature.
+6. If you dip into Scholar.google.com it's still a pretty thin literature.
 7. So I'm expecting some improvement, but not a lot in the next two years.
 
 # Dimension 8: Safety
@@ -576,7 +583,7 @@ buy the traditional donuts and coffee.
 1. Claude (and chat-gpt) both fully understand git and github.
 2. Which is nice as git is very powerful and rather overly complicated.
 3. However at one point rusticate's AI deleted it's local git copy and
- started running reviews directly on it's sibling AI that owned APAS!
+ started running reviews directly on its sibling AI that owned APAS!
 4. It makes much nicer checkin logs than you can.
 5. And it will quickly answer questions about other tools such as llvm-cov
 (test function, line coverage) in your programming language.
@@ -585,7 +592,8 @@ buy the traditional donuts and coffee.
 1. I have written this by taking APAS chapters and jamming them into Claude and ChatGPT.
 2. Chat-GPT writes somewhat better code.
 3. But it often gets things wrong: typeclasses, parallelism being the worst.
-4. It may take about 20 minutes to write a gnarly chapter's code.
+4. It may take about 20 minutes to write a gnarly chapter's code, with
+ it pausing a few times at least.
 
 # Coding APAS: Success - teaches you the PL!
 1. I knew almost no Rust when I started. :)
@@ -712,7 +720,7 @@ as many job offers.
 2. I put them in.
 3. Then I had Claude see if it agreed.
 4. I think it cheated like a lying rug.
-5. And I suspect now that APAS is public, it your AI will likely
+5. And I suspect now that APAS is public, your AI will likely
  cheat on that.
 
 # Coding APAS: Problem - Cost - manual is expensive
@@ -822,7 +830,7 @@ a 5% overhead in a software process you'll see in a few slides.
 2. Well mostly it ignores processes in favor of brute force coding, 
   but that can't last. 
 3. But then you have to read the results, fix it.
-4. It's pushing you up into the early stages of the waterfall.
+4. LLMs are pushing you up into the early stages of the waterfall.
 5. You're a software architect now.
 6. And you're working more and more at the code base level.
 
@@ -900,7 +908,7 @@ the standards I thought!
 ::: incremental
 1. So what went right?
 
-2. I taught it to fix over a thousand unecessary UFCS calls with MODULE::F or
+2. I taught it to fix over a thousand unecessary (UFCS) calls with MODULE::F or
 worse '\<Type as Trait\>::OP' typings.
 
 3. I taught it to fix bad duplicate and stubbed impls and fixed them.
