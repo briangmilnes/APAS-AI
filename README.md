@@ -284,7 +284,3 @@ The implementations aim to be faithful to the textbook while leveraging Rust's t
 ## 📧 Contact
 
 For questions about the algorithms, refer to the textbook. For implementation-specific issues, please open an issue on GitHub.
-
----
-
-**Note**: This is an active educational project. Some chapters may be under development or disabled temporarily. Check `src/lib.rs` for the current module status.
