@@ -11,11 +11,11 @@ use apas_ai::Types::Types::*;
 
 fn bench_ordered_table_mt_eph_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableMtEph_insert");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 500, 1000].iter() {
+    for size in [20].iter() {
         group.bench_with_input(BenchmarkId::new("insert", size), size, |b, &size| {
             b.iter_batched(
                 <OrderedTableMtEph<i32, String>>::empty,
@@ -34,11 +34,11 @@ fn bench_ordered_table_mt_eph_insert(c: &mut Criterion) {
 
 fn bench_ordered_table_mt_eph_lookup(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableMtEph_lookup");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 500, 1000].iter() {
+    for size in [20].iter() {
         let mut table = <OrderedTableMtEph<i32, String>>::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{i}"), |_old, new| new.clone());
@@ -57,11 +57,11 @@ fn bench_ordered_table_mt_eph_lookup(c: &mut Criterion) {
 
 fn bench_ordered_table_mt_eph_delete(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableMtEph_delete");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 500, 1000].iter() {
+    for size in [20].iter() {
         group.bench_with_input(BenchmarkId::new("delete", size), size, |b, &size| {
             b.iter_batched(
                 || {
@@ -86,11 +86,11 @@ fn bench_ordered_table_mt_eph_delete(c: &mut Criterion) {
 
 fn bench_ordered_table_mt_eph_parallel_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableMtEph_parallel_operations");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 500, 1000].iter() {
+    for size in [20].iter() {
         group.bench_with_input(BenchmarkId::new("parallel_filter", size), size, |b, &size| {
             b.iter_batched(
                 || {
@@ -138,11 +138,11 @@ fn bench_ordered_table_mt_eph_parallel_operations(c: &mut Criterion) {
 
 fn bench_ordered_table_mt_eph_first_last_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableMtEph_first_last_key");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 500, 1000].iter() {
+    for size in [20].iter() {
         let mut table = <OrderedTableMtEph<i32, String>>::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{i}"), |_old, new| new.clone());
@@ -161,11 +161,11 @@ fn bench_ordered_table_mt_eph_first_last_key(c: &mut Criterion) {
 
 fn bench_ordered_table_mt_eph_previous_next_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableMtEph_previous_next_key");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 500, 1000].iter() {
+    for size in [20].iter() {
         let mut table = <OrderedTableMtEph<i32, String>>::empty();
         for i in 0..*size {
             table.insert(i * 2, format!("value_{}", i * 2), |_old, new| new.clone());
@@ -193,11 +193,11 @@ fn bench_ordered_table_mt_eph_previous_next_key(c: &mut Criterion) {
 
 fn bench_ordered_table_mt_eph_split_join_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableMtEph_split_join_key");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 500, 1000].iter() {
+    for size in [20].iter() {
         group.bench_with_input(BenchmarkId::new("split_key", size), size, |b, &size| {
             b.iter_batched(
                 || {
@@ -243,11 +243,11 @@ fn bench_ordered_table_mt_eph_split_join_key(c: &mut Criterion) {
 
 fn bench_ordered_table_mt_eph_get_key_range(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableMtEph_get_key_range");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 500, 1000].iter() {
+    for size in [20].iter() {
         let mut table = <OrderedTableMtEph<i32, String>>::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{i}"), |_old, new| new.clone());
@@ -266,11 +266,11 @@ fn bench_ordered_table_mt_eph_get_key_range(c: &mut Criterion) {
 
 fn bench_ordered_table_mt_eph_rank_select_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableMtEph_rank_select_key");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 500, 1000].iter() {
+    for size in [20].iter() {
         let mut table = <OrderedTableMtEph<i32, String>>::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{i}"), |_old, new| new.clone());
@@ -297,11 +297,11 @@ fn bench_ordered_table_mt_eph_rank_select_key(c: &mut Criterion) {
 
 fn bench_ordered_table_mt_eph_split_rank_key(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableMtEph_split_rank_key");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 500, 1000].iter() {
+    for size in [20].iter() {
         group.bench_with_input(BenchmarkId::new("split_rank_key", size), size, |b, &size| {
             b.iter_batched(
                 || {
@@ -324,11 +324,11 @@ fn bench_ordered_table_mt_eph_split_rank_key(c: &mut Criterion) {
 
 fn bench_ordered_table_mt_eph_collect(c: &mut Criterion) {
     let mut group = c.benchmark_group("OrderedTableMtEph_collect");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 500, 1000].iter() {
+    for size in [20].iter() {
         let mut table = <OrderedTableMtEph<i32, String>>::empty();
         for i in 0..*size {
             table.insert(i, format!("value_{i}"), |_old, new| new.clone());

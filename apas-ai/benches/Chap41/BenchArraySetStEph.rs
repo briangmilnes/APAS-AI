@@ -19,9 +19,9 @@ fn build_array_set(len: usize) -> ArraySetStEph<i32> {
 
 fn bench_array_set_build(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetStEph_build");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
     for size in [10, 20].iter() {
         group.bench_with_input(BenchmarkId::new("build", size), size, |b, &size| {
@@ -33,9 +33,9 @@ fn bench_array_set_build(c: &mut Criterion) {
 
 fn bench_array_set_find(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetStEph_find");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
     for size in [10, 20].iter() {
         let set = build_array_set(*size);
@@ -58,11 +58,11 @@ fn bench_array_set_find(c: &mut Criterion) {
 
 fn bench_array_set_insert(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetStEph_insert");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 1000].iter() {
+    for size in [20].iter() {
         group.bench_with_input(BenchmarkId::new("insert_new", size), size, |b, &size| {
             b.iter_batched(
                 || build_array_set(size),
@@ -92,11 +92,11 @@ fn bench_array_set_insert(c: &mut Criterion) {
 
 fn bench_array_set_delete(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetStEph_delete");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 1000].iter() {
+    for size in [20].iter() {
         group.bench_with_input(BenchmarkId::new("delete_existing", size), size, |b, &size| {
             b.iter_batched(
                 || build_array_set(size),
@@ -126,11 +126,11 @@ fn bench_array_set_delete(c: &mut Criterion) {
 
 fn bench_array_set_bulk_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetStEph_bulk");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 1000].iter() {
+    for size in [20].iter() {
         let set1 = build_array_set(*size);
         let set2 = build_array_set(*size / 2);
 
@@ -151,11 +151,11 @@ fn bench_array_set_bulk_operations(c: &mut Criterion) {
 
 fn bench_array_set_from_seq(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetStEph_from_seq");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 1000].iter() {
+    for size in [20].iter() {
         // Create sequence with some duplicates
         let mut vec_data = Vec::new();
         for i in 0..*size {
@@ -175,11 +175,11 @@ fn bench_array_set_from_seq(c: &mut Criterion) {
 
 fn bench_array_set_filter(c: &mut Criterion) {
     let mut group = c.benchmark_group("ArraySetStEph_filter");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
-    for size in [100, 1000].iter() {
+    for size in [20].iter() {
         let set = build_array_set(*size);
 
         group.bench_with_input(BenchmarkId::new("filter_half", size), size, |b, _| {

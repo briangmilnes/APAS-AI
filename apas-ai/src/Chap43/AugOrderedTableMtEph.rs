@@ -348,14 +348,21 @@ pub mod AugOrderedTableMtEph {
             // Unconditionally parallel split using ParaPair!
             let mid_rank = range_table.size() / 2;
             if let Some(mid_key) = range_table.select_key(mid_rank) {
+                // Split [k1, mid_key) and [mid_key, k2] to avoid overlap and infinite recursion
                 let left_table = range_table.get_key_range(k1, &mid_key);
-                let right_table = range_table.get_key_range(&mid_key, k2);
+                // Get next key after mid_key for exclusive split
+                let right_start = range_table.next_key(&mid_key).unwrap_or_else(|| mid_key.clone());
+                let right_table = range_table.get_key_range(&right_start, k2);
+                
                 let reducer = range_table.reducer.clone();
+                let mid_val = range_table.find(&mid_key).unwrap_or_else(|| range_table.identity.clone());
 
                 let Pair(left_val, right_val) =
                     ParaPair!(move || left_table.reduce_val(), move || right_table.reduce_val());
 
-                reducer(&left_val, &right_val)
+                // Combine left + mid + right
+                let left_mid = reducer(&left_val, &mid_val);
+                reducer(&left_mid, &right_val)
             } else {
                 range_table.reduce_val()
             }

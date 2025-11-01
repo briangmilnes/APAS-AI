@@ -48,7 +48,9 @@ pub mod AdjSeqGraphMtEph {
             let n = self.adj.length();
             let mut count = 0;
             for i in 0..n {
-                count += self.adj.nth(i).length();
+                if let Some(adj_list) = self.adj.nth(i) {
+                    count += adj_list.length();
+                }
             }
             count
         }
@@ -57,28 +59,28 @@ pub mod AdjSeqGraphMtEph {
             if u >= self.adj.length() {
                 return false;
             }
-            let neighbors = self.adj.nth(u);
+            let neighbors = self.adj.nth_cloned(u);
             for i in 0..neighbors.length() {
-                if *neighbors.nth(i) == v {
+                if neighbors.nth_cloned(i) == v {
                     return true;
                 }
             }
             false
         }
 
-        fn out_neighbors(&self, u: N) -> ArraySeqMtEphS<N> { self.adj.nth(u).clone() }
+        fn out_neighbors(&self, u: N) -> ArraySeqMtEphS<N> { self.adj.nth_cloned(u) }
 
-        fn out_degree(&self, u: N) -> N { self.adj.nth(u).length() }
+        fn out_degree(&self, u: N) -> N { self.adj.nth_cloned(u).length() }
 
         fn set_edge(&self, u: N, v: N, exists: B) {
             if u >= self.adj.length() || v >= self.adj.length() {
                 return;
             }
-            let old_neighbors = self.adj.nth(u);
+            let old_neighbors = self.adj.nth_cloned(u);
             if exists {
                 let mut found = false;
                 for i in 0..old_neighbors.length() {
-                    if *old_neighbors.nth(i) == v {
+                    if old_neighbors.nth_cloned(i) == v {
                         found = true;
                         break;
                     }
@@ -86,7 +88,7 @@ pub mod AdjSeqGraphMtEph {
                 if !found {
                     let mut new_neighbors_vec = Vec::<N>::with_capacity(old_neighbors.length() + 1);
                     for i in 0..old_neighbors.length() {
-                        new_neighbors_vec.push(*old_neighbors.nth(i));
+                        new_neighbors_vec.push(old_neighbors.nth_cloned(i));
                     }
                     new_neighbors_vec.push(v);
                     let _ = self.adj.set(u, ArraySeqMtEphS::from_vec(new_neighbors_vec));
@@ -94,7 +96,7 @@ pub mod AdjSeqGraphMtEph {
             } else {
                 let mut new_neighbors_vec = Vec::<N>::new();
                 for i in 0..old_neighbors.length() {
-                    let neighbor = *old_neighbors.nth(i);
+                    let neighbor = old_neighbors.nth_cloned(i);
                     if neighbor != v {
                         new_neighbors_vec.push(neighbor);
                     }

@@ -64,7 +64,7 @@ apas-ai/
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/apas-ai.git
+git clone https://github.com/briangmilnes/apas-ai.git
 cd apas-ai
 ```
 

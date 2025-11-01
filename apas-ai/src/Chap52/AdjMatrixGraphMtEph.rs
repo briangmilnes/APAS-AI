@@ -51,9 +51,9 @@ pub mod AdjMatrixGraphMtEph {
         fn num_edges(&self) -> N {
             let mut count = 0;
             for i in 0..self.n {
-                let row = self.matrix.nth(i);
+                let row = self.matrix.nth_cloned(i);
                 for j in 0..self.n {
-                    if *row.nth(j) {
+                    if row.nth_cloned(j) {
                         count += 1;
                     }
                 }
@@ -65,17 +65,17 @@ pub mod AdjMatrixGraphMtEph {
             if u >= self.n || v >= self.n {
                 return false;
             }
-            *self.matrix.nth(u).nth(v)
+            self.matrix.nth_cloned(u).nth_cloned(v)
         }
 
         fn out_neighbors(&self, u: N) -> ArraySeqMtEphS<N> {
             if u >= self.n {
                 return ArraySeqMtEphS::empty();
             }
-            let row = self.matrix.nth(u);
+            let row = self.matrix.nth_cloned(u);
             let mut neighbors = Vec::new();
             for v in 0..self.n {
-                if *row.nth(v) {
+                if row.nth_cloned(v) {
                     neighbors.push(v);
                 }
             }
@@ -86,10 +86,10 @@ pub mod AdjMatrixGraphMtEph {
             if u >= self.n {
                 return 0;
             }
-            let row = self.matrix.nth(u);
+            let row = self.matrix.nth_cloned(u);
             let mut count = 0;
             for v in 0..self.n {
-                if *row.nth(v) {
+                if row.nth_cloned(v) {
                     count += 1;
                 }
             }
@@ -100,20 +100,20 @@ pub mod AdjMatrixGraphMtEph {
             if u >= self.n || v >= self.n {
                 return;
             }
-            let row = self.matrix.nth(u);
+            let row = self.matrix.nth_cloned(u);
             let _ = row.set(v, exists);
         }
 
         fn complement(&self) -> Self {
             let mut new_matrix_vec = Vec::with_capacity(self.n);
             for i in 0..self.n {
-                let row = self.matrix.nth(i);
+                let row = self.matrix.nth_cloned(i);
                 let mut new_row_vec = Vec::with_capacity(self.n);
                 for j in 0..self.n {
                     if i == j {
                         new_row_vec.push(false);
                     } else {
-                        new_row_vec.push(!*row.nth(j));
+                        new_row_vec.push(!row.nth_cloned(j));
                     }
                 }
                 new_matrix_vec.push(ArraySeqMtEphS::from_vec(new_row_vec));

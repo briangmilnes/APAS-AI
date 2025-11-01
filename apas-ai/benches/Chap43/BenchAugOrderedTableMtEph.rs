@@ -12,7 +12,6 @@ use apas_ai::Chap41::ArraySetStEph::ArraySetStEph::*;
 use apas_ai::Chap43::AugOrderedTableMtEph::AugOrderedTableMtEph::*;
 use apas_ai::Types::Types::*;
 
-#[ignore] // Too slow - union_operation_multithreaded wanted 154.8s for 30 samples
 fn bench_multithreaded_reduce_val_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("multithreaded_reduce_val");
     group.warm_up_time(Duration::from_millis(300));
@@ -21,7 +20,7 @@ fn bench_multithreaded_reduce_val_performance(c: &mut Criterion) {
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
-    for size in [10, 50, 100, 200].iter() {
+    for size in [1, 2, 5, 10].iter() {
         // Create augmented table
         let mut aug_table = AugOrderedTableMtEph::empty(sum_reducer, 0);
         for i in 1..=*size {

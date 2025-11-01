@@ -264,11 +264,11 @@ pub mod Chap52 {
     pub mod EdgeSetGraphMtPer;
     pub mod EdgeSetGraphStEph;
     pub mod EdgeSetGraphStPer;
-    // pub mod AdjSeqGraphMtEph; // API mismatch - ArraySeqMtEphS lacks nth method
+    pub mod AdjSeqGraphMtEph;
     pub mod AdjSeqGraphMtPer;
     pub mod AdjSeqGraphStEph;
     pub mod AdjSeqGraphStPer;
-    // pub mod AdjMatrixGraphMtEph; // API mismatch - ArraySeqMtEphS lacks nth method
+    pub mod AdjMatrixGraphMtEph;
     pub mod AdjMatrixGraphMtPer;
     pub mod AdjMatrixGraphStEph;
     pub mod AdjMatrixGraphStPer;

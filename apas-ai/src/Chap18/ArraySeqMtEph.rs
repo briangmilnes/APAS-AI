@@ -30,8 +30,9 @@ pub mod ArraySeqMtEph {
         /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - locks mutex
         fn length(&self)                                      -> N;
         /// APAS: Work Θ(1), Span Θ(1)
-        /// claude-4-sonet: Work Θ(1), Span Θ(1), Parallelism Θ(1) - locks mutex
         fn nth_cloned(&self, index: N)                        -> T;
+        /// APAS: Work Θ(1), Span Θ(1)
+        fn nth(&self, index: N)                               -> Option<T>;
         /// APAS: Work Θ(len), Span Θ(1)
         /// claude-4-sonet: Work Θ(len), Span Θ(len), Parallelism Θ(1) - sequential copy, locks mutex
         fn subseq_copy(&self, start: N, length: N)            -> Self;
@@ -124,6 +125,15 @@ pub mod ArraySeqMtEph {
         fn nth_cloned(&self, index: N) -> T {
             let guard = self.data.lock().unwrap();
             guard[index].clone()
+        }
+
+        fn nth(&self, index: N) -> Option<T> {
+            let guard = self.data.lock().unwrap();
+            if index < guard.len() {
+                Some(guard[index].clone())
+            } else {
+                None
+            }
         }
 
         fn subseq_copy(&self, start: N, length: N) -> ArraySeqMtEphS<T> {

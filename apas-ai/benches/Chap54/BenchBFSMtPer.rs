@@ -26,14 +26,14 @@ pub fn bench_bfs_mt_per(c: &mut Criterion) {
     group.measurement_time(Duration::from_secs(1));
     group.sample_size(30);
 
-    let g100 = create_dag(100);
-    group.bench_function("bfs_dag_100", |b| {
-        b.iter(|| BFSMtPer::bfs(black_box(&g100), black_box(0)))
+    let g20 = create_dag(20);
+    group.bench_function("bfs_dag_20", |b| {
+        b.iter(|| BFSMtPer::bfs(black_box(&g20), black_box(0)))
     });
 
-    let g1000 = create_dag(1000);
-    group.bench_function("bfs_dag_1000", |b| {
-        b.iter(|| BFSMtPer::bfs(black_box(&g1000), black_box(0)))
+    let g40 = create_dag(40);
+    group.bench_function("bfs_dag_40", |b| {
+        b.iter(|| BFSMtPer::bfs(black_box(&g40), black_box(0)))
     });
 
     group.finish();

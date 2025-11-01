@@ -14,13 +14,13 @@ use apas_ai::Types::Types::*;
 
 fn bench_reduce_val_vs_naive(c: &mut Criterion) {
     let mut group = c.benchmark_group("reduce_val_comparison");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
-    for size in [100, 500, 1000, 2000].iter() {
+    for size in [20].iter() {
         // Create augmented table
         let mut aug_table = AugOrderedTableStPer::empty(sum_reducer, 0);
         for i in 1..=*size {
@@ -51,15 +51,15 @@ fn bench_reduce_val_vs_naive(c: &mut Criterion) {
 
 fn bench_range_reduction_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("range_reduction");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableStPer::empty(sum_reducer, 0);
 
-    // Create large dataset
-    for i in 1..=5000 {
+    // Create dataset
+    for i in 1..=100 {
         table = table.insert(i, i * 2);
     }
 
@@ -79,15 +79,15 @@ fn bench_range_reduction_performance(c: &mut Criterion) {
 
 fn bench_tramlaw_scenario(c: &mut Criterion) {
     let mut group = c.benchmark_group("tramlaw_sales_analysis");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut sales_table = AugOrderedTableStPer::empty(sum_reducer, 0);
 
-    // Simulate a full day of sales data (1440 minutes)
-    for minute in 0..1440 {
+    // Simulate sales data
+    for minute in 0..50 {
         let base_sales = 1000;
         let time_factor = if (540..=1200).contains(&minute) { 2 } else { 1 }; // Business hours
         let sales = base_sales * time_factor + (minute % 100);
@@ -122,9 +122,9 @@ fn bench_tramlaw_scenario(c: &mut Criterion) {
 
 fn bench_insert_performance(c: &mut Criterion) {
     let mut group = c.benchmark_group("insert_operations");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -157,9 +157,9 @@ fn bench_insert_performance(c: &mut Criterion) {
 
 fn bench_different_reducers(c: &mut Criterion) {
     let mut group = c.benchmark_group("reducer_types");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
     let size = 1000;
 
@@ -195,15 +195,15 @@ fn bench_different_reducers(c: &mut Criterion) {
 
 fn bench_split_join_operations(c: &mut Criterion) {
     let mut group = c.benchmark_group("split_join_operations");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
     let mut table = AugOrderedTableStPer::empty(sum_reducer, 0);
 
     // Create test data
-    for i in 1..=1000 {
+    for i in 1..=50 {
         table = table.insert(i, i * 10);
     }
 
@@ -227,9 +227,9 @@ fn bench_split_join_operations(c: &mut Criterion) {
 
 fn bench_macro_construction(c: &mut Criterion) {
     let mut group = c.benchmark_group("construction_methods");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 
@@ -260,9 +260,9 @@ fn bench_macro_construction(c: &mut Criterion) {
 
 fn bench_memory_usage_patterns(c: &mut Criterion) {
     let mut group = c.benchmark_group("memory_patterns");
-    group.warm_up_time(Duration::from_millis(300));
-    group.measurement_time(Duration::from_secs(1));
-    group.sample_size(30);
+    group.warm_up_time(Duration::from_millis(50));
+    group.measurement_time(Duration::from_millis(300));
+    group.sample_size(10);
 
     let sum_reducer = |a: &i32, b: &i32| a + b;
 

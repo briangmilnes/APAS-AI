@@ -778,6 +778,8 @@ tests.
 5. You tell it run one at a time, timeout?
 6. Well it's no good at real time understanding and wastes a ton
 of time.
+7. I had a livelock and I asked it to run my Mt module with 1 thread.
+ It declared victory when it finished. 
 
 # Coding APAS: Problem - Horrible on estimating
 1. My AIs often estimate 7-12 hours.
