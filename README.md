@@ -254,14 +254,6 @@ All implementations are benchmarked using Criterion. Key findings:
 
 See `analyses/benchmarks/` for detailed performance reports.
 
-## 🐛 Known Issues
-
-- **Chap47 examples**: Some hash table examples have compilation issues (commented out in `lib.rs`)
-- **Chap50**: OBST trait bound issues with `OrderedFloat<f64>` and `MtT` constraints
-- **Chap52**: `AdjSeqGraphMtEph` and `AdjMatrixGraphMtEph` disabled due to API mismatches
-
-See `PATCH_NOTES.md` for detailed issue tracking and resolution plans.
-
 ## 📝 Documentation
 
 - **In-code documentation**: All public APIs include rustdoc comments
