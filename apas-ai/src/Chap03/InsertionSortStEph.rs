@@ -16,11 +16,11 @@ pub mod InsertionSortStEph {
         /// cost of sort using our composition rules described in Section (Work, Span, and Parallel
         /// Time). Since the code uses insert sequentially and since there are n inserts, the algorithm
         /// insSort has n × O(n) = O(n²) work and n × O(log n) = O(n log n) span.
-        fn insSort(&self, slice: &mut [T]);
+        fn insSort(slice: &mut [T]);
     }
 
     impl<T: Ord + Clone> InsertionSortStTrait<T> for T {
-        fn insSort(&self, slice: &mut [T]) {
+        fn insSort(slice: &mut [T]) {
             for i in 1..slice.len() {
                 let key = slice[i].clone();
                 let mut j = i;

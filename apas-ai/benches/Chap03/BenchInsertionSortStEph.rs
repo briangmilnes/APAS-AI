@@ -18,7 +18,7 @@ fn bench_insertion_sort(c: &mut Criterion) {
             b.iter_batched(
                 || build_vec(len),
                 |mut data| {
-                    0i32.insSort(&mut data);
+                    i32::insSort(&mut data);
                 },
                 BatchSize::SmallInput,
             );

@@ -3,14 +3,14 @@ use apas_ai::Chap03::InsertionSortStEph::InsertionSortStEph::*;
 use apas_ai::Types::Types::*;
 
 fn sort_and_assert(mut data: Vec<i32>, expected: &[i32]) {
-    0i32.insSort(&mut data);
+    i32::insSort(&mut data);
     assert_eq!(data, expected);
 }
 
 #[test]
 fn insertion_sort_handles_empty() {
     let mut data = Vec::<i32>::new();
-    0i32.insSort(&mut data);
+    i32::insSort(&mut data);
     assert!(data.is_empty());
 }
 
@@ -31,7 +31,7 @@ fn insertion_sort_random_slice() {
     let mut data = vec![10, -1, 7, 3, 3, 9, 0, -5];
     let mut expected = data.clone();
     expected.sort();
-    0i32.insSort(&mut data);
+    i32::insSort(&mut data);
     assert_eq!(data, expected);
 }
 
@@ -42,7 +42,7 @@ fn insertion_sort_large_input_stress_test() {
     let mut expected = data.clone();
     expected.sort();
 
-    0i32.insSort(&mut data);
+    i32::insSort(&mut data);
     assert_eq!(data, expected);
     assert_eq!(data.len(), 10_000);
 
