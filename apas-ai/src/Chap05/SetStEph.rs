@@ -92,6 +92,11 @@ pub mod SetStEph {
         }
 
         fn partition(&self, parts: &SetStEph<SetStEph<T>>) -> B {
+            for subset in parts.data.iter() {
+                if subset.data.is_empty() {
+                    return false;
+                }
+            }
             for x in self.data.iter() {
                 let mut count: N = 0;
                 for subset in parts.data.iter() {

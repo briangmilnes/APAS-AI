@@ -89,6 +89,15 @@ fn test_partition_false_due_to_missing_element() {
 }
 
 #[test]
+fn test_partition_false_due_to_empty_subset() {
+    let a: SetStEph<N> = SetLit![1, 2, 3];
+    let s1: SetStEph<N> = SetLit![1, 2, 3];
+    let empty: SetStEph<N> = SetLit![];
+    let parts: SetStEph<SetStEph<N>> = SetLit![s1, empty];
+    assert!(!a.partition(&parts));
+}
+
+#[test]
 fn test_set_empty() {
     let empty_set = SetStEph::<i32>::empty();
     assert_eq!(empty_set.size(), 0);
